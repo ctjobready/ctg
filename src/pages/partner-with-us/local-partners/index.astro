@@ -21,7 +21,8 @@ import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import { localCta } from '../../../components/pages/about/routes';
-import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, STEPS, STEPS_FACTS, VALUE_PROPOSITION } from '../../../data/copy';
+import { HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -37,10 +38,10 @@ const jsonLd = [
 
 // C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
 const cmpRows = [
-  { label: 'Certification', cells: [{ text: 'Exam preparation and the exam fee for each trainee’s track (terms set per program)', included: true }, 'Varies', 'Often sold separately', 'Not included', '—'] },
-  { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Not included', '—'] },
-  { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Learners arrange their own', 'Matching for people who already have marketable skills', '—'] },
-  { label: 'Outcome tracking', cells: [{ text: 'Tracers at 3, 6 and 12 months; monthly reports', included: true }, 'Varies', 'Usually course completion', 'Platform activity', '—'] },
+  { label: 'Certification', cells: [{ text: 'Exam preparation and the exam fee for each trainee’s track (terms set per program)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', '—'] },
+  { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', '—'] },
+  { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', '—'] },
+  { label: 'Outcome tracking', cells: [{ text: 'Tracers at 3, 6 and 12 months; monthly reports', included: true }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', '—'] },
   {
     label: 'Independent evidence',
     cells: [
@@ -52,6 +53,13 @@ const cmpRows = [
     ],
   },
   { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
+];
+
+// C8d "How it works in 3 steps", written for a local partner (built from the page's own CTA, ways to partner and next steps).
+const localSteps = [
+  { title: 'Tell the Bangladesh team', text: 'Describe your organization, your district and the groups you work with, and we shape the cohort, tracks, safeguarding and reporting together.' },
+  { title: 'Host, train and mentor', text: `Certified local facilitators deliver the localized curriculum in your labs, classrooms or centers: ${HOURS} training hours per certification, then three months of milestone-based mentoring.` },
+  { title: 'Place and report', text: `Placement support into local, remote and global work, with monthly reports to the funder and tracer surveys at ${TRACER_MONTHS}.` },
 ];
 
 const ways = [
@@ -124,6 +132,7 @@ const ways = [
       id="mechanism"
       tone="airy"
       title="How a local partnership works."
+      positioning={POSITIONING.localPartners}
       blocks={[
         { label: 'Your organization', title: 'Mobilizes and hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
         { label: 'With CodersTrust', title: 'Trains and certifies', text: 'Certified local facilitators, a localized curriculum and certification, delivered in blended classes.', icon: 'graduation-cap' },
@@ -158,9 +167,9 @@ const ways = [
     ]}
   />
   <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">
-    <div data-fact={STEPS_FACTS.join(' ')}>
+    <div data-fact="ID-07 PD-06 PD-01 PD-15 PD-08 PD-09">
       <SectionHeader id="steps-h" level={2} title="How it works in 3 steps" />
-      <StepFlow steps={STEPS.map((s) => ({ title: s.title, text: s.text }))} />
+      <StepFlow steps={localSteps} />
     </div>
   </Section>
 

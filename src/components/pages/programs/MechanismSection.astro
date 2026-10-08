@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import ModelDiagram from '../../ui/ModelDiagram.astro';
 import Icon from '../../system/Icon.astro';
+import PositioningStatement from '../../sections/PositioningStatement.astro';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -13,6 +14,8 @@ interface Props {
   title: string;
   lead?: string;
   eyebrow?: string;
+  /** C6a positioning statement (data/copy.ts POSITIONING), shown in the band header. */
+  positioning?: { text: string; facts: string[] };
   blocks?: { label: string; title: string; text?: string; icon?: string }[];
   /** Fact IDs the diagram text rests on (data-fact for the status gate). */
   factIds?: string[];
@@ -20,11 +23,13 @@ interface Props {
   tone?: 'white' | 'airy' | 'ice';
   id?: string;
 }
-const { title, lead, eyebrow = 'How it works', blocks, factIds = [], link, tone = 'white', id = 'mechanism' } = Astro.props;
+const { title, lead, eyebrow = 'How it works', positioning, blocks, factIds = [], link, tone = 'white', id = 'mechanism' } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead}>
+    {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
+  </SectionHeader>
   {
     blocks && (
       <div data-fact={factIds.join(' ') || undefined}>

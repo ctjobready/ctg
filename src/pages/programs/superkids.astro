@@ -22,7 +22,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, ORIGIN, PRICING, SAFEGUARDING } from '../../data/copy';
+import { MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, SAFEGUARDING } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -47,8 +47,8 @@ const courses = linkAttrs(COURSES_URL);
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={enquiry}>
   <!-- C1 -->
   <HeroBand
-    audience="For schools and education partners"
-    title="SuperKids — STEAM, coding and robotics for young learners."
+    audience="SuperKids · For schools and education partners"
+    title="Help young learners explore coding, creativity and robotics."
     lead="We help schools and partners bring STEAM, coding and robotics to young learners."
     cta={enquiry}
     artSeed="superkids"
@@ -90,7 +90,7 @@ const courses = linkAttrs(COURSES_URL);
   </GuideSection>
 
   <!-- C6 -->
-  <MechanismSection title="How SuperKids runs." lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
+  <MechanismSection title="How SuperKids runs." positioning={POSITIONING.superkids} lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
     <div class="courses">
       <FeatureCard icon="blocks" title="Block coding" text="Visual coding with blocks." />
       <FeatureCard icon="bot" title="Robotics" text="Building and programming simple robots." />

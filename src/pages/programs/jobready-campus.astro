@@ -26,7 +26,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, ORIGIN, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -58,8 +58,8 @@ const options = [
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'JobReady@Campus' }]} jsonLd={jsonLd} stickyCta={campus}>
   <!-- C1 -->
   <HeroBand
-    audience="For universities and colleges"
-    title="JobReady@Campus — industry skills alongside the degree."
+    audience="JobReady@Campus · For universities and colleges"
+    title="Give your students a practical route into digital work."
     lead={VALUE_PROPOSITION.universities}
     cta={campus}
     artSeed="jobready-campus"
@@ -113,6 +113,7 @@ const options = [
   <!-- C6 -->
   <MechanismSection
     title="Skills training that runs beside the academic program."
+    positioning={POSITIONING.campus}
     blocks={[
       { label: 'When', title: 'In parallel with studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
       { label: 'Where', title: 'On-campus labs', text: 'Labs serve as blended-learning centers, with faculty members as coordinators.', icon: 'school' },

@@ -6,10 +6,13 @@
  * distributions behind the charts.
  *
  * INTERNAL ONLY: the `n` counts and `base` totals below are reconstructed from the published percentages. They
- * are never rendered or exported; their only job is the small-cell rule (any cell under MIN_CELL is folded into
- * "Other districts" or a neighboring band on the page, and suppressed in the CSV). Only `statedBase`, the base
- * the Impact Report itself states (321, 277, 170, and 34 of 47), may be shown. Every percentage reproduces a
- * register headline (checked in `assertConsistent`).
+ * are never rendered or exported; their only job is the small-cell rule (any cell under MIN_CELL is folded into a
+ * neighboring band on the page, and suppressed in the CSV). Only `statedBase`, the base the Impact Report itself
+ * states (321, 277, 170, and 34 of 47), may be shown. Every percentage reproduces a register headline (checked in
+ * `assertConsistent`).
+ *
+ * Districts are the exception: their base is not stated, so no counts are held or derived for them at all. Only the
+ * published shares are kept, and every district under 3.0% is combined into "Other districts".
  */
 export interface Cell {
   label: string;
@@ -56,24 +59,34 @@ export const EDUCATION: Dist = {
   ],
 };
 
-const DISTRICTS_RAW: Cell[] = [
-  { label: 'Dhaka', n: 176 },
-  { label: 'Chattogram', n: 39 },
-  { label: 'Barishal', n: 27 },
-  { label: 'Comilla', n: 15 },
-  { label: 'Narayanganj', n: 14 },
-  { label: 'Khulna', n: 11 },
-  { label: 'Bogura', n: 10 },
-  { label: 'Rajshahi', n: 10 },
+/**
+ * District of residence. The Impact Report does not state the base for this question, so no counts are held or derived
+ * here: the districts are kept as the published shares only. Every district under 3.0% is combined into "Other districts"
+ * (page text: "Districts under 3% are combined into Other districts"); that remainder is 100% minus the shares shown.
+ */
+export const DISTRICT_FOLD_BELOW = 3.0;
+export const OTHER_DISTRICTS = 'Other districts';
+export interface ShareCell {
+  label: string;
+  /** Published share of respondents, in percent (one decimal). */
+  pct: number;
+}
+/** Districts at or above DISTRICT_FOLD_BELOW; the smaller ones are not listed anywhere. */
+const DISTRICT_SHARES: ShareCell[] = [
+  { label: 'Dhaka', pct: 37.1 },
+  { label: 'Chattogram', pct: 8.2 },
+  { label: 'Barishal', pct: 5.7 },
+  { label: 'Comilla', pct: 3.2 },
+  { label: 'Narayanganj', pct: 3.0 },
 ];
-const DISTRICT_BASE = 474;
-const named = DISTRICTS_RAW.reduce((s, c) => s + c.n, 0);
-/** Districts with fewer than 10 respondents (and every district outside the list) fold into "Other districts". */
-export const DISTRICTS: Dist = {
+const tenths = (p: number) => Math.round(p * 10);
+export const DISTRICTS: { id: string; measure: string; cells: ShareCell[] } = {
   id: 'OC-09-district',
   measure: 'Respondents by district of residence',
-  base: DISTRICT_BASE,
-  cells: [...DISTRICTS_RAW, { label: 'Other districts', n: DISTRICT_BASE - named }],
+  cells: [
+    ...DISTRICT_SHARES,
+    { label: OTHER_DISTRICTS, pct: (1000 - DISTRICT_SHARES.reduce((s, c) => s + tenths(c.pct), 0)) / 10 },
+  ],
 };
 
 // ---- Employment by type (OC-04, base 321) ----------------------------------------------------
@@ -167,12 +180,12 @@ export function assertConsistent(): void {
   const must = (ok: boolean, msg: string) => {
     if (!ok) throw new Error(`outcomes-data: ${msg}`);
   };
-  for (const d of [AGE, EDUCATION, DISTRICTS, CAREER, SOURCE, RECOMMEND]) {
+  for (const d of [AGE, EDUCATION, CAREER, SOURCE, RECOMMEND]) {
     if (d.id !== 'OC-08') must(sum(d.cells) === d.base, `${d.id} cells sum to ${sum(d.cells)}, expected ${d.base}`);
   }
   must(pct(AGE.cells[0].n + AGE.cells[1].n, AGE.base) === 68.7, 'aged 15–35 should be 68.7%');
   must(pct(EDUCATION.cells[2].n + EDUCATION.cells[3].n, EDUCATION.base) === 84.6, 'bachelor’s or higher should be 84.6%');
-  must(pct(DISTRICT_BASE - 176, DISTRICT_BASE) === 62.9, 'outside Dhaka should be 62.9%');
+  must(tenths(100) - tenths(DISTRICTS.cells[0].pct) === 629, 'outside Dhaka should be 62.9%');
   must(pct(EMPLOYED.before, EMPLOYMENT_BASE) === 47.4 && pct(EMPLOYED.after, EMPLOYMENT_BASE) === 77.9, 'employment should be 47.4 → 77.9');
   must(pct(EMPLOYMENT_TYPES[0].before, EMPLOYMENT_BASE) === 38.3 && pct(EMPLOYMENT_TYPES[0].after, EMPLOYMENT_BASE) === 53.3, 'salaried should be 38.3 → 53.3');
   must(pct(EMPLOYMENT_TYPES[1].before, EMPLOYMENT_BASE) === 6.2 && pct(EMPLOYMENT_TYPES[1].after, EMPLOYMENT_BASE) === 14, 'freelancing should be 6.2 → 14.0');
@@ -187,7 +200,9 @@ export function assertConsistent(): void {
   must(pct(SOURCE.cells[3].n + SOURCE.cells[4].n, SOURCE.base) === 11.9, 'foreign-client freelancing or job abroad should be 11.9%');
   must(pct(CAREER.base - 130, CAREER.base) === 59.5, 'specific career or education outcome should be 59.5%');
   must(pct(61 + 37 + 22, CAREER.base) === 37.4, 'new income source should be 37.4%');
-  must(DISTRICTS.cells.every((c) => c.n >= MIN_CELL), 'districts must all have at least 10 respondents');
+  must(DISTRICTS.cells.reduce((s, c) => s + tenths(c.pct), 0) === 1000, 'district shares should add up to 100%');
+  must(DISTRICTS.cells.every((c) => c.label === OTHER_DISTRICTS || c.pct >= DISTRICT_FOLD_BELOW), `every district under ${DISTRICT_FOLD_BELOW}% must be combined into "${OTHER_DISTRICTS}"`);
+  must(DISTRICTS.cells[DISTRICTS.cells.length - 1].label === OTHER_DISTRICTS, '"Other districts" should come last');
 }
 
 // ---- CSV of published aggregates -------------------------------------------------------------
@@ -231,9 +246,11 @@ function recs(): Rec[] {
     out.push(pctRec('OC-04', 'Employment by type, among surveyed completers with paired answers', `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE, EMPLOYMENT_BASE));
   }
   for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of completers who first earned during or after training and started earning by each point (timing only)', c.label, c.n, SPEED_BASE, SPEED_BASE));
-  for (const d of [RECOMMEND, CAREER, SOURCE, AGE, EDUCATION, DISTRICTS]) {
+  for (const d of [RECOMMEND, CAREER, SOURCE, AGE, EDUCATION]) {
     for (const c of d.cells) out.push(pctRec(d.id, d.measure, c.label, c.n, d.base, d.statedBase, d.statedBase ? undefined : NOT_STATED));
   }
+  // Districts: the published shares only (no counts exist for them, so the cell-size rule works by share: under 3% is combined).
+  for (const c of DISTRICTS.cells) out.push({ id: DISTRICTS.id, measure: DISTRICTS.measure, category: c.label, type: 'percent', value: c.pct.toFixed(1), note: NOT_STATED });
   return out;
 }
 

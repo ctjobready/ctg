@@ -34,12 +34,11 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
   { job: 'Across the platform', capability: 'Marketing automation', status: 'Live', note: 'Live as part of the staged rollout.' },
   { job: 'Across the platform', capability: 'CRM', status: 'Live', note: 'Live as part of the staged rollout.' },
 ];
+// Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
+// Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
 const roadmap = [
-  { icon: 'route', title: 'Personalized learning paths', text: 'The platform is designed to build each learner’s path from their TalentLEAP competency level and goals.' },
-  { icon: 'message-circle', title: 'AI tutoring', text: 'The platform is designed to give learners help with course material when they need it.' },
-  { icon: 'clipboard-check', title: 'Adaptive assessment', text: 'The platform is designed to adjust assessment to what each learner has already shown.' },
-  { icon: 'compass', title: 'AI career coach', text: 'The platform is designed to guide learners toward the next step on their career path.' },
-  { icon: 'users', title: 'Talent matching', text: 'The platform is designed to match job-ready learners with employer demand once the marketplace opens.' },
+  { icon: 'route', title: 'Personalized learning', text: 'The platform is designed to personalize each learner’s path, building on the TalentLEAP competency model.' },
+  { icon: 'trending-up', title: 'Adaptive learning', text: 'The platform is designed to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
 ];
 const toc = [
   { id: 'jobs', label: 'Four jobs' },
@@ -97,8 +96,8 @@ const f = fundingCta();
   </ReportSection>
 
   <ReportSection id="roadmap" title="AI-native roadmap: what the platform is designed to do">
-    <p>JobReady is being built as an AI-native platform. Everything below is roadmap, described as what the platform is designed to do, and none of it is presented as live.</p>
-    <div class="jr__cards jr__cards--roadmap">
+    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. Everything below is roadmap, described as what the platform is designed to do, and none of it is presented as live.</p>
+    <div class="jr__cards jr__cards--roadmap" data-fact="IN-06">
       {roadmap.map((r) => (
         <FeatureCard icon={r.icon} title={r.title} text={r.text}>
           <Badge tone="sale">Roadmap</Badge>

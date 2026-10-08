@@ -33,7 +33,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, NATIONWIDE_TARGET, factPart, meta, statValue } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -135,6 +135,7 @@ const steps = [
   <!-- C6 · Mechanism (NationWIDE-style delivery) -->
   <MechanismBand
     title="A national delivery model, built on labs that already exist."
+    positioning={POSITIONING.governments}
     lead={`NationWIDE-style delivery aims to train ${NATIONWIDE_TARGET} vulnerable youth by 2030. That is a target, not a result.`}
     blocks={[
       { label: 'Who we reach', title: 'Vulnerable and unemployed youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },

@@ -41,7 +41,7 @@ const jsonLd = [
     ...dataset({
       path,
       name: 'CodersTrust Impact Survey 2026 — published aggregates',
-      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Small cells (n < 10) are suppressed.',
+      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Small cells (n < 10) are suppressed, and districts under 3% are combined into Other districts.',
       datePublished: '2026-10-07',
       dateModified: '2026-10-07',
       methodology: 'Online alumni survey (LimeSurvey)',
@@ -70,7 +70,8 @@ const toc = [
 ];
 
 const cell = (c: D.Cell, base: number) => ({ label: c.label, value: pc(c.n, base), display: `${pc(c.n, base).toFixed(1)}%` });
-const districts = D.DISTRICTS.cells.map((c) => cell(c, D.DISTRICTS.base));
+// Districts are held as published shares (the base is not stated, so no counts exist); districts under 3% are already combined.
+const districts = D.DISTRICTS.cells.map((c) => ({ label: c.label, value: c.pct, display: `${c.pct.toFixed(1)}%` }));
 const education = D.EDUCATION.cells.map((c) => cell(c, D.EDUCATION.base));
 const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.n - a.n).concat(D.CAREER.cells[7]).map((c) => cell(c, D.CAREER.base));
 const source = D.SOURCE.cells.map((c) => cell(c, D.SOURCE.base));
@@ -144,7 +145,7 @@ const reportLink = reportCta();
       title="Respondents by district of residence"
       items={districts}
       max={100}
-      note="Base not stated in the report. Districts with fewer than 10 respondents are folded into “Other districts”."
+      note="Base not stated in the report. Districts under 3% are combined into Other districts."
     />
   </ReportSection>
 
@@ -231,7 +232,7 @@ const reportLink = reportCta();
       <li><strong>Recall and self-report.</strong> Status before training is recalled, and every answer is self-reported.</li>
       <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
       <li><strong>Descriptive, not causal.</strong> Nothing here shows that training caused a change; see the randomized trial for causal evidence from one program.</li>
-      <li><strong>Small cells.</strong> Districts with fewer than 10 respondents are folded into “Other districts”; the download suppresses cells based on fewer than 10 respondents. The tables and the download show percentages and stated bases only, not counts.</li>
+      <li><strong>Small cells.</strong> Districts under 3% are combined into Other districts, because the base for that question is not stated in the report; the download suppresses other cells based on fewer than 10 respondents. The tables and the download show percentages and stated bases only, not counts.</li>
       <li><strong>Ratio of medians.</strong> The income figure compares medians; it is not an average and does not mean every learner’s income tripled.</li>
     </ul>
   </ReportSection>

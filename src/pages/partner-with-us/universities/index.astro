@@ -29,7 +29,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -131,6 +131,7 @@ const steps = [
   <!-- C6 · Mechanism (JobReady@Campus) -->
   <MechanismBand
     title="JobReady@Campus: training alongside the degree."
+    positioning={POSITIONING.universities}
     blocks={[
       { label: 'Set up', title: 'Campus labs as learning centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
       { label: 'Certify', title: 'Industry certification tracks', text: `${HOURS} training hours per certification, with exam preparation and the exam fee for each trainee’s track.`, icon: 'award' },

@@ -3,12 +3,15 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import ModelDiagram from '../ui/ModelDiagram.astro';
 import Icon from '../system/Icon.astro';
+import PositioningStatement from './PositioningStatement.astro';
 import { linkAttrs } from '../../lib/url';
 
-/** C6 Mechanism (Klein band): four-block model diagram + Learn → Earn → Prosper ribbon + link. */
+/** C6 Mechanism (Klein band): positioning statement + four-block model diagram + Learn → Earn → Prosper ribbon + link. */
 interface Props {
   title: string;
   lead?: string;
+  /** C6a positioning statement (data/copy.ts POSITIONING), shown in the band header. */
+  positioning?: { text: string; facts: string[] };
   blocks?: { label: string; title: string; text?: string; icon?: string }[];
   link?: { label: string; href: string };
   ribbon?: string[];
@@ -17,6 +20,7 @@ interface Props {
 const {
   title,
   lead,
+  positioning,
   blocks = [
     { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Outreach and selection with local partners.', icon: 'users' },
     { label: 'How we reach them', title: 'Blended training', text: 'Labs, colleges and connectivity-light delivery.', icon: 'graduation-cap' },
@@ -30,7 +34,9 @@ const {
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="How it works" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="How it works" title={title} lead={lead}>
+    {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
+  </SectionHeader>
   <ModelDiagram blocks={blocks} />
   <p class="mech__ribbon" data-reveal>
     {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}

@@ -7,7 +7,9 @@ import { fact } from '../../../data/facts';
 
 /**
  * C3 Cost of inaction. Same look as CostBand but sized to 2 or 3 blocks. `scope` ("Globally") prefixes the
- * canonical fact wording in the same sentence, for context facts that are not Bangladesh figures.
+ * canonical fact wording in the same sentence, for context facts that are not Bangladesh figures. The global
+ * context facts (PX-05, PX-07, PX-08) already open with "Globally" in the register, so the prefix is only added
+ * to a sentence that does not name its scope yet.
  */
 interface Block {
   claim: string;
@@ -25,6 +27,7 @@ interface Props {
 const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
 const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(fact(b.factId).text);
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -36,7 +39,7 @@ const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + 
           <div class="card__body">
             <h3 class="card__title">{b.claim}</h3>
             {
-              b.scope ? (
+              needsScope(b) ? (
                 <p class="cost__data" data-fact={b.factId}>{b.scope}, {lowerFirst(fact(b.factId).text)}<FootnoteMarker id={b.factId} footnote="auto" /></p>
               ) : (
                 <p class="cost__data"><Fact id={b.factId} /></p>

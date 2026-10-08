@@ -28,7 +28,7 @@ import PlatformStatus from '../components/pages/investors/PlatformStatus.astro';
 import InvestorFit from '../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../components/pages/hub/FaqBlock.astro';
-import { C14, HEADLINE, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
+import { C14, HEADLINE, POSITIONING, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
 import { fact } from '../data/facts';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
@@ -84,7 +84,7 @@ const mechanismBlocks = [
   <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" eyebrow="The model" title="A multi-sided model: learn, earn, prosper." blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
+    <HomeMechanism id="mechanism" tone="airy" eyebrow="The model" title="A multi-sided model: learn, earn, prosper." positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
       <InvestorMarket />
     </HomeMechanism>
   </Tone>

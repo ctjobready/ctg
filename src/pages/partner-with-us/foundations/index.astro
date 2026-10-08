@@ -34,7 +34,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -136,6 +136,7 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
   <div class="pp-two">
     <MechanismBand
       title="Two ways to fund the path."
+      positioning={POSITIONING.foundations}
       lead="Fund the platform, the cohorts, or both."
       blocks={[
         { label: 'Funding vehicle 1', title: 'JobReady platform grant', text: 'A grant toward platform infrastructure. JobReady is being built as an AI-native platform, and its modules are rolling out in stages.', icon: 'layers' },

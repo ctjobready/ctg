@@ -29,7 +29,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, MICRO_COMMITMENT, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -125,6 +125,7 @@ const steps = [
   <!-- C6 · Mechanism (JobReady@Work) -->
   <MechanismBand
     title="JobReady@Work: built around your roles."
+    positioning={POSITIONING.employers}
     lead="JobReady@Work is corporate training custom-developed for each organization."
     blocks={[
       { label: 'Assess', title: 'Needs assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
