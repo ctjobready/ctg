@@ -1,0 +1,48 @@
+---
+import SubBand from './SubBand.astro';
+import CopyText from './CopyText.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import { C14 } from '../../../data/copy';
+import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
+
+/**
+ * C14 post-decision reinforcement (doc 04 §8), directly under the next-steps band: the first action
+ * (with the audience variant where one exists), validation, the timeline reminder for grant-funded
+ * pilots, and a partner logo row (PA-04 caption) when the page has not already shown that group.
+ */
+interface Props {
+  firstAction?: string;
+  /** Grant-funded pilots only: the 6–8 week reminder. */
+  reminder?: boolean;
+  logos?: PartnerGroup | PartnerGroup[] | false;
+  id?: string;
+}
+const { firstAction = C14.firstAction, reminder = true, logos = 'development', id = 'reinforce' } = Astro.props;
+---
+
+<SubBand tone="airy" pull id={id}>
+  <ul class="rf" role="list">
+    <li class="rf__first"><strong>{firstAction}</strong></li>
+    <li><CopyText block={C14.validate} as="span" /></li>
+    {reminder && <li><CopyText block={C14.reminder} as="span" /></li>}
+  </ul>
+  {logos !== false && <PartnerStrip variant="grid" group={logos} caption={PARTNER_CAPTION} />}
+</SubBand>
+
+<style>
+  .rf {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-md) 0 0;
+    border-top: 1px solid var(--primary-fixed);
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 48rem;
+    color: var(--on-surface-variant);
+  }
+  .rf__first {
+    color: var(--on-surface);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+  }
+</style>

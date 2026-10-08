@@ -1,0 +1,257 @@
+---
+/**
+ * P5 Foundations & CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
+ * C1 to C14 in order, as the numbered table in doc 06 P5.
+ */
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
+import ProblemBand from '../../../components/sections/ProblemBand.astro';
+import CostBand from '../../../components/sections/CostBand.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import MechanismBand from '../../../components/sections/MechanismBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import OfferBand from '../../../components/sections/OfferBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import Section from '../../../components/ui/Section.astro';
+import Badge from '../../../components/system/Badge.astro';
+import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
+import SubBand from '../../../components/pages/partners/SubBand.astro';
+import Callout from '../../../components/pages/partners/Callout.astro';
+import CopyText from '../../../components/pages/partners/CopyText.astro';
+import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
+import FitBrief from '../../../components/pages/partners/FitBrief.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
+import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import { FAQ_SCOPE, LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
+import { fact } from '../../../data/facts';
+import { faqJsonLd } from '../../../lib/faq';
+import { cta } from '../../../lib/mailto';
+import { webPage } from '../../../lib/schema';
+
+const PATH = '/partner-with-us/foundations/';
+const primary = cta('funding');
+// The partner-edition report request (doc 04 §7); the shared CTA label for this key still reads "full".
+const report = { label: 'Request the Impact Report 2026 (partner edition)', href: cta('report').href };
+
+const { title, description } = meta(
+  'Fund Youth Employment: Foundations & CSR',
+  `Fund a supported path from learning to earning. A randomized trial by BIGD found women’s income up ${factPart('RC-01', /income by (\d+%)/)} for those offered a place.`,
+);
+
+const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
+const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
+const funders = ['the Rockefeller Foundation', 'Porticus', 'DANIDA', 'the World Food Programme', 'UNDP', 'the World Bank Group', 'BRAC'];
+for (const f of funders) if (!fact('PA-01').text.includes(f.replace(/^the /, ''))) throw new Error(`PA-01 does not mention ${f}`);
+const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.length - 1]}`;
+---
+
+<LandingLayout
+  title={title}
+  description={description}
+  path={PATH}
+  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Foundations & CSR' }]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  stickyCta={{ label: primary.label, href: primary.href }}
+>
+  <!-- C1 · Identity hook -->
+  <HeroBand
+    audience="For foundations and CSR leaders"
+    title={HEADLINE.foundations}
+    lead={VALUE_PROPOSITION.foundations}
+    cta={{ label: primary.label, href: primary.href }}
+    artSeed="partners-foundations"
+  />
+  <!-- GEO · What is CodersTrust? -->
+  <DefinitionBand />
+
+  <!-- C2 · Problem -->
+  <ProblemBand
+    title="Grants buy hours. You want earnings."
+    bluf="You want to know what your grant changed, not only how many hours it paid for."
+    factIds={[]}
+  >
+    <GainsPains
+      slot="lead"
+      gains={['Documented outcomes for your grant', 'Confidence in the implementer', 'Reporting that fits your framework']}
+      pains={[
+        { q: 'Why do grants buy training hours, but rarely earnings?', text: 'Attendance is easy to count; a change in income is harder to show.' },
+        { q: 'Where is the independent evidence?', text: 'Independent evidence on youth-employment programs is thin.' },
+        { q: 'Who can you trust to implement and report?', text: 'Scalable, accountable implementers are hard to find.' },
+      ]}
+    />
+  </ProblemBand>
+
+  <!-- C3 · Agitation -->
+  <div class="pp-two">
+    <CostBand
+      title="Every year of delay is a cohort without a path."
+      transition="It doesn’t have to work that way."
+      blocks={[
+        { claim: 'AI is reshaping entry work.', factId: 'PX-07', implication: 'Programs have to track where entry-level work is going.' },
+        { claim: 'AI is already thinning some entry-level postings.', factId: 'PX-06', implication: 'Tracks chosen from current employer demand keep pace.' },
+        { claim: 'Educated young people are waiting.', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
+        { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
+      ]}
+    />
+  </div>
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    title="What a funded cohort could show."
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'Monthly reports from cohort one', text: 'Enrollment, certification, placements and first earnings arrive in your monthly reports.' },
+      { kind: 'Emotional', title: 'Who started earning', text: `The ${sixMonth}-month tracer shows who started earning, from jobs, freelance clients and businesses of their own.` },
+      { kind: 'Social', title: 'Results by group', text: 'Women’s and priority-group shares are reported alongside the headline results.' },
+    ]}
+  />
+
+  <!-- C5 · Guide (empathy first) -->
+  <PartnerGuideBand
+    empathy={EMPATHY.foundations}
+    statements={[
+      { facts: ['PA-01'], text: `CodersTrust has worked with ${funderList} since 2015.` },
+      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'WSDFM, commissioned by Porticus, was independently evaluated by BIGD in a randomized controlled trial.' },
+    ]}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
+    partnerGroup="development"
+  />
+
+  <!-- C6 · Mechanism (two funding vehicles) -->
+  <div class="pp-two">
+    <MechanismBand
+      title="Two ways to fund the path."
+      lead="Fund the platform, the cohorts, or both."
+      blocks={[
+        { label: 'Funding vehicle 1', title: 'JobReady platform grant', text: 'A grant toward platform infrastructure. JobReady is being built as an AI-native platform, and its modules are rolling out in stages.', icon: 'layers' },
+        { label: 'Funding vehicle 2', title: 'YouthWIDE cohorts', text: 'Co-fundable country programs in South Asia, MENA and Sub-Saharan Africa, with Bangladesh as the evidence-rich reference implementation.', icon: 'globe' },
+      ]}
+      link={{ label: 'About the JobReady platform', href: LINKS.platform }}
+    />
+  </div>
+  <SubBand>
+    <Callout eyebrow="Reporting and recognition">
+      <Fact id="PD-18" as="p" />
+      <ul class="cluster" role="list" data-fact="ID-09">
+        <li><Badge tone="eyebrow">SDG 4: Quality education</Badge></li>
+        <li><Badge tone="eyebrow">SDG 5: Gender equality</Badge></li>
+        <li><Badge tone="eyebrow">SDG 8: Decent work and economic growth</Badge></li>
+      </ul>
+    </Callout>
+  </SubBand>
+
+  <!-- C7 · Proof -->
+  <ProofBand
+    title="Independent evidence and survey results"
+    headlineFact="RC-01"
+    statIds={['RC-02', 'RC-03']}
+    chartId="OC-01"
+    links={[
+      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'Outcomes 2026', href: LINKS.outcomes },
+    ]}
+  >
+    <EvidenceList heading="More from the trial, and from surveyed completers" items={[{ facts: ['RC-05'] }, { facts: ['OC-03'] }]} />
+    <FitBrief />
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Program results, with the case studies behind them"
+    items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+    ]}
+  />
+
+  <!-- C8 · Features to benefits -->
+  <FeaturesTable
+    title="What you get, and what it means for your grant."
+    rows={[
+      {
+        feature: `Mentoring, placement support and outcome tracking for ${TRACKING_MONTHS} months, in the standard inclusions`,
+        means: 'your grant is accountable for first paid work, not attendance.',
+        outcomeFactId: 'PD-02',
+        relieves: 'Grants buy hours, rarely earnings',
+      },
+      {
+        feature: 'A randomized trial by BIGD on WSDFM; independent evaluation welcome on new programs',
+        means: 'you can fund a model with independent evidence and add your own evaluation.',
+        outcomeFactId: 'RC-01',
+        relieves: 'Independent evidence is thin',
+      },
+      {
+        feature: 'Monthly reports, a quarterly steering review and a pilot scorecard; contracting entity and due-diligence documents confirmed in co-design',
+        means: 'you see progress monthly, know who you are contracting with, and can decide expansion on evidence.',
+        outcomeFactId: 'PD-08',
+        relieves: 'Accountable implementers are hard to find',
+      },
+      {
+        feature: 'SDG-mapped reporting tailored to your CSR framework, with co-branded certificates and events',
+        means: 'reporting that fits your framework.',
+        outcomeFactId: 'PD-18',
+      },
+    ]}
+  />
+  <HowItWorks steps={STEPS} />
+
+  <!-- C9 · Objections -->
+  <FAQBand
+    audience={FAQ_SCOPE}
+    ids={FAQ_IDS}
+    title="Questions funders ask"
+    lead="Right for you if you want to fund outcomes you can see. Not right if you want a one-off donation with no reporting."
+    allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
+  />
+
+  <!-- C10 · Differentiation -->
+  <ComparisonBand
+    title="Compare the approaches."
+    lead="A supported cohort pairs independent evidence on our own training with recognized credentials built into each track. Provision varies by provider and program."
+  />
+
+  <!-- C11 · Offer -->
+  <OfferBand title="Choose where to start." />
+  <SubBand tone="airy" pull>
+    <Callout eyebrow="Option: JobReady platform grant"><Fact id="IN-04" as="p" /></Callout>
+    <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
+  </SubBand>
+
+  <!-- C12 · Risk reversal (immediately before C13) -->
+  <RiskReversalBand
+    title="Start with a pilot. Decide on evidence."
+    lead={SCORECARD.text}
+    points={[
+      { icon: 'rocket', title: 'Pilot first', text: 'Start with one cohort and see its results before you commit further.' },
+      { icon: 'chart-bar', title: 'Milestone reporting', text: 'Monthly reports and a quarterly steering review show progress against the scorecard.' },
+      { icon: 'handshake', title: 'Expansion is the funder’s decision', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent evaluation', text: 'An independent evaluation can be budgeted separately where you want one.' },
+    ]}
+  />
+
+  <!-- C13 · Call to action -->
+  <CTABand
+    id="cta"
+    heading="Let’s explore a funding partnership."
+    cta={{ label: primary.label, href: primary.href }}
+    secondary={report}
+    urgency={SPEED.text}
+  />
+
+  <!-- C14 · Next steps -->
+  <NextStepsBand title="What happens after you say yes." />
+  <Reinforcement logos={false} />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <PageEnhancements />
+</LandingLayout>

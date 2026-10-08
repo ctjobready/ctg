@@ -1,0 +1,36 @@
+---
+import Section from '../../ui/Section.astro';
+
+/**
+ * A continuation of the band above it (same tone, no extra band rhythm): the shared bands have no
+ * slot for the copy blocks the page specs add to C6, C8, C11 and C14, so those render here.
+ * `pull` tucks the band up under the previous one so the two read as one section.
+ */
+interface Props {
+  tone?: 'white' | 'airy' | 'ice' | 'klein';
+  pull?: boolean;
+  id?: string;
+  'aria-labelledby'?: string;
+  'aria-label'?: string;
+  class?: string;
+}
+const { tone = 'white', pull = false, class: className, ...rest } = Astro.props;
+---
+
+<Section tone={tone} pad="none" class:list={['subband', pull && 'subband--pull', className]} {...rest}>
+  <div class="subband__in"><slot /></div>
+</Section>
+
+<style>
+  .subband__in {
+    padding-block: var(--space-lg) var(--band-pad);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .subband__in > :global(*) {
+    margin: 0;
+  }
+  :global(.subband--pull) {
+    margin-top: calc(var(--band-pad) * -1 + var(--space-md));
+  }
+</style>

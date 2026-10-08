@@ -1,0 +1,20 @@
+---
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import type { CopyBlock } from '../../../data/copy';
+
+/**
+ * A shared copy block (src/data/copy.ts) rendered verbatim with its fact IDs in data-fact and the
+ * footnote markers of the facts that carry a caveat. `markers` overrides which facts show a marker
+ * (for example ORIGIN, whose second fact is a quotation caveat that does not belong to this sentence).
+ */
+interface Props {
+  block: CopyBlock;
+  as?: 'p' | 'div' | 'li' | 'span';
+  markers?: string[];
+  class?: string;
+}
+const { block, as: Tag = 'p', markers, class: className } = Astro.props;
+const showMarkersFor = markers ?? block.facts;
+---
+
+<Tag class={className} data-fact={block.facts.join(' ')}>{block.text}{showMarkersFor.map((id) => <FootnoteMarker id={id} />)}</Tag>

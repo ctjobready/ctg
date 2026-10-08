@@ -1,0 +1,45 @@
+---
+/**
+ * A short, emphasized statement on a white or airy ground (a result line, the accountability line,
+ * a scale paragraph). Holds shared copy blocks next to the band they belong to.
+ */
+interface Props {
+  eyebrow?: string;
+  class?: string;
+}
+const { eyebrow, class: className } = Astro.props;
+---
+
+<div class:list={['callout', className]} data-reveal>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <div class="callout__body"><slot /></div>
+</div>
+
+<style>
+  .callout {
+    max-width: 56rem;
+    padding: var(--space-md) var(--space-gutter);
+    border-left: 4px solid var(--tertiary);
+    background: var(--surface);
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    box-shadow: var(--shadow-card);
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .callout > * {
+    margin: 0;
+  }
+  .callout__body {
+    display: grid;
+    gap: var(--space-sm);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface);
+  }
+  .callout__body > :global(*) {
+    margin: 0;
+  }
+  .callout__body :global(a.link) {
+    font-size: var(--fs-body-base);
+  }
+</style>

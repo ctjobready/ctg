@@ -1,0 +1,60 @@
+---
+import Section from '../../ui/Section.astro';
+import Button from '../../system/Button.astro';
+
+/**
+ * C13 for the employers page: one solid primary and one outline button side by side (doc 04 §4.6:
+ * "one solid primary per band"). Same layout and tone as the shared CTABand, which only offers a
+ * text link as its secondary action.
+ */
+interface Props {
+  heading: string;
+  text?: string;
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+  micro?: string;
+  id?: string;
+}
+const { heading, text, primary, secondary, micro, id = 'cta' } = Astro.props;
+---
+
+<Section tone="airy" id={id} pad="lg" aria-labelledby={`${id}-h`}>
+  <div class="dcta">
+    <h2 id={`${id}-h`} class="dcta__title" data-reveal>{heading}</h2>
+    {text && <p class="lead dcta__text" data-reveal>{text}</p>}
+    <div class="dcta__actions" data-reveal>
+      <Button variant="primary" href={primary.href} iconEnd="arrow-right">{primary.label}</Button>
+      <Button variant="outline" href={secondary.href}>{secondary.label}</Button>
+    </div>
+    {micro && <p class="dcta__micro" data-reveal>{micro}</p>}
+  </div>
+</Section>
+
+<style>
+  .dcta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-md);
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .dcta > * {
+    margin: 0;
+  }
+  .dcta__title {
+    color: var(--ctx-section-heading);
+  }
+  .dcta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+  .dcta__micro {
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
+  }
+</style>

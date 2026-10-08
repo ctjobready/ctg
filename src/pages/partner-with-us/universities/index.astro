@@ -1,0 +1,256 @@
+---
+/**
+ * P6 Universities: /partner-with-us/universities/ (T3, implements doc 04 matrix 4.5).
+ * C1 to C14 in order, as the numbered table in doc 06 P6.
+ */
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
+import ProblemBand from '../../../components/sections/ProblemBand.astro';
+import CostBand from '../../../components/sections/CostBand.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import MechanismBand from '../../../components/sections/MechanismBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import Section from '../../../components/ui/Section.astro';
+import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
+import SubBand from '../../../components/pages/partners/SubBand.astro';
+import Callout from '../../../components/pages/partners/Callout.astro';
+import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import OfferCards from '../../../components/pages/partners/OfferCards.astro';
+import StepsBand from '../../../components/pages/partners/StepsBand.astro';
+import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
+import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import { FAQ_SCOPE, HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
+import { EMPATHY, HEADLINE, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { faqJsonLd } from '../../../lib/faq';
+import { cta } from '../../../lib/mailto';
+import { webPage } from '../../../lib/schema';
+
+const PATH = '/partner-with-us/universities/';
+const primary = cta('campus');
+
+const degreeShare = factPart('OC-09', /84\.6% hold a bachelor’s degree or higher/);
+const { title, description } = meta(
+  'University Employability Program',
+  `Help degree holders move into paid digital work with certified, mentored training. Among surveyed completers, ${degreeShare}.`,
+);
+
+const FAQ_IDS = ['Q1', 'Q13', 'Q3', 'Q10', 'Q8'];
+const options = programOptions().filter((o) => o.name === 'Pilot' || o.name === 'Scale');
+const optionText: Record<string, string> = {
+  Pilot: 'Prove the model with one campus cohort.',
+  Scale: 'Expand to more cohorts and campuses on the pilot’s results.',
+};
+const steps = [
+  { title: 'Set up', text: 'Agree tracks and campus labs in a discovery session.' },
+  { title: 'Train and certify', text: `${HOURS} training hours per certification.` },
+  { title: 'Mentor and place', text: 'Three months of milestone-based mentoring, placement support and tracers.' },
+];
+---
+
+<LandingLayout
+  title={title}
+  description={description}
+  path={PATH}
+  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Universities' }]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  stickyCta={{ label: primary.label, href: primary.href }}
+>
+  <!-- C1 · Identity hook -->
+  <HeroBand
+    audience="For universities and colleges"
+    title={HEADLINE.universities}
+    lead={VALUE_PROPOSITION.universities}
+    cta={{ label: primary.label, href: primary.href }}
+    artSeed="partners-universities"
+  />
+  <!-- GEO · What is CodersTrust? -->
+  <DefinitionBand />
+
+  <!-- C2 · Problem -->
+  <ProblemBand
+    title="Degree holders struggle to find work."
+    bluf="Capable students finish their degrees, and employers still say they cannot find the skills they need."
+    factIds={['PX-03', 'PX-05']}
+  >
+    <GainsPains
+      slot="lead"
+      gains={['Graduates who start work', 'A stronger employment story for your institution', 'Students with credentials employers recognize']}
+      pains={[
+        { q: 'Why do degree holders struggle to find work?', text: 'A degree alone is not producing job offers.' },
+        { q: 'Why can’t employers find the skills they need?', text: 'Employers report difficulty finding talent, and AI skills are the hardest to find.' },
+        { q: 'Where are your placement results?', text: 'Institutions lack placement results they can publish.' },
+      ]}
+    />
+  </ProblemBand>
+
+  <!-- C3 · Agitation -->
+  <div class="pp-two">
+    <CostBand
+      title="AI is raising the bar for entry-level work."
+      lead="Employers already say AI skills are the hardest to find."
+      transition="It doesn’t have to work that way."
+      blocks={[
+        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', implication: 'Students who graduate without those skills start behind.' },
+        { claim: 'AI is thinning some entry-level postings.', factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
+      ]}
+    />
+  </div>
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    title="What your students leave with."
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'A certification beside the degree', text: 'Students leave with an industry certification beside their degree.' },
+      { kind: 'Emotional', title: 'Placement results you can discuss', text: `Tracer results at ${TRACER_MONTHS} show where students work.` },
+      { kind: 'Social', title: 'Capacity that stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
+    ]}
+  />
+
+  <!-- C5 · Guide (empathy first) -->
+  <PartnerGuideBand
+    empathy={EMPATHY.universities}
+    stats={['SC-05']}
+    statements={[
+      { facts: ['SC-04'], markers: [], text: 'CodersTrust is National University’s official training partner for digital career skills and credentials.' },
+      { facts: ['PA-05'], markers: [], text: 'University partnerships include the University for Peace (UPEACE) and The City College of New York (CCNY).' },
+    ]}
+    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
+    partnerGroup="academic"
+  />
+
+  <!-- C6 · Mechanism (JobReady@Campus) -->
+  <MechanismBand
+    title="JobReady@Campus: training alongside the degree."
+    blocks={[
+      { label: 'Set up', title: 'Campus labs as learning centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
+      { label: 'Certify', title: 'Industry certification tracks', text: `${HOURS} training hours per certification, with exam preparation and the exam fee for each trainee’s track.`, icon: 'award' },
+      { label: 'Mentor and place', title: 'Mentoring and placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months.`, icon: 'users' },
+      { label: 'Alongside studies', title: 'In parallel with the degree', text: 'Training runs in parallel with academic studies, with professional internships.', icon: 'graduation-cap' },
+    ]}
+    link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
+  />
+  <SubBand>
+    <Callout eyebrow="A delivery platform for institutions">
+      <p data-fact="IN-04">Institutions also get a digital delivery platform: JobReady is being built as an AI-native platform, and its modules are rolling out in stages.</p>
+    </Callout>
+  </SubBand>
+
+  <!-- C7 · Proof -->
+  <ProofBand
+    title="Independent evidence and survey results"
+    headlineFact="RC-01"
+    statIds={['RC-02', 'RC-04']}
+    chartId="OC-01"
+    links={[
+      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'Outcomes 2026', href: LINKS.outcomes },
+    ]}
+  >
+    <EvidenceList
+      heading="What surveyed completers report"
+      items={[
+        { facts: ['OC-09'], text: `Among surveyed completers, ${degreeShare}: degree holders are our core learners.` },
+        { facts: ['OC-03'] },
+      ]}
+    />
+  </ProofBand>
+
+  <!-- C8 · Features to benefits -->
+  <FeaturesTable
+    title="What you get, and what it means for your students."
+    rows={[
+      {
+        feature: 'Industry certifications by track and three months of milestone-based mentoring',
+        means: 'students add a recognized credential and a first-client or first-job path to the degree.',
+        outcomeFactId: 'PD-03',
+        relieves: 'Degree holders struggle to find work',
+      },
+      {
+        feature: 'Tracks set from employer demand; an AI-ready curriculum',
+        means: 'training matches what employers say they cannot find.',
+        outcomeFactId: 'PD-10',
+        relieves: 'Employers cannot find the skills they need',
+      },
+      {
+        feature: 'Tracers, documentary evidence of earnings and monthly reports',
+        means: 'your institution has outcome data it can report.',
+        outcomeFactId: 'PD-09',
+        relieves: 'No placement results to publish',
+      },
+      {
+        feature: 'Certified local facilitators, with campus labs as blended-learning centers',
+        means: 'capacity stays on your campus.',
+        outcomeFactId: 'PD-06',
+      },
+    ]}
+  />
+  <HowItWorks steps={steps} />
+
+  <!-- C9 · Objections -->
+  <FAQBand
+    audience={FAQ_SCOPE}
+    ids={FAQ_IDS}
+    title="Questions universities ask"
+    lead="Right for you if you want certified, employer-demand tracks alongside degrees. Not right if you want to replace the degree."
+  />
+
+  <!-- C10 · Differentiation -->
+  <ComparisonBand
+    title="Compare the approaches."
+    lead="Recognized credentials are built into each track, and delivery uses infrastructure that already exists: campus labs, certified local facilitators and Training of Trainers. Provision varies by provider and program."
+  />
+
+  <!-- C11 · Offer -->
+  <OfferCards
+    title="Choose where to start."
+    cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: o.duration, text: optionText[o.name], facts: ['PD-05'] }))}
+    inclusions
+  />
+
+  <!-- C12 · Risk reversal (immediately before C13) -->
+  <RiskReversalBand
+    title="Start with a pilot cohort. Decide on evidence."
+    lead={SCORECARD.text}
+    points={[
+      { icon: 'rocket', title: 'Pilot cohort first', text: 'Start with one campus cohort and see its results.' },
+      { icon: 'target', title: 'Scorecard thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
+      { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+    ]}
+  />
+
+  <!-- C13 · Call to action -->
+  <CTABand
+    id="cta"
+    heading="Let’s bring JobReady@Campus to your students."
+    cta={{ label: primary.label, href: primary.href }}
+    secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
+    urgency={SPEED.text}
+  />
+
+  <!-- C14 · Next steps -->
+  <StepsBand
+    title="What happens after you say yes."
+    steps={[
+      { title: 'Discovery session', text: 'A conversation about your students, programs and timeline.' },
+      { title: 'Co-design', text: 'Tracks and campus labs are shaped with you.' },
+      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
+      { title: 'First cohort in training', text: 'Certified facilitators begin the first cohort in your labs.' },
+      { title: 'Monthly reports', text: 'Enrollment, completion, certification and placements follow each month.' },
+    ]}
+  />
+  <Reinforcement />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <PageEnhancements />
+</LandingLayout>

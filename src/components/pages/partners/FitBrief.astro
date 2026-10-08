@@ -1,0 +1,102 @@
+---
+import Fact from '../../facts/Fact.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { caveatPart, factPart, HOURS } from './partners';
+
+/**
+ * [FIT-BRIEF] evidence-and-fit brief (doc 06 shared blocks, enhancement 1): one screen, five
+ * statements, no new facts. Every number is pulled from the register or the trial caveat at build time.
+ */
+const evaluatedHours = factPart('RC-07', /(\d+) hours over/);
+const population = caveatPart('R', /women aged [\d–]+ with SSC or above, Dhaka/);
+const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
+---
+
+<section class="fit" aria-labelledby="fit-h" data-reveal>
+  <header>
+    <p class="eyebrow">Evidence and fit</p>
+    <h3 class="fit__title" id="fit-h">Before you decide: what the evidence covers, and what a new pilot must establish</h3>
+  </header>
+  <dl class="fit__grid">
+    <div class="fit__item" data-fact="RC-01 RC-07">
+      <dt>What was evaluated</dt>
+      <dd>The WSDFM program, a {evaluatedHours}-hour predecessor of today’s {HOURS}-hour track.<FootnoteMarker id="RC-01" /></dd>
+    </div>
+    <div class="fit__item" data-fact="RC-01">
+      <dt>Who took part</dt>
+      <dd>{population.charAt(0).toUpperCase() + population.slice(1)}.<FootnoteMarker id="RC-01" /></dd>
+    </div>
+    <div class="fit__item" data-fact="RC-01 RC-02">
+      <dt>Offered-place effects first, attenders second</dt>
+      <dd><Fact id="RC-02" /></dd>
+    </div>
+    <div class="fit__item" data-fact="OC-01 OC-09">
+      <dt>What the 2026 survey adds</dt>
+      <dd>Descriptive outcomes among surveyed completers across {districts}, not causal.<FootnoteMarker id="OC-09" /></dd>
+    </div>
+    <div class="fit__item" data-fact="PD-01">
+      <dt>What a new pilot must establish</dt>
+      <dd>The country, the priority groups and the {HOURS}-hour track, agreed in co-design.</dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  .fit {
+    margin-top: var(--space-lg);
+    padding: var(--space-gutter);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-default);
+    background: var(--ctx-card);
+  }
+  .fit header {
+    display: grid;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    max-width: 48rem;
+  }
+  .fit header > * {
+    margin: 0;
+  }
+  .fit .eyebrow {
+    color: var(--ctx-heading);
+  }
+  .fit__title {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--ctx-heading);
+  }
+  .fit__grid {
+    margin: 0;
+    display: grid;
+    gap: var(--space-md) var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fit__item {
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--ctx-border);
+  }
+  .fit__item dt {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ctx-heading);
+    margin-bottom: 4px;
+  }
+  .fit__item dd {
+    margin: 0;
+    color: var(--ctx-text);
+  }
+  @media (min-width: 768px) {
+    .fit__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .fit__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

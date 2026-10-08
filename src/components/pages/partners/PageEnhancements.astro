@@ -1,0 +1,61 @@
+---
+/**
+ * Page-level behaviour shared by the five audience pages (about 0.6 KB of script, no dependencies).
+ *
+ * Sticky mobile CTA (LandingLayout `stickyCta`): doc 06 has the bar appear once the reader is past the
+ * problem band (C2) and gives way to the page's own CTA band (C13), so a solid primary button is never
+ * shown twice in one viewport region. Without JavaScript the bar is simply always visible.
+ *
+ * Also hosts the small global layout tweak for two-card bands (`.pp-two`).
+ */
+---
+
+<script>
+  const bar = document.querySelector<HTMLElement>('.sticky-cta');
+  const start = document.getElementById('problem');
+  const end = document.getElementById('cta');
+  if (bar && start && 'IntersectionObserver' in window) {
+    let pastStart = false;
+    let overEnd = false;
+    const apply = () => {
+      const show = pastStart && !overEnd;
+      bar.toggleAttribute('data-hidden', !show);
+      bar.toggleAttribute('inert', !show);
+    };
+    new IntersectionObserver(([e]) => {
+      pastStart = e.isIntersecting || e.boundingClientRect.top < 0;
+      apply();
+    }).observe(start);
+    if (end) {
+      new IntersectionObserver(([e]) => {
+        overEnd = e.isIntersecting;
+        apply();
+      }).observe(end);
+    }
+    apply();
+  }
+</script>
+
+<style is:global>
+  @media (max-width: 767px) {
+    .sticky-cta[data-hidden] {
+      visibility: hidden;
+      transform: translateY(110%);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .sticky-cta {
+        transition: transform var(--dur-base) var(--ease-standard), visibility 0s linear;
+      }
+      .sticky-cta[data-hidden] {
+        transition: transform var(--dur-base) var(--ease-standard), visibility 0s linear var(--dur-base);
+      }
+    }
+  }
+  /* Two-card bands: two columns on desktop instead of two thirds of a three-column grid */
+  @media (min-width: 1024px) {
+    .pp-two .grid-cards,
+    .pp-two .model__list.model__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
