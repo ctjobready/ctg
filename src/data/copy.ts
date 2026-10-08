@@ -131,8 +131,10 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization; ${UNLIKE_MEASURES}`,
     facts: ['IN-10', 'RC-01'],
   },
+  // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
+  // supports a comparison with other approaches, so the statement stops at what GV-08 and the page definition already say.
   superkids: {
-    text: 'For schools and education partners who want children to build digital skills early, CodersTrust offers SuperKids, a K-12 STEAM program of block coding, robotics and digital art; unlike stand-alone courses, it runs through schools and education partners, under agreements with DoICT and NCTB (agreements and targets, not delivered reach).',
+    text: 'For schools and education partners who want children to build digital skills early, CodersTrust offers SuperKids, a K-12 STEAM program of block coding, robotics and digital art, offered through schools and education partners under agreements with DoICT and NCTB (agreements and targets, not delivered reach).',
     facts: ['GV-08'],
   },
 };

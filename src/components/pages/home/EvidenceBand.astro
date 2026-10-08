@@ -12,7 +12,8 @@ import { linkAttrs } from '../../../lib/url';
  * figure rests on a small analytic base (OC-02: "n = 47 completers (34 earning)"), the base is printed inside
  * the stat label itself ("… — 34 of 47 surveyed completers"), not only in the footnote (review round 5).
  * Everything else matches ProofBand: the RCT headline is the H2 (RC-01), FactStats with automatic footnotes,
- * a before→after chart derived from OC-01, evidence links and a slot for extras.
+ * a before→after chart derived from OC-01, evidence links and a slot for extras. The named slot `ladder` sits between the
+ * figures and the links: Home puts the compact evidence ladder there (review round 9, enhancement 1).
  */
 interface Props {
   title: string;
@@ -74,6 +75,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
       <p class="eb__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
     </div>
   </div>
+  <slot name="ladder" />
   {
     links.length > 0 && (
       <ul class="eb__links" role="list">

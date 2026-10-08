@@ -22,6 +22,7 @@ import HomeCost from '../components/pages/home/HomeCost.astro';
 import HomeGuide from '../components/pages/home/HomeGuide.astro';
 import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
 import ProofExtras from '../components/pages/home/ProofExtras.astro';
+import EvidenceLadderCompact from '../components/pages/impact/EvidenceLadderCompact.astro';
 import CaseQuote from '../components/pages/home/CaseQuote.astro';
 import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
@@ -115,9 +116,9 @@ const featureRows = [
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
         { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
-        { label: 'How to read this evidence', href: '/impact/#evidence-ladder' },
       ]}
     >
+      <EvidenceLadderCompact slot="ladder" />
       <ProofExtras />
     </EvidenceBand>
   </Tone>

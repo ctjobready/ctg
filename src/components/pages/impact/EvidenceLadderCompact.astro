@@ -1,0 +1,101 @@
+---
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Compact evidence ladder (review round 9 enhancement 1): the four kinds of evidence from EvidenceLadder, one line each, strongest
+ * for cause first, with a link to the full ladder on /impact/. The rung order and names match EvidenceLadder; the number badge uses
+ * the same context tokens (`--ctx-num-bg`, `--ctx-num-fg`), so it adapts to light and dark bands. It is plain server-rendered
+ * markup (an ordered list), so it works without JS, and it carries no figures of its own: the only numerals are the list numbers
+ * and the trial's years. `data-fact` names the register entry each rung describes (for the status gate).
+ */
+interface Props {
+  id?: string;
+  class?: string;
+}
+const { id = 'ladder-compact', class: className } = Astro.props;
+
+const rungs = [
+  { name: 'Randomized trial (BIGD)', text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
+  { name: 'Impact Survey 2026', text: 'what surveyed completers report; descriptive, not causal', fact: 'OC-01' },
+  { name: 'Program results', text: 'gross placement among graduates, no comparison group', fact: 'PR-01' },
+  { name: 'Learner stories', text: 'individual journeys, not typical outcomes', fact: undefined },
+];
+const readHref = linkAttrs('/impact/#evidence-ladder').href;
+---
+
+<div class:list={['lc', className]} data-reveal>
+  <h3 class="lc__title" id={`${id}-h`}>Four kinds of evidence, strongest for cause first</h3>
+  <ol class="lc__list" role="list" aria-labelledby={`${id}-h`}>
+    {
+      rungs.map((r, i) => (
+        <li class="lc__rung" data-fact={r.fact}>
+          <span class="lc__num" aria-hidden="true">{i + 1}</span>
+          <p class="lc__line"><strong class="lc__name">{r.name}</strong> — {r.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+  <p class="lc__more"><a class="link" href={readHref}>How to read this evidence<Icon name="arrow-right" size={16} /></a></p>
+</div>
+
+<style>
+  .lc {
+    margin-top: var(--space-lg);
+    padding: var(--space-gutter);
+    background: var(--ctx-card, var(--surface-container-low));
+    border: 1px solid var(--ctx-border, var(--primary-fixed));
+    border-radius: var(--radius-default);
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .lc > * {
+    margin: 0;
+  }
+  .lc__title {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+  }
+  .lc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .lc__rung {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: start;
+  }
+  .lc__num {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--ctx-num-bg, var(--secondary));
+    color: var(--ctx-num-fg, var(--on-secondary));
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lc__line {
+    margin: 0;
+    font-size: var(--fs-body-base);
+    line-height: var(--lh-body-base);
+    color: var(--ctx-text);
+    /* the number badge is 28px tall: centre the first text line on it */
+    padding-top: 2px;
+  }
+  .lc__name {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+  }
+  .lc__more {
+    padding-top: var(--space-xs);
+  }
+</style>
