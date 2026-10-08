@@ -1,0 +1,49 @@
+---
+/**
+ * Page-local band rhythm helper. Several shared bands fix their own background (white, airy, ice, klein),
+ * which can put two same-tone or two dark bands side by side. This wrapper re-maps the band's tone tokens
+ * from the outside (the shared components stay untouched) and carries the CMF component id (`data-cmf`)
+ * so the section order can be audited in the markup.
+ *
+ *   tone: remap the direct-child `.band` to white | airy | ice (omit to keep the band's own tone)
+ *   join: two bands that read as one block (the second drops its top padding)
+ */
+interface Props {
+  tone?: 'white' | 'airy' | 'ice';
+  cmf?: string;
+  join?: boolean;
+}
+const { tone, cmf, join = false } = Astro.props;
+---
+
+<div class:list={['tone', tone && `tone--${tone}`, join && 'tone--join']} data-cmf={cmf}><slot /></div>
+
+<style is:global>
+  .tone--white > .band.band {
+    --band-bg: var(--surface);
+    --ctx-muted: var(--outline);
+    --ctx-border: var(--primary-fixed);
+    --badge-brand-bg: initial;
+    --badge-info-bg: initial;
+  }
+  .tone--airy > .band.band {
+    --band-bg: var(--surface-container-low);
+    --ctx-muted: var(--outline);
+    --ctx-border: var(--primary-fixed);
+    --badge-brand-bg: var(--primary-fixed);
+    --badge-info-bg: initial;
+  }
+  .tone--ice > .band.band {
+    --band-bg: var(--surface-container);
+    --ctx-muted: var(--on-surface-variant);
+    --ctx-border: var(--primary-fixed);
+    --badge-info-bg: var(--surface);
+    --badge-brand-bg: var(--surface);
+  }
+  .tone--join > .band.band:first-child {
+    padding-bottom: 0;
+  }
+  .tone--join > .band.band:not(:first-child) {
+    padding-top: var(--space-lg);
+  }
+</style>

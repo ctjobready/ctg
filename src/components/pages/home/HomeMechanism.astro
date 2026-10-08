@@ -1,0 +1,71 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import ModelDiagram from '../../ui/ModelDiagram.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * C6 Mechanism (page-local variant of the shared MechanismBand). Same content and diagram, but the tone
+ * is a prop: on Home the evidence band (C7) that follows is the Klein "impact moment", and the system
+ * rule is that two dark bands never sit back to back, so the mechanism band stays light here.
+ */
+interface Props {
+  title: string;
+  lead?: string;
+  tone?: 'white' | 'airy' | 'ice';
+  blocks?: { label: string; title: string; text?: string; icon?: string }[];
+  link?: { label: string; href: string };
+  ribbon?: string[];
+  eyebrow?: string;
+  id?: string;
+}
+const {
+  title,
+  lead,
+  tone = 'white',
+  eyebrow = 'How it works',
+  blocks = [
+    { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Outreach and selection with local partners.', icon: 'users' },
+    { label: 'How we reach them', title: 'Blended training', text: 'Labs, colleges and connectivity-light delivery.', icon: 'graduation-cap' },
+    { label: 'What we deliver', title: 'Skills, certification, mentoring', text: 'Industry certification with the exam fee for each trainee’s track, then three months of milestone-based mentoring.', icon: 'award' },
+    { label: 'Where they work', title: 'Local, remote and global work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
+  ],
+  link,
+  ribbon = ['Learn', 'Earn', 'Prosper'],
+  id = 'mechanism',
+} = Astro.props;
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <ModelDiagram blocks={blocks} />
+  <p class="mech__ribbon" data-reveal aria-label={ribbon.join('. ') + '.'}>
+    {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}
+  </p>
+  {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}
+  <slot />
+</Section>
+
+<style>
+  .mech__ribbon {
+    margin: var(--space-lg) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-md);
+    font-size: var(--fs-heading-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.5px;
+    color: var(--secondary);
+  }
+  .mech__ribbon span:last-of-type {
+    color: var(--primary);
+  }
+  .mech__ribbon :global(.icon) {
+    color: var(--tertiary);
+  }
+  .mech__link {
+    margin: var(--space-md) 0 0;
+  }
+</style>

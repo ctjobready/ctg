@@ -1,0 +1,164 @@
+---
+// P8 Investors (doc 06 P8; matrix 4.4; D2): thesis + traction only. C1 → C14 in order with the declared C2–C3
+// compression. No market-size figures, valuation, raise, revenue, growth or pipeline; no partner references
+// or reply-time promises (confirm list #13, #17).
+import LandingLayout from '../layouts/LandingLayout.astro';
+import HeroBand from '../components/sections/HeroBand.astro';
+import EvidenceBand from '../components/pages/home/EvidenceBand.astro';
+import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../components/sections/FeaturesTable.astro';
+import ComparisonBand from '../components/sections/ComparisonBand.astro';
+import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import Section from '../components/ui/Section.astro';
+import Sources from '../components/facts/Sources.astro';
+import Tone from '../components/pages/home/Tone.astro';
+import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
+import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
+import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
+import StickyCtaReveal from '../components/pages/home/StickyCtaReveal.astro';
+import { caseStudyItems } from '../components/pages/home/caseStudies';
+import InvestorDefinition from '../components/pages/investors/InvestorDefinition.astro';
+import InvestorThesis from '../components/pages/investors/InvestorThesis.astro';
+import InvestorVision from '../components/pages/investors/InvestorVision.astro';
+import InvestorGuide from '../components/pages/investors/InvestorGuide.astro';
+import InvestorMarket from '../components/pages/investors/InvestorMarket.astro';
+import InvestorProofExtras from '../components/pages/investors/InvestorProofExtras.astro';
+import PlatformStatus from '../components/pages/investors/PlatformStatus.astro';
+import InvestorFit from '../components/pages/investors/InvestorFit.astro';
+import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
+import FaqBlock from '../components/pages/hub/FaqBlock.astro';
+import { faqItemsByIds } from '../components/pages/hub/faqItems';
+import { C14, HEADLINE, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
+import { fact } from '../data/facts';
+import { cta } from '../lib/mailto';
+import { faqPage, webPage } from '../lib/schema';
+
+const path = '/investors/';
+const title = 'Investors';
+// Meta description (≤ 155): BLUF with one proof number taken from the register.
+const description = `CodersTrust is building JobReady, an AI-native platform for youth employment, on ${fact('SC-01').text}. Request the investor deck.`;
+if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
+const investor = cta('investor');
+const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
+const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqPage(faqItemsByIds(FAQ_IDS), path)];
+
+const featureRows = [
+  { feature: 'Employer and gig-work (Earn) marketplace — pre-launch', means: 'the platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
+  { feature: 'TalentLEAP competency units, with levels Competent → Proficient → Expert; mentoring, certification and placement in every program', means: 'learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths with progressive levels', relieves: 'Online learning sells content, not earnings' },
+  { feature: 'AI-ready curriculum in every track, with tracks chosen from employer demand', means: 'courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'AI-driven adaptive learning — on the roadmap', means: 'the platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'Partner portals, marketing automation, CRM and AI chat — live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
+];
+const learnEarnProsper = [
+  { title: 'Learn', text: 'Competency development through certified courses.' },
+  { title: 'Earn', text: 'Employment or freelance work, with mentoring and placement support.' },
+  { title: 'Prosper', text: 'Career advancement along graduated levels.' },
+];
+const mechanismBlocks = [
+  { label: 'Learn', title: 'Courses, bootcamps and university programs', text: 'Certified, AI-ready digital skills.', icon: 'graduation-cap' },
+  { label: 'Earn', title: 'Jobs, freelance work and gigs', text: 'Placement support and mentoring into paid work.', icon: 'briefcase' },
+  { label: 'Prosper', title: 'Career paths and continuing development', text: 'Graduated competency levels through TalentLEAP.', icon: 'trending-up' },
+  { label: 'Institutions', title: 'A digital delivery platform', text: 'Partner portals for governments, universities and partners.', icon: 'building-2' },
+];
+---
+
+<LandingLayout title={title} description={description} jsonLd={jsonLd} breadcrumbs={[{ label: 'Investors' }]} stickyCta={{ label: investor.label, href: investor.href }}>
+  <Tone cmf="C1">
+    <HeroBand
+      variant="inner"
+      audience="For impact and growth investors"
+      title={HEADLINE.investors}
+      lead={VALUE_PROPOSITION.investors}
+      cta={{ label: investor.label, href: investor.href }}
+      artSeed="investors"
+    />
+  </Tone>
+
+  <Tone cmf="GEO"><InvestorDefinition id="definition" /></Tone>
+
+  <Tone cmf="C2-C3 (compressed)"><InvestorThesis id="thesis" /></Tone>
+
+  <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
+
+  <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
+
+  <Tone cmf="C6">
+    <HomeMechanism id="mechanism" tone="airy" eyebrow="The model" title="A multi-sided model: learn, earn, prosper." blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
+      <InvestorMarket />
+    </HomeMechanism>
+  </Tone>
+
+  <Tone cmf="C7">
+    <EvidenceBand
+      id="proof-band"
+      title={RCT_HEADLINE.text}
+      headlineFact="RC-01"
+      lead="Traction and outcomes. Survey figures are among surveyed completers, at the October 2026 survey."
+      statIds={['SC-01', 'SC-02', 'SC-04', 'SC-06']}
+      links={[
+        { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
+        { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+      ]}
+    >
+      <InvestorProofExtras />
+    </EvidenceBand>
+  </Tone>
+  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with the partners who commissioned them." items={caseStudyItems} /></Tone>
+
+  <Tone cmf="C8" join>
+    <FeaturesTable id="features" title="What the platform does — and what it means." lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
+    <FeatureSteps id="how-it-works" steps={learnEarnProsper} facts={['ID-06', 'IN-04']} programs={false}>
+      <PlatformStatus />
+    </FeatureSteps>
+  </Tone>
+
+  <Tone cmf="C9"><FaqBlock id="faq" ids={FAQ_IDS} tone="ice" title="Questions investors ask." eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
+
+  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
+
+  <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
+
+  <Tone cmf="C12">
+    <RiskReversalBand
+      id="risk"
+      title="Start with a conversation, not a commitment."
+      points={[
+        { icon: 'phone', title: 'An introduction call first', text: 'We start by understanding your focus.' },
+        { icon: 'file-lock', title: 'The deck and data room under NDA', text: 'They follow the call, once an NDA is in place.' },
+        { icon: 'handshake', title: 'You decide what happens next', text: 'The call does not commit either side.' },
+      ]}
+    />
+  </Tone>
+
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      tone="klein"
+      heading="Let’s talk about backing the platform."
+      cta={{ label: investor.label, href: investor.href }}
+      secondary={{ label: 'Meet the leadership team', href: '/about/team/' }}
+      micro="An introduction call comes first; the deck follows under NDA."
+    />
+  </Tone>
+
+  <Tone cmf="C14">
+    <ConversionNextSteps
+      id="next-steps"
+      title="What happens after you ask."
+      lead="Four steps, at your pace."
+      steps={[
+        { title: 'Introduction call', text: 'A conversation about your investment focus and the thesis.' },
+        { title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
+        { title: 'Deck and data room', text: 'You receive the investor deck and access to the data room.' },
+        { title: 'Your questions', text: 'We answer your questions and agree what comes next.' },
+      ]}
+      validate={C14.validate}
+      reminder={{ text: C14.variants.investors, facts: [] }}
+      firstAction="In your enquiry, include two suitable times for an introduction call."
+    />
+  </Tone>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <StickyCtaReveal after="definition" until="cta" />
+</LandingLayout>

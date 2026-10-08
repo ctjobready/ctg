@@ -1,0 +1,135 @@
+---
+import Section from '../../ui/Section.astro';
+import Stat from '../../system/Stat.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import BeforeAfter from '../../ui/BeforeAfter.astro';
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * C7 evidence band (Klein). Page-local variant of the shared ProofBand with one difference: where a survey
+ * figure rests on a small analytic base (OC-02: "n = 47 completers (34 earning)"), the base is printed inside
+ * the stat label itself ("… — 34 of 47 surveyed completers"), not only in the footnote (review round 5).
+ * Everything else matches ProofBand: the RCT headline is the H2 (RC-01), FactStats with automatic footnotes,
+ * a before→after chart derived from OC-01, evidence links and a slot for extras.
+ */
+interface Props {
+  title: string;
+  lead?: string;
+  statIds: string[];
+  chartId?: string;
+  chartTitle?: string;
+  headlineFact?: string;
+  links?: { label: string; href: string }[];
+  id?: string;
+}
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, links = [], id = 'proof-band' } = Astro.props;
+const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
+
+const stats = statIds.map((sid) => {
+  const f = fact(sid);
+  if (!f.stat) throw new Error(`EvidenceBand: fact ${sid} has no stat`);
+  // "n = 47 completers (34 earning)" → "34 of 47 surveyed completers"
+  const m = f.base?.match(/n = (\d+) completers \((\d+) earning\)/);
+  const label = m ? `${f.stat.label} — ${m[2]} of ${m[1]} surveyed completers` : f.stat.label;
+  return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label };
+});
+
+const cf = fact(chartId);
+const after = cf.stat?.numeric;
+const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
+if (after === undefined || before === undefined) throw new Error(`EvidenceBand: fact ${chartId} needs stat.numeric and stat.from`);
+const unit = cf.stat?.suffix ?? '%';
+const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <header class="eb__head" data-reveal data-fact={headlineFact}>
+    <p class="eyebrow">The evidence</p>
+    <h2 class="eb__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
+    {lead && <p class="lead">{lead}</p>}
+  </header>
+  <div class="eb">
+    <div class="eb__stats">
+      {
+        stats.map((s, i) => (
+          <div class="eb__stat" data-fact={s.id}>
+            <Stat value={s.value} label={s.label} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
+              <FootnoteMarker id={s.id} footnote="auto" />
+            </Stat>
+          </div>
+        ))
+      }
+    </div>
+    <div class="eb__chart">
+      <BeforeAfter
+        title={chartTitle}
+        before={{ label: 'Before', value: before, caption: 'before training' }}
+        after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+        delta={delta}
+        unit={unit}
+        tone="dark"
+      />
+      <p class="eb__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+    </div>
+  </div>
+  {
+    links.length > 0 && (
+      <ul class="eb__links" role="list">
+        {links.map((l) => <li><a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a></li>)}
+      </ul>
+    )
+  }
+  <slot />
+</Section>
+
+<style>
+  .eb__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 52rem;
+  }
+  .eb__head > * {
+    margin: 0;
+  }
+  .eb__title {
+    color: var(--ctx-section-heading);
+  }
+  .eb {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .eb__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+    align-content: start;
+  }
+  .eb__stat {
+    min-width: 0;
+  }
+  .eb__fn {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .eb__links {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+  }
+  @media (min-width: 1024px) {
+    .eb {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+  }
+</style>

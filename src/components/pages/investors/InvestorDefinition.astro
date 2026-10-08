@@ -1,0 +1,48 @@
+---
+import Section from '../../ui/Section.astro';
+import Fact from '../../facts/Fact.astro';
+import { fact } from '../../../data/facts';
+import { DEFINITION_HEADING } from '../../../data/copy';
+
+/**
+ * GEO definition band for Investors: ID-01 verbatim, then the page lead sentence (IN-04 "being built as an
+ * AI-native platform"; SC-01 with its footnote). Page-local because DefinitionBand has one paragraph only.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'definition' } = Astro.props;
+---
+
+<Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
+  <div class="def" data-fact="ID-01 IN-04 SC-01">
+    <h2 class="def__title" id={`${id}-h`}>{DEFINITION_HEADING}</h2>
+    <p class="def__text">{fact('ID-01').text}</p>
+    <p class="def__text">
+      CodersTrust is building JobReady, an AI-native digital education and employment platform for emerging markets, on a track record of <Fact id="SC-01" />.
+    </p>
+  </div>
+</Section>
+
+<style>
+  .def {
+    max-width: var(--measure, 44rem);
+    display: grid;
+    gap: var(--space-sm);
+    padding-inline-start: var(--space-md);
+    border-inline-start: 3px solid var(--primary);
+  }
+  .def > * {
+    margin: 0;
+  }
+  .def__title {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--ctx-heading);
+  }
+  .def__text {
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-text);
+  }
+</style>

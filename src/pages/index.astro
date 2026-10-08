@@ -1,16 +1,161 @@
 ---
-// TEMP: replaced by WP5 (Home page). Exists only so the foundation builds and previews.
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/system/Hero.astro';
-import Button from '../components/system/Button.astro';
-import { ENTITY_DEFINITION } from '../lib/site';
+// P1 Home (doc 06 P1, CMF C1 → C14). Section order is fixed by the spec; rhythm between light, Airy Blue,
+// Ice Cyan, Klein and Deep Ink bands is set with the page-local <Tone> wrapper (never two dark bands in a row).
+import LandingLayout from '../layouts/LandingLayout.astro';
+import HeroBand from '../components/sections/HeroBand.astro';
+import DefinitionBand from '../components/sections/DefinitionBand.astro';
+import ProblemBand from '../components/sections/ProblemBand.astro';
+import FutureBand from '../components/sections/FutureBand.astro';
+import EvidenceBand from '../components/pages/home/EvidenceBand.astro';
+import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
+import NewsTeaserBand from '../components/sections/NewsTeaserBand.astro';
+import FeaturesTable from '../components/sections/FeaturesTable.astro';
+import FAQBand from '../components/sections/FAQBand.astro';
+import ComparisonBand from '../components/sections/ComparisonBand.astro';
+import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
+import CTABand from '../components/ui/CTABand.astro';
+import Sources from '../components/facts/Sources.astro';
+import Section from '../components/ui/Section.astro';
+import Tone from '../components/pages/home/Tone.astro';
+import HomeRouter from '../components/pages/home/HomeRouter.astro';
+import HomeCost from '../components/pages/home/HomeCost.astro';
+import HomeGuide from '../components/pages/home/HomeGuide.astro';
+import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
+import ProofExtras from '../components/pages/home/ProofExtras.astro';
+import CaseQuote from '../components/pages/home/CaseQuote.astro';
+import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
+import HomeOffer from '../components/pages/home/HomeOffer.astro';
+import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
+import StickyCtaReveal from '../components/pages/home/StickyCtaReveal.astro';
+import { caseStudyItems } from '../components/pages/home/caseStudies';
+import { C14, HEADLINE, HOME_META, MICRO_COMMITMENT, SPEED, SCORECARD, VALUE_PROPOSITION } from '../data/copy';
+import { fact } from '../data/facts';
+import { cta } from '../lib/mailto';
+import { faqJsonLd } from '../lib/faq';
+import { webPage } from '../lib/schema';
+
+const discovery = cta('discovery');
+const FAQ_IDS = ['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'];
+const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
+
+// C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
+const lcfirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
+const problemBluf = `${fact('PX-01').text}; ${lcfirst(fact('PX-03').text)}.`;
+
+// C8: numbers inside feature rows come from the register.
+const hours = fact('PD-01').stat?.value;
+const featureRows = [
+  { feature: 'Accessible readiness assessment', means: 'each applicant is routed to a track that fits, rather than screened out.', outcome: 'The right career or foundation track', relieves: 'Millions of educated youth outside work and training' },
+  { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio', relieves: 'Employers can’t find the talent they need' },
+  { feature: 'Certification exam preparation, with the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a credential, not only a course record.', outcome: 'A recognized credential', relieves: 'Degrees aren’t turning into jobs' },
+  { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcome: 'A path to first paid work', relieves: 'Graduate unemployment' },
+  { feature: 'Placement support', means: 'learners are matched to local, remote and global work.', outcome: 'Local, remote or global work', relieves: 'University-educated people without jobs' },
+  { feature: 'Monthly reports and outcome tracking after each course', means: 'you see enrollment, completion, placements and first earnings month by month.', outcome: 'Auditable results', relieves: 'Training that never reports results' },
+];
 ---
 
-<!-- TEMP: replaced by WP5 -->
-<BaseLayout title="CodersTrust" titleSuffix={false} description={ENTITY_DEFINITION}>
-  <Hero variant="home" eyebrow="Foundation build" title="CodersTrust — temporary home placeholder" lead={ENTITY_DEFINITION}>
-    <Fragment slot="actions">
-      <Button href="/styleguide/" iconEnd="arrow-right">Open the styleguide</Button>
-    </Fragment>
-  </Hero>
-</BaseLayout>
+<LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
+  <Tone cmf="C1">
+    <HeroBand
+      variant="home"
+      audience="For development partners, governments and funders"
+      title={HEADLINE.home}
+      lead={VALUE_PROPOSITION.home}
+      cta={{ label: discovery.label, href: discovery.href }}
+      secondary={{ label: 'See the evidence', href: '/impact/' }}
+      artSeed="home"
+    />
+  </Tone>
+
+  <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
+  <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
+
+  <Tone cmf="C2"><ProblemBand id="problem" title="Degrees aren’t turning into jobs." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} /></Tone>
+
+  <Tone cmf="C3">
+    <HomeCost
+      id="cost"
+      title="Every year of waiting costs a cohort."
+      blocks={[
+        { icon: 'cpu', claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as entry-level tasks disappear.' },
+        { icon: 'waves', claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },
+        { icon: 'trending-down', claim: 'Training does not always lead to work.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
+      ]}
+      after={VALUE_PROPOSITION.home}
+    />
+  </Tone>
+
+  <Tone cmf="C4">
+    <FutureBand
+      id="future"
+      title="Imagine the next twelve months."
+      lead="Three illustrative scenarios, not case studies."
+      vignettes={[
+        { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'A young woman outside Dhaka invoices her first foreign client from her own laptop.' },
+        { kind: 'Emotional', title: 'First earnings, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
+        { kind: 'Social', title: 'Certified, AI-ready talent', text: 'An employer hires certified, AI-ready talent without a long search.' },
+      ]}
+    />
+  </Tone>
+
+  <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
+
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One path from learning to earning." tone="white" link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
+
+  <Tone cmf="C7">
+    <EvidenceBand
+      id="proof-band"
+      title="Independent evidence and survey results"
+      headlineFact="RC-01"
+      lead="The results speak in paychecks. Survey figures are among surveyed completers, at the October 2026 survey."
+      statIds={['RC-02', 'OC-03', 'OC-02', 'OC-05']}
+      links={[
+        { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
+        { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+      ]}
+    >
+      <ProofExtras />
+    </EvidenceBand>
+  </Tone>
+
+  <Tone cmf="C7" join>
+    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with the partners who commissioned them." items={caseStudyItems} />
+    <CaseQuote />
+  </Tone>
+
+  <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
+
+  <Tone cmf="C8" tone="airy" join>
+    <FeaturesTable id="features" title="What you get — and what it means for your outcomes." rows={featureRows} />
+    <FeatureSteps />
+  </Tone>
+
+  <Tone cmf="C9" tone="white">
+    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions partners ask." allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faq' }} />
+  </Tone>
+
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
+
+  <Tone cmf="C11"><HomeOffer id="offer" /></Tone>
+
+  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a pilot. Decide on evidence." lead={SCORECARD.text} /></Tone>
+
+  <Tone cmf="C13">
+    <CTABand
+      id="cta"
+      tone="klein"
+      heading="Let’s design your first cohort."
+      cta={{ label: discovery.label, href: discovery.href }}
+      secondary={{ label: 'Read the evidence', href: '/impact/' }}
+      urgency={SPEED.text}
+      micro={MICRO_COMMITMENT}
+    />
+  </Tone>
+
+  <Tone cmf="C14">
+    <ConversionNextSteps id="next-steps" title="What happens after you say yes." validate={C14.validate} reminder={C14.reminder} firstAction={C14.firstAction} logos />
+  </Tone>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <StickyCtaReveal after="router" until="cta" />
+</LandingLayout>

@@ -1,0 +1,69 @@
+---
+import Section from '../../ui/Section.astro';
+import StepFlow from '../../ui/StepFlow.astro';
+import Icon from '../../system/Icon.astro';
+import { navGroups } from '../../../data/nav';
+import { STEPS, STEPS_FACTS } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * C8d "How it works in 3 steps" plus the compact program link row. Rendered as the second half of the
+ * C8 band (wrap it with the features table in <Tone join>). Steps come from the shared STEPS block.
+ */
+interface Props {
+  steps?: readonly { title: string; text: string }[];
+  heading?: string;
+  /** Fact ids the steps rest on (data-fact + footnotes). */
+  facts?: string[];
+  programs?: boolean;
+  id?: string;
+}
+const { steps = STEPS, heading = 'How it works in 3 steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
+const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <slot />
+  <h3 class="t-heading-xl hw__title" id={`${id}-h`} data-reveal>{heading}</h3>
+  <div data-fact={facts.join(' ')}>
+    <StepFlow steps={steps.map((s) => ({ title: s.title, text: s.text }))} />
+  </div>
+  {
+    programs && (
+      <nav class="hw__programs" aria-label="Programs" data-reveal>
+        <p class="hw__programs-label">Explore the programs</p>
+        <ul class="cluster" role="list">
+          {programLinks.map((p) => <li><a class="link" href={linkAttrs(p.href).href}>{p.label}<Icon name="arrow-right" size={16} /></a></li>)}
+        </ul>
+      </nav>
+    )
+  }
+</Section>
+
+<style>
+  .hw__title {
+    margin: var(--space-lg) 0 var(--space-lg);
+    color: var(--secondary);
+  }
+  .hw__programs {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--primary-fixed);
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .hw__programs-label {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  .hw__programs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-sm) var(--space-lg);
+  }
+</style>

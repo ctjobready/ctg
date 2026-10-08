@@ -1,0 +1,48 @@
+---
+import FactCard from '../../facts/FactCard.astro';
+import { INVESTOR_MARKET } from '../../../data/copy';
+
+/**
+ * Market opportunity (C6, Investors): the four sectors, four context facts with their sources, and the closing
+ * line. NO market-size figures (TAM / SAM / SOM): sizing and method are in the investor deck (D2; IN-07 never renders).
+ */
+const [sectors, closingTail] = INVESTOR_MARKET.text.split('. Market sizing');
+const intro = sectors.replace(/^Market opportunity:\s*/, '');
+const closing = closingTail ? `Market sizing${closingTail}` : '';
+---
+
+<div class="mk" data-fact={INVESTOR_MARKET.facts.join(' ')}>
+  <h3 class="t-heading-xl mk__title" data-reveal>Market opportunity</h3>
+  <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
+  <div class="grid-cards grid-cards--4 mk__grid">
+    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} />)}
+  </div>
+  {closing && <p class="mk__closing" data-reveal>{closing}</p>}
+</div>
+
+<style>
+  .mk {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--primary-fixed);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .mk > * {
+    margin: 0;
+  }
+  .mk__title {
+    color: var(--secondary);
+  }
+  .mk__intro {
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface-variant);
+    max-width: 48rem;
+  }
+  .mk__closing {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    font-size: var(--fs-body-m);
+  }
+</style>

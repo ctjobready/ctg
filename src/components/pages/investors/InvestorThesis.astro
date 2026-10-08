@@ -1,0 +1,80 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import FactStat from '../../facts/FactStat.astro';
+import Fact from '../../facts/Fact.astro';
+
+/**
+ * C2–C3 (compressed, declared in doc 06 P8): the investor view of the problem and its stakes in one band.
+ * P1 educated youth cannot find work while employers cannot find skills (PX-01, PX-02, PX-05); P2 many online
+ * courses provide content without the work-entry support that turns skills into income; P3 AI is raising the
+ * bar for entry work (PX-06, PX-08). Stakes: the gap widens with every cohort trained but not employed.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'thesis' } = Astro.props;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader
+    id={`${id}-h`}
+    eyebrow="The thesis"
+    title="Skills and work are not meeting — and the gap is widening."
+    lead="Educated youth cannot find work while employers cannot find skills. Courses that sell content do not close the gap, and AI is raising the bar for entry work."
+  />
+  <div class="grid-cards th">
+    <article class="card th__card" data-reveal>
+      <div class="card__body">
+        <Icon name="users" size={36} strokeWidth={1.5} class="th__icon" />
+        <h3 class="card__title">Youth cannot find work; employers cannot find skills.</h3>
+        <div class="th__stats">
+          <FactStat id="PX-01" />
+          <FactStat id="PX-05" />
+        </div>
+        <p class="th__more" data-fact="PX-02"><Fact id="PX-02" /></p>
+      </div>
+    </article>
+    <article class="card th__card" data-reveal>
+      <div class="card__body">
+        <Icon name="book-open" size={36} strokeWidth={1.5} class="th__icon" />
+        <h3 class="card__title">Online learning sells content, not earnings.</h3>
+        <p class="card__text">Many online courses provide content without the work-entry support that turns skills into income: mentoring, certification and placement.</p>
+      </div>
+    </article>
+    <article class="card th__card" data-reveal>
+      <div class="card__body">
+        <Icon name="cpu" size={36} strokeWidth={1.5} class="th__icon" />
+        <h3 class="card__title">AI is raising the bar for entry work.</h3>
+        <p class="th__more" data-fact="PX-08"><Fact id="PX-08" /></p>
+        <p class="th__more" data-fact="PX-06"><Fact id="PX-06" /></p>
+      </div>
+    </article>
+  </div>
+  <p class="th__stakes" data-reveal>The gap widens with every cohort that is trained but not employed.</p>
+</Section>
+
+<style>
+  .th :global(.th__icon) {
+    color: var(--primary);
+  }
+  .th__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+  .th__more {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .th__stakes {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+    max-width: 40rem;
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import Fact from '../../facts/Fact.astro';
+import CopyBlock from '../home/CopyBlock.astro';
+import LeadershipStrip from './LeadershipStrip.astro';
+import { EMPATHY, ORIGIN } from '../../../data/copy';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+import { PARTNER_CAPTION } from '../../../lib/logos';
+
+/**
+ * C5 Guide (Investors), empathy first: empathy ([EMP] P8) → ORIGIN → programs since 2014 (ID-08) and the
+ * founders (ID-03) → distribution through governments, development partners, universities and private-sector
+ * partners (PA-02, PA-01, PA-05, PA-03) → leadership strip → TalentLEAP (IN-06) and the partner marquee.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'guide' } = Astro.props;
+const talentleap = linkAttrs('/our-model/talentleap/');
+const channels = [
+  { icon: 'landmark', label: 'Governments', fact: 'PA-02' },
+  { icon: 'globe', label: 'Development partners', fact: 'PA-01' },
+  { icon: 'graduation-cap', label: 'Universities', fact: 'PA-05' },
+  { icon: 'building-2', label: 'Private-sector partners', fact: 'PA-03' },
+];
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <div class="ig">
+    <div class="ig__copy">
+      <p class="eyebrow" data-reveal>Our track record</p>
+      <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
+      <h2 id={`${id}-h`} data-reveal>A record built since 2014, with institutions that reach youth.</h2>
+      <CopyBlock block={ORIGIN} class="ig__origin" />
+      <p class="ig__founders" data-fact="ID-08 ID-03"><Fact id="ID-08" /> <Fact id="ID-03" /></p>
+      <p class="ig__method" data-fact="IN-06">
+        TalentLEAP, our method, organizes skills into career paths with progressive levels.
+        <a class="link" href={talentleap.href}>How TalentLEAP works<Icon name="arrow-right" size={16} /></a>
+      </p>
+    </div>
+    <div class="ig__channels" data-reveal>
+      <h3 class="t-heading-l">Distribution through four kinds of partner</h3>
+      <ul role="list">
+        {
+          channels.map((c) => (
+            <li data-fact={c.fact}>
+              <Icon name={c.icon} size={28} strokeWidth={1.5} />
+              <div>
+                <p class="ig__label">{c.label}</p>
+                <p class="ig__text">{fact(c.fact).text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  <h3 class="t-heading-l ig__lead-h" data-reveal>Leadership</h3>
+  <LeadershipStrip />
+  <PartnerStrip variant="marquee" caption={PARTNER_CAPTION} />
+</Section>
+
+<style>
+  .ig {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  .ig__copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .ig__copy > * {
+    margin: 0;
+  }
+  .ig__empathy {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--tertiary);
+    max-width: 36rem;
+  }
+  .ig__origin {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface);
+  }
+  .ig__founders,
+  .ig__method {
+    color: var(--on-surface-variant);
+  }
+  .ig__method {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  .ig__channels {
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-lg);
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .ig__channels h3 {
+    margin: 0;
+    color: var(--secondary);
+  }
+  .ig__channels ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+  .ig__channels li {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+  .ig__channels li :global(.icon) {
+    color: var(--primary);
+    flex: none;
+    margin-top: 2px;
+  }
+  .ig__channels p {
+    margin: 0;
+  }
+  .ig__label {
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .ig__text {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .ig__lead-h {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  @media (min-width: 1024px) {
+    .ig {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: start;
+    }
+  }
+</style>

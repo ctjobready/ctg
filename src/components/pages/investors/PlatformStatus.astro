@@ -1,0 +1,48 @@
+---
+import Icon from '../../system/Icon.astro';
+import Fact from '../../facts/Fact.astro';
+
+/**
+ * Platform status, exactly as registered (IN-04): partner portals, marketing automation, CRM and AI chat are
+ * live; the Earn marketplace is pre-launch; the course storefront operates at jobready.global. Roadmap items
+ * are "designed to" (never stated as live).
+ */
+---
+
+<aside class="ps" data-reveal aria-label="JobReady platform status">
+  <Icon name="layers" size={28} strokeWidth={1.5} />
+  <div>
+    <p class="ps__label">Platform status</p>
+    <p class="ps__text" data-fact="IN-04"><Fact id="IN-04" /></p>
+  </div>
+</aside>
+
+<style>
+  .ps {
+    margin-top: var(--space-lg);
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding: var(--space-md) var(--space-gutter);
+    background: var(--tertiary-container);
+    border-left: 4px solid var(--tertiary);
+    border-radius: var(--radius-default);
+    color: var(--on-tertiary-container);
+  }
+  .ps :global(.icon) {
+    flex: none;
+    margin-top: 2px;
+  }
+  .ps p {
+    margin: 0;
+  }
+  .ps__label {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ps__text {
+    margin-top: 2px !important;
+  }
+</style>
