@@ -77,7 +77,8 @@ const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.n - a.n).concat(
 const source = D.SOURCE.cells.map((c) => cell(c, D.SOURCE.base));
 const ageItems = D.AGE.cells.map((c) => ({ label: c.label, value: pc(c.n, D.AGE.base) }));
 const speedItems = D.SPEED.map((c) => ({ label: c.label, value: pc(c.n, D.SPEED_BASE) }));
-const recItems = D.RECOMMEND.cells.map((c, i) => ({ label: c.label, value: pc(c.n, D.RECOMMEND.base), emphasis: i >= 4 }));
+// Recommendation score: all eleven scores as published shares (percentages only, no fold); scores of 7 or higher are emphasised.
+const recItems = D.RECOMMEND.cells.map((c) => ({ label: c.label, value: c.pct, emphasis: Number(c.label) >= 7 }));
 const incomeItems = D.INCOME_DIRECTION.map((c) => cell(c, D.INCOME_BASE));
 const priorItems = [
   { label: `Earning at the October 2026 survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
@@ -214,7 +215,7 @@ const reportLink = reportCta();
     <ColumnChart
       title="Recommendation score, 0 to 10, among surveyed completers"
       items={recItems}
-      note={`Base: responding completers; base not stated in the report. Darker columns are scores of 7 or higher. Scores 0 to 3 are combined. This is a distribution of scores, not a Net Promoter Score.`}
+      note={`Base: responding completers; base not stated in the report. Darker columns are scores of 7 or higher. Every score from 0 to 10 is shown, as a percentage only; shares are rounded, so they may not add up exactly. This is a distribution of scores, not a Net Promoter Score.`}
     />
   </ReportSection>
 

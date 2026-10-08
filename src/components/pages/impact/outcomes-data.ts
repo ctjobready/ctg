@@ -11,8 +11,9 @@
  * states (321, 277, 170, and 34 of 47), may be shown. Every percentage reproduces a register headline (checked in
  * `assertConsistent`).
  *
- * Districts are the exception: their base is not stated, so no counts are held or derived for them at all. Only the
- * published shares are kept, and every district under 3.0% is combined into "Other districts".
+ * Districts and the recommendation score are the exceptions: their base is not stated, so no counts are held or derived for
+ * them at all. Only the published shares are kept. Every district under 3.0% is combined into "Other districts" (the only
+ * place the below-3% fold applies); the 0–10 recommendation score shows all eleven scores, as percentages only.
  */
 export interface Cell {
   label: string;
@@ -152,21 +153,28 @@ export const SOURCE: Dist = {
   ],
 };
 
-// ---- Recommendation score 0–10 (OC-06, base 550) -------------------------------------------
-/** Scores 0–3 are merged: scores 2 (n = 4) and 3 (n = 8) alone would fall below the small-cell threshold. */
-export const RECOMMEND: Dist = {
+// ---- Recommendation score 0–10 (OC-06) -------------------------------------------------------
+/**
+ * The Impact Report publishes the share for each of the 11 scores and does not state the base, so, as for the districts, only
+ * those published shares are held: no counts and no base are reconstructed. The below-3% fold is a district rule and is not
+ * applied here (review round 9, N6): the scale is ordered, so every score from 0 to 10 is shown, as a percentage only.
+ * The shares are rounded to one decimal and add to 100.1; scores of 7 or more add to 71.7 against the 71.6 headline.
+ */
+export const RECOMMEND: { id: string; measure: string; cells: ShareCell[] } = {
   id: 'OC-06-recommend',
   measure: 'Recommendation score (0–10)',
-  base: 550,
   cells: [
-    { label: '0–3', n: 52 },
-    { label: '4', n: 16 },
-    { label: '5', n: 62 },
-    { label: '6', n: 26 },
-    { label: '7', n: 52 },
-    { label: '8', n: 72 },
-    { label: '9', n: 32 },
-    { label: '10', n: 238 },
+    { label: '0', pct: 5.5 },
+    { label: '1', pct: 1.8 },
+    { label: '2', pct: 0.7 },
+    { label: '3', pct: 1.5 },
+    { label: '4', pct: 2.9 },
+    { label: '5', pct: 11.3 },
+    { label: '6', pct: 4.7 },
+    { label: '7', pct: 9.5 },
+    { label: '8', pct: 13.1 },
+    { label: '9', pct: 5.8 },
+    { label: '10', pct: 43.3 },
   ],
 };
 
@@ -180,7 +188,7 @@ export function assertConsistent(): void {
   const must = (ok: boolean, msg: string) => {
     if (!ok) throw new Error(`outcomes-data: ${msg}`);
   };
-  for (const d of [AGE, EDUCATION, CAREER, SOURCE, RECOMMEND]) {
+  for (const d of [AGE, EDUCATION, CAREER, SOURCE]) {
     if (d.id !== 'OC-08') must(sum(d.cells) === d.base, `${d.id} cells sum to ${sum(d.cells)}, expected ${d.base}`);
   }
   must(pct(AGE.cells[0].n + AGE.cells[1].n, AGE.base) === 68.7, 'aged 15–35 should be 68.7%');
@@ -194,7 +202,13 @@ export function assertConsistent(): void {
   must(pct(SPEED[2].n, SPEED_BASE) === 58.8 && pct(SPEED[3].n, SPEED_BASE) === 77.1 && pct(SPEED[4].n, SPEED_BASE) === 90.6 && pct(SPEED[0].n, SPEED_BASE) === 23.5, 'speed to earnings should match OC-05');
   must(sum(INCOME_DIRECTION) === INCOME_BASE, 'income direction cells should sum to 277');
   must(pct(INCOME_DIRECTION[0].n, INCOME_BASE) === 72.2 && pct(INCOME_DIRECTION[1].n, INCOME_BASE) === 22 && pct(INCOME_DIRECTION[2].n, INCOME_BASE) === 5.8, 'income direction should match OC-03b');
-  must(pct(RECOMMEND.cells.slice(4).reduce((s, c) => s + c.n, 0), RECOMMEND.base) === 71.6, 'scores of 7+ should be 71.6%');
+  // Recommendation score: all eleven scores, in order, as published shares. Each share is rounded to one decimal (at most 0.05 off), so a
+  // sum may differ from 100% or from the 71.6% headline by half a tenth per share added.
+  const scores = RECOMMEND.cells;
+  const shareSum = (cs: ShareCell[]) => cs.reduce((s, c) => s + tenths(c.pct), 0);
+  must(scores.length === 11 && scores.every((c, i) => c.label === String(i)), 'the recommendation-score distribution must show every score from 0 to 10, in order (no fold, no merged buckets)');
+  must(Math.abs(shareSum(scores) - 1000) <= Math.ceil(scores.length / 2), 'recommendation-score shares should add up to 100% within rounding');
+  must(Math.abs(shareSum(scores.slice(7)) - 716) <= Math.ceil(scores.slice(7).length / 2), 'scores of 7+ should be 71.6% within rounding');
   must(pct(NO_PRIOR.earning, NO_PRIOR.base) === 72.3, 'no-prior-income earners should be 72.3%');
   must(pct(SOURCE.cells.slice(0, 5).reduce((s, c) => s + c.n, 0), SOURCE.base) === 78, 'work as main income source should be 78.0%');
   must(pct(SOURCE.cells[3].n + SOURCE.cells[4].n, SOURCE.base) === 11.9, 'foreign-client freelancing or job abroad should be 11.9%');
@@ -246,7 +260,9 @@ function recs(): Rec[] {
     out.push(pctRec('OC-04', 'Employment by type, among surveyed completers with paired answers', `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE, EMPLOYMENT_BASE));
   }
   for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of completers who first earned during or after training and started earning by each point (timing only)', c.label, c.n, SPEED_BASE, SPEED_BASE));
-  for (const d of [RECOMMEND, CAREER, SOURCE, AGE, EDUCATION]) {
+  // Recommendation score: the published share for each score 0–10 (no counts exist, and no cell is folded or suppressed).
+  for (const c of RECOMMEND.cells) out.push({ id: RECOMMEND.id, measure: RECOMMEND.measure, category: c.label, type: 'percent', value: c.pct.toFixed(1), note: NOT_STATED });
+  for (const d of [CAREER, SOURCE, AGE, EDUCATION]) {
     for (const c of d.cells) out.push(pctRec(d.id, d.measure, c.label, c.n, d.base, d.statedBase, d.statedBase ? undefined : NOT_STATED));
   }
   // Districts: the published shares only (no counts exist for them, so the cell-size rule works by share: under 3% is combined).

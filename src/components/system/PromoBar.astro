@@ -23,8 +23,7 @@ const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-p
 <section class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} aria-label={label}>
   <div class="promo-bar__inner">
     <p class="promo-bar__text">
-      {lead && <strong>{lead}</strong>}
-      {message}<slot />
+      {lead && <strong>{lead}</strong>}{lead && message ? ' ' : ''}{message}<slot />
     </p>
     {actionLabel && href && <Button variant="promo" href={href}>{actionLabel}</Button>}
   </div>
@@ -58,8 +57,9 @@ const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-p
     font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
     text-align: center;
   }
+  /* a real space follows the lead-in (text extraction and screen readers read "2026: among"); this only widens it slightly */
   .promo-bar__text strong {
-    margin-right: 0.35em;
+    margin-right: 0.1em;
   }
   .promo-bar__close {
     position: absolute;
