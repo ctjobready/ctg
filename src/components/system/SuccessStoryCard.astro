@@ -14,13 +14,15 @@ interface Props {
   href?: string;
   /** Show a play mark (story has a video). */
   video?: boolean;
+  /** D13: consent-dependent asset ID (learner name, quote, photo) → data-asset. */
+  assetId?: string;
   class?: string;
 }
-const { image, imageAlt = '', outcome, name, role, href, video = false, class: className } = Astro.props;
+const { image, imageAlt = '', outcome, name, role, href, video = false, assetId, class: className } = Astro.props;
 const a = href ? linkAttrs(href) : undefined;
 ---
 
-<article class:list={['story', className]} data-reveal>
+<article class:list={['story', className]} data-reveal data-asset={assetId}>
   <div class="story__media">
     {image ? <Img src={image} alt={imageAlt} width={600} height={450} widths={[300, 600]} sizes="(min-width:1024px) 360px, 90vw" /> : !video && <Icon name="user" size={56} strokeWidth={1.25} class="story__ph" />}
     {video && <span class="story__play" aria-hidden="true"><Icon name="play" size={22} /></span>}

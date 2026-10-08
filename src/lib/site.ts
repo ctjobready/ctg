@@ -1,4 +1,5 @@
 /** Site-wide constants (identity, contacts, social). Single place to edit. */
+import { fact } from '../data/facts';
 
 /** Canonical production origin — canonical URLs and JSON-LD always use it, even on staging. */
 export const PRODUCTION_ORIGIN = 'https://coderstrust.global';
@@ -7,9 +8,8 @@ export const SITE_NAME = 'CodersTrust';
 export const SITE_TAGLINE = 'Learn. Earn. Prosper.';
 export const COPYRIGHT_YEAR = 2026;
 
-/** ID-01 entity definition (planning/05) — use verbatim on Home, About and in schema. */
-export const ENTITY_DEFINITION =
-  'CodersTrust is a workforce-development organization that turns educated, unemployed youth in emerging markets into job-ready digital professionals — and connects them to local, remote and global work.';
+/** ID-01 entity definition (facts register v1.2) — verbatim on Home, About and in schema; read from the facts dataset so it cannot drift. */
+export const ENTITY_DEFINITION = fact('ID-01').text;
 
 export const CONTACT = {
   email: 'contact@coderstrust.global',
@@ -61,7 +61,7 @@ export const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: https://i.ytimg.com",
+  "img-src 'self' data:",
   "font-src 'self'",
   "connect-src 'self'",
   'frame-src https://www.youtube-nocookie.com https://player.vimeo.com',

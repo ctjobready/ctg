@@ -1,6 +1,5 @@
 ---
 import Section from '../ui/Section.astro';
-import SectionHeader from '../ui/SectionHeader.astro';
 import FactStat from '../facts/FactStat.astro';
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
 import BeforeAfter from '../ui/BeforeAfter.astro';
@@ -33,9 +32,12 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <div data-fact={headlineFact}>
-    <SectionHeader id={`${id}-h`} eyebrow="The evidence" title={heading} lead={lead} />
-  </div>
+  <!-- Own header (not SectionHeader) so the RCT headline can carry its footnote marker (RC-01). -->
+  <header class="proofband__head" data-reveal data-fact={headlineFact}>
+    <p class="eyebrow">The evidence</p>
+    <h2 class="proofband__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
+    {lead && <p class="lead">{lead}</p>}
+  </header>
   <div class="proofband">
     <div class="proofband__stats">
       {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
@@ -44,7 +46,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
       <BeforeAfter
         title={chartTitle}
         before={{ label: 'Before', value: before, caption: 'before training' }}
-        after={{ label: 'Today', value: after, caption: 'surveyed completers' }}
+        after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
         delta={delta}
         unit={unit}
         tone="dark"
@@ -63,6 +65,20 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 </Section>
 
 <style>
+  .proofband__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 52rem;
+  }
+  .proofband__head > * {
+    margin: 0;
+  }
+  .proofband__title {
+    color: var(--ctx-section-heading);
+  }
   .proofband {
     display: grid;
     gap: var(--space-lg);

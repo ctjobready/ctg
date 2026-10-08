@@ -1,0 +1,47 @@
+---
+import Section from '../ui/Section.astro';
+import { fact } from '../../data/facts';
+
+/**
+ * GEO/AEO definition band — sits directly below a hero (C1 + GEO coexistence rule, planning v1.2 §B).
+ * One short paragraph carrying ID-01 verbatim, within the first 100 words of body text. It is a
+ * definition for readers, search and answer engines, not C1 copy (no claims, no CTA).
+ */
+interface Props {
+  heading?: string;
+  /** Fact carrying the definition (default ID-01). */
+  factId?: string;
+  id?: string;
+}
+const { heading = 'What is CodersTrust?', factId = 'ID-01', id = 'definition' } = Astro.props;
+const text = fact(factId).text;
+---
+
+<Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
+  <div class="def" data-fact={factId}>
+    <h2 class="def__title" id={`${id}-h`}>{heading}</h2>
+    <p class="def__text">{text}</p>
+  </div>
+</Section>
+
+<style>
+  .def {
+    max-width: var(--measure, 44rem);
+    display: grid;
+    gap: var(--space-xs);
+    padding-inline-start: var(--space-md);
+    border-inline-start: 3px solid var(--primary);
+  }
+  .def__title {
+    margin: 0;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--ctx-heading);
+  }
+  .def__text {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-text);
+  }
+</style>

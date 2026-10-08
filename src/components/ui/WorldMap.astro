@@ -1,23 +1,25 @@
 ---
 import { WORLD_LAND_PATH, WORLD_W, WORLD_H, LAT_TOP, LAT_SPAN } from '../../data/world-land';
 import { locations, OFFICES_LINE, type ProgramLocation } from '../../data/countries';
+import { assertMapEquivalence, tooltipFields, tableRow } from '../../lib/mapFields';
 
 /**
  * WorldMap ➕ (M17) — inline SVG equirectangular map (Natural Earth 110m, public domain) with one pin
- * per program location. Hover or tap a pin for a card (country, years, target group, skills,
- * funder). Pins are a pointer enhancement (aria-hidden, not tab stops: clustered pins cannot meet the
- * 24px target-size rule); the keyboard / screen-reader path is the full table of the same data that is
- * ALWAYS rendered below the map. Pins pulse only when motion is allowed.
+ * per program location. Equivalence contract: the SVG is supplementary. Pins are a pointer
+ * enhancement — hidden from the accessibility tree (aria-hidden) and not focus targets — and the
+ * location table below is ALWAYS rendered and contains every detail any pin tooltip shows
+ * (tooltip and table rows are built from lib/mapFields.ts; the build fails if they diverge).
+ * Pins pulse only when motion is allowed.
  */
 interface Props {
   /** Defaults to every location in countries.ts. */
   items?: ProgramLocation[];
   caption?: string;
-  /** Hide the data table (not recommended; kept for tiny teasers that link to the full page). */
-  table?: boolean;
   class?: string;
 }
-const { items = locations, caption = 'Where CodersTrust programs have run', table = true, class: className } = Astro.props;
+const { items = locations, caption = 'Where CodersTrust programs have run', class: className } = Astro.props;
+assertMapEquivalence(items);
+const rowsData = items.map((l) => tableRow(l));
 
 const pos = (l: ProgramLocation) => ({
   x: ((l.lon + 180) / 360) * 100,
@@ -25,7 +27,7 @@ const pos = (l: ProgramLocation) => ({
 });
 const pins = items.map((l) => {
   const p = pos(l);
-  return { ...l, ...p, side: p.x > 62 ? 'left' : p.x < 28 ? 'right' : 'center', vert: p.y > 52 ? 'up' : 'down' };
+  return { ...l, ...p, tip: tooltipFields(l), side: p.x > 62 ? 'left' : p.x < 28 ? 'right' : 'center', vert: p.y > 52 ? 'up' : 'down' };
 });
 ---
 
@@ -42,14 +44,14 @@ const pins = items.map((l) => {
               <span class="wmap__dot"></span>
             </span>
             <div class="wmap__card" id={`wmap-card-${p.id}`}>
-              <p class="wmap__country">{p.name} <span>{p.years}</span></p>
+              <p class="wmap__country">{p.tip.name} <span>{p.tip.years}</span></p>
               <dl>
                 <dt>Target group</dt>
-                <dd>{p.targetGroup}</dd>
+                <dd>{p.tip.targetGroup}</dd>
                 <dt>Skills</dt>
-                <dd>{p.skills}</dd>
-                {p.funder && (<><dt>Funder</dt><dd>{p.funder}</dd></>)}
-                {p.note && (<><dt>Note</dt><dd>{p.note}</dd></>)}
+                <dd>{p.tip.skills}</dd>
+                {p.tip.funder && (<><dt>Funder</dt><dd>{p.tip.funder}</dd></>)}
+                {p.tip.note && (<><dt>Note</dt><dd>{p.tip.note}</dd></>)}
               </dl>
             </div>
           </li>
@@ -57,38 +59,34 @@ const pins = items.map((l) => {
       }
     </ul>
   </div>
-  <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The full list, readable by keyboard and screen reader, is the table below.</figcaption>
+  <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The table below lists the same details for every location.</figcaption>
   <p class="wmap__offices" data-fact="ID-07">{OFFICES_LINE}</p>
 
-  {
-    table && (
-      <div class="wmap__table table-scroll" role="region" aria-label="Program locations table" tabindex="0">
-        <table>
-          <caption class="sr-only">{caption}</caption>
-          <thead>
-            <tr>
-              <th scope="col">Location</th>
-              <th scope="col">Years</th>
-              <th scope="col">Target group</th>
-              <th scope="col">Skills</th>
-              <th scope="col">Funder / note</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((l) => (
-              <tr>
-                <th scope="row">{l.name}<span class="wmap__region">{l.region}</span></th>
-                <td>{l.years}</td>
-                <td>{l.targetGroup}</td>
-                <td>{l.skills}</td>
-                <td>{[l.funder && `Funder: ${l.funder}`, l.note].filter(Boolean).join(' · ') || '—'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )
-  }
+  <div class="wmap__table table-scroll" role="region" aria-label="Program locations table" tabindex="0">
+    <table>
+      <caption class="sr-only">{caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Location</th>
+          <th scope="col">Years</th>
+          <th scope="col">Target group</th>
+          <th scope="col">Skills</th>
+          <th scope="col">Funder / note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rowsData.map((r) => (
+          <tr>
+            <th scope="row">{r.location}<span class="wmap__region">{r.region}</span></th>
+            <td>{r.years}</td>
+            <td>{r.targetGroup}</td>
+            <td>{r.skills}</td>
+            <td>{r.funderNote}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 </figure>
 
 <style>

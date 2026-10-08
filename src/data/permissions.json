@@ -1,0 +1,4 @@
+[
+  { "assetId": "example-cleared-asset", "clearanceId": "EXAMPLE-0001", "status": "cleared" },
+  { "assetId": "example-pending-asset", "clearanceId": "EXAMPLE-0002", "status": "pending" }
+]

@@ -36,6 +36,7 @@ import HeroArt from '../components/ui/HeroArt.astro';
 import Quote from '../components/ui/Quote.astro';
 import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
 import HeroBand from '../components/sections/HeroBand.astro';
+import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import RouterBand from '../components/sections/RouterBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
 import CostBand from '../components/sections/CostBand.astro';
@@ -314,7 +315,7 @@ const sectionLinks = [
         <Button variant="outline" href="/impact/">Secondary action</Button>
       </Fragment>
       <Fragment slot="stats">
-        <Stat value="61.5%" label="Sample stat — employed today" />
+        <Stat value="61.5%" label="Sample stat — employed at the survey" />
         <Stat value="12,345+" label="Sample stat — youth trained" />
         <Stat value="15" label="Sample stat — countries" />
       </Fragment>
@@ -343,7 +344,7 @@ const sectionLinks = [
     <div class="grid-cards">
       <CaseStudyCard title="Case study title that may wrap to two lines" program="Program" partner="Partner" stat={{ value: '88.8%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
       <NewsCard title="News article headline that wraps onto two lines when long" date="2026-10-08" topic="Impact" excerpt="A short excerpt of the article, two lines at most, to help readers choose." href="/news/" />
-      <PersonCard name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
+      <PersonCard assetId="sample-person-portrait" name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
     </div>
 
     <h3 class="sg-h3">CourseCard</h3>
@@ -383,9 +384,9 @@ const sectionLinks = [
 
     <h3 class="sg-h3">SuccessStoryCard (photo grayscale → color, M22) · Testimonial</h3>
     <div class="grid-cards">
-      <SuccessStoryCard outcome="Outcome-led sentence in the learner's voice." name="Learner Name" role="Role, location" href="/impact/stories/" />
+      <SuccessStoryCard assetId="sample-story-1" outcome="Outcome-led sentence in the learner's voice." name="Learner Name" role="Role, location" href="/impact/stories/" />
       <SuccessStoryCard outcome="A story that has a video available." name="Another Learner" role="Role, location" href="/impact/stories/" video />
-      <Testimonial quote="A longer quote in a quiet, spacious layout, set in body-l with room to breathe." name="Person Name" role="Organization" rating={5} />
+      <Testimonial assetId="sample-testimonial" quote="A longer quote in a quiet, spacious layout, set in body-l with room to breathe." name="Person Name" role="Organization" rating={5} />
     </div>
 
     <h3 class="sg-h3">Carousel + CarouselControls (M14; scroll-snap, no autoplay)</h3>
@@ -404,20 +405,19 @@ const sectionLinks = [
   <Section id="data" aria-labelledby="data-h">
     <SectionHeader id="data-h" eyebrow="Components" title="Data and charts" lead="Each chart has an accessible table fallback (open ‘View chart data’)." />
     <div class="sg-two">
-      <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 33.3, caption: 'before training' }} after={{ label: 'Today', value: 61.5, caption: 'surveyed completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
+      <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 33.3, caption: 'before training' }} after={{ label: 'October 2026 survey', value: 61.5, caption: 'surveyed completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
       <BarChart title="Horizontal bar chart (sample)" items={[{ label: 'First measure', value: 40.1 }, { label: 'Second measure', value: 30.2 }, { label: 'Third measure', value: 20.3 }, { label: 'Fourth measure', value: 9.4 }]} note="Sample data for the styleguide." />
     </div>
 
-    <h3 class="sg-h3">ComparisonTable (sticky first column on mobile; status as icon + text)</h3>
+    <h3 class="sg-h3">ComparisonTable (approaches and trade-offs; sticky first column on mobile; icon only for our own inclusions)</h3>
     <ComparisonTable
       caption="Sample comparison of approaches"
-      columns={['Criterion', 'Our model', 'Conventional programs', 'Self-paced platforms', 'Doing nothing']}
+      columns={['Aspect', 'Our model', 'Conventional programs', 'Self-paced platforms', 'Doing nothing']}
       highlight={0}
       rows={[
-        { label: 'Tracks chosen from current employer demand', cells: ['✅', '⚠️ Often supply-led', '⚠️ Learner picks', '❌'] },
-        { label: 'Three months of milestone-based mentoring', cells: ['✅', '❌ Rare', '❌', '❌'] },
-        { label: 'Independent causal evidence', cells: ['✅ RCT', '⚠️ Few show employment gains', '❌', '—'] },
-        { label: 'Cost per learner', cells: ['Moderate', 'High (facilities)', 'Lowest', 'Highest long-run cost'] },
+        { label: 'Track choice', cells: [{ text: 'Set from current employer demand', included: true }, 'Varies by program design', 'Learner chooses', '—'] },
+        { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', '—'] },
+        { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less; actual prices vary', 'No fee — but forgone earnings'] },
       ]}
     />
   </Section>
@@ -557,6 +557,7 @@ const sectionLinks = [
   <div id="cmf">
     <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
     <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <DefinitionBand id="band-definition" />
     <RouterBand id="band-router" title="What brings you here?" />
     <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
@@ -582,14 +583,13 @@ const sectionLinks = [
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
-      { title: 'BRAC STRONG-IT', program: 'Funded by BRAC', factId: 'PR-04', href: '/impact/case-studies/brac-strong-it/' },
       { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]} />
     <FAQBand id="band-faq" audience="home" ids={['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8']} allLink={{ label: 'All partner FAQs', href: '/partner-with-us/' }} />
     <ComparisonBand id="band-compare" />
     <OfferBand id="band-offer" />
     <RiskReversalBand id="band-risk" />
-    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['Your first step: a discovery session. Reply to our email with two time slots.']} />
+    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['In your enquiry, include two suitable times for a discovery conversation.']} />
     <NextStepsBand id="band-next" />
     <NewsTeaserBand id="band-news" fallback={[
       { title: 'Sample news headline one', date: '2026-10-07', topic: 'Impact', excerpt: 'Shown only when the news collection is empty.', href: '/news/' },

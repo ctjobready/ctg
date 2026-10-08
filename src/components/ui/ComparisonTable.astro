@@ -1,14 +1,19 @@
 ---
 import Icon from '../system/Icon.astro';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
- * ComparisonTable ➕ — sticky first column on mobile; ✅/⚠️/❌ are rendered as icons with
- * visually-hidden text (never colour alone). Cells may be plain strings or start with a
- * status emoji ("✅ RCT", "⚠️ Often completion only", "❌", "—").
+ * ComparisonTable ➕ — "approaches and trade-offs" (planning v1.2 §B), not verdicts. Cells are text.
+ * A check icon (+ visually-hidden "Included:") marks only the highlighted organisation's own
+ * inclusions (`included: true`); other approaches never get verdict icons (no ✗ / ⚠). "—" is
+ * announced as "Not applicable". The first column is sticky on small screens.
  */
 interface Cell {
-  status?: 'yes' | 'partial' | 'no';
-  text?: string;
+  text: string;
+  /** The row's item is part of this column's offer (CodersTrust's own inclusions only). */
+  included?: boolean;
+  /** Fact whose caveat footnote marker follows the text (e.g. RC-01, RC-06). */
+  factId?: string;
 }
 interface Props {
   caption: string;
@@ -17,31 +22,21 @@ interface Props {
   rows: { label: string; cells: (string | Cell)[] }[];
   /** 0-based index among data columns (excluding criteria) to emphasise, e.g. CodersTrust. */
   highlight?: number;
+  /** Fact IDs the table cites (written to data-fact for the status gate). */
+  facts?: string[];
   class?: string;
 }
-const { caption, columns, rows, highlight, class: className } = Astro.props;
+const { caption, columns, rows, highlight, facts = [], class: className } = Astro.props;
 
-const MAP: Record<string, { status: 'yes' | 'partial' | 'no'; label: string }> = {
-  '✅': { status: 'yes', label: 'Yes' },
-  '⚠️': { status: 'partial', label: 'Partial' },
-  '⚠': { status: 'partial', label: 'Partial' },
-  '❌': { status: 'no', label: 'No' },
-};
-function norm(c: string | Cell): { status?: 'yes' | 'partial' | 'no'; label?: string; text: string } {
-  if (typeof c !== 'string') {
-    const label = c.status ? { yes: 'Yes', partial: 'Partial', no: 'No' }[c.status] : undefined;
-    return { status: c.status, label, text: c.text ?? '' };
-  }
-  const s = c.trim();
-  for (const key of Object.keys(MAP)) {
-    if (s.startsWith(key)) return { ...MAP[key], text: s.slice(key.length).trim() };
-  }
-  return { text: s === '—' || s === '-' ? '' : s, label: s === '—' || s === '-' ? 'Not applicable' : undefined };
+function norm(c: string | Cell): Cell {
+  const cell = typeof c === 'string' ? { text: c } : c;
+  return { ...cell, text: cell.text.trim() };
 }
-const ICON = { yes: 'circle-check', partial: 'triangle-alert', no: 'circle-x' } as const;
+const isNone = (t: string) => t === '—' || t === '-';
+const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm).map((c) => c.factId).filter((f): f is string => !!f))])].join(' ');
 ---
 
-<div class:list={['cmp', className]} role="region" aria-label={caption} tabindex="0" data-reveal>
+<div class:list={['cmp', className]} role="region" aria-label={caption} tabindex="0" data-reveal data-fact={dataFacts || undefined}>
   <table>
     <caption class="sr-only">{caption}</caption>
     <thead>
@@ -58,15 +53,23 @@ const ICON = { yes: 'circle-check', partial: 'triangle-alert', no: 'circle-x' } 
               const c = norm(raw);
               return (
                 <td class:list={[highlight === i && 'is-hl']}>
-                  {c.status && (
-                    <span class={`cmp__mark cmp__mark--${c.status}`}>
-                      <Icon name={ICON[c.status]} size={20} />
-                      <span class="sr-only">{c.label}{c.text ? ': ' : ''}</span>
-                    </span>
+                  {isNone(c.text) ? (
+                    <>
+                      <span class="sr-only">Not applicable</span>
+                      <span aria-hidden="true">—</span>
+                    </>
+                  ) : (
+                    <>
+                      {c.included && (
+                        <span class="cmp__mark">
+                          <Icon name="circle-check" size={20} />
+                          <span class="sr-only">Included: </span>
+                        </span>
+                      )}
+                      <span class="cmp__text">{c.text}</span>
+                      {c.factId && <FootnoteMarker id={c.factId} footnote="auto" />}
+                    </>
                   )}
-                  {c.text && <span class="cmp__text">{c.text}</span>}
-                  {!c.status && !c.text && <span class="sr-only">{c.label ?? 'Not applicable'}</span>}
-                  {!c.status && !c.text && <span aria-hidden="true">—</span>}
                 </td>
               );
             })}
@@ -87,7 +90,7 @@ const ICON = { yes: 'circle-check', partial: 'triangle-alert', no: 'circle-x' } 
   }
   table {
     width: 100%;
-    min-width: 640px;
+    min-width: 880px;
     border-collapse: separate;
     border-spacing: 0;
     font-size: var(--fs-body-base);
@@ -136,15 +139,7 @@ const ICON = { yes: 'circle-check', partial: 'triangle-alert', no: 'circle-x' } 
     display: inline-flex;
     vertical-align: -4px;
     margin-right: 6px;
-  }
-  .cmp__mark--yes {
     color: var(--success);
-  }
-  .cmp__mark--partial {
-    color: var(--on-tertiary-container);
-  }
-  .cmp__mark--no {
-    color: var(--error);
   }
   .cmp:focus-visible {
     outline-offset: 2px;

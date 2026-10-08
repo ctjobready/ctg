@@ -4,34 +4,49 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import ComparisonTable from '../ui/ComparisonTable.astro';
 
 /**
- * C10 Comparison: categories, never named competitors (Decision D8). Always includes a
- * "Doing nothing" column. Status is shown as icon + visually-hidden text, never colour alone.
- * Default content is the compressed table from planning/04 §6.
+ * C10 Comparison = approaches and trade-offs, not verdicts (planning v1.2 §B). Categories, never named
+ * competitors (D8). Always includes a "Doing nothing" column. Cells are text; a check icon marks only
+ * CodersTrust's own inclusions (`included`), never a verdict on another approach.
  */
+type Cell = string | { text: string; included?: boolean; factId?: string };
 interface Props {
   title?: string;
   lead?: string;
   columns?: string[];
-  rows?: { label: string; cells: string[] }[];
+  rows?: { label: string; cells: Cell[] }[];
+  /** Fact IDs the default cells rest on (data-fact for the status gate). */
+  facts?: string[];
   id?: string;
 }
 const {
-  title = 'Not another training program.',
-  lead,
-  columns = ['Criterion', 'CodersTrust model', 'Conventional skills programs', 'Self-paced course platforms', 'Doing nothing'],
+  title = 'Approaches to getting into digital work, and their trade-offs.',
+  lead = 'Different routes suit different people. This is what each one typically includes.',
+  columns = ['Approach', 'CodersTrust supported cohort', 'Conventional skills programs', 'Self-paced course platforms', 'Freelance marketplaces alone', 'Doing nothing'],
   rows = [
-    { label: 'Tracks chosen from current employer demand', cells: ['✅', '⚠️ Often supply-led', '⚠️ Learner picks', '❌'] },
-    { label: 'Industry certification, exam fee included', cells: ['✅', '⚠️ Varies', '⚠️ Paid separately', '❌'] },
-    { label: 'Three months of milestone-based mentoring', cells: ['✅', '❌ Rare', '❌', '❌'] },
-    { label: 'Placement into local, remote and global work', cells: ['✅', '⚠️ Mostly local', '❌', '❌'] },
-    { label: 'Outcomes tracked after the course', cells: ['✅', '⚠️ Often completion only', '❌', '❌'] },
+    { label: 'Track choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', '—'] },
+    { label: 'Certification', cells: [{ text: 'Exam preparation and the exam fee for each trainee’s track (terms set per program)', included: true }, 'Varies', 'Often sold separately', 'Not included', '—'] },
+    { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Not included', '—'] },
+    { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Learners arrange their own', 'Matching for people who already have marketable skills', '—'] },
+    { label: 'Outcome tracking', cells: [{ text: 'Tracers at 3, 6 and 12 months; monthly reports', included: true }, 'Varies', 'Usually course completion', 'Platform activity', '—'] },
+    {
+      label: 'Independent evidence',
+      cells: [
+        { text: 'A randomized trial by BIGD of a CodersTrust program (WSDFM)', included: true, factId: 'RC-01' },
+        { text: 'Varies — a review of nine randomized trials of vocational training found three with significant employment impacts', factId: 'RC-06' },
+        'Varies',
+        'Varies',
+        '—',
+      ],
+    },
+    { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
   ],
+  facts = ['PD-10', 'PD-19', 'PD-02', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
   id = 'compare',
 } = Astro.props;
 if (!columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing nothing" column');
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Why CodersTrust" title={title} lead={lead} />
-  <ComparisonTable caption="How the CodersTrust model compares with other approaches" columns={columns} rows={rows} highlight={0} />
+  <SectionHeader id={`${id}-h`} eyebrow="Compare approaches" title={title} lead={lead} />
+  <ComparisonTable caption="Approaches to getting into digital work: what each typically includes" columns={columns} rows={rows} highlight={0} facts={facts} />
 </Section>

@@ -46,22 +46,24 @@ const clamped = Math.max(0, Math.min(100, value));
     background: var(--primary-fixed);
     overflow: hidden;
   }
+  /* Fill animates transform: scaleX (origin left), never width. Final state is the default. */
   .progress__fill {
     height: 100%;
     background: var(--primary);
-    clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
+    transform: scaleX(calc(var(--p) / 100));
+    transform-origin: left center;
   }
   .progress--bright .progress__fill {
     background: var(--brand-bright);
   }
-  /* M3: fill 0 → value (800ms) once the bar is revealed. Only runs with JS + motion allowed. */
+  /* M3: fill 0 → value (800ms, transform only) once the bar is revealed. Only with JS + motion allowed; reduced motion = final state. */
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .progress .progress__fill {
-      clip-path: inset(0 100% 0 0 round 9999px);
+      transform: scaleX(0);
     }
     :global(.js) .progress.is-visible .progress__fill {
-      clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
-      transition: clip-path 800ms var(--ease-emphasized) 150ms;
+      transform: scaleX(calc(var(--p) / 100));
+      transition: transform 800ms var(--ease-emphasized) 150ms;
     }
   }
 </style>

@@ -6,12 +6,14 @@ interface Props {
   role?: string;
   /** 1–5 orange stars */
   rating?: number;
+  /** D13: consent-dependent asset ID (name + quote) → data-asset. */
+  assetId?: string;
   class?: string;
 }
-const { quote, name, role, rating, class: className } = Astro.props;
+const { quote, name, role, rating, assetId, class: className } = Astro.props;
 ---
 
-<figure class:list={['testimonial', className]}>
+<figure class:list={['testimonial', className]} data-asset={assetId}>
   {
     rating && (
       <div class="testimonial__rating" role="img" aria-label={`Rated ${rating} out of 5`}>

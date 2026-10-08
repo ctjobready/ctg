@@ -10,9 +10,11 @@ interface Props {
   /** Profile link (T7). Omit for a non-linked card. */
   href?: string;
   bio?: string;
+  /** D13: consent-dependent asset ID (portrait) → data-asset. */
+  assetId?: string;
   class?: string;
 }
-const { name, role, photo, href, bio, class: className } = Astro.props;
+const { name, role, photo, href, bio, assetId, class: className } = Astro.props;
 const a = href ? linkAttrs(href) : undefined;
 const initials = name
   .split(/\s+/)
@@ -22,7 +24,7 @@ const initials = name
   .toUpperCase();
 ---
 
-<article class:list={['card person', a && 'card--link', className]} data-reveal>
+<article class:list={['card person', a && 'card--link', className]} data-reveal data-asset={assetId}>
   <div class="person__photo">
     {photo ? <Img src={photo} alt={`Portrait of ${name}`} width={480} height={480} widths={[240, 480]} sizes="(min-width:1024px) 280px, 60vw" /> : <span class="person__initials" aria-hidden="true">{initials}</span>}
   </div>

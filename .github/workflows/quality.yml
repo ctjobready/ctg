@@ -30,3 +30,7 @@ jobs:
           BASE_PATH: /ctg
       - name: Fact status and public-citation gate
         run: npm run check:facts
+      - name: Asset permissions (staging: warn only)
+        run: npm run check:permissions
+        env:
+          SITE_ENV: staging

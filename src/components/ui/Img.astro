@@ -13,17 +13,20 @@ interface Props {
   sizes?: string;
   loading?: 'eager' | 'lazy';
   fetchpriority?: 'high' | 'low' | 'auto';
+  /** D13: ID of a consent-dependent asset (learner photo etc.); written to data-asset for scripts/check-permissions.mjs. */
+  assetId?: string;
   class?: string;
 }
-const { src, alt, width, height, widths, sizes, loading = 'lazy', fetchpriority, class: className } = Astro.props;
+const { src, alt, width, height, widths, sizes, loading = 'lazy', fetchpriority, assetId, class: className } = Astro.props;
 ---
 
 {
   typeof src === 'string' ? (
-    <img class={className} src={src} alt={alt} width={width} height={height} loading={loading} decoding="async" fetchpriority={fetchpriority} />
+    <img class={className} data-asset={assetId} src={src} alt={alt} width={width} height={height} loading={loading} decoding="async" fetchpriority={fetchpriority} />
   ) : (
     <Image
       class={className}
+      data-asset={assetId}
       src={src}
       alt={alt}
       width={width}

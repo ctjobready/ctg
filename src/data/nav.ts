@@ -113,7 +113,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Impact overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
       { label: 'Outcomes 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
       { label: 'Independent evaluation (RCT)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
-      { label: 'Case studies', href: '/impact/case-studies/', description: 'Five programs with partners, in depth.' },
+      { label: 'Case studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success stories', href: '/impact/stories/', description: 'Learners in their own words.' },
       { label: 'Global reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
     ],
@@ -122,7 +122,7 @@ export const navGroups: NavGroup[] = [
       eyebrow: 'Impact Survey 2026',
       figure: `${emp.from} → ${emp.value}`,
       title: 'of surveyed completers employed',
-      text: 'Before training and today.',
+      text: 'Before training and at the October 2026 survey.',
       caveat: 'Impact Survey 2026: alumni who responded; self-reported; not a random sample.',
       factIds: ['OC-01'],
       cta: { label: 'See the findings', href: '/impact/outcomes-2026/' },
@@ -162,7 +162,7 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
   lead: 'Impact Survey 2026:',
-  rest: `employment among surveyed completers rose from ${emp.from} to ${emp.value}.`,
+  rest: `employment among surveyed completers rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v2',
   factId: 'OC-01',
