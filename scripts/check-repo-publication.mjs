@@ -14,7 +14,7 @@
  *       2. --list <file> or env NEVER_PUBLISH_FILE
  *       3. ../ctg-planning/never-publish.json (the private planning checkout; found by walking up from the repo, so it also
  *          works from a git worktree)
- *     If none exists: on refs/heads/main (GITHUB_REF) or with NEVER_PUBLISH_STRICT=1 the audit FAILS CLOSED; anywhere else it
+ *     If none exists: for production builds (SITE_ENV=production) or with NEVER_PUBLISH_STRICT=1 the audit FAILS CLOSED; anywhere else it
  *     warns and skips this part (the sensitive-asset check below still runs). A list that exists but is invalid always fails.
  *
  *       { "terms": [ { "id": "learner-a", "pattern": "<JavaScript regex source>", "flags": "i" } ],
@@ -41,7 +41,7 @@ import { Findings, REPO_ROOT, dirname, existsSync, fatal, findingsMarkdown, join
 
 const cfg = loadConfig(process.argv.slice(2));
 const root = cfg.opts.root ? resolve(String(cfg.opts.root)) : REPO_ROOT;
-const strict = process.env.GITHUB_REF === 'refs/heads/main' || process.env.NEVER_PUBLISH_STRICT === '1';
+const strict = process.env.SITE_ENV === 'production' || process.env.NEVER_PUBLISH_STRICT === '1';
 const findings = new Findings();
 
 /* ---- committed files ---- */
@@ -88,7 +88,7 @@ if (raw === null) {
     findings.error('list-missing', '', msg);
     failedClosed = true;
   } else {
-    console.warn(`check-repo-publication: WARN ${msg}; skipping the never-publish scan locally (it fails closed on refs/heads/main). The sensitive-asset check still runs.`);
+    console.warn(`check-repo-publication: WARN ${msg}; skipping the never-publish scan (it fails closed for production builds). The sensitive-asset check still runs.`);
     findings.warn('list-missing', '', `${msg}; scan skipped`);
   }
 } else {

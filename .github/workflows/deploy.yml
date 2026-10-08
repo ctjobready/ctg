@@ -30,6 +30,17 @@ jobs:
           SITE_ENV: staging
           SITE_URL: https://ctjobready.github.io
           BASE_PATH: /ctg
+      # Deterministic gates on the built site (planning/08 §10, planning/10 §1). The private term lists come from
+      # Actions secrets when the owner has created them; without them the two private-list checks warn on staging and
+      # fail closed only for production builds.
+      - name: Gates (test:build)
+        run: npm run test:build
+        env:
+          SITE_ENV: staging
+          SITE_URL: https://ctjobready.github.io
+          BASE_PATH: /ctg
+          CONTENT_RULES_JSON: ${{ secrets.CONTENT_RULES_JSON }}
+          NEVER_PUBLISH_JSON: ${{ secrets.NEVER_PUBLISH_JSON }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -6,7 +6,7 @@
  *
  * Covered: a clean repo passes; a banned term in Markdown, YAML, JSON, front matter, Astro alt text, a TS data file or a file
  * name fails; a banned file glob fails; a sensitive-group asset whose files are committed fails and passes once cleared; an
- * untracked file and a CSV are ignored; a missing list warns locally, fails closed on refs/heads/main (GITHUB_REF) and with
+ * untracked file and a CSV are ignored; a missing list warns, fails closed for production builds (GITHUB_REF) and with
  * NEVER_PUBLISH_STRICT=1; NEVER_PUBLISH_JSON wins over a file; an invalid list fails without echoing it; and the output never
  * contains the pattern or the text that matched.
  */
@@ -159,9 +159,13 @@ check('no list: warns and skips locally (exit 0), the sensitive-asset check stil
   const r2 = run(repo(SENS), { list: null, permissions: [ROW('story-someone-x', 'pending', true)] });
   assert(r2.status === 1, 'the sensitive-asset check should still fail without a list');
 });
-check('no list on refs/heads/main fails closed', () => {
-  const r = run(repo(CLEAN), { list: null, env: { GITHUB_REF: 'refs/heads/main' } });
+check('no list for a production build fails closed', () => {
+  const r = run(repo(CLEAN), { list: null, env: { SITE_ENV: 'production' } });
   assert(r.status === 1 && /FAILED CLOSED/.test(r.text), `exit ${r.status}\n${r.text}`);
+});
+check('no list on a staging deploy from main only warns', () => {
+  const r = run(repo(CLEAN), { list: null, env: { GITHUB_REF: 'refs/heads/main', SITE_ENV: 'staging' } });
+  assert(r.status === 0 && /WARN/.test(r.text), `exit ${r.status}\n${r.text}`);
 });
 check('no list with NEVER_PUBLISH_STRICT=1 fails closed', () => {
   const r = run(repo(CLEAN), { list: null, env: { NEVER_PUBLISH_STRICT: '1' } });

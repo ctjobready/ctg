@@ -11,7 +11,7 @@
  *   2. --rules <file> or env CONTENT_RULES_FILE
  *   3. ../ctg-planning/content-rules.json (the private planning checkout; found by walking up from the repo, so it also
  *      works from a git worktree)
- * If none exists: on refs/heads/main (GITHUB_REF) or with CONTENT_RULES_STRICT=1 the check FAILS CLOSED; anywhere else
+ * If none exists: for production builds (SITE_ENV=production) or with CONTENT_RULES_STRICT=1 the check FAILS CLOSED; anywhere else
  * it warns and skips (exit 0). A rules source that exists but is invalid always fails.
  *
  * Rules file format
@@ -68,7 +68,7 @@ if (process.env.CONTENT_RULES_JSON && process.env.CONTENT_RULES_JSON.trim()) {
   }
 }
 
-const strict = process.env.GITHUB_REF === 'refs/heads/main' || process.env.CONTENT_RULES_STRICT === '1';
+const strict = process.env.SITE_ENV === 'production' || process.env.CONTENT_RULES_STRICT === '1';
 if (raw === null) {
   const msg = 'no content rules found (env CONTENT_RULES_JSON unset and no ../ctg-planning/content-rules.json)';
   if (strict) {
@@ -76,7 +76,7 @@ if (raw === null) {
     writeReports(cfg, 'content', { check: 'content', summary: { skipped: false, failedClosed: true, errors: 1 } }, `# Content rules\n\nFAILED CLOSED: ${msg}\n`);
     process.exit(1);
   }
-  console.warn(`check-content-rules: WARN ${msg}; skipping locally (this check fails closed on refs/heads/main).`);
+  console.warn(`check-content-rules: WARN ${msg}; skipping (this check fails closed for production builds).`);
   writeReports(cfg, 'content', { check: 'content', summary: { skipped: true, errors: 0 } }, `# Content rules\n\nSKIPPED: ${msg}\n`);
   process.exit(0);
 }
