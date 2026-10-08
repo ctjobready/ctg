@@ -1,0 +1,257 @@
+[
+  {
+    "id": "ashikur-rahman",
+    "name": "Ashikur Rahman",
+    "role": "Mentor, Digital Marketing",
+    "expertise": [
+      "WordPress Plugin & SaaS Product Marketing",
+      "Go-to-Market (GTM) Strategy & Product Launches",
+      "Media Buying / Paid Media (Meta, Google Ads, YouTube)",
+      "SEO & AI / GEO / LLM Search Optimization",
+      "Email Marketing",
+      "Conversion Rate Optimization (CRO)",
+      "Content & Social Media Marketing",
+      "Seasonal Revenue Campaigns (BFCM, Flash Sale)"
+    ],
+    "photo": "../assets/images/mentors/ashikur-rahman.jpg",
+    "photoAlt": "Portrait of Ashikur Rahman, Mentor, Digital Marketing",
+    "legacyUrl": "https://coderstrust.global/mentor/ashikur-rahman/"
+  },
+  {
+    "id": "khandoker-almas-uddin",
+    "name": "Khandoker Almas Uddin",
+    "role": "Mentor, Video Editing",
+    "expertise": [
+      "Video Editing",
+      "Motion Graphic Design",
+      "3D Animation",
+      "2D Animation",
+      "Graphic Design",
+      "Visual Branding",
+      "Post Production"
+    ],
+    "photo": "../assets/images/mentors/khandoker-almas-uddin.jpg",
+    "photoAlt": "Portrait of Khandoker Almas Uddin, Mentor, Video Editing",
+    "legacyUrl": "https://coderstrust.global/mentor/khandoker-almas-uddin/"
+  },
+  {
+    "id": "md-abdur-rashid",
+    "name": "Md Abdur Rashid",
+    "role": "Mentor, Digital Marketing",
+    "expertise": [
+      "On-page SEO",
+      "off-page SEO",
+      "Keyword Strategy Setup",
+      "Social Media Marketing",
+      "Pay-Per-Click (PPC) Advertising",
+      "Content Marketing & Strategy",
+      "Online Branding",
+      "Freelancing Guidance"
+    ],
+    "photo": "../assets/images/mentors/md-abdur-rashid.jpg",
+    "photoAlt": "Portrait of Md Abdur Rashid, Mentor, Digital Marketing",
+    "legacyUrl": "https://coderstrust.global/mentor/md-abdur-rashid/"
+  },
+  {
+    "id": "md-hazrat-ali-nahid",
+    "name": "Md Hazrat Ali Nahid",
+    "role": "Team Lead, Head of Digital Accounting and Team Education",
+    "expertise": [
+      "QuickBooks",
+      "Xero",
+      "Zoho Books",
+      "Wave",
+      "FreshBooks",
+      "Sage 50",
+      "Payroll"
+    ],
+    "photo": "../assets/images/mentors/md-hazrat-ali-nahid.jpg",
+    "photoAlt": "Portrait of Md Hazrat Ali Nahid, Team Lead, Head of Digital Accounting and Team Education",
+    "legacyUrl": "https://coderstrust.global/mentor/md-hazrat-ali-nahid/"
+  },
+  {
+    "id": "md-selim-sheikh",
+    "name": "Md. Selim Sheikh",
+    "role": "Mentor, Digital Accounting",
+    "expertise": [
+      "Cloud Accounting with AI",
+      "Data Analysis and Visualization",
+      "Financial Analysis & Reporting",
+      "Quickbooks",
+      "Xero",
+      "ERP System"
+    ],
+    "photo": "../assets/images/mentors/md-selim-sheikh.jpg",
+    "photoAlt": "Portrait of Md. Selim Sheikh, Mentor, Digital Accounting",
+    "legacyUrl": "https://coderstrust.global/mentor/md-selim-sheikh/"
+  },
+  {
+    "id": "md-sharif-hossain",
+    "name": "Md. Sharif Hossain",
+    "role": "Mentor, Graphic Design",
+    "expertise": [
+      "Adobe Illustrator",
+      "Adobe Photoshop",
+      "Video Editing",
+      "Wordpress Website Design",
+      "AI-Powered Design",
+      "Brand Identity Design",
+      "Packaging Design",
+      "Print & Digital Design"
+    ],
+    "photo": "../assets/images/mentors/md-sharif-hossain.jpg",
+    "photoAlt": "Portrait of Md. Sharif Hossain, Mentor, Graphic Design",
+    "legacyUrl": "https://coderstrust.global/mentor/md-sharif-hossain/"
+  },
+  {
+    "id": "md-towfiqur-rahman",
+    "name": "Md. Towfiqur Rahman",
+    "role": "Mentor, Advanced Excel",
+    "expertise": [
+      "AI-Enhanced MIS Reporting",
+      "Data Intelligence & Analytics",
+      "Advanced Excel & Automation",
+      "Dashboard Design & Visualization",
+      "Analytical Tools Training"
+    ],
+    "photo": "../assets/images/mentors/md-towfiqur-rahman.jpg",
+    "photoAlt": "Portrait of Md. Towfiqur Rahman, Mentor, Advanced Excel",
+    "legacyUrl": "https://coderstrust.global/mentor/md-towfiqur-rahman/"
+  },
+  {
+    "id": "papiya-nabi",
+    "name": "Papiya Nabi",
+    "role": "Mentor, IELTS",
+    "expertise": [
+      "IELTS",
+      "TOEFL",
+      "GED",
+      "SAT",
+      "International English Training",
+      "Academic Communication",
+      "PR and Digital Communication",
+      "Building Global Academic Partnerships"
+    ],
+    "photo": "../assets/images/mentors/papiya-nabi.jpg",
+    "photoAlt": "Portrait of Papiya Nabi, Mentor, IELTS",
+    "legacyUrl": "https://coderstrust.global/mentor/papiya-nabi/"
+  },
+  {
+    "id": "rezaul-karim-khan",
+    "name": "Rezaul Karim Khan",
+    "role": "Mentor, Artificial Intelligence",
+    "expertise": [
+      "Prompt Engineering",
+      "AI Applications and Tools",
+      "AI Service Design",
+      "Research & Development",
+      "Cloud Computing & Solution Architect",
+      "Business Analysis",
+      "Project Management",
+      "Strategic Marketing"
+    ],
+    "photo": "../assets/images/mentors/rezaul-karim-khan.jpg",
+    "photoAlt": "Portrait of Rezaul Karim Khan, Mentor, Artificial Intelligence",
+    "legacyUrl": "https://coderstrust.global/mentor/rezaul-karim-khan/"
+  },
+  {
+    "id": "salma-aktar-suma",
+    "name": "Salma Aktar Suma",
+    "role": "Mentor, Digital Marketing",
+    "expertise": [
+      "Meta (Facebook & Instagram) Ads",
+      "Social Media Marketing (SMM)",
+      "Search Engine Optimization (SEO)",
+      "Search Engine Marketing (SEM)",
+      "YouTube SEO",
+      "Email Marketing"
+    ],
+    "photo": "../assets/images/mentors/salma-aktar-suma.jpg",
+    "photoAlt": "Portrait of Salma Aktar Suma, Mentor, Digital Marketing",
+    "legacyUrl": "https://coderstrust.global/mentor/salma-aktar-suma/"
+  },
+  {
+    "id": "sandipan-chowdhury",
+    "name": "Sandipan Chowdhury",
+    "role": "Mentor, Digital Accounting",
+    "expertise": [
+      "QuickBooks Online",
+      "QuickBooks Online Payroll",
+      "Xero with Payroll",
+      "Accounts Payable (AP)",
+      "Accounts Receivable (AR)",
+      "Bank Reconciliation",
+      "Catch-up & Clean-up",
+      "Error Fixing & Troubleshooting"
+    ],
+    "photo": "../assets/images/mentors/sandipan-chowdhury.jpg",
+    "photoAlt": "Portrait of Sandipan Chowdhury, Mentor, Digital Accounting",
+    "legacyUrl": "https://coderstrust.global/mentor/sandipan-chowdhury/"
+  },
+  {
+    "id": "sanjida-rahman",
+    "name": "Sanjida Rahman",
+    "role": "Mentor, Content Writing",
+    "expertise": [
+      "Strategic Team Leadership & Mentoring",
+      "Content writing",
+      "Copy writing",
+      "ERP Maintenance & Procurement Workflows",
+      "SEO (On-Page SEO, Off-Page SEO)",
+      "Google Analytics (GA4)",
+      "Google Tag Manager (GTM)",
+      "Budgeting & Expense Tracking"
+    ],
+    "photo": "../assets/images/mentors/sanjida-rahman.jpg",
+    "photoAlt": "Portrait of Sanjida Rahman, Mentor, Content Writing",
+    "legacyUrl": "https://coderstrust.global/mentor/sanjida-rahman/"
+  },
+  {
+    "id": "sheikh-sakibul-hasan",
+    "name": "Sheikh Sakibul Hasan",
+    "role": "Mentor, Web Development",
+    "expertise": [
+      "HTML5/CSS3",
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "Redux Toolkit",
+      "Tailwind CSS",
+      "Vite"
+    ],
+    "photo": "../assets/images/mentors/sheikh-sakibul-hasan.jpg",
+    "photoAlt": "Portrait of Sheikh Sakibul Hasan, Mentor, Web Development",
+    "legacyUrl": "https://coderstrust.global/mentor/sheikh-sakibul-hasan/"
+  },
+  {
+    "id": "sujon-kumar-dey",
+    "name": "Sujon Kumar Dey",
+    "role": "Mentor, Web Development",
+    "expertise": [
+      "Front End Development",
+      "JavaScript and jQuery",
+      "Laravel Framework",
+      "PHP",
+      "WordPress Theme Development",
+      "WordPress Theme and Plugin Customization"
+    ],
+    "photo": "../assets/images/mentors/sujon-kumar-dey.jpg",
+    "photoAlt": "Portrait of Sujon Kumar Dey, Mentor, Web Development",
+    "legacyUrl": "https://coderstrust.global/mentor/sujon-kumar-dey/"
+  },
+  {
+    "id": "suntaiya-islam-shila",
+    "name": "Suntaiya Islam Shila",
+    "role": "Mentor, Digital Accounting",
+    "expertise": [
+      "QuickBooks",
+      "Xero",
+      "Microsoft Excel",
+      "Freelance Marketplace"
+    ],
+    "photo": "../assets/images/mentors/suntaiya-islam-shila.jpg",
+    "photoAlt": "Portrait of Suntaiya Islam Shila, Mentor, Digital Accounting",
+    "legacyUrl": "https://coderstrust.global/mentor/suntaiya-islam-shila/"
+  }
+]
