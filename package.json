@@ -35,7 +35,11 @@
     "test:manifest": "node scripts/test-manifest.mjs",
     "test:edge": "node --test edge/worker/test/",
     "validate:jsonld": "node scripts/validate-jsonld.mjs",
-    "verify:seo": "node scripts/verify-seo-files.mjs"
+    "verify:seo": "node scripts/verify-seo-files.mjs",
+    "test:e2e": "playwright test --project=chromium",
+    "test:a11y": "playwright test tests/a11y.spec.ts --project=chromium",
+    "test:smoke": "playwright test tests/smoke.spec.ts tests/home-cta.spec.ts --project=chromium --project=firefox --project=webkit",
+    "test:screens": "SCREENS=1 playwright test tests/screenshots.spec.ts --project=chromium"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.3",
