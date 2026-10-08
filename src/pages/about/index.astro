@@ -1,0 +1,257 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Button from '../../components/system/Button.astro';
+import Badge from '../../components/system/Badge.astro';
+import Icon from '../../components/system/Icon.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import Fact from '../../components/facts/Fact.astro';
+import FactStat from '../../components/facts/FactStat.astro';
+import Sources from '../../components/facts/Sources.astro';
+import CopyBlock from '../../components/pages/about/CopyBlock.astro';
+import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
+import TeamCard from '../../components/pages/about/TeamCard.astro';
+import { fact } from '../../data/facts';
+import { ORIGIN, MICRO_COMMITMENT } from '../../data/copy';
+import { timeline } from '../../data/timeline';
+import { ctaHref } from '../../lib/mailto';
+import { linkAttrs } from '../../lib/url';
+import { webPage } from '../../lib/schema';
+
+const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
+const since = fact('ID-02').stat?.value;
+const description = `CodersTrust turns educated, unemployed youth in emerging markets into job-ready digital professionals. Founded in ${since}, with offices in New York and Dhaka.`;
+
+const principles = [
+  {
+    icon: 'target',
+    title: 'Outcomes over outputs',
+    text: 'We judge a program by whether young people end up working and earning, not by how many attended.',
+    factId: 'PD-09',
+    link: { label: 'See the outcomes', href: '/impact/' },
+  },
+  {
+    icon: 'users',
+    title: 'Inclusion by design',
+    text: 'Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
+    factId: 'PD-14',
+    link: { label: 'How our model works', href: '/our-model/' },
+  },
+  {
+    icon: 'scale',
+    title: 'Evidence before claims',
+    text: 'We say what a randomized trial shows and what a survey only describes, and we keep the two apart.',
+    factId: 'RC-01',
+    field: 'headline' as const,
+    link: { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+  },
+  {
+    icon: 'handshake',
+    title: 'Partnership and accountability',
+    text: 'Partners agree the scorecard before the first cohort and see progress in reports every month.',
+    factId: 'PD-08',
+    link: { label: 'Governance and accountability', href: '/about/governance/' },
+  },
+];
+
+const sdgs = ['SDG 4 · Quality education', 'SDG 5 · Gender equality', 'SDG 8 · Decent work and economic growth', 'SDG 1 · No poverty', 'SDG 2 · Zero hunger', 'SDG 9 · Industry and innovation', 'SDG 10 · Reduced inequalities'];
+
+const jsonLd = [
+  webPage({
+    path: '/about/',
+    name: 'About CodersTrust',
+    description,
+    type: 'AboutPage',
+    breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }],
+  }),
+];
+---
+
+<BaseLayout title="About CodersTrust" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="About us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
+    <Fragment slot="actions">
+      <Button href="/impact/" iconEnd="arrow-right">See our impact</Button>
+      <Button variant="outline" href="/about/team/">Meet the team</Button>
+    </Fragment>
+  </Hero>
+
+  <Section id="story" aria-labelledby="story-h">
+    <SectionHeader id="story-h" eyebrow="Our story" title="Built since 2014" />
+    <div class="about-story">
+      <CopyBlock class="lead" block={ORIGIN} />
+      <p class="about-story__sub"><Fact id="ID-02" /></p>
+    </div>
+  </Section>
+
+  <Section id="mission" tone="airy" aria-labelledby="mission-h">
+    <SectionHeader id="mission-h" eyebrow="Mission and vision" title="Why we exist, and where we are heading" />
+    <div class="grid-cards grid-cards--2">
+      <article class="card" data-reveal>
+        <div class="card__body">
+          <p class="eyebrow">Mission</p>
+          <p class="about-statement"><Fact id="ID-04" /></p>
+        </div>
+      </article>
+      <article class="card" data-reveal>
+        <div class="card__body">
+          <p class="eyebrow">Vision</p>
+          <p class="about-statement"><Fact id="ID-05" /></p>
+        </div>
+      </article>
+    </div>
+  </Section>
+
+  <Section id="glance" aria-labelledby="glance-h">
+    <SectionHeader id="glance-h" eyebrow="At a glance" title="Where we are today" />
+    <div class="about-stats">
+      {['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
+    </div>
+  </Section>
+
+  <Section id="timeline" tone="ice" aria-labelledby="timeline-h">
+    <SectionHeader id="timeline-h" eyebrow="Our story" title="From a Copenhagen launch to national programs" lead="Milestones that rest on registered facts." />
+    <StoryTimeline items={timeline} />
+  </Section>
+
+  <Section id="founders" aria-labelledby="founders-h">
+    <SectionHeader id="founders-h" eyebrow="Founders" title="The people who started it">
+      <p class="lead"><Fact id="ID-03" /></p>
+    </SectionHeader>
+    <div class="grid-cards grid-cards--2 about-founders">
+      {founders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
+    </div>
+    <p class="about-more"><a class="link" href={linkAttrs('/about/team/').href}>Meet the full team<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <Section id="how-we-work" tone="airy" aria-labelledby="how-h">
+    <SectionHeader id="how-h" eyebrow="How we work" title="Four principles behind every program" />
+    <div class="grid-cards grid-cards--2 grid-cards--stretch">
+      {
+        principles.map((p) => (
+          <article class="card principle" data-reveal>
+            <div class="card__body">
+              <span class="principle__icon" aria-hidden="true"><Icon name={p.icon} size={24} /></span>
+              <h3 class="card__title">{p.title}</h3>
+              <p class="card__text">{p.text}</p>
+              <p class="principle__fact"><Fact id={p.factId} field={p.field} /></p>
+              <a class="link principle__link" href={linkAttrs(p.link.href).href}>{p.link.label}<Icon name="arrow-right" size={16} /></a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section id="sdgs" aria-labelledby="sdg-h">
+    <SectionHeader id="sdg-h" eyebrow="Global goals" title="Seven Sustainable Development Goals" />
+    <div data-fact="ID-09">
+      <ul class="cluster about-sdgs" role="list">
+        {sdgs.map((s, i) => <li><Badge tone={i < 3 ? 'brand' : 'eyebrow'}>{s}</Badge></li>)}
+      </ul>
+      <p class="about-sdgs__note"><Fact id="ID-09" /></p>
+    </div>
+  </Section>
+
+  <Section id="recognition" tone="ice" aria-labelledby="rec-h">
+    <SectionHeader id="rec-h" eyebrow="Recognition" title="Recognized by peers, covered by the press" />
+    <div class="about-rec">
+      <p class="lead"><Fact id="PA-08" /></p>
+      <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and media<Icon name="arrow-right" size={16} /></a>
+    </div>
+  </Section>
+
+  <CTABand
+    id="about-cta"
+    heading="Talk to the team"
+    text="Tell us your goals and priority groups, and we will outline a first cohort with you."
+    cta={{ label: 'Book a discovery session', href: ctaHref('discovery') }}
+    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+    micro={MICRO_COMMITMENT}
+  />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .about-story {
+    display: grid;
+    gap: var(--space-md);
+    max-width: var(--measure);
+  }
+  .about-story > * {
+    margin: 0;
+  }
+  .about-story__sub {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-m);
+  }
+  .about-statement {
+    margin: 0;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--on-surface);
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+  }
+  @media (min-width: 768px) {
+    .about-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .about-stats {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+  .about-founders {
+    max-width: 640px;
+  }
+  .about-more {
+    margin: var(--space-lg) 0 0;
+  }
+  .principle__icon {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .principle__fact {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+    padding-left: var(--space-sm);
+    border-left: 3px solid var(--primary-fixed);
+  }
+  .principle__link {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .about-sdgs {
+    list-style: none;
+    margin: 0 0 var(--space-md);
+    padding: 0;
+  }
+  .about-sdgs__note {
+    margin: 0;
+    max-width: var(--measure);
+    color: var(--on-surface-variant);
+  }
+  .about-rec {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
+    max-width: var(--measure);
+  }
+  .about-rec > * {
+    margin: 0;
+  }
+</style>

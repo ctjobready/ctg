@@ -1,0 +1,81 @@
+---
+import LongformLayout from '../../layouts/LongformLayout.astro';
+import CopyEmail from '../../components/ui/CopyEmail.astro';
+import { CONTACT } from '../../lib/site';
+import { webPage } from '../../lib/schema';
+import { url } from '../../lib/url';
+
+const UPDATED = '2026-10-08';
+const description = 'Our accessibility target (WCAG 2.2 AA), what we have done to meet it, known limitations such as the supplementary map, and how to tell us about a barrier.';
+const toc = [
+  { id: 'target', label: 'Our target' },
+  { id: 'measures', label: 'What we have done' },
+  { id: 'map', label: 'The world map' },
+  { id: 'limits', label: 'Known limitations' },
+  { id: 'feedback', label: 'Tell us about a barrier' },
+];
+const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statement', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Accessibility', path: '/accessibility/' }] })];
+---
+
+<LongformLayout
+  title="Accessibility Statement"
+  description={description}
+  breadcrumbs={[{ label: 'Accessibility' }]}
+  jsonLd={jsonLd}
+  eyebrow="Legal"
+  lead="We want everyone to be able to read this site and use it, with a keyboard, a screen reader, magnification or a phone. We build to WCAG 2.2 level AA."
+  toc={toc}
+  updated={UPDATED}
+>
+  <div class="prose lp">
+    <section id="target" aria-labelledby="target-h">
+      <h2 id="target-h">Our target</h2>
+      <p>The target for this website is the Web Content Accessibility Guidelines (WCAG) 2.2, level AA. That includes the newer success criteria, such as focus not being hidden behind sticky page elements (2.4.11) and large enough touch targets (2.5.8). This statement describes the target and the measures we take. It is not a certificate of conformance, and we keep working on gaps.</p>
+    </section>
+
+    <section id="measures" aria-labelledby="measures-h">
+      <h2 id="measures-h">What we have done</h2>
+      <ul>
+        <li><strong>Structure.</strong> Every page has one main heading, a logical heading order, landmarks, and a "Skip to main content" link as the first item.</li>
+        <li><strong>Keyboard.</strong> Menus, the mobile drawer, accordions, carousels and filters work with a keyboard. Focus is always visible, and the sticky header and announcement bar do not cover the element that has focus.</li>
+        <li><strong>Colour and type.</strong> Text and controls use an accessible colour theme that meets AA contrast. Pages reflow to a 320 px width without sideways scrolling, and text can be enlarged.</li>
+        <li><strong>Motion.</strong> Animations stop for visitors who ask their device for reduced motion, and the final values of counters are in the page without animation. The logo marquee has a pause button.</li>
+        <li><strong>Works without JavaScript.</strong> Content, statistics, links and the news topic filter are available when scripts do not run.</li>
+        <li><strong>Images, charts and maps.</strong> Images have meaningful alternative text or are marked decorative. Charts have a data table, and the map has a location table (below).</li>
+        <li><strong>Testing.</strong> Every page is checked with automated accessibility tests at phone and desktop widths. Before each major release we also run a manual pass with VoiceOver (macOS and iOS), NVDA and TalkBack, because automated tests alone do not show how a page is experienced.</li>
+      </ul>
+    </section>
+
+    <section id="map" aria-labelledby="map-h">
+      <h2 id="map-h">The world map</h2>
+      <p>The map on the <a href={url('/impact/global-reach/')}>global reach</a> page is a supplementary visual. Its pins are hidden from assistive technology and are not focus targets. Everything a pin shows is also in the location table on the same page, which is always visible and can be read and navigated by keyboard and screen reader. The table carries every detail the map shows.</p>
+    </section>
+
+    <section id="limits" aria-labelledby="limits-h">
+      <h2 id="limits-h">Known limitations</h2>
+      <ul>
+        <li><strong>Older news posts.</strong> News articles are carried over from our earlier website as published. Some photos in them have generic or empty alternative text, and some posts link to long web addresses. We are improving these as we edit posts.</li>
+        <li><strong>Embedded and external content.</strong> Videos play on YouTube, and their captions and controls are YouTube's. Pages we link to, such as jobready.global and the application form for the National University diploma, are run by others and may not meet the same standard.</li>
+        <li><strong>Press logos.</strong> Third-party logos are shown as supplied by their owners.</li>
+      </ul>
+    </section>
+
+    <section id="feedback" aria-labelledby="feedback-h">
+      <h2 id="feedback-h">Tell us about a barrier</h2>
+      <p>If something on this site is hard to use, or you need information in another format, write to <CopyEmail email={CONTACT.email} />. Please tell us the page, what you were trying to do, and the device or assistive technology you use. We will look into it and tell you what we can do.</p>
+      <p>You can also call <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>.</p>
+    </section>
+  </div>
+</LongformLayout>
+
+<style>
+  .lp section + section {
+    margin-top: var(--space-lg);
+  }
+  .lp h2 {
+    margin-top: 0;
+  }
+  .lp a {
+    overflow-wrap: anywhere;
+  }
+</style>

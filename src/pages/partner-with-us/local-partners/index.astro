@@ -1,0 +1,222 @@
+---
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import ProblemBand from '../../../components/sections/ProblemBand.astro';
+import CostBand from '../../../components/sections/CostBand.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import GuideBand from '../../../components/sections/GuideBand.astro';
+import MechanismBand from '../../../components/sections/MechanismBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
+import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
+import { localCta } from '../../../components/pages/about/routes';
+import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, STEPS, STEPS_FACTS, VALUE_PROPOSITION } from '../../../data/copy';
+import { faqJsonLd } from '../../../lib/faq';
+import { webPage } from '../../../lib/schema';
+import { BANGLADESH_HQ } from '../../../lib/site';
+
+const local = localCta();
+const FAQ_IDS = ['Q1', 'Q2', 'Q9', 'Q10'];
+const path = '/partner-with-us/local-partners/';
+const description = "Bangladeshi NGOs, colleges and chambers can deliver CodersTrust's mentored digital-skills programs in their communities.";
+const jsonLd = [
+  webPage({ path, name: 'Local implementing partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with us', path: '/partner-with-us/' }, { name: 'Local partners', path }] }),
+  faqJsonLd('governments', path, FAQ_IDS),
+];
+
+// C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
+const cmpRows = [
+  { label: 'Certification', cells: [{ text: 'Exam preparation and the exam fee for each trainee’s track (terms set per program)', included: true }, 'Varies', 'Often sold separately', 'Not included', '—'] },
+  { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Not included', '—'] },
+  { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Learners arrange their own', 'Matching for people who already have marketable skills', '—'] },
+  { label: 'Outcome tracking', cells: [{ text: 'Tracers at 3, 6 and 12 months; monthly reports', included: true }, 'Varies', 'Usually course completion', 'Platform activity', '—'] },
+  {
+    label: 'Independent evidence',
+    cells: [
+      { text: 'A randomized trial by BIGD of a CodersTrust program (WSDFM)', included: true, factId: 'RC-01' },
+      { text: 'Varies — a review of nine randomized trials of vocational training found three with significant employment impacts', factId: 'RC-06' },
+      'Varies',
+      'Varies',
+      '—',
+    ],
+  },
+  { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
+];
+
+const ways = [
+  { icon: 'building-2', title: 'Host a cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
+  { icon: 'graduation-cap', title: 'Supply certified facilitators', text: 'Put trainers through certified facilitator training so delivery capacity stays in your community.' },
+  { icon: 'users', title: 'Mobilize priority groups', text: 'Reach the young people central programs miss, with women a priority in every group.' },
+  { icon: 'handshake', title: 'Co-apply with CodersTrust', text: 'Prepare funding proposals together with the CodersTrust team.' },
+];
+---
+
+<LandingLayout
+  title="Local Implementing Partners"
+  description={description}
+  breadcrumbs={[{ label: 'Partner with us', href: '/partner-with-us/' }, { label: 'Local partners' }]}
+  jsonLd={jsonLd}
+  stickyCta={{ label: local.label, href: local.href }}
+>
+  <!-- C1 -->
+  <HeroBand audience="For Bangladeshi NGOs, colleges, chambers and associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
+
+  <!-- GEO definition + page BLUF -->
+  <DefinitionPlus id="definition">
+    <p data-fact="PD-06 GV-09">Larger programs run hub-and-spoke through certified local facilitators and existing labs and colleges, and CodersTrust Bangladesh supports local partners with curriculum, certification, mentoring, reporting and safeguarding.</p>
+  </DefinitionPlus>
+
+  <!-- C2 -->
+  <ProblemBand id="problem" title="Local organizations reach the young people central programs miss." bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']} />
+
+  <!-- C3 -->
+  <CostBand
+    id="cost"
+    title="Cohorts that train but do not place cost community trust."
+    blocks={[
+      { claim: 'AI is changing entry-level work.', factId: 'PX-06', implication: 'Skills that were enough last year may not open doors next year, so tracks have to follow current demand.' },
+      { claim: 'Much vocational training shows no employment gain.', factId: 'RC-06', implication: 'Funders and communities spend years on programs that never reach earnings.' },
+    ]}
+  />
+
+  <!-- C4 -->
+  <FutureBand
+    id="future"
+    title="Imagine a cohort in your community."
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'A cohort in your own lab', text: 'A college computer lab or an NGO center runs a cohort led by certified local facilitators.' },
+      { kind: 'Emotional', title: 'Reports that show earnings', text: 'Monthly reports to the funder show who is earning, not only who completed.' },
+      { kind: 'Social', title: 'Completers in paid digital work', text: 'Young people from your district move into paid digital work, and the skills stay in the community.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <div data-fact="ID-07 PA-01 PA-02 IN-06 GV-07">
+    <GuideBand
+      id="guide"
+      title="Delivered with a Bangladesh team beside you."
+      empathy={EMPATHY.localPartners}
+      authorityIds={['SC-11', 'GV-09']}
+      partnerGroup={['government', 'development']}
+      variant="grid"
+      method={{
+        text: `CodersTrust Bangladesh works from its headquarters in ${BANGLADESH_HQ.city} and campuses in Mirpur and Agrabad, Chattogram. ${C14.validate.text} With the Bangladesh Computer Council and Bandhu Welfare Society, we built a digital-skills program for third-gender people. Our TalentLEAP method turns this experience into a repeatable path.`,
+        link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' },
+      }}
+    />
+  </div>
+
+  <!-- C6 -->
+  <div data-fact="PD-01 PD-06 PD-07 PD-08">
+    <MechanismBand
+      id="mechanism"
+      title="How a local partnership works."
+      blocks={[
+        { label: 'Your organization', title: 'Mobilizes and hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
+        { label: 'With CodersTrust', title: 'Trains and certifies', text: 'Certified local facilitators, a localized curriculum and certification, delivered in blended classes.', icon: 'graduation-cap' },
+        { label: 'Together', title: 'Mentoring and placement', text: 'Three months of milestone-based mentoring, then placement support into local, remote and global work.', icon: 'handshake' },
+        { label: 'Throughout', title: 'Monthly reporting', text: 'The funder sees enrollment, completion, certification, placements and first earnings every month.', icon: 'chart-bar' },
+      ]}
+      link={{ label: 'How our model works', href: '/our-model/' }}
+    />
+  </div>
+
+  <!-- C7 -->
+  <ProofBand id="proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+  <CaseStudyCarousel
+    id="cases"
+    title="Women-focused programs in practice"
+    items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+    ]}
+  />
+
+  <!-- C8 -->
+  <FeaturesTable
+    id="features"
+    title="What you get, and what it means for your community."
+    rows={[
+      { feature: 'Certified-facilitator training', means: 'local capacity that stays after a funded cohort ends.', outcomeFactId: 'PD-06' },
+      { feature: 'Blended delivery in existing labs and colleges', means: 'a low capital cost for you and for the funder.', outcomeFactId: 'GV-09' },
+      { feature: 'Connectivity-light delivery', means: 'young people outside big cities can take part.', outcomeFactId: 'PD-07' },
+      { feature: 'Consent-based data practice and safeguarding agreed per program', means: 'a program your community can trust.', outcomeFactId: 'PD-12' },
+      { feature: 'Monthly reports', means: 'accountability that you and the funder share.', outcomeFactId: 'PD-08' },
+    ]}
+  />
+  <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">
+    <div data-fact={STEPS_FACTS.join(' ')}>
+      <SectionHeader id="steps-h" level={2} title="How it works in 3 steps" />
+      <StepFlow steps={STEPS.map((s) => ({ title: s.title, text: s.text }))} />
+    </div>
+  </Section>
+
+  <!-- C9 -->
+  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions local partners ask" />
+
+  <!-- C10 -->
+  <ComparisonBand id="compare" rows={cmpRows} facts={['PD-02', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06']} />
+
+  <!-- C11 -->
+  <Section id="offer" tone="airy" aria-labelledby="offer-h">
+    <SectionHeader id="offer-h" eyebrow="Ways to partner" title="Four ways to partner with us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
+    <div class="grid-cards grid-cards--4 grid-cards--stretch" data-fact="PD-06 PD-05">
+      {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
+    </div>
+  </Section>
+
+  <!-- C12 -->
+  <RiskReversalBand id="risk" title="Start with a pilot cohort. Decide on evidence." />
+
+  <!-- C13 -->
+  <CTABand
+    id="cta"
+    heading="Let's plan your first local cohort."
+    text="Tell the Bangladesh team about your organization, your district and the groups you work with."
+    cta={{ label: local.label, href: local.href }}
+    micro={MICRO_COMMITMENT}
+  />
+
+  <!-- C14 -->
+  <Section id="next-steps" aria-labelledby="next-h">
+    <SectionHeader id="next-h" eyebrow="After you write" title="What happens after you say yes." />
+    <StepFlow steps={[
+      { title: 'Intro call', text: 'A conversation about your organization and the young people you reach.' },
+      { title: 'Fit check and co-design', text: 'We shape the cohort, tracks, safeguarding and reporting with you.' },
+      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
+      { title: 'First cohort', text: 'Training begins at your site.' },
+    ]} />
+    <div class="lp-after">
+      <p>In your enquiry, include two suitable times for a discovery conversation.</p>
+      <CopyBlock block={C14.reminder} />
+    </div>
+  </Section>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</LandingLayout>
+
+<style>
+  .lp-after {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .lp-after :global(p) {
+    margin: 0;
+  }
+</style>

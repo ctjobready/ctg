@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Badge from '../../system/Badge.astro';
+import Icon from '../../system/Icon.astro';
+import Button from '../../system/Button.astro';
+import { formatDate, isoDate, truncate } from '../../../lib/format';
+import { newsArticle } from '../../../lib/schema';
+import { absoluteUrl, canonicalUrl, url } from '../../../lib/url';
+import { ctaHref } from '../../../lib/mailto';
+
+/**
+ * T6 news article shell. Like the shared ArticleLayout, but with a separate <title> (kept within 60
+ * characters while the H1 and the NewsArticle headline carry the full headline), the archive banner
+ * above the hero image, and an X share link.
+ */
+interface Props {
+  headline: string;
+  description: string;
+  path: string;
+  date: Date;
+  updated?: Date;
+  topic: string;
+  /** Production-relative path of the 1200×630 social image. */
+  image?: string;
+  imageAlt?: string;
+}
+const { headline, description, path, date, updated, topic, image, imageAlt } = Astro.props;
+const canonical = canonicalUrl(path);
+const published = date.toISOString();
+const SUFFIX = ' | CodersTrust';
+// Long headlines: drop a leading "CodersTrust " (the suffix names the site) so the distinguishing words survive truncation.
+const metaTitle = headline.length + SUFFIX.length > 60 ? truncate(headline.replace(/^CodersTrust\s+/, ''), 60 - SUFFIX.length) : headline;
+const node = newsArticle({
+  path,
+  headline,
+  description,
+  datePublished: isoDate(date),
+  dateModified: updated ? isoDate(updated) : undefined,
+  image: image ? absoluteUrl(image, Astro.site) : undefined,
+  section: topic,
+});
+const enc = encodeURIComponent;
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={truncate(description, 155)}
+  path={path}
+  breadcrumbs={[{ label: 'News', href: '/news/' }, { label: truncate(headline, 48) }]}
+  ogType="article"
+  image={image}
+  imageAlt={imageAlt}
+  publishedTime={published}
+  modifiedTime={(updated ?? date).toISOString()}
+  jsonLd={[node]}
+>
+  <article class="art container container--narrow">
+    <header class="art__head">
+      <p class="art__meta">
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+        <Badge tone="brand">{topic}</Badge>
+      </p>
+      <h1 class="t-display-4xl">{headline}</h1>
+    </header>
+    <p class="archive-banner" role="note">
+      <Icon name="calendar" size={18} />
+      <span>Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; figures reflect that date.</span>
+    </p>
+    {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" /></figure>}
+    <div class="prose art__body"><slot /></div>
+
+    <aside class="art__share" aria-label="Share this article">
+      <p>Share</p>
+      <ul role="list">
+        <li><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`} rel="noopener"><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
+        <li><a class="art__x" href={`https://twitter.com/intent/tweet?url=${enc(canonical)}&text=${enc(headline)}`} rel="noopener"><span aria-hidden="true">X</span><span class="sr-only">Share on X (opens twitter.com)</span></a></li>
+        <li><a href={`https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`} rel="noopener"><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
+        <li><button type="button" data-copy={canonical} data-copy-message="Link copied"><Icon name="link" size={20} /><span class="sr-only">Copy link</span></button></li>
+      </ul>
+    </aside>
+  </article>
+
+  <section class="art__cta" aria-labelledby="art-cta-h">
+    <div class="container container--narrow art__cta-inner">
+      <h2 id="art-cta-h" class="t-heading-xl">Working on youth employment?</h2>
+      <p>Tell us your goals and priority groups. A discovery session is a conversation, not a commitment.</p>
+      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a discovery session</Button>
+    </div>
+  </section>
+
+  {
+    Astro.slots.has('related') && (
+      <section class="art__related container" aria-labelledby="related-h">
+        <h2 id="related-h" class="t-heading-2xl">More news</h2>
+        <div class="grid-cards">
+          <slot name="related" />
+        </div>
+        <p><a class="link" href={url('/news/')}>All news<Icon name="arrow-right" size={16} /></a></p>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .art {
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .art {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+  .art__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+  .art__head > * {
+    margin: 0;
+  }
+  .art__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .archive-banner {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
+    border-left: 4px solid var(--tertiary);
+    border-radius: var(--radius-sm);
+    background: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+    font-size: var(--fs-body-base);
+  }
+  .archive-banner :global(.icon) {
+    flex: none;
+    margin-top: 2px;
+  }
+  .art__hero {
+    margin: 0 0 var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .art__hero :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .art__body :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .art__body :global(a) {
+    overflow-wrap: anywhere;
+  }
+  .art__share {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .art__share p {
+    margin: 0;
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .art__share ul {
+    display: flex;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .art__share a,
+  .art__share button {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--primary-fixed);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-image: none;
+    font-weight: var(--fw-bold);
+  }
+  .art__share a:hover,
+  .art__share button:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .art__cta {
+    background: var(--surface-container-low);
+    padding-block: var(--space-section-mobile);
+  }
+  .art__cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .art__cta-inner > * {
+    margin: 0;
+  }
+  .art__related {
+    padding-block: var(--band-pad);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .art__related > * {
+    margin: 0;
+  }
+</style>

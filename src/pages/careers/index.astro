@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Button from '../../components/system/Button.astro';
+import Icon from '../../components/system/Icon.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import Img from '../../components/ui/Img.astro';
+import Fact from '../../components/facts/Fact.astro';
+import FactStat from '../../components/facts/FactStat.astro';
+import Sources from '../../components/facts/Sources.astro';
+import { careersCta, CAREERS_EMAIL } from '../../components/pages/about/routes';
+import { webPage } from '../../lib/schema';
+import falgun from '../../assets/images/pages/about/careers-team-falgun-celebration.jpg';
+import picnic from '../../assets/images/pages/about/careers-team-picnic.jpg';
+
+const apply = careersCta('Send your CV');
+const description = 'Join CodersTrust and help move educated, unemployed young people into paid digital work. How we work, how to apply, and a speculative application route.';
+const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
+const expect = [
+  { icon: 'users', title: 'Inclusive and flexible', text: 'A workplace that is active, flexible, diverse and inclusive, socially responsible and open to new thinking.' },
+  { icon: 'target', title: 'Work that is measured', text: 'Our programs are judged by whether young people end up working and earning, not by how many attended.' },
+  { icon: 'trophy', title: 'Wins are celebrated', text: 'Big or small, we celebrate the wins, because we know how hard the team works.' },
+];
+---
+
+<BaseLayout title="Careers" description={description} breadcrumbs={[{ label: 'Careers' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="Careers" title="Work with us at CodersTrust" lead="Help move educated, unemployed young people into paid digital work. We are building a team that thinks outside the box and delivers." artSeed="careers">
+    <Fragment slot="actions">
+      <Button href={apply.href} icon="mail">{apply.label}</Button>
+      <Button variant="outline" href="#roles">Open roles</Button>
+    </Fragment>
+  </Hero>
+
+  <Section id="why" aria-labelledby="why-h">
+    <SectionHeader id="why-h" eyebrow="Why CodersTrust" title="A mission you can measure">
+      <p class="lead"><Fact id="ID-04" /></p>
+    </SectionHeader>
+    <div class="cr-stats">
+      {['SC-01', 'SC-03', 'SC-11'].map((id) => <FactStat id={id} />)}
+    </div>
+  </Section>
+
+  <Section id="how" tone="airy" aria-labelledby="how-h">
+    <SectionHeader id="how-h" eyebrow="How we work" title="What to expect" />
+    <div class="grid-cards grid-cards--stretch">
+      {
+        expect.map((e) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <span class="cr-icon" aria-hidden="true"><Icon name={e.icon} size={22} /></span>
+              <h3 class="card__title">{e.title}</h3>
+              <p class="card__text">{e.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="cr-photos">
+      <figure data-reveal>
+        <Img src={falgun} alt="The CodersTrust Bangladesh team gathered at the office entrance for a festival celebration." width={800} widths={[480, 800]} sizes="(min-width:900px) 580px, 100vw" assetId="careers-team-falgun" />
+      </figure>
+      <figure data-reveal>
+        <Img src={picnic} alt="A group photo of the CodersTrust Bangladesh team outdoors at a company picnic." width={800} widths={[480, 800]} sizes="(min-width:900px) 580px, 100vw" assetId="careers-team-picnic" />
+      </figure>
+    </div>
+  </Section>
+
+  <Section id="roles" aria-labelledby="roles-h">
+    <SectionHeader id="roles-h" eyebrow="Open roles" title="Current openings" />
+    <div class="cr-roles card" data-reveal>
+      <div class="card__body">
+        <h3 class="card__title">We're not hiring for specific roles right now</h3>
+        <p class="card__text">Send a speculative application. Tell us what you do well, where you are based and what you would like to work on, and we will keep it on file for when a role opens.</p>
+        <p><Button href={apply.href} icon="mail" variant="outline">Send a speculative application</Button></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="apply" tone="ice" aria-labelledby="apply-h">
+    <SectionHeader id="apply-h" eyebrow="How to apply" title="From CV to offer" lead="Applications go to the CodersTrust Bangladesh HR team." />
+    <StepFlow steps={[
+      { title: 'Resume assessment', text: 'We scan and sort resumes to find the best candidates.' },
+      { title: 'In-person interview', text: 'Shortlisted candidates are invited to a face-to-face interview.' },
+      { title: 'Employment offer', text: 'The selected candidate receives an offer letter and package details.' },
+    ]} />
+    <p class="cr-mail">Send your CV to <a href={apply.href}>{CAREERS_EMAIL}</a>.</p>
+  </Section>
+
+  <Section id="eoe" aria-labelledby="eoe-h">
+    <SectionHeader id="eoe-h" eyebrow="Equal opportunity" title="Everyone is equal here" />
+    <p class="cr-eoe">We believe every person is equal, across every dimension, and we work as an unbiased meritocracy. We put inclusion at the front of how we operate and build tolerance and understanding into everything we do.</p>
+  </Section>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .cr-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+  }
+  @media (min-width: 768px) {
+    .cr-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .cr-icon {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .cr-photos {
+    display: grid;
+    gap: var(--space-gutter);
+    margin-top: var(--space-lg);
+  }
+  .cr-photos figure {
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .cr-photos :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+  @media (min-width: 768px) {
+    .cr-photos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .cr-roles {
+    max-width: 46rem;
+    height: auto;
+  }
+  .cr-mail {
+    margin: var(--space-lg) 0 0;
+  }
+  .cr-mail a {
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cr-eoe {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface-variant);
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Img from '../../components/ui/Img.astro';
+import HeroArt from '../../components/ui/HeroArt.astro';
+import Badge from '../../components/system/Badge.astro';
+import Icon from '../../components/system/Icon.astro';
+import NewsGrid from '../../components/pages/news/NewsGrid.astro';
+import { allNews, coverAlt, newsHref, TOPICS } from '../../components/pages/news/news';
+import { formatDate, isoDate } from '../../lib/format';
+import { pageUrl, webPage } from '../../lib/schema';
+import { url } from '../../lib/url';
+
+const posts = await allNews();
+const [latest, ...rest] = posts;
+const jsonLd = [
+  {
+    ...webPage({ path: '/news/', name: 'News', description: 'News from CodersTrust: partnerships and MoUs, recognition, program events and leadership.', type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'News', path: '/news/' }] }),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(newsHref(p)), name: p.data.title })),
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="News"
+  description="News from CodersTrust: partnerships and MoUs, recognition, program events and leadership, with each post dated as published."
+  breadcrumbs={[{ label: 'News' }]}
+  jsonLd={jsonLd}
+>
+  <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MoUs, recognition, program events and leadership: what CodersTrust has announced, in the words of the time." art={false} />
+
+  <Section id="latest" aria-labelledby="latest-h">
+    <SectionHeader id="latest-h" eyebrow="Latest" title="Most recent" />
+    <article class="feat card card--link" data-reveal>
+      <div class="feat__media card__media">
+        {latest.data.cover ? <Img src={latest.data.cover} alt={coverAlt(latest.data.coverAlt)} width={900} height={600} widths={[480, 900]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" /> : <HeroArt seed={latest.data.title} shape="card" />}
+      </div>
+      <div class="card__body feat__body">
+        <p class="card__meta feat__meta">
+          <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>
+          <Badge tone="brand">{TOPICS[latest.data.topic]}</Badge>
+        </p>
+        <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
+        <p class="card__text">{latest.data.excerpt}</p>
+        <span class="card__more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
+      </div>
+    </article>
+  </Section>
+
+  <Section id="archive" tone="airy" aria-labelledby="archive-h">
+    <SectionHeader id="archive-h" eyebrow="All news" title="Browse by topic" lead="Every post is shown as published: older items keep their original wording, and each carries the date its figures reflect." />
+    <NewsGrid posts={rest} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .feat {
+    display: grid;
+    height: auto;
+  }
+  .feat__media {
+    aspect-ratio: 3 / 2;
+  }
+  .feat__body > * {
+    margin: 0;
+  }
+  .feat__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .feat__title {
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+  }
+  @media (min-width: 900px) {
+    .feat {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+    .feat__media {
+      aspect-ratio: auto;
+      min-height: 320px;
+    }
+    .feat__body {
+      justify-content: center;
+      padding: var(--space-lg);
+    }
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+import LongformLayout from '../../layouts/LongformLayout.astro';
+import CopyEmail from '../../components/ui/CopyEmail.astro';
+import { CONTACT, OFFICES } from '../../lib/site';
+import { promo } from '../../data/nav';
+import { NU_PGD_APPLY_URL } from '../../data/ctas';
+import { webPage } from '../../lib/schema';
+import { url } from '../../lib/url';
+
+const UPDATED = '2026-10-08';
+const description = 'How the CodersTrust website handles data: no analytics cookies, no third-party trackers, and a plain list of every service involved.';
+const toc = [
+  { id: 'summary', label: 'In short' },
+  { id: 'services', label: 'Every service involved' },
+  { id: 'hosting', label: 'Hosting and server logs' },
+  { id: 'email', label: 'Email enquiries' },
+  { id: 'nu-form', label: 'National University applications' },
+  { id: 'links', label: 'Links to other sites' },
+  { id: 'video', label: 'Video' },
+  { id: 'storage', label: 'Your browser storage' },
+  { id: 'rights', label: 'Your rights' },
+  { id: 'children', label: 'Children' },
+  { id: 'changes', label: 'Changes and contact' },
+];
+const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Privacy policy', path: '/privacy-policy/' }] })];
+---
+
+<LongformLayout
+  title="Privacy Policy"
+  description={description}
+  breadcrumbs={[{ label: 'Privacy policy' }]}
+  jsonLd={jsonLd}
+  eyebrow="Legal"
+  lead="This website is a static site. It sets no analytics cookies and uses no third-party trackers. This page names every service that touches your data, and when."
+  toc={toc}
+  updated={UPDATED}
+>
+  <div class="prose lp">
+    <section id="summary" aria-labelledby="summary-h">
+      <h2 id="summary-h">In short</h2>
+      <ul>
+        <li>We run no analytics and set no analytics cookies. We use no advertising or third-party tracking scripts.</li>
+        <li>The site has no forms. Enquiries are emails that you send yourself.</li>
+        <li>The only thing the site stores in your browser is a note that you dismissed the announcement bar.</li>
+        <li>Services run by other organizations (the host, Google Forms, YouTube, social networks, maps) come into play only in the situations listed below.</li>
+      </ul>
+    </section>
+
+    <section id="services" aria-labelledby="services-h">
+      <h2 id="services-h">Every service involved</h2>
+      <div class="lp__table" role="region" aria-label="Services table" tabindex="0">
+        <table>
+          <caption class="sr-only">Services that process data when you use this website, and when</caption>
+          <thead>
+            <tr><th scope="col">Service</th><th scope="col">When it is involved</th><th scope="col">What it can see</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">GitHub Pages (hosting)</th><td>Every page view</td><td>Your IP address and request details in server logs</td></tr>
+            <tr><th scope="row">Your email provider</th><td>When you send us an email</td><td>Your message and address</td></tr>
+            <tr><th scope="row">Google Forms (NU application)</th><td>Only if you use the National University diploma application form</td><td>What you type into the form</td></tr>
+            <tr><th scope="row">jobready.global</th><td>Only if you follow a link to it</td><td>Whatever that site collects once you are on it</td></tr>
+            <tr><th scope="row">YouTube (youtube-nocookie.com)</th><td>Only after you click play on a video</td><td>Your IP address, and what YouTube sets once the video loads</td></tr>
+            <tr><th scope="row">LinkedIn, X, Facebook, Google Maps</th><td>Only if you click a share, social or map link</td><td>What those services collect once you are on them</td></tr>
+            <tr><th scope="row">Your browser (local storage)</th><td>If you dismiss the announcement bar</td><td>Stays on your device; we never receive it</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="hosting" aria-labelledby="hosting-h">
+      <h2 id="hosting-h">Hosting and server logs</h2>
+      <p>This site is hosted on GitHub Pages. When you load a page, the host's servers record standard log data, which includes your IP address, the page requested and your browser type. We do not add analytics, and we do not use this data to identify visitors. Read <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement<span class="sr-only"> (opens docs.github.com)</span></a> for how the host handles logs.</p>
+    </section>
+
+    <section id="email" aria-labelledby="email-h">
+      <h2 id="email-h">Email enquiries</h2>
+      <p>Buttons that say "Book a discovery session", "Ask about due diligence" and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your enquiry. Your email provider handles the message on its way.</p>
+      <p>Write to us at <CopyEmail email={CONTACT.email} />.</p>
+    </section>
+
+    <section id="nu-form" aria-labelledby="nu-h">
+      <h2 id="nu-h">National University applications</h2>
+      <p>Applications for the National University postgraduate diploma use an existing Google Form. When you open it you leave this site and go to a page run by Google (<a href={NU_PGD_APPLY_URL} rel="noopener">application form<span class="sr-only"> (opens docs.google.com)</span></a>). What you enter goes to Google Forms and to the admissions team, and Google's own privacy policy applies to it.</p>
+    </section>
+
+    <section id="links" aria-labelledby="links-h">
+      <h2 id="links-h">Links to other sites</h2>
+      <p>Course catalogue links go to <a href="https://jobready.global/" rel="noopener">jobready.global<span class="sr-only"> (opens jobready.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and "Open in Maps" links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
+    </section>
+
+    <section id="video" aria-labelledby="video-h">
+      <h2 id="video-h">Video</h2>
+      <p>Videos appear as a still image with a play button. No request goes to YouTube until you click play. After the click, the video loads from youtube-nocookie.com, YouTube's privacy-enhanced domain, and YouTube sees your IP address and may store its own data on your device. If you never click play, YouTube never hears from you.</p>
+    </section>
+
+    <section id="storage" aria-labelledby="storage-h">
+      <h2 id="storage-h">Your browser storage</h2>
+      <p>If you close the announcement bar at the top of the page, the site saves a small note in your browser's local storage (the key is <code>{promo.storageKey}</code>) so that the bar stays closed on your next visit. It is a functional setting, it stays on your device, and we never receive it. That is why we do not ask for consent for it. You can remove it at any time by clearing this site's data in your browser.</p>
+      <p>We set no cookies of our own.</p>
+    </section>
+
+    <section id="rights" aria-labelledby="rights-h">
+      <h2 id="rights-h">Your rights</h2>
+      <p>Depending on where you live, you may have the right to ask what personal data we hold about you, to have it corrected or deleted, to object to our use of it, and to complain to your local data-protection authority. To exercise these rights, email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.</p>
+    </section>
+
+    <section id="children" aria-labelledby="children-h">
+      <h2 id="children-h">Children</h2>
+      <p>This website is written for partners, funders, employers, universities and learners. It does not collect personal data from visitors of any age. Each CodersTrust program specifies its own safeguarding and data arrangements, including those for participants under 18, which are agreed before enrollment. See <a href={url('/about/governance/')}>governance and accountability</a>.</p>
+    </section>
+
+    <section id="changes" aria-labelledby="changes-h">
+      <h2 id="changes-h">Changes and contact</h2>
+      <p>If we add or change a service that touches your data, we update this page before the change goes live. The "Last updated" date above shows the current version.</p>
+      <p>This website is run by CodersTrust. Questions about privacy go to <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, or by post to either office:</p>
+      <ul>
+        {OFFICES.map((o) => <li><strong>{o.name}</strong>, {o.address.join(', ')}</li>)}
+      </ul>
+    </section>
+  </div>
+</LongformLayout>
+
+<style>
+  .lp section + section {
+    margin-top: var(--space-lg);
+  }
+  .lp h2 {
+    margin-top: 0;
+  }
+  .lp__table {
+    overflow-x: auto;
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-default);
+  }
+  .lp__table table {
+    min-width: 640px;
+    border-collapse: collapse;
+  }
+  .lp__table th[scope='row'] {
+    color: var(--on-surface);
+    font-weight: var(--fw-bold);
+  }
+  .lp a {
+    overflow-wrap: anywhere;
+  }
+</style>

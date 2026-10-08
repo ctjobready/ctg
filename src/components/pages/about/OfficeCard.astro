@@ -1,0 +1,70 @@
+---
+import Icon from '../../system/Icon.astro';
+import CopyEmail from '../../ui/CopyEmail.astro';
+import { mapsHref } from './routes';
+
+/** Office card from the ID-07 office list (lib/site.ts): address, phone, copyable email, "Open in Maps" link. */
+interface Props {
+  name: string;
+  city: string;
+  address: readonly string[];
+  email: string;
+  phone: string;
+  phoneHref: string;
+  /** Extra line (for example the campuses). */
+  note?: string;
+  /** Lead line describing the office's role. */
+  role?: string;
+  headingLevel?: 2 | 3;
+}
+const { name, city, address, email, phone, phoneHref, note, role, headingLevel = 3 } = Astro.props;
+const H = `h${headingLevel}` as 'h2' | 'h3';
+const maps = mapsHref(`${name}, ${address.join(', ')}`);
+---
+
+<article class="office card" data-fact="ID-07" data-reveal>
+  <div class="card__body">
+    <p class="eyebrow">{city}</p>
+    <H class="card__title">{name}</H>
+    {role && <p class="card__text">{role}</p>}
+    <address class="office__addr">{address.map((l) => <span>{l}</span>)}</address>
+    {note && <p class="card__text">{note}</p>}
+    <ul class="office__rows" role="list">
+      <li><Icon name="phone" size={18} /><a href={phoneHref}>{phone}</a></li>
+      <li><Icon name="mail" size={18} /><CopyEmail email={email} /></li>
+      <li><Icon name="map-pin" size={18} /><a class="office__map" href={maps} rel="noopener">Open in Maps<span class="sr-only"> (opens google.com/maps)</span></a></li>
+    </ul>
+  </div>
+</article>
+
+<style>
+  .office__addr {
+    font-style: normal;
+    display: grid;
+    color: var(--on-surface);
+  }
+  .office__rows {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .office__rows li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    flex-wrap: wrap;
+  }
+  .office__rows li > :global(.icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  .office__rows a {
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
