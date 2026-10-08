@@ -1,0 +1,88 @@
+---
+import Icon from '../system/Icon.astro';
+import Img from './Img.astro';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * LiteVideo ➕ — facade. No third-party request until the visitor clicks play:
+ * the thumbnail is served locally; the iframe comes from youtube-nocookie.com / player.vimeo.com.
+ * Without JS the poster is a plain link to the video.
+ */
+interface Props {
+  provider?: 'youtube' | 'vimeo';
+  id: string;
+  title: string;
+  poster?: ImageMetadata | string;
+  class?: string;
+}
+const { provider = 'youtube', id, title, poster, class: className } = Astro.props;
+const watchUrl = provider === 'vimeo' ? `https://vimeo.com/${id}` : `https://www.youtube.com/watch?v=${id}`;
+---
+
+<div class:list={['lite', className]} data-lite data-provider={provider} data-id={id} data-title={title}>
+  <a class="lite__play" href={watchUrl} rel="noopener" data-lite-play aria-label={`Play video: ${title}`}>
+    {poster ? <Img src={poster} alt="" width={1280} height={720} widths={[640, 1280]} sizes="(min-width:1024px) 720px, 100vw" /> : <span class="lite__ph" aria-hidden="true"></span>}
+    <span class="lite__btn" aria-hidden="true"><Icon name="play" size={28} /></span>
+  </a>
+</div>
+
+<style>
+  .lite {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--secondary);
+    box-shadow: var(--shadow-card);
+  }
+  .lite__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+  .lite__play :global(img),
+  .lite__ph {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lite__ph {
+    background: linear-gradient(135deg, var(--secondary), var(--brand-bright));
+  }
+  .lite__btn {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-card-hover);
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  .lite__play:hover .lite__btn {
+    transform: scale(1.08);
+  }
+  .lite :global(.lite__frame) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lite__play:hover .lite__btn {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/lite';
+</script>

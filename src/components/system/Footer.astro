@@ -1,0 +1,250 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { footerColumns, footerBottomLinks, utilityLink } from '../../data/nav';
+import { ENTITY_DEFINITION, OFFICES, SOCIAL, SITE_TAGLINE, COPYRIGHT_YEAR, SITE_NAME, COURSES_URL } from '../../lib/site';
+import { linkAttrs } from '../../lib/url';
+---
+
+<footer class="footer" id="site-footer">
+  <div class="container container--wide footer__main">
+    <div class="footer__brand">
+      <Logo variant="white" width={200} loading="lazy" />
+      <p class="footer__def">{ENTITY_DEFINITION}</p>
+      <p class="footer__tagline">{SITE_TAGLINE}</p>
+      <ul class="footer__social" role="list" aria-label="CodersTrust on social media">
+        {
+          SOCIAL.map((s) => (
+            <li>
+              <a href={s.href} rel="noopener" aria-label={`${s.label} (opens ${new URL(s.href).hostname.replace('www.', '')})`}>
+                <Icon name={s.id} size={20} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {
+      footerColumns.map((col) => (
+        <nav class="footer__col" aria-labelledby={`footer-${col.id}`}>
+          <h2 class="footer__heading" id={`footer-${col.id}`}>
+            <a href={linkAttrs(col.href).href}>{col.title}</a>
+          </h2>
+          <ul role="list">
+            {col.links.map((l) => (
+              <li>
+                <a href={linkAttrs(l.href).href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+
+  <div class="container container--wide">
+    <section class="footer__offices" aria-label="Offices">
+      {
+        OFFICES.map((o) => (
+          <div class="footer__office">
+            <h3>
+              {o.name}
+              <span> · {o.city}</span>
+            </h3>
+            {o.address.length > 0 && <address>{o.address.join(', ')}</address>}
+            <p>
+              <a href={`mailto:${o.email}`}>{o.email}</a>
+              <span aria-hidden="true"> · </span>
+              <a href={o.phoneHref}>{o.phone}</a>
+            </p>
+          </div>
+        ))
+      }
+    </section>
+
+    <div class="footer__bottom">
+      <p>© {COPYRIGHT_YEAR} {SITE_NAME}</p>
+      <ul role="list">
+        {
+          footerBottomLinks.map((l) => (
+            <li>
+              <a href={linkAttrs(l.href).href}>{l.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          Looking for courses?
+          <a href={COURSES_URL} rel="noopener">
+            JobReady.global
+            <Icon name="arrow-up-right" size={14} />
+            <span class="sr-only">{linkAttrs(utilityLink.href).srText}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    --ctx-text: var(--inverse-on-surface);
+    --ctx-muted: var(--surface-container-highest);
+    --ctx-heading: var(--inverse-on-surface);
+    --ctx-focus: var(--inverse-primary);
+    background: var(--inverse-surface);
+    color: var(--inverse-on-surface);
+    padding-top: var(--band-pad);
+    padding-bottom: var(--space-gutter);
+    font-size: var(--fs-body-base);
+  }
+  .footer a {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    transition: background-size var(--dur-base) var(--ease-standard), color var(--dur-base) ease;
+  }
+  .footer a:hover {
+    color: var(--inverse-primary);
+    background-size: 100% 1px;
+  }
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer__main {
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: 1fr;
+    padding-bottom: var(--space-lg);
+  }
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+  .footer__def {
+    margin: 0;
+    max-width: 34ch;
+    color: var(--inverse-on-surface);
+    font-size: var(--fs-body-xs);
+    line-height: 1.6;
+  }
+  .footer__tagline {
+    margin: 0;
+    color: var(--tertiary-light);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.5px;
+    font-size: var(--fs-heading-m);
+  }
+  .footer__social {
+    display: flex;
+    gap: var(--space-sm);
+  }
+  .footer__social a {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--on-surface-variant);
+    background-image: none;
+    transition: background-color var(--dur-base) ease, color var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .footer__social a:hover {
+    background: var(--inverse-primary);
+    border-color: var(--inverse-primary);
+    color: var(--inverse-surface);
+  }
+  .footer__heading {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-md);
+  }
+  .footer__col li + li {
+    margin-top: 2px;
+  }
+  .footer__col li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--inverse-on-surface);
+  }
+  .footer__offices {
+    display: grid;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+    border-block: 1px solid var(--on-surface-variant);
+  }
+  .footer__office h3 {
+    font-size: var(--fs-body-base);
+    font-weight: var(--fw-bold);
+    color: var(--inverse-on-surface);
+  }
+  .footer__office h3 span {
+    font-weight: var(--fw-regular);
+    color: var(--ctx-muted);
+  }
+  .footer__office address {
+    font-style: normal;
+    margin-top: 4px;
+    color: var(--ctx-muted);
+    font-size: var(--fs-body-xs);
+  }
+  .footer__office p {
+    margin: 4px 0 0;
+    font-size: var(--fs-body-xs);
+  }
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-lg);
+    padding-top: var(--space-gutter);
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .footer__bottom p {
+    margin: 0;
+  }
+  .footer__bottom ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-gutter);
+  }
+  .footer__bottom a {
+    color: var(--inverse-on-surface);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .footer__main {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+    .footer__offices {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer__main {
+      grid-template-columns: 1.35fr repeat(4, minmax(0, 1fr));
+    }
+    .footer__brand {
+      grid-column: auto;
+    }
+  }
+</style>

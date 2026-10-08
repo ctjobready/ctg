@@ -14,3 +14,6 @@ subagent-model-scores.csv
 playwright-report/
 test-results/
 .lighthouseci/
+
+# agent worktrees
+.claude/worktrees/

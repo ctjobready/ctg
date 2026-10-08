@@ -1,0 +1,148 @@
+---
+import Icon from '../system/Icon.astro';
+
+/** ModelDiagram ➕ — four numbered blocks (Who → How → What → Where) with animated connectors. */
+interface Props {
+  blocks: { label: string; title: string; text?: string; icon?: string }[];
+  caption?: string;
+  class?: string;
+}
+const { blocks, caption, class: className } = Astro.props;
+---
+
+<figure class:list={['model', className]}>
+  <ol class="model__list" role="list">
+    {
+      blocks.map((b, i) => (
+        <li class="model__block" data-reveal>
+          <span class="model__num" aria-hidden="true">{i + 1}</span>
+          <p class="eyebrow model__label">{b.label}</p>
+          {b.icon && <Icon name={b.icon} size={32} strokeWidth={1.5} class="model__icon" />}
+          <h3 class="model__title">{b.title}</h3>
+          {b.text && <p class="model__text">{b.text}</p>}
+          {i < blocks.length - 1 && <span class="model__conn" aria-hidden="true"><Icon name="arrow-right" size={20} /></span>}
+        </li>
+      ))
+    }
+  </ol>
+  {caption && <figcaption class="model__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .model {
+    margin: 0;
+  }
+  .model__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .model__block {
+    position: relative;
+    background: var(--ctx-card);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-gutter);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .model__block > * {
+    margin: 0;
+  }
+  .model__num {
+    position: absolute;
+    top: -14px;
+    right: var(--space-gutter);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--secondary);
+    color: var(--on-secondary);
+    font-weight: var(--fw-bold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-body-xs);
+  }
+  .model__block :global(.model__icon) {
+    color: var(--primary);
+  }
+  .model__label {
+    color: var(--on-primary-container);
+  }
+  .model__title {
+    color: var(--on-surface);
+    font-size: var(--fs-heading-l);
+  }
+  .model__text {
+    color: var(--on-surface-variant);
+  }
+  /* connectors: a line that draws between blocks when the figure reveals */
+  .model__conn {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    left: 50%;
+    bottom: calc(var(--space-lg) * -1 - 2px);
+    transform: translateX(-50%) rotate(90deg);
+    width: 24px;
+    height: 24px;
+    background: var(--surface);
+    border-radius: var(--radius-full);
+  }
+  .model__caption {
+    margin-top: var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  @media (min-width: 768px) {
+    .model__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .model__conn {
+      display: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    .model__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .model__conn {
+      display: inline-flex;
+      left: auto;
+      right: calc(var(--space-gutter) * -1 - 12px);
+      bottom: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+    .model__block:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: var(--space-gutter);
+      height: 2px;
+      background: var(--primary);
+      transform-origin: left;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @media (min-width: 1024px) {
+      :global(.js) .model__block:not(:last-child)::after {
+        transform: scaleX(0);
+      }
+      :global(.js) .model__block.is-visible:not(:last-child)::after {
+        transform: scaleX(1);
+        transition: transform 500ms var(--ease-emphasized) calc(var(--reveal-i, 0) * 60ms + 300ms);
+      }
+    }
+  }
+</style>

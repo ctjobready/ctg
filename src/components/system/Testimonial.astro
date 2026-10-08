@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  quote: string;
+  name: string;
+  role?: string;
+  /** 1–5 orange stars */
+  rating?: number;
+  class?: string;
+}
+const { quote, name, role, rating, class: className } = Astro.props;
+---
+
+<figure class:list={['testimonial', className]}>
+  {
+    rating && (
+      <div class="testimonial__rating" role="img" aria-label={`Rated ${rating} out of 5`}>
+        {Array.from({ length: Math.round(rating) }, () => <Icon name="star" size={18} strokeWidth={0} class="star" />)}
+      </div>
+    )
+  }
+  <blockquote class="testimonial__quote"><p>{quote}</p></blockquote>
+  <figcaption>
+    <span class="testimonial__name">{name}</span>
+    {role && <span class="testimonial__role">{role}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-gutter);
+    max-width: 720px;
+    margin: 0;
+    padding: var(--space-lg) 0;
+  }
+  .testimonial__quote {
+    margin: 0;
+  }
+  .testimonial__quote p {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-text);
+  }
+  .testimonial__rating {
+    display: flex;
+    gap: 2px;
+    color: var(--tertiary);
+  }
+  .testimonial__rating :global(.star) {
+    fill: currentColor;
+    stroke: none;
+  }
+  figcaption {
+    display: flex;
+    flex-direction: column;
+  }
+  .testimonial__name {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+  .testimonial__role {
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
+  }
+</style>

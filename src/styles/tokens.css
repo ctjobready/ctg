@@ -1,0 +1,173 @@
+/* ==========================================================================
+   GENERATED FILE — DO NOT EDIT.
+   Source: design-system/tokens.json (theme: Accessible AA) via scripts/build-tokens.mjs
+   Regenerate with `npm run tokens` (runs automatically before dev and build).
+   ========================================================================== */
+
+:root {
+  /* Color — AA theme values; themed tokens also expose --<name>-light (decoration / ≥24px display only) */
+  --surface: #ffffff;
+  --surface-dim: #d8dadf;
+  --surface-bright: #ffffff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #ebf4fe;
+  --surface-container: #e5f8ff;
+  --surface-container-high: #dbe5ff;
+  --surface-container-highest: #868e9d;
+  --on-surface: #272a30;
+  --on-surface-variant: #40454f;
+  --inverse-surface: #0e0f11;
+  --inverse-on-surface: #ebedef;
+  --outline: #636a79;
+  --outline-variant: #d8dadf;
+  --surface-tint: #0665df;
+  --primary: #0665df;
+  --on-primary: #ffffff;
+  --primary-container: #ebf4fe;
+  --on-primary-container: #054ca9;
+  --inverse-primary: #7eb5fb;
+  --secondary: #002fa7;
+  --on-secondary: #ffffff;
+  --secondary-container: #dbe5ff;
+  --on-secondary-container: #001d66;
+  --tertiary: #c47700;
+  --on-tertiary: #000a24;
+  --tertiary-container: #feedd2;
+  --on-tertiary-container: #744602;
+  --error: #dc2626;
+  --on-error: #ffffff;
+  --error-container: #fbe9e9;
+  --on-error-container: #841515;
+  --primary-fixed: #d2e5fe;
+  --primary-fixed-dim: #7eb5fb;
+  --on-primary-fixed: #021937;
+  --on-primary-fixed-variant: #054ca9;
+  --secondary-fixed: #dbe5ff;
+  --secondary-fixed-dim: #759cff;
+  --on-secondary-fixed: #000a24;
+  --on-secondary-fixed-variant: #001d66;
+  --tertiary-fixed: #feedd2;
+  --tertiary-fixed-dim: #fdb74f;
+  --on-tertiary-fixed: #372201;
+  --on-tertiary-fixed-variant: #744602;
+  --background: #ffffff;
+  --on-background: #272a30;
+  --surface-variant: #ebedef;
+  --blue-600: #054ca9;
+  --blue-700: #054ca9;
+  --klein-600: #002585;
+  --orange-600: #e28903;
+  --cyan: #0dc0ff;
+  --cyan-600: #009ed6;
+  --on-cyan: #272a30;
+  --powder-blue: #d2e5fe;
+  --enroll-bg: #edf5ff;
+  --promo-strip: #0665df;
+  --hero-gradient-center: #f5f9ff;
+  --hero-gradient-edge: #d6f4ff;
+  --success: #12823b;
+  --success-subtle: #e4fbed;
+  --success-strong: #12823b;
+  --warning: #f5b70b;
+  --warning-subtle: #fef8e7;
+  --warning-strong: #c49208;
+  --info: #0dc0ff;
+  --info-subtle: #e5f8ff;
+  --sale-badge-bg: #fdf7e8;
+  --sale-badge-border: #d4a017;
+
+  /* Light-theme counterparts of themed tokens */
+  --surface-container-highest-light: #adb2bd;
+  --outline-light: #868e9d;
+  --surface-tint-light: #2682f9;
+  --primary-light: #2682f9;
+  --on-primary-light: #ffffff;
+  --tertiary-light: #fca624;
+  --on-tertiary-light: #372201;
+  --blue-600-light: #0665df;
+  --on-cyan-light: #ffffff;
+  --promo-strip-light: #2682f9;
+  --success-light: #16a34a;
+
+  /* Spacing & layout */
+  --space-unit: 4px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-gutter: 20px;
+  --space-lg: 32px;
+  --space-section-mobile: 40px;
+  --space-section-desktop: 70px;
+  --content-max: 1200px;
+  --header-max: 1320px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-default: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-pill: 22px;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --shadow-card: 0 4px 8px 3px rgba(210, 229, 254, 0.25), 0 1px 3px 0 rgba(210, 229, 254, 0.3);
+  --shadow-header: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-focus: 0 0 0 2px #d2e5fe;
+
+  /* Breakpoints (reference values; use the literal px in @media) */
+  --bp-desktop: 1024px;
+  --bp-880: 880px;
+  --bp-tablet: 768px;
+  --bp-mobile: 576px;
+
+  /* ➕ Extension tokens */
+  --brand-bright: #2682f9; /* Light-theme JobReady Blue: decoration + ≥24px display figures only (3.72:1 on white) */
+  --font-sans: "D-DIN", "D-DIN Fallback", Roboto, "Hind Siliguri", system-ui, sans-serif; /* system stack + metric-matched fallback */
+  --measure: 68ch;
+  --header-h: 64px; /* 72px from 1024px — see media query below */
+  --band-pad: clamp(40px, 6vw, 80px); /* section padding */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+  --dur-reveal: 600ms;
+  --shadow-card-hover: 0 12px 24px -6px rgba(6, 101, 223, 0.18), 0 2px 6px rgba(210, 229, 254, 0.6);
+
+  /* Font weights — D-DIN ships 400 + 700; 500 resolves to 400 and 600 to 700 by CSS font matching */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Type scale — fluid between mobile and desktop (system sizes) */
+  --fs-display-5xl: clamp(2rem, 1.4rem + 2.2vw, 2.75rem);
+  --lh-display-5xl: 1.2;
+  --fs-display-4xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  --lh-display-4xl: 1.2;
+  --fs-heading-3xl: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  --lh-heading-3xl: 1.22;
+  --fs-heading-2xl: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
+  --lh-heading-2xl: 1.25;
+  --fs-heading-xl: clamp(1.5rem, 1.35rem + 0.6vw, 1.75rem);
+  --lh-heading-xl: 1.29;
+  --fs-heading-l: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --lh-heading-l: 1.33;
+  --fs-heading-m: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
+  --lh-heading-m: 1.4;
+  --fs-body-l: clamp(1rem, 0.9rem + 0.45vw, 1.25rem);
+  --lh-body-l: 1.6;
+  --fs-body-m: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --lh-body-m: 1.45;
+  --fs-body-base: 1rem;
+  --lh-body-base: 1.5;
+  --fs-body-xs: 0.875rem;
+  --lh-body-xs: 1.43;
+}
+
+/* Header height steps up on desktop */
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 72px;
+  }
+}

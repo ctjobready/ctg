@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  /** Number of slides if known at build time; otherwise carousel.ts creates the dots. */
+  count?: number;
+  index?: number;
+  label?: string;
+  class?: string;
+}
+const { count, index = 0, label = 'carousel', class: className } = Astro.props;
+---
+
+<div class:list={['cc', className]}>
+  <button class="cc__arrow" type="button" data-carousel-prev aria-label={`Previous ${label} slide`}>
+    <Icon name="chevron-left" size={20} />
+  </button>
+  <div class="cc__dots" data-carousel-dots>
+    {count && Array.from({ length: count }, (_, i) => <button type="button" class:list={['dot', i === index && 'is-active']} aria-label={`Go to slide ${i + 1}`} aria-current={i === index ? 'true' : undefined} />)}
+  </div>
+  <button class="cc__arrow" type="button" data-carousel-next aria-label={`Next ${label} slide`}>
+    <Icon name="chevron-right" size={20} />
+  </button>
+</div>
+
+<style>
+  .cc {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .cc__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--dur-base) ease, color var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .cc__arrow:hover:not(:disabled) {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+  }
+  .cc__arrow:disabled {
+    color: var(--outline);
+    opacity: 0.55;
+  }
+  .cc__dots {
+    display: flex;
+    align-items: center;
+  }
+  /* 24×24 hit box (WCAG 2.2 target size); the visible dot is the ::before */
+  .cc__dots :global(.dot) {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+  }
+  .cc__dots :global(.dot)::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    transition: width var(--dur-base) var(--ease-standard), background-color var(--dur-base) ease;
+  }
+  .cc__dots :global(.dot.is-active)::before {
+    width: 24px;
+    background: var(--primary);
+  }
+</style>

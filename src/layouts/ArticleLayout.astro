@@ -1,0 +1,141 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Badge from '../components/system/Badge.astro';
+import Icon from '../components/system/Icon.astro';
+import { formatDate, isoDate } from '../lib/format';
+import { newsArticle } from '../lib/schema';
+import { absoluteUrl, canonicalUrl, stripBase } from '../lib/url';
+import type { BaseLayoutProps } from '../lib/layout';
+
+/** T6 Article (news): title, date, topic, hero image slot, prose body, share links, related. */
+interface Props extends BaseLayoutProps {
+  date: string;
+  updated?: string;
+  topic?: string;
+  author?: string;
+}
+const { date, updated, topic, author, ...base } = Astro.props;
+const path = base.path ?? stripBase(Astro.url.pathname);
+const canonical = canonicalUrl(path);
+const node = newsArticle({
+  path,
+  headline: base.title,
+  description: base.description,
+  datePublished: date,
+  dateModified: updated,
+  image: base.image ? (base.image.startsWith('http') ? base.image : absoluteUrl(base.image, Astro.site)) : undefined,
+  authorName: author,
+  section: topic,
+});
+const enc = encodeURIComponent;
+---
+
+<BaseLayout {...base} path={path} ogType="article" publishedTime={date} modifiedTime={updated ?? date} jsonLd={[...(base.jsonLd ?? []), node]}>
+  <slot name="head" slot="head" />
+  <article class="art container container--narrow">
+    <header class="art__head">
+      <p class="art__meta">
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+        {topic && <Badge tone="brand">{topic}</Badge>}
+      </p>
+      <h1 class="t-display-4xl">{base.title}</h1>
+      {author && <p class="art__author">By {author}</p>}
+    </header>
+    {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" /></figure>}
+    <div class="prose art__body"><slot /></div>
+
+    <aside class="art__share" aria-label="Share this article">
+      <p>Share</p>
+      <ul role="list">
+        <li><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`} rel="noopener"><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
+        <li><a href={`https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`} rel="noopener"><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
+        <li><a href={`mailto:?subject=${enc(base.title)}&body=${enc(canonical)}`}><Icon name="mail" size={20} /><span class="sr-only">Share by email</span></a></li>
+        <li><button type="button" data-copy={canonical} data-copy-message="Link copied"><Icon name="link" size={20} /><span class="sr-only">Copy link</span></button></li>
+      </ul>
+    </aside>
+  </article>
+  {Astro.slots.has('related') && <section class="art__related container" aria-labelledby="related-h"><h2 id="related-h" class="t-heading-2xl">Related</h2><div class="grid-cards"><slot name="related" /></div></section>}
+</BaseLayout>
+
+<style>
+  .art {
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .art {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+  .art__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  .art__head > * {
+    margin: 0;
+  }
+  .art__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .art__author {
+    color: var(--on-surface-variant);
+  }
+  .art__hero {
+    margin: 0 0 var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .art__hero :global(img) {
+    width: 100%;
+    height: auto;
+  }
+  .art__share {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .art__share p {
+    margin: 0;
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .art__share ul {
+    display: flex;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .art__share a,
+  .art__share button {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--primary-fixed);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-image: none;
+  }
+  .art__share a:hover,
+  .art__share button:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .art__related {
+    padding-bottom: var(--band-pad);
+    display: grid;
+    gap: var(--space-md);
+  }
+</style>

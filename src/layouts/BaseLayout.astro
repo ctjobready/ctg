@@ -1,0 +1,104 @@
+---
+import '../styles/reset.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/motion.css';
+import '../styles/utilities.css';
+
+import SEOHead from '../components/seo/SEOHead.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import PromoBar from '../components/system/PromoBar.astro';
+import SiteHeader from '../components/system/SiteHeader.astro';
+import Footer from '../components/system/Footer.astro';
+import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import BackToTop from '../components/ui/BackToTop.astro';
+import Toast from '../components/ui/Toast.astro';
+import { promo as promoData } from '../data/nav';
+import { breadcrumbList, webPage } from '../lib/schema';
+import { stripBase } from '../lib/url';
+import type { BaseLayoutProps } from '../lib/layout';
+
+interface Props extends BaseLayoutProps {}
+const {
+  title,
+  description,
+  path: pathProp,
+  breadcrumbs,
+  jsonLd = [],
+  promo = true,
+  image,
+  imageAlt,
+  ogType = 'website',
+  noindex = false,
+  titleSuffix = true,
+  publishedTime,
+  modifiedTime,
+  bodyClass,
+} = Astro.props;
+
+const path = pathProp ?? stripBase(Astro.url.pathname);
+const showPromo = promo && path !== promoData.hideOnPath;
+
+const crumbItems = breadcrumbs
+  ? [
+      { name: 'Home', path: '/' },
+      ...breadcrumbs.map((c, i) => ({ name: c.label, path: c.href ?? (i === breadcrumbs.length - 1 ? path : '/') })),
+    ]
+  : [];
+const nodes = [
+  // Home gets a plain WebPage; others are described by the page itself (pass richer nodes via jsonLd).
+  ...(jsonLd.length ? [] : [webPage({ path, name: title, description, ...(crumbItems.length ? { breadcrumb: crumbItems } : {}) })]),
+  ...jsonLd,
+  ...(crumbItems.length && jsonLd.length ? [breadcrumbList(crumbItems)] : []),
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      imageAlt={imageAlt}
+      type={ogType}
+      noindex={noindex}
+      suffix={titleSuffix}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+    />
+    <!-- Progressive enhancement flag + remembered promo dismissal, set before first paint -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        if (localStorage.getItem('ct-promo-v1')) document.documentElement.setAttribute('data-promo', 'off');
+      } catch (e) {}
+    </script>
+    <style is:inline>
+      html[data-promo='off'] [data-promo] {
+        display: none;
+      }
+      main:focus {
+        outline: none;
+      }
+    </style>
+    <JsonLd nodes={nodes} />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    {showPromo && <PromoBar lead={promoData.lead} message={promoData.rest} actionLabel={promoData.action.label} href={promoData.action.href} />}
+    <SiteHeader />
+    <main id="main" tabindex="-1">
+      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+      <slot />
+    </main>
+    <Footer />
+    <BackToTop />
+    <Toast />
+    <script>
+      import '../scripts/reveal';
+    </script>
+  </body>
+</html>

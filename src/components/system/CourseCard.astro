@@ -1,0 +1,136 @@
+---
+import Icon from './Icon.astro';
+import Badge from './Badge.astro';
+import Button from './Button.astro';
+import Img from '../ui/Img.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  title: string;
+  image?: ImageMetadata | string;
+  imageAlt?: string;
+  badge?: string;
+  meta?: { icon: string; label: string }[];
+  /** Fee, only if published. */
+  price?: string;
+  oldPrice?: string;
+  actionLabel?: string;
+  href: string;
+  class?: string;
+}
+const { title, image, imageAlt = '', badge, meta = [], price, oldPrice, actionLabel = 'View course', href, class: className } = Astro.props;
+---
+
+<article class:list={['course', className]}>
+  <div class="course__media">
+    {image ? <Img src={image} alt={imageAlt} width={640} height={360} widths={[320, 640]} sizes="(min-width:1024px) 360px, 90vw" /> : <Icon name="book-open" size={48} strokeWidth={1.25} />}
+    {badge && <Badge tone="sale" class="course__badge">{badge}</Badge>}
+  </div>
+  <div class="course__body">
+    <h3 class="course__title">{title}</h3>
+    {
+      meta.length > 0 && (
+        <ul class="course__meta" role="list">
+          {meta.map((m) => (
+            <li>
+              <Icon name={m.icon} size={16} />
+              {m.label}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      price && (
+        <p class="course__price">
+          <span class="course__now">{price}</span>
+          {oldPrice && <s class="course__old">{oldPrice}</s>}
+        </p>
+      )
+    }
+    <div class="course__foot">
+      <Button variant="enroll" href={href}>{actionLabel}</Button>
+    </div>
+  </div>
+</article>
+
+<style>
+  .course {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    height: 100%;
+  }
+  .course__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--surface-container-low);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+  .course__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .course__media :global(.course__badge) {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+  }
+  .course__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: var(--space-md);
+    flex: 1;
+  }
+  .course__title {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--on-surface);
+  }
+  .course__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .course__meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .course__meta :global(.icon) {
+    color: var(--primary);
+  }
+  .course__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin: 0;
+  }
+  .course__now {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+  }
+  .course__old {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .course__foot {
+    margin-top: auto;
+  }
+</style>

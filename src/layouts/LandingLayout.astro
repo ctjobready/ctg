@@ -1,0 +1,55 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Button from '../components/system/Button.astro';
+import type { BaseLayoutProps } from '../lib/layout';
+
+/** T3 Landing (CMF): BaseLayout + optional sticky in-page CTA bar on mobile. */
+interface Props extends BaseLayoutProps {
+  stickyCta?: { label: string; href: string };
+}
+const { stickyCta, ...base } = Astro.props;
+---
+
+<BaseLayout {...base} bodyClass={[base.bodyClass, stickyCta && 'has-sticky-cta'].filter(Boolean).join(' ')}>
+  <slot name="head" slot="head" />
+  <slot />
+  {
+    stickyCta && (
+      <div class="sticky-cta">
+        <Button href={stickyCta.href} iconEnd="arrow-right">{stickyCta.label}</Button>
+      </div>
+    )
+  }
+</BaseLayout>
+
+<style is:global>
+  .sticky-cta {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 80;
+    padding: var(--space-sm) var(--space-gutter) calc(var(--space-sm) + env(safe-area-inset-bottom));
+    background: var(--surface);
+    box-shadow: 0 -2px 8px color-mix(in srgb, var(--inverse-surface) 8%, transparent);
+  }
+  .sticky-cta .btn {
+    width: 100%;
+  }
+  .has-sticky-cta {
+    padding-bottom: 72px;
+  }
+  /* keep the back-to-top button clear of the bar */
+  .has-sticky-cta .btt {
+    bottom: calc(var(--space-gutter) + 64px);
+  }
+  @media (min-width: 768px) {
+    .sticky-cta {
+      display: none;
+    }
+    .has-sticky-cta {
+      padding-bottom: 0;
+    }
+    .has-sticky-cta .btt {
+      bottom: var(--space-gutter);
+    }
+  }
+</style>

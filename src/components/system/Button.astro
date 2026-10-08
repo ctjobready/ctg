@@ -1,0 +1,169 @@
+---
+import Icon from './Icon.astro';
+import { linkAttrs } from '../../lib/url';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'promo' | 'enroll' | 'inverse';
+  size?: 'md' | 'sm';
+  href?: string;
+  icon?: string;
+  iconEnd?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  class?: string;
+  /** Extra attributes (data-*, aria-*) are forwarded to the element. */
+  [key: `data-${string}`]: string | undefined;
+  'aria-label'?: string;
+  'aria-expanded'?: boolean | 'true' | 'false';
+  'aria-controls'?: string;
+}
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  icon,
+  iconEnd,
+  type = 'button',
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, size === 'sm' && 'btn--sm', className];
+const link = href ? linkAttrs(href) : undefined;
+---
+
+{
+  link ? (
+    <a class:list={classes} href={link.href} rel={link.rel} {...rest}>
+      {icon && <Icon name={icon} />}
+      <span class="btn__label"><slot /></span>
+      {link.srText && <span class="sr-only"> {link.srText}</span>}
+      {iconEnd && <Icon name={iconEnd} class="btn__end" />}
+    </a>
+  ) : (
+    <button class:list={classes} type={type} disabled={disabled} {...rest}>
+      {icon && <Icon name={icon} />}
+      <span class="btn__label"><slot /></span>
+      {iconEnd && <Icon name={iconEnd} class="btn__end" />}
+    </button>
+  )
+}
+
+<style is:global>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font: var(--fw-medium) 1rem/1.5 var(--font-sans);
+    border: 1px solid transparent;
+    border-radius: var(--radius-default);
+    padding: 11px var(--space-gutter);
+    min-height: 48px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    background-image: none;
+    transition:
+      background-color var(--dur-base) ease,
+      color var(--dur-base) ease,
+      border-color var(--dur-base) ease,
+      transform var(--dur-base) ease;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--ctx-focus);
+    outline-offset: 0;
+    box-shadow: 0 0 0 4px var(--powder-blue);
+    border-radius: var(--radius-default);
+  }
+  .btn[disabled] {
+    background: var(--surface-variant);
+    color: var(--on-surface-variant);
+    border-color: var(--outline-variant);
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn__end {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  .btn:hover .btn__end {
+    transform: translateX(3px);
+  }
+
+  .btn--primary {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .btn--primary:hover {
+    background: var(--blue-600);
+    transform: scale(1.03);
+  }
+  .btn--primary:active {
+    background: var(--blue-700);
+    transform: scale(0.98);
+  }
+  .btn--secondary {
+    background: var(--secondary);
+    color: var(--on-secondary);
+    min-height: 50px;
+  }
+  .btn--secondary:hover,
+  .btn--secondary:active {
+    background: var(--klein-600);
+  }
+  .btn--outline {
+    background: var(--surface);
+    color: var(--secondary);
+    border-color: var(--secondary);
+  }
+  .btn--outline:hover {
+    background: var(--surface-container-low);
+  }
+  .btn--promo {
+    background: var(--cyan);
+    color: var(--on-cyan);
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-body-xs);
+    line-height: 1.43;
+    padding: 5px 14px;
+    min-height: 32px;
+  }
+  .btn--promo:hover {
+    background: var(--cyan-600);
+  }
+  .btn--enroll {
+    background: var(--enroll-bg);
+    color: var(--blue-600);
+    min-height: 40px;
+    padding: 8px var(--space-md);
+    width: 100%;
+  }
+  .btn--enroll:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  /* ➕ White button for Klein / Deep Ink bands (the primary blue lacks contrast there) */
+  .btn--inverse {
+    background: var(--surface);
+    color: var(--secondary);
+  }
+  .btn--inverse:hover {
+    background: var(--primary-fixed);
+    transform: scale(1.03);
+  }
+  .btn--sm {
+    min-height: 40px;
+    padding: 8px var(--space-md);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn--primary:hover,
+    .btn--inverse:hover {
+      transform: none;
+    }
+    .btn:hover .btn__end {
+      transform: none;
+    }
+  }
+</style>

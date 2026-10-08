@@ -1,0 +1,51 @@
+---
+/** Global toast region (M18). Toasts are created by scripts/toast.ts. Rendered once by BaseLayout. */
+---
+
+<div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<style is:global>
+  .toast-region {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--space-gutter) + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    pointer-events: none;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--space-gutter));
+  }
+  .toast {
+    background: var(--inverse-surface);
+    color: var(--inverse-on-surface);
+    padding: 12px var(--space-gutter);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card-hover);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--dur-slow) var(--ease-emphasized), transform var(--dur-slow) var(--ease-emphasized);
+  }
+  .toast.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .toast.is-out {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .toast {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/toast';
+</script>

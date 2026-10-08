@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import colorLogo from '../../assets/images/brand/coderstrust-logo-color.png';
+import whiteLogo from '../../assets/images/brand/coderstrust-logo-white.png';
+import { url } from '../../lib/url';
+
+interface Props {
+  variant?: 'color' | 'white';
+  /** Rendered width in CSS px (height follows the aspect ratio). */
+  width?: number;
+  /** Wrap in a link to Home. */
+  link?: boolean;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+}
+const { variant = 'color', width = 190, link = false, class: className, loading = 'eager' } = Astro.props;
+const src = variant === 'white' ? whiteLogo : colorLogo;
+const height = Math.round((width * src.height) / src.width);
+---
+
+{
+  link ? (
+    <a class:list={['logo', className]} href={url('/')} aria-label="CodersTrust — home">
+      <Image src={src} alt="CodersTrust" width={width} height={height} densities={[1, 2]} format="png" loading={loading} decoding="async" />
+    </a>
+  ) : (
+    <span class:list={['logo', className]}>
+      <Image src={src} alt="CodersTrust" width={width} height={height} densities={[1, 2]} format="png" loading={loading} decoding="async" />
+    </span>
+  )
+}
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+  .logo img {
+    height: auto;
+  }
+</style>

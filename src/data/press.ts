@@ -6,12 +6,12 @@ import type { ImageMetadata } from 'astro';
 import logo_gulf_news from '../assets/images/press/gulf-news.png';
 import logo_techcrunch from '../assets/images/press/techcrunch.png';
 import logo_forbes from '../assets/images/press/forbes.png';
-import logo_the_wall_street_journal from '../assets/images/press/the-wall-street-journal.png';
+import logo_the_wall_street_journal from '../assets/images/press/wsj.png';
 import logo_tech_in_asia from '../assets/images/press/tech-in-asia.png';
 import logo_usa_today from '../assets/images/press/usa-today.png';
 import logo_mid_hudson_news from '../assets/images/press/mid-hudson-news.png';
-import logo_the_times_of_india from '../assets/images/press/the-times-of-india.png';
-import logo_world_bank from '../assets/images/press/world-bank.png';
+import logo_the_times_of_india from '../assets/images/press/times-of-india.png';
+import logo_world_bank from '../assets/images/press/world-bank-blogs.png';
 
 export interface PressItem {
   outlet: string;

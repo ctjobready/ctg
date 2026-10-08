@@ -1,0 +1,74 @@
+---
+import CarouselControls from './CarouselControls.astro';
+interface Props {
+  /** Accessible name of the carousel region */
+  label: string;
+  /** Slides visible at ≥1024px (1 on mobile, 2 at ≥768) */
+  perView?: 1 | 2 | 3;
+  count?: number;
+  class?: string;
+}
+const { label, perView = 3, count, class: className } = Astro.props;
+---
+
+<section class:list={['carousel', `carousel--${perView}`, className]} data-carousel aria-roledescription="carousel" aria-label={label}>
+  <div class="carousel__track" data-carousel-track tabindex="0" role="group" aria-label={`${label} slides, use arrow keys to scroll`}>
+    <slot />
+  </div>
+  <CarouselControls class="carousel__controls" label={label} count={count} />
+</section>
+
+<style>
+  .carousel {
+    --gap: var(--space-gutter);
+    position: relative;
+  }
+  .carousel__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    gap: var(--gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 4px 4px var(--space-md);
+    margin-inline: -4px;
+    overscroll-behavior-x: contain;
+    border-radius: var(--radius-default);
+  }
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+  .carousel__track > :global(*) {
+    scroll-snap-align: start;
+    height: 100%;
+  }
+  .carousel :global(.carousel__controls) {
+    margin-top: var(--space-md);
+    justify-content: center;
+  }
+  :global(html:not(.js)) .carousel :global(.carousel__controls) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .carousel--2 .carousel__track,
+    .carousel--3 .carousel__track {
+      grid-auto-columns: calc((100% - var(--gap)) / 2);
+    }
+  }
+  @media (min-width: 1024px) {
+    .carousel--3 .carousel__track {
+      grid-auto-columns: calc((100% - 2 * var(--gap)) / 3);
+    }
+    .carousel--1 .carousel__track {
+      grid-auto-columns: 100%;
+    }
+  }
+  .carousel--1 .carousel__track {
+    grid-auto-columns: 100%;
+  }
+</style>
+
+<script>
+  import '../../scripts/carousel';
+</script>

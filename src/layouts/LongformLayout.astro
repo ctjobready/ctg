@@ -1,0 +1,137 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate, isoDate } from '../lib/format';
+import type { BaseLayoutProps } from '../lib/layout';
+
+/** T4 Evidence / long-form: header, sticky table of contents, "Last updated". */
+interface Props extends BaseLayoutProps {
+  eyebrow?: string;
+  /** H1 (defaults to `title`). */
+  heading?: string;
+  lead?: string;
+  toc?: { id: string; label: string }[];
+  /** ISO date of last substantive update. */
+  updated?: string;
+}
+const { eyebrow, heading, lead, toc = [], updated, ...base } = Astro.props;
+---
+
+<BaseLayout {...base}>
+  <slot name="head" slot="head" />
+  <header class="lf-head">
+    <div class="container container--narrow lf-head__inner">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1 class="t-display-4xl">{heading ?? base.title}</h1>
+      {lead && <p class="lead">{lead}</p>}
+      {updated && <p class="lf-updated">Last updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></p>}
+    </div>
+  </header>
+
+  <div class="container lf-grid">
+    {
+      (toc.length > 0 || Astro.slots.has('toc')) && (
+        <aside class="lf-toc" data-toc>
+          <details class="lf-toc__box" open>
+            <summary>On this page</summary>
+            <nav aria-label="On this page">
+              <slot name="toc">
+                <ol role="list">
+                  {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
+                </ol>
+              </slot>
+            </nav>
+          </details>
+        </aside>
+      )
+    }
+    <div class="lf-body"><slot /></div>
+  </div>
+
+  <script>
+    import '../scripts/toc';
+  </script>
+</BaseLayout>
+
+<style>
+  .lf-head {
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .lf-head {
+      padding-block: var(--space-section-desktop) calc(var(--space-section-desktop) * 0.7);
+    }
+  }
+  .lf-head__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+  .lf-head__inner > * {
+    margin: 0;
+  }
+  .lf-updated {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .lf-grid {
+    display: grid;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg) var(--band-pad);
+  }
+  .lf-toc__box {
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface-container-low);
+    padding: var(--space-md);
+  }
+  .lf-toc__box summary {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .lf-toc ol {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .lf-toc a {
+    display: block;
+    padding: 6px 10px;
+    border-left: 3px solid transparent;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .lf-toc a:hover {
+    color: var(--primary);
+    background: var(--surface);
+  }
+  .lf-toc a.is-active {
+    border-left-color: var(--primary);
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    background: var(--surface);
+  }
+  .lf-body {
+    min-width: 0;
+  }
+  @media (min-width: 1024px) {
+    .lf-grid {
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: var(--space-lg) 56px;
+      align-items: start;
+    }
+    .lf-toc {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      max-height: calc(100dvh - var(--header-h) - 48px);
+      overflow-y: auto;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import { iconInner } from '../../lib/icons';
+
+interface Props {
+  /** Lucide icon name (e.g. "arrow-right") or brand glyph: facebook | linkedin | youtube. */
+  name: string;
+  /** Pixel size; defaults to 1em so the icon follows font-size. */
+  size?: number;
+  /** Accessible name. Omit for decorative icons (aria-hidden). */
+  label?: string;
+  strokeWidth?: number;
+  class?: string;
+}
+const { name, size, label, strokeWidth = 1.75, class: className } = Astro.props;
+const inner = iconInner(name);
+---
+
+<svg
+  class:list={['icon', className]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  style={size ? `--icon-size:${size}px` : undefined}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+  set:html={inner}
+/>
+
+<style is:global>
+  .icon {
+    width: var(--icon-size, 1em);
+    height: var(--icon-size, 1em);
+    flex: none;
+    display: inline-block;
+    vertical-align: -0.125em;
+  }
+</style>
