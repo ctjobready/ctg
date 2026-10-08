@@ -1,0 +1,16 @@
+# dependencies & build
+node_modules/
+dist/
+.astro/
+.cache/
+# local tooling / reports
+subagent-model-scores.csv
+.work/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+.lighthouseci/
