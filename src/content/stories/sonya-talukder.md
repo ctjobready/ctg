@@ -1,6 +1,6 @@
 ---
 name: "Sonya Talukder"
-outcome: "Ex-Army officer earning $2,000 a month as a digital marketer"
+outcome: "Works as a digital marketer"
 pathway: unknown
 photo: ../../assets/images/stories/sonya-talukder.jpg
 photoAlt: "Portrait of Sonya Talukder"

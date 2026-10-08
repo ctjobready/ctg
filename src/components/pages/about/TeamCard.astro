@@ -43,7 +43,7 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
     {
       more.length > 0 && (
         <details class="tc__more">
-          <summary>{more.length} more areas</summary>
+          <summary>{more.length} more {more.length === 1 ? 'area' : 'areas'}</summary>
           <ul class="tc__chips" role="list">
             {more.map((e) => <li>{e}</li>)}
           </ul>

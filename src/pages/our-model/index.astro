@@ -9,7 +9,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import MechanismBand from '../../components/sections/MechanismBand.astro';
-import Fact from '../../components/facts/Fact.astro';
+import FootnoteMarker from '../../components/facts/FootnoteMarker.astro';
 import Sources from '../../components/facts/Sources.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
@@ -19,14 +19,17 @@ import { linkAttrs } from '../../lib/url';
 const path = '/our-model/';
 const description = desc('One integrated path: readiness assessment, certified training, three months of milestone-based mentoring and placement support, with outcomes tracked.');
 const lead = `One integrated path: an accessible assessment, ${val('PD-01')} training hours per certification, three months of milestone-based mentoring, placement support and outcome tracking after each course.`;
+// Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
+// register entry; the figures come from it (val) or are copied from it unchanged.
 const delivery = [
-  { icon: 'clipboard-check', title: 'Accessible readiness assessment', id: 'PD-14' },
-  { icon: 'layers', title: 'Foundation tracks', id: 'PD-17' },
-  { icon: 'graduation-cap', title: 'Blended training with certification', id: 'PD-01' },
-  { icon: 'wifi', title: 'Connectivity-light delivery', id: 'PD-07' },
-  { icon: 'network', title: 'Hub-and-spoke delivery at scale', id: 'PD-06' },
-  { icon: 'briefcase', title: 'Placement support', id: 'PD-15' },
+  { icon: 'clipboard-check', title: 'Accessible readiness assessment', id: 'PD-14', text: 'Tests and an interview route each applicant to a career track or a foundation track, rather than screening people out. Selection uses a customized psychometric analysis, a written test and an interview, and the reasons for non-selection are reported.' },
+  { icon: 'layers', title: 'Foundation tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
+  { icon: 'graduation-cap', title: 'Blended training with certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, from a live profile to first bids, a first client and the exam, and then learners join the alumni network.` },
+  { icon: 'wifi', title: 'Connectivity-light delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
+  { icon: 'network', title: 'Hub-and-spoke delivery at scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
+  { icon: 'briefcase', title: 'Placement support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
+const qa = 'Programs use common practical-assessment rubrics, sampled moderation of portfolios and assessments, and trainer observation, with remediation before the next cohort. Completion, competency and external-exam results are reported separately.';
 const d = discoveryCta();
 ---
 
@@ -52,11 +55,10 @@ const d = discoveryCta();
 
   <Section aria-labelledby="delivery-h">
     <SectionHeader id="delivery-h" eyebrow="Delivery model" title="How a program is delivered" lead="The design choices that make the path work for learners who start from different places." />
-    <p class="om__cycle" data-fact="ID-06"><Fact id="ID-06" /></p>
     <div class="grid-cards">
       {delivery.map((x) => (
         <FeatureCard icon={x.icon} title={x.title}>
-          <p class="card__text" data-fact={x.id}><Fact id={x.id} /></p>
+          <p class="card__text" data-fact={x.id}>{x.text}<FootnoteMarker id={x.id} /></p>
         </FeatureCard>
       ))}
     </div>
@@ -64,7 +66,7 @@ const d = discoveryCta();
 
   <Section tone="airy" aria-labelledby="qa-h">
     <SectionHeader id="qa-h" eyebrow="Quality" title="Quality assurance" />
-    <p class="om__text" data-fact="PD-16"><Fact id="PD-16" /></p>
+    <p class="om__text" data-fact="PD-16">{qa}<FootnoteMarker id="PD-16" /></p>
   </Section>
 
   <Section aria-labelledby="safe-h">
@@ -86,12 +88,6 @@ const d = discoveryCta();
 </BaseLayout>
 
 <style>
-  .om__cycle {
-    margin: 0 0 var(--space-lg);
-    max-width: var(--measure);
-    font-size: var(--fs-body-l);
-    color: var(--on-surface);
-  }
   .om__text {
     max-width: var(--measure);
     font-size: var(--fs-body-m);

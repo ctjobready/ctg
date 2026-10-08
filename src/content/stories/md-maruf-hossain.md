@@ -1,6 +1,6 @@
 ---
 name: "Md. Maruf Hossain"
-outcome: "Earned $943+ as a freelance graphic designer"
+outcome: "Works as a freelance graphic designer"
 pathway: freelance
 photo: ../../assets/images/stories/md-maruf-hossain.jpg
 photoAlt: "Portrait of Md. Maruf Hossain"

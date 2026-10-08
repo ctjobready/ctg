@@ -1,6 +1,6 @@
 ---
 name: "Mustafa Zabed"
-outcome: "Sold a first blog to an Upwork client for $200"
+outcome: "Sold a first blog to an Upwork client"
 pathway: freelance
 photo: ../../assets/images/stories/mustafa-zabed.jpg
 photoAlt: "Portrait of Mustafa Zabed"

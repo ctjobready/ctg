@@ -1,6 +1,6 @@
 ---
 name: "Maria Dewan"
-outcome: "Won a logo design project on Freelancer.com and built a freelance portfolio"
+outcome: "Won a company logo design on Freelancer.com, then more clients"
 pathway: freelance
 program: "Her Power"
 photo: ../../assets/images/stories/maria-dewan.jpg

@@ -13,11 +13,11 @@ seoTitle: "UPEACE Partnership for Next Generation Skills"
 
 Global EdTech company CodersTrust and the University for Peace, an university and treaty organization mandated by UN General Assembly, have forged a partnership on Saturday June 3rd, at a signing ceremony held at UPEACE campus in San Jose, Costa Rica, to offer Next Generation Skills training for the Digital Era through academic collaboration and student exchanges.
 
-Aziz Ahmad, Chairman of CodersTrust and Professor Fransisco Rojas Aravena, Rector of University for Peace signed the agreement. Dr. Juan Carlos Sainz Borgo, Vice Rector of University for Peace and Md. Shamsul Haque, CEO of CodersTrust was present among others.
+Aziz Ahmad, Chairman of CodersTrust and Professor Francisco Rojas Aravena, Rector of University for Peace signed the agreement. Dr. Juan Carlos Sainz Borgo, Vice Rector of University for Peace and Md. Shamsul Haque, CEO of CodersTrust was present among others.
 
 ![Photo from the news story: CodersTrust partners up with UN University for Peace (UPEACE) to offer Next Generation...](../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg)
 
-UPEACE Rector Professor Fransisco Rojas Aravena praised CodersTrust for its focus on youths and women from underprivileged, underserved and underemployed backgrounds. Emphasizing on innovation for peace, Professor Aravena said next-generation skills and technologies like Artificial Intelligence should be leveraged for the peace and prosperity of humanity, addressing any concerns. He recalled his visit to Bangladesh and termed its relationship with Bangladesh as permanent.
+UPEACE Rector Professor Francisco Rojas Aravena praised CodersTrust for its focus on youths and women from underprivileged, underserved and underemployed backgrounds. Emphasizing on innovation for peace, Professor Aravena said next-generation skills and technologies like Artificial Intelligence should be leveraged for the peace and prosperity of humanity, addressing any concerns. He recalled his visit to Bangladesh and termed its relationship with Bangladesh as permanent.
 
 CodersTrust Chairman Aziz Ahmad said, this affiliation holds great significance in relation to world peace, education, job opportunities, and women empowerment. He said, in today’s world where technology is rapidly advancing, digital skills have become essential for socio-economic progress. He pointed out, $17 trillion will be lost due to setbacks of educational attainment during the pandemic, 1 billion youth are entering the labour market this decade with risk of un/under-employment and 45% of the workforce will need to reskilling every 3-4 years.
 

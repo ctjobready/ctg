@@ -1,6 +1,6 @@
 ---
 name: "A B M Mahir Absar"
-outcome: "Earned $5,000 from Instagram alone as a digital designer"
+outcome: "Works as a digital designer"
 pathway: unknown
 photo: ../../assets/images/stories/a-b-m-mahir-absar.png
 photoAlt: "Portrait of A B M Mahir Absar"

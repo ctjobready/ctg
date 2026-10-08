@@ -14,7 +14,7 @@ seoTitle: "Joyeeta Foundation Certificate Ceremony"
 ![Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with...: photo 1 of 5](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation-3-scaled.jpg)
 Dhaka, Bangladesh
 
-On May 28, 2023, CodersTrust, in collaboration with the Joyeeta Foundation, celebrated a significant milestone with a certificate-giving ceremony and graduation event for women who have completed advanced training in social media marketing and accounts management systems. This initiative aims to empower women through advanced training and education.
+On May 28, 2024, CodersTrust, in collaboration with the Joyeeta Foundation, celebrated a significant milestone with a certificate-giving ceremony and graduation event for women who have completed advanced training in social media marketing and accounts management systems. This initiative aims to empower women through advanced training and education.
 
 Ms. Afroza Khan, Managing Director of the Joyeeta Foundation and former Secretary to the Bangladesh government, expressed her gratitude during the event. She praised CodersTrust’s unwavering commitment to creating a brighter, more inclusive future. Ms. Khan emphasized the crucial role women will play in the Smart Bangladesh initiative, noting that CodersTrust’s innovative methodologies and dedicated mentorship are equipping graduates with essential skills for success in the digital economy.
 

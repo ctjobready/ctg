@@ -22,12 +22,14 @@ const path = '/impact/stories/';
 // Photos of people whose age is not documented are replaced by the illustration.
 const NO_PHOTO = new Set(['mysha-k-diya']);
 
-// Positive, verbatim excerpts only (no hardship-led or personal-circumstance passages). Each must appear in the story file.
+// Positive, verbatim excerpts only (no hardship-led or personal-circumstance passages, and no income figures). Each must
+// appear in the story file; an excerpt that stops before the end of its sentence is shown with an ellipsis. A card without
+// an excerpt shows a plain role line from the story file, never an income headline.
 const EXCERPTS: Record<string, string> = {
   'adrian-afraham': 'Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer.',
   'ashraful-alam-sani': 'I’m thrilled to announce that I’ve attained Fiverr Level One Seller rank!',
   'aysha-akter-bipasha': 'Their guidance has been instrumental in my ability to excel in this independent work style.',
-  'mustafa-zabed': 'I am delighted to share that I successfully sold my first blog to an Upwork client for $200',
+  'mustafa-zabed': 'I am delighted to share that I successfully sold my first blog to an Upwork client',
   'mysha-k-diya': 'A paying job after only two months of Digital Accounting training is a huge accomplishment for me, made possible by the mentorship of CodersTrust.',
   'nushrat-jahan': 'I got my first job using Upwork and the client is overjoyed. He wants to collaborate with me more.',
   'zarin-tusnim-shifa': 'Finally, I have reached a truly remarkable milestone in my life: successfully completing my very first freelancing task.',
@@ -38,6 +40,12 @@ const all = await getCollection('stories');
 for (const [id, ex] of Object.entries(EXCERPTS)) {
   const e = all.find((s) => s.id === id);
   if (!e?.data.quote?.includes(ex)) throw new Error(`excerpt for ${id} is not a verbatim part of the story quote`);
+}
+const cite = (ex: string) => (/[.!?]$/.test(ex) ? ex : `${ex}…`);
+// An income figure may appear on a card only inside a verbatim register line (the anonymized lines below), marked as an individual result.
+const INCOME = /[$€£]\s?\d|\b(?:BDT|Tk|taka)\b/i;
+for (const s of all) {
+  if (INCOME.test(EXCERPTS[s.id] ?? s.data.outcome)) throw new Error(`story card for ${s.id} shows an income figure; use a verbatim excerpt without one`);
 }
 const pathwayOf = (p: string): StoryCardData['pathway'] => (p === 'freelance' || p === 'job' || p === 'business' ? p : 'other');
 const quoted = (id: string) => {
@@ -52,7 +60,7 @@ const toCard = (s: (typeof all)[number]): StoryCardData => {
   const ex = EXCERPTS[s.id];
   return {
     key: s.id,
-    outcome: ex ? `“${ex}”` : s.data.outcome,
+    outcome: ex ? `“${cite(ex)}”` : s.data.outcome,
     name: s.data.name,
     role: s.data.program ?? s.data.role,
     pathway: pathwayOf(s.data.pathway),
@@ -68,9 +76,9 @@ const legacyCards = named
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split(' in Kosovo ')[1].replace('; earning', ' and is earning')}.` },
-  { key: 'yes-anon-1', name: 'A UNDP YES learner', role: 'Korail', pathway: 'freelance', outcome: `“${quoted('ST-01')}”` },
-  { key: 'yes-anon-2', name: 'A UNDP YES learner', role: 'Korail (an outlier result)', pathway: 'freelance', outcome: `“${quoted('ST-02')}”` },
+  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo · Individual result; not typical', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split(' in Kosovo ')[1].replace('; earning', ' and is earning')}.` },
+  { key: 'yes-anon-1', name: 'A UNDP YES learner', role: 'Korail · Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”` },
+  { key: 'yes-anon-2', name: 'A UNDP YES learner', role: 'Korail · An outlier; individual result, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}”` },
 ];
 const cards = [...caseCards, ...anon, ...legacyCards];
 

@@ -81,7 +81,18 @@ const share = {
     </header>
     <p class="archive-banner" role="note">
       <Icon name="calendar" size={18} />
-      <span>Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; figures reflect that date.</span>
+      {
+        updated ? (
+          <span>
+            Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; updated{' '}
+            <time datetime={isoDate(updated)}>{formatDate(updated)}</time>; titles, offices and figures reflect those dates.
+          </span>
+        ) : (
+          <span>
+            Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; titles, offices and figures reflect that date.
+          </span>
+        )
+      }
     </p>
     {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" /></figure>}
     <div class="prose art__body"><slot /></div>

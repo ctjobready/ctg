@@ -28,11 +28,10 @@ type Status = 'Live' | 'Operating' | 'Pre-launch' | 'Roadmap';
 const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-launch': 'info', Roadmap: 'sale' };
 const rows: { job: string; capability: string; status: Status; note: string }[] = [
   { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
-  { job: 'Train', capability: 'AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
   { job: 'Connect to work and supply talent', capability: 'Employer and gig-work (Earn) marketplace', status: 'Pre-launch', note: 'In pre-launch; until it opens, placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
   { job: 'Equip institutions', capability: 'Partner portals', status: 'Live', note: 'Give institutions a digital delivery platform.' },
-  { job: 'Across the platform', capability: 'Marketing automation', status: 'Live', note: 'Live as part of the staged rollout.' },
-  { job: 'Across the platform', capability: 'CRM', status: 'Live', note: 'Live as part of the staged rollout.' },
+  // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
+  { job: 'Across the platform', capability: 'Marketing automation, CRM and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
 ];
 // Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
@@ -53,7 +52,7 @@ const f = fundingCta();
   title={title('JobReady Platform')}
   heading="JobReady: CodersTrust’s digital education and employment platform"
   eyebrow="Our model"
-  lead={fact('IN-04').text}
+  lead={/[.!?]$/.test(fact('IN-04').text) ? fact('IN-04').text : `${fact('IN-04').text}.`}
   description={description}
   path={path}
   updated="2026-10-08"

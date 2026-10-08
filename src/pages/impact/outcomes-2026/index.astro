@@ -24,8 +24,13 @@ import { dataset, webPage } from '../../../lib/schema';
 import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
 
 D.assertConsistent();
-D.assertSuppression();
-// The downloadable CSV must be exactly what this module generates (published aggregates, n < 10 suppressed).
+D.assertPublication();
+// Every headline share in the data must appear in its register entry (the entry's own text, base and footnote).
+D.assertAgainstRegister((id) => {
+  const f = fact(id);
+  return [f.text, f.base, f.footnote].filter(Boolean).join(' ');
+});
+// The downloadable CSV must be exactly what this module generates (published percentages and medians, no counts).
 const csvPath = join(process.cwd(), 'public/data/outcomes-2026-aggregates.csv');
 if (readFileSync(csvPath, 'utf8') !== D.csvText()) throw new Error('public/data/outcomes-2026-aggregates.csv is out of date; regenerate it from outcomes-data.ts');
 
@@ -41,7 +46,7 @@ const jsonLd = [
     ...dataset({
       path,
       name: 'CodersTrust Impact Survey 2026 — published aggregates',
-      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Small cells (n < 10) are suppressed, and districts under 3% are combined into Other districts.',
+      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Percentages and medians only, with no counts; districts under 3% are combined into Other districts.',
       datePublished: '2026-10-07',
       dateModified: '2026-10-07',
       methodology: 'Online alumni survey (LimeSurvey)',
@@ -69,17 +74,18 @@ const toc = [
   { id: 'download', label: 'Download the data' },
 ];
 
-const cell = (c: D.Cell, base: number) => ({ label: c.label, value: pc(c.n, base), display: `${pc(c.n, base).toFixed(1)}%` });
-// Districts are held as published shares (the base is not stated, so no counts exist); districts under 3% are already combined.
-const districts = D.DISTRICTS.cells.map((c) => ({ label: c.label, value: c.pct, display: `${c.pct.toFixed(1)}%` }));
-const education = D.EDUCATION.cells.map((c) => cell(c, D.EDUCATION.base));
-const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.n - a.n).concat(D.CAREER.cells[7]).map((c) => cell(c, D.CAREER.base));
-const source = D.SOURCE.cells.map((c) => cell(c, D.SOURCE.base));
-const ageItems = D.AGE.cells.map((c) => ({ label: c.label, value: pc(c.n, D.AGE.base) }));
-const speedItems = D.SPEED.map((c) => ({ label: c.label, value: pc(c.n, D.SPEED_BASE) }));
-// Recommendation score: all eleven scores as published shares (percentages only, no fold); scores of 7 or higher are emphasised.
+// Every chart shows the published shares (percentages only; no count is held or derived). Districts under 3% are already combined.
+const cell = (c: D.ShareCell) => ({ label: c.label, value: c.pct, display: `${c.pct.toFixed(1)}%` });
+const districts = D.DISTRICTS.cells.map(cell);
+const education = D.EDUCATION.cells.map(cell);
+const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.pct - a.pct).concat(D.CAREER.cells[7]).map(cell);
+const source = D.SOURCE.cells.map(cell);
+const ageItems = D.AGE.cells.map((c) => ({ label: c.label, value: c.pct }));
+const speedItems = D.SPEED.map((c) => ({ label: c.label, value: c.pct }));
+// Recommendation score: all eleven scores as published shares (percentages only, no fold); scores of 7 or higher are emphasized.
 const recItems = D.RECOMMEND.cells.map((c) => ({ label: c.label, value: c.pct, emphasis: Number(c.label) >= 7 }));
-const incomeItems = D.INCOME_DIRECTION.map((c) => cell(c, D.INCOME_BASE));
+const incomeItems = D.INCOME_DIRECTION.map(cell);
+// OC-02 states its count (34 of 47), so the one derived share on the page is computed from that stated count.
 const priorItems = [
   { label: `Earning at the October 2026 survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
   { label: 'Not earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
@@ -87,7 +93,7 @@ const priorItems = [
 const emp = fact('OC-01').stat!;
 const before = parseFloat(emp.from!);
 const after = emp.numeric!;
-const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: pc(t.before, D.EMPLOYMENT_BASE), after: pc(t.after, D.EMPLOYMENT_BASE) }));
+const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: t.before, after: t.after }));
 const reportLink = reportCta();
 ---
 
@@ -140,7 +146,7 @@ const reportLink = reportCta();
       title="Respondents by highest education"
       items={education}
       max={100}
-      note="Base not stated in the report. Education levels with very few respondents are merged into the neighboring band."
+      note="Base not stated in the report."
     />
     <BarChart
       title="Respondents by district of residence"
@@ -148,6 +154,7 @@ const reportLink = reportCta();
       max={100}
       note="Base not stated in the report. Districts under 3% are combined into Other districts."
     />
+    <p class="ro__src">Education categories as grouped in the source; districts under 3% are combined into Other; shares are rounded.</p>
   </ReportSection>
 
   <ReportSection id="employment" title="Employment">
@@ -164,7 +171,7 @@ const reportLink = reportCta();
       beforeLabel="Before training"
       afterLabel="October 2026 survey"
       rows={typeRows}
-      note={`Base: n = ${D.EMPLOYMENT_BASE} paired completers. Cells resting on very few respondents are suppressed in the downloadable CSV. Entries into and exits from work are not charted because the transition counts are not published.`}
+      note={`Base: n = ${D.EMPLOYMENT_BASE} paired completers. Shares are percentages only; the report states no counts for the types of work. Entries into and exits from work are not charted because the transition counts are not published.`}
     />
     <p data-fact="OC-04" class="ro__src">Chart data: <Fact id="OC-04" field="label" /></p>
   </ReportSection>
@@ -233,13 +240,13 @@ const reportLink = reportCta();
       <li><strong>Recall and self-report.</strong> Status before training is recalled, and every answer is self-reported.</li>
       <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
       <li><strong>Descriptive, not causal.</strong> Nothing here shows that training caused a change; see the randomized trial for causal evidence from one program.</li>
-      <li><strong>Small cells.</strong> Districts under 3% are combined into Other districts, because the base for that question is not stated in the report; the download suppresses other cells based on fewer than 10 respondents. The tables and the download show percentages and stated bases only, not counts.</li>
+      <li><strong>Grouping and rounding.</strong> Education categories as grouped in the source; districts under 3% are combined into Other districts, because the base for that question is not stated in the report; shares are rounded. The tables and the download show percentages and stated bases only, not counts.</li>
       <li><strong>Ratio of medians.</strong> The income figure compares medians; it is not an average and does not mean every learner’s income tripled.</li>
     </ul>
   </ReportSection>
 
   <ReportSection id="download" title="Download the data">
-    <p>The published aggregates are available as a CSV: one row per published percentage or median, with its base where the Impact Report states one. Cells based on fewer than 10 respondents are suppressed.</p>
+    <p>The published aggregates are available as a CSV: one row per published percentage or median, with its base where the Impact Report states one. The file holds percentages and medians only; no counts are reconstructed from them.</p>
     <p><a class="ro__dl" href={csvHref} download>
       <Icon name="download" size={18} />Download outcomes-2026-aggregates.csv
     </a></p>
