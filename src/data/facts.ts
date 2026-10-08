@@ -46,7 +46,7 @@ export const sources: Record<string, Source> = {
   PDESIGN: { id: 'PDESIGN', label: 'CodersTrust YouthWIDE program design', citation: `CodersTrust YouthWIDE program design (2026).` },
   PX01CALC: { id: 'PX01CALC', label: 'CodersTrust analysis of ILOSTAT and ILO data', citation: `CodersTrust analysis of ILOSTAT and ILO, Global Employment Trends for Youth 2026.` },
   ILOSTAT26: { id: 'ILOSTAT26', label: 'ILOSTAT', citation: `ILOSTAT, International Labour Organization (table UNE_TUNE_SEX_AGE_EDU_NB_A; latest year per country, 2019–2025).` },
-  ILO26: { id: 'ILO26', label: 'ILO, Global Employment Trends for Youth 2026', citation: `International Labour Organization (ILO), Global Employment Trends for Youth 2026 (August 2026).` },
+  ILO26: { id: 'ILO26', label: 'ILO, Global Employment Trends for Youth 2026', citation: `International Labour Organization (ILO), Global Employment Trends for Youth 2026 (August 2026).`, url: 'https://www.ilo.org/sites/default/files/2026-08/9789220437612_PDFA_Web_ENG.pdf' },
   BBSLFS24: { id: 'BBSLFS24', label: 'BBS Labour Force Survey 2024', citation: `Bangladesh Bureau of Statistics (BBS), Labour Force Survey 2024.` },
   BIDS23: { id: 'BIDS23', label: 'BIDS 2023 tracer study', citation: `Bangladesh Institute of Development Studies (BIDS), 2023 tracer study.` },
   WB19NU: { id: 'WB19NU', label: 'World Bank 2019', citation: `World Bank, 2019.` },
