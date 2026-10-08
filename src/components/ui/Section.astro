@@ -1,0 +1,96 @@
+---
+/**
+ * Section ➕ — a full-bleed band with the system's rhythm:
+ * white → airy → ice → klein (impact moment) → deep-ink. Re-maps contextual tokens so
+ * headings, stats, links, focus rings and cards adapt on dark grounds.
+ * Never place two dark bands (klein / deep-ink) back to back.
+ */
+interface Props {
+  tone?: 'white' | 'airy' | 'ice' | 'klein' | 'deep-ink';
+  id?: string;
+  /** Vertical padding scale. */
+  pad?: 'none' | 'sm' | 'md' | 'lg';
+  /** Container width. */
+  width?: 'content' | 'wide' | 'narrow' | 'full';
+  /** Fade/rise the content in when it enters the viewport. */
+  reveal?: boolean;
+  /** Skip rendering while offscreen (content-visibility:auto) — for long, below-the-fold bands only. */
+  defer?: boolean;
+  'aria-labelledby'?: string;
+  'aria-label'?: string;
+  class?: string;
+}
+const { tone = 'white', id, pad = 'md', width = 'content', reveal = false, defer = false, class: className, ...aria } = Astro.props;
+const container = width === 'full' ? '' : width === 'wide' ? 'container container--wide' : width === 'narrow' ? 'container container--narrow' : 'container';
+---
+
+<section class:list={['band', `band--${tone}`, `band--pad-${pad}`, defer && 'band--defer', className]} id={id} {...aria}>
+  <div class={container} data-reveal={reveal ? '' : undefined}>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .band {
+    background: var(--band-bg);
+    color: var(--ctx-text);
+  }
+  .band--white {
+    --band-bg: var(--surface);
+  }
+  .band--airy {
+    --band-bg: var(--surface-container-low);
+    --ctx-muted: var(--outline);
+    --ctx-border: var(--primary-fixed);
+    --badge-brand-bg: var(--primary-fixed);
+  }
+  .band--ice {
+    --band-bg: var(--surface-container);
+    --ctx-muted: var(--on-surface-variant);
+    --badge-info-bg: var(--surface);
+    --badge-brand-bg: var(--surface);
+  }
+  .band--klein {
+    --band-bg: var(--secondary);
+    --ctx-text: var(--primary-fixed);
+    --ctx-muted: var(--primary-fixed);
+    --ctx-heading: var(--on-secondary);
+    --ctx-section-heading: var(--on-secondary);
+    --ctx-link: var(--on-secondary);
+    --ctx-accent: var(--tertiary-light);
+    --ctx-stat: var(--on-secondary);
+    --ctx-focus: var(--on-secondary);
+    --ctx-border: color-mix(in srgb, var(--on-secondary) 28%, transparent);
+    --ctx-card: var(--secondary);
+  }
+  .band--deep-ink {
+    --band-bg: var(--inverse-surface);
+    --ctx-text: var(--inverse-on-surface);
+    --ctx-muted: var(--surface-container-highest);
+    --ctx-heading: var(--inverse-on-surface);
+    --ctx-section-heading: var(--inverse-on-surface);
+    --ctx-link: var(--inverse-primary);
+    --ctx-accent: var(--tertiary-light);
+    --ctx-stat: var(--inverse-on-surface);
+    --ctx-focus: var(--inverse-primary);
+    --ctx-border: color-mix(in srgb, var(--inverse-on-surface) 22%, transparent);
+    --ctx-card: var(--inverse-surface);
+  }
+  .band--pad-none {
+    padding-block: 0;
+  }
+  .band--pad-sm {
+    padding-block: calc(var(--band-pad) * 0.6);
+  }
+  .band--pad-md {
+    padding-block: var(--band-pad);
+  }
+  .band--pad-lg {
+    padding-block: calc(var(--band-pad) * 1.35);
+  }
+  /* Opt-in: offscreen bands skip rendering work (INP/LCP) */
+  .band--defer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+</style>

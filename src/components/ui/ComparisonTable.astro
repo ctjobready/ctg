@@ -1,0 +1,152 @@
+---
+import Icon from '../system/Icon.astro';
+
+/**
+ * ComparisonTable ➕ — sticky first column on mobile; ✅/⚠️/❌ are rendered as icons with
+ * visually-hidden text (never colour alone). Cells may be plain strings or start with a
+ * status emoji ("✅ RCT", "⚠️ Often completion only", "❌", "—").
+ */
+interface Cell {
+  status?: 'yes' | 'partial' | 'no';
+  text?: string;
+}
+interface Props {
+  caption: string;
+  /** Column headings; the first is the criteria column. */
+  columns: string[];
+  rows: { label: string; cells: (string | Cell)[] }[];
+  /** 0-based index among data columns (excluding criteria) to emphasise, e.g. CodersTrust. */
+  highlight?: number;
+  class?: string;
+}
+const { caption, columns, rows, highlight, class: className } = Astro.props;
+
+const MAP: Record<string, { status: 'yes' | 'partial' | 'no'; label: string }> = {
+  '✅': { status: 'yes', label: 'Yes' },
+  '⚠️': { status: 'partial', label: 'Partial' },
+  '⚠': { status: 'partial', label: 'Partial' },
+  '❌': { status: 'no', label: 'No' },
+};
+function norm(c: string | Cell): { status?: 'yes' | 'partial' | 'no'; label?: string; text: string } {
+  if (typeof c !== 'string') {
+    const label = c.status ? { yes: 'Yes', partial: 'Partial', no: 'No' }[c.status] : undefined;
+    return { status: c.status, label, text: c.text ?? '' };
+  }
+  const s = c.trim();
+  for (const key of Object.keys(MAP)) {
+    if (s.startsWith(key)) return { ...MAP[key], text: s.slice(key.length).trim() };
+  }
+  return { text: s === '—' || s === '-' ? '' : s, label: s === '—' || s === '-' ? 'Not applicable' : undefined };
+}
+const ICON = { yes: 'circle-check', partial: 'triangle-alert', no: 'circle-x' } as const;
+---
+
+<div class:list={['cmp', className]} role="region" aria-label={caption} tabindex="0" data-reveal>
+  <table>
+    <caption class="sr-only">{caption}</caption>
+    <thead>
+      <tr>
+        {columns.map((c, i) => <th scope="col" class:list={[i === 0 && 'cmp__corner', highlight !== undefined && i - 1 === highlight && 'is-hl']}>{c}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            <th scope="row">{r.label}</th>
+            {r.cells.map((raw, i) => {
+              const c = norm(raw);
+              return (
+                <td class:list={[highlight === i && 'is-hl']}>
+                  {c.status && (
+                    <span class={`cmp__mark cmp__mark--${c.status}`}>
+                      <Icon name={ICON[c.status]} size={20} />
+                      <span class="sr-only">{c.label}{c.text ? ': ' : ''}</span>
+                    </span>
+                  )}
+                  {c.text && <span class="cmp__text">{c.text}</span>}
+                  {!c.status && !c.text && <span class="sr-only">{c.label ?? 'Not applicable'}</span>}
+                  {!c.status && !c.text && <span aria-hidden="true">—</span>}
+                </td>
+              );
+            })}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .cmp {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--fs-body-base);
+  }
+  th,
+  td {
+    padding: 14px var(--space-md);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    font-weight: var(--fw-bold);
+    position: sticky;
+    top: 0;
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    background: var(--surface);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 11rem;
+    box-shadow: 1px 0 0 var(--outline-variant);
+  }
+  thead .cmp__corner {
+    left: 0;
+    z-index: 2;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .is-hl {
+    background: var(--surface-container-low);
+  }
+  thead .is-hl {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .cmp__mark {
+    display: inline-flex;
+    vertical-align: -4px;
+    margin-right: 6px;
+  }
+  .cmp__mark--yes {
+    color: var(--success);
+  }
+  .cmp__mark--partial {
+    color: var(--on-tertiary-container);
+  }
+  .cmp__mark--no {
+    color: var(--error);
+  }
+  .cmp:focus-visible {
+    outline-offset: 2px;
+  }
+</style>

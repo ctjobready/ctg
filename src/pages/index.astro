@@ -1,0 +1,16 @@
+---
+// TEMP: replaced by WP5 (Home page). Exists only so the foundation builds and previews.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/system/Hero.astro';
+import Button from '../components/system/Button.astro';
+import { ENTITY_DEFINITION } from '../lib/site';
+---
+
+<!-- TEMP: replaced by WP5 -->
+<BaseLayout title="CodersTrust" titleSuffix={false} description={ENTITY_DEFINITION}>
+  <Hero variant="home" eyebrow="Foundation build" title="CodersTrust — temporary home placeholder" lead={ENTITY_DEFINITION}>
+    <Fragment slot="actions">
+      <Button href="/styleguide/" iconEnd="arrow-right">Open the styleguide</Button>
+    </Fragment>
+  </Hero>
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+import { canonicalUrl, absoluteUrl, url } from '../../lib/url';
+import { SITE_NAME, ENTITY_DEFINITION } from '../../lib/site';
+import { truncate } from '../../lib/format';
+import { FONT_PRELOADS, fontFaceCss } from '../../lib/fonts';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Site path of this page (base-less), e.g. "/about/". */
+  path: string;
+  /** Add " | CodersTrust" to the title (default true; false for Home). */
+  suffix?: boolean;
+  /** Absolute or site-relative image for og:image. */
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  /** Force noindex even in production (styleguide, 404, redirect stubs). */
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+}
+const {
+  title,
+  description = truncate(ENTITY_DEFINITION, 200),
+  path,
+  suffix = true,
+  image = '/og/default.png',
+  imageAlt = 'CodersTrust — Learn. Earn. Prosper.',
+  type = 'website',
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
+
+const fullTitle = suffix && !title.includes(SITE_NAME) ? `${title} | ${SITE_NAME}` : title;
+const canonical = canonicalUrl(path);
+// Staging is always noindex (planning/08 §2): prevents duplicate-content indexing while WordPress is live.
+const staging = __SITE_ENV__ !== 'production';
+const robots = staging || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+const ogImage = image.startsWith('http') ? image : absoluteUrl(image, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={robots} />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="canonical" href={canonical} />
+<link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:locale" content="en_US" />
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+{FONT_PRELOADS.map((f) => <link rel="preload" href={url('/' + f)} as="font" type="font/woff2" crossorigin />)}
+<style is:inline set:html={fontFaceCss()}></style>

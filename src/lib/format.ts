@@ -1,0 +1,66 @@
+/** Small formatting helpers (American English, UTC-stable so builds are reproducible). */
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const monthFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+
+/** "October 8, 2026" */
+export function formatDate(d: Date | string): string {
+  return dateFmt.format(typeof d === 'string' ? new Date(d) : d);
+}
+/** "October 2026" */
+export function formatMonth(d: Date | string): string {
+  return monthFmt.format(typeof d === 'string' ? new Date(d) : d);
+}
+/** ISO date (YYYY-MM-DD) for <time datetime>. */
+export function isoDate(d: Date | string): string {
+  return (typeof d === 'string' ? new Date(d) : d).toISOString().slice(0, 10);
+}
+/** 130000 -> "130,000" */
+export function formatNumber(n: number, decimals = 0): string {
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(n);
+}
+/** 77.9 -> "77.9%" */
+export function formatPercent(n: number, decimals = 1): string {
+  return `${formatNumber(n, decimals)}%`;
+}
+/** Tiny slugger for ids/anchors. */
+export function slugify(s: string): string {
+  return s
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+/** Truncate at a word boundary. */
+export function truncate(s: string, max = 160): string {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max - 1);
+  return cut.slice(0, cut.lastIndexOf(' ') > 40 ? cut.lastIndexOf(' ') : cut.length).trimEnd() + '…';
+}
+/** "A, B and C" */
+export function joinList(items: string[]): string {
+  if (items.length <= 1) return items.join('');
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+}
+/** Strip tags for plain-text use (FAQ schema, meta descriptions). */
+export function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+/**
+ * Split a display figure into prefix / number / suffix for count-up:
+ * "77.9%" -> {prefix:"", num:77.9, decimals:1, suffix:"%", grouped:false}
+ * "130,000+" -> {prefix:"", num:130000, decimals:0, suffix:"+", grouped:true}
+ */
+export function parseFigure(display: string) {
+  const m = display.match(/^([^\d-]*)(\d[\d,]*(?:\.\d+)?)(.*)$/);
+  if (!m) return null;
+  const raw = m[2];
+  return {
+    prefix: m[1],
+    num: Number(raw.replace(/,/g, '')),
+    decimals: raw.includes('.') ? raw.split('.')[1].length : 0,
+    suffix: m[3],
+    grouped: raw.includes(','),
+  };
+}

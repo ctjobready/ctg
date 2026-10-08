@@ -1,0 +1,45 @@
+---
+import Icon from '../system/Icon.astro';
+import { CONTACT } from '../../lib/site';
+
+/** Email address as a mailto link plus a copy button (toast "Email copied", M18). */
+interface Props {
+  email?: string;
+  class?: string;
+}
+const { email = CONTACT.email, class: className } = Astro.props;
+---
+
+<span class:list={['copy-email', className]}>
+  <a class="copy-email__addr" href={`mailto:${email}`}>{email}</a>
+  <button class="copy-email__btn" type="button" data-copy={email} data-copy-message="Email copied">
+    <Icon name="copy" size={18} />
+    <span class="sr-only">Copy email address {email}</span>
+  </button>
+</span>
+
+<style>
+  .copy-email {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+  .copy-email__addr {
+    color: var(--ctx-link);
+    font-weight: var(--fw-medium);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .copy-email__btn {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    color: var(--ctx-link);
+  }
+  .copy-email__btn:hover {
+    background: var(--surface-container-low);
+  }
+</style>

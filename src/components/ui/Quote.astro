@@ -1,0 +1,56 @@
+---
+interface Props {
+  cite?: string;
+  role?: string;
+  /** Large pull quote vs inline */
+  size?: 'md' | 'lg';
+  class?: string;
+}
+const { cite, role, size = 'md', class: className } = Astro.props;
+---
+
+<figure class:list={['quote', `quote--${size}`, className]} data-reveal>
+  <blockquote><p><slot /></p></blockquote>
+  {
+    cite && (
+      <figcaption>
+        <span class="quote__cite">{cite}</span>
+        {role && <span class="quote__role">{role}</span>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .quote {
+    margin: 0;
+    padding-left: var(--space-gutter);
+    border-left: 4px solid var(--ctx-accent);
+  }
+  .quote blockquote {
+    margin: 0;
+  }
+  .quote p {
+    margin: 0;
+    color: var(--ctx-heading);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    font-weight: var(--fw-medium);
+  }
+  .quote--lg p {
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+  }
+  .quote figcaption {
+    margin-top: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
+  }
+  .quote__cite {
+    font-size: var(--fs-body-base);
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+  }
+</style>

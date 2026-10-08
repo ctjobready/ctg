@@ -1,0 +1,83 @@
+---
+import Icon from './Icon.astro';
+import { linkAttrs } from '../../lib/url';
+
+interface Props {
+  title: string;
+  icon?: string;
+  /** Short supporting line ("count" in the system). */
+  text?: string;
+  href: string;
+  active?: boolean;
+  class?: string;
+}
+const { title, icon = 'users', text, href, active = false, class: className } = Astro.props;
+const a = linkAttrs(href);
+---
+
+<a class:list={['cat', active && 'is-active', className]} href={a.href} rel={a.rel} data-reveal>
+  <Icon name={icon} size={40} strokeWidth={1.5} class="cat__icon" />
+  <span class="cat__title">{title}</span>
+  {text && <span class="cat__text">{text}</span>}
+  {a.srText && <span class="sr-only">{a.srText}</span>}
+</a>
+
+<style>
+  .cat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    min-height: 197px;
+    padding: 35px 30px 25px;
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    text-decoration: none;
+    transition:
+      background-color var(--dur-base) ease,
+      color var(--dur-base) ease,
+      border-color var(--dur-base) ease;
+  }
+  .cat :global(.cat__icon) {
+    color: var(--primary);
+    transition: color var(--dur-base) ease;
+  }
+  .cat__title {
+    margin-top: auto;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+  }
+  .cat__text {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+    transition: color var(--dur-base) ease;
+  }
+  .cat:hover,
+  .cat:focus-visible,
+  .cat.is-active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+    --ctx-focus: var(--primary);
+  }
+  .cat:hover :global(.cat__icon),
+  .cat:focus-visible :global(.cat__icon),
+  .cat.is-active :global(.cat__icon),
+  .cat:hover .cat__text,
+  .cat:focus-visible .cat__text,
+  .cat.is-active .cat__text {
+    color: var(--on-primary);
+  }
+  /* M6: icon bounces once on hover/focus */
+  @media (prefers-reduced-motion: no-preference) {
+    .cat:hover :global(.cat__icon),
+    .cat:focus-visible :global(.cat__icon) {
+      animation: ct-bounce 600ms var(--ease-emphasized) 1;
+    }
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+interface Props {
+  /** 0–100 */
+  value: number;
+  label: string;
+  /** Text shown at the right ("77.9%"); defaults to value + "%". */
+  valueLabel?: string;
+  tone?: 'default' | 'bright';
+  class?: string;
+}
+const { value, label, valueLabel, tone = 'default', class: className } = Astro.props;
+const clamped = Math.max(0, Math.min(100, value));
+---
+
+<div class:list={['progress', tone === 'bright' && 'progress--bright', className]} data-reveal style={`--p:${clamped}`}>
+  <div class="progress__head">
+    <span>{label}</span>
+    <b>{valueLabel ?? `${clamped}%`}</b>
+  </div>
+  <div class="progress__track" role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax="100" aria-valuenow={clamped}>
+    <div class="progress__fill"></div>
+  </div>
+</div>
+
+<style>
+  .progress {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .progress__head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
+  }
+  .progress__head b {
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+  }
+  .progress__track {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    overflow: hidden;
+  }
+  .progress__fill {
+    height: 100%;
+    background: var(--primary);
+    clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
+  }
+  .progress--bright .progress__fill {
+    background: var(--brand-bright);
+  }
+  /* M3: fill 0 → value (800ms) once the bar is revealed. Only runs with JS + motion allowed. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .progress .progress__fill {
+      clip-path: inset(0 100% 0 0 round 9999px);
+    }
+    :global(.js) .progress.is-visible .progress__fill {
+      clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
+      transition: clip-path 800ms var(--ease-emphasized) 150ms;
+    }
+  }
+</style>

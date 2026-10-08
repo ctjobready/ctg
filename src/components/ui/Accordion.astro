@@ -1,0 +1,70 @@
+---
+import Icon from '../system/Icon.astro';
+
+/**
+ * Accordion / FAQ ➕ (details/summary, animated height M15). Answers may contain HTML.
+ * For FAQ rich results pass the same items to `faqPage()` from lib/schema.ts.
+ */
+interface Props {
+  items: { q: string; a: string }[];
+  /** Exclusive group name (only one open at a time). */
+  name?: string;
+  openFirst?: boolean;
+  class?: string;
+}
+const { items, name, openFirst = false, class: className } = Astro.props;
+---
+
+<div class:list={['faq', className]} data-reveal>
+  {
+    items.map((it, i) => (
+      <details class="acc faq__item" name={name} open={openFirst && i === 0}>
+        <summary class="faq__q">
+          <span>{it.q}</span>
+          <Icon name="chevron-down" size={22} class="acc__chev" />
+        </summary>
+        <div class="acc__body faq__a" set:html={it.a} />
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .faq {
+    border-top: 1px solid var(--ctx-border, var(--outline-variant));
+    max-width: 52rem;
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    min-height: 56px;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+  .faq__q:hover {
+    color: var(--primary);
+  }
+  .faq__item[open] > .faq__q {
+    color: var(--ctx-link);
+  }
+  .faq__a {
+    padding-bottom: var(--space-md);
+    max-width: var(--measure);
+    color: var(--ctx-text);
+  }
+  .faq__a :global(p + p) {
+    margin-top: 0.8em;
+  }
+  .faq__a :global(a) {
+    color: var(--ctx-link);
+    text-decoration: underline;
+  }
+</style>

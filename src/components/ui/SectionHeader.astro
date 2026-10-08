@@ -1,0 +1,43 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: 'start' | 'center';
+  /** Heading level (visual style stays heading-3xl). */
+  level?: 2 | 3;
+  id?: string;
+  class?: string;
+}
+const { eyebrow, title, lead, align = 'start', level = 2, id, class: className } = Astro.props;
+const Tag = (`h${level}`) as 'h2' | 'h3';
+---
+
+<header class:list={['sh', `sh--${align}`, className]} data-reveal>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag class="sh__title" id={id}>{title}</Tag>
+  {lead && <p class="sh__lead lead">{lead}</p>}
+  <slot />
+</header>
+
+<style>
+  .sh {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 52rem;
+  }
+  .sh--center {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+  .sh > * {
+    margin: 0;
+  }
+  .sh__title {
+    color: var(--ctx-section-heading);
+  }
+</style>

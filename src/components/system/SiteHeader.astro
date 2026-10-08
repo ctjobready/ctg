@@ -1,0 +1,642 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { navGroups, topLinks, utilityLink, headerCta } from '../../data/nav';
+import { linkAttrs, stripBase } from '../../lib/url';
+import { CONTACT } from '../../lib/site';
+
+const currentPath = stripBase(Astro.url.pathname);
+const isActive = (href: string) =>
+  href !== '/' && !/^https?:/.test(href) && (currentPath === href || currentPath.startsWith(href));
+const groupActive = (g: (typeof navGroups)[number]) => g.items.some((i) => isActive(i.href) && i.href !== '/');
+const util = linkAttrs(utilityLink.href);
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-header__row container container--wide">
+    <Logo link width={190} />
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" role="list">
+        {
+          navGroups.map((g) => (
+            <li class="site-nav__item" data-mega>
+              <button
+                class="site-nav__trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls={`mega-${g.id}`}
+                data-mega-trigger
+                data-active={groupActive(g) ? 'true' : undefined}
+              >
+                {g.label}
+                <Icon name="chevron-down" size={16} class="site-nav__chev" />
+              </button>
+              <div class="mega" id={`mega-${g.id}`} data-mega-panel role="group" aria-label={`${g.label} menu`}>
+                <div class="mega__inner container container--wide">
+                  <ul class="mega__links" role="list">
+                    {g.items.map((it) => {
+                      const a = linkAttrs(it.href);
+                      return (
+                        <li>
+                          <a class="mega__link" href={a.href} aria-current={isActive(it.href) && currentPath === it.href ? 'page' : undefined}>
+                            <span class="mega__title">{it.label}</span>
+                            {it.description && <span class="mega__desc">{it.description}</span>}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <aside class={`mega__feature mega__feature--${g.feature.kind}`} aria-label={`Featured: ${g.feature.title}`}>
+                    {g.feature.eyebrow && <p class="mega__eyebrow">{g.feature.eyebrow}</p>}
+                    {g.feature.figure && <p class="mega__figure">{g.feature.figure}</p>}
+                    <p class="mega__feature-title">{g.feature.title}</p>
+                    {g.feature.kind === 'model' && (
+                      <ol class="mega__cycle" aria-label="Learn, then Earn, then Prosper">
+                        <li>Learn</li>
+                        <li aria-hidden="true"><Icon name="arrow-right" size={16} /></li>
+                        <li>Earn</li>
+                        <li aria-hidden="true"><Icon name="arrow-right" size={16} /></li>
+                        <li>Prosper</li>
+                      </ol>
+                    )}
+                    {g.feature.text && <p class="mega__feature-text">{g.feature.text}</p>}
+                    <a class="link" href={linkAttrs(g.feature.cta.href).href}>
+                      {g.feature.cta.label}
+                      <Icon name="arrow-right" size={16} />
+                    </a>
+                  </aside>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+        {
+          topLinks.map((l) => (
+            <li class="site-nav__item">
+              <a class="site-nav__link" href={linkAttrs(l.href).href} aria-current={currentPath.startsWith(l.href) ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="site-header__util" href={util.href} rel={util.rel}>
+        {utilityLink.label}
+        <Icon name="arrow-up-right" size={16} />
+        <span class="sr-only">{util.srText}</span>
+      </a>
+      <Button class="site-header__cta" size="sm" href={headerCta.href}>{headerCta.label}</Button>
+      <button
+        class="menu-btn"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="site-drawer"
+        data-drawer-open
+      >
+        <Icon name="menu" size={22} />
+        <span>Menu</span>
+      </button>
+    </div>
+
+    <noscript>
+      <nav class="nav-noscript" aria-label="Primary (without scripts)">
+        <ul role="list">
+          {navGroups.map((g) => <li><a href={linkAttrs(g.href).href}>{g.label}</a></li>)}
+          {topLinks.map((l) => <li><a href={linkAttrs(l.href).href}>{l.label}</a></li>)}
+          <li><a href={linkAttrs(headerCta.href).href}>{headerCta.label}</a></li>
+        </ul>
+      </nav>
+    </noscript>
+  </div>
+
+  <!-- Mobile / tablet drawer: modal dialog, focus trapped by drawer.ts -->
+  <dialog class="drawer" id="site-drawer" data-drawer aria-label="Site menu">
+    <div class="drawer__panel">
+      <div class="drawer__head">
+        <Logo width={160} />
+        <button class="drawer__close" type="button" data-drawer-close aria-label="Close menu">
+          <Icon name="x" size={24} />
+        </button>
+      </div>
+      <nav class="drawer__nav" aria-label="Mobile">
+        <ul role="list">
+          {
+            navGroups.map((g) => (
+              <li>
+                <details class="acc drawer__group" name="drawer-group">
+                  <summary>
+                    <span>{g.label}</span>
+                    <Icon name="chevron-down" size={20} class="acc__chev" />
+                  </summary>
+                  <div class="acc__body">
+                    <ul role="list">
+                      {!g.items.some((i) => i.href === g.href) && (
+                        <li>
+                          <a href={linkAttrs(g.href).href}>
+                            <strong>{g.label} overview</strong>
+                          </a>
+                        </li>
+                      )}
+                      {g.items.map((it) => (
+                        <li>
+                          <a href={linkAttrs(it.href).href}>{it.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
+              </li>
+            ))
+          }
+          {
+            topLinks.map((l) => (
+              <li>
+                <a class="drawer__top" href={linkAttrs(l.href).href}>{l.label}</a>
+              </li>
+            ))
+          }
+          <li>
+            <a class="drawer__top" href={util.href} rel={util.rel}>
+              {utilityLink.label}
+              <Icon name="arrow-up-right" size={18} />
+              <span class="sr-only">{util.srText}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="drawer__foot">
+        <ul class="drawer__contact" role="list">
+          <li><a href={`mailto:${CONTACT.email}`}><Icon name="mail" size={18} />{CONTACT.email}</a></li>
+          <li><a href={CONTACT.phoneHref}><Icon name="phone" size={18} />{CONTACT.phone}</a></li>
+        </ul>
+        <Button class="drawer__cta" href={headerCta.href} iconEnd="arrow-right">{headerCta.label}</Button>
+      </div>
+    </div>
+  </dialog>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    view-transition-name: site-header;
+    transition: transform var(--dur-slow) var(--ease-standard), box-shadow var(--dur-base) ease;
+  }
+  .site-header.is-scrolled {
+    box-shadow: var(--shadow-header);
+  }
+  .site-header.is-hidden {
+    transform: translateY(-100%);
+  }
+  .site-header__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    height: var(--header-h);
+  }
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-left: auto;
+  }
+
+  /* ---- Desktop nav ---- */
+  .site-nav {
+    display: none;
+    height: 100%;
+  }
+  .site-nav__list {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    gap: var(--space-sm);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .site-nav__item {
+    display: flex;
+    align-items: center;
+  }
+  .site-nav__trigger,
+  .site-nav__link {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 44px;
+    padding: 0 12px;
+    font: var(--fw-regular) 1rem/1.5 var(--font-sans);
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    border-radius: var(--radius-default);
+    transition: color var(--dur-base) ease, background-color var(--dur-base) ease;
+  }
+  .site-nav__trigger:hover,
+  .site-nav__link:hover,
+  .site-nav__item.is-open .site-nav__trigger {
+    color: var(--primary);
+    background: var(--surface-container-low);
+  }
+  .site-nav__trigger[data-active='true'],
+  .site-nav__link[aria-current='page'] {
+    color: var(--primary);
+    box-shadow: inset 0 -2px 0 var(--primary);
+    border-radius: 0;
+  }
+  .site-nav__trigger :global(.site-nav__chev) {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  .site-nav__item.is-open :global(.site-nav__chev) {
+    transform: rotate(180deg);
+  }
+
+  .site-header__util {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    min-height: 44px;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    padding: 0 8px;
+  }
+  .site-header__util:hover {
+    color: var(--primary);
+  }
+  .site-header :global(.site-header__cta) {
+    display: none;
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: var(--radius-default);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .menu-btn:hover {
+    background: var(--surface-container-low);
+    color: var(--primary);
+  }
+
+  /* ---- Mega panels (M10: 8px slide + 200ms fade) ---- */
+  .mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--surface);
+    border-top: 1px solid var(--outline-variant);
+    box-shadow: var(--shadow-header);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity var(--dur-base) var(--ease-standard),
+      transform var(--dur-base) var(--ease-standard),
+      visibility 0s linear var(--dur-base);
+    pointer-events: none;
+  }
+  .site-nav__item.is-open > .mega {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+    pointer-events: auto;
+  }
+  /* No-JS: reveal on hover / focus-within */
+  :global(html:not(.js)) .site-nav__item:hover > .mega,
+  :global(html:not(.js)) .site-nav__item:focus-within > .mega {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+    pointer-events: auto;
+  }
+  .mega__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+  }
+  .mega__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px var(--space-gutter);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-content: start;
+  }
+  .mega__link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: var(--radius-default);
+    text-decoration: none;
+    transition: background-color var(--dur-base) ease;
+  }
+  .mega__link:hover,
+  .mega__link:focus-visible {
+    background: var(--surface-container-low);
+  }
+  .mega__title {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .mega__link:hover .mega__title {
+    color: var(--primary);
+  }
+  .mega__desc {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .mega__feature {
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+    padding: var(--space-gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  .mega__feature > p {
+    margin: 0;
+  }
+  .mega__eyebrow {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .mega__figure {
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.1;
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    letter-spacing: -1px;
+  }
+  .mega__feature-title {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+  }
+  .mega__feature-text {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
+  .mega__cycle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--secondary);
+    font-weight: var(--fw-bold);
+  }
+
+  .nav-noscript {
+    display: none;
+  }
+
+  /* ---- Drawer ---- */
+  .drawer {
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+    width: min(420px, 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    background: var(--surface);
+    color: var(--on-surface-variant);
+    box-shadow: var(--shadow-header);
+  }
+  .drawer::backdrop {
+    background: color-mix(in srgb, var(--inverse-surface) 56%, transparent);
+  }
+  .drawer[open] {
+    animation: drawer-in var(--dur-slow) var(--ease-emphasized);
+  }
+  .drawer[open]::backdrop {
+    animation: drawer-fade var(--dur-slow) ease;
+  }
+  @keyframes drawer-in {
+    from {
+      transform: translateX(32px);
+      opacity: 0;
+    }
+  }
+  @keyframes drawer-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  .drawer__panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-gutter);
+    height: var(--header-h);
+    flex: none;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .drawer__close {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    color: var(--on-surface);
+  }
+  .drawer__close:hover {
+    background: var(--surface-container-low);
+  }
+  .drawer__nav {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-sm) var(--space-gutter);
+  }
+  .drawer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .drawer__nav > ul > li {
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .drawer__group summary,
+  .drawer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    min-height: 56px;
+    font-size: var(--fs-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+    text-decoration: none;
+    list-style: none;
+  }
+  .drawer__group summary::-webkit-details-marker {
+    display: none;
+  }
+  .drawer__group[open] summary {
+    color: var(--primary);
+  }
+  .drawer__group .acc__body a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-left: var(--space-sm);
+    text-decoration: none;
+    color: var(--on-surface-variant);
+  }
+  .drawer__group .acc__body a:hover {
+    color: var(--primary);
+  }
+  .drawer__group .acc__body ul {
+    padding-bottom: var(--space-sm);
+  }
+  .drawer__foot {
+    flex: none;
+    padding: var(--space-md) var(--space-gutter) calc(var(--space-md) + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface-container-low);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .drawer__contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .drawer__contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    text-decoration: none;
+    color: var(--on-surface-variant);
+  }
+  .drawer :global(.drawer__cta) {
+    width: 100%;
+  }
+
+  /* ---- Breakpoints ---- */
+  @media (min-width: 1024px) {
+    .site-nav {
+      display: block;
+    }
+    .site-header__util,
+    .site-header :global(.site-header__cta) {
+      display: inline-flex;
+    }
+    .menu-btn,
+    .drawer {
+      display: none;
+    }
+  }
+  @media (max-width: 1023px) {
+    .mega {
+      display: none;
+    }
+    :global(html:not(.js)) .menu-btn {
+      display: none;
+    }
+    .nav-noscript {
+      display: block;
+    }
+    .nav-noscript ul {
+      display: flex;
+      gap: var(--space-md);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow-x: auto;
+    }
+    .site-header__row {
+      flex-wrap: wrap;
+      height: auto;
+      min-height: var(--header-h);
+    }
+  }
+  /* Compact desktop (1024–1279): tighter nav so everything fits on one row */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .site-header__util {
+      display: none;
+    }
+    .site-header__row {
+      gap: var(--space-md);
+    }
+    .site-nav__list {
+      gap: 0;
+    }
+    .site-header :global(.logo img) {
+      width: 160px;
+      height: auto;
+    }
+    .site-nav__trigger,
+    .site-nav__link {
+      padding: 0 8px;
+      font-size: 0.9375rem;
+    }
+    .site-header__actions {
+      gap: var(--space-sm);
+    }
+    .site-header :global(.site-header__cta) {
+      white-space: nowrap;
+    }
+  }
+  @media (min-width: 1280px) {
+    .site-header :global(.site-header__cta) {
+      white-space: nowrap;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header.is-hidden {
+      transform: none;
+    }
+    .mega {
+      transform: none;
+    }
+    .drawer[open],
+    .drawer[open]::backdrop {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/header';
+  import '../../scripts/megamenu';
+  import '../../scripts/drawer';
+  import '../../scripts/accordion';
+</script>

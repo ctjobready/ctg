@@ -1,0 +1,368 @@
+/* Utilities: containers, grids, stack/cluster, a11y helpers, prose */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--space-gutter));
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}
+.container--wide {
+  max-width: calc(var(--header-max) + 2 * var(--space-gutter));
+}
+.container--narrow {
+  max-width: calc(var(--measure) + 2 * var(--space-gutter));
+}
+
+/* 12-column grid, 20px gap */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-gutter);
+}
+
+/* Card grids: 1 column < 768, 2 columns ≥ 768, 3 columns ≥ 1024 (system) */
+.grid-cards {
+  display: grid;
+  gap: var(--space-gutter);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 768px) {
+  .grid-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .grid-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .grid-cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-cards--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.grid-cards--stretch > * {
+  height: 100%;
+}
+
+.stack > * + * {
+  margin-top: var(--stack-gap, var(--space-md));
+}
+.stack--lg {
+  --stack-gap: var(--space-lg);
+}
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--space-md));
+}
+
+.sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1000;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: var(--radius-default);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: var(--fs-body-xs);
+  line-height: var(--lh-body-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ctx-accent);
+}
+
+.lead {
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-body-l);
+  color: var(--ctx-text);
+  max-width: 48rem;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-muted {
+  color: var(--ctx-muted);
+}
+
+/* External-link affordance helper */
+.link {
+  color: var(--ctx-link);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  padding-bottom: 2px;
+}
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 1px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .link {
+    transition: background-size var(--dur-base) var(--ease-standard);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link:hover,
+  .link:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ---- Prose: long-form body copy (Markdown output, evidence pages) --------- */
+.prose {
+  max-width: var(--measure);
+  font-size: var(--fs-body-m);
+  line-height: var(--lh-body-m);
+  color: var(--on-surface-variant);
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h2 {
+  margin-top: 2em;
+  color: var(--secondary);
+}
+.prose h3 {
+  margin-top: 1.6em;
+  color: var(--on-surface);
+}
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: 0.6em;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose li::marker {
+  color: var(--primary);
+}
+.prose blockquote {
+  border-left: 4px solid var(--primary-fixed);
+  padding-left: var(--space-md);
+  color: var(--on-surface);
+  font-size: var(--fs-body-l);
+}
+.prose img,
+.prose figure {
+  border-radius: var(--radius-default);
+}
+.prose figcaption {
+  font-size: var(--fs-body-xs);
+  color: var(--outline);
+  margin-top: var(--space-sm);
+}
+.prose table {
+  width: 100%;
+  font-size: var(--fs-body-base);
+}
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--outline-variant);
+}
+.prose th {
+  color: var(--on-surface);
+}
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--surface-container-low);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+/* Numerals in stats/tables */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Cards (shared by system + ➕ cards) -------------------------------------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--ctx-card);
+  border: 1px solid var(--ctx-border);
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  height: 100%;
+}
+.card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  background: var(--surface-container-low);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-gutter);
+  flex: 1;
+}
+.card__body > * {
+  margin: 0;
+}
+.card__title {
+  font-size: var(--fs-heading-l);
+  line-height: var(--lh-heading-l);
+  font-weight: var(--fw-medium);
+  color: var(--on-surface);
+}
+.card__text {
+  color: var(--on-surface-variant);
+}
+.card__meta {
+  font-size: var(--fs-body-xs);
+  line-height: var(--lh-body-xs);
+  color: var(--outline);
+}
+.card__more {
+  margin-top: auto;
+  padding-top: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--fw-medium);
+  color: var(--blue-600);
+}
+/* Stretched link: the whole card is the target; the heading link carries the name. */
+.card__link {
+  color: inherit;
+  text-decoration: none;
+}
+.card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.card__link:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.card--link:hover .card__link,
+.card--link:focus-within .card__link {
+  color: var(--primary);
+}
+/* Keyboard focus ring is drawn on the whole card (system: 2px primary + 4px powder blue) */
+.card--link:has(.card__link:focus-visible) {
+  outline: 2px solid var(--ctx-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--powder-blue);
+}
+/* M5: card lift */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
+  }
+  .card__media img {
+    transition: transform var(--dur-slow) var(--ease-standard);
+  }
+  .card__more .icon {
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  .card--link:hover,
+  .card--link:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .card--link:hover .card__media img,
+  .card--link:focus-within .card__media img {
+    transform: scale(1.04);
+  }
+  .card--link:hover .card__more .icon,
+  .card--link:focus-within .card__more .icon {
+    transform: translateX(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card--link:hover,
+  .card--link:focus-within {
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+/* ---- Details accordion (FAQ + drawer groups). M15: animated height ----------- */
+details.acc > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details.acc > summary::-webkit-details-marker {
+  display: none;
+}
+details.acc .acc__chev {
+  transition: transform var(--dur-base) var(--ease-standard);
+  flex: none;
+}
+details.acc[open] > summary .acc__chev {
+  transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  details.acc::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--dur-base) var(--ease-standard),
+      content-visibility var(--dur-base) allow-discrete;
+  }
+  details.acc[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* Full-width "enroll" buttons sit naturally in clusters */
+.cluster > .btn--enroll {
+  width: auto;
+}

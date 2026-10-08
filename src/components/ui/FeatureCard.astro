@@ -1,0 +1,52 @@
+---
+import Icon from '../system/Icon.astro';
+import { linkAttrs } from '../../lib/url';
+
+/** Icon + title + body + optional "which means…" consequence line. */
+interface Props {
+  icon?: string;
+  title: string;
+  text?: string;
+  /** Consequence line, rendered under a divider ("which means…"). */
+  means?: string;
+  href?: string;
+  class?: string;
+}
+const { icon, title, text, means, href, class: className } = Astro.props;
+const a = href ? linkAttrs(href) : undefined;
+---
+
+<article class:list={['card feature', a && 'card--link', className]} data-reveal>
+  <div class="card__body">
+    {icon && <Icon name={icon} size={40} strokeWidth={1.5} class="feature__icon" />}
+    <h3 class="card__title">
+      {a ? <a class="card__link" href={a.href} rel={a.rel}>{title}</a> : title}
+    </h3>
+    {text && <p class="card__text">{text}</p>}
+    <slot />
+    {means && <p class="feature__means"><span class="feature__means-label">Which means</span> {means}</p>}
+  </div>
+</article>
+
+<style>
+  .feature :global(.feature__icon) {
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
+  }
+  .feature__means {
+    margin-top: auto !important;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .feature__means-label {
+    color: var(--on-primary-container);
+    font-size: var(--fs-body-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: var(--fw-bold);
+    display: block;
+    margin-bottom: 2px;
+  }
+</style>

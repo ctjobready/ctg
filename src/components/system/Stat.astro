@@ -1,0 +1,116 @@
+---
+import { parseFigure } from '../../lib/format';
+
+interface Props {
+  /** Display value, e.g. "77.9%", "130,000+", "15". Final text is always in the HTML. */
+  value: string;
+  label: string;
+  /** default: Primary figure on light grounds; dark: white numerals on Klein/Deep Ink; accent: orange numerals on dark. */
+  tone?: 'default' | 'dark' | 'accent';
+  size?: 'md' | 'lg';
+  align?: 'start' | 'center';
+  /** Count up when it enters the viewport (M2). */
+  count?: boolean;
+  /** Footnote / source marker or short note under the label. */
+  note?: string;
+  class?: string;
+}
+const { value, label, tone = 'default', size = 'md', align = 'start', count = true, note, class: className } = Astro.props;
+const fig = count ? parseFigure(value) : null;
+// Reserve width for the final value: D-DIN has no tabular figures.
+const widthCh = value.length;
+---
+
+<div class:list={['stat', `stat--${tone}`, `stat--${size}`, `stat--${align}`, className]}>
+  <p class="stat__value">
+    {
+      fig ? (
+        <>
+          <span
+            class="stat__num"
+            aria-hidden="true"
+            data-countup
+            data-value={fig.num}
+            data-prefix={fig.prefix}
+            data-suffix={fig.suffix}
+            data-decimals={fig.decimals}
+            data-grouped={fig.grouped}
+            style={`min-width:${widthCh}ch`}
+          >
+            {value}
+          </span>
+          <span class="sr-only">{value}</span>
+        </>
+      ) : (
+        <span class="stat__num" style={`min-width:${widthCh}ch`}>{value}</span>
+      )
+    }
+  </p>
+  <p class="stat__label">{label}</p>
+  {note && <p class="stat__note">{note}</p>}
+</div>
+
+<style>
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    --stat-color: var(--ctx-stat);
+    --stat-label: var(--ctx-text);
+  }
+  .stat--dark {
+    --stat-color: var(--on-secondary);
+    --stat-label: var(--primary-fixed);
+  }
+  .stat--accent {
+    --stat-color: var(--tertiary-light);
+    --stat-label: var(--primary-fixed);
+  }
+  .stat--center {
+    align-items: center;
+    text-align: center;
+  }
+  .stat__value {
+    margin: 0;
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.25;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--stat-color);
+  }
+  .stat--lg .stat__value {
+    font-size: var(--fs-display-5xl);
+    line-height: 1.15;
+  }
+  .stat__num {
+    display: inline-block;
+    text-align: inherit;
+    white-space: nowrap;
+  }
+  .stat--start .stat__num {
+    text-align: left;
+  }
+  .stat--center .stat__num {
+    text-align: center;
+  }
+  .stat__label {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--stat-label);
+    max-width: 28ch;
+  }
+  .stat__note {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .stat--dark .stat__note,
+  .stat--accent .stat__note {
+    color: var(--primary-fixed);
+  }
+</style>
+
+<script>
+  import '../../scripts/countup';
+</script>

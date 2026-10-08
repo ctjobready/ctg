@@ -1,0 +1,134 @@
+---
+/**
+ * BarChart ➕ — horizontal bars (HTML, so the labels are real text) + an accessible data table.
+ * Bars grow on reveal (M3).
+ */
+interface Props {
+  title: string;
+  items: { label: string; value: number; /** Text shown at the right; defaults to value + unit. */ display?: string; note?: string }[];
+  /** Axis maximum; default 100. */
+  max?: number;
+  unit?: string;
+  note?: string;
+  class?: string;
+}
+const { title, items, max = 100, unit = '%', note, class: className } = Astro.props;
+---
+
+<figure class:list={['bars', className]} data-reveal>
+  <figcaption class="bars__title">{title}</figcaption>
+  <ul class="bars__list" role="list">
+    {
+      items.map((it, i) => (
+        <li class="bars__row" style={`--p:${Math.max(0, Math.min(100, (it.value / max) * 100))};--bi:${i}`}>
+          <span class="bars__label">{it.label}</span>
+          <span class="bars__track" aria-hidden="true"><span class="bars__fill"></span></span>
+          <span class="bars__value">{it.display ?? `${it.value}${unit}`}</span>
+        </li>
+      ))
+    }
+  </ul>
+  {note && <p class="bars__note">{note}</p>}
+  <details class="bars__data">
+    <summary>View chart data as a table</summary>
+    <table>
+      <caption class="sr-only">{title}</caption>
+      <thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead>
+      <tbody>
+        {items.map((it) => <tr><th scope="row">{it.label}</th><td>{it.display ?? `${it.value}${unit}`}{it.note ? ` — ${it.note}` : ''}</td></tr>)}
+      </tbody>
+    </table>
+  </details>
+</figure>
+
+<style>
+  .bars {
+    margin: 0;
+    max-width: 720px;
+  }
+  .bars__title {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-md);
+  }
+  .bars__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+  .bars__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'label value' 'track track';
+    gap: 4px var(--space-md);
+    align-items: baseline;
+  }
+  .bars__label {
+    grid-area: label;
+    color: var(--ctx-text);
+  }
+  .bars__value {
+    grid-area: value;
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+  }
+  .bars__track {
+    grid-area: track;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    overflow: hidden;
+  }
+  .bars__fill {
+    display: block;
+    height: 100%;
+    background: var(--primary);
+    clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
+  }
+  .bars__note {
+    margin: var(--space-md) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .bars__data {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+  }
+  .bars__data summary {
+    color: var(--ctx-link);
+    font-weight: var(--fw-medium);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .bars__data table {
+    width: 100%;
+  }
+  .bars__data th,
+  .bars__data td {
+    text-align: left;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
+  }
+  @media (min-width: 768px) {
+    .bars__row {
+      grid-template-columns: 220px minmax(0, 1fr) 4.5rem;
+      grid-template-areas: 'label track value';
+      align-items: center;
+    }
+    .bars__value {
+      text-align: right;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .bars .bars__fill {
+      clip-path: inset(0 100% 0 0 round 9999px);
+    }
+    :global(.js) .bars.is-visible .bars__fill {
+      clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px);
+      transition: clip-path 800ms var(--ease-emphasized) calc(150ms + var(--bi) * 90ms);
+    }
+  }
+</style>

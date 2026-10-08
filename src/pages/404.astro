@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import CategoryCard from '../components/system/CategoryCard.astro';
+import Button from '../components/system/Button.astro';
+import Icon from '../components/system/Icon.astro';
+import CopyEmail from '../components/ui/CopyEmail.astro';
+import { audiences } from '../data/nav';
+import { linkAttrs } from '../lib/url';
+import { COURSES_URL } from '../lib/site';
+
+const popular = [
+  { label: 'Impact: outcomes and evidence', href: '/impact/', icon: 'chart-bar' },
+  { label: 'How our model works', href: '/our-model/', icon: 'target' },
+  { label: 'Programs', href: '/programs/', icon: 'rocket' },
+  { label: 'News', href: '/news/', icon: 'file-text' },
+  { label: 'About CodersTrust', href: '/about/', icon: 'users' },
+  { label: 'Contact us', href: '/contact/', icon: 'mail' },
+];
+---
+
+<BaseLayout title="Page not found" description="The page you were looking for could not be found. Find your way from here." path="/404/" noindex promo={false}>
+  <section class="nf">
+    <div class="container nf__inner">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="t-display-4xl">We can't find that page</h1>
+      <p class="lead">The link may be out of date or mistyped. Tell us who you are and we will point you to the right place.</p>
+      <div class="cluster">
+        <Button href="/" iconEnd="arrow-right">Go to the home page</Button>
+        <Button variant="outline" href="/contact/">Contact us</Button>
+      </div>
+    </div>
+  </section>
+
+  <Section tone="airy" aria-labelledby="router-h">
+    <SectionHeader id="router-h" eyebrow="Start here" title="Who are you?" lead="Each path leads to the evidence and the next step for your role." />
+    <div class="grid-cards">
+      {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
+      <CategoryCard title="Learners" icon="book-open" text="Browse courses on JobReady.global" href={COURSES_URL} />
+    </div>
+  </Section>
+
+  <Section aria-labelledby="popular-h">
+    <SectionHeader id="popular-h" title="Popular pages" />
+    <ul class="nf__links" role="list">
+      {
+        popular.map((p) => (
+          <li>
+            <a class="nf__link" href={linkAttrs(p.href).href}>
+              <Icon name={p.icon} size={20} />
+              <span>{p.label}</span>
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="nf__mail">Still stuck? Write to <CopyEmail />.</p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .nf {
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .nf {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+  .nf__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .nf__inner > * {
+    margin: 0;
+  }
+  .nf__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .nf__links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .nf__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-height: 56px;
+    padding: 0 var(--space-md);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+    background: var(--surface);
+    transition: background-color var(--dur-base) ease, border-color var(--dur-base) ease;
+  }
+  .nf__link span {
+    flex: 1;
+  }
+  .nf__link :global(.icon:first-child) {
+    color: var(--primary);
+  }
+  .nf__link:hover {
+    background: var(--surface-container-low);
+    border-color: var(--primary);
+  }
+  .nf__mail {
+    margin-top: var(--space-lg);
+  }
+</style>

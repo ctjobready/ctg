@@ -1,0 +1,195 @@
+/* Base: document, type scale, links, focus, selection. All values are tokens. */
+
+:root {
+  color-scheme: light;
+
+  /* Contextual tokens — Section bands re-map these so components adapt to dark grounds. */
+  --ctx-text: var(--on-surface-variant);
+  --ctx-muted: var(--outline);
+  --ctx-heading: var(--on-surface);
+  --ctx-section-heading: var(--secondary);
+  --ctx-link: var(--blue-600);
+  --ctx-accent: var(--primary);
+  --ctx-stat: var(--primary);
+  --ctx-focus: var(--primary);
+  --ctx-border: var(--primary-fixed);
+  --ctx-card: var(--surface);
+}
+
+html {
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+  interpolate-size: allow-keywords;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html.is-locked {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-base);
+  line-height: var(--lh-body-base);
+  font-weight: var(--fw-regular);
+  color: var(--on-surface-variant);
+  background: var(--surface);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--primary-fixed);
+  color: var(--on-primary-fixed);
+}
+
+/* ---- Headings: system scale (planning/07 §3) ------------------------------ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ctx-heading);
+  text-wrap: balance;
+}
+p,
+li,
+blockquote,
+figcaption {
+  text-wrap: pretty;
+}
+
+h1,
+.t-display-4xl {
+  font-size: var(--fs-display-4xl);
+  line-height: var(--lh-display-4xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: -1px;
+}
+.t-display-5xl {
+  font-size: var(--fs-display-5xl);
+  line-height: var(--lh-display-5xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: -1px;
+}
+h2,
+.t-heading-3xl {
+  font-size: var(--fs-heading-3xl);
+  line-height: var(--lh-heading-3xl);
+  font-weight: var(--fw-semibold);
+}
+.t-heading-2xl {
+  font-size: var(--fs-heading-2xl);
+  line-height: var(--lh-heading-2xl);
+  font-weight: var(--fw-semibold);
+}
+.t-heading-xl {
+  font-size: var(--fs-heading-xl);
+  line-height: var(--lh-heading-xl);
+  font-weight: var(--fw-semibold);
+}
+h3,
+.t-heading-l {
+  font-size: var(--fs-heading-l);
+  line-height: var(--lh-heading-l);
+  font-weight: var(--fw-medium);
+}
+h4,
+.t-heading-m {
+  font-size: var(--fs-heading-m);
+  line-height: var(--lh-heading-m);
+  font-weight: var(--fw-medium);
+}
+h5,
+h6 {
+  font-size: var(--fs-body-base);
+  font-weight: var(--fw-bold);
+}
+.t-body-l {
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-body-l);
+}
+.t-body-m {
+  font-size: var(--fs-body-m);
+  line-height: var(--lh-body-m);
+}
+.t-body-base {
+  font-size: var(--fs-body-base);
+  line-height: var(--lh-body-base);
+}
+.t-body-xs {
+  font-size: var(--fs-body-xs);
+  line-height: var(--lh-body-xs);
+}
+
+/* Tracking: −1px only where the glyphs are ≥ 28px (tablet and up for 3xl/2xl) */
+@media (min-width: 768px) {
+  h2,
+  .t-heading-3xl,
+  .t-heading-2xl {
+    letter-spacing: -1px;
+  }
+  .t-heading-xl {
+    letter-spacing: -0.5px;
+  }
+}
+
+strong,
+b {
+  font-weight: var(--fw-bold);
+}
+
+/* ---- Links ------------------------------------------------------------------
+   Unclassed anchors inside running text (p, .prose, .rich) are links: underline grows from the left (M8). */
+:where(p, .prose, .rich) a:where(:not([class])) {
+  color: var(--ctx-link);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 1px;
+}
+:where(p, .prose, .rich) a:where(:not([class])):hover {
+  background-size: 100% 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :where(p, .prose, .rich) a:where(:not([class])) {
+    transition: background-size var(--dur-base) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+  }
+}
+
+/* ---- Focus (system: 2px primary outline + 4px powder-blue ring) ------------ */
+:focus-visible {
+  outline: 2px solid var(--ctx-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--powder-blue);
+  border-radius: var(--radius-sm);
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--outline-variant);
+}
+
+/* ---- Cross-document view transitions (M20) ---------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-base);
+  }
+}

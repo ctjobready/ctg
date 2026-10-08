@@ -1,0 +1,54 @@
+---
+import Icon from '../system/Icon.astro';
+import Badge from '../system/Badge.astro';
+import { linkAttrs } from '../../lib/url';
+
+interface Props {
+  title: string;
+  text: string;
+  icon?: string;
+  href: string;
+  badge?: string;
+  /** Short facts line(s): audience, duration… */
+  meta?: string[];
+  linkLabel?: string;
+  class?: string;
+}
+const { title, text, icon = 'rocket', href, badge, meta = [], linkLabel = 'Learn more', class: className } = Astro.props;
+const a = linkAttrs(href);
+---
+
+<article class:list={['card card--link program', className]} data-reveal>
+  <div class="card__body">
+    <div class="program__top">
+      <Icon name={icon} size={40} strokeWidth={1.5} class="program__icon" />
+      {badge && <Badge tone="brand">{badge}</Badge>}
+    </div>
+    <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
+    <p class="card__text">{text}</p>
+    {meta.length > 0 && <ul class="program__meta" role="list">{meta.map((m) => <li>{m}</li>)}</ul>}
+    <span class="card__more" aria-hidden="true">{linkLabel}<Icon name="arrow-right" size={16} /></span>
+  </div>
+</article>
+
+<style>
+  .program__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+  .program :global(.program__icon) {
+    color: var(--primary);
+  }
+  .program__meta {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

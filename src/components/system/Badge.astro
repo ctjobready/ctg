@@ -1,0 +1,47 @@
+---
+interface Props {
+  tone?: 'brand' | 'info' | 'success' | 'sale' | 'eyebrow';
+  class?: string;
+}
+const { tone = 'brand', class: className } = Astro.props;
+---
+
+<span class:list={['badge', `badge--${tone}`, className]}><slot /></span>
+
+<style is:global>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    height: 22px;
+    padding: 0 10px;
+    border-radius: var(--radius-pill);
+    font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .badge--sale {
+    background: var(--sale-badge-bg);
+    border-color: var(--sale-badge-border);
+    color: var(--on-tertiary-container);
+  }
+  .badge--brand {
+    background: var(--badge-brand-bg, var(--surface-container-low));
+    color: var(--on-primary-container);
+  }
+  .badge--info {
+    background: var(--badge-info-bg, var(--info-subtle));
+    color: var(--on-surface);
+  }
+  .badge--success {
+    background: var(--success-subtle);
+    color: var(--success-strong);
+  }
+  .badge--eyebrow {
+    height: 32px;
+    padding: 0 var(--space-md);
+    background: var(--surface);
+    color: var(--secondary);
+    border-color: var(--primary-fixed);
+  }
+</style>

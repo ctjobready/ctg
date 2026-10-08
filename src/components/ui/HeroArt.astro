@@ -1,0 +1,174 @@
+---
+import { rng } from '../../lib/seed';
+
+/**
+ * HeroArt ➕ — generated SVG in the system's cover motif (planning/07 §7):
+ * Klein slab, Powder panel, JobReady-Blue slab, one orange spark disc, one cyan chip,
+ * six progress pills that fill upward in sequence (M12). `seed` makes each page's
+ * composition distinct but deterministic.
+ */
+interface Props {
+  seed?: string;
+  /** portrait = 4:5 (hero side image), wide = 16:9 (banner), card = 3:2 (card media) */
+  shape?: 'portrait' | 'wide' | 'card';
+  class?: string;
+}
+const { seed = 'coderstrust', shape = 'portrait', class: className } = Astro.props;
+const r = rng(seed);
+const J = (n: number, spread: number) => n + (r() - 0.5) * 2 * spread;
+
+const W = shape === 'portrait' ? 400 : shape === 'card' ? 600 : 640;
+const H = shape === 'portrait' ? 500 : shape === 'card' ? 400 : 360;
+
+// Three base compositions (A/B/C), optionally mirrored, so each seed gets a distinct but consistent layout.
+const variant = Math.floor(r() * 3);
+const flip = r() < 0.5;
+type Box = { x: number; y: number; w: number; h: number };
+const box = (x: number, y: number, w: number, h: number, jx = 0.03, jy = 0.03): Box => ({
+  x: W * J(x, jx),
+  y: H * J(y, jy),
+  w: W * J(w, 0.03),
+  h: H * J(h, 0.04),
+});
+let klein: Box, blue: Box, powder: Box, spark: { x: number; y: number }, chip: { x: number; y: number };
+if (variant === 0) {
+  klein = box(0.1, 0.12, 0.52, 0.58);
+  blue = box(0.54, 0.4, 0.4, 0.42);
+  powder = box(0.62, 0.07, 0.34, 0.3);
+  spark = { x: 0.79, y: 0.22 };
+  chip = { x: 0.14, y: 0.8 };
+} else if (variant === 1) {
+  klein = box(0.08, 0.1, 0.6, 0.36);
+  blue = box(0.5, 0.3, 0.38, 0.42);
+  powder = box(0.06, 0.52, 0.32, 0.28);
+  spark = { x: 0.2, y: 0.66 };
+  chip = { x: 0.14, y: 0.52 };
+} else {
+  klein = box(0.1, 0.08, 0.34, 0.66);
+  blue = box(0.36, 0.34, 0.5, 0.32);
+  powder = box(0.52, 0.06, 0.38, 0.24);
+  spark = { x: 0.72, y: 0.17 };
+  chip = { x: 0.12, y: 0.82 };
+}
+const sr = Math.min(W, H) * J(0.075, 0.01);
+const cw = W * 0.17;
+const chh = Math.min(W, H) * 0.06;
+// Progress card with six pills (always bottom-right so the "progress" motif stays anchored)
+const cardW = W * J(0.5, 0.03);
+const cardH = H * J(0.26, 0.02);
+const cardX = W * 0.96 - cardW;
+const cardY = H * 0.94 - cardH;
+const pillGap = cardW * 0.05;
+const pillW = (cardW - pillGap * 7) / 6;
+const pillH = cardH - pillGap * 2;
+const levels = Array.from({ length: 6 }, (_, i) => Math.min(0.96, 0.22 + i * 0.13 + (r() - 0.5) * 0.1));
+const id = `ha-${Math.abs(seed.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7))}`;
+const mirror = flip ? `translate(${W} 0) scale(-1 1)` : undefined;
+---
+
+<svg
+  class:list={['hero-art', `hero-art--${shape}`, className]}
+  viewBox={`0 0 ${W} ${H}`}
+  role="presentation"
+  aria-hidden="true"
+  focusable="false"
+  preserveAspectRatio="xMidYMid slice"
+  data-art={id}
+>
+  <rect class="art-bg" width={W} height={H} />
+  <g transform={mirror}>
+    <rect class="art-powder" x={powder.x} y={powder.y} width={powder.w} height={powder.h} rx="14" />
+    <rect class="art-klein" x={klein.x} y={klein.y} width={klein.w} height={klein.h} rx="16" />
+    <rect class="art-blue" x={blue.x} y={blue.y} width={blue.w} height={blue.h} rx="14" />
+    <circle class="art-spark" cx={W * spark.x} cy={H * spark.y} r={sr} />
+    <rect class="art-cyan" x={W * chip.x} y={H * chip.y} width={cw} height={chh} rx={chh / 2} />
+  <rect class="art-card" x={cardX} y={cardY} width={cardW} height={cardH} rx="12" />
+  {
+    levels.map((lv, i) => {
+      const x = cardX + pillGap + i * (pillW + pillGap);
+      const y = cardY + pillGap;
+      return (
+        <g style={`--i:${i}`}>
+          <rect class="art-pill-track" x={x} y={y} width={pillW} height={pillH} rx={pillW / 2} />
+          <rect class="art-pill-fill" x={x} y={y + pillH * (1 - lv)} width={pillW} height={pillH * lv} rx={pillW / 2} />
+        </g>
+      );
+    })
+  }
+  </g>
+</svg>
+
+<style>
+  .hero-art {
+    width: 100%;
+    height: 100%;
+  }
+  .hero-art--portrait {
+    aspect-ratio: 4 / 5;
+  }
+  .hero-art--wide {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-art--card {
+    aspect-ratio: 3 / 2;
+  }
+  .art-bg {
+    fill: var(--surface-container-low);
+  }
+  .art-powder {
+    fill: var(--primary-fixed);
+  }
+  .art-klein {
+    fill: var(--secondary);
+  }
+  .art-blue {
+    fill: var(--brand-bright);
+  }
+  .art-spark {
+    fill: var(--tertiary-light);
+  }
+  .art-cyan {
+    fill: var(--cyan);
+  }
+  .art-card {
+    fill: var(--surface);
+  }
+  .art-pill-track {
+    fill: var(--primary-fixed);
+  }
+  .art-pill-fill {
+    fill: var(--primary);
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+  /* M12: six pills fill upward in sequence on load */
+  @media (prefers-reduced-motion: no-preference) {
+    .art-pill-fill {
+      animation: pill-fill 800ms var(--ease-emphasized) both;
+      animation-delay: calc(350ms + var(--i) * 130ms);
+    }
+    .art-spark {
+      animation: spark-in 600ms var(--ease-emphasized) 200ms both;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+  }
+  @keyframes pill-fill {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes spark-in {
+    from {
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+</style>

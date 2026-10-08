@@ -1,0 +1,13 @@
+---
+import { graph, type JsonLdNode } from '../../lib/schema';
+
+/** One @graph per page: Organization + WebSite always; `nodes` are the page-type nodes. */
+interface Props {
+  nodes?: JsonLdNode[];
+}
+const { nodes = [] } = Astro.props;
+// "<" is escaped so the payload can never close the script element.
+const json = JSON.stringify(graph(nodes)).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} is:inline />
