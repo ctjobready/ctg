@@ -21,7 +21,7 @@ const planned = columns.filter((c) => c !== 'Credential');
 ---
 
 <figure class="wep" data-fact="PD-19 PD-03 PD-10" data-reveal>
-  <div class="wep__table" role="region" aria-label="Work-entry plan per track" tabindex="0">
+  <section class="wep__table" aria-label="Work-entry plan per track" tabindex="0">
     <table>
       <caption class="sr-only">Work-entry plan per track: a co-designed plan, not a guarantee</caption>
       <thead>
@@ -46,7 +46,7 @@ const planned = columns.filter((c) => c !== 'Credential');
         }
       </tbody>
     </table>
-  </div>
+  </section>
   <ul class="wep__cards" role="list">
     {
       tracks.map((t) => (

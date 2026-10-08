@@ -5,7 +5,8 @@
  *   - exist in dist/ as a redirect stub,
  *   - point (meta refresh + canonical + visible link + JS replace) to its mapped destination,
  *   - not chain (the destination is never itself a stub),
- *   - carry no `noindex`,
+ *   - carry `<meta name="robots" content="noindex">` on a STAGING build (SITE_ENV staging, the default) and no noindex
+ *     at all on a production build (a noindex on a production redirect source slows consolidation),
  * and no stub path may collide with a real page or appear in the sitemap.
  *
  *   node scripts/test-redirects.mjs [dist]       env: SITE_URL, BASE_PATH, SITE_ENV (as astro.config.mjs)
@@ -62,7 +63,22 @@ for (const r of stubRows) {
 
 // 2. Every stub exists and points at its mapped destination.
 const attr = (html, re) => (html.match(re) || [])[1];
-const unesc = (s) => (s ?? '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+/** Every robots-family <meta> of a stub, as lower-cased content strings. */
+const robotsMetas = (html) => [...html.matchAll(/<meta\b[^>]*>/gi)]
+  .map((m) => m[0])
+  .filter((t) => /\bname="(robots|googlebot|bingbot)"/i.test(t))
+  .map((t) => ((t.match(/\bcontent="([^"]*)"/i) || [])[1] ?? '').toLowerCase().trim());
+/** Staging stubs must be exactly `noindex`; production stubs must carry no robots meta (and no noindex anywhere). */
+function robotsProblem(html) {
+  const metas = robotsMetas(html);
+  if (siteEnv === 'staging') {
+    if (metas.length !== 1 || metas[0] !== 'noindex') return `staging stub must carry exactly one <meta name="robots" content="noindex"> (found ${metas.length ? metas.map((m) => `"${m}"`).join(', ') : 'none'})`;
+    return null;
+  }
+  if (metas.length || /noindex/i.test(html)) return 'production stub must not carry noindex or any robots meta';
+  return null;
+}
+const unesc =(s) => (s ?? '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 let verified = 0;
 let internal = 0;
 let external = 0;
@@ -90,7 +106,8 @@ for (const r of stubRows) {
   if (!js || JSON.parse(js) !== href) bad.push(`location.replace ${js} != "${href}"`);
   if (!/<html lang="en"[ >]/.test(html)) bad.push('missing lang="en"');
   if (!/<title>[^<]+<\/title>/.test(html)) bad.push('missing <title>');
-  if (/noindex/i.test(html)) bad.push('contains noindex');
+  const robotsBad = robotsProblem(html);
+  if (robotsBad) bad.push(robotsBad);
   if (isExternalDest(r.destination)) {
     if (!href.startsWith('https://')) bad.push('external destination is not absolute');
     external++;
@@ -109,7 +126,7 @@ for (const r of stubRows) {
   else verified++;
 }
 
-// 3. No stray stubs, no noindex on any stub, no real page overwritten.
+// 3. No stray stubs, the environment's robots behaviour on every stub, no real page overwritten.
 let stubsInDist = 0;
 let noindexStubs = 0;
 let pages = 0;
@@ -118,13 +135,14 @@ for (const f of walkFiles(dist)) {
   const html = fs.readFileSync(f, 'utf8');
   if (isRedirectStub(html)) {
     stubsInDist++;
-    if (/noindex/i.test(html)) noindexStubs++;
+    if (robotsMetas(html).includes('noindex')) noindexStubs++;
     const route = '/' + path.relative(dist, path.dirname(f)).split(path.sep).join('/') + '/';
     if (!stubPaths.has(route)) err(`${path.relative(dist, f)}: redirect stub that is not a manifest row`);
   } else pages++;
 }
 if (stubsInDist !== stubRows.length) err(`${stubsInDist} stubs in dist/, ${stubRows.length} stub rows in the manifest`);
-if (noindexStubs) err(`${noindexStubs} stub(s) contain noindex`);
+if (siteEnv === 'staging' && noindexStubs !== stubsInDist) err(`staging: ${stubsInDist - noindexStubs} of ${stubsInDist} stub(s) lack the noindex robots meta`);
+if (siteEnv === 'production' && noindexStubs) err(`production: ${noindexStubs} stub(s) contain noindex`);
 for (const route of routes) {
   const f = distFile(dist, route);
   if (!fs.existsSync(f)) err(`route ${route} was not built`);
@@ -142,7 +160,7 @@ console.log(`test-redirects (${siteEnv}, base "${base || '/'}", dist ${path.rela
 console.log(`  stub rows in manifest      ${stubRows.length} (${internal} internal, ${external} external)`);
 console.log(`  stubs verified             ${verified}`);
 console.log(`  stubs in dist/             ${stubsInDist}`);
-console.log(`  stubs containing noindex   ${noindexStubs}`);
+console.log(`  stubs containing noindex   ${noindexStubs} (${siteEnv === 'staging' ? 'staging: every stub must carry it' : 'production: none may carry it'})`);
 console.log(`  real pages in dist/        ${pages}`);
 console.log(`  sitemap URLs               ${sm.length}, none is a stub`);
 if (errors.length) {

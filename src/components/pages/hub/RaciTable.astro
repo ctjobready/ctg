@@ -24,7 +24,7 @@ const cols = [
 ] as const;
 ---
 
-<div class="raci" role="region" aria-label="Who does what in a partnership" tabindex="0" data-reveal>
+<section class="raci" aria-label="Who does what in a partnership" tabindex="0" data-scroll data-stack="inline" data-reveal>
   <table>
     <caption class="sr-only">Who does what in a partnership: responsible, accountable, consulted and informed by role</caption>
     <thead>
@@ -38,8 +38,8 @@ const cols = [
         rows.map((r) => (
           <tr>
             <th scope="row">{r.activity}</th>
-            {cols.map(([, key]) => (
-              <td>
+            {cols.map(([label, key]) => (
+              <td data-label={label}>
                 {r[key].map((role) => (
                   <span class={`raci__pill raci__pill--${role}`} aria-hidden="true">{role}</span>
                 ))}
@@ -51,13 +51,17 @@ const cols = [
       }
     </tbody>
   </table>
-</div>
+</section>
 <p class="raci__legend t-body-xs">
   <span><b>R</b> Responsible: does the work</span>
   <span><b>A</b> Accountable: decides and answers for it</span>
   <span><b>C</b> Consulted</span>
   <span><b>I</b> Informed</span>
 </p>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .raci {

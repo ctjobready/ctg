@@ -1,58 +1,15 @@
 ---
 /**
- * Mobile sticky CTA bar behaviour (doc 06 P1: "appears after section 4"). LandingLayout renders the bar
- * always; on a page whose hero already carries the one solid primary button that would put two solid
- * primaries in one viewport region, so the bar stays hidden until the visitor has scrolled past the
- * `target` element (the router band). Without JS the bar stays visible (progressive enhancement).
+ * Retired: the mobile sticky CTA bar's behaviour now lives in one place for every page that has the bar
+ * (LandingLayout + src/scripts/stickycta.ts): the bar steps aside, and goes inert, while the hero's primary CTA or an
+ * in-flow CTA band (`#cta`, `.cta-band`) is in view, and shows everywhere else; without JavaScript it stays visible.
+ * This component renders nothing. It is kept only so the pages that still render it
+ * (`<StickyCtaReveal after="router" until="cta" />`) keep compiling; remove those usages, then this file.
  */
 interface Props {
-  /** id of the element after which the bar appears. */
-  after: string;
-  /** id of the page's own CTA band: the bar steps aside while that band is on screen. */
+  /** Ignored (the old "appears after this section" anchor). */
+  after?: string;
+  /** Ignored (the old "steps aside at this CTA band" anchor; `#cta` and `.cta-band` are handled generally). */
   until?: string;
 }
-const { after, until = '' } = Astro.props;
 ---
-
-<style is:global>
-  html.js .sticky-cta:not(.is-on) {
-    visibility: hidden;
-    transform: translateY(100%);
-  }
-  html.js .sticky-cta {
-    transition:
-      transform var(--dur-slow) var(--ease-emphasized),
-      visibility 0s linear var(--dur-slow);
-  }
-  html.js .sticky-cta.is-on {
-    transition-delay: 0s;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html.js .sticky-cta {
-      transition: none;
-    }
-  }
-</style>
-
-<script define:vars={{ after, until }}>
-  // The bar is rendered by the layout after the page slot, so wait for the full document.
-  function init() {
-    var bar = document.querySelector('.sticky-cta');
-    var target = document.getElementById(after);
-    var end = until ? document.getElementById(until) : null;
-    if (!bar || !target) return;
-    function update() {
-      var passed = target.getBoundingClientRect().bottom < 0;
-      if (passed && end) {
-        var r = end.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) passed = false;
-      }
-      bar.classList.toggle('is-on', passed);
-    }
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-</script>

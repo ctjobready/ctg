@@ -21,7 +21,7 @@ const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => n
 ---
 
 <figure class="raci" data-reveal data-fact="PD-08 PD-11 PD-02">
-  <div class="raci__wrap" role="region" aria-label="Illustrative responsibilities for governance and reporting" tabindex="0">
+  <section class="raci__wrap" aria-label="Illustrative responsibilities for governance and reporting" tabindex="0" data-scroll data-stack="inline">
     <table>
       <caption class="sr-only">Illustrative responsibilities (RACI) for governance and reporting</caption>
       <thead>
@@ -35,17 +35,21 @@ const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => n
           rows.map((r) => (
             <tr>
               <th scope="row">{r.what}</th>
-              {r.cells.map((c) => (
-                <td><span aria-hidden="true" class:list={['raci__v', c === '—' && 'raci__v--none']}>{c}</span><span class="sr-only">{say(c)}</span></td>
+              {r.cells.map((c, i) => (
+                <td data-label={roles[i]}><span aria-hidden="true" class:list={['raci__v', c === '—' && 'raci__v--none']}>{c}</span><span class="sr-only">{say(c)}</span></td>
               ))}
             </tr>
           ))
         }
       </tbody>
     </table>
-  </div>
+  </section>
   <figcaption class="raci__cap">R responsible · A accountable · C consulted · I informed. Illustrative: the final split is set in co-design.</figcaption>
 </figure>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .raci {

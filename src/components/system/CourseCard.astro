@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import Badge from './Badge.astro';
 import Button from './Button.astro';
 import Img from '../ui/Img.astro';
+import HeroArt from '../ui/HeroArt.astro';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
@@ -23,7 +24,8 @@ const { title, image, imageAlt = '', badge, meta = [], price, oldPrice, actionLa
 
 <article class:list={['course', className]}>
   <div class="course__media">
-    {image ? <Img src={image} alt={imageAlt} width={640} height={360} widths={[320, 640]} sizes="(min-width:1024px) 360px, 90vw" /> : <Icon name="book-open" size={48} strokeWidth={1.25} />}
+    {/* No photo: the design system's seeded HeroArt composition (16:9, decorative, aria-hidden), distinct per course. */}
+    {image ? <Img src={image} alt={imageAlt} width={640} height={360} widths={[320, 640]} sizes="(min-width:1024px) 360px, 90vw" /> : <HeroArt seed={`course-${title}`} shape="wide" />}
     {badge && <Badge tone="sale" class="course__badge">{badge}</Badge>}
   </div>
   <div class="course__body">

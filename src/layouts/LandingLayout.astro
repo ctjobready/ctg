@@ -3,7 +3,11 @@ import BaseLayout from './BaseLayout.astro';
 import Button from '../components/system/Button.astro';
 import type { BaseLayoutProps } from '../lib/layout';
 
-/** T3 Landing (CMF): BaseLayout + optional sticky in-page CTA bar on mobile. */
+/**
+ * T3 Landing (CMF): BaseLayout + optional sticky in-page CTA bar on mobile. The bar steps aside (and goes inert) while
+ * the hero's primary CTA or an in-flow CTA band is in view, so a viewport region never holds two solid primaries
+ * (src/scripts/stickycta.ts); without JavaScript it stays visible.
+ */
 interface Props extends BaseLayoutProps {
   stickyCta?: { label: string; href: string };
 }
@@ -22,6 +26,11 @@ const { stickyCta, ...base } = Astro.props;
   }
 </BaseLayout>
 
+<script>
+  // Self-guarding: does nothing on a page without the bar.
+  import '../scripts/stickycta';
+</script>
+
 <style is:global>
   .sticky-cta {
     position: fixed;
@@ -33,6 +42,22 @@ const { stickyCta, ...base } = Astro.props;
   }
   .sticky-cta .btn {
     width: 100%;
+  }
+  /* Stepped aside: out of sight and (with the inert attribute) out of the tab order. With JavaScript the bar starts
+     hidden until the script has worked out whether a hero or band CTA is in view (no flash at load); without
+     JavaScript none of these rules match and the bar stays visible. */
+  .sticky-cta[data-hidden],
+  html.js .sticky-cta:not([data-ready]) {
+    visibility: hidden;
+    transform: translateY(110%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sticky-cta[data-ready] {
+      transition: transform var(--dur-base) var(--ease-standard), visibility 0s linear;
+    }
+    .sticky-cta[data-ready][data-hidden] {
+      transition: transform var(--dur-base) var(--ease-standard), visibility 0s linear var(--dur-base);
+    }
   }
   .has-sticky-cta {
     padding-bottom: 72px;

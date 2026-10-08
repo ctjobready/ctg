@@ -16,7 +16,7 @@ const rows = [
 
 <figure class="ds" data-reveal data-fact="PD-11 PD-09 PD-08 PD-02">
   <figcaption class="ds__cap"><span class="ds__tag">Illustrative · empty template</span> <strong>Decision sheet</strong></figcaption>
-  <div class="ds__wrap" role="region" aria-label="Illustrative decision sheet" tabindex="0">
+  <section class="ds__wrap" aria-label="Illustrative decision sheet" tabindex="0" data-scroll data-stack>
     <table>
       <caption class="sr-only">Illustrative decision sheet: an empty template completed with the funder in co-design</caption>
       <thead>
@@ -27,15 +27,19 @@ const rows = [
           rows.map((r) => (
             <tr>
               <th scope="row">{r.field}</th>
-              <td>{r.fixed}</td>
-              <td class="ds__blank"><span aria-hidden="true"></span><span class="sr-only">Left blank</span></td>
+              <td data-label="What is fixed">{r.fixed}</td>
+              <td class="ds__blank" data-label="Agreed with you"><span aria-hidden="true"></span><span class="sr-only">Left blank</span></td>
             </tr>
           ))
         }
       </tbody>
     </table>
-  </div>
+  </section>
 </figure>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .ds {

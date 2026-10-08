@@ -74,7 +74,7 @@ import { linkAttrs } from '../../lib/url';
           ))
         }
         <li>
-          Looking for courses?
+          Looking for courses?{' '}
           <a href={COURSES_URL} rel="noopener">
             JobReady.global
             <Icon name="arrow-up-right" size={14} />
@@ -95,7 +95,9 @@ import { linkAttrs } from '../../lib/url';
     background: var(--inverse-surface);
     color: var(--inverse-on-surface);
     padding-top: var(--band-pad);
-    padding-bottom: var(--space-gutter);
+    /* Keep-clear zone for the fixed back-to-top button (--btt-clear, base.css): at maximum scroll the button sits in
+       the bottom-right corner, so the last row of links must end above it at every width. */
+    padding-bottom: calc(var(--btt-clear) + env(safe-area-inset-bottom));
     font-size: var(--fs-body-base);
   }
   .footer a {

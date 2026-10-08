@@ -73,7 +73,7 @@ const { title, lead, id = 'contracts' } = Astro.props;
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Government contracts" title={title} lead={lead} />
-  <div class="ct" role="region" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-reveal>
+  <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
       <caption class="sr-only">Six government contracts: what CodersTrust does under each, the training scope and the curriculum reach. Counts are contract training scopes, not delivered scale.</caption>
       <thead>
@@ -89,9 +89,9 @@ const { title, lead, id = 'contracts' } = Astro.props;
           rows.map((r) => (
             <tr data-fact={r.facts.join(' ')}>
               <th scope="row">{r.contract}</th>
-              <td>{r.scope}</td>
-              <td class="ct__num">{r.direct}</td>
-              <td>
+              <td data-label="CodersTrust scope">{r.scope}</td>
+              <td class="ct__num" data-label="Direct training">{r.direct}</td>
+              <td data-label="Curriculum reach">
                 {r.reach ? r.reach : (<><span class="sr-only">Not applicable</span><span aria-hidden="true">—</span></>)}
               </td>
             </tr>
@@ -99,13 +99,17 @@ const { title, lead, id = 'contracts' } = Astro.props;
         }
       </tbody>
     </table>
-  </div>
+  </section>
   <div class="ct__notes" data-reveal>
     <p data-fact="GV-10">Counts are contract training scopes, not delivered scale; some scopes are still in progress.<FootnoteMarker id="GV-10" footnote={true} /></p>
     <p data-fact="SC-06"><Fact id="SC-06" />. {sc06Note}.</p>
     <p data-fact="SC-08">Separately, CodersTrust trained {teachers}.</p>
   </div>
 </Section>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .ct {

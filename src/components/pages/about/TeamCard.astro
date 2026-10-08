@@ -68,6 +68,18 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
     height: 100%;
     object-fit: cover;
     object-position: 50% 12%;
+    /* One tone for every headshot (the source photos differ): grayscale at rest, full color on card hover / focus-within. */
+    filter: grayscale(1);
+  }
+  .tc:hover .tc__photo :global(img),
+  .tc:focus-within .tc__photo :global(img) {
+    filter: none;
+  }
+  /* Colour-fade only when motion is welcome; under reduced motion the change is instant. */
+  @media (prefers-reduced-motion: no-preference) {
+    .tc__photo :global(img) {
+      transition: filter var(--dur-slow) var(--ease-standard);
+    }
   }
   .tc__initials {
     font-size: var(--fs-display-4xl);

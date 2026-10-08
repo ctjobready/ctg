@@ -14,6 +14,10 @@
   --ctx-focus: var(--primary);
   --ctx-border: var(--primary-fixed);
   --ctx-card: var(--surface);
+
+  /* Fixed back-to-top button: its size, and the room the footer reserves under its last row so the button never covers a footer control. */
+  --btt-size: 48px;
+  --btt-clear: calc(var(--btt-size) + 2 * var(--space-gutter));
 }
 
 html {
