@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-even
 coverAlt: "CodersTrust attends WSIS+20 Forum High-Level Event: photo 2 of 3"
 legacyUrl: "https://coderstrust.global/coderstrust-attends-wsis20-forum-high-level-event/"
 tags: []
+seoTitle: "WSIS+20 Forum High-Level Event in Geneva"
 ---
 
 CodersTrust participates in the Technological Achievements and Global Recognition program of WSIS+20 Forum in Geneva

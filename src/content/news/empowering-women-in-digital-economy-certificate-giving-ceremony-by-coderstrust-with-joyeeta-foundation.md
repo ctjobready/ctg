@@ -8,6 +8,7 @@ cover: ../../assets/images/news/empowering-women-in-digital-economy-certificate-
 coverAlt: "Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with...: cover image"
 legacyUrl: "https://coderstrust.global/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/"
 tags: []
+seoTitle: "Joyeeta Foundation Certificate Ceremony"
 ---
 
 ![Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with...: photo 1 of 5](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation-3-scaled.jpg)
@@ -27,6 +28,6 @@ Aziz Ahmad, Chairman of CodersTrust, joined the event virtually from Geneva, Swi
 
 ![Empowering Women in Digital Economy: Certificate Giving Ceremony by CodersTrust with...: photo 5 of 5](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certifictae-ceremony-2.jpg)
 
-CodersTrust is a global EdTech-based workforce development and skill-oriented education provider currently serving over 1.5 million learners and professionals and 2300+ academic institutions in 15+ countries covering K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
+CodersTrust is a global EdTech-based workforce development and skill-oriented education provider that has trained 130,000+ youth since 2014 across 15 countries and territories, and is onboarding 1.5M+ National University learners. Its programs range from K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
 
-CodersTrust’s mission is to transform underprivileged, disadvantaged, and marginalized communities, especially youth and women, into skilled professionals and connect them with work opportunities to enable financial independence and economic growth on a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to millions of youths worldwide, resulting in employment, upward social mobility, and durable social impact.
+CodersTrust’s mission is to transform underprivileged, disadvantaged, and marginalized communities, especially youth and women, into skilled professionals and connect them with work opportunities to enable financial independence and economic growth on a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, resulting in employment, upward social mobility, and durable social impact.

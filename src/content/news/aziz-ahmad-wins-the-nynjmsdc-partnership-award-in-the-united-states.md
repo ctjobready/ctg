@@ -8,6 +8,7 @@ cover: ../../assets/images/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-i
 coverAlt: "Photo from the news story: Bangladeshi Philanthropist Aziz Ahmad Honored with NYNJMSDC Partnership Award in the..."
 legacyUrl: "https://coderstrust.global/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/"
 tags: ["Featured News"]
+seoTitle: "Aziz Ahmad Wins NYNJMSDC Partnership Award"
 ---
 
 ![Photo from the news story: Bangladeshi Philanthropist Aziz Ahmad Honored with NYNJMSDC Partnership Award in the...](../../assets/images/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/aziz-ahmad.jpg)

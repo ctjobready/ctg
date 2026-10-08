@@ -7,7 +7,7 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
+import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
@@ -92,12 +92,12 @@ const steps = [
 
   <!-- C3 · Agitation -->
   <div class="pp-two">
-    <CostBand
+    <CostSection
       title="Teams without AI skills fall behind."
-      transition="It doesn’t have to work that way."
+      transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', implication: 'Waiting means competing for the same scarce talent.' },
-        { claim: 'AI is reshaping the workforce.', factId: 'PX-07', implication: 'Teams without AI skills fall behind.' },
+        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', scope: 'Globally', implication: 'Waiting means competing for the same scarce talent.' },
+        { claim: 'AI is reshaping the workforce.', factId: 'PX-07', scope: 'Globally', implication: 'Teams without AI skills fall behind.' },
       ]}
     />
   </div>

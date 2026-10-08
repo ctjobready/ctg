@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-thr
 coverAlt: "CodersTrust and DoICT Shaping a Smart Future through Trainer Empowerment: photo 1 of 4"
 legacyUrl: "https://coderstrust.global/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/"
 tags: ["Featured News", "Latest News", "NationWIDE"]
+seoTitle: "DoICT Training of Trainers Program Concludes"
 ---
 
 ## Empowering the Digital Workforce: CodersTrust Bangladesh Successfully Concludes Training of Trainers (ToT) Program in Collaboration with DoICT

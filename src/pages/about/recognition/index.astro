@@ -27,7 +27,7 @@ const post = (id: string) => byId.get(id);
 // Founder honors (PA-11): parsed from the fact so wording and years cannot drift; each links to its dated news post.
 const HONOR_POSTS: [RegExp, string | null][] = [
   [/UPEACE/, 'aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador'],
-  [/UNSGII/, 'coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii'],
+  [/SDG Life Achievement/, 'coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii'],
   [/NYNJMSDC/, 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states'],
   [/NOVA/, null],
 ];
@@ -50,7 +50,7 @@ const coverage = press
   .sort((a, b) => a.date.localeCompare(b.date))
   .map((p) => ({ ...p, year: p.date.slice(0, 4) }));
 
-// Forums and events: only those documented in a dated news post.
+// Forums and events: only those documented in a dated news post. Political posts (`political` front matter) stay under /news/.
 const FORUMS = [
   'aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day',
   'coderstrust-attends-wsis20-forum-high-level-event',
@@ -59,7 +59,7 @@ const FORUMS = [
   'coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel',
 ]
   .map(post)
-  .filter((p): p is NonNullable<typeof p> => !!p);
+  .filter((p): p is NonNullable<typeof p> => !!p && !p.data.political);
 
 // PA-10 (U.S. Department of State remarks) may appear only inside its dated news item, so that endorsement is not shown here.
 const quotes = endorsements.filter((e) => e.id !== 'james-gardiner');

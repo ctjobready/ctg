@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-
 coverAlt: "Photo from the news story: CodersTrust and LEEDO Collaborate to Extend ICT Education to Street Children,..."
 legacyUrl: "https://coderstrust.global/coderstrust-leedo-join-to-expands-ict-education-to-street-children/"
 tags: ["Featured News"]
+seoTitle: "ICT Education for Street Children with LEEDO"
 ---
 
 ![Photo from the news story: CodersTrust and LEEDO Collaborate to Extend ICT Education to Street Children,...](../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg)

@@ -8,13 +8,74 @@
 //     blocks (the Sources list and footnote markers), so ordinary calls to action such as
 //     "Request the investor deck" are not false positives
 //   - WorldMap: every pin-tooltip detail must appear in the location table (equivalence contract)
-import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative, sep } from 'node:path';
+//   - SITE_ENV=production only: production fact holds. A private hold list names facts that must not render in
+//     production until the matching item of CodersTrust's confirm list is closed. It is read from
+//       1. env PROD_FACT_HOLDS   a JSON string (the Actions secret), or
+//       2. ../ctg-planning/prod-fact-holds.json   (the private planning checkout; found by walking up from the
+//          repo, so it also works from a git worktree)
+//     shape: { "holds": [ { "fact": "SC-01", "confirm": 6 }, ... ] }. With neither source the check FAILS CLOSED;
+//     an invalid list fails; a held fact that is rendered (a data-fact reference) fails, listing fact -> pages.
+//     Only fact IDs and confirm-list item numbers are ever printed, never any confirm-list text. Staging says nothing.
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const dist = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(root, 'dist');
 const { facts } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
+
+/* ---- production fact holds (private list; staging never reads or reports it) ---- */
+const production = process.env.SITE_ENV === 'production';
+const holds = new Map(); // fact id -> confirm-list item number
+if (production) {
+  const findPlanningFile = () => {
+    let dir = dirname(root.replace(/\/$/, ''));
+    for (let i = 0; i < 7; i++) {
+      const candidate = join(dir, 'ctg-planning', 'prod-fact-holds.json');
+      if (existsSync(candidate)) return candidate;
+      const up = dirname(dir);
+      if (up === dir) break;
+      dir = up;
+    }
+    return null;
+  };
+  let source = null;
+  let raw = null;
+  if (process.env.PROD_FACT_HOLDS && process.env.PROD_FACT_HOLDS.trim()) {
+    source = 'env PROD_FACT_HOLDS';
+    raw = process.env.PROD_FACT_HOLDS;
+  } else {
+    const file = findPlanningFile();
+    if (file) {
+      source = 'file ../ctg-planning/prod-fact-holds.json';
+      raw = readFileSync(file, 'utf8');
+    }
+  }
+  if (raw === null) {
+    console.error('check-facts: FAILED CLOSED - SITE_ENV=production but no production fact-hold list was found (env PROD_FACT_HOLDS is unset and there is no ../ctg-planning/prod-fact-holds.json). Refusing to pass without it; use {"holds":[]} if nothing is held.');
+    process.exit(1);
+  }
+  const bad = (why) => {
+    // the list is private and CI logs are public: never echo its content or parser messages that quote it
+    console.error(`check-facts: FAILED - the production fact-hold list (${source}) is invalid: ${why}`);
+    process.exit(1);
+  };
+  let spec;
+  try {
+    spec = JSON.parse(raw);
+  } catch (e) {
+    const at = /position (\d+)/.exec(e.message);
+    bad(`not valid JSON${at ? ` (parse error at character ${at[1]})` : ''}`);
+  }
+  if (!spec || typeof spec !== 'object' || !Array.isArray(spec.holds)) bad('expected an object with a "holds" array');
+  spec.holds.forEach((h, i) => {
+    if (!h || typeof h.fact !== 'string' || !/^[A-Z]{2}-\d{2}[a-z]?$/.test(h.fact)) bad(`holds[${i}].fact must be a fact ID such as "SC-01"`);
+    if (!Number.isInteger(h.confirm) || h.confirm < 1) bad(`holds[${i}].confirm must be a positive confirm-list item number`);
+    if (holds.has(h.fact)) bad(`holds[${i}]: fact ${h.fact} is listed twice`);
+    holds.set(h.fact, h.confirm);
+  });
+}
+const heldPages = new Map(); // fact id -> Set(page paths where it is rendered)
 
 // Anywhere in the page (rendered markup outside <script>/<style>).
 const TOKENS = [[/\b(IR26|GD26|ID26|BIGD22)\b/, 'internal source code']];
@@ -88,6 +149,10 @@ for (const file of htmlFiles(dist)) {
   for (const m of markup.matchAll(/\sdata-fact=(?:"([^"]*)"|'([^']*)')/g)) for (const t of (m[1] ?? m[2]).split(/\s+/).filter(Boolean)) ids.add(t);
   refs += ids.size;
   for (const id of ids) {
+    if (holds.has(id)) {
+      if (!heldPages.has(id)) heldPages.set(id, new Set());
+      heldPages.get(id).add(path);
+    }
     const f = facts[id];
     if (!f) { problems.push(`${path}: data-fact="${id}" is not in the register`); continue; }
     if (f.status === 'U' && !path.startsWith('/news/')) problems.push(`${path}: unverified (U) fact ${id} rendered outside /news/`);
@@ -111,8 +176,16 @@ if (pages === 0) {
   console.error(`check-facts: no HTML found in ${dist}. Run "npm run build" first.`);
   process.exit(1);
 }
+// Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
+for (const [id, set] of heldPages) {
+  const list = [...set].sort();
+  problems.push(`production fact hold: ${id} (confirm item ${holds.get(id)}) is rendered on ${list.length} page(s): ${list.slice(0, 8).join(', ')}${list.length > 8 ? ` +${list.length - 8} more` : ''}`);
+}
 if (problems.length) {
   console.error(`check-facts: ${problems.length} problem(s)\n` + problems.map((p) => '  - ' + p).join('\n'));
   process.exit(1);
 }
-console.log(`check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording.`);
+console.log(
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording` +
+    (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
+);

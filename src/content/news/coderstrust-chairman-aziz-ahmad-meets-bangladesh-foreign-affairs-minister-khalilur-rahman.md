@@ -7,6 +7,8 @@ cover: ../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh
 coverAlt: "Photo from the news story: CodersTrust Chairman Aziz Ahmad Meets Bangladesh Foreign Affairs Minister Khalilur Rahman"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/"
 tags: ["Aziz Ahmad"]
+seoTitle: "Aziz Ahmad Meets Bangladesh Foreign Minister"
+political: true
 ---
 
 ![Photo from the news story: CodersTrust Chairman Aziz Ahmad Meets Bangladesh Foreign Affairs Minister Khalilur Rahman](../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg)

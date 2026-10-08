@@ -8,6 +8,8 @@ cover: ../../assets/images/news/gardinar-emphasizes-skill-development-and-access
 coverAlt: "Gardinar Emphasizes on Skill Development and Access to US Digital Platform for Bangladesh: cover image"
 legacyUrl: "https://coderstrust.global/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/"
 tags: ["Featured News"]
+seoTitle: "Gardiner on Skills and US Digital Platforms"
+political: true
 ---
 
 ![Photo from the news story: Gardinar Emphasizes on Skill Development and Access to US Digital Platform for Bangladesh](../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development-1.jpg)

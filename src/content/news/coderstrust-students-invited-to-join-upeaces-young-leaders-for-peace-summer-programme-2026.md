@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-you
 coverAlt: "CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 1 of 6"
 legacyUrl: "https://coderstrust.global/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/"
 tags: ["Latest News", "UPEACE"]
+seoTitle: "Young Leaders for Peace Summer Programme 2026"
 ---
 
 ![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 1 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg)

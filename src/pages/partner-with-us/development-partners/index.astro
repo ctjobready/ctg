@@ -51,6 +51,9 @@ const { title, description } = meta(
 
 const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
 const partnerNames = factPart('PA-01', /include (.*)$/);
+// Only UNDP's relationship dates to 2015 (its first program); the other names carry no start year.
+if (!partnerNames.startsWith('UNDP, ')) throw new Error('PA-01 no longer lists UNDP first');
+const partnerList = `UNDP (from 2015)${partnerNames.slice('UNDP'.length)}`;
 const undpQuote = factPart('PR-03a', /“([^”]+)”/);
 const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 ---
@@ -95,7 +98,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <div class="pp-two">
     <CostBand
       title="Every cohort that trains but does not place spends the budget for a fraction of the result."
-      transition="It doesn’t have to work that way."
+      transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'AI is closing some entry-level doors.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
         { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
@@ -118,7 +121,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <PartnerGuideBand
     empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
-    statements={[{ facts: ['PA-01'], text: `CodersTrust has worked with ${partnerNames} since 2015.` }]}
+    statements={[{ facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${partnerList}.` }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />

@@ -7,6 +7,7 @@ cover: ../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-
 coverAlt: "The Man Behind CodersTrust Who Never Forgot His Roots: photo 1 of 3"
 legacyUrl: "https://coderstrust.global/the-man-behind-coderstrust-who-never-forgot-his-roots/"
 tags: ["Aziz Ahmad", "Latest News"]
+seoTitle: "Aziz Ahmad, Who Never Forgot His Roots"
 ---
 
 ## For CodersTrust Chairman Aziz Ahmad, True Wealth Lies in Changing Lives

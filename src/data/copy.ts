@@ -27,7 +27,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders turn grants into paid digital work for youth through certified, mentored training.',
   universities: 'We help universities move degree holders into paid digital work through certified, mentored training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through certified, mentored training.',
-  investors: 'We help investors back the platform moving emerging-market youth into paid work.',
+  investors: 'We help investors back the platform moving emerging-market youth into paid work through certified training.',
   localPartners: 'We help local organizations move young people into paid digital work through certified, mentored training.',
   nuPgd: 'We help degree holders move into digital work through a National University postgraduate diploma.',
 };
@@ -59,17 +59,17 @@ export const EMPATHY: Record<Audience, string> = {
 };
 
 export const ORIGIN: CopyBlock = {
-  text: 'CodersTrust began in 2014 in Copenhagen and Dhaka, developing freelancers through mentored training. Our first UNDP program (2015) was in Dhaka’s Korail slum.',
+  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail slum.',
   facts: ['ID-02', 'PR-03a'],
 };
 
 export const RCT_HEADLINE: CopyBlock = {
-  text: 'A randomized trial by BIGD found CodersTrust training raised women’s income by 41% for everyone offered a place — and by 53% for women who attended.',
+  text: 'A randomized trial by BIGD found CodersTrust’s WSDFM training raised women’s income by 41% for everyone offered a place — and by 53% for women who attended.',
   facts: ['RC-01'],
 };
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes of 1,000–3,120 people, the curriculum for a national program to train 25,125 women (with 2,500 women trained directly), and 10,000 teachers trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
+  text: 'We scale in phases, starting from what we have done: government contracts with training scopes of up to 3,120 people, the curriculum for a national program to train 25,125 women (with 2,500 women trained directly), and 10,000 teachers trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
   facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],
 };
 
@@ -127,7 +127,7 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
 
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
-  validate: { text: 'Organizations such as UNDP, the World Bank Group and BRAC have worked with CodersTrust since 2015.', facts: ['PA-01'] } as CopyBlock,
+  validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
   reminder: { text: 'For grant-funded pilots, your first cohort is in training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your enquiry, include two suitable times for a discovery conversation.',
   variants: {

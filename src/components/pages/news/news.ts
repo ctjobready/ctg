@@ -21,10 +21,18 @@ export function relatedNews(all: NewsEntry[], post: NewsEntry, count = 3): NewsE
   return [...same, ...rest].slice(0, count);
 }
 
-/** Posts that mention a person (title or body), newest first. Used for "related news" on team profiles. */
+/**
+ * Posts that mention a person (title or body), newest first. Used for "related news" on team profiles, which
+ * are evergreen pages: political posts (a minister, official, politician or slogan in the teaser) are skipped.
+ */
 export function newsMentioning(all: NewsEntry[], name: string, count = 3): NewsEntry[] {
   const needle = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').toLowerCase();
-  return all.filter((p) => `${p.data.title}\n${p.body ?? ''}`.toLowerCase().includes(needle)).slice(0, count);
+  return all.filter((p) => !p.data.political && `${p.data.title}\n${p.body ?? ''}`.toLowerCase().includes(needle)).slice(0, count);
+}
+
+/** News for teasers on evergreen (non-/news/) pages: political posts are excluded. */
+export function teasableNews(all: NewsEntry[]): NewsEntry[] {
+  return all.filter((p) => !p.data.political);
 }
 
 export const newsHref = (post: NewsEntry) => `/news/${post.id}/`;
@@ -35,6 +43,14 @@ export const newsHref = (post: NewsEntry) => `/news/${post.id}/`;
  */
 export function coverAlt(alt: string): string {
   return /(: (photo \d+ of \d+|cover image)$)|^Photo from the news story/i.test(alt) ? '' : alt;
+}
+
+/**
+ * Alt text for the og:image / twitter:image of a post. The social image is never decorative, so the generic
+ * migrated alts (which `coverAlt` empties) fall back to a plain description built from the headline.
+ */
+export function ogImageAlt(alt: string, title: string): string {
+  return coverAlt(alt) || `Photo from the news story: ${title}`;
 }
 
 /** True when the cover image is also embedded in the body (the hero would repeat it). */

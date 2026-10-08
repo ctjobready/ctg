@@ -8,6 +8,7 @@ cover: ../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace
 coverAlt: "Photo from the news story: Enhanced technology skills can ensure peace, says Aziz Ahmad"
 legacyUrl: "https://coderstrust.global/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/"
 tags: []
+seoTitle: "Aziz Ahmad on Technology Skills and Peace"
 ---
 
 ![Photo from the news story: Enhanced technology skills can ensure peace, says Aziz Ahmad](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg)

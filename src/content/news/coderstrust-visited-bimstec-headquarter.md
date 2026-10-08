@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstr
 coverAlt: "CodersTrust visited BIMSTEC Headquarters: Highlights Potential for Science,...: cover image"
 legacyUrl: "https://coderstrust.global/coderstrust-visited-bimstec-headquarter/"
 tags: []
+seoTitle: "Visit to the BIMSTEC Secretariat in Dhaka"
 ---
 
 ![Photo from the news story: CodersTrust visited BIMSTEC Headquarters: Highlights Potential for Science,...](../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec-2-1.jpg)

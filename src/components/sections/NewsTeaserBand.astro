@@ -5,6 +5,7 @@ import NewsCard from '../ui/NewsCard.astro';
 import Icon from '../system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
 import { topicLabel } from '../../data/newsTopics';
+import { coverAlt } from '../pages/news/news';
 
 /**
  * Latest news: the 3 newest entries of the `news` content collection. Guarded so the build works
@@ -34,7 +35,10 @@ try {
   entries = [];
 }
 // Mapped outside the guard above, so an unknown topic fails the build instead of silently emptying the band.
+// This band sits on evergreen pages, so drafts and political posts (a minister, official, politician or slogan
+// in the teaser; `political` in the front matter) are never teased here. They stay under /news/.
 let items: Item[] = entries
+  .filter((e) => !e.data.draft && !e.data.political)
   .map((e) => ({
     title: e.data.title as string,
     date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
@@ -43,7 +47,7 @@ let items: Item[] = entries
     excerpt: e.data.excerpt as string | undefined,
     href: `/news/${e.data.slug ?? e.id}/`,
     image: e.data.cover,
-    imageAlt: e.data.coverAlt,
+    imageAlt: coverAlt(e.data.coverAlt as string),
   }))
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, count) as Item[];

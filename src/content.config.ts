@@ -29,6 +29,18 @@ const news = defineCollection({
       legacyUrl: z.string(),
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
+      /**
+       * true when the title or excerpt names a minister, government official, politician or political slogan.
+       * Such posts stay under /news/ but are never teased on evergreen pages (Home, team profiles, recognition).
+       */
+      political: z.boolean().default(false),
+      /**
+       * Optional page title (the <title>, og:title and twitter:title) for posts whose headline is too long to
+       * read well in search results. Write it without " | CodersTrust" and without the site name: the layout
+       * appends the suffix, and the whole title must stay within 60 characters (the build fails otherwise).
+       * The H1 and the NewsArticle headline keep the full headline.
+       */
+      seoTitle: z.string().max(46).optional(),
     }),
 });
 

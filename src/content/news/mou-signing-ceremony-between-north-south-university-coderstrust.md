@@ -8,6 +8,7 @@ cover: ../../assets/images/news/mou-signing-ceremony-between-north-south-univers
 coverAlt: "MoU Signing Ceremony Between North South University & CodersTrust: photo 3 of 3"
 legacyUrl: "https://coderstrust.global/mou-signing-ceremony-between-north-south-university-coderstrust/"
 tags: ["Latest News", "MoU Signing"]
+seoTitle: "MoU Signing with North South University"
 ---
 
 We are proud to announce the signing of a Memorandum of Understanding (MoU) between North South University (NSU) and CodersTrust. MoU signed by Professor Abdul Hannan Chowdhury, Vice Chancellor, North South University & Chairman, Grameen Bank and Aziz Ahmad, Chairman & Co-Founder, CodersTrust.

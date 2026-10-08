@@ -12,13 +12,13 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import FitBrief from '../../../components/pages/impact/FitBrief.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { fact, sources } from '../../../data/facts';
+import { AI_SHIFT_NOTE, fact, sources } from '../../../data/facts';
 import { RCT_HEADLINE, MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
-const description = desc('A randomized trial by BIGD found CodersTrust training raised women’s income by 41% for those offered a place and 53% for those who attended.');
+const description = desc('A randomized trial by BIGD found CodersTrust’s WSDFM training raised women’s income by 41% for those offered a place and 53% for those who attended.');
 const faqIds = ['Q4', 'Q3'];
 
 // RC-08 chart values must match the register text.
@@ -142,12 +142,13 @@ const d = discoveryCta();
   <ReportSection id="context" title="Context: how this compares">
     <p data-fact="RC-06"><Fact id="RC-06" /></p>
     <p data-fact="RC-11">Design lesson from the trial: <Fact id="RC-11" /> This is a design rationale, not a claim about the effect of mentoring.</p>
+    <p data-fact="RC-12"><Fact id="RC-12" /></p>
   </ReportSection>
 
   <ReportSection id="limits" title="Limitations">
     <ul class="ie__list">
       <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.<FootnoteMarker id="RC-01" footnote="auto" /></li>
-      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021.</li>
+      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021. {AI_SHIFT_NOTE}</li>
       <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
       <li><strong>200 hours vs 100 hours.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
       <li><strong>Attrition.</strong> Not every woman in the baseline sample was reached at follow-up (see the trial design above).</li>

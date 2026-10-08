@@ -8,6 +8,7 @@ cover: ../../assets/images/news/mou-signed-between-bangladesh-petroleum-institut
 coverAlt: "MoU Signed Between Bangladesh Petroleum Institute (BPI) and CodersTrust: photo 1 of 3"
 legacyUrl: "https://coderstrust.global/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/"
 tags: ["MoU Signing"]
+seoTitle: "Bangladesh Petroleum Institute Signs MoU"
 ---
 
 ![MoU Signed Between Bangladesh Petroleum Institute (BPI) and CodersTrust: photo 1 of 3](../../assets/images/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/mou-between-bpi-and-coderstrust-4-2.jpg)

@@ -7,14 +7,20 @@ import { newsArticle } from '../lib/schema';
 import { absoluteUrl, canonicalUrl, stripBase } from '../lib/url';
 import type { BaseLayoutProps } from '../lib/layout';
 
-/** T6 Article (news): title, date, topic, hero image slot, prose body, share links, related. */
+/**
+ * T6 Article (news): title, date, topic, hero image slot, prose body, share links, related.
+ * `title` is the full headline (H1, NewsArticle headline, share subject). `seoTitle` is the shorter page
+ * title for <title>, og:title and twitter:title (the layout adds " | CodersTrust"; keep it within 46 characters).
+ * `imageAlt` is the alt text of the cover image and is used as the og:image alt.
+ */
 interface Props extends BaseLayoutProps {
   date: string;
   updated?: string;
   topic?: string;
   author?: string;
+  seoTitle?: string;
 }
-const { date, updated, topic, author, ...base } = Astro.props;
+const { date, updated, topic, author, seoTitle, ...base } = Astro.props;
 const path = base.path ?? stripBase(Astro.url.pathname);
 const canonical = canonicalUrl(path);
 const node = newsArticle({
@@ -30,7 +36,7 @@ const node = newsArticle({
 const enc = encodeURIComponent;
 ---
 
-<BaseLayout {...base} path={path} ogType="article" publishedTime={date} modifiedTime={updated ?? date} jsonLd={[...(base.jsonLd ?? []), node]}>
+<BaseLayout {...base} title={seoTitle ?? base.title} path={path} ogType="article" publishedTime={date} modifiedTime={updated ?? date} jsonLd={[...(base.jsonLd ?? []), node]}>
   <slot name="head" slot="head" />
   <article class="art container container--narrow">
     <header class="art__head">

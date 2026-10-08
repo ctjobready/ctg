@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-w
 coverAlt: "Photo from the news story: CodersTrust Revolutionizes Training for Freelancing Career: Teaching You the Right Way..."
 legacyUrl: "https://coderstrust.global/coderstrust-teaching-you-freelancing-the-right-way/"
 tags: ["Featured News"]
+seoTitle: "Freelancing Training: One Student’s Story"
 ---
 
 ![Photo from the news story: CodersTrust Revolutionizes Training for Freelancing Career: Teaching You the Right Way...](../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg)

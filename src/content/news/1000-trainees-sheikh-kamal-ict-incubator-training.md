@@ -8,6 +8,7 @@ cover: ../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-trainin
 coverAlt: "1000 People to be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training: cover image"
 legacyUrl: "https://coderstrust.global/1000-trainees-sheikh-kamal-ict-incubator-training/"
 tags: []
+seoTitle: "Sheikh Kamal ICT Incubator: 1,000 IT Trainees"
 ---
 
 ![Photo from the news story: 1000 People to be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training](../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/image-2.jpg)
