@@ -64,7 +64,7 @@ const pins = items.map((l) => {
   </figure>
   <p class="wmap__offices" data-fact="ID-07">{OFFICES_LINE}</p>
 
-  <section class="wmap__table table-scroll" aria-label="Program locations table" tabindex="0">
+  <section class="wmap__table table-scroll" aria-label="Program locations table" tabindex="0" data-stack>
     <table>
       <caption class="sr-only">{caption}</caption>
       <thead>
@@ -80,16 +80,20 @@ const pins = items.map((l) => {
         {rowsData.map((r) => (
           <tr>
             <th scope="row">{r.location}<span class="wmap__region">{r.region}</span></th>
-            <td>{r.years}</td>
-            <td>{r.targetGroup}</td>
-            <td>{r.skills}</td>
-            <td>{r.funderNote}</td>
+            <td data-label="Years">{r.years}</td>
+            <td data-label="Target group">{r.targetGroup}</td>
+            <td data-label="Skills">{r.skills}</td>
+            <td data-label="Partner / note">{r.funderNote}</td>
           </tr>
         ))}
       </tbody>
     </table>
   </section>
 </div>
+
+<script>
+  import '../../scripts/tablestack';
+</script>
 
 <style>
   .wmap {

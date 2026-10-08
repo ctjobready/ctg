@@ -15,7 +15,8 @@
  *   · every <img> has an alt attribute (alt="" marks decorative images) and numeric width and height
  *   · external <a> links carry rel="noopener" (error) and rel="noreferrer" unless the host is in src/data/partners.ts (warning;
  *   no other partner list is assumed) · heading levels do not skip downwards (warning)
- * Redirect stubs: no noindex, a canonical that matches the refresh target, a visible fallback link (warning).
+ * Redirect stubs: robots follows the environment (staging: exactly `noindex`, like every staging page; production: no noindex),
+ * a canonical that matches the refresh target, a visible fallback link (warning).
  * Sitemap: sitemap-index.xml and its sitemaps list exactly the non-stub pages except /404/ and /styleguide/.
  *
  * Output: console summary, .work/qa/seo.json and seo.md (seo.production.* for SITE_ENV=production).
@@ -103,7 +104,12 @@ for (const page of site.pages) {
   /* ---------------- redirect stubs ---------------- */
   if (page.isStub) {
     stubs++;
-    if (robots.includes('noindex')) findings.error('stub-has-noindex', where, 'redirect stub carries noindex (a noindex on a redirect source slows consolidation; doc 08 §7)', { evidence: robots.join(',') });
+    if (cfg.siteEnv === 'staging') {
+      // Staging stubs are noindex like every staging page (the staging host must never be indexed).
+      if (!robots.includes('noindex')) findings.error('stub-missing-noindex', where, 'staging redirect stub has no robots noindex (the staging host must not be indexed)', { evidence: `robots: ${robots.join(', ') || '(none)'}` });
+    } else if (robots.includes('noindex')) {
+      findings.error('stub-has-noindex', where, 'production redirect stub carries noindex (a noindex on a redirect source slows consolidation; doc 08 §7)', { evidence: robots.join(',') });
+    }
     if (canon.length !== 1) {
       findings.error('stub-canonical', where, canon.length ? 'redirect stub has more than one canonical' : 'redirect stub has no <link rel="canonical"> to its destination (doc 08 §7)');
     } else {
@@ -366,7 +372,7 @@ console.log(`  ${checked} page(s) linted, ${stubs} redirect stub(s), ${checkedIm
 
 const longest = [...rows].sort((a, b) => b.titleLength - a.titleLength).slice(0, 8);
 let md = `# SEO lint\n\nPages linted: ${checked} (+${stubs} redirect stubs) · env ${cfg.siteEnv} · base \`${cfg.base || '/'}\` · errors **${errors}** · warnings ${warnings}\n\n`;
-md += `Limits: title ≤ ${TITLE_MAX} characters; description target ≤ ${DESC_MAX}; canonical \`${PRODUCTION_ORIGIN}\` + route with trailing slash; ${cfg.siteEnv === 'staging' ? 'every page noindex' : 'no noindex except ' + [...NOINDEX_OK_IN_PRODUCTION].join(', ')}.\n\n`;
+md += `Limits: title ≤ ${TITLE_MAX} characters; description target ≤ ${DESC_MAX}; canonical \`${PRODUCTION_ORIGIN}\` + route with trailing slash; ${cfg.siteEnv === 'staging' ? 'every page and redirect stub noindex' : 'no noindex except ' + [...NOINDEX_OK_IN_PRODUCTION].join(', ') + ' (redirect stubs carry none)'}.\n\n`;
 md += `## Longest titles\n\n${mdTable(['Page', 'Characters', 'Title'], longest.map((r) => [r.route, r.titleLength, r.title ?? '']))}\n`;
 md += `## Findings\n${findingsMarkdown(findings)}`;
 const paths = writeReports(cfg, 'seo', { check: 'seo', limits: { titleMax: TITLE_MAX, descMax: DESC_MAX }, summary: { pages: checked, stubs, errors, warnings, images: checkedImages, externalLinks: checkedLinks, sitemapUrls: locs.length }, findings: findings.items, pageSummaries: rows }, md);

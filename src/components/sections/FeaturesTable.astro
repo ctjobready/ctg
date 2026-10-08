@@ -29,7 +29,7 @@ const showPain = rows.some((r) => r.relieves);
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="What you get" title={title} lead={lead} />
-  <div class="ft" role="region" aria-label="Features and benefits" tabindex="0" data-reveal>
+  <section class="ft" aria-label="Features and benefits" tabindex="0" data-scroll data-stack data-reveal>
     <table>
       <caption class="sr-only">{title}</caption>
       <thead>
@@ -45,16 +45,20 @@ const showPain = rows.some((r) => r.relieves);
           rows.map((r) => (
             <tr>
               <th scope="row">{r.feature}</th>
-              <td>{r.means}</td>
-              <td>{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? '—'}</td>
-              {showPain && <td>{r.relieves ? <span class="ft__pain"><Icon name="circle-check" size={16} />{r.relieves}</span> : '—'}</td>}
+              <td data-label="Which means…">{r.means}</td>
+              <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? '—'}</td>
+              {showPain && <td data-label="Relieves">{r.relieves ? <span class="ft__pain"><Icon name="circle-check" size={16} />{r.relieves}</span> : '—'}</td>}
             </tr>
           ))
         }
       </tbody>
     </table>
-  </div>
+  </section>
 </Section>
+
+<script>
+  import '../../scripts/tablestack';
+</script>
 
 <style>
   .ft {

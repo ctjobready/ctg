@@ -36,7 +36,7 @@ const isNone = (t: string) => t === '—' || t === '-';
 const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm).map((c) => c.factId).filter((f): f is string => !!f))])].join(' ');
 ---
 
-<div class:list={['cmp', className]} role="region" aria-label={caption} tabindex="0" data-reveal data-fact={dataFacts || undefined}>
+<section class:list={['cmp', className]} aria-label={caption} tabindex="0" data-scroll data-stack data-reveal data-fact={dataFacts || undefined}>
   <table>
     <caption class="sr-only">{caption}</caption>
     <thead>
@@ -52,7 +52,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
             {r.cells.map((raw, i) => {
               const c = norm(raw);
               return (
-                <td class:list={[highlight === i && 'is-hl']}>
+                <td class:list={[highlight === i && 'is-hl']} data-label={columns[i + 1]}>
                   {isNone(c.text) ? (
                     <>
                       <span class="sr-only">Not applicable</span>
@@ -78,7 +78,11 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
       }
     </tbody>
   </table>
-</div>
+</section>
+
+<script>
+  import '../../scripts/tablestack';
+</script>
 
 <style>
   .cmp {

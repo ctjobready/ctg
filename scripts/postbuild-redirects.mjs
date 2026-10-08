@@ -3,13 +3,14 @@
  * Post-processes every Astro redirect stub in dist/ (planning/02 §5, planning/08 §7, planning/09 §7).
  *
  * Astro's default stub carries `<meta name="robots" content="noindex">` and a canonical on the deployment host. A
- * noindex on a redirecting URL asks search engines to drop it and can stop the signal passing to the destination,
- * so each stub is rewritten as:
+ * noindex on a production redirect source asks search engines to drop it and can stop the signal passing to the
+ * destination, so each stub is rewritten as:
  *   - <html lang="en">, <title>, meta refresh 0 to the base-aware destination
  *       (staging /ctg/...; production /...; external destinations absolute),
  *   - <link rel="canonical"> to the PRODUCTION destination URL (PRODUCTION_ORIGIN from src/lib/site.ts; externals as-is),
  *   - a JavaScript location.replace and a visible fallback link,
- *   - NO noindex.
+ *   - `<meta name="robots" content="noindex">` on STAGING builds only (SITE_ENV staging, the default: the staging host
+ *     must never be indexed, like every other staging page); production stubs carry no robots meta at all.
  *
  * Fails loudly (exit 1) when a stub path holds a real page, when a stub was not emitted, or when an unexpected
  * redirect stub is found in dist/.
@@ -36,6 +37,9 @@ const isAstroStub = (html) => /^<!doctype html>\s*<title>Redirecting to:/i.test(
 /** A stub this script already rewrote (the script is idempotent). */
 const isOurStub = (html) => /<html lang="en" data-redirect-stub>/.test(html);
 
+// Staging stubs stay out of the index like every staging page; production stubs must carry no noindex.
+const STAGING = siteEnv === 'staging';
+
 function stubHtml(to) {
   const href = deployedHref(to, base);
   const canonical = canonicalOf(to, origin);
@@ -44,7 +48,7 @@ function stubHtml(to) {
 <html lang="en" data-redirect-stub>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">${STAGING ? '\n<meta name="robots" content="noindex">' : ''}
 <title>Redirecting to ${esc(label)}</title>
 <meta http-equiv="refresh" content="0;url=${esc(href)}">
 <link rel="canonical" href="${esc(canonical)}">
@@ -124,7 +128,7 @@ if (problems.length) {
   for (const p of problems.slice(0, 40)) console.error('  ' + p);
   process.exit(1);
 }
-console.log(`postbuild-redirects: ${written} stubs rewritten (${siteEnv}, base "${base || '/'}"); ${pagesAfter} real pages untouched`);
+console.log(`postbuild-redirects: ${written} stubs rewritten (${siteEnv}, base "${base || '/'}", ${STAGING ? 'robots noindex' : 'no robots meta'}); ${pagesAfter} real pages untouched`);
 
 // Second post-build step, kept here so one command finishes dist/: add each page's own meta description to llms.txt.
 try {

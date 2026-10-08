@@ -217,6 +217,97 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- Stacked data tables (≤ 640 px) ------------------------------------------------------------
+   A wide table opts in with `data-stack` on its scroll wrapper (a <section aria-label tabindex="0" data-scroll>) and
+   `data-label="<column header>"` on every <td>. Above 640 px it stays a real, horizontally scrollable table. At 640 px
+   and below each body row becomes a card: the row header (<th scope="row">) is the card title and each cell shows its
+   column header above its value (`data-stack="inline"` puts label and value on one line, for short cells). The <thead>
+   stays in the accessibility tree, visually hidden. The generated label is hidden from assistive technology
+   (content alt text) because the header association already announces it.
+   WebKit drops table semantics when `display` changes, so src/scripts/tablestack.ts adds explicit ARIA table roles
+   while this layout is active (they cannot be written into the markup: html-validate rejects redundant roles).
+   `!important` is deliberate: this layer must beat each component's own scoped table rules (min-width, sticky first
+   column, nowrap, centred cells). */
+@media (max-width: 640px) {
+  [data-stack] {
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+  [data-stack] table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  [data-stack] thead {
+    display: block !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+  [data-stack] tbody {
+    display: grid !important;
+    gap: var(--space-md);
+  }
+  [data-stack] tbody tr {
+    display: block !important;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+  }
+  [data-stack] tbody th {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 12px var(--space-md) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--primary-fixed) !important;
+    box-shadow: none !important;
+    background: var(--surface-container-low) !important;
+    color: var(--secondary) !important;
+    font-weight: var(--fw-bold) !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+  [data-stack] tbody td {
+    display: block !important;
+    width: auto !important;
+    padding: 10px var(--space-md) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--outline-variant) !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+  [data-stack] tbody td:last-child {
+    border-bottom: 0 !important;
+  }
+  [data-stack] tbody td[data-label]::before {
+    content: attr(data-label);
+    content: attr(data-label) / '';
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  [data-stack='inline'] tbody td[data-label]::before {
+    display: inline-block;
+    width: 58%;
+    margin: 0 var(--space-sm) 0 0;
+    vertical-align: middle;
+  }
+}
+
 /* ---- Cards (shared by system + ➕ cards) -------------------------------------- */
 .card {
   position: relative;

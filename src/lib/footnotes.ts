@@ -12,6 +12,11 @@ export interface Note {
   claim: string;
   /** Caveat class text (register v1.1), if the fact has one. */
   caveat?: string;
+  /**
+   * Set when an earlier note on the same page already carries this exact caveat text: that note's number.
+   * <Sources> then prints "Same caveat as note N." (linked) instead of repeating the caveat in full.
+   */
+  caveatSameAs?: number;
   /** Public plain-language extra note, if any. */
   footnote?: string;
   /** Sample base (n), if the register gives one. */
@@ -42,8 +47,22 @@ export class Footnotes {
     return this.order.length;
   }
 
+  /**
+   * The numbered notes in render order. A caveat is printed in full at its first occurrence; every later note with the
+   * identical caveat text gets `caveatSameAs` (the first note's number) so the list does not repeat long identical text.
+   * Each note keeps its own claim, footnote, base and sources.
+   */
   notes(): Note[] {
-    return this.order.map((id, i) => noteFor(fact(id), i + 1, this.refs.get(id) ?? 1));
+    const firstWithCaveat = new Map<string, number>();
+    return this.order.map((id, i) => {
+      const note = noteFor(fact(id), i + 1, this.refs.get(id) ?? 1);
+      if (note.caveat) {
+        const first = firstWithCaveat.get(note.caveat);
+        if (first === undefined) firstWithCaveat.set(note.caveat, note.n);
+        else note.caveatSameAs = first;
+      }
+      return note;
+    });
   }
 }
 

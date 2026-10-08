@@ -5,25 +5,40 @@ import Icon from '../system/Icon.astro';
 /**
  * Numbered notes for every footnote marker rendered earlier on the page (deduplicated, in render
  * order). Place once, after the last <Fact>/<FactStat>. M21: target note flashes on jump.
+ *
+ * A caveat is printed in full at its first occurrence; later notes with the identical caveat read
+ * "Same caveat as note N." (linked), see Footnotes.notes().
+ *
+ * Landmarks: most pages wrap this block in `<Section aria-label="Notes and sources">`, which is the page's one
+ * landmark for it, so the <section> here is not exposed as a second (nested, same-named) region. Pass `landmark`
+ * when the block is NOT inside a labelled wrapper and should be the region itself.
  */
 interface Props {
   title?: string;
   id?: string;
   class?: string;
+  landmark?: boolean;
 }
-const { title = 'Notes and sources', id = 'sources', class: className } = Astro.props;
+const { title = 'Notes and sources', id = 'sources', class: className, landmark = false } = Astro.props;
 const notes = footnotesFor(Astro).notes();
+// A named <section> is a "region" landmark; role="none" (with no aria-labelledby, which would override it) keeps the
+// element and its structure for scripts and the facts gate without adding a nested landmark.
+const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'none' as const };
 ---
 
 {
   notes.length > 0 && (
-    <section class:list={['sources', className]} id={id} aria-labelledby={`${id}-h`}>
+    <section class:list={['sources', className]} id={id} {...landmarkAttrs}>
       <h2 class="sources__title t-heading-m" id={`${id}-h`}>{title}</h2>
       <ol class="sources__list">
         {notes.map((n) => (
           <li class="sources__note" id={`fn-${n.n}`} tabindex="-1" data-fact={n.id}>
             <p class="sources__claim">{n.claim}</p>
-            {n.caveat && <p>{n.caveat}</p>}
+            {n.caveatSameAs ? (
+              <p class="sources__same">Same caveat as <a href={`#fn-${n.caveatSameAs}`}>note {n.caveatSameAs}</a>.</p>
+            ) : (
+              n.caveat && <p>{n.caveat}</p>
+            )}
             {n.footnote && <p>{n.footnote}</p>}
             {n.base && <p>Base: {n.base}.</p>}
             {n.sources.length > 0 && (

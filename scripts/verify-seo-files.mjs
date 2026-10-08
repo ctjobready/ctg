@@ -5,7 +5,8 @@
  *                staging: disallow all
  *   llms.txt     line 1 title, line 2 ENTITY_DEFINITION verbatim, the planning/09 priority resources, production URLs only,
  *                each description equal to that page's own meta description, deprioritised section
- *   robots meta  staging: every page noindex (redirect stubs never); production: only 404 and styleguide are noindex
+ *   robots meta  staging: every page and every redirect stub is noindex; production: only 404 and styleguide are noindex and
+ *                redirect stubs carry no robots meta at all
  *   og:image     every card URL exists in dist/ as a 1200x630 PNG of at most 200 KB
  *   sitemap      lists real, indexable pages only (no stub, no 404, no styleguide, no noindex page)
  *
@@ -101,15 +102,26 @@ const pngInfo = (file) => {
   return { w: b.readUInt32BE(16), h: b.readUInt32BE(20), bytes: b.length };
 };
 let pages = 0;
+let stubCount = 0;
 const cardsSeen = new Set();
 const noindexPages = new Set();
+/** Every robots-family <meta> of a document, as lower-cased content strings. */
+const robotsMetas = (html) => [...html.matchAll(/<meta\b[^>]*>/gi)]
+  .map((m) => m[0])
+  .filter((t) => /\bname="(robots|googlebot|bingbot)"/i.test(t))
+  .map((t) => ((t.match(/\bcontent="([^"]*)"/i) || [])[1] ?? '').toLowerCase().trim());
 for (const f of walkFiles(dist)) {
   if (!f.endsWith('.html')) continue;
   const html = fs.readFileSync(f, 'utf8');
   const rel = path.relative(dist, f).split(path.sep).join('/');
   const route = rel === '404.html' ? '/404/' : '/' + rel.replace(/index\.html$/, '');
   if (isRedirectStub(html)) {
-    if (/noindex/i.test(html)) err(`${route}: redirect stub carries noindex`);
+    stubCount++;
+    // Staging stubs are noindex like every staging page; a production stub never is (a noindex on a redirect source slows consolidation).
+    const metas = robotsMetas(html);
+    if (siteEnv === 'staging') {
+      if (metas.length !== 1 || metas[0] !== 'noindex') err(`${route}: staging redirect stub must carry exactly one <meta name="robots" content="noindex"> (found ${metas.length ? metas.join(', ') : 'none'})`);
+    } else if (metas.length || /noindex/i.test(html)) err(`${route}: production redirect stub carries noindex or a robots meta`);
     continue;
   }
   pages++;
@@ -152,7 +164,7 @@ if (sm.length !== pages - utilityBuilt) err(`sitemap has ${sm.length} URLs for $
 console.log(`verify-seo-files (${siteEnv}, base "${base || '/'}", dist ${path.relative(REPO_ROOT, dist) || '.'})`);
 console.log(`  robots.txt   ${siteEnv === 'production' ? `allow all + ${AI.length} AI user agents + sitemap index` : 'disallow all'}`);
 console.log(`  llms.txt     ${llmsLinks} link lines, each description equal to the page's meta description`);
-console.log(`  pages        ${pages}, ${noindexPages.size} noindex${siteEnv === 'production' ? ` (${[...noindexPages].sort().join(', ') || 'none'})` : ' (staging: all, by design)'}; redirect stubs carry no noindex`);
+console.log(`  pages        ${pages}, ${noindexPages.size} noindex${siteEnv === 'production' ? ` (${[...noindexPages].sort().join(', ') || 'none'})` : ' (staging: all, by design)'}; ${stubCount} redirect stubs ${siteEnv === 'production' ? 'carry no noindex or robots meta' : 'all carry noindex (staging)'}`);
 console.log(`  og cards     ${[...cardsSeen].sort().map((c) => c.replace('/og/', '')).join(', ')}`);
 console.log(`  sitemap      ${sm.length} URLs, no stub, no utility page`);
 if (errors.length) {
