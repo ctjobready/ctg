@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "elements": ["html5"],
+  "rules": {
+    "no-inline-style": "off",
+    "no-redundant-role": ["error", { "exclude": ["list"] }],
+    "prefer-native-element": ["error", { "exclude": ["list"] }]
+  }
+}
