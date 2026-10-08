@@ -1,0 +1,102 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * C3 Cost of waiting (Home): three CLAIM / DATA / IMPLICATION blocks, then the transition line followed by
+ * the value proposition. Page-local variant of the shared CostBand, which has no slot for the value
+ * proposition under the transition.
+ */
+interface Block {
+  icon: string;
+  claim: string;
+  factId: string;
+  implication: string;
+}
+interface Props {
+  title: string;
+  blocks: Block[];
+  transition?: string;
+  /** Shown directly after the transition (the value proposition). */
+  after?: string;
+  id?: string;
+}
+const { title, blocks, transition = 'It doesn’t have to be this way.', after, id = 'cost' } = Astro.props;
+// The register labels some context facts ("Context (external): …"); the label is for editors, not readers.
+const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s*/i, '').replace(/^./, (c) => c.toUpperCase());
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The cost of waiting" title={title} />
+  <div class="grid-cards">
+    {
+      blocks.map((b) => (
+        <article class="card cost" data-reveal>
+          <div class="card__body">
+            <Icon name={b.icon} size={36} strokeWidth={1.5} class="cost__icon" />
+            <h3 class="card__title">{b.claim}</h3>
+            <p class="cost__data" data-fact={b.factId}>
+              {clean(fact(b.factId).text)}
+              <FootnoteMarker id={b.factId} footnote="auto" />
+            </p>
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <div class="cost__turn" data-reveal>
+    <p class="cost__transition">{transition}</p>
+    {after && <p class="cost__after">{after}</p>}
+  </div>
+</Section>
+
+<style>
+  .cost :global(.cost__icon) {
+    color: var(--primary);
+  }
+  .cost__data {
+    color: var(--on-surface);
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--tertiary);
+  }
+  .cost__impl {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+    color: var(--on-surface-variant);
+  }
+  .cost__tag {
+    display: block;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  .cost__turn {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--primary-fixed);
+  }
+  .cost__turn > * {
+    margin: 0;
+  }
+  .cost__transition {
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+  }
+  .cost__after {
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface-variant);
+    max-width: 44rem;
+  }
+</style>

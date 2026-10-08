@@ -1,0 +1,49 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import CategoryCard from '../../system/CategoryCard.astro';
+import Icon from '../../system/Icon.astro';
+import { audiences } from '../../../data/nav';
+import { COURSES_URL } from '../../../lib/site';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Audience router: eight cards in the priority order of doc 01 §3 (doc 06 P1 row 3), then a quiet text
+ * link for learners. Descriptions reuse nav.ts so the router and the menus never drift.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'router' } = Astro.props;
+const text = (aid: string) => audiences.find((a) => a.id === aid)?.text;
+const cards = [
+  { title: 'Development partners & NGOs', icon: 'globe', text: text('development-partners'), href: '/partner-with-us/development-partners/' },
+  { title: 'Governments', icon: 'landmark', text: text('governments'), href: '/partner-with-us/governments/' },
+  { title: 'Foundations & CSR', icon: 'heart-handshake', text: text('foundations'), href: '/partner-with-us/foundations/' },
+  { title: 'Investors', icon: 'trending-up', text: text('investors'), href: '/investors/' },
+  { title: 'Local partners (Bangladesh)', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
+  { title: 'Universities & colleges', icon: 'graduation-cap', text: text('universities'), href: '/partner-with-us/universities/' },
+  { title: 'Employers', icon: 'briefcase', text: text('employers'), href: '/partner-with-us/employers/' },
+  { title: 'NU Postgraduate Diploma applicants', icon: 'award', text: 'Digital Marketing and ICT diplomas', href: '/nu-postgraduate-diploma/' },
+];
+const learners = linkAttrs(COURSES_URL);
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Start here" title="What brings you here?" lead="Choose your role to see the evidence and next step that matter to you." />
+  <div class="grid-cards grid-cards--4 router">
+    {cards.map((c) => <CategoryCard title={c.title} icon={c.icon} text={c.text} href={c.href} />)}
+  </div>
+  <p class="router__learners" data-reveal>
+    <a class="link" href={learners.href} rel={learners.rel}>
+      Learners: courses on JobReady.global<Icon name="arrow-up-right" size={16} />
+      <span class="sr-only">{learners.srText}</span>
+    </a>
+  </p>
+</Section>
+
+<style>
+  .router__learners {
+    margin: var(--space-lg) 0 0;
+  }
+</style>

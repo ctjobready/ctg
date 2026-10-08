@@ -1,0 +1,120 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import StepFlow from '../../ui/StepFlow.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import Icon from '../../system/Icon.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import CopyBlock from './CopyBlock.astro';
+import { fact } from '../../../data/facts';
+import type { CopyBlock as CopyBlockData } from '../../../data/copy';
+
+/**
+ * C14 Next steps with the post-decision reinforcement (messaging framework §8): the step flow, then
+ * validate / transformation reminder / first action, then the partner logo row (PA-04).
+ * Default steps are the grant-funded pilot timeline, parsed from PD-04 so the weeks are never retyped.
+ */
+interface Props {
+  title: string;
+  lead?: string;
+  steps?: { title: string; text?: string }[];
+  /** Footnote line under the steps (PD-04 timing) — only for the default pilot timeline. */
+  timing?: boolean;
+  validate?: CopyBlockData;
+  reminder?: CopyBlockData;
+  firstAction: string;
+  logos?: boolean;
+  tone?: 'white' | 'airy';
+  id?: string;
+}
+const { title, lead, steps, timing = !steps, validate, reminder, firstAction, logos = false, tone = 'airy', id = 'next-steps' } = Astro.props;
+
+const pd04 = fact('PD-04');
+const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => m[2]);
+const cohort = pd04.stat?.value ?? '';
+const flow = steps ?? [
+  { title: `Discovery · week ${wk[0]}`, text: 'A conversation about your goals, priority groups and timeline.' },
+  { title: `Co-design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
+  { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and success measures are agreed.' },
+  { title: `First cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
+];
+const notes = [
+  validate && { icon: 'handshake', label: 'Who you would join', body: validate },
+  reminder && { icon: 'calendar-check', label: 'What to expect', body: reminder },
+].filter(Boolean) as { icon: string; label: string; body: CopyBlockData }[];
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
+  <StepFlow steps={flow} />
+  {timing && <p class="ns__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {pd04.text}</p>}
+
+  <div class="ns__reinforce" data-reveal>
+    {
+      notes.map((n) => (
+        <div class="ns__note">
+          <Icon name={n.icon} size={28} strokeWidth={1.5} />
+          <p class="ns__label">{n.label}</p>
+          <CopyBlock block={n.body} />
+        </div>
+      ))
+    }
+    <div class="ns__note ns__note--first">
+      <Icon name="mail-check" size={28} strokeWidth={1.5} />
+      <p class="ns__label">Your first step</p>
+      <p>{firstAction}</p>
+    </div>
+  </div>
+  {logos && <PartnerStrip group="development" variant="grid" />}
+</Section>
+
+<style>
+  .ns__fn {
+    margin: var(--space-md) 0 0;
+  }
+  .ns__reinforce {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ns__note {
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    color: var(--on-surface-variant);
+  }
+  .ns__note > * {
+    margin: 0;
+  }
+  .ns__note :global(.icon) {
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
+  }
+  .ns__note--first {
+    background: var(--tertiary-container);
+    border-color: var(--tertiary);
+    color: var(--on-tertiary-container);
+  }
+  .ns__note--first :global(.icon),
+  .ns__note--first .ns__label {
+    color: var(--on-tertiary-container);
+  }
+  .ns__label {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  @media (min-width: 900px) {
+    .ns__reinforce {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      grid-auto-flow: column;
+    }
+  }
+</style>

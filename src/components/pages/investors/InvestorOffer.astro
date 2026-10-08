@@ -1,0 +1,47 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+
+/**
+ * C11 Offer (Investors): the offer is the deck request: an introduction call, then the deck and data room under
+ * NDA. Thesis and traction only; no financial terms are published (D2).
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'offer' } = Astro.props;
+const items = [
+  { icon: 'phone', title: 'An introduction call', text: 'A conversation about your investment focus and the thesis. It comes first.' },
+  { icon: 'file-lock', title: 'The deck and data room, under NDA', text: 'The investor deck and the data room follow the call, under NDA.' },
+];
+---
+
+<Section id={id} tone="white" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The offer" title="What you receive." lead="This page shows thesis and traction only. The rest is shared in conversation." />
+  <ol class="grid-cards grid-cards--2 io" role="list">
+    {
+      items.map((it, i) => (
+        <li class="card" data-reveal>
+          <div class="card__body">
+            <Icon name={it.icon} size={36} strokeWidth={1.5} class="io__icon" />
+            <p class="eyebrow">Step {i + 1}</p>
+            <h3 class="card__title">{it.title}</h3>
+            <p class="card__text">{it.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+<style>
+  .io {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .io :global(.io__icon) {
+    color: var(--primary);
+  }
+</style>

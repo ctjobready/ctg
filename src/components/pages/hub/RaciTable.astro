@@ -1,0 +1,141 @@
+---
+/**
+ * Who does what in a partnership (RACI). R = responsible (does the work), A = accountable (decides and answers
+ * for it), C = consulted, I = informed. The roles restate arrangements the register already states
+ * (co-design of groups, tracks and scorecard; monthly reports; safeguarding agreed per program; expansion is
+ * the funder's decision; independent evaluation welcome); nothing new is promised.
+ */
+type Role = 'R' | 'A' | 'C' | 'I';
+const LABEL: Record<Role, string> = { R: 'Responsible', A: 'Accountable', C: 'Consulted', I: 'Informed' };
+const rows: { activity: string; ct: Role[]; partner: Role[]; local: Role[] }[] = [
+  { activity: 'Agree priority groups, tracks, the indicative budget and the pilot scorecard (discovery and co-design)', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'Outreach, accessible selection and the readiness assessment', ct: ['A'], partner: ['I'], local: ['R'] },
+  { activity: 'Training, certification exam preparation and three months of mentoring', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Placement support and outcome tracking', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Monthly reports and tracer surveys', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Safeguarding and data protection, agreed before enrollment', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'The decision to expand after the pilot', ct: ['C'], partner: ['A', 'R'], local: ['I'] },
+  { activity: 'Independent evaluation, where the funder wants one', ct: ['C'], partner: ['A'], local: ['I'] },
+];
+const cols = [
+  ['CodersTrust', 'ct'],
+  ['Funder or government partner', 'partner'],
+  ['Local implementing partner', 'local'],
+] as const;
+---
+
+<div class="raci" role="region" aria-label="Who does what in a partnership" tabindex="0" data-reveal>
+  <table>
+    <caption class="sr-only">Who does what in a partnership: responsible, accountable, consulted and informed by role</caption>
+    <thead>
+      <tr>
+        <th scope="col">Activity</th>
+        {cols.map(([label]) => <th scope="col">{label}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            <th scope="row">{r.activity}</th>
+            {cols.map(([, key]) => (
+              <td>
+                {r[key].map((role) => (
+                  <span class={`raci__pill raci__pill--${role}`} aria-hidden="true">{role}</span>
+                ))}
+                <span class="sr-only">{r[key].map((role) => LABEL[role]).join(', ')}</span>
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+<p class="raci__legend t-body-xs">
+  <span><b>R</b> Responsible: does the work</span>
+  <span><b>A</b> Accountable: decides and answers for it</span>
+  <span><b>C</b> Consulted</span>
+  <span><b>I</b> Informed</span>
+</p>
+
+<style>
+  .raci {
+    position: relative;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: middle;
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    font-weight: var(--fw-bold);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    min-width: 16rem;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  td {
+    white-space: nowrap;
+  }
+  .raci__pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    margin-right: 6px;
+    padding: 0 6px;
+    border-radius: var(--radius-full);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+    background: var(--surface-container-high);
+    color: var(--on-secondary-container);
+  }
+  .raci__pill--A {
+    background: var(--secondary);
+    color: var(--on-secondary);
+  }
+  .raci__pill--R {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .raci__pill--C {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .raci__pill--I {
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    border: 1px solid var(--outline-variant);
+  }
+  .raci__legend {
+    margin: var(--space-sm) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+    color: var(--ctx-text);
+  }
+</style>

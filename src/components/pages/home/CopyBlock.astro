@@ -1,0 +1,17 @@
+---
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import type { CopyBlock } from '../../../data/copy';
+
+/**
+ * Renders a shared copy block from `src/data/copy.ts` verbatim, tagged with the facts it rests on
+ * (`data-fact`, for the status gate) and a footnote marker for every fact that carries a caveat.
+ */
+interface Props {
+  block: CopyBlock;
+  as?: 'p' | 'div' | 'span' | 'li';
+  class?: string;
+}
+const { block, as: Tag = 'p', class: className } = Astro.props;
+---
+
+<Tag class={className} data-fact={block.facts.join(' ')}>{block.text}{block.facts.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</Tag>

@@ -1,0 +1,68 @@
+---
+import Section from '../../ui/Section.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * The one UNDP quote the site may use (PR-03a): printed in full, attributed to "UNDP Innovation Facility,
+ * 2015 Year in Review" and scoped to the 2015 Korail pilot (40 students; typing speed and
+ * computer-application targets). It never appears beside employment results without that scope line.
+ */
+interface Props {
+  tone?: 'white' | 'airy';
+  id?: string;
+}
+const { tone = 'airy', id = 'case-quote' } = Astro.props;
+const text = fact('PR-03a').text;
+const sep = text.indexOf(': “');
+if (sep === -1 || !text.endsWith('”')) throw new Error('CaseQuote: PR-03a is not in "scope: “quote”" form');
+const before = text.slice(0, sep);
+const quote = text.slice(sep + 3, -1);
+const at = before.indexOf(', on ');
+const cite = at === -1 ? before : before.slice(0, at);
+const scope = at === -1 ? '' : before.slice(at + 2).replace(/^./, (c) => c.toUpperCase());
+---
+
+<Section id={id} tone={tone} pad="sm" aria-label="UNDP Innovation Facility on the 2015 Korail pilot">
+  <figure class="cq" data-fact="PR-03a" data-reveal>
+    <p class="eyebrow cq__eyebrow">What UNDP wrote about the 2015 pilot</p>
+    <blockquote class="cq__q"><p>“{quote}”</p></blockquote>
+    <figcaption class="cq__cap">
+      <span class="cq__cite">{cite}</span>
+      {scope && <span class="cq__scope">{scope}</span>}
+    </figcaption>
+  </figure>
+</Section>
+
+<style>
+  .cq {
+    margin: 0;
+    max-width: 48rem;
+    padding-left: var(--space-gutter);
+    border-left: 4px solid var(--tertiary);
+  }
+  .cq__eyebrow {
+    margin: 0 0 var(--space-xs);
+  }
+  .cq__q {
+    margin: 0;
+  }
+  .cq__q p {
+    margin: 0;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .cq__cap {
+    margin-top: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .cq__cite {
+    font-size: var(--fs-body-base);
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+</style>

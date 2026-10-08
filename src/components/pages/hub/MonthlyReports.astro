@@ -1,0 +1,87 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * What funders receive monthly (PD-08). The list is parsed from the register's wording so it cannot drift:
+ * "Funders receive monthly reports: a, b, c; quarterly steering review; independent evaluation welcome".
+ */
+interface Props {
+  sample: { label: string; href: string };
+  id?: string;
+}
+const { sample, id = 'monthly-reports' } = Astro.props;
+const text = fact('PD-08').text;
+const [head, ...rest] = text.split('; ');
+const reports = head.split(': ')[1].split(', ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
+const extras = rest.map((s) => s.charAt(0).toUpperCase() + s.slice(1));
+if (reports.length < 3) throw new Error('MonthlyReports: PD-08 wording changed; update the parser');
+const icons = ['users-round', 'award', 'briefcase', 'search-check', 'heart-handshake', 'message-circle'];
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Accountability" title="What funders receive every month" lead="Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end." />
+  <ul class="grid-cards grid-cards--stretch mr" role="list" data-fact="PD-08">
+    {
+      reports.map((r, i) => (
+        <li class="card mr__item" data-reveal>
+          <div class="card__body">
+            <Icon name={icons[i % icons.length]} size={32} strokeWidth={1.5} class="mr__icon" />
+            <p class="mr__label">{r}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <ul class="mr__extras" role="list" data-reveal>
+    {extras.map((e) => <li><Icon name="circle-check" size={20} />{e}</li>)}
+  </ul>
+  <p class="mr__link" data-reveal><a class="link" href={linkAttrs(sample.href).href}>{sample.label}<Icon name="arrow-right" size={16} /></a></p>
+</Section>
+
+<style>
+  .mr {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mr__item .card__body {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .mr__item :global(.mr__icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  .mr__label {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .mr__extras {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    color: var(--on-surface-variant);
+  }
+  .mr__extras li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .mr__extras :global(.icon) {
+    color: var(--success);
+    flex: none;
+  }
+  .mr__link {
+    margin: var(--space-md) 0 0;
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import Badge from '../../system/Badge.astro';
+import CopyBlock from './CopyBlock.astro';
+import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE } from '../../../data/copy';
+
+/**
+ * C11 Offer (funder-facing pages): three program options (PD-05, no prices), then the PRICING and SCALE
+ * blocks verbatim and the ACCOUNTABILITY line directly after the options (round-3 enhancement 2).
+ * Page-local because the shared OfferBand has no slot for those blocks.
+ */
+interface Props {
+  title?: string;
+  lead?: string;
+  id?: string;
+}
+const { title = 'Choose where to start.', lead, id = 'offer' } = Astro.props;
+---
+
+<Section id={id} tone="white" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The offer" title={title} lead={lead} />
+  <ol class="grid-cards offer" role="list" data-fact={PROGRAM_OPTIONS_FACTS.join(' ')}>
+    {
+      PROGRAM_OPTIONS.map((o, i) => (
+        <li class="card offer__card" data-reveal>
+          <div class="card__body">
+            <p class="eyebrow">Option {i + 1}</p>
+            <h3 class="card__title">{o.name}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design option</Badge>}</h3>
+            <p class="offer__size">{o.size}</p>
+            <p class="card__meta offer__duration">{o.duration}</p>
+            <p class="card__text">{o.note}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="offer__acc" data-reveal data-fact={ACCOUNTABILITY.facts.join(' ')}>
+    <Icon name="target" size={28} strokeWidth={1.5} />
+    <span>{ACCOUNTABILITY.text}</span>
+  </p>
+
+  <div class="offer__two">
+    <div class="offer__panel" data-reveal>
+      <h3 class="t-heading-l"><Icon name="clipboard-list" size={24} strokeWidth={1.5} />How pricing works</h3>
+      <CopyBlock block={PRICING} />
+    </div>
+    <div class="offer__panel" data-reveal>
+      <h3 class="t-heading-l"><Icon name="layers" size={24} strokeWidth={1.5} />How we scale</h3>
+      <CopyBlock block={SCALE} />
+    </div>
+  </div>
+</Section>
+
+<style>
+  .offer {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .offer :global(.offer__badge) {
+    margin-left: var(--space-sm);
+    vertical-align: middle;
+  }
+  .offer__size {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .offer__duration {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .offer__acc {
+    margin: var(--space-lg) 0 0;
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding: var(--space-md) var(--space-gutter);
+    background: var(--tertiary-container);
+    border-left: 4px solid var(--tertiary);
+    border-radius: var(--radius-default);
+    color: var(--on-tertiary-container);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    font-weight: var(--fw-medium);
+  }
+  .offer__acc :global(.icon) {
+    flex: none;
+    margin-top: 4px;
+  }
+  .offer__two {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer__panel {
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .offer__panel > * {
+    margin: 0;
+  }
+  .offer__panel > * + * {
+    margin-top: var(--space-sm);
+  }
+  .offer__panel h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--secondary);
+  }
+  .offer__panel h3 :global(.icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  @media (min-width: 900px) {
+    .offer__two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

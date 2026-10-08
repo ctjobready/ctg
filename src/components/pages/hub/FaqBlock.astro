@@ -1,0 +1,40 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Accordion from '../../ui/Accordion.astro';
+import Icon from '../../system/Icon.astro';
+// Imported for its global .fn marker styles (answers carry footnote markers).
+import '../../facts/FootnoteMarker.astro';
+import { faqItemsByIds } from './faqItems';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * C9-style FAQ block over an explicit list of FAQ v1.2 ids (any audience). Optional `before` slot for a
+ * lead-in block (for example the "is this right for you" fit cards on Investors). The page adds the
+ * FAQPage JSON-LD from the same ids (lib/schema `faqPage(faqItemsByIds(ids), path)`).
+ */
+interface Props {
+  ids: string[];
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+  tone?: 'white' | 'airy' | 'ice';
+  allLink?: { label: string; href: string };
+  id?: string;
+}
+const { ids, title, eyebrow = 'Objections, answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
+const items = faqItemsByIds(ids, Astro);
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <slot />
+  <Accordion items={items} name={`${id}-group`} />
+  {allLink && <p class="faqb__all"><a class="link" href={linkAttrs(allLink.href).href}>{allLink.label}<Icon name="arrow-right" size={16} /></a></p>}
+</Section>
+
+<style>
+  .faqb__all {
+    margin: var(--space-md) 0 0;
+  }
+</style>

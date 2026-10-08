@@ -1,0 +1,78 @@
+---
+import Icon from '../../system/Icon.astro';
+import FactStat from '../../facts/FactStat.astro';
+import CopyBlock from '../home/CopyBlock.astro';
+import { fact } from '../../../data/facts';
+import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+
+/**
+ * Extras inside the Klein traction band on Investors (C7): the survey sentence ([SURVEY], dated and qualified),
+ * impact investment received (SC-13, historical traction only: no valuation, raise or terms), and the
+ * AWS (PA-06) and HolonIQ (PA-08) badges. The HolonIQ years are to be confirmed, so none are printed.
+ */
+const badges = ['PA-06', 'PA-08'];
+---
+
+<div class="ipx">
+  <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
+  <div class="ipx__row">
+    <div class="ipx__stat" data-reveal><FactStat id="SC-13" tone="accent" /></div>
+    <ul class="ipx__badges" role="list">
+      {
+        badges.map((id) => (
+          <li data-fact={id}>
+            <Icon name="award" size={20} />
+            <span>{fact(id).text}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .ipx {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .ipx > * {
+    margin: 0;
+  }
+  .ipx__survey {
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-heading);
+    max-width: 52rem;
+  }
+  .ipx__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-lg);
+  }
+  .ipx__badges {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .ipx__badges li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px var(--space-md);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-pill);
+    color: var(--ctx-heading);
+    font-size: var(--fs-body-xs);
+  }
+  .ipx__badges :global(.icon) {
+    color: var(--ctx-accent);
+    flex: none;
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import Icon from '../../system/Icon.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import CopyBlock from './CopyBlock.astro';
+import { fact } from '../../../data/facts';
+import { WOMEN_INCLUSION } from '../../../data/copy';
+
+/**
+ * Extras that sit inside the Klein evidence band (C7) on Home:
+ * the women-and-inclusion line, the HolonIQ badge and the "As covered in" press row (PA-09).
+ * The press logos are dark artwork, so the row sits on a white panel.
+ */
+interface Props {
+  press?: boolean;
+  women?: boolean;
+  badge?: boolean;
+}
+const { press = true, women = true, badge = true } = Astro.props;
+---
+
+<div class="px">
+  {women && <CopyBlock block={WOMEN_INCLUSION} class="px__women" />}
+  <div class="px__row">
+    {
+      badge && (
+        <p class="px__badge" data-fact="PA-08">
+          <Icon name="award" size={20} />
+          <span>{fact('PA-08').text}</span>
+        </p>
+      )
+    }
+  </div>
+  {
+    press && (
+      <div class="px__press" data-fact="PA-09">
+        <PartnerStrip kind="press" variant="grid" caption="As covered in, 2014–2016" />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .px {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .px > * {
+    margin: 0;
+  }
+  .px__base {
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .px__women {
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-heading);
+    max-width: 52rem;
+  }
+  .px__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px var(--space-md);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-pill);
+    color: var(--ctx-heading);
+    font-size: var(--fs-body-xs);
+  }
+  .px__badge :global(.icon) {
+    color: var(--ctx-accent);
+    flex: none;
+  }
+  .px__press {
+    --ctx-text: var(--on-surface-variant);
+    background: var(--surface);
+    border-radius: var(--radius-default);
+    padding-inline: var(--space-md);
+  }
+</style>

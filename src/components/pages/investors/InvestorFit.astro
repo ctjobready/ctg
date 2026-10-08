@@ -1,0 +1,57 @@
+---
+import Icon from '../../system/Icon.astro';
+
+/** C9a: who this is right for, and who it is not right for (doc 04 §4.4). */
+---
+
+<div class="fit" data-reveal>
+  <div class="fit__card fit__card--yes">
+    <p class="fit__label"><Icon name="circle-check" size={22} />Right for you if</p>
+    <p>You back platform infrastructure for emerging-market workforces and can evaluate an early-stage rollout.</p>
+  </div>
+  <div class="fit__card">
+    <p class="fit__label"><Icon name="info" size={22} />Not right for you if</p>
+    <p>You need a finished marketplace yet: the employer and gig-work (Earn) marketplace is in pre-launch.</p>
+  </div>
+</div>
+
+<style>
+  .fit {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: var(--space-lg);
+  }
+  .fit__card {
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    color: var(--on-surface-variant);
+  }
+  .fit__card--yes {
+    border-top: 3px solid var(--success);
+  }
+  .fit__card p {
+    margin: 0;
+  }
+  .fit__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm) !important;
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .fit__card--yes .fit__label :global(.icon) {
+    color: var(--success);
+  }
+  .fit__card:not(.fit__card--yes) .fit__label :global(.icon) {
+    color: var(--on-primary-container);
+  }
+  @media (min-width: 768px) {
+    .fit {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

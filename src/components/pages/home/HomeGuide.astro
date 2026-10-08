@@ -1,0 +1,108 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import FactStat from '../../facts/FactStat.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import CopyBlock from './CopyBlock.astro';
+import { C14, EMPATHY, ORIGIN } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+import { PARTNER_CAPTION } from '../../../lib/logos';
+
+/**
+ * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the partner line
+ * (PA-01), the method signal (TalentLEAP) and four authority figures with the partner logo marquee.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'guide' } = Astro.props;
+const talentleap = linkAttrs('/our-model/talentleap/');
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <div class="guide">
+    <div class="guide__copy">
+      <p class="eyebrow" data-reveal>Our track record</p>
+      <p class="guide__empathy" data-reveal>{EMPATHY.home}</p>
+      <h2 id={`${id}-h`} data-reveal>We’ve built this path since 2014.</h2>
+      <CopyBlock block={ORIGIN} class="guide__origin" />
+      <CopyBlock block={C14.validate} class="guide__partners" />
+      <p class="guide__method" data-fact="IN-06">
+        TalentLEAP, our method, organizes skills into career paths with progressive levels.
+        <a class="link" href={talentleap.href}>How TalentLEAP works<Icon name="arrow-right" size={16} /></a>
+      </p>
+    </div>
+    <div class="guide__panel" data-reveal>
+      <FactStat id="SC-01" />
+      <FactStat id="SC-03" />
+      <FactStat id="SC-06" />
+      <FactStat id="SC-04" />
+    </div>
+  </div>
+  <PartnerStrip variant="marquee" caption={PARTNER_CAPTION} />
+</Section>
+
+<style>
+  .guide {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+  .guide__copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .guide__copy > * {
+    margin: 0;
+  }
+  .guide__empathy {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--tertiary);
+    max-width: 36rem;
+  }
+  .guide__origin {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface);
+  }
+  .guide__partners,
+  .guide__method {
+    color: var(--on-surface-variant);
+  }
+  .guide__method {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  .guide__panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+    align-content: center;
+    padding: var(--space-lg) var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+  .guide__panel :global(.stat--lg .stat__value) {
+    font-size: var(--fs-heading-3xl);
+    line-height: 1.15;
+  }
+  @media (min-width: 1024px) {
+    .guide {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .guide__panel {
+      padding: var(--space-lg);
+    }
+  }
+</style>

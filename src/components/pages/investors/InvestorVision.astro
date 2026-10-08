@@ -1,0 +1,72 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import FactStat from '../../facts/FactStat.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * C4 Future state (Klein): the company vision (ID-05) and the company ambition (IN-05, an [E] projection,
+ * shown with its footnote and never beside SC-04).
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'vision' } = Astro.props;
+// ID-05: "By 2032, to be among the top three … globally, focused on developing and emerging markets — offering …"
+const [lead, ...tail] = fact('ID-05').text.split(' — ');
+const detail = tail.join(' — ');
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Where it is heading" title="The vision: a top-three platform for emerging-market work." />
+  <div class="vis">
+    <div class="vis__copy" data-fact="ID-05" data-reveal>
+      <p class="vis__lead">{lead}<FootnoteMarker id="ID-05" footnote="auto" />.</p>
+      {detail && <p class="vis__detail">{detail.charAt(0).toUpperCase() + detail.slice(1).replace(/\.$/, '')}.</p>}
+    </div>
+    <div class="vis__stat" data-reveal>
+      <FactStat id="IN-05" tone="accent" size="lg" />
+    </div>
+  </div>
+</Section>
+
+<style>
+  .vis {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  .vis__copy {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .vis__copy > * {
+    margin: 0;
+  }
+  .vis__lead {
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+    max-width: 36rem;
+  }
+  .vis__detail {
+    color: var(--ctx-text);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    max-width: 36rem;
+  }
+  .vis__stat {
+    padding: var(--space-lg);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-lg);
+    background: var(--ctx-card);
+  }
+  @media (min-width: 900px) {
+    .vis {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 56px;
+    }
+  }
+</style>
