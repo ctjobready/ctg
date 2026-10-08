@@ -1,15 +1,10 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { TOPICS as TOPIC_LABELS } from '../../../data/newsTopics';
 
 export type NewsEntry = CollectionEntry<'news'>;
 
-/** Topic labels (planning/02 §2). Keys match the `topic` enum in src/content.config.ts. */
-export const TOPICS: Record<NewsEntry['data']['topic'], string> = {
-  partnerships: 'Partnerships & MoUs',
-  recognition: 'Recognition',
-  'programs-events': 'Programs & events',
-  'leadership-advocacy': 'Leadership & advocacy',
-  insights: 'Insights',
-};
+/** Topic labels (planning/02 §2), shared with the Home news teaser (src/data/newsTopics.ts). Typed against the collection's `topic` enum, so a new topic must get a label. */
+export const TOPICS: Record<NewsEntry['data']['topic'], string> = TOPIC_LABELS;
 export const TOPIC_KEYS = Object.keys(TOPICS) as NewsEntry['data']['topic'][];
 
 /** All published news, newest first. */

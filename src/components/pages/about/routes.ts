@@ -1,11 +1,9 @@
 /**
- * Page-local CTA definitions for WP8 pages. The shared CTA library (src/data/ctas.ts) has no `local`
- * or `diligence` key yet and its `report` label predates the partner-edition decision (planning/04 §7,
- * D9). These helpers build the same kind of prefilled mailto links with the shared builders, so
- * nothing about the library's behavior is duplicated. Request for the shared library: add `local`,
- * `diligence` and the §7 `report` wording.
+ * Page-local CTA helpers for WP8 pages. The enquiry routes (`local`, `diligence`, `report`, ...) come
+ * from the shared CTA library (src/data/ctas.ts, planning/04 §7); only the mentor and careers mailtos,
+ * which are not in the §7 library, are built here with the shared builders.
  */
-import { BANGLADESH_HQ, CONTACT, COURSES_URL } from '../../../lib/site';
+import { CONTACT, COURSES_URL } from '../../../lib/site';
 import { bodyTemplate, cta, mailto } from '../../../lib/mailto';
 import { NU_PGD_APPLY_URL, type CtaKey } from '../../../data/ctas';
 
@@ -19,28 +17,17 @@ function build(key: string, label: string, subject: string, body: string[], to?:
   return { key, label, href: mailto({ to, subject, body: bodyTemplate(body) }) };
 }
 
+const fromLibrary = (key: CtaKey): LocalCta => {
+  const c = cta(key);
+  return { key, label: c.label, href: c.href };
+};
+
 /** `local` — goes to the Bangladesh team (ID-07). */
-export const localCta = (): LocalCta =>
-  build(
-    'local',
-    'Talk to our Bangladesh team',
-    'Local partnership enquiry — [organization]',
-    ['Organization', 'Type (NGO, college, chamber, association)', 'District', 'Groups you work with', 'Facilities (labs, classrooms)', 'Best times to talk'],
-    BANGLADESH_HQ.email,
-  );
-
+export const localCta = (): LocalCta => fromLibrary('local');
 /** `diligence` — opens a conversation; no ready document set is promised (PD-13b is unverified). */
-export const diligenceCta = (): LocalCta =>
-  build('diligence', 'Ask about due diligence', 'Due-diligence enquiry — [organization]', [
-    'Organization',
-    'Program or grant under consideration',
-    'Questions or documents you need',
-    'Deadline',
-  ]);
-
+export const diligenceCta = (): LocalCta => fromLibrary('diligence');
 /** `report` — partner edition only (planning/04 §7). */
-export const reportCta = (): LocalCta =>
-  build('report', 'Request the Impact Report 2026 (partner edition)', 'Impact Report 2026 (partner edition) request', ['Name', 'Organization', 'Purpose']);
+export const reportCta = (): LocalCta => fromLibrary('report');
 
 /** Mentor applications (P29): same mailto pattern as the `media` key. */
 export const mentorCta = (): LocalCta =>
@@ -62,11 +49,6 @@ export const careersCta = (label = 'Send your CV'): LocalCta =>
     ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],
     CAREERS_EMAIL,
   );
-
-const fromLibrary = (key: CtaKey): LocalCta => {
-  const c = cta(key);
-  return { key, label: c.label, href: c.href };
-};
 
 export interface ContactRoute {
   id: string;

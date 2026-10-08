@@ -10,7 +10,7 @@ import { fact } from '../../../data/facts';
 // PR-03a: the partner quote, shown in full with its scope line (never beside the 2017 results without it).
 const pq = fact('PR-03a').text.match(/“([^”]+)”/);
 if (!pq) throw new Error('PR-03a no longer contains the quotation');
-// ST-01 and ST-02 carry learners' names in the register; Korail residents are shown as anonymized outcome lines.
+// ST-01 and ST-02 are anonymized outcome lines (Korail residents are never named); the reported outcome is the quoted part.
 const quoteOf = (id: string) => {
   const m = fact(id).text.match(/“([^”]+)”/);
   if (!m) throw new Error(`${id} has no quoted outcome`);

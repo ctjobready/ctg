@@ -12,7 +12,15 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
  */
 export function faqItems(audience: FaqAudience, ids?: string[], astro?: { locals: App.Locals }): { q: string; a: string }[] {
   let list = faqsFor(audience);
-  if (ids) list = ids.map((id) => list.find((f) => f.id === id) ?? faqsFor('all').find((f) => f.id === id)).filter((f): f is NonNullable<typeof f> => !!f);
+  if (ids) {
+    // An id outside the audience's own 9b list is still served from the full bank (`all`); an unknown id fails the build.
+    const bank = faqsFor('all');
+    list = ids.map((id) => {
+      const f = list.find((x) => x.id === id) ?? bank.find((x) => x.id === id);
+      if (!f) throw new Error(`faqItems: unknown FAQ id ${id}`);
+      return f;
+    });
+  }
   return list.map((f) => {
     let marks = '';
     if (astro) {

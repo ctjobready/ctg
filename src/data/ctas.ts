@@ -1,8 +1,9 @@
 /**
  * CTA library (planning/04 §7, Decision D3). All enquiry CTAs are prefilled mailto links to
- * contact@coderstrust.global; build hrefs with `ctaHref(key)` from `lib/mailto.ts`.
+ * contact@coderstrust.global (the `local` key goes to the Bangladesh team, ID-07); build hrefs with
+ * `ctaHref(key)` from `lib/mailto.ts`.
  */
-import { CONTACT } from '../lib/site';
+import { BANGLADESH_HQ, CONTACT } from '../lib/site';
 
 export type CtaKey =
   | 'discovery'
@@ -14,12 +15,16 @@ export type CtaKey =
   | 'talent'
   | 'report'
   | 'media'
+  | 'local'
+  | 'diligence'
   | 'nu-pgd';
 
 export interface CtaDef {
   key: CtaKey;
   /** Button label (outcome-framed). */
   label: string;
+  /** Recipient when it is not the general address (`local` goes to the Bangladesh team). */
+  to?: string;
   /** Prefilled subject. "[…]" marks the part the sender completes. Absent for non-mailto CTAs. */
   subject?: string;
   /** One field per line in the prefilled body. */
@@ -47,7 +52,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
       'Priority groups',
       'Approx. number of trainees',
       'Preferred timeline',
-      'Best times to talk',
+      'Two suitable times for a discovery conversation',
     ],
   },
   briefing: {
@@ -66,7 +71,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'investor',
     label: 'Request the investor deck',
     subject: 'Investor deck request — [firm]',
-    body: ['Firm', 'Name & role', 'Investment focus', 'Ticket size (optional)'],
+    body: ['Firm', 'Name & role', 'Investment focus', 'Preferred time for an introduction call'],
   },
   campus: {
     key: 'campus',
@@ -88,8 +93,8 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   report: {
     key: 'report',
-    label: 'Request the full Impact Report 2026',
-    subject: 'Impact Report 2026 request',
+    label: 'Request the Impact Report 2026 (partner edition)',
+    subject: 'Impact Report 2026 (partner edition) request',
     body: ['Name', 'Organization', 'Purpose'],
   },
   media: {
@@ -97,6 +102,27 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     label: 'Media enquiries',
     subject: 'Media enquiry — [outlet]',
     body: ['Outlet', 'Deadline', 'Topic'],
+  },
+  local: {
+    key: 'local',
+    label: 'Talk to our Bangladesh team',
+    to: BANGLADESH_HQ.email,
+    subject: 'Local partnership enquiry — [organization]',
+    body: [
+      'Organization',
+      'Type (NGO, college, chamber, association)',
+      'District',
+      'Groups you work with',
+      'Facilities (labs, classrooms)',
+      'Best times to talk',
+    ],
+  },
+  /** Opens a conversation; no ready document set is promised (PD-13b is unverified, `U`). */
+  diligence: {
+    key: 'diligence',
+    label: 'Ask about due diligence',
+    subject: 'Due-diligence enquiry — [organization]',
+    body: ['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline'],
   },
   'nu-pgd': {
     key: 'nu-pgd',

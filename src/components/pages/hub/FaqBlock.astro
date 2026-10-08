@@ -5,16 +5,19 @@ import Accordion from '../../ui/Accordion.astro';
 import Icon from '../../system/Icon.astro';
 // Imported for its global .fn marker styles (answers carry footnote markers).
 import '../../facts/FootnoteMarker.astro';
-import { faqItemsByIds } from './faqItems';
+import { faqItems } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
+import type { FaqAudience } from '../../../data/faqs';
 
 /**
- * C9-style FAQ block over an explicit list of FAQ v1.2 ids (any audience). Optional `before` slot for a
- * lead-in block (for example the "is this right for you" fit cards on Investors). The page adds the
- * FAQPage JSON-LD from the same ids (lib/schema `faqPage(faqItemsByIds(ids), path)`).
+ * C9-style FAQ block over the questions tagged for `audience` in src/data/faqs.ts (`all` = the hub's full
+ * Q1–Q14 list; `ids` restricts and orders). Optional default slot for a lead-in block (for example the
+ * "is this right for you" fit cards on Investors). The page adds the FAQPage JSON-LD from the same
+ * questions (`faqJsonLd(audience, path, ids)` in lib/faq).
  */
 interface Props {
-  ids: string[];
+  audience: FaqAudience;
+  ids?: string[];
   title: string;
   eyebrow?: string;
   lead?: string;
@@ -22,8 +25,8 @@ interface Props {
   allLink?: { label: string; href: string };
   id?: string;
 }
-const { ids, title, eyebrow = 'Objections, answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
-const items = faqItemsByIds(ids, Astro);
+const { audience, ids, title, eyebrow = 'Objections, answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
+const items = faqItems(audience, ids, Astro);
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>

@@ -69,7 +69,7 @@ const legacyCards = named
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split('): ')[1].replace('; earning', ' and is earning')}.` },
+  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split(' in Kosovo ')[1].replace('; earning', ' and is earning')}.` },
   { key: 'yes-anon-1', name: 'A UNDP YES learner', role: 'Korail', pathway: 'freelance', outcome: `“${quoted('ST-01')}”` },
   { key: 'yes-anon-2', name: 'A UNDP YES learner', role: 'Korail (an outlier result)', pathway: 'freelance', outcome: `“${quoted('ST-02')}”` },
 ];

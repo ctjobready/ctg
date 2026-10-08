@@ -19,7 +19,7 @@ A recently released video by content creator Jana Alam Jhony offers a glimpse in
 
 https://www.youtube.com/watch?v=rQC8BaL71QI
 
-As the Co-Founder and Chairman of CodersTrust, Mr. Aziz has dedicated his career to making quality digital education affordable and accessible for everyone. Since its founding in 2014, CodersTrust has empowered more than one million learners and professionals worldwide with future-ready digital skills, enabling thousands of young people to build sustainable careers in the global digital economy.
+As the Co-Founder and Chairman of CodersTrust, Mr. Aziz has dedicated his career to making quality digital education affordable and accessible for everyone. Since its founding in 2014, CodersTrust has trained 130,000+ youth across 15 countries and territories with future-ready digital skills, enabling thousands of young people to build sustainable careers in the global digital economy.
 
 Beyond technology, Mr. Aziz remains deeply connected to Bangladesh’s roots through his passion for farming. More than a personal interest, agriculture represents his belief in self-reliance, sustainability, and the importance of staying connected to the land. A significant portion of the income generated from his farming activities is dedicated to supporting education and youth empowerment initiatives, reflecting his conviction that education is the most effective path to breaking the cycle of poverty.
 

@@ -23,6 +23,7 @@ export function ctaHref(key: CtaKey): string {
   const cta = CTAS[key];
   if (cta.href) return cta.href;
   return mailto({
+    to: cta.to,
     subject: cta.subject,
     body: cta.body ? bodyTemplate(cta.body) : undefined,
   });

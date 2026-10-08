@@ -4,6 +4,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import NewsCard from '../ui/NewsCard.astro';
 import Icon from '../system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
+import { topicLabel } from '../../data/newsTopics';
 
 /**
  * Latest news: the 3 newest entries of the `news` content collection. Guarded so the build works
@@ -25,25 +26,27 @@ interface Props {
 }
 const { title = 'Latest news', count = 3, fallback = [], id = 'news-teaser' } = Astro.props;
 
-let items: Item[] = [];
+let entries: any[] = [];
 try {
   const mod = await import('astro:content');
-  const entries = await (mod.getCollection as (c: string) => Promise<any[]>)('news');
-  items = entries
-    .map((e) => ({
-      title: e.data.title as string,
-      date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
-      topic: e.data.topic as string | undefined,
-      excerpt: e.data.excerpt as string | undefined,
-      href: `/news/${e.data.slug ?? e.id}/`,
-      image: e.data.cover,
-      imageAlt: e.data.coverAlt,
-    }))
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, count) as Item[];
+  entries = await (mod.getCollection as (c: string) => Promise<any[]>)('news');
 } catch {
-  items = [];
+  entries = [];
 }
+// Mapped outside the guard above, so an unknown topic fails the build instead of silently emptying the band.
+let items: Item[] = entries
+  .map((e) => ({
+    title: e.data.title as string,
+    date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
+    // Human label ("Leadership & advocacy"), never the collection slug.
+    topic: e.data.topic ? topicLabel(e.data.topic as string) : undefined,
+    excerpt: e.data.excerpt as string | undefined,
+    href: `/news/${e.data.slug ?? e.id}/`,
+    image: e.data.cover,
+    imageAlt: e.data.coverAlt,
+  }))
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, count) as Item[];
 if (items.length === 0) items = fallback.slice(0, count);
 ---
 

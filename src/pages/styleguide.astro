@@ -344,7 +344,7 @@ const sectionLinks = [
     <div class="grid-cards">
       <CaseStudyCard title="Case study title that may wrap to two lines" program="Program" partner="Partner" stat={{ value: '88.8%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
       <NewsCard title="News article headline that wraps onto two lines when long" date="2026-10-08" topic="Impact" excerpt="A short excerpt of the article, two lines at most, to help readers choose." href="/news/" />
-      <PersonCard assetId="sample-person-portrait" name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
+      <PersonCard assetId="example-person-portrait" name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
     </div>
 
     <h3 class="sg-h3">CourseCard</h3>
@@ -384,9 +384,9 @@ const sectionLinks = [
 
     <h3 class="sg-h3">SuccessStoryCard (photo grayscale → color, M22) · Testimonial</h3>
     <div class="grid-cards">
-      <SuccessStoryCard assetId="sample-story-1" outcome="Outcome-led sentence in the learner's voice." name="Learner Name" role="Role, location" href="/impact/stories/" />
+      <SuccessStoryCard assetId="example-story-1" outcome="Outcome-led sentence in the learner's voice." name="Learner Name" role="Role, location" href="/impact/stories/" />
       <SuccessStoryCard outcome="A story that has a video available." name="Another Learner" role="Role, location" href="/impact/stories/" video />
-      <Testimonial assetId="sample-testimonial" quote="A longer quote in a quiet, spacious layout, set in body-l with room to breathe." name="Person Name" role="Organization" rating={5} />
+      <Testimonial assetId="example-testimonial" quote="A longer quote in a quiet, spacious layout, set in body-l with room to breathe." name="Person Name" role="Organization" rating={5} />
     </div>
 
     <h3 class="sg-h3">Carousel + CarouselControls (M14; scroll-snap, no autoplay)</h3>
@@ -559,7 +559,7 @@ const sectionLinks = [
     <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <DefinitionBand id="band-definition" />
     <RouterBand id="band-router" title="What brings you here?" />
-    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
+    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
       { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as junior tasks disappear.' },
       { claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },

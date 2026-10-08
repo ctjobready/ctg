@@ -28,7 +28,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { FAQ_SCOPE, HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
 import { EMPATHY, HEADLINE, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -61,7 +61,7 @@ const steps = [
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Universities' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('universities', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -198,7 +198,7 @@ const steps = [
 
   <!-- C9 · Objections -->
   <FAQBand
-    audience={FAQ_SCOPE}
+    audience="universities"
     ids={FAQ_IDS}
     title="Questions universities ask"
     lead="Right for you if you want certified, employer-demand tracks alongside degrees. Not right if you want to replace the degree."

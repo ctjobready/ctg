@@ -28,7 +28,7 @@ import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { FAQ_SCOPE, LINKS, factPart, meta } from '../../../components/pages/partners/partners';
+import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
 import { EMPATHY, HEADLINE, MICRO_COMMITMENT, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -59,7 +59,7 @@ const steps = [
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Employers' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('employers', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -189,7 +189,7 @@ const steps = [
 
   <!-- C9 · Objections -->
   <FAQBand
-    audience={FAQ_SCOPE}
+    audience="employers"
     ids={FAQ_IDS}
     title="Questions employers ask"
     lead="Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool."

@@ -5,9 +5,9 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import { fact } from '../../../data/facts';
 
-// ST-05 in the register carries the learner's name; the outcome is shared without it.
-const raw = fact('ST-05').text.split('): ')[1];
-if (!raw) throw new Error('ST-05 text no longer has the expected "(program): outcome" shape');
+// ST-05 is already an anonymized outcome line; the program is shown beside it, so the line is shortened to "A participant …".
+const raw = fact('ST-05').text.split(' in Kosovo ')[1];
+if (!raw) throw new Error('ST-05 text no longer has the expected "A … participant in Kosovo <outcome>" shape');
 const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
 ---
 

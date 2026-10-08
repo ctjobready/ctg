@@ -1,6 +1,5 @@
 import { fact } from '../../../data/facts';
-import { CTAS } from '../../../data/ctas';
-import { cta as libCta, mailto, bodyTemplate } from '../../../lib/mailto';
+import { cta as libCta } from '../../../lib/mailto';
 import { article, ref, ORG_ID, type JsonLdNode } from '../../../lib/schema';
 
 /** Meta description guard: ≤ 155 characters (doc 09). */
@@ -21,17 +20,10 @@ export const val = (id: string, field: 'value' | 'from' | 'label' = 'value'): st
   return v;
 };
 
-/**
- * `report` CTA with the partner-edition wording of messaging framework §7
- * ("Request the Impact Report 2026 (partner edition)"); the shared CTA library still carries the
- * earlier label, so the label and subject are set here (shared-code change requested in the report).
- */
+/** `report` CTA: the shared library carries the partner-edition wording of messaging framework §7. */
 export function reportCta() {
-  const def = CTAS.report;
-  return {
-    label: 'Request the Impact Report 2026 (partner edition)',
-    href: mailto({ subject: 'Impact Report 2026 (partner edition) request', body: bodyTemplate(def.body ?? []) }),
-  };
+  const { label, href } = libCta('report');
+  return { label, href };
 }
 export const discoveryCta = () => libCta('discovery');
 export const fundingCta = () => libCta('funding');

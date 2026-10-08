@@ -51,12 +51,12 @@ const rc = reportCta();
     </div>
   </Section>
 
-  <Section tone="airy" aria-labelledby="ladder-h">
+  <Section id="evidence-ladder" tone="airy" aria-labelledby="ladder-h">
     <SectionHeader id="ladder-h" eyebrow="Results at a glance" title="The evidence ladder: four kinds of evidence" lead="Strongest for cause first. Each rung says what it shows, what it does not show and how it was made." />
     <EvidenceLadder />
   </Section>
 
-  <ProofBand id="proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+  <ProofBand id="proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'How to read this evidence', href: '/impact/#evidence-ladder' }]} />
 
   <CaseStudyCarousel
     id="cases"

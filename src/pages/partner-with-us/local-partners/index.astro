@@ -5,7 +5,6 @@ import ProblemBand from '../../../components/sections/ProblemBand.astro';
 import CostBand from '../../../components/sections/CostBand.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import GuideBand from '../../../components/sections/GuideBand.astro';
-import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
@@ -19,6 +18,7 @@ import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import StepFlow from '../../../components/ui/StepFlow.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
+import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import { localCta } from '../../../components/pages/about/routes';
 import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, STEPS, STEPS_FACTS, VALUE_PROPOSITION } from '../../../data/copy';
@@ -118,10 +118,11 @@ const ways = [
     />
   </div>
 
-  <!-- C6 -->
+  <!-- C6: the light variant of the mechanism band (as on Home), so it never touches the Klein proof band (C7) -->
   <div data-fact="PD-01 PD-06 PD-07 PD-08">
-    <MechanismBand
+    <HomeMechanism
       id="mechanism"
+      tone="airy"
       title="How a local partnership works."
       blocks={[
         { label: 'Your organization', title: 'Mobilizes and hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },

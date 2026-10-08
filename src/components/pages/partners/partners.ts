@@ -3,7 +3,6 @@
  * Everything here reads the facts register, so a number in a page string can never drift from it.
  */
 import { CAVEATS, fact, type CaveatClass } from '../../../data/facts';
-import type { FaqAudience } from '../../../data/faqs';
 
 /**
  * Pull a phrase out of a fact's canonical text. The first capture group is returned when the
@@ -37,13 +36,6 @@ export function meta(title: string, description: string): { title: string; descr
   if (description.length > 155) throw new Error(`Description is ${description.length} characters (max 155): ${description}`);
   return { title, description };
 }
-
-/**
- * FAQ lookup scope for pages whose question set (doc 04 §4.x 9b) crosses the audience tags in
- * src/data/faqs.ts. The "foundations" tag is a superset of every id used on P4 to P7; the
- * questions actually shown are always selected explicitly with `ids`.
- */
-export const FAQ_SCOPE: FaqAudience = 'foundations';
 
 // Program-design phrases used in page strings, sourced from the register.
 export const HOURS = factPart('PD-01', /(\d+) training hours per certification/);

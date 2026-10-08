@@ -33,7 +33,7 @@ import FitBrief from '../../../components/pages/partners/FitBrief.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { FAQ_SCOPE, LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
+import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, EMPATHY, HEADLINE, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -42,8 +42,9 @@ import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
 const primary = cta('funding');
-// The partner-edition report request (doc 04 §7); the shared CTA label for this key still reads "full".
-const report = { label: 'Request the Impact Report 2026 (partner edition)', href: cta('report').href };
+// The partner-edition report request (doc 04 §7), straight from the shared CTA library.
+const reportCta = cta('report');
+const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations & CSR',
@@ -62,7 +63,7 @@ const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.len
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Foundations & CSR' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -207,7 +208,7 @@ const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.len
 
   <!-- C9 · Objections -->
   <FAQBand
-    audience={FAQ_SCOPE}
+    audience="foundations"
     ids={FAQ_IDS}
     title="Questions funders ask"
     lead="Right for you if you want to fund outcomes you can see. Not right if you want a one-off donation with no reporting."

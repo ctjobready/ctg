@@ -40,7 +40,7 @@ const hours = statValue('PD-01');
 
 const faqSources: FaqSource[] = [
   { q: 'Is JobReady@Campus right for our institution?', html: 'Right for you if you want certified, employer-demand tracks alongside degrees. Not right if you want to replace the degree.' },
-  ...['Q1', 'Q13', 'Q3', 'Q10', 'Q8'].map((id) => ({ audience: 'development-partners' as const, id })),
+  ...['Q1', 'Q13', 'Q3', 'Q10', 'Q8'].map((id) => ({ audience: 'universities' as const, id })),
 ];
 
 const jsonLd = [

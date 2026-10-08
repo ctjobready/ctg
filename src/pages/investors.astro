@@ -28,11 +28,11 @@ import PlatformStatus from '../components/pages/investors/PlatformStatus.astro';
 import InvestorFit from '../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../components/pages/hub/FaqBlock.astro';
-import { faqItemsByIds } from '../components/pages/hub/faqItems';
 import { C14, HEADLINE, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
 import { fact } from '../data/facts';
 import { cta } from '../lib/mailto';
-import { faqPage, webPage } from '../lib/schema';
+import { faqJsonLd } from '../lib/faq';
+import { webPage } from '../lib/schema';
 
 const path = '/investors/';
 const title = 'Investors';
@@ -41,7 +41,7 @@ const description = `CodersTrust is building JobReady, an AI-native platform for
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
-const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqPage(faqItemsByIds(FAQ_IDS), path)];
+const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 const featureRows = [
   { feature: 'Employer and gig-work (Earn) marketplace — pre-launch', means: 'the platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
@@ -113,7 +113,7 @@ const mechanismBlocks = [
     </FeatureSteps>
   </Tone>
 
-  <Tone cmf="C9"><FaqBlock id="faq" ids={FAQ_IDS} tone="ice" title="Questions investors ask." eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
+  <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions investors ask." eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
 
   <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
 

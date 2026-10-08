@@ -17,12 +17,12 @@ import CopyBlock from '../../components/pages/home/CopyBlock.astro';
 import RaciTable from '../../components/pages/hub/RaciTable.astro';
 import MonthlyReports from '../../components/pages/hub/MonthlyReports.astro';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
-import { faqItemsByIds } from '../../components/pages/hub/faqItems';
 import { GOVERNANCE, MICRO_COMMITMENT, SPEED } from '../../data/copy';
 import { navGroups } from '../../data/nav';
 import { fact } from '../../data/facts';
-import { bodyTemplate, cta, mailto } from '../../lib/mailto';
-import { faqPage, pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
+import { cta } from '../../lib/mailto';
+import { faqJsonLd } from '../../lib/faq';
+import { pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/partner-with-us/';
@@ -55,13 +55,9 @@ const steps = [
   { title: `First cohort · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
 ];
 
-const diligence = mailto({
-  subject: 'Due-diligence enquiry — [organization]',
-  body: bodyTemplate(['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline']),
-});
+const diligence = cta('diligence');
 const governance = linkAttrs('/about/governance/');
 
-const FAQ_IDS = Array.from({ length: 14 }, (_, i) => `Q${i + 1}`);
 const jsonLd = [
   webPage({ path, name: `${title} | CodersTrust`, description, type: 'CollectionPage' }),
   {
@@ -71,7 +67,7 @@ const jsonLd = [
     itemListElement: audiences.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
     isPartOf: ref(ORG_ID),
   },
-  faqPage(faqItemsByIds(FAQ_IDS), path),
+  faqJsonLd('all', path),
 ];
 ---
 
@@ -114,7 +110,7 @@ const jsonLd = [
           <CopyBlock block={GOVERNANCE} class="dd__text" />
           <div class="cluster dd__actions">
             <a class="link" href={governance.href}>Read about governance and accountability<Icon name="arrow-right" size={16} /></a>
-            <Button variant="outline" size="sm" href={diligence}>Ask about due diligence</Button>
+            <Button variant="outline" size="sm" href={diligence.href}>{diligence.label}</Button>
           </div>
         </div>
         <Icon name="shield" size={96} strokeWidth={1} class="dd__icon" />
@@ -123,7 +119,7 @@ const jsonLd = [
   </Tone>
 
   <Tone cmf="FAQ">
-    <FaqBlock id="faq" ids={FAQ_IDS} tone="white" title="Partner FAQs" lead="Fourteen questions partners ask before they start, answered in full." />
+    <FaqBlock id="faq" audience="all" tone="white" title="Partner FAQs" lead="Fourteen questions partners ask before they start, answered in full." />
   </Tone>
 
   <Tone cmf="CTA">

@@ -4,17 +4,24 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import Fact from '../../facts/Fact.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
 
 /**
- * C2–C3 (compressed, declared in doc 06 P8): the investor view of the problem and its stakes in one band.
- * P1 educated youth cannot find work while employers cannot find skills (PX-01, PX-02, PX-05); P2 many online
- * courses provide content without the work-entry support that turns skills into income; P3 AI is raising the
- * bar for entry work (PX-06, PX-08). Stakes: the gap widens with every cohort trained but not employed.
+ * C2–C3 (compressed, declared in doc 06 P8 v1.6): the investor view of the problem and its stakes in one band.
+ * P1 educated young people aged 15–24 are not in work or training (PX-01); separately, university-educated
+ * people of all working ages (ages 15+, a floor) are unemployed in these regions (PX-02, never a youth
+ * figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
+ * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
+ * PX-08, which is global). Stakes: the gap widens with every cohort trained but not employed.
  */
 interface Props {
   id?: string;
 }
 const { id = 'thesis' } = Astro.props;
+// PX-08 is a global figure: its sentence says "globally" (claims rule 12). The wording stays the register's.
+const px08 = fact('PX-08').text;
+const px08Sentence = px08.charAt(0).toLowerCase() + px08.slice(1);
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -22,18 +29,19 @@ const { id = 'thesis' } = Astro.props;
     id={`${id}-h`}
     eyebrow="The thesis"
     title="Skills and work are not meeting — and the gap is widening."
-    lead="Educated youth cannot find work while employers cannot find skills. Courses that sell content do not close the gap, and AI is raising the bar for entry work."
+    lead="Educated young people are not in work or training, and employers cannot find skills. Courses that sell content do not close the gap, and AI is raising the bar for entry work."
   />
   <div class="grid-cards th">
     <article class="card th__card" data-reveal>
       <div class="card__body">
         <Icon name="users" size={36} strokeWidth={1.5} class="th__icon" />
-        <h3 class="card__title">Youth cannot find work; employers cannot find skills.</h3>
+        <h3 class="card__title">Educated young people are not in work or training; employers cannot find skills.</h3>
         <div class="th__stats">
           <FactStat id="PX-01" />
           <FactStat id="PX-05" />
         </div>
-        <p class="th__more" data-fact="PX-02"><Fact id="PX-02" /></p>
+        <p class="th__more">Young people here are aged 15–24.</p>
+        <p class="th__more" data-fact="PX-02">Separately, <Fact id="PX-02" field="value" footnote={false} /> university-educated people of all working ages (15 and over) are unemployed in these regions, a floor figure rather than a youth figure.<FootnoteMarker id="PX-02" /></p>
       </div>
     </article>
     <article class="card th__card" data-reveal>
@@ -47,7 +55,7 @@ const { id = 'thesis' } = Astro.props;
       <div class="card__body">
         <Icon name="cpu" size={36} strokeWidth={1.5} class="th__icon" />
         <h3 class="card__title">AI is raising the bar for entry work.</h3>
-        <p class="th__more" data-fact="PX-08"><Fact id="PX-08" /></p>
+        <p class="th__more" data-fact="PX-08">Globally, {px08Sentence}<FootnoteMarker id="PX-08" /></p>
         <p class="th__more" data-fact="PX-06"><Fact id="PX-06" /></p>
       </div>
     </article>

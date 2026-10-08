@@ -22,7 +22,7 @@ This is what CodersTrust is all about using digital skills to build real, meanin
 
 ![A Proud Milestone for CodersTrust!: photo 2 of 2](../../assets/images/news/a-proud-milestone-for-coderstrust/great-american-treasure-hunt-2.jpg)
 
-Since 2014, we’ve trained over 1.5 million learners across 15+ countries, with major operations in Bangladesh, empowering youth and underserved communities to build real economic opportunity.
+Since 2014, we’ve trained 130,000+ youth across 15 countries and territories, with major operations in Bangladesh, empowering youth and underserved communities to build real economic opportunity.
 
 Here’s to lifting educated youth in Bangladesh and beyond and to many more collaborations ahead.
 

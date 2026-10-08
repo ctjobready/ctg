@@ -34,7 +34,7 @@ import FitBrief from '../../../components/pages/partners/FitBrief.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { FAQ_SCOPE, HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -60,7 +60,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   description={description}
   path={PATH}
   breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Development partners & NGOs' }]}
-  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
@@ -208,7 +208,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C9 · Objections -->
   <FAQBand
-    audience={FAQ_SCOPE}
+    audience="development-partners"
     ids={FAQ_IDS}
     title="Questions partners ask"
     lead="Right for you if you fund youth employment and want results you can report. Not right if you want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
