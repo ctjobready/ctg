@@ -5,6 +5,7 @@ import ArticleShell from '../../components/pages/news/ArticleShell.astro';
 import NewsCard from '../../components/ui/NewsCard.astro';
 import Img from '../../components/ui/Img.astro';
 import { allNews, newsHref, ogImageAlt, relatedNews, TOPICS, coverAlt, coverDuplicatesBody } from '../../components/pages/news/news';
+import { mayRender } from '../../lib/permissions';
 import { stripBase } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -15,8 +16,12 @@ const { post, all } = Astro.props;
 const { Content } = await render(post);
 const d = post.data;
 const topic = TOPICS[d.topic];
-const showHero = d.cover && !coverDuplicatesBody(post);
-const og = d.cover ? await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
+// D13: one asset per post, news-<slug>, for the cover (hero, social image) and the photos in the body (tagged by
+// rehypeNewsPhotos in astro.config.mjs). Staging drops a cover the gate does not allow; the branded section card stands in.
+const asset = `news-${post.id}`;
+const cover = d.cover && mayRender(asset) ? d.cover : undefined;
+const showHero = cover && !coverDuplicatesBody(post);
+const og = cover ? await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
 const related = relatedNews(all, post);
 ---
 
@@ -30,8 +35,9 @@ const related = relatedNews(all, post);
   topic={topic}
   image={og ? stripBase(og.src) : undefined}
   imageAlt={og ? ogImageAlt(d.coverAlt, d.title) : undefined}
+  imageAsset={og ? asset : undefined}
 >
-  {showHero && d.cover && <Img slot="hero" src={d.cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" />}
+  {showHero && cover && <Img slot="hero" src={cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} />}
   <Content />
   <Fragment slot="related">
     {

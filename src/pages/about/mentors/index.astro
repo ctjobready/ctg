@@ -10,7 +10,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
-import { mentorCta } from '../../../components/pages/about/routes';
+import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
 // Mentor photos are stored as path strings relative to src/content/ (see src/content.config.ts).
@@ -25,7 +25,7 @@ const tidyExpertise = (e: string) => e.replace(/^dashboard design\s*&\s*visualiz
 const mentors = (await getCollection('mentors'))
   .map((m) => ({ ...m.data, expertise: m.data.expertise.map(tidyExpertise) }))
   .sort((a, b) => a.name.localeCompare(b.name));
-const apply = mentorCta();
+const apply = cta('mentor');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners to their first client.';
 const jsonLd = [
   {

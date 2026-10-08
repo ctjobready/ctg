@@ -1,4 +1,5 @@
 import { PRODUCTION_ORIGIN } from './site';
+import { externalRel } from './externalRel';
 
 /**
  * Base-aware URL helper (planning/08 §2). EVERY internal href/src must go through `url()`.
@@ -87,10 +88,14 @@ export interface LinkAttrs {
   srText?: string;
 }
 
-/** One place that decides href resolution, rel and the external-link announcement. */
+/**
+ * One place that decides href resolution, rel and the external-link announcement.
+ * External links get rel="noopener", plus "noreferrer" unless the host is a CodersTrust site or a partner
+ * (src/lib/externalRel.ts, planning/08 §9). They open in the same tab, so there is no target attribute.
+ */
 export function linkAttrs(href: string): LinkAttrs {
   if (isOffsite(href)) {
-    return { href, rel: 'noopener', external: true, srText: `(opens ${hostOf(href)})` };
+    return { href, rel: externalRel(href), external: true, srText: `(opens ${hostOf(href)})` };
   }
   if (/^mailto:/i.test(href)) return { href, external: false, srText: '(opens your email app)' };
   return { href: url(href), external: false };

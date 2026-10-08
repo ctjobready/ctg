@@ -38,3 +38,16 @@ export function isStagingRenderable(assetId: string): boolean {
   const row = rowFor(assetId);
   return Boolean(row && row.publishedOnLegacySite && !row.sensitiveGroup);
 }
+
+/**
+ * Render gate for components that have a text or illustration fallback (news covers, partner logos).
+ * Staging: an asset whose row says "sensitive group" or "not published on coderstrust.global" is replaced by the
+ * fallback, so it never reaches the markup. An asset with NO row is still rendered, so that
+ * scripts/check-permissions.mjs reports the missing row. Production never hides anything here: the gate script
+ * fails the build until every rendered asset is `cleared`.
+ */
+export function mayRender(assetId: string): boolean {
+  if (__SITE_ENV__ === 'production') return true;
+  const row = rowFor(assetId);
+  return !row || (row.publishedOnLegacySite && !row.sensitiveGroup);
+}

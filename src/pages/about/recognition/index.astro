@@ -90,7 +90,7 @@ const media = { href: ctaHref('media'), label: 'Media enquiries' };
       <span class="rec-listing__badge" aria-hidden="true"><Icon name="award" size={32} /></span>
       <div>
         <p class="lead"><Fact id="PA-08" /></p>
-        <p><a class="link" href={`${url('/news/')}#recognition`}>More recognition news<Icon name="arrow-right" size={16} /></a></p>
+        <p><a class="link" href={`${url('/news/')}#nf-recognition`}>More recognition news<Icon name="arrow-right" size={16} /></a></p>
       </div>
     </div>
   </Section>
@@ -134,7 +134,7 @@ const media = { href: ctaHref('media'), label: 'Media enquiries' };
               </div>
               <p class="card__meta"><time datetime={c.year}>{c.year}</time></p>
               <h3 class="rec-press__headline">
-                {c.url ? <a class="link" href={linkAttrs(c.url).href} rel="noopener">{c.headline}<span class="sr-only"> (opens {new URL(c.url).hostname.replace('www.', '')})</span></a> : c.headline}
+                {c.url ? <a class="link" href={linkAttrs(c.url).href} rel={linkAttrs(c.url).rel}>{c.headline}<span class="sr-only"> (opens {new URL(c.url).hostname.replace('www.', '')})</span></a> : c.headline}
               </h3>
             </div>
           </li>

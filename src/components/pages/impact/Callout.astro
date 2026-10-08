@@ -1,5 +1,8 @@
 ---
-/** Short highlighted block: BLUF answer, reading note, caveat or context. */
+/**
+ * Short highlighted block: BLUF answer, reading note, caveat or context. It is part of the reading flow, not
+ * complementary content, so it is a note (a role, not a landmark) rather than an unnamed <aside>.
+ */
 interface Props {
   tone?: 'bluf' | 'note' | 'caveat';
   label?: string;
@@ -8,10 +11,10 @@ interface Props {
 const { tone = 'note', label, class: className } = Astro.props;
 ---
 
-<aside class:list={['callout', `callout--${tone}`, className]}>
+<div class:list={['callout', `callout--${tone}`, className]} role="note">
   {label && <p class="callout__label">{label}</p>}
   <div class="callout__body"><slot /></div>
-</aside>
+</div>
 
 <style>
   .callout {

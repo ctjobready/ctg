@@ -11,7 +11,7 @@ import NewsCard from '../../../components/ui/NewsCard.astro';
 import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../components/pages/news/news';
 import { person, webPage, pageUrl } from '../../../lib/schema';
 import { PRODUCTION_ORIGIN } from '../../../lib/site';
-import { stripBase, url } from '../../../lib/url';
+import { linkAttrs, stripBase, url } from '../../../lib/url';
 import { truncate } from '../../../lib/format';
 
 export async function getStaticPaths() {
@@ -59,6 +59,7 @@ const jsonLd = [
   ogType="profile"
   image={img ? stripBase(img.src) : undefined}
   imageAlt={d.photoAlt}
+  imageAsset={img ? `team-${p.id}` : undefined}
   jsonLd={jsonLd}
 >
   <section class="prof">
@@ -79,7 +80,7 @@ const jsonLd = [
         }
         {
           d.linkedin && (
-            <a class="link" href={d.linkedin} rel="noopener">
+            <a class="link" href={d.linkedin} rel={linkAttrs(d.linkedin).rel}>
               <Icon name="linkedin" size={18} />LinkedIn<span class="sr-only"> (opens linkedin.com)</span>
             </a>
           )

@@ -30,7 +30,7 @@ const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
   </div>
   {
     programs && (
-      <nav class="hw__programs" aria-label="Programs" data-reveal>
+      <nav class="hw__programs" aria-label="Explore the programs" data-reveal>
         <p class="hw__programs-label">Explore the programs</p>
         <ul class="cluster" role="list">
           {programLinks.map((p) => <li><a class="link" href={linkAttrs(p.href).href}>{p.label}<Icon name="arrow-right" size={16} /></a></li>)}

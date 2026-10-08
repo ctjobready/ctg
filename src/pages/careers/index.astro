@@ -10,12 +10,13 @@ import Img from '../../components/ui/Img.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import Sources from '../../components/facts/Sources.astro';
-import { careersCta, CAREERS_EMAIL } from '../../components/pages/about/routes';
+import { cta } from '../../lib/mailto';
+import { CAREERS_EMAIL } from '../../lib/site';
 import { webPage } from '../../lib/schema';
 import falgun from '../../assets/images/pages/about/careers-team-falgun-celebration.jpg';
 import picnic from '../../assets/images/pages/about/careers-team-picnic.jpg';
 
-const apply = careersCta('Send your CV');
+const apply = cta('careers');
 const description = 'Join CodersTrust and help move educated, unemployed young people into paid digital work. How we work, how to apply, and a speculative application route.';
 const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
 const expect = [

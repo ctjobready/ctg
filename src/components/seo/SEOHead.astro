@@ -15,6 +15,12 @@ interface Props {
   /** Absolute or site-relative image for og:image. */
   image?: string;
   imageAlt?: string;
+  /**
+   * D13: ID of the consent-dependent asset the social image shows (a team headshot, a news cover). Written to
+   * data-asset on og:image and twitter:image, so scripts/check-permissions.mjs holds the social preview to the same
+   * gate as the on-page photo (production fails while the asset is pending). Omit for the branded section cards.
+   */
+  imageAsset?: string;
   type?: 'website' | 'article' | 'profile';
   /** Force noindex even in production (styleguide, 404, redirect stubs). */
   noindex?: boolean;
@@ -28,6 +34,7 @@ const {
   suffix = true,
   image: imageProp,
   imageAlt: imageAltProp,
+  imageAsset,
   type = 'website',
   noindex = false,
   publishedTime,
@@ -37,7 +44,8 @@ const {
 // A page that passes no image gets its section's card (src/lib/og.ts, rendered by scripts/build-og.mjs).
 const card = ogCardFor(path);
 const image = imageProp ?? card.src;
-const imageAlt = imageAltProp ?? (imageProp ? 'CodersTrust — Learn. Earn. Prosper.' : card.alt);
+// A blank alt (pages that treat their on-page photo as decorative) must not leave the social image without a description.
+const imageAlt = imageAltProp?.trim() || (imageProp ? `Image for “${title}”` : card.alt);
 
 const fullTitle = suffix && !title.includes(SITE_NAME) ? `${title} | ${SITE_NAME}` : title;
 const canonical = canonicalUrl(path);
@@ -67,7 +75,7 @@ const ogImage = image.startsWith('http') ? image : PRODUCTION_ORIGIN + (image.st
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={ogImage} data-asset={imageAsset} />
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:locale" content="en_US" />
 {publishedTime && <meta property="article:published_time" content={publishedTime} />}
@@ -75,7 +83,7 @@ const ogImage = image.startsWith('http') ? image : PRODUCTION_ORIGIN + (image.st
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image" content={ogImage} data-asset={imageAsset} />
 <meta name="twitter:image:alt" content={imageAlt} />
 
 {FONT_PRELOADS.map((f) => <link rel="preload" href={url('/' + f)} as="font" type="font/woff2" crossorigin />)}

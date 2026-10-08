@@ -5,7 +5,8 @@ import { TOPICS, TOPIC_KEYS, coverAlt, newsHref, type NewsEntry } from './news';
 /**
  * Topic filter + card grid. The filter is radio buttons styled as chips and the grid is filtered with
  * CSS :has(), so it works with no JavaScript at all. A tiny script only adds a live result count (for
- * screen readers) and lets /news/#recognition preselect a topic.
+ * screen readers) and lets /news/#recognition (or /news/#nf-recognition, the chip's own id, which is a real
+ * anchor) preselect a topic.
  */
 interface Props {
   posts: NewsEntry[];
@@ -13,11 +14,14 @@ interface Props {
 const { posts } = Astro.props;
 const counts = Object.fromEntries(TOPIC_KEYS.map((k) => [k, posts.filter((p) => p.data.topic === k).length]));
 const visibleKeys = TOPIC_KEYS.filter((k) => counts[k] > 0);
-const filterCss = visibleKeys.map((k) => `.nf:has(#nf-${k}:checked) .nf__item:not([data-topic='${k}']) { display: none; }`).join('\n');
+// The filter rules in <style> below are written out per topic (a <style> element cannot sit inside the markup).
+// Adding a topic to src/data/newsTopics.ts therefore needs one more selector there; fail the build until it has one.
+const FILTER_RULES = ['partnerships', 'recognition', 'programs-events', 'leadership-advocacy', 'insights'];
+const unfiltered = TOPIC_KEYS.filter((k) => !FILTER_RULES.includes(k));
+if (unfiltered.length) throw new Error(`NewsGrid: add a filter rule in <style> for the new topic(s): ${unfiltered.join(', ')}`);
 ---
 
 <div class="nf" data-news-filter>
-  <style is:inline set:html={filterCss}></style>
   <fieldset class="nf__chips">
     <legend class="nf__legend">Filter by topic</legend>
     <div class="nf__row">
@@ -58,7 +62,7 @@ const filterCss = visibleKeys.map((k) => `.nf:has(#nf-${k}:checked) .nf__item:no
       status.textContent = announce ? `Showing ${shown} ${shown === 1 ? 'article' : 'articles'}${sel.value === 'all' ? '' : ` in ${label}`}.` : '';
     };
     const hash = decodeURIComponent(location.hash.slice(1));
-    const preset = radios.find((r) => r.value === hash);
+    const preset = radios.find((r) => r.value === hash || r.id === hash);
     if (preset) preset.checked = true;
     radios.forEach((r) => r.addEventListener('change', () => update(true)));
     update(false);
@@ -66,6 +70,14 @@ const filterCss = visibleKeys.map((k) => `.nf:has(#nf-${k}:checked) .nf__item:no
 </script>
 
 <style>
+  /* Topic filter: hide the cards of every other topic while a chip is checked (one selector per topic, see FILTER_RULES). */
+  .nf:has(#nf-partnerships:checked) .nf__item:not([data-topic='partnerships']),
+  .nf:has(#nf-recognition:checked) .nf__item:not([data-topic='recognition']),
+  .nf:has(#nf-programs-events:checked) .nf__item:not([data-topic='programs-events']),
+  .nf:has(#nf-leadership-advocacy:checked) .nf__item:not([data-topic='leadership-advocacy']),
+  .nf:has(#nf-insights:checked) .nf__item:not([data-topic='insights']) {
+    display: none;
+  }
   .nf__chips {
     border: 0;
     margin: 0 0 var(--space-md);

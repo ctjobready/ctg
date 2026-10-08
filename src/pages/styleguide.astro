@@ -155,7 +155,7 @@ const sectionLinks = [
 
 <BaseLayout
   title="Styleguide"
-  description="Component and token gallery for QA. Not indexed."
+  description="Component and token gallery for QA: colors, type, components and section bands. Not indexed."
   breadcrumbs={[{ label: 'Styleguide' }]}
   jsonLd={jsonLd}
   noindex
@@ -303,7 +303,7 @@ const sectionLinks = [
     </div>
     <div class="sg-block">
       <h3>Breadcrumbs</h3>
-      <Breadcrumbs items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies', href: '/impact/case-studies/' }, { label: 'Example case study' }]} />
+      <Breadcrumbs label="Breadcrumb (example)" items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies', href: '/impact/case-studies/' }, { label: 'Example case study' }]} />
     </div>
   </Section>
 
@@ -602,7 +602,7 @@ const sectionLinks = [
   <Section id="partners" aria-labelledby="partners-h">
     <SectionHeader id="partners-h" eyebrow="Components" title="Partner logos, press and world map" />
     <h3 class="sg-h3">PartnerStrip — all partners, marquee (PA-04 caption)</h3>
-    <PartnerStrip variant="marquee" />
+    <PartnerStrip variant="marquee" label="All partners, marquee (example)" />
     <h3 class="sg-h3">PartnerStrip — development partners, static grid, linked</h3>
     <PartnerStrip group="development" variant="grid" link />
     <h3 class="sg-h3">Government and academic groups</h3>

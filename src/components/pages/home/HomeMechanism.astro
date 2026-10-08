@@ -40,7 +40,7 @@ const {
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <ModelDiagram blocks={blocks} />
-  <p class="mech__ribbon" data-reveal aria-label={ribbon.join('. ') + '.'}>
+  <p class="mech__ribbon" data-reveal>
     {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}
   </p>
   {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}

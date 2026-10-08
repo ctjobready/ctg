@@ -1,20 +1,15 @@
 /**
- * Page-local CTA helpers for WP8 pages. The enquiry routes (`local`, `diligence`, `report`, ...) come
- * from the shared CTA library (src/data/ctas.ts, planning/04 §7); only the mentor and careers mailtos,
- * which are not in the §7 library, are built here with the shared builders.
+ * Page-local CTA helpers for WP8 pages. Every enquiry route (`local`, `diligence`, `report`, `mentor`,
+ * `careers`, ...) comes from the shared CTA library (src/data/ctas.ts, planning/04 §7).
  */
 import { CONTACT, COURSES_URL } from '../../../lib/site';
-import { bodyTemplate, cta, mailto } from '../../../lib/mailto';
-import { NU_PGD_APPLY_URL, type CtaKey } from '../../../data/ctas';
+import { cta } from '../../../lib/mailto';
+import { CTAS, NU_PGD_APPLY_URL, type CtaKey } from '../../../data/ctas';
 
 export interface LocalCta {
   key: string;
   label: string;
   href: string;
-}
-
-function build(key: string, label: string, subject: string, body: string[], to?: string): LocalCta {
-  return { key, label, href: mailto({ to, subject, body: bodyTemplate(body) }) };
 }
 
 const fromLibrary = (key: CtaKey): LocalCta => {
@@ -28,27 +23,6 @@ export const localCta = (): LocalCta => fromLibrary('local');
 export const diligenceCta = (): LocalCta => fromLibrary('diligence');
 /** `report` — partner edition only (planning/04 §7). */
 export const reportCta = (): LocalCta => fromLibrary('report');
-
-/** Mentor applications (P29): same mailto pattern as the `media` key. */
-export const mentorCta = (): LocalCta =>
-  build('mentor', 'Mentor application', 'Mentor application — [your name]', [
-    'Name',
-    'Area of expertise',
-    'Years of experience',
-    'LinkedIn or portfolio link',
-    'Availability',
-  ]);
-
-/** Careers: the HR address published on the legacy careers pages. */
-export const CAREERS_EMAIL = 'career@coderstrustbd.com';
-export const careersCta = (label = 'Send your CV'): LocalCta =>
-  build(
-    'careers',
-    label,
-    'Application — [role or "speculative application"]',
-    ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],
-    CAREERS_EMAIL,
-  );
 
 export interface ContactRoute {
   id: string;
@@ -80,8 +54,8 @@ export const contactRoutes = (): ContactRoute[] => [
     who: 'National University diploma applicants',
     text: 'Apply through the existing application form, or call the admissions team.',
     icon: 'graduation-cap',
-    cta: { key: 'nu-pgd', label: 'Apply now', href: NU_PGD_APPLY_URL },
-    secondary: { label: 'Call to enroll', href: 'tel:+8801958220802' },
+    cta: { key: 'nu-pgd', label: CTAS['nu-pgd'].label, href: NU_PGD_APPLY_URL },
+    secondary: CTAS['nu-pgd'].secondary,
   },
   { id: 'learners', who: 'Learners looking for courses', text: 'Courses, enrollment and learner support are on JobReady.global.', icon: 'book-open', cta: { key: 'learners', label: 'Go to JobReady.global', href: COURSES_URL } },
 ];

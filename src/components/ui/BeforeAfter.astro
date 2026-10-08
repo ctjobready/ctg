@@ -41,32 +41,34 @@ const fmt = (v: number) => `${v}${unit}`;
 const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after.value)}.${delta ? ` Change: ${delta}.` : ''}`;
 ---
 
-<figure class:list={['ba', className]} data-reveal>
-  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title}. ${desc}`}>
-    <line class="ba-axis" x1="40" y1={baseY} x2={W - 40} y2={baseY} />
-    {
-      bars.map((b, i) => (
-        <g class={b.cls} style={`--bi:${i}`}>
-          <rect class="ba-bar" x={b.x} y={b.y} width={barW} height={b.h} rx="8" />
-          <text class="ba-value" x={b.x + barW / 2} y={b.y - 12} text-anchor="middle">{fmt(b.value)}</text>
-          <text class="ba-label" x={b.x + barW / 2} y={baseY + 26} text-anchor="middle">{b.label}</text>
-          {b.caption && <text class="ba-cap" x={b.x + barW / 2} y={baseY + 46} text-anchor="middle">{b.caption}</text>}
-        </g>
-      ))
-    }
-    {
-      delta && (
-        <g class="ba-delta" transform={`translate(${W / 2 - 4} ${bars[1].y - 62})`}>
-          <rect x="-48" y="-18" width="96" height="36" rx="18" />
-          <text x="0" y="6" text-anchor="middle">{delta}</text>
-        </g>
-      )
-    }
-  </svg>
-  <figcaption class="ba__cap">
-    <span class="ba__title">{title}</span>
-    {note && <span class="ba__note">{note}</span>}
-  </figcaption>
+<div class:list={['ba', className]} data-reveal>
+  <figure class="ba__fig">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title}. ${desc}`}>
+      <line class="ba-axis" x1="40" y1={baseY} x2={W - 40} y2={baseY} />
+      {
+        bars.map((b, i) => (
+          <g class={b.cls} style={`--bi:${i}`}>
+            <rect class="ba-bar" x={b.x} y={b.y} width={barW} height={b.h} rx="8" />
+            <text class="ba-value" x={b.x + barW / 2} y={b.y - 12} text-anchor="middle">{fmt(b.value)}</text>
+            <text class="ba-label" x={b.x + barW / 2} y={baseY + 26} text-anchor="middle">{b.label}</text>
+            {b.caption && <text class="ba-cap" x={b.x + barW / 2} y={baseY + 46} text-anchor="middle">{b.caption}</text>}
+          </g>
+        ))
+      }
+      {
+        delta && (
+          <g class="ba-delta" transform={`translate(${W / 2 - 4} ${bars[1].y - 62})`}>
+            <rect x="-48" y="-18" width="96" height="36" rx="18" />
+            <text x="0" y="6" text-anchor="middle">{delta}</text>
+          </g>
+        )
+      }
+    </svg>
+    <figcaption class="ba__cap">
+      <span class="ba__title">{title}</span>
+      {note && <span class="ba__note">{note}</span>}
+    </figcaption>
+  </figure>
   <details class="ba__data">
     <summary>View chart data as a table</summary>
     <table>
@@ -79,12 +81,16 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
       </tbody>
     </table>
   </details>
-</figure>
+</div>
 
 <style>
   .ba {
     margin: 0;
     max-width: 560px;
+  }
+  /* The figure holds the chart and its caption (figcaption must be its first or last child); the data table disclosure follows it. */
+  .ba__fig {
+    margin: 0;
   }
   svg {
     width: 100%;

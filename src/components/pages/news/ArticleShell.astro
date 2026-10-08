@@ -5,7 +5,7 @@ import Icon from '../../system/Icon.astro';
 import Button from '../../system/Button.astro';
 import { formatDate, isoDate, truncate } from '../../../lib/format';
 import { newsArticle } from '../../../lib/schema';
-import { absoluteUrl, canonicalUrl, url } from '../../../lib/url';
+import { absoluteUrl, canonicalUrl, linkAttrs, url } from '../../../lib/url';
 import { ctaHref } from '../../../lib/mailto';
 
 /**
@@ -29,8 +29,10 @@ interface Props {
   /** Production-relative path of the 1200×630 social image. */
   image?: string;
   imageAlt?: string;
+  /** D13 asset ID of the photo behind `image` (news-<slug>); becomes data-asset on og:image/twitter:image. */
+  imageAsset?: string;
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset } = Astro.props;
 const canonical = canonicalUrl(path);
 const published = date.toISOString();
 const SUFFIX = ' | CodersTrust';
@@ -49,6 +51,11 @@ const node = newsArticle({
   section: topic,
 });
 const enc = encodeURIComponent;
+const share = {
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`,
+  x: `https://twitter.com/intent/tweet?url=${enc(canonical)}&text=${enc(headline)}`,
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`,
+};
 ---
 
 <BaseLayout
@@ -59,6 +66,7 @@ const enc = encodeURIComponent;
   ogType="article"
   image={image}
   imageAlt={imageAlt}
+  imageAsset={imageAsset}
   publishedTime={published}
   modifiedTime={(updated ?? date).toISOString()}
   jsonLd={[node]}
@@ -81,9 +89,9 @@ const enc = encodeURIComponent;
     <aside class="art__share" aria-label="Share this article">
       <p>Share</p>
       <ul role="list">
-        <li><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`} rel="noopener"><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
-        <li><a class="art__x" href={`https://twitter.com/intent/tweet?url=${enc(canonical)}&text=${enc(headline)}`} rel="noopener"><span aria-hidden="true">X</span><span class="sr-only">Share on X (opens twitter.com)</span></a></li>
-        <li><a href={`https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`} rel="noopener"><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
+        <li><a href={share.linkedin} rel={linkAttrs(share.linkedin).rel}><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
+        <li><a class="art__x" href={share.x} rel={linkAttrs(share.x).rel}><span aria-hidden="true">X</span><span class="sr-only">Share on X (opens twitter.com)</span></a></li>
+        <li><a href={share.facebook} rel={linkAttrs(share.facebook).rel}><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
         <li><button type="button" data-copy={canonical} data-copy-message="Link copied"><Icon name="link" size={20} /><span class="sr-only">Copy link</span></button></li>
       </ul>
     </aside>
