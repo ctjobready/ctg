@@ -1,0 +1,92 @@
+---
+/**
+ * Numbered cards in reading order (ordered list). Used for the YouthWIDE execution roadmap and the
+ * JobReady@Work approach. Each item may carry the fact IDs it rests on.
+ */
+interface Item {
+  title: string;
+  text?: string;
+  factIds?: string[];
+}
+interface Props {
+  items: Item[];
+  /** Columns at ≥ 1024 px. */
+  cols?: 3 | 4 | 5;
+  label?: string;
+  class?: string;
+}
+const { items, cols = 4, label, class: className } = Astro.props;
+---
+
+<ol class:list={['phases', `phases--${cols}`, className]} role="list" aria-label={label}>
+  {
+    items.map((it, i) => (
+      <li class="phases__item" data-reveal data-fact={it.factIds?.join(' ')}>
+        <span class="phases__num" aria-hidden="true">{i + 1}</span>
+        <h3 class="phases__title"><span class="sr-only">Step {i + 1}: </span>{it.title}</h3>
+        {it.text && <p class="phases__text">{it.text}</p>}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .phases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .phases__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+  }
+  .phases__item > * {
+    margin: 0;
+  }
+  .phases__num {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--fw-bold);
+  }
+  .phases__title {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--on-surface);
+  }
+  .phases__text {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  @media (min-width: 640px) {
+    .phases {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .phases--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .phases--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .phases--5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+</style>

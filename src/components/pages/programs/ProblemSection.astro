@@ -1,0 +1,106 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import FactCard from '../../facts/FactCard.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact, sources } from '../../../data/facts';
+
+/**
+ * C2 Problem. Same look as ProblemBand but accepts any number of FactCards and extra text-only pain
+ * cards (a pain with no register figure), so pages are not forced into four statistics.
+ * `scope` re-words a fact that is not a Bangladesh figure (PX-05, PX-07, PX-08, PX-09) so the scope sits in
+ * the same sentence: `prefix` ("Globally") is put before the canonical text; `label` replaces a stat label.
+ */
+interface Extra {
+  title: string;
+  text: string;
+  /** Facts the sentence rests on (data-fact for the status gate). */
+  factIds?: string[];
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  bluf?: string;
+  factIds?: string[];
+  extra?: Extra[];
+  scope?: Record<string, { prefix?: string; label?: string }>;
+  id?: string;
+}
+const { eyebrow = 'The challenge', title, bluf, factIds = [], extra = [], scope = {}, id = 'problem' } = Astro.props;
+const total = factIds.length + extra.length;
+const grid = total === 4 ? 'grid-cards grid-cards--4' : total === 2 ? 'grid-cards grid-cards--2' : total === 1 ? 'grid-cards pcs-one' : 'grid-cards';
+const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+const scoped = (fid: string) => {
+  const f = fact(fid);
+  const sc = scope[fid]!;
+  return {
+    id: fid,
+    value: f.stat?.value,
+    text: f.stat ? (sc.label ?? f.stat.label) : `${sc.prefix}, ${lowerFirst(f.text)}`,
+    src: f.sourceIds.map((s) => sources[s]?.label).filter(Boolean).slice(0, 2),
+  };
+};
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={bluf} />
+  <div class={grid}>
+    {
+      factIds.map((f) => {
+        if (!scope[f]) return <FactCard id={f} />;
+        const s = scoped(f);
+        return (
+          <article class="card" data-reveal data-fact={s.id}>
+            <div class="card__body">
+              {s.value && <p class="pcs__value">{s.value}</p>}
+              <p class:list={['pcs__label', !s.value && 'pcs__label--text']}>{s.text}<FootnoteMarker id={s.id} footnote="auto" /></p>
+              {s.src.length > 0 && <p class="card__meta pcs__src">Source: {s.src.join('; ')}</p>}
+            </div>
+          </article>
+        );
+      })
+    }
+    {
+      extra.map((e) => (
+        <article class="card" data-reveal data-fact={e.factIds?.join(' ')}>
+          <div class="card__body">
+            <h3 class="card__title">{e.title}</h3>
+            <p class="card__text">{e.text}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <slot />
+</Section>
+
+<style>
+  .pcs-one {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 30rem;
+  }
+  @media (min-width: 768px) {
+    .pcs-one {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .pcs__value {
+    font-size: var(--fs-display-4xl);
+    line-height: 1.1;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--primary);
+  }
+  .pcs__label {
+    color: var(--on-surface);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .pcs__label--text {
+    font-size: var(--fs-body-base);
+  }
+  .pcs__src {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+  }
+</style>

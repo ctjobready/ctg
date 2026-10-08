@@ -1,0 +1,81 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Fact from '../../facts/Fact.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * C3 Cost of inaction. Same look as CostBand but sized to 2 or 3 blocks. `scope` ("Globally") prefixes the
+ * canonical fact wording in the same sentence, for context facts that are not Bangladesh figures.
+ */
+interface Block {
+  claim: string;
+  factId: string;
+  implication: string;
+  scope?: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  blocks: Block[];
+  transition?: string;
+  id?: string;
+}
+const { title, lead, blocks, transition = 'It doesn’t have to work that way.', id = 'cost' } = Astro.props;
+const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
+const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The cost of waiting" title={title} lead={lead} />
+  <div class={grid}>
+    {
+      blocks.map((b) => (
+        <article class="card cost" data-reveal>
+          <div class="card__body">
+            <h3 class="card__title">{b.claim}</h3>
+            {
+              b.scope ? (
+                <p class="cost__data" data-fact={b.factId}>{b.scope}, {lowerFirst(fact(b.factId).text)}<FootnoteMarker id={b.factId} footnote="auto" /></p>
+              ) : (
+                <p class="cost__data"><Fact id={b.factId} /></p>
+              )
+            }
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <p class="cost__transition" data-reveal>{transition}</p>
+</Section>
+
+<style>
+  .cost__data {
+    color: var(--on-surface);
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--tertiary);
+  }
+  .cost__impl {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+    color: var(--on-surface-variant);
+  }
+  .cost__tag {
+    display: block;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  .cost__transition {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+  }
+</style>

@@ -1,0 +1,255 @@
+---
+// P12 — JobReady@Campus /programs/jobready-campus/ (T3 conversion page; doc 04 matrix 4.5 — universities; C1 → C14).
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import HeroBand from '../../components/sections/HeroBand.astro';
+import FutureBand from '../../components/sections/FutureBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../components/sections/FeaturesTable.astro';
+import ComparisonBand from '../../components/sections/ComparisonBand.astro';
+import Sources from '../../components/facts/Sources.astro';
+import Fact from '../../components/facts/Fact.astro';
+import FactList from '../../components/facts/FactList.astro';
+import CopyP from '../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import CostSection from '../../components/pages/programs/CostSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
+import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { EMPATHY, MICRO_COMMITMENT, ORIGIN, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { fact } from '../../data/facts';
+import { formatDate, isoDate } from '../../lib/format';
+import { webPage } from '../../lib/schema';
+
+const path = '/programs/jobready-campus/';
+const title = 'JobReady@Campus: Skills Alongside the Degree';
+const degree = statValue('OC-09');
+const description = `JobReady@Campus runs certified digital-skills training alongside the degree. Among surveyed completers, ${degree} hold a bachelor’s degree or higher.`;
+const campus = ctaFor('campus');
+const hours = statValue('PD-01');
+
+const faqSources: FaqSource[] = [
+  { q: 'Is JobReady@Campus right for our institution?', html: 'Right for you if you want certified, employer-demand tracks alongside degrees. Not right if you want to replace the degree.' },
+  ...['Q1', 'Q13', 'Q3', 'Q10', 'Q8'].map((id) => ({ audience: 'development-partners' as const, id })),
+];
+
+const jsonLd = [
+  webPage({ path, name: 'JobReady@Campus', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'JobReady@Campus', path }] }),
+  serviceNode({ path, name: 'JobReady@Campus', description: fact('IN-09').text, audience: 'Universities and colleges', areaServed: ['Bangladesh'] }),
+  faqNode(faqSources, path),
+];
+
+const options = [
+  { ...PROGRAM_OPTIONS[0], note: 'Prove the model with a first campus cohort.' },
+  { ...PROGRAM_OPTIONS[1], note: 'Expand to more cohorts and campuses on the pilot’s results.' },
+];
+---
+
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'JobReady@Campus' }]} jsonLd={jsonLd} stickyCta={campus}>
+  <!-- C1 -->
+  <HeroBand
+    audience="For universities and colleges"
+    title="JobReady@Campus — industry skills alongside the degree."
+    lead={VALUE_PROPOSITION.universities}
+    cta={campus}
+    artSeed="jobready-campus"
+  />
+
+  <DefinitionBlock>
+    <p data-fact="IN-09"><Fact id="IN-09" footnote={false} />.</p>
+  </DefinitionBlock>
+
+  <!-- C2 -->
+  <ProblemSection
+    title="Degree holders struggle to find work."
+    bluf="Employers worldwide cannot find the skills they need, and institutions lack placement results they can publish."
+    factIds={['PX-03', 'PX-05']}
+    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
+    extra={[{ title: 'Institutions lack placement results to publish', text: 'Without tracer data, a university cannot show where its degree holders end up working.' }]}
+  />
+
+  <!-- C3 -->
+  <CostSection
+    title="AI skills are in demand, and entry-level postings are thinning."
+    blocks={[
+      { claim: 'Employers want AI skills alongside the degree.', factId: 'PX-08', scope: 'Globally', implication: 'A degree alone does not show the skills employers are asking for.' },
+      { claim: 'AI is already thinning some entry-level postings.', factId: 'PX-06', implication: 'Students need a credential that shows practical skills.' },
+    ]}
+  />
+
+  <!-- C4 -->
+  <FutureBand
+    title="What your students leave with."
+    lead="Illustrative: an industry certification beside the degree, and tracer results that show where students work."
+    vignettes={[
+      { kind: 'Functional', title: 'An industry certification beside the degree', text: 'Students leave with a credential employers recognize, and a first-client or first-job path.' },
+      { kind: 'Emotional', title: 'A stronger employment story', text: 'Tracer results show where students work, so your institution can discuss placement with confidence.' },
+      { kind: 'Social', title: 'Capacity that stays on campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <GuideSection
+    title="Universities partner with CodersTrust."
+    empathy={EMPATHY.universities}
+    origin={ORIGIN}
+    statIds={['SC-04', 'SC-05']}
+    partnerGroup="academic"
+    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
+  >
+    <p data-fact="PA-05"><Fact id="PA-05" footnote={false} />.</p>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection
+    title="Skills training that runs beside the academic program."
+    blocks={[
+      { label: 'When', title: 'In parallel with studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
+      { label: 'Where', title: 'On-campus labs', text: 'Labs serve as blended-learning centers, with faculty members as coordinators.', icon: 'school' },
+      { label: 'What', title: 'Certification and internships', text: 'Globally accepted certifications plus professional internships.', icon: 'award' },
+      { label: 'After', title: 'Freelance, local, remote and overseas work', text: 'Mentoring and placement support lead into work.', icon: 'globe' },
+    ]}
+    factIds={['IN-09', 'PD-06']}
+  >
+    <div class="incl">
+      <h3 class="t-heading-xl" data-reveal>What a campus cohort includes</h3>
+      <FactList ids={['PD-01', 'PD-03', 'PD-06']} />
+    </div>
+  </MechanismSection>
+
+  <!-- C7 -->
+  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-01', 'OC-09', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
+    <div class="proof-notes">
+      <p data-fact="OC-09">Among surveyed completers, <b>{degree}</b> hold a bachelor’s degree or higher: degree holders are our core learners.</p>
+      <CopyP block={SURVEY_EMPLOYMENT} />
+    </div>
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Proof in practice"
+    items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+    ]}
+  />
+
+  <!-- C8 -->
+  <FeaturesTable
+    title="Every feature answers a pain institutions carry."
+    rows={[
+      { feature: 'Industry certifications by track and three months of milestone-based mentoring', means: 'students add a recognized credential and a first-client or first-job path to the degree.', outcomeFactId: 'PD-03', relieves: 'Degree holders struggle to find work' },
+      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcomeFactId: 'PD-10', relieves: 'Employers cannot find the skills they need' },
+      { feature: 'Tracer surveys, documentary evidence of earnings and monthly reports', means: 'your institution has outcome data it can report.', outcomeFactId: 'PD-09', relieves: 'No placement results to publish' },
+      { feature: 'Certified local facilitators and campus labs as blended-learning centers', means: 'capacity stays on campus.', outcomeFactId: 'PD-06' },
+    ]}
+  />
+  <Section id="steps" tone="airy" aria-labelledby="steps-h">
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps." />
+    <div data-fact="PD-01 PD-02 PD-08 PD-09">
+      <StepFlow
+        steps={[
+          { title: 'Set up', text: 'Agree tracks and campus labs in a discovery session.' },
+          { title: 'Train and certify', text: `${hours} training hours per certification.` },
+          { title: 'Mentor and place', text: 'Three months of milestone-based mentoring, placement support and tracer surveys.' },
+        ]}
+      />
+    </div>
+  </Section>
+
+  <!-- C9 -->
+  <FaqSection sources={faqSources} title="Questions institutions ask" />
+
+  <!-- C10 -->
+  <ComparisonBand title="Compare the approaches." />
+
+  <!-- C11 -->
+  <OfferSection title="Two ways to start a campus cohort." lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options}>
+    <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
+  </OfferSection>
+
+  <!-- C12 -->
+  <RiskSection
+    title="Start with a pilot cohort. Decide on evidence."
+    points={[
+      { icon: 'rocket', title: 'A pilot cohort comes first', text: 'Prove the model on your campus before you widen it.', factIds: ['PD-05'] },
+      { icon: 'target', title: 'Scorecard thresholds', text: 'A missed threshold triggers a corrective plan.', factIds: ['PD-11'] },
+      { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
+      { icon: 'shield', title: 'Independent evaluation is welcome', text: 'We support a third-party evaluation of outcomes.', factIds: ['PD-08'] },
+    ]}
+  >
+    <Fragment slot="lead"><CopyP block={SCORECARD} /></Fragment>
+  </RiskSection>
+
+  <!-- C13 -->
+  <CTABand
+    id="cta"
+    heading="Bring industry skills to your campus."
+    cta={campus}
+    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+    micro={MICRO_COMMITMENT}
+  >
+    <CopyP block={SPEED} class="cta-speed" />
+  </CTABand>
+
+  <!-- C14 -->
+  <NextSteps
+    steps={[
+      { title: 'Discovery session', text: 'A conversation about your students, tracks and labs.' },
+      { title: 'Co-design', text: 'We shape tracks and campus labs with you.' },
+      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
+      { title: 'First cohort in training', text: 'Training runs in parallel with academic studies.' },
+      { title: 'Monthly reports', text: 'Your institution sees results as they arrive.' },
+    ]}
+    firstAction={C14_FIRST}
+  />
+
+  <Section pad="sm" aria-label="Notes and sources">
+    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <Sources />
+  </Section>
+</LandingLayout>
+
+<style>
+  .incl {
+    margin-top: var(--space-xl, 56px);
+    max-width: 52rem;
+  }
+  .incl > h3 {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .proof-notes {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    max-width: 56rem;
+  }
+  .proof-notes :global(p) {
+    margin: 0;
+    color: var(--ctx-text);
+  }
+  .proof-notes b {
+    color: var(--on-secondary);
+  }
+  .cta-speed {
+    margin: 0;
+    max-width: 40rem;
+    font-size: var(--fs-body-base);
+    color: var(--ctx-text);
+  }
+  .updated {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

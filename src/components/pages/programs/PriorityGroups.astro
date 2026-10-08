@@ -1,0 +1,92 @@
+---
+import Badge from '../../system/Badge.astro';
+import Fact from '../../facts/Fact.astro';
+
+/**
+ * NationWIDE priority groups (IN-03), one card per group with its status:
+ *  - "Priority group": unemployed graduates, madrasah youth
+ *  - "NationWIDE aims to reach": coastal and indigenous youth (no delivered program is claimed)
+ *  - "Program agreed": third-gender people (GV-07, a program to train a stated number; enrollment is not stated)
+ * Group sizes overlap and are never added together (IN-03 footnote). Women are a priority in every group.
+ */
+interface Group {
+  title: string;
+  status: string;
+  tone: 'brand' | 'info' | 'success' | 'eyebrow';
+  /** Plain sentence without a figure (with data-fact IDs), or fact IDs rendered with their canonical wording. */
+  note?: { text: string; factIds: string[] };
+  factIds?: string[];
+}
+const groups: Group[] = [
+  { title: 'Unemployed graduates', status: 'Priority group', tone: 'brand', note: { text: 'Degree holders are the most jobless group: graduate unemployment is far higher than for SSC holders (see the national challenge above).', factIds: ['PX-03'] } },
+  { title: 'Madrasah youth', status: 'Priority group', tone: 'brand', factIds: ['PX-12'] },
+  { title: 'Climate-vulnerable coastal youth', status: 'NationWIDE aims to reach', tone: 'info', factIds: ['PX-11'] },
+  { title: 'Indigenous communities', status: 'NationWIDE aims to reach', tone: 'info', factIds: ['PX-13'] },
+  { title: 'Third-gender people', status: 'Program agreed with BCC and Bandhu Welfare Society', tone: 'success', factIds: ['GV-07', 'PX-14'] },
+];
+---
+
+<div class="pg">
+  <h3 class="pg__title t-heading-xl" data-reveal>Five priority groups</h3>
+  <p class="pg__lead" data-reveal><Fact id="IN-03" /></p>
+  <ul class="pg__grid" role="list">
+    {
+      groups.map((g) => (
+        <li class="card pg__card" data-reveal data-fact={[...(g.factIds ?? []), ...(g.note?.factIds ?? [])].join(' ')}>
+          <div class="card__body">
+            <p><Badge tone={g.tone}>{g.status}</Badge></p>
+            <h3 class="card__title">{g.title}</h3>
+            {g.note && <p class="card__text">{g.note.text}</p>}
+            {g.factIds?.map((id) => <p class="card__text"><Fact id={id} /></p>)}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="pg__foot" data-reveal>Coastal and indigenous youth are groups NationWIDE aims to reach; no delivered program for them is claimed.</p>
+</div>
+
+<style>
+  .pg {
+    margin-top: var(--space-xl, 56px);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .pg__title {
+    margin: 0;
+    color: var(--secondary);
+  }
+  .pg__lead {
+    margin: 0;
+    max-width: 52rem;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface);
+  }
+  .pg__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pg__card .card__body > p {
+    margin: 0;
+  }
+  .pg__foot {
+    margin: 0;
+    max-width: 52rem;
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 768px) {
+    .pg__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .pg__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

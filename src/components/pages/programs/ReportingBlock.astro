@@ -1,0 +1,257 @@
+---
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * Left: the sample monthly report as an EMPTY, clearly labelled layout (field names from PD-08, no data).
+ * Right: "What your reports show over time" — a timeline built only from PD-08 and PD-09:
+ * baseline at enrollment, monthly reports, quarterly steering review, tracer surveys 3/6/12 months after
+ * each course, backed by documentary evidence. No results are shown.
+ */
+const fields = [
+  { label: 'Enrollment and attendance' },
+  { label: 'Completion and certification' },
+  { label: 'Placements and first earnings' },
+  { label: 'Women and priority-group shares' },
+  { label: 'Trainee satisfaction' },
+];
+const tr = fact('PD-09').text.match(/tracers at (\d+)\/(\d+)\/(\d+) months/);
+if (!tr) throw new Error('PD-09 wording changed: update the reporting timeline');
+const tracers = [tr[1], tr[2], tr[3]];
+
+const timeline = [
+  { when: 'At enrollment', title: 'Baseline', text: 'Every trainee’s starting point is recorded, so later results have something to be measured against.', ids: 'PD-09' },
+  { when: 'Every month', title: 'Monthly report', text: `Enrollment and attendance, completion and certification, placements and first earnings, women and priority-group shares, and trainee satisfaction.`, ids: 'PD-08' },
+  { when: 'Every quarter', title: 'Steering review', text: 'You and CodersTrust review the reports together; independent evaluation is welcome.', ids: 'PD-08' },
+  ...tracers.map((m, i) => ({
+    when: `${m} months after each course`,
+    title: `Tracer survey ${i + 1}`,
+    text: i === 0 ? 'The first tracer survey after the course, with documents behind the answers.' : i === 1 ? 'The second tracer survey, which shows who started earning.' : 'The third tracer survey, a year after the course.',
+    ids: 'PD-09',
+  })),
+];
+---
+
+<div class="rep">
+  <figure class="tmpl" data-reveal data-fact="PD-08">
+    <figcaption class="tmpl__cap">
+      <span class="tmpl__tag">Sample layout · no data</span>
+      <strong>Monthly report</strong>
+      <span class="tmpl__sub">Layout only. Every field is empty; results appear here once a cohort is running.</span>
+    </figcaption>
+    <dl class="tmpl__fields">
+      <div class="tmpl__row tmpl__row--head">
+        <dt>Program</dt>
+        <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+        <dt>Month</dt>
+        <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+      </div>
+      {
+        fields.map((f) => (
+          <div class="tmpl__row">
+            <dt>{f.label}</dt>
+            <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+          </div>
+        ))
+      }
+      <div class="tmpl__row tmpl__row--tracers">
+        <dt>Tracer results</dt>
+        <dd>
+          <ul role="list">
+            {tracers.map((m) => <li><span>{m}-month</span><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></li>)}
+          </ul>
+        </dd>
+      </div>
+      <div class="tmpl__row">
+        <dt>Quarterly steering review</dt>
+        <dd><span class="tmpl__blank tmpl__blank--tall" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+      </div>
+    </dl>
+  </figure>
+
+  <div class="time" data-reveal data-fact="PD-08 PD-09">
+    <h3 class="time__title">What your reports show over time</h3>
+    <p class="time__lead">A fixed rhythm of evidence, from the first day to a year after each course. It is a schedule of what is measured, not a set of results.</p>
+    <ol class="time__list" role="list">
+      {
+        timeline.map((t) => (
+          <li class="time__item" data-fact={t.ids}>
+            <span class="time__dot" aria-hidden="true"><Icon name="circle-check" size={18} /></span>
+            <p class="time__when">{t.when}</p>
+            <h4 class="time__name">{t.title}</h4>
+            <p class="time__text">{t.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="time__evidence">Results are backed by payslips and offer letters for jobs, and by platform logs and bank receipts for freelancers.</p>
+  </div>
+</div>
+
+<style>
+  .rep {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .rep {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 56px;
+    }
+  }
+  .tmpl {
+    margin: 0;
+    background: var(--surface);
+    border: 2px dashed var(--outline);
+    border-radius: var(--radius-default);
+    padding: var(--space-gutter);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .tmpl__cap {
+    display: grid;
+    gap: 4px;
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface);
+  }
+  .tmpl__tag {
+    justify-self: start;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+  }
+  .tmpl__sub {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .tmpl__fields {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .tmpl__row {
+    display: grid;
+    gap: 6px;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .tmpl__row dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .tmpl__row dd {
+    margin: 0;
+  }
+  .tmpl__row--head {
+    grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .tmpl__blank {
+    display: block;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: repeating-linear-gradient(135deg, var(--surface-container-low), var(--surface-container-low) 6px, var(--surface) 6px, var(--surface) 12px);
+    border: 1px solid var(--outline-variant);
+  }
+  .tmpl__blank--tall {
+    height: 56px;
+  }
+  .tmpl__row--tracers ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+  .tmpl__row--tracers li {
+    display: grid;
+    gap: 4px;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .time {
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .time > * {
+    margin: 0;
+  }
+  .time__title {
+    color: var(--secondary);
+  }
+  .time__lead {
+    color: var(--on-surface-variant);
+  }
+  .time__list {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0 0 0 0;
+    display: grid;
+    gap: 0;
+    position: relative;
+  }
+  .time__item {
+    position: relative;
+    padding: 0 0 var(--space-md) 44px;
+  }
+  .time__item::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-fixed);
+  }
+  .time__item:last-child::before {
+    display: none;
+  }
+  .time__item > * {
+    margin: 0;
+  }
+  .time__dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .time__when {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .time__name {
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface);
+  }
+  .time__text {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .time__evidence {
+    padding: var(--space-md);
+    background: var(--surface-container-low);
+    border-radius: var(--radius-default);
+    color: var(--on-surface);
+    font-size: var(--fs-body-base);
+  }
+</style>

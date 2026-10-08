@@ -1,0 +1,110 @@
+---
+/**
+ * Illustrative decision sheet (enhancement 2): an EMPTY template the funder and CodersTrust fill in
+ * during co-design. Left column: what the field is. Middle: what is already fixed (from PD-02, PD-08,
+ * PD-09, PD-11). Right: the agreed value, left blank.
+ */
+const rows = [
+  { field: 'Outcome definitions', fixed: 'Completion, certification, first paid work, sustained work, and cost per completer and per verified outcome.', ids: 'PD-11' },
+  { field: 'Evidence required', fixed: 'Baseline at enrollment, tracer surveys, payslips, platform logs and bank receipts.', ids: 'PD-09' },
+  { field: 'Review dates', fixed: 'Monthly reports and a quarterly steering review; the calendar is set in co-design.', ids: 'PD-08' },
+  { field: 'Corrective-action process', fixed: 'A missed threshold triggers a corrective plan.', ids: 'PD-11' },
+  { field: 'Who decides expansion', fixed: 'The funder.', ids: 'PD-11' },
+  { field: 'Scoped separately', fixed: 'Devices, stipends, connectivity and independent evaluation, where a program needs them.', ids: 'PD-02' },
+];
+---
+
+<figure class="ds" data-reveal data-fact="PD-11 PD-09 PD-08 PD-02">
+  <figcaption class="ds__cap"><span class="ds__tag">Illustrative · empty template</span> <strong>Decision sheet</strong></figcaption>
+  <div class="ds__wrap" role="region" aria-label="Illustrative decision sheet" tabindex="0">
+    <table>
+      <caption class="sr-only">Illustrative decision sheet: an empty template completed with the funder in co-design</caption>
+      <thead>
+        <tr><th scope="col">Field</th><th scope="col">What is fixed</th><th scope="col">Agreed with you</th></tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr>
+              <th scope="row">{r.field}</th>
+              <td>{r.fixed}</td>
+              <td class="ds__blank"><span aria-hidden="true"></span><span class="sr-only">Left blank</span></td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</figure>
+
+<style>
+  .ds {
+    margin: var(--space-lg) 0 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .ds__cap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface);
+  }
+  .ds__tag {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+  }
+  .ds__wrap {
+    position: relative;
+    overflow-x: auto;
+    border: 2px dashed var(--outline);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+  }
+  .ds__wrap:focus-visible {
+    outline-offset: 2px;
+  }
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: var(--fs-body-base);
+  }
+  th,
+  td {
+    padding: 12px var(--space-md);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    font-size: var(--fs-body-xs);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    width: 22%;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .ds__blank {
+    width: 24%;
+  }
+  .ds__blank span[aria-hidden] {
+    display: block;
+    height: 28px;
+    border-bottom: 2px dotted var(--outline);
+  }
+</style>

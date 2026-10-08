@@ -1,0 +1,267 @@
+---
+// P13 — JobReady@Work /programs/jobready-work/ (T3 conversion page; doc 04 matrix 4.6 — employers; C1 → C14).
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import Button from '../../components/system/Button.astro';
+import HeroBand from '../../components/sections/HeroBand.astro';
+import FutureBand from '../../components/sections/FutureBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../components/sections/FeaturesTable.astro';
+import ComparisonBand from '../../components/sections/ComparisonBand.astro';
+import Sources from '../../components/facts/Sources.astro';
+import Fact from '../../components/facts/Fact.astro';
+import CopyP from '../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import CostSection from '../../components/pages/programs/CostSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
+import PhaseList from '../../components/pages/programs/PhaseList.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
+import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { EMPATHY, MICRO_COMMITMENT, ORIGIN, PRICING, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { fact } from '../../data/facts';
+import { formatDate, isoDate } from '../../lib/format';
+import { webPage } from '../../lib/schema';
+
+const path = '/programs/jobready-work/';
+const title = 'JobReady@Work: Upskill Teams, Hire Talent';
+const description = `JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Globally, ${statValue('PX-05')} of employers report difficulty finding talent.`;
+const work = ctaFor('work');
+const talent = ctaFor('talent');
+const pricingFirst = PRICING.text.split('. ')[0] + '.';
+
+const faqSources: FaqSource[] = [
+  { q: 'Is JobReady@Work right for us?', html: 'Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool.', evidence: ['IN-10', 'IN-04'] },
+  { audience: 'employers', id: 'Q5' },
+  { audience: 'home', id: 'Q1' },
+  { audience: 'employers', id: 'Q12' },
+  { audience: 'home', id: 'Q8' },
+  { audience: 'employers', id: 'Q11' },
+];
+
+const jsonLd = [
+  webPage({ path, name: 'JobReady@Work', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'JobReady@Work', path }] }),
+  serviceNode({ path, name: 'JobReady@Work', description: fact('IN-10').text, audience: 'Employers and corporates' }),
+  faqNode(faqSources, path),
+];
+
+const approach = [
+  { title: 'Needs assessment', text: 'Scopes the skills and team size.' },
+  { title: 'Customized solution', text: 'A program shaped around your roles.' },
+  { title: 'Comprehensive curriculum', text: 'Custom-developed for your organization.' },
+  { title: 'Interactive workshops', text: 'Your team learns on tasks from your own roles.' },
+  { title: 'Progress evaluation', text: 'Checked against the measures you set.' },
+  { title: 'Post-training support', text: 'Support continues after the workshops.' },
+  { title: 'Measurable outcomes', text: 'Success measures are agreed before you start.' },
+].map((s) => ({ ...s, factIds: ['IN-10'] }));
+---
+
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'JobReady@Work' }]} jsonLd={jsonLd} stickyCta={work}>
+  <!-- C1 -->
+  <HeroBand
+    audience="For employers"
+    title="JobReady@Work — upskill teams and hire job-ready talent."
+    lead={VALUE_PROPOSITION.employers}
+    cta={work}
+    artSeed="jobready-work"
+  />
+
+  <DefinitionBlock>
+    <p data-fact="IN-10"><Fact id="IN-10" footnote={false} />.</p>
+  </DefinitionBlock>
+
+  <!-- C2 -->
+  <ProblemSection
+    title="You cannot find the digital talent you need."
+    bluf="Hiring alone is not closing the gap, and your teams need AI skills now."
+    factIds={['PX-05']}
+    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
+    extra={[
+      { title: 'AI skills are the hardest to find', text: 'Globally, employers say AI skills are now the hardest to find, so hiring alone does not close the gap.', factIds: ['PX-05'] },
+      { title: 'Your teams need upskilling for AI workflows', text: 'Training works best when it is built around the tasks in your own roles.', factIds: ['IN-10'] },
+    ]}
+  />
+
+  <!-- C3 -->
+  <CostSection
+    title="Teams without AI skills fall behind."
+    blocks={[
+      { claim: 'Jobs that need AI skills are growing fast.', factId: 'PX-08', scope: 'Globally', implication: 'Teams without AI skills fall behind the roles that employers are creating.' },
+      { claim: 'AI is changing the job mix by 2030.', factId: 'PX-07', scope: 'Globally', implication: 'Upskilling now keeps your team ahead of the change.' },
+    ]}
+  />
+
+  <!-- C4 -->
+  <FutureBand
+    title="What changes for your team."
+    lead="Illustrative: a team applies AI tools in daily work, and certified new hires contribute early."
+    vignettes={[
+      { kind: 'Functional', title: 'A team that uses AI tools every day', text: 'Workshops start from tasks in your own roles, so the skills carry straight into daily work.' },
+      { kind: 'Emotional', title: 'New hires who contribute early', text: 'Certified candidates arrive ready to contribute, sourced through CodersTrust’s placement team.' },
+      { kind: 'Social', title: 'Progress you can measure', text: 'Success measures are agreed before you start and checked in the progress evaluation.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <GuideSection
+    title="Employers and partners we work with."
+    empathy={EMPATHY.employers}
+    origin={ORIGIN}
+    statIds={['SC-15']}
+    partnerGroup="private"
+    method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
+  >
+    <ul class="guide-list" role="list">
+      <li data-fact="PA-03"><Fact id="PA-03" footnote={false} />.</li>
+      <li data-fact="PA-06"><Fact id="PA-06" footnote={false} />.</li>
+      <li data-fact="PA-07"><Fact id="PA-07" footnote={false} />.</li>
+      <li data-fact="GV-06"><Fact id="GV-06" footnote={false} />.</li>
+    </ul>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection title="A program built around your roles." lead="JobReady@Work is custom-developed for each organization, in seven steps." eyebrow="How it works">
+    <PhaseList items={approach} cols={4} label="JobReady@Work approach" />
+    <div class="tracks" data-fact="IN-10 PA-07 IN-04">
+      <FeatureCard icon="layers" title="Soft-skills and hard-skills tracks" text="Programs combine both, depending on the roles you are building for." />
+      <FeatureCard icon="sparkles" title="AI leadership programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
+      <FeatureCard icon="briefcase" title="Talent through our placement team" text="Job-ready candidates come through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch." />
+    </div>
+  </MechanismSection>
+
+  <!-- C7 -->
+  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
+    <div class="proof-notes">
+      <p data-fact="OC-07"><Fact id="OC-07" /></p>
+      <CopyP block={SURVEY_EMPLOYMENT} />
+      <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
+    </div>
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Proof in practice"
+    items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+    ]}
+  />
+
+  <!-- C8 -->
+  <FeaturesTable
+    title="Every feature answers a pain employers carry."
+    rows={[
+      { feature: 'A placement team plus certified trainees from employer-demand tracks', means: 'you get a short route to job-ready candidates.', outcomeFactId: 'PD-10', relieves: 'You cannot find the digital talent you need' },
+      { feature: 'An AI-ready curriculum in every track', means: 'hires and trainees already work with AI tools.', outcomeFactId: 'PD-02', relieves: 'AI skills are the hardest to find' },
+      { feature: 'A customized curriculum and interactive workshops', means: 'your team learns on tasks from your own roles.', outcomeFactId: 'IN-10', relieves: 'Your teams need upskilling for AI workflows' },
+    ]}
+  />
+  <Section id="steps" tone="airy" aria-labelledby="steps-h">
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps." />
+    <div data-fact="IN-10 PD-03">
+      <StepFlow
+        steps={[
+          { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
+          { title: 'Train and certify', text: 'Custom curriculum and workshops, ending in industry certification where a track offers one.' },
+          { title: 'Support and measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
+        ]}
+      />
+    </div>
+  </Section>
+
+  <!-- C9 -->
+  <FaqSection sources={faqSources} title="Questions employers ask" />
+
+  <!-- C10 -->
+  <ComparisonBand title="Compare the approaches." />
+
+  <!-- C11 -->
+  <OfferSection
+    title="A training program for your team, and talent when you need it."
+    lead="Pick one or both."
+    cards={[
+      { icon: 'presentation', title: 'Train your team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.' },
+      { icon: 'briefcase', title: 'Hire job-ready talent', text: 'Access to job-ready candidates through CodersTrust’s placement team.' },
+    ]}
+  >
+    <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
+  </OfferSection>
+
+  <!-- C12 -->
+  <RiskSection
+    title="Start with a pilot team. Decide on evidence."
+    points={[
+      { icon: 'users', title: 'A pilot team comes first', text: 'Start with one team before you widen the program.', factIds: ['IN-10'] },
+      { icon: 'target', title: 'Success measures set up front', text: 'Completion, certification and the skills you name are agreed before you start and checked in the progress evaluation.', factIds: ['IN-10'] },
+      { icon: 'handshake', title: 'Scaling up is your decision', text: 'You choose whether and how far to scale.', factIds: ['IN-10'] },
+      { icon: 'shield', title: 'Independent evaluation is welcome', text: 'We support a third-party evaluation of outcomes.', factIds: ['PD-08'] },
+    ]}
+  />
+
+  <!-- C13: one solid primary; the talent action is outline -->
+  <CTABand id="cta" heading="Tell us about your team and your roles." cta={work} micro={MICRO_COMMITMENT}>
+    <Button variant="outline" href={talent.href}>{talent.label}</Button>
+  </CTABand>
+
+  <!-- C14 -->
+  <NextSteps
+    steps={[
+      { title: 'Discovery session', text: 'A conversation about your roles and goals.' },
+      { title: 'Needs assessment', text: 'We scope the skills and team size.' },
+      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
+      { title: 'First workshop or cohort', text: 'Training starts on tasks from your roles.' },
+      { title: 'Progress evaluation', text: 'Results are checked against your measures.' },
+    ]}
+    firstAction={C14_FIRST}
+  />
+
+  <Section pad="sm" aria-label="Notes and sources">
+    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <Sources />
+  </Section>
+</LandingLayout>
+
+<style>
+  .guide-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .tracks {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .tracks {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .proof-notes {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    max-width: 56rem;
+  }
+  .proof-notes :global(p) {
+    margin: 0;
+    color: var(--ctx-text);
+  }
+  .updated {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

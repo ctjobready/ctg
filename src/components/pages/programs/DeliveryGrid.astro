@@ -1,0 +1,87 @@
+---
+import Icon from '../../system/Icon.astro';
+import Fact from '../../facts/Fact.astro';
+
+/** Delivery-model cards: a heading and the register's canonical sentence for the fact, with its marker. */
+interface Item {
+  icon: string;
+  title: string;
+  factId: string;
+}
+interface Props {
+  items: Item[];
+  heading?: string;
+  class?: string;
+}
+const { items, heading, class: className } = Astro.props;
+---
+
+<div class:list={['dg', className]}>
+  {heading && <h3 class="dg__heading t-heading-xl" data-reveal>{heading}</h3>}
+  <ul class="dg__grid" role="list">
+    {
+      items.map((it) => (
+        <li class="dg__item" data-reveal data-fact={it.factId}>
+          <span class="dg__icon" aria-hidden="true"><Icon name={it.icon} size={24} strokeWidth={1.75} /></span>
+          <div>
+            <h4 class="dg__title">{it.title}</h4>
+            <p class="dg__text"><Fact id={it.factId} /></p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .dg {
+    margin-top: var(--space-xl, 56px);
+  }
+  .dg__heading {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .dg__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dg__item {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .dg__icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dg__title {
+    margin: 0 0 4px;
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface);
+  }
+  .dg__text {
+    margin: 0;
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  @media (min-width: 768px) {
+    .dg__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
