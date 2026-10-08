@@ -12,6 +12,7 @@
     "dev": "astro dev",
     "prebuild": "node scripts/build-tokens.mjs",
     "build": "astro build",
+    "postbuild": "node scripts/postbuild-redirects.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "check:base": "node scripts/check-base-links.mjs",
@@ -24,7 +25,17 @@
     "test:seo": "node scripts/check-seo.mjs",
     "test:content": "node scripts/check-content-rules.mjs",
     "test:static": "node -e \"const {spawnSync}=require('node:child_process');let failed=0;for(const c of ['html','links','budget','seo','content']){const r=spawnSync(process.execPath,['scripts/check-'+(c==='content'?'content-rules':c)+'.mjs'],{stdio:'inherit'});if(r.status!==0)failed++}console.log('\\ntest:static: '+(failed?failed+' of 5 checks failed':'all 5 checks passed'));process.exit(failed?1:0)\"",
-    "astro": "astro"
+    "astro": "astro",
+    "manifest": "node scripts/build-manifest.mjs",
+    "manifest:derive": "node scripts/generate-from-manifest.mjs",
+    "manifest:check": "node scripts/generate-from-manifest.mjs --check",
+    "manifest:report": "node scripts/manifest-report.mjs",
+    "og": "node scripts/build-og.mjs",
+    "test:redirects": "node scripts/test-redirects.mjs",
+    "test:manifest": "node scripts/test-manifest.mjs",
+    "test:edge": "node --test edge/worker/test/",
+    "validate:jsonld": "node scripts/validate-jsonld.mjs",
+    "verify:seo": "node scripts/verify-seo-files.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
