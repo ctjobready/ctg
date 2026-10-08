@@ -35,10 +35,33 @@ import LiteVideo from '../components/ui/LiteVideo.astro';
 import HeroArt from '../components/ui/HeroArt.astro';
 import Quote from '../components/ui/Quote.astro';
 import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
+import HeroBand from '../components/sections/HeroBand.astro';
+import RouterBand from '../components/sections/RouterBand.astro';
+import ProblemBand from '../components/sections/ProblemBand.astro';
+import CostBand from '../components/sections/CostBand.astro';
+import FutureBand from '../components/sections/FutureBand.astro';
+import GuideBand from '../components/sections/GuideBand.astro';
+import MechanismBand from '../components/sections/MechanismBand.astro';
+import ProofBand from '../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../components/sections/FeaturesTable.astro';
+import FAQBand from '../components/sections/FAQBand.astro';
+import ComparisonBand from '../components/sections/ComparisonBand.astro';
+import OfferBand from '../components/sections/OfferBand.astro';
+import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
+import NextStepsBand from '../components/sections/NextStepsBand.astro';
+import NewsTeaserBand from '../components/sections/NewsTeaserBand.astro';
+import Fact from '../components/facts/Fact.astro';
+import FactStat from '../components/facts/FactStat.astro';
+import FactList from '../components/facts/FactList.astro';
+import FactCard from '../components/facts/FactCard.astro';
+import Sources from '../components/facts/Sources.astro';
+import WorldMap from '../components/ui/WorldMap.astro';
+import { faqJsonLd } from '../lib/faq';
+import { fact } from '../data/facts';
 import tokens from '../../design-system/tokens.json';
 import { audiences } from '../data/nav';
 import { cta } from '../lib/mailto';
-import { faqPage } from '../lib/schema';
 
 // ---- Token data (AA theme) with computed contrast -----------------------------------------
 type Tok = { name: string; value: string | { light: string; accessible: string }; usage: string };
@@ -111,7 +134,7 @@ const timeline = [
   { year: '2022', title: 'Third milestone', text: 'Sample milestone text for the styleguide.' },
   { year: '2026', title: 'Latest milestone', text: 'Sample milestone text for the styleguide.' },
 ];
-const jsonLd = [faqPage(faqs, '/styleguide/')];
+const jsonLd = [faqJsonLd('home', '/styleguide/', ['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'])];
 const sectionLinks = [
   ['tokens', 'Tokens'],
   ['type', 'Typography'],
@@ -123,6 +146,9 @@ const sectionLinks = [
   ['structure', 'Structure'],
   ['bands', 'Bands'],
   ['motion', 'Motion'],
+  ['facts', 'Facts UI'],
+  ['cmf', 'CMF bands'],
+  ['partners', 'Partners & map'],
 ];
 ---
 
@@ -272,7 +298,7 @@ const sectionLinks = [
     </div>
     <div class="sg-block">
       <h3>PromoBar</h3>
-      <PromoBar lead="Impact Report 2026:" message="employment among surveyed graduates rose from 47.4% to 77.9%." actionLabel="See the findings" href="/impact/outcomes-2026/" storageKey="sg-promo" dismissible={false} />
+      <PromoBar lead="Impact Report 2026:" message="employment among surveyed graduates rose from 33.3% to 61.5%." actionLabel="See the findings" href="/impact/outcomes-2026/" storageKey="sg-promo" dismissible={false} />
     </div>
     <div class="sg-block">
       <h3>Breadcrumbs</h3>
@@ -288,8 +314,8 @@ const sectionLinks = [
         <Button variant="outline" href="/impact/">Secondary action</Button>
       </Fragment>
       <Fragment slot="stats">
-        <Stat value="77.9%" label="Sample stat — employed today" />
-        <Stat value="130,000+" label="Sample stat — youth trained" />
+        <Stat value="61.5%" label="Sample stat — employed today" />
+        <Stat value="12,345+" label="Sample stat — youth trained" />
         <Stat value="15" label="Sample stat — countries" />
       </Fragment>
     </Hero>
@@ -315,7 +341,7 @@ const sectionLinks = [
 
     <h3 class="sg-h3">CaseStudyCard · NewsCard · PersonCard</h3>
     <div class="grid-cards">
-      <CaseStudyCard title="Case study title that may wrap to two lines" program="Program" partner="Partner" stat={{ value: '97.5%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
+      <CaseStudyCard title="Case study title that may wrap to two lines" program="Program" partner="Partner" stat={{ value: '88.8%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
       <NewsCard title="News article headline that wraps onto two lines when long" date="2026-10-08" topic="Impact" excerpt="A short excerpt of the article, two lines at most, to help readers choose." href="/news/" />
       <PersonCard name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
     </div>
@@ -332,26 +358,26 @@ const sectionLinks = [
     <SectionHeader id="proof-h" eyebrow="Components" title="Proof: stats, stories, testimonials, partners" />
     <h3 class="sg-h3">Stat (count-up M2) — on light</h3>
     <div class="cluster sg-stats">
-      <Stat value="77.9%" label="Decimal percent" />
-      <Stat value="130,000+" label="Grouped with suffix" />
+      <Stat value="61.5%" label="Decimal percent" />
+      <Stat value="12,345+" label="Grouped with suffix" />
       <Stat value="15" label="Plain integer" />
-      <Stat value="47.4%" label="Left-aligned lg" size="lg" />
+      <Stat value="33.3%" label="Left-aligned lg" size="lg" />
       <Stat value="12" label="Centered" align="center" count={false} />
     </div>
 
     <h3 class="sg-h3">Stat on Klein / Deep Ink band</h3>
     <div class="sg-inline-band"><Section tone="klein" pad="sm">
       <div class="cluster sg-stats">
-        <Stat tone="dark" value="77.9%" label="White numerals on Klein" size="lg" />
-        <Stat tone="accent" value="130,000+" label="Orange numerals on Klein" size="lg" />
+        <Stat tone="dark" value="61.5%" label="White numerals on Klein" size="lg" />
+        <Stat tone="accent" value="12,345+" label="Orange numerals on Klein" size="lg" />
         <Stat tone="dark" value="15" label="Countries" size="lg" />
       </div>
     </Section></div>
 
     <h3 class="sg-h3">ProgressBar (M3)</h3>
     <div class="sg-progress">
-      <ProgressBar label="Sample rate A" value={77.9} valueLabel="77.9%" />
-      <ProgressBar label="Sample rate B" value={47.4} valueLabel="47.4%" />
+      <ProgressBar label="Sample rate A" value={61.5} valueLabel="61.5%" />
+      <ProgressBar label="Sample rate B" value={33.3} valueLabel="33.3%" />
       <ProgressBar label="Sample rate C (bright)" value={62} tone="bright" />
     </div>
 
@@ -370,16 +396,16 @@ const sectionLinks = [
     <CarouselControls count={5} index={2} label="demo" />
 
     <h3 class="sg-h3">PartnerStrip — grid and marquee (M13)</h3>
-    <PartnerStrip title="Organizations we have worked with, 2014–2026 (sample names)" items={partners} />
-    <PartnerStrip variant="marquee" title="Marquee variant — pauses on hover/focus and via the button" items={partners} />
+    <PartnerStrip caption="Organizations we have worked with, 2014–2026 (sample names)" items={partners} />
+    <PartnerStrip variant="marquee" caption="Marquee variant — pauses on hover/focus and via the button" items={partners} />
   </Section>
 
   <!-- ===================================== DATA ===================================== -->
   <Section id="data" aria-labelledby="data-h">
     <SectionHeader id="data-h" eyebrow="Components" title="Data and charts" lead="Each chart has an accessible table fallback (open ‘View chart data’)." />
     <div class="sg-two">
-      <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 47.4, caption: 'before training' }} after={{ label: 'Today', value: 77.9, caption: 'surveyed completers' }} delta="+30.5 pp" note="Sample data for the styleguide." />
-      <BarChart title="Horizontal bar chart (sample)" items={[{ label: 'First measure', value: 72.3 }, { label: 'Second measure', value: 58.8 }, { label: 'Third measure', value: 23.5 }, { label: 'Fourth measure', value: 5.9 }]} note="Sample data for the styleguide." />
+      <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 33.3, caption: 'before training' }} after={{ label: 'Today', value: 61.5, caption: 'surveyed completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
+      <BarChart title="Horizontal bar chart (sample)" items={[{ label: 'First measure', value: 40.1 }, { label: 'Second measure', value: 30.2 }, { label: 'Third measure', value: 20.3 }, { label: 'Fourth measure', value: 9.4 }]} note="Sample data for the styleguide." />
     </div>
 
     <h3 class="sg-h3">ComparisonTable (sticky first column on mobile; status as icon + text)</h3>
@@ -509,6 +535,85 @@ const sectionLinks = [
     </div>
     <p class="t-body-xs text-muted">Not in this foundation: M17 world map and M21 footnote jump (follow-up packages).</p>
   </Section>
+
+  <!-- ===================================== FACTS UI ===================================== -->
+  <Section id="facts" aria-labelledby="facts-h">
+    <SectionHeader id="facts-h" eyebrow="Facts" title="Facts UI" lead="Numbers are never typed into pages. Fact, FactStat, FactCard and FactList render the register's canonical wording and add footnote markers automatically; Sources collects the numbered notes at the end of the page." />
+    <p class="t-body-l">Inline: <Fact id="SC-01" /> — and <Fact id="OC-01" field="value" /> employed, up from <Fact id="OC-01" field="from" footnote={false} />.</p>
+    <h3 class="sg-h3">FactStat (count-up when numeric)</h3>
+    <div class="cluster sg-stats">
+      <FactStat id="SC-01" />
+      <FactStat id="OC-01" />
+      <FactStat id="RC-01" />
+      <FactStat id="PD-04" />
+    </div>
+    <h3 class="sg-h3">FactList</h3>
+    <FactList ids={['SC-03', 'OC-03', 'PD-04']} />
+    <h3 class="sg-h3">FactCard</h3>
+    <div class="grid-cards grid-cards--4"><FactCard id="PX-01" /><FactCard id="PX-03" /><FactCard id="PX-06" /><FactCard id="PX-05" /></div>
+  </Section>
+
+  <!-- ===================================== CMF BANDS ===================================== -->
+  <div id="cmf">
+    <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence (planning/06 P1), data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
+    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work within months." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <RouterBand id="band-router" title="What brings you here?" />
+    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and most employers still cannot find the talent they need." factIds={['PX-01', 'PX-04', 'PX-03', 'PX-05']} />
+    <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
+      { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Graduates who wait fall behind as junior tasks disappear.' },
+      { claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },
+      { claim: 'Most training does not lead to jobs.', factId: 'RC-06', implication: 'Funding repeats programs that never reach earnings.' },
+    ]} />
+    <FutureBand id="band-future" title="Imagine the next twelve months." vignettes={[
+      { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A graduate in Barishal invoices her first foreign client from her own laptop.' },
+      { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'A ministry dashboard shows who is earning, not only who completed.' },
+      { kind: 'Social', title: 'Certified, AI-ready talent in weeks', text: 'An employer hires certified graduates without a long search.' },
+    ]} />
+    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="We began in Dhaka’s Korail slum with UNDP, learning what it takes to move a first-generation learner into a first job." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
+    <MechanismBand id="band-mechanism" title="One path from learning to earning." link={{ label: 'How our model works', href: '/our-model/' }} />
+    <FeaturesTable id="band-features" title="Built around outcomes, not attendance." rows={[
+      { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Degrees are not turning into jobs' },
+      { feature: 'Certification with exam fees paid', means: 'graduates hold credentials employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
+      { feature: 'One-to-one mentoring into first income', means: 'learners reach earnings, not just a certificate.', outcomeFactId: 'OC-05', relieves: 'Graduates stay jobless' },
+      { feature: 'Outcome tracking after each course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
+    ]} />
+    <ProofBand id="band-proof" title="The results speak in paychecks." statIds={['OC-01', 'OC-03', 'OC-02', 'RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+    <CaseStudyCarousel id="band-cases" title="Proof in practice" items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
+      { title: 'BRAC STRONG-IT', program: 'Funded by BRAC', factId: 'PR-04', href: '/impact/case-studies/brac-strong-it/' },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+    ]} />
+    <FAQBand id="band-faq" audience="home" ids={['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8']} allLink={{ label: 'All partner FAQs', href: '/partner-with-us/' }} />
+    <ComparisonBand id="band-compare" />
+    <OfferBand id="band-offer" />
+    <RiskReversalBand id="band-risk" />
+    <CTABand id="band-cta" heading="Start with a pilot. Decide on evidence." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`First cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="30 minutes, no obligation." reinforce={['Your first step: a 30-minute discovery session. Reply to our email with two time slots.']} />
+    <NextStepsBand id="band-next" />
+    <NewsTeaserBand id="band-news" fallback={[
+      { title: 'Sample news headline one', date: '2026-10-07', topic: 'Impact', excerpt: 'Shown only when the news collection is empty.', href: '/news/' },
+      { title: 'Sample news headline two', date: '2026-09-20', topic: 'Programs', excerpt: 'Fallback demo item.', href: '/news/' },
+      { title: 'Sample news headline three', date: '2026-08-30', topic: 'Partners', excerpt: 'Fallback demo item.', href: '/news/' },
+    ]} />
+  </div>
+
+  <!-- ===================================== PARTNERS & MAP ===================================== -->
+  <Section id="partners" aria-labelledby="partners-h">
+    <SectionHeader id="partners-h" eyebrow="Components" title="Partner logos, press and world map" />
+    <h3 class="sg-h3">PartnerStrip — all partners, marquee (PA-04 caption)</h3>
+    <PartnerStrip variant="marquee" />
+    <h3 class="sg-h3">PartnerStrip — development partners, static grid, linked</h3>
+    <PartnerStrip group="development" variant="grid" link />
+    <h3 class="sg-h3">Government and academic groups</h3>
+    <PartnerStrip group={['government', 'academic']} variant="grid" caption="Government and academic partners" />
+    <h3 class="sg-h3">Press variant ("As covered in")</h3>
+    <PartnerStrip kind="press" variant="grid" link />
+    <h3 class="sg-h3">WorldMap (M17) with table fallback</h3>
+    <WorldMap />
+  </Section>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

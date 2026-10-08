@@ -1,0 +1,34 @@
+---
+import Hero from '../system/Hero.astro';
+import Button from '../system/Button.astro';
+import FactStat from '../facts/FactStat.astro';
+
+/** C1 Hero band: Hero + audience eyebrow + up to 3 FactStats + primary/secondary CTA. */
+interface Props {
+  /** Audience mirror ("For governments, development partners and funders"). */
+  audience: string;
+  title: string;
+  lead: string;
+  cta: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  /** Fact IDs (max 3) — rendered as count-up stats with footnote markers. */
+  stats?: string[];
+  variant?: 'home' | 'inner';
+  artSeed?: string;
+  /** h2 when the page already has an h1 (galleries). */
+  headingLevel?: 1 | 2;
+  id?: string;
+}
+const { audience, title, lead, cta, secondary, stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
+if (stats.length > 3) throw new Error('HeroBand: at most 3 stats');
+---
+
+<div id={id}>
+  <Hero variant={variant} eyebrow={audience} title={title} lead={lead} artSeed={artSeed} headingLevel={headingLevel}>
+    <Fragment slot="actions">
+      <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
+      {secondary && <Button variant="outline" href={secondary.href}>{secondary.label}</Button>}
+    </Fragment>
+    {stats.length > 0 && <Fragment slot="stats">{stats.map((s) => <FactStat id={s} />)}</Fragment>}
+  </Hero>
+</div>

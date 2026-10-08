@@ -46,7 +46,7 @@ const widthCh = value.length;
       )
     }
   </p>
-  <p class="stat__label">{label}</p>
+  <p class="stat__label">{label}<slot /></p>
   {note && <p class="stat__note">{note}</p>}
 </div>
 

@@ -61,8 +61,8 @@ const { blocks, caption, class: className } = Astro.props;
     width: 32px;
     height: 32px;
     border-radius: var(--radius-full);
-    background: var(--secondary);
-    color: var(--on-secondary);
+    background: var(--ctx-num-bg, var(--secondary));
+    color: var(--ctx-num-fg, var(--on-secondary));
     font-weight: var(--fw-bold);
     display: inline-flex;
     align-items: center;
@@ -70,17 +70,17 @@ const { blocks, caption, class: className } = Astro.props;
     font-size: var(--fs-body-xs);
   }
   .model__block :global(.model__icon) {
-    color: var(--primary);
+    color: var(--ctx-accent);
   }
   .model__label {
-    color: var(--on-primary-container);
+    color: var(--ctx-text);
   }
   .model__title {
-    color: var(--on-surface);
+    color: var(--ctx-heading);
     font-size: var(--fs-heading-l);
   }
   .model__text {
-    color: var(--on-surface-variant);
+    color: var(--ctx-text);
   }
   /* connectors: a line that draws between blocks when the figure reveals */
   .model__conn {
@@ -88,13 +88,13 @@ const { blocks, caption, class: className } = Astro.props;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
+    color: var(--ctx-accent);
     left: 50%;
     bottom: calc(var(--space-lg) * -1 - 2px);
     transform: translateX(-50%) rotate(90deg);
     width: 24px;
     height: 24px;
-    background: var(--surface);
+    background: var(--band-bg, var(--surface));
     border-radius: var(--radius-full);
   }
   .model__caption {
@@ -130,7 +130,7 @@ const { blocks, caption, class: className } = Astro.props;
       left: 100%;
       width: var(--space-gutter);
       height: 2px;
-      background: var(--primary);
+      background: var(--ctx-accent);
       transform-origin: left;
     }
   }

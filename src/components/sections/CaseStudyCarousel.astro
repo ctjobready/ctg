@@ -1,0 +1,39 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Carousel from '../system/Carousel.astro';
+import CaseStudyCard from '../ui/CaseStudyCard.astro';
+import { fact } from '../../data/facts';
+import type { ImageMetadata } from 'astro';
+
+/** C7 Proof in practice: scroll-snap carousel of case-study cards, each with an outcome stat from the register. */
+interface Item {
+  title: string;
+  program?: string;
+  partner?: string;
+  /** Fact ID whose stat is the outcome (PR-01 … PR-05). */
+  factId: string;
+  href: string;
+  image?: ImageMetadata | string;
+  imageAlt?: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  items: Item[];
+  id?: string;
+}
+const { title, lead, items, id = 'cases' } = Astro.props;
+const cards = items.map((it) => {
+  const s = fact(it.factId).stat;
+  if (!s) throw new Error(`CaseStudyCarousel: fact ${it.factId} has no stat`);
+  return { ...it, stat: { value: s.value, label: s.label } };
+});
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Proof in practice" title={title} lead={lead} />
+  <Carousel label="Case studies" perView={3} count={cards.length}>
+    {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} stat={c.stat} href={c.href} />)}
+  </Carousel>
+</Section>

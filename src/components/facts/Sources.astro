@@ -1,0 +1,121 @@
+---
+import { footnotesFor } from '../../lib/footnotes';
+import Icon from '../system/Icon.astro';
+
+/**
+ * Numbered notes for every footnote marker rendered earlier on the page (deduplicated, in render
+ * order). Place once, after the last <Fact>/<FactStat>. M21: target note flashes on jump.
+ */
+interface Props {
+  title?: string;
+  id?: string;
+  class?: string;
+}
+const { title = 'Notes and sources', id = 'sources', class: className } = Astro.props;
+const notes = footnotesFor(Astro).notes();
+---
+
+{
+  notes.length > 0 && (
+    <section class:list={['sources', className]} id={id} aria-labelledby={`${id}-h`}>
+      <h2 class="sources__title t-heading-m" id={`${id}-h`}>{title}</h2>
+      <ol class="sources__list">
+        {notes.map((n) => (
+          <li class="sources__note" id={`fn-${n.n}`} tabindex="-1">
+            <p class="sources__claim">{n.claim}</p>
+            {n.parts.map((p) => <p>{p}</p>)}
+            {n.sources.length > 0 && (
+              <p class="sources__cite">
+                <span>Source{n.sources.length > 1 ? 's' : ''}: </span>
+                {n.sources.map((s, i) => (
+                  <>
+                    {s.url ? <a href={s.url} rel="noopener">{s.citation}</a> : s.citation}
+                    {i < n.sources.length - 1 ? ' · ' : ''}
+                  </>
+                ))}
+              </p>
+            )}
+            <p class="sources__back">
+              {Array.from({ length: n.refs }, (_, k) => (
+                <a href={`#fn-ref-${n.n}-${k + 1}`} aria-label={`Back to reference ${n.n}${n.refs > 1 ? `.${k + 1}` : ''}`}>
+                  <Icon name="corner-up-left" size={14} />
+                  <span>Back{n.refs > 1 ? ` ${k + 1}` : ''}</span>
+                </a>
+              ))}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+<style>
+  .sources {
+    font-size: var(--fs-body-xs);
+    line-height: 1.5;
+    color: var(--ctx-text);
+    max-width: var(--measure);
+  }
+  .sources__title {
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-md);
+  }
+  .sources__list {
+    margin: 0;
+    padding-left: 1.6em;
+    display: grid;
+    gap: var(--space-md);
+  }
+  .sources__note {
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+  .sources__note::marker {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-link);
+  }
+  .sources__note > p {
+    margin: 0 0 4px;
+  }
+  .sources__claim {
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+  .sources__back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: var(--space-md);
+    min-height: 24px;
+    color: var(--ctx-link);
+  }
+  .sources a {
+    color: var(--ctx-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  /* M21: highlight flash when a marker jumps here (static highlight under reduced motion) */
+  .sources__note:target {
+    background: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+  }
+  .sources__note:target .sources__claim,
+  .sources__note:target a {
+    color: var(--on-tertiary-container);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sources__note:target {
+      animation: ct-flash 1800ms ease-out 1;
+    }
+  }
+  @keyframes ct-flash {
+    0% {
+      background: var(--tertiary-fixed-dim);
+    }
+    100% {
+      background: var(--tertiary-container);
+    }
+  }
+</style>

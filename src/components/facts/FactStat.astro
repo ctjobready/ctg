@@ -1,0 +1,25 @@
+---
+import Stat from '../system/Stat.astro';
+import FootnoteMarker from './FootnoteMarker.astro';
+import { fact } from '../../data/facts';
+
+/** Stat bound to a fact: value, label, count-up (when numeric) and an automatic footnote marker. */
+interface Props {
+  id: string;
+  tone?: 'default' | 'dark' | 'accent';
+  size?: 'md' | 'lg';
+  align?: 'start' | 'center';
+  count?: boolean;
+  footnote?: boolean | 'auto';
+  class?: string;
+}
+const { id, tone = 'default', size = 'md', align = 'start', count, footnote = 'auto', class: className } = Astro.props;
+const f = fact(id);
+if (!f.stat) throw new Error(`<FactStat id="${id}">: fact has no stat`);
+// Only count up values with a clean numeric target (not "6–8 weeks").
+const doCount = count ?? f.stat.numeric !== undefined;
+---
+
+<Stat value={f.stat.value} label={f.stat.label} tone={tone} size={size} align={align} count={doCount} class={className}>
+  <FootnoteMarker id={id} footnote={footnote} />
+</Stat>

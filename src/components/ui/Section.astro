@@ -61,7 +61,11 @@ const container = width === 'full' ? '' : width === 'wide' ? 'container containe
     --ctx-stat: var(--on-secondary);
     --ctx-focus: var(--on-secondary);
     --ctx-border: color-mix(in srgb, var(--on-secondary) 28%, transparent);
-    --ctx-card: var(--secondary);
+    --ctx-card: color-mix(in srgb, var(--on-secondary) 8%, var(--secondary));
+    --ctx-num-bg: var(--tertiary-light);
+    --ctx-num-fg: var(--on-tertiary-fixed);
+    --ba-before: var(--secondary-fixed-dim);
+    --ba-after: var(--tertiary-light);
   }
   .band--deep-ink {
     --band-bg: var(--inverse-surface);
@@ -74,7 +78,9 @@ const container = width === 'full' ? '' : width === 'wide' ? 'container containe
     --ctx-stat: var(--inverse-on-surface);
     --ctx-focus: var(--inverse-primary);
     --ctx-border: color-mix(in srgb, var(--inverse-on-surface) 22%, transparent);
-    --ctx-card: var(--inverse-surface);
+    --ctx-card: color-mix(in srgb, var(--inverse-on-surface) 8%, var(--inverse-surface));
+    --ctx-num-bg: var(--tertiary-light);
+    --ctx-num-fg: var(--on-tertiary-fixed);
   }
   .band--pad-none {
     padding-block: 0;

@@ -1,10 +1,20 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * The statistics inside feature cards mirror the Facts Register (SC-01, SC-03, OC-01);
- * wire them to `facts.ts` once that module is merged.
+ * Every statistic below is read from the Facts Register (facts.ts): SC-01, SC-03, OC-01, ID-02.
  */
+import { fact } from './facts';
 import { COURSES_URL } from '../lib/site';
 import { ctaHref } from '../lib/mailto';
+
+const stat = (id: string) => {
+  const s = fact(id).stat;
+  if (!s) throw new Error(`Fact ${id} has no stat`);
+  return s;
+};
+const youth = stat('SC-01').value;
+const countries = stat('SC-03').value;
+const since = stat('ID-02').value;
+const emp = stat('OC-01');
 
 export interface NavLink {
   label: string;
@@ -47,8 +57,8 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'about',
-      eyebrow: 'Since 2014',
-      title: '130,000+ youth · 15 countries',
+      eyebrow: `Since ${since}`,
+      title: `${youth} youth · ${countries} countries`,
       text: 'A workforce-development organization for the next generation of digital professionals.',
       cta: { label: 'Read our story', href: '/about/' },
     },
@@ -105,7 +115,7 @@ export const navGroups: NavGroup[] = [
     feature: {
       kind: 'stat',
       eyebrow: 'Impact Survey 2026',
-      figure: '47.4% → 77.9%',
+      figure: `${emp.from} → ${emp.value}`,
       title: 'employed',
       text: 'Surveyed completers, before training and today.',
       cta: { label: 'See the findings', href: '/impact/outcomes-2026/' },
@@ -144,9 +154,8 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
-  message: 'Impact Report 2026: employment among surveyed graduates rose from 47.4% to 77.9%.',
   lead: 'Impact Report 2026:',
-  rest: 'employment among surveyed graduates rose from 47.4% to 77.9%.',
+  rest: `employment among surveyed graduates rose from ${emp.from} to ${emp.value}.`,
   action: { label: 'See the findings', href: '/impact/outcomes-2026/' },
   hideOnPath: '/impact/outcomes-2026/',
 };

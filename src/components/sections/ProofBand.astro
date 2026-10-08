@@ -1,0 +1,91 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import FactStat from '../facts/FactStat.astro';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
+import BeforeAfter from '../ui/BeforeAfter.astro';
+import Icon from '../system/Icon.astro';
+import { fact } from '../../data/facts';
+import { linkAttrs } from '../../lib/url';
+
+/** C7 Proof (Klein band): FactStats + before→after chart derived from a fact + evidence links. */
+interface Props {
+  title: string;
+  lead?: string;
+  /** Up to 4 stat facts. */
+  statIds: string[];
+  /** Fact with stat.from + stat.numeric (e.g. OC-01) for the before→after chart. */
+  chartId?: string;
+  chartTitle?: string;
+  links?: { label: string; href: string }[];
+  id?: string;
+}
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', links = [], id = 'proof-band' } = Astro.props;
+const cf = fact(chartId);
+const after = cf.stat?.numeric;
+const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
+if (after === undefined || before === undefined) throw new Error(`ProofBand: fact ${chartId} needs stat.numeric and stat.from`);
+const unit = cf.stat?.suffix ?? '%';
+const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The evidence" title={title} lead={lead} />
+  <div class="proofband">
+    <div class="proofband__stats">
+      {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
+    </div>
+    <div class="proofband__chart">
+      <BeforeAfter
+        title={chartTitle}
+        before={{ label: 'Before', value: before, caption: 'before training' }}
+        after={{ label: 'Today', value: after, caption: 'surveyed completers' }}
+        delta={delta}
+        unit={unit}
+        tone="dark"
+      />
+      <p class="proofband__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+    </div>
+  </div>
+  {
+    links.length > 0 && (
+      <ul class="proofband__links" role="list">
+        {links.map((l) => <li><a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a></li>)}
+      </ul>
+    )
+  }
+  <slot />
+</Section>
+
+<style>
+  .proofband {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .proofband__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+    align-content: start;
+  }
+  .proofband__fn {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .proofband__links {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+  }
+  @media (min-width: 1024px) {
+    .proofband {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Accordion from '../ui/Accordion.astro';
+import Icon from '../system/Icon.astro';
+import { faqItems } from '../../lib/faq';
+import { linkAttrs } from '../../lib/url';
+import type { FaqAudience } from '../../data/faqs';
+
+/**
+ * C9 Objection handling. Items come from faqsFor(audience) (src/data/faqs.ts).
+ * The FAQPage JSON-LD for the same items must be added by the PAGE (one @graph per page):
+ *   jsonLd={[faqJsonLd('home', '/', ['Q1','Q2'])]}   // from src/lib/faq.ts
+ */
+interface Props {
+  audience: FaqAudience;
+  /** Restrict / order by FAQ id. */
+  ids?: string[];
+  title?: string;
+  lead?: string;
+  allLink?: { label: string; href: string };
+  id?: string;
+  /** Accordion group name (exclusive). */
+  name?: string;
+}
+const { audience, ids, title = 'Questions partners ask', lead, allLink, id = 'faq', name = `${id}-group` } = Astro.props;
+const items = faqItems(audience, ids);
+---
+
+<Section id={id} tone="ice" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Objections, answered" title={title} lead={lead} />
+  <Accordion items={items} name={name} />
+  {allLink && <p class="faqband__all"><a class="link" href={linkAttrs(allLink.href).href}>{allLink.label}<Icon name="arrow-right" size={16} /></a></p>}
+</Section>
+
+<style>
+  .faqband__all {
+    margin: var(--space-md) 0 0;
+  }
+</style>

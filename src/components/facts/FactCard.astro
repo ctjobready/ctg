@@ -1,0 +1,48 @@
+---
+import { fact, sources } from '../../data/facts';
+import FootnoteMarker from './FootnoteMarker.astro';
+
+/** Stat + label + source line (problem/context facts). The number comes from the register. */
+interface Props {
+  id: string;
+  /** Show the full canonical sentence under the figure (for facts without a stat). */
+  showText?: boolean;
+  class?: string;
+}
+const { id, showText, class: className } = Astro.props;
+const f = fact(id);
+const src = f.sourceIds.map((s) => sources[s]?.label).filter(Boolean);
+const useText = showText ?? !f.stat;
+---
+
+<article class:list={['card factcard', className]} data-reveal data-fact={id}>
+  <div class="card__body">
+    {f.stat && <p class="factcard__value">{f.stat.value}</p>}
+    <p class:list={['factcard__label', useText && 'factcard__label--text']}>
+      {useText ? f.text : f.stat?.label}<FootnoteMarker id={id} footnote="auto" />
+    </p>
+    {src.length > 0 && <p class="card__meta factcard__src">Source: {src.slice(0, 2).join('; ')}</p>}
+  </div>
+</article>
+
+<style>
+  .factcard__value {
+    font-size: var(--fs-display-4xl);
+    line-height: 1.1;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--primary);
+  }
+  .factcard__label {
+    color: var(--on-surface);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .factcard__label--text {
+    font-size: var(--fs-body-base);
+  }
+  .factcard__src {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+  }
+</style>

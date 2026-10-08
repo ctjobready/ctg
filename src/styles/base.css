@@ -193,3 +193,30 @@ hr {
     animation-duration: var(--dur-base);
   }
 }
+
+/* ---- Overflow guard -----------------------------------------------------------
+   No component may cause page-level horizontal scrolling. Wide content (tables, carousels,
+   marquees) must scroll or clip inside its own wrapper; this is the backstop. */
+html {
+  overflow-x: clip;
+}
+main,
+.band {
+  max-width: 100%;
+}
+.grid-cards > *,
+.grid-12 > *,
+.cluster > * {
+  min-width: 0;
+}
+/* Scroll/clip wrappers must be containing blocks, otherwise absolutely-positioned descendants
+   (.sr-only text) escape the clip and widen the page. */
+.cmp,
+.carousel__track,
+.marquee,
+.sg-table-wrap,
+.table-scroll,
+[data-scroll] {
+  position: relative;
+  max-width: 100%;
+}

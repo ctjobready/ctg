@@ -1,6 +1,6 @@
 ---
-import { canonicalUrl, absoluteUrl, url } from '../../lib/url';
-import { SITE_NAME, ENTITY_DEFINITION } from '../../lib/site';
+import { canonicalUrl, url } from '../../lib/url';
+import { SITE_NAME, ENTITY_DEFINITION, PRODUCTION_ORIGIN, CSP } from '../../lib/site';
 import { truncate } from '../../lib/format';
 import { FONT_PRELOADS, fontFaceCss } from '../../lib/fonts';
 
@@ -38,7 +38,8 @@ const canonical = canonicalUrl(path);
 // Staging is always noindex (planning/08 §2): prevents duplicate-content indexing while WordPress is live.
 const staging = __SITE_ENV__ !== 'production';
 const robots = staging || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
-const ogImage = image.startsWith('http') ? image : absoluteUrl(image, Astro.site);
+// Social images always use the absolute production URL (they are fetched by crawlers, not by the visitor's browser).
+const ogImage = image.startsWith('http') ? image : PRODUCTION_ORIGIN + (image.startsWith('/') ? image : '/' + image);
 ---
 
 <meta charset="utf-8" />
@@ -47,9 +48,13 @@ const ogImage = image.startsWith('http') ? image : absoluteUrl(image, Astro.site
 <meta name="description" content={description} />
 <meta name="robots" content={robots} />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta name="theme-color" content="#ffffff" />
+<meta name="theme-color" content="#002FA7" />
+<meta http-equiv="Content-Security-Policy" content={CSP} />
 <link rel="canonical" href={canonical} />
+<link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
 <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+<link rel="manifest" href={url('/site.webmanifest')} />
 
 <meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:type" content={type} />

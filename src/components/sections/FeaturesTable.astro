@@ -1,0 +1,108 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Fact from '../facts/Fact.astro';
+import Icon from '../system/Icon.astro';
+
+/**
+ * C8 Features → benefits: feature → "which means…" → outcome (fact or text); optional pain-reliever
+ * column maps each feature 1:1 to a problem card.
+ */
+interface Row {
+  feature: string;
+  means: string;
+  /** Fact ID rendered as the outcome (value + footnote), or plain text. */
+  outcomeFactId?: string;
+  outcome?: string;
+  /** Pain relieved (mirror of a problem-band card). */
+  relieves?: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  rows: Row[];
+  id?: string;
+}
+const { title, lead, rows, id = 'features' } = Astro.props;
+const showPain = rows.some((r) => r.relieves);
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="What you get" title={title} lead={lead} />
+  <div class="ft" role="region" aria-label="Features and benefits" tabindex="0" data-reveal>
+    <table>
+      <caption class="sr-only">{title}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Feature</th>
+          <th scope="col">Which means…</th>
+          <th scope="col">Outcome</th>
+          {showPain && <th scope="col">Relieves</th>}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr>
+              <th scope="row">{r.feature}</th>
+              <td>{r.means}</td>
+              <td>{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? '—'}</td>
+              {showPain && <td>{r.relieves ? <span class="ft__pain"><Icon name="circle-check" size={16} />{r.relieves}</span> : '—'}</td>}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</Section>
+
+<style>
+  .ft {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    position: sticky;
+    left: 0;
+    background: var(--surface);
+    min-width: 11rem;
+    box-shadow: 1px 0 0 var(--outline-variant);
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .ft__pain {
+    display: inline-flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .ft__pain :global(.icon) {
+    color: var(--success);
+    margin-top: 4px;
+    flex: none;
+  }
+</style>

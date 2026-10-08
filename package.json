@@ -27,6 +27,8 @@
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.64.0",
-    "typescript": "6.0.3"
+    "topojson-client": "3.1.0",
+    "typescript": "6.0.3",
+    "world-atlas": "2.0.2"
   }
 }

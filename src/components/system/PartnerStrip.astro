@@ -2,45 +2,73 @@
 import Icon from './Icon.astro';
 import Img from '../ui/Img.astro';
 import { linkAttrs } from '../../lib/url';
-import type { ImageMetadata } from 'astro';
+import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type PartnerGroup } from '../../lib/logos';
 
+/**
+ * PartnerStrip — quiet credibility band. Logos come from src/data/partners.ts (relationships, not
+ * endorsements, PA-04): grayscale + reduced opacity at rest, full color on hover/focus.
+ * `grid` = static; `marquee` = continuous scroll (M13) with hover/focus pause + pause button.
+ */
 interface Item {
   name: string;
-  /** Logo image; when absent the name is set as text. */
   logo?: ImageMetadata | string;
   href?: string;
+  white?: boolean;
 }
 interface Props {
-  title?: string;
-  items: Item[];
-  /** grid = static strip; marquee = continuous scroll (M13) */
+  /** partners (default) or press outlets ("As covered in"). */
+  kind?: 'partners' | 'press';
+  /** Filter partners by group. */
+  group?: PartnerGroup | PartnerGroup[];
+  /** Caption above the strip; defaults to the PA-04 caption (partners) or "As covered in" (press). */
+  caption?: string | false;
   variant?: 'grid' | 'marquee';
+  /** Override the data source with explicit items. */
+  items?: Item[];
+  /** Logos link to the partner's site (grid only). */
+  link?: boolean;
   class?: string;
 }
-const { title, items, variant = 'grid', class: className } = Astro.props;
+import type { ImageMetadata } from 'astro';
+const { kind = 'partners', group, caption, variant = 'grid', items, link = false, class: className } = Astro.props;
+const list: Item[] = items ?? (kind === 'press' ? pressLogos() : partnerLogos(group));
+const cap = (caption === undefined ? (kind === 'press' ? PRESS_CAPTION : PARTNER_CAPTION) : caption);
+const label = cap || (kind === 'press' ? 'Press coverage' : 'Partners');
 ---
 
-<section class:list={['partners', `partners--${variant}`, className]} aria-label={title ?? 'Partners'} data-marquee={variant === 'marquee' ? '' : undefined}>
-  {title && <p class="partners__title">{title}</p>}
+<section class:list={['partners', `partners--${variant}`, className]} aria-label={label} data-marquee={variant === 'marquee' ? '' : undefined}>
+  {cap && <p class="partners__title">{cap}</p>}
   {
     variant === 'grid' ? (
       <ul class="partners__row" role="list">
-        {items.map((it) => (
-          <li>{it.href ? <a href={linkAttrs(it.href).href} rel={linkAttrs(it.href).rel} class="partners__item">{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</a> : <span class="partners__item">{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</span>}</li>
-        ))}
+        {list.map((it) => {
+          const a = link && it.href ? linkAttrs(it.href) : undefined;
+          return (
+            <li>
+              {a ? (
+                <a href={a.href} rel={a.rel} class:list={['partners__item', it.white && 'is-white']}>
+                  {it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}
+                  <span class="sr-only">{a.srText}</span>
+                </a>
+              ) : (
+                <span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     ) : (
       <>
         <div class="marquee">
           <div class="marquee__inner">
             <ul class="partners__row marquee__track" role="list">
-              {items.map((it) => (
-                <li>{it.href ? <a href={linkAttrs(it.href).href} rel={linkAttrs(it.href).rel} class="partners__item">{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</a> : <span class="partners__item">{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</span>}</li>
+              {list.map((it) => (
+                <li><span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt={it.name} height={40} /> : it.name}</span></li>
               ))}
             </ul>
             <ul class="partners__row marquee__track marquee__clone" role="list" aria-hidden="true" inert>
-              {items.map((it) => (
-                <li><span class="partners__item">{it.logo ? <Img src={it.logo} alt="" height={40} /> : it.name}</span></li>
+              {list.map((it) => (
+                <li><span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt="" height={40} /> : it.name}</span></li>
               ))}
             </ul>
           </div>
@@ -60,6 +88,8 @@ const { title, items, variant = 'grid', class: className } = Astro.props;
     align-items: center;
     gap: var(--space-md);
     padding-block: var(--space-lg);
+    min-width: 0;
+    max-width: 100%;
   }
   .partners__title {
     margin: 0;
@@ -82,30 +112,40 @@ const { title, items, variant = 'grid', class: className } = Astro.props;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    max-width: 160px;
+    min-height: 56px;
+    min-width: 72px;
+    max-width: 176px;
+    padding: 6px 8px;
+    border-radius: var(--radius-default);
     font-size: var(--fs-body-m);
     font-weight: var(--fw-bold);
     color: var(--ctx-text);
     text-decoration: none;
     opacity: 0.8;
-    transition: opacity var(--dur-base) ease, filter var(--dur-base) ease;
+    transition: opacity var(--dur-base) ease;
+  }
+  /* Logos whose artwork has a solid white background sit on a white tile */
+  .partners__item.is-white {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
   }
   .partners__item :global(img) {
-    max-height: 40px;
+    max-height: 44px;
     width: auto;
     max-width: 160px;
     object-fit: contain;
     filter: grayscale(1);
-    transition: filter var(--dur-base) ease;
+    opacity: 0.85;
+    transition: filter var(--dur-base) ease, opacity var(--dur-base) ease;
   }
-  a.partners__item:hover,
+  .partners__item:hover,
   a.partners__item:focus-visible {
     opacity: 1;
   }
-  a.partners__item:hover :global(img),
+  .partners__item:hover :global(img),
   a.partners__item:focus-visible :global(img) {
     filter: none;
+    opacity: 1;
   }
 
   /* ---- Marquee (M13) ---- */
@@ -128,7 +168,7 @@ const { title, items, variant = 'grid', class: className } = Astro.props;
   }
   @media (prefers-reduced-motion: no-preference) {
     .marquee__inner {
-      animation: marquee 40s linear infinite;
+      animation: marquee 60s linear infinite;
     }
     .marquee:hover .marquee__inner,
     .marquee:focus-within .marquee__inner,

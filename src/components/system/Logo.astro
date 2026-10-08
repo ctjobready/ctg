@@ -1,9 +1,12 @@
 ---
-import { Image } from 'astro:assets';
-import colorLogo from '../../assets/images/brand/coderstrust-logo-color.png';
-import whiteLogo from '../../assets/images/brand/coderstrust-logo-white.png';
+import colorSvg from '../../assets/images/brand/coderstrust-wordmark.svg?raw';
+import whiteSvg from '../../assets/images/brand/coderstrust-wordmark-white.svg?raw';
 import { url } from '../../lib/url';
 
+/**
+ * Vector wordmark, inlined (no request, crisp at any size). Color (#023E8A) on light grounds,
+ * white on Klein / Deep Ink / photos. Aspect ratio 2400:286.
+ */
 interface Props {
   variant?: 'color' | 'white';
   /** Rendered width in CSS px (height follows the aspect ratio). */
@@ -11,32 +14,40 @@ interface Props {
   /** Wrap in a link to Home. */
   link?: boolean;
   class?: string;
+  /** Kept for API compatibility with the raster version. */
   loading?: 'eager' | 'lazy';
 }
-const { variant = 'color', width = 190, link = false, class: className, loading = 'eager' } = Astro.props;
-const src = variant === 'white' ? whiteLogo : colorLogo;
-const height = Math.round((width * src.height) / src.width);
+const { variant = 'color', width = 190, link = false, class: className } = Astro.props;
+const svg = (variant === 'white' ? whiteSvg : colorSvg).replace('<svg ', '<svg class="logo__svg" aria-hidden="true" focusable="false" ');
+const height = Math.round((width * 286) / 2400);
 ---
 
 {
   link ? (
-    <a class:list={['logo', className]} href={url('/')} aria-label="CodersTrust — home">
-      <Image src={src} alt="CodersTrust" width={width} height={height} densities={[1, 2]} format="png" loading={loading} decoding="async" />
+    <a class:list={['logo', className]} href={url('/')} style={`--logo-w:${width}px`} aria-label="CodersTrust — home">
+      <span class="logo__img" role="img" aria-label="CodersTrust" style={`aspect-ratio:2400/286;`} data-h={height} set:html={svg} />
     </a>
   ) : (
-    <span class:list={['logo', className]}>
-      <Image src={src} alt="CodersTrust" width={width} height={height} densities={[1, 2]} format="png" loading={loading} decoding="async" />
+    <span class:list={['logo', className]} style={`--logo-w:${width}px`}>
+      <span class="logo__img" role="img" aria-label="CodersTrust" style={`aspect-ratio:2400/286;`} data-h={height} set:html={svg} />
     </span>
   )
 }
 
-<style>
+<style is:global>
   .logo {
     display: inline-flex;
     align-items: center;
     line-height: 0;
   }
-  .logo img {
-    height: auto;
+  .logo__img {
+    display: block;
+    width: var(--logo-w, 190px);
+    max-width: 100%;
+  }
+  .logo__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

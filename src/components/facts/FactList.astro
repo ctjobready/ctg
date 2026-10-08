@@ -1,0 +1,29 @@
+---
+import Fact from './Fact.astro';
+/** Bullet list of facts (canonical wording + automatic footnote markers). */
+interface Props {
+  ids: string[];
+  ordered?: boolean;
+  field?: 'text' | 'value' | 'from' | 'label';
+  class?: string;
+}
+const { ids, ordered = false, field = 'text', class: className } = Astro.props;
+const Tag = ordered ? 'ol' : 'ul';
+---
+
+<Tag class:list={['fact-list', className]}>
+  {ids.map((id) => <li><Fact id={id} field={field} /></li>)}
+</Tag>
+
+<style>
+  .fact-list {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-sm);
+    color: var(--ctx-text);
+  }
+  .fact-list li::marker {
+    color: var(--ctx-accent);
+  }
+</style>

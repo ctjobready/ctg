@@ -1,0 +1,32 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import CategoryCard from '../system/CategoryCard.astro';
+import { audiences } from '../../data/nav';
+import { COURSES_URL } from '../../lib/site';
+
+/** C1 Audience router: "What brings you here?" — one card per audience (+ learners → JobReady.global). */
+interface Props {
+  title?: string;
+  lead?: string;
+  items?: { title: string; icon?: string; text?: string; href: string }[];
+  /** Append the Learners card (links out to jobready.global). */
+  learners?: boolean;
+  id?: string;
+}
+const {
+  title = 'What brings you here?',
+  lead = 'Choose your role to see the evidence and next step that matter to you.',
+  items = audiences.map((a) => ({ title: a.title, icon: a.icon, text: a.text, href: a.href })),
+  learners = true,
+  id = 'router',
+} = Astro.props;
+const cards = learners ? [...items, { title: 'Learners', icon: 'book-open', text: 'Courses on JobReady.global', href: COURSES_URL }] : items;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Start here" title={title} lead={lead} />
+  <div class="grid-cards grid-cards--4">
+    {cards.map((c) => <CategoryCard title={c.title} icon={c.icon} text={c.text} href={c.href} />)}
+  </div>
+</Section>

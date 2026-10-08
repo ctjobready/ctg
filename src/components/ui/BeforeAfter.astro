@@ -16,6 +16,8 @@ interface Props {
   /** Delta chip text, e.g. "+30.5 pp". */
   delta?: string;
   unit?: string;
+  /** Kept for API clarity: colors follow the surrounding Section band (--ctx-* tokens). */
+  tone?: 'light' | 'dark';
   /** Source / base note shown under the chart. */
   note?: string;
   class?: string;
@@ -91,14 +93,14 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
     font-family: var(--font-sans);
   }
   .ba-axis {
-    stroke: var(--outline-variant);
+    stroke: var(--ctx-border, var(--outline-variant));
     stroke-width: 2;
   }
   .ba-before .ba-bar {
-    fill: var(--primary-fixed-dim);
+    fill: var(--ba-before, var(--primary-fixed-dim));
   }
   .ba-after .ba-bar {
-    fill: var(--brand-bright);
+    fill: var(--ba-after, var(--brand-bright));
   }
   .ba-bar {
     transform-box: fill-box;
@@ -108,19 +110,19 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
     font-size: 30px;
     font-weight: 700;
     letter-spacing: -1px;
-    fill: var(--on-surface);
+    fill: var(--ctx-heading);
   }
   .ba-after .ba-value {
-    fill: var(--primary);
+    fill: var(--ctx-accent);
   }
   .ba-label {
     font-size: 17px;
     font-weight: 700;
-    fill: var(--on-surface);
+    fill: var(--ctx-heading);
   }
   .ba-cap {
     font-size: 15px;
-    fill: var(--on-surface-variant);
+    fill: var(--ctx-text);
   }
   .ba-delta rect {
     fill: var(--tertiary-container);

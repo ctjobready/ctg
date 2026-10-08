@@ -1,0 +1,62 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import ModelDiagram from '../ui/ModelDiagram.astro';
+import Icon from '../system/Icon.astro';
+import { linkAttrs } from '../../lib/url';
+
+/** C6 Mechanism (Klein band): four-block model diagram + Learn → Earn → Prosper ribbon + link. */
+interface Props {
+  title: string;
+  lead?: string;
+  blocks?: { label: string; title: string; text?: string; icon?: string }[];
+  link?: { label: string; href: string };
+  ribbon?: string[];
+  id?: string;
+}
+const {
+  title,
+  lead,
+  blocks = [
+    { label: 'Who we reach', title: 'Educated, unemployed youth', text: 'Outreach and selection with local partners.', icon: 'users' },
+    { label: 'How we reach them', title: 'Blended training', text: 'Labs, colleges and connectivity-light delivery.', icon: 'graduation-cap' },
+    { label: 'What we deliver', title: 'Skills, certification, mentoring', text: 'Industry certification with exam fees paid, then one-to-one mentoring.', icon: 'award' },
+    { label: 'Where they work', title: 'Local, remote and global work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
+  ],
+  link,
+  ribbon = ['Learn', 'Earn', 'Prosper'],
+  id = 'mechanism',
+} = Astro.props;
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="How it works" title={title} lead={lead} />
+  <ModelDiagram blocks={blocks} />
+  <p class="mech__ribbon" data-reveal aria-label={ribbon.join('. ') + '.'}>
+    {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}
+  </p>
+  {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}
+</Section>
+
+<style>
+  .mech__ribbon {
+    margin: var(--space-lg) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-md);
+    font-size: var(--fs-heading-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.5px;
+    color: var(--ctx-heading);
+  }
+  .mech__ribbon span:last-of-type {
+    color: var(--ctx-accent);
+  }
+  .mech__ribbon :global(.icon) {
+    color: var(--ctx-accent);
+  }
+  .mech__link {
+    margin: var(--space-md) 0 0;
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Fact from '../facts/Fact.astro';
+
+/** C3 Cost of inaction: three CLAIM / DATA / IMPLICATION blocks + transition line. */
+interface Block {
+  claim: string;
+  /** Fact ID shown as the DATA line (canonical wording + footnote). */
+  factId: string;
+  implication: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  blocks: Block[];
+  transition?: string;
+  id?: string;
+}
+const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The cost of waiting" title={title} lead={lead} />
+  <div class="grid-cards">
+    {
+      blocks.map((b) => (
+        <article class="card cost" data-reveal>
+          <div class="card__body">
+            <h3 class="card__title">{b.claim}</h3>
+            <p class="cost__data"><Fact id={b.factId} /></p>
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <p class="cost__transition" data-reveal>{transition}</p>
+</Section>
+
+<style>
+  .cost__data {
+    color: var(--on-surface);
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--tertiary);
+  }
+  .cost__impl {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+    color: var(--on-surface-variant);
+  }
+  .cost__tag {
+    display: block;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  .cost__transition {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
+  }
+</style>

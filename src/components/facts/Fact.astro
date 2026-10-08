@@ -1,0 +1,28 @@
+---
+import { fact } from '../../data/facts';
+import FootnoteMarker from './FootnoteMarker.astro';
+
+/**
+ * Renders a Facts Register entry. Numbers are never typed into pages: use <Fact id="OC-01" />.
+ * field: text (canonical sentence, default) | value | from | label | prefix/suffix not needed (value includes them)
+ */
+interface Props {
+  id: string;
+  field?: 'text' | 'value' | 'from' | 'label';
+  footnote?: boolean | 'auto';
+  /** Wrapper element (default span). */
+  as?: 'span' | 'p' | 'strong' | 'b' | 'div';
+  class?: string;
+}
+const { id, field = 'text', footnote = 'auto', as: Tag = 'span', class: className } = Astro.props;
+const f = fact(id);
+let out: string;
+if (field === 'text') out = f.text;
+else {
+  const v = f.stat?.[field];
+  if (v === undefined) throw new Error(`<Fact id="${id}" field="${field}">: fact has no stat.${field}`);
+  out = v;
+}
+---
+
+<Tag class:list={['fact', className]} data-fact={id}>{out}<FootnoteMarker id={id} footnote={footnote} /></Tag>

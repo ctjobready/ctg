@@ -1,0 +1,65 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../system/Icon.astro';
+
+/** C12 Risk reversal: decide on evidence, expansion is the partner's choice. */
+interface Props {
+  title?: string;
+  lead?: string;
+  points?: { icon?: string; title: string; text: string }[];
+  id?: string;
+}
+const {
+  title = 'Start with a pilot. Decide on evidence.',
+  lead,
+  points = [
+    { icon: 'chart-bar', title: 'Expansion review on real results', text: 'We review expansion together, based on the first cohort’s three-month results.' },
+    { icon: 'target', title: 'Scorecard thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
+    { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.' },
+    { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+  ],
+  id = 'risk',
+} = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Low risk" title={title} lead={lead} />
+  <ul class="risk grid-cards grid-cards--4" role="list">
+    {
+      points.map((p) => (
+        <li class="risk__item" data-reveal>
+          <Icon name={p.icon ?? 'shield'} size={32} strokeWidth={1.5} class="risk__icon" />
+          <h3 class="t-heading-m">{p.title}</h3>
+          <p>{p.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .risk {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .risk__item {
+    padding: var(--space-gutter);
+    border-top: 3px solid var(--primary);
+    background: var(--surface-container-low);
+    border-radius: 0 0 var(--radius-default) var(--radius-default);
+  }
+  .risk__item > * {
+    margin: 0;
+  }
+  .risk__item > * + * {
+    margin-top: var(--space-sm);
+  }
+  .risk__item :global(.risk__icon) {
+    color: var(--primary);
+  }
+  .risk__item p {
+    color: var(--on-surface-variant);
+  }
+</style>

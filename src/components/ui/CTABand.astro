@@ -14,10 +14,12 @@ interface Props {
   urgency?: string;
   micro?: string;
   secondary?: { label: string; href: string };
+  /** C14 post-decision reinforcement lines (validate / transformation / first action). */
+  reinforce?: string[];
   tone?: 'airy' | 'klein';
   id?: string;
 }
-const { heading, text, cta, urgency, micro, secondary, tone = 'airy', id } = Astro.props;
+const { heading, text, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id } = Astro.props;
 const dark = tone === 'klein';
 ---
 
@@ -39,6 +41,11 @@ const dark = tone === 'klein';
       <ul class="cta-band__notes" role="list" data-reveal>
         {urgency && <li>{urgency}</li>}
         {micro && <li>{micro}</li>}
+      </ul>
+    )}
+    {reinforce.length > 0 && (
+      <ul class="cta-band__reinforce" role="list" data-reveal>
+        {reinforce.map((r) => <li>{r}</li>)}
       </ul>
     )}
     <slot />
@@ -74,6 +81,17 @@ const dark = tone === 'klein';
     padding: 0;
     font-size: var(--fs-body-xs);
     color: var(--ctx-text);
+  }
+  .cta-band__reinforce {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: var(--space-md) 0 0;
+    border-top: 1px solid var(--ctx-border);
+    display: grid;
+    gap: var(--space-xs);
+    font-size: var(--fs-body-base);
+    color: var(--ctx-text);
+    max-width: 40rem;
   }
   .cta-band__title {
     color: var(--ctx-section-heading);

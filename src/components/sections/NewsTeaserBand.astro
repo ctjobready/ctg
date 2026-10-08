@@ -1,0 +1,66 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import NewsCard from '../ui/NewsCard.astro';
+import Icon from '../system/Icon.astro';
+import { linkAttrs } from '../../lib/url';
+
+/**
+ * Latest news: the 3 newest entries of the `news` content collection. Guarded so the build works
+ * before the collection exists (renders nothing, or `fallback` items if provided).
+ */
+interface Item {
+  title: string;
+  date: string;
+  topic?: string;
+  excerpt?: string;
+  href: string;
+}
+interface Props {
+  title?: string;
+  count?: number;
+  /** Used when the collection is missing/empty (e.g. styleguide demo). */
+  fallback?: Item[];
+  id?: string;
+}
+const { title = 'Latest news', count = 3, fallback = [], id = 'news-teaser' } = Astro.props;
+
+let items: Item[] = [];
+try {
+  const mod = await import('astro:content');
+  const entries = await (mod.getCollection as (c: string) => Promise<any[]>)('news');
+  items = entries
+    .map((e) => ({
+      title: e.data.title as string,
+      date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
+      topic: e.data.topic as string | undefined,
+      excerpt: e.data.excerpt as string | undefined,
+      href: `/news/${e.data.slug ?? e.id}/`,
+      image: e.data.cover,
+      imageAlt: e.data.coverAlt,
+    }))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, count) as Item[];
+} catch {
+  items = [];
+}
+if (items.length === 0) items = fallback.slice(0, count);
+---
+
+{
+  items.length > 0 && (
+    <Section id={id} aria-labelledby={`${id}-h`}>
+      <SectionHeader id={`${id}-h`} eyebrow="News" title={title} />
+      <div class="grid-cards">
+        {items.map((n: any) => <NewsCard title={n.title} date={n.date} topic={n.topic} excerpt={n.excerpt} image={n.image} imageAlt={n.imageAlt} href={n.href} />)}
+      </div>
+      <p class="news__all"><a class="link" href={linkAttrs('/news/').href}>All news<Icon name="arrow-right" size={16} /></a></p>
+    </Section>
+  )
+}
+
+<style>
+  .news__all {
+    margin: var(--space-lg) 0 0;
+  }
+</style>

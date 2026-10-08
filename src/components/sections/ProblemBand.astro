@@ -1,0 +1,23 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import FactCard from '../facts/FactCard.astro';
+
+/** C2 Problem: BLUF sentence + FactCards from PX-* ids (each shows its source). */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Short BLUF sentence under the heading. */
+  bluf?: string;
+  factIds: string[];
+  id?: string;
+}
+const { eyebrow = 'The challenge', title, bluf, factIds, id = 'problem' } = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={bluf}><slot name="lead" /></SectionHeader>
+  <div class="grid-cards grid-cards--4">
+    {factIds.map((f) => <FactCard id={f} />)}
+  </div>
+</Section>

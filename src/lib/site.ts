@@ -31,7 +31,7 @@ export const OFFICES = [
     id: 'bangladesh',
     name: 'CodersTrust Bangladesh',
     city: 'Dhaka',
-    address: [] as string[],
+    address: ['BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand)', 'Dhaka 1216, Bangladesh'],
     email: 'hello@coderstrustbd.com',
     phone: '+880 1958-220802',
     phoneHref: 'tel:+8801958220802',
@@ -50,3 +50,37 @@ export const FOUNDERS = [
 ] as const;
 
 export const COURSES_URL = 'https://jobready.global/';
+
+/**
+ * Content-Security-Policy (meta). Astro's built-in hashing CSP (security.csp) is not used because it
+ * forbids inline style attributes (used for CSS custom properties on components) and `is:inline`
+ * scripts. This policy still blocks third-party scripts, plugins and base-tag injection; frames are
+ * limited to the click-to-load video providers.
+ */
+export const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https://i.ytimg.com",
+  "font-src 'self'",
+  "connect-src 'self'",
+  'frame-src https://www.youtube-nocookie.com https://player.vimeo.com',
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
+
+export const BANGLADESH_HQ = {
+  name: 'CodersTrust Bangladesh',
+  street: 'BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand)',
+  city: 'Dhaka',
+  postalCode: '1216',
+  country: 'Bangladesh',
+  countryCode: 'BD',
+  phone: '+880 1958-220802',
+  email: 'hello@coderstrustbd.com',
+} as const;
+
+/** 1200-px PNG wordmark for schema.org logo (public/press-kit). */
+export const LOGO_PNG_PATH = '/press-kit/coderstrust-wordmark.png';

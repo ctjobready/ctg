@@ -1,0 +1,109 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../system/Icon.astro';
+import { fact } from '../../data/facts';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
+
+/**
+ * C11 Offer: three option cards (volume + duration from PD-05) + "Every package includes" (PD-02).
+ * NO PRICES (Decision D7): budgets are shared in the discovery session.
+ */
+interface Props {
+  title?: string;
+  lead?: string;
+  /** Short description per option, in the same order as PD-05 (Pilot, Scale, National). */
+  blurbs?: string[];
+  id?: string;
+}
+const {
+  title = 'Start with a pilot. Decide on evidence.',
+  lead = 'Indicative budgets are shared in the discovery session.',
+  blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
+  id = 'offer',
+} = Astro.props;
+
+// PD-05: "Program options (no prices — Decision D7): Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"
+const pd05 = fact('PD-05').text.split(': ').slice(1).join(': ');
+const options = pd05.split('; ').map((chunk) => {
+  const [name, ...rest] = chunk.split(' ');
+  const detail = rest.join(' ');
+  const [volume, ...tail] = detail.split(', ');
+  return { name, volume, duration: tail.join(', ') };
+});
+// PD-02: "Every program includes: a · b · c"
+const includes = fact('PD-02').text.split(': ').slice(1).join(': ').split(' · ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Start" title={title} lead={lead} />
+  <div class="grid-cards">
+    {
+      options.map((o, i) => (
+        <article class="card offer" data-reveal>
+          <div class="card__body">
+            <p class="eyebrow">Option {i + 1}</p>
+            <h3 class="card__title">{o.name}</h3>
+            <p class="offer__volume">{o.volume}</p>
+            <p class="card__meta offer__duration">{o.duration}</p>
+            <p class="card__text">{blurbs[i]}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <div class="offer__incl" data-reveal>
+    <h3 class="t-heading-l">Every package includes<FootnoteMarker id="PD-02" footnote={false} /></h3>
+    <ul role="list">
+      {includes.map((s) => <li><Icon name="circle-check" size={20} />{s}</li>)}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .offer__volume {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .offer__duration {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .offer__incl {
+    margin-top: var(--space-lg);
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .offer__incl h3 {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .offer__incl ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .offer__incl li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    color: var(--on-surface-variant);
+  }
+  .offer__incl :global(.icon) {
+    color: var(--success);
+    margin-top: 3px;
+    flex: none;
+  }
+  @media (min-width: 768px) {
+    .offer__incl ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

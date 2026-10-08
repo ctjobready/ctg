@@ -1,0 +1,295 @@
+---
+import { WORLD_LAND_PATH, WORLD_W, WORLD_H, LAT_TOP, LAT_SPAN } from '../../data/world-land';
+import { locations, type ProgramLocation } from '../../data/countries';
+
+/**
+ * WorldMap ➕ (M17) — inline SVG equirectangular map (Natural Earth 110m, public domain) with one pin
+ * per program location. Hover or tap a pin for a card (country, years, target group, skills,
+ * funder). Pins are a pointer enhancement (aria-hidden, not tab stops: clustered pins cannot meet the
+ * 24px target-size rule); the keyboard / screen-reader path is the full table of the same data that is
+ * ALWAYS rendered below the map. Pins pulse only when motion is allowed.
+ */
+interface Props {
+  /** Defaults to every location in countries.ts. */
+  items?: ProgramLocation[];
+  caption?: string;
+  /** Hide the data table (not recommended; kept for tiny teasers that link to the full page). */
+  table?: boolean;
+  class?: string;
+}
+const { items = locations, caption = 'Where CodersTrust programs have run', table = true, class: className } = Astro.props;
+
+const pos = (l: ProgramLocation) => ({
+  x: ((l.lon + 180) / 360) * 100,
+  y: ((LAT_TOP - l.lat) / LAT_SPAN) * 100,
+});
+const pins = items.map((l) => {
+  const p = pos(l);
+  return { ...l, ...p, side: p.x > 62 ? 'left' : p.x < 28 ? 'right' : 'center', vert: p.y > 52 ? 'up' : 'down' };
+});
+---
+
+<figure class:list={['wmap', className]} data-reveal>
+  <div class="wmap__stage">
+    <svg class="wmap__svg" viewBox={`0 0 ${WORLD_W} ${WORLD_H}`} role="img" aria-label={`${caption}: ${items.length} locations. A table with the same information follows.`} preserveAspectRatio="xMidYMid meet">
+      <path class="wmap__land" d={WORLD_LAND_PATH} />
+    </svg>
+    <ul class="wmap__pins" role="presentation">
+      {
+        pins.map((p) => (
+          <li class={`wmap__pt wmap__pt--${p.side} wmap__pt--${p.vert} wmap__pt--${p.kind}`} style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%`} aria-hidden="true">
+            <span class="wmap__pin">
+              <span class="wmap__dot"></span>
+            </span>
+            <div class="wmap__card" id={`wmap-card-${p.id}`}>
+              <p class="wmap__country">{p.country} <span>{p.years}</span></p>
+              <dl>
+                <dt>Target group</dt>
+                <dd>{p.targetGroup}</dd>
+                <dt>Skills</dt>
+                <dd>{p.skills}</dd>
+                {p.funder && (<><dt>Funder</dt><dd>{p.funder}</dd></>)}
+                {p.note && (<><dt>Note</dt><dd>{p.note}</dd></>)}
+              </dl>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The full list, readable by keyboard and screen reader, is the table below.</figcaption>
+
+  {
+    table && (
+      <div class="wmap__table table-scroll" role="region" aria-label="Program locations table" tabindex="0">
+        <table>
+          <caption class="sr-only">{caption}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Country</th>
+              <th scope="col">Years</th>
+              <th scope="col">Target group</th>
+              <th scope="col">Skills</th>
+              <th scope="col">Funder / note</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((l) => (
+              <tr>
+                <th scope="row">{l.country}<span class="wmap__region">{l.region}</span></th>
+                <td>{l.years}</td>
+                <td>{l.targetGroup}</td>
+                <td>{l.skills}</td>
+                <td>{[l.funder && `Funder: ${l.funder}`, l.note].filter(Boolean).join(' · ') || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</figure>
+
+<style>
+  .wmap {
+    margin: 0;
+    min-width: 0;
+  }
+  .wmap__stage {
+    position: relative;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    aspect-ratio: 1000 / 500;
+  }
+  .wmap__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .wmap__land {
+    fill: var(--primary-fixed);
+    stroke: var(--primary-fixed-dim);
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+  }
+  .wmap__pins {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .wmap__pt {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  .wmap__pin {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wmap__dot {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--primary);
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+  .wmap__pt--office .wmap__dot,
+  .wmap__pt--hq .wmap__dot {
+    background: var(--tertiary);
+    box-shadow: 0 0 0 1px var(--tertiary);
+  }
+  .wmap__pin:hover .wmap__dot {
+    transform: scale(1.35);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .wmap__dot::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      border: 2px solid var(--primary);
+      opacity: 0;
+    }
+    .wmap__pin:hover .wmap__dot::after {
+      animation: wmap-pulse 1.2s ease-out infinite;
+    }
+  }
+  @keyframes wmap-pulse {
+    from {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(2.6);
+    }
+  }
+  .wmap__card {
+    position: absolute;
+    z-index: 5;
+    width: 260px;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card-hover);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-xs);
+    line-height: 1.45;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) ease, visibility 0s linear var(--dur-base);
+  }
+  .wmap__pt--center .wmap__card {
+    left: -130px;
+  }
+  .wmap__pt--left .wmap__card {
+    right: -18px;
+  }
+  .wmap__pt--right .wmap__card {
+    left: -18px;
+  }
+  .wmap__pt--up .wmap__card {
+    bottom: 22px;
+  }
+  .wmap__pt--down .wmap__card {
+    top: 22px;
+  }
+  .wmap__pin:hover + .wmap__card {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+  .wmap__country {
+    margin: 0 0 4px;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-base);
+    color: var(--on-surface);
+  }
+  .wmap__country span {
+    font-weight: var(--fw-regular);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-xs);
+    margin-left: 4px;
+  }
+  .wmap__card dl {
+    margin: 0;
+  }
+  .wmap__card dt {
+    font-weight: var(--fw-bold);
+    color: var(--on-primary-container);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    margin-top: 6px;
+  }
+  .wmap__card dd {
+    margin: 0;
+  }
+  .wmap__cap {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .wmap__table {
+    margin-top: var(--space-md);
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+  }
+  .wmap__table table {
+    width: 100%;
+    min-width: 720px;
+    font-size: var(--fs-body-xs);
+    line-height: 1.45;
+  }
+  .wmap__table th,
+  .wmap__table td {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  .wmap__table thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  .wmap__table tbody th {
+    color: var(--on-surface);
+    white-space: nowrap;
+  }
+  .wmap__region {
+    display: block;
+    font-weight: var(--fw-regular);
+    color: var(--outline);
+  }
+  .wmap__table tr:last-child th,
+  .wmap__table tr:last-child td {
+    border-bottom: 0;
+  }
+  /* Small screens: the pin card becomes a bottom sheet */
+  @media (max-width: 767px) {
+    .wmap__card {
+      position: fixed;
+      left: var(--space-gutter) !important;
+      right: var(--space-gutter) !important;
+      bottom: var(--space-gutter) !important;
+      top: auto !important;
+      width: auto;
+    }
+  }
+</style>

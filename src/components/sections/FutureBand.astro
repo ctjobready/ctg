@@ -1,0 +1,43 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Img from '../ui/Img.astro';
+import HeroArt from '../ui/HeroArt.astro';
+import type { ImageMetadata } from 'astro';
+
+/** C4 Future state: three vignettes (functional / emotional / social) with images. */
+interface Vignette {
+  kind: 'Functional' | 'Emotional' | 'Social' | string;
+  title: string;
+  text: string;
+  image?: ImageMetadata | string;
+  imageAlt?: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  vignettes: Vignette[];
+  id?: string;
+}
+const { title, lead, vignettes, id = 'future' } = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="What success looks like" title={title} lead={lead} />
+  <div class="grid-cards">
+    {
+      vignettes.map((v) => (
+        <article class="card" data-reveal>
+          <div class="card__media">
+            {v.image ? <Img src={v.image} alt={v.imageAlt ?? ''} width={720} height={480} widths={[360, 720]} sizes="(min-width:1024px) 380px, 90vw" /> : <HeroArt seed={v.title} shape="card" />}
+          </div>
+          <div class="card__body">
+            <p class="eyebrow">{v.kind}</p>
+            <h3 class="card__title">{v.title}</h3>
+            <p class="card__text">{v.text}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</Section>

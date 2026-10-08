@@ -1,4 +1,4 @@
-import { CONTACT, ENTITY_DEFINITION, OFFICES, PRODUCTION_ORIGIN, SITE_NAME, SOCIAL } from './site';
+import { BANGLADESH_HQ, CONTACT, ENTITY_DEFINITION, LOGO_PNG_PATH, OFFICES, PRODUCTION_ORIGIN, SITE_NAME, SOCIAL } from './site';
 import { canonicalUrl } from './url';
 import { stripHtml } from './format';
 
@@ -27,6 +27,8 @@ export function organization(): JsonLdNode {
     name: SITE_NAME,
     legalName: 'CodersTrust',
     url: `${PRODUCTION_ORIGIN}/`,
+    logo: { '@type': 'ImageObject', url: PRODUCTION_ORIGIN + LOGO_PNG_PATH, width: 1200, height: 143 },
+    image: PRODUCTION_ORIGIN + LOGO_PNG_PATH,
     description: ENTITY_DEFINITION,
     foundingDate: '2014',
     founder: [
@@ -35,14 +37,37 @@ export function organization(): JsonLdNode {
     ],
     email: CONTACT.email,
     telephone: CONTACT.phone,
-    address: {
-      '@type': 'PostalAddress',
-      name: usa.name,
-      streetAddress: '40 Wall Street, Suite 2004',
-      addressLocality: 'New York',
-      addressRegion: 'NY',
-      postalCode: '10005',
-      addressCountry: 'US',
+    address: [
+      {
+        '@type': 'PostalAddress',
+        name: usa.name,
+        streetAddress: '40 Wall Street, Suite 2004',
+        addressLocality: 'New York',
+        addressRegion: 'NY',
+        postalCode: '10005',
+        addressCountry: 'US',
+      },
+      {
+        '@type': 'PostalAddress',
+        name: BANGLADESH_HQ.name,
+        streetAddress: BANGLADESH_HQ.street,
+        addressLocality: BANGLADESH_HQ.city,
+        postalCode: BANGLADESH_HQ.postalCode,
+        addressCountry: BANGLADESH_HQ.countryCode,
+      },
+    ],
+    location: {
+      '@type': 'Place',
+      name: BANGLADESH_HQ.name,
+      telephone: BANGLADESH_HQ.phone,
+      email: BANGLADESH_HQ.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: BANGLADESH_HQ.street,
+        addressLocality: BANGLADESH_HQ.city,
+        postalCode: BANGLADESH_HQ.postalCode,
+        addressCountry: BANGLADESH_HQ.countryCode,
+      },
     },
     contactPoint: [
       {
@@ -53,7 +78,8 @@ export function organization(): JsonLdNode {
         availableLanguage: ['en'],
       },
     ],
-    sameAs: SOCIAL.map((s) => s.href),
+    // linkedin.com/company/coderstrust verified HTTP 200 ("CodersTrust Global | LinkedIn") on 2026-10-08
+    sameAs: [...SOCIAL.map((s) => s.href), 'https://www.linkedin.com/company/coderstrust'],
   };
 }
 

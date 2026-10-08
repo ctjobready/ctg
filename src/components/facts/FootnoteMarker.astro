@@ -1,0 +1,50 @@
+---
+import { fact } from '../../data/facts';
+import { footnotesFor, needsFootnote } from '../../lib/footnotes';
+
+/** Superscript marker linking to the page's Sources list. Registers the fact in render order. */
+interface Props {
+  id: string;
+  /** auto (default): only when the fact carries a caveat/base/note. true: always. false: never. */
+  footnote?: boolean | 'auto';
+}
+const { id, footnote = 'auto' } = Astro.props;
+const f = fact(id);
+const show = footnote === 'auto' ? needsFootnote(f) : footnote;
+const reg = show ? footnotesFor(Astro).register(id) : null;
+---
+
+{
+  reg && (
+    <sup class="fn">
+      <a href={`#fn-${reg.n}`} id={`fn-ref-${reg.n}-${reg.k}`} aria-label={`Note ${reg.n}`}>
+        {reg.n}
+      </a>
+    </sup>
+  )
+}
+
+<style is:global>
+  .fn {
+    font-size: 0.7em;
+    line-height: 0;
+    margin-left: 1px;
+    font-weight: var(--fw-bold);
+  }
+  .fn a {
+    display: inline-block;
+    min-width: 1.4em;
+    text-align: center;
+    color: var(--ctx-link);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    padding: 0 2px;
+  }
+  .fn a:hover {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  [id^='fn-ref-']:target {
+    outline: 2px solid var(--tertiary);
+  }
+</style>
