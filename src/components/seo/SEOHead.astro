@@ -3,6 +3,7 @@ import { canonicalUrl, url } from '../../lib/url';
 import { SITE_NAME, ENTITY_DEFINITION, PRODUCTION_ORIGIN, CSP } from '../../lib/site';
 import { truncate } from '../../lib/format';
 import { FONT_PRELOADS, fontFaceCss } from '../../lib/fonts';
+import { ogCardFor } from '../../lib/og';
 
 interface Props {
   title: string;
@@ -25,13 +26,18 @@ const {
   description = truncate(ENTITY_DEFINITION, 200),
   path,
   suffix = true,
-  image = '/og/default.png',
-  imageAlt = 'CodersTrust — Learn. Earn. Prosper.',
+  image: imageProp,
+  imageAlt: imageAltProp,
   type = 'website',
   noindex = false,
   publishedTime,
   modifiedTime,
 } = Astro.props;
+
+// A page that passes no image gets its section's card (src/lib/og.ts, rendered by scripts/build-og.mjs).
+const card = ogCardFor(path);
+const image = imageProp ?? card.src;
+const imageAlt = imageAltProp ?? (imageProp ? 'CodersTrust — Learn. Earn. Prosper.' : card.alt);
 
 const fullTitle = suffix && !title.includes(SITE_NAME) ? `${title} | ${SITE_NAME}` : title;
 const canonical = canonicalUrl(path);

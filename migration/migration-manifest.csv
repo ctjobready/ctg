@@ -1,0 +1,1467 @@
+legacy_url,content_id,class,disposition,destination,query_handling,publication_hold,test_status
+/,33235,page,KEEP,/,none,none,route
+/about/,7670,page,KEEP,/about/,none,none,route
+/aziz-ahmad/,8631,page,MOVE,/about/team/aziz-ahmad/,none,none,stub+edge
+/case-studies/,30429,page,MOVE,/impact/case-studies/,none,none,stub+edge
+/case-studies/brac-strong-it-project/,30583,page,WITHHELD,/impact/case-studies/,none,withheld pending owner confirmation,stub+edge
+/case-studies/her-power-project/,30116,page,MOVE,/impact/case-studies/her-power/,none,none,stub+edge
+/case-studies/kosovo-women-in-online-work-wow-pilot-2017/,30551,page,MOVE,/impact/case-studies/kosovo-women-in-online-work/,none,none,stub+edge
+/case-studies/undp-yes-project/,30611,page,MOVE,/impact/case-studies/undp-yes-korail/,none,none,stub+edge
+/case-studies/womens-skill-development-for-freelancing-marketplace-wsdfm-project/,30578,page,MOVE,/impact/case-studies/wsdfm-women-freelancers/,none,none,stub+edge
+/coderstrust-story/,2091,page,MERGE,/about/#story,none,none,stub+edge
+/contact/,5009,page,KEEP,/contact/,none,none,route
+/course-layout-template/,13178,page,DROP,https://jobready.global/,none,none,stub+edge
+/ferdinand-kjaerulff/,30939,page,MOVE,/about/team/ferdinand-kjaerulff/,none,none,stub+edge
+/job-category/,18454,page,DROP,/careers/,none,none,stub+edge
+/join-us/,16758,page,MOVE,/careers/,none,none,stub+edge
+/mentors/,23736,page,MOVE,/about/mentors/,none,none,stub+edge
+/nationwide/,12656,page,MOVE,/programs/nationwide/,none,none,stub+edge
+/news/,5287,page,KEEP,/news/,none,none,route
+/ngs-category-page-new-layout/,19316,page,DROP,https://jobready.global/,none,none,stub+edge
+/nu-postgraduate-diploma/,21235,page,KEEP,/nu-postgraduate-diploma/,none,none,route
+/payment-methods/,25026,page,JR,https://jobready.global/,none,none,stub+edge
+/privacy-policy/,19820,page,KEEP,/privacy-policy/,none,none,route
+/registration-form/,32647,page,JR,https://jobready.global/,none,none,stub+edge
+/superkids/,25445,page,MOVE,/programs/superkids/,none,none,stub+edge
+/talentleap/,6636,page,MOVE,/our-model/talentleap/,none,none,stub+edge
+/team/,8600,page,MOVE,/about/team/,none,none,stub+edge
+/workforce-development/,6616,page,MOVE,/partner-with-us/development-partners/,none,none,stub+edge
+/1000-trainees-enhancing-digital-government-economy-edge/,7307,post,MOVE,/news/1000-trainees-enhancing-digital-government-economy-edge/,none,none,stub+edge
+/1000-trainees-sheikh-kamal-ict-incubator-training/,7316,post,MOVE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,none,none,stub+edge
+/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,7298,post,MOVE,/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,none,none,stub+edge
+/a-proud-milestone-for-coderstrust/,33245,post,MOVE,/news/a-proud-milestone-for-coderstrust/,none,none,stub+edge
+/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,9468,post,MOVE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,none,none,stub+edge
+/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/,33304,post,MOVE,/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/,none,none,stub+edge
+/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,9826,post,MOVE,/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,none,none,stub+edge
+/celebrating-america-week-with-the-u-s-embassy-dhaka/,33324,post,MOVE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,none,none,stub+edge
+/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,32930,post,MOVE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,none,none,stub+edge
+/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,20592,post,MOVE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,stub+edge
+/coderstrust-attends-wsis20-forum-high-level-event/,29117,post,MOVE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,stub+edge
+/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,20336,post,MOVE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,stub+edge
+/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,33238,post,MOVE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,none,none,stub+edge
+/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,32523,post,MOVE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,none,none,stub+edge
+/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/,14270,post,MOVE,/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/,none,none,stub+edge
+/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,32920,post,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,none,none,stub+edge
+/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,32936,post,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,none,none,stub+edge
+/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/,33339,post,MOVE,/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/,none,none,stub+edge
+/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/,33381,post,MOVE,/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,32552,post,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,32570,post,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,31559,post,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,32557,post,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,none,none,stub+edge
+/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/,21152,post,MOVE,/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/,none,none,stub+edge
+/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,20332,post,MOVE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,none,none,stub+edge
+/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,11188,post,MOVE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,none,none,stub+edge
+/coderstrust-launches-a-next-generation-skills-college-in-partnership-with-the-worlds-second-largest-university/,none,post,DROP,/news/,none,none,stub+edge
+/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,9832,post,MOVE,/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,none,none,stub+edge
+/coderstrust-organizes-career-carnival-for-students-and-affiliates/,31520,post,MOVE,/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/,none,none,stub+edge
+/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,19277,post,MOVE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,stub+edge
+/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,31514,post,MOVE,/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,none,none,stub+edge
+/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,21030,post,MOVE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,stub+edge
+/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,33077,post,MOVE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,stub+edge
+/coderstrust-teaching-you-freelancing-the-right-way/,9835,post,MOVE,/news/coderstrust-teaching-you-freelancing-the-right-way/,none,none,stub+edge
+/coderstrust-visited-bimstec-headquarter/,9651,post,MOVE,/news/coderstrust-visited-bimstec-headquarter/,none,none,stub+edge
+/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,29090,post,MOVE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,stub+edge
+/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,9829,post,MOVE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,none,none,stub+edge
+/harnessing-socio-technology-for-positive-impact-and-unity-globally/,29087,post,MOVE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,none,none,stub+edge
+/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,32534,post,MOVE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,none,none,stub+edge
+/mou-signing-ceremony-between-north-south-university-coderstrust/,31547,post,MOVE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,none,none,stub+edge
+/the-future-building-a-digital-factory-for-bangladesh/,33184,post,MOVE,/news/the-future-building-a-digital-factory-for-bangladesh/,none,none,stub+edge
+/the-man-behind-coderstrust-who-never-forgot-his-roots/,33273,post,MOVE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,none,none,stub+edge
+/why-we-call-it-a-digital-factory/,33209,post,MOVE,/news/why-we-call-it-a-digital-factory/,none,none,stub+edge
+/?ae_global_templates=additional-instruction-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=core-skill-responsibilities-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-faq,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-eligibility,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-key-features,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-learning-path,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-prerequisite,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-what-youll-learn,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-general-who-will-benifit,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-layout,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=course-objectives-nu-pgd,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=eligibility-checklist,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=faq,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-eligibility,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-key-features,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-learning-path,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-prerequisite,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-what-youll-learn,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=general-who-will-benifit,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=how-to-apply-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=key-features-loop,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=kra-flexible-content,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=mandatory-qualification-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=mentors-additional-info,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=mentors-certifications,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=mentors-expertise,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=nu-pgd-career-opportunities,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=partners,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=preferred-qualification-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=secondary-roles-responsibilities-job-post,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=secondary-roles-responsibilities-job-post-2,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=semester-1-courses,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=semester-2-courses,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=superkids-course-objectives,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=superkids-lessons,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=superkids-what-youll-learn,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=what-youll-learn,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=what-youll-learn-nu-pgd,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=who-will-benefit,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/?ae_global_templates=your-role-and-responsibilities-himel,none,custom-post-type,DROP,/,ignore parameters,none,edge
+/c-test/ctwest1/,none,custom-post-type,DROP,/,none,none,stub+edge
+/endorsements/dr-juan-carlos-sainz-borgo/,29870,custom-post-type,MERGE,/about/recognition/#endorsements,none,none,stub+edge
+/endorsements/h-e-winnie-estrup-petersen/,29867,custom-post-type,MERGE,/about/recognition/#endorsements,none,none,stub+edge
+/endorsements/james-gardiner/,13025,custom-post-type,MERGE,/about/recognition/#endorsements,none,none,stub+edge
+/endorsements/melissa-mannis/,29874,custom-post-type,MERGE,/about/recognition/#endorsements,none,none,stub+edge
+/featured-media/5-companies-making-a-splash-for-a-better-world/,18723,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/a-novel-idea-in-microfinance-is-turning-bangladeshis-into-freelance-coders/,18721,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/bangladesh-new-york-pursue-different-paths-to-train-more-coders/,18720,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/building-code-to-break-poverty-in-bangladesh/,18724,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/coderstrust-brings-discovery-education-global-leader-of-stem-education-to-bangladesh/,18618,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/coderstrust-to-finance-brains-to-educate-it-coders/,18725,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/cook-to-coder-how-low-income-youth-are-writing-a-better-future/,17931,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/kosovos-women-go-wow-online-and-working/,17929,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/featured-media/lorem-ipsumlorem-ipsumlorem-ipsum-2/,17897,custom-post-type,DROP,/about/recognition/,none,none,stub+edge
+/featured-media/startup-aims-to-boost-number-of-qualified-it-workers/,18722,custom-post-type,MERGE,/about/recognition/#coverage,none,none,stub+edge
+/footer/main-footer/,none,custom-post-type,DROP,/,none,none,stub+edge
+/header/header-1-mobile/,none,custom-post-type,DROP,/,none,none,stub+edge
+/header/header-2/,none,custom-post-type,DROP,/,none,none,stub+edge
+/jobs/associate-manager-pr-communications/,24990,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/associate-sr-associate-content-development-and-demand-generation/,25466,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/chief-revenue-officer-cro/,31268,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/cinematographer-videographer-editor/,24342,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/executive-student-affairs/,24339,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/frontend-developer-wordpress-woocommerce-shopify/,25757,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/head-of-business-development-and-sales-workforce-development-and-corporate-training-solutions/,28570,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/interactive-animator/,30030,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/intern-business-development/,18174,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/job-intern-grant-marketing-proposals-and-content-writer/,18879,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/job-sr-manager-marketing-and-sales-corporate-training-and-employment/,18869,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/management-trainee-training-excellence-customer-success/,29408,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/manager-digital-marketing/,19053,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-coding-stem/,18877,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-for-mern-stack-course/,29816,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-instructor-cybersecurity/,25471,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-maths-stem/,18902,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-robotics-stem/,18853,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/mentor-science-stem/,18932,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/senior-executive-job-placement/,26980,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/senior-manager-accounts-and-finance/,24885,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-associate-associate-manager-talent-acquisition/,24890,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-creative-video-editor/,30079,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-business-development-and-sales-ctg/,28765,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-global-marketing-and-sales-corporate-training/,24880,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-global-marketing-and-sales-training-and-talent-solutions/,24873,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-head-of-business-development-workforce-development-solutions/,24623,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-head-of-global-sales-and-marketing/,28554,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-marketing-and-sales-b2c-training/,17618,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-marketing-and-sales-superkids/,29833,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/sr-manager-training-excellence-customer-success/,29820,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/systems-administrator/,29936,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/jobs/tech-lead-php-wordpress-woocommerce-shopify/,20128,custom-post-type,MERGE,/careers/,none,none,stub+edge
+/mentor/ashikur-rahman/,23449,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/khandoker-almas-uddin/,33389,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/md-abdur-rashid/,33353,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/md-hazrat-ali-nahid/,23482,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/md-selim-sheikh/,32467,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/md-sharif-hossain/,32464,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/md-towfiqur-rahman/,23491,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/papiya-nabi/,32767,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/rezaul-karim-khan/,32153,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/salma-aktar-suma/,23476,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/sandipan-chowdhury/,33358,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/sanjida-rahman/,33181,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/sheikh-sakibul-hasan/,33335,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/sujon-kumar-dey/,23158,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/mentor/suntaiya-islam-shila/,23488,custom-post-type,MERGE,/about/mentors/,none,none,stub+edge
+/project/yes-project/,none,custom-post-type,MOVE,/impact/case-studies/undp-yes-korail/,none,none,stub+edge
+/students-success-sto/a-b-m-mahir-absar/,10601,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/ashraful-alam-sani/,20421,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/bristy-bagchi/,10600,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/joty-akter/,20410,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/md-maruf-hossain/,20419,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/samia-alam/,20414,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/sonya-talukder/,19312,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/students-success-sto/tushar/,10599,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/team-member/adbul-karim/,18797,custom-post-type,MOVE,/about/team/abdul-karim/,none,none,stub+edge
+/team-member/aziz-ahmad/,18796,custom-post-type,MOVE,/about/team/aziz-ahmad/,none,none,stub+edge
+/team-member/faruque-hossain/,18799,custom-post-type,MOVE,/about/team/faruque-hossain/,none,none,stub+edge
+/team-member/h-m-asad-uz-zaman/,33435,custom-post-type,MOVE,/about/team/asad-zaman/,none,none,stub+edge
+/team-member/mahzabin-akter/,18806,custom-post-type,MOVE,/about/team/mahzabin-akter/,none,none,stub+edge
+/team-member/md-fahim-sheikh/,31755,custom-post-type,MOVE,/about/team/fahim-sheikh/,none,none,stub+edge
+/team-member/md-hazrat-ali-nahid/,32102,custom-post-type,MOVE,/about/team/hazrat-ali-nahid/,none,none,stub+edge
+/team-member/md-zahurul-islam/,33436,custom-post-type,MOVE,/about/team/zahurul-islam/,none,none,stub+edge
+/team-member/mohammad-mahdee-uz-zaman/,33427,custom-post-type,MOVE,/about/team/mahdee-zaman/,none,none,stub+edge
+/team-member/rezaul-karim-khan/,31793,custom-post-type,MOVE,/about/team/rezaul-karim-khan/,none,none,stub+edge
+/team-member/shafqat-ullah/,20468,custom-post-type,MOVE,/about/team/shafqat-ullah/,none,none,stub+edge
+/team-member/shamsul-haque/,18800,custom-post-type,MOVE,/about/team/shamsul-haque/,none,none,stub+edge
+/testcase/test-1/,19065,custom-post-type,DROP,/,none,none,stub+edge
+/trainee-testimonials/adrian-afraham/,13327,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/arfias-islam-rudro/,13329,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/asraful-alam-sany/,13332,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/aysha-akter-bipasha/,13328,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/mehedi-hasan-shakil/,13330,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/mustafa-zabed/,13331,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/mysha-k-diya/,19404,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/nushrat-jahan/,19093,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/trainee-testimonials/zarin-tusnim-shifa/,13319,custom-post-type,MERGE,/impact/stories/,none,none,stub+edge
+/course/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/advance-excel-and-power-bi/,25402,course,JR,https://jobready.global/course/advanced-excel-live-online-course/,none,none,stub+edge
+/course/advanced-facebook-marketing/,25396,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/advanced-seo-amazon-affiliate-marketing/,25392,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/advanced-web-development/,25394,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/android-app-development/,25389,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/app-development-with-lovable-cursor-ai/,33099,course,JR,https://jobready.global/course/app-development-with-lovable-cursor-ai-live-online-course/,none,none,stub+edge
+/course/aws-certified-solutions-architect-associate/,28185,course,JR,https://jobready.global/course/aws-certified-solutions-architect-associate/,none,none,stub+edge
+/course/career-with-remote-job/,25406,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/certified-cyber-security-professional-advance/,32892,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/cloud-accounting-with-quickbooks-and-xero/,30099,course,JR,https://jobready.global/course/cloud-accounting-with-quickbooks-and-xero-on-campus-course/,none,none,stub+edge
+/course/complete-ielts-preparation/,32762,course,JR,https://jobready.global/course/complete-ielts-preparation-live-online-course/,none,none,stub+edge
+/course/content-writing/,25404,course,JR,https://jobready.global/course/content-writing-with-ai-live-online-course/,none,none,stub+edge
+/course/cyber-security-career-accelerator-fundamental/,32891,course,JR,https://jobready.global/course/cybersecurity-career-accelerator-live-online-course/,none,none,stub+edge
+/course/cyber-security/,21519,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/digital-accounting-professional/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/digital-marketing-pgd/,21293,course,MOVE,/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
+/course/digital-marketing/,25398,course,JR,https://jobready.global/course/digital-marketing-with-ai-on-campus-classroom-course/,none,none,stub+edge
+/course/diploma-in-digital-business/,25367,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/diploma-in-tech-entrepreneurship-course/,29912,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/front-end-development/,25410,course,JR,https://jobready.global/course/web-development-professional-live-online-course/,none,none,stub+edge
+/course/fundamentals-of-block-coding/,29985,course,JR,https://jobready.global/course/fundamentals-of-block-coding-live-online-course/,none,none,stub+edge
+/course/graphic-design-with-ai/,25408,course,JR,https://jobready.global/course/graphic-design-with-ai-live-online-course/,none,none,stub+edge
+/course/graphics-design-for-kids/,28414,course,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,none,none,stub+edge
+/course/information-communication-technology/,21358,course,MOVE,/nu-postgraduate-diploma/ict/,none,none,stub+edge
+/course/introduction-to-robotics/,28352,course,JR,https://jobready.global/course/introduction-to-robotics-on-campus-course/,none,none,stub+edge
+/course/jlpt-n5-japanese-language/,32396,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/mastering-ai-with-prompt-engineering/,32114,course,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
+/course/mern-stack-development/,25388,course,JR,https://jobready.global/course/mern-stack-development-live-online-course/,none,none,stub+edge
+/course/motion-graphics/,25370,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/professional-graphic-design/,25390,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/python-and-django/,25333,course,JR,https://jobready.global/course/python-and-django-live-online-course/,none,none,stub+edge
+/course/react-js/,25400,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/ui-ux-design-with-figma/,25407,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/video-editing/,25386,course,JR,https://jobready.global/course/video-editing-live-online-course/,none,none,stub+edge
+/courses/,24639,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/courses/all-courses/,28732,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/courses/cloud-devops-courses/,28340,course,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,none,none,stub+edge
+/courses/digital-business/,26008,course,JR,https://jobready.global/course-category/professional-skills/digital-marketing/,none,none,stub+edge
+/courses/digital-operations/,26964,course,JR,https://jobready.global/course-category/professional-certification/digital-enterprise/,none,none,stub+edge
+/courses/software-development/,26958,course,JR,https://jobready.global/course-category/professional-certification/software-development/,none,none,stub+edge
+/digital-career-skills-courses/,11534,course,JR,https://jobready.global/professional-skills/,none,none,stub+edge
+/latest-courses/,31700,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/list-of-courses/,32358,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/next-generation-skills-courses/big-data-hadoop-and-spark-developer-course/,16563,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/next-generation-skills-courses/test/,14537,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/next-generation-skills/,6638,course,JR,https://jobready.global/professional-certification/,none,none,stub+edge
+/next-generation-skills/artificial-intelligence/,10650,course,JR,https://jobready.global/course-category/professional-certification/artificial-intelligence/,none,none,stub+edge
+/next-generation-skills/big-data/,10659,course,JR,https://jobready.global/course-category/professional-certification/data-analysis/,none,none,stub+edge
+/next-generation-skills/blockchain/,10661,course,JR,https://jobready.global/professional-certification/,none,none,stub+edge
+/next-generation-skills/cloud-computing/,10665,course,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,none,none,stub+edge
+/next-generation-skills/cybersecurity/,10663,course,JR,https://jobready.global/course-category/professional-certification/security/,none,none,stub+edge
+/next-generation-skills/devops/,10667,course,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,none,none,stub+edge
+/product/digital-marketing/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/product/graphic-design/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/product/responsive-web-design/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/1000-trainees-enhancing-digital-government-economy-edge/feed/,none,archive,MOVE,/news/1000-trainees-enhancing-digital-government-economy-edge/,none,none,stub+edge
+/1000-trainees-sheikh-kamal-ict-incubator-training/feed/,none,archive,MOVE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,none,none,stub+edge
+/2021/,none,archive,DROP,/news/,none,none,stub+edge
+/2021/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2021/05/12/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/06/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/06/19/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/10/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/10/20/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/11/,none,archive,DROP,/news/,none,none,stub+edge
+/2022/11/16/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/01/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/03/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/03/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/03/21/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/04/13/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/05/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/06/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/06/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/06/12/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/06/13/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/06/15/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/07/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/07/19/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/08/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/08/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/08/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/08/16/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/08/27/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/09/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/09/07/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/09/17/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/07/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/15/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/16/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/11/21/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/12/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/12/03/,none,archive,DROP,/news/,none,none,stub+edge
+/2023/12/12/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/05/28/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/05/29/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/08/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/08/07/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/10/,none,archive,DROP,/news/,none,none,stub+edge
+/2024/10/08/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/01/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/01/22/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/05/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/05/13/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/05/26/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/08/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/08/28/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/09/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/09/23/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/10/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/10/14/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/10/18/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/11/,none,archive,DROP,/news/,none,none,stub+edge
+/2025/11/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/01/16/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/02/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/02/06/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/02/09/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/04/17/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/07/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/07/17/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/07/18/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/07/27/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/08/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/08/01/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/08/04/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/08/18/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/09/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/09/02/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/09/13/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/09/23/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/10/,none,archive,DROP,/news/,none,none,stub+edge
+/2026/10/06/,none,archive,DROP,/news/,none,none,stub+edge
+/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/feed/,none,archive,MOVE,/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,none,none,stub+edge
+/a-proud-milestone-for-coderstrust/feed/,none,archive,MOVE,/news/a-proud-milestone-for-coderstrust/,none,none,stub+edge
+/author/joya/,none,archive,DROP,/about/team/,none,none,stub+edge
+/author/joya/feed/,none,archive,DROP,/about/team/,none,none,stub+edge
+/author/joya/page/2/,none,archive,DROP,/about/team/,none,none,stub+edge
+/author/joya/page/3/,none,archive,DROP,/about/team/,none,none,stub+edge
+/author/mehta/,none,archive,DROP,/about/team/,none,none,stub+edge
+/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/feed/,none,archive,MOVE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,none,none,stub+edge
+/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/feed/,none,archive,MOVE,/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/,none,none,stub+edge
+/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/feed/,none,archive,MOVE,/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,none,none,stub+edge
+/c-test/ctwest1/feed/,none,archive,DROP,/,none,none,stub+edge
+/category/company-news/,none,archive,DROP,/news/,none,none,stub+edge
+/category/company-news/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/category/featured-news/,none,archive,DROP,/news/,none,none,stub+edge
+/category/featured-news/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/category/latest-news/,none,archive,DROP,/news/,none,none,stub+edge
+/category/latest-news/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/category/latest-news/page/2/,none,archive,DROP,/news/,none,none,stub+edge
+/category/latest-news/page/3/,none,archive,DROP,/news/,none,none,stub+edge
+/category/latest-news/page/4/,none,archive,DROP,/news/,none,none,stub+edge
+/category/news-and-events/,none,archive,DROP,/news/,none,none,stub+edge
+/category/recent-large-scale-contracts/,none,archive,DROP,/news/,none,none,stub+edge
+/category/recent-large-scale-contracts/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/category/uncategorized/,none,archive,DROP,/news/,none,none,stub+edge
+/category/workforce-development/,none,archive,DROP,/news/,none,none,stub+edge
+/category/workforce-development/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/celebrating-america-week-with-the-u-s-embassy-dhaka/feed/,none,archive,MOVE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,none,none,stub+edge
+/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/feed/,none,archive,MOVE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,none,none,stub+edge
+/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/feed/,none,archive,MOVE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,stub+edge
+/coderstrust-attends-wsis20-forum-high-level-event/feed/,none,archive,MOVE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,stub+edge
+/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/feed/,none,archive,MOVE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,stub+edge
+/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/feed/,none,archive,MOVE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,none,none,stub+edge
+/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/feed/,none,archive,MOVE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,none,none,stub+edge
+/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/feed/,none,archive,MOVE,/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/,none,none,stub+edge
+/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/feed/,none,archive,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,none,none,stub+edge
+/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/feed/,none,archive,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,none,none,stub+edge
+/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/feed/,none,archive,MOVE,/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/,none,none,stub+edge
+/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/feed/,none,archive,MOVE,/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/feed/,none,archive,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/feed/,none,archive,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/feed/,none,archive,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,none,none,stub+edge
+/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/feed/,none,archive,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,none,none,stub+edge
+/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/feed/,none,archive,MOVE,/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/,none,none,stub+edge
+/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/feed/,none,archive,MOVE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,none,none,stub+edge
+/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/feed/,none,archive,MOVE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,none,none,stub+edge
+/coderstrust-leedo-join-to-expands-ict-education-to-street-children/feed/,none,archive,MOVE,/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,none,none,stub+edge
+/coderstrust-organizes-career-carnival-for-students-and-affiliates/feed/,none,archive,MOVE,/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/,none,none,stub+edge
+/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/feed/,none,archive,MOVE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,stub+edge
+/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/feed/,none,archive,MOVE,/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,none,none,stub+edge
+/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/feed/,none,archive,MOVE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,stub+edge
+/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/feed/,none,archive,MOVE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,stub+edge
+/coderstrust-teaching-you-freelancing-the-right-way/feed/,none,archive,MOVE,/news/coderstrust-teaching-you-freelancing-the-right-way/,none,none,stub+edge
+/coderstrust-visited-bimstec-headquarter/feed/,none,archive,MOVE,/news/coderstrust-visited-bimstec-headquarter/,none,none,stub+edge
+/comments/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/course-category/cloud-devops/,none,archive,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,none,none,stub+edge
+/course-category/digital-business/,none,archive,JR,https://jobready.global/course-category/professional-skills/digital-marketing/,none,none,stub+edge
+/course-category/digital-operations/,none,archive,JR,https://jobready.global/course-category/professional-certification/digital-enterprise/,none,none,stub+edge
+/course-category/nu-pgd-courses/,none,archive,MOVE,/nu-postgraduate-diploma/,none,none,stub+edge
+/course-category/software-development/,none,archive,JR,https://jobready.global/course-category/professional-certification/software-development/,none,none,stub+edge
+/course-category/superkids-courses/,none,archive,JR,https://jobready.global/course-category/superkids/,none,none,stub+edge
+/course/advance-excel-and-power-bi/feed/,none,archive,JR,https://jobready.global/course/advanced-excel-live-online-course/,none,none,stub+edge
+/course/advanced-facebook-marketing/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/advanced-seo-amazon-affiliate-marketing/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/advanced-web-development/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/android-app-development/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/app-development-with-lovable-cursor-ai/feed/,none,archive,JR,https://jobready.global/course/app-development-with-lovable-cursor-ai-live-online-course/,none,none,stub+edge
+/course/aws-certified-solutions-architect-associate/feed/,none,archive,JR,https://jobready.global/course/aws-certified-solutions-architect-associate/,none,none,stub+edge
+/course/career-with-remote-job/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/certified-cyber-security-professional-advance/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/cloud-accounting-with-quickbooks-and-xero/feed/,none,archive,JR,https://jobready.global/course/cloud-accounting-with-quickbooks-and-xero-on-campus-course/,none,none,stub+edge
+/course/complete-ielts-preparation/feed/,none,archive,JR,https://jobready.global/course/complete-ielts-preparation-live-online-course/,none,none,stub+edge
+/course/content-writing/feed/,none,archive,JR,https://jobready.global/course/content-writing-with-ai-live-online-course/,none,none,stub+edge
+/course/cyber-security-career-accelerator-fundamental/feed/,none,archive,JR,https://jobready.global/course/cybersecurity-career-accelerator-live-online-course/,none,none,stub+edge
+/course/cyber-security/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/digital-marketing-pgd/feed/,none,archive,DROP,/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
+/course/digital-marketing/feed/,none,archive,JR,https://jobready.global/course/digital-marketing-with-ai-on-campus-classroom-course/,none,none,stub+edge
+/course/diploma-in-digital-business/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/diploma-in-tech-entrepreneurship-course/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/front-end-development/feed/,none,archive,JR,https://jobready.global/course/web-development-professional-live-online-course/,none,none,stub+edge
+/course/fundamentals-of-block-coding/feed/,none,archive,JR,https://jobready.global/course/fundamentals-of-block-coding-live-online-course/,none,none,stub+edge
+/course/graphic-design-with-ai/feed/,none,archive,JR,https://jobready.global/course/graphic-design-with-ai-live-online-course/,none,none,stub+edge
+/course/graphics-design-for-kids/feed/,none,archive,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,none,none,stub+edge
+/course/information-communication-technology/feed/,none,archive,DROP,/nu-postgraduate-diploma/ict/,none,none,stub+edge
+/course/introduction-to-robotics/feed/,none,archive,JR,https://jobready.global/course/introduction-to-robotics-on-campus-course/,none,none,stub+edge
+/course/jlpt-n5-japanese-language/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/mastering-ai-with-prompt-engineering/feed/,none,archive,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
+/course/mern-stack-development/feed/,none,archive,JR,https://jobready.global/course/mern-stack-development-live-online-course/,none,none,stub+edge
+/course/motion-graphics/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/professional-graphic-design/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/python-and-django/feed/,none,archive,JR,https://jobready.global/course/python-and-django-live-online-course/,none,none,stub+edge
+/course/react-js/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/ui-ux-design-with-figma/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/video-editing/feed/,none,archive,JR,https://jobready.global/course/video-editing-live-online-course/,none,none,stub+edge
+/courses/all-courses/2/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/courses/all-courses/3/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/courses/all-courses/4/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/courses/all-courses/5/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/feed/,none,archive,MOVE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,stub+edge
+/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/feed/,none,archive,MOVE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,none,none,stub+edge
+/harnessing-socio-technology-for-positive-impact-and-unity-globally/feed/,none,archive,MOVE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,none,none,stub+edge
+/job-category/accountant-finance/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/accountant-finance/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/creative_media/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/creative_media/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/digital-marketing/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/digital-marketing/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/graphics-design/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/it/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/management/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/management/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/marketing-sales/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/marketing-sales/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/mentors/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/mentors/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/operations/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/operations/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/project-management/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/software-engineering/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/software-engineering/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/training-development/,none,archive,DROP,/careers/,none,none,stub+edge
+/job-category/training-development/feed/,none,archive,DROP,/careers/,none,none,stub+edge
+/jobs/,none,archive,DROP,/careers/,none,none,stub+edge
+/jobs/page/2/,none,archive,DROP,/careers/,none,none,stub+edge
+/join-us/2/,none,archive,DROP,/careers/,none,none,stub+edge
+/join-us/3/,none,archive,DROP,/careers/,none,none,stub+edge
+/mentor-category/accounts-management-system/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/accounts-management-system/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/advanced-excel/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/advanced-excel/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/ai-engineer/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/ai-engineer/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/content-writing/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/content-writing/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/digital-marketing/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/digital-marketing/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/graphics-design/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/graphics-design/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/ielts/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/ielts/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/video-editing/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/video-editing/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/web-development/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor-category/web-development/feed/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mentor/,none,archive,DROP,/about/mentors/,none,none,stub+edge
+/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/feed/,none,archive,MOVE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,none,none,stub+edge
+/mou-signing-ceremony-between-north-south-university-coderstrust/feed/,none,archive,MOVE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,none,none,stub+edge
+/news/page/2/,none,archive,DROP,/news/,none,none,stub+edge
+/news/page/3/,none,archive,DROP,/news/,none,none,stub+edge
+/news/page/4/,none,archive,DROP,/news/,none,none,stub+edge
+/news/page/5/,none,archive,DROP,/news/,none,none,stub+edge
+/page/2/,none,archive,DROP,/news/,none,none,stub+edge
+/page/3/,none,archive,DROP,/news/,none,none,stub+edge
+/page/4/,none,archive,DROP,/news/,none,none,stub+edge
+/page/5/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/aziz-ahmad/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/aziz-ahmad/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/aziz-ahmad/page/2/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/corporate-training/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/featured-news/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/featured-news/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/holoniq/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/k-12-education/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/latest-news/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/latest-news/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/latest-news/page/2/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/mou-signing/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/mou-signing/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/nationwide/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/news-and-events/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/roundtable/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/roundtable/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/signing/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/signing/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/south-asia-edtech/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/third-gender-training/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/u-s-embassy/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/u-s-embassy/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/upeace/,none,archive,DROP,/news/,none,none,stub+edge
+/tag/upeace/feed/,none,archive,DROP,/news/,none,none,stub+edge
+/team-category/core-team/,none,archive,DROP,/about/team/,none,none,stub+edge
+/team-category/founder-advisors/,none,archive,DROP,/about/team/,none,none,stub+edge
+/testcase/,none,archive,DROP,/,none,none,stub+edge
+/the-future-building-a-digital-factory-for-bangladesh/feed/,none,archive,MOVE,/news/the-future-building-a-digital-factory-for-bangladesh/,none,none,stub+edge
+/the-man-behind-coderstrust-who-never-forgot-his-roots/feed/,none,archive,MOVE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,none,none,stub+edge
+/why-we-call-it-a-digital-factory/feed/,none,archive,MOVE,/news/why-we-call-it-a-digital-factory/,none,none,stub+edge
+/?attachment_id=11748,11748,attachment,MERGE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,ID map,none,edge
+/?attachment_id=13252,13252,attachment,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?attachment_id=13341,13341,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=13342,13342,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=13347,13347,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=13348,13348,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=13349,13349,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=13350,13350,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=14271,14271,attachment,MERGE,/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/,ID map,none,edge
+/?attachment_id=14557,14557,attachment,MERGE,/programs/nationwide/,ID map,none,edge
+/?attachment_id=14568,14568,attachment,MERGE,/programs/nationwide/,ID map,none,edge
+/?attachment_id=14619,14619,attachment,MERGE,/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,ID map,none,edge
+/?attachment_id=14622,14622,attachment,MERGE,/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,ID map,none,edge
+/?attachment_id=14629,14629,attachment,MERGE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,ID map,none,edge
+/?attachment_id=14630,14630,attachment,MERGE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,ID map,none,edge
+/?attachment_id=14634,14634,attachment,MERGE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,ID map,none,edge
+/?attachment_id=14656,14656,attachment,MERGE,/news/coderstrust-teaching-you-freelancing-the-right-way/,ID map,none,edge
+/?attachment_id=14658,14658,attachment,MERGE,/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,ID map,none,edge
+/?attachment_id=14685,14685,attachment,MERGE,/news/1000-trainees-enhancing-digital-government-economy-edge/,ID map,none,edge
+/?attachment_id=15787,15787,attachment,MERGE,/about/#story,ID map,none,edge
+/?attachment_id=16402,16402,attachment,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,ID map,none,edge
+/?attachment_id=16757,16757,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=16821,16821,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=17240,17240,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=17653,17653,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=17654,17654,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=17655,17655,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=18196,18196,attachment,MERGE,/about/#story,ID map,none,edge
+/?attachment_id=18248,18248,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=18261,18261,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=18269,18269,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=18710,18710,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18711,18711,attachment,DROP,/about/recognition/,ID map,none,edge
+/?attachment_id=18712,18712,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18713,18713,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18714,18714,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18716,18716,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18717,18717,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18718,18718,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=18746,18746,attachment,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?attachment_id=19102,19102,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=19278,19278,attachment,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,ID map,none,edge
+/?attachment_id=19279,19279,attachment,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,ID map,none,edge
+/?attachment_id=19315,19315,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=20333,20333,attachment,MERGE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,ID map,none,edge
+/?attachment_id=20337,20337,attachment,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,ID map,none,edge
+/?attachment_id=20338,20338,attachment,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,ID map,none,edge
+/?attachment_id=20411,20411,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=20415,20415,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=20420,20420,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=20422,20422,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=20509,20509,attachment,MERGE,/about/team/shamsul-haque/,ID map,none,edge
+/?attachment_id=20510,20510,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=20608,20608,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
+/?attachment_id=20609,20609,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
+/?attachment_id=20610,20610,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
+/?attachment_id=20611,20611,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
+/?attachment_id=21038,21038,attachment,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
+/?attachment_id=22367,22367,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=22505,22505,attachment,MERGE,/our-model/talentleap/,ID map,none,edge
+/?attachment_id=24229,24229,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=24230,24230,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=25055,25055,attachment,JR,https://jobready.global/,ID map,none,edge
+/?attachment_id=25056,25056,attachment,JR,https://jobready.global/,ID map,none,edge
+/?attachment_id=25060,25060,attachment,JR,https://jobready.global/,ID map,none,edge
+/?attachment_id=25082,25082,attachment,JR,https://jobready.global/,ID map,none,edge
+/?attachment_id=25489,25489,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=25534,25534,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=25763,25763,attachment,JR,https://jobready.global/courses/,ID map,none,edge
+/?attachment_id=26347,26347,attachment,MERGE,/nu-postgraduate-diploma/ict/,ID map,none,edge
+/?attachment_id=26356,26356,attachment,MERGE,/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
+/?attachment_id=26380,26380,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=27041,27041,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=27240,27240,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=27241,27241,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=27242,27242,attachment,MERGE,/impact/stories/,ID map,none,edge
+/?attachment_id=27309,27309,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27310,27310,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27314,27314,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27325,27325,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27326,27326,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27327,27327,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27329,27329,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27384,27384,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27871,27871,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27872,27872,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27874,27874,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27879,27879,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27958,27958,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27960,27960,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27961,27961,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27966,27966,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27976,27976,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27977,27977,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27978,27978,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=27979,27979,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=28115,28115,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=28119,28119,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=28127,28127,attachment,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,ID map,none,edge
+/?attachment_id=28239,28239,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=28447,28447,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=28449,28449,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=28972,28972,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=29091,29091,attachment,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,ID map,none,edge
+/?attachment_id=29092,29092,attachment,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,ID map,none,edge
+/?attachment_id=29093,29093,attachment,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,ID map,none,edge
+/?attachment_id=29119,29119,attachment,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,ID map,none,edge
+/?attachment_id=29120,29120,attachment,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,ID map,none,edge
+/?attachment_id=29121,29121,attachment,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,ID map,none,edge
+/?attachment_id=29355,29355,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29363,29363,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29364,29364,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29367,29367,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29369,29369,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29370,29370,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29371,29371,attachment,MERGE,/programs/superkids/,ID map,none,edge
+/?attachment_id=29523,29523,attachment,MERGE,/news/coderstrust-visited-bimstec-headquarter/,ID map,none,edge
+/?attachment_id=29526,29526,attachment,MERGE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,ID map,none,edge
+/?attachment_id=29548,29548,attachment,MERGE,/programs/nationwide/,ID map,none,edge
+/?attachment_id=29549,29549,attachment,MERGE,/programs/nationwide/,ID map,none,edge
+/?attachment_id=29554,29554,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29559,29559,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29578,29578,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29584,29584,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29586,29586,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29591,29591,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29601,29601,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29606,29606,attachment,MERGE,/about/team/aziz-ahmad/,ID map,none,edge
+/?attachment_id=29775,29775,attachment,MERGE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,ID map,none,edge
+/?attachment_id=29780,29780,attachment,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,ID map,none,edge
+/?attachment_id=29785,29785,attachment,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
+/?attachment_id=29792,29792,attachment,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
+/?attachment_id=29794,29794,attachment,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
+/?attachment_id=29871,29871,attachment,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?attachment_id=29873,29873,attachment,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?attachment_id=29885,29885,attachment,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?attachment_id=30124,30124,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=30126,30126,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=30132,30132,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=30586,30586,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30587,30587,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30589,30589,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30590,30590,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30594,30594,attachment,WITHHELD,/impact/case-studies/,ID map,withheld pending owner confirmation,edge
+/?attachment_id=30595,30595,attachment,WITHHELD,/impact/case-studies/,ID map,withheld pending owner confirmation,edge
+/?attachment_id=30607,30607,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30608,30608,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30609,30609,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30610,30610,attachment,MERGE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?attachment_id=30613,30613,attachment,MERGE,/impact/case-studies/undp-yes-korail/,ID map,none,edge
+/?attachment_id=30637,30637,attachment,MERGE,/impact/case-studies/undp-yes-korail/,ID map,none,edge
+/?attachment_id=30814,30814,attachment,JR,https://jobready.global/courses/,ID map,none,edge
+/?attachment_id=30947,30947,attachment,MERGE,/about/team/ferdinand-kjaerulff/,ID map,none,edge
+/?attachment_id=30955,30955,attachment,MERGE,/about/team/ferdinand-kjaerulff/,ID map,none,edge
+/?attachment_id=30960,30960,attachment,MERGE,/about/team/ferdinand-kjaerulff/,ID map,none,edge
+/?attachment_id=30966,30966,attachment,MERGE,/about/team/ferdinand-kjaerulff/,ID map,none,edge
+/?attachment_id=31515,31515,attachment,MERGE,/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,ID map,none,edge
+/?attachment_id=31529,31529,attachment,MERGE,/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/,ID map,none,edge
+/?attachment_id=31548,31548,attachment,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,ID map,none,edge
+/?attachment_id=31549,31549,attachment,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,ID map,none,edge
+/?attachment_id=31550,31550,attachment,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,ID map,none,edge
+/?attachment_id=31560,31560,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,ID map,none,edge
+/?attachment_id=31563,31563,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,ID map,none,edge
+/?attachment_id=31778,31778,attachment,MERGE,/about/team/fahim-sheikh/,ID map,none,edge
+/?attachment_id=31810,31810,attachment,MERGE,/about/team/rezaul-karim-khan/,ID map,none,edge
+/?attachment_id=32103,32103,attachment,MERGE,/about/team/hazrat-ali-nahid/,ID map,none,edge
+/?attachment_id=32155,32155,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=32354,32354,attachment,MERGE,/careers/,ID map,none,edge
+/?attachment_id=32408,32408,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=32411,32411,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=32412,32412,attachment,MERGE,/about/team/,ID map,none,edge
+/?attachment_id=32468,32468,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=32487,32487,attachment,MERGE,/programs/nationwide/,ID map,none,edge
+/?attachment_id=32524,32524,attachment,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,ID map,none,edge
+/?attachment_id=32525,32525,attachment,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,ID map,none,edge
+/?attachment_id=32526,32526,attachment,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,ID map,none,edge
+/?attachment_id=32535,32535,attachment,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,ID map,none,edge
+/?attachment_id=32536,32536,attachment,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,ID map,none,edge
+/?attachment_id=32537,32537,attachment,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,ID map,none,edge
+/?attachment_id=32553,32553,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,ID map,none,edge
+/?attachment_id=32558,32558,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,ID map,none,edge
+/?attachment_id=32559,32559,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,ID map,none,edge
+/?attachment_id=32560,32560,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,ID map,none,edge
+/?attachment_id=32571,32571,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,ID map,none,edge
+/?attachment_id=32572,32572,attachment,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,ID map,none,edge
+/?attachment_id=32768,32768,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=32830,32830,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=32832,32832,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=32833,32833,attachment,MERGE,/impact/case-studies/her-power/,ID map,none,edge
+/?attachment_id=32921,32921,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,ID map,none,edge
+/?attachment_id=32922,32922,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,ID map,none,edge
+/?attachment_id=32923,32923,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,ID map,none,edge
+/?attachment_id=32931,32931,attachment,MERGE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,ID map,none,edge
+/?attachment_id=32932,32932,attachment,MERGE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,ID map,none,edge
+/?attachment_id=32937,32937,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,ID map,none,edge
+/?attachment_id=32939,32939,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,ID map,none,edge
+/?attachment_id=32940,32940,attachment,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,ID map,none,edge
+/?attachment_id=33085,33085,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33086,33086,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33088,33088,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33089,33089,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33090,33090,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33091,33091,attachment,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?attachment_id=33182,33182,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33185,33185,attachment,MERGE,/news/the-future-building-a-digital-factory-for-bangladesh/,ID map,none,edge
+/?attachment_id=33213,33213,attachment,MERGE,/news/why-we-call-it-a-digital-factory/,ID map,none,edge
+/?attachment_id=33216,33216,attachment,MERGE,/news/why-we-call-it-a-digital-factory/,ID map,none,edge
+/?attachment_id=33239,33239,attachment,MERGE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,ID map,none,edge
+/?attachment_id=33240,33240,attachment,MERGE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,ID map,none,edge
+/?attachment_id=33246,33246,attachment,MERGE,/news/a-proud-milestone-for-coderstrust/,ID map,none,edge
+/?attachment_id=33247,33247,attachment,MERGE,/news/a-proud-milestone-for-coderstrust/,ID map,none,edge
+/?attachment_id=33276,33276,attachment,MERGE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,ID map,none,edge
+/?attachment_id=33277,33277,attachment,MERGE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,ID map,none,edge
+/?attachment_id=33286,33286,attachment,MERGE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,ID map,none,edge
+/?attachment_id=33305,33305,attachment,MERGE,/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/,ID map,none,edge
+/?attachment_id=33325,33325,attachment,MERGE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,ID map,none,edge
+/?attachment_id=33326,33326,attachment,MERGE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,ID map,none,edge
+/?attachment_id=33332,33332,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33333,33333,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33340,33340,attachment,MERGE,/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/,ID map,none,edge
+/?attachment_id=33343,33343,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33349,33349,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33350,33350,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33359,33359,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33383,33383,attachment,MERGE,/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/,ID map,none,edge
+/?attachment_id=33390,33390,attachment,MERGE,/about/mentors/,ID map,none,edge
+/?attachment_id=33430,33430,attachment,MERGE,/about/team/shafqat-ullah/,ID map,none,edge
+/?attachment_id=33431,33431,attachment,MERGE,/about/team/mahdee-zaman/,ID map,none,edge
+/?attachment_id=33432,33432,attachment,MERGE,/about/team/mahdee-zaman/,ID map,none,edge
+/?attachment_id=33433,33433,attachment,MERGE,/about/team/mahdee-zaman/,ID map,none,edge
+/?attachment_id=7310,7310,attachment,MERGE,/news/1000-trainees-enhancing-digital-government-economy-edge/,ID map,none,edge
+/?attachment_id=7317,7317,attachment,MERGE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,ID map,none,edge
+/?attachment_id=7793,7793,attachment,MERGE,/about/#story,ID map,none,edge
+/?attachment_id=8593,8593,attachment,MERGE,/about/#story,ID map,none,edge
+/?attachment_id=,none,query-string,DROP,/,ID map,none,edge
+/?author=,none,query-string,DROP,/about/team/,ignore parameters,none,edge
+/?cat=,none,query-string,DROP,/news/,ignore parameters,none,edge
+/?feed=,none,query-string,DROP,/news/,ignore parameters,none,edge
+/?p=,none,query-string,DROP,/,ID map,none,edge
+/?p=10599,10599,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=10600,10600,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=10601,10601,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=11188,11188,query-string,MOVE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,ID map,none,edge
+/?p=13025,13025,query-string,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?p=13319,13319,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13327,13327,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13328,13328,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13329,13329,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13330,13330,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13331,13331,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=13332,13332,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=14270,14270,query-string,MOVE,/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/,ID map,none,edge
+/?p=14537,14537,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=16563,16563,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=17618,17618,query-string,MERGE,/careers/,ID map,none,edge
+/?p=17897,17897,query-string,DROP,/about/recognition/,ID map,none,edge
+/?p=17929,17929,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=17931,17931,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18174,18174,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18618,18618,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18720,18720,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18721,18721,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18722,18722,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18723,18723,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18724,18724,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18725,18725,query-string,MERGE,/about/recognition/#coverage,ID map,none,edge
+/?p=18796,18796,query-string,MOVE,/about/team/aziz-ahmad/,ID map,none,edge
+/?p=18797,18797,query-string,MOVE,/about/team/abdul-karim/,ID map,none,edge
+/?p=18799,18799,query-string,MOVE,/about/team/faruque-hossain/,ID map,none,edge
+/?p=18800,18800,query-string,MOVE,/about/team/shamsul-haque/,ID map,none,edge
+/?p=18806,18806,query-string,MOVE,/about/team/mahzabin-akter/,ID map,none,edge
+/?p=18853,18853,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18869,18869,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18877,18877,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18879,18879,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18902,18902,query-string,MERGE,/careers/,ID map,none,edge
+/?p=18932,18932,query-string,MERGE,/careers/,ID map,none,edge
+/?p=19053,19053,query-string,MERGE,/careers/,ID map,none,edge
+/?p=19093,19093,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=19277,19277,query-string,MOVE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,ID map,none,edge
+/?p=19312,19312,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=19404,19404,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=20128,20128,query-string,MERGE,/careers/,ID map,none,edge
+/?p=20332,20332,query-string,MOVE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,ID map,none,edge
+/?p=20336,20336,query-string,MOVE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,ID map,none,edge
+/?p=20410,20410,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=20414,20414,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=20419,20419,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=20421,20421,query-string,MERGE,/impact/stories/,ID map,none,edge
+/?p=20468,20468,query-string,MOVE,/about/team/shafqat-ullah/,ID map,none,edge
+/?p=20592,20592,query-string,MOVE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
+/?p=21030,21030,query-string,MOVE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
+/?p=21152,21152,query-string,MOVE,/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/,ID map,none,edge
+/?p=21293,21293,query-string,MOVE,/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
+/?p=21358,21358,query-string,MOVE,/nu-postgraduate-diploma/ict/,ID map,none,edge
+/?p=21519,21519,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=23158,23158,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=23449,23449,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=23476,23476,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=23482,23482,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=23488,23488,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=23491,23491,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=24339,24339,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24342,24342,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24623,24623,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24873,24873,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24880,24880,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24885,24885,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24890,24890,query-string,MERGE,/careers/,ID map,none,edge
+/?p=24990,24990,query-string,MERGE,/careers/,ID map,none,edge
+/?p=25333,25333,query-string,JR,https://jobready.global/course/python-and-django-live-online-course/,ID map,none,edge
+/?p=25367,25367,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25370,25370,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25386,25386,query-string,JR,https://jobready.global/course/video-editing-live-online-course/,ID map,none,edge
+/?p=25388,25388,query-string,JR,https://jobready.global/course/mern-stack-development-live-online-course/,ID map,none,edge
+/?p=25389,25389,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25390,25390,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25392,25392,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25394,25394,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25396,25396,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25398,25398,query-string,JR,https://jobready.global/course/digital-marketing-with-ai-on-campus-classroom-course/,ID map,none,edge
+/?p=25400,25400,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25402,25402,query-string,JR,https://jobready.global/course/advanced-excel-live-online-course/,ID map,none,edge
+/?p=25404,25404,query-string,JR,https://jobready.global/course/content-writing-with-ai-live-online-course/,ID map,none,edge
+/?p=25406,25406,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25407,25407,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=25408,25408,query-string,JR,https://jobready.global/course/graphic-design-with-ai-live-online-course/,ID map,none,edge
+/?p=25410,25410,query-string,JR,https://jobready.global/course/web-development-professional-live-online-course/,ID map,none,edge
+/?p=25466,25466,query-string,MERGE,/careers/,ID map,none,edge
+/?p=25471,25471,query-string,MERGE,/careers/,ID map,none,edge
+/?p=25757,25757,query-string,MERGE,/careers/,ID map,none,edge
+/?p=26980,26980,query-string,MERGE,/careers/,ID map,none,edge
+/?p=28185,28185,query-string,JR,https://jobready.global/course/aws-certified-solutions-architect-associate/,ID map,none,edge
+/?p=28352,28352,query-string,JR,https://jobready.global/course/introduction-to-robotics-on-campus-course/,ID map,none,edge
+/?p=28414,28414,query-string,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,ID map,none,edge
+/?p=28554,28554,query-string,MERGE,/careers/,ID map,none,edge
+/?p=28570,28570,query-string,MERGE,/careers/,ID map,none,edge
+/?p=28765,28765,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29087,29087,query-string,MOVE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,ID map,none,edge
+/?p=29090,29090,query-string,MOVE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,ID map,none,edge
+/?p=29117,29117,query-string,MOVE,/news/coderstrust-attends-wsis20-forum-high-level-event/,ID map,none,edge
+/?p=29408,29408,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29816,29816,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29820,29820,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29833,29833,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29867,29867,query-string,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?p=29870,29870,query-string,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?p=29874,29874,query-string,MERGE,/about/recognition/#endorsements,ID map,none,edge
+/?p=29912,29912,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=29936,29936,query-string,MERGE,/careers/,ID map,none,edge
+/?p=29985,29985,query-string,JR,https://jobready.global/course/fundamentals-of-block-coding-live-online-course/,ID map,none,edge
+/?p=30030,30030,query-string,MERGE,/careers/,ID map,none,edge
+/?p=30079,30079,query-string,MERGE,/careers/,ID map,none,edge
+/?p=30099,30099,query-string,JR,https://jobready.global/course/cloud-accounting-with-quickbooks-and-xero-on-campus-course/,ID map,none,edge
+/?p=31268,31268,query-string,MERGE,/careers/,ID map,none,edge
+/?p=31514,31514,query-string,MOVE,/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,ID map,none,edge
+/?p=31520,31520,query-string,MOVE,/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/,ID map,none,edge
+/?p=31547,31547,query-string,MOVE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,ID map,none,edge
+/?p=31559,31559,query-string,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,ID map,none,edge
+/?p=31755,31755,query-string,MOVE,/about/team/fahim-sheikh/,ID map,none,edge
+/?p=31793,31793,query-string,MOVE,/about/team/rezaul-karim-khan/,ID map,none,edge
+/?p=32102,32102,query-string,MOVE,/about/team/hazrat-ali-nahid/,ID map,none,edge
+/?p=32114,32114,query-string,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,ID map,none,edge
+/?p=32153,32153,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=32396,32396,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=32464,32464,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=32467,32467,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=32523,32523,query-string,MOVE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,ID map,none,edge
+/?p=32534,32534,query-string,MOVE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,ID map,none,edge
+/?p=32552,32552,query-string,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,ID map,none,edge
+/?p=32557,32557,query-string,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,ID map,none,edge
+/?p=32570,32570,query-string,MOVE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,ID map,none,edge
+/?p=32762,32762,query-string,JR,https://jobready.global/course/complete-ielts-preparation-live-online-course/,ID map,none,edge
+/?p=32767,32767,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=32891,32891,query-string,JR,https://jobready.global/course/cybersecurity-career-accelerator-live-online-course/,ID map,none,edge
+/?p=32892,32892,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?p=32920,32920,query-string,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,ID map,none,edge
+/?p=32930,32930,query-string,MOVE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,ID map,none,edge
+/?p=32936,32936,query-string,MOVE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,ID map,none,edge
+/?p=33077,33077,query-string,MOVE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,ID map,none,edge
+/?p=33099,33099,query-string,JR,https://jobready.global/course/app-development-with-lovable-cursor-ai-live-online-course/,ID map,none,edge
+/?p=33181,33181,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=33184,33184,query-string,MOVE,/news/the-future-building-a-digital-factory-for-bangladesh/,ID map,none,edge
+/?p=33209,33209,query-string,MOVE,/news/why-we-call-it-a-digital-factory/,ID map,none,edge
+/?p=33238,33238,query-string,MOVE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,ID map,none,edge
+/?p=33245,33245,query-string,MOVE,/news/a-proud-milestone-for-coderstrust/,ID map,none,edge
+/?p=33273,33273,query-string,MOVE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,ID map,none,edge
+/?p=33304,33304,query-string,MOVE,/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/,ID map,none,edge
+/?p=33324,33324,query-string,MOVE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,ID map,none,edge
+/?p=33335,33335,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=33339,33339,query-string,MOVE,/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/,ID map,none,edge
+/?p=33353,33353,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=33358,33358,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=33381,33381,query-string,MOVE,/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/,ID map,none,edge
+/?p=33389,33389,query-string,MERGE,/about/mentors/,ID map,none,edge
+/?p=33427,33427,query-string,MOVE,/about/team/mahdee-zaman/,ID map,none,edge
+/?p=33435,33435,query-string,MOVE,/about/team/asad-zaman/,ID map,none,edge
+/?p=33436,33436,query-string,MOVE,/about/team/zahurul-islam/,ID map,none,edge
+/?p=7298,7298,query-string,MOVE,/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,ID map,none,edge
+/?p=7307,7307,query-string,MOVE,/news/1000-trainees-enhancing-digital-government-economy-edge/,ID map,none,edge
+/?p=7316,7316,query-string,MOVE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,ID map,none,edge
+/?p=9468,9468,query-string,MOVE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,ID map,none,edge
+/?p=9651,9651,query-string,MOVE,/news/coderstrust-visited-bimstec-headquarter/,ID map,none,edge
+/?p=9826,9826,query-string,MOVE,/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,ID map,none,edge
+/?p=9829,9829,query-string,MOVE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,ID map,none,edge
+/?p=9832,9832,query-string,MOVE,/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,ID map,none,edge
+/?p=9835,9835,query-string,MOVE,/news/coderstrust-teaching-you-freelancing-the-right-way/,ID map,none,edge
+/?page_id=,none,query-string,DROP,/,ID map,none,edge
+/?page_id=10650,10650,query-string,JR,https://jobready.global/course-category/professional-certification/artificial-intelligence/,ID map,none,edge
+/?page_id=10659,10659,query-string,JR,https://jobready.global/course-category/professional-certification/data-analysis/,ID map,none,edge
+/?page_id=10661,10661,query-string,JR,https://jobready.global/professional-certification/,ID map,none,edge
+/?page_id=10663,10663,query-string,JR,https://jobready.global/course-category/professional-certification/security/,ID map,none,edge
+/?page_id=10665,10665,query-string,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,ID map,none,edge
+/?page_id=10667,10667,query-string,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,ID map,none,edge
+/?page_id=11534,11534,query-string,JR,https://jobready.global/professional-skills/,ID map,none,edge
+/?page_id=12656,12656,query-string,MOVE,/programs/nationwide/,ID map,none,edge
+/?page_id=13178,13178,query-string,DROP,https://jobready.global/,ID map,none,edge
+/?page_id=16758,16758,query-string,MOVE,/careers/,ID map,none,edge
+/?page_id=18454,18454,query-string,DROP,/careers/,ID map,none,edge
+/?page_id=19316,19316,query-string,DROP,https://jobready.global/,ID map,none,edge
+/?page_id=19820,19820,query-string,MOVE,/privacy-policy/,ID map,none,edge
+/?page_id=2091,2091,query-string,MERGE,/about/#story,ID map,none,edge
+/?page_id=21235,21235,query-string,MOVE,/nu-postgraduate-diploma/,ID map,none,edge
+/?page_id=23736,23736,query-string,MOVE,/about/mentors/,ID map,none,edge
+/?page_id=24639,24639,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?page_id=25026,25026,query-string,JR,https://jobready.global/,ID map,none,edge
+/?page_id=25445,25445,query-string,MOVE,/programs/superkids/,ID map,none,edge
+/?page_id=26008,26008,query-string,JR,https://jobready.global/course-category/professional-skills/digital-marketing/,ID map,none,edge
+/?page_id=26958,26958,query-string,JR,https://jobready.global/course-category/professional-certification/software-development/,ID map,none,edge
+/?page_id=26964,26964,query-string,JR,https://jobready.global/course-category/professional-certification/digital-enterprise/,ID map,none,edge
+/?page_id=28340,28340,query-string,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,ID map,none,edge
+/?page_id=28732,28732,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?page_id=30116,30116,query-string,MOVE,/impact/case-studies/her-power/,ID map,none,edge
+/?page_id=30429,30429,query-string,MOVE,/impact/case-studies/,ID map,none,edge
+/?page_id=30551,30551,query-string,MOVE,/impact/case-studies/kosovo-women-in-online-work/,ID map,none,edge
+/?page_id=30578,30578,query-string,MOVE,/impact/case-studies/wsdfm-women-freelancers/,ID map,none,edge
+/?page_id=30583,30583,query-string,WITHHELD,/impact/case-studies/,ID map,withheld pending owner confirmation,edge
+/?page_id=30611,30611,query-string,MOVE,/impact/case-studies/undp-yes-korail/,ID map,none,edge
+/?page_id=30939,30939,query-string,MOVE,/about/team/ferdinand-kjaerulff/,ID map,none,edge
+/?page_id=31700,31700,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?page_id=32358,32358,query-string,JR,https://jobready.global/courses/,ID map,none,edge
+/?page_id=32647,32647,query-string,JR,https://jobready.global/,ID map,none,edge
+/?page_id=33235,33235,query-string,MOVE,/,ID map,none,edge
+/?page_id=5009,5009,query-string,MOVE,/contact/,ID map,none,edge
+/?page_id=5287,5287,query-string,MOVE,/news/,ID map,none,edge
+/?page_id=6616,6616,query-string,MOVE,/partner-with-us/development-partners/,ID map,none,edge
+/?page_id=6636,6636,query-string,MOVE,/our-model/talentleap/,ID map,none,edge
+/?page_id=6638,6638,query-string,JR,https://jobready.global/professional-certification/,ID map,none,edge
+/?page_id=7670,7670,query-string,MOVE,/about/,ID map,none,edge
+/?page_id=8600,8600,query-string,MOVE,/about/team/,ID map,none,edge
+/?page_id=8631,8631,query-string,MOVE,/about/team/aziz-ahmad/,ID map,none,edge
+/?post_type=,none,query-string,DROP,/,ignore parameters,none,edge
+/?post_type=course,none,query-string,JR,https://jobready.global/courses/,ignore parameters,none,edge
+/?post_type=ngs-course,none,query-string,JR,https://jobready.global/courses/,ignore parameters,none,edge
+/?s=,none,query-string,DROP,/news/,ignore parameters,none,edge
+/?tag=,none,query-string,DROP,/news/,ignore parameters,none,edge
+/wp-admin/,none,system,SYSTEM,410,none,none,edge
+/wp-cron.php,none,system,SYSTEM,410,none,none,edge
+/wp-json/,none,system,SYSTEM,410,none,none,edge
+/wp-login.php,none,system,SYSTEM,410,none,none,edge
+/xmlrpc.php,none,system,SYSTEM,410,none,none,edge
+/wp-content/uploads/2017/02/UNDP-Korail-561x456.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2017/02/UNDP-Korail-970x457.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/2017/02/UNDP-Korail.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/2017/02/UNDP-Yes-Graph.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/2017/02/Yes-Partner-Logos.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/2021/05/coders_trust_7_1-1-561x456.jpg,14656,media,MERGE,/,none,none,edge
+/wp-content/uploads/2021/05/coders_trust_7_1-1-scaled.jpg,14656,media,MERGE,/news/coderstrust-teaching-you-freelancing-the-right-way/,none,none,edge
+/wp-content/uploads/2021/05/coders_trust_7_1-1.jpg,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-1024x140.png,12553,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-1536x210.png,12553,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-2048x280.png,12553,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-300x41.png,12553,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-600x82.png,12553,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-768x105.png,12553,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo.png,12553,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2022/02/bw-generic-01.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/02/bw-team-01.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/02/bw-testi-01.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/02/client-logo.png,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/03/bw-fact-img-1.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/CT-Symbol-Logo-100x100.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/04/CT-Symbol-Logo-150x150.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/04/CT-Symbol-Logo-70x70.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/04/CT-Symbol-Logo.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2022/04/bw-fact-img-2.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-fact-img-3.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-generic-02.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-team-02.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-team-03.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-team-04.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-testi-02.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/04/bw-testi-03.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/05/bw-fact-img-4.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/06/bw-generic-03.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/06/leedo1.png,14622,media,MERGE,/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/,none,none,edge
+/wp-content/uploads/2022/07/bw-blog-detail-5.jpg,6127,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/bw-team-05.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/bw-team-06.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/bw-testi-04.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/bw-testi-05.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/bw-testi-06.jpg,none,media,MERGE,/about/,none,none,edge
+/wp-content/uploads/2022/07/image-frame-new.png,none,media,MERGE,/partner-with-us/development-partners/,none,none,edge
+/wp-content/uploads/2022/10/Aziz-Ahmad-561x446.png,14619,media,MERGE,/,none,none,edge
+/wp-content/uploads/2022/10/Aziz-Ahmad.png,14619,media,MERGE,/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/,none,none,edge
+/wp-content/uploads/2022/11/Gardinar-emphasizes-skill-development-1.jpg,14630,media,MERGE,/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/,none,none,edge
+/wp-content/uploads/2022/11/Gardinar-emphasizes-skill-development-561x456.jpg,14629,media,MERGE,/,none,none,edge
+/wp-content/uploads/2022/11/Gardinar-emphasizes-skill-development.jpg,14629,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/01/Sheikh-Kamal-IT-centre-561x456.png,14634,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/01/Sheikh-Kamal-IT-centre.png,14634,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/03/Edge-Signing-561x456.jpg,14685,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/03/Edge-Signing.jpg,14685,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/CARE_Logo_Orange-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/CodersTrust-slider-1-c-1.jpg,7793,media,MERGE,/about/#story,none,none,edge
+/wp-content/uploads/2023/04/IDE_Official_Logo-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/Porticus-logo.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/Signing-with-Her-Power-Project-561x456.jpg,14658,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/Signing-with-Her-Power-Project.jpg,14658,media,MERGE,/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/,none,none,edge
+/wp-content/uploads/2023/04/The_Rockefeller_Foundation_Logo-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/UNDP-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/World_Bank_logo-2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/accenture-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/brac-logo-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/bw-fact-img-white.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/danida-logo-2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/dutch-foundation-logo.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/04/image-1.png,7310,media,MERGE,/news/1000-trainees-enhancing-digital-government-economy-edge/,none,none,edge
+/wp-content/uploads/2023/04/image-2.png,7317,media,MERGE,/news/1000-trainees-sheikh-kamal-ict-incubator-training/,none,none,edge
+/wp-content/uploads/2023/04/wfp-logo-standard-blue-en.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/05/Aklima-Akder-Success.png,8732,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/05/CT-in-countries.webp,8593,media,MERGE,/about/#story,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-1024x155.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-1536x232.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-2048x310.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-300x45.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-600x91.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white-768x116.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/CodersTrust-Logo-white.png,10084,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/05/Shamim-Ahmed-Success.png,8733,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/05/bw-generic-03-2.png,none,media,MERGE,/partner-with-us/development-partners/,none,none,edge
+/wp-content/uploads/2023/05/light-bg.jpg,8141,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/05/undp-logo-5682674D5C-seeklogo.com_.png,8820,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/A-B-M-Mahir-Absar.png,27240,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/AIUB-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/AUST-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/Adrian-Testimonials.png,13342,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Arfias-Islam-Rudro.png,13347,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Asraful-Alam-Sany-Testimonials.png,13350,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Aysha-Akter-Testimonials-1-1.png,16757,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Aziz-Ahmad.webp,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/BRAC-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/BRAC-STRONG-IT-1.png,none,media,MERGE,/impact/case-studies/,none,none,edge
+/wp-content/uploads/2023/06/Bristy-Bagchi.png,27241,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/CodersTrust-updated-Roadmap.png,15787,media,MERGE,/about/#story,none,none,edge
+/wp-content/uploads/2023/06/DIU-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/Dhaka-University-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/East-west-university-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/Green-University-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/Jahangirnagar-University-Logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/James-Gardiner-Endorsement.webp,13252,media,MERGE,/about/recognition/#endorsements,none,none,edge
+/wp-content/uploads/2023/06/Mehedi-Hasan-Sakil-Testimonial.png,13348,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Mustafa-Zabed-Testimonials.png,13349,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/NU-Graduates-Graphs.png,14568,media,MERGE,/programs/nationwide/,none,none,edge
+/wp-content/uploads/2023/06/UIU-logo-final.jpg.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-1024x255.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-1536x383.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-2048x510.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-300x75.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-600x150.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent-768x191.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/06/UPEACE-Logo-Transparent.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/University_of_Liberal_Arts_Bangladesh_logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/WhatsApp-Image-2023-06-04-at-00.15.44-561x456.jpeg,11748,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/WhatsApp-Image-2023-06-04-at-00.15.44.jpeg,11748,media,MERGE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,none,none,edge
+/wp-content/uploads/2023/06/Zarin-Tusnim-Shifa-Testimonials.png,13341,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/image_2023_06_15T16_10_59_630Z-561x456.png,14271,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/06/image_2023_06_15T16_10_59_630Z.png,14271,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/06/light-bg.jpg,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/madrasha-graph-ICT-training.png,14557,media,MERGE,/programs/nationwide/,none,none,edge
+/wp-content/uploads/2023/06/north-south-university-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/northern-university-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/partner-with-us.png,none,media,MERGE,/about/#story,none,none,edge
+/wp-content/uploads/2023/06/primeasia-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/testbg.jpg,none,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/tushar.png,27242,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/06/wub-logo-final.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/Artificial-Intelligence-Category-1.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/Bigdata-Category.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/Blockchain-Category.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/CT-Favicon.jpg,17156,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/Cloud-Computing-Categegory.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/CodersTrust-Logo.png,16762,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/CodersTrust-Slider-NationWIDE.webp,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/CodersTrust-slider-albania-color-.webp,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/CodersTrust-slider-kosovo.webp,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/Cybersecurity-Category.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/DevOps-Category-1.png,16402,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/Falgun-event-1024x731.jpg,17240,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Falgun-event.jpg,17240,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Faruk-sir.jpg,18261,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/07/Mahzabin-Akter.jpg,18248,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/07/Monika-employee-1024x819.jpg,none,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Monika-employee.jpg,none,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Office-lab-1024x732.jpg,17654,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Office-lab.jpg,17654,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Picninc-1024x731.jpg,17655,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Picninc.jpg,17655,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Scalable-Sustainable-Model.png,18196,media,MERGE,/about/#story,none,none,edge
+/wp-content/uploads/2023/07/Support-employee-1024x732.jpg,17653,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/Support-employee.jpg,17653,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/The-times-of-India-e1690880846511.png,18746,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/coders_trust_1_0.jpg,16821,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2023/07/cropped-CT-Favicon-180x180.jpg,17157,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/cropped-CT-Favicon-192x192.jpg,17157,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/cropped-CT-Favicon-32x32.jpg,17157,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/cropped-CT-Favicon-512x512.jpg,17157,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/cropped-CT-Favicon.jpg,17157,media,DROP,/,none,none,edge
+/wp-content/uploads/2023/07/karim_sir.jpg,18269,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/07/logo-under-tab-copy.png,17971,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/world-maps-marked.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/07/yes-result-graph.png,16314,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/AZIZ-AHMAD-1.png,20510,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/08/Forbes.png,18710,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/Gulf-News.png,18711,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/MD-SHAMSUL-HAQUE-1.png,20509,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/08/Mid-Hudson-News.png,18712,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/TechCrunch.png,18713,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/TechInAsia-e1690871420459.png,18714,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/USA-Today.png,18716,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/Wall-street-Journal.png,18717,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/World-Bank-e1690869428383.png,18718,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/08/nushratjahan-400x446.jpg,19102,media,MERGE,/impact/stories/,none,none,edge
+/wp-content/uploads/2023/08/nushratjahan.jpg,19102,media,MERGE,/impact/stories/,none,none,edge
+/wp-content/uploads/2023/09/CodersTrust-provide-certificate-of-participation-to-Akij-group-employees-300x200.jpg,19279,media,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,edge
+/wp-content/uploads/2023/09/CodersTrust-provide-certificate-of-participation-to-Akij-group-employees.jpg,19279,media,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,edge
+/wp-content/uploads/2023/09/Coderstrust-provide-corporate-training-to-Akij-group-300x200.jpg,19278,media,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,edge
+/wp-content/uploads/2023/09/Coderstrust-provide-corporate-training-to-Akij-group.jpg,19278,media,MERGE,/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/,none,none,edge
+/wp-content/uploads/2023/09/Diya-400x446.jpg,19403,media,MERGE,/impact/stories/,none,none,edge
+/wp-content/uploads/2023/09/Diya.jpg,19403,media,MERGE,/impact/stories/,none,none,edge
+/wp-content/uploads/2023/09/Sonya-Talukder-Sucess-Story.jpg,19315,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/10/Title-Slider-Images-Upscaled.jpg,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/11/Ashraful-Alam-Sani.png,20422,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/11/CT-Mou-with-NCTB-4-300x200.jpg,21038,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/11/CT-Mou-with-NCTB-4.jpg,21038,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/11/CT-Mou-with-NCTB-5-e1701081133756-300x218.jpg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/11/CT-Mou-with-NCTB-5-e1701081133756.jpg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/11/Md.-Maruf-Hossain.png,20420,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/11/MoU-with-Ostitto-and-CT-1-e1700657239544-300x128.jpeg,20337,media,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,edge
+/wp-content/uploads/2023/11/MoU-with-Ostitto-and-CT-1-e1700657239544.jpeg,20337,media,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,edge
+/wp-content/uploads/2023/11/MoU-with-Ostitto-and-CT-2-e1700657311830-300x135.jpeg,20338,media,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,edge
+/wp-content/uploads/2023/11/MoU-with-Ostitto-and-CT-2-e1700657311830.jpeg,20338,media,MERGE,/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/,none,none,edge
+/wp-content/uploads/2023/11/Samia-Alam.png,20415,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-1-e1700660236975-300x179.jpeg,20609,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-1-e1700660236975.jpeg,20609,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-2-300x225.jpeg,20611,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-2.jpeg,20611,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-4-e1700660156296-300x150.jpeg,20608,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-4-e1700660156296.jpeg,20608,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-5-e1700660271919-300x156.jpeg,20610,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/ToT-closing-ceremony-at-ICT-5-e1700660271919.jpeg,20610,media,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,none,none,edge
+/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-05-at-10.28.23-AM-300x169.jpeg,20333,media,MERGE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,none,none,edge
+/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-05-at-10.28.23-AM.jpeg,20333,media,MERGE,/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/,none,none,edge
+/wp-content/uploads/2023/11/joty.png,20411,media,MERGE,/,none,none,edge
+/wp-content/uploads/2023/11/shafqat-1.webp,33430,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2023/12/Build-Peace-2023-Conference-2024-2-300x225.jpg,29775,media,MERGE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,none,none,edge
+/wp-content/uploads/2023/12/Build-Peace-2023-Conference-2024-2.jpg,29775,media,MERGE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,none,none,edge
+/wp-content/uploads/2023/12/CT-in-top-100-561x456.jpeg,none,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/12/CT-in-top-100.jpeg,none,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/12/DGM-thumbnail.jpg,26356,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/ICT-thumbnail.jpg,26347,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB-2-300x200.jpeg,29794,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB-2.jpeg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB-300x244.jpeg,29792,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB-4-e1721022580902-561x456.jpg,29785,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB-4-e1721022580902.jpg,29785,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2023/12/MoU-with-NCTB.jpeg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
+/wp-content/uploads/2023/12/NU-logo-colorful.png,23192,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193-1024x615.jpeg,22367,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193.jpeg,22367,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559-1024x783.jpeg,22381,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559.jpeg,22381,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/right-arrow.png,22505,media,MERGE,/our-model/talentleap/,none,none,edge
+/wp-content/uploads/2024/01/NU-logo-6.png,none,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/01/NU-logo-bold-300x103.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/01/NU-logo-bold.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/01/Rashid.png,33350,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/Sakibul.webp,33332,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/Sujon-kumar-dey.jpg,28972,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/ashikur.jpg,24230,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/nahid-2.jpg,24229,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/salma-suma.webp,33333,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/shila.png,33349,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/01/tawfiqur.jpg,none,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2024/03/bank-asia.png,25082,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/bkash.svg,25055,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/nogod.svg,25056,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/rocket.svg,25060,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/CodersTrust-Logo.jpg,27270,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/04/NU-PGD-CT-Thumbnail.jpg,27041,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/04/NUPGD-Circular-2024.pdf,26984,media,DROP,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/certificate_1.svg,27329,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/contact_2.svg,27327,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/dynamic-education.svg,27314,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/gvt-partnership.svg,27310,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/holon-iq.png,25489,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/image-1024x614.png,26380,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/image.png,26380,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/impact.svg,27309,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/neurodiverse-988x1024.png,25534,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/neurodiverse.png,25534,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/next-generation-skill-courses-scaled-1.jpg,25569,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2024/04/select_1.svg,27325,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/sk-img-2.png,27384,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/start-learning_1.svg,27326,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/04/wave-bg-light-images.png,25763,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/05/Aziz-Ahmad.jpg,28239,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/05/Certificate-Ceremony-4-300x148.jpeg,29093,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/Certificate-Ceremony-4.jpeg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-3-scaled-e1721019042728-300x156.jpg,29780,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-3-scaled-e1721019042728.jpg,29780,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/Kolika-Chakma-1024x1024.jpg,27879,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/Kolika-Chakma.jpg,27879,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/Nagad.jpg,27702,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/Rocket.jpg,27703,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/SK-Logo-24-v1.1.svg,28449,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/SK-Mascot-Male-2.svg,28447,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/STEAMARTS.svg,27960,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-1-300x123.jpeg,29119,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-1-300x225.png,29120,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-1.jpeg,29119,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-1.png,29120,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-2-300x225.jpeg,29121,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/WSIS-2.jpeg,29121,media,MERGE,/news/coderstrust-attends-wsis20-forum-high-level-event/,none,none,edge
+/wp-content/uploads/2024/05/bank-transfer.jpg,27699,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/bkash.jpg,27700,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/certifictae-ceremony-2-300x154.jpg,29092,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/certifictae-ceremony-2.jpg,29092,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/05/certifictae-ceremony.jpg,29091,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/05/computational-thinking.svg,27958,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/higher-education-2.svg,27966,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/interactive-steam.svg,27961,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/mastercard.jpg,27701,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/nihal-1024x1024.jpg,27871,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/nihal.jpg,27871,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/prnt-review-1.png,28126,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/prnt-review-3.png,28127,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/prnt-review-4.png,28128,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-2-1.png,27976,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-2-2.png,27977,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-4.png,27978,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-5.jpg,27979,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-7.jpg,28115,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/sk-gallery-8.jpg,28119,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/visa.jpg,27704,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/05/zaeem-1024x1024.jpg,27872,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/zaeem.jpg,none,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/05/zuhaina.png,27874,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-Speaking.jpg,29554,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-at-UN-1-300x225.jpg,29526,media,MERGE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-at-UN-1.jpg,29526,media,MERGE,/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-at-UN-2-768x538.jpg,29586,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-at-UN-2.jpg,29586,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-awarded-Minority-Business-Entrepreneur-of-the-Year-2-768x538.jpg,29606,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-awarded-Minority-Business-Entrepreneur-of-the-Year-2.jpg,none,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-with-Pope-Francis-768x538.jpg,29578,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad-with-Pope-Francis.jpg,29578,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmad_European_Union.jpg,29584,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmed-speaks-at-SDG-Lab-in-Davos-768x538.jpg,29601,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/Aziz-Ahmed-speaks-at-SDG-Lab-in-Davos.jpg,29601,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/CCNY-Logo-white.svg,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/06/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-4-300x225.jpg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/06/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-4.jpg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/06/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-5-300x225.jpg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/06/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-5.jpg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
+/wp-content/uploads/2024/06/CodersTrust-at-BIMSTEC-2-1-300x225.jpg,29523,media,MERGE,/news/coderstrust-visited-bimstec-headquarter/,none,none,edge
+/wp-content/uploads/2024/06/CodersTrust-at-BIMSTEC-2-1.jpg,29523,media,MERGE,/news/coderstrust-visited-bimstec-headquarter/,none,none,edge
+/wp-content/uploads/2024/06/CodersTrust-at-BIMSTEC-561x456.jpg,29522,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/06/CodersTrust-at-BIMSTEC.jpg,29522,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/06/SBA-Image.jpg,29559,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/US-Chamber-of-Commerce.jpg,29591,media,MERGE,/about/team/aziz-ahmad/,none,none,edge
+/wp-content/uploads/2024/06/education26-light.jpg,29549,media,MERGE,/programs/nationwide/,none,none,edge
+/wp-content/uploads/2024/06/gallary12.jpg,29363,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/gallary14.jpg,29364,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/gallary16.jpg,29369,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/gallary19.jpg,29370,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/gallary2.0.jpg,29367,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/gallary20.jpg,29371,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/06/nationwide-3.jpg,29548,media,MERGE,/programs/nationwide/,none,none,edge
+/wp-content/uploads/2024/06/workshop-white-bg.jpg,29355,media,MERGE,/programs/superkids/,none,none,edge
+/wp-content/uploads/2024/08/Dr.-Juan-Carlos-Sainz-Borgo-2.png,29885,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/08/H.E.-Winnie-Estrup-Petersen.png,29871,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/08/Melissa-Mannis.png,29873,media,MERGE,/,none,none,edge
+/wp-content/uploads/2024/09/CodersTrust-Logo-1536x183.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/09/CodersTrust-Logo-2048x244.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/09/CodersTrust-Logo-768x92.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/09/CodersTrust-Logo.png,none,media,DROP,/,none,none,edge
+/wp-content/uploads/2024/09/Erlisa-Zherka-e1727695144944.jpg,none,media,MERGE,/impact/case-studies/kosovo-women-in-online-work/,none,none,edge
+/wp-content/uploads/2024/09/Kosovo-Women-in-Online-Work-WOW-Pilot-2017.jpg,none,media,MERGE,/impact/case-studies/,none,none,edge
+/wp-content/uploads/2024/09/Maria-Dewan-herpower-e1727599982142.jpg,30132,media,MERGE,/impact/case-studies/her-power/,none,none,edge
+/wp-content/uploads/2024/09/Overlay-Right-Dark.png,none,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2024/09/Porticus-logo-1.png,30610,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/STRONG.png,30594,media,WITHHELD,/impact/case-studies/,none,withheld pending owner confirmation,edge
+/wp-content/uploads/2024/09/Screenshot-2024-09-30-194023-e1727703690352.png,30595,media,WITHHELD,/impact/case-studies/,none,withheld pending owner confirmation,edge
+/wp-content/uploads/2024/09/UNDP-YES.png,30613,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/2024/09/YES.png,30637,media,MERGE,/impact/case-studies/,none,none,edge
+/wp-content/uploads/2024/09/ab9521121356851.60ccb50198432-1.png,30608,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/empower-logo.png,30607,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/her-power-chart.png,30126,media,MERGE,/impact/case-studies/her-power/,none,none,edge
+/wp-content/uploads/2024/09/herPower-e1727597558375.jpg,30124,media,MERGE,/impact/case-studies/,none,none,edge
+/wp-content/uploads/2024/09/kosova-chart.png,none,media,MERGE,/impact/case-studies/kosovo-women-in-online-work/,none,none,edge
+/wp-content/uploads/2024/09/manusher-jonno-foundation-logo.png,30609,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/wsdfm-1.jpg,30586,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/wsdfm-2.jpg,30587,media,MERGE,/impact/case-studies/,none,none,edge
+/wp-content/uploads/2024/09/wsdfm-graph.jpg.png,30589,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/09/wsdfm-trainee-2.png,30590,media,MERGE,/impact/case-studies/wsdfm-women-freelancers/,none,none,edge
+/wp-content/uploads/2024/10/CodersTrust-organizes-Career-Carnival-1.png,31529,media,MERGE,/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/,none,none,edge
+/wp-content/uploads/2024/10/Ferdinand-aziz-yunus-768x768.jpg,30960,media,MERGE,/about/team/ferdinand-kjaerulff/,none,none,edge
+/wp-content/uploads/2024/10/Ferdinand-aziz-yunus.jpg,30960,media,MERGE,/about/team/ferdinand-kjaerulff/,none,none,edge
+/wp-content/uploads/2024/10/Ferdinand-crast.jpg,30955,media,MERGE,/about/team/ferdinand-kjaerulff/,none,none,edge
+/wp-content/uploads/2024/10/Ferdinand-kjaerulff-lanscape-scaled-e1728207376429.jpg,30947,media,MERGE,/about/team/ferdinand-kjaerulff/,none,none,edge
+/wp-content/uploads/2024/10/atikur-rahman-fos.png,30814,media,JR,https://jobready.global/,none,none,edge
+/wp-content/uploads/2024/10/ferdinand-giving-award-to-trainee.jpg,30966,media,MERGE,/about/team/ferdinand-kjaerulff/,none,none,edge
+/wp-content/uploads/2025/01/MoU-Signing-Ceremony-Between-North-South-University-CodersTrust-2-e1737963409112.jpg,31550,media,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,none,none,edge
+/wp-content/uploads/2025/01/MoU-Signing-Ceremony-Between-North-South-University-CodersTrust-3.jpg,31549,media,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,none,none,edge
+/wp-content/uploads/2025/01/MoU-Signing-Ceremony-Between-North-South-University-CodersTrust.jpg,31548,media,MERGE,/news/mou-signing-ceremony-between-north-south-university-coderstrust/,none,none,edge
+/wp-content/uploads/2025/01/SDG-Life-Achievement-Award-2-e1737966432106.png,31563,media,DROP,/,none,none,edge
+/wp-content/uploads/2025/01/SDG-Life-Achievement-Award-e1737966582881.png,31560,media,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/,none,none,edge
+/wp-content/uploads/2025/01/holonIQ-24.png,31515,media,MERGE,/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/,none,none,edge
+/wp-content/uploads/2025/05/MD-FAHIM-SHEIKH.png,31778,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/05/MD-HAZRAT-ALI-NAHID.png,32103,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/05/Rezaul-Karim-Khan.png,31810,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/08/Rezaul-Karim-Khan.jpg,32155,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2025/08/sadik-putul-1.2.png,32354,media,MERGE,/careers/,none,none,edge
+/wp-content/uploads/2025/09/Logo-118x45-1.png,32411,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/09/Selim-Sheikh.png,32468,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2025/09/founding-of-CodersTrust.png,32408,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/09/sharif.webp,33343,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2025/09/tc-lockup.svg,32412,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2025/10/hi-tech-park-flow-chart-e1760529452560.jpg,32487,media,MERGE,/programs/nationwide/,none,none,edge
+/wp-content/uploads/2025/11/BCIU-Roundtable.png,32553,media,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/,none,none,edge
+/wp-content/uploads/2025/11/Cybersecurity-AI-at-UNGA-2025-1.jpeg,32560,media,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,none,none,edge
+/wp-content/uploads/2025/11/Cybersecurity-AI-at-UNGA-2025-4-e1763190263802.png,32558,media,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/,none,none,edge
+/wp-content/uploads/2025/11/Cybersecurity-AI-at-UNGA-2025-4.2.png,32559,media,DROP,/,none,none,edge
+/wp-content/uploads/2025/11/MoU-between-BPI-and-CodersTrust-2.png,32536,media,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,none,none,edge
+/wp-content/uploads/2025/11/MoU-between-BPI-and-CodersTrust-3.png,32537,media,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,none,none,edge
+/wp-content/uploads/2025/11/MoU-between-BPI-and-CodersTrust-4-2.png,32535,media,MERGE,/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/,none,none,edge
+/wp-content/uploads/2025/11/MoU-with-Base-Study-Concern-1.png,32524,media,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,none,none,edge
+/wp-content/uploads/2025/11/MoU-with-Base-Study-Concern-3.png,32526,media,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,none,none,edge
+/wp-content/uploads/2025/11/MoU-with-Base-Study-Concern-4.png,32525,media,MERGE,/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/,none,none,edge
+/wp-content/uploads/2025/11/US-Embassy-August-2025-2.png,32572,media,MERGE,/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/,none,none,edge
+/wp-content/uploads/2025/11/US-Embassy-August-2025.png,32571,media,DROP,/,none,none,edge
+/wp-content/uploads/2025/12/PAPIYA-NABI.png,32768,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-11-at-2.40.21-PM-1-e1768124307518.jpeg,32833,media,MERGE,/impact/case-studies/her-power/,none,none,edge
+/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-11-at-2.40.21-PM-4-e1768123869421.jpeg,32830,media,MERGE,/impact/case-studies/her-power/,none,none,edge
+/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-11-at-2.40.21-PM-e1768124121761.jpeg,32832,media,MERGE,/impact/case-studies/her-power/,none,none,edge
+/wp-content/uploads/2026/02/Rangamati-Science-and-Technology-University-1.png,32922,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,none,none,edge
+/wp-content/uploads/2026/02/Rangamati-Science-and-Technology-University-2.png,32923,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,none,none,edge
+/wp-content/uploads/2026/02/Rangamati-Science-and-Technology-University-3.png,32921,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/,none,none,edge
+/wp-content/uploads/2026/03/US-Secretary-of-Energy-1.png,32939,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,none,none,edge
+/wp-content/uploads/2026/03/US-Secretary-of-Energy-2.png,32940,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,none,none,edge
+/wp-content/uploads/2026/03/US-Secretary-of-Energy-3.png,32937,media,MERGE,/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/,none,none,edge
+/wp-content/uploads/2026/03/basis-asset-1-e1772347175564.png,32932,media,MERGE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,none,none,edge
+/wp-content/uploads/2026/03/basis-asset-2.png,32931,media,MERGE,/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students-2.jpg,33085,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students-5.jpg,33088,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students-6.jpg,33089,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students-7.jpg,33090,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students-8.jpg,33091,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/04/UPACE-students.jpg,33086,media,MERGE,/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/,none,none,edge
+/wp-content/uploads/2026/07/Partners-with-US-Based-RemoteIntegrity-2-370x296.webp,33239,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/07/Partners-with-US-Based-RemoteIntegrity-2.webp,33239,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/07/Partners-with-US-Based-RemoteIntegrity.webp,33240,media,MERGE,/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/,none,none,edge
+/wp-content/uploads/2026/07/Sanjida-Rahman-mentor.png,33182,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2026/07/Why-We-Call-It-a-Digital-Factory-3.jpeg,33213,media,MERGE,/news/why-we-call-it-a-digital-factory/,none,none,edge
+/wp-content/uploads/2026/07/Why-We-Call-It-a-Digital-Factory-370x296.jpeg,33216,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/07/Why-We-Call-It-a-Digital-Factory.jpeg,33216,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/07/technical-excellence-370x296.jpeg,33185,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/07/technical-excellence.jpeg,33185,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/Aziz-Ahmad-Farming-370x296.jpg,33286,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/Aziz-Ahmad-Farming.jpg,33286,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/Aziz-Ahmad-farming-8.jpg,33277,media,MERGE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,none,none,edge
+/wp-content/uploads/2026/08/Aziz-Ahmad-farming-9.jpg,33276,media,MERGE,/news/the-man-behind-coderstrust-who-never-forgot-his-roots/,none,none,edge
+/wp-content/uploads/2026/08/Great-American-Treasure-Hunt-2-370x296.jpeg,33246,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/Great-American-Treasure-Hunt-2.jpeg,33246,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/Great-American-Treasure-Hunt-5.jpeg,33247,media,MERGE,/news/a-proud-milestone-for-coderstrust/,none,none,edge
+/wp-content/uploads/2026/08/UPEACE-Ambassador-370x296.jpeg,33305,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/08/UPEACE-Ambassador.jpeg,33305,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/Aziz-Ahmad-Visits-City-College-Downtown-370x296.webp,33383,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/Aziz-Ahmad-Visits-City-College-Downtown.webp,33383,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/Celebrating-America-Week-1-370x296.webp,33325,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/Celebrating-America-Week-1.webp,33325,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/Celebrating-America-Week-group.webp,33326,media,MERGE,/news/celebrating-america-week-with-the-u-s-embassy-dhaka/,none,none,edge
+/wp-content/uploads/2026/09/almas.webp,33390,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2026/09/meeting-with-Honble-Foreign-Minister-of-Bangladesh-370x296.png,33340,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/meeting-with-Honble-Foreign-Minister-of-Bangladesh.png,33340,media,MERGE,/news/,none,none,edge
+/wp-content/uploads/2026/09/sandipan.webp,33359,media,MERGE,/about/mentors/,none,none,edge
+/wp-content/uploads/2026/10/Zaharul.webp,33432,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2026/10/asad.webp,33433,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/2026/10/zaman.webp,33431,media,MERGE,/about/team/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Albania-qic0o4qa0a4h6lwzqtj15vp3jcdn8jggapghirwwlc.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Bangladesh-qhwe5f7fyefhuf78nu8h4kqy67jnlijnr04xvvubcw.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Bhutan-qnj2r0fhpe8x77ch168cqauv5p53z9d9kcyupn5tkw.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Denmark-qhwe5jwmwklxgh0ewe9lz1k954who02bfneda9nchs.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/DoICT-Logo-qhwgh4q428j31idzq1nfqmrn6fpp924jbzsyrnp4gi.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Hi-Tech-Park-logo-qhwgh6lsfwlnoqb9f2govmakd7gfogc0093xq7mc42.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Honduras-qhwe5pjo1ktne4s7zgpde050pg4oy6opgfba5xezgg.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/ICT-Division-Logo-qhwgh8hgtko8by8j439y0lthjz763ujgoieworjjrm.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/IDEA-Logo-qic0oadem9uidiguowru50qrmkd4onc9q5iqp3nis2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/India-qhwe5kuh3en7s2z1qwo8jjbpqiruvp61rs1urjlybk.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Iraq-qhwe5lsba8oi3oxolf2v4136bwn83e9s3wpc8tkk5c.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Jordan-qhwe5h34c2i2hn4icv1q9k9vczae0wr4f9fwufrj0g.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Kenya-qhwe5lsba8oi3oxolf2v4136bwn83e9s3wpc8tkk5c.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Kosovo-qhwe5jwmwklxgh0ewe9lz1k954who02bfneda9nchs.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/MEWOS-logo-qic0oadem9uidiguowru50qrmkd4onc9q5iqp3nis2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Malaysia-qic0o3sftg36uzycwb4eldxmxyia0ucpykt01hyark.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/NSDA-Logo-qic0oadem9uidiguowru50qrmkd4onc9q5iqp3nis2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/PKSF-Logo-qhwggy58qea2s8njsgt1r6ff0qm4r6eez38kepyvo2.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Poland-qhwe5qhi8euxpqqutz3zyhwhau025vsfsjyrn7dla8.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/SEIP-Logo-qhwgh00x42cnfgkthhmaw5yc7icv6klvncjjd9w3bm.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Somalia-qhwe5i0yiwjct9357dgcu21byd5r8luure3ebpq4u8.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Somaliland-qhwe5iyspqkn4v1s1vuzejssjr14gayl3iqvszoqo0.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/USA-qic0o8hmrm9mh1rj4v5jfuqxwvv43bvdn82ffvrbwg.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/Uganda-qhwe5i0yiwjct9357dgcu21byd5r8luure3ebpq4u8.png,none,media,MERGE,/,none,none,edge
+/wp-content/uploads/elementor/thumbs/undp-logo-5682674D5C-seeklogo.com_-q63xl4vop652guursketub0qgywx5f19yibpqsebis.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge
+/wp-content/uploads/elementor/thumbs/undp-report-cover-qnj2r2b632d787alqf2zglvti08g8bia12rbr2nw1s.png,none,media,MERGE,/impact/case-studies/undp-yes-korail/,none,none,edge

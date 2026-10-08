@@ -171,7 +171,11 @@ function articleBase(type: 'Article' | 'NewsArticle', o: ArticleOpts): JsonLdNod
 export const article = (o: ArticleOpts) => articleBase('Article', o);
 export const newsArticle = (o: ArticleOpts) => articleBase('NewsArticle', o);
 
-/** FAQPage from Q/A pairs. Answers may contain HTML; tags are stripped for the schema text. */
+/** JSON-LD text is plain text: undo the HTML escaping (&amp; and friends) that stripHtml leaves behind. */
+const unescapeHtml = (s: string) =>
+  s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, e: string) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' })[e as 'amp']);
+
+/** FAQPage from Q/A pairs. Answers may contain HTML; tags are stripped and entities decoded for the schema text. */
 export function faqPage(items: { q: string; a: string }[], path?: string): JsonLdNode {
   return {
     '@type': 'FAQPage',
@@ -179,7 +183,7 @@ export function faqPage(items: { q: string; a: string }[], path?: string): JsonL
     mainEntity: items.map((it) => ({
       '@type': 'Question',
       name: it.q,
-      acceptedAnswer: { '@type': 'Answer', text: stripHtml(it.a) },
+      acceptedAnswer: { '@type': 'Answer', text: unescapeHtml(stripHtml(it.a)) },
     })),
   };
 }
