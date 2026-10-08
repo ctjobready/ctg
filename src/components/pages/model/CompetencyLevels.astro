@@ -25,15 +25,13 @@ const { class: className } = Astro.props;
     </li>
     <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
     <li class="lv__item" data-reveal>
-      <p class="eyebrow">Level 2 · Proficient</p>
-      <h3 class="lv__title">Proficient professional</h3>
-      <p class="lv__text">The next step on the same career path.</p>
+      <p class="eyebrow">Level 2</p>
+      <h3 class="lv__title">Proficient</h3>
     </li>
     <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
     <li class="lv__item" data-reveal>
-      <p class="eyebrow">Level 3 · Expert</p>
-      <h3 class="lv__title">Expert professional</h3>
-      <p class="lv__text">The top level of the career path.</p>
+      <p class="eyebrow">Level 3</p>
+      <h3 class="lv__title">Expert</h3>
     </li>
   </ol>
   <figcaption class="lv__cap">Example only: the Digital Marketing career path.<FootnoteMarker id="IN-08" footnote="auto" /> Levels progress from Competent to Proficient to Expert.</figcaption>
@@ -83,10 +81,6 @@ const { class: className } = Astro.props;
   }
   .lv__bullets li::marker {
     color: var(--primary);
-  }
-  .lv__text {
-    font-size: var(--fs-body-xs);
-    color: var(--on-surface-variant);
   }
   .lv__arrow {
     display: flex;

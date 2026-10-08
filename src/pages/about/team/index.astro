@@ -9,9 +9,11 @@ import { webPage, pageUrl } from '../../../lib/schema';
 import { url } from '../../../lib/url';
 
 const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+// No lead line for the advisors: what they do and how they are kept apart from procurement stays unpublished until
+// confirm-list item #24 closes (register R8-M1). The cards keep their names and titles.
 const groups = [
   { key: 'founders', title: 'Founders and Chair', lead: 'The people who started CodersTrust in 2014.' },
-  { key: 'advisors', title: 'Advisors', lead: 'Former senior public servants who advise CodersTrust.' },
+  { key: 'advisors', title: 'Advisors', lead: undefined },
   { key: 'executive', title: 'Executive team', lead: 'The leaders of strategy, growth, business and technology.' },
   { key: 'management', title: 'Bangladesh leadership', lead: 'The managers who run training, projects and operations at CodersTrust Bangladesh.' },
 ] as const;

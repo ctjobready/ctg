@@ -15,7 +15,7 @@ import { mayRender } from '../../lib/permissions';
 import { url } from '../../lib/url';
 
 const posts = await allNews();
-const [latest, ...rest] = posts;
+const latest = posts[0];
 // D13: the featured cover carries the same asset ID as on its card and article (news-<slug>); staging swaps in the illustration when the gate says so.
 const latestAsset = `news-${latest.id}`;
 const showLatestCover = Boolean(latest.data.cover) && mayRender(latestAsset);
@@ -38,27 +38,26 @@ const jsonLd = [
 >
   <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MoUs, recognition, program events and leadership: what CodersTrust has announced, in the words of the time." art={false} />
 
-  <Section id="latest" aria-labelledby="latest-h">
-    <SectionHeader id="latest-h" eyebrow="Latest" title="Most recent" />
-    <article class="feat card card--link" data-reveal>
-      <div class="feat__media card__media">
-        {showLatestCover && latest.data.cover ? <Img src={latest.data.cover} alt={coverAlt(latest.data.coverAlt)} width={900} height={600} widths={[480, 900]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" assetId={latestAsset} /> : <HeroArt seed={latest.data.title} shape="card" />}
-      </div>
-      <div class="card__body feat__body">
-        <p class="card__meta feat__meta">
-          <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>
-          <Badge tone="brand">{TOPICS[latest.data.topic]}</Badge>
-        </p>
-        <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
-        <p class="card__text">{latest.data.excerpt}</p>
-        <span class="card__more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
-      </div>
-    </article>
-  </Section>
-
-  <Section id="archive" tone="airy" aria-labelledby="archive-h">
-    <SectionHeader id="archive-h" eyebrow="All news" title="Browse by topic" lead="Every post is shown as published: older items keep their original wording, and each carries the date its figures reflect." />
-    <NewsGrid posts={rest} />
+  <Section id="archive" aria-labelledby="archive-h">
+    <SectionHeader id="archive-h" eyebrow="All news" title="Browse by topic" lead="Every post is shown as published: older items keep their original wording, and each carries the dates its titles, offices and figures reflect." />
+    <!-- The most recent post is the first, full-width item of the same list, so the topic counts cover every post and the filter applies to it too. -->
+    <NewsGrid posts={posts}>
+      <article slot="featured" class="feat card card--link" data-reveal>
+        <div class="feat__media card__media">
+          {showLatestCover && latest.data.cover ? <Img src={latest.data.cover} alt={coverAlt(latest.data.coverAlt)} width={900} height={600} widths={[480, 900]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" assetId={latestAsset} /> : <HeroArt seed={latest.data.title} shape="card" />}
+        </div>
+        <div class="card__body feat__body">
+          <p class="card__meta feat__meta">
+            <Badge tone="eyebrow">Latest</Badge>
+            <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>
+            <Badge tone="brand">{TOPICS[latest.data.topic]}</Badge>
+          </p>
+          <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
+          <p class="card__text">{latest.data.excerpt}</p>
+          <span class="card__more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
+        </div>
+      </article>
+    </NewsGrid>
   </Section>
 </BaseLayout>
 

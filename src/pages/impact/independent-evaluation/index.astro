@@ -82,7 +82,7 @@ const d = discoveryCta();
   <ReportSection id="summary" title="The short answer">
     <Callout tone="bluf">
       <p data-fact="RC-01 RC-02">
-        <strong>Women offered a place first, women who attended second.</strong> <Fact id="RC-01" /> <Fact id="RC-02" />
+        <strong>Women offered a place first, women who attended second.</strong> <Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" footnote="auto" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
       </p>
     </Callout>
     <div class="ie__stats">
@@ -91,6 +91,7 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
+    <p class="ie__tbl">Figures from the BIGD report (May 2022): Table 4 for employment, income and hours worked, and Table 5 for freelancing.</p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -105,25 +106,35 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="results" title="What the trial found">
+    <p>Each figure below names the table of the BIGD report (May 2022) that it comes from.</p>
     <h3 class="t-heading-l">Women offered a place</h3>
     <ul class="ie__list">
-      <li data-fact="RC-01"><Fact id="RC-01" /></li>
-      <li data-fact="RC-02"><Fact id="RC-02" /></li>
-      <li data-fact="RC-04"><Fact id="RC-04" /></li>
+      <li data-fact="RC-01"><Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" /> <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-02"><Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" /> <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-04"><Fact id="RC-04" footnote={false} />.<FootnoteMarker id="RC-04" /> <span class="ie__tbl">BIGD Table 4.</span></li>
     </ul>
     <h3 class="t-heading-l">Women who attended</h3>
     <ul class="ie__list">
-      <li data-fact="RC-03"><Fact id="RC-03" /></li>
-      <li data-fact="RC-05"><Fact id="RC-05" /></li>
+      <li data-fact="RC-03"><Fact id="RC-03" footnote={false} />.<FootnoteMarker id="RC-03" /> <span class="ie__tbl">BIGD Table 5 for freelancing; Table 4 for overall hours worked.</span></li>
+      <li data-fact="RC-05"><Fact id="RC-05" footnote={false} />.<FootnoteMarker id="RC-05" /> <span class="ie__tbl">Each household figure is listed below with its BIGD table, significance level and base.</span></li>
     </ul>
-    <p>Freelancing and household effects are labelled as in the BIGD report: for women who attended or for women offered a place.</p>
+    <div class="ie__hh" data-fact="RC-05">
+      <h4 class="ie__hhtitle">Household figures: BIGD table, significance level and base</h4>
+      <ul class="ie__list">
+        <li>Food and non-food spending: BIGD Table 8, significant at the 1% level (n&nbsp;=&nbsp;599).</li>
+        <li>Share of women with savings: BIGD Table 10, significant at the 5% level (n&nbsp;=&nbsp;599).</li>
+        <li>Fewer women took a loan: BIGD Table 9, significant at the 10% level (n&nbsp;=&nbsp;599).</li>
+        <li>“Never felt stressed in the last month”: BIGD Table 14, significant at the 1% level (n&nbsp;=&nbsp;373). This item rests on 373 observations, fewer than the 599 behind the other household figures.</li>
+      </ul>
+    </div>
+    <p>Freelancing and household effects are labeled as in the BIGD report: for women who attended or for women offered a place.</p>
   </ReportSection>
 
   <ReportSection id="classes" title="Freelancing by classes attended">
     <BarChart
       title="Share freelancing, by classes attended (descriptive, not causal)"
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
-      note="Descriptive, not causal: women who attend more classes may differ from those who attend fewer. Control group and attenders at follow-up."
+      note="Descriptive, not causal: women who attend more classes may differ from those who attend fewer. Control group and attenders at follow-up. Source: BIGD report (May 2022), Figure 11."
     />
     <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
     <p data-fact="RC-10"><Fact id="RC-10" />. It is planned, not under way.</p>
@@ -134,7 +145,7 @@ const d = discoveryCta();
       The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The attender results show what training did for the women who took part, among women who chose to attend.
     </p>
     <p>
-      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
+      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.{' '}
       <a class="link" href={linkAttrs('/partner-with-us/').href}>How partnerships work<Icon name="arrow-right" size={16} /></a>
     </p>
   </ReportSection>
@@ -192,6 +203,21 @@ const d = discoveryCta();
   }
   .ie__list li::marker {
     color: var(--primary);
+  }
+  .ie__tbl {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-xs);
+  }
+  .ie__hh {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .ie__hhtitle {
+    margin: 0;
+    font-size: var(--fs-body-m);
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
   }
   .ie__fit {
     padding-block: var(--space-lg);

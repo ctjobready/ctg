@@ -6,7 +6,7 @@ group: executive
 order: 8
 photo: ../../assets/images/team/asad-zaman.jpg
 photoAlt: "Portrait of Asad Zaman, Chief Growth Officer"
-expertise: ["Business Development", "Development Partners & NGOs", "TVET", "EdTech", "Labour Market", "Strategic Planning"]
+expertise: ["Business Development", "Development Partners & NGOs", "TVET", "EdTech", "Labor Market", "Strategic Planning"]
 legacyUrl: "https://coderstrust.global/team-member/h-m-asad-uz-zaman/"
 ---
 

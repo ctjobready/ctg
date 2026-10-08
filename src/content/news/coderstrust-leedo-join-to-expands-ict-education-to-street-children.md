@@ -11,7 +11,7 @@ tags: ["Featured News"]
 seoTitle: "ICT Education for Street Children with LEEDO"
 ---
 
-![Photo from the news story: CodersTrust and LEEDO Collaborate to Extend ICT Education to Street Children,...](../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg)
+![](../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg)
 
 CodersTrust, a prominent EduTech Company, has embarked on an initiative to provide information technology training to underprivileged street children in Dhaka, aiming to empower them and foster self-reliance. This collaborative effort is being carried out in cooperation with LEEDO, an organization dedicated to the well-being and support of street children.
 

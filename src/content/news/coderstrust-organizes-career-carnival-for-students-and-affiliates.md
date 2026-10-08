@@ -11,7 +11,7 @@ tags: []
 seoTitle: "Career Carnival for Students and Affiliates"
 ---
 
-CodersTrust recently organized a ‘Career Carnival’ at its head office in Banani, Dhaka. The event aimed to provide unique job placement opportunities for its students and alumni. The Chairman of CodersTrust, Mr. Aziz Ahmed, inaugurated the event virtually from New York, USA.
+CodersTrust recently organized a ‘Career Carnival’ at its head office in Banani, Dhaka. The event aimed to provide unique job placement opportunities for its students and alumni. The Chairman of CodersTrust, Mr. Aziz Ahmad, inaugurated the event virtually from New York, USA.
 
 ![Photo from the news story: CodersTrust Organizes Career Carnival for Students and Affiliates](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg)
 

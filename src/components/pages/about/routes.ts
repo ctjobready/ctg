@@ -1,5 +1,5 @@
 /**
- * Page-local CTA helpers for WP8 pages. Every enquiry route (`local`, `diligence`, `report`, `mentor`,
+ * Page-local CTA helpers for WP8 pages. Every inquiry route (`local`, `diligence`, `report`, `mentor`,
  * `careers`, ...) comes from the shared CTA library (src/data/ctas.ts, planning/04 §7).
  */
 import { CONTACT, COURSES_URL } from '../../../lib/site';
@@ -28,7 +28,7 @@ export interface ContactRoute {
   id: string;
   /** Who the route is for. */
   who: string;
-  /** What the enquiry is for, in one sentence. */
+  /** What the inquiry is for, in one sentence. */
   text: string;
   icon: string;
   cta: LocalCta;
@@ -36,7 +36,7 @@ export interface ContactRoute {
   secondary?: { label: string; href: string };
 }
 
-/** Enquiry routes for /contact/ — every mailto comes from the CTA library (planning/04 §7). */
+/** Inquiry routes for /contact/ — every mailto comes from the CTA library (planning/04 §7). */
 export const contactRoutes = (): ContactRoute[] => [
   { id: 'discovery', who: 'Development partners and NGOs', text: 'Design a first cohort with us: priority groups, tracks and the pilot scorecard.', icon: 'globe', cta: fromLibrary('discovery') },
   { id: 'briefing', who: 'Governments and ministries', text: 'A briefing on national programs, contract scopes and delivery through existing labs.', icon: 'landmark', cta: fromLibrary('briefing') },

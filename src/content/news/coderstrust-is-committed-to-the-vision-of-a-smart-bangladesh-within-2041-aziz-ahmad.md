@@ -3,7 +3,7 @@ title: "CodersTrust is committed to the vision of a Smart Bangladesh within 2041
 date: 2023-11-04
 updated: 2023-11-22
 topic: leadership-advocacy
-excerpt: "Aziz Ahmad joins virtually the MoU signing between Jahangirnagar University's Institute of IT and the ICT Division, and voices support for Smart Bangladesh."
+excerpt: "Aziz Ahmad joins the MoU signing between Jahangirnagar University’s Institute of IT and the ICT Division and voices support for Smart Bangladesh."
 cover: ../../assets/images/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/whatsapp-image-2023-11-05-at-10-28-23-am.jpg
 coverAlt: "Photo from the news story: CodersTrust is committed to the vision of a Smart Bangladesh within 2041: Aziz Ahmad"
 legacyUrl: "https://coderstrust.global/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/"

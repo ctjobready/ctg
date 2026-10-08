@@ -9,9 +9,12 @@ import { TOPICS, TOPIC_KEYS, coverAlt, newsHref, type NewsEntry } from './news';
  * anchor) preselect a topic.
  */
 interface Props {
+  /** Every post, newest first. With a `featured` slot, the first post is shown through that slot (full width) instead of as a card. */
   posts: NewsEntry[];
 }
 const { posts } = Astro.props;
+const hasFeature = Astro.slots.has('featured') && posts.length > 0;
+const cards = hasFeature ? posts.slice(1) : posts;
 const counts = Object.fromEntries(TOPIC_KEYS.map((k) => [k, posts.filter((p) => p.data.topic === k).length]));
 const visibleKeys = TOPIC_KEYS.filter((k) => counts[k] > 0);
 // The filter rules in <style> below are written out per topic (a <style> element cannot sit inside the markup).
@@ -40,7 +43,14 @@ if (unfiltered.length) throw new Error(`NewsGrid: add a filter rule in <style> f
   <p class="nf__status" role="status" aria-live="polite" data-news-status></p>
   <div class="grid-cards nf__grid">
     {
-      posts.map((p) => (
+      hasFeature && (
+        <div class="nf__item nf__item--feature" data-topic={posts[0].data.topic}>
+          <slot name="featured" />
+        </div>
+      )
+    }
+    {
+      cards.map((p) => (
         <div class="nf__item" data-topic={p.data.topic}>
           <NewsCard title={p.data.title} date={p.data.date} topic={TOPICS[p.data.topic]} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={coverAlt(p.data.coverAlt)} href={newsHref(p)} />
         </div>
@@ -77,6 +87,9 @@ if (unfiltered.length) throw new Error(`NewsGrid: add a filter rule in <style> f
   .nf:has(#nf-leadership-advocacy:checked) .nf__item:not([data-topic='leadership-advocacy']),
   .nf:has(#nf-insights:checked) .nf__item:not([data-topic='insights']) {
     display: none;
+  }
+  .nf__item--feature {
+    grid-column: 1 / -1;
   }
   .nf__chips {
     border: 0;

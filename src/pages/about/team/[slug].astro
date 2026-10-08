@@ -12,7 +12,6 @@ import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../co
 import { person, webPage, pageUrl } from '../../../lib/schema';
 import { PRODUCTION_ORIGIN } from '../../../lib/site';
 import { linkAttrs, stripBase, url } from '../../../lib/url';
-import { truncate } from '../../../lib/format';
 
 export async function getStaticPaths() {
   const team = await getCollection('team');
@@ -26,7 +25,20 @@ const groupLabel = { founders: 'Founders and Chair', advisors: 'Advisor', execut
 const path = `/about/team/${p.id}/`;
 const related = newsMentioning(news, d.name, 3);
 const firstPara = (p.body ?? '').split(/\n\s*\n/)[0].replace(/\s+/g, ' ').trim();
-const description = truncate(firstPara, 155);
+// Meta descriptions are complete sentences of at most 155 characters, never a bio cut off mid-sentence. A profile whose first
+// paragraph is longer than that needs an entry here; the build fails until it has one.
+const DESCRIPTIONS: Record<string, string> = {
+  'aziz-ahmad': 'Aziz Ahmad is the Co-Founder and Chairman of CodersTrust, a Bangladeshi-American business leader who founded it in 2014 with Ferdinand Kjærulff.',
+  'ferdinand-kjaerulff': 'Ferdinand Kjærulff, a former Danish Army captain, founded CodersTrust in 2014 with Aziz Ahmad to build a financing system for online-workforce education.',
+  'asad-zaman': 'Asad Zaman is CodersTrust’s Chief Growth Officer, with 20+ years of experience across Asia and Africa, including 14 years at UNDP.',
+  'mahdee-zaman': 'Mahdee Zaman is CodersTrust’s Chief Strategy Officer, a technology executive, generative AI strategist and former solutions architecture lead at AWS.',
+  'shafqat-ullah': 'Shafqat Ullah is CodersTrust’s Chief Technology Officer, a software architect with 25+ years of experience building enterprise products and IT solutions.',
+  'rezaul-karim-khan': 'Rezaul Karim Khan is CodersTrust’s Chief Business Officer and an AI mentor, with 20+ years in global ICT projects and startups.',
+  'shamsul-haque': 'Md. Shamsul Haque is CEO of CodersTrust Bangladesh and a former Additional Foreign Secretary, with 38 years as a banker and advertising executive.',
+  'hazrat-ali-nahid': 'Md. Hazrat Ali Nahid is Team Lead of the Education Department at CodersTrust Bangladesh, a cloud accounting expert and tax consultant.',
+};
+const description = DESCRIPTIONS[p.id] ?? firstPara;
+if (description.length > 155) throw new Error(`Team profile ${p.id}: the meta description is ${description.length} characters (limit 155). Add a complete sentence to DESCRIPTIONS in this file.`);
 const titleFull = `${d.name}, ${d.role}`;
 const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.name;
 const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;

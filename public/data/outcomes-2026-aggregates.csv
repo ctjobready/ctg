@@ -1,7 +1,7 @@
 measure_id,measure,category,value_type,value,base_n,status
 OC-01,"Employed, among surveyed completers with paired employment answers",Before training,percent,47.4,321,published
 OC-01,"Employed, among surveyed completers with paired employment answers",At the October 2026 survey,percent,77.9,321,published
-OC-01,Employed before training who reported no longer being employed,Share of those employed before training,percent,,,suppressed (small cell)
+OC-01,Employed before training who reported no longer being employed,Share of those employed before training,percent,5.9,,published; base not stated in the report
 OC-02,Completers (2014–2023) with no income before training who were earning at the October 2026 survey,Earning,percent,72.3,47,published
 OC-02,Completers (2014–2023) with no income before training who were earning at the October 2026 survey,Not earning,percent,27.7,47,published
 OC-03,"Median monthly income (USD), ratio of medians 3.00",Before training,median_usd,82,,published; base not stated in the report
@@ -14,7 +14,7 @@ OC-04,"Employment by type, among surveyed completers with paired answers","Salar
 OC-04,"Employment by type, among surveyed completers with paired answers","Salaried employment, at the October 2026 survey",percent,53.3,321,published
 OC-04,"Employment by type, among surveyed completers with paired answers","Freelancing, before training",percent,6.2,321,published
 OC-04,"Employment by type, among surveyed completers with paired answers","Freelancing, at the October 2026 survey",percent,14.0,321,published
-OC-04,"Employment by type, among surveyed completers with paired answers","Business ownership, before training",percent,,,suppressed (small cell)
+OC-04,"Employment by type, among surveyed completers with paired answers","Business ownership, before training",percent,2.8,,"published; base is n = 321, as for the other rows of this measure"
 OC-04,"Employment by type, among surveyed completers with paired answers","Business ownership, at the October 2026 survey",percent,10.6,321,published
 OC-05,Cumulative share of completers who first earned during or after training and started earning by each point (timing only),During the course,percent,23.5,170,published
 OC-05,Cumulative share of completers who first earned during or after training and started earning by each point (timing only),Within 3 months,percent,38.2,170,published
@@ -61,3 +61,17 @@ OC-09-district,Respondents by district of residence,Barishal,percent,5.7,,publis
 OC-09-district,Respondents by district of residence,Comilla,percent,3.2,,published; base not stated in the report
 OC-09-district,Respondents by district of residence,Narayanganj,percent,3.0,,published; base not stated in the report
 OC-09-district,Respondents by district of residence,Other districts,percent,42.8,,published; base not stated in the report
+OC-01,"Net gain in employment, among surveyed completers with paired employment answers",October 2026 survey vs before training,percentage_points,30.5,321,published
+OC-03,Change in median monthly income (ratio of medians 3.00),October 2026 survey vs before training,percent_change,200,,published; base not stated in the report
+OC-06-summary,"Learner experience, among responding completers",Rate instructors good or better,percent,92.7,,published; base not stated in the report
+OC-06-summary,"Learner experience, among responding completers",Rate their overall experience good or better,percent,86.9,,published; base not stated in the report
+OC-06-summary,"Learner experience, among responding completers",Recommendation score of 7 or more out of 10,percent,71.6,,published; base not stated in the report
+OC-07-summary,"Main income source, summary shares",Freelancing for foreign clients or a job abroad,percent,11.9,,published; base not stated in the report
+OC-07-summary,"Main income source, summary shares",Work as the main income source,percent,78.0,,published; base not stated in the report
+OC-08-summary,"Career and education outcomes, summary shares",Report a specific career or education outcome,percent,59.5,321,published
+OC-08-summary,"Career and education outcomes, summary shares",Gained a new income source,percent,37.4,321,published
+OC-09-profile,Respondent profile,Hold a bachelor’s degree or higher,percent,84.6,,published; base not stated in the report
+OC-09-profile,Respondent profile,Aged 15–35,percent,68.7,,published; base not stated in the report
+OC-09-profile,Respondent profile,Women,percent,19.9,,published; base not stated in the report
+OC-09-profile,Respondent profile,Live outside Dhaka,percent,62.9,,published; base not stated in the report
+OC-09-profile,Respondent profile,Rural,percent,16.0,,published; base not stated in the report

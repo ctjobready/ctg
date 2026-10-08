@@ -31,6 +31,11 @@ const HONOR_POSTS: [RegExp, string | null][] = [
   [/NYNJMSDC/, 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states'],
   [/NOVA/, null],
 ];
+// The NYNJMSDC Partnership Award went to UTC Associates, the technology consulting company Aziz Ahmad leads (see the dated
+// news post), so the card says so and spells out the council's name.
+const HONOR_NOTES: [RegExp, string][] = [
+  [/NYNJMSDC/, 'Presented by the New York & New Jersey Minority Supplier Development Council to UTC Associates, the technology consulting company Aziz Ahmad leads'],
+];
 const honors = fact('PA-11')
   .text.split(': ')
   .slice(1)
@@ -40,7 +45,8 @@ const honors = fact('PA-11')
     const m = s.match(/^(.*?) \((\d{4})(?:, (.*))?\)$/);
     const label = m ? m[1] : s;
     const slug = HONOR_POSTS.find(([re]) => re.test(label))?.[1] ?? null;
-    return { label, year: m?.[2], note: m?.[3], post: slug ? post(slug) : undefined };
+    const note = HONOR_NOTES.find(([re]) => re.test(label))?.[1] ?? m?.[3];
+    return { label, year: m?.[2], note, post: slug ? post(slug) : undefined };
   });
 
 // Media coverage (PA-09): the eight registered items, with years, oldest first. Links only where the original URL is known.
@@ -61,9 +67,12 @@ const FORUMS = [
   .map(post)
   .filter((p): p is NonNullable<typeof p> => !!p && !p.data.political);
 
-// PA-10 (U.S. Department of State remarks) may appear only inside its dated news item, so that endorsement is not shown here.
-const quotes = endorsements.filter((e) => e.id !== 'james-gardiner');
-const tidy = (q: string) => q.replace(/^[“"]\s*/, '').replace(/\s*[”"]$/, '');
+// Public officials' endorsements stay out of evergreen pages: PA-10 (U.S. Department of State remarks) may appear only inside its
+// dated news item, and the Danish ambassador's remarks are treated the same way.
+const OFFICIAL_ENDORSERS = new Set(['james-gardiner', 'h-e-winnie-estrup-petersen']);
+const quotes = endorsements.filter((e) => !OFFICIAL_ENDORSERS.has(e.id));
+// Quotes are verbatim; the migration glued some sentences together ("tomorrow.Thank"), so only the spacing after a full stop is restored.
+const tidy = (q: string) => q.replace(/^[“"]\s*/, '').replace(/\s*[”"]$/, '').replace(/([a-z]{2})\.([A-Z])/g, '$1. $2');
 
 const kit = [
   { file: 'coderstrust-wordmark', label: 'Wordmark', note: 'For light backgrounds', dark: false, w: 1200, h: 143 },
@@ -73,7 +82,7 @@ const kit = [
 
 const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016, and a press kit with logos and boilerplate for CodersTrust.';
 const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and media', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and media', path: '/about/recognition/' }] })];
-const media = { href: ctaHref('media'), label: 'Media enquiries' };
+const media = { href: ctaHref('media'), label: 'Media inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and media' }]} jsonLd={jsonLd}>

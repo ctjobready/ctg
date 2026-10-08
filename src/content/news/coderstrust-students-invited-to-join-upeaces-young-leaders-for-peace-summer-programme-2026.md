@@ -11,15 +11,11 @@ tags: ["Latest News", "UPEACE"]
 seoTitle: "Young Leaders for Peace Summer Programme 2026"
 ---
 
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 1 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg)
+![](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg)
 
 CodersTrust is excited to announce a remarkable global opportunity for its learner community through its official partner, University for Peace (UPEACE), located in San José, Costa Rica.
 
 UPEACE is now accepting applications for its prestigious “Young Leaders for Peace (YLP)” Summer Programme 2026, designed specifically for high school students who aspire to become impactful leaders and changemakers.
-
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 2 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-8.jpg)
-
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 3 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-6.jpg)
 
 ## About the Programme
 
@@ -34,17 +30,11 @@ Participants will engage in interactive sessions, leadership development activit
 - Location: UPEACE Headquarters, San José, Costa Rica
 - Eligibility: High school students (rising sophomores, juniors, and seniors)
 
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 4 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-7.jpg)
-
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 5 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-5.jpg)
-
 ## Why This Matters
 
 This programme is more than just a summer learning experience. It offers students a unique opportunity to step into a global environment where they can develop leadership qualities, understand peacebuilding practices, and contribute to meaningful international conversations.
 
 Through this initiative, CodersTrust continues its mission to go beyond technical education by nurturing essential soft skills such as leadership, communication, and global awareness.
-
-![CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 6 of 6](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-2.jpg)
 
 ## A Pathway to Global Leadership
 

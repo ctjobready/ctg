@@ -13,7 +13,7 @@ seoTitle: "Aziz Ahmad Joins BCIU Roundtable in Washington"
 
 ![Photo from the news story: CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, DC](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/bciu-roundtable.jpg)
 
-Mr. Aziz Ahmed, Chairman and Co-Founder of CodersTrust participated in the Business Council for International Understanding (BCIU) Roundtable in Washington, D.C., alongside Dr. Salehuddin Ahmed, Honorable Adviser to the Ministry of Finance, and Dr. Ahsan H. Mansur, Governor of Bangladesh Bank, during their visit to attend the World Bank meetings.
+Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust participated in the Business Council for International Understanding (BCIU) Roundtable in Washington, D.C., alongside Dr. Salehuddin Ahmed, Honorable Adviser to the Ministry of Finance, and Dr. Ahsan H. Mansur, Governor of Bangladesh Bank, during their visit to attend the World Bank meetings.
 
 The roundtable discussion centered on strategies to better align Bangladesh’s development financing with digital skills advancement, youth empowerment, and innovation—identified as essential pillars for strengthening a resilient, knowledge-based economy.
 

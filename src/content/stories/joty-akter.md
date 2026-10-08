@@ -1,6 +1,6 @@
 ---
 name: "Joty Akter"
-outcome: "Earned $5,000+ as a web designer"
+outcome: "Works as a web designer"
 pathway: unknown
 photo: ../../assets/images/stories/joty-akter.jpg
 photoAlt: "Portrait of Joty Akter"
