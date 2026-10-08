@@ -21,7 +21,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { C14_FIRST, LAST_UPDATED, serviceNode, superkidsEnquiry } from '../../components/pages/programs/meta';
+import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
 import { MICRO_COMMITMENT, ORIGIN, PRICING, SAFEGUARDING } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
@@ -31,7 +31,7 @@ import { linkAttrs } from '../../lib/url';
 const path = '/programs/superkids/';
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. DoICT and NCTB agreements set targets, not delivered reach.';
-const enquiry = superkidsEnquiry();
+const enquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 const faqSources: FaqSource[] = ['Q1', 'Q8', 'Q9'].map((id) => ({ audience: 'foundations' as const, id }));

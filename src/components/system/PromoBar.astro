@@ -14,11 +14,13 @@ interface Props {
   storageKey?: string;
   /** Register fact the message states (data-fact, for the status gate). */
   factId?: string;
+  /** Accessible name of the region; only a page that shows a second bar needs another one. */
+  label?: string;
 }
-const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId } = Astro.props;
+const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId, label = 'Announcement' } = Astro.props;
 ---
 
-<div class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} role="region" aria-label="Announcement">
+<section class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} aria-label={label}>
   <div class="promo-bar__inner">
     <p class="promo-bar__text">
       {lead && <strong>{lead}</strong>}
@@ -33,7 +35,7 @@ const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-p
       </button>
     )
   }
-</div>
+</section>
 
 <style>
   .promo-bar {

@@ -11,9 +11,18 @@ export const COPYRIGHT_YEAR = 2026;
 /** ID-01 entity definition (facts register v1.2) — verbatim on Home, About and in schema; read from the facts dataset so it cannot drift. */
 export const ENTITY_DEFINITION = fact('ID-01').text;
 
+/**
+ * Display form of a phone number: non-breaking spaces (U+00A0) and non-breaking hyphens (U+2011), so a number never
+ * wraps mid-way (html-validate rule tel-non-breaking). Every number shown on a page comes from the `phone` fields
+ * below; the `tel:` hrefs stay plain E.164. D-DIN has no U+2011 glyph, so the metric-matched Arial fallback draws it.
+ */
+export const nonBreaking = (s: string): string => s.replace(/ /g, ' ').replace(/-/g, '‑');
+/** Plain form (ordinary spaces and hyphens) for structured data and plain-text output. */
+export const plainPhone = (s: string): string => s.replace(/ /g, ' ').replace(/‑/g, '-');
+
 export const CONTACT = {
   email: 'contact@coderstrust.global',
-  phone: '+1 212 344 4111',
+  phone: nonBreaking('+1 212 344 4111'),
   phoneHref: 'tel:+12123444111',
 } as const;
 
@@ -24,7 +33,7 @@ export const OFFICES = [
     city: 'New York',
     address: ['40 Wall Street, Suite 2004', 'New York, NY 10005, USA'],
     email: 'contact@coderstrust.global',
-    phone: '+1 212 344 4111',
+    phone: nonBreaking('+1 212 344 4111'),
     phoneHref: 'tel:+12123444111',
   },
   {
@@ -33,7 +42,7 @@ export const OFFICES = [
     city: 'Dhaka',
     address: ['BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand)', 'Dhaka 1216, Bangladesh'],
     email: 'hello@coderstrustbd.com',
-    phone: '+880 1958-220802',
+    phone: nonBreaking('+880 1958-220802'),
     phoneHref: 'tel:+8801958220802',
   },
 ] as const;
@@ -78,9 +87,15 @@ export const BANGLADESH_HQ = {
   postalCode: '1216',
   country: 'Bangladesh',
   countryCode: 'BD',
-  phone: '+880 1958-220802',
+  phone: nonBreaking('+880 1958-220802'),
   email: 'hello@coderstrustbd.com',
 } as const;
+
+/**
+ * CodersTrust Bangladesh HR address, as published on the legacy careers page. It is not a general contact address:
+ * only the `careers` CTA (src/data/ctas.ts) and the Careers page use it.
+ */
+export const CAREERS_EMAIL = 'career@coderstrustbd.com';
 
 /** 1200-px PNG wordmark for schema.org logo (public/press-kit). */
 export const LOGO_PNG_PATH = '/press-kit/coderstrust-wordmark.png';

@@ -9,6 +9,9 @@
 //                          what CodersTrust itself already published for adults, noindex.
 // `example-` assets (sample content in the component gallery) are allowed only on /styleguide/ and need no
 // row; an `example-` asset anywhere else fails in both modes.
+// The attribute is read from every element in the built HTML, <meta> tags included: SEOHead writes the asset ID of a
+// team headshot or news cover onto og:image and twitter:image (data-asset), so a social preview is held to the same
+// rule as the photo on the page. Those uses are reported separately ("social preview image(s)").
 // The public file holds only these five non-personal fields (holder, basis and release documents stay private).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, sep } from 'node:path';
@@ -51,6 +54,11 @@ function* htmlFiles(dir) {
 }
 
 const used = new Map(); // assetId -> Set(site paths)
+const social = new Map(); // assetId -> Set(site paths) where it is a <meta data-asset> (og:image / twitter:image)
+const add = (map, id, path) => {
+  if (!map.has(id)) map.set(id, new Set());
+  map.get(id).add(path);
+};
 let pages = 0;
 for (const file of htmlFiles(dist)) {
   pages++;
@@ -58,10 +66,13 @@ for (const file of htmlFiles(dist)) {
   const path = rel.endsWith('/index.html') ? rel.slice(0, -'index.html'.length) : rel;
   const html = readFileSync(file, 'utf8').replace(/<script\b[\s\S]*?<\/script>/gi, '');
   for (const m of html.matchAll(/\sdata-asset=(?:"([^"]*)"|'([^']*)')/g)) {
-    for (const id of (m[1] ?? m[2]).split(/\s+/).filter(Boolean)) {
-      if (!used.has(id)) used.set(id, new Set());
-      used.get(id).add(path);
-    }
+    for (const id of (m[1] ?? m[2]).split(/\s+/).filter(Boolean)) add(used, id, path);
+  }
+  for (const tag of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const m = /\sdata-asset=(?:"([^"]*)"|'([^']*)')/.exec(tag[0]);
+    if (!m) continue;
+    if (!/\s(?:property|name)=["'](?:og:image|twitter:image)["']/i.test(tag[0])) errors.push(`${path}: <meta data-asset> is only meaningful on og:image and twitter:image (${tag[0].slice(0, 90)})`);
+    for (const id of (m[1] ?? m[2]).split(/\s+/).filter(Boolean)) add(social, id, path);
   }
 }
 if (pages === 0) {
@@ -70,6 +81,7 @@ if (pages === 0) {
 }
 
 const where = (set) => `used on ${[...set].slice(0, 3).join(', ')}${set.size > 3 ? ` +${set.size - 3} more` : ''}`;
+const via = (id) => (social.has(id) ? `; also as social preview image on ${social.get(id).size} page(s)` : '');
 let examples = 0;
 let pending = 0;
 for (const [id, paths] of used) {
@@ -81,13 +93,13 @@ for (const [id, paths] of used) {
   }
   const row = byId.get(id);
   if (production) {
-    if (!row) errors.push(`asset "${id}" is not in permissions.json (${where(paths)})`);
-    else if (row.status !== 'cleared') errors.push(`asset "${id}" is ${row.status}, not cleared (${where(paths)})`);
+    if (!row) errors.push(`asset "${id}" is not in permissions.json (${where(paths)}${via(id)})`);
+    else if (row.status !== 'cleared') errors.push(`asset "${id}" is ${row.status}, not cleared (${where(paths)}${via(id)})`);
     continue;
   }
-  if (!row) errors.push(`asset "${id}" has no row in permissions.json (${where(paths)})`);
-  else if (row.sensitiveGroup) errors.push(`asset "${id}" is in a sensitive group and must not render (${where(paths)})`);
-  else if (!row.publishedOnLegacySite) errors.push(`asset "${id}" was not already published on coderstrust.global and must not render on staging (${where(paths)})`);
+  if (!row) errors.push(`asset "${id}" has no row in permissions.json (${where(paths)}${via(id)})`);
+  else if (row.sensitiveGroup) errors.push(`asset "${id}" is in a sensitive group and must not render (${where(paths)}${via(id)})`);
+  else if (!row.publishedOnLegacySite) errors.push(`asset "${id}" was not already published on coderstrust.global and must not render on staging (${where(paths)}${via(id)})`);
   else if (row.status !== 'cleared') pending++;
 }
 
@@ -97,8 +109,10 @@ if (errors.length) {
   process.exit(1);
 }
 const real = used.size - examples;
+const socialReal = [...social.keys()].filter((id) => !id.startsWith(EXAMPLE_PREFIX)).length;
 console.log(
   `check-permissions (${production ? 'production' : 'staging'}): OK — ${pages} pages, ${real} consent-dependent asset(s) in use` +
+    (socialReal ? ` (${socialReal} of them also as social preview image)` : '') +
     (production ? ', all cleared' : ` (${pending} pending clearance, rendered under the staging rule)`) +
     `, ${examples} example asset(s) on ${STYLEGUIDE}, ${warnings.length} warning(s).`,
 );

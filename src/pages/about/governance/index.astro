@@ -18,8 +18,8 @@ import { diligenceCta } from '../../../components/pages/about/routes';
 import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { formatDate, isoDate } from '../../../lib/format';
-import { ORG_ID, webPage } from '../../../lib/schema';
-import { BANGLADESH_HQ, OFFICES } from '../../../lib/site';
+import { webPage } from '../../../lib/schema';
+import { OFFICES } from '../../../lib/site';
 import { linkAttrs } from '../../../lib/url';
 
 const UPDATED = '2026-10-08';
@@ -42,15 +42,7 @@ const checklist = [
 const description = "CodersTrust's offices, leadership, safeguarding and data-protection arrangements, and how funders can ask about due diligence.";
 const jsonLd = [
   webPage({ path: '/about/governance/', name: 'Governance and accountability', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Governance', path: '/about/governance/' }] }),
-  // Offices only: no parent/subsidiary relation is asserted until legal status is confirmed.
-  {
-    '@type': 'Organization',
-    '@id': ORG_ID,
-    location: [
-      { '@type': 'Place', name: `${usa.name}, ${usa.city}`, address: { '@type': 'PostalAddress', streetAddress: usa.address[0], addressLocality: 'New York', addressRegion: 'NY', postalCode: '10005', addressCountry: 'US' }, telephone: usa.phone, email: usa.email },
-      { '@type': 'Place', name: `${BANGLADESH_HQ.name}, ${BANGLADESH_HQ.city}`, address: { '@type': 'PostalAddress', streetAddress: BANGLADESH_HQ.street, addressLocality: BANGLADESH_HQ.city, postalCode: BANGLADESH_HQ.postalCode, addressCountry: BANGLADESH_HQ.countryCode }, telephone: bd.phone, email: bd.email },
-    ],
-  },
+  // Both offices are already on the Organization node of every page (organization() in src/lib/schema.ts).
   faqJsonLd('governments', '/about/governance/', FAQ_IDS),
 ];
 ---

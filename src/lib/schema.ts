@@ -1,5 +1,5 @@
-import { BANGLADESH_HQ, CONTACT, ENTITY_DEFINITION, LOGO_PNG_PATH, OFFICES, PRODUCTION_ORIGIN, SITE_NAME, SOCIAL } from './site';
-import { canonicalUrl } from './url';
+import { BANGLADESH_HQ, CONTACT, ENTITY_DEFINITION, LOGO_PNG_PATH, OFFICES, PRODUCTION_ORIGIN, SITE_NAME, SOCIAL, plainPhone } from './site';
+import { canonicalUrl, stripBase } from './url';
 import { stripHtml } from './format';
 
 /**
@@ -13,14 +13,44 @@ export type JsonLdNode = Record<string, unknown>;
 export const ORG_ID = `${PRODUCTION_ORIGIN}/#organization`;
 export const SITE_ID = `${PRODUCTION_ORIGIN}/#website`;
 
+/**
+ * dateModified of a page node whose page states no "last updated" date: the day the site was built (UTC).
+ * PUBLIC_BUILD_DATE (YYYY-MM-DD) pins it for reproducible builds.
+ */
+export const BUILD_DATE: string = (import.meta.env.PUBLIC_BUILD_DATE as string | undefined) || new Date().toISOString().slice(0, 10);
+
 /** Reference to a node by id. */
 export const ref = (id: string) => ({ '@id': id });
 
 /** Canonical absolute URL for a site path. */
 export const pageUrl = (path: string) => canonicalUrl(path);
 
+/** An asset URL on the deployment host (staging) re-pointed at the canonical origin, like every other URL in the graph. */
+const canonicalAsset = (u: string): string => {
+  if (!/^https?:\/\//i.test(u)) return u;
+  const p = new URL(u);
+  return p.origin === PRODUCTION_ORIGIN ? u : PRODUCTION_ORIGIN + stripBase(p.pathname) + p.search;
+};
+
+/** A CodersTrust office as a schema.org Place (telephone in plain form). */
+const officePlace = (o: { name: string; city: string; street: string; region?: string; postalCode: string; countryCode: string; phone: string; email: string }): JsonLdNode => ({
+  '@type': 'Place',
+  name: `${o.name}, ${o.city}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: o.street,
+    addressLocality: o.city,
+    ...(o.region && { addressRegion: o.region }),
+    postalCode: o.postalCode,
+    addressCountry: o.countryCode,
+  },
+  telephone: plainPhone(o.phone),
+  email: o.email,
+});
+
 export function organization(): JsonLdNode {
   const usa = OFFICES[0];
+  const phone = plainPhone(CONTACT.phone);
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -36,7 +66,13 @@ export function organization(): JsonLdNode {
       { '@type': 'Person', name: 'Ferdinand Kjærulff' },
     ],
     email: CONTACT.email,
-    telephone: CONTACT.phone,
+    telephone: phone,
+    // Where the site says CodersTrust works (IN-02, ID-07): Bangladesh, the base, and the three regions YouthWIDE names.
+    areaServed: [
+      { '@type': 'Country', name: 'Bangladesh' },
+      ...['South Asia', 'Middle East and North Africa', 'Sub-Saharan Africa'].map((name) => ({ '@type': 'Place', name })),
+    ],
+    knowsAbout: ['workforce development', 'digital skills training', 'youth employment', 'freelancing', 'competency-based education', 'AI-ready curriculum'],
     address: [
       {
         '@type': 'PostalAddress',
@@ -56,27 +92,14 @@ export function organization(): JsonLdNode {
         addressCountry: BANGLADESH_HQ.countryCode,
       },
     ],
-    location: {
-      '@type': 'Place',
-      name: BANGLADESH_HQ.name,
-      telephone: BANGLADESH_HQ.phone,
-      email: BANGLADESH_HQ.email,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: BANGLADESH_HQ.street,
-        addressLocality: BANGLADESH_HQ.city,
-        postalCode: BANGLADESH_HQ.postalCode,
-        addressCountry: BANGLADESH_HQ.countryCode,
-      },
-    },
+    // Offices only: no parent/subsidiary relation is asserted until the legal status is confirmed with funders (ID-07).
+    location: [
+      officePlace({ name: usa.name, city: usa.city, street: usa.address[0], region: 'NY', postalCode: '10005', countryCode: 'US', phone: usa.phone, email: usa.email }),
+      officePlace({ name: BANGLADESH_HQ.name, city: BANGLADESH_HQ.city, street: BANGLADESH_HQ.street, postalCode: BANGLADESH_HQ.postalCode, countryCode: BANGLADESH_HQ.countryCode, phone: BANGLADESH_HQ.phone, email: BANGLADESH_HQ.email }),
+    ],
     contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        contactType: 'customer support',
-        email: CONTACT.email,
-        telephone: CONTACT.phone,
-        availableLanguage: ['en'],
-      },
+      { '@type': 'ContactPoint', contactType: 'customer support', email: CONTACT.email, telephone: phone, availableLanguage: ['en'] },
+      { '@type': 'ContactPoint', contactType: 'partnerships', email: CONTACT.email, telephone: phone, availableLanguage: ['en'] },
     ],
     // linkedin.com/company/coderstrust verified HTTP 200 ("CodersTrust Global | LinkedIn") on 2026-10-08
     sameAs: [...SOCIAL.map((s) => s.href), 'https://www.linkedin.com/company/coderstrust'],
@@ -134,7 +157,8 @@ export function webPage(o: WebPageOpts): JsonLdNode {
     isPartOf: ref(SITE_ID),
     about: o.about ?? ref(ORG_ID),
     ...(o.datePublished && { datePublished: o.datePublished }),
-    ...(o.dateModified && { dateModified: o.dateModified }),
+    // Every page node carries dateModified: the page's own "last updated" date, else the build date (BUILD_DATE).
+    dateModified: o.dateModified ?? BUILD_DATE,
     ...(o.breadcrumb && { breadcrumb: breadcrumbList(o.breadcrumb) }),
   };
 }
@@ -160,7 +184,7 @@ function articleBase(type: 'Article' | 'NewsArticle', o: ArticleOpts): JsonLdNod
     ...(o.description && { description: o.description }),
     datePublished: o.datePublished,
     dateModified: o.dateModified ?? o.datePublished,
-    ...(o.image && { image: [o.image] }),
+    ...(o.image && { image: [canonicalAsset(o.image)] }),
     author: o.authorName ? { '@type': 'Person', name: o.authorName } : ref(ORG_ID),
     publisher: ref(ORG_ID),
     inLanguage: 'en',
@@ -286,7 +310,38 @@ export function dataset(o: {
   };
 }
 
+const PAGE_TYPES = ['WebPage', 'AboutPage', 'ContactPage', 'CollectionPage', 'ProfilePage'];
+const typesOf = (n: JsonLdNode): string[] => [n['@type'] ?? []].flat() as string[];
+
+/**
+ * A page described by an Article or NewsArticle alone (news posts, case studies, ...) also gets a WebPage node,
+ * and the article points at it through mainEntityOfPage (planning/09 §2). The article builders keep the page URL
+ * in mainEntityOfPage; it becomes a reference to the page node here, so no page has to assemble the pair.
+ */
+function withPageNode(nodes: JsonLdNode[]): JsonLdNode[] {
+  if (nodes.some((n) => typesOf(n).some((t) => PAGE_TYPES.includes(t)))) return nodes;
+  const i = nodes.findIndex((n) => typesOf(n).some((t) => t === 'Article' || t === 'NewsArticle') && typeof n.mainEntityOfPage === 'string');
+  if (i === -1) return nodes;
+  const art = nodes[i];
+  const url = art.mainEntityOfPage as string;
+  const pageId = `${url}#webpage`;
+  const page: JsonLdNode = {
+    '@type': 'WebPage',
+    '@id': pageId,
+    url,
+    name: art.headline,
+    ...(art.description ? { description: art.description } : {}),
+    inLanguage: 'en',
+    isPartOf: ref(SITE_ID),
+    about: art.about ?? ref(ORG_ID),
+    datePublished: art.datePublished,
+    dateModified: art.dateModified ?? BUILD_DATE,
+    mainEntity: ref(art['@id'] as string),
+  };
+  return [page, ...nodes.map((n, j) => (j === i ? { ...n, mainEntityOfPage: ref(pageId) } : n))];
+}
+
 /** Assemble the page graph: Organization + WebSite always, then page nodes. */
 export function graph(nodes: JsonLdNode[] = []): JsonLdNode {
-  return { '@context': 'https://schema.org', '@graph': [organization(), website(), ...nodes] };
+  return { '@context': 'https://schema.org', '@graph': [organization(), website(), ...withPageNode(nodes)] };
 }

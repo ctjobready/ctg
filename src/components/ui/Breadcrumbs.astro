@@ -9,13 +9,15 @@ interface Crumb {
 interface Props {
   /** Items after "Home". Last item is the current page. */
   items: Crumb[];
+  /** Accessible name of the landmark. A page shows one trail; a gallery that shows a second one must name it differently. */
+  label?: string;
   class?: string;
 }
-const { items, class: className } = Astro.props;
+const { items, label = 'Breadcrumb', class: className } = Astro.props;
 const all: Crumb[] = [{ label: 'Home', href: '/' }, ...items];
 ---
 
-<nav class:list={['crumbs', className]} aria-label="Breadcrumb">
+<nav class:list={['crumbs', className]} aria-label={label}>
   <ol class="container">
     {
       all.map((c, i) => {

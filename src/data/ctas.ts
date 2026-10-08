@@ -1,9 +1,14 @@
 /**
  * CTA library (planning/04 §7, Decision D3). All enquiry CTAs are prefilled mailto links to
- * contact@coderstrust.global (the `local` key goes to the Bangladesh team, ID-07); build hrefs with
- * `ctaHref(key)` from `lib/mailto.ts`.
+ * contact@coderstrust.global (the `local` key goes to the Bangladesh team, ID-07, and `careers` to the
+ * Bangladesh HR address); build hrefs with `ctaHref(key)` from `lib/mailto.ts`.
+ *
+ * Keep the `CTAS` object literal self-contained (string literals only, plus NU_PGD_APPLY_URL and
+ * CTA_RECIPIENT): scripts/lib/dist.mjs evaluates exactly that literal in a sandbox to learn the subjects and
+ * body fields that the link check compares every mailto: on the built site against. The guard below the
+ * object keeps the two literal addresses in step with src/lib/site.ts.
  */
-import { BANGLADESH_HQ, CONTACT } from '../lib/site';
+import { BANGLADESH_HQ, CAREERS_EMAIL, CONTACT } from '../lib/site';
 
 export type CtaKey =
   | 'discovery'
@@ -17,6 +22,9 @@ export type CtaKey =
   | 'media'
   | 'local'
   | 'diligence'
+  | 'careers'
+  | 'mentor'
+  | 'superkids'
   | 'nu-pgd';
 
 export interface CtaDef {
@@ -106,7 +114,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   local: {
     key: 'local',
     label: 'Talk to our Bangladesh team',
-    to: BANGLADESH_HQ.email,
+    to: 'hello@coderstrustbd.com', // BANGLADESH_HQ.email (checked below)
     subject: 'Local partnership enquiry — [organization]',
     body: [
       'Organization',
@@ -124,12 +132,40 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     subject: 'Due-diligence enquiry — [organization]',
     body: ['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline'],
   },
+  /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
+  careers: {
+    key: 'careers',
+    label: 'Send your CV',
+    to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
+    subject: 'Application — [role or "speculative application"]',
+    body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],
+  },
+  /** Mentor applications (About / Mentors): same pattern as `media`, general address. */
+  mentor: {
+    key: 'mentor',
+    label: 'Mentor application',
+    subject: 'Mentor application — [your name]',
+    body: ['Name', 'Area of expertise', 'Years of experience', 'LinkedIn or portfolio link', 'Availability'],
+  },
+  /** SuperKids schools and education partners: the `discovery` conversation with school-specific fields. */
+  superkids: {
+    key: 'superkids',
+    label: 'Book a discovery session',
+    subject: 'SuperKids discovery session request — [school or organization]',
+    body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery conversation'],
+  },
   'nu-pgd': {
     key: 'nu-pgd',
     label: 'Apply now',
     href: NU_PGD_APPLY_URL,
-    secondary: { label: 'Call to enroll', href: 'tel:+8801958220802' },
+    // Non-breaking spaces: html-validate (tel-non-breaking) treats every space in a tel: link as a phone-number break.
+    secondary: { label: 'Call to enroll', href: 'tel:+8801958220802' },
   },
 };
+
+// The two literal addresses above must equal the site contact data (the CTAS literal stays sandbox-evaluable).
+if (CTAS.local.to !== BANGLADESH_HQ.email || CTAS.careers.to !== CAREERS_EMAIL) {
+  throw new Error('src/data/ctas.ts: `local`/`careers` recipients are out of step with src/lib/site.ts');
+}
 
 export const CTA_KEYS = Object.keys(CTAS) as CtaKey[];

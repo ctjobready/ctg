@@ -30,7 +30,7 @@ const { eyebrow, heading, lead, toc = [], updated, ...base } = Astro.props;
   <div class="container lf-grid">
     {
       (toc.length > 0 || Astro.slots.has('toc')) && (
-        <aside class="lf-toc" data-toc>
+        <div class="lf-toc" data-toc>
           <details class="lf-toc__box" open>
             <summary>On this page</summary>
             <nav aria-label="On this page">
@@ -41,7 +41,7 @@ const { eyebrow, heading, lead, toc = [], updated, ...base } = Astro.props;
               </slot>
             </nav>
           </details>
-        </aside>
+        </div>
       )
     }
     <div class="lf-body"><slot /></div>

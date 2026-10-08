@@ -1,7 +1,7 @@
 import { ORG_ID, pageUrl, ref, type JsonLdNode } from '../../../lib/schema';
 import { fact } from '../../../data/facts';
 import { C14 } from '../../../data/copy';
-import { cta, mailto } from '../../../lib/mailto';
+import { cta } from '../../../lib/mailto';
 
 /** C14 first action (N1): "In your enquiry, include two suitable times for a discovery conversation." */
 export const C14_FIRST = C14.firstAction.replace(/^Your first step: a discovery session\. /, '');
@@ -55,11 +55,4 @@ export function serviceNode(o: {
     audience: { '@type': 'Audience', audienceType: o.audience },
     ...(o.areaServed?.length && { areaServed: o.areaServed }),
   };
-}
-
-/** Prefilled mailto for a school or education partner (SuperKids discovery variant). */
-export function superkidsEnquiry() {
-  const lines = ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery conversation'];
-  const body = ['Hello CodersTrust team,', '', ...lines.map((l) => `${l}: `), '', 'Thank you.'].join('\r\n');
-  return { label: 'Book a discovery session', href: mailto({ subject: 'SuperKids discovery session request — [school or organization]', body }) };
 }

@@ -20,6 +20,8 @@ export interface BaseLayoutProps {
   promo?: boolean;
   image?: string;
   imageAlt?: string;
+  /** D13 asset ID of the photo behind `image` (team headshot, news cover); see SEOHead. */
+  imageAsset?: string;
   ogType?: 'website' | 'article' | 'profile';
   noindex?: boolean;
   /** Append " | CodersTrust" (default true). */

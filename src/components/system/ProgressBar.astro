@@ -17,9 +17,11 @@ const clamped = Math.max(0, Math.min(100, value));
     <span>{label}</span>
     <b>{valueLabel ?? `${clamped}%`}</b>
   </div>
-  <div class="progress__track" role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax="100" aria-valuenow={clamped}>
+  <!-- The drawn bar is decoration; the native <progress> (visually hidden) carries the value for assistive technology. -->
+  <div class="progress__track" aria-hidden="true">
     <div class="progress__fill"></div>
   </div>
+  <progress class="sr-only" max="100" value={clamped} aria-label={label}>{valueLabel ?? `${clamped}%`}</progress>
 </div>
 
 <style>

@@ -31,38 +31,40 @@ const pins = items.map((l) => {
 });
 ---
 
-<figure class:list={["wmap", className]} data-reveal data-fact="SC-03">
-  <div class="wmap__stage">
-    <svg class="wmap__svg" viewBox={`0 0 ${WORLD_W} ${WORLD_H}`} role="img" aria-label={`${caption}: ${items.length} locations. A table with the same information follows.`} preserveAspectRatio="xMidYMid meet">
-      <path class="wmap__land" d={WORLD_LAND_PATH} />
-    </svg>
-    <ul class="wmap__pins" role="presentation">
-      {
-        pins.map((p) => (
-          <li class={`wmap__pt wmap__pt--${p.side} wmap__pt--${p.vert}`} style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%`} aria-hidden="true">
-            <span class="wmap__pin">
-              <span class="wmap__dot"></span>
-            </span>
-            <div class="wmap__card" id={`wmap-card-${p.id}`}>
-              <p class="wmap__country">{p.tip.name} <span>{p.tip.years}</span></p>
-              <dl>
-                <dt>Target group</dt>
-                <dd>{p.tip.targetGroup}</dd>
-                <dt>Skills</dt>
-                <dd>{p.tip.skills}</dd>
-                {p.tip.funder && (<><dt>Funder</dt><dd>{p.tip.funder}</dd></>)}
-                {p.tip.note && (<><dt>Note</dt><dd>{p.tip.note}</dd></>)}
-              </dl>
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-  <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The table below lists the same details for every location.</figcaption>
+<div class:list={["wmap", className]} data-reveal data-fact="SC-03">
+  <figure class="wmap__fig">
+    <div class="wmap__stage">
+      <svg class="wmap__svg" viewBox={`0 0 ${WORLD_W} ${WORLD_H}`} role="img" aria-label={`${caption}: ${items.length} locations. A table with the same information follows.`} preserveAspectRatio="xMidYMid meet">
+        <path class="wmap__land" d={WORLD_LAND_PATH} />
+      </svg>
+      <ul class="wmap__pins" role="presentation">
+        {
+          pins.map((p) => (
+            <li class={`wmap__pt wmap__pt--${p.side} wmap__pt--${p.vert}`} style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%`} aria-hidden="true">
+              <span class="wmap__pin">
+                <span class="wmap__dot"></span>
+              </span>
+              <div class="wmap__card" id={`wmap-card-${p.id}`}>
+                <p class="wmap__country">{p.tip.name} <span>{p.tip.years}</span></p>
+                <dl>
+                  <dt>Target group</dt>
+                  <dd>{p.tip.targetGroup}</dd>
+                  <dt>Skills</dt>
+                  <dd>{p.tip.skills}</dd>
+                  {p.tip.funder && (<><dt>Funder</dt><dd>{p.tip.funder}</dd></>)}
+                  {p.tip.note && (<><dt>Note</dt><dd>{p.tip.note}</dd></>)}
+                </dl>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The table below lists the same details for every location.</figcaption>
+  </figure>
   <p class="wmap__offices" data-fact="ID-07">{OFFICES_LINE}</p>
 
-  <div class="wmap__table table-scroll" role="region" aria-label="Program locations table" tabindex="0">
+  <section class="wmap__table table-scroll" aria-label="Program locations table" tabindex="0">
     <table>
       <caption class="sr-only">{caption}</caption>
       <thead>
@@ -86,13 +88,17 @@ const pins = items.map((l) => {
         ))}
       </tbody>
     </table>
-  </div>
-</figure>
+  </section>
+</div>
 
 <style>
   .wmap {
     margin: 0;
     min-width: 0;
+  }
+  /* The figure holds the map and its caption only (figcaption must be its first or last child); the offices line and the table follow it. */
+  .wmap__fig {
+    margin: 0;
   }
   .wmap__stage {
     position: relative;
