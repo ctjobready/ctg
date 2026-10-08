@@ -1,0 +1,59 @@
+---
+import Button from '../../system/Button.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/** End-of-report next step: one solid primary action, one text link, and the micro-commitment line. */
+interface Props {
+  heading: string;
+  text?: string;
+  cta: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  micro?: string;
+}
+const { heading, text, cta, secondary, micro } = Astro.props;
+---
+
+<aside class="next" aria-label={heading}>
+  <h2 class="next__title">{heading}</h2>
+  {text && <p class="next__text">{text}</p>}
+  <div class="next__actions">
+    <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
+    {secondary && <a class="link" href={linkAttrs(secondary.href).href}>{secondary.label}</a>}
+  </div>
+  {micro && <p class="next__micro">{micro}</p>}
+</aside>
+
+<style>
+  .next {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
+    padding: var(--space-lg) var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-lg);
+  }
+  .next > :global(*) {
+    margin: 0;
+  }
+  .next__title {
+    font-size: var(--fs-heading-2xl);
+    line-height: var(--lh-heading-2xl);
+    color: var(--secondary);
+  }
+  .next__text {
+    max-width: var(--measure);
+    color: var(--on-surface-variant);
+  }
+  .next__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-lg);
+  }
+  .next__micro {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+</style>

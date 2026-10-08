@@ -1,0 +1,116 @@
+---
+import Img from '../../ui/Img.astro';
+import Icon from '../../system/Icon.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { CAVEATS } from '../../../data/facts';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Learner story block for a case-study page. Two modes:
+ *  - named: an adult learner whose story, name and photo are already published on coderstrust.global;
+ *  - anonymized (`name` omitted): an outcome line with no name, quote or photo (learners from groups
+ *    that need a documented release: minors, refugees, third-gender trainees, slum residents).
+ * Every story carries the individual-story caveat; outliers say so.
+ */
+interface Props {
+  /** Register story fact (ST-xx) for the footnote marker; omit for anonymized lines (the register entry carries a name). */
+  factId?: string;
+  name?: string;
+  program: string;
+  outcome: string;
+  excerpt?: string;
+  outlier?: boolean;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  assetId?: string;
+}
+const { factId, name, program, outcome, excerpt, outlier = false, image, imageAlt = '', assetId } = Astro.props;
+---
+
+<article class="ls" data-asset={name ? assetId : undefined} data-fact={factId}>
+  <div class="ls__media" aria-hidden={image ? undefined : 'true'}>
+    {image ? <Img src={image} alt={imageAlt} width={480} height={480} widths={[240, 480]} sizes="160px" assetId={assetId} /> : <Icon name="user" size={44} strokeWidth={1.25} />}
+  </div>
+  <div class="ls__body">
+    <p class="eyebrow">{name ? 'Learner story' : 'Learner outcome, shared without a name'}</p>
+    <p class="ls__outcome">{outcome}{factId && <FootnoteMarker id={factId} footnote="auto" />}</p>
+    {excerpt && <p class="ls__excerpt">{excerpt}</p>}
+    {name && <p class="ls__name"><b>{name}</b><span>{program}</span></p>}
+    {!name && <p class="ls__name"><span>{program}</span></p>}
+    <p class="ls__caveat">
+      Individual story, not a typical or promised outcome{outlier && '; this one is an outlier'}.
+      {!factId && <span> {CAVEATS.I}</span>}
+    </p>
+  </div>
+</article>
+
+<style>
+  .ls {
+    display: grid;
+    gap: var(--space-md);
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .ls__media {
+    width: 120px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+  .ls__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ls__body {
+    display: grid;
+    gap: var(--space-sm);
+    min-width: 0;
+  }
+  .ls__body > * {
+    margin: 0;
+  }
+  .ls__outcome {
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .ls__excerpt {
+    color: var(--on-surface-variant);
+    max-width: var(--measure);
+  }
+  .ls__name {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px var(--space-sm);
+    color: var(--on-surface-variant);
+  }
+  .ls__name b {
+    color: var(--on-surface);
+  }
+  .ls__caveat {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--outline);
+  }
+  @media (min-width: 640px) {
+    .ls {
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+    .ls__media {
+      width: 140px;
+    }
+  }
+</style>

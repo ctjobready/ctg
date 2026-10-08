@@ -1,0 +1,195 @@
+---
+import LongformLayout from '../../../layouts/LongformLayout.astro';
+import Accordion from '../../../components/ui/Accordion.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import ReportSection from '../../../components/pages/impact/ReportSection.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import NextStep from '../../../components/pages/impact/NextStep.astro';
+import CompetencyLevels from '../../../components/pages/model/CompetencyLevels.astro';
+import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { describedList } from '../../../components/pages/impact/jsonld';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { linkAttrs } from '../../../lib/url';
+
+const path = '/our-model/talentleap/';
+const bluf = 'TalentLEAP is CodersTrust’s competency-based talent development model. It breaks each career path into individual skill units aligned with industry expectations, teaches and assesses them in graduated competency levels (after the Dreyfus model of skill acquisition), and carries every learner through three stages — Learn, Earn and Prosper — with three months of milestone-based mentoring after the course.';
+const description = desc('TalentLEAP is CodersTrust’s competency-based model: skill units, graduated levels, and Learn, Earn, Prosper with three months of milestone-based mentoring.');
+
+const steps = [
+  { name: 'Assess and place on a track', text: 'An accessible readiness assessment (tests and an interview) routes each applicant to a career track or to a foundation track with extra support. It routes people; it does not screen them out.' },
+  { name: 'Learn skill units', text: 'Each track teaches individual skill units, assessed against common rubrics: 100 training hours per certification, half of them hands-on labs.' },
+  { name: 'Certify', text: 'Certification exam preparation, and the exam fee for the learner’s track (exam terms set per program).' },
+  { name: 'Earn', text: 'Three months of milestone-based one-to-one mentoring (profile live, first bids, first client, exam), together with placement support into local, remote and global work.' },
+  { name: 'Prosper', text: 'Career paths with progressive levels, continuing professional development and the alumni network.' },
+];
+const levels = [
+  { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership of a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills.' },
+  { name: 'Level 2 · Proficient', description: 'The next level of the Digital Marketing career path (example).' },
+  { name: 'Level 3 · Expert', description: 'The top level of the Digital Marketing career path (example).' },
+];
+const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
+const jsonLd = [
+  articleNode({ path, headline: 'What is TalentLEAP? CodersTrust’s competency-based talent development model', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  describedList('How TalentLEAP works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
+  describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
+  faqJsonLd('foundations', path, faqIds),
+];
+const faq = faqItems('foundations', faqIds, Astro);
+const toc = [
+  { id: 'glance', label: 'At a glance' },
+  { id: 'how', label: 'How TalentLEAP works' },
+  { id: 'example', label: 'Example: Digital Marketing' },
+  { id: 'different', label: 'What makes it different' },
+  { id: 'results', label: 'TalentLEAP results' },
+  { id: 'faq', label: 'Questions' },
+];
+const d = discoveryCta();
+---
+
+<LongformLayout
+  title={title('TalentLEAP Model')}
+  heading="What is TalentLEAP? CodersTrust’s competency-based talent development model"
+  eyebrow="Our model"
+  lead={bluf}
+  description={description}
+  path={path}
+  updated="2026-10-08"
+  toc={toc}
+  breadcrumbs={[{ label: 'Our model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
+  jsonLd={jsonLd}
+>
+  <ReportSection id="glance" title="At a glance">
+    <ul class="tl__list">
+      <li data-fact="OC-01"><Fact id="OC-01" /></li>
+      <li data-fact="OC-05"><Fact id="OC-05" /> This is a timing measure only.</li>
+      <li data-fact="RC-01"><Fact id="RC-01" field="headline" /></li>
+    </ul>
+    <p class="tl__scope">These results describe CodersTrust programs, not TalentLEAP’s features on their own: neither the survey nor the trial isolates one part of the model.</p>
+  </ReportSection>
+
+  <ReportSection id="how" title="How TalentLEAP works">
+    <ol class="tl__steps" role="list">
+      {steps.map((s, i) => (
+        <li class="tl__step" data-reveal>
+          <span class="tl__num" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h3 class="tl__steptitle"><span class="sr-only">Step {i + 1}: </span>{s.name}</h3>
+            <p>{s.text}{i === 1 && <FootnoteMarker id="PD-01" footnote="auto" />}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p data-fact="PD-01 PD-03 PD-14 PD-15 ID-06">Certifications run by track, for example Meta Blueprint and Google Ads for digital marketing, Adobe Certified Professional for design and video, QuickBooks Online ProAdvisor for digital accounting, PCEP for Python and CWP for web.</p>
+  </ReportSection>
+
+  <ReportSection id="example" title="Example: the Digital Marketing career path">
+    <p>TalentLEAP organizes skills into career paths with progressive levels. The Digital Marketing path is the example here: its levels are Competent, Proficient and Expert.</p>
+    <CompetencyLevels />
+  </ReportSection>
+
+  <ReportSection id="different" title="What makes TalentLEAP different">
+    <ul class="tl__list">
+      <li><strong>Competency-based rather than time-based.</strong> Learning is organized around individual skill units that are assessed, not around hours attended alone.</li>
+      <li><strong>Milestone-based mentoring.</strong> Mentoring follows milestones (profile live, first bids, first client, exam), and attendance is tracked.</li>
+      <li><strong>Demand-led tracks.</strong> Tracks are set from current employer demand in each country, and each track’s work-entry plan is approved before enrollment.<FootnoteMarker id="PD-19" footnote="auto" /></li>
+    </ul>
+    <Callout label="Design rationale, not a proof of mentoring">
+      <p data-fact="RC-11"><Fact id="RC-11" /></p>
+      <p>The randomized trial’s program included three months of mentoring, but the trial did not isolate the effect of mentoring, so this page makes no claim that mentoring itself is proven.</p>
+    </Callout>
+    <p data-fact="RC-06">External context: <Fact id="RC-06" /></p>
+  </ReportSection>
+
+  <ReportSection id="results" title="TalentLEAP results">
+    <p>Results for CodersTrust programs, with the evidence each one rests on:</p>
+    <ul class="tl__list">
+      <li data-fact="OC-01"><Fact id="OC-01" /></li>
+      <li data-fact="OC-05"><Fact id="OC-05" /> Timing only: it does not show why people started earning.</li>
+      <li data-fact="RC-01"><Fact id="RC-01" field="headline" /></li>
+    </ul>
+    <p><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a> · <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a></p>
+  </ReportSection>
+
+  <ReportSection id="faq" title="Questions about TalentLEAP">
+    <Accordion items={faq} name="tl-faq" openFirst />
+  </ReportSection>
+
+  <NextStep heading="See how TalentLEAP would run in your program." text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
+
+  <p class="tl__author">Author: CodersTrust Learning Design</p>
+  <Sources class="tl__sources" />
+</LongformLayout>
+
+<style>
+  .tl__list {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .tl__list li::marker {
+    color: var(--primary);
+  }
+  .tl__scope,
+  .tl__author {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .tl__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg);
+    max-width: var(--measure);
+  }
+  .tl__step {
+    position: relative;
+    display: flex;
+    gap: var(--space-md);
+  }
+  .tl__step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 48px;
+    bottom: calc(var(--space-lg) * -1 + 4px);
+    width: 2px;
+    background: var(--primary-fixed);
+  }
+  .tl__num {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-heading-m);
+    position: relative;
+    z-index: 1;
+  }
+  .tl__steptitle {
+    margin: 0 0 4px;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--secondary);
+  }
+  .tl__step p {
+    margin: 0;
+  }
+  :global(.tl__sources) {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+</style>

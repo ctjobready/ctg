@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import Icon from '../../../components/system/Icon.astro';
+import CaseGrid from '../../../components/pages/impact/CaseGrid.astro';
+import CopyText from '../../../components/pages/impact/CopyText.astro';
+import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { CASE_STUDIES } from '../../../components/pages/impact/case-studies';
+import { WOMEN_INCLUSION, MICRO_COMMITMENT } from '../../../data/copy';
+import { itemList } from '../../../components/pages/impact/jsonld';
+import { linkAttrs } from '../../../lib/url';
+import { webPage } from '../../../lib/schema';
+
+const path = '/impact/case-studies/';
+const description = desc('Four CodersTrust case studies, each with its result, its base and what it does not show: WSDFM, Women in Online Work in Kosovo, UNDP YES and Her Power.');
+const jsonLd = [
+  webPage({ path, name: 'CodersTrust case studies', description, type: 'CollectionPage' }),
+  itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
+  articleNode({ path, headline: 'CodersTrust case studies', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' }),
+];
+const d = discoveryCta();
+---
+
+<BaseLayout title={title('Case Studies')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Case studies: four programs, results with their bases" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
+
+  <Section aria-labelledby="cases-h">
+    <SectionHeader id="cases-h" eyebrow="Four programs" title="Read the case studies" lead="Placement figures are program data. Where a randomized trial evaluated the program, the case study says so and keeps the two kinds of evidence apart." />
+    <CaseGrid />
+  </Section>
+
+  <Section tone="airy" aria-labelledby="women-h" pad="sm">
+    <h2 class="t-heading-2xl" id="women-h">Women-focused programs, side by side</h2>
+    <div class="ch__text"><CopyText block={WOMEN_INCLUSION} /></div>
+    <p class="ch__link"><a class="link" href={linkAttrs('/impact/').href}>How the evidence fits together<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .ch__text {
+    max-width: var(--measure);
+    margin-top: var(--space-md);
+    font-size: var(--fs-body-m);
+  }
+  .ch__link {
+    margin: var(--space-md) 0 0;
+  }
+</style>

@@ -1,0 +1,158 @@
+---
+import Fact from '../../facts/Fact.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Evidence ladder: four kinds of evidence, strongest for cause first. Each rung says what it shows,
+ * what it does not show and gives a one-line methods note (planning v1.3, P21/P22).
+ */
+interface Props {
+  /** Link each rung to its page (hub) or leave plain (inside the report). */
+  links?: boolean;
+  headingLevel?: 3 | 4;
+  class?: string;
+}
+const { links = true, headingLevel = 3, class: className } = Astro.props;
+const H = `h${headingLevel}` as 'h3' | 'h4';
+---
+
+<ol class:list={['ladder', className]} role="list">
+  <li class="ladder__rung" data-reveal>
+    <span class="ladder__num" aria-hidden="true">1</span>
+    <H class="ladder__title">Randomized trial (BIGD)</H>
+    <p class="ladder__fig"><Fact id="RC-02" field="value" /> <span><Fact id="RC-02" field="label" footnote={false} /></span></p>
+    <dl class="ladder__dl">
+      <dt>What it shows</dt>
+      <dd>The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.</dd>
+      <dt>What it does not show</dt>
+      <dd>Results for other countries, groups or today’s standard track.</dd>
+      <dt>Method</dt>
+      <dd>Women offered a place come first (intent to treat); women who attended come second.</dd>
+    </dl>
+    {links && <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a>}
+  </li>
+  <li class="ladder__rung" data-reveal>
+    <span class="ladder__num" aria-hidden="true">2</span>
+    <H class="ladder__title">Impact Survey 2026 (surveyed completers)</H>
+    <p class="ladder__fig"><Fact id="OC-01" field="value" /> <span><Fact id="OC-01" field="label" footnote={false} /></span></p>
+    <dl class="ladder__dl">
+      <dt>What it shows</dt>
+      <dd>What alumni who responded report about work and income after training.</dd>
+      <dt>What it does not show</dt>
+      <dd>Cause: respondents are not a random sample and may over-represent successful learners.</dd>
+      <dt>Method</dt>
+      <dd>Online, self-reported, before-training status recalled; descriptive.</dd>
+    </dl>
+    {links && <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Outcomes 2026<Icon name="arrow-right" size={16} /></a>}
+  </li>
+  <li class="ladder__rung" data-reveal>
+    <span class="ladder__num" aria-hidden="true">3</span>
+    <H class="ladder__title">Program results (gross placement)</H>
+    <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span><Fact id="PR-01" field="label" footnote={false} /></span></p>
+    <dl class="ladder__dl">
+      <dt>What it shows</dt>
+      <dd>How many completers of a program were placed, from CodersTrust program records.</dd>
+      <dt>What it does not show</dt>
+      <dd>What would have happened without training; placement is gross, not net.</dd>
+      <dt>Method</dt>
+      <dd>Program data; each case study states its own base.</dd>
+    </dl>
+    {links && <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case studies<Icon name="arrow-right" size={16} /></a>}
+  </li>
+  <li class="ladder__rung" data-reveal>
+    <span class="ladder__num" aria-hidden="true">4</span>
+    <H class="ladder__title">Learner stories</H>
+    <p class="ladder__fig"><span>Individual stories, in learners’ own words</span></p>
+    <dl class="ladder__dl">
+      <dt>What it shows</dt>
+      <dd>What the path can look like for one person.</dd>
+      <dt>What it does not show</dt>
+      <dd>A typical or promised outcome; some are outliers and say so.</dd>
+      <dt>Method</dt>
+      <dd>Reported by the learner; used with consent where a name appears.</dd>
+    </dl>
+    {links && <a class="link" href={linkAttrs('/impact/stories/').href}>Success stories<Icon name="arrow-right" size={16} /></a>}
+  </li>
+</ol>
+
+<style>
+  .ladder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  }
+  .ladder__rung {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-gutter);
+    padding-top: calc(var(--space-gutter) + 8px);
+    background: var(--ctx-card);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    min-width: 0;
+  }
+  .ladder__rung > * {
+    margin: 0;
+  }
+  .ladder__num {
+    position: absolute;
+    top: -14px;
+    left: var(--space-gutter);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--secondary);
+    color: var(--on-secondary);
+    font-weight: var(--fw-bold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ladder__title {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--ctx-heading);
+  }
+  .ladder__fig {
+    color: var(--ctx-text);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
+  .ladder__fig > :global(.fact:first-child) {
+    display: block;
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.1;
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+  .ladder__dl {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
+  }
+  .ladder__dl dt {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    margin-top: var(--space-xs);
+  }
+  .ladder__dl dd {
+    margin: 0;
+  }
+  .ladder__rung > .link {
+    margin-top: auto;
+    padding-top: var(--space-sm);
+    align-self: flex-start;
+  }
+</style>

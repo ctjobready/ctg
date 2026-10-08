@@ -1,0 +1,115 @@
+---
+import Icon from '../../system/Icon.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+
+/**
+ * TalentLEAP example: the Digital Marketing career path (IN-08). The competency levels
+ * Competent → Proficient → Expert are shown here only, as this career-path example.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<figure class:list={['lv', className]} data-fact="IN-08 IN-06">
+  <ol class="lv__list" role="list">
+    <li class="lv__item lv__item--first" data-reveal>
+      <p class="eyebrow">Level 1 · Competent</p>
+      <h3 class="lv__title">Introduction to Digital Marketing with Google and Meta Certifications</h3>
+      <ul class="lv__bullets">
+        <li>Three months of mentorship by an experienced professional</li>
+        <li>Three months of membership of a digital-marketing expertise community</li>
+        <li>Bonus mini-courses in essential business and leadership skills</li>
+      </ul>
+    </li>
+    <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
+    <li class="lv__item" data-reveal>
+      <p class="eyebrow">Level 2 · Proficient</p>
+      <h3 class="lv__title">Proficient professional</h3>
+      <p class="lv__text">The next step on the same career path.</p>
+    </li>
+    <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
+    <li class="lv__item" data-reveal>
+      <p class="eyebrow">Level 3 · Expert</p>
+      <h3 class="lv__title">Expert professional</h3>
+      <p class="lv__text">The top level of the career path.</p>
+    </li>
+  </ol>
+  <figcaption class="lv__cap">Example only: the Digital Marketing career path.<FootnoteMarker id="IN-08" footnote="auto" /> Levels progress from Competent to Proficient to Expert.</figcaption>
+</figure>
+
+<style>
+  .lv {
+    margin: 0;
+  }
+  .lv__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lv__item {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+  }
+  .lv__item--first {
+    border-color: var(--primary);
+  }
+  .lv__item > :global(*) {
+    margin: 0;
+  }
+  .lv__title {
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--ctx-heading);
+  }
+  .lv__bullets {
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: 4px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .lv__bullets li::marker {
+    color: var(--primary);
+  }
+  .lv__text {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .lv__arrow {
+    display: flex;
+    justify-content: center;
+    color: var(--primary);
+    transform: rotate(90deg);
+    height: 24px;
+    align-items: center;
+  }
+  .lv__cap {
+    margin-top: var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  @media (min-width: 900px) {
+    .lv__list {
+      grid-template-columns: minmax(0, 1.5fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr);
+      align-items: stretch;
+      gap: var(--space-sm);
+    }
+    .lv__arrow {
+      transform: none;
+      height: auto;
+    }
+  }
+</style>

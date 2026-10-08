@@ -1,0 +1,141 @@
+---
+import { getEntry } from 'astro:content';
+import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
+import StackedBars from '../../../components/pages/impact/StackedBars.astro';
+import CopyText from '../../../components/pages/impact/CopyText.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Img from '../../../components/ui/Img.astro';
+import Icon from '../../../components/system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { RCT_HEADLINE } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
+
+// RC-09 (BIGD employment status at follow-up). The chart values must match the register text.
+const control = [47.2, 40.9, 12.0];
+const offered = [36.9, 34.6, 28.5];
+const rc09 = fact('RC-09').text;
+for (const v of [...control, ...offered]) if (!rc09.includes(`${v.toFixed(1)}%`)) throw new Error(`RC-09 chart value ${v} is not in the register text`);
+
+const samina = await getEntry('stories', 'samina-tasneem-chowdhury');
+if (!samina) throw new Error('story samina-tasneem-chowdhury missing');
+const paras = (samina.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+const excerpt = paras[2];
+---
+
+<CaseStudyPage
+  slug="wsdfm-women-freelancers"
+  pageTitle="WSDFM Case Study"
+  description="WSDFM, commissioned by Porticus: 711 of 1,000 women placed, and a randomized trial by BIGD found income rose for women offered a place."
+  stats={[
+    { id: 'PR-01', evidence: 'Program records — gross placement, no comparison group' },
+    { id: 'RC-01', evidence: 'BIGD randomized trial, May 2022' },
+    { id: 'RC-02', evidence: 'BIGD randomized trial, May 2022' },
+  ]}
+  context={[
+    'Women in Bangladesh often lack the skills and training to succeed in the workforce, which limits their employment opportunities.',
+    'Porticus commissioned CodersTrust to run a skills project for women, focused on ICT skills for freelancing marketplaces and local jobs, and on women’s empowerment.',
+  ]}
+  challenges={[
+    'Low awareness of freelancing made students uninterested.',
+    'Families did not always support their studies.',
+    'Many trainees lacked basic computer literacy, a computer or an internet connection.',
+    'Social obstacles drove dropout up.',
+    'COVID-19 closed physical classrooms.',
+  ]}
+  solution={[
+    'Campus activation, roadshows, seminars, parent counseling sessions and online campaigns.',
+    'Basic computer literacy added to the curriculum.',
+    'Family counseling and a stipend for active students.',
+    'Online training sessions during COVID-19.',
+    'One-to-one mentoring support for students.',
+  ]}
+>
+  <figure slot="context" class="wf__photo">
+    <Img src={photo} alt="Women trainees and a CodersTrust Bangladesh banner at a WSDFM training session" width={977} height={568} widths={[480, 977]} sizes="(min-width:1024px) 560px, 90vw" assetId="case-wsdfm-training-group" />
+    <figcaption>A WSDFM training session.</figcaption>
+  </figure>
+
+  <Fragment slot="results">
+    <Callout tone="bluf" label="Program records — gross placement, no comparison group">
+      <Fact id="PR-01" as="p" />
+    </Callout>
+
+    <div>
+      <h3 class="t-heading-l">What the randomized trial found</h3>
+      <p class="wf__evid">BIGD randomized trial, May 2022</p>
+      <CopyText block={RCT_HEADLINE} class="wf__lead" />
+    </div>
+
+    <StackedBars
+      title="Employment status at follow-up: women offered a place vs the control group"
+      segments={['Unemployed', 'Other employment', 'Freelancing']}
+      rows={[
+        { label: 'Control group', values: control },
+        { label: 'Women offered a place', values: offered },
+      ]}
+      note="BIGD randomized trial; women offered a place vs control group (intent to treat). Follow-up November–December 2021."
+    />
+    <p data-fact="RC-09">Chart data: <Fact id="RC-09" footnote="auto" as="span" /></p>
+
+    <div class="wf__attend" data-fact="RC-03">
+      <h3 class="t-heading-m">Women who attended</h3>
+      <p class="wf__evid">BIGD randomized trial, May 2022</p>
+      <p><Fact id="RC-03" as="span" /></p>
+    </div>
+
+    <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>Read the full trial results<Icon name="arrow-right" size={16} /></a></p>
+  </Fragment>
+
+  <Fragment slot="story">
+    <LearnerStory
+      factId="ST-03"
+      name="Samina Tasneem Chowdhury"
+      program="WSDFM, first batch"
+      outcome="Completed 90+ projects as a freelance graphic designer on Fiverr."
+      excerpt={excerpt}
+      assetId="story-samina-tasneem-chowdhury"
+    />
+  </Fragment>
+</CaseStudyPage>
+
+<style>
+  .wf__photo {
+    margin: 0;
+    max-width: 560px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--primary-fixed);
+  }
+  .wf__photo :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .wf__photo figcaption {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .wf__evid {
+    margin: 4px 0 0;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+  }
+  :global(.wf__lead) {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface);
+  }
+  .wf__attend {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .wf__attend > :global(*) {
+    margin: 0;
+  }
+</style>

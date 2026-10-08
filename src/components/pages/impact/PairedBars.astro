@@ -1,0 +1,190 @@
+---
+/**
+ * PairedBars — one row per category with a "before" and an "after" bar, real text values and an
+ * accessible data-table toggle. Values are percentages 0–100.
+ */
+interface Props {
+  title: string;
+  beforeLabel: string;
+  afterLabel: string;
+  rows: { label: string; before: number; after: number; nBefore?: number; nAfter?: number }[];
+  max?: number;
+  note?: string;
+  class?: string;
+}
+const { title, beforeLabel, afterLabel, rows, max = 60, note, class: className } = Astro.props;
+const fmt = (v: number) => `${v.toFixed(1)}%`;
+const hasN = rows.some((r) => r.nBefore !== undefined);
+---
+
+<figure class:list={['pb', className]} data-reveal>
+  <figcaption class="pb__title">{title}</figcaption>
+  <p class="pb__legend" aria-hidden="true">
+    <span class="pb__key pb__key--before"></span>{beforeLabel}
+    <span class="pb__key pb__key--after"></span>{afterLabel}
+  </p>
+  <ul class="pb__list" role="list">
+    {
+      rows.map((r, i) => (
+        <li class="pb__row" style={`--b:${(r.before / max) * 100};--a:${(r.after / max) * 100};--bi:${i}`}>
+          <p class="pb__label">{r.label}</p>
+          <p class="pb__line">
+            <span class="pb__track" aria-hidden="true"><span class="pb__fill pb__fill--before"></span></span>
+            <span class="pb__val"><span class="sr-only">{beforeLabel}: </span>{fmt(r.before)}</span>
+          </p>
+          <p class="pb__line">
+            <span class="pb__track" aria-hidden="true"><span class="pb__fill pb__fill--after"></span></span>
+            <span class="pb__val pb__val--after"><span class="sr-only">{afterLabel}: </span>{fmt(r.after)}</span>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+  {note && <p class="pb__note">{note}</p>}
+  <details class="pb__data">
+    <summary>View chart data as a table</summary>
+    <div class="pb__tablewrap" role="region" aria-label={`${title}: data table`} tabindex="0">
+      <table>
+        <caption class="sr-only">{title}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">{beforeLabel}</th>
+            <th scope="col">{afterLabel}</th>
+            {hasN && <th scope="col">Respondents (n)</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => <tr><th scope="row">{r.label}</th><td>{fmt(r.before)}</td><td>{fmt(r.after)}</td>{hasN && <td>{r.nBefore} → {r.nAfter}</td>}</tr>)}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</figure>
+
+<style>
+  .pb {
+    margin: 0;
+    max-width: 720px;
+  }
+  .pb__title {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-sm);
+  }
+  .pb__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-sm);
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
+  }
+  .pb__key {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    margin-left: var(--space-sm);
+  }
+  .pb__key:first-child {
+    margin-left: 0;
+  }
+  .pb__key--before {
+    background: var(--primary-fixed-dim);
+  }
+  .pb__key--after {
+    background: var(--primary);
+  }
+  .pb__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .pb__row {
+    display: grid;
+    gap: 6px;
+  }
+  .pb__row > * {
+    margin: 0;
+  }
+  .pb__label {
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+  .pb__line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 4.5rem;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .pb__track {
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: var(--surface-container-low);
+    overflow: hidden;
+  }
+  .pb__fill {
+    display: block;
+    height: 100%;
+    border-radius: var(--radius-full);
+  }
+  .pb__fill--before {
+    background: var(--primary-fixed-dim);
+    width: calc(var(--b) * 1%);
+  }
+  .pb__fill--after {
+    background: var(--primary);
+    width: calc(var(--a) * 1%);
+  }
+  .pb__val {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-text);
+    text-align: right;
+  }
+  .pb__val--after {
+    color: var(--primary);
+  }
+  .pb__note {
+    margin: var(--space-md) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .pb__data {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+  }
+  .pb__data summary {
+    color: var(--ctx-link);
+    font-weight: var(--fw-medium);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .pb__tablewrap {
+    overflow-x: auto;
+  }
+  .pb__data table {
+    width: 100%;
+    min-width: 320px;
+  }
+  .pb__data th,
+  .pb__data td {
+    text-align: left;
+    padding: 6px 12px 6px 0;
+    border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .pb .pb__fill {
+      clip-path: inset(0 100% 0 0 round 9999px);
+    }
+    :global(.js) .pb.is-visible .pb__fill {
+      clip-path: inset(0 0 0 0 round 9999px);
+      transition: clip-path 800ms var(--ease-emphasized) calc(150ms + var(--bi) * 120ms);
+    }
+  }
+</style>

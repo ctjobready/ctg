@@ -1,0 +1,101 @@
+---
+import { getEntry } from 'astro:content';
+import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import CopyText from '../../../components/pages/impact/CopyText.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Img from '../../../components/ui/Img.astro';
+import { WOMEN_INCLUSION } from '../../../data/copy';
+import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
+
+const maria = await getEntry('stories', 'maria-dewan');
+if (!maria) throw new Error('story maria-dewan missing');
+const paras = (maria.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+const excerpt = `${paras[1]} ${paras[2]}`;
+---
+
+<CaseStudyPage
+  slug="her-power"
+  pageTitle="Her Power Case Study"
+  description="Her Power, a project of Bangladesh’s ICT Division: 372 of 800 women in the training cohort placed (47%), shown with the program’s separate scale measures."
+  stats={[{ id: 'PR-05', evidence: 'Program records — gross placement' }]}
+  context={[
+    'Her Power is a project of the ICT Division of the Government of Bangladesh. It aims to help women become entrepreneurs and self-employed through digital skills, using technology safely.',
+    'CodersTrust provided the curriculum, training manuals and mentorship guidelines for the national program, trained trainers, and trained a cohort of women directly.',
+  ]}
+  challenges={[
+    'Keeping students engaged and motivated.',
+    'Giving feedback without face-to-face contact.',
+    'Instructors and learners who were new to online tools.',
+    'Few training materials designed for online learning.',
+  ]}
+  solution={[
+    'Extra support to help learners adopt digital tools.',
+    'Interactive, collaborative sessions.',
+    'Regular check-ins and Q&A to keep learners on track.',
+    'Accessible, interactive digital learning materials.',
+  ]}
+>
+  <figure slot="context" class="hp__photo">
+    <Img src={photo} alt="Women working on laptops in a Her Power training lab" width={1093} height={714} widths={[480, 1093]} sizes="(min-width:1024px) 560px, 90vw" assetId="case-her-power-training-lab" />
+    <figcaption>A Her Power training lab.</figcaption>
+  </figure>
+
+  <Fragment slot="results">
+    <Callout tone="bluf" label="Program records — gross placement, training cohort">
+      <Fact id="PR-05" as="p" />
+    </Callout>
+    <div class="hp__scale" data-fact="GV-01">
+      <h3 class="t-heading-m">Program scale: a different measure</h3>
+      <p>The placement figure above covers the training cohort only. The national program’s scale is counted separately: <Fact id="GV-01" as="span" /></p>
+    </div>
+    <div class="hp__compare">
+      <h3 class="t-heading-m">Alongside other women-focused programs</h3>
+      <CopyText block={WOMEN_INCLUSION} />
+    </div>
+  </Fragment>
+
+  <Fragment slot="story">
+    <LearnerStory
+      factId="ST-06"
+      name="Maria Dewan"
+      program="Her Power"
+      outcome="Won a company logo design on Freelancer.com, then built a freelance portfolio."
+      excerpt={excerpt}
+      image={maria.data.photo}
+      imageAlt="Portrait of Maria Dewan"
+      assetId="story-maria-dewan"
+    />
+  </Fragment>
+</CaseStudyPage>
+
+<style>
+  .hp__photo {
+    margin: 0;
+    max-width: 560px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--primary-fixed);
+  }
+  .hp__photo :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .hp__photo figcaption {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .hp__scale,
+  .hp__compare {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: var(--measure);
+  }
+  .hp__scale > :global(*),
+  .hp__compare > :global(*) {
+    margin: 0;
+  }
+</style>

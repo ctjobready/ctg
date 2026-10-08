@@ -1,0 +1,153 @@
+---
+/**
+ * ColumnChart — vertical columns (HTML, real text labels) with an accessible data-table toggle.
+ * Values are percentages 0–100 unless `max` says otherwise; `n` (optional) is the cell count shown in the table.
+ */
+interface Props {
+  title: string;
+  items: { label: string; value: number; n?: number; emphasis?: boolean }[];
+  /** Short line under the chart: base, dating, what it does and does not show. */
+  note?: string;
+  /** Axis maximum; default is the largest value rounded up to the next 10. */
+  max?: number;
+  unit?: string;
+  valueHeader?: string;
+  class?: string;
+}
+const { title, items, note, max: maxProp, unit = '%', valueHeader = 'Share', class: className } = Astro.props;
+const max = maxProp ?? Math.min(100, Math.ceil(Math.max(...items.map((i) => i.value)) / 10) * 10);
+const hasN = items.some((i) => i.n !== undefined);
+const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
+---
+
+<figure class:list={['colc', className]} data-reveal style={`--cols:${items.length}`}>
+  <figcaption class="colc__title">{title}</figcaption>
+  <ul class="colc__plot" role="list">
+    {
+      items.map((it, i) => (
+        <li class:list={['colc__col', it.emphasis && 'is-emph']} style={`--h:${Math.max(1, Math.min(100, (it.value / max) * 100))};--ci:${i}`}>
+          <span class="colc__stack">
+            <span class="colc__val">{fmt(it.value)}</span>
+            <span class="colc__bar" aria-hidden="true"></span>
+          </span>
+          <span class="colc__label">{it.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+  {note && <p class="colc__note">{note}</p>}
+  <details class="colc__data">
+    <summary>View chart data as a table</summary>
+    <div class="colc__tablewrap" role="region" aria-label={`${title}: data table`} tabindex="0">
+      <table>
+        <caption class="sr-only">{title}</caption>
+        <thead>
+          <tr><th scope="col">Category</th><th scope="col">{valueHeader}</th>{hasN && <th scope="col">Respondents (n)</th>}</tr>
+        </thead>
+        <tbody>
+          {items.map((it) => <tr><th scope="row">{it.label}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</figure>
+
+<style>
+  .colc {
+    margin: 0;
+    max-width: 760px;
+  }
+  .colc__title {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-md);
+  }
+  .colc__plot {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: clamp(4px, 1.4vw, 14px);
+    align-items: start;
+    --plot-h: 240px;
+  }
+  .colc__col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    text-align: center;
+  }
+  .colc__stack {
+    height: calc(var(--plot-h) + 24px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-bottom: 2px solid var(--outline-variant);
+  }
+  .colc__val {
+    font-size: clamp(0.6875rem, 0.6rem + 0.5vw, 0.875rem);
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    padding-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+  .colc__bar {
+    display: block;
+    width: 100%;
+    height: calc(var(--h) / 100 * var(--plot-h));
+    background: var(--primary-fixed-dim);
+    border-radius: 6px 6px 0 0;
+    transform-origin: bottom;
+  }
+  .is-emph .colc__bar {
+    background: var(--primary);
+  }
+  .colc__label {
+    font-size: clamp(0.6875rem, 0.62rem + 0.4vw, 0.875rem);
+    line-height: 1.25;
+    color: var(--ctx-text);
+    padding-top: 6px;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .colc__note {
+    margin: var(--space-md) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .colc__data {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+  }
+  .colc__data summary {
+    color: var(--ctx-link);
+    font-weight: var(--fw-medium);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .colc__tablewrap {
+    overflow-x: auto;
+  }
+  .colc__data table {
+    width: 100%;
+    min-width: 280px;
+  }
+  .colc__data th,
+  .colc__data td {
+    text-align: left;
+    padding: 6px 12px 6px 0;
+    border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .colc .colc__bar {
+      transform: scaleY(0);
+    }
+    :global(.js) .colc.is-visible .colc__bar {
+      transform: scaleY(1);
+      transition: transform 700ms var(--ease-emphasized) calc(100ms + var(--ci) * 70ms);
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+/** A titled section inside a long-form (T4) evidence page; the H2 carries the anchor used by the table of contents. */
+interface Props {
+  id: string;
+  title: string;
+  eyebrow?: string;
+  /** Put `id` on the H2 itself (so #id lands on the heading) instead of on the wrapping section. */
+  anchorOnHeading?: boolean;
+  class?: string;
+}
+const { id, title, eyebrow, anchorOnHeading = false, class: className } = Astro.props;
+const headingId = anchorOnHeading ? id : `${id}-h`;
+---
+
+<section class:list={['rsec', className]} id={anchorOnHeading ? `${id}-section` : id} aria-labelledby={headingId}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2 class="rsec__title" id={headingId}>{title}</h2>
+  <div class="rsec__body"><slot /></div>
+</section>
+
+<style>
+  .rsec {
+    padding-block: var(--space-lg) var(--space-md);
+    border-top: 1px solid var(--outline-variant);
+  }
+  .rsec:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .rsec__title {
+    color: var(--secondary);
+    margin: 0 0 var(--space-md);
+  }
+  .rsec__body {
+    display: grid;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+  .rsec__body > :global(*) {
+    margin: 0;
+  }
+  .rsec__body > :global(p),
+  .rsec__body > :global(ul:not([class])),
+  .rsec__body > :global(ol:not([class])) {
+    max-width: var(--measure);
+  }
+  .rsec__body > :global(ul:not([class])),
+  .rsec__body > :global(ol:not([class])) {
+    padding-left: 1.3em;
+  }
+</style>

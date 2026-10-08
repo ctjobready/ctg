@@ -1,0 +1,306 @@
+---
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import LongformLayout from '../../../layouts/LongformLayout.astro';
+import Icon from '../../../components/system/Icon.astro';
+import BarChart from '../../../components/ui/BarChart.astro';
+import BeforeAfter from '../../../components/ui/BeforeAfter.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import ReportSection from '../../../components/pages/impact/ReportSection.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import CopyText from '../../../components/pages/impact/CopyText.astro';
+import BaseStat from '../../../components/pages/impact/BaseStat.astro';
+import EvidenceLadder from '../../../components/pages/impact/EvidenceLadder.astro';
+import ColumnChart from '../../../components/pages/impact/ColumnChart.astro';
+import PairedBars from '../../../components/pages/impact/PairedBars.astro';
+import NextStep from '../../../components/pages/impact/NextStep.astro';
+import { desc, title, val, reportCta, articleNode } from '../../../components/pages/impact/page-utils';
+import * as D from '../../../components/pages/impact/outcomes-data';
+import { fact, CAVEATS } from '../../../data/facts';
+import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { dataset, webPage } from '../../../lib/schema';
+import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
+
+D.assertConsistent();
+D.assertSuppression();
+// The downloadable CSV must be exactly what this module generates (published aggregates, n < 10 suppressed).
+const csvPath = join(process.cwd(), 'public/data/outcomes-2026-aggregates.csv');
+if (readFileSync(csvPath, 'utf8') !== D.csvText()) throw new Error('public/data/outcomes-2026-aggregates.csv is out of date; regenerate it from outcomes-data.ts');
+
+const path = '/impact/outcomes-2026/';
+const csvHref = url('/data/outcomes-2026-aggregates.csv');
+const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey. Bases, charts and methods for every result.`);
+const pc = D.percent;
+
+const jsonLd = [
+  webPage({ path, name: 'Impact Survey 2026: what happened after training', description, datePublished: '2026-10-07', dateModified: '2026-10-07' }),
+  articleNode({ path, headline: 'Impact Survey 2026: what happened after training', description, datePublished: '2026-10-07', dateModified: '2026-10-07', author: 'CodersTrust' }),
+  {
+    ...dataset({
+      path,
+      name: 'CodersTrust Impact Survey 2026 — published aggregates',
+      description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Small cells (n < 10) are suppressed.',
+      datePublished: '2026-10-07',
+      dateModified: '2026-10-07',
+      methodology: 'Online alumni survey (LimeSurvey)',
+      keywords: ['youth employment', 'digital skills training', 'Bangladesh', 'impact survey', 'freelancing'],
+      variableMeasured: ['Employment rate before training and at the survey', 'Median monthly income', 'Direction of paired income change', 'Speed to first earnings', 'Career and education outcomes', 'Main income source', 'Recommendation score', 'Respondent profile'],
+      spatialCoverage: 'Bangladesh',
+      temporalCoverage: '2014/2026',
+    }),
+    distribution: { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: canonicalUrl('/data/outcomes-2026-aggregates.csv') },
+  },
+];
+
+const toc = [
+  { id: 'ladder', label: 'Evidence ladder and how to read this report' },
+  { id: 'summary', label: 'Summary' },
+  { id: 'respondents', label: 'Who responded' },
+  { id: 'employment', label: 'Employment' },
+  { id: 'speed', label: 'Speed to earnings' },
+  { id: 'income', label: 'Income' },
+  { id: 'careers', label: 'Career outcomes' },
+  { id: 'income-source', label: 'Main income source' },
+  { id: 'experience', label: 'Learner experience' },
+  { id: 'no-prior-income', label: 'No prior income' },
+  { id: 'methodology', label: 'Methodology and limitations' },
+  { id: 'download', label: 'Download the data' },
+];
+
+const cell = (c: D.Cell, base: number) => ({ label: c.label, value: pc(c.n, base), display: `${pc(c.n, base).toFixed(1)}%` });
+const districts = D.DISTRICTS.cells.map((c) => cell(c, D.DISTRICTS.base));
+const education = D.EDUCATION.cells.map((c) => cell(c, D.EDUCATION.base));
+const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.n - a.n).concat(D.CAREER.cells[7]).map((c) => cell(c, D.CAREER.base));
+const source = D.SOURCE.cells.map((c) => cell(c, D.SOURCE.base));
+const ageItems = D.AGE.cells.map((c) => ({ label: c.label, value: pc(c.n, D.AGE.base) }));
+const speedItems = D.SPEED.map((c) => ({ label: c.label, value: pc(c.n, D.SPEED_BASE) }));
+const recItems = D.RECOMMEND.cells.map((c, i) => ({ label: c.label, value: pc(c.n, D.RECOMMEND.base), emphasis: i >= 4 }));
+const incomeItems = D.INCOME_DIRECTION.map((c) => cell(c, D.INCOME_BASE));
+const priorItems = [
+  { label: `Earning at the October 2026 survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
+  { label: 'Not earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
+].map((c) => ({ label: c.label, value: pc(c.n, D.NO_PRIOR.base), display: `${pc(c.n, D.NO_PRIOR.base).toFixed(1)}%` }));
+const emp = fact('OC-01').stat!;
+const before = parseFloat(emp.from!);
+const after = emp.numeric!;
+const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: pc(t.before, D.EMPLOYMENT_BASE), after: pc(t.after, D.EMPLOYMENT_BASE) }));
+const reportLink = reportCta();
+---
+
+<LongformLayout
+  title={title('Impact Survey 2026 Outcomes')}
+  heading="Impact Survey 2026: what happened after training"
+  eyebrow="Outcomes 2026 · surveyed completers"
+  lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience, each with its own base."
+  description={description}
+  path={path}
+  updated="2026-10-07"
+  toc={toc}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Outcomes 2026' }]}
+  jsonLd={jsonLd}
+>
+  <ReportSection id="ladder" title="Evidence ladder and how to read this report">
+    <p>This survey is the second rung of four kinds of evidence. It reports what surveyed completers say; it does not show that training caused any change.</p>
+    <EvidenceLadder links={false} headingLevel={3} />
+    <Callout label="How to read this report">
+      <ul class="ro__list">
+        <li><strong>Surveyed completers.</strong> Every result describes alumni who responded to the survey, not all learners.</li>
+        <li><strong>Dated.</strong> Results are dated “at the October 2026 survey”.</li>
+        <li><strong>Own base.</strong> Each figure shows its own base where the Impact Report states one, and says “base not stated in the report” where it does not.</li>
+        <li><strong>Descriptive, not causal.</strong> For causal evidence, see <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>the randomized trial</a>.</li>
+        <li><strong>Charts have tables.</strong> Every chart has a data table behind “View chart data as a table”.</li>
+      </ul>
+    </Callout>
+  </ReportSection>
+
+  <ReportSection id="summary" title="Summary">
+    <Callout tone="bluf"><CopyText block={SURVEY_EMPLOYMENT} /></Callout>
+    <div class="ro__stats">
+      <BaseStat id="OC-01" base={`n = ${D.EMPLOYMENT_BASE} paired completers`} />
+      <BaseStat id="OC-03" base="completers who reported income before and after training; the base for the medians is not reported separately" />
+      <BaseStat id="OC-03b" base={`n = ${D.INCOME_BASE} paired income answers`} />
+      <BaseStat id="OC-05" base={`n = ${D.SPEED_BASE} new earners`} />
+      <BaseStat id="OC-06" base="responding completers; base not stated in the report" />
+      <BaseStat id="OC-02" base={`${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base} completers with no prior income were earning`} small />
+    </div>
+  </ReportSection>
+
+  <ReportSection id="respondents" title="Who responded">
+    <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" footnote={false} /> were already working). <Fact id="OC-09" /></p>
+    <ColumnChart
+      title="Respondents by age group"
+      items={ageItems}
+      note="Base not stated in the report."
+    />
+    <BarChart
+      title="Respondents by highest education"
+      items={education}
+      max={100}
+      note="Base not stated in the report. Education levels with very few respondents are merged into the neighboring band."
+    />
+    <BarChart
+      title="Respondents by district of residence"
+      items={districts}
+      max={100}
+      note="Base not stated in the report. Districts with fewer than 10 respondents are folded into “Other districts”."
+    />
+  </ReportSection>
+
+  <ReportSection id="employment" title="Employment">
+    <p data-fact="OC-01">Among {D.EMPLOYMENT_BASE} completers with paired employment responses, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey.<FootnoteMarker id="OC-01" footnote="auto" /> Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed (the base for that share is those employed before training, not all {D.EMPLOYMENT_BASE}; its size is not stated in the report).</p>
+    <BeforeAfter
+      title="Employment among surveyed completers"
+      before={{ label: 'Before', value: before, caption: 'before training' }}
+      after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+      delta={`+${(after - before).toFixed(1)} pp`}
+      note={`Base: n = ${D.EMPLOYMENT_BASE} paired completers. Employed means salaried, freelancing or business. Descriptive.`}
+    />
+    <PairedBars
+      title="Employment by type, before training and at the October 2026 survey"
+      beforeLabel="Before training"
+      afterLabel="October 2026 survey"
+      rows={typeRows}
+      note={`Base: n = ${D.EMPLOYMENT_BASE} paired completers. Cells resting on very few respondents are suppressed in the downloadable CSV. Entries into and exits from work are not charted because the transition counts are not published.`}
+    />
+    <p data-fact="OC-04" class="ro__src">Chart data: <Fact id="OC-04" field="label" /></p>
+  </ReportSection>
+
+  <ReportSection id="speed" title="Speed to earnings">
+    <p data-fact="OC-05"><Fact id="OC-05" /></p>
+    <ColumnChart
+      title="Cumulative share of new earners who had started earning"
+      items={speedItems}
+      valueHeader="Cumulative share"
+      note={`Base: n = ${D.SPEED_BASE} completers who first earned during or after training. This is a timing measure only.`}
+    />
+    <Callout tone="caveat" label="Timing only">
+      <p>This shows when new earners began earning. It does not show why, and it is not evidence about mentoring or any other part of the program.</p>
+    </Callout>
+  </ReportSection>
+
+  <ReportSection id="income" title="Income: three separate measures">
+    <p>Income is reported three ways. Each measure has its own base, and they are not interchangeable.</p>
+    <div class="ro__measure" data-fact="OC-03">
+      <h3 class="t-heading-l">Median monthly income</h3>
+      <p><Fact id="OC-03" /></p>
+      <p class="ro__base">Base: completers who reported income before and after training. The survey tables do not report a separate base for the medians, so none is shown here.</p>
+    </div>
+    <div class="ro__measure" data-fact="OC-03b">
+      <h3 class="t-heading-l">Direction of paired income change</h3>
+      <BarChart title="Paired monthly income change" items={incomeItems} note={`Base: n = ${D.INCOME_BASE} completers with paired income answers.`} />
+      <p class="ro__src"><Fact id="OC-03b" /></p>
+    </div>
+    <div class="ro__measure" data-fact="OC-03c">
+      <h3 class="t-heading-l">Median individual change</h3>
+      <div class="ro__stats ro__stats--one"><BaseStat id="OC-03c" base="completers with valid paired income answers" /></div>
+    </div>
+  </ReportSection>
+
+  <ReportSection id="careers" title="Career outcomes">
+    <p data-fact="OC-08"><Fact id="OC-08" /></p>
+    <BarChart title="Career and education outcomes reported" items={career} max={100} note={`Base: n = ${D.CAREER.statedBase} surveyed completers. Each respondent appears once.`} />
+  </ReportSection>
+
+  <ReportSection id="income-source" title="Main income source">
+    <p data-fact="OC-07"><Fact id="OC-07" /></p>
+    <BarChart title="Main income source" items={source} max={100} note={`Base: valid respondents; base not stated in the report. This is the main income source, not where income is received or the quality of the job.`} />
+  </ReportSection>
+
+  <ReportSection id="experience" title="Learner experience">
+    <p data-fact="OC-06"><Fact id="OC-06" /></p>
+    <ColumnChart
+      title="Recommendation score, 0 to 10, among surveyed completers"
+      items={recItems}
+      note={`Base: responding completers; base not stated in the report. Darker columns are scores of 7 or higher. Scores 0 to 3 are combined. This is a distribution of scores, not a Net Promoter Score.`}
+    />
+  </ReportSection>
+
+  <ReportSection id="no-prior-income" title="Completers with no prior income">
+    <p data-fact="OC-02"><Fact id="OC-02" /> That is {D.NO_PRIOR.earning} of {D.NO_PRIOR.base} completers with no prior income.</p>
+    <BarChart title="Completers (2014–2023) with no income before training" items={priorItems} max={100} note={`Small base: n = ${D.NO_PRIOR.base}. Read with care.`} />
+  </ReportSection>
+
+  <ReportSection id="methodology" title={'Methodology & limitations'} anchorOnHeading>
+    <Callout tone="caveat" label="Survey caveat"><p data-fact="OC-01">{CAVEATS.S}</p></Callout>
+    <ul class="ro__list">
+      <li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
+      <li><strong>Who answered.</strong> Responding alumni only. Respondents are not a random sample; the number invited and the response rate are not reported, and results may over-represent successful learners.</li>
+      <li><strong>Bases.</strong> {D.EMPLOYMENT_BASE} paired completers (employment and type of work), {D.INCOME_BASE} paired income answers, {D.SPEED_BASE} new earners (speed to earnings) and {D.NO_PRIOR.base} completers with no prior income ({D.NO_PRIOR.earning} of {D.NO_PRIOR.base} were earning). For the other questions the base is not stated in the report, and so is not shown; the medians behind the income figure have no separately reported base.</li>
+      <li><strong>Recall and self-report.</strong> Status before training is recalled, and every answer is self-reported.</li>
+      <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
+      <li><strong>Descriptive, not causal.</strong> Nothing here shows that training caused a change; see the randomized trial for causal evidence from one program.</li>
+      <li><strong>Small cells.</strong> Districts with fewer than 10 respondents are folded into “Other districts”; the download suppresses cells based on fewer than 10 respondents. The tables and the download show percentages and stated bases only, not counts.</li>
+      <li><strong>Ratio of medians.</strong> The income figure compares medians; it is not an average and does not mean every learner’s income tripled.</li>
+    </ul>
+  </ReportSection>
+
+  <ReportSection id="download" title="Download the data">
+    <p>The published aggregates are available as a CSV: one row per published percentage or median, with its base where the Impact Report states one. Cells based on fewer than 10 respondents are suppressed.</p>
+    <p><a class="ro__dl" href={csvHref} download>
+      <Icon name="download" size={18} />Download outcomes-2026-aggregates.csv
+    </a></p>
+    <NextStep heading="Want the full report?" text="The Impact Report 2026 (partner edition) covers the programs behind these results." cta={reportLink} />
+  </ReportSection>
+
+  <Sources class="ro__sources" />
+</LongformLayout>
+
+<style>
+  .ro__stats {
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  }
+  .ro__stats--one {
+    grid-template-columns: minmax(0, 260px);
+  }
+  .ro__list {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .ro__list li::marker {
+    color: var(--primary);
+  }
+  .ro__measure {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+  }
+  .ro__measure > :global(*) {
+    margin: 0;
+  }
+  .ro__base,
+  .ro__src {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .ro__dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-default);
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .ro__dl:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  :global(.ro__sources) {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+</style>
