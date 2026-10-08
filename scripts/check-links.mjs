@@ -61,7 +61,7 @@ const fileSize = (rel) => {
 const EMAIL_STRICT = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 const ENCODED_VALUE = /^(?:[A-Za-z0-9\-_.!~*'()]|%[0-9A-Fa-f]{2})*$/;
 const E164 = /^\+[1-9]\d{6,14}$/;
-const VIDEO_FRAME_HOSTS = new Set(['www.youtube-nocookie.com', 'player.vimeo.com']);
+const VIDEO_FRAME_HOSTS = new Set(['www.youtube-nocookie.com']);
 const PASSIVE_LINK_RELS = new Set(['dns-prefetch', 'preconnect']);
 
 function addExternal(u, page, ref, text) {

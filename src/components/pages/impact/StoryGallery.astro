@@ -1,12 +1,18 @@
 ---
 import SuccessStoryCard from '../../system/SuccessStoryCard.astro';
+import { mayRender } from '../../../lib/permissions';
 import type { StoryCardData } from './story-types';
 
-/** Filterable grid of story cards (progressive enhancement: without JavaScript every card shows and the filter is hidden). */
+/**
+ * Filterable grid of story cards (progressive enhancement: without JavaScript every card shows and the filter is hidden).
+ * A card that carries an `assetId` (a named learner: name, quote, photo) is dropped when the permissions rule does not
+ * let it render (src/lib/permissions.ts: staging renders cleared OR (published on coderstrust.global AND not sensitive),
+ * production only cleared); cards without an `assetId` are anonymized outcome lines and always render.
+ */
 interface Props {
   cards: StoryCardData[];
 }
-const { cards } = Astro.props;
+const cards = Astro.props.cards.filter((c) => !c.assetId || mayRender(c.assetId));
 const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other pathways' };
 const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) => cards.some((c) => c.pathway === p));
 ---

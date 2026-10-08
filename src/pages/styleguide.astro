@@ -505,34 +505,34 @@ const sectionLinks = [
     </div>
 
     <h3 class="sg-h3">Interaction index</h3>
-    <div class="sg-table-wrap" role="region" aria-label="Micro-interactions table" tabindex="0">
+    <section class="sg-table-wrap" aria-label="Micro-interactions table" tabindex="0" data-scroll data-stack="inline">
       <table class="sg-table">
         <caption class="sr-only">Micro-interactions implemented</caption>
         <thead><tr><th scope="col">#</th><th scope="col">Interaction</th><th scope="col">Where to see it</th></tr></thead>
         <tbody>
-          <tr><th scope="row">M1</th><td>Section reveal + stagger</td><td>Reveal demo above; every card grid</td></tr>
-          <tr><th scope="row">M2</th><td>Stat count-up</td><td>Proof section</td></tr>
-          <tr><th scope="row">M3</th><td>Progress fill</td><td>ProgressBar, BarChart</td></tr>
-          <tr><th scope="row">M4</th><td>Before → after chart</td><td>Data section</td></tr>
-          <tr><th scope="row">M5</th><td>Card lift</td><td>Any linked card</td></tr>
-          <tr><th scope="row">M6</th><td>Router fill + icon bounce</td><td>CategoryCard grid</td></tr>
-          <tr><th scope="row">M7</th><td>Button hover/press, arrow slide</td><td>Buttons</td></tr>
-          <tr><th scope="row">M8</th><td>Link underline grows</td><td>Typography links</td></tr>
-          <tr><th scope="row">M9</th><td>Sticky header: shadow, hide/reveal</td><td>Scroll up and down</td></tr>
-          <tr><th scope="row">M10</th><td>Mega-menu slide + fade</td><td>Header (desktop)</td></tr>
-          <tr><th scope="row">M11</th><td>Hero gradient drift</td><td>Hero</td></tr>
-          <tr><th scope="row">M12</th><td>HeroArt progress pills</td><td>Motion section</td></tr>
-          <tr><th scope="row">M13</th><td>Logo marquee</td><td>PartnerStrip</td></tr>
-          <tr><th scope="row">M14</th><td>Carousel, dots widen</td><td>Proof section</td></tr>
-          <tr><th scope="row">M15</th><td>Accordion height</td><td>Structure section</td></tr>
-          <tr><th scope="row">M16</th><td>Timeline progress</td><td>Structure section</td></tr>
-          <tr><th scope="row">M18</th><td>Copy email toast</td><td>Above</td></tr>
-          <tr><th scope="row">M19</th><td>Back-to-top ring</td><td>Scroll down one viewport</td></tr>
-          <tr><th scope="row">M20</th><td>Page transitions</td><td>Navigate between pages (Chromium)</td></tr>
-          <tr><th scope="row">M22</th><td>Story photo gray → color</td><td>SuccessStoryCard (with a photo)</td></tr>
+          <tr><th scope="row">M1</th><td data-label="Interaction">Section reveal + stagger</td><td data-label="Where to see it">Reveal demo above; every card grid</td></tr>
+          <tr><th scope="row">M2</th><td data-label="Interaction">Stat count-up</td><td data-label="Where to see it">Proof section</td></tr>
+          <tr><th scope="row">M3</th><td data-label="Interaction">Progress fill</td><td data-label="Where to see it">ProgressBar, BarChart</td></tr>
+          <tr><th scope="row">M4</th><td data-label="Interaction">Before → after chart</td><td data-label="Where to see it">Data section</td></tr>
+          <tr><th scope="row">M5</th><td data-label="Interaction">Card lift</td><td data-label="Where to see it">Any linked card</td></tr>
+          <tr><th scope="row">M6</th><td data-label="Interaction">Router fill + icon bounce</td><td data-label="Where to see it">CategoryCard grid</td></tr>
+          <tr><th scope="row">M7</th><td data-label="Interaction">Button hover/press, arrow slide</td><td data-label="Where to see it">Buttons</td></tr>
+          <tr><th scope="row">M8</th><td data-label="Interaction">Link underline grows</td><td data-label="Where to see it">Typography links</td></tr>
+          <tr><th scope="row">M9</th><td data-label="Interaction">Sticky header: shadow, hide/reveal</td><td data-label="Where to see it">Scroll up and down</td></tr>
+          <tr><th scope="row">M10</th><td data-label="Interaction">Mega-menu slide + fade</td><td data-label="Where to see it">Header (desktop)</td></tr>
+          <tr><th scope="row">M11</th><td data-label="Interaction">Hero gradient settles once (3 s, no loop)</td><td data-label="Where to see it">Hero</td></tr>
+          <tr><th scope="row">M12</th><td data-label="Interaction">HeroArt progress pills</td><td data-label="Where to see it">Motion section</td></tr>
+          <tr><th scope="row">M13</th><td data-label="Interaction">Logo marquee</td><td data-label="Where to see it">PartnerStrip</td></tr>
+          <tr><th scope="row">M14</th><td data-label="Interaction">Carousel, dots widen</td><td data-label="Where to see it">Proof section</td></tr>
+          <tr><th scope="row">M15</th><td data-label="Interaction">Accordion height</td><td data-label="Where to see it">Structure section</td></tr>
+          <tr><th scope="row">M16</th><td data-label="Interaction">Timeline progress</td><td data-label="Where to see it">Structure section</td></tr>
+          <tr><th scope="row">M18</th><td data-label="Interaction">Copy email toast</td><td data-label="Where to see it">Above</td></tr>
+          <tr><th scope="row">M19</th><td data-label="Interaction">Back-to-top ring</td><td data-label="Where to see it">Scroll down one viewport</td></tr>
+          <tr><th scope="row">M20</th><td data-label="Interaction">Page transitions</td><td data-label="Where to see it">Navigate between pages (Chromium)</td></tr>
+          <tr><th scope="row">M22</th><td data-label="Interaction">Story photo gray → color</td><td data-label="Where to see it">SuccessStoryCard (with a photo)</td></tr>
         </tbody>
       </table>
-    </div>
+    </section>
     <p class="t-body-xs text-muted">Not in this foundation: M17 world map and M21 footnote jump (follow-up packages).</p>
   </Section>
 
@@ -615,6 +615,10 @@ const sectionLinks = [
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
+
+<script>
+  import '../scripts/tablestack';
+</script>
 
 <style>
   .sg-intro {

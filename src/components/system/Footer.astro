@@ -16,7 +16,7 @@ import { linkAttrs } from '../../lib/url';
         {
           SOCIAL.map((s) => (
             <li>
-              <a href={s.href} rel="noopener" aria-label={`${s.label} (opens ${new URL(s.href).hostname.replace('www.', '')})`}>
+              <a href={s.href} rel={linkAttrs(s.href).rel} aria-label={`${s.label} (opens ${new URL(s.href).hostname.replace('www.', '')})`}>
                 <Icon name={s.id} size={20} />
               </a>
             </li>
@@ -75,7 +75,7 @@ import { linkAttrs } from '../../lib/url';
         }
         <li>
           Looking for courses?{' '}
-          <a href={COURSES_URL} rel="noopener">
+          <a href={COURSES_URL} rel={linkAttrs(COURSES_URL).rel}>
             JobReady.global
             <Icon name="arrow-up-right" size={14} />
             <span class="sr-only">{linkAttrs(utilityLink.href).srText}</span>

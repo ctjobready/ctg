@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
 import { REDIRECTS } from './src/data/redirects.ts';
 import { OWN_HOSTS, PARTNER_HOSTS, externalRel, hostKey } from './src/lib/externalRel.ts';
+import { stagingMayRender } from './src/lib/permissionRule.mjs';
 
 /**
  * Environment-driven build (planning/08 §2).
@@ -22,7 +23,8 @@ const BASE = BASE_PATH === '/' ? '' : BASE_PATH;
 /**
  * Legacy-URL redirect stubs (planning/08 §7), generated from the migration manifest (src/data/redirects.ts).
  * Astro emits one meta-refresh page per entry; scripts/postbuild-redirects.mjs then rewrites each stub
- * (canonical, visible link, no noindex). Internal destinations carry the deployment base here (Astro does not add it).
+ * (canonical, visible link; robots noindex on staging builds only, none on production). Internal destinations carry the
+ * deployment base here (Astro does not add it).
  */
 const redirects = Object.fromEntries(REDIRECTS.map((r) => [r.from, r.kind === 'external' ? r.to : BASE + r.to]));
 const stubPaths = new Set(REDIRECTS.map((r) => r.from));
@@ -64,13 +66,13 @@ const externalLinks = {
 /**
  * D13 for the photographs inside news posts: every <img> in src/content/news/<slug>.md carries
  * data-asset="news-<slug>", the same asset as the post's cover (src/data/permissions.json, scripts/check-permissions.mjs),
- * so the permissions gate sees the whole post, not only its cover. On staging an asset whose row says "sensitive group"
- * or "not published on coderstrust.global" is not rendered at all: its images, and the paragraphs that held nothing
- * else, are dropped from the post body.
+ * so the permissions gate sees the whole post, not only its cover. On staging an asset that the D13 rule does not let
+ * render (neither cleared, nor published on coderstrust.global and outside a sensitive group; src/lib/permissionRule.mjs)
+ * is not rendered at all: its images, and the paragraphs that held nothing else, are dropped from the post body.
  */
-/** @type {{ assetId: string; sensitiveGroup: boolean; publishedOnLegacySite: boolean }[]} */
+/** @type {import('./src/lib/permissionRule.mjs').PermissionRow[]} */
 const PERMISSIONS = JSON.parse(readFileSync(new URL('./src/data/permissions.json', import.meta.url), 'utf8'));
-const HIDDEN_NEWS = new Set(SITE_ENV === 'production' ? [] : PERMISSIONS.filter((r) => r.assetId.startsWith('news-') && (r.sensitiveGroup || !r.publishedOnLegacySite)).map((r) => r.assetId));
+const HIDDEN_NEWS = new Set(SITE_ENV === 'production' ? [] : PERMISSIONS.filter((r) => r.assetId.startsWith('news-') && !stagingMayRender(r)).map((r) => r.assetId));
 /** The asset ID of the post a Markdown document belongs to ("news-<slug>"), or undefined outside src/content/news. */
 const newsAsset = (/** @type {import('satteri').HastVisitorContext} */ ctx) => {
   const slug = /\/src\/content\/news\/([^/]+)\.md$/.exec(ctx.fileURL?.pathname ?? '')?.[1];

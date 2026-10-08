@@ -47,7 +47,8 @@ const hasMedia = Astro.slots.has('media') || art;
     background: var(--hero-gradient-edge);
     padding-block: var(--space-section-mobile);
   }
-  /* M11: the gradient lives on a pseudo-element so the drift animates transform only (no repaint of a gradient) */
+  /* M11 (WCAG 2.2.2): the gradient lives on a pseudo-element so its one entrance movement animates transform only (no
+     repaint of a gradient). It settles once, ends after 3 s and never repeats; reduced motion renders it at rest. */
   .hero::before {
     content: '';
     position: absolute;
@@ -63,8 +64,7 @@ const hasMedia = Astro.slots.has('media') || art;
   }
   @media (prefers-reduced-motion: no-preference) {
     .hero::before {
-      will-change: transform;
-      animation: ct-hero-drift 20s ease-in-out infinite alternate;
+      animation: ct-hero-settle 3s var(--ease-emphasized) both;
     }
   }
   .hero__inner {

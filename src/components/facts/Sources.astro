@@ -1,6 +1,7 @@
 ---
 import { footnotesFor } from '../../lib/footnotes';
 import Icon from '../system/Icon.astro';
+import { linkAttrs } from '../../lib/url';
 
 /**
  * Numbered notes for every footnote marker rendered earlier on the page (deduplicated, in render
@@ -46,7 +47,7 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
                 <span>Source{n.sources.length > 1 ? 's' : ''}: </span>
                 {n.sources.map((s, i) => (
                   <>
-                    {s.url ? <a href={s.url} rel="noopener">{s.citation}</a> : s.citation}
+                    {s.url ? <a href={s.url} rel={linkAttrs(s.url).rel}>{s.citation}</a> : s.citation}
                     {i < n.sources.length - 1 ? ' · ' : ''}
                   </>
                 ))}

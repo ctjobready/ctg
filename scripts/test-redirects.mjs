@@ -105,7 +105,10 @@ for (const r of stubRows) {
   if (link !== href) bad.push(`link "${link}" != "${href}"`);
   if (!js || JSON.parse(js) !== href) bad.push(`location.replace ${js} != "${href}"`);
   if (!/<html lang="en"[ >]/.test(html)) bad.push('missing lang="en"');
-  if (!/<title>[^<]+<\/title>/.test(html)) bad.push('missing <title>');
+  const stubTitle = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+  if (!stubTitle) bad.push('missing <title>');
+  else if ([...stubTitle].length > 60) bad.push(`<title> is ${[...stubTitle].length} characters (limit 60)`);
+  if (!html.startsWith('<!DOCTYPE html>')) bad.push('doctype is not the uppercase <!DOCTYPE html>');
   const robotsBad = robotsProblem(html);
   if (robotsBad) bad.push(robotsBad);
   if (isExternalDest(r.destination)) {

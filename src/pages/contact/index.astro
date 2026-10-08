@@ -68,7 +68,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let's talk", description, ty
         {
           SOCIAL.map((s) => (
             <li>
-              <a class="ct-social__link" href={s.href} rel="noopener">
+              <a class="ct-social__link" href={s.href} rel={linkAttrs(s.href).rel}>
                 <Icon name={s.id} size={20} />
                 <span>{s.label}</span>
                 <span class="sr-only"> (opens {new URL(s.href).hostname.replace('www.', '')})</span>

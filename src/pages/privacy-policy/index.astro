@@ -5,8 +5,10 @@ import { CONTACT, OFFICES } from '../../lib/site';
 import { promo } from '../../data/nav';
 import { NU_PGD_APPLY_URL } from '../../data/ctas';
 import { webPage } from '../../lib/schema';
-import { url } from '../../lib/url';
+import { url, linkAttrs } from '../../lib/url';
 
+const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
+const JOBREADY = 'https://jobready.global/';
 const UPDATED = '2026-10-08';
 const description = 'How the CodersTrust website handles data: no analytics cookies, no third-party trackers, and a plain list of every service involved.';
 const toc = [
@@ -48,28 +50,28 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
 
     <section id="services" aria-labelledby="services-h">
       <h2 id="services-h">Every service involved</h2>
-      <div class="lp__table" role="region" aria-label="Services table" tabindex="0">
+      <section class="lp__table" aria-label="Services table" tabindex="0" data-scroll data-stack>
         <table>
           <caption class="sr-only">Services that process data when you use this website, and when</caption>
           <thead>
             <tr><th scope="col">Service</th><th scope="col">When it is involved</th><th scope="col">What it can see</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">GitHub Pages (hosting)</th><td>Every page view</td><td>Your IP address and request details in server logs</td></tr>
-            <tr><th scope="row">Your email provider</th><td>When you send us an email</td><td>Your message and address</td></tr>
-            <tr><th scope="row">Google Forms (NU application)</th><td>Only if you use the National University diploma application form</td><td>What you type into the form</td></tr>
-            <tr><th scope="row">jobready.global</th><td>Only if you follow a link to it</td><td>Whatever that site collects once you are on it</td></tr>
-            <tr><th scope="row">YouTube (youtube-nocookie.com)</th><td>Only after you click play on a video</td><td>Your IP address, and what YouTube sets once the video loads</td></tr>
-            <tr><th scope="row">LinkedIn, X, Facebook, Google Maps</th><td>Only if you click a share, social or map link</td><td>What those services collect once you are on them</td></tr>
-            <tr><th scope="row">Your browser (local storage)</th><td>If you dismiss the announcement bar</td><td>Stays on your device; we never receive it</td></tr>
+            <tr><th scope="row">GitHub Pages (hosting)</th><td data-label="When it is involved">Every page view</td><td data-label="What it can see">Your IP address and request details in server logs</td></tr>
+            <tr><th scope="row">Your email provider</th><td data-label="When it is involved">When you send us an email</td><td data-label="What it can see">Your message and address</td></tr>
+            <tr><th scope="row">Google Forms (NU application)</th><td data-label="When it is involved">Only if you use the National University diploma application form</td><td data-label="What it can see">What you type into the form</td></tr>
+            <tr><th scope="row">jobready.global</th><td data-label="When it is involved">Only if you follow a link to it</td><td data-label="What it can see">Whatever that site collects once you are on it</td></tr>
+            <tr><th scope="row">YouTube (youtube-nocookie.com)</th><td data-label="When it is involved">Only after you click play on a video</td><td data-label="What it can see">Your IP address, and what YouTube sets once the video loads</td></tr>
+            <tr><th scope="row">LinkedIn, X, Facebook, Google Maps</th><td data-label="When it is involved">Only if you click a share, social or map link</td><td data-label="What it can see">What those services collect once you are on them</td></tr>
+            <tr><th scope="row">Your browser (local storage)</th><td data-label="When it is involved">If you dismiss the announcement bar</td><td data-label="What it can see">Stays on your device; we never receive it</td></tr>
           </tbody>
         </table>
-      </div>
+      </section>
     </section>
 
     <section id="hosting" aria-labelledby="hosting-h">
       <h2 id="hosting-h">Hosting and server logs</h2>
-      <p>This site is hosted on GitHub Pages. When you load a page, the host's servers record standard log data, which includes your IP address, the page requested and your browser type. We do not add analytics, and we do not use this data to identify visitors. Read <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement<span class="sr-only"> (opens docs.github.com)</span></a> for how the host handles logs.</p>
+      <p>This site is hosted on GitHub Pages. When you load a page, the host's servers record standard log data, which includes your IP address, the page requested and your browser type. We do not add analytics, and we do not use this data to identify visitors. Read <a href={GITHUB_PRIVACY} rel={linkAttrs(GITHUB_PRIVACY).rel}>GitHub's privacy statement<span class="sr-only"> (opens docs.github.com)</span></a> for how the host handles logs.</p>
     </section>
 
     <section id="email" aria-labelledby="email-h">
@@ -80,12 +82,12 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
 
     <section id="nu-form" aria-labelledby="nu-h">
       <h2 id="nu-h">National University applications</h2>
-      <p>Applications for the National University postgraduate diploma use an existing Google Form. When you open it you leave this site and go to a page run by Google (<a href={NU_PGD_APPLY_URL} rel="noopener">application form<span class="sr-only"> (opens docs.google.com)</span></a>). What you enter goes to Google Forms and to the admissions team, and Google's own privacy policy applies to it.</p>
+      <p>Applications for the National University postgraduate diploma use an existing Google Form. When you open it you leave this site and go to a page run by Google (<a href={NU_PGD_APPLY_URL} rel={linkAttrs(NU_PGD_APPLY_URL).rel}>application form<span class="sr-only"> (opens docs.google.com)</span></a>). What you enter goes to Google Forms and to the admissions team, and Google's own privacy policy applies to it.</p>
     </section>
 
     <section id="links" aria-labelledby="links-h">
       <h2 id="links-h">Links to other sites</h2>
-      <p>Course catalogue links go to <a href="https://jobready.global/" rel="noopener">jobready.global<span class="sr-only"> (opens jobready.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and "Open in Maps" links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
+      <p>Course catalogue links go to <a href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>jobready.global<span class="sr-only"> (opens jobready.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and "Open in Maps" links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
     </section>
 
     <section id="video" aria-labelledby="video-h">
@@ -119,6 +121,10 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
     </section>
   </div>
 </LongformLayout>
+
+<script>
+  import '../../scripts/tablestack';
+</script>
 
 <style>
   .lp section + section {

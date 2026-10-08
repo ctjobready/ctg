@@ -35,7 +35,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
   {note && <p class="sb__note">{note}</p>}
   <details class="sb__data">
     <summary>View chart data as a table</summary>
-    <div class="sb__tablewrap" role="region" aria-label={`${title}: data table`} tabindex="0">
+    <section class="sb__tablewrap" aria-label={`${title}: data table`} tabindex="0">
       <table>
         <caption class="sr-only">{title}</caption>
         <thead>
@@ -45,7 +45,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
           {rows.map((r) => <tr><th scope="row">{r.label}</th>{r.values.map((v) => <td>{fmt(v)}</td>)}</tr>)}
         </tbody>
       </table>
-    </div>
+    </section>
   </details>
 </figure>
 
@@ -53,6 +53,8 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
   .sb {
     margin: 0;
     max-width: 720px;
+    /* a grid or flex parent must be able to shrink the figure below the data table's minimum width */
+    min-width: 0;
   }
   .sb__title {
     font-weight: var(--fw-bold);
@@ -140,10 +142,13 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
   }
   .sb__tablewrap {
     overflow-x: auto;
+    max-width: 100%;
   }
+  /* min-width: 360px made the wrapper (and the figure around it) 360px wide on a 390px screen, ~10px past its column.
+     The minimum now follows the wrapper, so a narrow screen scrolls the table inside its box instead of widening the page. */
   .sb__data table {
     width: 100%;
-    min-width: 360px;
+    min-width: min(360px, 100%);
   }
   .sb__data th,
   .sb__data td {

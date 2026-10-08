@@ -3,7 +3,8 @@
 //
 // Path-based legacy URLs only (planning/02 §5). `from` is base-less with a trailing slash; `to` is a base-less site
 // path (optionally with #fragment) or an absolute https URL. astro.config.mjs feeds this list to `redirects`, and
-// scripts/postbuild-redirects.mjs rewrites every emitted stub (canonical, visible link, no noindex).
+// scripts/postbuild-redirects.mjs rewrites every emitted stub (canonical, visible link; robots noindex on staging builds only,
+// none on production).
 export const REDIRECTS: { from: string; to: string; kind: 'internal' | 'external' }[] = [
   { from: '/1000-trainees-enhancing-digital-government-economy-edge/', to: '/news/1000-trainees-enhancing-digital-government-economy-edge/', kind: 'internal' },
   { from: '/1000-trainees-enhancing-digital-government-economy-edge/feed/', to: '/news/1000-trainees-enhancing-digital-government-economy-edge/', kind: 'internal' },
