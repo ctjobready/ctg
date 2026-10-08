@@ -7,7 +7,7 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
+import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
@@ -95,13 +95,13 @@ const steps = [
   </ProblemBand>
 
   <!-- C3 · Agitation -->
-  <CostBand
+  <CostSection
     title="Every training cycle without placement tracking repeats the same result."
-    transition="It doesn’t have to work that way."
+    transition="It doesn’t have to be this way."
     blocks={[
       { claim: 'Out-migration is pulling educated youth toward informal city work.', factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
       { claim: 'Entry-level work is shifting.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
-      { claim: 'Jobs now ask for AI-ready skills.', factId: 'PX-08', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
+      { claim: 'Jobs now ask for AI-ready skills.', factId: 'PX-08', scope: 'Globally', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
     ]}
   />
 

@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-e
 coverAlt: "CodersTrust Chairman and Co-founder Aziz Ahmad Encourages RMSTU Graduates to Build...: photo 1 of 3"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/"
 tags: ["Aziz Ahmad", "Latest News"]
+seoTitle: "Aziz Ahmad Encourages RMSTU Graduates"
 ---
 
 ![CodersTrust Chairman and Co-founder Aziz Ahmad Encourages RMSTU Graduates to Build...: photo 1 of 3](../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/rangamati-science-and-technology-university-3.jpg)

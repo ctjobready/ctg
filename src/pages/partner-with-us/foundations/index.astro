@@ -7,7 +7,7 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
+import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
@@ -55,7 +55,9 @@ const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
 const funders = ['the Rockefeller Foundation', 'Porticus', 'DANIDA', 'the World Food Programme', 'UNDP', 'the World Bank Group', 'BRAC'];
 for (const f of funders) if (!fact('PA-01').text.includes(f.replace(/^the /, ''))) throw new Error(`PA-01 does not mention ${f}`);
-const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.length - 1]}`;
+// Only UNDP's relationship dates to 2015; the other names carry no start year.
+const shown = funders.map((f) => (f === 'UNDP' ? 'UNDP (from 2015)' : f));
+const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 1]}`;
 ---
 
 <LandingLayout
@@ -96,11 +98,11 @@ const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.len
 
   <!-- C3 · Agitation -->
   <div class="pp-two">
-    <CostBand
+    <CostSection
       title="Every year of delay is a cohort without a path."
-      transition="It doesn’t have to work that way."
+      transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'AI is reshaping entry work.', factId: 'PX-07', implication: 'Programs have to track where entry-level work is going.' },
+        { claim: 'AI is reshaping entry work.', factId: 'PX-07', scope: 'Globally', implication: 'Programs have to track where entry-level work is going.' },
         { claim: 'AI is already thinning some entry-level postings.', factId: 'PX-06', implication: 'Tracks chosen from current employer demand keep pace.' },
         { claim: 'Educated young people are waiting.', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
         { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
@@ -123,7 +125,7 @@ const funderList = `${funders.slice(0, -1).join(', ')} and ${funders[funders.len
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
-      { facts: ['PA-01'], text: `CodersTrust has worked with ${funderList} since 2015.` },
+      { facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${funderList}.` },
       { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'WSDFM, commissioned by Porticus, was independently evaluated by BIGD in a randomized controlled trial.' },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}

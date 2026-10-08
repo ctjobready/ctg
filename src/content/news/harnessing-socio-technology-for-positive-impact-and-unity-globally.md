@@ -8,6 +8,7 @@ cover: ../../assets/images/news/harnessing-socio-technology-for-positive-impact-
 coverAlt: "Photo from the news story: Harnessing Socio-Technology for Positive Impact and Unity Globally"
 legacyUrl: "https://coderstrust.global/harnessing-socio-technology-for-positive-impact-and-unity-globally/"
 tags: []
+seoTitle: "Socio-Technology for Unity at Build Peace 2023"
 ---
 
 ## CodersTrust creates digital spaces that actively contribute to building and sustaining harmony by transforming conflicts on a global scale

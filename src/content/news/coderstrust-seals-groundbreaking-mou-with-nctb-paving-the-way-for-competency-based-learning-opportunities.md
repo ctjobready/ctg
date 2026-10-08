@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-p
 coverAlt: "CodersTrust Seals Groundbreaking MoU with NCTB, Paving the Way for Competency-based...: cover image"
 legacyUrl: "https://coderstrust.global/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/"
 tags: ["Featured News", "k-12 Education", "Latest News", "NationWIDE"]
+seoTitle: "NCTB MoU on Competency-Based Learning"
 ---
 
 ## CodersTrust and Bangladesh’s National Curriculum and Textbook Board forge a Partnership to develop World-Class Competency-based Experiential Learning Programs for 25 million Students Countrywide.

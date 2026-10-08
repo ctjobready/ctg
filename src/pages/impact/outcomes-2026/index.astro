@@ -121,7 +121,7 @@ const reportLink = reportCta();
       <BaseStat id="OC-01" base={`n = ${D.EMPLOYMENT_BASE} paired completers`} />
       <BaseStat id="OC-03" base="completers who reported income before and after training; the base for the medians is not reported separately" />
       <BaseStat id="OC-03b" base={`n = ${D.INCOME_BASE} paired income answers`} />
-      <BaseStat id="OC-05" base={`n = ${D.SPEED_BASE} new earners`} />
+      <BaseStat id="OC-05" base={`n = ${D.SPEED_BASE} completers who first earned during or after training`} />
       <BaseStat id="OC-06" base="responding completers; base not stated in the report" />
       <BaseStat id="OC-02" base={`${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base} completers with no prior income were earning`} small />
     </div>
@@ -170,13 +170,13 @@ const reportLink = reportCta();
   <ReportSection id="speed" title="Speed to earnings">
     <p data-fact="OC-05"><Fact id="OC-05" /></p>
     <ColumnChart
-      title="Cumulative share of new earners who had started earning"
+      title="Cumulative share of surveyed completers who first earned during or after training, by when they started earning"
       items={speedItems}
       valueHeader="Cumulative share"
       note={`Base: n = ${D.SPEED_BASE} completers who first earned during or after training. This is a timing measure only.`}
     />
     <Callout tone="caveat" label="Timing only">
-      <p>This shows when new earners began earning. It does not show why, and it is not evidence about mentoring or any other part of the program.</p>
+      <p>This shows when completers who first earned during or after training began earning. It does not show why, and it is not evidence about mentoring or any other part of the program.</p>
     </Callout>
   </ReportSection>
 
@@ -227,7 +227,7 @@ const reportLink = reportCta();
     <ul class="ro__list">
       <li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
       <li><strong>Who answered.</strong> Responding alumni only. Respondents are not a random sample; the number invited and the response rate are not reported, and results may over-represent successful learners.</li>
-      <li><strong>Bases.</strong> {D.EMPLOYMENT_BASE} paired completers (employment and type of work), {D.INCOME_BASE} paired income answers, {D.SPEED_BASE} new earners (speed to earnings) and {D.NO_PRIOR.base} completers with no prior income ({D.NO_PRIOR.earning} of {D.NO_PRIOR.base} were earning). For the other questions the base is not stated in the report, and so is not shown; the medians behind the income figure have no separately reported base.</li>
+      <li><strong>Bases.</strong> {D.EMPLOYMENT_BASE} paired completers (employment and type of work), {D.INCOME_BASE} paired income answers, {D.SPEED_BASE} completers who first earned during or after training (speed to earnings) and {D.NO_PRIOR.base} completers with no prior income ({D.NO_PRIOR.earning} of {D.NO_PRIOR.base} were earning). For the other questions the base is not stated in the report, and so is not shown; the medians behind the income figure have no separately reported base.</li>
       <li><strong>Recall and self-report.</strong> Status before training is recalled, and every answer is self-reported.</li>
       <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
       <li><strong>Descriptive, not causal.</strong> Nothing here shows that training caused a change; see the randomized trial for causal evidence from one program.</li>

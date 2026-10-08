@@ -8,6 +8,8 @@ cover: ../../assets/images/news/coderstrust-is-committed-to-the-vision-of-a-smar
 coverAlt: "Photo from the news story: CodersTrust is committed to the vision of a Smart Bangladesh within 2041: Aziz Ahmad"
 legacyUrl: "https://coderstrust.global/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/"
 tags: ["Latest News", "News and Events"]
+seoTitle: "Aziz Ahmad on a Smart Bangladesh by 2041"
+political: true
 ---
 
 Dhaka, Bangladesh

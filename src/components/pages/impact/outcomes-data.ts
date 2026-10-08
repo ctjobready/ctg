@@ -230,7 +230,7 @@ function recs(): Rec[] {
     out.push(pctRec('OC-04', 'Employment by type, among surveyed completers with paired answers', `${t.label}, before training`, t.before, EMPLOYMENT_BASE, EMPLOYMENT_BASE));
     out.push(pctRec('OC-04', 'Employment by type, among surveyed completers with paired answers', `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE, EMPLOYMENT_BASE));
   }
-  for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of new earners who started earning by each point (timing only)', c.label, c.n, SPEED_BASE, SPEED_BASE));
+  for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of completers who first earned during or after training and started earning by each point (timing only)', c.label, c.n, SPEED_BASE, SPEED_BASE));
   for (const d of [RECOMMEND, CAREER, SOURCE, AGE, EDUCATION, DISTRICTS]) {
     for (const c of d.cells) out.push(pctRec(d.id, d.measure, c.label, c.n, d.base, d.statedBase, d.statedBase ? undefined : NOT_STATED));
   }

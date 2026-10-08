@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-
 coverAlt: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNSGII: cover image"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/"
 tags: []
+seoTitle: "Aziz Ahmad Receives SDG Life Achievement Award"
 ---
 
 Mr. Aziz Ahmed, Chairman and Co-Founder of CodersTrust had the honor to accept the Lifetime SDG Achievement Award from the UNSGII during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development in driving progress across all 17 Sustainable Development Goals.

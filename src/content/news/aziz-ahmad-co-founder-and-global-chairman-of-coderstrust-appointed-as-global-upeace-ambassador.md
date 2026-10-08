@@ -8,6 +8,7 @@ cover: ../../assets/images/news/aziz-ahmad-co-founder-and-global-chairman-of-cod
 coverAlt: "Photo from the news story: Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, Appointed as Global UPEACE..."
 legacyUrl: "https://coderstrust.global/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/"
 tags: ["Aziz Ahmad", "Latest News"]
+seoTitle: "Aziz Ahmad Appointed Global UPEACE Ambassador"
 ---
 
 ![Photo from the news story: Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, Appointed as Global UPEACE...](../../assets/images/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/upeace-ambassador.jpg)

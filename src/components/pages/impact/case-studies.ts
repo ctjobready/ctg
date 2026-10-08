@@ -35,7 +35,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'kosovo-women-in-online-work',
     path: `${base}kosovo-women-in-online-work/`,
     name: 'Women in Online Work, Kosovo',
-    heading: 'Women in Online Work, Kosovo: a 2017 pilot for the World Bank Group',
+    heading: 'Women in Online Work, Kosovo: a 2017 pilot with the World Bank Group',
     program: 'World Bank Group, 2017',
     partner: 'Women in Online Work pilot',
     factId: 'PR-02',

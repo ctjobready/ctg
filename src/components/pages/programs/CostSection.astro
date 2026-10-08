@@ -22,7 +22,7 @@ interface Props {
   transition?: string;
   id?: string;
 }
-const { title, lead, blocks, transition = 'It doesn’t have to work that way.', id = 'cost' } = Astro.props;
+const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
 const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 ---

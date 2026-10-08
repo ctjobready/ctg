@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-and-basis-asset-collaborate-to-build
 coverAlt: "CodersTrust and BASIS-ASSET Collaborate to Build Bangladesh’s IT Future: photo 1 of 2"
 legacyUrl: "https://coderstrust.global/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/"
 tags: ["Latest News", "Signing"]
+seoTitle: "Training Partner for the BASIS-ASSET Project"
 ---
 
 ![CodersTrust and BASIS-ASSET Collaborate to Build Bangladesh’s IT Future: photo 1 of 2](../../assets/images/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/basis-asset-1.jpg)

@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-provides-corporate-training-to-akij-
 coverAlt: "CodersTrust provides corporate training to Akij Group, one of the largest...: photo 1 of 2"
 legacyUrl: "https://coderstrust.global/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/"
 tags: ["Corporate Training", "Latest News"]
+seoTitle: "Corporate Training for the Akij Group"
 ---
 
 ## Akij Group receives training on Modern Corporate Skills, Digital Marketing and Soft Skills

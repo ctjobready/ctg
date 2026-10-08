@@ -7,6 +7,8 @@ cover: ../../assets/images/news/celebrating-america-week-with-the-u-s-embassy-dh
 coverAlt: "Celebrating America Week with the U.S. Embassy Dhaka: photo 1 of 2"
 legacyUrl: "https://coderstrust.global/celebrating-america-week-with-the-u-s-embassy-dhaka/"
 tags: ["Aziz Ahmad", "Latest News", "U.S. Embassy"]
+seoTitle: "America Week with the U.S. Embassy in Dhaka"
+political: true
 ---
 
 ![Celebrating America Week with the U.S. Embassy Dhaka: photo 1 of 2](../../assets/images/news/celebrating-america-week-with-the-u-s-embassy-dhaka/celebrating-america-week-1.jpg)

@@ -12,9 +12,15 @@ import { ctaHref } from '../../../lib/mailto';
  * T6 news article shell. Like the shared ArticleLayout, but with a separate <title> (kept within 60
  * characters while the H1 and the NewsArticle headline carry the full headline), the archive banner
  * above the hero image, and an X share link.
+ *
+ * The <title>, og:title and twitter:title come from the post's `seoTitle` (front matter; the layout adds
+ * " | CodersTrust"). A headline short enough to fit needs none; a longer one without a seoTitle fails the
+ * build instead of being cut off mid-word in search results.
  */
 interface Props {
   headline: string;
+  /** Short page title for <title> and social titles, without the site-name suffix. */
+  seoTitle?: string;
   description: string;
   path: string;
   date: Date;
@@ -24,12 +30,15 @@ interface Props {
   image?: string;
   imageAlt?: string;
 }
-const { headline, description, path, date, updated, topic, image, imageAlt } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt } = Astro.props;
 const canonical = canonicalUrl(path);
 const published = date.toISOString();
 const SUFFIX = ' | CodersTrust';
-// Long headlines: drop a leading "CodersTrust " (the suffix names the site) so the distinguishing words survive truncation.
-const metaTitle = headline.length + SUFFIX.length > 60 ? truncate(headline.replace(/^CodersTrust\s+/, ''), 60 - SUFFIX.length) : headline;
+const metaTitle = seoTitle ?? headline;
+// The layout appends the suffix unless the title already names the site; the whole <title> must fit in 60 characters.
+const fullLength = metaTitle.includes('CodersTrust') ? metaTitle.length : metaTitle.length + SUFFIX.length;
+if (fullLength > 60) throw new Error(`News post ${path}: the <title> would be ${fullLength} characters (limit 60). Add a seoTitle of at most ${60 - SUFFIX.length} characters to its front matter.`);
+if (/…|\.\.\./.test(metaTitle) || /^\p{Ll}/u.test(metaTitle)) throw new Error(`News post ${path}: the seoTitle must be a complete title (no ellipsis, no lowercase start): "${metaTitle}"`);
 const node = newsArticle({
   path,
   headline,

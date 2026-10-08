@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-earns-recognition-among-top-100-edte
 coverAlt: "Photo from the news story: CodersTrust Earns Recognition Among Top 100 EdTech Companies in South Asia"
 legacyUrl: "https://coderstrust.global/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/"
 tags: ["HolonIQ", "South Asia EdTech"]
+seoTitle: "Named a Top 100 EdTech Company in South Asia"
 ---
 
 Dhaka, Bangladesh

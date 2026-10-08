@@ -8,6 +8,7 @@ cover: ../../assets/images/news/the-future-building-a-digital-factory-for-bangla
 coverAlt: "Photo from the news story: The Future: Building a Digital Factory for Bangladesh"
 legacyUrl: "https://coderstrust.global/the-future-building-a-digital-factory-for-bangladesh/"
 tags: ["Aziz Ahmad", "Latest News"]
+seoTitle: "Building a Digital Factory for Bangladesh"
 ---
 
 ![Photo from the news story: The Future: Building a Digital Factory for Bangladesh](../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg)

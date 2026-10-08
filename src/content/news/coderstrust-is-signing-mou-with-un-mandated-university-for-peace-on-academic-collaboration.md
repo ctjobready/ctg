@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-univ
 coverAlt: "Photo from the news story: CodersTrust partners up with UN University for Peace (UPEACE) to offer Next Generation..."
 legacyUrl: "https://coderstrust.global/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/"
 tags: ["Featured News"]
+seoTitle: "UPEACE Partnership for Next Generation Skills"
 ---
 
 Global EdTech company CodersTrust and the University for Peace, an university and treaty organization mandated by UN General Assembly, have forged a partnership on Saturday June 3rd, at a signing ceremony held at UPEACE campus in San Jose, Costa Rica, to offer Next Generation Skills training for the Digital Era through academic collaboration and student exchanges.
@@ -26,7 +27,7 @@ The signing ceremony was followed by a roundtable discussion on Human Rights and
 
 ## About CodersTrust
 
-CodersTrust is a global digital workforce development company. With the power of EdTech, CodersTrust mission is to transform underprivileged, disadvantaged, and marginalized communities – especially youth and women – with skills for the Digital Era and connect them with work opportunities to enable financial independence and economic growth at a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to millions of youths worldwide, resulting in employment, upward social mobility and durable social impact.
+CodersTrust is a global digital workforce development company. With the power of EdTech, CodersTrust mission is to transform underprivileged, disadvantaged, and marginalized communities – especially youth and women – with skills for the Digital Era and connect them with work opportunities to enable financial independence and economic growth at a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, resulting in employment, upward social mobility and durable social impact.
 
 ## About University for Peace
 

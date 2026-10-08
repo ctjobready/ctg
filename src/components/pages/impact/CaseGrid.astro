@@ -22,9 +22,9 @@ const photos: Record<string, { src: ImageMetadata; alt: string; assetId: string 
 };
 import type { ImageMetadata } from 'astro';
 const evidence: Record<string, string> = {
-  'wsdfm-women-freelancers': 'Program records — gross placement, no comparison group',
-  'kosovo-women-in-online-work': 'Program records — gross placement',
-  'undp-yes-korail': 'Program records — placement denominator not stated',
+  'wsdfm-women-freelancers': 'Program data — gross in-work rate among graduates, no comparison group',
+  'kosovo-women-in-online-work': 'Program data — gross in-work rate among graduates, no comparison group',
+  'undp-yes-korail': 'Program data — in-work rate, denominator not stated',
   'her-power': 'Program records — gross placement',
 };
 const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
@@ -59,7 +59,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
     })
   }
 </div>
-<p class="case__note">Each figure carries its own evidence label. Placement figures are program records of gross placement among completers, not net of what would have happened without training.</p>
+<p class="case__note">Each figure carries its own evidence label. Placement figures are program data: gross in-work rates, not net of what would have happened without training.</p>
 
 <style>
   .case__stat {

@@ -8,6 +8,7 @@ cover: ../../assets/images/news/25000-trainees-her-power-empowerment-of-women-th
 coverAlt: "Photo from the news story: 25,000+ Trainees | CodersTrust Signs Contract with Her Power: Empowerment of Women..."
 legacyUrl: "https://coderstrust.global/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/"
 tags: []
+seoTitle: "Her Power Contract Aims to Train 25,125 Women"
 ---
 
 ![Photo from the news story: 25,000+ Trainees | CodersTrust Signs Contract with Her Power: Empowerment of Women...](../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg)

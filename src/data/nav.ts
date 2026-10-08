@@ -15,6 +15,9 @@ const youth = stat('SC-01').value;
 const countries = stat('SC-03').value;
 const since = stat('ID-02').value;
 const emp = stat('OC-01');
+// The survey base (n) is read from the register, never typed here.
+const empBase = /^(\d+) paired completers/.exec(fact('OC-01').base ?? '')?.[1];
+if (!empBase) throw new Error('OC-01 base no longer starts with "<n> paired completers"');
 
 export interface NavLink {
   label: string;
@@ -133,12 +136,13 @@ export const navGroups: NavGroup[] = [
     label: 'Partner with us',
     href: '/partner-with-us/',
     items: [
-      { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Development partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
+      { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Foundations & CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
+      { label: 'Investors', href: '/investors/', description: 'Thesis and traction.' },
+      { label: 'Local partners', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
-      { label: 'Investors', href: '/investors/', description: 'Thesis and traction.' },
     ],
     feature: {
       kind: 'discovery',
@@ -162,7 +166,7 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
   lead: 'Impact Survey 2026:',
-  rest: `employment among surveyed completers rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
+  rest: `employment among ${empBase} surveyed completers rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v2',
   factId: 'OC-01',
@@ -182,10 +186,11 @@ export const footerBottomLinks: NavLink[] = [
 
 /** Audience router (Home, 404, partner hub): who are you? */
 export const audiences = [
-  { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
   { id: 'development-partners', title: 'Development partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
+  { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations & CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Thesis and traction', href: '/investors/' },
+  { id: 'local-partners', title: 'Local partners', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Thesis and traction', href: '/investors/' },
 ] as const;

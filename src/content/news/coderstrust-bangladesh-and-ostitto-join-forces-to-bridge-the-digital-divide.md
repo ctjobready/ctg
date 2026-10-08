@@ -8,6 +8,7 @@ cover: ../../assets/images/news/coderstrust-bangladesh-and-ostitto-join-forces-t
 coverAlt: "CodersTrust Bangladesh and Ostitto Join Forces to Bridge the Digital Divide: photo 1 of 2"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/"
 tags: ["Latest News", "NationWIDE", "News and Events", "Third-gender Training"]
+seoTitle: "Ostitto MoU to Bridge the Digital Divide"
 ---
 
 Dhaka, Bangladesh

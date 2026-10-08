@@ -8,6 +8,8 @@ cover: ../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-p
 coverAlt: "CodersTrust Chairman and Co-founder Aziz Ahmad Participates in U.S. Energy Security Panel: photo 1 of 3"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/"
 tags: ["Aziz Ahmad", "Latest News"]
+seoTitle: "Aziz Ahmad at a U.S. Energy Security Panel"
+political: true
 ---
 
 ![CodersTrust Chairman and Co-founder Aziz Ahmad Participates in U.S. Energy Security Panel: photo 1 of 3](../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/us-secretary-of-energy-3.jpg)

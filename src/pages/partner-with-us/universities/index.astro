@@ -7,7 +7,7 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
+import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
@@ -94,12 +94,12 @@ const steps = [
 
   <!-- C3 · Agitation -->
   <div class="pp-two">
-    <CostBand
+    <CostSection
       title="AI is raising the bar for entry-level work."
       lead="Employers already say AI skills are the hardest to find."
-      transition="It doesn’t have to work that way."
+      transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', implication: 'Students who graduate without those skills start behind.' },
+        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
         { claim: 'AI is thinning some entry-level postings.', factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
       ]}
     />
