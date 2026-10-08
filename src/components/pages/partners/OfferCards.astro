@@ -1,0 +1,114 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import { pricingParts } from './partners';
+
+/**
+ * C11 offer cards for audiences whose options differ from the three-option OfferBand (universities:
+ * Pilot and Scale for a campus cohort; employers: a training program and talent access). Same structure
+ * and styling as OfferBand. No prices: budgets are shared in the discovery session.
+ */
+interface Card {
+  eyebrow: string;
+  title: string;
+  /** Big line (volume), when the option has one. */
+  headline?: string;
+  meta?: string;
+  text: string;
+  facts?: string[];
+}
+interface Props {
+  title: string;
+  lead?: string;
+  cards: Card[];
+  /** Show the standard inclusions list (PD-02) under the cards. */
+  inclusions?: boolean;
+  id?: string;
+}
+const { title, lead, cards, inclusions = false, id = 'offer' } = Astro.props;
+const pricing = pricingParts();
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Start" title={title} lead={lead ?? pricing.lead} />
+  <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
+    {
+      cards.map((c) => (
+        <article class="card oc" data-reveal data-fact={c.facts?.join(' ')}>
+          <div class="card__body">
+            <p class="eyebrow">{c.eyebrow}</p>
+            <h3 class="card__title">{c.title}</h3>
+            {c.headline && <p class="oc__headline">{c.headline}</p>}
+            {c.meta && <p class="card__meta oc__meta">{c.meta}</p>}
+            <p class="card__text">{c.text}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  {
+    inclusions && (
+      <div class="oc__incl" data-reveal data-fact="PD-02">
+        <h3 class="t-heading-l">Standard inclusions</h3>
+        <ul role="list">
+          {pricing.inclusions.map((s) => <li><Icon name="circle-check" size={20} />{s}</li>)}
+        </ul>
+        <p class="oc__sep">{pricing.separate}</p>
+      </div>
+    )
+  }
+  <slot />
+</Section>
+
+<style>
+  .oc__headline {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .oc__meta {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .oc__incl {
+    margin-top: var(--space-lg);
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .oc__incl h3 {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .oc__incl ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .oc__incl li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    color: var(--on-surface-variant);
+  }
+  .oc__incl :global(.icon) {
+    color: var(--success);
+    margin-top: 3px;
+    flex: none;
+  }
+  .oc__sep {
+    margin: var(--space-md) 0 0;
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 768px) {
+    .oc__incl ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

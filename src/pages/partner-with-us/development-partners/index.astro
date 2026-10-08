@@ -1,0 +1,249 @@
+---
+/**
+ * P4 Development partners & NGOs: /partner-with-us/development-partners/ (T3, implements doc 04 matrix 4.1).
+ * C1 to C14 in order, as the numbered table in doc 06 P4.
+ */
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
+import ProblemBand from '../../../components/sections/ProblemBand.astro';
+import CostBand from '../../../components/sections/CostBand.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import MechanismBand from '../../../components/sections/MechanismBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import OfferBand from '../../../components/sections/OfferBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Quote from '../../../components/ui/Quote.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import Section from '../../../components/ui/Section.astro';
+import Icon from '../../../components/system/Icon.astro';
+import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
+import SubBand from '../../../components/pages/partners/SubBand.astro';
+import Callout from '../../../components/pages/partners/Callout.astro';
+import CopyText from '../../../components/pages/partners/CopyText.astro';
+import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
+import FitBrief from '../../../components/pages/partners/FitBrief.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
+import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import { FAQ_SCOPE, HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { faqJsonLd } from '../../../lib/faq';
+import { cta } from '../../../lib/mailto';
+import { webPage } from '../../../lib/schema';
+import { url } from '../../../lib/url';
+
+const PATH = '/partner-with-us/development-partners/';
+const primary = cta('discovery');
+
+const { title, description } = meta(
+  'Youth Employment Implementing Partner',
+  `CodersTrust moves educated, unemployed youth into paid work. A randomized trial by BIGD found women’s income up ${factPart('RC-01', /income by (\d+%)/)} for those offered a place.`,
+);
+
+const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
+const partnerNames = factPart('PA-01', /include (.*)$/);
+const undpQuote = factPart('PR-03a', /“([^”]+)”/);
+const undpPilot = factPart('PR-03a', /\((\d+ students)/);
+---
+
+<LandingLayout
+  title={title}
+  description={description}
+  path={PATH}
+  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Development partners & NGOs' }]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd(FAQ_SCOPE, PATH, FAQ_IDS)]}
+  stickyCta={{ label: primary.label, href: primary.href }}
+>
+  <!-- C1 · Identity hook -->
+  <HeroBand
+    audience="For development partners & INGOs"
+    title={HEADLINE.developmentPartners}
+    lead={VALUE_PROPOSITION.developmentPartners}
+    cta={{ label: primary.label, href: primary.href }}
+    artSeed="partners-development"
+  />
+  <!-- GEO · What is CodersTrust? -->
+  <DefinitionBand />
+
+  <!-- C2 · Problem -->
+  <ProblemBand
+    title="Enrollment targets are met. Employment lags."
+    bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part."
+    factIds={['PX-01']}
+  >
+    <GainsPains
+      slot="lead"
+      gains={['Employment results you can report', 'Confidence that the budget produced earnings', 'A reputation as a funder whose programs place people']}
+      pains={[
+        { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are met, but employment lags.' },
+        { q: 'Why do the hardest-to-reach groups drop out?', text: 'They drop out, or are never reached in the first place.' },
+        { q: 'How can your evaluators audit the outcomes?', text: 'Outcomes are hard to audit without a baseline and documentary evidence.' },
+      ]}
+    />
+  </ProblemBand>
+
+  <!-- C3 · Agitation: cost of waiting -->
+  <div class="pp-two">
+    <CostBand
+      title="Every cohort that trains but does not place spends the budget for a fraction of the result."
+      transition="It doesn’t have to work that way."
+      blocks={[
+        { claim: 'AI is closing some entry-level doors.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+        { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
+      ]}
+    />
+  </div>
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    title="What your next reporting cycle could show."
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'Earnings in your monthly reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
+      { kind: 'Emotional', title: 'Evidence your evaluators can audit', text: `Tracer results at ${TRACER_MONTHS}, backed by payslips, offer letters, platform logs and bank receipts.` },
+      { kind: 'Social', title: 'Work on their own terms', text: 'Young people earning from jobs, freelance clients and businesses of their own.' },
+    ]}
+  />
+
+  <!-- C5 · Guide (empathy first) -->
+  <PartnerGuideBand
+    empathy={EMPATHY.developmentPartners}
+    stats={['SC-01', 'SC-03']}
+    statements={[{ facts: ['PA-01'], text: `CodersTrust has worked with ${partnerNames} since 2015.` }]}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
+    partnerGroup="development"
+  />
+
+  <!-- C6 · Mechanism (YouthWIDE) -->
+  <MechanismBand
+    title="How YouthWIDE works."
+    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country, with Bangladesh as the evidence-rich reference implementation."
+    blocks={[
+      { label: 'Who we reach', title: 'Priority groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
+      { label: 'How we reach them', title: 'Existing labs and colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
+      { label: 'What we deliver', title: 'Certification and mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
+      { label: 'Where they work', title: 'Local, remote and global work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+    ]}
+    link={{ label: 'How our model works', href: LINKS.model }}
+  />
+  <SubBand>
+    <Callout eyebrow="The result line">
+      <CopyText block={SURVEY_EMPLOYMENT} />
+      <a class="link" href={url(LINKS.methodology)}>See the survey methodology<Icon name="arrow-right" size={16} /></a>
+    </Callout>
+  </SubBand>
+
+  <!-- C7 · Proof -->
+  <ProofBand
+    title="Independent evidence and survey results"
+    headlineFact="RC-01"
+    statIds={['RC-02', 'RC-04']}
+    chartId="OC-01"
+    links={[
+      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'Outcomes 2026', href: LINKS.outcomes },
+    ]}
+  >
+    <EvidenceList heading="What surveyed completers report" items={[{ facts: ['OC-03'] }]} />
+    <FitBrief />
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Program results, with the case studies behind them"
+    items={[
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+    ]}
+  />
+  <SubBand tone="airy" pull>
+    <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role={`Quoted on the 2015 Korail pilot (${undpPilot}; typing speed and computer-application targets), not on later employment results`}>
+      {undpQuote}<FootnoteMarker id="PR-03a" />
+    </Quote>
+  </SubBand>
+
+  <!-- C8 · Features to benefits -->
+  <FeaturesTable
+    title="What you get, and what it means for your outcomes."
+    rows={[
+      {
+        feature: `${HOURS} training hours per certification, three months of milestone-based mentoring, placement support`,
+        means: 'success is counted in paid work, not hours attended. A work-entry plan per track is approved before enrollment.',
+        outcomeFactId: 'PD-01',
+        relieves: 'Enrollment targets are met, but employment lags',
+      },
+      {
+        feature: 'Outreach and accessible selection; tracks set per country from employer demand; safeguarding and data protection specified per program',
+        means: 'priority groups can join a local lab and train for work that local employers want.',
+        outcomeFactId: 'PD-14',
+        relieves: 'Hardest-to-reach groups drop out',
+      },
+      {
+        feature: 'Baseline at enrollment, tracers, documentary evidence of earnings and monthly reports',
+        means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.',
+        outcomeFactId: 'PD-09',
+        relieves: 'Outcomes are hard to audit',
+      },
+      {
+        feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)',
+        means: 'completers hold a recognized credential.',
+        outcomeFactId: 'PD-03',
+      },
+      {
+        feature: 'Placement support',
+        means: 'completers reach local, remote and global work.',
+        outcomeFactId: 'PD-15',
+      },
+    ]}
+  />
+  <HowItWorks steps={STEPS} />
+
+  <!-- C9 · Objections -->
+  <FAQBand
+    audience={FAQ_SCOPE}
+    ids={FAQ_IDS}
+    title="Questions partners ask"
+    lead="Right for you if you fund youth employment and want results you can report. Not right if you want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
+    allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
+  />
+
+  <!-- C10 · Differentiation -->
+  <ComparisonBand
+    title="Compare the approaches."
+    lead="Provision varies by provider and program. This describes what a CodersTrust supported cohort includes where the agreed program scope specifies it, and how the other routes typically differ."
+  />
+
+  <!-- C11 · Offer -->
+  <OfferBand title="Choose where to start." />
+  <SubBand tone="airy" pull>
+    <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
+  </SubBand>
+
+  <!-- C12 · Risk reversal (immediately before C13) -->
+  <RiskReversalBand title="Start with a pilot. Decide on evidence." lead={SCORECARD.text} />
+
+  <!-- C13 · Call to action -->
+  <CTABand
+    id="cta"
+    heading="Let’s design your first cohort."
+    cta={{ label: primary.label, href: primary.href }}
+    secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
+    urgency={SPEED.text}
+    micro={MICRO_COMMITMENT}
+  />
+
+  <!-- C14 · Next steps -->
+  <NextStepsBand title="What happens after you say yes." />
+  <Reinforcement logos={false} />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <PageEnhancements />
+</LandingLayout>

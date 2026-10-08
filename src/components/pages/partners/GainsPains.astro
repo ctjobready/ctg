@@ -1,0 +1,111 @@
+---
+import Icon from '../../system/Icon.astro';
+
+/**
+ * C2 gains and ranked pains (doc 04 matrices, 2a and 2b). Rendered inside ProblemBand's lead slot, so
+ * the band keeps its heading and evidence cards. Pains are phrased as the questions buyers ask (AEO).
+ */
+interface Props {
+  gains: string[];
+  pains: { q: string; text: string }[];
+  gainsHeading?: string;
+  painsHeading?: string;
+}
+const { gains, pains, gainsHeading = 'What you are working toward', painsHeading = 'What gets in the way' } = Astro.props;
+---
+
+<div class="gp">
+  <div class="gp__col">
+    <h3 class="gp__h">{gainsHeading}</h3>
+    <ul class="gp__gains" role="list">
+      {gains.map((g) => <li><Icon name="circle-check" size={20} />{g}</li>)}
+    </ul>
+  </div>
+  <div class="gp__col">
+    <h3 class="gp__h">{painsHeading}</h3>
+    <ol class="gp__pains" role="list">
+      {
+        pains.map((p, i) => (
+          <li>
+            <span class="gp__n" aria-hidden="true">{i + 1}</span>
+            <div>
+              <p class="gp__q">{p.q}</p>
+              <p class="gp__a">{p.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>
+
+<style>
+  .gp {
+    display: grid;
+    gap: var(--space-lg);
+    width: 100%;
+    margin-top: var(--space-md);
+  }
+  .gp__h {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ctx-accent);
+    margin: 0 0 var(--space-sm);
+  }
+  .gp__gains,
+  .gp__pains {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .gp__gains li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    color: var(--on-surface);
+  }
+  .gp__gains :global(.icon) {
+    color: var(--success);
+    margin-top: 3px;
+    flex: none;
+  }
+  .gp__pains li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+  .gp__n {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .gp__q {
+    margin: 0;
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .gp__a {
+    margin: 2px 0 0;
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 900px) {
+    .gp {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: var(--space-lg) 48px;
+    }
+  }
+</style>

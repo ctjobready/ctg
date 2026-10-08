@@ -1,0 +1,270 @@
+---
+/**
+ * P3 Governments: /partner-with-us/governments/ (T3, implements doc 04 matrix 4.2).
+ * C1 to C14 in order, as the numbered table in doc 06 P3.
+ */
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
+import ProblemBand from '../../../components/sections/ProblemBand.astro';
+import CostBand from '../../../components/sections/CostBand.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import MechanismBand from '../../../components/sections/MechanismBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import OfferBand from '../../../components/sections/OfferBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import Section from '../../../components/ui/Section.astro';
+import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
+import SubBand from '../../../components/pages/partners/SubBand.astro';
+import Callout from '../../../components/pages/partners/Callout.astro';
+import CopyText from '../../../components/pages/partners/CopyText.astro';
+import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
+import ContractTable from '../../../components/pages/partners/ContractTable.astro';
+import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import StepsBand from '../../../components/pages/partners/StepsBand.astro';
+import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
+import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
+import { LINKS, NATIONWIDE_TARGET, factPart, meta, statValue } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, HEADLINE, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
+import { faqJsonLd } from '../../../lib/faq';
+import { cta } from '../../../lib/mailto';
+import { webPage } from '../../../lib/schema';
+
+const PATH = '/partner-with-us/governments/';
+const primary = cta('briefing');
+
+const { title, description } = meta(
+  'Digital Skills Training for Governments',
+  `We help ministries move educated, unemployed youth into paid digital work. Six government contracts cover training and curriculum for ${statValue('SC-06')} people.`,
+);
+
+const FAQ_IDS = ['Q7', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
+const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
+const manuals = factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/);
+const thirdGender = factPart('GV-07', /[\d,]+ third-gender people/);
+const nationalSize = factPart('PD-05', /National ([\d,]+\+) trainees/);
+const steps = [
+  { title: 'Briefing and co-design with the agency', text: STEPS[0].text.replace('A discovery session sets', 'The briefing and co-design sessions set') },
+  STEPS[1],
+  STEPS[2],
+];
+---
+
+<LandingLayout
+  title={title}
+  description={description}
+  path={PATH}
+  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Governments' }]}
+  jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('governments', PATH, FAQ_IDS)]}
+  stickyCta={{ label: primary.label, href: primary.href }}
+>
+  <!-- C1 · Identity hook -->
+  <HeroBand
+    audience="For ministries and public agencies"
+    title={HEADLINE.governments}
+    lead={VALUE_PROPOSITION.governments}
+    cta={{ label: primary.label, href: primary.href }}
+    artSeed="partners-governments"
+  />
+  <!-- GEO · What is CodersTrust? -->
+  <DefinitionBand />
+
+  <!-- C2 · Problem -->
+  <ProblemBand
+    title="Graduates are the most jobless group."
+    bluf="Degrees are not turning into jobs, and budgets that count enrollment cannot show who is earning."
+    factIds={['PX-03']}
+  >
+    <GainsPains
+      slot="lead"
+      gains={['A workforce that meets youth-employment targets', 'Budgets that buy earnings', 'Capacity that stays in your system']}
+      pains={[
+        { q: 'Why are graduates the most jobless group?', text: 'A degree alone is not producing job offers.' },
+        { q: 'Why do training budgets not show up as earnings?', text: 'Budgets are measured by enrollment, not by who is earning afterward.' },
+        { q: 'Where will the trainers and curricula come from?', text: 'Trainer and curriculum capacity is thin.' },
+      ]}
+    />
+  </ProblemBand>
+
+  <!-- C3 · Agitation -->
+  <CostBand
+    title="Every training cycle without placement tracking repeats the same result."
+    transition="It doesn’t have to work that way."
+    blocks={[
+      { claim: 'Out-migration is pulling educated youth toward informal city work.', factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+      { claim: 'Entry-level work is shifting.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
+      { claim: 'Jobs now ask for AI-ready skills.', factId: 'PX-08', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
+    ]}
+  />
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    title="What your next budget cycle could show."
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'Certified young people in work', text: 'Monthly reports show certified young people moving into work: locally, remotely and abroad.' },
+      { kind: 'Emotional', title: 'Employers find job-ready talent', text: 'Employers find certified, job-ready talent.' },
+      { kind: 'Social', title: 'Capacity that stays', text: 'Trained facilitators and localized curricula stay in your system after the program.' },
+    ]}
+  />
+  <SubBand pull>
+    <Callout eyebrow="From the October 2026 survey"><Fact id="OC-07" as="p" /></Callout>
+  </SubBand>
+
+  <!-- C5 · Guide (empathy first) -->
+  <PartnerGuideBand
+    empathy={EMPATHY.governments}
+    stats={['SC-06']}
+    statements={[
+      { facts: ['SC-04'], markers: [], text: 'CodersTrust is National University’s official training partner for digital career skills and credentials.' },
+      { facts: ['GV-07'], text: `A program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender}.` },
+      { facts: ['PA-02'] },
+    ]}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
+    partnerGroup={['government', 'academic']}
+  />
+
+  <!-- C6 · Mechanism (NationWIDE-style delivery) -->
+  <MechanismBand
+    title="A national delivery model, built on labs that already exist."
+    lead={`NationWIDE-style delivery aims to train ${NATIONWIDE_TARGET} vulnerable youth by 2030. That is a target, not a result.`}
+    blocks={[
+      { label: 'Who we reach', title: 'Vulnerable and unemployed youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
+      { label: 'How we reach them', title: 'Government digital labs', text: `Blended learning in ${labs} that can serve as blended-learning centers; seats are confirmed per program.`, icon: 'landmark' },
+      { label: 'What we deliver', title: 'Capacity that stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then certification.`, icon: 'award' },
+      { label: 'Where they work', title: 'Placement and monthly reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
+    ]}
+    link={{ label: 'See NationWIDE', href: LINKS.nationwide }}
+  />
+  <SubBand>
+    <Callout eyebrow="How we scale"><CopyText block={SCALE} /></Callout>
+  </SubBand>
+
+  <!-- C7 · Proof -->
+  <ProofBand
+    title="Independent evidence and survey results"
+    headlineFact="RC-01"
+    statIds={['RC-02', 'RC-04']}
+    chartId="OC-01"
+    links={[
+      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'Outcomes 2026', href: LINKS.outcomes },
+    ]}
+  >
+    <EvidenceList heading="What surveyed completers report" items={[{ facts: ['OC-03'] }]} />
+  </ProofBand>
+  <ContractTable title="Six government contracts, scope by scope." lead="What CodersTrust does under each contract, and the training scope it covers." />
+  <CaseStudyCarousel
+    title="The Her Power cohort, beside two other women-focused programs"
+    lead={WOMEN_INCLUSION.text}
+    items={[
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
+    ]}
+  />
+
+  <!-- C8 · Features to benefits -->
+  <FeaturesTable
+    title="What you get, and what it means for your agency."
+    rows={[
+      {
+        feature: 'Certification tracks chosen from employer demand, then mentoring and placement support',
+        means: 'graduates leave with a recognized credential and a route to work.',
+        outcomeFactId: 'PD-03',
+        relieves: 'Graduates are the most jobless group',
+      },
+      {
+        feature: 'A pilot scorecard with cost per completer and per verified outcome; monthly reports',
+        means: 'your budget is judged against verified outcomes.',
+        outcomeFactId: 'PD-11',
+        relieves: 'Budgets are measured by enrollment, not earnings',
+      },
+      {
+        feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; blended learning in existing labs; connectivity-light delivery',
+        means: 'capacity stays in your system and rural labs can take part.',
+        outcomeFactId: 'PD-07',
+        relieves: 'Trainer and curriculum capacity is thin',
+      },
+      {
+        feature: 'Local, remote and global work',
+        means: 'your workforce gains access to work beyond the local market.',
+        outcomeFactId: 'PD-15',
+      },
+    ]}
+  />
+  <HowItWorks steps={steps} />
+
+  <!-- C9 · Objections -->
+  <FAQBand
+    audience="governments"
+    ids={FAQ_IDS}
+    title="Questions ministries ask"
+    lead={`Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`}
+    allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
+  />
+
+  <!-- C10 · Differentiation -->
+  <ComparisonBand
+    title="Compare the approaches."
+    lead="Our approach rests on independent evidence of our own training and on infrastructure that already exists: labs, colleges and Training of Trainers. Provision varies by provider and program."
+  />
+
+  <!-- C11 · Offer -->
+  <OfferBand title="Choose where to start." />
+  <SubBand tone="airy" pull>
+    <EvidenceList
+      heading="Services we can scope for an agency"
+      items={[
+        { facts: ['GV-01'], text: 'Curriculum development, manuals and Training of Trainers.' },
+        { facts: ['GV-05'], text: 'LMS and operation training for staff.' },
+      ]}
+    />
+  </SubBand>
+
+  <!-- C12 · Risk reversal (immediately before C13) -->
+  <RiskReversalBand
+    title="Phased rollout, with review gates."
+    lead={SCORECARD.text}
+    points={[
+      { icon: 'rocket', title: 'Pilot first', text: 'We start with a pilot, not a national rollout.' },
+      { icon: 'target', title: 'Review gates', text: 'Thresholds are agreed with the agency before the first cohort; a missed threshold triggers a corrective plan.' },
+      { icon: 'handshake', title: 'The agency decides on expansion', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+    ]}
+  />
+
+  <!-- C13 · Call to action -->
+  <CTABand
+    id="cta"
+    heading="Let’s plan a first phase with your ministry."
+    cta={{ label: primary.label, href: primary.href }}
+    secondary={{ label: 'See government programs', href: LINKS.nationwide }}
+    urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
+  />
+
+  <!-- C14 · Next steps -->
+  <StepsBand
+    title="What happens after you say yes."
+    lead="Your agency’s procurement timeline sets the pace."
+    steps={[
+      { title: 'Briefing', text: 'A briefing for your ministry or agency, shaped to its procurement timeline.' },
+      { title: 'Co-design with the agency', text: 'Priority groups, tracks, labs and the pilot scorecard are agreed together.' },
+      { title: 'Agreement', text: 'Scope and schedule follow the agency’s own procurement timeline.' },
+      { title: 'Launch in existing labs', text: 'Seats are confirmed per program.' },
+      { title: 'Monthly reports', text: 'Enrollment, completion, certification, placements and first earnings.' },
+    ]}
+  />
+  <Reinforcement firstAction={C14.variants.governments} reminder={false} />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+  <PageEnhancements />
+</LandingLayout>

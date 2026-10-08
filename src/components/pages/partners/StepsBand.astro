@@ -1,0 +1,22 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import StepFlow from '../../ui/StepFlow.astro';
+
+/**
+ * C14 next steps with the audience's own sequence (governments, universities, employers). Same
+ * structure and tone as the shared NextStepsBand, which is fixed to the grant-funded pilot timeline.
+ */
+interface Props {
+  title: string;
+  lead?: string;
+  steps: { title: string; text?: string }[];
+  id?: string;
+}
+const { title, lead, steps, id = 'next-steps' } = Astro.props;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
+  <StepFlow steps={steps} />
+</Section>

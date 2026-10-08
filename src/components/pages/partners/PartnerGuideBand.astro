@@ -1,0 +1,134 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import FactStat from '../../facts/FactStat.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import Icon from '../../system/Icon.astro';
+import CopyText from './CopyText.astro';
+import { linkAttrs } from '../../../lib/url';
+import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
+import { ORIGIN } from '../../../data/copy';
+import { fact } from '../../../data/facts';
+
+/**
+ * C5 Guide, empathy first: the audience's empathy line (EMPATHY[audience]), then ORIGIN, then
+ * authority (stat tiles and register-backed statements), then the method signal and the logo strip.
+ * Same visual structure as the shared GuideBand; it adds what that band cannot hold: the ORIGIN
+ * paragraph and authority statements that are sentences rather than numbers.
+ */
+interface Statement {
+  /** Fact(s) behind the statement (data-fact and footnote markers). */
+  facts: string[];
+  /** Sentence to show; defaults to the canonical text of the first fact. */
+  text?: string;
+  /** Facts whose footnote markers follow the sentence; defaults to all of facts. */
+  markers?: string[];
+}
+interface Props {
+  title?: string;
+  empathy: string;
+  /** Fact IDs rendered as stat tiles (need a stat). */
+  stats?: string[];
+  statements?: Statement[];
+  method: { text: string; link?: { label: string; href: string } };
+  partnerGroup?: PartnerGroup | PartnerGroup[];
+  id?: string;
+}
+const { title = 'We’ve built this path since 2014.', empathy, stats = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Our track record" title={title} />
+  <div class="pg">
+    <div class="pg__copy" data-reveal>
+      <p class="lead">{empathy}</p>
+      <CopyText block={ORIGIN} markers={[]} class="pg__origin" />
+      <p class="pg__method">
+        {method.text}
+        {method.link && (
+          <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
+        )}
+      </p>
+    </div>
+    <div class="pg__proof">
+      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} />)}</div>}
+      {
+        statements.length > 0 && (
+          <ul class="pg__list" role="list">
+            {statements.map((s) => (
+              <li data-fact={s.facts.join(' ')}>
+                <Icon name="circle-check" size={20} />
+                <span>{s.text ?? fact(s.facts[0]).text}{(s.markers ?? s.facts).map((f) => <FootnoteMarker id={f} />)}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+  <PartnerStrip variant="grid" group={partnerGroup} caption={PARTNER_CAPTION} />
+</Section>
+
+<style>
+  .pg {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  .pg__copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .pg__copy > * {
+    margin: 0;
+  }
+  .pg__origin {
+    color: var(--on-surface-variant);
+    max-width: 48rem;
+  }
+  .pg__method {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    color: var(--on-surface-variant);
+    max-width: 48rem;
+  }
+  .pg__proof {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+  }
+  .pg__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+  }
+  .pg__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+  .pg__list li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    color: var(--on-surface);
+  }
+  .pg__list :global(.icon) {
+    color: var(--success);
+    margin-top: 3px;
+    flex: none;
+  }
+  @media (min-width: 1024px) {
+    .pg {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: start;
+    }
+  }
+</style>

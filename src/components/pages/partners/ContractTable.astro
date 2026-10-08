@@ -1,0 +1,167 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Fact from '../../facts/Fact.astro';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
+import { factPart } from './partners';
+
+/**
+ * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06. Columns and cells exist only where a
+ * fact backs them, so there is no status column (the register states none), and a blank cell reads "—".
+ * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
+ */
+interface Row {
+  contract: string;
+  facts: string[];
+  scope: string;
+  direct: string;
+  reach?: string;
+}
+
+const rows: Row[] = [
+  {
+    contract: 'Her Power (DoICT, ICT Division)',
+    facts: ['GV-01'],
+    scope: 'Curriculum, training manuals and mentorship guidelines; Training of Trainers',
+    direct: factPart('GV-01', /[\d,]+ women trained directly/),
+    reach: `Program to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ upazilas)/)}; ${factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/)}`,
+  },
+  {
+    contract: 'EDGE (PMIS, University of Dhaka, with BCC)',
+    facts: ['GV-02'],
+    scope: 'Training in digital and 4IR technologies',
+    direct: `Scope: ${factPart('GV-02', /[\d,]+ youth/)}`,
+  },
+  {
+    contract: 'SKIT incubator (Bangladesh Hi-Tech Park Authority)',
+    facts: ['GV-03'],
+    scope: 'High-demand IT skills training, Barishal',
+    direct: `Scope: ${factPart('GV-03', /[\d,]+ people/)}`,
+  },
+  {
+    contract: 'NHRDF (implemented by NSDA)',
+    facts: ['GV-04'],
+    scope: 'Training service provider',
+    direct: `Initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
+  },
+  {
+    contract: 'Digital Lab Establishment Project, Phase II',
+    facts: ['GV-05'],
+    scope: 'LMS and operation training for staff',
+    direct: `Scope: ${factPart('GV-05', /[\d,]+\+ staff/)}`,
+  },
+  {
+    contract: 'Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute)',
+    facts: ['GV-06'],
+    scope: 'ICT, networking and cybersecurity training',
+    direct: `Scope: ${factPart('GV-06', /[\d,]+\+ professionals/)}`,
+  },
+];
+
+const sc06Note = (fact('SC-06').footnote ?? '').match(/^(.*?deduplicated)\./)?.[1];
+if (!sc06Note) throw new Error('ContractTable: SC-06 footnote no longer has the expected wording');
+const teachers = factPart('SC-08', /[\d,]+ teachers trained to teach online during COVID-19/);
+
+interface Props {
+  title: string;
+  lead?: string;
+  id?: string;
+}
+const { title, lead, id = 'contracts' } = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Government contracts" title={title} lead={lead} />
+  <div class="ct" role="region" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-reveal>
+    <table>
+      <caption class="sr-only">Six government contracts: what CodersTrust does under each, the training scope and the curriculum reach. Counts are contract training scopes, not delivered scale.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Contract</th>
+          <th scope="col">CodersTrust scope</th>
+          <th scope="col">Direct training</th>
+          <th scope="col">Curriculum reach</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr data-fact={r.facts.join(' ')}>
+              <th scope="row">{r.contract}</th>
+              <td>{r.scope}</td>
+              <td class="ct__num">{r.direct}</td>
+              <td>
+                {r.reach ? r.reach : (<><span class="sr-only">Not applicable</span><span aria-hidden="true">—</span></>)}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="ct__notes" data-reveal>
+    <p data-fact="GV-10">Counts are contract training scopes, not delivered scale; some scopes are still in progress.<FootnoteMarker id="GV-10" footnote={true} /></p>
+    <p data-fact="SC-06"><Fact id="SC-06" />. {sc06Note}.</p>
+    <p data-fact="SC-08">Separately, CodersTrust trained {teachers}.</p>
+  </div>
+</Section>
+
+<style>
+  .ct {
+    position: relative;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  table {
+    width: 100%;
+    min-width: 820px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    position: sticky;
+    left: 0;
+    background: var(--surface);
+    min-width: 12rem;
+    box-shadow: 1px 0 0 var(--outline-variant);
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .ct__num {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .ct__notes {
+    margin-top: var(--space-md);
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 62rem;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .ct__notes > p {
+    margin: 0;
+  }
+</style>

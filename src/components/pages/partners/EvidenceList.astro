@@ -1,0 +1,67 @@
+---
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * Qualified evidence statements for the proof band's slot. Each item is a register fact rendered in
+ * its canonical wording (which already carries "surveyed completers" and the survey date), or a page
+ * sentence built from a fact with the qualifier written in the same sentence. Footnote markers follow
+ * automatically for facts that carry a caveat.
+ */
+interface Item {
+  facts: string[];
+  /** Page sentence; defaults to the canonical text of the first fact. */
+  text?: string;
+}
+interface Props {
+  heading: string;
+  items: Item[];
+}
+const { heading, items } = Astro.props;
+---
+
+<div class="ev" data-reveal>
+  <h3 class="ev__h">{heading}</h3>
+  <ul class="ev__list" role="list">
+    {
+      items.map((it) => (
+        <li data-fact={it.facts.join(' ')}>
+          {it.text ?? fact(it.facts[0]).text}
+          {it.facts.map((f) => <FootnoteMarker id={f} />)}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .ev {
+    margin-top: var(--space-lg);
+    padding: var(--space-gutter);
+    border: 1px solid var(--ctx-border);
+    border-radius: var(--radius-default);
+    background: var(--ctx-card);
+    max-width: 62rem;
+  }
+  .ev__h {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ctx-heading);
+  }
+  .ev__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    color: var(--ctx-text);
+  }
+  .ev__list li {
+    padding-left: var(--space-md);
+    border-left: 3px solid var(--ctx-accent);
+  }
+</style>
