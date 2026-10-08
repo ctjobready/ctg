@@ -17,3 +17,6 @@ test-results/
 
 # agent worktrees
 .claude/worktrees/
+
+# Planning lives in the private repo ctjobready/ctg-planning
+planning/
