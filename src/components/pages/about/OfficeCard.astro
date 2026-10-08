@@ -2,6 +2,7 @@
 import Icon from '../../system/Icon.astro';
 import CopyEmail from '../../ui/CopyEmail.astro';
 import { mapsHref } from './routes';
+import { linkAttrs } from '../../../lib/url';
 
 /** Office card from the ID-07 office list (lib/site.ts): address, phone, copyable email, "Open in Maps" link. */
 interface Props {
@@ -32,7 +33,7 @@ const maps = mapsHref(`${name}, ${address.join(', ')}`);
     <ul class="office__rows" role="list">
       <li><Icon name="phone" size={18} /><a href={phoneHref}>{phone}</a></li>
       <li><Icon name="mail" size={18} /><CopyEmail email={email} /></li>
-      <li><Icon name="map-pin" size={18} /><a class="office__map" href={maps} rel="noopener">Open in Maps<span class="sr-only"> (opens google.com/maps)</span></a></li>
+      <li><Icon name="map-pin" size={18} /><a class="office__map" href={maps} rel={linkAttrs(maps).rel}>Open in Maps<span class="sr-only"> (opens google.com/maps)</span></a></li>
     </ul>
   </div>
 </article>

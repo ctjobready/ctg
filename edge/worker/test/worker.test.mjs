@@ -5,12 +5,14 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import http from 'node:http';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-import worker, { handle, isSystemPath, resolveLocation, destinationFor, CANONICAL_ORIGIN } from '../src/index.mjs';
+import worker, { handle, isSystemPath, resolveLocation, destinationFor, winningParam, PARAM_ORDER, CANONICAL_ORIGIN } from '../src/index.mjs';
 import { loadManifest, needsStub } from '../../../scripts/manifest-lib.mjs';
+import { buildCases, runStaged } from '../../staged-checks.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ID_MAP = JSON.parse(readFileSync(path.join(here, '..', 'id-map.json'), 'utf8'));
@@ -162,10 +164,123 @@ test('?attachment_id=<id> goes to the attachment parent page or post', () => {
 
 test('?cat=, ?tag= -> /news/, ?author= -> /about/team/, ?feed= -> /news/', () => {
   for (const q of ['cat=3', 'cat=', 'cat=abc', 'tag=latest-news', 'tag=', 'cat=3&tag=4']) expectRedirect(handle(at(`/?${q}`)), CANONICAL_ORIGIN + '/news/');
-  for (const q of ['author=2', 'author=', 'author=joya', 'author=2&cat=3']) expectRedirect(handle(at(`/?${q}`)), CANONICAL_ORIGIN + '/about/team/');
+  for (const q of ['author=2', 'author=', 'author=joya']) expectRedirect(handle(at(`/?${q}`)), CANONICAL_ORIGIN + '/about/team/');
   for (const q of ['feed=rss2', 'feed=atom', 'feed=']) expectRedirect(handle(at(`/?${q}`)), CANONICAL_ORIGIN + '/news/');
   expectRedirect(handle(at('/jobs/?feed=rss2')), CANONICAL_ORIGIN + '/news/');
   expectRedirect(handle(at('/?feed=rss2&utm_source=x')), CANONICAL_ORIGIN + '/news/');
+});
+
+/* ---- precedence when several WordPress parameters are present (planning/08 §7, review round 8 M7) ---- */
+
+test('PARAM_ORDER is exactly the documented precedence', () => {
+  assert.deepEqual([...PARAM_ORDER], ['p', 'page_id', 'attachment_id', 'post_type', 'cat', 'tag', 'author', 'feed', 's']);
+});
+
+test('precedence: of two recognized parameters the earlier one in PARAM_ORDER wins, in either URL order', () => {
+  for (let i = 0; i < PARAM_ORDER.length; i++) {
+    for (let j = i + 1; j < PARAM_ORDER.length; j++) {
+      const early = PARAM_ORDER[i];
+      const late = PARAM_ORDER[j];
+      for (const q of [`${early}=1&${late}=1`, `${late}=1&${early}=1`, `utm_source=x&${late}=1&fbclid=y&${early}=1`]) {
+        assert.equal(winningParam(new URLSearchParams(q)), early, `${q} should be decided by ${early}`);
+        assert.equal(winningParam(new URL(`${CANONICAL_ORIGIN}/?${q}`).searchParams), early, `${q} (URL) should be decided by ${early}`);
+      }
+    }
+  }
+  assert.equal(winningParam(new URLSearchParams('utm_source=x&name=y&P=1')), null);
+});
+
+test('precedence: the destinations follow it (distinguishable pairs)', () => {
+  const news = CANONICAL_ORIGIN + '/news/';
+  const team = CANONICAL_ORIGIN + '/about/team/';
+  const id = SAMPLES.post.content_id;
+  const want = abs(SAMPLES.post.destination);
+  const att = attRows[0];
+  // p beats everything after it, page_id beats attachment_id and the rest
+  for (const rest of ['page_id=7670', `attachment_id=${att.content_id}`, 'post_type=course', 'cat=3', 'tag=x', 'author=2', 'feed=rss2', 's=term']) {
+    expectRedirect(handle(at(`/?${rest}&p=${id}`)), want);
+    expectRedirect(handle(at(`/?p=${id}&${rest}`)), want);
+  }
+  expectRedirect(handle(at(`/?attachment_id=${att.content_id}&page_id=7670`)), abs('/about/')); // page_id precedes attachment_id
+  expectRedirect(handle(at(`/?post_type=course&attachment_id=${att.content_id}`)), abs(att.destination)); // attachment_id precedes post_type
+  expectRedirect(handle(at('/?author=2&post_type=course')), 'https://jobready.global/courses/'); // post_type precedes author
+  expectRedirect(handle(at('/?author=2&cat=3')), news); // cat precedes author
+  expectRedirect(handle(at('/?tag=x&author=2')), news); // tag precedes author
+  expectRedirect(handle(at('/?feed=rss2&author=2')), team); // author precedes feed
+  expectRedirect(handle(at('/?s=term&author=2')), team); // author precedes s
+  expectRedirect(handle(at('/?s=term&feed=rss2')), news);
+  // a present but invalid higher-precedence parameter still decides (an empty p goes home; s is not consulted)
+  expectHome(handle(at('/?s=term&p=')));
+  expectHome(handle(at('/?author=2&attachment_id=abc')));
+});
+
+/* ---- collisions with the Bulk Redirects list: real legacy paths from the migration manifest ---- */
+
+// every path-based legacy URL the Bulk Redirects list covers (pages, posts, archives, feeds, courses, uploads), without the query rows
+const LEGACY_PATHS = MANIFEST.filter((r) => !r.legacy_url.includes('?') && r.legacy_url !== '/' && ['page', 'post', 'archive', 'course', 'custom-post-type', 'attachment', 'media'].includes(r.class));
+
+test('collisions: the manifest holds hundreds of real legacy paths, and /team/ is one of them', () => {
+  assert.ok(LEGACY_PATHS.length > 800, `only ${LEGACY_PATHS.length} legacy paths`);
+  const team = LEGACY_PATHS.find((r) => r.legacy_url === '/team/');
+  assert.ok(team && team.destination === '/about/team/', '/team/ should redirect to /about/team/ in the list');
+});
+
+test('collisions: /team/?p=<known id> goes to the post, not to /about/team/ (the path rule would have caught it)', () => {
+  const post = SAMPLES.post;
+  const res = handle(at(`/team/?p=${post.content_id}`));
+  expectRedirect(res, abs(post.destination));
+  assert.notEqual(res.headers.get('location'), CANONICAL_ORIGIN + '/about/team/');
+  expectRedirect(handle(at(`/team/?page_id=${SAMPLES.page.content_id}&utm_source=x`)), abs(SAMPLES.page.destination));
+  // the path alone, and the path with only tracking parameters, are the Bulk Redirects list's job: the Worker passes them through
+  assert.equal(handle(at('/team/')), null);
+  assert.equal(handle(at('/team/?utm_source=x&fbclid=y')), null);
+});
+
+test('collisions: on every legacy path in the manifest a known ID decides, never the path', () => {
+  const post = SAMPLES.post;
+  const want = abs(post.destination);
+  let differing = 0;
+  for (const r of LEGACY_PATHS) {
+    expectRedirect(handle(at(`${r.legacy_url}?p=${post.content_id}`)), want);
+    expectRedirect(handle(at(`${r.legacy_url}?utm_source=x&page_id=${post.content_id}&fbclid=y`)), want);
+    if (abs(r.destination) !== want) differing++;
+  }
+  assert.ok(differing > LEGACY_PATHS.length * 0.9, 'the test should cover paths whose own destination differs from the ID destination');
+});
+
+test('collisions: every recognized parameter, on every kind of legacy path, is answered by the Worker', () => {
+  const byClass = new Map();
+  for (const r of LEGACY_PATHS) if (!byClass.has(r.class)) byClass.set(r.class, []);
+  for (const r of LEGACY_PATHS) byClass.get(r.class).push(r);
+  assert.ok(byClass.size >= 6, 'expected several classes of legacy path');
+  for (const rows of byClass.values()) {
+    // first, middle and last of each class keeps the test fast and still spans every folder shape
+    for (const r of [rows[0], rows[Math.floor(rows.length / 2)], rows[rows.length - 1]]) {
+      for (const param of PARAM_ORDER) {
+        const res = handle(at(`${r.legacy_url}?${param}=1`));
+        assert.ok(res && res.status === 301, `${r.legacy_url}?${param}=1 should be answered by the Worker`);
+        assert.ok(!res.headers.get('location').includes('?'));
+      }
+    }
+  }
+});
+
+test('collisions: archive, author, feed and category paths keep their meaning for their own parameter', () => {
+  const news = CANONICAL_ORIGIN + '/news/';
+  expectRedirect(handle(at('/author/joya/?author=2')), CANONICAL_ORIGIN + '/about/team/');
+  expectRedirect(handle(at('/category/latest-news/?cat=3')), news);
+  expectRedirect(handle(at('/category/latest-news/page/2/?s=term')), news);
+  expectRedirect(handle(at('/feed/?feed=rss2')), news);
+  expectRedirect(handle(at(`/author/joya/?p=${SAMPLES.post.content_id}`)), abs(SAMPLES.post.destination)); // an ID on an author archive: the ID wins
+  expectRedirect(handle(at(`/feed/?p=${SAMPLES.post.content_id}`)), abs(SAMPLES.post.destination));
+  const courseRow = LEGACY_PATHS.find((r) => r.class === 'course' && r.legacy_url.startsWith('/course/'));
+  assert.ok(courseRow, 'no course path in the manifest');
+  expectRedirect(handle(at(`${courseRow.legacy_url}?post_type=course`)), 'https://jobready.global/courses/');
+  expectRedirect(handle(at(`${courseRow.legacy_url}?p=${SAMPLES.course.content_id}`)), SAMPLES.course.destination);
+  const att = attRows[0];
+  const media = LEGACY_PATHS.find((r) => r.class === 'media');
+  assert.ok(media, 'no media path in the manifest');
+  expectRedirect(handle(at(`${media.legacy_url}?attachment_id=${att.content_id}`)), abs(att.destination));
 });
 
 test('?post_type=: a known course type goes to the JobReady courses page, a known slug or ID to the manifest, else home', () => {
@@ -265,4 +380,70 @@ test('the default export passes through to the origin when nothing matches, and 
   } finally {
     globalThis.fetch = realFetch;
   }
+});
+
+/* ---- the staged-hostname runner (edge/staged-checks.mjs), against a LOOPBACK edge only: no outside network ---- */
+
+/**
+ * A stand-in for the staged edge on 127.0.0.1: the Bulk Redirects list (path only, query ignored), the Worker, and an origin that
+ * answers 200. `ruleExpression` true is the documented set-up (edge/README.md "Rule expression"): the list is skipped for a
+ * request the Worker handles. false is the broken set-up: the list runs first and swallows the query string.
+ */
+async function loopbackEdge({ ruleExpression }) {
+  // the real list: edge/bulk-redirects.csv, seven columns, source = host + path, target = absolute URL
+  const listed = new Map();
+  for (const line of readFileSync(path.join(here, '..', '..', 'bulk-redirects.csv'), 'utf8').split('\n').filter(Boolean)) {
+    const cols = line.split(',');
+    assert.equal(cols.length, 7, `unexpected Bulk Redirects row: ${line}`);
+    listed.set(cols[0].slice(cols[0].indexOf('/')), cols[1]);
+  }
+  assert.ok(listed.size > 900 && listed.get('/team/') === 'https://coderstrust.global/about/team/', 'the list should hold the legacy paths');
+  const server = http.createServer((incoming, outgoing) => {
+    const request = new Request(`http://127.0.0.1:${server.address().port}${incoming.url}`, { method: incoming.method });
+    const requestPath = new URL(request.url).pathname;
+    const workerAnswer = handle(request);
+    let answer;
+    if (ruleExpression) answer = workerAnswer; // WordPress parameters and system paths bypass the list and reach the Worker
+    else answer = listed.has(requestPath) ? new Response(null, { status: 301, headers: { location: listed.get(requestPath) } }) : workerAnswer;
+    if (!answer && listed.has(requestPath)) answer = new Response(null, { status: 301, headers: { location: listed.get(requestPath) } });
+    answer ??= new Response('origin', { status: 200 });
+    outgoing.writeHead(answer.status, Object.fromEntries(answer.headers));
+    answer.text().then((body) => outgoing.end(body));
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  return { host: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((resolve) => server.close(resolve)) };
+}
+
+test('staged runner: every case passes against an edge built as documented (list excludes WordPress parameters, Worker decides them)', async () => {
+  const edge = await loopbackEdge({ ruleExpression: true });
+  try {
+    const { passed, failed, lines } = await runStaged(edge.host);
+    assert.equal(failed, 0, lines.filter((l) => l.startsWith('FAIL')).join('\n'));
+    assert.equal(passed, buildCases().length);
+  } finally {
+    await edge.close();
+  }
+});
+
+test('staged runner: it catches the broken set-up where the Bulk Redirects list runs first and swallows ?p= on a legacy path', async () => {
+  const edge = await loopbackEdge({ ruleExpression: false });
+  try {
+    const { failed, lines } = await runStaged(edge.host);
+    const failing = lines.filter((l) => l.startsWith('FAIL'));
+    assert.ok(failed >= 3, `expected the collision cases to fail, ${failed} failed`);
+    assert.ok(failing.some((l) => l.includes('COLLISION /team/?p=')), 'the /team/?p= collision should be reported');
+    assert.ok(failing.every((l) => l.includes('COLLISION')), `only collision cases should fail:\n${failing.join('\n')}`);
+  } finally {
+    await edge.close();
+  }
+});
+
+test('staged runner: without EDGE_HOST the CLI prints the checklist and sends nothing', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const env = { ...process.env };
+  delete env.EDGE_HOST;
+  const r = spawnSync(process.execPath, [path.join(here, '..', '..', 'staged-checks.mjs')], { encoding: 'utf8', env });
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /EDGE_HOST is not set: the staged requests were NOT sent \(no network used\)/);
+  assert.match(r.stdout, /Full \(strict\) only after/);
 });

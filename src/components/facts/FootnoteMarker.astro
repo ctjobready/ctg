@@ -31,14 +31,19 @@ const reg = show ? footnotesFor(Astro).register(id) : null;
     margin-left: 1px;
     font-weight: var(--fw-bold);
   }
+  /* The <sup> has line-height 0, which would give the link a 0px-tall box and collapse its 2px focus ring into a thin strip.
+     The link gets a real box (line-height 1 plus vertical padding) and equal negative vertical margins, so its margin box is
+     still zero tall: the text keeps its baseline and the line height does not grow. */
   .fn a {
     display: inline-block;
     min-width: 1.4em;
+    line-height: 1;
     text-align: center;
     color: var(--ctx-link);
     text-decoration: none;
     border-radius: var(--radius-sm);
-    padding: 0 2px;
+    padding: 0.1em 2px;
+    margin-block: -0.6em;
   }
   .fn a:hover {
     background: var(--primary-fixed);

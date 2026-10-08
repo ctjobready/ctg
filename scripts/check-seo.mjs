@@ -13,7 +13,8 @@
  *   · referrer policy strict-origin-when-cross-origin and a Content-Security-Policy meta that keeps scripts, fonts, connections and
  *   objects same-origin and frames limited to the click-to-load video hosts (doc 08 §9)
  *   · every <img> has an alt attribute (alt="" marks decorative images) and numeric width and height
- *   · external <a> links carry rel="noopener" (error) and rel="noreferrer" unless the host is in src/data/partners.ts (warning;
+ *   · external <a> links carry rel="noopener" (error) and rel="noreferrer" unless the host is one of our own sites (OWN_HOSTS in
+ *   src/lib/externalRel.ts) or in src/data/partners.ts (warning;
  *   no other partner list is assumed) · heading levels do not skip downwards (warning)
  * Redirect stubs: robots follows the environment (staging: exactly `noindex`, like every staging page; production: no noindex),
  * a canonical that matches the refresh target, a visible fallback link (warning).
@@ -22,7 +23,7 @@
  * Output: console summary, .work/qa/seo.json and seo.md (seo.production.* for SITE_ENV=production).
  */
 import {
-  PRODUCTION_ORIGIN, Findings, classifyUrl, describeConfig, elements, fatal, findingsMarkdown, first, jsonLdBlocks, join, loadConfig, loadSite,
+  PRODUCTION_ORIGIN, REPO_ROOT, Findings, classifyUrl, describeConfig, elements, fatal, findingsMarkdown, first, jsonLdBlocks, join, loadConfig, loadSite,
   loadSiteData, mdTable, metaContent, pageTitle, plainText, printFindings, publicPath, readFileSync, snippet, trunc, writeReports,
 } from './lib/dist.mjs';
 
@@ -36,6 +37,18 @@ try {
 const data = loadSiteData();
 const findings = new Findings();
 for (const e of data.errors) findings.warn('site-data', 'src/', e);
+
+/**
+ * CodersTrust's own sites (OWN_HOSTS in src/lib/externalRel.ts, planning/08 §9): links to them keep the referrer and carry
+ * rel="noopener" only, like links to partner organizations. Read from that file so the rule has one source; the check warns
+ * if the list cannot be found, rather than silently treating every own-site link as a missing noreferrer.
+ */
+const ownHosts = (() => {
+  const m = /export const OWN_HOSTS[^=]*=\s*\[([^\]]*)\]/.exec(readFileSync(join(REPO_ROOT, 'src/lib/externalRel.ts'), 'utf8'));
+  const hosts = m ? [...m[1].matchAll(/['"]([^'"]+)['"]/g)].map((x) => x[1].toLowerCase().replace(/^www\./, '')) : [];
+  if (!hosts.length) findings.warn('site-data', 'src/lib/externalRel.ts', 'could not read OWN_HOSTS (own-site links will be reported as missing noreferrer)');
+  return new Set(hosts);
+})();
 console.log(`check-seo: ${site.pages.length} pages  (${describeConfig(cfg)})`);
 
 const TITLE_MAX = 60;
@@ -47,7 +60,7 @@ const NOT_IN_SITEMAP = new Set(['/404/', '/styleguide/']);
 const TWITTER_CARDS = new Set(['summary', 'summary_large_image', 'app', 'player']);
 
 const REFERRER_POLICY = 'strict-origin-when-cross-origin';
-const VIDEO_FRAME_ORIGINS = new Set(['https://www.youtube-nocookie.com', 'https://player.vimeo.com']);
+const VIDEO_FRAME_ORIGINS = new Set(['https://www.youtube-nocookie.com']);
 
 /**
  * doc 08 §9 states the shipped CSP; hardening to hashes is allowed later, so the check is rule-based rather than an exact match:
@@ -311,7 +324,7 @@ for (const page of site.pages) {
     const rel = (a.attrs.rel ?? '').toLowerCase().split(/\s+/).filter(Boolean);
     if (!rel.includes('noopener')) findings.error('external-no-noopener', where, `external link to ${trunc(c.url.href, 80)} lacks rel="noopener"${a.attrs.target === '_blank' ? ' (target=_blank)' : ''}`, { evidence: snippet(page.source, a) });
     const host = c.url.hostname.toLowerCase().replace(/^www\./, '');
-    if (!rel.includes('noreferrer') && !data.partnerHosts.has(host)) {
+    if (!rel.includes('noreferrer') && !data.partnerHosts.has(host) && !ownHosts.has(host)) {
       const e = externalNoReferrer.get(host) ?? { pages: new Set(), count: 0 };
       e.pages.add(route);
       e.count++;
@@ -326,7 +339,7 @@ for (const [title, pages] of titles) if (pages.length > 1) findings.error('title
 for (const [d, pages] of descriptions) if (pages.length > 1) findings.error('description-duplicate', pages[0], `description "${trunc(d, 70)}" is used by ${pages.length} pages: ${pages.slice(0, 6).join(', ')}${pages.length > 6 ? ', …' : ''}`);
 // noreferrer is reported per host, not per link (doc 08 §9: noreferrer for non-partner sites; partner list = src/data/partners.ts)
 for (const [host, e] of [...externalNoReferrer].sort((a, b) => b[1].count - a[1].count)) {
-  findings.warn('external-no-noreferrer', [...e.pages][0], `${host}: ${e.count} link(s) on ${e.pages.size} page(s) lack rel="noreferrer" and the host is not in src/data/partners.ts`);
+  findings.warn('external-no-noreferrer', [...e.pages][0], `${host}: ${e.count} link(s) on ${e.pages.size} page(s) lack rel="noreferrer" and the host is neither one of our own sites (src/lib/externalRel.ts) nor in src/data/partners.ts`);
 }
 
 /* ---------------- sitemap ---------------- */

@@ -64,7 +64,7 @@ export const COURSES_URL = 'https://jobready.global/';
  * Content-Security-Policy (meta). Astro's built-in hashing CSP (security.csp) is not used because it
  * forbids inline style attributes (used for CSS custom properties on components) and `is:inline`
  * scripts. This policy still blocks third-party scripts, plugins and base-tag injection; frames are
- * limited to the click-to-load video providers.
+ * limited to the click-to-load video provider (YouTube's privacy-enhanced domain; no page uses another video host).
  */
 export const CSP = [
   "default-src 'self'",
@@ -73,7 +73,7 @@ export const CSP = [
   "img-src 'self' data:",
   "font-src 'self'",
   "connect-src 'self'",
-  'frame-src https://www.youtube-nocookie.com https://player.vimeo.com',
+  'frame-src https://www.youtube-nocookie.com',
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

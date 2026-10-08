@@ -51,7 +51,7 @@ const d = discoveryCta();
 
   <ReportSection id="bangladesh" title="Selected programs in Bangladesh">
     <p>Programs with a published case study. Results are program data (gross placement) unless the case study says otherwise.</p>
-    <div class="gr__table" role="region" aria-label="Selected programs in Bangladesh" tabindex="0">
+    <section class="gr__table" aria-label="Table of selected programs" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Selected CodersTrust programs in Bangladesh</caption>
         <thead><tr><th scope="col">Program</th><th scope="col">Partner</th><th scope="col">Years</th><th scope="col">Focus</th><th scope="col">Reach</th></tr></thead>
@@ -59,21 +59,25 @@ const d = discoveryCta();
           {programs.map((p) => (
             <tr>
               <th scope="row"><a class="link" href={linkAttrs(`/impact/case-studies/${p.slug}/`).href}>{p.name}</a></th>
-              <td>{p.partner}</td>
-              <td>{p.years === '—' ? <><span class="sr-only">Not stated</span><span aria-hidden="true">—</span></> : p.years}</td>
-              <td>{p.focus}</td>
-              <td data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
+              <td data-label="Partner">{p.partner}</td>
+              <td data-label="Years">{p.years === '—' ? <><span class="sr-only">Not stated</span><span aria-hidden="true">—</span></> : p.years}</td>
+              <td data-label="Focus">{p.focus}</td>
+              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
     <p><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <NextStep heading="Talk to us about a first cohort." text="Tell us the country and priority groups; we outline a first cohort in a discovery session." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Sources class="gr__sources" />
+  <Sources class="gr__sources" landmark />
 </LongformLayout>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .gr__table {

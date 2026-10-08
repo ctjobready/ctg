@@ -4,7 +4,7 @@ import Badge from '../components/system/Badge.astro';
 import Icon from '../components/system/Icon.astro';
 import { formatDate, isoDate } from '../lib/format';
 import { newsArticle } from '../lib/schema';
-import { absoluteUrl, canonicalUrl, stripBase } from '../lib/url';
+import { absoluteUrl, canonicalUrl, linkAttrs, stripBase } from '../lib/url';
 import type { BaseLayoutProps } from '../lib/layout';
 
 /**
@@ -34,6 +34,8 @@ const node = newsArticle({
   section: topic,
 });
 const enc = encodeURIComponent;
+const shareLinkedIn = linkAttrs(`https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`);
+const shareFacebook = linkAttrs(`https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`);
 ---
 
 <BaseLayout {...base} title={seoTitle ?? base.title} path={path} ogType="article" publishedTime={date} modifiedTime={updated ?? date} jsonLd={[...(base.jsonLd ?? []), node]}>
@@ -53,8 +55,8 @@ const enc = encodeURIComponent;
     <aside class="art__share" aria-label="Share this article">
       <p>Share</p>
       <ul role="list">
-        <li><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${enc(canonical)}`} rel="noopener"><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
-        <li><a href={`https://www.facebook.com/sharer/sharer.php?u=${enc(canonical)}`} rel="noopener"><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
+        <li><a href={shareLinkedIn.href} rel={shareLinkedIn.rel}><Icon name="linkedin" size={20} /><span class="sr-only">Share on LinkedIn (opens linkedin.com)</span></a></li>
+        <li><a href={shareFacebook.href} rel={shareFacebook.rel}><Icon name="facebook" size={20} /><span class="sr-only">Share on Facebook (opens facebook.com)</span></a></li>
         <li><a href={`mailto:?subject=${enc(base.title)}&body=${enc(canonical)}`}><Icon name="mail" size={20} /><span class="sr-only">Share by email</span></a></li>
         <li><button type="button" data-copy={canonical} data-copy-message="Link copied"><Icon name="link" size={20} /><span class="sr-only">Copy link</span></button></li>
       </ul>

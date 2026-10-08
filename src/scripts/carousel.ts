@@ -54,11 +54,18 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
   const sync = () => {
     const i = current();
     const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    // The track has padding, so the first slide snaps at scrollLeft = its offset (4px), not at 0: "at the start" means at
+    // or before that snap position (2px of rounding slack), the same position goTo(0) scrolls to.
+    const atStart = track.scrollLeft <= slides[0].offsetLeft - track.offsetLeft + 2;
+    const active = atEnd ? slides.length - 1 : i;
     dots.forEach((d, n) => {
-      d.classList.toggle('is-active', n === (atEnd ? slides.length - 1 : i));
-      d.toggleAttribute('aria-current', n === (atEnd ? slides.length - 1 : i));
+      const on = n === active;
+      d.classList.toggle('is-active', on);
+      // aria-current needs a value: a bare attribute (toggleAttribute) is aria-current="" which assistive technology treats as false
+      if (on) d.setAttribute('aria-current', 'true');
+      else d.removeAttribute('aria-current');
     });
-    if (prev) prev.disabled = track.scrollLeft <= 2;
+    if (prev) prev.disabled = atStart;
     if (next) next.disabled = atEnd;
   };
 

@@ -38,7 +38,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
   {note && <p class="colc__note">{note}</p>}
   <details class="colc__data">
     <summary>View chart data as a table</summary>
-    <div class="colc__tablewrap" role="region" aria-label={`${title}: data table`} tabindex="0">
+    <section class="colc__tablewrap" aria-label={`${title}: data table`} tabindex="0">
       <table>
         <caption class="sr-only">{title}</caption>
         <thead>
@@ -48,7 +48,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
           {items.map((it) => <tr><th scope="row">{it.label}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
         </tbody>
       </table>
-    </div>
+    </section>
   </details>
 </figure>
 
@@ -130,10 +130,11 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
   }
   .colc__tablewrap {
     overflow-x: auto;
+    max-width: 100%;
   }
   .colc__data table {
     width: 100%;
-    min-width: 280px;
+    min-width: min(280px, 100%);
   }
   .colc__data th,
   .colc__data td {

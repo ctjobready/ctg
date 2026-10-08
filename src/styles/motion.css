@@ -12,13 +12,14 @@
     transform: none;
   }
 }
-/* M11: gradient drift animates transform only (applied to Hero's ::before) */
-@keyframes ct-hero-drift {
+/* M11: the hero gradient settles into place once on load (transform only, applied to Hero's ::before, 3 s, no loop).
+   Nothing in a hero moves continuously: WCAG 2.2.2 would then need a pause control, and reduced motion renders it at rest. */
+@keyframes ct-hero-settle {
   from {
-    transform: translate3d(-5%, -4%, 0) scale(1.02);
+    transform: translate3d(-4%, -3%, 0) scale(1.04);
   }
   to {
-    transform: translate3d(5%, 4%, 0) scale(1.02);
+    transform: none;
   }
 }
 @keyframes ct-bounce {

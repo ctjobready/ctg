@@ -28,6 +28,10 @@ const { count, index = 0, label = 'carousel', class: className } = Astro.props;
     align-items: center;
     gap: var(--space-md);
   }
+  /* The arrows and dots only work once carousel.ts has run: without JavaScript they stay hidden (also base.css) */
+  :global(html:not(.js)) .cc {
+    display: none;
+  }
   .cc__arrow {
     width: 44px;
     height: 44px;

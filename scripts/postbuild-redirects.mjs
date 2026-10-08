@@ -5,7 +5,7 @@
  * Astro's default stub carries `<meta name="robots" content="noindex">` and a canonical on the deployment host. A
  * noindex on a production redirect source asks search engines to drop it and can stop the signal passing to the
  * destination, so each stub is rewritten as:
- *   - <html lang="en">, <title>, meta refresh 0 to the base-aware destination
+ *   - <!DOCTYPE html>, <html lang="en">, a fixed short <title> ("Page moved | CodersTrust"), meta refresh 0 to the base-aware destination
  *       (staging /ctg/...; production /...; external destinations absolute),
  *   - <link rel="canonical"> to the PRODUCTION destination URL (PRODUCTION_ORIGIN from src/lib/site.ts; externals as-is),
  *   - a JavaScript location.replace and a visible fallback link,
@@ -22,7 +22,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { REPO_ROOT, canonicalOf, deployedHref, envConfig, isExternalDest, productionOrigin, readRedirectsTs, splitFragment } from './manifest-lib.mjs';
+import { REPO_ROOT, canonicalOf, deployedHref, envConfig, isExternalDest, productionOrigin, readRedirectsTs } from './manifest-lib.mjs';
 
 const dist = path.resolve(process.argv[2] ?? path.join(REPO_ROOT, 'dist'));
 const { base, siteEnv } = envConfig();
@@ -39,17 +39,21 @@ const isOurStub = (html) => /<html lang="en" data-redirect-stub>/.test(html);
 
 // Staging stubs stay out of the index like every staging page; production stubs must carry no noindex.
 const STAGING = siteEnv === 'staging';
+/** Title of every rewritten stub: short, and within the 60-character title limit (planning/10 §1). */
+const STUB_TITLE = 'Page moved | CodersTrust';
 
 function stubHtml(to) {
   const href = deployedHref(to, base);
   const canonical = canonicalOf(to, origin);
   const label = isExternalDest(to) ? to.replace(/^https?:\/\//, '') : to;
-  return `<!doctype html>
+  // Uppercase DOCTYPE and a fixed short title (html-validate: doctype-style, long-title). The destination is named in the
+  // visible fallback link below, not in the title, so a long destination can never push the title past 60 characters.
+  return `<!DOCTYPE html>
 <html lang="en" data-redirect-stub>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">${STAGING ? '\n<meta name="robots" content="noindex">' : ''}
-<title>Redirecting to ${esc(label)}</title>
+<title>${STUB_TITLE}</title>
 <meta http-equiv="refresh" content="0;url=${esc(href)}">
 <link rel="canonical" href="${esc(canonical)}">
 <script>location.replace(${jsString(href)})</script>

@@ -3,7 +3,7 @@ name: "Samina Tasneem Chowdhury"
 outcome: "Completed 90+ projects as a freelance graphic designer on Fiverr"
 pathway: freelance
 program: "WSDFM"
-source: "CodersTrust impact deck, slide 28 (WSDFM case study). No usable photo in the deck (only a third-party Fiverr screenshot, not reused)."
+source: "CodersTrust program records (WSDFM case study)"
 ---
 
 Samina Tasneem Chowdhury, a trainee from the first batch of the Women's Skill Development for Freelancing Marketplace (WSDFM) project, was a bright and ambitious girl from a middle-income family in Bangladesh.

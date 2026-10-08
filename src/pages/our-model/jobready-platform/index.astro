@@ -73,7 +73,7 @@ const f = fundingCta();
 
   <ReportSection id="status" title="Rollout status">
     <p>Categories of capability and their status, as of this page’s last update.</p>
-    <div class="jr__table" role="region" aria-label="Platform capabilities and status" tabindex="0">
+    <section class="jr__table" aria-label="Platform capabilities and status" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Platform capabilities and their rollout status</caption>
         <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Note</th></tr></thead>
@@ -81,18 +81,18 @@ const f = fundingCta();
           {rows.map((r) => (
             <tr>
               <th scope="row">{r.job}</th>
-              <td>{r.capability}</td>
-              <td><Badge tone={tone[r.status]}>{r.status}</Badge></td>
-              <td>{r.note}</td>
+              <td data-label="Capability">{r.capability}</td>
+              <td data-label="Status"><Badge tone={tone[r.status]}>{r.status}</Badge></td>
+              <td data-label="Note">{r.note}</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
     <Callout label="Not presented as live">
       <p>The employer and gig-work marketplace is in pre-launch, and the AI features below are on the roadmap. AI chat, which is live, is the one AI module in the table above.</p>
     </Callout>
-    <p><a class="link" href={JOBREADY} rel="noopener">Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
+    <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
   </ReportSection>
 
   <ReportSection id="roadmap" title="AI-native roadmap: what the platform is designed to do">
@@ -115,13 +115,17 @@ const f = fundingCta();
     <p>A platform grant helps CodersTrust roll out the remaining modules.</p>
     <div class="jr__actions">
       <Button href={f.href} iconEnd="arrow-right">{f.label}</Button>
-      <a class="link" href={JOBREADY} rel="noopener">Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
+      <a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
     </div>
     <p class="jr__micro">{MICRO_COMMITMENT} <a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP works</a></p>
   </aside>
 
-  <Sources class="jr__sources" />
+  <Sources class="jr__sources" landmark />
 </LongformLayout>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .jr__cards {

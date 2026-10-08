@@ -7,15 +7,20 @@
  *
  * Rules
  *  - 410 Gone: /wp-login.php, /wp-admin/*, /wp-json/*, /xmlrpc.php, /wp-cron.php (any method, any query).
- *  - GET/HEAD requests whose query string carries a WordPress parameter, on ANY path:
+ *  - GET/HEAD requests whose query string carries a WordPress parameter, on ANY path (a path that the Bulk Redirects
+ *    list also knows, such as /team/?p=7670, is decided here: edge/README.md "Rule expression" keeps those requests
+ *    away from the list):
  *      p, page_id        known ID -> one 301 to the mapped destination (no query string); unknown or non-numeric -> home
  *      attachment_id     known attachment -> its parent page or post; unknown -> home
  *      post_type         with a known `name` slug -> its destination; a known course post type -> the JobReady courses
  *                        page; anything else -> home (an accompanying p/page_id decides first)
+ *      cat, tag          -> /news/
  *      author            -> /about/team/
- *      cat, tag, s, feed -> /news/ (the search term is never forwarded)
- *    Parameters are looked up in that order; the first one present decides. Tracking parameters (utm_*, fbclid,
- *    gclid, ...) and every other parameter are ignored for matching and never reach the destination.
+ *      feed, s           -> /news/ (the search term is never forwarded)
+ *    PRECEDENCE when several of these parameters are present: the first one recognized in the order
+ *      p, page_id, attachment_id, post_type, cat, tag, author, feed, s
+ *    decides, whatever order they have in the URL (PARAM_ORDER below; the tests pin every pair). Tracking parameters
+ *    (utm_*, fbclid, gclid, ...) and every other parameter are ignored for matching and never reach the destination.
  *  - Values are percent-decoded exactly once, then validated (IDs must be 1-12 ASCII digits). Duplicate
  *    parameters: the first one wins. A malformed encoding is simply "not an ID" and falls through to home.
  *  - Every other request, including every other query string, is passed through unchanged.
@@ -38,8 +43,13 @@ const NEWS = '/news/';
 const TEAM = '/about/team/';
 const COURSES = 'https://jobready.global/courses/';
 const COURSE_POST_TYPES = new Set(['course', 'ngs-course', 'product']);
-const ID_PARAMS = ['p', 'page_id'];
-const NEWS_PARAMS = ['cat', 'tag', 's', 'feed'];
+
+/**
+ * The WordPress parameters the Worker recognizes, in PRECEDENCE order: when a URL carries several, the first one in this
+ * list decides the destination, whatever order the parameters have in the query string. edge/README.md ("Rule
+ * expression") lists the same names for the Bulk Redirect rule.
+ */
+export const PARAM_ORDER = Object.freeze(['p', 'page_id', 'attachment_id', 'post_type', 'cat', 'tag', 'author', 'feed', 's']);
 
 const RE_ID = /^[0-9]{1,12}$/;
 const RE_TYPE = /^[A-Za-z0-9_-]{1,40}$/;
@@ -76,27 +86,40 @@ function lookupId(raw, ...maps) {
   return undefined;
 }
 
+/** Destination for one recognized parameter (the value rules in the header comment). */
+const RESOLVE = {
+  p: (sp) => lookupId(sp.get('p'), ID_MAP.ids, ID_MAP.attachments) ?? HOME,
+  page_id: (sp) => lookupId(sp.get('page_id'), ID_MAP.ids, ID_MAP.attachments) ?? HOME,
+  attachment_id: (sp) => lookupId(sp.get('attachment_id'), ID_MAP.attachments) ?? HOME,
+  post_type: (sp) => {
+    const type = sp.get('post_type');
+    if (RE_TYPE.test(type)) {
+      const name = sp.get('name');
+      if (name !== null && RE_SLUG.test(name) && own(ID_MAP.slugs, `${type}/${name}`)) return ID_MAP.slugs[`${type}/${name}`];
+      if (COURSE_POST_TYPES.has(type)) return COURSES;
+    }
+    return HOME;
+  },
+  cat: () => NEWS,
+  tag: () => NEWS,
+  author: () => TEAM,
+  feed: () => NEWS,
+  s: () => NEWS,
+};
+
+/** The parameter that decides a request (the first of PARAM_ORDER present in the query string), or null. */
+export function winningParam(searchParams) {
+  for (const name of PARAM_ORDER) if (searchParams.has(name)) return name;
+  return null;
+}
+
 /**
  * Where should a request go? Returns a destination (base-less path or absolute https URL) or null when the
  * query string carries no WordPress parameter (pass through).
  */
 export function destinationFor(searchParams) {
-  for (const name of ID_PARAMS) {
-    if (searchParams.has(name)) return lookupId(searchParams.get(name), ID_MAP.ids, ID_MAP.attachments) ?? HOME;
-  }
-  if (searchParams.has('attachment_id')) return lookupId(searchParams.get('attachment_id'), ID_MAP.attachments) ?? HOME;
-  if (searchParams.has('post_type')) {
-    const type = searchParams.get('post_type');
-    if (RE_TYPE.test(type)) {
-      const name = searchParams.get('name');
-      if (name !== null && RE_SLUG.test(name) && own(ID_MAP.slugs, `${type}/${name}`)) return ID_MAP.slugs[`${type}/${name}`];
-      if (COURSE_POST_TYPES.has(type)) return COURSES;
-    }
-    return HOME;
-  }
-  if (searchParams.has('author')) return TEAM;
-  for (const name of NEWS_PARAMS) if (searchParams.has(name)) return NEWS;
-  return null;
+  const name = winningParam(searchParams);
+  return name === null ? null : RESOLVE[name](searchParams);
 }
 
 /**

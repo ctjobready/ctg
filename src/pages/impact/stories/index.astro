@@ -16,10 +16,9 @@ import { webPage } from '../../../lib/schema';
 
 const path = '/impact/stories/';
 
-// Never rendered: ST-04 (Arfias Islam, withheld). Not shown with names or photos: learners from groups that need a
-// documented release (UNDP YES Korail slum residents; Kosovo participants, described by the program as refugee women).
-const WITHHELD = new Set(['arfias-islam']);
-const ANONYMIZED = new Set(['aklima-akder', 'shamim-ahmed', 'erlisa-zherka']);
+// Stories from groups that need a documented release (UNDP YES Korail slum residents; Kosovo participants, described
+// by the program as refugee women) and the withheld STRONG-IT story are not kept in this public repository; the Korail
+// and Kosovo outcomes appear below only as anonymized lines from the facts register (ST-01, ST-02, ST-05).
 // Photos of people whose age is not documented are replaced by the illustration.
 const NO_PHOTO = new Set(['mysha-k-diya']);
 
@@ -47,7 +46,7 @@ const quoted = (id: string) => {
   return m[1];
 };
 
-const named = all.filter((s) => !WITHHELD.has(s.id) && !ANONYMIZED.has(s.id));
+const named = all;
 const caseIds = ['samina-tasneem-chowdhury', 'maria-dewan'];
 const toCard = (s: (typeof all)[number]): StoryCardData => {
   const ex = EXCERPTS[s.id];

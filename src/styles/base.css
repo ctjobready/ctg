@@ -240,3 +240,14 @@ main,
   position: relative;
   max-width: 100%;
 }
+
+/* Controls that only work with JavaScript stay hidden until it runs (BaseLayout adds .js to <html> before first paint), so a
+   visitor without JavaScript never meets a dead button: the announcement bar's dismiss button, the copy-to-clipboard buttons
+   (news share row, email addresses) and the carousel controls. The address, the share links and the slides themselves stay
+   fully usable. !important is deliberate: each component styles its own display, and none may re-show a dead control. */
+html:not(.js) :is([data-promo-close], [data-copy], .copy-email__btn, .cc) {
+  display: none !important;
+}
+html:not(.js) li:has(> [data-copy]:only-child) {
+  display: none;
+}

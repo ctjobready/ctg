@@ -5,7 +5,7 @@ pathway: freelance
 program: "Her Power"
 photo: ../../assets/images/stories/maria-dewan.jpg
 photoAlt: "Portrait of Maria Dewan"
-source: "CodersTrust impact deck, slide 31 (Her Power case study)"
+source: "CodersTrust program records (Her Power case study)"
 ---
 
 For the women of the Her Power project, freelancing not only brought hope, but also paved the way to career success.

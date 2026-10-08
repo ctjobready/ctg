@@ -171,7 +171,8 @@ const pins = items.map((l) => {
       opacity: 0;
     }
     .wmap__pin:hover .wmap__dot::after {
-      animation: wmap-pulse 1.2s ease-out infinite;
+      /* hover-only, and finite (3 pulses, 3.6 s): no pointer-held decoration runs past the WCAG 2.2.2 five seconds */
+      animation: wmap-pulse 1.2s ease-out 3;
     }
   }
   @keyframes wmap-pulse {
