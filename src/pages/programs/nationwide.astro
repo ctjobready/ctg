@@ -15,6 +15,7 @@ import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import Icon from '../../components/system/Icon.astro';
+import Badge from '../../components/system/Badge.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -28,7 +29,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { ACCOUNTABILITY, C14, EMPATHY, ORIGIN, PRICING, PROGRAM_OPTIONS, SCALE, SCORECARD, SURVEY_EMPLOYMENT, STEPS, VALUE_PROPOSITION } from '../../data/copy';
+import { ACCOUNTABILITY, C14, EMPATHY, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCALE, SCORECARD, SURVEY_EMPLOYMENT, STEPS, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -56,8 +57,8 @@ const jsonLd = [
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NationWIDE' }]} jsonLd={jsonLd} stickyCta={briefing}>
   <!-- C1 -->
   <HeroBand
-    audience="For ministries, agencies and national funders"
-    title={`NationWIDE — aiming to train ${target} young Bangladeshis for digital work by 2030.`}
+    audience="NationWIDE · For ministries, agencies and national funders"
+    title="Help excluded young Bangladeshis prepare for paid digital work."
     lead={VALUE_PROPOSITION.governments}
     cta={briefing}
     artSeed="nationwide"
@@ -114,6 +115,7 @@ const jsonLd = [
   <!-- C6 -->
   <MechanismSection
     title="Delivered through the labs and colleges you already have."
+    positioning={POSITIONING.nationwide}
     blocks={[
       { label: 'Where it runs', title: 'Government digital labs and colleges', text: 'Labs that can serve as blended-learning centers, with seats confirmed per program.', icon: 'building' },
       { label: 'Who delivers', title: 'Trained trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
@@ -122,6 +124,11 @@ const jsonLd = [
     ]}
     factIds={['GV-09', 'GV-01', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
   >
+    <div class="mech-target" data-reveal>
+      <Badge tone="sale">Target</Badge>
+      <FactStat id="IN-01" />
+      <p class="mech-target__note">A target for 2030, not a delivered figure.</p>
+    </div>
     <div class="mech-stats">
       <FactStat id="GV-09" />
       <FactStat id="GV-01" />
@@ -232,6 +239,23 @@ const jsonLd = [
 </LandingLayout>
 
 <style>
+  /* The 2030 target sits in the mechanism band with its fact and a "Target" label, never in the hero */
+  .mech-target {
+    margin-top: var(--space-lg);
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
+    border-left: 4px solid var(--tertiary);
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    max-width: 30rem;
+  }
+  .mech-target > :global(*) {
+    margin: 0;
+  }
+  .mech-target__note {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
   .mech-stats {
     margin-top: var(--space-lg);
     display: grid;

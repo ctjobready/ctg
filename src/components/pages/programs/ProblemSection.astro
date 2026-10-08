@@ -30,13 +30,14 @@ const { eyebrow = 'The challenge', title, bluf, factIds = [], extra = [], scope 
 const total = factIds.length + extra.length;
 const grid = total === 4 ? 'grid-cards grid-cards--4' : total === 2 ? 'grid-cards grid-cards--2' : total === 1 ? 'grid-cards pcs-one' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
+// The global context facts already open with "Globally" in the register: the prefix is only added to a sentence that does not name its scope yet.
 const scoped = (fid: string) => {
   const f = fact(fid);
   const sc = scope[fid]!;
   return {
     id: fid,
     value: f.stat?.value,
-    text: f.stat ? (sc.label ?? f.stat.label) : `${sc.prefix}, ${lowerFirst(f.text)}`,
+    text: f.stat ? (sc.label ?? f.stat.label) : /\b(globally|worldwide)\b/i.test(f.text) ? f.text : `${sc.prefix}, ${lowerFirst(f.text)}`,
     src: f.sourceIds.map((s) => sources[s]?.label).filter(Boolean).slice(0, 2),
   };
 };

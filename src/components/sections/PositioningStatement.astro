@@ -1,0 +1,46 @@
+---
+/**
+ * C6a positioning statement: one sentence, "For [audience] who need [outcome], CodersTrust [category] that
+ * [differentiator]; unlike [alternative], we [proof-backed difference]." The copy lives in data/copy.ts (POSITIONING) and
+ * is placed in the header of each page's C6 mechanism band. The facts it rests on go to data-fact for the status gate.
+ */
+interface Props {
+  text: string;
+  /** Fact IDs behind the sentence (data-fact). */
+  facts?: string[];
+  class?: string;
+}
+const { text, facts = [], class: className } = Astro.props;
+---
+
+<div class:list={['pos', className]} data-reveal data-fact={facts.join(' ') || undefined}>
+  <p class="pos__label">Where we stand</p>
+  <p class="pos__text">{text}</p>
+</div>
+
+<style>
+  .pos {
+    margin-top: var(--space-xs);
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
+    border-left: 4px solid var(--ctx-accent);
+    display: grid;
+    gap: 4px;
+    max-width: 48rem;
+  }
+  .pos > * {
+    margin: 0;
+  }
+  .pos__label {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ctx-muted);
+  }
+  .pos__text {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+</style>

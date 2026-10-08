@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import ModelDiagram from '../../ui/ModelDiagram.astro';
 import Icon from '../../system/Icon.astro';
+import PositioningStatement from '../../sections/PositioningStatement.astro';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -13,6 +14,8 @@ import { linkAttrs } from '../../../lib/url';
 interface Props {
   title: string;
   lead?: string;
+  /** C6a positioning statement (data/copy.ts POSITIONING), shown in the band header. */
+  positioning?: { text: string; facts: string[] };
   tone?: 'white' | 'airy' | 'ice';
   blocks?: { label: string; title: string; text?: string; icon?: string }[];
   link?: { label: string; href: string };
@@ -23,6 +26,7 @@ interface Props {
 const {
   title,
   lead,
+  positioning,
   tone = 'white',
   eyebrow = 'How it works',
   blocks = [
@@ -38,7 +42,9 @@ const {
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead}>
+    {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
+  </SectionHeader>
   <ModelDiagram blocks={blocks} />
   <p class="mech__ribbon" data-reveal>
     {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}

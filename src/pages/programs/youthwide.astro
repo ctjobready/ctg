@@ -32,7 +32,7 @@ import DecisionSheet from '../../components/pages/programs/DecisionSheet.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ROADMAP_PHASES, ctaFor, serviceNode, statValue, surveyShort } from '../../components/pages/programs/meta';
-import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, GOVERNANCE } from '../../data/copy';
+import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, GOVERNANCE } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl } from '../../lib/schema';
@@ -68,8 +68,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'YouthWIDE' }]} jsonLd={jsonLd} stickyCta={discovery}>
   <!-- C1 -->
   <HeroBand
-    audience="For development partners and funders"
-    title="YouthWIDE — a ready-to-fund program for youth digital employment."
+    audience="YouthWIDE · For development partners and funders"
+    title="Fund a supported path from education to paid digital work."
     lead="We help funders move educated, unemployed youth into paid digital work through certified, mentored training."
     cta={discovery}
     artSeed="youthwide"
@@ -124,6 +124,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C6 -->
   <MechanismSection
     title="One delivery model, from selection to paid work."
+    positioning={POSITIONING.youthwide}
     blocks={[
       { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
       { label: 'How we reach them', title: 'Accessible selection, blended delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },

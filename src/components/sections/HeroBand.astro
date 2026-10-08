@@ -2,11 +2,17 @@
 import Hero from '../system/Hero.astro';
 import Button from '../system/Button.astro';
 import FactStat from '../facts/FactStat.astro';
+import { linkAttrs } from '../../lib/url';
 
 /** C1 Hero band: Hero + audience eyebrow + up to 3 FactStats + primary/secondary CTA. */
 interface Props {
-  /** Audience mirror ("For governments, development partners and funders"). */
-  audience: string;
+  /** Audience mirror ("For governments, development partners and funders"); program pages lead with the program name. */
+  audience?: string;
+  /**
+   * Replaces the text eyebrow with audience links (Home: Development partners · Governments · Foundations). Plain text links,
+   * so the hero keeps its one solid primary CTA. Shown above the H1 in the eyebrow position.
+   */
+  audienceLinks?: { label: string; href: string }[];
   title: string;
   lead: string;
   cta: { label: string; href: string };
@@ -19,12 +25,24 @@ interface Props {
   headingLevel?: 1 | 2;
   id?: string;
 }
-const { audience, title, lead, cta, secondary, stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
+const { audience, audienceLinks = [], title, lead, cta, secondary, stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
 if (stats.length > 3) throw new Error('HeroBand: at most 3 stats');
+const eyebrow = audienceLinks.length > 0 ? undefined : audience;
 ---
 
 <div id={id}>
-  <Hero variant={variant} eyebrow={audience} title={title} lead={lead} artSeed={artSeed} headingLevel={headingLevel}>
+  <Hero variant={variant} eyebrow={eyebrow} title={title} lead={lead} artSeed={artSeed} headingLevel={headingLevel}>
+    {
+      audienceLinks.length > 0 && (
+        <nav class="herolinks" aria-label="Choose your audience" data-reveal>
+          <ul>
+            {audienceLinks.map((l) => (
+              <li><a class="link" href={linkAttrs(l.href).href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
     <Fragment slot="actions">
       <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
       {secondary && <Button variant="outline" href={secondary.href}>{secondary.label}</Button>}
@@ -32,3 +50,55 @@ if (stats.length > 3) throw new Error('HeroBand: at most 3 stats');
     {stats.length > 0 && <Fragment slot="stats">{stats.map((s) => <FactStat id={s} />)}</Fragment>}
   </Hero>
 </div>
+
+<style>
+  /* In the eyebrow position: Hero lays its copy out as a flex column, so `order: -1` lifts the links above the H1 (DOM order
+     keeps them ahead of the actions, so keyboard focus order still matches the visual order). Styled like Hero's eyebrow pill. */
+  .herolinks {
+    order: -1;
+    margin: 0;
+    max-width: 100%;
+  }
+  .herolinks ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-sm);
+    row-gap: 2px;
+    min-height: 32px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+  }
+  .herolinks li {
+    display: inline-flex;
+    align-items: center;
+  }
+  /* the separator trails each link, so a wrapped line ends with it rather than starting with it */
+  .herolinks li:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-sm);
+    color: var(--outline);
+  }
+  @media (max-width: 480px) {
+    .herolinks ul {
+      padding-inline: 12px;
+      column-gap: 6px;
+    }
+    .herolinks li:not(:last-child)::after {
+      margin-left: 6px;
+    }
+  }
+  .herolinks a {
+    --ctx-link: var(--secondary);
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding-block: 3px;
+  }
+</style>

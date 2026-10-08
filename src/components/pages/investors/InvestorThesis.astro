@@ -19,9 +19,9 @@ interface Props {
   id?: string;
 }
 const { id = 'thesis' } = Astro.props;
-// PX-08 is a global figure: its sentence says "globally" (claims rule 12). The wording stays the register's.
+// PX-08 is a global figure: the register's own sentence says "Globally" (claims rule 12), so it is shown as registered.
 const px08 = fact('PX-08').text;
-const px08Sentence = px08.charAt(0).toLowerCase() + px08.slice(1);
+if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally": the investors thesis must keep the scope in the sentence (claims rule 12)');
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -54,12 +54,13 @@ const px08Sentence = px08.charAt(0).toLowerCase() + px08.slice(1);
       <div class="card__body">
         <Icon name="cpu" size={36} strokeWidth={1.5} class="th__icon" />
         <h3 class="card__title">AI is raising the bar for entry work.</h3>
-        <p class="th__more" data-fact="PX-08">Globally, {px08Sentence}<FootnoteMarker id="PX-08" /></p>
+        <p class="th__more" data-fact="PX-08">{px08}<FootnoteMarker id="PX-08" /></p>
         <p class="th__more" data-fact="PX-06"><Fact id="PX-06" /></p>
       </div>
     </article>
   </div>
   <p class="th__stakes" data-reveal>The gap widens with every cohort that is trained but not employed.</p>
+  <p class="th__transition" data-reveal>It doesn’t have to be this way.</p>
 </Section>
 
 <style>
@@ -83,5 +84,14 @@ const px08Sentence = px08.charAt(0).toLowerCase() + px08.slice(1);
     color: var(--secondary);
     letter-spacing: -0.5px;
     max-width: 40rem;
+  }
+  /* C3 transition line, as on every other cost-of-waiting band */
+  .th__transition {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    letter-spacing: -0.5px;
   }
 </style>

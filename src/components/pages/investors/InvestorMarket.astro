@@ -9,13 +9,15 @@ import { INVESTOR_MARKET } from '../../../data/copy';
 const [sectors, closingTail] = INVESTOR_MARKET.text.split('. Market sizing');
 const intro = sectors.replace(/^Market opportunity:\s*/, '');
 const closing = closingTail ? `Market sizing${closingTail}` : '';
+// PX-10 carries two figures (257 million NEET and the 12.4% youth unemployment rate): show its full sentence, not only the stat label.
+const fullSentence = new Set(['PX-10']);
 ---
 
 <div class="mk" data-fact={INVESTOR_MARKET.facts.join(' ')}>
   <h3 class="t-heading-xl mk__title" data-reveal>Market opportunity</h3>
   <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
   <div class="grid-cards grid-cards--4 mk__grid">
-    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} />)}
+    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} showText={fullSentence.has(id) ? true : undefined} />)}
   </div>
   {closing && <p class="mk__closing" data-reveal>{closing}</p>}
 </div>

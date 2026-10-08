@@ -35,7 +35,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -129,6 +129,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C6 · Mechanism (YouthWIDE) -->
   <MechanismBand
     title="How YouthWIDE works."
+    positioning={POSITIONING.developmentPartners}
     lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country, with Bangladesh as the evidence-rich reference implementation."
     blocks={[
       { label: 'Who we reach', title: 'Priority groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },

@@ -28,7 +28,7 @@ import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import StickyCtaReveal from '../components/pages/home/StickyCtaReveal.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
-import { C14, HEADLINE, HOME_META, MICRO_COMMITMENT, SPEED, SCORECARD, VALUE_PROPOSITION } from '../data/copy';
+import { C14, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION } from '../data/copy';
 import { fact } from '../data/facts';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
@@ -58,7 +58,11 @@ const featureRows = [
   <Tone cmf="C1">
     <HeroBand
       variant="home"
-      audience="For development partners, governments and funders"
+      audienceLinks={[
+        { label: 'Development partners', href: '/partner-with-us/development-partners/' },
+        { label: 'Governments', href: '/partner-with-us/governments/' },
+        { label: 'Foundations', href: '/partner-with-us/foundations/' },
+      ]}
       title={HEADLINE.home}
       lead={VALUE_PROPOSITION.home}
       cta={{ label: discovery.label, href: discovery.href }}
@@ -100,7 +104,7 @@ const featureRows = [
 
   <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
 
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One path from learning to earning." tone="white" link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One path from learning to earning." tone="white" positioning={POSITIONING.home} link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
 
   <Tone cmf="C7">
     <EvidenceBand
@@ -132,7 +136,7 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C9" tone="white">
-    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions partners ask." allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faq' }} />
+    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions partners ask." allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
   <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
