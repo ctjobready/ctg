@@ -7,7 +7,7 @@ legacyUrl: "https://coderstrust.global/nu-postgraduate-diploma/"
 verify: true
 ---
 
-CodersTrust offers Post-Graduate Diploma courses of National University and serves as the Official Training Partner for Digital Career Skills and Credentials. CodersTrust's College Code with National University is 6634.
+CodersTrust offers Postgraduate Diploma courses of National University and serves as the Official Training Partner for Digital Career Skills and Credentials. CodersTrust's College Code with National University is 6634.
 
 The diploma courses are designed for highly relevant, future-fit job roles, so that learners gain the technical knowledge to improve their domain in technical and IT skills. The program offers four high-demand courses with experienced mentors who have long been involved in upskilling learners in technology.
 
@@ -21,8 +21,8 @@ The diploma courses are designed for highly relevant, future-fit job roles, so t
 
 ## Courses
 
-- Post-Graduate Diploma in Digital Marketing: 40 credit hours, 10 subjects, instructor-led
-- Post-Graduate Diploma in Information & Communication Technology: 40 credit hours, 10 subjects, instructor-led
+- Postgraduate Diploma in Digital Marketing: 40 credit hours, 10 subjects, instructor-led
+- Postgraduate Diploma in Information & Communication Technology: 40 credit hours, 10 subjects, instructor-led
 - Upcoming: Cybersecurity and Data Analytics
 
 ## How to apply

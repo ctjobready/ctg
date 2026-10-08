@@ -28,6 +28,7 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
+import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
@@ -50,7 +51,7 @@ const jsonLd = [
 ];
 
 const options = [
-  { ...PROGRAM_OPTIONS[0], note: 'Prove the model with a first campus cohort.' },
+  { ...PROGRAM_OPTIONS[0], note: 'Prove the model with a first campus program.' },
   { ...PROGRAM_OPTIONS[1], note: 'Expand to more cohorts and campuses on the pilot’s results.' },
 ];
 ---
@@ -80,10 +81,10 @@ const options = [
 
   <!-- C3 -->
   <CostSection
-    title="AI skills are in demand, and entry-level postings are thinning."
+    title="Globally, employers say AI skills are the hardest to find."
     blocks={[
       { claim: 'Employers want AI skills alongside the degree.', factId: 'PX-08', scope: 'Globally', implication: 'A degree alone does not show the skills employers are asking for.' },
-      { claim: 'AI is already thinning some entry-level postings.', factId: 'PX-06', implication: 'Students need a credential that shows practical skills.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Students need a credential that shows practical skills.' },
     ]}
   />
 
@@ -104,6 +105,7 @@ const options = [
     empathy={EMPATHY.universities}
     origin={ORIGIN}
     statIds={['SC-04', 'SC-05']}
+    noted={['SC-05']}
     partnerGroup="academic"
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
@@ -123,7 +125,7 @@ const options = [
     factIds={['IN-09', 'PD-06']}
   >
     <div class="incl">
-      <h3 class="t-heading-xl" data-reveal>What a campus cohort includes</h3>
+      <h3 class="t-heading-xl" data-reveal>What a campus program includes</h3>
       <FactList ids={['PD-01', 'PD-03', 'PD-06']} />
     </div>
   </MechanismSection>
@@ -140,7 +142,7 @@ const options = [
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />
 
@@ -148,10 +150,10 @@ const options = [
   <FeaturesTable
     title="Every feature answers a pain institutions carry."
     rows={[
-      { feature: 'Industry certifications by track and three months of milestone-based mentoring', means: 'students add a recognized credential and a first-client or first-job path to the degree.', outcomeFactId: 'PD-03', relieves: 'Degree holders struggle to find work' },
-      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcomeFactId: 'PD-10', relieves: 'Employers cannot find the skills they need' },
-      { feature: 'Tracer surveys, documentary evidence of earnings and monthly reports', means: 'your institution has outcome data it can report.', outcomeFactId: 'PD-09', relieves: 'No placement results to publish' },
-      { feature: 'Certified local facilitators and campus labs as blended-learning centers', means: 'capacity stays on campus.', outcomeFactId: 'PD-06' },
+      { feature: 'Industry certifications by track and three months of milestone-based mentoring', means: 'students add a recognized credential and a first-client or first-job path to the degree.', outcome: 'A recognized credential beside the degree', relieves: 'Degree holders struggle to find work' },
+      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot find the skills they need' },
+      { feature: 'Tracer surveys, documentary evidence of earnings and monthly reports', means: 'your institution has outcome data it can report.', outcome: 'Placement results you can discuss', relieves: 'No placement results to publish' },
+      { feature: 'Certified local facilitators and campus labs as blended-learning centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },
     ]}
   />
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
@@ -174,15 +176,15 @@ const options = [
   <ComparisonBand title="Compare the approaches." />
 
   <!-- C11 -->
-  <OfferSection title="Two ways to start a campus cohort." lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options}>
+  <OfferSection title="Two ways to start a campus program." lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options}>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
   </OfferSection>
 
   <!-- C12 -->
   <RiskSection
-    title="Start with a pilot cohort. Decide on evidence."
+    title="Start with a pilot. Decide on evidence."
     points={[
-      { icon: 'rocket', title: 'A pilot cohort comes first', text: 'Prove the model on your campus before you widen it.', factIds: ['PD-05'] },
+      { icon: 'rocket', title: 'A pilot comes first', text: 'Prove the model on your campus before you widen it.', factIds: ['PD-05'] },
       { icon: 'target', title: 'Scorecard thresholds', text: 'A missed threshold triggers a corrective plan.', factIds: ['PD-11'] },
       { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
       { icon: 'shield', title: 'Independent evaluation is welcome', text: 'We support a third-party evaluation of outcomes.', factIds: ['PD-08'] },

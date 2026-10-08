@@ -8,7 +8,8 @@ import { caveatPart, factPart, HOURS } from './partners';
  * statements, no new facts. Every number is pulled from the register or the trial caveat at build time.
  */
 const evaluatedHours = factPart('RC-07', /(\d+) hours over/);
-const population = caveatPart('R', /women aged [\d–]+ with SSC or above, Dhaka/);
+// The trial population as the [R] caveat states it, with SSC spelled out at its first mention on the page.
+const population = caveatPart('R', /women aged [\d–]+ with (?:the Secondary School Certificate \(SSC\)|SSC) or above, Dhaka/).replace('with SSC or above', 'with the Secondary School Certificate (SSC) or above');
 const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
 ---
 

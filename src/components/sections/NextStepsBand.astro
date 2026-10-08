@@ -4,14 +4,17 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import StepFlow from '../ui/StepFlow.astro';
 import { fact } from '../../data/facts';
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
+import { endSentence } from './copyText';
 
 /** C14 Next steps: Discovery → Co-design → Agreement → First cohort; timing comes from PD-04. */
 interface Props {
   title?: string;
   lead?: string;
+  /** Show the full PD-04 timing line under the steps. A page that already states the window elsewhere turns it off. */
+  timing?: boolean;
   id?: string;
 }
-const { title = 'What happens next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', id = 'next-steps' } = Astro.props;
+const { title = 'What happens next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Week labels are parsed from PD-04 ("Discovery wk 1 → Co-design wk 2 → Agreement wk 3") so timings are never retyped.
 const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => ({ name: m[1], wk: m[2] }));
@@ -26,6 +29,6 @@ const steps = [
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
-  <StepFlow steps={steps} />
-  <p class="next__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {pd04.text}</p>
+  <div data-fact="PD-04"><StepFlow steps={steps} /></div>
+  {timing && <p class="next__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {endSentence(pd04.text)}</p>}
 </Section>

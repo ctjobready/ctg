@@ -30,6 +30,7 @@ import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.as
 import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { C14, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION } from '../data/copy';
 import { fact } from '../data/facts';
+import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
 import { webPage } from '../lib/schema';
@@ -40,7 +41,7 @@ const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_ME
 
 // C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
 const lcfirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
-const problemBluf = `${fact('PX-01').text}; ${lcfirst(fact('PX-03').text)}.`;
+const problemBluf = `${fact('PX-01').text}; ${lcfirst(expandSsc(fact('PX-03').text))}.`;
 
 // C8: numbers inside feature rows come from the register.
 const hours = fact('PD-01').stat?.value;
@@ -81,9 +82,9 @@ const featureRows = [
       id="cost"
       title="Every year of waiting costs a cohort."
       blocks={[
-        { icon: 'cpu', claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as entry-level tasks disappear.' },
-        { icon: 'waves', claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },
-        { icon: 'trending-down', claim: 'Training does not always lead to work.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
+        { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+        { icon: 'waves', claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+        { icon: 'trending-down', claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after={VALUE_PROPOSITION.home}
     />
@@ -92,7 +93,7 @@ const featureRows = [
   <Tone cmf="C4">
     <FutureBand
       id="future"
-      title="Imagine the next twelve months."
+      title="Imagine the next 12 months."
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
         { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'A young woman outside Dhaka invoices her first foreign client from her own laptop.' },
@@ -124,7 +125,7 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with the partners who commissioned them." items={caseStudyItems} />
+    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with their partners." items={caseStudyItems} />
     <CaseQuote />
   </Tone>
 

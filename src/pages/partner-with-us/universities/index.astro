@@ -30,6 +30,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
 import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { CLAIM_PX06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -46,7 +47,7 @@ const { title, description } = meta(
 const FAQ_IDS = ['Q1', 'Q13', 'Q3', 'Q10', 'Q8'];
 const options = programOptions().filter((o) => o.name === 'Pilot' || o.name === 'Scale');
 const optionText: Record<string, string> = {
-  Pilot: 'Prove the model with one campus cohort.',
+  Pilot: 'Prove the model with a first campus program.',
   Scale: 'Expand to more cohorts and campuses on the pilot’s results.',
 };
 const steps = [
@@ -95,12 +96,11 @@ const steps = [
   <!-- C3 · Agitation -->
   <div class="pp-two">
     <CostSection
-      title="AI is raising the bar for entry-level work."
-      lead="Employers already say AI skills are the hardest to find."
+      title="Globally, employers say AI skills are the hardest to find."
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
-        { claim: 'AI is thinning some entry-level postings.', factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
+        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
       ]}
     />
   </div>
@@ -120,6 +120,7 @@ const steps = [
   <PartnerGuideBand
     empathy={EMPATHY.universities}
     stats={['SC-05']}
+    noted={['SC-05']}
     statements={[
       { facts: ['SC-04'], markers: [], text: 'CodersTrust is National University’s official training partner for digital career skills and credentials.' },
       { facts: ['PA-05'], markers: [], text: 'University partnerships include the University for Peace (UPEACE) and The City College of New York (CCNY).' },
@@ -173,25 +174,25 @@ const steps = [
       {
         feature: 'Industry certifications by track and three months of milestone-based mentoring',
         means: 'students add a recognized credential and a first-client or first-job path to the degree.',
-        outcomeFactId: 'PD-03',
+        outcome: 'A recognized credential beside the degree',
         relieves: 'Degree holders struggle to find work',
       },
       {
         feature: 'Tracks set from employer demand; an AI-ready curriculum',
         means: 'training matches what employers say they cannot find.',
-        outcomeFactId: 'PD-10',
+        outcome: 'Skills employers ask for',
         relieves: 'Employers cannot find the skills they need',
       },
       {
         feature: 'Tracers, documentary evidence of earnings and monthly reports',
         means: 'your institution has outcome data it can report.',
-        outcomeFactId: 'PD-09',
+        outcome: 'Placement results you can discuss',
         relieves: 'No placement results to publish',
       },
       {
         feature: 'Certified local facilitators, with campus labs as blended-learning centers',
         means: 'capacity stays on your campus.',
-        outcomeFactId: 'PD-06',
+        outcome: 'Campus labs that serve as learning centers',
       },
     ]}
   />
@@ -220,10 +221,10 @@ const steps = [
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
-    title="Start with a pilot cohort. Decide on evidence."
+    title="Start with a pilot. Decide on evidence."
     lead={SCORECARD.text}
     points={[
-      { icon: 'rocket', title: 'Pilot cohort first', text: 'Start with one campus cohort and see its results.' },
+      { icon: 'rocket', title: 'A pilot comes first', text: 'Start with a first campus program and see its results.' },
       { icon: 'target', title: 'Scorecard thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
       { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.' },
       { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },

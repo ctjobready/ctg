@@ -24,9 +24,11 @@ interface Props {
   factIds?: string[];
   extra?: Extra[];
   scope?: Record<string, { prefix?: string; label?: string }>;
+  /** Transition line closing the band, for a page whose C2 and C3 are compressed into one band (for example SuperKids). */
+  transition?: string;
   id?: string;
 }
-const { eyebrow = 'The challenge', title, bluf, factIds = [], extra = [], scope = {}, id = 'problem' } = Astro.props;
+const { eyebrow = 'The challenge', title, bluf, factIds = [], extra = [], scope = {}, transition, id = 'problem' } = Astro.props;
 const total = factIds.length + extra.length;
 const grid = total === 4 ? 'grid-cards grid-cards--4' : total === 2 ? 'grid-cards grid-cards--2' : total === 1 ? 'grid-cards pcs-one' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
@@ -73,6 +75,7 @@ const scoped = (fid: string) => {
     }
   </div>
   <slot />
+  {transition && <p class="pcs__transition" data-reveal>{transition}</p>}
 </Section>
 
 <style>
@@ -103,5 +106,13 @@ const scoped = (fid: string) => {
   .pcs__src {
     margin-top: auto !important;
     padding-top: var(--space-sm);
+  }
+  .pcs__transition {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    letter-spacing: -0.5px;
   }
 </style>

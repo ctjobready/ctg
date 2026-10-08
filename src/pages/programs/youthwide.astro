@@ -34,6 +34,7 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ROADMAP_PHASES, ctaFor, serviceNode, statValue, surveyShort } from '../../components/pages/programs/meta';
 import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, GOVERNANCE } from '../../data/copy';
 import { fact } from '../../data/facts';
+import { CLAIM_PX06, CLAIM_RC06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl } from '../../lib/schema';
 import { webPage } from '../../lib/schema';
@@ -50,7 +51,7 @@ const tracking = fact('PD-02').text.match(/tracking for (\d+ months)/)?.[1] ?? '
 const faqSources: FaqSource[] = ['Q2', 'Q3', 'Q7', 'Q8', 'Q9', 'Q14'].map((id) => ({ audience: 'foundations' as const, id }));
 
 const jsonLd = [
-  webPage({ path, name: 'YouthWIDE — a ready-to-fund program for youth digital employment', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'YouthWIDE', path }] }),
+  webPage({ path, name: 'YouthWIDE — a country program for youth digital employment', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'YouthWIDE', path }] }),
   serviceNode({ path, name: 'YouthWIDE', description: fact('IN-02').text, audience: 'Development partners and funders', areaServed: ['South Asia', 'Middle East and North Africa', 'Sub-Saharan Africa'] }),
   {
     '@type': 'ItemList',
@@ -90,10 +91,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C3 -->
   <CostSection
-    title="A cohort that trains but does not place costs the whole budget."
+    title="Every cohort that trains but does not place spends the budget for a fraction of the result."
     blocks={[
-      { claim: 'Cohorts that train but do not place.', factId: 'RC-06', implication: 'Training alone does not reliably reach paid work, so funders pay for hours attended and still cannot report who is earning.' },
-      { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as junior tasks disappear.' },
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Funders pay for hours attended and still cannot report who is earning.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
       { claim: 'Employers say AI skills are the hardest to find.', factId: 'PX-05', scope: 'Globally', implication: 'Tracks need to follow what employers ask for now, not last year’s course list.' },
     ]}
   />
@@ -163,7 +164,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />
 
@@ -171,11 +172,11 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <FeaturesTable
     title="Every inclusion answers a funder’s pain."
     rows={[
-      { feature: 'Certified training, three months of milestone-based mentoring and placement support, with a work-entry plan per track approved before enrollment', means: 'success is counted in paid work, not hours attended.', outcomeFactId: 'PD-01', relieves: 'Enrollment targets are met but employment lags' },
-      { feature: 'Outreach and accessible selection; entry-level tracks set per country from employer demand; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcomeFactId: 'PD-14', relieves: 'The hardest-to-reach groups drop out' },
-      { feature: 'Baseline at enrollment, tracer surveys, documentary evidence of earnings and monthly reports', means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.', outcomeFactId: 'PD-09', relieves: 'Outcomes are hard for your evaluators to audit' },
-      { feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a recognized credential.', outcomeFactId: 'PD-03' },
-      { feature: 'Placement support', means: 'completers are routed to local, remote and global work.', outcomeFactId: 'PD-15' },
+      { feature: 'Certified training, three months of milestone-based mentoring and placement support, with a work-entry plan per track approved before enrollment', means: 'success is counted in paid work, not hours attended.', outcome: 'Results measured in paid work', relieves: 'Enrollment targets are met but employment lags' },
+      { feature: 'Outreach and accessible selection; entry-level tracks set per country from employer demand; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcome: 'Training that reaches hard-to-reach groups', relieves: 'The hardest-to-reach groups drop out' },
+      { feature: 'Baseline at enrollment, tracer surveys, documentary evidence of earnings and monthly reports', means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.', outcome: 'Auditable results', relieves: 'Outcomes are hard for your evaluators to audit' },
+      { feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a recognized credential.', outcome: 'A recognized credential' },
+      { feature: 'Placement support', means: 'completers are routed to local, remote and global work.', outcome: 'Local, remote or global work' },
     ]}
   />
 
@@ -226,7 +227,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <div class="note">
       <span class="note__label">Scale</span>
       <CopyP block={SCALE} />
-      <p class="scale-note">In Bangladesh, <Fact id="GV-09" footnote={false} />.</p>
+      <p class="scale-note"><Fact id="GV-09" footnote={false} />.</p>
     </div>
   </OfferSection>
 

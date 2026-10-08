@@ -1,5 +1,5 @@
 ---
-title: "Post-Graduate Diploma in Digital Marketing"
+title: "Postgraduate Diploma in Digital Marketing"
 slug: digital-marketing
 kind: course
 duration: "12 Months"
@@ -9,7 +9,7 @@ applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdN0J_VMgh0FYMTTx9DNRVYn840X
 modules: ["Fundamentals of Digital Marketing", "WordPress Design (Practical)", "AdWords & PPC", "Content Marketing (Practical)", "Affiliate & E-mail Marketing (Practical)", "E-Commerce", "Social Media Marketing", "Search Engine Optimization (SEO) - Practical", "Web & Google Analytics (Practical)", "Internship/ Project Work & Seminar"]
 internship: "The students are required to undergo an internship in Digital Marketing Firm for gaining practical experience in the field."
 faqs:
-  - q: "What is Digital Marketing, and why is it important in today's business landscape?"
+  - q: "What is Digital Marketing, and why is it important in today’s business landscape?"
     a: "Digital Marketing encompasses all online channels and methods to promote products or services. In the current business environment, where consumers are highly active online, digital marketing provides a powerful means to reach and engage the target audience, increase brand visibility, and drive business growth."
   - q: "How does the Postgraduate Diploma in Digital Marketing prepare students for real-world challenges in the industry?"
     a: "The PGD in Digital Marketing is designed to equip students with practical skills and knowledge. From fundamental concepts to hands-on experience in areas like SEO, social media marketing, and web analytics, the program ensures that students are ready to implement effective digital marketing strategies and contribute to the success of businesses in the real world."
@@ -23,9 +23,9 @@ legacyUrl: "https://coderstrust.global/course/digital-marketing-pgd/"
 verify: true
 ---
 
-The Digital Marketing Post Graduate Diploma covers SEO, social media, advertising, and analytics, providing practical skills for roles like Digital Marketing Manager and SEO Expert. Emphasizing industry standards, it prepares for diverse opportunities, including entrepreneurship and freelancing.
+The Digital Marketing Postgraduate Diploma covers SEO, social media, advertising, and analytics, providing practical skills for roles like Digital Marketing Manager and SEO Expert. Emphasizing industry standards, it prepares for diverse opportunities, including entrepreneurship and freelancing.
 
-Post Graduate Diploma in Digital Marketing encompasses the concepts such as Introduction to Digital Marketing, Website Planning, Domain & Hosting, Search Engine Optimization, Social Media Optimization, Advertising & Product Placements, Social Media Marketing, Google Analytics & Web Master Tools, App Store Optimization and E-Commerce Optimization. Digital marketing is a broad term that includes all marketing channels and methods you can use to promote products or services on the internet. The course gives expertise to the students by providing them with enormous chance of window in Digital Marketing.
+Postgraduate Diploma in Digital Marketing encompasses the concepts such as Introduction to Digital Marketing, Website Planning, Domain & Hosting, Search Engine Optimization, Social Media Optimization, Advertising & Product Placements, Social Media Marketing, Google Analytics & Web Master Tools, App Store Optimization and E-Commerce Optimization. Digital marketing is a broad term that includes all marketing channels and methods you can use to promote products or services on the internet. The course gives expertise to the students by providing them with enormous chance of window in Digital Marketing.
 
 Benefits of earning a diploma in digital marketing help individuals develop their talents to tackle practical marketing techniques. These competitive advantages provide the requisite skills and knowledge to design, implement, and observe useful digital marketing campaigns and contribute to operational marketing systems, utilizing the latest digital tools and practices. This diploma helps to find employment in large corporations and often in global marketplaces. It enables them to transform their job by working with industry leaders to impact society. Careers will utilize learned skills such as those needed to be a marketing manager or marketing team leader. Other career paths may include sales consulting, global acquisition managing, or being a product specialist.
 

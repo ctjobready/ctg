@@ -31,6 +31,7 @@ import PageEnhancements from '../../../components/pages/partners/PageEnhancement
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
 import { EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
+import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -117,7 +118,8 @@ const steps = [
   <PartnerGuideBand
     empathy={EMPATHY.employers}
     stats={['SC-15']}
-    statements={[{ facts: ['PA-03'] }, { facts: ['GV-06'] }, { facts: ['PA-06'] }]}
+    noted={['SC-15']}
+    statements={[{ facts: ['PA-03'] }, { facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-06'] }]}
     method={{ text: 'JobReady@Work builds each program around a needs assessment, and TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup="private"
   />
@@ -169,19 +171,19 @@ const steps = [
       {
         feature: 'A placement team, plus certified trainees from employer-demand tracks',
         means: 'a short route to job-ready candidates.',
-        outcomeFactId: 'PD-10',
+        outcome: 'Certified candidates for your roles',
         relieves: 'You cannot find the digital talent you need',
       },
       {
         feature: 'An AI-ready curriculum in every track',
         means: 'hires and trainees already work with AI tools.',
-        outcomeFactId: 'PD-02',
+        outcome: 'People ready to work with AI tools',
         relieves: 'AI skills are the hardest to find',
       },
       {
         feature: 'JobReady@Work customized curriculum and interactive workshops',
         means: 'your team learns on tasks from your own roles.',
-        outcomeFactId: 'IN-10',
+        outcome: 'A team trained on its own tasks',
         relieves: 'Your teams need upskilling for AI workflows',
       },
     ]}

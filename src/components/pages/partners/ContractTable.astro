@@ -7,9 +7,11 @@ import { fact } from '../../../data/facts';
 import { factPart } from './partners';
 
 /**
- * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06. Columns and cells exist only where a
- * fact backs them, so there is no status column (the register states none), and a blank cell reads "—".
+ * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06. A blank cell reads "—".
  * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
+ * Status column (doc 06 P3; confirm list #29): the register states a status for no single contract, and doc 06
+ * marks only NHRDF as in progress (GV-10: "some contracts are still in progress"). Every other row reads
+ * "To confirm" until CodersTrust closes #29 and the status of each contract is stated.
  */
 interface Row {
   contract: string;
@@ -17,7 +19,9 @@ interface Row {
   scope: string;
   direct: string;
   reach?: string;
+  status: string;
 }
+const TO_CONFIRM = 'To confirm';
 
 const rows: Row[] = [
   {
@@ -26,42 +30,51 @@ const rows: Row[] = [
     scope: 'Curriculum, training manuals and mentorship guidelines; Training of Trainers',
     direct: factPart('GV-01', /[\d,]+ women trained directly/),
     reach: `Program to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ upazilas)/)}; ${factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/)}`,
+    status: TO_CONFIRM,
   },
   {
-    contract: 'EDGE (PMIS, University of Dhaka, with BCC)',
+    // PMIS is the Center for Project Management and Information Systems at the University of Dhaka (named in full in the EDGE news item).
+    contract: 'EDGE: Center for Project Management and Information Systems (PMIS), University of Dhaka, with the Bangladesh Computer Council (BCC)',
     facts: ['GV-02'],
     scope: 'Training in digital and 4IR technologies',
     direct: `Scope: ${factPart('GV-02', /[\d,]+ youth/)}`,
+    status: TO_CONFIRM,
   },
   {
     contract: 'SKIT incubator (Bangladesh Hi-Tech Park Authority)',
     facts: ['GV-03'],
     scope: 'High-demand IT skills training, Barishal',
     direct: `Scope: ${factPart('GV-03', /[\d,]+ people/)}`,
+    status: TO_CONFIRM,
   },
   {
     contract: 'NHRDF (implemented by NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
     direct: `Initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
+    status: 'In progress',
   },
   {
     contract: 'Digital Lab Establishment Project, Phase II',
     facts: ['GV-05'],
     scope: 'LMS and operation training for staff',
     direct: `Scope: ${factPart('GV-05', /[\d,]+\+ staff/)}`,
+    status: TO_CONFIRM,
   },
   {
     contract: 'Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute)',
     facts: ['GV-06'],
     scope: 'ICT, networking and cybersecurity training',
     direct: `Scope: ${factPart('GV-06', /[\d,]+\+ professionals/)}`,
+    status: TO_CONFIRM,
   },
 ];
 
 const sc06Note = (fact('SC-06').footnote ?? '').match(/^(.*?deduplicated)\./)?.[1];
 if (!sc06Note) throw new Error('ContractTable: SC-06 footnote no longer has the expected wording');
-const teachers = factPart('SC-08', /[\d,]+ teachers trained to teach online during COVID-19/);
+// SC-08 reads "10,000 teachers trained to teach online during COVID-19": the sentence takes the number and the rest, so "trained" is not repeated.
+const teachersNumber = factPart('SC-08', /([\d,]+) teachers trained to teach online during COVID-19/);
+const teachersTask = factPart('SC-08', /teachers trained (to teach online during COVID-19)/);
 
 interface Props {
   title: string;
@@ -75,13 +88,14 @@ const { title, lead, id = 'contracts' } = Astro.props;
   <SectionHeader id={`${id}-h`} eyebrow="Government contracts" title={title} lead={lead} />
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
-      <caption class="sr-only">Six government contracts: what CodersTrust does under each, the training scope and the curriculum reach. Counts are contract training scopes, not delivered scale.</caption>
+      <caption class="sr-only">Six government contracts: what CodersTrust does under each, the training scope, the curriculum reach and the contract status. Counts are contract training scopes, not delivered scale.</caption>
       <thead>
         <tr>
           <th scope="col">Contract</th>
           <th scope="col">CodersTrust scope</th>
           <th scope="col">Direct training</th>
           <th scope="col">Curriculum reach</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -94,6 +108,7 @@ const { title, lead, id = 'contracts' } = Astro.props;
               <td data-label="Curriculum reach">
                 {r.reach ? r.reach : (<><span class="sr-only">Not applicable</span><span aria-hidden="true">—</span></>)}
               </td>
+              <td class="ct__status" data-label="Status">{r.status}</td>
             </tr>
           ))
         }
@@ -103,7 +118,7 @@ const { title, lead, id = 'contracts' } = Astro.props;
   <div class="ct__notes" data-reveal>
     <p data-fact="GV-10">Counts are contract training scopes, not delivered scale; some scopes are still in progress.<FootnoteMarker id="GV-10" footnote={true} /></p>
     <p data-fact="SC-06"><Fact id="SC-06" />. {sc06Note}.</p>
-    <p data-fact="SC-08">Separately, CodersTrust trained {teachers}.</p>
+    <p data-fact="SC-08">Separately, CodersTrust trained {teachersNumber} teachers {teachersTask}.</p>
   </div>
 </Section>
 
@@ -155,6 +170,9 @@ const { title, lead, id = 'contracts' } = Astro.props;
   .ct__num {
     color: var(--on-surface);
     font-weight: var(--fw-medium);
+  }
+  .ct__status {
+    white-space: nowrap;
   }
   .ct__notes {
     margin-top: var(--space-md);

@@ -23,6 +23,8 @@ import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import { localCta } from '../../../components/pages/about/routes';
 import { HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { fact } from '../../../data/facts';
+import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -30,7 +32,10 @@ import { BANGLADESH_HQ } from '../../../lib/site';
 const local = localCta();
 const FAQ_IDS = ['Q1', 'Q2', 'Q9', 'Q10'];
 const path = '/partner-with-us/local-partners/';
-const description = "Bangladeshi NGOs, colleges and chambers can deliver CodersTrust's mentored digital-skills programs in their communities.";
+const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
+// GV-07 in the third-gender program wording the register uses ("program ... to provide digital-skills training to 5,000 third-gender people").
+const thirdGender = fact('GV-07').text.match(/[\d,]+ third-gender people/)?.[0];
+if (!thirdGender) throw new Error('GV-07 no longer names the number of third-gender people');
 const jsonLd = [
   webPage({ path, name: 'Local implementing partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with us', path: '/partner-with-us/' }, { name: 'Local partners', path }] }),
   faqJsonLd('governments', path, FAQ_IDS),
@@ -66,7 +71,6 @@ const ways = [
   { icon: 'building-2', title: 'Host a cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
   { icon: 'graduation-cap', title: 'Supply certified facilitators', text: 'Put trainers through certified facilitator training so delivery capacity stays in your community.' },
   { icon: 'users', title: 'Mobilize priority groups', text: 'Reach the young people central programs miss, with women a priority in every group.' },
-  { icon: 'handshake', title: 'Co-apply with CodersTrust', text: 'Prepare funding proposals together with the CodersTrust team.' },
 ];
 ---
 
@@ -93,8 +97,8 @@ const ways = [
     id="cost"
     title="Cohorts that train but do not place cost community trust."
     blocks={[
-      { claim: 'AI is changing entry-level work.', factId: 'PX-06', implication: 'Skills that were enough last year may not open doors next year, so tracks have to follow current demand.' },
-      { claim: 'Much vocational training shows no employment gain.', factId: 'RC-06', implication: 'Funders and communities spend years on programs that never reach earnings.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Skills that were enough last year may not open doors next year, so tracks have to follow current demand.' },
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
     ]}
   />
 
@@ -117,10 +121,11 @@ const ways = [
       title="Delivered with a Bangladesh team beside you."
       empathy={EMPATHY.localPartners}
       authorityIds={['SC-11', 'GV-09']}
+      noted={['SC-11']}
       partnerGroup={['government', 'development']}
       variant="grid"
       method={{
-        text: `CodersTrust Bangladesh works from its headquarters in ${BANGLADESH_HQ.city} and campuses in Mirpur and Agrabad, Chattogram. ${C14.validate.text} With the Bangladesh Computer Council and Bandhu Welfare Society, we built a digital-skills program for third-gender people. Our TalentLEAP method turns this experience into a repeatable path.`,
+        text: `CodersTrust Bangladesh works from its headquarters in ${BANGLADESH_HQ.city} and campuses in Mirpur and Agrabad, Chattogram. ${C14.validate.text} A program with the Bangladesh Computer Council and Bandhu Welfare Society aims to train ${thirdGender}. Our TalentLEAP method organizes skills into career paths with progressive levels.`,
         link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' },
       }}
     />
@@ -150,7 +155,7 @@ const ways = [
     title="Women-focused programs in practice"
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />
 
@@ -159,11 +164,11 @@ const ways = [
     id="features"
     title="What you get, and what it means for your community."
     rows={[
-      { feature: 'Certified-facilitator training', means: 'local capacity that stays after a funded cohort ends.', outcomeFactId: 'PD-06' },
-      { feature: 'Blended delivery in existing labs and colleges', means: 'a low capital cost for you and for the funder.', outcomeFactId: 'GV-09' },
-      { feature: 'Connectivity-light delivery', means: 'young people outside big cities can take part.', outcomeFactId: 'PD-07' },
-      { feature: 'Consent-based data practice and safeguarding agreed per program', means: 'a program your community can trust.', outcomeFactId: 'PD-12' },
-      { feature: 'Monthly reports', means: 'accountability that you and the funder share.', outcomeFactId: 'PD-08' },
+      { feature: 'Certified-facilitator training', means: 'local capacity that stays after a funded cohort ends.', outcome: 'Certified facilitators from your community' },
+      { feature: 'Blended delivery in existing labs and colleges', means: 'a low capital cost for you and for the funder.', outcome: 'A cohort in a lab or classroom you already have' },
+      { feature: 'Connectivity-light delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
+      { feature: 'Consent-based data practice and safeguarding agreed per program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
+      { feature: 'Monthly reports', means: 'accountability that you and the funder share.', outcome: 'Progress you and the funder can both see' },
     ]}
   />
   <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">
@@ -181,8 +186,8 @@ const ways = [
 
   <!-- C11 -->
   <Section id="offer" tone="airy" aria-labelledby="offer-h">
-    <SectionHeader id="offer-h" eyebrow="Ways to partner" title="Four ways to partner with us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
-    <div class="grid-cards grid-cards--4 grid-cards--stretch" data-fact="PD-06 PD-05">
+    <SectionHeader id="offer-h" eyebrow="Ways to partner" title="Three ways to partner with us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
+    <div class="grid-cards grid-cards--stretch" data-fact="PD-06 PD-05">
       {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
     </div>
   </Section>
@@ -193,7 +198,7 @@ const ways = [
   <!-- C13 -->
   <CTABand
     id="cta"
-    heading="Let's plan your first local cohort."
+    heading="Let’s plan your first local cohort."
     text="Tell the Bangladesh team about your organization, your district and the groups you work with."
     cta={{ label: local.label, href: local.href }}
     micro={MICRO_COMMITMENT}
@@ -203,13 +208,13 @@ const ways = [
   <Section id="next-steps" aria-labelledby="next-h">
     <SectionHeader id="next-h" eyebrow="After you write" title="What happens after you say yes." />
     <StepFlow steps={[
-      { title: 'Intro call', text: 'A conversation about your organization and the young people you reach.' },
+      { title: 'Discovery session', text: 'A conversation about your organization and the young people you reach.' },
       { title: 'Fit check and co-design', text: 'We shape the cohort, tracks, safeguarding and reporting with you.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
       { title: 'First cohort', text: 'Training begins at your site.' },
     ]} />
     <div class="lp-after">
-      <p>In your enquiry, include two suitable times for a discovery conversation.</p>
+      <p>In your inquiry, include two suitable times for a discovery session.</p>
       <CopyBlock block={C14.reminder} />
     </div>
   </Section>

@@ -21,10 +21,15 @@ export const NU_NAME = 'National University Postgraduate Diploma';
 export const NU_APPLY = { label: CTAS['nu-pgd'].label, href: CTAS['nu-pgd'].href as string };
 export const NU_CALL = CTAS['nu-pgd'].secondary as { label: string; href: string };
 
-/** Legacy FAQ indexes that do not touch the unapproved admissions facts (duration, eligibility, mode, award, internship terms). */
+/**
+ * Legacy FAQ indexes that describe the course itself. They exclude the unapproved admissions facts (duration, eligibility, mode, award,
+ * internship terms) and every answer that promises an outcome or a service: the digital-marketing answers on readiness for real-world
+ * challenges and on career roles, and the ICT answers on skills gained, career benefit ("enhancing your employability") and
+ * "personalized support from experienced instructors". They return only with the approved NU admissions fact set (confirm list #16).
+ */
 const SAFE_FAQS: Record<string, number[]> = {
-  'digital-marketing': [0, 1, 2],
-  ict: [1, 2, 3, 5],
+  'digital-marketing': [0],
+  ict: [1],
 };
 
 /** Short, claim-light summary per course, written from the module names. */
@@ -73,7 +78,3 @@ export async function nuCourses(): Promise<NuCourse[]> {
     });
 }
 
-export async function nuUpcoming() {
-  const all = await getCollection('nuPgd');
-  return all.filter((e) => e.data.kind === 'upcoming').map((e) => ({ slug: e.data.slug, title: e.data.title.replace(/\s*\(upcoming\)\s*$/i, '') }));
-}

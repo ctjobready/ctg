@@ -7,6 +7,7 @@ import Icon from '../../system/Icon.astro';
 import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import CopyBlock from './CopyBlock.astro';
 import { fact } from '../../../data/facts';
+import { endSentence } from '../../sections/copyText';
 import type { CopyBlock as CopyBlockData } from '../../../data/copy';
 
 /**
@@ -47,7 +48,7 @@ const notes = [
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
   <StepFlow steps={flow} />
-  {timing && <p class="ns__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {pd04.text}</p>}
+  {timing && <p class="ns__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {endSentence(pd04.text)}</p>}
 
   <div class="ns__reinforce" data-reveal>
     {

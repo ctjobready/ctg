@@ -34,6 +34,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, NATIONWIDE_TARGET, factPart, meta, statValue } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
+import { CLAIM_PX06, CLAIM_PX11, governmentPartners, graduateRates } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -43,10 +44,11 @@ const primary = cta('briefing');
 
 const { title, description } = meta(
   'Digital Skills Training for Governments',
-  `We help ministries move educated, unemployed youth into paid digital work. Six government contracts cover training and curriculum for ${statValue('SC-06')} people.`,
+  `We help ministries move educated, unemployed youth into paid digital work. Six contracts have training and curriculum scopes covering ${statValue('SC-06')} people.`,
 );
 
 const FAQ_IDS = ['Q7', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
+const rates = graduateRates();
 const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
 const manuals = factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/);
 const thirdGender = factPart('GV-07', /[\d,]+ third-gender people/);
@@ -79,15 +81,15 @@ const steps = [
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="Graduates are the most jobless group."
-    bluf="Degrees are not turning into jobs, and budgets that count enrollment cannot show who is earning."
+    title={`In Bangladesh, graduate unemployment is ${rates.graduate}.`}
+    bluf={`That compares with ${rates.ssc} for holders of the Secondary School Certificate (SSC). Budgets that count enrollment cannot show who is earning.`}
     factIds={['PX-03']}
   >
     <GainsPains
       slot="lead"
       gains={['A workforce that meets youth-employment targets', 'Budgets that buy earnings', 'Capacity that stays in your system']}
       pains={[
-        { q: 'Why are graduates the most jobless group?', text: 'A degree alone is not producing job offers.' },
+        { q: 'Why do graduates struggle to find work?', text: 'A degree alone is not producing job offers.' },
         { q: 'Why do training budgets not show up as earnings?', text: 'Budgets are measured by enrollment, not by who is earning afterward.' },
         { q: 'Where will the trainers and curricula come from?', text: 'Trainer and curriculum capacity is thin.' },
       ]}
@@ -99,8 +101,8 @@ const steps = [
     title="Every training cycle without placement tracking repeats the same result."
     transition="It doesn’t have to be this way."
     blocks={[
-      { claim: 'Out-migration is pulling educated youth toward informal city work.', factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
-      { claim: 'Entry-level work is shifting.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
+      { claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
       { claim: 'Jobs now ask for AI-ready skills.', factId: 'PX-08', scope: 'Globally', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
     ]}
   />
@@ -126,7 +128,8 @@ const steps = [
     statements={[
       { facts: ['SC-04'], markers: [], text: 'CodersTrust is National University’s official training partner for digital career skills and credentials.' },
       { facts: ['GV-07'], text: `A program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender}.` },
-      { facts: ['PA-02'] },
+      // The register's wording with the acronyms spelled out at their first mention on the page.
+      { facts: ['PA-02'], text: governmentPartners() },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
@@ -167,7 +170,7 @@ const steps = [
     title="The Her Power cohort, beside two other women-focused programs"
     lead={WOMEN_INCLUSION.text}
     items={[
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
     ]}
@@ -180,25 +183,25 @@ const steps = [
       {
         feature: 'Certification tracks chosen from employer demand, then mentoring and placement support',
         means: 'graduates leave with a recognized credential and a route to work.',
-        outcomeFactId: 'PD-03',
-        relieves: 'Graduates are the most jobless group',
+        outcome: 'Certified graduates moving toward work',
+        relieves: 'Graduates struggle to find work',
       },
       {
         feature: 'A pilot scorecard with cost per completer and per verified outcome; monthly reports',
         means: 'your budget is judged against verified outcomes.',
-        outcomeFactId: 'PD-11',
+        outcome: 'Spending tied to verified outcomes',
         relieves: 'Budgets are measured by enrollment, not earnings',
       },
       {
         feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; blended learning in existing labs; connectivity-light delivery',
         means: 'capacity stays in your system and rural labs can take part.',
-        outcomeFactId: 'PD-07',
+        outcome: 'Trainers and curricula that stay in your system',
         relieves: 'Trainer and curriculum capacity is thin',
       },
       {
         feature: 'Local, remote and global work',
         means: 'your workforce gains access to work beyond the local market.',
-        outcomeFactId: 'PD-15',
+        outcome: 'Local, remote or global work',
       },
     ]}
   />

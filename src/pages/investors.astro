@@ -35,8 +35,9 @@ import { webPage } from '../lib/schema';
 
 const path = '/investors/';
 const title = 'Investors';
-// Meta description (≤ 155): BLUF with one proof number taken from the register.
-const description = `CodersTrust is building JobReady, an AI-native platform for youth employment, on ${fact('SC-01').text}. Request the investor deck.`;
+// Meta description (≤ 155): BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta description cannot show,
+// so the headline count stays in the page body (InvestorDefinition) beside its note.
+const description = `CodersTrust is building JobReady, an AI-native platform for youth employment, on training programs since ${fact('ID-02').stat?.value}. Request the investor deck.`;
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
@@ -103,7 +104,7 @@ const mechanismBlocks = [
       <InvestorProofExtras />
     </EvidenceBand>
   </Tone>
-  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with the partners who commissioned them." items={caseStudyItems} /></Tone>
+  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with their partners." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
     <FeaturesTable id="features" title="What the platform does — and what it means." lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
@@ -154,7 +155,7 @@ const mechanismBlocks = [
       ]}
       validate={C14.validate}
       reminder={{ text: C14.variants.investors, facts: [] }}
-      firstAction="In your enquiry, include two suitable times for an introduction call."
+      firstAction="In your inquiry, include two suitable times for an introduction call."
     />
   </Tone>
 

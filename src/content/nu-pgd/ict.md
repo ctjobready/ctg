@@ -1,5 +1,5 @@
 ---
-title: "Post-Graduate Diploma in Information & Communication Technology"
+title: "Postgraduate Diploma in Information & Communication Technology"
 slug: ict
 kind: course
 duration: "12 Months"
@@ -68,4 +68,3 @@ The syllabus is structured to provide students with skill-based education, enabl
 - Web Developer or Web Designer
 - System Analyst or Business Analyst
 - Mobile App Developer or Mobile Solutions Architect
-- Cybersecurity Analyst or Information Security Specialist

@@ -10,6 +10,7 @@ import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
 import { ORIGIN } from '../../../data/copy';
 import { fact } from '../../../data/facts';
+import { endSentence } from '../../sections/copyText';
 
 /**
  * C5 Guide, empathy first: the audience's empathy line (EMPATHY[audience]), then ORIGIN, then
@@ -30,12 +31,14 @@ interface Props {
   empathy: string;
   /** Fact IDs rendered as stat tiles (need a stat). */
   stats?: string[];
+  /** Stat tiles that always carry their source note, even when the fact has no caveat of its own. */
+  noted?: string[];
   statements?: Statement[];
   method: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   id?: string;
 }
-const { title = 'We’ve built this path since 2014.', empathy, stats = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
+const { title = 'We’ve built this path since 2014.', empathy, stats = [], noted = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -45,21 +48,21 @@ const { title = 'We’ve built this path since 2014.', empathy, stats = [], stat
       <p class="lead">{empathy}</p>
       <CopyText block={ORIGIN} markers={[]} class="pg__origin" />
       <p class="pg__method">
-        {method.text}
+        {method.text}{' '}
         {method.link && (
           <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
         )}
       </p>
     </div>
     <div class="pg__proof">
-      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} />)}</div>}
+      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} footnote={noted.includes(s) ? true : 'auto'} />)}</div>}
       {
         statements.length > 0 && (
           <ul class="pg__list" role="list">
             {statements.map((s) => (
               <li data-fact={s.facts.join(' ')}>
                 <Icon name="circle-check" size={20} />
-                <span>{s.text ?? fact(s.facts[0]).text}{(s.markers ?? s.facts).map((f) => <FootnoteMarker id={f} />)}</span>
+                <span>{endSentence(s.text ?? fact(s.facts[0]).text)}{(s.markers ?? s.facts).map((f) => <FootnoteMarker id={f} />)}</span>
               </li>
             ))}
           </ul>
