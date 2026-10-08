@@ -21,9 +21,11 @@ const notes = footnotesFor(Astro).notes();
       <h2 class="sources__title t-heading-m" id={`${id}-h`}>{title}</h2>
       <ol class="sources__list">
         {notes.map((n) => (
-          <li class="sources__note" id={`fn-${n.n}`} tabindex="-1">
+          <li class="sources__note" id={`fn-${n.n}`} tabindex="-1" data-fact={n.id}>
             <p class="sources__claim">{n.claim}</p>
-            {n.parts.map((p) => <p>{p}</p>)}
+            {n.caveat && <p>{n.caveat}</p>}
+            {n.footnote && <p>{n.footnote}</p>}
+            {n.base && <p>Base: {n.base}.</p>}
             {n.sources.length > 0 && (
               <p class="sources__cite">
                 <span>Source{n.sources.length > 1 ? 's' : ''}: </span>

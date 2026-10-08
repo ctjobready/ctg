@@ -48,7 +48,7 @@ const util = linkAttrs(utilityLink.href);
                       );
                     })}
                   </ul>
-                  <aside class={`mega__feature mega__feature--${g.feature.kind}`} aria-label={`Featured: ${g.feature.title}`}>
+                  <aside class={`mega__feature mega__feature--${g.feature.kind}`} aria-label={`Featured: ${g.feature.title}`} data-fact={g.feature.factIds?.join(' ')}>
                     {g.feature.eyebrow && <p class="mega__eyebrow">{g.feature.eyebrow}</p>}
                     {g.feature.figure && <p class="mega__figure">{g.feature.figure}</p>}
                     <p class="mega__feature-title">{g.feature.title}</p>
@@ -62,6 +62,7 @@ const util = linkAttrs(utilityLink.href);
                       </ol>
                     )}
                     {g.feature.text && <p class="mega__feature-text">{g.feature.text}</p>}
+                    {g.feature.caveat && <p class="mega__feature-text mega__feature-caveat">{g.feature.caveat}</p>}
                     <a class="link" href={linkAttrs(g.feature.cta.href).href}>
                       {g.feature.cta.label}
                       <Icon name="arrow-right" size={16} />
@@ -90,7 +91,7 @@ const util = linkAttrs(utilityLink.href);
         <Icon name="arrow-up-right" size={16} />
         <span class="sr-only">{util.srText}</span>
       </a>
-      <Button class="site-header__cta" size="sm" href={headerCta.href}>{headerCta.label}</Button>
+      <Button class="site-header__cta" variant="outline" size="sm" href={headerCta.href}>{headerCta.label}</Button>
       <button
         class="menu-btn"
         type="button"

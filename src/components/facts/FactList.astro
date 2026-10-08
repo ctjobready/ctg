@@ -4,7 +4,7 @@ import Fact from './Fact.astro';
 interface Props {
   ids: string[];
   ordered?: boolean;
-  field?: 'text' | 'value' | 'from' | 'label';
+  field?: 'text' | 'headline' | 'value' | 'from' | 'label';
   class?: string;
 }
 const { ids, ordered = false, field = 'text', class: className } = Astro.props;
@@ -12,7 +12,7 @@ const Tag = ordered ? 'ol' : 'ul';
 ---
 
 <Tag class:list={['fact-list', className]}>
-  {ids.map((id) => <li><Fact id={id} field={field} /></li>)}
+  {ids.map((id) => <li data-fact={id}><Fact id={id} field={field} /></li>)}
 </Tag>
 
 <style>

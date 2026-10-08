@@ -8,7 +8,7 @@ import FootnoteMarker from './FootnoteMarker.astro';
  */
 interface Props {
   id: string;
-  field?: 'text' | 'value' | 'from' | 'label';
+  field?: 'text' | 'headline' | 'value' | 'from' | 'label';
   footnote?: boolean | 'auto';
   /** Wrapper element (default span). */
   as?: 'span' | 'p' | 'strong' | 'b' | 'div';
@@ -18,6 +18,7 @@ const { id, field = 'text', footnote = 'auto', as: Tag = 'span', class: classNam
 const f = fact(id);
 let out: string;
 if (field === 'text') out = f.text;
+else if (field === 'headline') out = f.headline ?? f.text;
 else {
   const v = f.stat?.[field];
   if (v === undefined) throw new Error(`<Fact id="${id}" field="${field}">: fact has no stat.${field}`);

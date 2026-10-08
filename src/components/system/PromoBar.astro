@@ -12,11 +12,13 @@ interface Props {
   dismissible?: boolean;
   /** Storage key: change it to show a new announcement to people who dismissed the old one. */
   storageKey?: string;
+  /** Register fact the message states (data-fact, for the status gate). */
+  factId?: string;
 }
-const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v1' } = Astro.props;
+const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId } = Astro.props;
 ---
 
-<div class="promo-bar" data-promo data-promo-key={storageKey} role="region" aria-label="Announcement">
+<div class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} role="region" aria-label="Announcement">
   <div class="promo-bar__inner">
     <p class="promo-bar__text">
       {lead && <strong>{lead}</strong>}

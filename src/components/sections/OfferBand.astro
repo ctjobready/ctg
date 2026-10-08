@@ -7,7 +7,7 @@ import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
  * C11 Offer: three option cards (volume + duration from PD-05) + "Every package includes" (PD-02).
- * NO PRICES (Decision D7): budgets are shared in the discovery session.
+ * NO PRICES: budgets are shared in the discovery session.
  */
 interface Props {
   title?: string;
@@ -17,13 +17,13 @@ interface Props {
   id?: string;
 }
 const {
-  title = 'Start with a pilot. Decide on evidence.',
-  lead = 'Indicative budgets are shared in the discovery session.',
+  title = 'Three ways to start, sized to your goals.',
+  lead = 'Pricing is set per program, and we share an indicative budget in the discovery session.',
   blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
   id = 'offer',
 } = Astro.props;
 
-// PD-05: "Program options (no prices — Decision D7): Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"
+// PD-05: "Program options: Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"
 const pd05 = fact('PD-05').text.split(': ').slice(1).join(': ');
 const options = pd05.split('; ').map((chunk) => {
   const [name, ...rest] = chunk.split(' ');
@@ -31,8 +31,8 @@ const options = pd05.split('; ').map((chunk) => {
   const [volume, ...tail] = detail.split(', ');
   return { name, volume, duration: tail.join(', ') };
 });
-// PD-02: "Every program includes: a · b · c"
-const includes = fact('PD-02').text.split(': ').slice(1).join(': ').split(' · ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
+// PD-02: "Pricing is set per program. Standard inclusions: a · b · c. Items such as … are budgeted separately where needed"
+const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. Items such as')[0].split(' · ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -40,7 +40,7 @@ const includes = fact('PD-02').text.split(': ').slice(1).join(': ').split(' · '
   <div class="grid-cards">
     {
       options.map((o, i) => (
-        <article class="card offer" data-reveal>
+        <article class="card offer" data-reveal data-fact="PD-05">
           <div class="card__body">
             <p class="eyebrow">Option {i + 1}</p>
             <h3 class="card__title">{o.name}</h3>
@@ -53,10 +53,11 @@ const includes = fact('PD-02').text.split(': ').slice(1).join(': ').split(' · '
     }
   </div>
   <div class="offer__incl" data-reveal>
-    <h3 class="t-heading-l">Every package includes<FootnoteMarker id="PD-02" footnote={false} /></h3>
+    <h3 class="t-heading-l" data-fact="PD-02">Standard inclusions</h3>
     <ul role="list">
       {includes.map((s) => <li><Icon name="circle-check" size={20} />{s}</li>)}
     </ul>
+    <p class="offer__sep">Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.</p>
   </div>
 </Section>
 
@@ -81,6 +82,10 @@ const includes = fact('PD-02').text.split(': ').slice(1).join(': ').split(' · '
   .offer__incl h3 {
     margin: 0 0 var(--space-md);
     color: var(--secondary);
+  }
+  .offer__sep {
+    margin: var(--space-md) 0 0;
+    color: var(--on-surface-variant);
   }
   .offer__incl ul {
     list-style: none;

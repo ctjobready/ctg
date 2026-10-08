@@ -1,6 +1,6 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * Every statistic below is read from the Facts Register (facts.ts): SC-01, SC-03, OC-01, ID-02.
+ * Every statistic below is read from the Facts Register (facts.ts): SC-01, SC-03, OC-01, ID-02. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
  */
 import { fact } from './facts';
 import { COURSES_URL } from '../lib/site';
@@ -30,6 +30,10 @@ export interface NavFeature {
   text?: string;
   /** Large figure shown on stat cards. */
   figure?: string;
+  /** Register facts the card displays (rendered as data-fact; used by the status gate). */
+  factIds?: string[];
+  /** Short caveat shown on the card, with the full footnote on the destination page. */
+  caveat?: string;
   cta: { label: string; href: string };
 }
 
@@ -58,7 +62,8 @@ export const navGroups: NavGroup[] = [
     feature: {
       kind: 'about',
       eyebrow: `Since ${since}`,
-      title: `${youth} youth · ${countries} countries`,
+      title: `${youth} youth · ${countries} countries and territories`,
+      factIds: ['SC-01', 'SC-03', 'ID-02'],
       text: 'A workforce-development organization for the next generation of digital professionals.',
       cta: { label: 'Read our story', href: '/about/' },
     },
@@ -68,7 +73,7 @@ export const navGroups: NavGroup[] = [
     label: 'Our model',
     href: '/our-model/',
     items: [
-      { label: 'How it works', href: '/our-model/', description: 'From partner goals to employed graduates, end to end.' },
+      { label: 'How it works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'The mechanism behind our results.' },
       { label: 'JobReady platform', href: '/our-model/jobready-platform/', description: 'The digital platform that scales the model.' },
     ],
@@ -116,8 +121,10 @@ export const navGroups: NavGroup[] = [
       kind: 'stat',
       eyebrow: 'Impact Survey 2026',
       figure: `${emp.from} → ${emp.value}`,
-      title: 'employed',
-      text: 'Surveyed completers, before training and today.',
+      title: 'of surveyed completers employed',
+      text: 'Before training and today.',
+      caveat: 'Impact Survey 2026: alumni who responded; self-reported; not a random sample.',
+      factIds: ['OC-01'],
       cta: { label: 'See the findings', href: '/impact/outcomes-2026/' },
     },
   },
@@ -135,7 +142,7 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'discovery',
-      eyebrow: '30 minutes, no obligation',
+      eyebrow: 'A conversation, not a commitment',
       title: 'Book a discovery session',
       text: 'Tell us your goals; we will outline a first cohort.',
       cta: { label: 'Book a discovery session', href: ctaHref('discovery') },
@@ -154,8 +161,11 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
-  lead: 'Impact Report 2026:',
-  rest: `employment among surveyed graduates rose from ${emp.from} to ${emp.value}.`,
+  lead: 'Impact Survey 2026:',
+  rest: `employment among surveyed completers rose from ${emp.from} to ${emp.value}.`,
+  /** Bump to show a changed announcement to people who dismissed the previous one. */
+  storageKey: 'ct-promo-v2',
+  factId: 'OC-01',
   action: { label: 'See the findings', href: '/impact/outcomes-2026/' },
   hideOnPath: '/impact/outcomes-2026/',
 };

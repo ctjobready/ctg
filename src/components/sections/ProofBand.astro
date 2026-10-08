@@ -17,10 +17,13 @@ interface Props {
   /** Fact with stat.from + stat.numeric (e.g. OC-01) for the before→after chart. */
   chartId?: string;
   chartTitle?: string;
+  /** Fact whose authoritative `headline` replaces `title` (e.g. RC-01, the randomized-trial headline). */
+  headlineFact?: string;
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, links = [], id = 'proof-band' } = Astro.props;
+const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
 const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
@@ -30,7 +33,9 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The evidence" title={title} lead={lead} />
+  <div data-fact={headlineFact}>
+    <SectionHeader id={`${id}-h`} eyebrow="The evidence" title={heading} lead={lead} />
+  </div>
   <div class="proofband">
     <div class="proofband__stats">
       {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}

@@ -15,6 +15,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:base": "node scripts/check-base-links.mjs",
+    "check:facts": "node --experimental-strip-types scripts/check-facts.mjs",
     "a11y": "node scripts/a11y-smoke.mjs",
     "astro": "astro"
   },

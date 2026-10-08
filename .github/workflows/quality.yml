@@ -28,3 +28,5 @@ jobs:
           SITE_ENV: staging
           SITE_URL: https://ctjobready.github.io
           BASE_PATH: /ctg
+      - name: Fact status and public-citation gate
+        run: npm run check:facts

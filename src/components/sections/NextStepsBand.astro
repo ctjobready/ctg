@@ -11,16 +11,16 @@ interface Props {
   lead?: string;
   id?: string;
 }
-const { title = 'What happens next', lead, id = 'next-steps' } = Astro.props;
+const { title = 'What happens next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Week labels are parsed from PD-04 ("Discovery wk 1 → Co-design wk 2 → Agreement wk 3") so timings are never retyped.
 const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => ({ name: m[1], wk: m[2] }));
 const cohort = pd04.stat?.value ?? '';
 const steps = [
-  { title: `Discovery · week ${wk[0]?.wk}`, text: 'A 30-minute session on your goals, priority groups and timeline.' },
+  { title: `Discovery · week ${wk[0]?.wk}`, text: 'A conversation about your goals, priority groups and timeline.' },
   { title: `Co-design · week ${wk[1]?.wk}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
   { title: `Agreement · week ${wk[2]?.wk}`, text: 'Scope, schedule and success measures are agreed.' },
-  { title: `First cohort · ${cohort}`, text: 'Training starts within this window after signing.' },
+  { title: `First cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
 ];
 ---
 

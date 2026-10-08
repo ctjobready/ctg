@@ -69,10 +69,10 @@ const nodes = [
       modifiedTime={modifiedTime}
     />
     <!-- Progressive enhancement flag + remembered promo dismissal, set before first paint -->
-    <script is:inline>
+    <script is:inline define:vars={{ promoKey: promoData.storageKey }}>
       document.documentElement.classList.add('js');
       try {
-        if (localStorage.getItem('ct-promo-v1')) document.documentElement.setAttribute('data-promo', 'off');
+        if (localStorage.getItem(promoKey)) document.documentElement.setAttribute('data-promo', 'off');
       } catch (e) {}
     </script>
     <style is:inline>
@@ -88,7 +88,7 @@ const nodes = [
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">Skip to main content</a>
-    {showPromo && <PromoBar lead={promoData.lead} message={promoData.rest} actionLabel={promoData.action.label} href={promoData.action.href} />}
+    {showPromo && <PromoBar lead={promoData.lead} message={promoData.rest} actionLabel={promoData.action.label} href={promoData.action.href} storageKey={promoData.storageKey} factId={promoData.factId} />}
     <SiteHeader />
     <main id="main" tabindex="-1">
       {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}

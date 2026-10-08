@@ -19,7 +19,9 @@
 html {
   font-family: var(--font-sans);
   font-synthesis: none;
+  /* WCAG 2.4.11: sticky header (the PromoBar scrolls away) and the mobile sticky CTA bar must not hide focused or targeted content */
   scroll-padding-top: calc(var(--header-h) + 16px);
+  scroll-padding-bottom: 24px;
   interpolate-size: allow-keywords;
 }
 
@@ -27,6 +29,20 @@ html {
   html {
     scroll-behavior: smooth;
   }
+}
+
+@media (max-width: 767px) {
+  html:has(.has-sticky-cta) {
+    scroll-padding-bottom: calc(72px + 24px);
+  }
+}
+
+/* In-page targets (headings with ids, footnotes, sections) clear the sticky header */
+:where(h1, h2, h3, h4, h5, h6, section, article)[id],
+[id^='fn-'],
+[id^='fn-ref-'],
+:target {
+  scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
 html.is-locked {

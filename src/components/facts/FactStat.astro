@@ -20,6 +20,15 @@ if (!f.stat) throw new Error(`<FactStat id="${id}">: fact has no stat`);
 const doCount = count ?? f.stat.numeric !== undefined;
 ---
 
-<Stat value={f.stat.value} label={f.stat.label} tone={tone} size={size} align={align} count={doCount} class={className}>
-  <FootnoteMarker id={id} footnote={footnote} />
-</Stat>
+<!-- display:contents keeps the wrapper out of the parent's flex/grid layout while carrying data-fact for the status gate. -->
+<div class="factstat" data-fact={id}>
+  <Stat value={f.stat.value} label={f.stat.label} tone={tone} size={size} align={align} count={doCount} class={className}>
+    <FootnoteMarker id={id} footnote={footnote} />
+  </Stat>
+</div>
+
+<style>
+  .factstat {
+    display: contents;
+  }
+</style>

@@ -60,7 +60,7 @@ import WorldMap from '../components/ui/WorldMap.astro';
 import { faqJsonLd } from '../lib/faq';
 import { fact } from '../data/facts';
 import tokens from '../../design-system/tokens.json';
-import { audiences } from '../data/nav';
+import { audiences, promo } from '../data/nav';
 import { cta } from '../lib/mailto';
 
 // ---- Token data (AA theme) with computed contrast -----------------------------------------
@@ -298,7 +298,7 @@ const sectionLinks = [
     </div>
     <div class="sg-block">
       <h3>PromoBar</h3>
-      <PromoBar lead="Impact Report 2026:" message="employment among surveyed graduates rose from 33.3% to 61.5%." actionLabel="See the findings" href="/impact/outcomes-2026/" storageKey="sg-promo" dismissible={false} />
+      <PromoBar lead={promo.lead} message={promo.rest} actionLabel={promo.action.label} href={promo.action.href} factId={promo.factId} storageKey="sg-promo" dismissible={false} />
     </div>
     <div class="sg-block">
       <h3>Breadcrumbs</h3>
@@ -308,7 +308,7 @@ const sectionLinks = [
 
   <!-- ===================================== HERO ===================================== -->
   <div id="hero">
-    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work within months." artSeed="styleguide-home">
+    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." artSeed="styleguide-home">
       <Fragment slot="actions">
         <Button iconEnd="arrow-right" href="/contact/">Primary action</Button>
         <Button variant="outline" href="/impact/">Secondary action</Button>
@@ -415,7 +415,7 @@ const sectionLinks = [
       highlight={0}
       rows={[
         { label: 'Tracks chosen from current employer demand', cells: ['✅', '⚠️ Often supply-led', '⚠️ Learner picks', '❌'] },
-        { label: 'One-to-one mentoring into first income', cells: ['✅ 3 months', '❌ Rare', '❌', '❌'] },
+        { label: 'Three months of milestone-based mentoring', cells: ['✅', '❌ Rare', '❌', '❌'] },
         { label: 'Independent causal evidence', cells: ['✅ RCT', '⚠️ Few show employment gains', '❌', '—'] },
         { label: 'Cost per learner', cells: ['Moderate', 'High (facilities)', 'Lowest', 'Highest long-run cost'] },
       ]}
@@ -464,7 +464,7 @@ const sectionLinks = [
     cta={{ label: 'Book a discovery session', href: cta('discovery').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     urgency="Authentic urgency line goes here."
-    micro="30 minutes, no obligation."
+    micro="A discovery session is a conversation, not a commitment."
   />
   <CTABand
     id="cta-klein"
@@ -472,7 +472,7 @@ const sectionLinks = [
     heading="CTA band on Klein"
     cta={{ label: 'Request a briefing', href: cta('briefing').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
-    micro="30 minutes, no obligation."
+    micro="A discovery session is a conversation, not a commitment."
   />
 
   <!-- ===================================== MOTION ===================================== -->
@@ -555,29 +555,29 @@ const sectionLinks = [
 
   <!-- ===================================== CMF BANDS ===================================== -->
   <div id="cmf">
-    <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence (planning/06 P1), data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
-    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work within months." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
+    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <RouterBand id="band-router" title="What brings you here?" />
-    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and most employers still cannot find the talent they need." factIds={['PX-01', 'PX-04', 'PX-03', 'PX-05']} />
+    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
-      { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Graduates who wait fall behind as junior tasks disappear.' },
+      { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as junior tasks disappear.' },
       { claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },
-      { claim: 'Most training does not lead to jobs.', factId: 'RC-06', implication: 'Funding repeats programs that never reach earnings.' },
+      { claim: 'Most vocational training shows no employment gain.', factId: 'RC-06', implication: 'Funding repeats programs that never reach earnings.' },
     ]} />
     <FutureBand id="band-future" title="Imagine the next twelve months." vignettes={[
-      { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A graduate in Barishal invoices her first foreign client from her own laptop.' },
-      { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'A ministry dashboard shows who is earning, not only who completed.' },
-      { kind: 'Social', title: 'Certified, AI-ready talent in weeks', text: 'An employer hires certified graduates without a long search.' },
+      { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
+      { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
+      { kind: 'Social', title: 'Certified, AI-ready talent', text: 'An employer hires certified completers without a long search.' },
     ]} />
-    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="We began in Dhaka’s Korail slum with UNDP, learning what it takes to move a first-generation learner into a first job." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
+    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="CodersTrust began in 2014 in Copenhagen and Dhaka, developing freelancers through mentored training. Our first UNDP program (2015) was in Dhaka's Korail slum." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
     <MechanismBand id="band-mechanism" title="One path from learning to earning." link={{ label: 'How our model works', href: '/our-model/' }} />
     <FeaturesTable id="band-features" title="Built around outcomes, not attendance." rows={[
       { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Degrees are not turning into jobs' },
-      { feature: 'Certification with exam fees paid', means: 'graduates hold credentials employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
-      { feature: 'One-to-one mentoring into first income', means: 'learners reach earnings, not just a certificate.', outcomeFactId: 'OC-05', relieves: 'Graduates stay jobless' },
+      { feature: 'Certification, with the exam fee for each trainee’s track', means: 'completers hold credentials employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
+      { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
       { feature: 'Outcome tracking after each course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
     ]} />
-    <ProofBand id="band-proof" title="The results speak in paychecks." statIds={['OC-01', 'OC-03', 'OC-02', 'RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+    <ProofBand id="band-proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
     <CaseStudyCarousel id="band-cases" title="Proof in practice" items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
@@ -589,7 +589,7 @@ const sectionLinks = [
     <ComparisonBand id="band-compare" />
     <OfferBand id="band-offer" />
     <RiskReversalBand id="band-risk" />
-    <CTABand id="band-cta" heading="Start with a pilot. Decide on evidence." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`First cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="30 minutes, no obligation." reinforce={['Your first step: a 30-minute discovery session. Reply to our email with two time slots.']} />
+    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['Your first step: a discovery session. Reply to our email with two time slots.']} />
     <NextStepsBand id="band-next" />
     <NewsTeaserBand id="band-news" fallback={[
       { title: 'Sample news headline one', date: '2026-10-07', topic: 'Impact', excerpt: 'Shown only when the news collection is empty.', href: '/news/' },

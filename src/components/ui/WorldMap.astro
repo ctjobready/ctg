@@ -1,6 +1,6 @@
 ---
 import { WORLD_LAND_PATH, WORLD_W, WORLD_H, LAT_TOP, LAT_SPAN } from '../../data/world-land';
-import { locations, type ProgramLocation } from '../../data/countries';
+import { locations, OFFICES_LINE, type ProgramLocation } from '../../data/countries';
 
 /**
  * WorldMap ➕ (M17) — inline SVG equirectangular map (Natural Earth 110m, public domain) with one pin
@@ -29,7 +29,7 @@ const pins = items.map((l) => {
 });
 ---
 
-<figure class:list={['wmap', className]} data-reveal>
+<figure class:list={["wmap", className]} data-reveal data-fact="SC-03">
   <div class="wmap__stage">
     <svg class="wmap__svg" viewBox={`0 0 ${WORLD_W} ${WORLD_H}`} role="img" aria-label={`${caption}: ${items.length} locations. A table with the same information follows.`} preserveAspectRatio="xMidYMid meet">
       <path class="wmap__land" d={WORLD_LAND_PATH} />
@@ -37,12 +37,12 @@ const pins = items.map((l) => {
     <ul class="wmap__pins" role="presentation">
       {
         pins.map((p) => (
-          <li class={`wmap__pt wmap__pt--${p.side} wmap__pt--${p.vert} wmap__pt--${p.kind}`} style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%`} aria-hidden="true">
+          <li class={`wmap__pt wmap__pt--${p.side} wmap__pt--${p.vert}`} style={`left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%`} aria-hidden="true">
             <span class="wmap__pin">
               <span class="wmap__dot"></span>
             </span>
             <div class="wmap__card" id={`wmap-card-${p.id}`}>
-              <p class="wmap__country">{p.country} <span>{p.years}</span></p>
+              <p class="wmap__country">{p.name} <span>{p.years}</span></p>
               <dl>
                 <dt>Target group</dt>
                 <dd>{p.targetGroup}</dd>
@@ -58,6 +58,7 @@ const pins = items.map((l) => {
     </ul>
   </div>
   <figcaption class="wmap__cap">{caption}. Hover or tap a pin for details. The full list, readable by keyboard and screen reader, is the table below.</figcaption>
+  <p class="wmap__offices" data-fact="ID-07">{OFFICES_LINE}</p>
 
   {
     table && (
@@ -66,7 +67,7 @@ const pins = items.map((l) => {
           <caption class="sr-only">{caption}</caption>
           <thead>
             <tr>
-              <th scope="col">Country</th>
+              <th scope="col">Location</th>
               <th scope="col">Years</th>
               <th scope="col">Target group</th>
               <th scope="col">Skills</th>
@@ -76,7 +77,7 @@ const pins = items.map((l) => {
           <tbody>
             {items.map((l) => (
               <tr>
-                <th scope="row">{l.country}<span class="wmap__region">{l.region}</span></th>
+                <th scope="row">{l.name}<span class="wmap__region">{l.region}</span></th>
                 <td>{l.years}</td>
                 <td>{l.targetGroup}</td>
                 <td>{l.skills}</td>
@@ -242,6 +243,11 @@ const pins = items.map((l) => {
     margin-top: var(--space-sm);
     font-size: var(--fs-body-xs);
     color: var(--ctx-muted);
+  }
+  .wmap__offices {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
   }
   .wmap__table {
     margin-top: var(--space-md);

@@ -2,17 +2,6 @@
    Hidden "pre-reveal" states exist only when JS is running (html.js) AND the user has not
    asked for reduced motion, so content is always visible without JS or with reduced motion. */
 
-@property --hero-x {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 50%;
-}
-@property --hero-y {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 50%;
-}
-
 @keyframes ct-reveal-in {
   from {
     opacity: 0;
@@ -23,14 +12,13 @@
     transform: none;
   }
 }
+/* M11: gradient drift animates transform only (applied to Hero's ::before) */
 @keyframes ct-hero-drift {
   from {
-    --hero-x: 42%;
-    --hero-y: 44%;
+    transform: translate3d(-5%, -4%, 0) scale(1.02);
   }
   to {
-    --hero-x: 58%;
-    --hero-y: 56%;
+    transform: translate3d(5%, 4%, 0) scale(1.02);
   }
 }
 @keyframes ct-bounce {

@@ -16,7 +16,7 @@ const reg = show ? footnotesFor(Astro).register(id) : null;
 
 {
   reg && (
-    <sup class="fn">
+    <sup class="fn" data-fact={id}>
       <a href={`#fn-${reg.n}`} id={`fn-ref-${reg.n}-${reg.k}`} aria-label={`Note ${reg.n}`}>
         {reg.n}
       </a>

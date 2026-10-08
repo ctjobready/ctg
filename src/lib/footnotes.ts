@@ -8,10 +8,15 @@ import { CAVEATS, fact, sources, type Fact, type Source } from '../data/facts';
 export interface Note {
   n: number;
   id: string;
-  /** Short description of the claim the note belongs to. */
+  /** Short description of the claim the note belongs to (public stat label or fact text). */
   claim: string;
-  /** Caveat class text + base + note, in that order (each optional). */
-  parts: string[];
+  /** Caveat class text (register v1.1), if the fact has one. */
+  caveat?: string;
+  /** Public plain-language extra note, if any. */
+  footnote?: string;
+  /** Sample base (n), if the register gives one. */
+  base?: string;
+  /** Public citations, deduplicated. */
   sources: Source[];
   /** Number of in-page references (for back-links). */
   refs: number;
@@ -44,20 +49,27 @@ export class Footnotes {
 
 /** Does a fact carry a caveat the reader should see (→ show a footnote marker automatically)? */
 export function needsFootnote(f: Fact): boolean {
-  return Boolean(f.caveat || f.base || f.note);
+  return Boolean(f.caveat || f.base || f.footnote);
 }
 
 export function noteFor(f: Fact, n: number, refs = 1): Note {
-  const parts: string[] = [];
-  if (f.caveat) parts.push(CAVEATS[f.caveat]);
-  if (f.base) parts.push(f.base);
-  if (f.note) parts.push(f.note);
+  const seen = new Set<string>();
+  const cites: Source[] = [];
+  for (const id of f.sourceIds) {
+    const s = sources[id];
+    if (s && !seen.has(s.id)) {
+      seen.add(s.id);
+      cites.push(s);
+    }
+  }
   return {
     n,
     id: f.id,
     claim: f.stat?.label ?? f.text,
-    parts,
-    sources: f.sourceIds.map((s) => sources[s]).filter(Boolean),
+    caveat: f.caveat ? CAVEATS[f.caveat] : undefined,
+    footnote: f.footnote,
+    base: f.base,
+    sources: cites,
     refs,
   };
 }

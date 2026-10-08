@@ -41,21 +41,29 @@ const hasMedia = Astro.slots.has('media') || art;
 
 <style>
   .hero {
-    background: radial-gradient(
-      ellipse 85% 120% at var(--hero-x) var(--hero-y),
-      var(--hero-gradient-center),
-      var(--hero-gradient-edge)
-    );
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--hero-gradient-edge);
     padding-block: var(--space-section-mobile);
+  }
+  /* M11: the gradient lives on a pseudo-element so the drift animates transform only (no repaint of a gradient) */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
   }
   @media (min-width: 768px) {
     .hero {
       padding-block: var(--space-section-desktop) calc(var(--space-section-desktop) * 0.8);
     }
   }
-  /* M11: slow gradient drift (registered custom properties) */
   @media (prefers-reduced-motion: no-preference) {
-    .hero {
+    .hero::before {
+      will-change: transform;
       animation: ct-hero-drift 20s ease-in-out infinite alternate;
     }
   }
@@ -147,7 +155,7 @@ const hasMedia = Astro.slots.has('media') || art;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero {
+    .hero::before {
       animation: none;
     }
   }

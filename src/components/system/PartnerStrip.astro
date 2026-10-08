@@ -74,7 +74,8 @@ const label = cap || (kind === 'press' ? 'Press coverage' : 'Partners');
           </div>
         </div>
         <button class="marquee__toggle" type="button" hidden data-marquee-toggle aria-pressed="false" aria-label="Pause logo animation">
-          <Icon name="pause" size={16} />
+          <Icon name="pause" size={16} class="marquee__ic-pause" />
+          <Icon name="play" size={16} class="marquee__ic-play" />
         </button>
       </>
     )
@@ -191,6 +192,17 @@ const label = cap || (kind === 'press' ? 'Press coverage' : 'Partners');
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+  .marquee__toggle :global(.marquee__ic-play),
+  .partners.is-paused .marquee__toggle :global(.marquee__ic-pause) {
+    display: none;
+  }
+  .partners.is-paused .marquee__toggle :global(.marquee__ic-play) {
+    display: inline-block;
+  }
+  .marquee__toggle:focus-visible {
+    outline: 2px solid var(--ctx-focus);
+    outline-offset: 2px;
   }
   .marquee__toggle:hover {
     background: var(--surface-container-low);

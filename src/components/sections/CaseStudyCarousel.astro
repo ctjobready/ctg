@@ -4,6 +4,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import Carousel from '../system/Carousel.astro';
 import CaseStudyCard from '../ui/CaseStudyCard.astro';
 import { fact } from '../../data/facts';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
 import type { ImageMetadata } from 'astro';
 
 /** C7 Proof in practice: scroll-snap carousel of case-study cards, each with an outcome stat from the register. */
@@ -33,7 +34,18 @@ const cards = items.map((it) => {
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Proof in practice" title={title} lead={lead} />
-  <Carousel label="Case studies" perView={3} count={cards.length}>
-    {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} stat={c.stat} href={c.href} />)}
-  </Carousel>
+  <div data-fact={items.map((i) => i.factId).join(' ')}>
+    <Carousel label="Case studies" perView={3} count={cards.length}>
+      {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} stat={c.stat} href={c.href} />)}
+    </Carousel>
+    <p class="cases__fn">Program results (gross placement){items.map((i) => <FootnoteMarker id={i.factId} footnote="auto" />)}</p>
+  </div>
 </Section>
+
+<style>
+  .cases__fn {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+</style>
