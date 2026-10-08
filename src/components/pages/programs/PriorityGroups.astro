@@ -1,6 +1,8 @@
 ---
 import Badge from '../../system/Badge.astro';
 import Fact from '../../facts/Fact.astro';
+import { fact, sources } from '../../../data/facts';
+import { graduateRates } from '../../sections/copyText';
 
 /**
  * NationWIDE priority groups (IN-03), one card per group with its status:
@@ -13,16 +15,25 @@ interface Group {
   title: string;
   status: string;
   tone: 'brand' | 'info' | 'success' | 'eyebrow';
-  /** Plain sentence without a figure (with data-fact IDs), or fact IDs rendered with their canonical wording. */
-  note?: { text: string; factIds: string[] };
+  /** Plain sentence (with data-fact IDs), or fact IDs rendered with their canonical wording. `source` lists source ids shown as a "Source:" line. */
+  note?: { text: string; factIds: string[]; source?: string[] };
   factIds?: string[];
 }
+const rates = graduateRates();
+// PX-12 without its "75% of 5M+ madrasah students unemployed or under-employed (study estimate)" clause: the register names no study
+// for that figure, so it is not used on the page until it is sourced. The rest of the sentence is the register's wording; the source
+// is shown on the card (a footnote would print the whole fact, 75% included).
+const px12 = fact('PX-12');
+const madrasah = px12.text
+  .split('; ')
+  .filter((part) => !/^75%/.test(part))
+  .join('; ');
 const groups: Group[] = [
-  { title: 'Unemployed graduates', status: 'Priority group', tone: 'brand', note: { text: 'Degree holders are the most jobless group: graduate unemployment is far higher than for SSC holders (see the national challenge above).', factIds: ['PX-03'] } },
-  { title: 'Madrasah youth', status: 'Priority group', tone: 'brand', factIds: ['PX-12'] },
+  { title: 'Unemployed graduates', status: 'Priority group', tone: 'brand', note: { text: `Graduate unemployment is ${rates.graduate}, against ${rates.ssc} for SSC holders (see the national challenge above).`, factIds: ['PX-03'] } },
+  { title: 'Madrasah youth', status: 'Priority group', tone: 'brand', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
   { title: 'Climate-vulnerable coastal youth', status: 'NationWIDE aims to reach', tone: 'info', factIds: ['PX-11'] },
   { title: 'Indigenous communities', status: 'NationWIDE aims to reach', tone: 'info', factIds: ['PX-13'] },
-  { title: 'Third-gender people', status: 'Program agreed with BCC and Bandhu Welfare Society', tone: 'success', factIds: ['GV-07', 'PX-14'] },
+  { title: 'Third-gender people', status: 'Program agreed', tone: 'success', factIds: ['GV-07', 'PX-14'] },
 ];
 ---
 
@@ -37,6 +48,7 @@ const groups: Group[] = [
             <p><Badge tone={g.tone}>{g.status}</Badge></p>
             <h3 class="card__title">{g.title}</h3>
             {g.note && <p class="card__text">{g.note.text}</p>}
+            {g.note?.source && <p class="card__meta">Source: {g.note.source.map((s) => sources[s]?.label).filter(Boolean).slice(0, 2).join('; ')}</p>}
             {g.factIds?.map((id) => <p class="card__text"><Fact id={id} /></p>)}
           </div>
         </li>

@@ -2,8 +2,11 @@
 // P14 — SuperKids /programs/superkids/ (T3 conversion page; derived from matrix 4.5 for schools and partners).
 // Only registered facts are used (GV-08 agreements and targets, never delivered reach). Content the spec marks
 // "to confirm with CodersTrust" is written as non-claim copy or omitted (see the page report): C3, C8 and C10.
-// Declared compression (doc 06 P14, round 9 Mi3): no separate C3 band; C2 leads straight into C4 because no registered fact supports a cost-of-late-exposure statement (comment only, nothing rendered).
+// Declared compression (doc 06 P14, round 9 Mi3): no separate C3 band; C2 (the PX-08 sentence) carries the transition line "It doesn’t have to be this way."
+// and leads straight into C4, because no registered fact supports a cost-of-late-exposure statement (comment only, nothing rendered).
 // The C6 positioning statement (POSITIONING.superkids) has no "unlike … we …" clause: it states only what GV-08 registers.
+// C5 names only the SuperKids agreements (DoICT, NCTB; GV-08) and Robi (PA-03, per doc 06 P14): the general government logo strip is not shown,
+// because its logos are CodersTrust-wide relationships, not SuperKids partners.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
@@ -32,11 +35,13 @@ import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
 const title = 'SuperKids: STEAM, Coding and Robotics';
-const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. DoICT and NCTB agreements set targets, not delivered reach.';
+const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. Public-sector agreements set targets, not delivered reach.';
 const enquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
-const faqSources: FaqSource[] = ['Q1', 'Q8', 'Q9'].map((id) => ({ audience: 'foundations' as const, id }));
+// Only the safeguarding question (Q9) applies to SuperKids: Q1 ("Will this work in our country?") answers with the adult course menu
+// and Q8 ("What does it cost?") with the adult program inclusions, and neither describes a K-12 program. Pricing is covered in C11.
+const faqSources: FaqSource[] = ['Q9'].map((id) => ({ audience: 'foundations' as const, id }));
 
 const jsonLd = [
   webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
@@ -66,6 +71,7 @@ const courses = linkAttrs(COURSES_URL);
     bluf="SuperKids brings the first steps of STEAM, coding and robotics into the classroom."
     factIds={['PX-08']}
     scope={{ 'PX-08': { prefix: 'Globally' } }}
+    transition="It doesn’t have to be this way."
   />
 
   <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
@@ -81,14 +87,14 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C5 -->
   <GuideSection
-    title="Built with public-sector and private partners."
+    title="Public-sector agreements and a private-sector partner."
     empathy="You want children to build digital skills early."
     origin={ORIGIN}
-    partnerGroup="government"
+    showPartners={false}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="GV-08">SuperKids has agreements with DoICT and NCTB. These are agreements and targets, not delivered reach.</p>
-    <p data-fact="PA-03"><Fact id="PA-03" footnote={false} />.</p>
+    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These are agreements and targets, not delivered reach.</p>
+    <p data-fact="PA-03">Private-sector partners include Robi.</p>
   </GuideSection>
 
   <!-- C6 -->
@@ -105,7 +111,7 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
-    <SectionHeader id="agreements-h" eyebrow="What is in place" title="Agreements and targets, not delivered reach." lead="No learner outcomes are claimed for SuperKids on this page." />
+    <SectionHeader id="agreements-h" eyebrow="What is in place" title="Agreements and targets, not delivered reach." />
     <div class="agree">
       <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>
       <div class="agree__cards">

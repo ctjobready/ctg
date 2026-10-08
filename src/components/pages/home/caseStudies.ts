@@ -10,5 +10,5 @@ export const caseStudyItems = [
   { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', image: wsdfm },
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', image: kosovo },
   { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', partner: 'Denominator not stated', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', image: undp },
-  { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/', image: herPower },
+  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/', image: herPower },
 ];

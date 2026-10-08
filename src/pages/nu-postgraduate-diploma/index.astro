@@ -7,7 +7,6 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import Badge from '../../components/system/Badge.astro';
 import CourseCard from '../../components/system/CourseCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
@@ -26,8 +25,9 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { LAST_UPDATED } from '../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview, nuUpcoming } from '../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
 import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
@@ -38,7 +38,6 @@ const description = 'Build practical digital skills alongside your degree with t
 const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const courses = await nuCourses();
-const upcoming = await nuUpcoming();
 
 const faqSources: FaqSource[] = [
   { q: 'Is the NU Postgraduate Diploma right for me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
@@ -83,7 +82,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     title="Employers are asking for different skills."
     lead="AI is shifting which entry-level skills employers ask for, and a degree alone does not show them."
     blocks={[
-      { claim: 'AI is shifting entry-level work.', factId: 'PX-06', implication: 'Some junior tasks are disappearing, so practical skills matter more.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what you can do, so practical skills matter.' },
       { claim: 'AI skills are growing in demand.', factId: 'PX-08', scope: 'Globally', implication: 'Employers look for AI skills alongside the degree.' },
     ]}
   />
@@ -105,6 +104,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     empathy={EMPATHY.nuPgd}
     origin={originShort}
     statIds={['SC-05']}
+    noted={['SC-05']}
     partnerGroup="academic"
     method={{ text: 'Practical digital-skills courses, delivered by CodersTrust under National University’s training partnership.', factId: 'SC-04' }}
   >
@@ -125,16 +125,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
         ))
       }
     </div>
-    {
-      upcoming.length > 0 && (
-        <div class="upcoming" data-reveal>
-          <h3 class="t-heading-l">Upcoming</h3>
-          <ul role="list">
-            {upcoming.map((u) => <li><Badge tone="info">Upcoming</Badge> {u.title}</li>)}
-          </ul>
-        </div>
-      )
-    }
   </MechanismSection>
 
   <!-- C7 -->
@@ -211,21 +201,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     .courses {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
-  .upcoming {
-    margin-top: var(--space-lg);
-  }
-  .upcoming h3 {
-    margin: 0 0 var(--space-sm);
-    color: var(--secondary);
-  }
-  .upcoming ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-sm);
-    color: var(--on-surface);
   }
   .proof-notes {
     margin-top: var(--space-lg);

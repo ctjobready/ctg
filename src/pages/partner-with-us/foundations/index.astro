@@ -36,6 +36,7 @@ import PageEnhancements from '../../../components/pages/partners/PageEnhancement
 import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
+import { CLAIM_PX06, CLAIM_RC06, endSentence } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -103,9 +104,9 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'AI is reshaping entry work.', factId: 'PX-07', scope: 'Globally', implication: 'Programs have to track where entry-level work is going.' },
-        { claim: 'AI is already thinning some entry-level postings.', factId: 'PX-06', implication: 'Tracks chosen from current employer demand keep pace.' },
+        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks chosen from current employer demand keep pace.' },
         { claim: 'Educated young people are waiting.', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
-        { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
+        { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
       ]}
     />
   </div>
@@ -147,7 +148,7 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
   </div>
   <SubBand>
     <Callout eyebrow="Reporting and recognition">
-      <Fact id="PD-18" as="p" />
+      <p data-fact="PD-18">{endSentence(fact('PD-18').text)}</p>
       <ul class="cluster" role="list" data-fact="ID-09">
         <li><Badge tone="eyebrow">SDG 4: Quality education</Badge></li>
         <li><Badge tone="eyebrow">SDG 5: Gender equality</Badge></li>
@@ -174,7 +175,7 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
     title="Program results, with the case studies behind them"
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
 
@@ -185,25 +186,25 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
       {
         feature: `Mentoring, placement support and outcome tracking for ${TRACKING_MONTHS} months, in the standard inclusions`,
         means: 'your grant is accountable for first paid work, not attendance.',
-        outcomeFactId: 'PD-02',
+        outcome: 'A grant followed through to first paid work',
         relieves: 'Grants buy hours, rarely earnings',
       },
       {
         feature: 'A randomized trial by BIGD on WSDFM; independent evaluation welcome on new programs',
         means: 'you can fund a model with independent evidence and add your own evaluation.',
-        outcomeFactId: 'RC-01',
+        outcome: 'Independent evidence on a CodersTrust program',
         relieves: 'Independent evidence is thin',
       },
       {
         feature: 'Monthly reports, a quarterly steering review and a pilot scorecard; contracting entity and due-diligence documents confirmed in co-design',
         means: 'you see progress monthly, know who you are contracting with, and can decide expansion on evidence.',
-        outcomeFactId: 'PD-08',
+        outcome: 'Progress you can see every month',
         relieves: 'Accountable implementers are hard to find',
       },
       {
         feature: 'SDG-mapped reporting tailored to your CSR framework, with co-branded certificates and events',
         means: 'reporting that fits your framework.',
-        outcomeFactId: 'PD-18',
+        outcome: 'Reports mapped to the SDGs',
       },
     ]}
   />

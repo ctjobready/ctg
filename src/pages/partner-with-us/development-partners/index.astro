@@ -36,6 +36,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -100,8 +101,8 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       title="Every cohort that trains but does not place spends the budget for a fraction of the result."
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'AI is closing some entry-level doors.', factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-        { claim: 'Training alone often does not lead to work.', factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
+        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+        { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
       ]}
     />
   </div>
@@ -165,7 +166,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: LINKS.caseHerPower },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
   <SubBand tone="airy" pull>
@@ -181,30 +182,30 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       {
         feature: `${HOURS} training hours per certification, three months of milestone-based mentoring, placement support`,
         means: 'success is counted in paid work, not hours attended. A work-entry plan per track is approved before enrollment.',
-        outcomeFactId: 'PD-01',
+        outcome: 'Results measured in paid work',
         relieves: 'Enrollment targets are met, but employment lags',
       },
       {
         feature: 'Outreach and accessible selection; tracks set per country from employer demand; safeguarding and data protection specified per program',
         means: 'priority groups can join a local lab and train for work that local employers want.',
-        outcomeFactId: 'PD-14',
+        outcome: 'Training that reaches hard-to-reach groups',
         relieves: 'Hardest-to-reach groups drop out',
       },
       {
         feature: 'Baseline at enrollment, tracers, documentary evidence of earnings and monthly reports',
         means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.',
-        outcomeFactId: 'PD-09',
+        outcome: 'Auditable results',
         relieves: 'Outcomes are hard to audit',
       },
       {
         feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)',
         means: 'completers hold a recognized credential.',
-        outcomeFactId: 'PD-03',
+        outcome: 'A recognized credential',
       },
       {
         feature: 'Placement support',
         means: 'completers reach local, remote and global work.',
-        outcomeFactId: 'PD-15',
+        outcome: 'Local, remote or global work',
       },
     ]}
   />
@@ -245,8 +246,9 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   />
 
   <!-- C14 · Next steps -->
-  <NextStepsBand title="What happens after you say yes." />
-  <Reinforcement logos={false} />
+  <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step. -->
+  <NextStepsBand title="What happens after you say yes." timing={false} />
+  <Reinforcement logos={false} reminder={false} />
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />

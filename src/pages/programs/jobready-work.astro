@@ -30,6 +30,7 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
+import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
@@ -118,6 +119,7 @@ const approach = [
     empathy={EMPATHY.employers}
     origin={ORIGIN}
     statIds={['SC-15']}
+    noted={['SC-15']}
     partnerGroup="private"
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
@@ -125,7 +127,7 @@ const approach = [
       <li data-fact="PA-03"><Fact id="PA-03" footnote={false} />.</li>
       <li data-fact="PA-06"><Fact id="PA-06" footnote={false} />.</li>
       <li data-fact="PA-07"><Fact id="PA-07" footnote={false} />.</li>
-      <li data-fact="GV-06"><Fact id="GV-06" footnote={false} />.</li>
+      <li data-fact="GV-06">{contractScope('GV-06')}</li>
     </ul>
   </GuideSection>
 
@@ -152,7 +154,7 @@ const approach = [
     items={[
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />
 
@@ -160,9 +162,9 @@ const approach = [
   <FeaturesTable
     title="Every feature answers a pain employers carry."
     rows={[
-      { feature: 'A placement team plus certified trainees from employer-demand tracks', means: 'you get a short route to job-ready candidates.', outcomeFactId: 'PD-10', relieves: 'You cannot find the digital talent you need' },
-      { feature: 'An AI-ready curriculum in every track', means: 'hires and trainees already work with AI tools.', outcomeFactId: 'PD-02', relieves: 'AI skills are the hardest to find' },
-      { feature: 'A customized curriculum and interactive workshops', means: 'your team learns on tasks from your own roles.', outcomeFactId: 'IN-10', relieves: 'Your teams need upskilling for AI workflows' },
+      { feature: 'A placement team plus certified trainees from employer-demand tracks', means: 'you get a short route to job-ready candidates.', outcome: 'Certified candidates for your roles', relieves: 'You cannot find the digital talent you need' },
+      { feature: 'An AI-ready curriculum in every track', means: 'hires and trainees already work with AI tools.', outcome: 'People ready to work with AI tools', relieves: 'AI skills are the hardest to find' },
+      { feature: 'A customized curriculum and interactive workshops', means: 'your team learns on tasks from your own roles.', outcome: 'A team trained on its own tasks', relieves: 'Your teams need upskilling for AI workflows' },
     ]}
   />
   <Section id="steps" tone="airy" aria-labelledby="steps-h">

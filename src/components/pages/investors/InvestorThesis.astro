@@ -13,7 +13,7 @@ import { fact } from '../../../data/facts';
  * people of all working ages (ages 15+, a floor) are unemployed in these regions (PX-02, never a youth
  * figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
  * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
- * PX-08, which is global). Stakes: the gap widens with every cohort trained but not employed.
+ * PX-08, which is global). Stakes: every cohort trained but not employed leaves the gap open (no claim that the gap is widening).
  */
 interface Props {
   id?: string;
@@ -28,7 +28,7 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
   <SectionHeader
     id={`${id}-h`}
     eyebrow="The thesis"
-    title="Skills and work are not meeting — and the gap is widening."
+    title="Skills and work are not meeting."
     lead="Educated young people are not in work or training, and employers cannot find skills. Courses that sell content do not close the gap, and AI is raising the bar for entry work."
   />
   <div class="grid-cards th">
@@ -59,7 +59,7 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
       </div>
     </article>
   </div>
-  <p class="th__stakes" data-reveal>The gap widens with every cohort that is trained but not employed.</p>
+  <p class="th__stakes" data-reveal>Every cohort that is trained but not employed leaves that gap open.</p>
   <p class="th__transition" data-reveal>It doesn’t have to be this way.</p>
 </Section>
 

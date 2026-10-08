@@ -13,6 +13,8 @@ interface Props {
   lead?: string;
   /** Up to 4 stat facts. */
   statIds: string[];
+  /** Stat tiles that always carry their source note, even when the fact has no caveat of its own. */
+  noted?: string[];
   /** Fact with stat.from + stat.numeric (e.g. OC-01) for the before→after chart. */
   chartId?: string;
   chartTitle?: string;
@@ -21,7 +23,7 @@ interface Props {
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, noted = [], chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, links = [], id = 'proof-band' } = Astro.props;
 const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
@@ -40,7 +42,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
   </header>
   <div class="proofband">
     <div class="proofband__stats">
-      {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
+      {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" footnote={noted.includes(s) ? true : 'auto'} />)}
     </div>
     <div class="proofband__chart">
       <BeforeAfter

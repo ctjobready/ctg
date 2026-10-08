@@ -31,6 +31,7 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { ACCOUNTABILITY, C14, EMPATHY, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCALE, SCORECARD, SURVEY_EMPLOYMENT, STEPS, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
+import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, contractScope, endSentence, governmentPartners, graduateRates } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
@@ -41,6 +42,7 @@ const description = `NationWIDE aims to train ${target} vulnerable youth in Bang
 const briefing = ctaFor('briefing');
 const funding = ctaFor('funding');
 const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
+const rates = graduateRates();
 
 const faqSources: FaqSource[] = [
   { q: 'Is NationWIDE right for our agency?', html: `Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
@@ -71,7 +73,7 @@ const jsonLd = [
   <!-- C2 -->
   <ProblemSection
     title="Degrees are not turning into jobs."
-    bluf="Graduates are the most jobless group in Bangladesh, and employers worldwide say they cannot find the skills they need. NationWIDE works with five priority groups."
+    bluf={`In Bangladesh, graduate unemployment is ${rates.graduate}, against ${rates.ssc} for holders of the Secondary School Certificate (SSC), and employers worldwide say they cannot find the skills they need. NationWIDE works with five priority groups.`}
     factIds={['PX-03', 'PX-05']}
     scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
   >
@@ -82,9 +84,9 @@ const jsonLd = [
   <CostSection
     title="Every training cycle without placement tracking repeats the result."
     blocks={[
-      { claim: 'Climate pressure is pushing educated youth out of coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists and move toward informal city work.' },
-      { claim: 'Entry-level work is shifting to AI-ready skills.', factId: 'PX-06', implication: 'Tracks need to follow employer demand for AI-ready skills.' },
-      { claim: 'Enrollment-only training repeats the same result.', factId: 'RC-06', implication: 'Each cycle that counts seats, not earnings, buys attendance and little else.' },
+      { claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks need to follow current employer demand.' },
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Each cycle that counts seats, not earnings, buys attendance and little else.' },
     ]}
   />
 
@@ -108,7 +110,7 @@ const jsonLd = [
     partnerGroup={['government', 'academic']}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="PA-02"><Fact id="PA-02" footnote={false} />.</p>
+    <p data-fact="PA-02">{governmentPartners()}.</p>
     <p data-fact="SC-04">CodersTrust is National University’s official training partner for digital career skills and credentials.</p>
   </GuideSection>
 
@@ -131,13 +133,13 @@ const jsonLd = [
     </div>
     <div class="mech-stats">
       <FactStat id="GV-09" />
-      <FactStat id="GV-01" />
+      <FactStat id="GV-01" footnote={true} />
       <FactStat id="PD-01" />
     </div>
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="What has been done to date" headlineFact="RC-01" statIds={['RC-01', 'SC-06', 'GV-01']} links={[{ label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="What has been done to date" headlineFact="RC-01" statIds={['RC-01', 'SC-06', 'GV-01']} noted={['GV-01']} links={[{ label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
       <CopyP block={SCALE} />
       <CopyP block={SURVEY_EMPLOYMENT} />
@@ -146,7 +148,7 @@ const jsonLd = [
   <CaseStudyCarousel
     title="Proof in practice"
     items={[
-      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
       { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
     ]}
@@ -156,10 +158,10 @@ const jsonLd = [
   <FeaturesTable
     title="Every feature answers a pain agencies carry."
     rows={[
-      { feature: 'Certification tracks chosen from employer demand, then mentoring and placement support', means: 'graduates leave with a recognized credential and a route to work.', outcomeFactId: 'PD-03', relieves: 'Graduates are the most jobless group' },
-      { feature: 'Pilot scorecard with cost per completer and per verified outcome; monthly reports', means: 'your budget is judged against verified outcomes.', outcomeFactId: 'PD-11', relieves: 'Budgets are measured by enrollment, not earnings' },
-      { feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; hub-and-spoke delivery; blended learning in existing labs; connectivity-light delivery', means: 'capacity stays in your system and rural labs can take part.', outcomeFactId: 'PD-07', relieves: 'Trainer and curriculum capacity is thin' },
-      { feature: 'Local, remote and global work after training', means: 'a workforce with access to work beyond the local market.', outcomeFactId: 'OC-07' },
+      { feature: 'Certification tracks chosen from employer demand, then mentoring and placement support', means: 'graduates leave with a recognized credential and a route to work.', outcome: 'Certified graduates moving toward work', relieves: 'Graduates struggle to find work' },
+      { feature: 'Pilot scorecard with cost per completer and per verified outcome; monthly reports', means: 'your budget is judged against verified outcomes.', outcome: 'Spending tied to verified outcomes', relieves: 'Budgets are measured by enrollment, not earnings' },
+      { feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; hub-and-spoke delivery; blended learning in existing labs; connectivity-light delivery', means: 'capacity stays in your system and rural labs can take part.', outcome: 'Trainers and curricula that stay in your system', relieves: 'Trainer and curriculum capacity is thin' },
+      { feature: 'Local, remote and global work after training', means: 'a workforce with access to work beyond the local market.', outcome: 'Local, remote or global work' },
     ]}
   />
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
@@ -188,8 +190,8 @@ const jsonLd = [
     <div class="note">
       <span class="note__label">Services behind a phase</span>
       <ul class="svc">
-        <li data-fact="GV-01"><Fact id="GV-01" /></li>
-        <li data-fact="GV-05"><Fact id="GV-05" /></li>
+        <li data-fact="GV-01">{endSentence(fact('GV-01').text)}</li>
+        <li data-fact="GV-05">{contractScope('GV-05')}</li>
       </ul>
     </div>
     <div class="note">
