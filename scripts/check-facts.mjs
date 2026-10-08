@@ -70,6 +70,11 @@ function* htmlFiles(dir) {
 }
 
 const problems = [];
+// The public dataset itself (D1, D15): no unverified facts and no restricted facts without a public scope.
+for (const f of Object.values(facts)) {
+  if (f.status === 'U') problems.push(`dataset: unverified (U) fact ${f.id} must stay in the private register`);
+  if (f.status === 'R' && !(f.allow ?? []).length) problems.push(`dataset: restricted (R) fact ${f.id} has no public allow scope and must stay in the private register`);
+}
 let pages = 0;
 let refs = 0;
 for (const file of htmlFiles(dist)) {

@@ -149,3 +149,9 @@ export const INVESTOR_MARKET: CopyBlock = {
   text: 'Market opportunity: four sectors in emerging markets — skill training, freelance marketplaces and job sites, HR tech and higher-ed EdTech. Market sizing and method are in the investor deck.',
   facts: ['PX-09', 'PX-08', 'PX-05', 'PX-10'],
 };
+
+/** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE, NationWIDE), after the program options. */
+export const ACCOUNTABILITY: CopyBlock = {
+  text: 'Every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
+  facts: ['PD-11'],
+};
