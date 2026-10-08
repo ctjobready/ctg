@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Button from '../../components/system/Button.astro';
+import Icon from '../../components/system/Icon.astro';
+import PartnerStrip from '../../components/system/PartnerStrip.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CopyEmail from '../../components/ui/CopyEmail.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import Sources from '../../components/facts/Sources.astro';
+import CopyBlock from '../../components/pages/about/CopyBlock.astro';
+import OfficeCard from '../../components/pages/about/OfficeCard.astro';
+import { contactRoutes } from '../../components/pages/about/routes';
+import { C14 } from '../../data/copy';
+import { ctaHref } from '../../lib/mailto';
+import { OFFICES, SOCIAL } from '../../lib/site';
+import { linkAttrs } from '../../lib/url';
+import { webPage } from '../../lib/schema';
+
+const routes = contactRoutes();
+const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Offices in New York and Dhaka.';
+const jsonLd = [webPage({ path: '/contact/', name: "Let's talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
+---
+
+<BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="Contact" title="Let's talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
+    <Fragment slot="actions">
+      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a discovery session</Button>
+      <Button variant="outline" href="#offices">Offices and phone</Button>
+    </Fragment>
+  </Hero>
+
+  <Section id="routes" aria-labelledby="routes-h">
+    <SectionHeader id="routes-h" eyebrow="Enquiry routes" title="Who are you writing as?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
+    <p class="ct-copy"><CopyEmail /></p>
+    <ul class="ct-routes" role="list">
+      {
+        routes.map((r) => {
+          const a = linkAttrs(r.cta.href);
+          const s = r.secondary ? linkAttrs(r.secondary.href) : undefined;
+          return (
+            <li class="card ct-route" data-reveal>
+              <div class="card__body">
+                <span class="ct-route__icon" aria-hidden="true"><Icon name={r.icon} size={22} /></span>
+                <h3 class="card__title">{r.who}</h3>
+                <p class="card__text">{r.text}</p>
+                <div class="ct-route__actions">
+                  <Button variant="outline" size="sm" href={r.cta.href} iconEnd={a.external ? 'arrow-up-right' : undefined} icon={a.external ? undefined : 'mail'}>{r.cta.label}</Button>
+                  {s && <a class="link" href={s.href} rel={s.rel}>{r.secondary!.label}{s.srText && <span class="sr-only"> {s.srText}</span>}</a>}
+                </div>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </Section>
+
+  <Section id="offices" tone="airy" aria-labelledby="offices-h">
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where we work from" lead="Write to the address of the office that is closest to your work." />
+    <div class="grid-cards grid-cards--2">
+      {OFFICES.map((o) => <OfficeCard {...o} role={o.id === 'usa' ? 'Office in New York' : 'Headquarters in Dhaka'} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
+    </div>
+    <div class="ct-social">
+      <h3 class="t-heading-m">Follow CodersTrust</h3>
+      <ul class="cluster" role="list">
+        {
+          SOCIAL.map((s) => (
+            <li>
+              <a class="ct-social__link" href={s.href} rel="noopener">
+                <Icon name={s.id} size={20} />
+                <span>{s.label}</span>
+                <span class="sr-only"> (opens {new URL(s.href).hostname.replace('www.', '')})</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="next" aria-labelledby="next-h">
+    <SectionHeader id="next-h" eyebrow="After you write" title="What happens next" />
+    <div class="ct-next">
+      <StepFlow steps={[
+        { title: 'Your enquiry', text: 'In your enquiry, include two suitable times for a discovery conversation.' },
+        { title: 'A conversation', text: 'We talk through your goals, priority groups and timeline.' },
+        { title: 'A first cohort, designed with you', text: 'We shape tracks, safeguarding and reporting together.' },
+      ]} />
+      <ul class="ct-c14" role="list">
+        <li><CopyBlock block={C14.validate} /></li>
+        <li><CopyBlock block={C14.reminder} /></li>
+      </ul>
+    </div>
+    <PartnerStrip variant="grid" group="development" />
+  </Section>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .ct-copy {
+    margin: calc(-1 * var(--space-sm)) 0 var(--space-lg);
+  }
+  .ct-routes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .ct-routes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .ct-routes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .ct-route__icon {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .ct-route__actions {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-md);
+    padding-top: var(--space-sm);
+  }
+  .ct-social {
+    margin-top: var(--space-lg);
+  }
+  .ct-social h3 {
+    margin: 0 0 var(--space-sm);
+  }
+  .ct-social ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ct-social__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+  }
+  .ct-next {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  .ct-c14 {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-sm);
+    border-top: 1px solid var(--outline-variant);
+    max-width: var(--measure);
+    color: var(--on-surface-variant);
+  }
+  .ct-c14 :global(p) {
+    margin: 0;
+  }
+</style>

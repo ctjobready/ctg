@@ -1,0 +1,226 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Button from '../../../components/system/Button.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
+import FAQBand from '../../../components/sections/FAQBand.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
+import OfficeCard from '../../../components/pages/about/OfficeCard.astro';
+import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import { diligenceCta } from '../../../components/pages/about/routes';
+import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
+import { faqJsonLd } from '../../../lib/faq';
+import { formatDate, isoDate } from '../../../lib/format';
+import { ORG_ID, webPage } from '../../../lib/schema';
+import { BANGLADESH_HQ, OFFICES } from '../../../lib/site';
+import { linkAttrs } from '../../../lib/url';
+
+const UPDATED = '2026-10-08';
+const FAQ_IDS = ['Q3', 'Q9', 'Q10'];
+const diligence = diligenceCta();
+const [usa, bd] = OFFICES;
+const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
+
+// PD-13 list, restated as items confirmed with the funder during co-design (no document is promised as ready).
+const checklist = [
+  'Contracting entity',
+  'Legal entity and status',
+  'Audited accounts',
+  'Safeguarding policy',
+  'Anti-fraud policy',
+  'Data-protection policy',
+  'Sanctions-screening policy',
+];
+
+const description = "CodersTrust's offices, leadership, safeguarding and data-protection arrangements, and how funders can ask about due diligence.";
+const jsonLd = [
+  webPage({ path: '/about/governance/', name: 'Governance and accountability', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Governance', path: '/about/governance/' }] }),
+  // Offices only: no parent/subsidiary relation is asserted until legal status is confirmed.
+  {
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    location: [
+      { '@type': 'Place', name: `${usa.name}, ${usa.city}`, address: { '@type': 'PostalAddress', streetAddress: usa.address[0], addressLocality: 'New York', addressRegion: 'NY', postalCode: '10005', addressCountry: 'US' }, telephone: usa.phone, email: usa.email },
+      { '@type': 'Place', name: `${BANGLADESH_HQ.name}, ${BANGLADESH_HQ.city}`, address: { '@type': 'PostalAddress', streetAddress: BANGLADESH_HQ.street, addressLocality: BANGLADESH_HQ.city, postalCode: BANGLADESH_HQ.postalCode, addressCountry: BANGLADESH_HQ.countryCode }, telephone: bd.phone, email: bd.email },
+    ],
+  },
+  faqJsonLd('governments', '/about/governance/', FAQ_IDS),
+];
+---
+
+<BaseLayout title="Governance and Accountability" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Governance' }]} jsonLd={jsonLd}>
+  <div data-fact="ID-07 PD-13" id="hero">
+    <Hero eyebrow="For funders, procurement teams and partners" title="Governance and accountability" lead={GOVERNANCE.text} artSeed="governance">
+      <p class="gov-updated">Last updated <time datetime={isoDate(UPDATED)}>{formatDate(UPDATED)}</time></p>
+      <Fragment slot="actions">
+        <Button href={diligence.href} iconEnd="arrow-right">{diligence.label}</Button>
+        <Button variant="outline" href="#offices">See the offices</Button>
+      </Fragment>
+    </Hero>
+  </div>
+
+  <Section id="offices" aria-labelledby="offices-h">
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to find us" lead="CodersTrust lists two offices. Legal form, registration and how the two relate are confirmed with funders during co-design." />
+    <div class="grid-cards grid-cards--2">
+      <OfficeCard {...usa} role="Office in New York" />
+      <OfficeCard {...bd} role="Headquarters in Dhaka" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
+    </div>
+  </Section>
+
+  <Section id="leadership" tone="airy" aria-labelledby="lead-h">
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who leads CodersTrust" lead="The Chairman and the head of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
+      {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
+    </div>
+    <p class="gov-more"><a class="link" href={linkAttrs('/about/team/').href}>Leadership and team<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <Section id="safeguarding" aria-labelledby="safe-h">
+    <SectionHeader id="safe-h" eyebrow="Safeguarding" title="How people are protected" />
+    <div class="gov-text">
+      <CopyBlock class="lead" block={SAFEGUARDING} />
+      <p data-fact="PD-12">Funders receive privacy-appropriate data.</p>
+    </div>
+  </Section>
+
+  <Section id="anti-fraud" tone="ice" aria-labelledby="fraud-h">
+    <SectionHeader id="fraud-h" eyebrow="Anti-fraud and data protection" title="How results are evidenced and records are kept" />
+    <div class="grid-cards grid-cards--2">
+      <article class="card" data-reveal>
+        <div class="card__body">
+          <h3 class="card__title">Evidence of results</h3>
+          <p class="card__text"><Fact id="PD-09" /></p>
+        </div>
+      </article>
+      <article class="card" data-reveal>
+        <div class="card__body">
+          <h3 class="card__title">Consent and records</h3>
+          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policy documents are discussed with funders during co-design rather than published on this site.</p>
+        </div>
+      </article>
+    </div>
+  </Section>
+
+  <Section id="evidence" aria-labelledby="evid-h">
+    <SectionHeader id="evid-h" eyebrow="Independent evidence" title="Judged by independent evaluators, and by you" />
+    <div class="gov-text">
+      <CopyBlock class="lead" block={RCT_HEADLINE} />
+      <p data-fact="PD-08">Funders also receive monthly reports from the first cohort, and independent evaluation is welcome.</p>
+      <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a></p>
+    </div>
+  </Section>
+
+  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions on safeguarding, evidence and funding" />
+
+  <Section id="checklist" tone="airy" aria-labelledby="check-h">
+    <SectionHeader id="check-h" eyebrow="Due diligence" title="What we confirm with you in co-design" />
+    <div class="gov-check" data-fact="PD-13">
+      <p>These items are confirmed with the funder during co-design. Tell us which you need and by when. This list is a checklist for the conversation; it does not mean the documents are ready to send.</p>
+      <ul class="gov-check__list" role="list">
+        {checklist.map((c) => <li>{c}</li>)}
+      </ul>
+      <div class="gov-print"><Button variant="outline" size="sm" icon="printer" data-print>Print this checklist</Button></div>
+    </div>
+  </Section>
+
+  <CTABand
+    id="diligence-cta"
+    heading="Ask about due diligence"
+    text="Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared."
+    cta={{ label: diligence.label, href: diligence.href }}
+    secondary={{ label: 'Read our evidence', href: '/impact/' }}
+  />
+
+  <Section id="next" aria-labelledby="next-h">
+    <SectionHeader id="next-h" eyebrow="What happens next" title="From your question to a clarification call" />
+    <StepFlow steps={[
+      { title: 'Your question', text: 'Tell us the organization, the program or grant under consideration and what you need.' },
+      { title: 'Our reply', text: 'We reply with what can be shared.' },
+      { title: 'Clarification call', text: 'We talk through anything that needs clarifying.' },
+    ]} />
+  </Section>
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('[data-print]').forEach((b) => b.addEventListener('click', () => window.print()));
+</script>
+
+<style>
+  .gov-updated {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .gov-text {
+    display: grid;
+    gap: var(--space-md);
+    max-width: var(--measure);
+  }
+  .gov-text > * {
+    margin: 0;
+  }
+  .gov-leaders {
+    max-width: 640px;
+  }
+  .gov-more {
+    margin: var(--space-lg) 0 0;
+  }
+  .gov-check {
+    display: grid;
+    gap: var(--space-md);
+    max-width: var(--measure);
+    justify-items: start;
+  }
+  .gov-check > p {
+    margin: 0;
+  }
+  .gov-check__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+  .gov-check__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-height: 48px;
+    padding: 0 var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .gov-check__list li::before {
+    content: '';
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-sm);
+  }
+  /* The print button needs JavaScript, so it only shows when the page has set the js flag. */
+  .gov-print {
+    display: none;
+  }
+  :global(html.js) .gov-print {
+    display: block;
+  }
+  @media print {
+    :global(html.js) .gov-print {
+      display: none;
+    }
+  }
+</style>

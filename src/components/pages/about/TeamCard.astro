@@ -1,0 +1,114 @@
+---
+import Img from '../../ui/Img.astro';
+import { linkAttrs } from '../../../lib/url';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Person card for the team and mentor grids: portrait (top-aligned crop), name, role, optional chips.
+ * Portraits carry `data-asset` (D13) so the production permissions gate can check them.
+ */
+interface Props {
+  name: string;
+  role: string;
+  photo?: ImageMetadata;
+  alt?: string;
+  assetId: string;
+  /** Profile link (team). Omit for a non-linked card (mentors). */
+  href?: string;
+  expertise?: string[];
+  /** How many expertise chips show before "+N more". */
+  chips?: number;
+}
+const { name, role, photo, alt, assetId, href, expertise = [], chips = 3 } = Astro.props;
+const a = href ? linkAttrs(href) : undefined;
+const shown = expertise.slice(0, chips);
+const more = expertise.slice(chips);
+const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+---
+
+<article class:list={['tc card', a && 'card--link']} data-reveal>
+  <div class="tc__photo">
+    {photo ? <Img src={photo} alt={alt ?? `Portrait of ${name}`} width={480} height={480} widths={[240, 480]} sizes="(min-width:1024px) 280px, (min-width:600px) 45vw, 90vw" assetId={assetId} /> : <span class="tc__initials" aria-hidden="true">{initials}</span>}
+  </div>
+  <div class="card__body">
+    <h3 class="card__title">{a ? <a class="card__link" href={a.href}>{name}</a> : name}</h3>
+    <p class="tc__role">{role}</p>
+    {
+      shown.length > 0 && (
+        <ul class="tc__chips" role="list" aria-label={`Expertise of ${name}`}>
+          {shown.map((e) => <li>{e}</li>)}
+        </ul>
+      )
+    }
+    {
+      more.length > 0 && (
+        <details class="tc__more">
+          <summary>{more.length} more areas</summary>
+          <ul class="tc__chips" role="list">
+            {more.map((e) => <li>{e}</li>)}
+          </ul>
+        </details>
+      )
+    }
+    {a && <span class="card__more" aria-hidden="true">Read profile</span>}
+  </div>
+</article>
+
+<style>
+  .tc__photo {
+    aspect-ratio: 1 / 1;
+    background: var(--secondary-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .tc__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 12%;
+  }
+  .tc__initials {
+    font-size: var(--fs-display-4xl);
+    font-weight: var(--fw-bold);
+    color: var(--on-secondary-container);
+  }
+  .tc__role {
+    margin: 0;
+    color: var(--on-surface-variant);
+  }
+  .tc__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tc__chips li {
+    font-size: var(--fs-body-xs);
+    line-height: 1.3;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    border: 1px solid var(--primary-fixed);
+  }
+  .tc__more {
+    position: relative;
+    z-index: 2;
+    font-size: var(--fs-body-xs);
+  }
+  .tc__more summary {
+    cursor: pointer;
+    color: var(--primary);
+    font-weight: var(--fw-medium);
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  .tc__more[open] summary {
+    margin-bottom: var(--space-sm);
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import Section from '../../ui/Section.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * "What is CodersTrust?" band (ID-01 verbatim) with room for a page-specific lead sentence inside
+ * the same band (planning/06 conversion-page contract, rule 3). Same markup and look as DefinitionBand.
+ */
+interface Props {
+  heading?: string;
+  factId?: string;
+  id?: string;
+}
+const { heading = 'What is CodersTrust?', factId = 'ID-01', id = 'definition' } = Astro.props;
+const text = fact(factId).text;
+---
+
+<Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
+  <div class="def" data-fact={factId}>
+    <h2 class="def__title" id={`${id}-h`}>{heading}</h2>
+    <p class="def__text">{text}</p>
+    <slot />
+  </div>
+</Section>
+
+<style>
+  .def {
+    max-width: var(--measure, 44rem);
+    display: grid;
+    gap: var(--space-sm);
+    padding-inline-start: var(--space-md);
+    border-inline-start: 3px solid var(--primary);
+  }
+  .def__title {
+    margin: 0;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--ctx-heading);
+  }
+  .def :global(p),
+  .def__text {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-text);
+  }
+</style>

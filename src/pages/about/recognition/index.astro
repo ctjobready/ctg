@@ -1,0 +1,450 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Button from '../../../components/system/Button.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import Img from '../../../components/ui/Img.astro';
+import Quote from '../../../components/ui/Quote.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import { press } from '../../../data/press';
+import { endorsements } from '../../../data/endorsements';
+import { fact } from '../../../data/facts';
+import { ctaHref } from '../../../lib/mailto';
+import { formatDate, isoDate, slugify } from '../../../lib/format';
+import { webPage } from '../../../lib/schema';
+import { linkAttrs, url } from '../../../lib/url';
+import { newsHref } from '../../../components/pages/news/news';
+
+const news = await getCollection('news');
+const byId = new Map(news.map((n) => [n.id, n]));
+const post = (id: string) => byId.get(id);
+
+// Founder honors (PA-11): parsed from the fact so wording and years cannot drift; each links to its dated news post.
+const HONOR_POSTS: [RegExp, string | null][] = [
+  [/UPEACE/, 'aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador'],
+  [/UNSGII/, 'coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii'],
+  [/NYNJMSDC/, 'aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states'],
+  [/NOVA/, null],
+];
+const honors = fact('PA-11')
+  .text.split(': ')
+  .slice(1)
+  .join(': ')
+  .split('; ')
+  .map((s) => {
+    const m = s.match(/^(.*?) \((\d{4})(?:, (.*))?\)$/);
+    const label = m ? m[1] : s;
+    const slug = HONOR_POSTS.find(([re]) => re.test(label))?.[1] ?? null;
+    return { label, year: m?.[2], note: m?.[3], post: slug ? post(slug) : undefined };
+  });
+
+// Media coverage (PA-09): the eight registered items, with years, oldest first. Links only where the original URL is known.
+const PA09 = ['Forbes', 'The Wall Street Journal', 'TechCrunch', 'Tech in Asia', 'Gulf News', 'USA Today', 'The Times of India', 'World Bank'];
+const coverage = press
+  .filter((p) => PA09.includes(p.outlet))
+  .sort((a, b) => a.date.localeCompare(b.date))
+  .map((p) => ({ ...p, year: p.date.slice(0, 4) }));
+
+// Forums and events: only those documented in a dated news post.
+const FORUMS = [
+  'aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day',
+  'coderstrust-attends-wsis20-forum-high-level-event',
+  'coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025',
+  'coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c',
+  'coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel',
+]
+  .map(post)
+  .filter((p): p is NonNullable<typeof p> => !!p);
+
+// PA-10 (U.S. Department of State remarks) may appear only inside its dated news item, so that endorsement is not shown here.
+const quotes = endorsements.filter((e) => e.id !== 'james-gardiner');
+const tidy = (q: string) => q.replace(/^[“"]\s*/, '').replace(/\s*[”"]$/, '');
+
+const kit = [
+  { file: 'coderstrust-wordmark', label: 'Wordmark', note: 'For light backgrounds', dark: false, w: 1200, h: 143 },
+  { file: 'coderstrust-wordmark-white', label: 'Wordmark, white', note: 'For dark and Klein Blue backgrounds', dark: true, w: 1200, h: 143 },
+  { file: 'coderstrust-monogram', label: 'CT monogram', note: 'For small spaces and avatars', dark: false, w: 1200, h: 725 },
+];
+
+const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016, and a press kit with logos and boilerplate for CodersTrust.';
+const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and media', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and media', path: '/about/recognition/' }] })];
+const media = { href: ctaHref('media'), label: 'Media enquiries' };
+---
+
+<BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and media' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="About us" title="Recognition and media" lead="CodersTrust is listed in the HolonIQ South Asia EdTech 100, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
+    <Fragment slot="actions">
+      <Button href={media.href} icon="mail">{media.label}</Button>
+      <Button variant="outline" href="#press-kit">Press kit</Button>
+    </Fragment>
+  </Hero>
+
+  <Section id="listing" aria-labelledby="listing-h">
+    <SectionHeader id="listing-h" eyebrow="Industry recognition" title="HolonIQ South Asia EdTech 100" />
+    <div class="rec-listing">
+      <span class="rec-listing__badge" aria-hidden="true"><Icon name="award" size={32} /></span>
+      <div>
+        <p class="lead"><Fact id="PA-08" /></p>
+        <p><a class="link" href={`${url('/news/')}#recognition`}>More recognition news<Icon name="arrow-right" size={16} /></a></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="honors" tone="airy" aria-labelledby="honors-h">
+    <SectionHeader id="honors-h" eyebrow="Founder honors" title="Honors received by Aziz Ahmad" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
+    <ul class="rec-honors" role="list" data-fact="PA-11">
+      {
+        honors.map((h) => (
+          <li class="card rec-honor" data-reveal>
+            <div class="card__body">
+              {h.year && <p class="eyebrow">{h.year}</p>}
+              <h3 class="card__title">{h.label}</h3>
+              {h.note && <p class="card__meta">{h.note}</p>}
+              {
+                h.post ? (
+                  <p>
+                    <a class="link" href={url(newsHref(h.post))}>Read the announcement<Icon name="arrow-right" size={16} /></a>
+                    <span class="card__meta rec-honor__date"> Published <time datetime={isoDate(h.post.data.date)}>{formatDate(h.post.data.date)}</time></span>
+                  </p>
+                ) : (
+                  <p><a class="link" href={url('/about/team/aziz-ahmad/')}>In his profile<Icon name="arrow-right" size={16} /></a></p>
+                )
+              }
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section id="coverage" aria-labelledby="coverage-h">
+    <SectionHeader id="coverage-h" eyebrow="In the press" title="Media coverage, 2014 to 2016" lead="Coverage of CodersTrust's first years, shown as published. Links go to the original article where we hold it." />
+    <ul class="rec-press" role="list" data-fact="PA-09">
+      {
+        coverage.map((c) => (
+          <li class="card rec-press__item" data-reveal>
+            <div class="card__body">
+              <div class="rec-press__logo">
+                <Img src={c.logo} alt={c.logoAlt} height={36} assetId={`press-${slugify(c.outlet)}`} />
+              </div>
+              <p class="card__meta"><time datetime={c.year}>{c.year}</time></p>
+              <h3 class="rec-press__headline">
+                {c.url ? <a class="link" href={linkAttrs(c.url).href} rel="noopener">{c.headline}<span class="sr-only"> (opens {new URL(c.url).hostname.replace('www.', '')})</span></a> : c.headline}
+              </h3>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+    <aside class="rec-note" data-fact="ID-03" aria-label="Note on founder attribution">
+      <Icon name="info" size={20} />
+      <p>2014 press described Morten Lund as a co-founder of CodersTrust. CodersTrust's founders are Aziz Ahmad and Ferdinand Kjærulff. Press items are shown as published, and roles are never restated from press.</p>
+    </aside>
+  </Section>
+
+  {
+    quotes.length > 0 && (
+      <Section id="endorsements" tone="airy" aria-labelledby="end-h">
+        <SectionHeader id="end-h" eyebrow="Endorsements" title="In their words" />
+        <div class="rec-quotes">
+          {quotes.map((e) => (
+            <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
+              <Img src={e.photo} alt={e.photoAlt} width={96} height={96} assetId={`endorsement-${e.id}`} class="rec-quote__photo" />
+              <Quote cite={e.name} role={e.title}>{tidy(e.quote)}</Quote>
+            </figure>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  {
+    FORUMS.length > 0 && (
+      <Section id="forums" aria-labelledby="forums-h">
+        <SectionHeader id="forums-h" eyebrow="Forums and events" title="Where CodersTrust has taken part" lead="Selected appearances, each documented in a dated news post." />
+        <ul class="rec-forums" role="list">
+          {FORUMS.map((f) => (
+            <li>
+              <a class="rec-forum" href={url(newsHref(f))}>
+                <span class="rec-forum__date"><time datetime={isoDate(f.data.date)}>{formatDate(f.data.date)}</time></span>
+                <span class="rec-forum__title">{f.data.title}</span>
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
+    <SectionHeader id="kit-h" eyebrow="For journalists" title="Press kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />
+    <div class="kit">
+      <div class="kit__block">
+        <h3 class="t-heading-m">Boilerplate</h3>
+        <div class="kit__boiler">
+          <p data-fact="ID-01"><Fact id="ID-01" footnote={false} /></p>
+          <ul class="kit__facts" role="list">
+            <li><Fact id="ID-02" /></li>
+            <li><Fact id="SC-01" /></li>
+            <li><Fact id="SC-03" /></li>
+          </ul>
+        </div>
+        <p class="card__meta">CodersTrust, "Learn. Earn. Prosper."</p>
+      </div>
+      <div class="kit__block">
+        <h3 class="t-heading-m">Logo files</h3>
+        <ul class="kit__logos" role="list">
+          {kit.map((k) => (
+            <li class="card kit__logo">
+              <div class:list={['kit__preview', k.dark && 'kit__preview--dark']}>
+                <img src={url(`/press-kit/${k.file}.png`)} alt={`${k.label} logo preview`} width={k.w} height={k.h} loading="lazy" decoding="async" />
+              </div>
+              <div class="card__body">
+                <p class="kit__name">{k.label}</p>
+                <p class="card__meta">{k.note}</p>
+                <p class="kit__dl">
+                  <a class="link" href={url(`/press-kit/${k.file}.svg`)} download><Icon name="download" size={16} />SVG</a>
+                  <a class="link" href={url(`/press-kit/${k.file}.png`)} download><Icon name="download" size={16} />PNG</a>
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="card__meta">Do not recolor, stretch, rotate or add effects to the logos. Leave clear space around the logo at least as tall as the letter "C".</p>
+      </div>
+      <div class="kit__block">
+        <h3 class="t-heading-m">Media contact</h3>
+        <p>For interviews, background and quotes, write to the team. Include your outlet, your deadline and the topic.</p>
+        <p><Button href={media.href} icon="mail">{media.label}</Button></p>
+      </div>
+    </div>
+  </Section>
+
+  <CTABand
+    id="rec-cta"
+    heading="Working on a story about youth employment?"
+    text="We can talk about what the evidence shows and what it does not."
+    cta={{ label: media.label, href: media.href }}
+    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+  />
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .rec-listing {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    max-width: var(--measure);
+  }
+  .rec-listing p {
+    margin: 0 0 var(--space-sm);
+  }
+  .rec-listing__badge {
+    flex: none;
+    display: inline-flex;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+  }
+  .rec-honors,
+  .rec-press,
+  .rec-forums,
+  .kit__logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-gutter);
+  }
+  @media (min-width: 768px) {
+    .rec-honors,
+    .rec-press {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .rec-honors {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .rec-press {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .kit__logos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .rec-honor p,
+  .rec-press__item p {
+    margin: 0;
+  }
+  .rec-honor__date {
+    display: block;
+    margin-top: 2px;
+  }
+  .rec-press__logo {
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .rec-press__logo :global(img) {
+    max-height: 36px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+  }
+  .rec-press__headline {
+    margin: 0;
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .rec-note {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    border-left: 4px solid var(--primary);
+    background: var(--surface-container-low);
+    border-radius: var(--radius-sm);
+    max-width: var(--measure);
+  }
+  .rec-note p {
+    margin: 0;
+  }
+  .rec-note :global(.icon) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--primary);
+  }
+  .rec-quotes {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  @media (min-width: 900px) {
+    .rec-quotes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .rec-quote {
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .rec-quote :global(.rec-quote__photo) {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    object-position: 50% 15%;
+  }
+  .rec-forums {
+    gap: var(--space-sm);
+  }
+  .rec-forum {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    min-height: 56px;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    text-decoration: none;
+    color: var(--on-surface);
+    background: var(--surface);
+  }
+  .rec-forum:hover {
+    border-color: var(--primary);
+    background: var(--surface-container-low);
+  }
+  .rec-forum__date {
+    flex: none;
+    width: 9.5rem;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .rec-forum__title {
+    flex: 1;
+    font-weight: var(--fw-medium);
+  }
+  @media (max-width: 640px) {
+    .rec-forum {
+      flex-wrap: wrap;
+    }
+    .rec-forum__date {
+      width: 100%;
+    }
+  }
+  .kit {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .kit__block > * + * {
+    margin-top: var(--space-md);
+  }
+  .kit__block h3 {
+    margin: 0;
+  }
+  .kit__boiler {
+    max-width: var(--measure);
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .kit__boiler p {
+    margin: 0;
+  }
+  .kit__facts {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .kit__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-md);
+    min-height: 120px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .kit__preview--dark {
+    background: var(--secondary);
+  }
+  .kit__preview img {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    max-height: 90px;
+    object-fit: contain;
+  }
+  .kit__name {
+    margin: 0;
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .kit__dl {
+    margin: 0;
+    display: flex;
+    gap: var(--space-md);
+  }
+  .kit__dl a {
+    min-height: 32px;
+  }
+</style>

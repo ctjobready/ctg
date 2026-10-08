@@ -1,0 +1,189 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import Img from '../../../components/ui/Img.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Badge from '../../../components/system/Badge.astro';
+import NewsCard from '../../../components/ui/NewsCard.astro';
+import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../components/pages/news/news';
+import { person, webPage, pageUrl } from '../../../lib/schema';
+import { PRODUCTION_ORIGIN } from '../../../lib/site';
+import { stripBase, url } from '../../../lib/url';
+import { truncate } from '../../../lib/format';
+
+export async function getStaticPaths() {
+  const team = await getCollection('team');
+  const news = await allNews();
+  return team.map((p) => ({ params: { slug: p.id }, props: { p, news } }));
+}
+const { p, news } = Astro.props;
+const d = p.data;
+const { Content } = await render(p);
+const groupLabel = { founders: 'Founders and Chair', advisors: 'Advisor', executive: 'Executive team', management: 'Bangladesh leadership' }[d.group];
+const path = `/about/team/${p.id}/`;
+const related = newsMentioning(news, d.name, 3);
+const firstPara = (p.body ?? '').split(/\n\s*\n/)[0].replace(/\s+/g, ' ').trim();
+const description = truncate(firstPara, 155);
+const titleFull = `${d.name}, ${d.role}`;
+const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.name;
+const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;
+const imgUrl = img ? PRODUCTION_ORIGIN + stripBase(img.src) : undefined;
+const deceased = /passed away in (\w+ \d{4})/.exec(p.body ?? '');
+const personNode = {
+  ...person({
+    path,
+    name: d.name,
+    jobTitle: d.role,
+    description,
+    image: imgUrl,
+    sameAs: d.linkedin ? [d.linkedin] : undefined,
+    knowsAbout: d.expertise,
+    worksFor: !deceased,
+  }),
+  ...(deceased && { deathDate: '2023-02' }),
+};
+const jsonLd = [
+  webPage({ path, name: title, description, type: 'ProfilePage', about: { '@id': `${pageUrl(path)}#person` }, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }, { name: d.name, path }] }),
+  personNode,
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team', href: '/about/team/' }, { label: d.name }]}
+  ogType="profile"
+  image={img ? stripBase(img.src) : undefined}
+  imageAlt={d.photoAlt}
+  jsonLd={jsonLd}
+>
+  <section class="prof">
+    <div class="container prof__grid">
+      <div class="prof__photo" data-reveal>
+        {d.photo ? <Img src={d.photo} alt={d.photoAlt} width={640} height={640} widths={[320, 640]} sizes="(min-width:900px) 340px, 70vw" loading="eager" assetId={`team-${p.id}`} /> : <span class="prof__initials" aria-hidden="true">{d.name[0]}</span>}
+      </div>
+      <header class="prof__head">
+        <p class="eyebrow">{groupLabel}</p>
+        <h1 class="t-display-4xl">{d.name}</h1>
+        <p class="prof__role">{d.role}</p>
+        {
+          d.expertise.length > 0 && (
+            <ul class="prof__chips" role="list" aria-label={`Expertise of ${d.name}`}>
+              {d.expertise.map((e) => <li><Badge tone="brand">{e}</Badge></li>)}
+            </ul>
+          )
+        }
+        {
+          d.linkedin && (
+            <a class="link" href={d.linkedin} rel="noopener">
+              <Icon name="linkedin" size={18} />LinkedIn<span class="sr-only"> (opens linkedin.com)</span>
+            </a>
+          )
+        }
+      </header>
+      <div class="prose prof__bio" data-reveal><Content /></div>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <Section tone="airy" aria-labelledby="rel-h">
+        <SectionHeader id="rel-h" eyebrow="In the news" title="Related news" />
+        <div class="grid-cards">
+          {related.map((n) => <NewsCard title={n.data.title} date={n.data.date} topic={TOPICS[n.data.topic]} excerpt={n.data.excerpt} image={n.data.cover} imageAlt={coverAlt(n.data.coverAlt)} href={newsHref(n)} />)}
+        </div>
+        <p class="prof__all"><a class="link" href={url('/news/')}>All news<Icon name="arrow-right" size={16} /></a></p>
+      </Section>
+    )
+  }
+  <Section pad="sm" aria-label="Back to the team">
+    <p class="prof__back"><a class="link" href={url('/about/team/')}><Icon name="arrow-left" size={16} />All leadership and team</a></p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .prof {
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .prof {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+  .prof__grid {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+  .prof__photo {
+    width: min(70vw, 340px);
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--secondary-container);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prof__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 12%;
+  }
+  .prof__initials {
+    font-size: var(--fs-display-4xl);
+    font-weight: var(--fw-bold);
+    color: var(--on-secondary-container);
+  }
+  .prof__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+  .prof__head > * {
+    margin: 0;
+  }
+  .prof__role {
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface-variant);
+  }
+  .prof__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .prof__bio {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 900px) {
+    .prof__grid {
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: var(--space-lg) 56px;
+    }
+    .prof__photo {
+      grid-row: 1 / span 2;
+      width: 340px;
+    }
+    .prof__bio {
+      grid-column: 2;
+    }
+  }
+  .prof__all,
+  .prof__back {
+    margin: var(--space-lg) 0 0;
+  }
+  .prof__back {
+    margin: 0;
+  }
+</style>

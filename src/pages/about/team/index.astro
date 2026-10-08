@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import { webPage, pageUrl } from '../../../lib/schema';
+import { url } from '../../../lib/url';
+
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  { key: 'founders', title: 'Founders and Chair', lead: 'The people who started CodersTrust in 2014.' },
+  { key: 'advisors', title: 'Advisors', lead: 'Former senior public servants who advise CodersTrust.' },
+  { key: 'executive', title: 'Executive team', lead: 'The leaders of strategy, growth, business and technology.' },
+  { key: 'management', title: 'Bangladesh leadership', lead: 'The managers who run training, projects and operations at CodersTrust Bangladesh.' },
+] as const;
+const description = 'Meet the founders, advisors, executive team and Bangladesh leadership of CodersTrust, the workforce-development organization behind the JobReady platform.';
+const jsonLd = [
+  {
+    ...webPage({ path: '/about/team/', name: 'Leadership and team', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }] }),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: team.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(`/about/team/${p.id}/`), name: p.data.name })),
+    },
+  },
+];
+---
+
+<BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="About us" title="Leadership and team" lead="Founders, advisors and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
+  {
+    groups.map((g, i) => {
+      const people = team.filter((p) => p.data.group === g.key);
+      return (
+        <Section id={g.key} tone={i % 2 ? 'airy' : 'white'} aria-labelledby={`${g.key}-h`}>
+          <SectionHeader id={`${g.key}-h`} title={g.title} lead={g.lead} />
+          <div class="grid-cards grid-cards--4 team-grid">
+            {people.map((p) => (
+              <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={2} />
+            ))}
+          </div>
+        </Section>
+      );
+    })
+  }
+  <Section pad="sm" aria-label="Governance link">
+    <p class="team-gov">For how CodersTrust is organized and accountable, see <a class="link" href={url('/about/governance/')}>governance and accountability</a>.</p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .team-gov {
+    margin: 0;
+  }
+</style>

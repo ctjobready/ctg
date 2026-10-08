@@ -1,0 +1,112 @@
+---
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import type { TimelineItem } from '../../../data/timeline';
+
+/**
+ * Story timeline. Same look as the shared Timeline, but every milestone renders the footnote markers
+ * of its facts (for example the National University onboarding note) and carries data-fact.
+ */
+interface Props {
+  items: TimelineItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="timeline">
+  <ol class="timeline__list" role="list">
+    {
+      items.map((it) => (
+        <li class="timeline__item" data-fact={(it.factIds ?? []).join(' ') || undefined}>
+          <span class="timeline__dot" aria-hidden="true"></span>
+          <p class="timeline__year">{it.year}</p>
+          <h3 class="timeline__title">{it.title}</h3>
+          <p class="timeline__text">
+            {it.text}
+            {(it.factIds ?? []).map((id) => <FootnoteMarker id={id} />)}
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .timeline__list {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 36px;
+    --line: var(--primary-fixed);
+  }
+  .timeline__list::before,
+  .timeline__list::after {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: var(--radius-full);
+  }
+  .timeline__list::before {
+    background: var(--line);
+  }
+  .timeline__list::after {
+    background: var(--primary);
+    transform-origin: top;
+  }
+  .timeline__item {
+    position: relative;
+    padding-bottom: var(--space-lg);
+  }
+  .timeline__item:last-child {
+    padding-bottom: 0;
+  }
+  .timeline__item > * {
+    margin: 0;
+  }
+  .timeline__dot {
+    position: absolute;
+    left: -36px;
+    top: 4px;
+    width: 21px;
+    height: 21px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    border: 4px solid var(--surface);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .timeline__year {
+    font-size: var(--fs-heading-xl);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: var(--primary);
+  }
+  .timeline__title {
+    font-size: var(--fs-heading-m);
+    margin-top: 2px !important;
+  }
+  .timeline__text {
+    margin-top: var(--space-xs) !important;
+    max-width: 60ch;
+    color: var(--on-surface-variant);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .timeline__list::after {
+        animation: tl-fill linear both;
+        animation-timeline: view();
+        animation-range: entry 30% cover 70%;
+      }
+      @keyframes tl-fill {
+        from {
+          transform: scaleY(0);
+        }
+        to {
+          transform: scaleY(1);
+        }
+      }
+    }
+  }
+</style>

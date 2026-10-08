@@ -1,0 +1,42 @@
+---
+import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import ArticleShell from '../../components/pages/news/ArticleShell.astro';
+import NewsCard from '../../components/ui/NewsCard.astro';
+import Img from '../../components/ui/Img.astro';
+import { allNews, newsHref, relatedNews, TOPICS, coverAlt, coverDuplicatesBody } from '../../components/pages/news/news';
+import { stripBase } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const posts = await allNews();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+const { post, all } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const topic = TOPICS[d.topic];
+const showHero = d.cover && !coverDuplicatesBody(post);
+const og = d.cover ? await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
+const related = relatedNews(all, post);
+---
+
+<ArticleShell
+  headline={d.title}
+  description={d.excerpt}
+  path={`/news/${post.id}/`}
+  date={d.date}
+  updated={d.updated}
+  topic={topic}
+  image={og ? stripBase(og.src) : undefined}
+  imageAlt={coverAlt(d.coverAlt)}
+>
+  {showHero && d.cover && <Img slot="hero" src={d.cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" />}
+  <Content />
+  <Fragment slot="related">
+    {
+      related.map((p) => (
+        <NewsCard title={p.data.title} date={p.data.date} topic={TOPICS[p.data.topic]} excerpt={p.data.excerpt} image={p.data.cover} imageAlt={coverAlt(p.data.coverAlt)} href={newsHref(p)} />
+      ))
+    }
+  </Fragment>
+</ArticleShell>

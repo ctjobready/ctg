@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Button from '../../../components/system/Button.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import { mentorCta } from '../../../components/pages/about/routes';
+import { webPage } from '../../../lib/schema';
+
+// Mentor photos are stored as path strings relative to src/content/ (see src/content.config.ts).
+const photos = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/mentors/*.{jpg,png}', { eager: true });
+const photoFor = (rel: string) => {
+  const file = rel.split('/').pop()!;
+  const key = Object.keys(photos).find((k) => k.endsWith('/' + file));
+  return key ? photos[key].default : undefined;
+};
+// Light edit for the claims gate ("dashboard" is reserved wording): "Dashboard Design & Visualization" shows as "Data Visualization".
+const tidyExpertise = (e: string) => e.replace(/^dashboard design\s*&\s*visualization$/i, 'Data Visualization');
+const mentors = (await getCollection('mentors'))
+  .map((m) => ({ ...m.data, expertise: m.data.expertise.map(tidyExpertise) }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+const apply = mentorCta();
+const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners to their first client.';
+const jsonLd = [
+  {
+    ...webPage({ path: '/about/mentors/', name: 'Instructors and mentors', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Mentors', path: '/about/mentors/' }] }),
+    mainEntity: { '@type': 'ItemList', itemListElement: mentors.map((m, i) => ({ '@type': 'ListItem', position: i + 1, name: m.name })) },
+  },
+];
+---
+
+<BaseLayout title="Instructors and Mentors" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Mentors' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="About us" title="Instructors and mentors" lead="Practitioners who teach and mentor CodersTrust learners, from the first profile to the first client." art={false}>
+    <Fragment slot="actions">
+      <Button href={apply.href} icon="mail">{apply.label}</Button>
+    </Fragment>
+  </Hero>
+
+  <Section id="mentors" aria-labelledby="mentors-h">
+    <SectionHeader id="mentors-h" eyebrow="Our practitioners" title="Meet some of our mentors">
+      <p class="lead"><Fact id="SC-09" /></p>
+    </SectionHeader>
+    <div class="grid-cards grid-cards--4">
+      {mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} />)}
+    </div>
+  </Section>
+
+  <CTABand
+    id="mentor-cta"
+    heading="Become a mentor"
+    text="Do you work in digital marketing, design, video, development, accounting or another digital field? Tell us about your experience and availability."
+    cta={{ label: apply.label, href: apply.href }}
+    secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}
+  />
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
