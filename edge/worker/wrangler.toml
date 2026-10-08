@@ -1,0 +1,15 @@
+# Query-aware redirect Worker (see ../README.md). No account ID, zone ID or secret belongs in this file:
+# `wrangler login` (done by the site owner) supplies the account, and routes are added in the dashboard or below at cutover.
+name = "ctg-legacy-redirects"
+main = "src/index.mjs"
+compatibility_date = "2025-09-01"
+
+# At cutover, route only the production hostnames (never legacy.coderstrust.global):
+# routes = [
+#   { pattern = "coderstrust.global/*", zone_name = "coderstrust.global" },
+#   { pattern = "www.coderstrust.global/*", zone_name = "coderstrust.global" },
+# ]
+
+# For a staging hostname behind Cloudflare, point redirects at the production origin:
+# [vars]
+# TARGET_ORIGIN = "https://coderstrust.global"
