@@ -1,0 +1,39 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import StepFlow from '../../ui/StepFlow.astro';
+
+/**
+ * C14 Next steps: StepFlow plus the first-action line (C14-FIRST or an audience variant) and an
+ * optional note slot (for example the PD-04 timing footnote).
+ */
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  steps: { title: string; text?: string }[];
+  firstAction: string;
+  tone?: 'white' | 'airy';
+  id?: string;
+}
+const { eyebrow = 'Next steps', title = 'What happens next', lead, steps, firstAction, tone = 'white', id = 'next-steps' } = Astro.props;
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <StepFlow steps={steps} />
+  <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>
+  <slot />
+</Section>
+
+<style>
+  .next__first {
+    margin: var(--space-lg) 0 0;
+    padding: var(--space-md) var(--space-gutter);
+    border-left: 4px solid var(--primary);
+    background: var(--surface-container-low);
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    color: var(--on-surface);
+    max-width: 46rem;
+  }
+</style>

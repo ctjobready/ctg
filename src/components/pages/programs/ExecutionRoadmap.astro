@@ -1,0 +1,124 @@
+---
+import PhaseList from './PhaseList.astro';
+import { fact } from '../../../data/facts';
+import { PROGRAM_OPTIONS } from '../../../data/copy';
+import { ROADMAP_PHASES } from './meta';
+
+/**
+ * YouthWIDE execution roadmap: five phases in order, with an illustrative month ribbon (M1–M12) and
+ * checkpoints. Every timing comes from the register: PD-04 (first cohort 6–8 weeks after signing),
+ * PD-06 (up to 10 cohorts in parallel from about month 5), PD-08 (monthly reports, quarterly steering
+ * review), PD-05 (pilot length). Nothing else is placed on the ribbon.
+ */
+const pd06 = fact('PD-06').text.match(/Up to (\d+) certification cohorts in parallel from about month (\d+)/);
+if (!pd06) throw new Error('PD-06 wording changed: update the roadmap');
+const [, parallel, fromMonth] = pd06;
+const startMonth = Number(fromMonth);
+const weeks = fact('PD-04').stat?.value ?? '';
+const hours = fact('PD-01').stat?.value ?? '';
+const pilot = PROGRAM_OPTIONS[0].duration;
+
+const phases = [
+  { title: ROADMAP_PHASES[0], text: `Discovery, co-design and agreement. For grant-funded pilots the first cohort is in training ${weeks} after signing.`, factIds: ['PD-04'] },
+  { title: ROADMAP_PHASES[1], text: 'Outreach with local partners. An accessible readiness assessment routes each applicant to a career track or a foundation track.', factIds: ['PD-14'] },
+  { title: ROADMAP_PHASES[2], text: `${hours} training hours per certification, delivered blended in existing labs and colleges.`, factIds: ['PD-01', 'PD-06'] },
+  { title: ROADMAP_PHASES[3], text: 'Three months of milestone-based mentoring, certification exam preparation and placement support.', factIds: ['PD-01', 'PD-02', 'PD-15'] },
+  { title: ROADMAP_PHASES[4], text: `Up to ${parallel} cohorts run in parallel from about month ${fromMonth}, with monthly reports, tracer surveys and a quarterly steering review.`, factIds: ['PD-06', 'PD-08', 'PD-09'] },
+];
+const months = Array.from({ length: 12 }, (_, i) => i + 1);
+const quarters = [3, 6, 9, 12];
+---
+
+<div class="road" data-reveal>
+  <PhaseList items={phases} cols={5} label="Execution roadmap phases" />
+  <figure class="ribbon" data-fact="PD-06 PD-08 PD-05">
+    <div class="ribbon__scroll" role="region" aria-label="Illustrative month ribbon" tabindex="0">
+      <div class="ribbon__grid" role="img" aria-label={`Illustrative month ribbon, months 1 to 12. Monthly reports run throughout. A quarterly steering review falls in months ${quarters.join(', ')}. Up to ${parallel} cohorts run in parallel from about month ${fromMonth}.`}>
+        {months.map((m) => <span class="ribbon__m" style={`grid-column:${m};grid-row:1`}>M{m}</span>)}
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:2">Monthly reports</span>
+        <span class="ribbon__bar ribbon__bar--report" style="grid-column:1 / -1;grid-row:3"></span>
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:4">Quarterly steering review</span>
+        {quarters.map((m) => <span class="ribbon__dot" style={`grid-column:${m};grid-row:5`}></span>)}
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:6">Cohorts in parallel</span>
+        <span class="ribbon__bar ribbon__bar--par" style={`grid-column:${startMonth} / -1;grid-row:7`}>Up to {parallel} cohorts from about month {fromMonth}</span>
+      </div>
+    </div>
+    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. Pilots run {pilot}. Tracer surveys follow each course. For grant-funded pilots the first cohort is in training {weeks} after signing.</figcaption>
+  </figure>
+</div>
+
+<style>
+  .road {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+  }
+  .ribbon {
+    min-width: 0;
+  }
+  .ribbon {
+    margin: 0;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+  }
+  .ribbon__scroll {
+    overflow-x: auto;
+  }
+  .ribbon__scroll:focus-visible {
+    outline-offset: 4px;
+  }
+  .ribbon__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(44px, 1fr));
+    column-gap: 4px;
+    row-gap: 6px;
+    min-width: 600px;
+    align-items: center;
+  }
+  .ribbon__m {
+    text-align: center;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .ribbon__label {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+  }
+  .ribbon__bar {
+    height: 28px;
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-md);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+  }
+  .ribbon__bar--report {
+    background: var(--primary-fixed);
+  }
+  .ribbon__bar--par {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .ribbon__dot {
+    justify-self: center;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background: var(--tertiary-light);
+    border: 2px solid var(--tertiary);
+  }
+  .ribbon__cap {
+    margin-top: var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

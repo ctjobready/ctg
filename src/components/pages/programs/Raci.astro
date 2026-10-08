@@ -1,0 +1,108 @@
+---
+/**
+ * Illustrative RACI for governance and reporting on a funded program. Derived only from the stated
+ * design: co-design sets thresholds (PD-11), CodersTrust delivers and reports monthly (PD-08), the
+ * quarterly steering review (PD-08), a missed threshold triggers a corrective plan (PD-11), expansion is
+ * the funder's decision (PD-11) and independent evaluation is welcome and budgeted separately (PD-02, PD-08).
+ */
+const roles = ['Funder', 'CodersTrust', 'Independent evaluator (optional)'];
+const rows: { what: string; cells: [string, string, string] }[] = [
+  { what: 'Priority groups, tracks, indicative budget and scorecard thresholds (co-design)', cells: ['A', 'R', '—'] },
+  { what: 'Outreach, selection and training delivery', cells: ['I', 'A, R', '—'] },
+  { what: 'Mentoring, certification and placement support', cells: ['I', 'A, R', '—'] },
+  { what: 'Monthly reports and tracer results', cells: ['I', 'A, R', 'I'] },
+  { what: 'Quarterly steering review', cells: ['A', 'R', 'I'] },
+  { what: 'Corrective plan when a threshold is missed', cells: ['C', 'A, R', '—'] },
+  { what: 'Decision on expansion', cells: ['A, R', 'C', 'C'] },
+  { what: 'Independent evaluation, budgeted separately where wanted', cells: ['A', 'C', 'R'] },
+];
+const name: Record<string, string> = { R: 'Responsible', A: 'Accountable', C: 'Consulted', I: 'Informed' };
+const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => name[x]).join(' and '));
+---
+
+<figure class="raci" data-reveal data-fact="PD-08 PD-11 PD-02">
+  <div class="raci__wrap" role="region" aria-label="Illustrative responsibilities for governance and reporting" tabindex="0">
+    <table>
+      <caption class="sr-only">Illustrative responsibilities (RACI) for governance and reporting</caption>
+      <thead>
+        <tr>
+          <th scope="col">Activity</th>
+          {roles.map((r) => <th scope="col">{r}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr>
+              <th scope="row">{r.what}</th>
+              {r.cells.map((c) => (
+                <td><span aria-hidden="true" class:list={['raci__v', c === '—' && 'raci__v--none']}>{c}</span><span class="sr-only">{say(c)}</span></td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <figcaption class="raci__cap">R responsible · A accountable · C consulted · I informed. Illustrative: the final split is set in co-design.</figcaption>
+</figure>
+
+<style>
+  .raci {
+    margin: 0;
+  }
+  .raci__wrap {
+    position: relative;
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .raci__wrap:focus-visible {
+    outline-offset: 2px;
+  }
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: var(--fs-body-base);
+  }
+  th,
+  td {
+    padding: 12px var(--space-md);
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    font-size: var(--fs-body-xs);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  td {
+    text-align: center;
+    width: 14%;
+  }
+  .raci__v {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .raci__v--none {
+    color: var(--outline);
+  }
+  .raci__cap {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

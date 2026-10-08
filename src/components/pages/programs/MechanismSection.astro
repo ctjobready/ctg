@@ -1,0 +1,43 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import ModelDiagram from '../../ui/ModelDiagram.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * C6 Mechanism. ModelDiagram blocks plus a free default slot for the delivery detail. Tone defaults to
+ * white: the shared MechanismBand is Klein, which would sit back to back with the Klein proof band (C7).
+ */
+interface Props {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+  blocks?: { label: string; title: string; text?: string; icon?: string }[];
+  /** Fact IDs the diagram text rests on (data-fact for the status gate). */
+  factIds?: string[];
+  link?: { label: string; href: string };
+  tone?: 'white' | 'airy' | 'ice';
+  id?: string;
+}
+const { title, lead, eyebrow = 'How it works', blocks, factIds = [], link, tone = 'white', id = 'mechanism' } = Astro.props;
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  {
+    blocks && (
+      <div data-fact={factIds.join(' ') || undefined}>
+        <ModelDiagram blocks={blocks} />
+      </div>
+    )
+  }
+  <div class="mech__slot"><slot /></div>
+  {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}
+</Section>
+
+<style>
+  .mech__link {
+    margin: var(--space-lg) 0 0;
+  }
+</style>

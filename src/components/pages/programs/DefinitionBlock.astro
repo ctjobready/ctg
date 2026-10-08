@@ -1,0 +1,57 @@
+---
+import Section from '../../ui/Section.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * "What is CodersTrust?" (GEO definition, ID-01 verbatim) directly below the hero, plus an optional
+ * page BLUF in the default slot (kept inside the same band, within the first 100 words).
+ */
+interface Props {
+  heading?: string;
+  factId?: string;
+  id?: string;
+}
+const { heading = 'What is CodersTrust?', factId = 'ID-01', id = 'definition' } = Astro.props;
+const text = fact(factId).text;
+---
+
+<Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
+  <div class="def" data-fact={factId}>
+    <h2 class="def__title" id={`${id}-h`}>{heading}</h2>
+    <p class="def__text">{text}</p>
+    {Astro.slots.has('default') && <div class="def__extra"><slot /></div>}
+  </div>
+</Section>
+
+<style>
+  .def {
+    max-width: var(--measure, 44rem);
+    display: grid;
+    gap: var(--space-xs);
+    padding-inline-start: var(--space-md);
+    border-inline-start: 3px solid var(--primary);
+  }
+  .def__title {
+    margin: 0;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    color: var(--ctx-heading);
+  }
+  .def__text {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--ctx-text);
+  }
+  .def__extra {
+    margin-top: var(--space-sm);
+    display: grid;
+    gap: var(--space-sm);
+    color: var(--ctx-text);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .def__extra :global(p) {
+    margin: 0;
+  }
+</style>

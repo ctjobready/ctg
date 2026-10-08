@@ -1,0 +1,82 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+
+/**
+ * C12 Risk reversal. Like RiskReversalBand but takes any number of points, a named `lead` slot (for the
+ * scorecard paragraph) and a default slot after the points (decision sheet etc.).
+ */
+interface Point {
+  icon?: string;
+  title: string;
+  text: string;
+  factIds?: string[];
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  points?: Point[];
+  id?: string;
+}
+const { eyebrow = 'Low risk', title, lead, points = [], id = 'risk' } = Astro.props;
+const grid = points.length === 4 ? 'grid-cards grid-cards--4' : points.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  {Astro.slots.has('lead') && <div class="risk__lead"><slot name="lead" /></div>}
+  {
+    points.length > 0 && (
+      <ul class:list={['risk', grid]} role="list">
+        {points.map((p) => (
+          <li class="risk__item" data-reveal data-fact={p.factIds?.join(' ')}>
+            <Icon name={p.icon ?? 'shield'} size={32} strokeWidth={1.5} class="risk__icon" />
+            <h3 class="t-heading-m">{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <slot />
+</Section>
+
+<style>
+  .risk__lead {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    max-width: 62rem;
+  }
+  .risk__lead :global(p) {
+    margin: 0;
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface-variant);
+  }
+  .risk {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .risk__item {
+    padding: var(--space-gutter);
+    border-top: 3px solid var(--primary);
+    background: var(--surface-container-low);
+    border-radius: 0 0 var(--radius-default) var(--radius-default);
+  }
+  .risk__item > * {
+    margin: 0;
+  }
+  .risk__item > * + * {
+    margin-top: var(--space-sm);
+  }
+  .risk__item :global(.risk__icon) {
+    color: var(--primary);
+  }
+  .risk__item p {
+    color: var(--on-surface-variant);
+  }
+</style>

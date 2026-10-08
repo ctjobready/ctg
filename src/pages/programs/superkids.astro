@@ -1,0 +1,218 @@
+---
+// P14 — SuperKids /programs/superkids/ (T3 conversion page; derived from matrix 4.5 for schools and partners).
+// Only registered facts are used (GV-08 agreements and targets, never delivered reach). Content the spec marks
+// "to confirm with CodersTrust" is written as non-claim copy or omitted (see the page report): C3, C8 and C10.
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import Icon from '../../components/system/Icon.astro';
+import HeroBand from '../../components/sections/HeroBand.astro';
+import FutureBand from '../../components/sections/FutureBand.astro';
+import Sources from '../../components/facts/Sources.astro';
+import Fact from '../../components/facts/Fact.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
+import { C14_FIRST, LAST_UPDATED, serviceNode, superkidsEnquiry } from '../../components/pages/programs/meta';
+import { MICRO_COMMITMENT, ORIGIN, PRICING, SAFEGUARDING } from '../../data/copy';
+import { COURSES_URL } from '../../lib/site';
+import { formatDate, isoDate } from '../../lib/format';
+import { webPage } from '../../lib/schema';
+import { linkAttrs } from '../../lib/url';
+
+const path = '/programs/superkids/';
+const title = 'SuperKids: STEAM, Coding and Robotics';
+const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. DoICT and NCTB agreements set targets, not delivered reach.';
+const enquiry = superkidsEnquiry();
+const pricingFirst = PRICING.text.split('. ')[0] + '.';
+
+const faqSources: FaqSource[] = ['Q1', 'Q8', 'Q9'].map((id) => ({ audience: 'foundations' as const, id }));
+
+const jsonLd = [
+  webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
+  serviceNode({ path, name: 'SuperKids', description: 'STEAM, robotics, coding and digital art for young learners, offered through schools and education partners.', audience: 'Schools and education partners', areaServed: ['Bangladesh'] }),
+  faqNode(faqSources, path),
+];
+const courses = linkAttrs(COURSES_URL);
+---
+
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={enquiry}>
+  <!-- C1 -->
+  <HeroBand
+    audience="For schools and education partners"
+    title="SuperKids — STEAM, coding and robotics for young learners."
+    lead="We help schools and partners bring STEAM, coding and robotics to young learners."
+    cta={enquiry}
+    artSeed="superkids"
+  />
+
+  <DefinitionBlock>
+    <p>SuperKids is CodersTrust’s K-12 STEAM program: robotics, coding and digital art for young learners, offered through schools and education partners.</p>
+  </DefinitionBlock>
+
+  <!-- C2 -->
+  <ProblemSection
+    title="Digital and AI skills are in growing demand."
+    bluf="SuperKids brings the first steps of STEAM, coding and robotics into the classroom."
+    factIds={['PX-08']}
+    scope={{ 'PX-08': { prefix: 'Globally' } }}
+  />
+
+  <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
+  <FutureBand
+    title="A classroom with coding, robotics and digital art."
+    lead="Illustrative: the pictures here are illustrations, not photographs of learners."
+    vignettes={[
+      { kind: 'Block coding', title: 'Learners build with blocks', text: 'Visual coding with blocks is a first step into programming.' },
+      { kind: 'Robotics', title: 'Ideas become things that move', text: 'Learners design and program simple robots.' },
+      { kind: 'Digital art', title: 'Creativity meets technology', text: 'Graphic design for kids brings art into the digital classroom.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <GuideSection
+    title="Built with public-sector and private partners."
+    empathy="You want children to build digital skills early."
+    origin={ORIGIN}
+    partnerGroup="government"
+    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
+  >
+    <p data-fact="GV-08">SuperKids has agreements with DoICT and NCTB. These are agreements and targets, not delivered reach.</p>
+    <p data-fact="PA-03"><Fact id="PA-03" footnote={false} />.</p>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection title="How SuperKids runs." lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
+    <div class="courses">
+      <FeatureCard icon="blocks" title="Block coding" text="Visual coding with blocks." />
+      <FeatureCard icon="bot" title="Robotics" text="Building and programming simple robots." />
+      <FeatureCard icon="palette" title="Graphic design for kids" text="Digital art and design." />
+    </div>
+    <p class="courses__more" data-reveal>
+      Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
+    </p>
+  </MechanismSection>
+
+  <!-- C7: agreements and targets only -->
+  <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
+    <SectionHeader id="agreements-h" eyebrow="What is in place" title="Agreements and targets, not delivered reach." lead="No learner outcomes are claimed for SuperKids on this page." />
+    <div class="agree">
+      <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>
+      <div class="agree__cards">
+        <article class="card" data-reveal>
+          <div class="card__body">
+            <p class="eyebrow">Agreement</p>
+            <h3 class="card__title">DoICT</h3>
+            <p class="card__text">Primary-school STEM and robotics.</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card__body">
+            <p class="eyebrow">Agreement</p>
+            <h3 class="card__title">NCTB</h3>
+            <p class="card__text">Competency-based experiential learning.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </Section>
+
+  <!-- C9 -->
+  <FaqSection sources={faqSources} title="Questions schools and partners ask" />
+
+  <!-- C11 -->
+  <OfferSection
+    title="Options are shaped with you in a discovery session."
+    lead="We do not publish prices. Bring these three things to the conversation."
+    cards={[
+      { icon: 'school', title: 'Your school or organization', text: 'Location, age groups and the approximate number of learners.' },
+      { icon: 'target', title: 'Your goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
+      { icon: 'calendar-check', title: 'Your timeline', text: 'When you would like to begin, and two suitable times for a conversation.' },
+    ]}
+  >
+    <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
+  </OfferSection>
+
+  <!-- C12 -->
+  <RiskSection
+    title="A conversation first. Safeguarding always."
+    points={[
+      { icon: 'handshake', title: 'Talk before you commit', text: MICRO_COMMITMENT },
+      { icon: 'shield', title: 'Safeguarding is agreed before enrollment', text: SAFEGUARDING.text, factIds: ['PD-12'] },
+    ]}
+  />
+
+  <!-- C13 -->
+  <CTABand id="cta" heading="Bring SuperKids to your school or program." cta={enquiry} micro={MICRO_COMMITMENT} />
+
+  <!-- C14 -->
+  <NextSteps
+    steps={[
+      { title: 'Discovery', text: 'A conversation about your learners and goals.' },
+      { title: 'Agreement', text: 'Scope and schedule are agreed together.' },
+      { title: 'Pilot classes', text: 'Classes begin with your learners.' },
+    ]}
+    firstAction={C14_FIRST}
+  />
+
+  <Section pad="sm" aria-label="Notes and sources">
+    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <Sources />
+  </Section>
+</LandingLayout>
+
+<style>
+  .courses {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .courses {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .courses__more {
+    margin: var(--space-lg) 0 0;
+    color: var(--on-surface-variant);
+  }
+  .agree {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .agree__fact {
+    margin: 0;
+    max-width: 52rem;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    color: var(--on-surface);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .agree__cards {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 52rem;
+  }
+  @media (min-width: 768px) {
+    .agree__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .updated {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

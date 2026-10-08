@@ -1,0 +1,245 @@
+---
+// P15 — NU Postgraduate Diploma /nu-postgraduate-diploma/ (T3 conversion page; doc 04 matrix 4.7).
+// Gate: duration, schedule, fee, eligibility, delivery mode, internship terms and award are NOT published until
+// NU and CodersTrust approve the admissions fact set. "Apply now" is a plain link to the standalone Google Form.
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import Badge from '../../components/system/Badge.astro';
+import CourseCard from '../../components/system/CourseCard.astro';
+import Icon from '../../components/system/Icon.astro';
+import HeroBand from '../../components/sections/HeroBand.astro';
+import FutureBand from '../../components/sections/FutureBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import Sources from '../../components/facts/Sources.astro';
+import CopyP from '../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import CostSection from '../../components/pages/programs/CostSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
+import { LAST_UPDATED } from '../../components/pages/programs/meta';
+import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview, nuUpcoming } from '../../components/pages/programs/nuPgd';
+import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { COURSES_URL } from '../../lib/site';
+import { formatDate, isoDate } from '../../lib/format';
+import { pageUrl, webPage } from '../../lib/schema';
+
+const path = NU_PATH;
+const title = 'NU Postgraduate Diploma';
+const description = 'Build practical digital skills alongside your degree with the National University postgraduate diploma, delivered by CodersTrust.';
+const overview = await nuOverview();
+const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
+const courses = await nuCourses();
+const upcoming = await nuUpcoming();
+
+const faqSources: FaqSource[] = [
+  { q: 'Is the NU Postgraduate Diploma right for me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
+  { q: 'Who delivers the diploma?', html: 'CodersTrust is National University’s official training partner for digital career skills and credentials, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
+  { q: 'Where do I find eligibility, schedule and fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. ${anchor(NU_CALL.href, NU_CALL.label)} to ask.` },
+  { q: 'How do I apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
+];
+
+const jsonLd = [
+  webPage({ path, name: NU_NAME, description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path }] }),
+  {
+    '@type': 'ItemList',
+    '@id': `${pageUrl(path)}#courses`,
+    name: 'NU Postgraduate Diploma courses',
+    itemListElement: courses.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.title, url: pageUrl(`${path}${c.slug}/`) })),
+  },
+  faqNode(faqSources, path),
+];
+
+const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] };
+---
+
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
+  <!-- C1 -->
+  <HeroBand audience={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} cta={apply} artSeed="nu-pgd" />
+
+  <DefinitionBlock>
+    <p data-fact="SC-04">CodersTrust is National University’s official training partner for digital career skills and credentials, and delivers NU postgraduate diploma courses.</p>
+  </DefinitionBlock>
+
+  <!-- C2 -->
+  <ProblemSection
+    title="A degree alone is not producing job offers."
+    bluf="You want interviews, a first digital job and credentials employers recognize."
+    factIds={['PX-03', 'PX-05']}
+    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
+    extra={[{ title: 'It is hard to know which skills to pick', text: 'Which skills and certifications to add next is not obvious, and the wrong choice costs time.' }]}
+  />
+
+  <!-- C3 -->
+  <CostSection
+    title="Employers are asking for different skills."
+    lead="AI is shifting which entry-level skills employers ask for, and a degree alone does not show them."
+    blocks={[
+      { claim: 'AI is shifting entry-level work.', factId: 'PX-06', implication: 'Some junior tasks are disappearing, so practical skills matter more.' },
+      { claim: 'AI skills are growing in demand.', factId: 'PX-08', scope: 'Globally', implication: 'Employers look for AI skills alongside the degree.' },
+    ]}
+  />
+
+  <!-- C4 -->
+  <FutureBand
+    title="What you can take from the diploma."
+    lead="Illustrative: you finish with practical digital skills and a clearer route into work."
+    vignettes={[
+      { kind: 'Functional', title: 'Practical digital skills', text: 'You build skills employers ask for, in digital marketing or ICT.' },
+      { kind: 'Emotional', title: 'A clearer idea of what to add next', text: 'A structured course replaces guesswork about which skills to pick.' },
+      { kind: 'Social', title: 'A route into work you can explain', text: 'You can tell employers what you can do.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <GuideSection
+    title="Delivered with National University."
+    empathy={EMPATHY.nuPgd}
+    origin={originShort}
+    statIds={['SC-05']}
+    partnerGroup="academic"
+    method={{ text: 'Practical digital-skills courses, delivered by CodersTrust under National University’s training partnership.', factId: 'SC-04' }}
+  >
+    <p data-fact="SC-04">CodersTrust is the official training partner of National University.</p>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection title="The National University Postgraduate Diploma." lead="Courses delivered by CodersTrust under National University’s official training partnership." eyebrow="The courses" factIds={['SC-04']}>
+    <div class="courses" data-fact="SC-04">
+      {
+        courses.map((c) => (
+          <CourseCard
+            title={c.title}
+            meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
+            href={`${path}${c.slug}/`}
+            actionLabel="View course"
+          />
+        ))
+      }
+    </div>
+    {
+      upcoming.length > 0 && (
+        <div class="upcoming" data-reveal>
+          <h3 class="t-heading-l">Upcoming</h3>
+          <ul role="list">
+            {upcoming.map((u) => <li><Badge tone="info">Upcoming</Badge> {u.title}</li>)}
+          </ul>
+        </div>
+      )
+    }
+  </MechanismSection>
+
+  <!-- C7 -->
+  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+    <div class="proof-notes">
+      <CopyP block={SURVEY_EMPLOYMENT} />
+      <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
+    </div>
+  </ProofBand>
+
+  <!-- C8 -->
+  <Section id="steps" tone="airy" aria-labelledby="steps-h">
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps." />
+    <StepFlow
+      steps={[
+        { title: 'Apply', text: 'Complete the application form.' },
+        { title: 'Learn', text: 'Attend the diploma courses.' },
+        { title: 'Move into work', text: 'Take your new skills into interviews, freelance work or your next role.' },
+      ]}
+    />
+  </Section>
+
+  <!-- C9 -->
+  <FaqSection sources={faqSources} title="Questions applicants ask" />
+
+  <!-- C11 -->
+  <OfferSection
+    title="Fees, schedule and eligibility are confirmed with admissions."
+    lead="Details are shared by the admissions team before you apply."
+    cards={[
+      { icon: 'clipboard-check', title: 'Eligibility', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'calendar-check', title: 'Intake and schedule', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'hand-coins', title: 'Fees and payment', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'award', title: 'Recognition', text: 'Ask admissions about recognition before you decide.' },
+    ]}
+  >
+    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL.label}</a> to ask about fees, schedule, eligibility and recognition.</p>
+  </OfferSection>
+
+  <!-- C12 -->
+  <RiskSection
+    title="Talk to admissions before you decide."
+    points={[
+      { icon: 'phone', title: 'Ask first', text: 'Call with your eligibility and recognition questions before you apply.' },
+      { icon: 'handshake', title: 'Applying starts a conversation', text: 'After you apply, our admissions team contacts you with the next steps.' },
+    ]}
+  />
+
+  <!-- C13 -->
+  <CTABand id="cta" heading="Ready to apply?" cta={apply} secondary={NU_CALL} />
+
+  <!-- C14 -->
+  <NextSteps
+    steps={[
+      { title: 'Submit the application form', text: 'It takes you to the standalone application form.' },
+      { title: 'Admissions contacts you', text: 'Our admissions team shares the next steps.' },
+    ]}
+    firstAction="Submit the application form. Our admissions team will contact you with the next steps."
+  />
+
+  <Section pad="sm" aria-label="Notes and sources">
+    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <Sources />
+  </Section>
+</LandingLayout>
+
+<style>
+  .courses {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .courses {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .upcoming {
+    margin-top: var(--space-lg);
+  }
+  .upcoming h3 {
+    margin: 0 0 var(--space-sm);
+    color: var(--secondary);
+  }
+  .upcoming ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    color: var(--on-surface);
+  }
+  .proof-notes {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    max-width: 56rem;
+  }
+  .proof-notes :global(p) {
+    margin: 0;
+    color: var(--ctx-text);
+  }
+  .updated {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

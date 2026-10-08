@@ -1,0 +1,267 @@
+---
+// P11 — NationWIDE /programs/nationwide/ (T3 conversion page; doc 04 matrix 4.2 — governments; C1 → C14).
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import HeroBand from '../../components/sections/HeroBand.astro';
+import FutureBand from '../../components/sections/FutureBand.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../components/sections/FeaturesTable.astro';
+import ComparisonBand from '../../components/sections/ComparisonBand.astro';
+import Sources from '../../components/facts/Sources.astro';
+import Fact from '../../components/facts/Fact.astro';
+import FactStat from '../../components/facts/FactStat.astro';
+import Icon from '../../components/system/Icon.astro';
+import CopyP from '../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
+import PriorityGroups from '../../components/pages/programs/PriorityGroups.astro';
+import CostSection from '../../components/pages/programs/CostSection.astro';
+import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
+import { LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { ACCOUNTABILITY, C14, EMPATHY, ORIGIN, PRICING, PROGRAM_OPTIONS, SCALE, SCORECARD, SURVEY_EMPLOYMENT, STEPS, VALUE_PROPOSITION } from '../../data/copy';
+import { fact } from '../../data/facts';
+import { formatDate, isoDate } from '../../lib/format';
+import { webPage } from '../../lib/schema';
+
+const path = '/programs/nationwide/';
+const target = statValue('IN-01');
+const title = 'NationWIDE: Bangladesh Digital Workforce';
+const description = `NationWIDE aims to train ${target} vulnerable youth in Bangladesh for digital employment by 2030, with certified training, mentoring and monthly reports.`;
+const briefing = ctaFor('briefing');
+const funding = ctaFor('funding');
+const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
+
+const faqSources: FaqSource[] = [
+  { q: 'Is NationWIDE right for our agency?', html: `Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
+  ...['Q2', 'Q1', 'Q6', 'Q7', 'Q9', 'Q10'].map((id) => ({ audience: 'governments' as const, id })),
+];
+
+const jsonLd = [
+  webPage({ path, name: 'NationWIDE', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NationWIDE', path }] }),
+  serviceNode({ path, name: 'NationWIDE', description: fact('IN-01').text, audience: 'Ministries, agencies and national funders', areaServed: ['Bangladesh'] }),
+  faqNode(faqSources, path),
+];
+---
+
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NationWIDE' }]} jsonLd={jsonLd} stickyCta={briefing}>
+  <!-- C1 -->
+  <HeroBand
+    audience="For ministries, agencies and national funders"
+    title={`NationWIDE — aiming to train ${target} young Bangladeshis for digital work by 2030.`}
+    lead={VALUE_PROPOSITION.governments}
+    cta={briefing}
+    artSeed="nationwide"
+  />
+
+  <DefinitionBlock>
+    <p data-fact="IN-01">NationWIDE (Nationwide Workforce Inclusion for Digital Economy) is a Bangladesh initiative that aims to train {target} vulnerable youth for digital employment by 2030. That is a target, not a delivered figure.</p>
+  </DefinitionBlock>
+
+  <!-- C2 -->
+  <ProblemSection
+    title="Degrees are not turning into jobs."
+    bluf="Graduates are the most jobless group in Bangladesh, and employers worldwide say they cannot find the skills they need. NationWIDE works with five priority groups."
+    factIds={['PX-03', 'PX-05']}
+    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
+  >
+    <PriorityGroups />
+  </ProblemSection>
+
+  <!-- C3 -->
+  <CostSection
+    title="Every training cycle without placement tracking repeats the result."
+    blocks={[
+      { claim: 'Climate pressure is pushing educated youth out of coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists and move toward informal city work.' },
+      { claim: 'Entry-level work is shifting to AI-ready skills.', factId: 'PX-06', implication: 'Tracks need to follow employer demand for AI-ready skills.' },
+      { claim: 'Enrollment-only training repeats the same result.', factId: 'RC-06', implication: 'Each cycle that counts seats, not earnings, buys attendance and little else.' },
+    ]}
+  />
+
+  <!-- C4 -->
+  <FutureBand
+    title="What a national program can look like."
+    lead="Illustrative: a government lab becomes a blended-learning center, and monthly reports to the agency show completers moving into work."
+    vignettes={[
+      { kind: 'Functional', title: 'A government lab becomes a blended-learning center', text: 'Seats are confirmed per program in existing government digital labs and colleges.' },
+      { kind: 'Emotional', title: 'Budgets that buy earnings', text: 'Monthly reports show certified young people moving into work, locally, remotely and abroad.' },
+      { kind: 'Social', title: 'Capacity that stays in your system', text: 'Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.' },
+    ]}
+  />
+
+  <!-- C5 -->
+  <GuideSection
+    title="A track record with Bangladesh’s government."
+    empathy={EMPATHY.governments}
+    origin={ORIGIN}
+    statIds={['SC-06', 'SC-04']}
+    partnerGroup={['government', 'academic']}
+    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
+  >
+    <p data-fact="PA-02"><Fact id="PA-02" footnote={false} />.</p>
+    <p data-fact="SC-04">CodersTrust is National University’s official training partner for digital career skills and credentials.</p>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection
+    title="Delivered through the labs and colleges you already have."
+    blocks={[
+      { label: 'Where it runs', title: 'Government digital labs and colleges', text: 'Labs that can serve as blended-learning centers, with seats confirmed per program.', icon: 'building' },
+      { label: 'Who delivers', title: 'Trained trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
+      { label: 'What trainees earn', title: 'Certification by track', text: 'Industry certification, then mentoring and placement support.', icon: 'award' },
+      { label: 'What you receive', title: 'Monthly reports', text: 'Reports to the agency show completers moving into work.', icon: 'chart-bar' },
+    ]}
+    factIds={['GV-09', 'GV-01', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
+  >
+    <div class="mech-stats">
+      <FactStat id="GV-09" />
+      <FactStat id="GV-01" />
+      <FactStat id="PD-01" />
+    </div>
+  </MechanismSection>
+
+  <!-- C7 -->
+  <ProofBand title="What has been done to date" headlineFact="RC-01" statIds={['RC-01', 'SC-06', 'GV-01']} links={[{ label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+    <div class="proof-notes">
+      <CopyP block={SCALE} />
+      <CopyP block={SURVEY_EMPLOYMENT} />
+    </div>
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Proof in practice"
+    items={[
+      { title: 'Her Power', program: 'ICT Division / DoICT', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+    ]}
+  />
+
+  <!-- C8 -->
+  <FeaturesTable
+    title="Every feature answers a pain agencies carry."
+    rows={[
+      { feature: 'Certification tracks chosen from employer demand, then mentoring and placement support', means: 'graduates leave with a recognized credential and a route to work.', outcomeFactId: 'PD-03', relieves: 'Graduates are the most jobless group' },
+      { feature: 'Pilot scorecard with cost per completer and per verified outcome; monthly reports', means: 'your budget is judged against verified outcomes.', outcomeFactId: 'PD-11', relieves: 'Budgets are measured by enrollment, not earnings' },
+      { feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; hub-and-spoke delivery; blended learning in existing labs; connectivity-light delivery', means: 'capacity stays in your system and rural labs can take part.', outcomeFactId: 'PD-07', relieves: 'Trainer and curriculum capacity is thin' },
+      { feature: 'Local, remote and global work after training', means: 'a workforce with access to work beyond the local market.', outcomeFactId: 'OC-07' },
+    ]}
+  />
+  <Section id="steps" tone="airy" aria-labelledby="steps-h">
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps." />
+    <div data-fact="PD-19 PD-01 PD-15 PD-08 PD-09">
+      <StepFlow
+        steps={[
+          { title: 'Briefing and co-design with the agency', text: 'A briefing sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
+          { title: STEPS[1].title, text: STEPS[1].text },
+          { title: STEPS[2].title, text: STEPS[2].text },
+        ]}
+      />
+    </div>
+  </Section>
+
+  <!-- C9 -->
+  <FaqSection sources={faqSources} title="Questions agencies ask" />
+
+  <!-- C10 -->
+  <ComparisonBand title="Compare the approaches." />
+
+  <!-- C11 -->
+  <OfferSection eyebrow="Phased plan" title="A phased plan: Pilot, Scale, National." lead="Each phase is planned with the agency on the results of the one before. Program options are shown without prices." options={PROGRAM_OPTIONS}>
+    <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} footnote={true} /></div>
+    <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
+    <div class="note">
+      <span class="note__label">Services behind a phase</span>
+      <ul class="svc">
+        <li data-fact="GV-01"><Fact id="GV-01" /></li>
+        <li data-fact="GV-05"><Fact id="GV-05" /></li>
+      </ul>
+    </div>
+    <div class="note">
+      <span class="note__label">Partners and funders</span>
+      <p>Development partners and foundations can also fund a phase. <a class="link" href={funding.href}>{funding.label}<Icon name="arrow-right" size={16} /></a></p>
+    </div>
+  </OfferSection>
+
+  <!-- C12 -->
+  <RiskSection
+    title="Phase it, review it, decide on evidence."
+    points={[
+      { icon: 'rocket', title: 'A pilot comes first', text: 'Prove the model in your labs before you commit to a wider phase.', factIds: ['PD-05'] },
+      { icon: 'target', title: 'A review gate before each phase', text: 'Scorecard thresholds are agreed with you; a missed threshold triggers a corrective plan.', factIds: ['PD-11'] },
+      { icon: 'handshake', title: 'The agency decides on expansion', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
+      { icon: 'shield', title: 'Independent evaluation is welcome', text: 'We support a third-party evaluation of outcomes.', factIds: ['PD-08'] },
+    ]}
+  >
+    <Fragment slot="lead"><CopyP block={SCORECARD} /></Fragment>
+  </RiskSection>
+
+  <!-- C13 -->
+  <CTABand
+    id="cta"
+    heading="Start with a briefing that fits your timeline."
+    cta={briefing}
+    secondary={{ label: funding.label, href: funding.href }}
+    urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
+  />
+
+  <!-- C14 -->
+  <NextSteps
+    steps={[
+      { title: 'Briefing', text: 'We present NationWIDE and the evidence to your team.' },
+      { title: 'Co-design with the agency', text: 'Priority groups, tracks, labs and the scorecard are shaped together.' },
+      { title: 'Agreement', text: 'Agreed on the agency’s own procurement timeline.' },
+      { title: 'Launch in existing labs', text: 'Seats are confirmed per program.' },
+      { title: 'Monthly reports', text: 'The agency sees completers moving into work.' },
+    ]}
+    firstAction={C14.variants.governments}
+  />
+
+  <Section pad="sm" aria-label="Notes and sources">
+    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <Sources />
+  </Section>
+</LandingLayout>
+
+<style>
+  .mech-stats {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 768px) {
+    .mech-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .proof-notes {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    max-width: 56rem;
+  }
+  .proof-notes :global(p) {
+    margin: 0;
+    color: var(--ctx-text);
+  }
+  .svc {
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .updated {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

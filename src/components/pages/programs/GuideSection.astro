@@ -1,0 +1,114 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import FactStat from '../../facts/FactStat.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import Icon from '../../system/Icon.astro';
+import CopyP from './CopyP.astro';
+import { linkAttrs } from '../../../lib/url';
+import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
+import type { CopyBlock } from '../../../data/copy';
+
+/**
+ * C5 Guide, empathy first: empathy line (lead) → ORIGIN → authority (default slot) → method signal.
+ * Stats are FactStats; partner logos come from the shared PartnerStrip (PA-04 caption).
+ */
+interface Props {
+  title: string;
+  empathy: string;
+  origin: CopyBlock;
+  statIds?: string[];
+  method?: { text: string; factId?: string; link?: { label: string; href: string } };
+  partnerGroup?: PartnerGroup | PartnerGroup[];
+  showPartners?: boolean;
+  id?: string;
+}
+const { title, empathy, origin, statIds = [], method, partnerGroup, showPartners = true, id = 'guide' } = Astro.props;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Our track record" title={title} />
+  <div class:list={['guide', statIds.length === 0 && 'guide--one']}>
+    <div class="guide__copy" data-reveal>
+      <p class="lead">{empathy}</p>
+      <CopyP block={origin} class="guide__origin" />
+      <div class="guide__auth"><slot /></div>
+      {
+        method && (
+          <p class="guide__method" data-fact={method.factId}>
+            {method.text}
+            {method.link && (
+              <a class="link" href={linkAttrs(method.link.href).href}>{method.link.label}<Icon name="arrow-right" size={16} /></a>
+            )}
+          </p>
+        )
+      }
+    </div>
+    {
+      statIds.length > 0 && (
+        <div class="guide__stats">
+          {statIds.map((s) => <FactStat id={s} />)}
+        </div>
+      )
+    }
+  </div>
+  {showPartners && <PartnerStrip variant="grid" group={partnerGroup} caption={PARTNER_CAPTION} />}
+</Section>
+
+<style>
+  .guide {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  .guide__copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .guide__copy > * {
+    margin: 0;
+  }
+  .guide__origin {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    max-width: 44rem;
+  }
+  .guide__auth {
+    display: grid;
+    gap: var(--space-sm);
+    color: var(--on-surface-variant);
+    max-width: 44rem;
+  }
+  .guide__auth:empty {
+    display: none;
+  }
+  .guide__auth :global(p),
+  .guide__auth :global(ul) {
+    margin: 0;
+  }
+  .guide__method {
+    color: var(--on-surface-variant);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  .guide__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+    align-content: start;
+  }
+  @media (min-width: 1024px) {
+    .guide {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .guide--one {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

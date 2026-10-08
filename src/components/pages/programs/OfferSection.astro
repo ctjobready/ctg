@@ -1,0 +1,119 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+
+/**
+ * C11 Offer. Option cards (program options from PD-05, no prices, or custom cards) followed by the
+ * default slot: ACCOUNTABILITY, PRICING and SCALE blocks render there, verbatim, in the order the page gives.
+ */
+interface Option {
+  name: string;
+  size: string;
+  duration: string;
+  note: string;
+}
+interface CardItem {
+  title: string;
+  text: string;
+  icon?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  options?: readonly Option[];
+  cards?: CardItem[];
+  id?: string;
+}
+const { eyebrow = 'Start', title, lead, options, cards, id = 'offer' } = Astro.props;
+const count = (options?.length ?? 0) + (cards?.length ?? 0);
+const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  {
+    options && (
+      <div class={grid}>
+        {options.map((o, i) => (
+          <article class="card offer" data-reveal data-fact="PD-05">
+            <div class="card__body">
+              <p class="eyebrow">Option {i + 1}</p>
+              <h3 class="card__title">{o.name}</h3>
+              <p class="offer__volume">{o.size}</p>
+              <p class="card__meta offer__duration">{o.duration}</p>
+              <p class="card__text">{o.note}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )
+  }
+  {
+    cards && (
+      <div class={grid}>
+        {cards.map((c) => (
+          <article class="card offer" data-reveal>
+            <div class="card__body">
+              {c.icon && <Icon name={c.icon} size={36} strokeWidth={1.5} class="offer__icon" />}
+              <h3 class="card__title">{c.title}</h3>
+              <p class="card__text">{c.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )
+  }
+  <div class="offer__after"><slot /></div>
+</Section>
+
+<style>
+  .offer__volume {
+    font-size: var(--fs-heading-l);
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .offer__duration {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-base);
+  }
+  .offer :global(.offer__icon) {
+    color: var(--primary);
+  }
+  .offer__after {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .offer__after:empty {
+    display: none;
+  }
+  .offer__after :global(.note) {
+    margin: 0;
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    color: var(--on-surface-variant);
+    max-width: 62rem;
+  }
+  .offer__after :global(.note p) {
+    margin: 0;
+  }
+  .offer__after :global(.note--key) {
+    border-left: 4px solid var(--primary);
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .offer__after :global(.note__label) {
+    display: block;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+    margin-bottom: 4px;
+  }
+</style>

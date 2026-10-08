@@ -1,0 +1,183 @@
+---
+import Icon from '../../system/Icon.astro';
+
+/**
+ * Work-entry plan per track (enhancement 3, PD-19). Tracks from the entry-level menu (PD-10); the
+ * credential column comes from PD-03 and every other cell reads "Set in co-design". Table from 900 px,
+ * one card per track below that.
+ */
+const SET = 'Set in co-design';
+const tracks = [
+  { track: 'Digital marketing', credential: 'Meta Blueprint / Google Ads' },
+  { track: 'Graphic design', credential: 'Adobe Certified Professional' },
+  { track: 'Video editing', credential: 'Adobe Certified Professional' },
+  { track: 'Web design and development', credential: 'CWP' },
+  { track: 'Digital accounting', credential: 'QuickBooks Online ProAdvisor' },
+  { track: 'Python programming', credential: 'PCEP' },
+  { track: 'Data analysis', credential: 'Credential chosen in co-design' },
+];
+const columns = ['Target work', 'Employer and client channels', 'Credential', 'Portfolio expectations', 'Device access', 'Payment and platform eligibility'];
+const planned = columns.filter((c) => c !== 'Credential');
+---
+
+<figure class="wep" data-fact="PD-19 PD-03 PD-10" data-reveal>
+  <div class="wep__table" role="region" aria-label="Work-entry plan per track" tabindex="0">
+    <table>
+      <caption class="sr-only">Work-entry plan per track: a co-designed plan, not a guarantee</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="wep__corner">Track</th>
+          {columns.map((c) => <th scope="col">{c}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          tracks.map((t) => (
+            <tr>
+              <th scope="row">{t.track}</th>
+              <td class="wep__set">{SET}</td>
+              <td class="wep__set">{SET}</td>
+              <td class="wep__cred">{t.credential}</td>
+              <td class="wep__set">{SET}</td>
+              <td class="wep__set">{SET}</td>
+              <td class="wep__set">{SET}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <ul class="wep__cards" role="list">
+    {
+      tracks.map((t) => (
+        <li class="wep__card">
+          <h4 class="wep__name">{t.track}</h4>
+          <p class="wep__cred-line"><Icon name="award" size={18} /> <span class="sr-only">Credential: </span>{t.credential}</p>
+          <p class="wep__plan"><span>{planned.join(', ').replace(/, ([^,]*)$/, ' and $1')}:</span> {SET.toLowerCase()}.</p>
+        </li>
+      ))
+    }
+  </ul>
+  <figcaption class="wep__caption"><strong>Illustrative work-entry plan per track: a co-designed plan, not a guarantee.</strong> Each track's demand and work-entry plan is approved before enrollment.</figcaption>
+</figure>
+
+<style>
+  .wep {
+    margin: 0;
+  }
+  .wep__table {
+    display: none;
+    position: relative;
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .wep__table:focus-visible {
+    outline-offset: 2px;
+  }
+  table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--fs-body-base);
+  }
+  th,
+  td {
+    padding: 12px var(--space-md);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    background: var(--surface);
+    position: sticky;
+    left: 0;
+    box-shadow: 1px 0 0 var(--outline-variant);
+    min-width: 11rem;
+  }
+  thead .wep__corner {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .wep__set {
+    color: var(--outline);
+    font-size: var(--fs-body-xs);
+  }
+  .wep__cred {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .wep__cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wep__card {
+    padding: var(--space-md) var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .wep__card > * {
+    margin: 0;
+  }
+  .wep__name {
+    font-size: var(--fs-heading-m);
+    color: var(--on-surface);
+  }
+  .wep__cred-line {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .wep__cred-line :global(.icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  .wep__plan {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .wep__caption {
+    margin-top: var(--space-md);
+    color: var(--on-surface);
+    max-width: 52rem;
+  }
+  @media (min-width: 640px) {
+    .wep__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .wep__table {
+      display: block;
+    }
+    .wep__cards {
+      display: none;
+    }
+  }
+</style>
