@@ -1,0 +1,93 @@
+---
+import SuccessStoryCard from '../../system/SuccessStoryCard.astro';
+import type { StoryCardData } from './story-types';
+
+/** Filterable grid of story cards (progressive enhancement: without JavaScript every card shows and the filter is hidden). */
+interface Props {
+  cards: StoryCardData[];
+}
+const { cards } = Astro.props;
+const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other pathways' };
+const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) => cards.some((c) => c.pathway === p));
+---
+
+<div data-story-filter>
+  <div class="sgf" role="group" aria-label="Filter stories by pathway">
+    <button type="button" class="sgf__btn" data-filter="all" aria-pressed="true">All stories</button>
+    {present.map((p) => <button type="button" class="sgf__btn" data-filter={p} aria-pressed="false">{labels[p]}</button>)}
+  </div>
+  <p class="sgf__status sr-only" role="status" aria-live="polite" data-filter-status></p>
+  <ul class="grid-cards sgrid" role="list">
+    {
+      cards.map((c) => (
+        <li data-pathway={c.pathway}>
+          <SuccessStoryCard image={c.image} imageAlt={c.imageAlt} outcome={c.outcome} name={c.name} role={c.role} assetId={c.assetId} />
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .sgf {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+  :global(.js) .sgf {
+    display: flex;
+  }
+  .sgf__btn {
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary);
+    background: var(--surface);
+    color: var(--primary);
+    font: inherit;
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+  }
+  .sgf__btn[aria-pressed='true'] {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .sgf__btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--powder-blue);
+  }
+  .sgrid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sgrid > li {
+    min-width: 0;
+  }
+  .sgrid > li[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-story-filter]').forEach((root) => {
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-pathway]'));
+    const status = root.querySelector<HTMLElement>('[data-filter-status]');
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        const f = b.dataset.filter ?? 'all';
+        buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        let shown = 0;
+        items.forEach((li) => {
+          const on = f === 'all' || li.dataset.pathway === f;
+          li.hidden = !on;
+          if (on) shown++;
+        });
+        if (status) status.textContent = `Showing ${shown} of ${items.length} stories`;
+      }),
+    );
+  });
+</script>

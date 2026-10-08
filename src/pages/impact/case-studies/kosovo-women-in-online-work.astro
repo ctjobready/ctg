@@ -1,0 +1,47 @@
+---
+import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import { fact } from '../../../data/facts';
+
+// ST-05 in the register carries the learner's name; the outcome is shared without it.
+const raw = fact('ST-05').text.split('): ')[1];
+if (!raw) throw new Error('ST-05 text no longer has the expected "(program): outcome" shape');
+const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
+---
+
+<CaseStudyPage
+  slug="kosovo-women-in-online-work"
+  pageTitle="Kosovo Women in Online Work"
+  description="Women in Online Work, a 2017 World Bank Group pilot in Kosovo: 102 of 150 women placed (68%). Placement is gross program data."
+  stats={[{ id: 'PR-02', evidence: 'Program records — gross placement' }]}
+  context={[
+    'In 2017 the World Bank Group sought market-oriented skills to help young refugee women in Kosovo find meaningful employment.',
+    'The Women in Online Work (WoW) pilot tested whether online work suits young Kosovar women around the country.',
+  ]}
+  challenges={[
+    'Weak infrastructure in a post-war country.',
+    'Few child- and elder-care options, leaving little time to learn.',
+    'Cultural attitudes that discourage women from working.',
+    'Few training materials designed for online learning.',
+  ]}
+  solution={[
+    'Two-phase delivery that built digital literacy first.',
+    'Interactive, collaborative sessions to keep learners engaged.',
+    'Accessible, engaging digital learning materials.',
+    'Soft skills paired with career counseling.',
+    'Marketplace integration: bidding on and doing real online work.',
+  ]}
+>
+  <Fragment slot="results">
+    <Callout tone="bluf" label="Program records — gross placement">
+      <Fact id="PR-02" as="p" />
+    </Callout>
+    <p>Women in Online Work was a pilot for the World Bank Group in 2017. The figures above are from CodersTrust program records.</p>
+  </Fragment>
+
+  <Fragment slot="story">
+    <LearnerStory program="Women in Online Work, Kosovo" outcome={outcome} />
+  </Fragment>
+</CaseStudyPage>

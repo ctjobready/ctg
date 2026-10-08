@@ -1,0 +1,192 @@
+---
+import LongformLayout from '../../../layouts/LongformLayout.astro';
+import Accordion from '../../../components/ui/Accordion.astro';
+import Badge from '../../../components/system/Badge.astro';
+import Button from '../../../components/system/Button.astro';
+import Icon from '../../../components/system/Icon.astro';
+import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import ReportSection from '../../../components/pages/impact/ReportSection.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import { articleNode, desc, title, fundingCta } from '../../../components/pages/impact/page-utils';
+import { fact } from '../../../data/facts';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { linkAttrs } from '../../../lib/url';
+
+const path = '/our-model/jobready-platform/';
+const JOBREADY = 'https://jobready.global/';
+const description = desc('JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Partner portals, CRM and AI chat are live.');
+const faqIds = ['Q11'];
+const jsonLd = [
+  articleNode({ path, headline: 'JobReady: CodersTrust’s digital education and employment platform', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady platform' } }),
+  faqJsonLd('foundations', path, faqIds),
+];
+const faq = faqItems('foundations', faqIds, Astro);
+
+type Status = 'Live' | 'Operating' | 'Pre-launch' | 'Roadmap';
+const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-launch': 'info', Roadmap: 'sale' };
+const rows: { job: string; capability: string; status: Status; note: string }[] = [
+  { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
+  { job: 'Train', capability: 'AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
+  { job: 'Connect to work and supply talent', capability: 'Employer and gig-work (Earn) marketplace', status: 'Pre-launch', note: 'In pre-launch; until it opens, placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
+  { job: 'Equip institutions', capability: 'Partner portals', status: 'Live', note: 'Give institutions a digital delivery platform.' },
+  { job: 'Across the platform', capability: 'Marketing automation', status: 'Live', note: 'Live as part of the staged rollout.' },
+  { job: 'Across the platform', capability: 'CRM', status: 'Live', note: 'Live as part of the staged rollout.' },
+];
+const roadmap = [
+  { icon: 'route', title: 'Personalized learning paths', text: 'The platform is designed to build each learner’s path from their TalentLEAP competency level and goals.' },
+  { icon: 'message-circle', title: 'AI tutoring', text: 'The platform is designed to give learners help with course material when they need it.' },
+  { icon: 'clipboard-check', title: 'Adaptive assessment', text: 'The platform is designed to adjust assessment to what each learner has already shown.' },
+  { icon: 'compass', title: 'AI career coach', text: 'The platform is designed to guide learners toward the next step on their career path.' },
+  { icon: 'users', title: 'Talent matching', text: 'The platform is designed to match job-ready learners with employer demand once the marketplace opens.' },
+];
+const toc = [
+  { id: 'jobs', label: 'Four jobs' },
+  { id: 'status', label: 'Rollout status' },
+  { id: 'roadmap', label: 'AI-native roadmap' },
+  { id: 'faq', label: 'Questions' },
+];
+const f = fundingCta();
+---
+
+<LongformLayout
+  title={title('JobReady Platform')}
+  heading="JobReady: CodersTrust’s digital education and employment platform"
+  eyebrow="Our model"
+  lead={fact('IN-04').text}
+  description={description}
+  path={path}
+  updated="2026-10-08"
+  toc={toc}
+  breadcrumbs={[{ label: 'Our model', href: '/our-model/' }, { label: 'JobReady platform' }]}
+  jsonLd={jsonLd}
+>
+  <ReportSection id="jobs" title="Four jobs, one platform">
+    <p data-fact="IN-04">JobReady is built around four jobs. Modules are rolling out in stages, so the table below says which are live today.</p>
+    <div class="jr__cards">
+      <FeatureCard icon="graduation-cap" title="Train" text="Trains youth through certified courses; the course storefront operates at jobready.global." />
+      <FeatureCard icon="briefcase" title="Connect to work" text="Connects learners to local, remote and global work." />
+      <FeatureCard icon="users" title="Supply talent" text="Supplies employers with job-ready talent." />
+      <FeatureCard icon="landmark" title="Equip institutions" text="Gives institutions a digital delivery platform." />
+    </div>
+  </ReportSection>
+
+  <ReportSection id="status" title="Rollout status">
+    <p>Categories of capability and their status, as of this page’s last update.</p>
+    <div class="jr__table" role="region" aria-label="Platform capabilities and status" tabindex="0">
+      <table>
+        <caption class="sr-only">Platform capabilities and their rollout status</caption>
+        <thead><tr><th scope="col">Job</th><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Note</th></tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <th scope="row">{r.job}</th>
+              <td>{r.capability}</td>
+              <td><Badge tone={tone[r.status]}>{r.status}</Badge></td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <Callout label="Not presented as live">
+      <p>The employer and gig-work marketplace is in pre-launch, and the AI features below are on the roadmap. AI chat, which is live, is the one AI module in the table above.</p>
+    </Callout>
+    <p><a class="link" href={JOBREADY} rel="noopener">Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
+  </ReportSection>
+
+  <ReportSection id="roadmap" title="AI-native roadmap: what the platform is designed to do">
+    <p>JobReady is being built as an AI-native platform. Everything below is roadmap, described as what the platform is designed to do, and none of it is presented as live.</p>
+    <div class="jr__cards jr__cards--roadmap">
+      {roadmap.map((r) => (
+        <FeatureCard icon={r.icon} title={r.title} text={r.text}>
+          <Badge tone="sale">Roadmap</Badge>
+        </FeatureCard>
+      ))}
+    </div>
+  </ReportSection>
+
+  <ReportSection id="faq" title="Questions about the platform">
+    <Accordion items={faq} name="jr-faq" openFirst />
+  </ReportSection>
+
+  <aside class="jr__next" aria-label="Fund the platform">
+    <h2 class="jr__nexttitle">Fund the platform’s next stage.</h2>
+    <p>A platform grant helps CodersTrust roll out the remaining modules.</p>
+    <div class="jr__actions">
+      <Button href={f.href} iconEnd="arrow-right">{f.label}</Button>
+      <a class="link" href={JOBREADY} rel="noopener">Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
+    </div>
+    <p class="jr__micro">{MICRO_COMMITMENT} <a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP works</a></p>
+  </aside>
+
+  <Sources class="jr__sources" />
+</LongformLayout>
+
+<style>
+  .jr__cards {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .jr__table {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .jr__table table {
+    width: 100%;
+    min-width: 640px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
+  .jr__table th,
+  .jr__table td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .jr__table thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  .jr__table tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  .jr__next {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
+    margin-top: var(--space-lg);
+    padding: var(--space-lg) var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+  }
+  .jr__next > :global(*) {
+    margin: 0;
+  }
+  .jr__nexttitle {
+    font-size: var(--fs-heading-2xl);
+    line-height: var(--lh-heading-2xl);
+    color: var(--secondary);
+  }
+  .jr__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-lg);
+  }
+  .jr__micro {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  :global(.jr__sources) {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+</style>

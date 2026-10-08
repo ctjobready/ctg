@@ -1,0 +1,204 @@
+---
+import LongformLayout from '../../../layouts/LongformLayout.astro';
+import Accordion from '../../../components/ui/Accordion.astro';
+import BarChart from '../../../components/ui/BarChart.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import FactStat from '../../../components/facts/FactStat.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import ReportSection from '../../../components/pages/impact/ReportSection.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import FitBrief from '../../../components/pages/impact/FitBrief.astro';
+import NextStep from '../../../components/pages/impact/NextStep.astro';
+import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { fact, sources } from '../../../data/facts';
+import { RCT_HEADLINE, MICRO_COMMITMENT } from '../../../data/copy';
+import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { linkAttrs } from '../../../lib/url';
+
+const path = '/impact/independent-evaluation/';
+const description = desc('A randomized trial by BIGD found CodersTrust training raised women’s income by 41% for those offered a place and 53% for those who attended.');
+const faqIds = ['Q4', 'Q3'];
+
+// RC-08 chart values must match the register text.
+const classes = [
+  { label: 'Control group', value: 12 },
+  { label: 'Attended 1–10 classes', value: 16 },
+  { label: 'Attended 11–24 classes', value: 21 },
+  { label: 'Attended 25 or more classes', value: 42 },
+];
+const rc08 = fact('RC-08').text;
+for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
+
+const citation = sources.BIGD22;
+const jsonLd = [
+  articleNode({
+    path,
+    headline: RCT_HEADLINE.text,
+    description,
+    datePublished: '2026-10-08',
+    dateModified: '2026-10-08',
+    author: 'CodersTrust',
+    citation: [
+      {
+        '@type': 'ScholarlyArticle',
+        name: 'Impact Evaluation Report of the WSDFM Program',
+        author: { '@type': 'Organization', name: 'BRAC Institute of Governance and Development (BIGD), BRAC University' },
+        datePublished: '2022-05',
+        publisher: { '@type': 'Organization', name: 'BRAC University' },
+      },
+    ],
+  }),
+  faqJsonLd('foundations', path, faqIds),
+];
+const faq = faqItems('foundations', faqIds, Astro);
+const toc = [
+  { id: 'summary', label: 'The short answer' },
+  { id: 'fit', label: 'Evidence-and-fit brief' },
+  { id: 'design', label: 'How the trial worked' },
+  { id: 'results', label: 'What it found' },
+  { id: 'classes', label: 'Freelancing by classes attended' },
+  { id: 'funders', label: 'What it means for funders' },
+  { id: 'context', label: 'Context' },
+  { id: 'limits', label: 'Limitations' },
+  { id: 'cite', label: 'Citation' },
+  { id: 'faq', label: 'Questions' },
+];
+const d = discoveryCta();
+---
+
+<LongformLayout
+  title={title('Randomized Trial Results')}
+  description={description}
+  path={path}
+  heading={RCT_HEADLINE.text}
+  eyebrow="Independent evaluation"
+  updated="2026-10-08"
+  toc={toc}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent evaluation' }]}
+  jsonLd={jsonLd}
+>
+  <ReportSection id="summary" title="The short answer">
+    <Callout tone="bluf">
+      <p data-fact="RC-01 RC-02">
+        <strong>Women offered a place first, women who attended second.</strong> <Fact id="RC-01" /> <Fact id="RC-02" />
+      </p>
+    </Callout>
+    <div class="ie__stats">
+      <FactStat id="RC-01" />
+      <FactStat id="RC-02" />
+      <FactStat id="RC-04" />
+      <FactStat id="RC-03" />
+    </div>
+  </ReportSection>
+
+  <section id="fit" class="ie__fit" aria-label="Evidence-and-fit brief">
+    <FitBrief />
+  </section>
+
+  <ReportSection id="design" title="How the trial worked">
+    <p data-fact="RC-07"><Fact id="RC-07" /></p>
+    <p>
+      “Offered a place” compares every woman randomly offered a place with the control group, whether or not she attended; this is the figure to lead with. “Attended” isolates the women who took part, and comes second.
+    </p>
+  </ReportSection>
+
+  <ReportSection id="results" title="What the trial found">
+    <h3 class="t-heading-l">Women offered a place</h3>
+    <ul class="ie__list">
+      <li data-fact="RC-01"><Fact id="RC-01" /></li>
+      <li data-fact="RC-02"><Fact id="RC-02" /></li>
+      <li data-fact="RC-04"><Fact id="RC-04" /></li>
+    </ul>
+    <h3 class="t-heading-l">Women who attended</h3>
+    <ul class="ie__list">
+      <li data-fact="RC-03"><Fact id="RC-03" /></li>
+      <li data-fact="RC-05"><Fact id="RC-05" /></li>
+    </ul>
+    <p>Freelancing and household effects are labelled as in the BIGD report: for women who attended or for women offered a place.</p>
+  </ReportSection>
+
+  <ReportSection id="classes" title="Freelancing by classes attended">
+    <BarChart
+      title="Share freelancing, by classes attended (descriptive, not causal)"
+      items={classes.map((c) => ({ label: c.label, value: c.value }))}
+      note="Descriptive, not causal: women who attend more classes may differ from those who attend fewer. Control group and attenders at follow-up."
+    />
+    <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
+    <p data-fact="RC-10"><Fact id="RC-10" />. It is planned, not under way.</p>
+  </ReportSection>
+
+  <ReportSection id="funders" title="What it means for funders">
+    <p>
+      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The attender results show what training did for the women who took part, among women who chose to attend.
+    </p>
+    <p>
+      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
+      <a class="link" href={linkAttrs('/partner-with-us/').href}>How partnerships work<Icon name="arrow-right" size={16} /></a>
+    </p>
+  </ReportSection>
+
+  <ReportSection id="context" title="Context: how this compares">
+    <p data-fact="RC-06"><Fact id="RC-06" /></p>
+    <p data-fact="RC-11">Design lesson from the trial: <Fact id="RC-11" /> This is a design rationale, not a claim about the effect of mentoring.</p>
+  </ReportSection>
+
+  <ReportSection id="limits" title="Limitations">
+    <ul class="ie__list">
+      <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.<FootnoteMarker id="RC-01" footnote="auto" /></li>
+      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021.</li>
+      <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
+      <li><strong>200 hours vs 100 hours.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
+      <li><strong>Attrition.</strong> Not every woman in the baseline sample was reached at follow-up (see the trial design above).</li>
+    </ul>
+  </ReportSection>
+
+  <ReportSection id="cite" title="Citation">
+    <Callout label="Cite this evaluation">
+      <p data-fact="RC-07">{citation.citation}</p>
+      <p>Evaluated program: the Women’s Skill Development for Freelancing Marketplace (WSDFM), commissioned by Porticus. <a class="link" href={linkAttrs('/impact/case-studies/wsdfm-women-freelancers/').href}>WSDFM case study<Icon name="arrow-right" size={16} /></a></p>
+    </Callout>
+  </ReportSection>
+
+  <ReportSection id="faq" title="Questions about the evidence">
+    <Accordion items={faq} name="ie-faq" openFirst />
+  </ReportSection>
+
+  <NextStep
+    heading="Talk to us about a first cohort."
+    text="A discovery session sets priority groups, tracks and the pilot scorecard."
+    cta={{ label: d.label, href: d.href }}
+    secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }}
+    micro={MICRO_COMMITMENT}
+  />
+
+  <Sources class="ie__sources" />
+</LongformLayout>
+
+<style>
+  .ie__stats {
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  }
+  .ie__list {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .ie__list li::marker {
+    color: var(--primary);
+  }
+  .ie__fit {
+    padding-block: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+  :global(.ie__sources) {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+</style>

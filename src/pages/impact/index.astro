@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/system/Hero.astro';
+import Badge from '../../components/system/Badge.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CTABand from '../../components/ui/CTABand.astro';
+import FeatureCard from '../../components/ui/FeatureCard.astro';
+import ProofBand from '../../components/sections/ProofBand.astro';
+import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
+import Fact from '../../components/facts/Fact.astro';
+import Sources from '../../components/facts/Sources.astro';
+import CopyText from '../../components/pages/impact/CopyText.astro';
+import Callout from '../../components/pages/impact/Callout.astro';
+import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
+import { articleNode, desc, title, val, reportCta } from '../../components/pages/impact/page-utils';
+import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
+import { SURVEY_EMPLOYMENT, RCT_HEADLINE } from '../../data/copy';
+
+const path = '/impact/';
+const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey. A randomized trial by BIGD found income gains.`);
+const jsonLd = [articleNode({ path, headline: 'Impact and evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
+const sdgs = [
+  { n: 4, label: 'Quality education', core: true },
+  { n: 5, label: 'Gender equality', core: true },
+  { n: 8, label: 'Decent work and economic growth', core: true },
+  { n: 1, label: 'No poverty', core: false },
+  { n: 2, label: 'Zero hunger', core: false },
+  { n: 9, label: 'Industry and innovation', core: false },
+  { n: 10, label: 'Reduced inequalities', core: false },
+];
+const explore = [
+  { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'The Impact Survey 2026: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
+  { icon: 'flask-conical', title: 'Independent evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
+  { icon: 'file-text', title: 'Case studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
+  { icon: 'message-square-quote', title: 'Success stories', text: 'Learners in their own words. Individual stories, not typical outcomes.', href: '/impact/stories/' },
+  { icon: 'globe', title: 'Global reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
+];
+const rc = reportCta();
+---
+
+<BaseLayout title={title('Impact and Evidence')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Impact and evidence" lead="What CodersTrust results show, what kind of evidence each one is, and what it does not show." artSeed="impact-hub" />
+
+  <Section pad="sm" aria-label="Summary">
+    <div class="ih__bluf">
+      <Callout tone="bluf" label="In short">
+        <CopyText block={SURVEY_EMPLOYMENT} />
+        <CopyText block={RCT_HEADLINE} />
+      </Callout>
+    </div>
+  </Section>
+
+  <Section tone="airy" aria-labelledby="ladder-h">
+    <SectionHeader id="ladder-h" eyebrow="Results at a glance" title="The evidence ladder: four kinds of evidence" lead="Strongest for cause first. Each rung says what it shows, what it does not show and how it was made." />
+    <EvidenceLadder />
+  </Section>
+
+  <ProofBand id="proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+
+  <CaseStudyCarousel
+    id="cases"
+    title="Four programs, in depth"
+    items={CASE_STUDIES.map((c) => ({ title: c.name, program: c.program, factId: c.factId, href: c.path }))}
+  />
+
+  <Section aria-labelledby="explore-h">
+    <SectionHeader id="explore-h" eyebrow="Explore" title="Go deeper" />
+    <div class="grid-cards">
+      {explore.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
+    </div>
+  </Section>
+
+  <Section tone="ice" aria-labelledby="sdg-h" pad="sm">
+    <h2 class="t-heading-2xl" id="sdg-h">Contribution to the Sustainable Development Goals</h2>
+    <p class="ih__sdgtext" data-fact="ID-09"><Fact id="ID-09" /></p>
+    <ul class="ih__sdgs" role="list">
+      {sdgs.map((s) => <li><Badge tone={s.core ? 'brand' : 'eyebrow'}>SDG {s.n} · {s.label}{s.core && ' (core)'}</Badge></li>)}
+    </ul>
+  </Section>
+
+  <CTABand id="cta" heading="Read the full Impact Report 2026." text="The partner edition covers the programs behind these results." cta={rc} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} />
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .ih__bluf {
+    max-width: var(--measure);
+  }
+  .ih__sdgtext {
+    margin: var(--space-sm) 0 var(--space-md);
+    max-width: var(--measure);
+  }
+  .ih__sdgs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+</style>

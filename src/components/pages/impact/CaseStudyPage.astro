@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../system/Hero.astro';
+import Button from '../../system/Button.astro';
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import CTABand from '../../ui/CTABand.astro';
+import Icon from '../../system/Icon.astro';
+import FactStat from '../../facts/FactStat.astro';
+import Sources from '../../facts/Sources.astro';
+import { linkAttrs } from '../../../lib/url';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { discoveryCta, articleNode, desc, title as chkTitle } from './page-utils';
+import { caseBySlug } from './case-studies';
+
+/**
+ * Template for the four case-study pages (T5): outcome-first header (stat row) → context → challenges →
+ * CodersTrust solution → results → learner story → related program → discovery CTA.
+ * Slots: `context` (extra context), `results`, `story`, `after-results`.
+ */
+interface Props {
+  slug: string;
+  /** <title> without the suffix. */
+  pageTitle: string;
+  description: string;
+  /** Register facts whose stats form the outcome-first row, each with its own evidence label (shown under the figure). */
+  stats: { id: string; evidence: string }[];
+  context: string[];
+  challenges: string[];
+  solution: string[];
+  artSeed?: string;
+}
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed } = Astro.props;
+const c = caseBySlug(slug);
+const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
+const related = linkAttrs(c.related.href);
+const d = discoveryCta();
+---
+
+<BaseLayout
+  title={chkTitle(pageTitle)}
+  description={desc(description)}
+  path={c.path}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies', href: '/impact/case-studies/' }, { label: c.name }]}
+  jsonLd={jsonLd}
+  ogType="article"
+>
+  <Hero variant="inner" eyebrow={`Case study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`}>
+    <Fragment slot="stats">
+      {
+        stats.map((s) => (
+          <div class="cs__stat">
+            <FactStat id={s.id} />
+            <p class="cs__evidence">{s.evidence}</p>
+          </div>
+        ))
+      }
+    </Fragment>
+    <Fragment slot="actions">
+      <Button variant="outline" href="#results">Jump to the results</Button>
+    </Fragment>
+  </Hero>
+
+  <Section aria-labelledby="context-h">
+    <SectionHeader id="context-h" eyebrow="Context" title="Why this program" />
+    <div class="cs__prose">
+      {context.map((p) => <p>{p}</p>)}
+      <slot name="context" />
+    </div>
+  </Section>
+
+  <Section tone="airy" aria-labelledby="solution-h">
+    <div class="cs__two">
+      <div data-reveal>
+        <h2 class="t-heading-2xl" id="challenges-h">Challenges</h2>
+        <ul class="cs__list" aria-labelledby="challenges-h">{challenges.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div data-reveal>
+        <h2 class="t-heading-2xl" id="solution-h">What CodersTrust did</h2>
+        <ul class="cs__list" aria-labelledby="solution-h">{solution.map((x) => <li>{x}</li>)}</ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="results" aria-labelledby="results-h">
+    <SectionHeader id="results-h" eyebrow="Results" title="What happened" />
+    <div class="cs__results"><slot name="results" /></div>
+  </Section>
+  <slot name="after-results" />
+
+  <Section tone="airy" aria-labelledby="story-h">
+    <SectionHeader id="story-h" eyebrow="In a learner’s words" title="A learner story" lead="Individual stories, not typical or promised outcomes." />
+    <slot name="story" />
+  </Section>
+
+  <Section aria-labelledby="related-h" pad="sm">
+    <h2 class="t-heading-2xl" id="related-h">Where the model runs next</h2>
+    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a> · <a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <CTABand id="cta" tone="klein" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .cs__stat {
+    display: grid;
+    gap: 4px;
+    align-content: start;
+    max-width: 15rem;
+  }
+  .cs__evidence {
+    margin: 0;
+    padding-top: 4px;
+    border-top: 1px solid var(--primary-fixed);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+  }
+  .cs__prose {
+    display: grid;
+    gap: var(--space-md);
+    max-width: var(--measure);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .cs__prose > :global(*) {
+    margin: 0;
+  }
+  .cs__two {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .cs__two h2 {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .cs__list {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: var(--space-sm);
+    font-size: var(--fs-body-m);
+  }
+  .cs__list li::marker {
+    color: var(--primary);
+  }
+  .cs__results {
+    display: grid;
+    gap: var(--space-lg);
+    min-width: 0;
+  }
+  .cs__results > :global(*) {
+    margin: 0;
+  }
+  .cs__results :global(p),
+  .cs__results :global(.callout) {
+    max-width: var(--measure);
+  }
+  .cs__related {
+    margin: var(--space-md) 0 0;
+  }
+  @media (min-width: 900px) {
+    .cs__two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 56px;
+    }
+  }
+</style>

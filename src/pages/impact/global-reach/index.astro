@@ -1,0 +1,106 @@
+---
+import LongformLayout from '../../../layouts/LongformLayout.astro';
+import Icon from '../../../components/system/Icon.astro';
+import WorldMap from '../../../components/ui/WorldMap.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import ReportSection from '../../../components/pages/impact/ReportSection.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import NextStep from '../../../components/pages/impact/NextStep.astro';
+import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { fact } from '../../../data/facts';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+
+const path = '/impact/global-reach/';
+const headline = `${fact('SC-03').text}.`;
+const description = desc('Programs in 15 countries and territories: Bangladesh since 2014 plus 14 international locations, with each location’s target group and skills.');
+const jsonLd = [articleNode({ path, headline: 'Global reach', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
+const toc = [
+  { id: 'map', label: 'Where programs have run' },
+  { id: 'bangladesh', label: 'Selected programs in Bangladesh' },
+];
+const programs = [
+  { name: 'WSDFM', slug: 'wsdfm-women-freelancers', partner: 'Commissioned by Porticus; evaluated by BIGD', years: 'Trained in 2020', focus: 'ICT skills for freelancing and local jobs for women', reachId: 'PR-01', reachText: 'women placed' },
+  { name: 'UNDP YES, Korail', slug: 'undp-yes-korail', partner: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh', years: '2017', focus: 'Skills for disadvantaged youth, linked to freelance marketplaces', reachId: 'PR-03', reachText: 'found their first job within 3 months (placement denominator not stated)' },
+  { name: 'Her Power', slug: 'her-power', partner: 'ICT Division / DoICT, Government of Bangladesh', years: '—', focus: 'Digital skills for women’s self-employment (national program)', reachId: 'PR-05', reachText: 'women placed (training cohort)' },
+];
+const d = discoveryCta();
+---
+
+<LongformLayout
+  title={title('Global Reach')}
+  heading="Global reach: where CodersTrust programs have run"
+  eyebrow="Impact"
+  lead={headline}
+  description={description}
+  path={path}
+  updated="2026-10-08"
+  toc={toc}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Global reach' }]}
+  jsonLd={jsonLd}
+>
+  <ReportSection id="map" title="Where programs have run">
+    <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.<FootnoteMarker id="SC-03" footnote="auto" /></p>
+    <WorldMap caption="Where CodersTrust programs have run" />
+    <Callout label="Locations are not programs">
+      <p>A location is a country or territory where CodersTrust has run a program. It does not say how many programs ran there, or how large they were. The New York office is not a program location; offices are listed under the map.</p>
+    </Callout>
+  </ReportSection>
+
+  <ReportSection id="bangladesh" title="Selected programs in Bangladesh">
+    <p>Programs with a published case study. Results are program data (gross placement) unless the case study says otherwise.</p>
+    <div class="gr__table" role="region" aria-label="Selected programs in Bangladesh" tabindex="0">
+      <table>
+        <caption class="sr-only">Selected CodersTrust programs in Bangladesh</caption>
+        <thead><tr><th scope="col">Program</th><th scope="col">Partner</th><th scope="col">Years</th><th scope="col">Focus</th><th scope="col">Reach</th></tr></thead>
+        <tbody>
+          {programs.map((p) => (
+            <tr>
+              <th scope="row"><a class="link" href={linkAttrs(`/impact/case-studies/${p.slug}/`).href}>{p.name}</a></th>
+              <td>{p.partner}</td>
+              <td>{p.years === '—' ? <><span class="sr-only">Not stated</span><span aria-hidden="true">—</span></> : p.years}</td>
+              <td>{p.focus}</td>
+              <td data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
+  </ReportSection>
+
+  <NextStep heading="Talk to us about a first cohort." text="Tell us the country and priority groups; we outline a first cohort in a discovery session." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <Sources class="gr__sources" />
+</LongformLayout>
+
+<style>
+  .gr__table {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .gr__table table {
+    width: 100%;
+    min-width: 720px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
+  .gr__table th,
+  .gr__table td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .gr__table thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  :global(.gr__sources) {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
+  }
+</style>

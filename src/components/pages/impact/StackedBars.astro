@@ -1,0 +1,163 @@
+---
+/**
+ * StackedBars — one 100% bar per group (for example control vs women offered a place), with a text legend
+ * beside every bar (colour is never the only cue) and an accessible data-table toggle.
+ */
+interface Props {
+  title: string;
+  /** Segment labels in stacking order (shared by every row). */
+  segments: string[];
+  rows: { label: string; values: number[] }[];
+  note?: string;
+  class?: string;
+}
+const { title, segments, rows, note, class: className } = Astro.props;
+const fmt = (v: number) => `${v.toFixed(1)}%`;
+---
+
+<figure class:list={['sb', className]} data-reveal>
+  <figcaption class="sb__title">{title}</figcaption>
+  <ul class="sb__list" role="list">
+    {
+      rows.map((r, ri) => (
+        <li class="sb__row" style={`--ri:${ri}`}>
+          <p class="sb__label">{r.label}</p>
+          <div class="sb__bar" aria-hidden="true">
+            {r.values.map((v, i) => <span class={`sb__seg sb__seg--${i}`} style={`--w:${v}`}></span>)}
+          </div>
+          <ul class="sb__key" role="list">
+            {r.values.map((v, i) => <li><span class={`sb__dot sb__seg--${i}`} aria-hidden="true"></span>{segments[i]}: <b>{fmt(v)}</b></li>)}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+  {note && <p class="sb__note">{note}</p>}
+  <details class="sb__data">
+    <summary>View chart data as a table</summary>
+    <div class="sb__tablewrap" role="region" aria-label={`${title}: data table`} tabindex="0">
+      <table>
+        <caption class="sr-only">{title}</caption>
+        <thead>
+          <tr><th scope="col">Group</th>{segments.map((s) => <th scope="col">{s}</th>)}</tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => <tr><th scope="row">{r.label}</th>{r.values.map((v) => <td>{fmt(v)}</td>)}</tr>)}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</figure>
+
+<style>
+  .sb {
+    margin: 0;
+    max-width: 720px;
+  }
+  .sb__title {
+    font-weight: var(--fw-bold);
+    color: var(--ctx-heading);
+    margin-bottom: var(--space-md);
+  }
+  .sb__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .sb__row {
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .sb__row > * {
+    margin: 0;
+  }
+  .sb__label {
+    font-weight: var(--fw-medium);
+    color: var(--ctx-heading);
+  }
+  .sb__bar {
+    display: flex;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    gap: 2px;
+    background: var(--surface);
+  }
+  .sb__seg {
+    flex: 0 0 auto;
+  }
+  .sb__bar .sb__seg {
+    width: calc(var(--w) * 1% - 2px);
+  }
+  .sb__seg--0 {
+    background: var(--surface-container-highest-light);
+  }
+  .sb__seg--1 {
+    background: var(--primary-fixed-dim);
+  }
+  .sb__seg--2 {
+    background: var(--primary);
+  }
+  .sb__key {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--space-md);
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-text);
+  }
+  .sb__key b {
+    color: var(--ctx-heading);
+  }
+  .sb__dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 6px;
+    vertical-align: -1px;
+  }
+  .sb__note {
+    margin: var(--space-md) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .sb__data {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-xs);
+  }
+  .sb__data summary {
+    color: var(--ctx-link);
+    font-weight: var(--fw-medium);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .sb__tablewrap {
+    overflow-x: auto;
+  }
+  .sb__data table {
+    width: 100%;
+    min-width: 360px;
+  }
+  .sb__data th,
+  .sb__data td {
+    text-align: left;
+    padding: 6px 12px 6px 0;
+    border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .sb .sb__bar {
+      clip-path: inset(0 100% 0 0);
+    }
+    :global(.js) .sb.is-visible .sb__bar {
+      clip-path: inset(0 0 0 0);
+      transition: clip-path 800ms var(--ease-emphasized) calc(150ms + var(--ri) * 200ms);
+    }
+  }
+</style>

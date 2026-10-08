@@ -1,0 +1,83 @@
+---
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+
+/** [FIT-BRIEF] — evidence-and-fit brief (one screen, no new facts). Wording follows planning v1.3 doc 06. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<section class:list={['fit', className]} aria-labelledby="fit-h" data-reveal>
+  <h2 class="fit__title" id="fit-h">Evidence-and-fit brief</h2>
+  <dl class="fit__list">
+    <div class="fit__item" data-fact="RC-07">
+      <dt>What was evaluated</dt>
+      <dd>The WSDFM program, a 200-hour predecessor of today’s 100-hour track.<FootnoteMarker id="RC-07" footnote="auto" /></dd>
+    </div>
+    <div class="fit__item" data-fact="RC-01">
+      <dt>Who took part</dt>
+      <dd>Women aged 18–35 with SSC or above, in Dhaka.<FootnoteMarker id="RC-01" footnote="auto" /></dd>
+    </div>
+    <div class="fit__item" data-fact="RC-01 RC-02">
+      <dt>Offered-place effects first</dt>
+      <dd>Employment rose 10.3 percentage points for women offered a place, on a control-group rate of 52.8%; effects for women who attended come second.<FootnoteMarker id="RC-02" footnote="auto" /></dd>
+    </div>
+    <div class="fit__item" data-fact="OC-01 OC-09">
+      <dt>What the 2026 survey adds</dt>
+      <dd>Descriptive outcomes among surveyed completers across 58 of 64 districts, not causal.<FootnoteMarker id="OC-09" footnote="auto" /></dd>
+    </div>
+    <div class="fit__item" data-fact="PD-01">
+      <dt>What a new pilot must establish</dt>
+      <dd>Country, priority groups and the 100-hour track, agreed in co-design.</dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  .fit {
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+  }
+  .fit__title {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    color: var(--secondary);
+  }
+  .fit__list {
+    display: grid;
+    gap: var(--space-md);
+    margin: 0;
+  }
+  .fit__item {
+    display: grid;
+    gap: 2px;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--primary-fixed);
+  }
+  .fit__item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .fit__item dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+  .fit__item dd {
+    margin: 0;
+    color: var(--on-surface);
+  }
+  @media (min-width: 768px) {
+    .fit__item {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: baseline;
+    }
+  }
+</style>

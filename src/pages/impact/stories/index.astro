@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Sources from '../../../components/facts/Sources.astro';
+import StoryGallery from '../../../components/pages/impact/StoryGallery.astro';
+import type { StoryCardData } from '../../../components/pages/impact/story-types';
+import { linkAttrs } from '../../../lib/url';
+import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
+import { fact, CAVEATS } from '../../../data/facts';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { webPage } from '../../../lib/schema';
+
+const path = '/impact/stories/';
+
+// Never rendered: ST-04 (Arfias Islam, withheld). Not shown with names or photos: learners from groups that need a
+// documented release (UNDP YES Korail slum residents; Kosovo participants, described by the program as refugee women).
+const WITHHELD = new Set(['arfias-islam']);
+const ANONYMIZED = new Set(['aklima-akder', 'shamim-ahmed', 'erlisa-zherka']);
+// Photos of people whose age is not documented are replaced by the illustration.
+const NO_PHOTO = new Set(['mysha-k-diya']);
+
+// Positive, verbatim excerpts only (no hardship-led or personal-circumstance passages). Each must appear in the story file.
+const EXCERPTS: Record<string, string> = {
+  'adrian-afraham': 'Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer.',
+  'ashraful-alam-sani': 'I’m thrilled to announce that I’ve attained Fiverr Level One Seller rank!',
+  'aysha-akter-bipasha': 'Their guidance has been instrumental in my ability to excel in this independent work style.',
+  'mustafa-zabed': 'I am delighted to share that I successfully sold my first blog to an Upwork client for $200',
+  'mysha-k-diya': 'A paying job after only two months of Digital Accounting training is a huge accomplishment for me, made possible by the mentorship of CodersTrust.',
+  'nushrat-jahan': 'I got my first job using Upwork and the client is overjoyed. He wants to collaborate with me more.',
+  'zarin-tusnim-shifa': 'Finally, I have reached a truly remarkable milestone in my life: successfully completing my very first freelancing task.',
+  'arfias-islam-rudro': 'I highly recommend CodersTrust to anyone seeking to thrive in the world of digital marketing.',
+};
+
+const all = await getCollection('stories');
+for (const [id, ex] of Object.entries(EXCERPTS)) {
+  const e = all.find((s) => s.id === id);
+  if (!e?.data.quote?.includes(ex)) throw new Error(`excerpt for ${id} is not a verbatim part of the story quote`);
+}
+const pathwayOf = (p: string): StoryCardData['pathway'] => (p === 'freelance' || p === 'job' || p === 'business' ? p : 'other');
+const quoted = (id: string) => {
+  const m = fact(id).text.match(/“([^”]+)”/);
+  if (!m) throw new Error(`${id} has no quoted outcome`);
+  return m[1];
+};
+
+const named = all.filter((s) => !WITHHELD.has(s.id) && !ANONYMIZED.has(s.id));
+const caseIds = ['samina-tasneem-chowdhury', 'maria-dewan'];
+const toCard = (s: (typeof all)[number]): StoryCardData => {
+  const ex = EXCERPTS[s.id];
+  return {
+    key: s.id,
+    outcome: ex ? `“${ex}”` : s.data.outcome,
+    name: s.data.name,
+    role: s.data.program ?? s.data.role,
+    pathway: pathwayOf(s.data.pathway),
+    image: NO_PHOTO.has(s.id) ? undefined : s.data.photo,
+    imageAlt: s.data.photoAlt,
+    assetId: `story-${s.id}`,
+  };
+};
+const caseCards = caseIds.map((id) => toCard(named.find((s) => s.id === id)!));
+const legacyCards = named
+  .filter((s) => !caseIds.includes(s.id))
+  .sort((a, b) => a.data.name.localeCompare(b.data.name))
+  .map(toCard);
+
+const anon: StoryCardData[] = [
+  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split('): ')[1].replace('; earning', ' and is earning')}.` },
+  { key: 'yes-anon-1', name: 'A UNDP YES learner', role: 'Korail', pathway: 'freelance', outcome: `“${quoted('ST-01')}”` },
+  { key: 'yes-anon-2', name: 'A UNDP YES learner', role: 'Korail (an outlier result)', pathway: 'freelance', outcome: `“${quoted('ST-02')}”` },
+];
+const cards = [...caseCards, ...anon, ...legacyCards];
+
+const description = desc('Learner stories from CodersTrust programs, in learners’ own words. Individual stories, not typical or promised outcomes.');
+const jsonLd = [
+  webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
+  articleNode({ path, headline: 'Success stories', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' }),
+];
+const d = discoveryCta();
+---
+
+<BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success stories' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Success stories: learners in their own words" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
+
+  <Section aria-labelledby="stories-h">
+    <SectionHeader id="stories-h" eyebrow="Learners" title="What learners report" lead="Individual stories; not typical or promised outcomes." />
+    <StoryGallery cards={cards} />
+    <div class="st__notes">
+      <p><strong>Read these as individual stories.</strong> {CAVEATS.I} Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
+      <p>Learners from some groups, including participants in programs for refugees and residents of urban slums, are shown as outcome lines without names or photos.</p>
+    </div>
+  </Section>
+
+  <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
+</BaseLayout>
+
+<style>
+  .st__notes {
+    display: grid;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    max-width: var(--measure);
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .st__notes > :global(*) {
+    margin: 0;
+  }
+</style>

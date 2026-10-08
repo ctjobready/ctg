@@ -1,0 +1,33 @@
+---
+import FactStat from '../../facts/FactStat.astro';
+
+/** FactStat with its sample base printed beneath it, so every survey figure shows its own n. */
+interface Props {
+  id: string;
+  base: string;
+  tone?: 'default' | 'dark' | 'accent';
+  size?: 'md' | 'lg';
+  small?: boolean;
+}
+const { id, base, tone = 'default', size = 'lg', small = false } = Astro.props;
+---
+
+<div class="bstat">
+  <FactStat id={id} tone={tone} size={size} />
+  <p class="bstat__base">Base: {base}{small && ' (small base; read with care)'}</p>
+</div>
+
+<style>
+  .bstat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+  .bstat__base {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-muted);
+  }
+</style>

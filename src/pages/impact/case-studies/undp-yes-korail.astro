@@ -1,0 +1,86 @@
+---
+import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import Quote from '../../../components/ui/Quote.astro';
+import { fact } from '../../../data/facts';
+
+// PR-03a: the partner quote, shown in full with its scope line (never beside the 2017 results without it).
+const pq = fact('PR-03a').text.match(/“([^”]+)”/);
+if (!pq) throw new Error('PR-03a no longer contains the quotation');
+// ST-01 and ST-02 carry learners' names in the register; Korail residents are shown as anonymized outcome lines.
+const quoteOf = (id: string) => {
+  const m = fact(id).text.match(/“([^”]+)”/);
+  if (!m) throw new Error(`${id} has no quoted outcome`);
+  return m[1];
+};
+---
+
+<CaseStudyPage
+  slug="undp-yes-korail"
+  pageTitle="UNDP YES Korail Case Study"
+  description="UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% graduated, 67% found a first job within 3 months (placement base not stated)."
+  stats={[{ id: 'PR-03', evidence: 'Program records — placement denominator not stated' }]}
+  context={[
+    'Young people in Dhaka’s urban slums face limited access to education and training, discrimination, and little exposure to careers or networks.',
+    'In 2017 CodersTrust trained disadvantaged youth in Korail, Dhaka’s largest slum, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Beyond jobs, awareness of the opportunity grew across Korail, and graduates went on to mentor local youth.',
+  ]}
+  challenges={[
+    'Day labor pulled young people away from training.',
+    'No electricity, computers or money to study.',
+    'No computer literacy and too little English to work with clients.',
+    'No follow-up mentoring to find employment after training.',
+  ]}
+  solution={[
+    'An awareness campaign, courtyard meetings and parent counseling in Korail.',
+    'A fully equipped lab to practice and work.',
+    'Fundraising and bank loans for students.',
+    'A basic English communication module.',
+    'One-to-one mentoring for students.',
+  ]}
+>
+  <Fragment slot="context">
+    <div class="uy__quote">
+      <h3 class="t-heading-l">The partner’s view of the 2015 pilot</h3>
+      <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role="2015 Korail pilot, 40 students, typing speed and computer-application targets">{pq[1]}</Quote>
+      <p class="uy__scope" data-fact="PR-03a">This quotation describes the 2015 pilot only; it is not a statement about the 2017 project or about employment results.<FootnoteMarker id="PR-03a" footnote={true} /></p>
+    </div>
+  </Fragment>
+
+  <Fragment slot="results">
+    <Callout tone="bluf" label="Program records, 2017 — placement denominator not stated">
+      <Fact id="PR-03" as="p" />
+      <p><strong>Placement denominator not stated.</strong> The 67% is reported as found their first job within 3 months; the number of graduates used as the base is not stated.</p>
+    </Callout>
+  </Fragment>
+
+  <Fragment slot="story">
+    <LearnerStory program="UNDP YES, Korail" outcome={`One YES learner reported: “${quoteOf('ST-01')}.”`} />
+    <div class="uy__gap"></div>
+    <LearnerStory program="UNDP YES, Korail" outcome={`Another reported: “${quoteOf('ST-02')}.”`} outlier />
+  </Fragment>
+</CaseStudyPage>
+
+<style>
+  .uy__quote {
+    display: grid;
+    gap: var(--space-md);
+    max-width: var(--measure);
+    padding: var(--space-gutter);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-md);
+    background: var(--surface-container-low);
+  }
+  .uy__quote > :global(*) {
+    margin: 0;
+  }
+  .uy__scope {
+    font-size: var(--fs-body-xs);
+    color: var(--outline);
+  }
+  .uy__gap {
+    height: var(--space-md);
+  }
+</style>
