@@ -80,7 +80,7 @@ const has = (n, k) => n[k] !== undefined && n[k] !== null && n[k] !== '' && !(Ar
 const KEYS = {
   Organization: {
     required: ['name', 'url', 'logo', 'description', 'foundingDate', 'founder', 'address', 'contactPoint', 'sameAs'],
-    recommended: ['alternateName', 'areaServed', 'knowsAbout', 'award', 'location'],
+    recommended: ['areaServed', 'knowsAbout', 'award', 'location'],
   },
   WebSite: { required: ['name', 'url', 'publisher', 'inLanguage'], recommended: [] },
   BreadcrumbList: { required: ['itemListElement'], recommended: [] },

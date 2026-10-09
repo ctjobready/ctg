@@ -25,14 +25,21 @@
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
 //     outside the archived /news/ posts and the styleguide; negative self-tests below
 //   - statistic tiles: every <Stat>/<FactStat> tile and <FactCard> stat tile carries its fact's footnote marker (doc 04 claims rule 15)
-//   - [PLAIN-LINE] (plan v1.10): Home, /partner-with-us/development-partners/ and /impact/independent-evaluation/ must carry "For every 100
+//   - [PLAIN-LINE] (plan v1.10, v1.13): Home, /partner-with-us/development-partners/, /impact/independent-evaluation/ and the WSDFM case study
+//     (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it) must carry "For every 100
 //     women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)." rendered by
 //     <PlainLine> with RC-02's footnote marker; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below
-//   - [SESSION-AGENDA] (plan v1.12): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
-//     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's words: the lead "What the discovery
-//     session covers:" (or "What the briefing covers:" where the CTA is a briefing), the three items joined with " · " and one final period,
-//     carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget" claim; PD-02 is a production hold); negative self-tests below
+//   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
+//     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's exact words for THAT page: the lead "What
+//     the discovery session covers:" (development partners, foundations, YouthWIDE; first item "your country, priority groups and
+//     locations") or "What the briefing covers:" (governments, NationWIDE; first item "your priority groups and districts"), then the three
+//     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
+//     claim; PD-02 is a production hold); negative self-tests below
+//   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
+//     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
+//     the audience sentence followed by the verbatim [UNLIKE] sentence (SuperKids, whose [UNLIKE] clause is pending, is exempt from that
+//     second part); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
 //     registers (facts, caveats, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
@@ -221,10 +228,11 @@ const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i
 
 /* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
 // "For every 100 women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)."
-// is built in src/data/copy.ts from RC-02's stat; it is required on Home, the development-partners page and the independent-evaluation page,
+// is built in src/data/copy.ts from RC-02's stat; it is required on Home, the development-partners page, the independent-evaluation page and the
+// WSDFM case study (its header leads with the randomized trial's plain-language line, the program result second),
 // and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
 // The expected sentence is derived here from the register on its own (not read from copy.ts), so a drift in either place fails the build.
-const PLAIN_LINE_PAGES = ['/', '/partner-with-us/development-partners/', '/impact/independent-evaluation/'];
+const PLAIN_LINE_PAGES = ['/', '/partner-with-us/development-partners/', '/impact/independent-evaluation/', '/impact/case-studies/wsdfm-women-freelancers/'];
 const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than in the control group \(([^)]*)\)\./;
 const plainLineWanted = (stat) => {
   const points = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)} percentage points`;
@@ -250,17 +258,31 @@ function plainLineProblems(markup, text, stat, required) {
 
 /* ---- [SESSION-AGENDA] (plan v1.12 round-11 enhancement) ---- */
 // Beside the C13 primary CTA on the governments, development-partners and foundations pages, YouthWIDE and NationWIDE: ONE paragraph, the
-// lead, the three items joined with " · " and a single final period, tied to PD-02 (data-fact) like [PRICING] and FAQ Q8, whose "indicative
-// budget" claim it repeats. The wording is verbatim from the plan (doc 06 [SESSION-AGENDA]) and is declared here independently of
-// src/data/copy.ts, so a wording change has to be made in both places on purpose. Either lead is accepted on any of the pages: "What the
-// discovery session covers:" (the CTA books a discovery session) or "What the briefing covers:" (governments and NationWIDE, where the CTA is a briefing).
-const SESSION_AGENDA_PAGES = ['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/', '/programs/nationwide/'];
-const SESSION_AGENDA_LEADS = ['What the discovery session covers:', 'What the briefing covers:'];
-const SESSION_AGENDA_ITEMS = ['your priority groups and districts', 'employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'];
+// lead, three items separated by semicolons and a single final period, tied to PD-02 (data-fact) like [PRICING] and FAQ Q8, whose "indicative
+// budget" claim it repeats. The wording is verbatim from the plan (doc 06 [SESSION-AGENDA], v1.13) and is declared here independently of
+// src/data/copy.ts, so a wording change has to be made in both places on purpose. Each page has its own exact sentence: the discovery-session
+// pages open with "your country, priority groups and locations" (the international pages), the briefing pages (governments, NationWIDE) with
+// "your priority groups and districts".
+const SESSION_AGENDA_LEAD_DISCOVERY = 'What the discovery session covers:';
+const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
+const SESSION_AGENDA_FIRST_DISCOVERY = 'your country, priority groups and locations';
+const SESSION_AGENDA_FIRST_BRIEFING = 'your priority groups and districts';
+const SESSION_AGENDA_COMMON = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'];
+const sessionAgendaWanted = (lead, first) => `${lead} ${[first, ...SESSION_AGENDA_COMMON].join('; ')}.`;
+const SESSION_AGENDA_DISCOVERY = sessionAgendaWanted(SESSION_AGENDA_LEAD_DISCOVERY, SESSION_AGENDA_FIRST_DISCOVERY);
+const SESSION_AGENDA_BRIEFING = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_BRIEFING);
+/** page path -> the exact agenda sentence that page must carry */
+const SESSION_AGENDA_BY_PAGE = {
+  '/partner-with-us/development-partners/': SESSION_AGENDA_DISCOVERY,
+  '/partner-with-us/foundations/': SESSION_AGENDA_DISCOVERY,
+  '/programs/youthwide/': SESSION_AGENDA_DISCOVERY,
+  '/partner-with-us/governments/': SESSION_AGENDA_BRIEFING,
+  '/programs/nationwide/': SESSION_AGENDA_BRIEFING,
+};
+const SESSION_AGENDA_PAGES = Object.keys(SESSION_AGENDA_BY_PAGE);
 const SESSION_AGENDA_FACT = 'PD-02';
-const sessionAgendaWanted = (lead) => `${lead} ${SESSION_AGENDA_ITEMS.join(' · ')}.`;
-/** Problems with the agenda on one page: one paragraph inside the C13 band (#cta), in the plan's words, with the PD-02 marker. */
-function sessionAgendaProblems(markup) {
+/** Problems with the agenda on one page: one paragraph inside the C13 band (#cta), in the plan's exact words for that page (`wanted`), with the PD-02 marker. */
+function sessionAgendaProblems(markup, wanted) {
   const band = /<section\b[^>]*\bid="cta"[^>]*>[\s\S]*?<\/section>/.exec(markup);
   if (!band) return ['the C13 call-to-action band (#cta) is missing, so the [SESSION-AGENDA] has no CTA to sit beside'];
   const open = /<([a-z][a-z0-9]*)\b([^>]*)\bdata-session-agenda\b([^>]*)>/.exec(band[0]);
@@ -271,12 +293,57 @@ function sessionAgendaProblems(markup) {
   if (inner) {
     if (/<(ul|ol|li|h[1-6])\b/.test(inner[1])) out.push('[SESSION-AGENDA] must be one line of text: no list items and no heading inside it');
     const text = decode(inner[1].replace(/<sup\b[\s\S]*?<\/sup>/g, ''));
-    if (!SESSION_AGENDA_LEADS.some((lead) => text === sessionAgendaWanted(lead))) {
-      out.push(`[SESSION-AGENDA] reads "${text}", expected "${sessionAgendaWanted(SESSION_AGENDA_LEADS[0])}" (or, where the CTA is a briefing, with the lead "${SESSION_AGENDA_LEADS[1]}")`);
-    }
+    if (text !== wanted) out.push(`[SESSION-AGENDA] reads "${text}", expected "${wanted}"`);
   }
   const factAttr = /\bdata-fact="([^"]*)"/.exec(open[0])?.[1] ?? '';
   if (!factAttr.split(/\s+/).includes(SESSION_AGENDA_FACT)) out.push(`[SESSION-AGENDA] must carry data-fact="${SESSION_AGENDA_FACT}" like [PRICING] and FAQ Q8, so a production hold on ${SESSION_AGENDA_FACT} treats it the same`);
+  return out;
+}
+
+/* ---- [POSITION] opens C6 (plan v1.13: conversion-page rule 9, review round 12 Mi2) ---- */
+// Every C6 band opens with the positioning statement: "For ... who need ..., CodersTrust ...." then the verbatim [UNLIKE] sentence (doc 04 section 1).
+// "Opens" means nothing precedes the statement in the band except its own eyebrow and H2 (the band's title): no lead line, no model heading as
+// body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
+const POSITION_PAGES = [
+  '/',
+  '/investors/',
+  '/partner-with-us/governments/',
+  '/partner-with-us/development-partners/',
+  '/partner-with-us/foundations/',
+  '/partner-with-us/universities/',
+  '/partner-with-us/employers/',
+  '/partner-with-us/local-partners/',
+  '/programs/youthwide/',
+  '/programs/nationwide/',
+  '/programs/jobready-campus/',
+  '/programs/jobready-work/',
+  '/programs/superkids/',
+];
+// SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
+const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
+const UNLIKE_SENTENCE =
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we take responsibility for the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+/** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence. */
+function positionProblems(markup, { unlike = true } = {}) {
+  const band = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*)/.exec(markup);
+  if (!band) return ['the C6 band (#mechanism) is missing, so the positioning statement has nowhere to open'];
+  const pos = /<div\b[^>]*\bclass="[^"]*\bpos\b[^"]*"[^>]*>([\s\S]*?)<\/div>/.exec(band[1]);
+  if (!pos) return ['the C6 band has no positioning statement ([POSITION])'];
+  const out = [];
+  const before = band[1]
+    .slice(0, pos.index)
+    .replace(/<p\b[^>]*\beyebrow\b[^>]*>[\s\S]*?<\/p>/g, '')
+    .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/g, '');
+  const leading = decode(before);
+  if (leading) out.push(`the C6 band puts "${leading.slice(0, 80)}${leading.length > 80 ? '…' : ''}" before the positioning statement (only its eyebrow and H2 may come first)`);
+  else if (/<(svg|img|ul|ol|table|figure|a)\b/.test(before)) out.push('the C6 band puts a diagram, list, image or link before the positioning statement (only its eyebrow and H2 may come first)');
+  const text = /<p\b[^>]*\bpos__text\b[^>]*>([\s\S]*?)<\/p>/.exec(pos[1]);
+  const statement = text ? decode(text[1]) : '';
+  if (!statement) out.push('the positioning statement has no text');
+  else if (unlike) {
+    if (!statement.endsWith(` ${UNLIKE_SENTENCE}`)) out.push('the positioning statement does not end with the verbatim [UNLIKE] sentence as its own sentence');
+    else if (!/[.!?]$/.test(statement.slice(0, -UNLIKE_SENTENCE.length - 1))) out.push('the positioning statement runs the audience sentence into [UNLIKE] (they are two sentences)');
+  }
   return out;
 }
 
@@ -674,28 +741,68 @@ function numberGuardPage(path, html, allow = []) {
   // [SESSION-AGENDA]: beside the C13 CTA as ONE paragraph (lead, items joined with " · ", one final period), tied to PD-02, in the plan's words
   const agendaP = (text, { tag = 'p', fact = 'PD-02', attrs = '' } = {}) => `<${tag} class="agenda" data-session-agenda${fact ? ` data-fact="${fact}"` : ''}${attrs} data-astro-cid-x><span class="agenda__lead">${text.split(': ')[0]}:</span> ${text.split(': ').slice(1).join(': ')}</${tag}>`;
   const ctaBand = (inner) => `<main><section class="band band--airy" id="cta" aria-labelledby="cta-h"><div class="container"><div class="cta-band"><h2 id="cta-h">Let’s</h2><a href="/x/">Book</a><ul><li>A discovery session is a conversation, not a commitment.</li></ul>${inner}</div></div></section></main>`;
-  const [leadDiscovery, leadBriefing] = SESSION_AGENDA_LEADS;
-  const agendaWant = sessionAgendaWanted(leadDiscovery);
-  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', sessionAgendaWanted(leadBriefing)]]) {
+  const agendaWant = SESSION_AGENDA_DISCOVERY;
+  const agendaWantB = SESSION_AGENDA_BRIEFING;
+  if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the discovery agenda is no longer the plan wording');
+  if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the briefing agenda is no longer the plan wording');
+  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB]]) {
     const ok = ctaBand(agendaP(text));
-    if (sessionAgendaProblems(ok).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok).join('; ')}`);
+    if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);
   }
-  if (sessionAgendaProblems(ctaBand(agendaP(agendaWant).replace('</p>', '<sup class="fn" data-fact="PD-02"><a href="#fn-9" id="fn-ref-9-1" aria-label="Note 9">9</a></sup></p>'))).length) problems.push('self-test: the [SESSION-AGENDA] check rejected an agenda that carries a footnote marker');
-  const agendaBad = (why, markup) => {
-    if (!sessionAgendaProblems(markup).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
+  if (sessionAgendaProblems(ctaBand(agendaP(agendaWant).replace('</p>', '<sup class="fn" data-fact="PD-02"><a href="#fn-9" id="fn-ref-9-1" aria-label="Note 9">9</a></sup></p>')), agendaWant).length) problems.push('self-test: the [SESSION-AGENDA] check rejected an agenda that carries a footnote marker');
+  // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
+  const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
+  for (const p of ['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
+  for (const p of ['/partner-with-us/governments/', '/programs/nationwide/']) if (byPage(p) !== agendaWantB) problems.push(`self-test: ${p} must carry the briefing agenda ("your priority groups and districts")`);
+  const agendaBad = (why, markup, wanted = agendaWant) => {
+    if (!sessionAgendaProblems(markup, wanted).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
   };
   agendaBad('a CTA band with no agenda', ctaBand(''));
   agendaBad('a page with no CTA band', '<main><p>nothing</p></main>');
   agendaBad('an agenda outside the C13 band', ctaBand('') + agendaP(agendaWant));
   agendaBad('an agenda set as a heading', ctaBand(agendaP(agendaWant, { tag: 'h3' })));
-  agendaBad('an agenda set as a list', ctaBand(`<ul class="agenda" data-session-agenda data-fact="PD-02"><li>${leadDiscovery}</li><li>${SESSION_AGENDA_ITEMS.join('</li><li>')}</li></ul>`));
-  agendaBad('a paragraph that wraps a list', ctaBand(`<p class="agenda" data-session-agenda data-fact="PD-02">${leadDiscovery} <ul><li>${SESSION_AGENDA_ITEMS.join('</li><li>')}</li></ul></p>`));
+  agendaBad('an agenda set as a list', ctaBand(`<ul class="agenda" data-session-agenda data-fact="PD-02"><li>${SESSION_AGENDA_LEAD_DISCOVERY}</li><li>${[SESSION_AGENDA_FIRST_DISCOVERY, ...SESSION_AGENDA_COMMON].join('</li><li>')}</li></ul>`));
+  agendaBad('a paragraph that wraps a list', ctaBand(`<p class="agenda" data-session-agenda data-fact="PD-02">${SESSION_AGENDA_LEAD_DISCOVERY} <ul><li>${[SESSION_AGENDA_FIRST_DISCOVERY, ...SESSION_AGENDA_COMMON].join('</li><li>')}</li></ul></p>`));
   agendaBad('a changed lead', ctaBand(agendaP(agendaWant.replace('discovery session', 'session'))));
   agendaBad('a changed item', ctaBand(agendaP(agendaWant.replace('employer demand and certification tracks', 'employer demand'))));
-  agendaBad('items joined with commas instead of " · "', ctaBand(agendaP(agendaWant.replaceAll(' · ', ', '))));
+  agendaBad('items joined with middle dots instead of semicolons', ctaBand(agendaP(agendaWant.replaceAll('; ', ' · '))));
+  agendaBad('items joined with commas instead of semicolons', ctaBand(agendaP(agendaWant.replaceAll('; ', ', '))));
   agendaBad('a missing final period', ctaBand(agendaP(agendaWant.slice(0, -1))));
   agendaBad('an agenda without the PD-02 marker', ctaBand(agendaP(agendaWant, { fact: '' })));
   agendaBad('an agenda tied to the wrong fact', ctaBand(agendaP(agendaWant, { fact: 'PD-04' })));
+  // the first item is per page: the briefing wording on a discovery page and the other way round both fail
+  agendaBad('the briefing agenda ("districts") on a discovery-session page', ctaBand(agendaP(agendaWantB)));
+  agendaBad('the discovery agenda on a briefing page', ctaBand(agendaP(agendaWant)), agendaWantB);
+  agendaBad('"districts" in the first item on a discovery-session page', ctaBand(agendaP(agendaWant.replace('your country, priority groups and locations', 'your priority groups and districts'))));
+  agendaBad('"your country, priority groups and locations" on a briefing page', ctaBand(agendaP(agendaWantB.replace('your priority groups and districts', 'your country, priority groups and locations'))), agendaWantB);
+  agendaBad('the discovery lead over the briefing items on a briefing page', ctaBand(agendaP(agendaWantB.replace('What the briefing covers:', 'What the discovery session covers:'))), agendaWantB);
+
+  // [POSITION] opens C6: the statement first (after, at most, the band's eyebrow and H2), then the verbatim [UNLIKE] sentence
+  const posFor = 'For governments who need youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.';
+  const posBlock = (text = `${posFor} ${UNLIKE_SENTENCE}`) => `<div class="pos" data-reveal data-fact="ID-06" data-astro-cid-x><p class="pos__label">Where we stand</p><p class="pos__text">${text}</p></div>`;
+  const headerHtml = '<header class="sh sh--start"><p class="eyebrow">How it works</p><h2 class="sh__title" id="mechanism-h">A title</h2>';
+  const mech = (inner) => `<main><section class="band" id="mechanism" aria-labelledby="mechanism-h"><div class="container">${inner}</div></section><section class="band" id="proof"><p>Next band</p></section></main>`;
+  const posOk = (why, markup, opts) => {
+    const r = positionProblems(markup, opts);
+    if (r.length) problems.push(`self-test: the [POSITION] check rejected ${why}: ${r.join('; ')}`);
+  };
+  const posBad = (why, markup, opts) => {
+    if (!positionProblems(markup, opts).length) problems.push(`self-test: the [POSITION] check accepted ${why}`);
+  };
+  posOk('eyebrow, H2, then the statement', mech(`${headerHtml}${posBlock()}</header><div class="diagram"><svg></svg></div>`));
+  posOk('the statement before the header (nothing precedes it)', mech(`${posBlock()}${headerHtml}</header><div class="diagram"><svg></svg></div>`));
+  posOk('a lead line that follows the statement', mech(`${headerHtml}${posBlock()}<p class="sh__lead lead">A lead.</p></header>`));
+  posOk('SuperKids’ audience-only statement (no [UNLIKE] pending approval)', mech(`${headerHtml}${posBlock(posFor)}</header>`), { unlike: false });
+  posBad('a lead line before the statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock()}</header>`));
+  posBad('a model block before the statement', mech(`<div class="diagram"><svg></svg></div>${posBlock()}`));
+  posBad('a paragraph before the statement', mech(`<p>The model: learn, earn, prosper.</p>${posBlock()}`));
+  posBad('a list before the statement', mech(`<ul><li>01 Who we reach</li></ul>${posBlock()}`));
+  posBad('a band with no statement', mech(`${headerHtml}</header><p>Just text.</p>`));
+  posBad('a page with no C6 band', '<main><p>nothing</p></main>');
+  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('whole path', 'path')}`)}</header>`));
+  posBad('a statement without the [UNLIKE] sentence', mech(`${headerHtml}${posBlock(posFor)}</header>`));
+  posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
+  posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
 
   // number guard: an unregistered figure on an evergreen page fails; registered figures pass in any format; archive posts, stubs, the styleguide
   // and the 404 are exempt; the whitelist is per page and per text
@@ -788,6 +895,7 @@ let vendorPages = 0;
 let footnotePages = 0;
 let plainLinePages = 0;
 let agendaPages = 0;
+let positionPages = 0;
 const guard = { pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
 guardLog.clear(); // the self-tests above also pass through the guard
 const { list: allowList, bad: allowBad } = loadAllowlist();
@@ -834,7 +942,7 @@ for (const file of htmlFiles(dist)) {
   problems.push(...archiveWordingProblems(path, html));
   // program-data label once per figure, no page-local variant (the archived posts keep their wording)
   if (!exemptFromArchiveRule(path, html)) for (const p of programLabelProblems(text)) problems.push(`${path}: ${p}`);
-  // [PLAIN-LINE] required on Home, the development-partners page and the independent-evaluation page; its numbers are RC-02's wherever it appears
+  // [PLAIN-LINE] required on Home, the development-partners page, the independent-evaluation page and the WSDFM case study; its numbers are RC-02's wherever it appears
   seenPaths.add(path);
   const plainRequired = PLAIN_LINE_PAGES.includes(path);
   if (plainRequired) plainLinePages++;
@@ -854,10 +962,15 @@ for (const file of htmlFiles(dist)) {
     }
     problems.push(...g.problems);
   }
+  // [POSITION] opens C6 on the 13 pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval)
+  if (POSITION_PAGES.includes(path)) {
+    positionPages++;
+    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path) })) problems.push(`${path}: ${p}`);
+  }
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
     agendaPages++;
-    for (const p of sessionAgendaProblems(markup)) problems.push(`${path}: ${p}`);
+    for (const p of sessionAgendaProblems(markup, SESSION_AGENDA_BY_PAGE[path])) problems.push(`${path}: ${p}`);
   }
   // footnotes in reading order, no empty notes band, no glued inline link
   if (markup.includes('class="fn"') || markup.includes('sources__note')) footnotePages++;
@@ -870,8 +983,8 @@ if (pages === 0) {
   console.error(`check-facts: no HTML found in ${dist}. Run "npm run build" first.`);
   process.exit(1);
 }
-// A page that must carry the [PLAIN-LINE] or the [SESSION-AGENDA] has to be in the build at all.
-for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE] or [SESSION-AGENDA] cannot be checked`);
+// A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA] or the [POSITION] statement has to be in the build at all.
+for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [SESSION-AGENDA] or [POSITION] cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -887,6 +1000,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

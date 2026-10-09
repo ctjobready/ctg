@@ -1,14 +1,16 @@
 ---
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
-import { SESSION_AGENDA_FACTS, SESSION_AGENDA_ITEMS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
+import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
 
 /**
- * [SESSION-AGENDA] (plan v1.12): what the first conversation covers, as ONE line of text beside the C13 primary CTA: a bold lead, the three
- * items joined with " · " and a single final period. It is a paragraph (not a heading, not a list), small and in the band's context text
+ * [SESSION-AGENDA] (plan v1.12, v1.13 wording): what the first conversation covers, as ONE sentence beside the C13 primary CTA: a bold lead,
+ * three items separated by semicolons and a single final period. It is a paragraph (not a heading, not a list), small and in the band's context text
  * color so it stays subordinate to the CTA, and it wraps freely at 390 px. The wording lives in src/data/copy.ts and is never typed on a page.
  *
- *   lead="discovery" (default)  "What the discovery session covers:"  where the primary CTA books a discovery session
- *   lead="briefing"             "What the briefing covers:"           where the primary CTA is "Request a briefing" (governments, NationWIDE)
+ *   lead="discovery" (default)  "What the discovery session covers: your country, priority groups and locations; …"
+ *                               where the primary CTA books a discovery session (development partners, foundations, YouthWIDE)
+ *   lead="briefing"             "What the briefing covers: your priority groups and districts; …"
+ *                               where the primary CTA is "Request a briefing" (governments, NationWIDE)
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the paragraph carries the same fact marker (PD-02: data-fact and
  * the fact's own footnote marker if it ever gets one), and a production hold on PD-02 treats it like them. Put it in the CTABand slot, after the
@@ -20,7 +22,8 @@ interface Props {
 }
 const { lead = 'discovery', class: className } = Astro.props;
 const leadText = lead === 'briefing' ? SESSION_AGENDA_LEAD_BRIEFING : SESSION_AGENDA_LEAD;
-const items = `${SESSION_AGENDA_ITEMS.join(' · ')}.`;
+const firstItem = lead === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
+const items = `${[firstItem, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 ---
 
 <p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}{SESSION_AGENDA_FACTS.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</p>

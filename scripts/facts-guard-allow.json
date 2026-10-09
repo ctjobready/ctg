@@ -5,7 +5,6 @@
     { "page": "/about/team/rezaul-karim-khan/", "text": "20+", "reason": "A team member's own career length in his biography (\"20+ years in global ICT projects\"), not an organizational result." },
     { "page": "/about/team/shafqat-ullah/", "text": "25+", "reason": "A team member's own career length in his biography (\"25+ years of experience\"), not an organizational result." },
     { "page": "/about/team/hazrat-ali-nahid/", "text": "over 30,000", "reason": "A team member's own teaching record in his biography (\"trained over 30,000 students globally\"); not a CodersTrust program count and not claimed as one." },
-    { "page": "/impact/global-reach/", "text": "Over 100", "reason": "Target-group size in the Bhutan row of the program-location table (src/data/countries.ts, from CodersTrust program records); a 2015-2016 pilot, not part of any register figure." },
     { "page": "/news/", "text": "1,400+", "reason": "Excerpt of the archived post a-proud-milestone-for-coderstrust (a treasure-hunt registration count); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their wording." },
     { "page": "/news/", "text": "25,000+", "reason": "Title of the archived post 25000-trainees-her-power-... (April 2023, Her Power contract); archived /news/<post>/ pages are excluded from the guard (R8-m5) and the listing repeats their title." }
   ]

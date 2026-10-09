@@ -7,6 +7,7 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import CTABand from '../../ui/CTABand.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
+import PlainLine from '../../facts/PlainLine.astro';
 import Sources from '../../facts/Sources.astro';
 import { linkAttrs } from '../../../lib/url';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -32,8 +33,13 @@ interface Props {
   challenges: string[];
   solution: string[];
   artSeed?: string;
+  /**
+   * The randomized-trial case (WSDFM) leads its header with the [PLAIN-LINE] (RC-02 in plain language, with its footnote marker), directly
+   * under the summary; the program result (the first stat tile, with its program-data label) comes second.
+   */
+  plainLine?: boolean;
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false } = Astro.props;
 const c = caseBySlug(slug);
 const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
 const related = linkAttrs(c.related.href);
@@ -49,6 +55,7 @@ const d = discoveryCta();
   ogType="article"
 >
   <Hero variant="inner" eyebrow={`Case study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`}>
+    {plainLine && <PlainLine />}
     <Fragment slot="stats">
       {
         stats.map((s) => (

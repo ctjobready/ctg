@@ -34,7 +34,7 @@ const {
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="How it works" title={title} lead={lead}>
+  <SectionHeader id={`${id}-h`} eyebrow="How it works" title={title} lead={lead} leadLast={!!positioning}>
     {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
   </SectionHeader>
   <ModelDiagram blocks={blocks} />

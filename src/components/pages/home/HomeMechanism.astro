@@ -21,6 +21,11 @@ interface Props {
   link?: { label: string; href: string };
   ribbon?: string[];
   eyebrow?: string;
+  /**
+   * Open the band with the positioning statement, ahead of the header, when the header's own heading is the model block's ("A multi-sided
+   * model: learn, earn, prosper." on Investors): nothing precedes the statement. The band keeps one H2, which names it (aria-labelledby).
+   */
+  statementFirst?: boolean;
   id?: string;
 }
 const {
@@ -37,13 +42,15 @@ const {
   ],
   link,
   ribbon = ['Learn', 'Earn', 'Prosper'],
+  statementFirst = false,
   id = 'mechanism',
 } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead}>
-    {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
+  {positioning && statementFirst && <PositioningStatement class="mech__open" text={positioning.text} facts={positioning.facts} />}
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} leadLast={!!positioning && !statementFirst}>
+    {positioning && !statementFirst && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
   </SectionHeader>
   <ModelDiagram blocks={blocks} />
   <p class="mech__ribbon" data-reveal>
@@ -54,6 +61,10 @@ const {
 </Section>
 
 <style>
+  /* the statement that opens the band (statementFirst) sits above the header: give it the header's own gap below */
+  :global(.mech__open) {
+    margin-bottom: var(--space-lg);
+  }
   .mech__ribbon {
     margin: var(--space-lg) 0 0;
     display: flex;

@@ -182,8 +182,8 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 };
 
 export const WOMEN_INCLUSION: CopyBlock = {
-  // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, closing the sentence).
-  text: `Two women-focused programs placed 68–71% of the women who completed them (WSDFM 71%; Women in Online Work, Kosovo, 68%); the Her Power cohort placed 47%. ${PROGRAM_DATA_LABEL}.`,
+  // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, as a parenthetical closing the sentence, round 12 N1).
+  text: `Two women-focused programs placed 68–71% of the women who completed them (WSDFM 71%; Women in Online Work, Kosovo, 68%); the Her Power cohort placed 47% (${PROGRAM_DATA_LABEL}).`,
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
@@ -220,10 +220,11 @@ export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
 
 /**
- * [SESSION-AGENDA] (plan v1.12 round-11 enhancement; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation covers, as ONE
- * line beside the C13 primary CTA: the lead, the three items joined with " · " and a single final period. It is shown on the
- * development-partners and foundations pages and on YouthWIDE, where the CTA books a discovery session, and on the governments page and
- * NationWIDE, where the primary CTA is a briefing (see <SessionAgenda>). The micro-commitment line stays where it is.
+ * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
+ * covers, as ONE sentence beside the C13 primary CTA: the lead, three items separated by semicolons and a single final period. It is shown
+ * on the development-partners and foundations pages and on YouthWIDE, where the CTA books a discovery session (first item: your country,
+ * priority groups and locations), and on the governments page and NationWIDE, where the primary CTA is a briefing (first item: your priority
+ * groups and districts); see <SessionAgenda>. The micro-commitment line stays where it is.
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02 (a production hold, confirm
  * #23): `facts` becomes its data-fact marker exactly as [PRICING]'s does, and a hold on PD-02 treats the agenda like them.
@@ -231,10 +232,21 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
 export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
 /** The lead on the pages whose primary CTA is "Request a briefing" (governments, NationWIDE). */
 export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
-export const SESSION_AGENDA_ITEMS = ['your priority groups and districts', 'employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
+/** The first item differs by kind (round 12, Mi1: "districts" does not fit the international pages). */
+export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and locations';
+export const SESSION_AGENDA_FIRST_ITEM_BRIEFING = 'your priority groups and districts';
+/** The second and third items are shared. */
+export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
 export const SESSION_AGENDA_FACTS = ['PD-02'];
-/** "What the discovery session covers: your priority groups and districts · employer demand and certification tracks · an indicative budget, the pilot scorecard and the tracer timeline." */
-export const sessionAgendaText = (lead: string = SESSION_AGENDA_LEAD): string => `${lead} ${SESSION_AGENDA_ITEMS.join(' · ')}.`;
+/**
+ * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline."
+ * or, for the briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …".
+ */
+export const sessionAgendaText = (kind: 'discovery' | 'briefing' = 'discovery'): string => {
+  const lead = kind === 'briefing' ? SESSION_AGENDA_LEAD_BRIEFING : SESSION_AGENDA_LEAD;
+  const first = kind === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
+  return `${lead} ${[first, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
+};
 
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {

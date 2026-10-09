@@ -23,7 +23,7 @@ export const OFFICES_LINE = 'Offices: New York (CT USA, Inc.) and Dhaka (CodersT
 
 export const locations: ProgramLocation[] = [
   { id: 'bangladesh', name: 'Bangladesh', region: 'South Asia', lat: 23.8103, lon: 90.4125, years: '2014–present', targetGroup: 'Unemployed graduates, women, and priority groups', skills: 'Digital marketing, graphic design, web development, freelancing and more', note: 'Direct training across 45 programs' },
-  { id: 'bhutan', name: 'Bhutan', region: 'South Asia', lat: 27.4728, lon: 89.6390, years: '2015–2016', targetGroup: 'Over 100 young Bhutanese who participated in the program', skills: 'Web development, mobile development and data analytics' },
+  { id: 'bhutan', name: 'Bhutan', region: 'South Asia', lat: 27.4728, lon: 89.6390, years: '2015–2016', targetGroup: 'Young Bhutanese who participated in the program', skills: 'Web development, mobile development and data analytics' },
   { id: 'india', name: 'India', region: 'South Asia', lat: 28.6139, lon: 77.2090, years: '2015–2017', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Coding, development, mobile development and data analytics' },
   { id: 'malaysia', name: 'Malaysia', region: 'Southeast Asia', lat: 3.1390, lon: 101.6869, years: '2016', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Front-end development and freelancing' },
   { id: 'iraq', name: 'Iraq', region: 'Middle East', lat: 33.3152, lon: 44.3661, years: '2017', targetGroup: 'Refugees', skills: 'Graphic design and freelancing' },

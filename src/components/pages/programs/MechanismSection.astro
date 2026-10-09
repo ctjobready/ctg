@@ -27,7 +27,7 @@ const { title, lead, eyebrow = 'How it works', positioning, blocks, factIds = []
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} leadLast={!!positioning}>
     {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
   </SectionHeader>
   {

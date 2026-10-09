@@ -6,7 +6,8 @@ import { PLAIN_LINE } from '../../data/copy';
  * [PLAIN-LINE] (plan v1.10; RC-02): "For every 100 women offered a place, about 10 more were in work at follow-up than in the control
  * group (+10.3 percentage points)." One short plain-language sentence in body text, with RC-02's footnote marker; it is not a stat tile.
  * The sentence is built in src/data/copy.ts from RC-02's stat, so no number is typed here or on a page. Used directly after the
- * randomized-trial lead on Home C7 and the development-partners C7, and in the independent-evaluation BLUF. scripts/check-facts.mjs fails the
+ * randomized-trial lead on Home C7 and the development-partners C7, in the independent-evaluation BLUF and at the head of the WSDFM case-study
+ * header (CaseStudyPage `plainLine`, ahead of the program result). scripts/check-facts.mjs fails the
  * build if one of those pages lacks it or if its numbers differ from RC-02.
  */
 interface Props {

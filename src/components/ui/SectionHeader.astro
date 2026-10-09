@@ -8,16 +8,19 @@ interface Props {
   level?: 2 | 3;
   id?: string;
   class?: string;
+  /** Print the lead after the slot content instead of before it (a C6 band's positioning statement is the slot and must come first). */
+  leadLast?: boolean;
 }
-const { eyebrow, title, lead, align = 'start', level = 2, id, class: className } = Astro.props;
+const { eyebrow, title, lead, align = 'start', level = 2, id, class: className, leadLast = false } = Astro.props;
 const Tag = (`h${level}`) as 'h2' | 'h3';
 ---
 
 <header class:list={['sh', `sh--${align}`, className]} data-reveal>
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <Tag class="sh__title" id={id}>{title}</Tag>
-  {lead && <p class="sh__lead lead">{lead}</p>}
+  {lead && !leadLast && <p class="sh__lead lead">{lead}</p>}
   <slot />
+  {lead && leadLast && <p class="sh__lead lead">{lead}</p>}
 </header>
 
 <style>
