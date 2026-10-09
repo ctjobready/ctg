@@ -4,6 +4,7 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/motion.css';
 import '../styles/utilities.css';
+import '../styles/print.css';
 
 import SEOHead from '../components/seo/SEOHead.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
@@ -15,7 +16,8 @@ import BackToTop from '../components/ui/BackToTop.astro';
 import Toast from '../components/ui/Toast.astro';
 import { promo as promoData } from '../data/nav';
 import { breadcrumbList, webPage } from '../lib/schema';
-import { stripBase } from '../lib/url';
+import { SITE_NAME } from '../lib/site';
+import { canonicalUrl, stripBase } from '../lib/url';
 import type { BaseLayoutProps } from '../lib/layout';
 
 interface Props extends BaseLayoutProps {}
@@ -99,8 +101,11 @@ const nodes = [
     <Footer />
     <BackToTop />
     <Toast />
+    {/* Printed only (src/styles/print.css): the page's canonical address in a footer line. Noindex utility pages have no canonical, so no line. */}
+    {!noindex && <p class="print-url" data-print-url>{SITE_NAME} · {canonicalUrl(path)}</p>}
     <script>
       import '../scripts/reveal';
+      import '../scripts/jump';
     </script>
   </body>
 </html>

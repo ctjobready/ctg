@@ -14,6 +14,7 @@ export type CtaKey =
   | 'discovery'
   | 'briefing'
   | 'funding'
+  | 'nationwide'
   | 'investor'
   | 'campus'
   | 'work'
@@ -74,6 +75,13 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     label: 'Explore a funding partnership',
     subject: 'Funding partnership — [foundation/company]',
     body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline'],
+  },
+  /** NationWIDE (/programs/nationwide/): the secondary CTA for national funders, in place of `funding` (review round 15, F4): districts and priority groups, not a platform grant. */
+  nationwide: {
+    key: 'nationwide',
+    label: 'Explore co-funding NationWIDE',
+    subject: 'NationWIDE co-funding — [organization]',
+    body: ['Organization', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline'],
   },
   investor: {
     key: 'investor',

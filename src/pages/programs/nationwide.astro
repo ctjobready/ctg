@@ -42,7 +42,7 @@ const target = statValue('IN-01');
 const title = 'NationWIDE: Bangladesh Digital Workforce';
 const description = `NationWIDE aims to train ${target} vulnerable youth in Bangladesh for digital employment by 2030, with certification preparation, mentoring and reporting.`;
 const briefing = ctaFor('briefing');
-const funding = ctaFor('funding');
+const cofunding = ctaFor('nationwide');
 const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 const rates = graduateRates();
 
@@ -197,7 +197,7 @@ const jsonLd = [
     </div>
     <div class="note">
       <span class="note__label">Partners and funders</span>
-      <p>Development partners and foundations can also fund a phase. <a class="link" href={funding.href}>{funding.label}<Icon name="arrow-right" size={16} /></a></p>
+      <p>Development partners and foundations can also fund a phase. <a class="link" href={cofunding.href}>{cofunding.label}<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </OfferSection>
 
@@ -219,7 +219,7 @@ const jsonLd = [
     id="cta"
     heading="Start with a briefing that fits your timeline."
     cta={briefing}
-    secondary={{ label: funding.label, href: funding.href }}
+    secondary={{ label: cofunding.label, href: cofunding.href }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
   >
     <SessionAgenda lead="briefing" />

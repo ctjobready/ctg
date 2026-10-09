@@ -11,7 +11,7 @@
 //   - vendor certifications (Meta Blueprint / Google Ads, Adobe Certified Professional, QuickBooks Online ProAdvisor, PCEP, CWP;
 //     messaging framework rule 13): a page whose visible text names one must also carry the non-affiliation note (CERT_NOTE_TEXT),
 //     exactly once (inline, via <CertNote>; no fact may also carry it as a footnote, which would print the sentence twice)
-//   - archive-only wording: no British "enquir*" (D6; write "inquir*") and no "tripled" (OC-03 is a ratio of medians) anywhere in a
+//   - archive-only wording: no British "enquir*" (D6; write "inquir*"), no British "licence" (write "license") and no "tripled" (OC-03 is a ratio of medians) anywhere in a
 //     page's HTML (text, attributes, meta, JSON-LD), except on the archived posts under /news/<post>/ and on redirect stubs
 //     (legacy URLs); negative self-tests below
 //   - program-data label (PROGRAM_DATA_LABEL in src/data/facts.ts, on PR-01, PR-02 and PR-05): never printed twice in a row, and no
@@ -35,7 +35,7 @@
 //     the discovery session covers:" (development partners, foundations, YouthWIDE; first item "your country, priority groups and
 //     locations") or "What the briefing covers:" (governments, NationWIDE; first item "your priority groups and districts"), then the three
 //     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
-//     claim; PD-02 is a production hold); negative self-tests below
+//     claim, so the three stand on the same fact); negative self-tests below
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim [UNLIKE] sentence (SuperKids, whose [UNLIKE] clause is pending, is exempt from that
@@ -199,10 +199,12 @@ function certNoteProblems(text) {
 }
 
 /* ---- wording that may survive only inside the archived /news/<post>/ pages ---- */
-// "enquir*" is British (American spelling, D6: the public site says "inquiry"/"inquiries"); "tripled" overstates OC-03, which compares
-// medians (a ratio of medians, not an average; individual changes vary). Both are held to every page except the archive.
+// "enquir*" and "licence*" are British (American spelling, D6: the public site says "inquiry"/"inquiries" and "license"; the schema.org property
+// is "license" too); "tripled" overstates OC-03, which compares medians (a ratio of medians, not an average; individual changes vary).
+// All three are held to every page except the archive.
 const ARCHIVE_ONLY_WORDING = [
   [/enquir/i, 'British spelling "enquir…" (write "inquiry"/"inquiries")'],
+  [/\blicence/i, 'British spelling "licence" (write "license")'],
   [/\btripled\b/i, '"tripled" (OC-03 is a ratio of medians, not an average; individual changes vary)'],
 ];
 /**
@@ -307,7 +309,7 @@ function sessionAgendaProblems(markup, wanted) {
     if (text !== wanted) out.push(`[SESSION-AGENDA] reads "${text}", expected "${wanted}"`);
   }
   const factAttr = /\bdata-fact="([^"]*)"/.exec(open[0])?.[1] ?? '';
-  if (!factAttr.split(/\s+/).includes(SESSION_AGENDA_FACT)) out.push(`[SESSION-AGENDA] must carry data-fact="${SESSION_AGENDA_FACT}" like [PRICING] and FAQ Q8, so a production hold on ${SESSION_AGENDA_FACT} treats it the same`);
+  if (!factAttr.split(/\s+/).includes(SESSION_AGENDA_FACT)) out.push(`[SESSION-AGENDA] must carry data-fact="${SESSION_AGENDA_FACT}" like [PRICING] and FAQ Q8, so a change to ${SESSION_AGENDA_FACT} or a hold on it treats the agenda the same`);
   return out;
 }
 
@@ -766,6 +768,15 @@ function numberGuardPage(path, html, allow = []) {
   if (brit('/news/some-archived-post/').length) problems.push('self-test: the wording gate flagged an archived /news/<post>/ page');
   if (archiveWordingProblems('/old-slug/', '<!DOCTYPE html><html lang="en" data-redirect-stub><head><meta http-equiv="refresh" content="0;url=/news/enquiry-open/"></head></html>').length) problems.push('self-test: the wording gate flagged a redirect stub');
   if (archiveWordingProblems('/contact/', '<body><p>Inquiry routes and media inquiries.</p></body>').length) problems.push('self-test: the wording gate flagged American spelling');
+  // "licence" (round 15, N3): British; "license" (noun and verb, and the schema.org property) is the site's spelling
+  if (!archiveWordingProblems('/impact/independent-evaluation/', '<body><p>Dataset licence: CC BY 4.0.</p></body>').length) problems.push('self-test: the wording gate accepted "licence" in the text of a page');
+  if (!archiveWordingProblems('/about/governance/', '<body><p>Licences are reviewed yearly.</p></body>').length) problems.push('self-test: the wording gate accepted "Licences" (case-insensitive plural)');
+  if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><a aria-label="Open data licence" href="/x/">data</a></body>').length) problems.push('self-test: the wording gate accepted "licence" in an attribute');
+  if (!archiveWordingProblems('/impact/outcomes-2026/', '<script type="application/ld+json">{"description":"Data under a CC BY licence"}</script>').length) problems.push('self-test: the wording gate accepted "licence" in JSON-LD');
+  if (!archiveWordingProblems('/news/page/2/', '<body>Licence</body>').length) problems.push('self-test: the wording gate exempted a news listing page for "licence" (only /news/<post>/ is exempt)');
+  if (archiveWordingProblems('/news/some-archived-post/', '<body>Licence to operate</body>').length) problems.push('self-test: the wording gate flagged "licence" inside an archived post');
+  if (archiveWordingProblems('/old-slug/', '<!DOCTYPE html><html lang="en" data-redirect-stub><head><meta http-equiv="refresh" content="0;url=/news/licence-notice/"></head></html>').length) problems.push('self-test: the wording gate flagged "licence" on a redirect stub');
+  if (archiveWordingProblems('/impact/outcomes-2026/', '<body><p>Open data license CC BY 4.0; licensed under CC BY; sublicense; licensee.</p><script type="application/ld+json">{"license":"https://creativecommons.org/licenses/by/4.0/"}</script></body>').length) problems.push('self-test: the wording gate flagged American "license" spellings');
   if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><li>does not mean every learner’s income Tripled.</li></body>').length) problems.push('self-test: the wording gate accepted "tripled" outside the archive');
   if (archiveWordingProblems('/news/some-archived-post/', '<body>income tripled</body>').length) problems.push('self-test: the wording gate flagged "tripled" inside an archived post');
   if (archiveWordingProblems('/our-model/', '<body>A triple-lens model; triplet; tripleshot</body>').length) problems.push('self-test: the wording gate flagged "triple" words that are not "tripled"');
@@ -1147,6 +1158,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

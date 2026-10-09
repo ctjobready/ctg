@@ -468,6 +468,10 @@ details.acc[open] > summary .acc__chev {
   details.acc[open]::details-content {
     block-size: auto;
   }
+  /* A link into a closed answer (a footnote back-link) lands in one scroll: no height animation while it is followed (src/scripts/jump.ts) */
+  html[data-jumping] details.acc::details-content {
+    transition: none !important;
+  }
 }
 
 /* Full-width "enroll" buttons sit naturally in clusters */

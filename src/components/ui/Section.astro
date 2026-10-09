@@ -14,7 +14,12 @@ interface Props {
   width?: 'content' | 'wide' | 'narrow' | 'full';
   /** Fade/rise the content in when it enters the viewport. */
   reveal?: boolean;
-  /** Skip rendering while offscreen (content-visibility:auto) — for long, below-the-fold bands only. */
+  /**
+   * Skip rendering while offscreen (content-visibility:auto) — for long, below-the-fold bands only. Never on a band that holds an in-page
+   * link target (a section id the table of contents points to, the Notes list a footnote marker jumps to, an answer with a footnote marker):
+   * the first jump into a skipped band lands short or long (tests/anchor-jumps.spec.ts holds the Outcomes 2026, independent-evaluation and
+   * TalentLEAP pages to this).
+   */
   defer?: boolean;
   'aria-labelledby'?: string;
   'aria-label'?: string;

@@ -243,7 +243,7 @@ function trainedReach(): CopyBlock {
   if (sc03.stat?.numeric === undefined) throw new Error('TRAINED_REACH: SC-03 has no numeric stat');
   const others = sc03.stat.numeric - 1;
   return {
-    text: `${sc01.text}, most of them in Bangladesh; earlier programs ran in ${others} other countries and territories.`,
+    text: `${sc01.text}, most of them in Bangladesh; programs have also run in ${others} other countries and territories.`,
     facts: ['SC-01', 'SC-03'],
   };
 }
@@ -255,7 +255,7 @@ export const SCALE: CopyBlock = {
 };
 
 export const PRICING: CopyBlock = {
-  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation and the exam fee for each trainee’s track (exam terms set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam terms set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
   facts: ['PD-02'],
 };
 
@@ -314,8 +314,8 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
  * priority groups and locations), and on the governments page and NationWIDE, where the primary CTA is a briefing (first item: your priority
  * groups and districts); see <SessionAgenda>. The micro-commitment line stays where it is.
  *
- * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02 (a production hold, confirm
- * #23): `facts` becomes its data-fact marker exactly as [PRICING]'s does, and a hold on PD-02 treats the agenda like them.
+ * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02: `facts` becomes its
+ * data-fact marker exactly as [PRICING]'s does, so the agenda, [PRICING] and Q8 stand or fall together.
  */
 export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
 /** The lead on the pages whose primary CTA is "Request a briefing" (governments, NationWIDE). */

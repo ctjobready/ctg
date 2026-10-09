@@ -17,6 +17,8 @@ interface Props {
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
+// Review round 15, enhancement 3: named accountable people matter to government and multilateral buyers; /investors/ already links the team the same way.
+const team = linkAttrs('/about/team/');
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -29,6 +31,9 @@ const talentleap = linkAttrs('/our-model/talentleap/');
       <p class="guide__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths with progressive levels.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP works<Icon name="arrow-right" size={16} /></a>
+      </p>
+      <p class="guide__leaders" data-reveal>
+        <a class="link" href={team.href}>Meet the leadership team<Icon name="arrow-right" size={16} /></a>
       </p>
     </div>
     <div class="guide__panel" data-reveal>

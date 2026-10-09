@@ -27,6 +27,8 @@ const cards = [
   { title: 'NU Postgraduate Diploma applicants', icon: 'award', text: 'Digital Marketing and ICT diplomas', href: '/nu-postgraduate-diploma/' },
 ];
 const learners = linkAttrs(COURSES_URL);
+// Review round 15, enhancement 1: diligence teams reach /about/governance/ from the top of the funnel, not only from the footer or the About menu.
+const governance = linkAttrs('/about/governance/');
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -34,6 +36,9 @@ const learners = linkAttrs(COURSES_URL);
   <div class="grid-cards grid-cards--4 router">
     {cards.map((c) => <CategoryCard title={c.title} icon={c.icon} text={c.text} href={c.href} />)}
   </div>
+  <p class="router__diligence" data-reveal>
+    <a class="link" href={governance.href}>Conducting due diligence? See our governance and evidence<Icon name="arrow-right" size={16} /></a>
+  </p>
   <p class="router__learners" data-reveal>
     <a class="link" href={learners.href} rel={learners.rel}>
       Learners: courses on JobReady.global<Icon name="arrow-up-right" size={16} />
@@ -43,7 +48,10 @@ const learners = linkAttrs(COURSES_URL);
 </Section>
 
 <style>
-  .router__learners {
+  .router__diligence {
     margin: var(--space-lg) 0 0;
+  }
+  .router__learners {
+    margin: var(--space-sm) 0 0;
   }
 </style>

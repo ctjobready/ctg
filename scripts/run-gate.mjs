@@ -15,6 +15,8 @@
  * to a scratch folder:   npm run build -- --outDir /tmp/ctg-prod   then   npm run test:production-release -- --dist /tmp/ctg-prod
  *
  * Both gates run check:privacy-origins (review round 14, m5): every third-party origin a built page can load is named in /privacy-policy/.
+ * Both also run the static checks (html validity, links by URI class, budgets, SEO lint, content rules) over the dist given; the production gate
+ * runs them in production mode (review round 15: it used to run only the SEO lint).
  *
  * Production release (doc 08 §11 step 1, doc 10 §4): run it against a build made with SITE_ENV=production SITE_URL=https://coderstrust.global
  * BASE_PATH=/. It reads the private lists the same way CI does and FAILS CLOSED without them: the production fact holds
@@ -38,13 +40,15 @@ const distRel = relative(root, dist) || '.';
 const node = (script, ...args) => [process.execPath, join(root, 'scripts', script), ...args];
 const nodeTs = (script, ...args) => [process.execPath, '--experimental-strip-types', join(root, 'scripts', script), ...args];
 
-const STATIC = [
-  ['test:static › html validity', node('check-html.mjs', '--dist', dist)],
-  ['test:static › links by URI class', node('check-links.mjs', '--dist', dist)],
-  ['test:static › budgets', node('check-budget.mjs', '--dist', dist)],
-  ['test:static › SEO lint', node('check-seo.mjs', '--dist', dist)],
-  ['test:static › content rules', node('check-content-rules.mjs', '--dist', dist)],
-];
+// The static checks over a built dist. They read SITE_ENV, BASE_PATH and SITE_URL from the environment (scripts/lib/dist.mjs loadConfig), so the
+// same steps are staging checks under `build` (no variables: the staging defaults) and production checks under `production-release` (the gate's
+// production env below). The SEO lint is listed apart because the production gate also passes it `--env production` explicitly.
+const HTML_STEP = ['test:static › html validity', node('check-html.mjs', '--dist', dist)];
+const LINKS_STEP = ['test:static › links by URI class', node('check-links.mjs', '--dist', dist)];
+const BUDGET_STEP = ['test:static › budgets', node('check-budget.mjs', '--dist', dist)];
+const SEO_STEP = ['test:static › SEO lint', node('check-seo.mjs', '--dist', dist)];
+const CONTENT_STEP = ['test:static › content rules', node('check-content-rules.mjs', '--dist', dist)];
+const STATIC = [HTML_STEP, LINKS_STEP, BUDGET_STEP, SEO_STEP, CONTENT_STEP];
 
 const GATES = {
   static: { title: 'test:static', steps: STATIC },
@@ -81,6 +85,14 @@ const GATES = {
       ['test:redirects (production stubs carry no noindex)', node('test-redirects.mjs', dist)],
       ['verify:seo (production robots)', node('verify-seo-files.mjs', dist)],
       ['SEO lint (production)', node('check-seo.mjs', '--dist', dist, '--env', 'production')],
+      // The static checks over the production dist (review round 15): the production build is what ships, so it gets the same html, link, budget
+      // and content checks as the staging build, each in its production mode (SITE_ENV=production, BASE_PATH=/ from the env above): the links check
+      // treats a missing own-origin canonical/og target as an error and writes links.production.*, and the content rules FAIL CLOSED without the
+      // private rules list. They run against the --dist given.
+      ['test:static › html validity (production)', HTML_STEP[1]],
+      ['test:static › links by URI class (production)', LINKS_STEP[1]],
+      ['test:static › budgets (production)', BUDGET_STEP[1]],
+      ['test:static › content rules (production)', CONTENT_STEP[1]],
     ],
   },
   'edge-release': {

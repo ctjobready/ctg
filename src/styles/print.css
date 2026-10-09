@@ -1,0 +1,291 @@
+/* Print (review round 15, enhancement 2): every page prints as a clean brief, and the evidence pages (/impact/independent-evaluation/,
+   /impact/outcomes-2026/) are the ones it is built around: the H1, the BLUF, the charts with their values and data tables, the footnotes and
+   the sources, in black type on white paper, with the page's canonical URL in a footer line.
+
+   What goes: site chrome (skip link, announcement bar, header, mega-menus and drawer, breadcrumbs, table of contents, footer, back-to-top,
+   toasts, the mobile sticky CTA bar), calls to action (buttons, CTA bands, the "next step" asides), decorative art (hero art and photos,
+   decorative icons, the partner-logo marquee).
+   What is made safe for paper: dark bands and their light type (bands print on white, with the contextual tokens remapped to black), reveal
+   and chart-grow states that wait for a scroll (printed in their final state), closed <details> (chart data tables, FAQ answers) and
+   sections that skip rendering offscreen (content-visibility).
+
+   Everything is inside @media print except the canonical-URL line, which is hidden on screen. The line is rendered by BaseLayout. */
+
+.print-url {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 16mm 15mm 20mm;
+  }
+
+  /* ---- paper: black on white, fixed type sizes (the screen scale is viewport-relative) -------------------------------------------- */
+  :root {
+    color-scheme: light;
+    --fs-display-5xl: 26pt;
+    --fs-display-4xl: 24pt;
+    --fs-heading-3xl: 18pt;
+    --fs-heading-2xl: 16pt;
+    --fs-heading-xl: 14.5pt;
+    --fs-heading-l: 13pt;
+    --fs-heading-m: 12pt;
+    --fs-body-l: 12pt;
+    --fs-body-m: 11.5pt;
+    --fs-body-base: 11pt;
+    --fs-body-xs: 9.5pt;
+    --band-pad: 0px;
+    --space-section-mobile: 12pt;
+    --space-section-desktop: 12pt;
+  }
+  /* The bands re-map these tokens (dark bands use light type): on paper every band is white with black type. Custom properties are set
+     with !important so they win over the bands' own (scoped) rules. */
+  *,
+  *::before,
+  *::after {
+    --band-bg: #fff !important;
+    --ctx-text: #000 !important;
+    --ctx-muted: #333 !important;
+    --ctx-heading: #000 !important;
+    --ctx-section-heading: #000 !important;
+    --ctx-link: #000 !important;
+    --ctx-accent: #000 !important;
+    --ctx-stat: #000 !important;
+    --ctx-focus: #000 !important;
+    --ctx-border: #8a8a8a !important;
+    --ctx-card: #fff !important;
+    --ctx-num-bg: #fff !important;
+    --ctx-num-fg: #000 !important;
+    --ba-before: #b8b8b8 !important;
+    --ba-after: #3a3a3a !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    overflow: visible !important;
+    height: auto !important;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+  body *:not(.bars, .bars *, .colc, .colc *, .pb, .pb *, .sb, .sb *, .ba, .ba *) {
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  body :where(h1, h2, h3, h4, h5, h6, p, li, dt, dd, th, td, caption, figcaption, summary, blockquote, cite, small, strong, b, em, i, span, div, a, label, time, q, dl) {
+    color: #000 !important;
+  }
+  /* SVG type and strokes (the Before/After chart): black text, grey bars that survive a black-and-white printer */
+  svg text {
+    fill: #000 !important;
+  }
+  .ba-axis {
+    stroke: #8a8a8a !important;
+  }
+  .ba-delta rect {
+    fill: #fff !important;
+    stroke: #000 !important;
+  }
+  /* Chart fills are drawn with background colors and clip paths: print them as drawn (browsers drop backgrounds unless asked) */
+  .bars,
+  .colc,
+  .pb,
+  .sb,
+  .ba {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ---- what is not part of a printed brief ------------------------------------------------------------------------------------------- */
+  .skip-link,
+  [data-promo],
+  .promo-bar,
+  .site-header,
+  [data-site-header],
+  [data-mega],
+  [data-drawer],
+  .nav-noscript,
+  .crumbs,
+  .lf-toc,
+  [data-toc],
+  #site-footer,
+  .btt,
+  .toast-region,
+  .sticky-cta,
+  .next,
+  .cta-band,
+  .band:has(> .container > .cta-band),
+  .btn,
+  .hero__actions,
+  .hero__media,
+  [data-art],
+  svg.icon[aria-hidden='true'],
+  .partners--marquee,
+  [data-marquee],
+  .carousel__controls,
+  [class*='carousel__ctrl'],
+  .gov-print,
+  .sources__back,
+  .acc__chev,
+  details[class$='__data'] > summary {
+    display: none !important;
+  }
+
+  /* ---- layout: the page's own width, flowing in one column ------------------------------------------------------------------------ */
+  main,
+  .container,
+  .container--wide,
+  .container--narrow,
+  .lf-grid,
+  .lf-body {
+    width: auto !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+  .band,
+  .rsec,
+  .lf-head {
+    padding-block: 6pt !important;
+  }
+  /* A band that skips rendering while offscreen still prints */
+  .band--defer,
+  .band {
+    content-visibility: visible !important;
+  }
+  /* Nothing waits for a scroll: reveals, chart growth and count-ups are printed in their final state */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  [data-reveal],
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .js .bars .bars__fill {
+    clip-path: inset(0 calc(100% - var(--p) * 1%) 0 0 round 9999px) !important;
+  }
+  .js .pb .pb__fill {
+    clip-path: inset(0 0 0 0 round 9999px) !important;
+  }
+  .js .sb .sb__bar {
+    clip-path: inset(0 0 0 0) !important;
+  }
+  .js .colc .colc__bar,
+  .js .ba .ba-bar {
+    transform: none !important;
+  }
+  .js .ba .ba-value,
+  .js .ba .ba-delta {
+    opacity: 1 !important;
+  }
+
+  /* The evidence ladder picks its columns from the width of its container (a container query), and a row of two cards does not break cleanly
+     across sheets: one card per row on paper. */
+  .ladder {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Closed <details> (chart data tables, FAQ answers) print open */
+  details::details-content {
+    content-visibility: visible !important;
+    block-size: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* ---- type ---------------------------------------------------------------------------------------------------------------------------- */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: 0 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+  a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  /* External links and citations carry their address on paper; internal links would print a path that is not the page's address */
+  .sources a[href^='http']::after,
+  main a.link[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+  sup.fn a {
+    text-decoration: none;
+  }
+
+  /* ---- tables and keep-together blocks ------------------------------------------------------------------------------------------------ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    border-bottom: 0.5pt solid #8a8a8a !important;
+    text-align: left;
+    padding: 3pt 4pt;
+  }
+  tr,
+  figure,
+  .card,
+  .factcard,
+  .callout,
+  .stat,
+  .plainline,
+  blockquote,
+  .sources__note,
+  .fit,
+  .acc,
+  [class$='__item'],
+  [class$='__row'],
+  [class$='__step'],
+  [class$='__rung'],
+  [class$='__card'] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  img,
+  svg {
+    max-width: 100% !important;
+    height: auto;
+    break-inside: avoid;
+  }
+  .callout,
+  .card,
+  .factcard {
+    border: 0.75pt solid #8a8a8a !important;
+  }
+
+  /* ---- the canonical URL, in a footer line at the end of the brief ------------------------------------------------------------------- */
+  /* In the flow, after the last band, so it prints once, at the foot of the last sheet, in every browser (a fixed footer repeated on each
+     sheet is placed unreliably across print engines). */
+  .print-url {
+    display: block;
+    margin: 18pt 0 0;
+    padding-top: 6pt;
+    border-top: 0.75pt solid #8a8a8a;
+    font-size: 9pt;
+    line-height: 1.3;
+    color: #000 !important;
+    text-align: left;
+    overflow-wrap: anywhere;
+    break-inside: avoid;
+  }
+}

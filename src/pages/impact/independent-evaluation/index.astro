@@ -14,11 +14,13 @@ import FitBrief from '../../../components/pages/impact/FitBrief.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { AI_SHIFT_NOTE, fact, sources } from '../../../data/facts';
-import { RCT_HEADLINE, MICRO_COMMITMENT } from '../../../data/copy';
+import { MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
+// H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
+const h1 = 'A randomized trial of CodersTrust’s training for women in Dhaka';
 const description = desc('A randomized trial by BIGD found CodersTrust’s WSDFM training raised women’s income by 41% for those offered a place and 54% for those who attended.');
 const faqIds = ['Q4', 'Q3'];
 
@@ -36,7 +38,7 @@ const citation = sources.BIGD22;
 const jsonLd = [
   articleNode({
     path,
-    headline: RCT_HEADLINE.text,
+    headline: h1,
     description,
     datePublished: '2026-10-08',
     dateModified: '2026-10-08',
@@ -73,7 +75,7 @@ const d = discoveryCta();
   title={title('Randomized Trial Results')}
   description={description}
   path={path}
-  heading={RCT_HEADLINE.text}
+  heading={h1}
   eyebrow="Independent evaluation"
   updated="2026-10-08"
   toc={toc}
@@ -83,7 +85,7 @@ const d = discoveryCta();
   <ReportSection id="summary" title="The short answer">
     <Callout tone="bluf">
       <p data-fact="RC-01 RC-02">
-        <strong>Women offered a place first, women who attended second.</strong> <Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" footnote="auto" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
+        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
       </p>
       <PlainLine />
     </Callout>
