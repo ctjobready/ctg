@@ -1,5 +1,6 @@
 ---
 import Icon from '../../system/Icon.astro';
+import CertNote from '../../ui/CertNote.astro';
 
 /**
  * Work-entry plan per track (enhancement 3, PD-19). Tracks from the entry-level menu (PD-10); the
@@ -58,6 +59,7 @@ const planned = columns.filter((c) => c !== 'Credential');
       ))
     }
   </ul>
+  <CertNote />
   <figcaption class="wep__caption"><strong>Illustrative work-entry plan per track: a co-designed plan, not a guarantee.</strong> Each track's demand and work-entry plan is approved before enrollment.</figcaption>
 </figure>
 

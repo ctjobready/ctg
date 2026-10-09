@@ -58,7 +58,8 @@ export const contactRoutes = (): ContactRoute[] => [
     secondary: CTAS['nu-pgd'].secondary,
   },
   { id: 'learners', who: 'Learners looking for courses', text: 'Courses, enrollment and learner support are on JobReady.global.', icon: 'book-open', cta: { key: 'learners', label: 'Go to JobReady.global', href: COURSES_URL } },
-];
+  // a withheld CTA (empty href, see ctaWithheld in src/lib/mailto.ts) has no route
+].filter((r) => r.cta.href);
 
 export const GENERAL_EMAIL = CONTACT.email;
 

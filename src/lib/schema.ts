@@ -55,7 +55,6 @@ export function organization(): JsonLdNode {
     '@type': 'Organization',
     '@id': ORG_ID,
     name: SITE_NAME,
-    legalName: 'CodersTrust',
     url: `${PRODUCTION_ORIGIN}/`,
     logo: { '@type': 'ImageObject', url: PRODUCTION_ORIGIN + LOGO_PNG_PATH, width: 1200, height: 143 },
     image: PRODUCTION_ORIGIN + LOGO_PNG_PATH,

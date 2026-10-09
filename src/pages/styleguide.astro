@@ -561,11 +561,11 @@ const sectionLinks = [
     <RouterBand id="band-router" title="What brings you here?" />
     <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
-      { claim: 'AI is closing entry-level doors.', factId: 'PX-06', implication: 'Young people who wait fall behind as junior tasks disappear.' },
-      { claim: 'Climate pressure is emptying coastal districts.', factId: 'PX-11', implication: 'Young people leave before local work exists.' },
-      { claim: 'Most vocational training shows no employment gain.', factId: 'RC-06', implication: 'Funding repeats programs that never reach earnings.' },
+      { claim: 'On one major freelancing platform, automation-prone postings fell after ChatGPT.', factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
+      { claim: 'Young people are leaving climate-exposed coastal districts.', factId: 'PX-11', implication: 'Many leave before local work exists.' },
+      { claim: 'A review of nine trials found only three with significant employment impacts.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
     ]} />
-    <FutureBand id="band-future" title="Imagine the next twelve months." vignettes={[
+    <FutureBand id="band-future" title="Imagine the next 12 months." vignettes={[
       { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
       { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
       { kind: 'Social', title: 'Certified, AI-ready talent', text: 'An employer hires certified completers without a long search.' },
@@ -589,7 +589,7 @@ const sectionLinks = [
     <ComparisonBand id="band-compare" />
     <OfferBand id="band-offer" />
     <RiskReversalBand id="band-risk" />
-    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['In your enquiry, include two suitable times for a discovery conversation.']} />
+    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['In your inquiry, include two suitable times for a discovery conversation.']} />
     <NextStepsBand id="band-next" />
     <NewsTeaserBand id="band-news" fallback={[
       { title: 'Sample news headline one', date: '2026-10-07', topic: 'Impact', excerpt: 'Shown only when the news collection is empty.', href: '/news/' },

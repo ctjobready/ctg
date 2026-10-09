@@ -1,5 +1,5 @@
 /**
- * CTA library (planning/04 §7, Decision D3). All enquiry CTAs are prefilled mailto links to
+ * CTA library (planning/04 §7, Decision D3). All inquiry CTAs are prefilled mailto links to
  * contact@coderstrust.global (the `local` key goes to the Bangladesh team, ID-07, and `careers` to the
  * Bangladesh HR address); build hrefs with `ctaHref(key)` from `lib/mailto.ts`.
  *
@@ -84,13 +84,13 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   campus: {
     key: 'campus',
     label: 'Bring JobReady@Campus to your institution',
-    subject: 'JobReady@Campus enquiry — [institution]',
+    subject: 'JobReady@Campus inquiry — [institution]',
     body: ['Institution', 'Number of students', 'Programs of interest'],
   },
   work: {
     key: 'work',
     label: 'Plan a training program',
-    subject: 'JobReady@Work enquiry — [company]',
+    subject: 'JobReady@Work inquiry — [company]',
     body: ['Company', 'Team size', 'Skills needed', 'Timeline'],
   },
   talent: {
@@ -99,6 +99,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     subject: 'Talent request — [company]',
     body: ['Company', 'Roles', 'Number of hires', 'Location/remote'],
   },
+  /** Withheld while REPORT_EDITION_READY is false (src/lib/site.ts): `cta('report')` then returns an empty href and nothing renders. */
   report: {
     key: 'report',
     label: 'Request the Impact Report 2026 (partner edition)',
@@ -107,15 +108,15 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   media: {
     key: 'media',
-    label: 'Media enquiries',
-    subject: 'Media enquiry — [outlet]',
+    label: 'Media inquiries',
+    subject: 'Media inquiry — [outlet]',
     body: ['Outlet', 'Deadline', 'Topic'],
   },
   local: {
     key: 'local',
     label: 'Talk to our Bangladesh team',
     to: 'hello@coderstrustbd.com', // BANGLADESH_HQ.email (checked below)
-    subject: 'Local partnership enquiry — [organization]',
+    subject: 'Local partnership inquiry — [organization]',
     body: [
       'Organization',
       'Type (NGO, college, chamber, association)',
@@ -129,7 +130,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   diligence: {
     key: 'diligence',
     label: 'Ask about due diligence',
-    subject: 'Due-diligence enquiry — [organization]',
+    subject: 'Due-diligence inquiry — [organization]',
     body: ['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline'],
   },
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */

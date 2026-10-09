@@ -1,6 +1,7 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * Every statistic below is read from the Facts Register (facts.ts): SC-01, SC-03, OC-01, ID-02. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
+ * Every statistic below is read from the Facts Register (facts.ts): ID-02, OC-01. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
+ * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
  */
 import { fact } from './facts';
 import { COURSES_URL } from '../lib/site';
@@ -11,8 +12,6 @@ const stat = (id: string) => {
   if (!s) throw new Error(`Fact ${id} has no stat`);
   return s;
 };
-const youth = stat('SC-01').value;
-const countries = stat('SC-03').value;
 const since = stat('ID-02').value;
 const emp = stat('OC-01');
 // The survey base (n) is read from the register, never typed here.
@@ -65,8 +64,8 @@ export const navGroups: NavGroup[] = [
     feature: {
       kind: 'about',
       eyebrow: `Since ${since}`,
-      title: `${youth} youth · ${countries} countries and territories`,
-      factIds: ['SC-01', 'SC-03', 'ID-02'],
+      title: 'From learning to earning, for youth',
+      factIds: ['ID-02'],
       text: 'A workforce-development organization for the next generation of digital professionals.',
       cta: { label: 'Read our story', href: '/about/' },
     },
@@ -77,8 +76,8 @@ export const navGroups: NavGroup[] = [
     href: '/our-model/',
     items: [
       { label: 'How it works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
-      { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'The mechanism behind our results.' },
-      { label: 'JobReady platform', href: '/our-model/jobready-platform/', description: 'The digital platform that scales the model.' },
+      { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
+      { label: 'JobReady platform', href: '/our-model/jobready-platform/', description: 'Our learning and work platform, rolling out in stages.' },
     ],
     feature: {
       kind: 'model',
@@ -93,7 +92,7 @@ export const navGroups: NavGroup[] = [
     label: 'Programs',
     href: '/programs/',
     items: [
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Multi-country cohorts for development partners.' },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'A country program for development partners and funders.' },
       { label: 'NationWIDE', href: '/programs/nationwide/', description: 'National initiative with priority groups.' },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'Universities and colleges.' },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'Corporate training and talent.' },

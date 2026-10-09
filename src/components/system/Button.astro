@@ -31,10 +31,12 @@ const {
 
 const classes = ['btn', `btn--${variant}`, size === 'sm' && 'btn--sm', className];
 const link = href ? linkAttrs(href) : undefined;
+// href="" is a withheld call to action (src/lib/mailto.ts ctaWithheld): draw nothing. Leaving href out still makes a <button>.
+const withheld = href === '';
 ---
 
 {
-  link ? (
+  withheld ? null : link ? (
     <a class:list={classes} href={link.href} rel={link.rel} {...rest}>
       {icon && <Icon name={icon} />}
       <span class="btn__label"><slot /></span>

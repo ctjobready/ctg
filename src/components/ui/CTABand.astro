@@ -21,8 +21,11 @@ interface Props {
 }
 const { heading, text, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id } = Astro.props;
 const dark = tone === 'klein';
+// An empty href is a withheld call to action (src/lib/mailto.ts ctaWithheld): without its primary CTA the band has nothing to ask for.
+const withheld = !cta.href;
 ---
 
+{withheld ? null : (
 <Section tone={tone} id={id} pad="lg" aria-labelledby={`${id ?? 'cta'}-h`}>
   <div class="cta-band">
     <h2 id={`${id ?? 'cta'}-h`} class="cta-band__title" data-reveal>{heading}</h2>
@@ -30,7 +33,7 @@ const dark = tone === 'klein';
     <div class="cta-band__actions" data-reveal>
       <Button variant={dark ? 'inverse' : 'primary'} href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
       {
-        secondary && (
+        secondary?.href && (
           <a class="link" href={linkAttrs(secondary.href).href} rel={linkAttrs(secondary.href).rel}>
             {secondary.label}
           </a>
@@ -51,6 +54,7 @@ const dark = tone === 'klein';
     <slot />
   </div>
 </Section>
+)}
 
 <style>
   .cta-band {

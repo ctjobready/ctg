@@ -43,6 +43,18 @@ export function joinList(items: string[]): string {
   if (items.length <= 1) return items.join('');
   return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
 }
+/**
+ * Where does the final period of a sentence belong? Returns null when the text already ends with terminal punctuation (a period,
+ * "!", "?" or "…", optionally followed by closing quotes or brackets), so a period is never doubled. Otherwise the text is split into
+ * the part before the period and what follows it: a closing quotation mark stays after the period (American style), a closing
+ * bracket does not ("(vs the control group)." and "“Earned $600 in 3 months.”").
+ */
+export function terminalStop(text: string): { body: string; close: string } | null {
+  const t = text.trimEnd();
+  if (/[.!?…][”’"')\]]*$/.test(t)) return null;
+  const m = /^([\s\S]*?)([”’"]+)$/.exec(t);
+  return m ? { body: m[1], close: m[2] } : { body: t, close: '' };
+}
 /** Strip tags for plain-text use (FAQ schema, meta descriptions). */
 export function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();

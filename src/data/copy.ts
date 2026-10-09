@@ -69,66 +69,67 @@ export const RCT_HEADLINE: CopyBlock = {
 };
 
 /**
- * C6a positioning statements (CMF C6; doc 04 §1). One sentence per conversion page, in the pattern
- * "For [audience] who need [outcome], CodersTrust [category] that [differentiator]; unlike [alternative], we [proof-backed difference]."
+ * C6a positioning statements (CMF C6; doc 04 §1). Each conversion page's C6 OPENS with its statement (no lead line before it), in the pattern
+ * "For [audience] who need [outcome], CodersTrust [category] that [differentiator]. Unlike [alternative], we [proof-backed difference]."
+ * The pattern is split at its semicolon into two sentences so that neither runs past about 50 words (review round 11, F26). The closing
+ * clause is the approved [UNLIKE] wording of doc 04 §1 on every page, verbatim; no page swaps in a different "we" clause.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors; other approaches
  * are described by what they typically focus on, with "provision varies by provider". The NU postgraduate diploma page
  * has no statement: its copy waits for National University sign-off.
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
-const UNLIKE_WHOLE_PATH =
-  'unlike approaches that typically focus on one part of the path (provision varies by provider), we take responsibility for the whole path to earnings, with outcome evidence that includes a randomized trial by BIGD.';
-const UNLIKE_MEASURES =
-  'unlike approaches that typically focus on one part of the path (provision varies by provider), we agree success measures before you start, with outcome evidence that includes a randomized trial by BIGD.';
+/** The approved [UNLIKE] + [WE] wording (doc 04 §1), word for word. */
+const UNLIKE_APPROVED =
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we take responsibility for the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
-    text: `For governments, development partners and funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly; ${UNLIKE_WHOLE_PATH}`,
+    text: `For governments, development partners and funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   developmentPartners: {
-    text: `For development partners and INGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model that tracks outcomes after every course; ${UNLIKE_WHOLE_PATH}`,
+    text: `For development partners and INGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model that tracks outcomes after every course. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   governments: {
-    text: `For governments who need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model delivered in phases; ${UNLIKE_WHOLE_PATH}`,
+    text: `For governments who need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   foundations: {
-    text: `For foundations and CSR funders who need a grant to change a young person’s income, and evidence that it did, CodersTrust offers an integrated training-to-earnings model with a pilot scorecard agreed in co-design; ${UNLIKE_WHOLE_PATH}`,
+    text: `For foundations and CSR funders who need a grant to change a young person’s income, and evidence that it did, CodersTrust offers an integrated training-to-earnings model with a pilot scorecard agreed in co-design. ${UNLIKE_APPROVED}`,
     facts: ['RC-01', 'PD-11'],
   },
   universities: {
-    text: `For universities and colleges who need their degree holders in paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree; ${UNLIKE_WHOLE_PATH}`,
+    text: `For universities and colleges who need their degree holders in paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   employers: {
-    text: `For employers who need teams with AI skills and job-ready digital talent, CodersTrust offers training custom-developed for each organization and talent through its placement team; ${UNLIKE_MEASURES}`,
+    text: `For employers who need teams with AI skills and job-ready digital talent, CodersTrust offers training custom-developed for each organization and talent through its placement team. ${UNLIKE_APPROVED}`,
     facts: ['RC-01', 'IN-10'],
   },
   investors: {
-    text: 'For governments, development partners, foundations and employers who need youth moved into paid digital work, with results that are measured, reported and open to independent evaluation, CodersTrust offers an integrated training-to-earnings model as country programs; unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we take responsibility for the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.',
+    text: `For governments, development partners, foundations and employers who need youth moved into paid digital work, with results that are measured, reported and open to independent evaluation, CodersTrust offers an integrated training-to-earnings model as country programs. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {
-    text: `For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs; ${UNLIKE_WHOLE_PATH}`,
+    text: `For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs. ${UNLIKE_APPROVED}`,
     facts: ['RC-01', 'PD-06'],
   },
   youthwide: {
-    text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, the program through which funders deploy its integrated training-to-earnings model in a country; ${UNLIKE_WHOLE_PATH}`,
+    text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, the program through which funders deploy its integrated training-to-earnings model in a country. ${UNLIKE_APPROVED}`,
     facts: ['IN-02', 'RC-01'],
   },
   nationwide: {
-    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers NationWIDE, a Bangladesh initiative delivered in phases through existing labs and colleges; ${UNLIKE_WHOLE_PATH}`,
+    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers NationWIDE, a Bangladesh initiative. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'RC-01'],
   },
   campus: {
-    text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, certified training that runs in parallel with academic studies; ${UNLIKE_WHOLE_PATH}`,
+    text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, certified training that runs in parallel with academic studies. ${UNLIKE_APPROVED}`,
     facts: ['IN-09', 'RC-01'],
   },
   work: {
-    text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization; ${UNLIKE_MEASURES}`,
+    text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${UNLIKE_APPROVED}`,
     facts: ['IN-10', 'RC-01'],
   },
   // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
@@ -200,7 +201,7 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
 export const C14 = {
   validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
   reminder: { text: 'For grant-funded pilots, your first cohort is in training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
-  firstAction: 'Your first step: a discovery session. In your enquiry, include two suitable times for a discovery conversation.',
+  firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
     investors: 'Your first step: an introduction call. The deck and data room follow under NDA.',
