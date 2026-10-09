@@ -8,6 +8,7 @@ import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Badge from '../../../components/system/Badge.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
+import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../components/pages/news/news';
 import { person, webPage, pageUrl } from '../../../lib/schema';
 import { PRODUCTION_ORIGIN } from '../../../lib/site';
@@ -16,14 +17,19 @@ import { linkAttrs, stripBase, url } from '../../../lib/url';
 export async function getStaticPaths() {
   const team = await getCollection('team');
   const news = await allNews();
-  return team.map((p) => ({ params: { slug: p.id }, props: { p, news } }));
+  return team.map((p) => ({ params: { slug: p.id }, props: { p, news, team } }));
 }
-const { p, news } = Astro.props;
+const { p, news, team } = Astro.props;
 const d = p.data;
 const { Content } = await render(p);
 const groupLabel = { founders: 'Founders and Chair', advisors: 'Advisor', executive: 'Executive team', management: 'Bangladesh leadership' }[d.group];
 const path = `/about/team/${p.id}/`;
 const related = newsMentioning(news, d.name, 3);
+// A profile with no news about the person shows three colleagues instead (same group first, then by team order), so it is
+// never a dead end.
+const byOrder = (a: (typeof team)[number], b: (typeof team)[number]) => a.data.order - b.data.order;
+const others = team.filter((x) => x.id !== p.id).sort(byOrder);
+const colleagues = related.length ? [] : [...others.filter((x) => x.data.group === d.group), ...others.filter((x) => x.data.group !== d.group)].slice(0, 3);
 const firstPara = (p.body ?? '').split(/\n\s*\n/)[0].replace(/\s+/g, ' ').trim();
 // Meta descriptions are complete sentences of at most 155 characters, never a bio cut off mid-sentence. A profile whose first
 // paragraph is longer than that needs an entry here; the build fails until it has one.
@@ -110,6 +116,16 @@ const jsonLd = [
           {related.map((n) => <NewsCard title={n.data.title} date={n.data.date} topic={TOPICS[n.data.topic]} excerpt={n.data.excerpt} image={n.data.cover} imageAlt={coverAlt(n.data.coverAlt)} href={newsHref(n)} />)}
         </div>
         <p class="prof__all"><a class="link" href={url('/news/')}>All news<Icon name="arrow-right" size={16} /></a></p>
+      </Section>
+    )
+  }
+  {
+    colleagues.length > 0 && (
+      <Section tone="airy" aria-labelledby="team-h">
+        <SectionHeader id="team-h" eyebrow="Team" title="More of the team" />
+        <div class="grid-cards">
+          {colleagues.map((c) => <TeamCard name={c.data.name} role={c.data.role} photo={c.data.photo} alt={c.data.photoAlt} assetId={`team-${c.id}`} href={`/about/team/${c.id}/`} expertise={c.data.expertise} chips={2} />)}
+        </div>
       </Section>
     )
   }
