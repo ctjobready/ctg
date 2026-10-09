@@ -36,7 +36,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, TRAINED_REACH, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -123,7 +123,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <PartnerGuideBand
     empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
-    statements={[{ facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${partnerList}.` }]}
+    statements={[{ facts: TRAINED_REACH.facts, text: TRAINED_REACH.text }, { facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${partnerList}.` }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />

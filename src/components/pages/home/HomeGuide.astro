@@ -4,7 +4,7 @@ import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import CopyBlock from './CopyBlock.astro';
-import { C14, EMPATHY, ORIGIN } from '../../../data/copy';
+import { C14, EMPATHY, ORIGIN, TRAINED_REACH } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION } from '../../../lib/logos';
 
@@ -35,6 +35,7 @@ const talentleap = linkAttrs('/our-model/talentleap/');
     <div class="guide__panel" data-reveal>
       <FactStat id="SC-01" />
       <FactStat id="SC-03" />
+      <CopyBlock block={TRAINED_REACH} class="guide__reach" />
       <FactStat id="SC-06" />
       <FactStat id="SC-04" />
     </div>
@@ -90,6 +91,13 @@ const talentleap = linkAttrs('/our-model/talentleap/');
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
+  }
+  /* the SC-01 / SC-03 qualifier sits directly under the two tiles it qualifies and spans the panel */
+  .guide__panel :global(.guide__reach) {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: var(--fs-body-base);
+    color: var(--on-surface-variant);
   }
   .guide__panel :global(.stat--lg .stat__value) {
     font-size: var(--fs-heading-3xl);

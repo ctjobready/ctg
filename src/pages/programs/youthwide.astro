@@ -33,7 +33,7 @@ import DecisionSheet from '../../components/pages/programs/DecisionSheet.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ROADMAP_PHASES, ctaFor, serviceNode, statValue, surveyShort } from '../../components/pages/programs/meta';
-import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, GOVERNANCE } from '../../data/copy';
+import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, TRAINED_REACH, GOVERNANCE } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -120,6 +120,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     partnerGroup="development"
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
+    <CopyP block={TRAINED_REACH} />
     <p data-fact="PA-01">{C14.validate.text}</p>
   </GuideSection>
 

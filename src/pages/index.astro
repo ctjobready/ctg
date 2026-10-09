@@ -48,7 +48,7 @@ const hours = fact('PD-01').stat?.value;
 const featureRows = [
   { feature: 'Accessible readiness assessment', means: 'each applicant is routed to a track that fits, rather than screened out.', outcome: 'The right career or foundation track', relieves: 'Millions of educated youth outside work and training' },
   { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio', relieves: 'Employers can’t find the talent they need' },
-  { feature: 'Certification exam preparation, with the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a credential, not only a course record.', outcome: 'A recognized credential', relieves: 'Degrees aren’t turning into jobs' },
+  { feature: 'Certification exam preparation, with the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a credential, not only a course record.', outcome: 'A recognized credential', relieves: 'Graduates whose degrees are not turning into jobs' },
   { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcome: 'A path to first paid work', relieves: 'Graduate unemployment' },
   { feature: 'Placement support', means: 'learners are matched to local, remote and global work.', outcome: 'Local, remote or global work', relieves: 'University-educated people without jobs' },
   { feature: 'Monthly reports and outcome tracking after each course', means: 'you see enrollment, completion, placements and first earnings month by month.', outcome: 'Auditable results', relieves: 'Training that never reports results' },
@@ -75,7 +75,7 @@ const featureRows = [
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
-  <Tone cmf="C2"><ProblemBand id="problem" title="Degrees aren’t turning into jobs." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} /></Tone>
+  <Tone cmf="C2"><ProblemBand id="problem" title="For too many graduates, a degree is not turning into a job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} /></Tone>
 
   <Tone cmf="C3">
     <HomeCost
@@ -112,6 +112,8 @@ const featureRows = [
       id="proof-band"
       title="Independent evidence and survey results"
       headlineFact="RC-01"
+      chart="trial"
+      chip={false}
       plainLine
       lead="The results speak in paychecks. Survey figures are among surveyed completers, at the October 2026 survey."
       statIds={['RC-02', 'OC-03', 'OC-02', 'OC-05']}

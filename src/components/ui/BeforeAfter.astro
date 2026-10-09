@@ -2,6 +2,12 @@
 /**
  * BeforeAfter ➕ — two-bar chart (e.g. employment 47.4% → 77.9%). SVG with an accessible data table.
  * M4: the "before" bar grows, then the "after" bar, then the delta chip pops in.
+ *
+ * Two modes. `change` (default) is a change over time: the first bar is the starting point, the second the later point, and the chip is a
+ * "Change". `comparison` is two groups measured at the same time (the randomized trial's control group beside the women offered a place):
+ * the props keep their `before` / `after` names and mean "first bar" / "second bar", but nothing on the page or in the data table says
+ * "before", "after" or "change": the table is headed "Group" and its last row reads "Difference". `chip={false}` leaves the chip off the
+ * chart when a tile beside it already states the difference; the difference stays in the chart's description and in the data table.
  */
 interface Point {
   label: string;
@@ -20,9 +26,15 @@ interface Props {
   tone?: 'light' | 'dark';
   /** Source / base note shown under the chart. */
   note?: string;
+  /** `change`: before → after over time (default). `comparison`: two groups side by side at one time (see above). */
+  mode?: 'change' | 'comparison';
+  /** Draw the delta chip on the chart (default true). The difference stays in the description and the data table either way. */
+  chip?: boolean;
   class?: string;
 }
-const { title, before, after, delta, unit = '%', note, class: className } = Astro.props;
+const { title, before, after, delta, unit = '%', note, mode = 'change', chip = true, class: className } = Astro.props;
+const comparison = mode === 'comparison';
+const diffWord = comparison ? 'Difference' : 'Change';
 
 const W = 480;
 const H = 320;
@@ -42,10 +54,10 @@ const fmt = (v: number) => `${v}${unit}`;
 const deltaUnit = delta?.endsWith(' pp') ? 'percentage points' : undefined;
 const deltaValue = delta && deltaUnit ? delta.slice(0, -3) : delta;
 const deltaFull = delta && deltaUnit ? `${deltaValue} ${deltaUnit}` : delta;
-const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after.value)}.${deltaFull ? ` Change: ${deltaFull}.` : ''}`;
+const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after.value)}.${deltaFull ? ` ${diffWord}: ${deltaFull}.` : ''}`;
 ---
 
-<div class:list={['ba', className]} data-reveal>
+<div class:list={['ba', comparison && 'ba--comparison', className]} data-reveal>
   <figure class="ba__fig">
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title}. ${desc}`}>
       <line class="ba-axis" x1="40" y1={baseY} x2={W - 40} y2={baseY} />
@@ -60,7 +72,7 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
         ))
       }
       {
-        delta && (
+        delta && chip && (
           <g class="ba-delta" transform={`translate(${W / 2 - 4} ${bars[1].y - (deltaUnit ? 72 : 62)})`}>
             {
               deltaUnit ? (
@@ -89,11 +101,11 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
     <summary>View chart data as a table</summary>
     <table>
       <caption class="sr-only">{title}</caption>
-      <thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead>
+      <thead><tr><th scope="col">{comparison ? 'Group' : 'Measure'}</th><th scope="col">Value</th></tr></thead>
       <tbody>
         <tr><th scope="row">{before.label}{before.caption ? ` (${before.caption})` : ''}</th><td>{fmt(before.value)}</td></tr>
         <tr><th scope="row">{after.label}{after.caption ? ` (${after.caption})` : ''}</th><td>{fmt(after.value)}</td></tr>
-        {deltaFull && <tr><th scope="row">Change</th><td>{deltaFull}</td></tr>}
+        {deltaFull && <tr><th scope="row">{diffWord}</th><td>{deltaFull}</td></tr>}
       </tbody>
     </table>
   </details>

@@ -161,6 +161,49 @@ function plainLine(): CopyBlock {
 }
 export const PLAIN_LINE: CopyBlock = plainLine();
 
+/**
+ * Employment at follow-up in the randomized trial, read from RC-02's footnote ("52.8% in the control group and 63.1% for women offered a
+ * place (52.8% plus 10.3 percentage points)"), so the Home C7 comparison chart never retypes a figure. It throws if the footnote stops
+ * reading that way or if the two rates no longer differ by RC-02's stat (+10.3 pp).
+ */
+export interface RctComparison {
+  control: number;
+  offered: number;
+  /** RC-02's stat value, e.g. "+10.3 pp". */
+  delta: string;
+}
+function rctComparison(): RctComparison {
+  const rc02 = fact('RC-02');
+  const m = rc02.footnote?.match(/(\d+(?:\.\d+)?)% in the control group and (\d+(?:\.\d+)?)% for women offered a place/);
+  if (!m || !rc02.stat || rc02.stat.numeric === undefined) {
+    throw new Error(`RCT_COMPARISON: RC-02's footnote no longer reads "X% in the control group and Y% for women offered a place": "${rc02.footnote}"`);
+  }
+  const control = Number(m[1]);
+  const offered = Number(m[2]);
+  if (Math.abs(offered - control - rc02.stat.numeric) > 1e-9) {
+    throw new Error(`RCT_COMPARISON: ${offered} minus ${control} is not RC-02's ${rc02.stat.value}`);
+  }
+  return { control, offered, delta: rc02.stat.value };
+}
+export const RCT_COMPARISON: RctComparison = rctComparison();
+
+/**
+ * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are
+ * about 970 of the 150,000+ enrollments (SC-03's footnote). Used wherever the two figures sit side by side (the C5 guide bands). The
+ * count of other locations is SC-03's 15 less Bangladesh, so it is derived, not typed.
+ */
+function trainedReach(): CopyBlock {
+  const sc01 = fact('SC-01');
+  const sc03 = fact('SC-03');
+  if (sc03.stat?.numeric === undefined) throw new Error('TRAINED_REACH: SC-03 has no numeric stat');
+  const others = sc03.stat.numeric - 1;
+  return {
+    text: `${sc01.text}, most of them in Bangladesh; earlier programs ran in ${others} other countries and territories.`,
+    facts: ['SC-01', 'SC-03'],
+  };
+}
+export const TRAINED_REACH: CopyBlock = trainedReach();
+
 export const SCALE: CopyBlock = {
   text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, the curriculum for a national program to train 25,125 women (with 2,500 women trained directly), and 10,000 teachers trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
   facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],

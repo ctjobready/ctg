@@ -335,7 +335,7 @@ const sectionLinks = [
 
     <h3 class="sg-h3">ProgramCard · FeatureCard</h3>
     <div class="grid-cards">
-      <ProgramCard title="Program name" text="One or two sentences describing the program and who it serves." icon="rocket" href="/programs/" badge="Pilot-ready" meta={['For development partners', 'Cohort-based']} />
+      <ProgramCard title="Program name" text="One or two sentences describing the program and who it serves." icon="rocket" href="/programs/" meta={['For development partners', 'Cohort-based']} />
       <FeatureCard icon="shield" title="Feature with consequence" text="What the feature is, in one sentence." means="the partner gets a result they can verify." />
       <FeatureCard icon="target" title="Linked feature" text="A feature card that links somewhere." href="/our-model/" />
     </div>
@@ -559,10 +559,10 @@ const sectionLinks = [
     <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <DefinitionBand id="band-definition" />
     <RouterBand id="band-router" title="What brings you here?" />
-    <ProblemBand id="band-problem" title="Degrees aren’t turning into jobs." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
+    <ProblemBand id="band-problem" title="For too many graduates, a degree is not turning into a job." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
       { claim: 'On one major freelancing platform, automation-prone postings fell after ChatGPT.', factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
-      { claim: 'Young people are leaving climate-exposed coastal districts.', factId: 'PX-11', implication: 'Many leave before local work exists.' },
+      { claim: 'Climate-exposed coastal districts have been losing their young people.', factId: 'PX-11', implication: 'Many leave before local work exists.' },
       { claim: 'A review of nine trials found only three with significant employment impacts.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
     ]} />
     <FutureBand id="band-future" title="Imagine the next 12 months." vignettes={[
@@ -573,7 +573,7 @@ const sectionLinks = [
     <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail slum." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
     <MechanismBand id="band-mechanism" title="One path from learning to earning." link={{ label: 'How our model works', href: '/our-model/' }} />
     <FeaturesTable id="band-features" title="Built around outcomes, not attendance." rows={[
-      { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Degrees are not turning into jobs' },
+      { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },
       { feature: 'Certification, with the exam fee for each trainee’s track', means: 'completers hold credentials employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
       { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
       { feature: 'Outcome tracking after each course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },

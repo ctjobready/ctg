@@ -11,8 +11,8 @@ import { fact } from '../../data/facts';
 export const CLAIM_PX06 = 'On one major freelancing platform, automation-prone postings fell after ChatGPT’s release.';
 /** RC-06: the review of vocational-training trials. */
 export const CLAIM_RC06 = 'A review of nine trials found only three with significant employment impacts.';
-/** PX-11: coastal-district out-migration (measured for one district; the heading claims no cause). */
-export const CLAIM_PX11 = 'Young people are leaving climate-exposed coastal districts.';
+/** PX-11: coastal-district out-migration (measured for one district, census 2001–2011; the perfect tense keeps the heading from reading as today's rate, and it claims no cause). */
+export const CLAIM_PX11 = 'Climate-exposed coastal districts have been losing their young people.';
 
 /**
  * First mention of SSC in a sentence taken from the register ("... 2.0% for SSC holders"): spelled out once, so a reader who does not know

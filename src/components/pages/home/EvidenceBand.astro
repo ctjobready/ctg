@@ -6,6 +6,7 @@ import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
+import { RCT_COMPARISON } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -20,15 +21,25 @@ interface Props {
   title: string;
   lead?: string;
   statIds: string[];
+  /**
+   * Which chart the band carries. `survey` (default): the before/after employment of surveyed completers, from `chartId` (OC-01).
+   * `trial`: the randomized trial's comparison, employment at follow-up for the control group beside women offered a place
+   * (RC-02; figures read from its footnote by RCT_COMPARISON). Home uses `trial` (review round 13, enhancement 2); the survey chart
+   * stays on /impact/ and /impact/outcomes-2026/.
+   */
+  chart?: 'survey' | 'trial';
   chartId?: string;
   chartTitle?: string;
+  /** `trial` chart only: draw the "+10.3 percentage points" chip on the chart. Off when a tile beside it already states the difference. */
+  chip?: boolean;
   headlineFact?: string;
   /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
   plainLine?: boolean;
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
+const trial = chart === 'trial';
 const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 
 const stats = statIds.map((sid) => {
@@ -40,12 +51,23 @@ const stats = statIds.map((sid) => {
   return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label };
 });
 
-const cf = fact(chartId);
-const after = cf.stat?.numeric;
-const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
-if (after === undefined || before === undefined) throw new Error(`EvidenceBand: fact ${chartId} needs stat.numeric and stat.from`);
-const unit = cf.stat?.suffix ?? '%';
-const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+// Survey chart: OC-01's before → after. Trial chart: RC-02's control group and women offered a place (a comparison of two groups at follow-up).
+const cf = fact(trial ? 'RC-02' : chartId);
+let after: number | undefined;
+let before: number | undefined;
+let delta: string;
+if (trial) {
+  before = RCT_COMPARISON.control;
+  after = RCT_COMPARISON.offered;
+  delta = RCT_COMPARISON.delta;
+} else {
+  after = cf.stat?.numeric;
+  before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
+  if (after === undefined || before === undefined) throw new Error(`EvidenceBand: fact ${chartId} needs stat.numeric and stat.from`);
+  delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+}
+const unit = trial ? '%' : (cf.stat?.suffix ?? '%');
+const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 2021), randomized trial' : 'Employment among surveyed completers');
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
@@ -68,15 +90,35 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
       }
     </div>
     <div class="eb__chart">
-      <BeforeAfter
-        title={chartTitle}
-        before={{ label: 'Before', value: before, caption: 'before training' }}
-        after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
-        delta={delta}
-        unit={unit}
-        tone="dark"
-      />
-      <p class="eb__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+      {
+        trial ? (
+          <>
+            <BeforeAfter
+              mode="comparison"
+              title={chartHeading}
+              before={{ label: 'Control group', value: before }}
+              after={{ label: 'Offered a place', value: after }}
+              delta={delta}
+              chip={chip}
+              unit={unit}
+              tone="dark"
+            />
+            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group<FootnoteMarker id="RC-02" footnote="auto" /></p>
+          </>
+        ) : (
+          <>
+            <BeforeAfter
+              title={chartHeading}
+              before={{ label: 'Before', value: before, caption: 'before training' }}
+              after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+              delta={delta}
+              unit={unit}
+              tone="dark"
+            />
+            <p class="eb__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+          </>
+        )
+      }
     </div>
   </div>
   <slot name="ladder" />
