@@ -14,7 +14,7 @@ import { linkAttrs } from '../../../lib/url';
 import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 
 // RC-09 (BIGD employment status at follow-up). The chart values must match the register text.
-const control = [47.2, 40.9, 12.0];
+const control = [47.2, 40.9, 11.9];
 const offered = [36.9, 34.6, 28.5];
 const rc09 = fact('RC-09').text;
 for (const v of [...control, ...offered]) if (!rc09.includes(`${v.toFixed(1)}%`)) throw new Error(`RC-09 chart value ${v} is not in the register text`);

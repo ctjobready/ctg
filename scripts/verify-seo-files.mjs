@@ -137,7 +137,10 @@ for (const f of walkFiles(dist)) {
     const m = og.match(new RegExp(`^${origin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/og/[a-z-]+\\.png)$`));
     if (m) cardsSeen.add(m[1]);
   }
-  if (!/<link rel="canonical" href="https:\/\/coderstrust\.global\//.test(html)) err(`${route}: canonical is not on the production origin`);
+  // The noindex utility pages (/404/, /styleguide/) carry no canonical link (SEOHead omits it); every other page's canonical is on the production origin.
+  if (noindexOk.has(route)) {
+    if (/<link rel="canonical"/.test(html)) err(`${route}: utility page carries a canonical link`);
+  } else if (!/<link rel="canonical" href="https:\/\/coderstrust\.global\//.test(html)) err(`${route}: canonical is not on the production origin`);
 }
 for (const c of cardsSeen) {
   const f = path.join(dist, c);

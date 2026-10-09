@@ -1,5 +1,6 @@
 ---
-import { fact, sources } from '../../data/facts';
+import { CERT_FACT_IDS, fact, sources } from '../../data/facts';
+import CertNote from '../ui/CertNote.astro';
 import FootnoteMarker from './FootnoteMarker.astro';
 
 /** Stat + label + source line (problem/context facts). The number comes from the register. */
@@ -21,6 +22,7 @@ const useText = showText ?? !f.stat;
     <p class:list={['factcard__label', useText && 'factcard__label--text']}>
       {useText ? f.text : f.stat?.label}<FootnoteMarker id={id} footnote="auto" />
     </p>
+    {useText && CERT_FACT_IDS.includes(id) && <CertNote />}
     {src.length > 0 && <p class="card__meta factcard__src">Source: {src.slice(0, 2).join('; ')}</p>}
   </div>
 </article>

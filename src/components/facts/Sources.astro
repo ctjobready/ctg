@@ -4,11 +4,17 @@ import Icon from '../system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
 
 /**
- * Numbered notes for every footnote marker rendered earlier on the page (deduplicated, in render
- * order). Place once, after the last <Fact>/<FactStat>. M21: target note flashes on jump.
+ * Numbered notes for every footnote marker rendered earlier on the page (deduplicated). Place once, after the last
+ * <Fact>/<FactStat>. M21: target note flashes on jump. Renders nothing when the page registered no notes.
  *
- * A caveat is printed in full at its first occurrence; later notes with the identical caveat read
- * "Same caveat as note N." (linked), see Footnotes.notes().
+ * Numbers and order: this component lists the notes in the order the page registered them. The reading order (markers and notes
+ * numbered by first appearance in the page body) is applied to the finished page by orderFootnotes() in src/lib/postprocess.ts,
+ * which src/middleware.ts runs for every page. The same pass keeps the first note that carries a caveat as the only one that prints
+ * it and turns the later ones into "Same caveat as note N." (linked), so every caveat paragraph is rendered in full here and tagged
+ * with data-caveat (the caveat's identity) for that pass.
+ *
+ * An empty band: pages wrap this component in a labelled <Section aria-label="Notes and sources">. When there are no notes the
+ * same pass removes the empty band, so no empty landmark reaches the page.
  *
  * Landmarks: most pages wrap this block in `<Section aria-label="Notes and sources">`, which is the page's one
  * landmark for it, so the <section> here is not exposed as a second (nested, same-named) region. Pass `landmark`
@@ -35,11 +41,7 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
         {notes.map((n) => (
           <li class="sources__note" id={`fn-${n.n}`} tabindex="-1" data-fact={n.id}>
             <p class="sources__claim">{n.claim}</p>
-            {n.caveatSameAs ? (
-              <p class="sources__same">Same caveat as <a href={`#fn-${n.caveatSameAs}`}>note {n.caveatSameAs}</a>.</p>
-            ) : (
-              n.caveat && <p>{n.caveat}</p>
-            )}
+            {n.caveat && <p class="sources__caveat" data-caveat={n.caveatKey}>{n.caveat}</p>}
             {n.footnote && <p>{n.footnote}</p>}
             {n.base && <p>Base: {n.base}.</p>}
             {n.sources.length > 0 && (
@@ -109,7 +111,7 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
     min-height: 24px;
     color: var(--ctx-link);
   }
-  .sources a {
+  .sources :global(a) {
     color: var(--ctx-link);
     text-decoration: underline;
     text-underline-offset: 2px;
@@ -120,7 +122,7 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
     color: var(--on-tertiary-container);
   }
   .sources__note:target .sources__claim,
-  .sources__note:target a {
+  .sources__note:target :global(a) {
     color: var(--on-tertiary-container);
   }
   @media (prefers-reduced-motion: no-preference) {

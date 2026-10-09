@@ -1,22 +1,27 @@
 import { CAVEATS, fact, sources, type Fact, type Source } from '../data/facts';
 
 /**
- * Per-page footnote collector. Fact markers register fact IDs in render order; <Sources> renders
- * the numbered notes. State lives on `Astro.locals`, which is one object per page render — never
- * module-level state (static builds render many pages in one process).
+ * Per-page footnote collector. Fact markers register fact IDs as the page renders; <Sources> renders the notes. State lives on
+ * `Astro.locals`, which is one object per page render — never module-level state (static builds render many pages in one process).
+ *
+ * Numbering. The numbers handed out here follow the order in which components happen to render, which is not always the order a
+ * reader meets the markers (a page's frontmatter can build FAQ answers, with their markers, before the body renders). The reading
+ * order is therefore settled once per page, after rendering, by `orderFootnotes()` in src/lib/postprocess.ts (run by
+ * src/middleware.ts): markers and notes are numbered by first appearance in the page, the Notes list follows that order, and a
+ * repeated caveat becomes "Same caveat as note N." scripts/check-facts.mjs fails the build for any page where that did not happen.
  */
 export interface Note {
   n: number;
   id: string;
-  /** Short description of the claim the note belongs to (public stat label or fact text). */
+  /** What the note annotates: a phrase that stands alone (fact.claim, else the stat label, else the full text). */
   claim: string;
-  /** Caveat class text (register v1.1), if the fact has one. */
+  /** Caveat text (register v1.1 class text, or the fact's own `caveatText`), if the fact has one. */
   caveat?: string;
   /**
-   * Set when an earlier note on the same page already carries this exact caveat text: that note's number.
-   * <Sources> then prints "Same caveat as note N." (linked) instead of repeating the caveat in full.
+   * Identity of the caveat text for de-duplication: the class letter, or `fact:<ID>` when the fact words its own caveat.
+   * Notes that share a key print the caveat once (the first in reading order) and "Same caveat as note N." afterwards.
    */
-  caveatSameAs?: number;
+  caveatKey?: string;
   /** Public plain-language extra note, if any. */
   footnote?: string;
   /** Sample base (n), if the register gives one. */
@@ -30,6 +35,7 @@ export interface Note {
 export class Footnotes {
   private order: string[] = [];
   private refs = new Map<string, number>();
+  private certNoteShown = false;
 
   /** Register a reference to a fact; returns its note number and the 1-based ref index. */
   register(id: string): { n: number; k: number } {
@@ -47,28 +53,25 @@ export class Footnotes {
     return this.order.length;
   }
 
-  /**
-   * The numbered notes in render order. A caveat is printed in full at its first occurrence; every later note with the
-   * identical caveat text gets `caveatSameAs` (the first note's number) so the list does not repeat long identical text.
-   * Each note keeps its own claim, footnote, base and sources.
-   */
+  /** The numbered notes, in registration order (the reading order is applied after rendering; see the class comment). */
   notes(): Note[] {
-    const firstWithCaveat = new Map<string, number>();
-    return this.order.map((id, i) => {
-      const note = noteFor(fact(id), i + 1, this.refs.get(id) ?? 1);
-      if (note.caveat) {
-        const first = firstWithCaveat.get(note.caveat);
-        if (first === undefined) firstWithCaveat.set(note.caveat, note.n);
-        else note.caveatSameAs = first;
-      }
-      return note;
-    });
+    return this.order.map((id, i) => noteFor(fact(id), i + 1, this.refs.get(id) ?? 1));
+  }
+
+  /**
+   * Claim the page's one certification note (messaging framework rule 13). True for the first caller on a page, false after:
+   * <CertNote> and the facts that name vendor certifications call this, so the note appears once, beside the first naming.
+   */
+  claimCertNote(): boolean {
+    if (this.certNoteShown) return false;
+    this.certNoteShown = true;
+    return true;
   }
 }
 
 /** Does a fact carry a caveat the reader should see (→ show a footnote marker automatically)? */
 export function needsFootnote(f: Fact): boolean {
-  return Boolean(f.caveat || f.base || f.footnote);
+  return Boolean(f.caveat || f.caveatText || f.base || f.footnote);
 }
 
 export function noteFor(f: Fact, n: number, refs = 1): Note {
@@ -84,8 +87,9 @@ export function noteFor(f: Fact, n: number, refs = 1): Note {
   return {
     n,
     id: f.id,
-    claim: f.stat?.label ?? f.text,
-    caveat: f.caveat ? CAVEATS[f.caveat] : undefined,
+    claim: f.claim ?? f.stat?.label ?? f.text,
+    caveat: f.caveatText ?? (f.caveat ? CAVEATS[f.caveat] : undefined),
+    caveatKey: f.caveatText ? `fact:${f.id}` : f.caveat,
     footnote: f.footnote,
     base: f.base,
     sources: cites,

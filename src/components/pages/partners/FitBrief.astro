@@ -9,7 +9,7 @@ import { caveatPart, factPart, HOURS } from './partners';
  */
 const evaluatedHours = factPart('RC-07', /(\d+) hours over/);
 // The trial population as the [R] caveat states it, with SSC spelled out at its first mention on the page.
-const population = caveatPart('R', /women aged [\d–]+ with (?:the Secondary School Certificate \(SSC\)|SSC) or above, Dhaka/).replace('with SSC or above', 'with the Secondary School Certificate (SSC) or above');
+const population = caveatPart('R', /women aged [\d–]+ with (?:(?:a|the) Secondary School Certificate \(SSC\)|SSC) or above, Dhaka/).replace('with SSC or above', 'with a Secondary School Certificate (SSC) or above');
 const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
 ---
 

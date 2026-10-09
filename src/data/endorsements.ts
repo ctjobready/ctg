@@ -1,10 +1,11 @@
 // Endorsements migrated from the legacy CodersTrust WordPress site (post type `endorsements`).
-// Quotes are verbatim from the rendered legacy homepage; do not edit wording. `date` is null because the
+// Quotes are verbatim from the rendered legacy homepage; do not edit wording (a missing space between two sentences is the one repair made).
+// Public officials in office (the Danish ambassador, H.E. Winnie Estrup Petersen; James Gardiner of the US Embassy) are not shown as endorsements on evergreen pages;
+// the ambassador's entry is removed from this dataset, and the recognition page filters out Gardiner (PA-10: his remarks stay in their dated news item). `date` is null because the
 // legacy site does not state when each quote was given (CMS publish dates are not quote dates).
 import type { ImageMetadata } from 'astro';
 import jamesGardiner from '../assets/images/endorsements/james-gardiner.jpg';
 import drJuanCarlosSainzBorgo from '../assets/images/endorsements/dr-juan-carlos-sainz-borgo.jpg';
-import hEWinnieEstrupPetersen from '../assets/images/endorsements/h-e-winnie-estrup-petersen.jpg';
 import melissaMannis from '../assets/images/endorsements/melissa-mannis.jpg';
 
 export interface Endorsement {
@@ -33,21 +34,11 @@ export const endorsements: Endorsement[] = [
     id: "dr-juan-carlos-sainz-borgo",
     name: "Dr. Juan Carlos Sainz-Borgo",
     title: "Vice Rector University for Peace, Costa Rica",
-    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and Brilliant young people paving the way for tomorrow.Thank you for your invitation to this extraordinary day and for your admirable and unring commitment to peace and education.",
+    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and Brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unring commitment to peace and education.",
     photo: drJuanCarlosSainzBorgo,
     photoAlt: "Portrait of Dr. Juan Carlos Sainz-Borgo, Vice Rector University for Peace, Costa Rica",
     date: null,
     legacyUrl: "https://coderstrust.global/endorsements/dr-juan-carlos-sainz-borgo/",
-  },
-  {
-    id: "h-e-winnie-estrup-petersen",
-    name: "H.E. Winnie Estrup Petersen",
-    title: "Ambassador of Denmark Bangladesh",
-    quote: "“Denmark does not just speak about making investments to promote gender equality but we put our words to action through our development cooperation through our company policies and social structures.So when I say that the Danes are taking action in this regard I have the pleasure to mention organizations like CodersTrust which have made such bold and necessary moves of bringing women into Tech especially here in Bangladesh.”",
-    photo: hEWinnieEstrupPetersen,
-    photoAlt: "Portrait of H.E. Winnie Estrup Petersen, Ambassador of Denmark Bangladesh",
-    date: null,
-    legacyUrl: "https://coderstrust.global/endorsements/h-e-winnie-estrup-petersen/",
   },
   {
     id: "melissa-mannis",

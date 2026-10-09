@@ -61,6 +61,20 @@ export const FOUNDERS = [
 export const COURSES_URL = 'https://jobready.global/';
 
 /**
+ * OWNER SWITCH — the "Request the Impact Report 2026 (partner edition)" call to action (`report` in src/data/ctas.ts).
+ *
+ * Leave it `false` until the owner has confirmed that the corrected partner edition exists: its slides 15–16 must show the public
+ * BIGD report values the site follows (attenders +54% income and +26% employment; household effects as in RC-05), see confirm-list
+ * item #28 and doc 06 R9-M3. While it is `false` no `report` button, link or contact route is rendered anywhere on the site: the CTA
+ * library (src/lib/mailto.ts) hands out an empty href for that key, and every component that draws a CTA (Button, CTABand, NextStep,
+ * the Contact routes) draws nothing for an empty href, so a band or route that exists only for the report disappears with it.
+ * scripts/check-facts.mjs reads this constant and fails the build if a report CTA is still rendered while it is `false`.
+ *
+ * To release the report: set it to `true`, rebuild, and deploy. Every report CTA returns at once.
+ */
+export const REPORT_EDITION_READY = false;
+
+/**
  * Content-Security-Policy (meta). Astro's built-in hashing CSP (security.csp) is not used because it
  * forbids inline style attributes (used for CSS custom properties on components) and `is:inline`
  * scripts. This policy still blocks third-party scripts, plugins and base-tag injection; frames are

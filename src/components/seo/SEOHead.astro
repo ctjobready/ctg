@@ -64,7 +64,8 @@ const ogImage = image.startsWith('http') ? image : PRODUCTION_ORIGIN + (image.st
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="theme-color" content="#002FA7" />
 <meta http-equiv="Content-Security-Policy" content={CSP} />
-<link rel="canonical" href={canonical} />
+{/* Noindex utility pages (404, styleguide) are not canonical documents: no canonical link. */}
+{!noindex && <link rel="canonical" href={canonical} />}
 <link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
 <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
 <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />

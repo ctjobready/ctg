@@ -7,7 +7,7 @@
  * Every page except redirect stubs (pages with a meta refresh):
  *   <html lang="en"> · exactly one non-empty <title>, at most 60 characters, unique · exactly one meta description,
  *   unique (length ≤ 155 and ≥ 50 are warnings) · exactly one <h1> · canonical present, absolute, https://coderstrust.global
- *   + the route with its trailing slash, only one · robots: staging pages carry noindex, production pages do not
+ *   + the route with its trailing slash, only one (the noindex utility pages /404/ and /styleguide/ carry none) · robots: staging pages carry noindex, production pages do not
  *   (utility pages /404/ and /styleguide/ may) · og:title, og:description, og:image (absolute https), og:url (= canonical)
  *   and twitter:card · charset and viewport · JSON-LD present, every block parses, @graph holds Organization and WebSite
  *   · referrer policy strict-origin-when-cross-origin and a Content-Security-Policy meta that keeps scripts, fonts, connections and
@@ -57,6 +57,8 @@ const DESC_MIN = 50;
 const HOME_TITLE = /^CodersTrust\b/;
 const NOINDEX_OK_IN_PRODUCTION = new Set(['/404/', '/styleguide/']);
 const NOT_IN_SITEMAP = new Set(['/404/', '/styleguide/']);
+/** Noindex utility pages are not canonical documents: SEOHead omits the canonical link on them. Any other page without one is an error. */
+const NO_CANONICAL_OK = new Set(['/404/', '/styleguide/']);
 const TWITTER_CARDS = new Set(['summary', 'summary_large_image', 'app', 'player']);
 
 const REFERRER_POLICY = 'strict-origin-when-cross-origin';
@@ -209,8 +211,10 @@ for (const page of site.pages) {
 
   /* ---------------- canonical ---------------- */
   let canonicalHref = null;
-  if (canon.length === 0) findings.error('canonical-missing', where, 'no <link rel="canonical">');
-  else {
+  if (canon.length === 0) {
+    if (!NO_CANONICAL_OK.has(route)) findings.error('canonical-missing', where, 'no <link rel="canonical">');
+    else if (!robots.includes('noindex')) findings.error('canonical-missing', where, 'utility page without a canonical must carry robots noindex');
+  } else {
     if (canon.length > 1) findings.error('canonical-multiple', where, `${canon.length} canonical links`);
     canonicalHref = canon[0].attrs.href ?? '';
     let u = null;

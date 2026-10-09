@@ -11,17 +11,21 @@ interface Props {
   micro?: string;
 }
 const { heading, text, cta, secondary, micro } = Astro.props;
+// An empty href is a withheld call to action (src/lib/mailto.ts ctaWithheld): the next step exists for that action, so it is not drawn.
+const withheld = !cta.href;
 ---
 
+{withheld ? null : (
 <aside class="next" aria-label={heading}>
   <h2 class="next__title">{heading}</h2>
   {text && <p class="next__text">{text}</p>}
   <div class="next__actions">
     <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
-    {secondary && <a class="link" href={linkAttrs(secondary.href).href}>{secondary.label}</a>}
+    {secondary?.href && <a class="link" href={linkAttrs(secondary.href).href}>{secondary.label}</a>}
   </div>
   {micro && <p class="next__micro">{micro}</p>}
 </aside>
+)}
 
 <style>
   .next {

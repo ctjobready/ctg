@@ -1,6 +1,7 @@
 ---
 import Icon from '../../system/Icon.astro';
 import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import CertNote from '../../ui/CertNote.astro';
 
 /**
  * TalentLEAP example: the Digital Marketing career path (IN-08). The competency levels
@@ -34,6 +35,7 @@ const { class: className } = Astro.props;
       <h3 class="lv__title">Expert</h3>
     </li>
   </ol>
+  <CertNote />
   <figcaption class="lv__cap">Example only: the Digital Marketing career path.<FootnoteMarker id="IN-08" footnote="auto" /> Levels progress from Competent to Proficient to Expert.</figcaption>
 </figure>
 

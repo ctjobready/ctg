@@ -1,0 +1,38 @@
+---
+import { CERT_NOTE_TEXT } from '../../data/facts';
+import { footnotesFor } from '../../lib/footnotes';
+
+/**
+ * Non-affiliation note for vendor certifications (messaging framework rule 13): "CodersTrust is not affiliated with or endorsed by
+ * these certifying bodies; it prepares learners for their exams." Place it beside the first naming of Meta Blueprint / Google Ads,
+ * Adobe Certified Professional, QuickBooks Online ProAdvisor, PCEP or CWP on a page. It renders once per page: the first call
+ * claims the note and later calls draw nothing, so a page may carry one wherever a naming can appear. <Fact> and <FactCard> add it
+ * automatically for the facts that name vendor certifications (CERT_FACT_IDS in src/data/facts.ts); typed text needs its own
+ * <CertNote />. scripts/check-facts.mjs fails the build for a page that names a vendor certification without the note.
+ *
+ *   as="p"    (default) a paragraph of its own
+ *   as="span" inside running text, a table cell or a list item (shown as its own line)
+ *   always    skip the once-per-page rule
+ */
+interface Props {
+  as?: 'p' | 'span';
+  always?: boolean;
+  class?: string;
+}
+const { as: Tag = 'p', always = false, class: className } = Astro.props;
+const show = always || footnotesFor(Astro).claimCertNote();
+---
+
+{show && <Tag class:list={['certnote', className]} data-cert-note>{CERT_NOTE_TEXT}</Tag>}
+
+<style>
+  .certnote {
+    display: block;
+    margin: var(--space-xs) 0 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: 400;
+    color: var(--ctx-muted);
+  }
+</style>
