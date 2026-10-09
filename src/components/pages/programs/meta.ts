@@ -26,7 +26,7 @@ export const PAGE_UPDATED = {
   youthwide: '2026-10-09',
   campus: '2026-10-09',
   work: '2026-10-09',
-  nationwide: '2026-10-09',
+  nationwide: '2026-10-10',
   superkids: LAST_UPDATED,
 } as const;
 
