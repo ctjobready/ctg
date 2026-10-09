@@ -6,20 +6,20 @@ import { ROADMAP_PHASES } from './meta';
 
 /**
  * YouthWIDE execution roadmap: five phases in order, with an illustrative month ribbon (M1–M12) and
- * checkpoints. Every timing comes from the register: PD-04 (first cohort 6–8 weeks after signing),
- * PD-06 (up to 10 cohorts in parallel from about month 5), PD-08 (monthly reports, quarterly steering
- * review), PD-05 (pilot length). Nothing else is placed on the ribbon.
+ * checkpoints. Every timing comes from the register: PD-06 (up to 10 cohorts in parallel from about month 5),
+ * PD-08 (monthly reports, quarterly steering review), PD-05 (pilot length). Nothing else is placed on the ribbon.
+ * The 6–8 week start (PD-04) is not restated here: the page states it twice already, in the C13 urgency line and in the C14 timing
+ * line (doc 04 §4, one statement per fact).
  */
 const pd06 = fact('PD-06').text.match(/Up to (\d+) certification cohorts in parallel from about month (\d+)/);
 if (!pd06) throw new Error('PD-06 wording changed: update the roadmap');
 const [, parallel, fromMonth] = pd06;
 const startMonth = Number(fromMonth);
-const weeks = fact('PD-04').stat?.value ?? '';
 const hours = fact('PD-01').stat?.value ?? '';
 const pilot = PROGRAM_OPTIONS[0].duration;
 
 const phases = [
-  { title: ROADMAP_PHASES[0], text: `Discovery, co-design and agreement. For grant-funded pilots the first cohort is in training ${weeks} after signing.`, factIds: ['PD-04'] },
+  { title: ROADMAP_PHASES[0], text: 'Discovery, co-design and agreement, with tracks, priority groups, the scorecard and the work-entry plan set before enrollment.', factIds: ['PD-19', 'PD-11'] },
   { title: ROADMAP_PHASES[1], text: 'Outreach with local partners. An accessible readiness assessment routes each applicant to a career track or a foundation track.', factIds: ['PD-14'] },
   { title: ROADMAP_PHASES[2], text: `${hours} training hours per certification, delivered blended in existing labs and colleges.`, factIds: ['PD-01', 'PD-06'] },
   { title: ROADMAP_PHASES[3], text: 'Three months of milestone-based mentoring, certification exam preparation and placement support.', factIds: ['PD-01', 'PD-02', 'PD-15'] },
@@ -43,7 +43,7 @@ const quarters = [3, 6, 9, 12];
         <span class="ribbon__bar ribbon__bar--par" style={`grid-column:${startMonth} / -1;grid-row:7`}>Up to {parallel} cohorts from about month {fromMonth}</span>
       </div>
     </section>
-    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. Pilots run {pilot}. Tracer surveys follow each course. For grant-funded pilots the first cohort is in training {weeks} after signing.</figcaption>
+    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. Pilots run {pilot}. Tracer surveys follow each course.</figcaption>
   </figure>
 </div>
 

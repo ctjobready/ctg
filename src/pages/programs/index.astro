@@ -17,8 +17,10 @@ import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
-const title = 'Programs: From Learning to Earning';
-const description = 'Six CodersTrust programs for funders, governments, universities, employers, degree holders and schools. Find the program that fits who you are.';
+// R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
+// is a diploma), so the H1, title and structured-data name are "CodersTrust programs". The meta description is the plan's P9 wording.
+const title = 'Programs';
+const description = 'Explore CodersTrust programs: YouthWIDE, NationWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Postgraduate Diploma.';
 const discovery = ctaFor('discovery');
 
 const programs = [
@@ -31,7 +33,7 @@ const programs = [
 ];
 
 const jsonLd = [
-  webPage({ path, name: 'Programs that take youth from learning to earning', description, type: 'CollectionPage', dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path }] }),
+  webPage({ path, name: 'CodersTrust programs', description, type: 'CollectionPage', dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path }] }),
   {
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#programs`,
@@ -44,7 +46,7 @@ const jsonLd = [
 <BaseLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs' }]} jsonLd={jsonLd}>
   <Hero
     eyebrow="Programs"
-    title="Programs that take youth from learning to earning"
+    title="CodersTrust programs"
     lead="CodersTrust runs six programs, each for a different partner: funders and governments, universities, employers, degree holders and schools."
     artSeed="programs-hub"
   >

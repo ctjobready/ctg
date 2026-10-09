@@ -102,12 +102,15 @@ const widthCh = value.length;
     line-height: var(--lh-body-xs);
     color: var(--stat-label);
     max-width: 28ch;
+    /* Even line lengths for a two- or three-line label at 390 px (no one-word last line); <FactStat> renders its label through this class. */
+    text-wrap: balance;
   }
   .stat__evidence {
     margin: 2px 0 0;
     padding-top: 4px;
     border-top: 1px solid var(--stat-rule, var(--primary-fixed));
     max-width: 28ch;
+    text-wrap: balance;
     font-size: var(--fs-body-xs);
     line-height: var(--lh-body-xs);
     font-weight: var(--fw-medium);

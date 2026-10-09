@@ -31,14 +31,12 @@ interface Props {
   empathy: string;
   /** Fact IDs rendered as stat tiles (need a stat). */
   stats?: string[];
-  /** Stat tiles that always carry their source note, even when the fact has no caveat of its own. */
-  noted?: string[];
   statements?: Statement[];
   method: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   id?: string;
 }
-const { title = 'We’ve built this path since 2014.', empathy, stats = [], noted = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
+const { title = 'We’ve built this path since 2014.', empathy, stats = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -55,7 +53,7 @@ const { title = 'We’ve built this path since 2014.', empathy, stats = [], note
       </p>
     </div>
     <div class="pg__proof">
-      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} footnote={noted.includes(s) ? true : 'auto'} />)}</div>}
+      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} />)}</div>}
       {
         statements.length > 0 && (
           <ul class="pg__list" role="list">

@@ -43,6 +43,10 @@ const useText = showText ?? !f.stat;
   .factcard__label--text {
     font-size: var(--fs-body-base);
   }
+  /* The stat label (not the full-sentence variant) wraps in even lines. */
+  .factcard__label:not(.factcard__label--text) {
+    text-wrap: balance;
+  }
   .factcard__src {
     margin-top: auto !important;
     padding-top: var(--space-sm);

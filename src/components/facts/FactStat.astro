@@ -6,6 +6,8 @@ import { fact, splitProgramLabel } from '../../data/facts';
 /**
  * Stat bound to a fact: value, label, count-up (when numeric) and an automatic footnote marker. A program-results label (PR-01, PR-02,
  * PR-05) ends with the register's program-data label; it is set on its own ruled line under the label, once.
+ * <FactStat> has no label element of its own: the label and the evidence line are Stat's .stat__label and .stat__evidence, which set
+ * `text-wrap: balance` (src/components/system/Stat.astro), so every fact tile wraps its label in even lines.
  */
 interface Props {
   id: string;
@@ -13,10 +15,11 @@ interface Props {
   size?: 'md' | 'lg';
   align?: 'start' | 'center';
   count?: boolean;
+  /** A statistic tile carries its fact's footnote (doc 04 claims rule 15), so the default is true; false only where a page prints the note itself. */
   footnote?: boolean | 'auto';
   class?: string;
 }
-const { id, tone = 'default', size = 'md', align = 'start', count, footnote = 'auto', class: className } = Astro.props;
+const { id, tone = 'default', size = 'md', align = 'start', count, footnote = true, class: className } = Astro.props;
 const f = fact(id);
 if (!f.stat) throw new Error(`<FactStat id="${id}">: fact has no stat`);
 // Only count up values with a clean numeric target (not "6–8 weeks").

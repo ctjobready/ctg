@@ -19,6 +19,7 @@ import OfferBand from '../../../components/sections/OfferBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import Section from '../../../components/ui/Section.astro';
@@ -251,11 +252,14 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
     cta={{ label: primary.label, href: primary.href }}
     secondary={report}
     urgency={SPEED.text}
-  />
+  >
+    <SessionAgenda />
+  </CTABand>
 
   <!-- C14 · Next steps -->
-  <NextStepsBand title="What happens after you say yes." />
-  <Reinforcement logos={false} />
+  <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step (doc 04 §4). -->
+  <NextStepsBand title="What happens after you say yes." timing={false} />
+  <Reinforcement logos={false} reminder={false} />
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />

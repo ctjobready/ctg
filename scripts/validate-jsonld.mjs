@@ -27,6 +27,13 @@ if (!fs.existsSync(dist)) {
 }
 const ORIGIN = productionOrigin();
 const ENTITY = entityDefinition();
+/** Organization.sameAs in the doc 02 §6 order. */
+const SAME_AS = [
+  'https://www.facebook.com/coderstrustbangladesh',
+  'https://www.linkedin.com/company/coderstrust',
+  'https://www.linkedin.com/company/coderstrust-bangladesh',
+  'https://www.youtube.com/@CodersTrustBangladesh',
+];
 
 // ---------------------------------------------------------------------------------------------
 // Templates (by built route) and the node types each must carry
@@ -241,6 +248,13 @@ for (const file of walkFiles(dist)) {
     if (org.url !== `${ORIGIN}/`) err(`Organization.url is ${org.url}`);
     if (org['@id'] !== `${ORIGIN}/#organization`) err(`Organization @id is ${org['@id']}`);
     if (!asArray(org.contactPoint).some((c) => c && c.contactType === 'partnerships')) warn('Organization.contactPoint has no contactType "partnerships" (planning/09 §2)');
+    // sameAs in the doc 02 §6 order (R10-N2): Facebook, LinkedIn (CodersTrust Global), LinkedIn (CodersTrust Bangladesh), YouTube
+    if (JSON.stringify(asArray(org.sameAs)) !== JSON.stringify(SAME_AS)) err(`Organization.sameAs is ${JSON.stringify(org.sameAs)}, expected the doc 02 §6 order ${JSON.stringify(SAME_AS)}`);
+  }
+  // NewsArticle: the author is the Organization (planning/09 §2, R10-Mi7), not an invented individual
+  for (const n of merged.filter((x) => typesOf(x).includes('NewsArticle'))) {
+    const a = n.author;
+    if (!org || !a || a['@id'] !== org['@id'] || Object.keys(a).some((k) => k !== '@id' && k !== '@type' && k !== 'name')) err(`NewsArticle.author is ${JSON.stringify(a)}, expected a reference to the Organization (${org?.['@id']})`);
   }
   if (sites[0] && org && sites[0].publisher?.['@id'] !== org['@id']) err('WebSite.publisher does not reference the Organization');
 

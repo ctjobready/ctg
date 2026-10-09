@@ -28,16 +28,15 @@ import InvestorFit from '../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../components/pages/hub/FaqBlock.astro';
 import { C14, HEADLINE, POSITIONING, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
-import { fact } from '../data/facts';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
 import { webPage } from '../lib/schema';
 
 const path = '/investors/';
 const title = 'Investors';
-// Meta description (≤ 155): BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta description cannot show,
-// so the headline count stays in the page body (InvestorDefinition) beside its note.
-const description = `CodersTrust is building JobReady, an AI-native platform for youth employment, on training programs since ${fact('ID-02').stat?.value}. Request the investor deck.`;
+// Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
+// description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
+const description = 'Back the platform moving emerging-market youth into paid work through certified training. Thesis and traction here; the investor deck on request.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];

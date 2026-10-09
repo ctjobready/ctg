@@ -58,7 +58,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}her-power/`,
     name: 'Her Power',
     heading: 'Her Power: women’s digital skills with the ICT Division',
-    program: 'ICT Division / DoICT, Government of Bangladesh',
+    program: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh',
     partner: 'Training cohort',
     factId: 'PR-05',
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',

@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import Stat from '../../system/Stat.astro';
 import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
@@ -22,10 +23,12 @@ interface Props {
   chartId?: string;
   chartTitle?: string;
   headlineFact?: string;
+  /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
+  plainLine?: boolean;
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, links = [], id = 'proof-band' } = Astro.props;
 const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 
 const stats = statIds.map((sid) => {
@@ -49,6 +52,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
   <header class="eb__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">The evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
+    {plainLine && <PlainLine />}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">

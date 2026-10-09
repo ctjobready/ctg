@@ -6,6 +6,7 @@ import Icon from '../../../components/system/Icon.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
 import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
+import PlainLine from '../../../components/facts/PlainLine.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
@@ -84,6 +85,7 @@ const d = discoveryCta();
       <p data-fact="RC-01 RC-02">
         <strong>Women offered a place first, women who attended second.</strong> <Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" footnote="auto" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
       </p>
+      <PlainLine />
     </Callout>
     <div class="ie__stats">
       <FactStat id="RC-01" />
@@ -161,7 +163,7 @@ const d = discoveryCta();
       <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.<FootnoteMarker id="RC-01" footnote="auto" /></li>
       <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021. {AI_SHIFT_NOTE}</li>
       <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
-      <li><strong>200 hours vs 100 hours.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
+      <li><strong>Program tested.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
       <li><strong>Attrition.</strong> Not every woman in the baseline sample was reached at follow-up (see the trial design above).</li>
     </ul>
   </ReportSection>

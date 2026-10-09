@@ -5,6 +5,7 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
+import SessionAgenda from '../../components/ui/SessionAgenda.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
@@ -139,7 +140,7 @@ const jsonLd = [
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="What has been done to date" headlineFact="RC-01" statIds={['RC-01', 'SC-06', 'GV-01']} noted={['GV-01']} links={[{ label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="What has been done to date" headlineFact="RC-01" statIds={['RC-01', 'SC-06', 'GV-01']} links={[{ label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
       <CopyP block={SCALE} />
       <CopyP block={SURVEY_EMPLOYMENT} />
@@ -220,7 +221,9 @@ const jsonLd = [
     cta={briefing}
     secondary={{ label: funding.label, href: funding.href }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
-  />
+  >
+    <SessionAgenda lead="briefing" />
+  </CTABand>
 
   <!-- C14 -->
   <NextSteps

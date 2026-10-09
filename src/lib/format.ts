@@ -55,6 +55,13 @@ export function terminalStop(text: string): { body: string; close: string } | nu
   const m = /^([\s\S]*?)([”’"]+)$/.exec(t);
   return m ? { body: m[1], close: m[2] } : { body: t, close: '' };
 }
+/**
+ * Visible text with arrows, as an accessible name: screen readers announce "→" as "right arrow", so a sequence reads as its steps
+ * ("Learn → Earn → Prosper" becomes "Learn, then Earn, then Prosper"), like the model diagram's own label. Text without arrows is unchanged.
+ */
+export function spokenSteps(text: string): string {
+  return text.replace(/\s*→\s*/g, ', then ');
+}
 /** Strip tags for plain-text use (FAQ schema, meta descriptions). */
 export function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();

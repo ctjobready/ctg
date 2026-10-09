@@ -103,6 +103,10 @@ const scoped = (fid: string) => {
   .pcs__label--text {
     font-size: var(--fs-body-base);
   }
+  /* The stat label (not the full-sentence variant) wraps in even lines. */
+  .pcs__label:not(.pcs__label--text) {
+    text-wrap: balance;
+  }
   .pcs__src {
     margin-top: auto !important;
     padding-top: var(--space-sm);

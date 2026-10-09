@@ -20,11 +20,11 @@ import { webPage } from '../../lib/schema';
 
 const routes = contactRoutes();
 const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Offices in New York and Dhaka.';
-const jsonLd = [webPage({ path: '/contact/', name: "Let's talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
+const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
 ---
 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let's talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
+  <Hero eyebrow="Contact" title="Let’s talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
     <Fragment slot="actions">
       <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a discovery session</Button>
       <Button variant="outline" href="#offices">Offices and phone</Button>

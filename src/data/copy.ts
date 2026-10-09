@@ -2,7 +2,7 @@
 // Pages import these instead of retyping them, so a wording change from review is one edit here.
 // Every number inside a block is a registered fact; render footnote markers for the IDs in `facts`.
 
-import { PROGRAM_DATA_LABEL } from './facts';
+import { PROGRAM_DATA_LABEL, fact } from './facts';
 
 export interface CopyBlock {
   text: string;
@@ -27,7 +27,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   developmentPartners: 'We help development partners move educated, unemployed youth into paid work through certified, mentored training.',
   governments: 'We help governments move educated, unemployed youth into paid digital work through certified, mentored training.',
   foundations: 'We help funders turn grants into paid digital work for youth through certified, mentored training.',
-  universities: 'We help universities move degree holders into paid digital work through certified, mentored training.',
+  universities: 'We help universities and colleges move students into paid work through certified, mentored training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through certified, mentored training.',
   investors: 'We help investors back the platform moving emerging-market youth into paid work through certified training.',
   localPartners: 'We help local organizations move young people into paid digital work through certified, mentored training.',
@@ -52,7 +52,7 @@ export const EMPATHY: Record<Audience, string> = {
   home: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
   developmentPartners: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
   governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
-  foundations: "You want your grant to change a young person's income, and you need evidence that it did — not only a count of hours attended.",
+  foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   investors: 'You are weighing a market with real demand for skills, and you need to tell a model that is working from one that is only promised.',
@@ -142,6 +142,25 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
 };
 
+/**
+ * [PLAIN-LINE] (plan v1.10 enhancement; RC-02): the plain-language reading of the employment effect in percentage points (not the relative
+ * +20% of RC-01), used directly after the randomized-trial lead on Home C7 and the development-partners C7, and in the independent-evaluation BLUF.
+ * Both numbers are derived from RC-02's stat, so the sentence cannot drift from the register: "+10.3 percentage points" is the stat value with
+ * its "pp" spelled out, and "about 10" is that value rounded to a whole number of women per 100.
+ */
+function plainLine(): CopyBlock {
+  const s = fact('RC-02').stat;
+  if (!s || s.numeric === undefined || !/^\+[\d.]+ pp$/.test(s.value)) {
+    throw new Error(`PLAIN_LINE: RC-02 no longer has a "+N pp" stat value with a numeric part: ${JSON.stringify(s)}`);
+  }
+  const points = s.value.replace(/ pp$/, ' percentage points');
+  return {
+    text: `For every 100 women offered a place, about ${Math.round(s.numeric)} more were in work at follow-up than in the control group (${points}).`,
+    facts: ['RC-02'],
+  };
+}
+export const PLAIN_LINE: CopyBlock = plainLine();
+
 export const SCALE: CopyBlock = {
   text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, the curriculum for a national program to train 25,125 women (with 2,500 women trained directly), and 10,000 teachers trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
   facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],
@@ -199,6 +218,23 @@ export const STEPS = [
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
+
+/**
+ * [SESSION-AGENDA] (plan v1.12 round-11 enhancement; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation covers, as ONE
+ * line beside the C13 primary CTA: the lead, the three items joined with " · " and a single final period. It is shown on the
+ * development-partners and foundations pages and on YouthWIDE, where the CTA books a discovery session, and on the governments page and
+ * NationWIDE, where the primary CTA is a briefing (see <SessionAgenda>). The micro-commitment line stays where it is.
+ *
+ * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02 (a production hold, confirm
+ * #23): `facts` becomes its data-fact marker exactly as [PRICING]'s does, and a hold on PD-02 treats the agenda like them.
+ */
+export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
+/** The lead on the pages whose primary CTA is "Request a briefing" (governments, NationWIDE). */
+export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
+export const SESSION_AGENDA_ITEMS = ['your priority groups and districts', 'employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
+export const SESSION_AGENDA_FACTS = ['PD-02'];
+/** "What the discovery session covers: your priority groups and districts · employer demand and certification tracks · an indicative budget, the pilot scorecard and the tracer timeline." */
+export const sessionAgendaText = (lead: string = SESSION_AGENDA_LEAD): string => `${lead} ${SESSION_AGENDA_ITEMS.join(' · ')}.`;
 
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {

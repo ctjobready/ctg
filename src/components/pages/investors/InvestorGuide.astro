@@ -7,6 +7,7 @@ import CopyBlock from '../home/CopyBlock.astro';
 import LeadershipStrip from './LeadershipStrip.astro';
 import { EMPATHY, ORIGIN } from '../../../data/copy';
 import { fact } from '../../../data/facts';
+import { governmentPartners } from '../../sections/copyText';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION } from '../../../lib/logos';
 
@@ -50,7 +51,7 @@ const channels = [
               <Icon name={c.icon} size={28} strokeWidth={1.5} />
               <div>
                 <p class="ig__label">{c.label}</p>
-                <p class="ig__text">{fact(c.fact).text}</p>
+                <p class="ig__text">{c.fact === 'PA-02' ? governmentPartners() : fact(c.fact).text}</p>
               </div>
             </li>
           ))

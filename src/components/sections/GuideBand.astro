@@ -12,14 +12,12 @@ interface Props {
   title: string;
   empathy: string;
   authorityIds: string[];
-  /** Authority tiles that always carry their source note, even when the fact has no caveat of its own. */
-  noted?: string[];
   method?: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   variant?: 'marquee' | 'grid';
   id?: string;
 }
-const { title, empathy, authorityIds, noted = [], method, partnerGroup, variant = 'marquee', id = 'guide' } = Astro.props;
+const { title, empathy, authorityIds, method, partnerGroup, variant = 'marquee', id = 'guide' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -39,7 +37,7 @@ const { title, empathy, authorityIds, noted = [], method, partnerGroup, variant 
       }
     </div>
     <div class="guide__stats">
-      {authorityIds.map((s) => <FactStat id={s} footnote={noted.includes(s) ? true : 'auto'} />)}
+      {authorityIds.map((s) => <FactStat id={s} />)}
     </div>
   </div>
   <PartnerStrip variant={variant} group={partnerGroup} caption={PARTNER_CAPTION} />

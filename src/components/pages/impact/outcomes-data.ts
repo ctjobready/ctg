@@ -58,7 +58,7 @@ export const EDUCATION: Dist = {
   id: 'OC-09-education',
   measure: 'Respondents by highest education',
   cells: [
-    { label: 'HSC or below', pct: 11.0 },
+    { label: 'Higher Secondary Certificate (HSC) or below', pct: 11.0 },
     { label: 'Diploma', pct: 4.4 },
     { label: 'Bachelor’s degree', pct: 34.2 },
     { label: 'Master’s degree or higher', pct: 50.4 },

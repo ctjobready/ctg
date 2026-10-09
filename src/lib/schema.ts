@@ -100,8 +100,14 @@ export function organization(): JsonLdNode {
       { '@type': 'ContactPoint', contactType: 'customer support', email: CONTACT.email, telephone: phone, availableLanguage: ['en'] },
       { '@type': 'ContactPoint', contactType: 'partnerships', email: CONTACT.email, telephone: phone, availableLanguage: ['en'] },
     ],
+    // The doc 02 §6 order: Facebook, LinkedIn (CodersTrust Global), LinkedIn (CodersTrust Bangladesh), YouTube.
     // linkedin.com/company/coderstrust verified HTTP 200 ("CodersTrust Global | LinkedIn") on 2026-10-08
-    sameAs: [...SOCIAL.map((s) => s.href), 'https://www.linkedin.com/company/coderstrust'],
+    sameAs: [
+      SOCIAL.find((s) => s.id === 'facebook')!.href,
+      'https://www.linkedin.com/company/coderstrust',
+      SOCIAL.find((s) => s.id === 'linkedin')!.href,
+      SOCIAL.find((s) => s.id === 'youtube')!.href,
+    ],
   };
 }
 

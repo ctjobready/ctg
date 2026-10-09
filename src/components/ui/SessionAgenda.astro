@@ -1,0 +1,44 @@
+---
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
+import { SESSION_AGENDA_FACTS, SESSION_AGENDA_ITEMS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
+
+/**
+ * [SESSION-AGENDA] (plan v1.12): what the first conversation covers, as ONE line of text beside the C13 primary CTA: a bold lead, the three
+ * items joined with " · " and a single final period. It is a paragraph (not a heading, not a list), small and in the band's context text
+ * color so it stays subordinate to the CTA, and it wraps freely at 390 px. The wording lives in src/data/copy.ts and is never typed on a page.
+ *
+ *   lead="discovery" (default)  "What the discovery session covers:"  where the primary CTA books a discovery session
+ *   lead="briefing"             "What the briefing covers:"           where the primary CTA is "Request a briefing" (governments, NationWIDE)
+ *
+ * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the paragraph carries the same fact marker (PD-02: data-fact and
+ * the fact's own footnote marker if it ever gets one), and a production hold on PD-02 treats it like them. Put it in the CTABand slot, after the
+ * micro-commitment line, which stays where it is. scripts/check-facts.mjs fails the build if one of the five pages that carry it lacks it.
+ */
+interface Props {
+  lead?: 'discovery' | 'briefing';
+  class?: string;
+}
+const { lead = 'discovery', class: className } = Astro.props;
+const leadText = lead === 'briefing' ? SESSION_AGENDA_LEAD_BRIEFING : SESSION_AGENDA_LEAD;
+const items = `${SESSION_AGENDA_ITEMS.join(' · ')}.`;
+---
+
+<p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}{SESSION_AGENDA_FACTS.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</p>
+
+<style>
+  .agenda {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 36rem;
+    margin: var(--space-sm) 0 0;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--ctx-border);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
+    text-wrap: balance;
+  }
+  .agenda__lead {
+    font-weight: var(--fw-bold);
+  }
+</style>

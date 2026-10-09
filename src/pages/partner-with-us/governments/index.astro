@@ -18,6 +18,7 @@ import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import OfferBand from '../../../components/sections/OfferBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import Section from '../../../components/ui/Section.astro';
@@ -32,7 +33,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, NATIONWIDE_TARGET, factPart, meta, statValue } from '../../../components/pages/partners/partners';
+import { LINKS, NATIONWIDE_TARGET, factPart, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_PX11, governmentPartners, graduateRates } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -44,7 +45,8 @@ const primary = cta('briefing');
 
 const { title, description } = meta(
   'Digital Skills Training for Governments',
-  `We help ministries move educated, unemployed youth into paid digital work. Six contracts have training and curriculum scopes covering ${statValue('SC-06')} people.`,
+  // Doc 06 P3 meta (R10/WP11 F17): the value proposition, with no count. SC-06's 31,200+ needs its footnote, which a meta description cannot carry.
+  VALUE_PROPOSITION.governments,
 );
 
 const FAQ_IDS = ['Q7', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
@@ -142,7 +144,7 @@ const steps = [
     lead={`NationWIDE-style delivery aims to train ${NATIONWIDE_TARGET} vulnerable youth by 2030. That is a target, not a result.`}
     blocks={[
       { label: 'Who we reach', title: 'Vulnerable and unemployed youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
-      { label: 'How we reach them', title: 'Government digital labs', text: `${labs} can serve as blended-learning centers; seats are confirmed per program.`, icon: 'landmark' },
+      { label: 'How we reach them', title: 'Government digital labs', text: `${labs} that can serve as blended-learning centers, with seats confirmed per program.`, icon: 'landmark' },
       { label: 'What we deliver', title: 'Capacity that stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then certification.`, icon: 'award' },
       { label: 'Where they work', title: 'Placement and monthly reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
     ]}
@@ -253,7 +255,9 @@ const steps = [
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'See government programs', href: LINKS.nationwide }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
-  />
+  >
+    <SessionAgenda lead="briefing" />
+  </CTABand>
 
   <!-- C14 · Next steps -->
   <StepsBand

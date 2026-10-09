@@ -22,6 +22,17 @@
 //     (src/lib/postprocess.ts, applied by src/middleware.ts) on fixtures first, so a regression there fails with a reason.
 //   - sentences: <Fact> ends every sentence with a period; the period it adds must never be doubled (no added period right after
 //     a period, none left in front of punctuation the page typed)
+//   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
+//     outside the archived /news/ posts and the styleguide; negative self-tests below
+//   - statistic tiles: every <Stat>/<FactStat> tile and <FactCard> stat tile carries its fact's footnote marker (doc 04 claims rule 15)
+//   - [PLAIN-LINE] (plan v1.10): Home, /partner-with-us/development-partners/ and /impact/independent-evaluation/ must carry "For every 100
+//     women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)." rendered by
+//     <PlainLine> with RC-02's footnote marker; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
+//     sentence appears; negative self-tests below
+//   - [SESSION-AGENDA] (plan v1.12): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
+//     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's words: the lead "What the discovery
+//     session covers:" (or "What the briefing covers:" where the CTA is a briefing), the three items joined with " · " and one final period,
+//     carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget" claim; PD-02 is a production hold); negative self-tests below
 //   - report CTA: while REPORT_EDITION_READY (src/lib/site.ts) is false, no "Request the Impact Report" button, link or mailto
 //     subject may appear on any page
 //   - SITE_ENV=production only: production fact holds. A private hold list names facts that must not render in
@@ -200,6 +211,95 @@ function programLabelProblems(text) {
 }
 const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, ''));
 
+/* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
+// "For every 100 women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)."
+// is built in src/data/copy.ts from RC-02's stat; it is required on Home, the development-partners page and the independent-evaluation page,
+// and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
+// The expected sentence is derived here from the register on its own (not read from copy.ts), so a drift in either place fails the build.
+const PLAIN_LINE_PAGES = ['/', '/partner-with-us/development-partners/', '/impact/independent-evaluation/'];
+const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than in the control group \(([^)]*)\)\./;
+const plainLineWanted = (stat) => {
+  const points = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)} percentage points`;
+  return { about: Math.round(stat.numeric), points, text: `For every 100 women offered a place, about ${Math.round(stat.numeric)} more were in work at follow-up than in the control group (${points}).` };
+};
+/** Problems with the plain-language line on one page: required = the page must carry it; the numbers are held on every page that has it. */
+function plainLineProblems(markup, text, stat, required) {
+  const m = PLAIN_LINE_SHAPE.exec(text);
+  if (!m) return required ? ['the [PLAIN-LINE] (RC-02 in plain language) is missing'] : [];
+  const want = plainLineWanted(stat);
+  const out = [];
+  if (Number(m[1]) !== want.about) out.push(`[PLAIN-LINE] says "about ${m[1]} more" but RC-02 (${stat.numeric}) rounds to ${want.about}`);
+  if (m[2] !== want.points) out.push(`[PLAIN-LINE] says "(${m[2]})" but RC-02 is "${want.points}" (the stat value with "pp" spelled out)`);
+  if (!out.length && !text.includes(want.text)) out.push(`[PLAIN-LINE] differs from the register-derived sentence "${want.text}"`);
+  if (required) {
+    // rendered by <PlainLine>, with RC-02's footnote marker, as body text (a paragraph, not a stat tile)
+    const block = /<p\b[^>]*\bdata-plain-line\b[^>]*>([\s\S]*?)<\/p>/.exec(markup);
+    if (!block) out.push('[PLAIN-LINE] is not rendered by <PlainLine> (no <p data-plain-line>)');
+    else if (!/<sup class="fn" data-fact="RC-02">/.test(block[1])) out.push('[PLAIN-LINE] lacks RC-02’s footnote marker');
+  }
+  return out;
+}
+
+/* ---- [SESSION-AGENDA] (plan v1.12 round-11 enhancement) ---- */
+// Beside the C13 primary CTA on the governments, development-partners and foundations pages, YouthWIDE and NationWIDE: ONE paragraph, the
+// lead, the three items joined with " · " and a single final period, tied to PD-02 (data-fact) like [PRICING] and FAQ Q8, whose "indicative
+// budget" claim it repeats. The wording is verbatim from the plan (doc 06 [SESSION-AGENDA]) and is declared here independently of
+// src/data/copy.ts, so a wording change has to be made in both places on purpose. Either lead is accepted on any of the pages: "What the
+// discovery session covers:" (the CTA books a discovery session) or "What the briefing covers:" (governments and NationWIDE, where the CTA is a briefing).
+const SESSION_AGENDA_PAGES = ['/partner-with-us/governments/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/', '/programs/nationwide/'];
+const SESSION_AGENDA_LEADS = ['What the discovery session covers:', 'What the briefing covers:'];
+const SESSION_AGENDA_ITEMS = ['your priority groups and districts', 'employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'];
+const SESSION_AGENDA_FACT = 'PD-02';
+const sessionAgendaWanted = (lead) => `${lead} ${SESSION_AGENDA_ITEMS.join(' · ')}.`;
+/** Problems with the agenda on one page: one paragraph inside the C13 band (#cta), in the plan's words, with the PD-02 marker. */
+function sessionAgendaProblems(markup) {
+  const band = /<section\b[^>]*\bid="cta"[^>]*>[\s\S]*?<\/section>/.exec(markup);
+  if (!band) return ['the C13 call-to-action band (#cta) is missing, so the [SESSION-AGENDA] has no CTA to sit beside'];
+  const open = /<([a-z][a-z0-9]*)\b([^>]*)\bdata-session-agenda\b([^>]*)>/.exec(band[0]);
+  if (!open) return ['the [SESSION-AGENDA] (what the discovery session or briefing covers) is missing from the C13 band'];
+  const out = [];
+  if (open[1] !== 'p') out.push(`[SESSION-AGENDA] must be one paragraph (<p>), not a <${open[1]}> (no heading, no list)`);
+  const inner = /^<p\b[^>]*>([\s\S]*?)<\/p>/.exec(band[0].slice(open.index));
+  if (inner) {
+    if (/<(ul|ol|li|h[1-6])\b/.test(inner[1])) out.push('[SESSION-AGENDA] must be one line of text: no list items and no heading inside it');
+    const text = decode(inner[1].replace(/<sup\b[\s\S]*?<\/sup>/g, ''));
+    if (!SESSION_AGENDA_LEADS.some((lead) => text === sessionAgendaWanted(lead))) {
+      out.push(`[SESSION-AGENDA] reads "${text}", expected "${sessionAgendaWanted(SESSION_AGENDA_LEADS[0])}" (or, where the CTA is a briefing, with the lead "${SESSION_AGENDA_LEADS[1]}")`);
+    }
+  }
+  const factAttr = /\bdata-fact="([^"]*)"/.exec(open[0])?.[1] ?? '';
+  if (!factAttr.split(/\s+/).includes(SESSION_AGENDA_FACT)) out.push(`[SESSION-AGENDA] must carry data-fact="${SESSION_AGENDA_FACT}" like [PRICING] and FAQ Q8, so a production hold on ${SESSION_AGENDA_FACT} treats it the same`);
+  return out;
+}
+
+/* ---- statistic tiles carry their fact's footnote (doc 04 claims rule 15, doc 06 "Tiles, footnotes and links") ---- */
+// Every <Stat>/<FactStat> tile (.stat__label) and every <FactCard> stat tile (.factcard__label, not its full-sentence --text variant) must hold a
+// footnote marker; the styleguide's sample tiles are exempt.
+const TILE_LABEL = /<p class="(?:stat__label|factcard__label)"[^>]*>([\s\S]*?)<\/p>/g;
+function tileProblems(markup) {
+  const out = [];
+  for (const m of markup.matchAll(TILE_LABEL)) {
+    if (!/<sup class="fn"/.test(m[1])) out.push(`a statistic tile ("${decode(m[1]).slice(0, 70)}") carries no footnote marker`);
+  }
+  return out;
+}
+
+/* ---- copy conventions (doc 06 global rules, R10/WP11 F29-F41): curly apostrophes; "pp" only once "percentage points" is spelled out ---- */
+// The archived /news/ posts keep their wording and the styleguide holds samples, so neither is held to these two rules.
+const exemptFromConventions = (path) => path.startsWith('/news/') || path === '/styleguide/';
+function conventionProblems(text) {
+  const out = [];
+  const apos = /[A-Za-z]'[A-Za-z]/.exec(text);
+  if (apos) out.push(`straight apostrophe in "…${text.slice(Math.max(0, apos.index - 25), apos.index + 25)}…" (write ’)`);
+  // a "pp" figure counts as introduced when "percentage points" is spelled out before it, or in its own tile label right after it
+  const pp = /\bpp\b/.exec(text);
+  if (pp) {
+    const spelled = /percentage points?/i.exec(text);
+    if (!spelled || spelled.index > pp.index + 40) out.push(`"pp" appears before "percentage points" is spelled out: "…${text.slice(Math.max(0, pp.index - 30), pp.index + 20)}…"`);
+  }
+  return out;
+}
+
 /* ---- footnote and link checks over one page's markup (shared by the self-test and the built-site scan) ---- */
 const MARKER_G = /<sup class="fn" data-fact="([^"]*)"><a href="#fn-(\d+)" id="fn-ref-(\d+)-(\d+)" aria-label="Note \d+">(\d+)<\/a><\/sup>/g;
 const GLUED_LINK = /([\p{L}\p{N}.,;:!?%)”’'"])(<a class="link[ "])/u;
@@ -315,6 +415,67 @@ function footnoteProblems(markup) {
   if (!programLabelProblems(`women placed (71%) in WSDFM. ${PROGRAM_DATA_LABEL} 1 ${PROGRAM_DATA_LABEL} Women’s skills`).length) problems.push('self-test: the program-data label check accepted the label printed twice in a row');
   if (!programLabelProblems('372 of 800 women placed (47%) in Her Power training Program records — gross placement Context').length) problems.push('self-test: the program-data label check accepted a page-local label');
   if (programLabelProblems('What would have happened without training; placement is gross, not net. Each case study states its own base.').length) problems.push('self-test: the program-data label check flagged ordinary wording');
+  // [PLAIN-LINE]: required on three pages, numbers derived from RC-02, rendered by <PlainLine> with RC-02's footnote marker
+  const rc02 = facts['RC-02'].stat;
+  const want = plainLineWanted(rc02);
+  const plainBlock = (sentence) => `<p class="plainline" data-plain-line data-fact="RC-02" data-astro-cid-x>${sentence}<sup class="fn" data-fact="RC-02"><a href="#fn-2" id="fn-ref-2-1" aria-label="Note 2">2</a></sup></p>`;
+  const plainPage = (sentence, block = plainBlock(sentence)) => ({ markup: `<main><h2>x</h2>${block}</main>`, text: decode(`<main><h2>x</h2>${block}</main>`) });
+  const plainOk = plainPage(want.text);
+  if (plainLineProblems(plainOk.markup, plainOk.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check rejected the register-derived sentence: ${plainLineProblems(plainOk.markup, plainOk.text, rc02, true).join('; ')}`);
+  if (want.text !== 'For every 100 women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points).') problems.push(`self-test: RC-02 no longer yields the plan's [PLAIN-LINE] sentence (derived: "${want.text}"); the plan wording needs a decision`);
+  const plainBad = (why, sentence, ...rest) => {
+    const pg = plainPage(sentence, ...rest);
+    if (!plainLineProblems(pg.markup, pg.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check accepted ${why}`);
+  };
+  plainBad('a page without the sentence', 'Women offered a place did better.');
+  plainBad('"+10.4 percentage points" (a number that differs from RC-02)', want.text.replace('+10.3', '+10.4'));
+  plainBad('"about 11 more" (RC-02 rounds to 10)', want.text.replace('about 10', 'about 11'));
+  plainBad('"(+10.3 pp)" instead of "percentage points"', want.text.replace('percentage points', 'pp'));
+  plainBad('a sentence typed by hand with no <PlainLine> block', want.text, `<p>${want.text}<sup class="fn" data-fact="RC-02"><a href="#fn-2" id="fn-ref-2-1" aria-label="Note 2">2</a></sup></p>`);
+  plainBad('the sentence without RC-02’s footnote marker', want.text, `<p class="plainline" data-plain-line data-fact="RC-02">${want.text}</p>`);
+  if (plainLineProblems(plainOk.markup, plainOk.text, { ...rc02, numeric: 10.6 }, true).length !== 2) problems.push('self-test: the [PLAIN-LINE] check did not notice that RC-02 changed (10.6 would give "about 11" and "+10.6 percentage points")');
+  const stray = plainPage(want.text.replace('+10.3', '+10.4'));
+  if (!plainLineProblems(stray.markup, stray.text, rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] but carries it with a wrong number was accepted');
+  if (plainLineProblems('<main><p>No plain line here.</p></main>', 'No plain line here.', rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] was flagged for lacking it');
+  // copy conventions: curly apostrophes, "pp" spelled out before it is used
+  if (conventionProblems('CodersTrust’s WSDFM training; +10.3 pp percentage points more employment; In percentage points, employment rose +10.3 pp.').length) problems.push('self-test: the copy-convention check rejected correct copy');
+  if (!conventionProblems('CodersTrust\'s WSDFM training raised women’s income.').length) problems.push('self-test: the copy-convention check accepted a straight apostrophe');
+  if (!conventionProblems('Won\'t AI eliminate these jobs?').length) problems.push('self-test: the copy-convention check accepted "Won\'t"');
+  if (!conventionProblems('Employment among surveyed completers +30.5 pp View chart data').length) problems.push('self-test: the copy-convention check accepted a bare "pp" that is never spelled out');
+  if (!conventionProblems('+30.5 pp ... much later text ................................................... percentage points').length) problems.push('self-test: the copy-convention check accepted "percentage points" far after the first "pp"');
+  if (conventionProblems('He said \'hello\' and the 8pp-wide column; opposite; apple').length) problems.push('self-test: the copy-convention check flagged quotes or words that merely contain "pp"');
+  // statistic tiles carry their footnote marker
+  const sup = '<sup class="fn" data-fact="SC-05"><a href="#fn-1" id="fn-ref-1-1" aria-label="Note 1">1</a></sup>';
+  const tile = (label) => `<div class="stat stat--md" data-astro-cid-x><p class="stat__value">3M+</p><p class="stat__label" data-astro-cid-x>${label}</p></div>`;
+  if (tileProblems(tile(`students at National University${sup}`)).length) problems.push('self-test: the tile check rejected a tile with its footnote marker');
+  if (!tileProblems(tile('students at National University')).length) problems.push('self-test: the tile check accepted a statistic tile with no footnote marker');
+  if (!tileProblems(`<article class="card factcard" data-fact="PX-05"><p class="factcard__label" data-astro-cid-x>of employers globally report difficulty finding talent</p></article>`).length) problems.push('self-test: the tile check accepted a FactCard stat tile with no footnote marker');
+  if (tileProblems(`<article class="card factcard" data-fact="PX-06"><p class="factcard__label factcard__label--text" data-astro-cid-x>A sentence card</p></article>`).length) problems.push('self-test: the tile check flagged a FactCard sentence (not a tile)');
+  // [SESSION-AGENDA]: beside the C13 CTA as ONE paragraph (lead, items joined with " · ", one final period), tied to PD-02, in the plan's words
+  const agendaP = (text, { tag = 'p', fact = 'PD-02', attrs = '' } = {}) => `<${tag} class="agenda" data-session-agenda${fact ? ` data-fact="${fact}"` : ''}${attrs} data-astro-cid-x><span class="agenda__lead">${text.split(': ')[0]}:</span> ${text.split(': ').slice(1).join(': ')}</${tag}>`;
+  const ctaBand = (inner) => `<main><section class="band band--airy" id="cta" aria-labelledby="cta-h"><div class="container"><div class="cta-band"><h2 id="cta-h">Let’s</h2><a href="/x/">Book</a><ul><li>A discovery session is a conversation, not a commitment.</li></ul>${inner}</div></div></section></main>`;
+  const [leadDiscovery, leadBriefing] = SESSION_AGENDA_LEADS;
+  const agendaWant = sessionAgendaWanted(leadDiscovery);
+  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', sessionAgendaWanted(leadBriefing)]]) {
+    const ok = ctaBand(agendaP(text));
+    if (sessionAgendaProblems(ok).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok).join('; ')}`);
+  }
+  if (sessionAgendaProblems(ctaBand(agendaP(agendaWant).replace('</p>', '<sup class="fn" data-fact="PD-02"><a href="#fn-9" id="fn-ref-9-1" aria-label="Note 9">9</a></sup></p>'))).length) problems.push('self-test: the [SESSION-AGENDA] check rejected an agenda that carries a footnote marker');
+  const agendaBad = (why, markup) => {
+    if (!sessionAgendaProblems(markup).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
+  };
+  agendaBad('a CTA band with no agenda', ctaBand(''));
+  agendaBad('a page with no CTA band', '<main><p>nothing</p></main>');
+  agendaBad('an agenda outside the C13 band', ctaBand('') + agendaP(agendaWant));
+  agendaBad('an agenda set as a heading', ctaBand(agendaP(agendaWant, { tag: 'h3' })));
+  agendaBad('an agenda set as a list', ctaBand(`<ul class="agenda" data-session-agenda data-fact="PD-02"><li>${leadDiscovery}</li><li>${SESSION_AGENDA_ITEMS.join('</li><li>')}</li></ul>`));
+  agendaBad('a paragraph that wraps a list', ctaBand(`<p class="agenda" data-session-agenda data-fact="PD-02">${leadDiscovery} <ul><li>${SESSION_AGENDA_ITEMS.join('</li><li>')}</li></ul></p>`));
+  agendaBad('a changed lead', ctaBand(agendaP(agendaWant.replace('discovery session', 'session'))));
+  agendaBad('a changed item', ctaBand(agendaP(agendaWant.replace('employer demand and certification tracks', 'employer demand'))));
+  agendaBad('items joined with commas instead of " · "', ctaBand(agendaP(agendaWant.replaceAll(' · ', ', '))));
+  agendaBad('a missing final period', ctaBand(agendaP(agendaWant.slice(0, -1))));
+  agendaBad('an agenda without the PD-02 marker', ctaBand(agendaP(agendaWant, { fact: '' })));
+  agendaBad('an agenda tied to the wrong fact', ctaBand(agendaP(agendaWant, { fact: 'PD-04' })));
 }
 
 // The public dataset itself (D1, D15): no unverified facts and no restricted facts without a public scope.
@@ -336,10 +497,16 @@ if (!reportFlag) problems.push('src/lib/site.ts: REPORT_EDITION_READY is missing
 const reportWithheld = reportFlag === 'false';
 const REPORT_CTA = [/Request the Impact Report/i, /partner edition\)\s*request/i, /Impact(?:%20| )Report(?:%20| )2026(?:%20| )\(partner(?:%20| )edition\)(?:%20| )request/i];
 
+const rc02Stat = facts['RC-02']?.stat;
+if (!rc02Stat || typeof rc02Stat.numeric !== 'number' || rc02Stat.suffix !== ' pp') problems.push('dataset: RC-02 must carry a numeric stat in percentage points (suffix " pp"); the [PLAIN-LINE] is derived from it');
+
 let pages = 0;
 let refs = 0;
 let vendorPages = 0;
 let footnotePages = 0;
+let plainLinePages = 0;
+let agendaPages = 0;
+const seenPaths = new Set();
 for (const file of htmlFiles(dist)) {
   pages++;
   const rel = relative(dist, file).split(sep).join('/');
@@ -381,6 +548,20 @@ for (const file of htmlFiles(dist)) {
   problems.push(...archiveWordingProblems(path, html));
   // program-data label once per figure, no page-local variant (the archived posts keep their wording)
   if (!exemptFromArchiveRule(path, html)) for (const p of programLabelProblems(text)) problems.push(`${path}: ${p}`);
+  // [PLAIN-LINE] required on Home, the development-partners page and the independent-evaluation page; its numbers are RC-02's wherever it appears
+  seenPaths.add(path);
+  const plainRequired = PLAIN_LINE_PAGES.includes(path);
+  if (plainRequired) plainLinePages++;
+  if (rc02Stat) for (const p of plainLineProblems(markup, text, rc02Stat, plainRequired)) problems.push(`${path}: ${p}`);
+  // curly apostrophes and "pp" spelled out (the archived posts and the styleguide samples are exempt)
+  if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(text)) problems.push(`${path}: ${p}`);
+  // every statistic tile carries its fact's footnote marker (the styleguide's samples are not real tiles)
+  if (path !== '/styleguide/') for (const p of tileProblems(markup)) problems.push(`${path}: ${p}`);
+  // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
+  if (SESSION_AGENDA_PAGES.includes(path)) {
+    agendaPages++;
+    for (const p of sessionAgendaProblems(markup)) problems.push(`${path}: ${p}`);
+  }
   // footnotes in reading order, no empty notes band, no glued inline link
   if (markup.includes('class="fn"') || markup.includes('sources__note')) footnotePages++;
   for (const p of footnoteProblems(markup)) problems.push(`${path}: ${p}`);
@@ -392,6 +573,8 @@ if (pages === 0) {
   console.error(`check-facts: no HTML found in ${dist}. Run "npm run build" first.`);
   process.exit(1);
 }
+// A page that must carry the [PLAIN-LINE] or the [SESSION-AGENDA] has to be in the build at all.
+for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE] or [SESSION-AGENDA] cannot be checked`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
 for (const [id, set] of heldPages) {
   const list = [...set].sort();
@@ -402,6 +585,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

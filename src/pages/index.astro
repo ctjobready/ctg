@@ -112,6 +112,7 @@ const featureRows = [
       id="proof-band"
       title="Independent evidence and survey results"
       headlineFact="RC-01"
+      plainLine
       lead="The results speak in paychecks. Survey figures are among surveyed completers, at the October 2026 survey."
       statIds={['RC-02', 'OC-03', 'OC-02', 'OC-05']}
       links={[
@@ -159,7 +160,8 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C14">
-    <ConversionNextSteps id="next-steps" title="What happens after you say yes." validate={C14.validate} reminder={C14.reminder} firstAction={C14.firstAction} logos />
+    <!-- The 6–8 week start is stated in the C13 urgency line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. -->
+    <ConversionNextSteps id="next-steps" title="What happens after you say yes." timing={false} validate={C14.validate} firstAction={C14.firstAction} logos />
   </Tone>
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>

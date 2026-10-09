@@ -10,4 +10,4 @@ expertise: []
 legacyUrl: "https://coderstrust.global/team-member/md-zahurul-islam/"
 ---
 
-Md. Zahurul Islam works in Finance & Accounts at CodersTrust Bangladesh and is part of the organization's Bangladesh management team.
+Md. Zahurul Islam works in Finance & Accounts at CodersTrust Bangladesh and is part of the organization’s Bangladesh management team.

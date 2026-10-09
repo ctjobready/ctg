@@ -1,0 +1,29 @@
+---
+import FootnoteMarker from './FootnoteMarker.astro';
+import { PLAIN_LINE } from '../../data/copy';
+
+/**
+ * [PLAIN-LINE] (plan v1.10; RC-02): "For every 100 women offered a place, about 10 more were in work at follow-up than in the control
+ * group (+10.3 percentage points)." One short plain-language sentence in body text, with RC-02's footnote marker; it is not a stat tile.
+ * The sentence is built in src/data/copy.ts from RC-02's stat, so no number is typed here or on a page. Used directly after the
+ * randomized-trial lead on Home C7 and the development-partners C7, and in the independent-evaluation BLUF. scripts/check-facts.mjs fails the
+ * build if one of those pages lacks it or if its numbers differ from RC-02.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<p class:list={['plainline', className]} data-plain-line data-fact={PLAIN_LINE.facts.join(' ')}>{PLAIN_LINE.text}{PLAIN_LINE.facts.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</p>
+
+<style>
+  .plainline {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    /* the colour is inherited: the band's context colour on Home and the partner pages, the callout's on the evaluation page */
+  }
+</style>

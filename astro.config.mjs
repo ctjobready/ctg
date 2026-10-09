@@ -88,7 +88,12 @@ const newsPhotos = {
       visit(node, ctx) {
         const id = newsAsset(ctx);
         if (!id) return;
-        if (!HIDDEN_NEWS.has(id)) return void ctx.setProperty(node, 'data-asset', id);
+        if (!HIDDEN_NEWS.has(id)) {
+          // Migrated alt texts such as "…: photo 2 of 3" or "…: cover image" describe nothing and would be read once per photo
+          // (doc 06 P31: never "photo 1 of 6"): the photo is decorative, as the cover images already are (coverAlt in src/components/pages/news/news.ts).
+          if (/: (photo \d+ of \d+|cover image)$/i.test(String(node.properties?.alt ?? ''))) ctx.setProperty(node, 'alt', '');
+          return void ctx.setProperty(node, 'data-asset', id);
+        }
         const parent = ctx.parent(node);
         // a paragraph made only of images is removed as a whole (visitor below)
         if (!(parent.type === 'element' && parent.tagName === 'p' && onlyImages(parent))) ctx.removeNode(node);

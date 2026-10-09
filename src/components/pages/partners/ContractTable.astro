@@ -9,9 +9,10 @@ import { factPart } from './partners';
 /**
  * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06. A blank cell reads "—".
  * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
- * Status column (doc 06 P3; confirm list #29): the register states a status for no single contract, and doc 06
- * marks only NHRDF as in progress (GV-10: "some contracts are still in progress"). Every other row reads
- * "To confirm" until CodersTrust closes #29 and the status of each contract is stated.
+ * Status column (doc 06 P3, R10/WP11 F25; confirm list #29): "In progress" or "Completed" only where the register states it for that
+ * contract. It states a status for no single contract (GV-10 says only that "some contracts are still in progress"), so every row reads
+ * "Status to confirm" until CodersTrust closes #29 and the status of each contract is stated.
+ * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
  */
 interface Row {
   contract: string;
@@ -21,11 +22,12 @@ interface Row {
   reach?: string;
   status: string;
 }
-const TO_CONFIRM = 'To confirm';
+const TO_CONFIRM = 'Status to confirm';
+const SCOPE = 'Contract scope:';
 
 const rows: Row[] = [
   {
-    contract: 'Her Power (DoICT, ICT Division)',
+    contract: 'Her Power (Department of ICT (DoICT), ICT Division)',
     facts: ['GV-01'],
     scope: 'Curriculum, training manuals and mentorship guidelines; Training of Trainers',
     direct: factPart('GV-01', /[\d,]+ women trained directly/),
@@ -37,35 +39,35 @@ const rows: Row[] = [
     contract: 'EDGE: Center for Project Management and Information Systems (PMIS), University of Dhaka, with the Bangladesh Computer Council (BCC)',
     facts: ['GV-02'],
     scope: 'Training in digital and 4IR technologies',
-    direct: `Scope: ${factPart('GV-02', /[\d,]+ youth/)}`,
+    direct: `${SCOPE} ${factPart('GV-02', /[\d,]+ youth/)}`,
     status: TO_CONFIRM,
   },
   {
     contract: 'SKIT incubator (Bangladesh Hi-Tech Park Authority)',
     facts: ['GV-03'],
     scope: 'High-demand IT skills training, Barishal',
-    direct: `Scope: ${factPart('GV-03', /[\d,]+ people/)}`,
+    direct: `${SCOPE} ${factPart('GV-03', /[\d,]+ people/)}`,
     status: TO_CONFIRM,
   },
   {
-    contract: 'NHRDF (implemented by NSDA)',
+    contract: 'NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
-    direct: `Initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
-    status: 'In progress',
+    direct: `${SCOPE} initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
+    status: TO_CONFIRM,
   },
   {
     contract: 'Digital Lab Establishment Project, Phase II',
     facts: ['GV-05'],
     scope: 'LMS and operation training for staff',
-    direct: `Scope: ${factPart('GV-05', /[\d,]+\+ staff/)}`,
+    direct: `${SCOPE} ${factPart('GV-05', /[\d,]+\+ staff/)}`,
     status: TO_CONFIRM,
   },
   {
     contract: 'Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute)',
     facts: ['GV-06'],
     scope: 'ICT, networking and cybersecurity training',
-    direct: `Scope: ${factPart('GV-06', /[\d,]+\+ professionals/)}`,
+    direct: `${SCOPE} ${factPart('GV-06', /[\d,]+\+ professionals/)}`,
     status: TO_CONFIRM,
   },
 ];

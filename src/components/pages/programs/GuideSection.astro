@@ -18,14 +18,12 @@ interface Props {
   empathy: string;
   origin: CopyBlock;
   statIds?: string[];
-  /** Stat tiles that always carry their source note, even when the fact has no caveat of its own. */
-  noted?: string[];
   method?: { text: string; factId?: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   showPartners?: boolean;
   id?: string;
 }
-const { title, empathy, origin, statIds = [], noted = [], method, partnerGroup, showPartners = true, id = 'guide' } = Astro.props;
+const { title, empathy, origin, statIds = [], method, partnerGroup, showPartners = true, id = 'guide' } = Astro.props;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -49,7 +47,7 @@ const { title, empathy, origin, statIds = [], noted = [], method, partnerGroup, 
     {
       statIds.length > 0 && (
         <div class="guide__stats">
-          {statIds.map((s) => <FactStat id={s} footnote={noted.includes(s) ? true : 'auto'} />)}
+          {statIds.map((s) => <FactStat id={s} />)}
         </div>
       )
     }

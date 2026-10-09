@@ -19,6 +19,7 @@ import OfferBand from '../../../components/sections/OfferBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Quote from '../../../components/ui/Quote.astro';
 import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
 import Sources from '../../../components/facts/Sources.astro';
@@ -151,6 +152,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <ProofBand
     title="Independent evidence and survey results"
     headlineFact="RC-01"
+    plainLine
     statIds={['RC-02', 'RC-04']}
     chartId="OC-01"
     links={[
@@ -243,7 +245,9 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
     urgency={SPEED.text}
     micro={MICRO_COMMITMENT}
-  />
+  >
+    <SessionAgenda />
+  </CTABand>
 
   <!-- C14 · Next steps -->
   <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step. -->

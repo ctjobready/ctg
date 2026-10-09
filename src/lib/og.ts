@@ -14,7 +14,7 @@ const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
   { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with us. Co-design a youth-employment program with CodersTrust.' } },
   { prefix: '/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Invest in the infrastructure of emerging-market work.' } },
   { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our model. How the CodersTrust model works.' } },
-  { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Programs that take youth from learning to earning.' } },
+  { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Choose the program that fits you.' } },
   { prefix: '/careers/', card: { src: '/og/careers.png', alt: 'CodersTrust: Careers. Help move educated, unemployed young people into paid digital work.' } },
   { prefix: '/contact/', card: { src: '/og/contact.png', alt: 'CodersTrust: Contact. Choose the route that fits you.' } },
   { prefix: '/impact/', card: { src: '/og/impact.png', alt: 'CodersTrust: Impact. What CodersTrust results show, what kind of evidence each one is, and what it does not show.' } },
