@@ -309,7 +309,7 @@ const sectionLinks = [
 
   <!-- ===================================== HERO ===================================== -->
   <div id="hero">
-    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." artSeed="styleguide-home">
+    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored training with certification preparation." artSeed="styleguide-home">
       <Fragment slot="actions">
         <Button iconEnd="arrow-right" href="/contact/">Primary action</Button>
         <Button variant="outline" href="/impact/">Secondary action</Button>
@@ -556,7 +556,7 @@ const sectionLinks = [
   <!-- ===================================== CMF BANDS ===================================== -->
   <div id="cmf">
     <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
-    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through certified, mentored training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored training with certification preparation." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <DefinitionBand id="band-definition" />
     <RouterBand id="band-router" title="What brings you here?" />
     <ProblemBand id="band-problem" title="For too many graduates, a degree is not turning into a job." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
@@ -568,9 +568,9 @@ const sectionLinks = [
     <FutureBand id="band-future" title="Imagine the next 12 months." vignettes={[
       { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
       { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
-      { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready completers, including those who passed an industry certification exam, without a long search.' },
+      { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready completers, including those prepared for an industry certification exam, without a long search.' },
     ]} />
-    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail slum." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
+    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
     <MechanismBand id="band-mechanism" title="One path from learning to earning." link={{ label: 'How our model works', href: '/our-model/' }} />
     <FeaturesTable id="band-features" title="Built around outcomes, not attendance." rows={[
       { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },

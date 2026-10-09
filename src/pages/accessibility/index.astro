@@ -5,7 +5,7 @@ import { CONTACT } from '../../lib/site';
 import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
-const UPDATED = '2026-10-08';
+const UPDATED = '2026-10-10';
 const description = 'Our accessibility target (WCAG 2.2 AA), what we have done to meet it, known limitations such as the supplementary map, and how to tell us about a barrier.';
 const toc = [
   { id: 'target', label: 'Our target' },
@@ -42,7 +42,8 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statemen
         <li><strong>Motion.</strong> Animations stop for visitors who ask their device for reduced motion, and the final values of counters are in the page without animation. The logo marquee has a pause button.</li>
         <li><strong>Works without JavaScript.</strong> Content, statistics, links and the news topic filter are available when scripts do not run.</li>
         <li><strong>Images, charts and maps.</strong> Images have meaningful alternative text or are marked decorative. Charts have a data table, and the map has a location table (below).</li>
-        <li><strong>Testing.</strong> Every page is checked with automated accessibility tests at phone and desktop widths. We plan a manual screen-reader pass (VoiceOver, NVDA, TalkBack) before launch, because automated tests alone do not show how a page is experienced.</li>
+        <li><strong>Testing.</strong> Every page is checked with automated accessibility tests at phone and desktop widths.</li>
+        <li><strong>Before launch.</strong> A manual screen-reader pass (VoiceOver, NVDA, TalkBack) is scheduled before launch, because automated tests alone do not show how a page is experienced.</li>
       </ul>
     </section>
 

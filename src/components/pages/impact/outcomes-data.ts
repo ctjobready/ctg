@@ -26,7 +26,7 @@
  */
 export const SOURCE_SNAPSHOT = 'October 2026';
 export const DATE_PUBLISHED = '2026-10-07';
-export const PAGE_LAST_REVIEWED = '2026-10-09';
+export const PAGE_LAST_REVIEWED = '2026-10-10';
 
 export interface ShareCell {
   label: string;
@@ -312,7 +312,7 @@ function recs(): Rec[] {
   for (const c of INCOME_DIRECTION) out.push(pctRec('OC-03b', 'Direction of paired monthly income change', c.label, c.pct, INCOME_BASE));
   out.push({ id: 'OC-03c', measure: 'Median individual change in monthly income (USD)', category: 'Median change', type: 'median_usd', value: '82', note: NOT_STATED });
   for (const t of EMPLOYMENT_TYPES) {
-    const m = 'Employment by type, among surveyed completers with paired answers';
+    const m = 'Employment by type, among surveyed completers with paired employment answers';
     out.push(pctRec('OC-04', m, `${t.label}, before training`, t.before, EMPLOYMENT_BASE));
     out.push(pctRec('OC-04', m, `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE));
   }

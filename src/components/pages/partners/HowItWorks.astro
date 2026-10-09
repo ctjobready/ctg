@@ -2,13 +2,13 @@
 import SubBand from './SubBand.astro';
 import StepFlow from '../../ui/StepFlow.astro';
 
-/** C8d "How it works in 3 steps", tucked under the features table it belongs to. */
+/** C8d "How it works in three steps", tucked under the features table it belongs to. */
 interface Props {
   steps: readonly { title: string; text?: string }[];
   heading?: string;
   id?: string;
 }
-const { steps, heading = 'How it works in 3 steps', id = 'how-it-works' } = Astro.props;
+const { steps, heading = 'How it works in three steps', id = 'how-it-works' } = Astro.props;
 ---
 
 <SubBand pull id={id} aria-labelledby={`${id}-h`}>

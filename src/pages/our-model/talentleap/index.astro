@@ -34,7 +34,7 @@ const levels = [
 ];
 const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
 const jsonLd = [
-  articleNode({ path, headline: 'What is TalentLEAP? CodersTrust’s competency-based talent development model', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
+  articleNode({ path, headline: 'What is TalentLEAP? CodersTrust’s competency-based talent development model', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqJsonLd('foundations', path, faqIds),
@@ -58,7 +58,7 @@ const d = discoveryCta();
   lead={bluf}
   description={description}
   path={path}
-  updated="2026-10-08"
+  updated="2026-10-10"
   toc={toc}
   breadcrumbs={[{ label: 'Our model', href: '/our-model/' }, { label: 'TalentLEAP' }]}
   jsonLd={jsonLd}

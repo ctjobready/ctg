@@ -24,7 +24,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { LAST_UPDATED } from '../../components/pages/programs/meta';
+import { PAGE_UPDATED } from '../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
 import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
 import { CLAIM_PX06 } from '../../components/sections/copyText';
@@ -47,7 +47,7 @@ const faqSources: FaqSource[] = [
 ];
 
 const jsonLd = [
-  webPage({ path, name: NU_NAME, description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path }] }),
+  webPage({ path, name: NU_NAME, description, dateModified: PAGE_UPDATED.nu, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path }] }),
   {
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#courses`,
@@ -185,7 +185,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   />
 
   <Section pad="sm" aria-label="Notes and sources">
-    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
+    <p class="updated">Last updated <time datetime={isoDate(PAGE_UPDATED.nu)}>{formatDate(PAGE_UPDATED.nu)}</time></p>
     <Sources />
   </Section>
 </LandingLayout>

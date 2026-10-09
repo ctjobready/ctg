@@ -50,7 +50,7 @@ interface Props {
 const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroPhoto } = Astro.props;
 const showPhoto = Boolean(heroPhoto) && mayRender(heroPhoto!.assetId);
 const c = caseBySlug(slug);
-const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
+const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const related = linkAttrs(c.related.href);
 const d = discoveryCta();
 ---

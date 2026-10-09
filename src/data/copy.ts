@@ -23,14 +23,14 @@ export type Audience =
 
 /** C1 value propositions — one sentence, at most 15 words (CMF). */
 export const VALUE_PROPOSITION: Record<Audience, string> = {
-  home: 'We help partners move educated, unemployed youth into paid digital work through certified, mentored training.',
-  developmentPartners: 'We help development partners move educated, unemployed youth into paid work through certified, mentored training.',
-  governments: 'We help governments move educated, unemployed youth into paid digital work through certified, mentored training.',
-  foundations: 'We help funders turn grants into paid digital work for youth through certified, mentored training.',
-  universities: 'We help universities and colleges move students into paid work through certified, mentored training.',
-  employers: 'We help employers upskill their teams and find job-ready digital talent through certified, mentored training.',
+  home: 'We help partners move educated, unemployed youth into paid digital work through mentored training with certification preparation.',
+  developmentPartners: 'We help development partners move educated, unemployed youth into paid work through mentored training with certification preparation.',
+  governments: 'We help governments move educated, unemployed youth into paid digital work through mentored training with certification preparation.',
+  foundations: 'We help funders turn grants into paid digital work for youth through mentored training with certification preparation.',
+  universities: 'We help universities and colleges move students into paid work through mentored training with certification preparation.',
+  employers: 'We help employers upskill their teams and find job-ready digital talent through mentored training with certification preparation.',
   investors: 'We help investors back the platform moving emerging-market youth into paid work through certified training.',
-  localPartners: 'We help local organizations move young people into paid digital work through certified, mentored training.',
+  localPartners: 'We help local organizations move young people into paid digital work through mentored training with certification preparation.',
   nuPgd: 'We help degree holders move into digital work through a National University postgraduate diploma.',
 };
 
@@ -61,7 +61,7 @@ export const EMPATHY: Record<Audience, string> = {
 };
 
 export const ORIGIN: CopyBlock = {
-  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail slum.',
+  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail settlement.',
   facts: ['ID-02', 'PR-03a'],
 };
 
@@ -297,7 +297,7 @@ export const PROGRAM_OPTIONS = [
 ] as const;
 export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 
-/** "How it works in 3 steps" (C8d) for funded programs. */
+/** "How it works in three steps" (C8d) for funded programs. */
 export const STEPS = [
   { title: 'Discover and co-design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
   { title: 'Train and mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring: profile live, first bids, first client, exam.' },

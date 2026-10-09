@@ -41,7 +41,7 @@ const primary = cta('campus');
 const degreeShare = factPart('OC-09', /84\.6% hold a bachelor’s degree or higher/);
 const { title, description } = meta(
   'University Employability Program',
-  `Help degree holders move into paid digital work with certified, mentored training. Among surveyed completers, ${degreeShare}.`,
+  `Mentored training with certification preparation helps degree holders into paid work. Among surveyed completers, ${degreeShare}.`,
 );
 
 const FAQ_IDS = ['Q1', 'Q13', 'Q3', 'Q10', 'Q8'];
@@ -249,7 +249,7 @@ const steps = [
       { title: 'Monthly reports', text: 'Enrollment, completion, certification and placements follow each month.' },
     ]}
   />
-  <Reinforcement />
+  <Reinforcement reminder={false} />
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />

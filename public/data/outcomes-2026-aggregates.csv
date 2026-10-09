@@ -10,12 +10,12 @@ OC-03b,Direction of paired monthly income change,Increased,percent,72.2,277,publ
 OC-03b,Direction of paired monthly income change,Unchanged,percent,22.0,277,published
 OC-03b,Direction of paired monthly income change,Decreased,percent,5.8,277,published
 OC-03c,Median individual change in monthly income (USD),Median change,median_usd,82,,published; base not stated in the report
-OC-04,"Employment by type, among surveyed completers with paired answers","Salaried employment, before training",percent,38.3,321,published
-OC-04,"Employment by type, among surveyed completers with paired answers","Salaried employment, at the October 2026 survey",percent,53.3,321,published
-OC-04,"Employment by type, among surveyed completers with paired answers","Freelancing, before training",percent,6.2,321,published
-OC-04,"Employment by type, among surveyed completers with paired answers","Freelancing, at the October 2026 survey",percent,14.0,321,published
-OC-04,"Employment by type, among surveyed completers with paired answers","Business ownership, before training",percent,2.8,,"published; base is n = 321, as for the other rows of this measure"
-OC-04,"Employment by type, among surveyed completers with paired answers","Business ownership, at the October 2026 survey",percent,10.6,321,published
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Salaried employment, before training",percent,38.3,321,published
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Salaried employment, at the October 2026 survey",percent,53.3,321,published
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Freelancing, before training",percent,6.2,321,published
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Freelancing, at the October 2026 survey",percent,14.0,321,published
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Business ownership, before training",percent,2.8,,"published; base is n = 321, as for the other rows of this measure"
+OC-04,"Employment by type, among surveyed completers with paired employment answers","Business ownership, at the October 2026 survey",percent,10.6,321,published
 OC-05,Cumulative share of completers who first earned during or after training and started earning by each point (timing only),During the course,percent,23.5,170,published
 OC-05,Cumulative share of completers who first earned during or after training and started earning by each point (timing only),Within 3 months,percent,38.2,170,published
 OC-05,Cumulative share of completers who first earned during or after training and started earning by each point (timing only),Within 6 months,percent,58.8,170,published

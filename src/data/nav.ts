@@ -165,7 +165,7 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
   lead: 'Impact Survey 2026:',
-  rest: `among ${empBase} surveyed completers with paired answers, self-reported employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
+  rest: `among ${empBase} surveyed completers with paired employment answers, self-reported employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v2',
   factId: 'OC-01',

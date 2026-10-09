@@ -7,7 +7,7 @@ import { STEPS, STEPS_FACTS } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * C8d "How it works in 3 steps" plus the compact program link row. Rendered as the second half of the
+ * C8d "How it works in three steps" plus the compact program link row. Rendered as the second half of the
  * C8 band (wrap it with the features table in <Tone join>). Steps come from the shared STEPS block.
  */
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   programs?: boolean;
   id?: string;
 }
-const { steps = STEPS, heading = 'How it works in 3 steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
+const { steps = STEPS, heading = 'How it works in three steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
 const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
 ---
 
