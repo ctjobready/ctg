@@ -1,5 +1,7 @@
+import { resolve } from 'node:path';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { TOPICS as TOPIC_LABELS } from '../../../data/newsTopics';
+import { coverAppearsInBody, readCoverRepeat } from '../../../lib/newsCover.mjs';
 
 export type NewsEntry = CollectionEntry<'news'>;
 
@@ -67,10 +69,20 @@ export function ogImageAlt(alt: string, title: string): string {
   return coverAlt(alt) || `Photo from the news story: ${title}`;
 }
 
-/** True when the cover image is also embedded in the body (the hero would repeat it). */
+/**
+ * The post's first body image is its cover photo (the same file, or a crop flagged with `coverInBody`): the page shows the photo once, as
+ * the hero, and the Markdown plugin in astro.config.mjs drops the repeat (and its italic caption line) from the body. `caption` is that
+ * line, to be set under the hero. Decided by src/lib/newsCover.mjs, the same function the plugin uses.
+ */
+export function coverRepeat(post: NewsEntry): { repeats: boolean; caption?: string } {
+  return readCoverRepeat(resolve(process.cwd(), post.filePath ?? `src/content/news/${post.id}.md`));
+}
+
+/**
+ * True when the cover image is also embedded in the body, further down (the hero would repeat it): then the body keeps its copy and there
+ * is no hero. Compared by file contents, not by file name (a cover "x-1.jpg" matched any body that mentioned "x-1", such as "x-1-2.jpg",
+ * and lost its hero for a different photo). Posts whose first body image is the cover are handled by coverRepeat() instead.
+ */
 export function coverDuplicatesBody(post: NewsEntry): boolean {
-  const src = post.data.cover?.src;
-  if (!src) return false;
-  const file = decodeURIComponent(src.split('?')[0].split('/').pop() ?? '').split('.')[0];
-  return file.length > 2 && (post.body ?? '').includes(file);
+  return post.data.cover ? coverAppearsInBody(resolve(process.cwd(), post.filePath ?? `src/content/news/${post.id}.md`)) : false;
 }

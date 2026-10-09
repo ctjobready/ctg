@@ -36,7 +36,7 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
     {
       shown.length > 0 && (
         <ul class="tc__chips" role="list" aria-label={`Expertise of ${name}`}>
-          {shown.map((e) => <li>{e}</li>)}
+          {shown.map((e) => <li title={e}>{e}</li>)}
         </ul>
       )
     }
@@ -98,7 +98,13 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
     margin: 0;
     padding: 0;
   }
+  /* A chip is one line, always: a long name is cut with an ellipsis (the profile lists every area in full) so the cards keep one rhythm. */
   .tc__chips li {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: var(--fs-body-xs);
     line-height: 1.3;
     padding: 4px 10px;

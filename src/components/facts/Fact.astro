@@ -1,6 +1,6 @@
 ---
 import { CERT_FACT_IDS, fact } from '../../data/facts';
-import { terminalStop } from '../../lib/format';
+import { dropTitleEcho, terminalStop } from '../../lib/format';
 import CertNote from '../ui/CertNote.astro';
 import FootnoteMarker from './FootnoteMarker.astro';
 
@@ -21,12 +21,14 @@ interface Props {
   footnote?: boolean | 'auto';
   /** Wrapper element (default span). */
   as?: 'span' | 'p' | 'strong' | 'b' | 'div';
+  /** The heading printed above this sentence in a card: the sentence's own "Heading: …" lead-in is not printed again (dropTitleEcho). */
+  under?: string;
   class?: string;
 }
-const { id, field = 'text', footnote = 'auto', as: Tag = 'span', class: className } = Astro.props;
+const { id, field = 'text', footnote = 'auto', as: Tag = 'span', under, class: className } = Astro.props;
 const f = fact(id);
 let out: string;
-if (field === 'text') out = f.text;
+if (field === 'text') out = under ? dropTitleEcho(under, f.text) : f.text;
 else if (field === 'headline') out = f.headline ?? f.text;
 else {
   const v = f.stat?.[field];

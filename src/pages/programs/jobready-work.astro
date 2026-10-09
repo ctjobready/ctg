@@ -27,7 +27,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
@@ -35,6 +35,7 @@ import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
 const path = '/programs/jobready-work/';
+const LAST_UPDATED = PAGE_UPDATED.work;
 const title = 'JobReady@Work: Upskill Teams, Hire Talent';
 const description = `JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Globally, ${statValue('PX-05')} of employers report difficulty finding talent.`;
 const work = ctaFor('work');
@@ -123,7 +124,6 @@ const approach = [
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
     <ul class="guide-list" role="list">
-      <li data-fact="PA-03"><Fact id="PA-03" footnote={false} />.</li>
       <li data-fact="PA-06"><Fact id="PA-06" footnote={false} />.</li>
       <li data-fact="PA-07"><Fact id="PA-07" footnote={false} />.</li>
       <li data-fact="GV-06">{contractScope('GV-06')}</li>

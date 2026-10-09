@@ -1,12 +1,14 @@
 // @ts-check
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
 import { REDIRECTS } from './src/data/redirects.ts';
 import { OWN_HOSTS, PARTNER_HOSTS, externalRel, hostKey } from './src/lib/externalRel.ts';
 import { stagingMayRender } from './src/lib/permissionRule.mjs';
+import { coverRepeats } from './src/lib/newsCover.mjs';
 
 /**
  * Environment-driven build (planning/08 §2).
@@ -79,9 +81,28 @@ const newsAsset = (/** @type {import('satteri').HastVisitorContext} */ ctx) => {
   return slug ? `news-${slug}` : undefined;
 };
 const onlyImages = (/** @type {import('hast').Element} */ p) => p.children.every((c) => (c.type === 'element' && c.tagName === 'img') || (c.type === 'text' && !c.value.trim()));
+/**
+ * A post whose first body image is its cover photo (src/lib/newsCover.mjs) shows that photo once, as the page's hero with its caption:
+ * the paragraph that holds the repeat, and the italic caption line under it, are dropped from the body (before the visitors below run).
+ */
+const COVER_REPEATS = coverRepeats(fileURLToPath(new URL('./src/content/news/', import.meta.url)));
 /** @type {import('satteri').HastPluginDefinition} */
 const newsPhotos = {
-  name: `ctg-news-photos-${digest([...HIDDEN_NEWS].sort())}`,
+  name: `ctg-news-photos-${digest([[...HIDDEN_NEWS].sort(), [...COVER_REPEATS].map(([slug, r]) => [slug, r.caption ?? null])])}`,
+  before(root, ctx) {
+    const id = newsAsset(ctx);
+    const repeat = id && COVER_REPEATS.get(id.slice('news-'.length));
+    if (!id || !repeat || HIDDEN_NEWS.has(id)) return;
+    const isEl = (/** @type {any} */ n, /** @type {string} */ tag) => n?.type === 'element' && n.tagName === tag;
+    /** @type {any[]} */
+    const kids = root.children;
+    const at = kids.findIndex((n) => isEl(n, 'p') && n.children.some((/** @type {any} */ c) => isEl(c, 'img')));
+    if (at === -1 || !onlyImages(kids[at])) return;
+    ctx.removeNode(kids[at]);
+    const after = kids.slice(at + 1).find((n) => !(n.type === 'text' && !n.value.trim()));
+    // the caption line: a paragraph made of one emphasis element
+    if (repeat.caption && isEl(after, 'p') && after.children.length === 1 && isEl(after.children[0], 'em')) ctx.removeNode(after);
+  },
   element: [
     {
       filter: ['img'],

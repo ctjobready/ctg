@@ -34,12 +34,16 @@ const jsonLd = [
   {
     groups.map((g, i) => {
       const people = team.filter((p) => p.data.group === g.key);
+      // Rows come out even: 5 people are 3 + 2 (centered), never 4 + 1. perRow(n, max) = ceil(n / ceil(n / max)).
+      const perRow = (max: number) => Math.max(1, Math.ceil(people.length / Math.ceil(people.length / max)));
       return (
         <Section id={g.key} tone={i % 2 ? 'airy' : 'white'} aria-labelledby={`${g.key}-h`}>
           <SectionHeader id={`${g.key}-h`} title={g.title} lead={g.lead} />
-          <div class="grid-cards grid-cards--4 team-grid">
+          <div class="team-grid" style={`--cols-md:${perRow(3)};--cols-lg:${perRow(4)}`}>
             {people.map((p) => (
-              <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={2} />
+              <div class="team-cell">
+                <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={2} />
+              </div>
             ))}
           </div>
         </Section>
@@ -54,5 +58,39 @@ const jsonLd = [
 <style>
   .team-gov {
     margin: 0;
+  }
+  /* One column on a phone; from 768 px rows of up to 3, from 1024 px up to 4, balanced and centered (the last row is centered, not left-stranded). */
+  .team-grid {
+    --cols: 1;
+    --gap: var(--space-gutter);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+  }
+  .team-cell {
+    flex: 0 1 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    max-width: 320px;
+    min-width: 0;
+    display: flex;
+  }
+  .team-cell > :global(.card) {
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .team-cell {
+      flex-basis: 100%;
+      max-width: 420px;
+    }
+  }
+  @media (min-width: 768px) {
+    .team-grid {
+      --cols: var(--cols-md);
+    }
+  }
+  @media (min-width: 1024px) {
+    .team-grid {
+      --cols: var(--cols-lg);
+    }
   }
 </style>

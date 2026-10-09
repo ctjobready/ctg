@@ -12,14 +12,16 @@ interface Props {
   artSeed?: string;
   /** Heading element for the title (1 on real pages; 2 in galleries that already have an h1). */
   headingLevel?: 1 | 2;
+  /** Frame of the `media` slot: portrait (4:5, the default, for generated art and portraits) or landscape (3:2, for a program photograph). */
+  mediaShape?: 'portrait' | 'landscape';
   class?: string;
 }
-const { eyebrow, title, lead, variant = 'inner', art = true, artSeed, headingLevel = 1, class: className } = Astro.props;
+const { eyebrow, title, lead, variant = 'inner', art = true, artSeed, headingLevel = 1, mediaShape = 'portrait', class: className } = Astro.props;
 const Title = `h${headingLevel}` as 'h1' | 'h2';
 const hasMedia = Astro.slots.has('media') || art;
 ---
 
-<section class:list={['hero', variant === 'home' && 'hero--home', !hasMedia && 'hero--text', className]}>
+<section class:list={['hero', variant === 'home' && 'hero--home', !hasMedia && 'hero--text', mediaShape === 'landscape' && Astro.slots.has('media') && 'hero--landscape', className]}>
   <div class="hero__inner container">
     <div class="hero__copy">
       {eyebrow && <p class="hero__eyebrow" data-reveal>{eyebrow}</p>}
@@ -152,6 +154,18 @@ const hasMedia = Astro.slots.has('media') || art;
     .hero__media {
       justify-self: end;
       max-height: 480px;
+    }
+  }
+  /* A program photograph keeps its landscape frame (no portrait crop of a room full of people). */
+  .hero--landscape .hero__media {
+    aspect-ratio: 3 / 2;
+    max-width: 560px;
+    max-height: none;
+  }
+  @media (max-width: 767px) {
+    .hero--landscape .hero__media {
+      max-width: 100%;
+      justify-self: stretch;
     }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -113,7 +113,7 @@ const d = discoveryCta();
       <li data-fact="OC-05"><Fact id="OC-05" /> Timing only: it does not show why people started earning.</li>
       <li data-fact="RC-01"><Fact id="RC-01" field="headline" /></li>
     </ul>
-    <p><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a> · <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a></p>
+    <p class="tl__links"><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <ReportSection id="faq" title="Questions about TalentLEAP">
@@ -127,6 +127,11 @@ const d = discoveryCta();
 </LongformLayout>
 
 <style>
+  .tl__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+  }
   .tl__list {
     margin: 0;
     padding-left: 1.3em;

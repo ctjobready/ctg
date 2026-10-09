@@ -39,8 +39,9 @@ const flow = steps ?? [
   { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and success measures are agreed.' },
   { title: `First cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
 ];
+// With the logo row below, the row is the validation; the sentence naming a few of the same organizations would only repeat it.
 const notes = [
-  validate && { icon: 'handshake', label: 'Who you would join', body: validate },
+  validate && !logos && { icon: 'handshake', label: 'Who you would join', body: validate },
   reminder && { icon: 'calendar-check', label: 'What to expect', body: reminder },
 ].filter(Boolean) as { icon: string; label: string; body: CopyBlockData }[];
 ---

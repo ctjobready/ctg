@@ -28,6 +28,8 @@ interface Props {
 }
 const { title = 'Notes and sources', id = 'sources', class: className, landmark = false } = Astro.props;
 const notes = footnotesFor(Astro).notes();
+// A claim label is often a stat label ("youth trained since 2014"): in the Notes list it opens an entry, so it starts with a capital. Only here; the register's wording is untouched.
+const capitalize = (s: string) => s.replace(/^\p{Ll}/u, (c) => c.toUpperCase());
 // A named <section> is a "region" landmark; role="none" (with no aria-labelledby, which would override it) keeps the
 // element and its structure for scripts and the facts gate without adding a nested landmark.
 const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'none' as const };
@@ -40,7 +42,7 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
       <ol class="sources__list">
         {notes.map((n) => (
           <li class="sources__note" id={`fn-${n.n}`} tabindex="-1" data-fact={n.id}>
-            <p class="sources__claim">{n.claim}</p>
+            <p class="sources__claim">{capitalize(n.claim)}</p>
             {n.caveat && <p class="sources__caveat" data-caveat={n.caveatKey}>{n.caveat}</p>}
             {n.footnote && <p>{n.footnote}</p>}
             {n.base && <p>Base: {n.base}.</p>}

@@ -96,6 +96,12 @@ const groups: Group[] = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  /* An odd last card takes the whole row in the two-column layout, instead of standing alone beside an empty cell. */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .pg__grid > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
   @media (min-width: 1024px) {
     .pg__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));

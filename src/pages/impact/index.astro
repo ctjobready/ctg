@@ -56,7 +56,8 @@ const rc = reportCta();
     <EvidenceLadder />
   </Section>
 
-  <ProofBand id="proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'How to read this evidence', href: '/impact/#evidence-ladder' }]} />
+  <!-- No headlineFact here: the randomized-trial sentence is the "In short" callout above, so this band is headed by what it shows (trial and survey figures). -->
+  <ProofBand id="proof" title="Independent evidence and survey results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'How to read this evidence', href: '/impact/#evidence-ladder' }]} />
 
   <CaseStudyCarousel
     id="cases"

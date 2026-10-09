@@ -56,6 +56,23 @@ export function terminalStop(text: string): { body: string; close: string } | nu
   return m ? { body: m[1], close: m[2] } : { body: t, close: '' };
 }
 /**
+ * A card prints its heading above a register sentence that often opens with the same words and a colon ("Quality assurance" over
+ * "Quality assurance: common practical-assessment rubrics, …"; "Placement support" over "Placement support components: …";
+ * "Connectivity-light delivery" over "Connectivity-light: runs on …"). When the words before the first colon are the heading or
+ * a close prefix of it (or the heading is a prefix of them), the echo is not printed: the sentence starts after the colon, with
+ * a capital. Any other text, including one whose colon introduces something else, comes back unchanged.
+ */
+export function dropTitleEcho(title: string, text: string): string {
+  const colon = text.indexOf(':');
+  if (colon < 3 || colon > 60) return text;
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const label = norm(text.slice(0, colon));
+  const head = norm(title);
+  if (!label || !head || !(head.startsWith(label) || label.startsWith(head))) return text;
+  const rest = text.slice(colon + 1).trimStart();
+  return rest ? rest.charAt(0).toUpperCase() + rest.slice(1) : text;
+}
+/**
  * Visible text with arrows, as an accessible name: screen readers announce "→" as "right arrow", so a sequence reads as its steps
  * ("Learn → Earn → Prosper" becomes "Learn, then Earn, then Prosper"), like the model diagram's own label. Text without arrows is unchanged.
  */

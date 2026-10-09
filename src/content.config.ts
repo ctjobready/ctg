@@ -26,6 +26,11 @@ const news = defineCollection({
       excerpt: z.string().max(180),
       cover: image().optional(),
       coverAlt: z.string(),
+      /**
+       * true when the post's first body image is a different crop of the cover photo (the same file needs no flag: it is detected). The
+       * page then shows the cover once, as the hero, and drops the body image (src/lib/newsCover.mjs).
+       */
+      coverInBody: z.boolean().default(false),
       legacyUrl: z.string(),
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),

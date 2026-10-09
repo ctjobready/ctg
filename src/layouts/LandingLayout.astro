@@ -59,8 +59,12 @@ const { stickyCta, ...base } = Astro.props;
       transition: transform var(--dur-base) var(--ease-standard), visibility 0s linear var(--dur-base);
     }
   }
-  .has-sticky-cta {
-    padding-bottom: 72px;
+  /* Room for the bar under the last footer row goes inside the footer (its own dark background fills it), not onto <body>,
+     where the same 72 px showed as a white band under the footer. */
+  @media (max-width: 767px) {
+    .has-sticky-cta #site-footer {
+      padding-bottom: calc(var(--btt-clear) + 72px + env(safe-area-inset-bottom));
+    }
   }
   /* keep the back-to-top button clear of the bar */
   .has-sticky-cta .btt {
@@ -69,9 +73,6 @@ const { stickyCta, ...base } = Astro.props;
   @media (min-width: 768px) {
     .sticky-cta {
       display: none;
-    }
-    .has-sticky-cta {
-      padding-bottom: 0;
     }
     .has-sticky-cta .btt {
       bottom: var(--space-gutter);

@@ -95,6 +95,12 @@ const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  /* An odd last item takes the whole row in the two-column layout, instead of standing alone beside an empty cell. */
+  @media (min-width: 768px) and (max-width: 1099px) {
+    .fit__item:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
   @media (min-width: 1100px) {
     .fit__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));

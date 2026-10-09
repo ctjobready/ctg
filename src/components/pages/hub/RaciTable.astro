@@ -52,12 +52,12 @@ const cols = [
     </tbody>
   </table>
 </section>
-<p class="raci__legend t-body-xs">
-  <span><b>R</b> Responsible: does the work</span>
-  <span><b>A</b> Accountable: decides and answers for it</span>
-  <span><b>C</b> Consulted</span>
-  <span><b>I</b> Informed</span>
-</p>
+<ul class="raci__legend t-body-xs" role="list" aria-label="Legend">
+  <li><b class="raci__pill raci__pill--R">R</b><span>Responsible: does the work</span></li>
+  <li><b class="raci__pill raci__pill--A">A</b><span>Accountable: decides and answers for it</span></li>
+  <li><b class="raci__pill raci__pill--C">C</b><span>Consulted</span></li>
+  <li><b class="raci__pill raci__pill--I">I</b><span>Informed</span></li>
+</ul>
 
 <script>
   import '../../../scripts/tablestack';
@@ -135,11 +135,38 @@ const cols = [
     color: var(--on-surface-variant);
     border: 1px solid var(--outline-variant);
   }
+  /* The legend wears the table's own pills, in a grid: each letter stays with its words (2 × 2 on a phone, one row from 900 px). */
   .raci__legend {
-    margin: var(--space-sm) 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs) var(--space-lg);
+    list-style: none;
+    margin: var(--space-md) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm) var(--space-md);
     color: var(--ctx-text);
+  }
+  .raci__legend li {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+  .raci__legend .raci__pill {
+    flex: none;
+    margin: 0;
+    height: 24px;
+    min-width: 24px;
+    padding: 0;
+    font-size: 0.8125rem;
+    line-height: 1;
+  }
+  .raci__legend li > span {
+    padding-top: 2px;
+  }
+  @media (min-width: 900px) {
+    .raci__legend {
+      grid-template-columns: repeat(4, auto);
+      justify-content: start;
+      gap: var(--space-sm) var(--space-lg);
+    }
   }
 </style>

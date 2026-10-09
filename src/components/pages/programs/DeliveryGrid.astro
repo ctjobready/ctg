@@ -25,7 +25,7 @@ const { items, heading, class: className } = Astro.props;
           <span class="dg__icon" aria-hidden="true"><Icon name={it.icon} size={24} strokeWidth={1.75} /></span>
           <div>
             <h4 class="dg__title">{it.title}</h4>
-            <p class="dg__text"><Fact id={it.factId} /></p>
+            <p class="dg__text"><Fact id={it.factId} under={it.title} /></p>
           </div>
         </li>
       ))

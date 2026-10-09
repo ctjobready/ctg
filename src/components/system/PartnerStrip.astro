@@ -4,16 +4,21 @@ import Img from '../ui/Img.astro';
 import { linkAttrs } from '../../lib/url';
 import { slugify } from '../../lib/format';
 import { mayRender } from '../../lib/permissions';
-import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type PartnerGroup } from '../../lib/logos';
+import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type LogoFit, type PartnerGroup } from '../../lib/logos';
 
 /**
  * PartnerStrip — quiet credibility band. Logos come from src/data/partners.ts (relationships, not
- * endorsements, PA-04): grayscale + reduced opacity at rest, full color on hover/focus.
- * `grid` = static; `marquee` = continuous scroll (M13) with hover/focus pause + pause button.
+ * endorsements, PA-04): one tile treatment for every item (white tile, hairline border), one grayscale/opacity
+ * treatment for the artwork, full color on hover/focus.
+ * `grid` = static, centered rows balanced so no row is left with a stray item; `marquee` = continuous scroll (M13) with
+ * hover/focus pause + pause button (static balanced grid under reduced motion).
  *
  * D13: each logo from the data files carries data-asset (partner-<id>, or press-<outlet> for the press strip).
  * Staging shows a logo only when its row in src/data/permissions.json says it was published on coderstrust.global;
- * otherwise the organization's name is shown as text, the same fallback as a partner without a logo file.
+ * otherwise the organization's name is shown as a quiet wordmark in the same tile, the same fallback as a partner without a logo file.
+ *
+ * Optical size: the logo's box is picked from the artwork's aspect ratio (a wide wordmark is limited by the tile's width,
+ * a crest by its height), then nudged per organization by LOGO_FIT in src/lib/logos.ts.
  */
 interface Item {
   /** Partner or outlet id from src/data/partners.ts; items without one (sample data) carry no data-asset. */
@@ -22,6 +27,7 @@ interface Item {
   logo?: ImageMetadata | string;
   href?: string;
   white?: boolean;
+  fit?: LogoFit;
 }
 interface Props {
   /** partners (default) or press outlets ("As covered in"). */
@@ -55,24 +61,40 @@ const GROUP_NAME: Record<PartnerGroup, string> = { development: 'development and
 const groups = group === undefined ? [] : Array.isArray(group) ? group : [group];
 const base = cap || (kind === 'press' ? 'Press coverage' : 'Partners');
 const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.replace(/\.$/, '')}: ${groups.map((g) => GROUP_NAME[g]).join(' and ')}` : base);
+
+/** Box for the artwork inside the tile, by aspect ratio (width / height): xl ≥ 5.5, wide ≥ 3.2, mid ≥ 1.8, sq ≥ 0.8, tall below. */
+const shapeOf = (logo?: ImageMetadata | string): 'xl' | 'wide' | 'mid' | 'sq' | 'tall' => {
+  if (!logo || typeof logo === 'string') return 'mid';
+  const ar = logo.width / logo.height;
+  return ar >= 5.5 ? 'xl' : ar >= 3.2 ? 'wide' : ar >= 1.8 ? 'mid' : ar >= 0.8 ? 'sq' : 'tall';
+};
+/** Items per row at each width, so the rows come out even: ceil(n / ceil(n / max)) (11 items, at most 6 → 6 + 5; 8 items, at most 6 → 4 + 4). */
+const perRow = (n: number, max: number) => Math.max(1, Math.ceil(n / Math.ceil(n / max)));
+const n = list.length;
+const rowVars = `--cols-xs:${perRow(n, 2)};--cols-sm:${perRow(n, 3)};--cols-md:${perRow(n, 4)};--cols-lg:${perRow(n, 6)}`;
+/** Native size of the artwork: the tile never shows it larger than this, so the file is not upscaled or re-sampled. */
+const dims = (logo: ImageMetadata | string) => (typeof logo === 'string' ? {} : { width: logo.width, height: logo.height });
+const itemClass = (it: (typeof list)[number]) => ['partners__item', it.logo ? `is-${shapeOf(it.logo)}` : 'is-name', it.fit?.tone && `is-${it.fit.tone}`, it.logo && it.white && 'is-white'];
+const itemStyle = (it: (typeof list)[number]) => (it.fit?.scale ? `--k:${it.fit.scale}` : undefined);
 ---
 
 <section class:list={['partners', `partners--${variant}`, className]} aria-label={label} data-marquee={variant === 'marquee' ? '' : undefined}>
   {cap && <p class="partners__title">{cap}</p>}
   {
     variant === 'grid' ? (
-      <ul class="partners__row" role="list">
+      <ul class="partners__row" role="list" style={rowVars}>
         {list.map((it) => {
           const a = link && it.href ? linkAttrs(it.href) : undefined;
+          const body = it.logo ? <Img src={it.logo} alt={it.name} {...dims(it.logo)} assetId={it.assetId} /> : <span class="partners__name">{it.name}</span>;
           return (
             <li>
               {a ? (
-                <a href={a.href} rel={a.rel} class:list={['partners__item', it.white && 'is-white']}>
-                  {it.logo ? <Img src={it.logo} alt={it.name} height={40} assetId={it.assetId} /> : it.name}
+                <a href={a.href} rel={a.rel} class:list={itemClass(it)} style={itemStyle(it)}>
+                  {body}
                   <span class="sr-only">{a.srText}</span>
                 </a>
               ) : (
-                <span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt={it.name} height={40} assetId={it.assetId} /> : it.name}</span>
+                <span class:list={itemClass(it)} style={itemStyle(it)}>{body}</span>
               )}
             </li>
           );
@@ -82,14 +104,14 @@ const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.r
       <>
         <div class="marquee">
           <div class="marquee__inner">
-            <ul class="partners__row marquee__track" role="list">
+            <ul class="partners__row marquee__track" role="list" style={rowVars}>
               {list.map((it) => (
-                <li><span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt={it.name} height={40} assetId={it.assetId} /> : it.name}</span></li>
+                <li><span class:list={itemClass(it)} style={itemStyle(it)}>{it.logo ? <Img src={it.logo} alt={it.name} {...dims(it.logo)} assetId={it.assetId} /> : <span class="partners__name">{it.name}</span>}</span></li>
               ))}
             </ul>
-            <ul class="partners__row marquee__track marquee__clone" role="list" aria-hidden="true" inert>
+            <ul class="partners__row marquee__track marquee__clone" role="list" aria-hidden="true" inert style={rowVars}>
               {list.map((it) => (
-                <li><span class:list={['partners__item', it.white && 'is-white']}>{it.logo ? <Img src={it.logo} alt="" height={40} assetId={it.assetId} /> : it.name}</span></li>
+                <li><span class:list={itemClass(it)} style={itemStyle(it)}>{it.logo ? <Img src={it.logo} alt="" {...dims(it.logo)} assetId={it.assetId} /> : <span class="partners__name">{it.name}</span>}</span></li>
               ))}
             </ul>
           </div>
@@ -112,6 +134,10 @@ const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.r
     padding-block: var(--space-lg);
     min-width: 0;
     max-width: 100%;
+    /* Tile geometry shared by every item (grid and marquee). */
+    --tile-h: 80px;
+    --tile-max-w: 208px;
+    --tile-gap: var(--space-md);
   }
   .partners__title {
     margin: 0;
@@ -121,53 +147,136 @@ const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.r
     text-align: center;
   }
   .partners__row {
+    /* --cols-xs … --cols-lg are set on the list itself (inline, from the item count); --cols is the one in force at this width. */
+    --cols: var(--cols-xs, 2);
+    /* A row is never wider than --cols capped tiles, so a wide container cannot squeeze one more tile into a row and unbalance it. */
+    --row-max: calc(var(--cols) * var(--tile-max-w) + (var(--cols) - 1) * var(--tile-gap));
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    gap: var(--space-md) var(--space-lg);
+    align-items: stretch;
+    gap: var(--tile-gap);
+    width: 100%;
+    max-width: var(--row-max);
     margin: 0;
     padding: 0;
     list-style: none;
   }
+  /* Rows hold exactly --cols tiles (balanced in the component), capped at --tile-max-w so a short row stays a row of tiles. */
+  .partners__row > li {
+    flex: 0 1 calc((100% - (var(--cols) - 1) * var(--tile-gap)) / var(--cols));
+    max-width: var(--tile-max-w);
+    min-width: 0;
+    display: flex;
+  }
+  @media (min-width: 520px) {
+    .partners__row {
+      --cols: var(--cols-sm, 3);
+    }
+  }
+  @media (min-width: 720px) {
+    .partners__row {
+      --cols: var(--cols-md, 4);
+    }
+  }
+  @media (min-width: 1024px) {
+    .partners__row {
+      --cols: var(--cols-lg, 6);
+    }
+  }
+
+  /* The tile: identical for logos and name fallbacks. */
   .partners__item {
-    display: inline-flex;
+    --h: 44px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 56px;
-    min-width: 72px;
-    max-width: 176px;
-    padding: 6px 8px;
-    border-radius: var(--radius-default);
-    font-size: var(--fs-body-m);
-    font-weight: var(--fw-bold);
-    color: var(--ctx-text);
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity var(--dur-base) ease;
-  }
-  /* Logos whose artwork has a solid white background sit on a white tile */
-  .partners__item.is-white {
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--tile-h);
+    padding: 10px 12px;
     background: var(--surface);
     border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-default);
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    transition: border-color var(--dur-base) ease;
   }
   .partners__item :global(img) {
-    max-height: 44px;
+    display: block;
     width: auto;
-    max-width: 160px;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(var(--h) * var(--k, 1));
     object-fit: contain;
     filter: grayscale(1);
     opacity: 0.85;
     transition: filter var(--dur-base) ease, opacity var(--dur-base) ease;
   }
-  .partners__item:hover,
-  a.partners__item:focus-visible {
-    opacity: 1;
+  /* Box height by artwork shape: thin wordmarks are limited by the tile's width, crests and marks by its height. */
+  .partners__item.is-xl :global(img) {
+    --h: 26px;
   }
-  .partners__item:hover :global(img),
-  a.partners__item:focus-visible :global(img) {
+  .partners__item.is-wide :global(img) {
+    --h: 38px;
+  }
+  .partners__item.is-mid :global(img) {
+    --h: 44px;
+  }
+  .partners__item.is-sq :global(img) {
+    --h: 50px;
+  }
+  .partners__item.is-tall :global(img) {
+    --h: 58px;
+  }
+  /* Optical weight: pale artwork is darkened a little, solid blocks sit softer. */
+  .partners__item.is-strong :global(img) {
+    filter: grayscale(1) brightness(0.72) contrast(1.15);
+    opacity: 0.9;
+  }
+  .partners__item.is-soft :global(img) {
+    opacity: 0.68;
+  }
+  /* Artwork with a solid white background sits on the white tile without a visible box: multiply keeps the white white, and no brightness filter grays it. */
+  .partners__item.is-white :global(img) {
+    filter: grayscale(1) contrast(1.2);
+    mix-blend-mode: multiply;
+  }
+  /* Pale artwork on a white background: dim, then push contrast so the white stays white while the ink darkens. */
+  .partners__item.is-white.is-strong :global(img) {
+    filter: grayscale(1) brightness(0.85) contrast(1.9);
+  }
+  /* No logo: the organization's name as a quiet wordmark, at the weight of the artwork around it. */
+  .partners__name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    font-size: var(--fs-body-xs);
+    line-height: 1.25;
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    color: var(--outline);
+  }
+  a.partners__item:hover,
+  a.partners__item:focus-visible,
+  span.partners__item:hover {
+    border-color: var(--primary-fixed-dim);
+  }
+  a.partners__item:hover :global(img),
+  a.partners__item:focus-visible :global(img),
+  span.partners__item:hover :global(img) {
     filter: none;
     opacity: 1;
+  }
+  a.partners__item:hover .partners__name,
+  a.partners__item:focus-visible .partners__name,
+  span.partners__item:hover .partners__name {
+    color: var(--on-surface-variant);
   }
 
   /* ---- Marquee (M13) ---- */
@@ -183,10 +292,13 @@ const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.r
   .marquee__track {
     flex-wrap: nowrap;
     flex: none;
-    padding-right: var(--space-lg);
+    width: auto;
+    max-width: none;
+    padding-right: var(--tile-gap);
   }
-  .marquee__track .partners__item {
-    white-space: nowrap;
+  .marquee__track > li {
+    flex: none;
+    width: 176px;
   }
   @media (prefers-reduced-motion: no-preference) {
     .marquee__inner {
@@ -228,18 +340,24 @@ const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.r
   .marquee__toggle:hover {
     background: var(--surface-container-low);
   }
-  /* Reduced motion: static wrapped grid, clone and pause control removed */
+  /* Reduced motion: static balanced grid, clone and pause control removed */
   @media (prefers-reduced-motion: reduce) {
     .marquee {
       mask-image: none;
     }
     .marquee__inner {
-      width: auto;
-      justify-content: center;
+      width: 100%;
     }
     .marquee__track {
       flex-wrap: wrap;
+      width: 100%;
+      max-width: var(--row-max);
+      margin-inline: auto;
       padding-right: 0;
+    }
+    .marquee__track > li {
+      flex: 0 1 calc((100% - (var(--cols) - 1) * var(--tile-gap)) / var(--cols));
+      width: auto;
     }
     .marquee__clone,
     .marquee__toggle {

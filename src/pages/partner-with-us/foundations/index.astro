@@ -55,11 +55,6 @@ const { title, description } = meta(
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
-const funders = ['the Rockefeller Foundation', 'Porticus', 'DANIDA', 'the World Food Programme', 'UNDP', 'the World Bank Group', 'BRAC'];
-for (const f of funders) if (!fact('PA-01').text.includes(f.replace(/^the /, ''))) throw new Error(`PA-01 does not mention ${f}`);
-// Only UNDP's relationship dates to 2015; the other names carry no start year.
-const shown = funders.map((f) => (f === 'UNDP' ? 'UNDP (from 2015)' : f));
-const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 1]}`;
 ---
 
 <LandingLayout
@@ -127,7 +122,6 @@ const funderList = `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
-      { facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${funderList}.` },
       { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'WSDFM, commissioned by Porticus, was independently evaluated by BIGD in a randomized controlled trial.' },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}

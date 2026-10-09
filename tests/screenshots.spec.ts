@@ -20,8 +20,14 @@ const SLICE = 8000;
 const SINGLE_SHOT_LIMIT = 12000;
 
 /**
- * Make sure every image has loaded. Lazy images inside horizontally scrolling carousels never come near the viewport
+ * Make sure every image has loaded and is decoded. Lazy images inside horizontally scrolling carousels never come near the viewport
  * while scrolling vertically, so they are switched to eager loading first; the wait is bounded.
+ *
+ * "Loaded" is not "painted": the site's images use decoding="async", and a full-page capture rasterizes areas that were never
+ * on screen. An image whose load event has fired can still be undecoded when the slice is taken, and then its card shows only the
+ * empty tile behind it. That is what left the RemoteIntegrity card on /news/ blank in about half of the 1440 px captures (page
+ * and image are fine: the same card paints in every capture once img.decode() has resolved, 10 of 10 runs). So every image is
+ * decoded before the capture.
  */
 async function imagesLoaded(page: Page): Promise<void> {
   await page.evaluate(async () => {
@@ -37,6 +43,8 @@ async function imagesLoaded(page: Page): Promise<void> {
       ),
     );
     await Promise.race([loaded, new Promise((resolve) => setTimeout(resolve, 10_000))]);
+    const decoded = Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => undefined)));
+    await Promise.race([decoded, new Promise((resolve) => setTimeout(resolve, 10_000))]);
   });
 }
 

@@ -4,13 +4,13 @@ import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import CopyBlock from './CopyBlock.astro';
-import { C14, EMPATHY, ORIGIN, TRAINED_REACH } from '../../../data/copy';
+import { EMPATHY, ORIGIN, TRAINED_REACH } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION } from '../../../lib/logos';
 
 /**
- * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the partner line
- * (PA-01), the method signal (TalentLEAP) and four authority figures with the partner logo marquee.
+ * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the method signal
+ * (TalentLEAP) and four authority figures with the partner logo marquee (the marquee is the partner line).
  */
 interface Props {
   id?: string;
@@ -26,7 +26,6 @@ const talentleap = linkAttrs('/our-model/talentleap/');
       <p class="guide__empathy" data-reveal>{EMPATHY.home}</p>
       <h2 id={`${id}-h`} data-reveal>We’ve built this path since 2014.</h2>
       <CopyBlock block={ORIGIN} class="guide__origin" />
-      <CopyBlock block={C14.validate} class="guide__partners" />
       <p class="guide__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths with progressive levels.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP works<Icon name="arrow-right" size={16} /></a>
@@ -71,11 +70,8 @@ const talentleap = linkAttrs('/our-model/talentleap/');
     line-height: var(--lh-body-m);
     color: var(--on-surface);
   }
-  .guide__partners,
   .guide__method {
     color: var(--on-surface-variant);
-  }
-  .guide__method {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

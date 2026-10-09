@@ -44,8 +44,10 @@ const { title, lead, blocks, transition = 'It doesn’t have to be this way.', i
     padding-left: var(--space-md);
     border-left: 4px solid var(--tertiary);
   }
+  /* The implication follows its data at one fixed distance (it is not pushed to the card's bottom, which stretched a gap of any size
+     between them in the shorter cards of a row). */
   .cost__impl {
-    margin-top: auto !important;
+    margin-top: var(--space-xs) !important;
     padding-top: var(--space-sm);
     color: var(--on-surface-variant);
   }

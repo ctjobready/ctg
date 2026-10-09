@@ -89,7 +89,6 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
         { title: 'A first cohort, designed with you', text: 'We shape tracks, safeguarding and reporting together.' },
       ]} />
       <ul class="ct-c14" role="list">
-        <li><CopyBlock block={C14.validate} /></li>
         <li><CopyBlock block={C14.reminder} /></li>
       </ul>
     </div>
@@ -138,6 +137,17 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
     align-items: center;
     gap: var(--space-sm) var(--space-md);
     padding-top: var(--space-sm);
+  }
+  /* Every route button is as wide as its card, so the long label ("Bring JobReady@Campus to your institution") is not the one button
+     that stretches and wraps while its neighbors sit at their own width; a secondary link goes on the line below. A label that has to
+     wrap does so in even lines. */
+  .ct-route__actions :global(.btn) {
+    flex: 1 1 100%;
+    padding-inline: 12px;
+    font-size: 0.9375rem;
+  }
+  .ct-route__actions :global(.btn__label) {
+    text-wrap: balance;
   }
   .ct-social {
     margin-top: var(--space-lg);

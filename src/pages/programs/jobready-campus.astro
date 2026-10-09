@@ -25,7 +25,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { C14_FIRST, LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { CLAIM_PX06 } from '../../components/sections/copyText';
@@ -33,6 +33,7 @@ import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
 const path = '/programs/jobready-campus/';
+const LAST_UPDATED = PAGE_UPDATED.campus;
 const title = 'JobReady@Campus: Skills Alongside the Degree';
 const degree = statValue('OC-09');
 const description = `JobReady@Campus adds digital skills and certification preparation to the degree. Among surveyed completers, ${degree} hold a bachelor’s degree or higher.`;

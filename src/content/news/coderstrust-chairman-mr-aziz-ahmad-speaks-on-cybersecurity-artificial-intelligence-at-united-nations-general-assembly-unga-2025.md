@@ -6,6 +6,7 @@ topic: leadership-advocacy
 excerpt: "Aziz Ahmad joins a high-level discussion on cybersecurity, digital governance, and AI during UN General Assembly week in New York."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-4-2.jpg
 coverAlt: "CodersTrust Chairman Mr. Aziz Ahmad Speaks on Cybersecurity & Artificial Intelligence...: cover image"
+coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/"
 tags: ["Aziz Ahmad"]
 seoTitle: "Aziz Ahmad on Cybersecurity, AI at UNGA 2025"

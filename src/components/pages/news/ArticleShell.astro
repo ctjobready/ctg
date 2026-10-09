@@ -31,8 +31,10 @@ interface Props {
   imageAlt?: string;
   /** D13 asset ID of the photo behind `image` (news-<slug>); becomes data-asset on og:image/twitter:image. */
   imageAsset?: string;
+  /** Caption of the hero photo (the italic line the post had under its first image, which the hero now stands in for). */
+  heroCaption?: string;
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption } = Astro.props;
 const canonical = canonicalUrl(path);
 const published = date.toISOString();
 const SUFFIX = ' | CodersTrust';
@@ -94,7 +96,7 @@ const share = {
         )
       }
     </p>
-    {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" /></figure>}
+    {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" />{heroCaption && <figcaption class="art__caption">{heroCaption}</figcaption>}</figure>}
     <div class="prose art__body"><slot /></div>
 
     <aside class="art__share" aria-label="Share this article">
@@ -180,6 +182,15 @@ const share = {
     width: 100%;
     height: auto;
     display: block;
+  }
+  .art__caption {
+    margin: 0;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-style: italic;
   }
   .art__body :global(img) {
     max-width: 100%;

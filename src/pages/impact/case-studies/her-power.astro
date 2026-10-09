@@ -5,7 +5,6 @@ import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Img from '../../../components/ui/Img.astro';
 import { WOMEN_INCLUSION } from '../../../data/copy';
 import { PROGRAM_DATA_LABEL } from '../../../data/facts';
 import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
@@ -21,6 +20,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
   pageTitle="Her Power Case Study"
   description="Her Power, a project of Bangladesh’s ICT Division: 372 of 800 women in the training cohort placed (47%), shown with the program’s separate scale measures."
   stats={[{ id: 'PR-05' }]}
+  heroPhoto={{ src: photo, alt: 'Women working on laptops in a Her Power training lab', assetId: 'case-her-power-training-lab', width: 1093, height: 714 }}
   context={[
     'Her Power is a project of the ICT Division of the Government of Bangladesh. It aims to help women become entrepreneurs and self-employed through digital skills, using technology safely.',
     'CodersTrust provided the curriculum, training manuals and mentorship guidelines for the national program, trained trainers, and trained a cohort of women directly.',
@@ -38,11 +38,6 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     'Accessible, interactive digital learning materials.',
   ]}
 >
-  <figure slot="context" class="hp__photo">
-    <Img src={photo} alt="Women working on laptops in a Her Power training lab" width={1093} height={714} widths={[480, 1093]} sizes="(min-width:1024px) 560px, 90vw" assetId="case-her-power-training-lab" />
-    <figcaption>A Her Power training lab.</figcaption>
-  </figure>
-
   <Fragment slot="results">
     <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
       <Fact id="PR-05" as="p" />
@@ -72,23 +67,6 @@ const excerpt = `${paras[1]} ${paras[2]}`;
 </CaseStudyPage>
 
 <style>
-  .hp__photo {
-    margin: 0;
-    max-width: 560px;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--primary-fixed);
-  }
-  .hp__photo :global(img) {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  .hp__photo figcaption {
-    padding: var(--space-sm) var(--space-md);
-    font-size: var(--fs-body-xs);
-    color: var(--outline);
-  }
   .hp__scale,
   .hp__compare {
     display: grid;

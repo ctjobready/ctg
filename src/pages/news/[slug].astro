@@ -4,7 +4,7 @@ import { render } from 'astro:content';
 import ArticleShell from '../../components/pages/news/ArticleShell.astro';
 import NewsCard from '../../components/ui/NewsCard.astro';
 import Img from '../../components/ui/Img.astro';
-import { allNews, newsHref, ogImageAlt, relatedNews, TOPICS, coverAlt, coverDuplicatesBody } from '../../components/pages/news/news';
+import { allNews, newsHref, ogImageAlt, relatedNews, TOPICS, coverAlt, coverDuplicatesBody, coverRepeat } from '../../components/pages/news/news';
 import { mayRender } from '../../lib/permissions';
 import { stripBase } from '../../lib/url';
 
@@ -20,7 +20,10 @@ const topic = TOPICS[d.topic];
 // rehypeNewsPhotos in astro.config.mjs). Staging drops a cover the gate does not allow; the branded section card stands in.
 const asset = `news-${post.id}`;
 const cover = d.cover && mayRender(asset) ? d.cover : undefined;
-const showHero = cover && !coverDuplicatesBody(post);
+// First body image = the cover photo: it is shown once, as the hero (with the caption it had in the body), and the body drops it.
+// A cover that only turns up later in the body keeps the older rule: no hero, the body shows it.
+const repeat = coverRepeat(post);
+const showHero = cover && (repeat.repeats || !coverDuplicatesBody(post));
 const og = cover ? await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' }) : undefined;
 const related = relatedNews(all, post);
 ---
@@ -36,6 +39,7 @@ const related = relatedNews(all, post);
   image={og ? stripBase(og.src) : undefined}
   imageAlt={og ? ogImageAlt(d.coverAlt, d.title) : undefined}
   imageAsset={og ? asset : undefined}
+  heroCaption={showHero && repeat.repeats ? repeat.caption : undefined}
 >
   {showHero && cover && <Img slot="hero" src={cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} />}
   <Content />

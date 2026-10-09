@@ -20,7 +20,8 @@ const H = `h${headingLevel}` as 'h3' | 'h4';
 const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
 ---
 
-<ol class:list={['ladder', className]} role="list">
+<div class:list={['ladder-box', className]}>
+<ol class="ladder" role="list">
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">1</span>
     <H class="ladder__title">Randomized trial (BIGD)</H>
@@ -78,15 +79,32 @@ const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
     {links && <a class="link" href={linkAttrs('/impact/stories/').href}>Success stories<Icon name="arrow-right" size={16} /></a>}
   </li>
 </ol>
+</div>
 
 <style>
+  /* Four rungs sit as 1 × 4, 2 × 2 or 4 × 1, never 3 + 1: the columns follow the width of the space the ladder is in
+     (the report page keeps a table of contents beside it), not the window. */
+  .ladder-box {
+    container-type: inline-size;
+  }
   .ladder {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     gap: var(--space-gutter);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @container (min-width: 540px) {
+    .ladder {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @container (min-width: 860px) {
+    .ladder {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
   }
   .ladder__rung {
     position: relative;
@@ -165,5 +183,18 @@ const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
     margin-top: auto;
     padding-top: var(--space-sm);
     align-self: flex-start;
+  }
+  /* Four across: tighter cards, and the figure steps down so "711 of 1,000" stays on one line. */
+  @container (min-width: 860px) {
+    .ladder__rung {
+      padding-inline: var(--space-md);
+    }
+    .ladder__num {
+      left: var(--space-md);
+    }
+    .ladder__fig > :global(.fact:first-child) {
+      font-size: var(--fs-heading-xl);
+      letter-spacing: -0.5px;
+    }
   }
 </style>

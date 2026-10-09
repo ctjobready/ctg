@@ -45,6 +45,23 @@
 .grid-cards--stretch > * {
   height: 100%;
 }
+/* No card is left alone in a row beside an empty cell. A short set of text cards (up to 9) that would end in a single card takes that
+   card across the full row (two columns, 768–1023 px); a set of exactly three cards with pictures stays in three columns instead (a
+   picture card across the full row would be a poster); a set of exactly four reads 2 × 2, not 3 + 1, where the grid has three columns
+   (from 1024 px; grid-cards--4 keeps its four). Long lists (news, mentors) are left as they are. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-cards:not(:has(> :nth-child(10))) > :last-child:nth-child(odd):not(:has(.card__media)) {
+    grid-column: 1 / -1;
+  }
+  .grid-cards:has(> :nth-child(3):last-child .card__media) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .grid-cards:not(.grid-cards--4):has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 .stack > * + * {
   margin-top: var(--stack-gap, var(--space-md));

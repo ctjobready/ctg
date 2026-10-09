@@ -9,7 +9,10 @@ import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import PlainLine from '../../facts/PlainLine.astro';
 import Sources from '../../facts/Sources.astro';
+import Img from '../../ui/Img.astro';
 import { linkAttrs } from '../../../lib/url';
+import { mayRender } from '../../../lib/permissions';
+import type { ImageMetadata } from 'astro';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { discoveryCta, articleNode, desc, title as chkTitle } from './page-utils';
 import { caseBySlug } from './case-studies';
@@ -38,8 +41,14 @@ interface Props {
    * under the summary; the program result (the first stat tile, with its program-data label) comes second.
    */
   plainLine?: boolean;
+  /**
+   * A real program photograph for the hero, in place of the generated art (D13: it renders on staging only when its permissions row allows it,
+   * otherwise the art stands in). The photo is shown once, here; the page does not repeat it lower down.
+   */
+  heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroPhoto } = Astro.props;
+const showPhoto = Boolean(heroPhoto) && mayRender(heroPhoto!.assetId);
 const c = caseBySlug(slug);
 const jsonLd = [articleNode({ path: c.path, headline: c.heading, description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' })];
 const related = linkAttrs(c.related.href);
@@ -54,7 +63,8 @@ const d = discoveryCta();
   jsonLd={jsonLd}
   ogType="article"
 >
-  <Hero variant="inner" eyebrow={`Case study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`}>
+  <Hero variant="inner" eyebrow={`Case study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
+    {showPhoto && heroPhoto && <Img slot="media" src={heroPhoto.src} alt={heroPhoto.alt} width={heroPhoto.width} height={heroPhoto.height} widths={[480, heroPhoto.width]} sizes="(min-width:1024px) 520px, 90vw" loading="eager" fetchpriority="high" assetId={heroPhoto.assetId} />}
     {plainLine && <PlainLine />}
     <Fragment slot="stats">
       {
@@ -105,7 +115,7 @@ const d = discoveryCta();
 
   <Section aria-labelledby="related-h" pad="sm">
     <h2 class="t-heading-2xl" id="related-h">Where the model runs next</h2>
-    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a> · <a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
+    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <CTABand id="cta" tone="klein" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
@@ -169,8 +179,12 @@ const d = discoveryCta();
   .cs__results :global(.callout) {
     max-width: var(--measure);
   }
+  /* Two links side by side, or stacked when they do not fit: no separator character to be left dangling at the end of a line. */
   .cs__related {
     margin: var(--space-md) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
   }
   @media (min-width: 900px) {
     .cs__two {

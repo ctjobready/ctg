@@ -127,10 +127,21 @@ const f = fundingCta();
 </script>
 
 <style>
+  /* Four cards: 1 across on a phone, 2 × 2 on a tablet, 4 across from 1024 px (never 3 + 1). */
   .jr__cards {
     display: grid;
     gap: var(--space-gutter);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 560px) {
+    .jr__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .jr__cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
   .jr__table {
     overflow-x: auto;

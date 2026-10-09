@@ -5,13 +5,15 @@ import { CONTACT } from '../../lib/site';
 /** Email address as a mailto link plus a copy button (toast "Email copied", M18). */
 interface Props {
   email?: string;
+  /** Punctuation that ends the sentence (".") sits right after the address, before the copy button, so it never floats after the icon. */
+  trail?: string;
   class?: string;
 }
-const { email = CONTACT.email, class: className } = Astro.props;
+const { email = CONTACT.email, trail, class: className } = Astro.props;
 ---
 
 <span class:list={['copy-email', className]}>
-  <a class="copy-email__addr" href={`mailto:${email}`}>{email}</a>
+  <span class="copy-email__text"><a class="copy-email__addr" href={`mailto:${email}`}>{email}</a>{trail}</span>
   <button class="copy-email__btn" type="button" data-copy={email} data-copy-message="Email copied">
     <Icon name="copy" size={18} />
     <span class="sr-only">Copy email address {email}</span>

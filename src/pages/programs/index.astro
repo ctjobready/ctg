@@ -11,12 +11,13 @@ import CTABand from '../../components/ui/CTABand.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import Sources from '../../components/facts/Sources.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import { LAST_UPDATED, ctaFor, statValue } from '../../components/pages/programs/meta';
+import { PAGE_UPDATED, ctaFor, statValue } from '../../components/pages/programs/meta';
 import { MICRO_COMMITMENT, STEPS, STEPS_FACTS } from '../../data/copy';
 import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
+const LAST_UPDATED = PAGE_UPDATED.programs;
 // R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
 // is a diploma), so the H1, title and structured-data name are "CodersTrust programs". The meta description is the plan's P9 wording.
 const title = 'Programs';

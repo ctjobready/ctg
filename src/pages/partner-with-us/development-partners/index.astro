@@ -52,10 +52,6 @@ const { title, description } = meta(
 );
 
 const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
-const partnerNames = factPart('PA-01', /include (.*)$/);
-// Only UNDP's relationship dates to 2015 (its first program); the other names carry no start year.
-if (!partnerNames.startsWith('UNDP, ')) throw new Error('PA-01 no longer lists UNDP first');
-const partnerList = `UNDP (from 2015)${partnerNames.slice('UNDP'.length)}`;
 const undpQuote = factPart('PR-03a', /“([^”]+)”/);
 const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 ---
@@ -123,7 +119,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <PartnerGuideBand
     empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
-    statements={[{ facts: TRAINED_REACH.facts, text: TRAINED_REACH.text }, { facts: ['PA-01'], text: `Organizations that have worked with CodersTrust include ${partnerList}.` }]}
+    statements={[{ facts: TRAINED_REACH.facts, text: TRAINED_REACH.text }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />

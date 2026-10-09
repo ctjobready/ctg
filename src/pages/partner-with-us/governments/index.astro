@@ -35,7 +35,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, NATIONWIDE_TARGET, factPart, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
-import { CLAIM_PX06, CLAIM_PX11, governmentPartners, graduateRates } from '../../../components/sections/copyText';
+import { CLAIM_PX06, CLAIM_PX11, graduateRates } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -130,8 +130,6 @@ const steps = [
     statements={[
       { facts: ['SC-04'], markers: [], text: 'CodersTrust is National University’s official training partner for digital career skills and credentials.' },
       { facts: ['GV-07'], text: `A program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender}.` },
-      // The register's wording with the acronyms spelled out at their first mention on the page.
-      { facts: ['PA-02'], text: governmentPartners() },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}

@@ -29,14 +29,15 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { LAST_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
+import { PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { ACCOUNTABILITY, C14, EMPATHY, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCALE, SCORECARD, SURVEY_EMPLOYMENT, STEPS, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
-import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, contractScope, endSentence, governmentPartners, graduateRates } from '../../components/sections/copyText';
+import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, contractScope, endSentence, graduateRates } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
 const path = '/programs/nationwide/';
+const LAST_UPDATED = PAGE_UPDATED.nationwide;
 const target = statValue('IN-01');
 const title = 'NationWIDE: Bangladesh Digital Workforce';
 const description = `NationWIDE aims to train ${target} vulnerable youth in Bangladesh for digital employment by 2030, with certification preparation, mentoring and reporting.`;
@@ -111,7 +112,6 @@ const jsonLd = [
     partnerGroup={['government', 'academic']}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="PA-02">{governmentPartners()}.</p>
     <p data-fact="SC-04">CodersTrust is National University’s official training partner for digital career skills and credentials.</p>
   </GuideSection>
 

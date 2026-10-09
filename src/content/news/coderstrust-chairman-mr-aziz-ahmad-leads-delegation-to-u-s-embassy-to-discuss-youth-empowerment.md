@@ -6,6 +6,7 @@ topic: leadership-advocacy
 excerpt: "Aziz Ahmad leads a seven-member delegation to the U.S. Embassy in Dhaka to discuss youth empowerment."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/us-embassy-august-2025.jpg
 coverAlt: "CodersTrust Chairman Mr. Aziz Ahmad Leads Delegation to U.S. Embassy to Discuss Youth...: cover image"
+coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/"
 tags: ["Aziz Ahmad"]
 seoTitle: "Aziz Ahmad Leads Delegation to U.S. Embassy"

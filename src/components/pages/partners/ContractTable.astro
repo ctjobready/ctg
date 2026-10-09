@@ -7,11 +7,13 @@ import { fact } from '../../../data/facts';
 import { factPart } from './partners';
 
 /**
- * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06. A blank cell reads "—".
+ * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06.
  * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
- * Status column (doc 06 P3, R10/WP11 F25; confirm list #29): "In progress" or "Completed" only where the register states it for that
- * contract. It states a status for no single contract (GV-10 says only that "some contracts are still in progress"), so every row reads
- * "Status to confirm" until CodersTrust closes #29 and the status of each contract is stated.
+ * No Status column (visual polish, WP1p; confirm list #29): the register states a status for no single contract (GV-10 says only that "some
+ * contracts are still in progress"), so a column would read "Status to confirm" in every row. The note under the table says once that delivery
+ * status is confirmed per contract on request. When a status is registered for a contract, add the column back.
+ * No Curriculum-reach column: only Her Power has one, so its figures (the national program's training goal and the manuals published) sit in
+ * that row's scope text. A column returns when two or more contracts carry a value.
  * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
  */
 interface Row {
@@ -19,20 +21,16 @@ interface Row {
   facts: string[];
   scope: string;
   direct: string;
-  reach?: string;
-  status: string;
 }
-const TO_CONFIRM = 'Status to confirm';
 const SCOPE = 'Contract scope:';
 
 const rows: Row[] = [
   {
     contract: 'Her Power (Department of ICT (DoICT), ICT Division)',
     facts: ['GV-01'],
-    scope: 'Curriculum, training manuals and mentorship guidelines; Training of Trainers',
+    // GV-01's own order: curriculum, manuals and guidelines for the national program (its goal), Training of Trainers, then the manuals published.
+    scope: `Curriculum, training manuals and mentorship guidelines for a national program to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ upazilas)/)}; Training of Trainers; ${factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/)}`,
     direct: factPart('GV-01', /[\d,]+ women trained directly/),
-    reach: `Program to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ upazilas)/)}; ${factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/)}`,
-    status: TO_CONFIRM,
   },
   {
     // PMIS is the Center for Project Management and Information Systems at the University of Dhaka (named in full in the EDGE news item).
@@ -40,35 +38,30 @@ const rows: Row[] = [
     facts: ['GV-02'],
     scope: 'Training in digital and 4IR technologies',
     direct: `${SCOPE} ${factPart('GV-02', /[\d,]+ youth/)}`,
-    status: TO_CONFIRM,
   },
   {
     contract: 'SKIT incubator (Bangladesh Hi-Tech Park Authority)',
     facts: ['GV-03'],
     scope: 'High-demand IT skills training, Barishal',
     direct: `${SCOPE} ${factPart('GV-03', /[\d,]+ people/)}`,
-    status: TO_CONFIRM,
   },
   {
     contract: 'NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
     direct: `${SCOPE} initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
-    status: TO_CONFIRM,
   },
   {
     contract: 'Digital Lab Establishment Project, Phase II',
     facts: ['GV-05'],
     scope: 'LMS and operation training for staff',
     direct: `${SCOPE} ${factPart('GV-05', /[\d,]+\+ staff/)}`,
-    status: TO_CONFIRM,
   },
   {
     contract: 'Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute)',
     facts: ['GV-06'],
     scope: 'ICT, networking and cybersecurity training',
     direct: `${SCOPE} ${factPart('GV-06', /[\d,]+\+ professionals/)}`,
-    status: TO_CONFIRM,
   },
 ];
 
@@ -90,14 +83,12 @@ const { title, lead, id = 'contracts' } = Astro.props;
   <SectionHeader id={`${id}-h`} eyebrow="Government contracts" title={title} lead={lead} />
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
-      <caption class="sr-only">Six government contracts: what CodersTrust does under each, the training scope, the curriculum reach and the contract status. Counts are contract training scopes, not delivered scale.</caption>
+      <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Counts are contract training scopes, not delivered scale.</caption>
       <thead>
         <tr>
           <th scope="col">Contract</th>
           <th scope="col">CodersTrust scope</th>
           <th scope="col">Direct training</th>
-          <th scope="col">Curriculum reach</th>
-          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -107,10 +98,6 @@ const { title, lead, id = 'contracts' } = Astro.props;
               <th scope="row">{r.contract}</th>
               <td data-label="CodersTrust scope">{r.scope}</td>
               <td class="ct__num" data-label="Direct training">{r.direct}</td>
-              <td data-label="Curriculum reach">
-                {r.reach ? r.reach : (<><span class="sr-only">Not applicable</span><span aria-hidden="true">—</span></>)}
-              </td>
-              <td class="ct__status" data-label="Status">{r.status}</td>
             </tr>
           ))
         }
@@ -118,7 +105,7 @@ const { title, lead, id = 'contracts' } = Astro.props;
     </table>
   </section>
   <div class="ct__notes" data-reveal>
-    <p data-fact="GV-10">Counts are contract training scopes, not delivered scale; some scopes are still in progress.<FootnoteMarker id="GV-10" footnote={true} /></p>
+    <p data-fact="GV-10">Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.<FootnoteMarker id="GV-10" footnote={true} /></p>
     <p data-fact="SC-06"><Fact id="SC-06" />. {sc06Note}.</p>
     <p data-fact="SC-08">Separately, CodersTrust trained {teachersNumber} teachers {teachersTask}.</p>
   </div>
@@ -140,7 +127,7 @@ const { title, lead, id = 'contracts' } = Astro.props;
   }
   table {
     width: 100%;
-    min-width: 820px;
+    min-width: 620px;
     border-collapse: separate;
     border-spacing: 0;
   }
@@ -172,9 +159,6 @@ const { title, lead, id = 'contracts' } = Astro.props;
   .ct__num {
     color: var(--on-surface);
     font-weight: var(--fw-medium);
-  }
-  .ct__status {
-    white-space: nowrap;
   }
   .ct__notes {
     margin-top: var(--space-md);
