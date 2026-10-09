@@ -61,7 +61,7 @@ export const EMPATHY: Record<Audience, string> = {
 };
 
 export const ORIGIN: CopyBlock = {
-  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP program (2015) was in Dhaka’s Korail settlement.',
+  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.',
   facts: ['ID-02', 'PR-03a'],
 };
 
