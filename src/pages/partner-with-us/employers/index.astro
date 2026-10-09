@@ -29,7 +29,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -50,7 +50,7 @@ const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% name work as their main income source/);
 const steps = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-  { title: 'Train and certify', text: 'Custom curriculum and workshops, ending in industry certification where a track offers one.' },
+  { title: 'Train and certify', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
   { title: 'Support and measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
 ];
 ---
@@ -109,7 +109,7 @@ const steps = [
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'A team fluent in AI workflows', text: 'Your team applies AI tools in daily work.' },
-      { kind: 'Emotional', title: 'Hires who arrive ready', text: 'New hires arrive certified and ready to contribute.' },
+      { kind: 'Emotional', title: 'Hires who arrive ready', text: 'New hires arrive ready to contribute, and those who pass the exam hold an industry certification.' },
       { kind: 'Social', title: 'A reliable pipeline', text: 'Digital talent comes through CodersTrust’s placement team.' },
     ]}
   />
@@ -131,7 +131,7 @@ const steps = [
     blocks={[
       { label: 'Assess', title: 'Needs assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
       { label: 'Design', title: 'Customized solution and curriculum', text: 'A comprehensive curriculum built for your organization.', icon: 'pen' },
-      { label: 'Deliver', title: 'Interactive workshops', text: 'Soft-skills and hard-skills tracks, ending in industry certification where a track offers one.', icon: 'users' },
+      { label: 'Deliver', title: 'Interactive workshops', text: 'Soft-skills and hard-skills tracks, including preparation for an industry certification where a track offers one.', icon: 'users' },
       { label: 'Measure', title: 'Progress evaluation and support', text: 'Post-training support and a progress evaluation, so outcomes are measurable.', icon: 'chart-bar' },
     ]}
     link={{ label: 'About JobReady@Work', href: LINKS.work }}
@@ -146,6 +146,7 @@ const steps = [
   <ProofBand
     title="Independent evidence and survey results"
     headlineFact="RC-01"
+    trialScope={TRIAL_SCOPE.work.text}
     statIds={['RC-02', 'RC-04']}
     chartId="OC-01"
     links={[
@@ -168,9 +169,9 @@ const steps = [
     title="What you get, and what it means for your business."
     rows={[
       {
-        feature: 'A placement team, plus certified trainees from employer-demand tracks',
+        feature: 'A placement team, plus trainees from employer-demand certification tracks',
         means: 'a short route to job-ready candidates.',
-        outcome: 'Certified candidates for your roles',
+        outcome: 'Job-ready candidates for your roles',
         relieves: 'You cannot find the digital talent you need',
       },
       {
@@ -200,7 +201,7 @@ const steps = [
   <!-- C10 · Differentiation -->
   <ComparisonBand
     title="Compare the approaches."
-    lead="Recognized credentials are built into each track, and delivery uses infrastructure that already exists. Provision varies by provider and program."
+    lead="Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists. Provision varies by provider and program."
   />
 
   <!-- C11 · Offer -->

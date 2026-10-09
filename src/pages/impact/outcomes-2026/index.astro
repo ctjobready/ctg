@@ -40,15 +40,15 @@ const description = desc(`Surveyed completers: employment rose from ${val('OC-01
 const pc = D.percent;
 
 const jsonLd = [
-  webPage({ path, name: 'Impact Survey 2026: what happened after training', description, datePublished: '2026-10-07', dateModified: '2026-10-07' }),
-  articleNode({ path, headline: 'Impact Survey 2026: what happened after training', description, datePublished: '2026-10-07', dateModified: '2026-10-07', author: 'CodersTrust' }),
+  webPage({ path, name: 'Impact Survey 2026: what happened after training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED }),
+  articleNode({ path, headline: 'Impact Survey 2026: what happened after training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED, author: 'CodersTrust' }),
   {
     ...dataset({
       path,
       name: 'CodersTrust Impact Survey 2026 — published aggregates',
       description: 'Published aggregates from the CodersTrust Impact Survey, October 2026: employment, income, speed to earnings, career outcomes, learner experience and respondent profile among surveyed completers. Percentages and medians only, with no counts; districts under 3% are combined into Other districts.',
-      datePublished: '2026-10-07',
-      dateModified: '2026-10-07',
+      datePublished: D.DATE_PUBLISHED,
+      dateModified: D.PAGE_LAST_REVIEWED,
       methodology: 'Online alumni survey (LimeSurvey)',
       keywords: ['youth employment', 'digital skills training', 'Bangladesh', 'impact survey', 'freelancing'],
       variableMeasured: ['Employment rate before training and at the survey', 'Median monthly income', 'Direction of paired income change', 'Speed to first earnings', 'Career and education outcomes', 'Main income source', 'Recommendation score', 'Respondent profile'],
@@ -104,7 +104,8 @@ const reportLink = reportCta();
   lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience, each with its own base."
   description={description}
   path={path}
-  updated="2026-10-07"
+  updated={D.PAGE_LAST_REVIEWED}
+  snapshot={D.SOURCE_SNAPSHOT}
   toc={toc}
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Outcomes 2026' }]}
   jsonLd={jsonLd}

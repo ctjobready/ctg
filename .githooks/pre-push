@@ -1,0 +1,96 @@
+#!/bin/sh
+# Pre-push publication audit (review round 14, M2; planning/08 §4 "Repository publication rule" and §10).
+#
+# This repository is public: a push publishes every committed file and the whole history. The public CI audit runs after the push, so it can
+# only detect a leak. This hook runs the same audit BEFORE anything leaves the machine:
+#
+#   NEVER_PUBLISH_STRICT=1 node scripts/check-repo-publication.mjs
+#
+# against the private never-publish list. Install once per clone:  npm run hooks:install   (git config core.hooksPath .githooks)
+# Run it by hand any time:                                         sh .githooks/pre-push
+#
+# The list is read by the audit script, in this order: env NEVER_PUBLISH_JSON (the list as a JSON string), env NEVER_PUBLISH_FILE (a path), then
+# ../ctg-planning/never-publish.json (the private planning checkout, found by walking up from this repository, so it also works from a git
+# worktree). Any finding blocks the push. If the list cannot be found the hook FAILS CLOSED with a clear message: the one-time bypass
+# (git push --no-verify) is the owner's decision and applies to that case only; a finding is fixed, never bypassed.
+#
+# The audit reads the checked-out working tree, so it only vouches for the commit that is checked out: the hook refuses to run when the
+# tracked files differ from HEAD, or when a ref being pushed is not the checked-out commit. Output carries entry ids, file paths and
+# line numbers only; the list itself is confidential and is never printed.
+
+zero=0000000000000000000000000000000000000000
+
+say() { printf '%s\n' "$*" >&2; }
+block() {
+  say ""
+  say "pre-push: BLOCKED - $1"
+  shift
+  for line in "$@"; do say "  $line"; done
+  say ""
+  exit 1
+}
+
+root=$(git rev-parse --show-toplevel 2>/dev/null) || block "this is not a git work tree, so the publication audit cannot run (fail closed)."
+cd "$root" || block "cannot enter the repository root ($root)."
+
+head_sha=$(git rev-parse HEAD 2>/dev/null) || head_sha=""
+
+# 1. What is being pushed (git lists "<local ref> <local sha> <remote ref> <remote sha>" on stdin; a manual run has none). The audit reads the
+#    checked-out working tree, so every ref being published must be the checked-out commit.
+refs_seen=0
+publishing=0
+if [ ! -t 0 ]; then
+  while read -r local_ref local_sha remote_ref remote_sha; do
+    [ -n "${local_ref:-}" ] || continue
+    refs_seen=1
+    [ "$local_sha" = "$zero" ] && continue # deleting a remote ref publishes nothing
+    publishing=1
+    tip=$(git rev-parse "${local_sha}^{commit}" 2>/dev/null || printf '%s' "$local_sha")
+    if [ -n "$head_sha" ] && [ "$tip" != "$head_sha" ]; then
+      block "you are pushing $local_ref ($tip), which is not the checked-out commit ($head_sha); the audit would not cover it." \
+        "Check out the commit you are pushing (a separate clean checkout or git worktree), then push again."
+    fi
+  done
+fi
+if [ "$refs_seen" -eq 1 ] && [ "$publishing" -eq 0 ]; then
+  say "pre-push: only deleting remote refs; nothing is published, so the audit is skipped."
+  exit 0
+fi
+
+# 2. The audit must be able to run, and must be looking at the commit that is checked out.
+command -v node >/dev/null 2>&1 || block "node is not on PATH, so the publication audit cannot run (fail closed)." "Install Node 22 (.nvmrc), then push again."
+[ -f scripts/check-repo-publication.mjs ] || block "scripts/check-repo-publication.mjs is missing, so the publication audit cannot run (fail closed)."
+[ -n "$head_sha" ] || block "the repository has no commit to audit."
+if ! git diff --quiet HEAD -- 2>/dev/null; then
+  block "tracked files differ from HEAD; the audit reads the working tree, so it would not vouch for the commits you are pushing." \
+    "Commit or discard the changes (git status), then push again."
+fi
+
+# 3. The audit, in strict mode (a missing list fails closed instead of skipping the scan). GIT_* variables from the caller must not redirect its git calls.
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+say "pre-push: running the repository publication audit (strict) against the private never-publish list ..."
+out=$(NEVER_PUBLISH_STRICT=1 node scripts/check-repo-publication.mjs 2>&1)
+status=$?
+[ -z "$out" ] || printf '%s\n' "$out" >&2
+
+if [ "$status" -eq 0 ]; then
+  say "pre-push: publication audit passed."
+  exit 0
+fi
+
+case "$out" in
+  *"FAILED CLOSED"*|*"never-publish list not found"*|*"is not valid JSON"*|*'needs a "terms"'*)
+    block "the private never-publish list is not available or not usable, so the publication audit cannot vouch for this push (fail closed)." \
+      "Make the list available, then push again:" \
+      "  - check out the private planning repository as ../ctg-planning (it holds never-publish.json), or" \
+      "  - set NEVER_PUBLISH_JSON (the list as a JSON string) or NEVER_PUBLISH_FILE (a path to the file)." \
+      "One-time bypass, only for this case and only on the owner's decision:  git push --no-verify" \
+      "A finding is never a reason to bypass."
+    ;;
+  *)
+    block "the publication audit reported a finding, or failed to run (exit $status). Nothing was pushed." \
+      "Remove the material in a new commit (the audit output above names the entry ids and files), then push again." \
+      "Do not use --no-verify for a finding. If sensitive material was already pushed anywhere, treat it as an incident:" \
+      "see README.md, \"Pre-push publication audit\", for the steps."
+    ;;
+esac

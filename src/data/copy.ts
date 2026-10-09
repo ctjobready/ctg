@@ -71,6 +71,18 @@ export const RCT_HEADLINE: CopyBlock = {
 };
 
 /**
+ * Relevance line (review round 14, m2), set directly under the randomized-trial headline on the pages whose offering the trial did not
+ * evaluate: /partner-with-us/employers/ and /programs/jobready-work/ (JobReady@Work) and /nu-postgraduate-diploma/ (the NU Postgraduate
+ * Diploma). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational evidence, not
+ * evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these three pages.
+ */
+export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Dhaka, not ${offering}.`, facts: ['RC-01'] });
+export const TRIAL_SCOPE = {
+  work: trialScope('JobReady@Work'),
+  nuPgd: trialScope('the NU Postgraduate Diploma'),
+};
+
+/**
  * C6a positioning statements (CMF C6; doc 04 §1). Each conversion page's C6 OPENS with its statement (no lead line before it), in the pattern
  * "For [audience] who need [outcome], CodersTrust [category] that [differentiator]. Unlike [alternative], we [proof-backed difference]."
  * The pattern is split at its semicolon into two sentences so that neither runs past about 50 words (review round 11, F26). The closing
@@ -127,7 +139,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-01', 'RC-01'],
   },
   campus: {
-    text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, certified training that runs in parallel with academic studies. ${UNLIKE_APPROVED}`,
+    text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, training with industry-certification preparation that runs in parallel with academic studies. ${UNLIKE_APPROVED}`,
     facts: ['IN-09', 'RC-01'],
   },
   work: {
@@ -140,6 +152,39 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: 'For schools and education partners who want children to build digital skills early, CodersTrust offers SuperKids, a K-12 STEAM program of block coding, robotics and digital art, offered through schools and education partners under agreements with DoICT and NCTB (agreements and targets, not delivered reach).',
     facts: ['GV-08'],
   },
+};
+
+/**
+ * Ranked C2b pains for the three bespoke conversion pages (review round 14, M4): Home and YouthWIDE (a funder audience) and the
+ * local-partners page. Each page's C2 band lists them as P1 to P3 (`name` as the heading, `text` under it, in the reader's own words)
+ * and its C8 table has exactly one row per pain: pain (`name`) → how we relieve it → the registered feature behind it. Both bands read
+ * this list, so the wording cannot drift between them; scripts/check-facts.mjs checks the one-to-one map from the built pages
+ * (`data-pain` in C2, `data-relieves` in C8). The pains carry no figure; `facts` ties one to the register fact it rests on.
+ */
+export type PainId = 'P1' | 'P2' | 'P3';
+export interface Pain {
+  id: PainId;
+  name: string;
+  text: string;
+  facts?: string[];
+}
+export const FUNDER_PAINS: Pain[] = [
+  { id: 'P1', name: 'Trained youth who never reach paid work', text: 'A course ends, and the way into a job, a freelance client or a business of their own is left to the learner.' },
+  { id: 'P2', name: 'Results you cannot verify or report', text: 'Enrollment is easy to count. Showing who started earning, to a board or an evaluator, is much harder.' },
+  { id: 'P3', name: 'Skills that age fast as AI changes entry-level work', text: 'AI is shifting which entry-level skills employers ask for, so last year’s course list can miss this year’s demand.', facts: ['PX-06'] },
+];
+export const LOCAL_PARTNER_PAINS: Pain[] = [
+  { id: 'P1', name: 'Missing curriculum, trainers and certification', text: 'You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are often out of reach.' },
+  { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
+  { id: 'P3', name: 'Reporting and accountability demands', text: 'Funders ask who is earning, but training is still measured by enrollment, not earnings.' },
+];
+/** A pain as the C2 list (GainsPains) takes it. */
+export const painForList = (p: Pain) => ({ id: p.id, q: p.name, text: p.text, facts: p.facts });
+/** The `painId` and `relieves` fields of the C8 row (FeaturesTable) that relieves pain `id` of `pains`. */
+export const painForRow = (pains: Pain[], id: PainId) => {
+  const p = pains.find((x) => x.id === id);
+  if (!p) throw new Error(`painForRow: no pain ${id}`);
+  return { painId: p.id, relieves: p.name };
 };
 
 /**

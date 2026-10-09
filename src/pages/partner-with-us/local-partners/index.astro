@@ -20,9 +20,10 @@ import Sources from '../../../components/facts/Sources.astro';
 import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
+import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import { localCta } from '../../../components/pages/about/routes';
 import { HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, LOCAL_PARTNER_PAINS, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -90,7 +91,9 @@ const ways = [
   </DefinitionPlus>
 
   <!-- C2 -->
-  <ProblemBand id="problem" title="Local organizations reach the young people central programs miss." bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']} />
+  <ProblemBand id="problem" title="Local organizations reach the young people central programs miss." bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']}>
+    <GainsPains slot="lead" painsHeading="What gets in the way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
+  </ProblemBand>
 
   <!-- C3 -->
   <CostBand
@@ -139,7 +142,7 @@ const ways = [
       positioning={POSITIONING.localPartners}
       blocks={[
         { label: 'Your organization', title: 'Mobilizes and hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
-        { label: 'With CodersTrust', title: 'Trains and certifies', text: 'Certified local facilitators, a localized curriculum and certification, delivered in blended classes.', icon: 'graduation-cap' },
+        { label: 'With CodersTrust', title: 'Trains and certifies', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and placement', text: 'Three months of milestone-based mentoring, then placement support into local, remote and global work.', icon: 'handshake' },
         { label: 'Throughout', title: 'Monthly reporting', text: 'The funder sees enrollment, completion, certification, placements and first earnings every month.', icon: 'chart-bar' },
       ]}
@@ -158,16 +161,35 @@ const ways = [
     ]}
   />
 
-  <!-- C8 -->
+  <!-- C8 (review round 14, M4): one row per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting"; then the gain creators -->
   <FeaturesTable
     id="features"
     title="What you get, and what it means for your community."
     rows={[
-      { feature: 'Certified-facilitator training', means: 'local capacity that stays after a funded cohort ends.', outcome: 'Certified facilitators from your community' },
+      {
+        ...painForRow(LOCAL_PARTNER_PAINS, 'P1'),
+        feature: 'Certified-facilitator training, a localized curriculum and preparation for industry certification',
+        means: 'local capacity that stays after a funded cohort ends, with a curriculum and a certification route you do not have to build yourself.',
+        outcome: 'Certified facilitators from your community',
+        facts: ['PD-06', 'PD-02'],
+      },
+      {
+        ...painForRow(LOCAL_PARTNER_PAINS, 'P2'),
+        feature: 'Three months of milestone-based mentoring, then placement support into local, remote and global work',
+        means: 'your completers get a route into work that your organization does not have to build alone.',
+        outcome: 'Work-entry connections for your completers',
+        facts: ['PD-01', 'PD-15'],
+      },
+      {
+        ...painForRow(LOCAL_PARTNER_PAINS, 'P3'),
+        feature: 'Monthly reports to the funder',
+        means: 'accountability that you and the funder share.',
+        outcome: 'Progress you and the funder can both see',
+        facts: ['PD-08'],
+      },
       { feature: 'Blended delivery in existing labs and colleges', means: 'a low capital cost for you and for the funder.', outcome: 'A cohort in a lab or classroom you already have' },
       { feature: 'Connectivity-light delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
       { feature: 'Consent-based data practice and safeguarding agreed per program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
-      { feature: 'Monthly reports', means: 'accountability that you and the funder share.', outcome: 'Progress you and the funder can both see' },
     ]}
   />
   <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">

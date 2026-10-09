@@ -12,8 +12,13 @@ interface Props extends BaseLayoutProps {
   toc?: { id: string; label: string }[];
   /** ISO date of last substantive update. */
   updated?: string;
+  /**
+   * Set where the page reports a dated source (the Outcomes 2026 survey): the header then reads "Source snapshot: <snapshot> · Page last
+   * reviewed: <updated>" instead of "Last updated <updated>", so the age of the data is not confused with the age of the page.
+   */
+  snapshot?: string;
 }
-const { eyebrow, heading, lead, toc = [], updated, ...base } = Astro.props;
+const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.props;
 ---
 
 <BaseLayout {...base}>
@@ -23,7 +28,14 @@ const { eyebrow, heading, lead, toc = [], updated, ...base } = Astro.props;
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h1 class="t-display-4xl">{heading ?? base.title}</h1>
       {lead && <p class="lead">{lead}</p>}
-      {updated && <p class="lf-updated">Last updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></p>}
+      {
+        updated && (
+          <p class="lf-updated">
+            {snapshot ? <>Source snapshot: {snapshot} · Page last reviewed: </> : <>Last updated </>}
+            <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
+          </p>
+        )
+      }
     </div>
   </header>
 

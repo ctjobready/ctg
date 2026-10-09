@@ -18,6 +18,7 @@
     "check:base": "node scripts/check-base-links.mjs",
     "check:facts": "node --experimental-strip-types scripts/check-facts.mjs",
     "check:permissions": "node scripts/check-permissions.mjs",
+    "check:privacy-origins": "node scripts/check-privacy-origins.mjs",
     "check:repo-publication": "node scripts/check-repo-publication.mjs",
     "a11y": "node scripts/a11y-smoke.mjs",
     "test:html": "node scripts/check-html.mjs",
@@ -45,7 +46,8 @@
     "test:repo-publication": "node scripts/test-repo-publication.mjs",
     "test:build": "node scripts/run-gate.mjs build",
     "test:production-release": "node scripts/run-gate.mjs production-release",
-    "test:edge-release": "node scripts/run-gate.mjs edge-release"
+    "test:edge-release": "node scripts/run-gate.mjs edge-release",
+    "hooks:install": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.3",

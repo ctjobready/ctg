@@ -26,7 +26,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { LAST_UPDATED } from '../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
-import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
 import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
@@ -127,7 +127,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="The evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
       <CopyP block={SURVEY_EMPLOYMENT} />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>

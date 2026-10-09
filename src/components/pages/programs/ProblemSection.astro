@@ -10,6 +10,7 @@ import { fact, sources } from '../../../data/facts';
  * cards (a pain with no register figure), so pages are not forced into four statistics.
  * `scope` re-words a fact that is not a Bangladesh figure (PX-05, PX-07, PX-08, PX-09) so the scope sits in
  * the same sentence: `prefix` ("Globally") is put before the canonical text; `label` replaces a stat label.
+ * The named slot `lead` sits in the band header under the BLUF, like ProblemBand's: the ranked pains (GainsPains) go there.
  */
 interface Extra {
   title: string;
@@ -46,7 +47,7 @@ const scoped = (fid: string) => {
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={bluf} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={bluf}><slot name="lead" /></SectionHeader>
   <div class={grid}>
     {
       factIds.map((f) => {

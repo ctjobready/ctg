@@ -40,6 +40,14 @@
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim [UNLIKE] sentence (SuperKids, whose [UNLIKE] clause is pending, is exempt from that
 //     second part); negative self-tests below
+//   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
+//     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 table (#features) exactly one row for
+//     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
+//   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /nu-postgraduate-diploma/ (the NU
+//     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
+//     the C7 proof band; negative self-tests below
+//   - program-data label wording: "Program data — gross in-work rate among program completers, no comparison group" (round 14, m1; the retired
+//     "among graduates" wording is flagged), and the retired USP heading "Earning starts within months" (round 14, m3) renders nowhere
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
 //     registers (facts, caveats, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
@@ -135,6 +143,8 @@ const DISCIPLINE = [
   [/\bdashboards?\b/i, '"dashboard" (use "monthly reports")'],
   [/into first income/i, '"into first income" (use "milestone-based mentoring")'],
   [/\b30[- ]minute/i, 'unsourced "30 minutes" promise'],
+  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners started earning within six months.", with the 58.8%, its base and the survey qualifier immediately below
+  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners started earning within six months.", with the 58.8%, its base and the survey qualifier below it)'],
 ];
 // The investor CTA label and its mailto subject are allowed.
 const ALLOWED = [/Request the investor deck/gi, /Investor(%20| )deck(%20| )request/gi];
@@ -216,7 +226,8 @@ function archiveWordingProblems(path, html) {
 // PR-01, PR-02 and PR-05 end their stat label with the register's label; components set it on its own line and add no second one.
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const LABEL_TWICE = new RegExp(`${escapeRe(PROGRAM_DATA_LABEL)}[^A-Za-z]{0,12}${escapeRe(PROGRAM_DATA_LABEL)}`);
-const LABEL_VARIANT = /Program records — gross|gross placement/i;
+// "among graduates" is the label's retired wording (review round 14 m1: "graduates" means university-degree holders; the denominator is program completers)
+const LABEL_VARIANT = /Program records — gross|gross placement|gross in-work rate among graduates/i;
 function programLabelProblems(text) {
   const out = [];
   if (LABEL_TWICE.test(text)) out.push('the program-data label is printed twice in a row (a figure carries it once)');
@@ -344,6 +355,68 @@ function positionProblems(markup, { unlike = true } = {}) {
     if (!statement.endsWith(` ${UNLIKE_SENTENCE}`)) out.push('the positioning statement does not end with the verbatim [UNLIKE] sentence as its own sentence');
     else if (!/[.!?]$/.test(statement.slice(0, -UNLIKE_SENTENCE.length - 1))) out.push('the positioning statement runs the audience sentence into [UNLIKE] (they are two sentences)');
   }
+  return out;
+}
+
+/* ---- ranked pains (C2b) and the C8 map on the bespoke pages (review round 14, M4) ---- */
+// Home, /partner-with-us/local-partners/ and /programs/youthwide/ are built by hand, not from a band matrix, so the messaging framework's C2b and
+// C8b rules are checked on the built pages: the C2 band (#problem) states exactly THREE ranked pains, each a list item with data-pain="P1", "P2",
+// "P3" in that order, and the C8 table (#features) has exactly ONE row for each of them, in the same order, as <tr data-relieves="P1"> (pain →
+// how we relieve it → the registered feature behind it). A row without data-relieves is a gain creator and is not counted. Only the two bands
+// are read: the same attributes elsewhere on the page count for nothing. The wording lives in src/data/copy.ts (FUNDER_PAINS, LOCAL_PARTNER_PAINS).
+const PAIN_PAGES = ['/', '/partner-with-us/local-partners/', '/programs/youthwide/'];
+const PAIN_IDS = ['P1', 'P2', 'P3'];
+/** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; the C8 table's own wrapper is not one). */
+function bandMarkup(markup, id) {
+  const open = new RegExp(`<section\\b[^>]*\\bid="${id}"[^>]*>`).exec(markup);
+  if (!open) return null;
+  const rest = markup.slice(open.index + open[0].length);
+  const next = /<section\b[^>]*\bclass="band\b/.exec(rest);
+  return next ? rest.slice(0, next.index) : rest;
+}
+function painMapProblems(markup) {
+  const c2 = bandMarkup(markup, 'problem');
+  const c8 = bandMarkup(markup, 'features');
+  const out = [];
+  if (c2 === null) out.push('the C2 band (#problem) is missing, so the ranked pains have nowhere to sit');
+  if (c8 === null) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
+  if (c2 === null || c8 === null) return out;
+  const pains = [...c2.matchAll(/<li\b[^>]*\bdata-pain="([^"]*)"/g)].map((m) => m[1]);
+  const rows = [...c8.matchAll(/<tr\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
+  if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
+  for (const id of PAIN_IDS) {
+    const n = rows.filter((r) => r === id).length;
+    if (n !== 1) out.push(`C8 must have exactly one row for pain ${id} (data-relieves="${id}"), found ${n}`);
+  }
+  for (const r of new Set(rows)) if (!PAIN_IDS.includes(r)) out.push(`C8 has a row that relieves "${r}", which is not one of ${PAIN_IDS.join(', ')}`);
+  const inOrder = rows.filter((r) => PAIN_IDS.includes(r));
+  if (inOrder.length === PAIN_IDS.length && new Set(inOrder).size === PAIN_IDS.length && inOrder.join(' ') !== PAIN_IDS.join(' ')) out.push(`C8 rows must follow the ranking of the pains, found [${inOrder.join(' ')}]`);
+  return out;
+}
+
+/* ---- relevance line beside the randomized-trial proof (review round 14, m2) ---- */
+// Where the offering on the page is not the program the trial evaluated, one line sits directly under the trial headline in the C7 proof band:
+// "This trial evaluated WSDFM training for women in Dhaka, not <the offering>." The sentences are declared here on their own (src/data/copy.ts
+// builds them from TRIAL_SCOPE), so a change has to be made in both places on purpose. Both employer pages sell JobReady@Work.
+const TRIAL_SCOPE_BY_PAGE = {
+  '/partner-with-us/employers/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
+  '/programs/jobready-work/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
+  '/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.',
+};
+const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
+function trialScopeProblems(markup, wanted) {
+  const band = bandMarkup(markup, 'proof-band');
+  if (band === null) return ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
+  const head = /<header\b[^>]*\bproofband__head\b[^>]*>([\s\S]*?)<\/header>/.exec(band)?.[1];
+  if (head === undefined) return ['the proof band has no header, so the trial relevance line cannot sit under the trial headline'];
+  const heading = /<h2\b[\s\S]*?<\/h2>/.exec(head);
+  const line = /<p\b[^>]*\bdata-trial-scope\b[^>]*>([\s\S]*?)<\/p>/.exec(head);
+  if (!heading) return ['the proof band header has no H2 trial headline'];
+  if (!line) return [`the relevance line "${wanted}" is missing directly under the randomized-trial headline`];
+  const out = [];
+  if (line.index < heading.index) out.push('the relevance line sits above the trial headline (it belongs directly under it)');
+  const text = decode(line[1]);
+  if (text !== wanted) out.push(`the relevance line reads "${text}", expected "${wanted}"`);
   return out;
 }
 
@@ -701,6 +774,8 @@ function numberGuardPage(path, html, allow = []) {
   if (programLabelProblems(okFig).length) problems.push('self-test: the program-data label check rejected figures that each carry the label once');
   if (!programLabelProblems(`women placed (71%) in WSDFM. ${PROGRAM_DATA_LABEL} 1 ${PROGRAM_DATA_LABEL} Women’s skills`).length) problems.push('self-test: the program-data label check accepted the label printed twice in a row');
   if (!programLabelProblems('372 of 800 women placed (47%) in Her Power training Program records — gross placement Context').length) problems.push('self-test: the program-data label check accepted a page-local label');
+  if (!programLabelProblems('711 of 1,000 women placed (71%) in WSDFM. Program data — gross in-work rate among graduates, no comparison group Context').length) problems.push('self-test: the program-data label check accepted the retired "among graduates" wording');
+  if (PROGRAM_DATA_LABEL !== 'Program data — gross in-work rate among program completers, no comparison group') problems.push(`self-test: PROGRAM_DATA_LABEL is "${PROGRAM_DATA_LABEL}", not the round-14 wording "Program data — gross in-work rate among program completers, no comparison group"`);
   if (programLabelProblems('What would have happened without training; placement is gross, not net. Each case study states its own base.').length) problems.push('self-test: the program-data label check flagged ordinary wording');
   // [PLAIN-LINE]: required on three pages, numbers derived from RC-02, rendered by <PlainLine> with RC-02's footnote marker
   const rc02 = facts['RC-02'].stat;
@@ -804,6 +879,66 @@ function numberGuardPage(path, html, allow = []) {
   posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
 
+  // ranked pains and the C8 map (M4): exactly P1, P2, P3 in C2, exactly one C8 row for each, in order; only the two bands are read
+  const painLi = (id) => `<li data-pain="${id}" data-astro-cid-x><span class="gp__n">1</span><div><p class="gp__q">A pain</p><p class="gp__a">Its words.</p></div></li>`;
+  const painTr = (id) => `<tr data-relieves="${id}" data-fact="PD-15"><th scope="row">A feature</th><td>Which means</td><td>Outcome</td><td>Relieves</td></tr>`;
+  const painPage = ({ pains = PAIN_IDS, rows = PAIN_IDS, c2 = true, c8 = true } = {}) =>
+    '<main>' +
+    (c2 ? `<section class="band band--white band--pad-md" id="problem" aria-labelledby="problem-h"><div class="container"><header class="sh"><h2 id="problem-h">Problem</h2><div class="gp"><ol class="gp__pains">${pains.map(painLi).join('')}</ol></div></header></div></section>` : '') +
+    (c8 ? `<section class="band band--white band--pad-md" id="features" aria-labelledby="features-h"><div class="container"><header class="sh"><h2 id="features-h">Features</h2></header><section class="ft" aria-label="Features and benefits"><table><tbody>${rows.map(painTr).join('')}<tr><th scope="row">A gain creator</th><td>Which means</td><td>Outcome</td><td>—</td></tr></tbody></table></section></div></section>` : '') +
+    // the same attributes in a later band count for nothing
+    `<section class="band band--white" id="faq"><ol><li data-pain="P4">x</li></ol><table><tr data-relieves="P4"><td>x</td></tr></table></section></main>`;
+  const painOk = (why, markup) => {
+    const r = painMapProblems(markup);
+    if (r.length) problems.push(`self-test: the pain-map check rejected ${why}: ${r.join('; ')}`);
+  };
+  const painBad = (why, markup) => {
+    if (!painMapProblems(markup).length) problems.push(`self-test: the pain-map check accepted ${why}`);
+  };
+  painOk('three pains with one C8 row each (and a gain-creator row, and decoys in a later band)', painPage());
+  painBad('two pains in C2', painPage({ pains: ['P1', 'P2'] }));
+  painBad('four pains in C2', painPage({ pains: ['P1', 'P2', 'P3', 'P4'] }));
+  painBad('no pains in C2', painPage({ pains: [] }));
+  painBad('pains out of rank order', painPage({ pains: ['P2', 'P1', 'P3'] }));
+  painBad('a pain stated twice (P1, P1, P3)', painPage({ pains: ['P1', 'P1', 'P3'] }));
+  painBad('a pain with the wrong id (P1, P2, P4)', painPage({ pains: ['P1', 'P2', 'P4'] }));
+  painBad('a pain with no C8 row (P2 missing)', painPage({ rows: ['P1', 'P3'] }));
+  painBad('no C8 rows at all', painPage({ rows: [] }));
+  painBad('two C8 rows for one pain (P1 twice)', painPage({ rows: ['P1', 'P1', 'P2', 'P3'] }));
+  painBad('a C8 row for a pain that C2 does not state (P4)', painPage({ rows: ['P1', 'P2', 'P3', 'P4'] }));
+  painBad('C8 rows that do not follow the ranking', painPage({ rows: ['P3', 'P1', 'P2'] }));
+  painBad('a page with no C2 band', painPage({ c2: false }));
+  painBad('a page with no C8 band', painPage({ c8: false }));
+  painBad('pain ids that sit only outside C2 (the attributes in a later band do not count)', painPage({ pains: [] }).replace('<ol><li data-pain="P4">x</li></ol>', `<ol>${painLi('P1')}${painLi('P2')}${painLi('P3')}</ol>`));
+  // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
+  const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
+  const scopeNu = TRIAL_SCOPE_BY_PAGE['/nu-postgraduate-diploma/'];
+  if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
+  const proofPage = (headInner, after = '') => `<main><section class="band band--klein band--pad-md" id="proof-band" aria-labelledby="proof-band-h"><div class="container"><header class="proofband__head" data-reveal data-fact="RC-01"><p class="eyebrow">The evidence</p>${headInner}</header><div class="proofband"><div class="proofband__stats"></div></div>${after}</div></section></main>`;
+  const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…<sup class="fn" data-fact="RC-01"><a href="#fn-1" id="fn-ref-1-1" aria-label="Note 1">1</a></sup></h2>';
+  const trialLine = (text) => `<p class="proofband__scope" data-trial-scope data-astro-cid-x>${text}</p>`;
+  const trialOk = (why, markup, wanted) => {
+    const r = trialScopeProblems(markup, wanted);
+    if (r.length) problems.push(`self-test: the trial-relevance check rejected ${why}: ${r.join('; ')}`);
+  };
+  const trialBad = (why, markup, wanted) => {
+    if (!trialScopeProblems(markup, wanted).length) problems.push(`self-test: the trial-relevance check accepted ${why}`);
+  };
+  trialOk('the line directly under the headline', proofPage(`${trialH2}${trialLine(scopeWork)}<p class="lead">A lead.</p>`), scopeWork);
+  trialOk('the NU diploma line on the NU page', proofPage(`${trialH2}${trialLine(scopeNu)}`), scopeNu);
+  trialBad('a proof band with no relevance line', proofPage(trialH2), scopeWork);
+  trialBad('the NU diploma line on an employer page', proofPage(`${trialH2}${trialLine(scopeNu)}`), scopeWork);
+  trialBad('the employer line on the NU diploma page', proofPage(`${trialH2}${trialLine(scopeWork)}`), scopeNu);
+  trialBad('a reworded line', proofPage(`${trialH2}${trialLine('This trial evaluated training for women in Dhaka, not JobReady@Work.')}`), scopeWork);
+  trialBad('a line without the Dhaka scope', proofPage(`${trialH2}${trialLine('This trial did not evaluate JobReady@Work.')}`), scopeWork);
+  trialBad('a line above the headline', proofPage(`${trialLine(scopeWork)}${trialH2}`), scopeWork);
+  trialBad('a line outside the header (after the stats, away from the proof)', proofPage(trialH2, trialLine(scopeWork)), scopeWork);
+  trialBad('a page with no proof band', '<main><p>nothing</p></main>', scopeWork);
+  // retired wording: the USP heading "Earning starts within months" overgeneralizes OC-05 (round 14, m3)
+  const disciplineHits = (text) => DISCIPLINE.filter(([re]) => re.test(text)).length;
+  if (!disciplineHits('<h3>Earning starts within months</h3>')) problems.push('self-test: the wording gate accepted the retired USP heading "Earning starts within months"');
+  if (disciplineHits('<h3>Most surveyed new earners started earning within six months.</h3>')) problems.push('self-test: the wording gate flagged the round-14 USP heading');
+
   // number guard: an unregistered figure on an evergreen page fails; registered figures pass in any format; archive posts, stubs, the styleguide
   // and the 404 are exempt; the whitelist is per page and per text
   const guardDoc = (body, head = '') => `<!doctype html><html lang="en"><head><title>Page</title>${head}</head><body><main>${body}</main></body></html>`;
@@ -896,7 +1031,9 @@ let footnotePages = 0;
 let plainLinePages = 0;
 let agendaPages = 0;
 let positionPages = 0;
-const guard = { pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
+let painPages = 0;
+let trialScopePages = 0;
+const guard ={ pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
 guardLog.clear(); // the self-tests above also pass through the guard
 const { list: allowList, bad: allowBad } = loadAllowlist();
 for (const p of allowBad) problems.push(`scripts/facts-guard-allow.json: ${p}`);
@@ -967,6 +1104,16 @@ for (const file of htmlFiles(dist)) {
     positionPages++;
     for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path) })) problems.push(`${path}: ${p}`);
   }
+  // three ranked pains in C2 and one C8 row for each, on the three bespoke pages (round 14, M4)
+  if (PAIN_PAGES.includes(path)) {
+    painPages++;
+    for (const p of painMapProblems(markup)) problems.push(`${path}: ${p}`);
+  }
+  // the trial relevance line directly under the randomized-trial headline where the offering is not the evaluated program (round 14, m2)
+  if (TRIAL_SCOPE_PAGES.includes(path)) {
+    trialScopePages++;
+    for (const p of trialScopeProblems(markup, TRIAL_SCOPE_BY_PAGE[path])) problems.push(`${path}: ${p}`);
+  }
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
     agendaPages++;
@@ -983,8 +1130,8 @@ if (pages === 0) {
   console.error(`check-facts: no HTML found in ${dist}. Run "npm run build" first.`);
   process.exit(1);
 }
-// A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA] or the [POSITION] statement has to be in the build at all.
-for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [SESSION-AGENDA] or [POSITION] cannot be checked`);
+// A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all.
+for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -1000,6 +1147,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

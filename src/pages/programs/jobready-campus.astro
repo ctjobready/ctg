@@ -35,12 +35,12 @@ import { webPage } from '../../lib/schema';
 const path = '/programs/jobready-campus/';
 const title = 'JobReady@Campus: Skills Alongside the Degree';
 const degree = statValue('OC-09');
-const description = `JobReady@Campus runs certified digital-skills training alongside the degree. Among surveyed completers, ${degree} hold a bachelor’s degree or higher.`;
+const description = `JobReady@Campus adds digital skills and certification preparation to the degree. Among surveyed completers, ${degree} hold a bachelor’s degree or higher.`;
 const campus = ctaFor('campus');
 const hours = statValue('PD-01');
 
 const faqSources: FaqSource[] = [
-  { q: 'Is JobReady@Campus right for our institution?', html: 'Right for you if you want certified, employer-demand tracks alongside degrees. Not right if you want to replace the degree.' },
+  { q: 'Is JobReady@Campus right for our institution?', html: 'Right for you if you want employer-demand tracks with certification preparation alongside degrees. Not right if you want to replace the degree.' },
   ...['Q1', 'Q13', 'Q3', 'Q10', 'Q8'].map((id) => ({ audience: 'universities' as const, id })),
 ];
 
@@ -91,9 +91,9 @@ const options = [
   <!-- C4 -->
   <FutureBand
     title="What your students leave with."
-    lead="Illustrative: an industry certification beside the degree, and tracer results that show where students work."
+    lead="Illustrative: an industry certification beside the degree for students who pass the exam, and tracer results that show where students work."
     vignettes={[
-      { kind: 'Functional', title: 'An industry certification beside the degree', text: 'Students leave with a credential employers recognize, and a first-client or first-job path.' },
+      { kind: 'Functional', title: 'An industry certification beside the degree', text: 'Students who pass the exam add an industry certification beside their degree, with a first-client or first-job path.' },
       { kind: 'Emotional', title: 'A stronger employment story', text: 'Tracer results show where students work, so your institution can discuss placement with confidence.' },
       { kind: 'Social', title: 'Capacity that stays on campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
@@ -149,7 +149,7 @@ const options = [
   <FeaturesTable
     title="Every feature answers a pain institutions carry."
     rows={[
-      { feature: 'Industry certifications by track and three months of milestone-based mentoring', means: 'students add a recognized credential and a first-client or first-job path to the degree.', outcome: 'A recognized credential beside the degree', relieves: 'Degree holders struggle to find work' },
+      { feature: 'Industry certifications by track and three months of milestone-based mentoring', means: 'each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
       { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot find the skills they need' },
       { feature: 'Tracer surveys, documentary evidence of earnings and monthly reports', means: 'your institution has outcome data it can report.', outcome: 'Placement results you can discuss', relieves: 'No placement results to publish' },
       { feature: 'Certified local facilitators and campus labs as blended-learning centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },

@@ -4,29 +4,45 @@ import Icon from '../../system/Icon.astro';
 /**
  * C2 gains and ranked pains (doc 04 matrices, 2a and 2b). Rendered inside ProblemBand's lead slot, so
  * the band keeps its heading and evidence cards. Pains are phrased as the questions buyers ask (AEO).
+ *
+ * `gains` is optional: a page that already shows its gains in the future-state band (C4) can render the ranked pains alone, in three
+ * columns (review round 14, M4: Home, YouthWIDE and the local-partners page). A pain may carry an `id` ("P1" to "P3"), written to the
+ * list item as `data-pain`; the C8 row that relieves it carries the same id as `data-relieves` (FeaturesTable `painId`), and
+ * scripts/check-facts.mjs checks the one-to-one map. `facts` ties a pain to the registered facts it rests on (`data-fact`).
  */
+interface Pain {
+  q: string;
+  text: string;
+  id?: string;
+  facts?: string[];
+}
 interface Props {
-  gains: string[];
-  pains: { q: string; text: string }[];
+  gains?: string[];
+  pains: Pain[];
   gainsHeading?: string;
   painsHeading?: string;
 }
-const { gains, pains, gainsHeading = 'What you are working toward', painsHeading = 'What gets in the way' } = Astro.props;
+const { gains = [], pains, gainsHeading = 'What you are working toward', painsHeading = 'What gets in the way' } = Astro.props;
+const solo = gains.length === 0;
 ---
 
-<div class="gp">
-  <div class="gp__col">
-    <h3 class="gp__h">{gainsHeading}</h3>
-    <ul class="gp__gains" role="list">
-      {gains.map((g) => <li><Icon name="circle-check" size={20} />{g}</li>)}
-    </ul>
-  </div>
+<div class:list={['gp', solo && 'gp--solo']}>
+  {
+    !solo && (
+      <div class="gp__col">
+        <h3 class="gp__h">{gainsHeading}</h3>
+        <ul class="gp__gains" role="list">
+          {gains.map((g) => <li><Icon name="circle-check" size={20} />{g}</li>)}
+        </ul>
+      </div>
+    )
+  }
   <div class="gp__col">
     <h3 class="gp__h">{painsHeading}</h3>
     <ol class="gp__pains" role="list">
       {
         pains.map((p, i) => (
-          <li>
+          <li data-pain={p.id} data-fact={p.facts?.join(' ')}>
             <span class="gp__n" aria-hidden="true">{i + 1}</span>
             <div>
               <p class="gp__q">{p.q}</p>
@@ -106,6 +122,14 @@ const { gains, pains, gainsHeading = 'What you are working toward', painsHeading
     .gp {
       grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       gap: var(--space-lg) 48px;
+    }
+    /* pains alone: the three ranked pains side by side, one compact row */
+    .gp--solo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .gp--solo .gp__pains {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md) var(--space-lg);
     }
   }
 </style>

@@ -28,7 +28,8 @@ import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
-import { C14, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION } from '../data/copy';
+import GainsPains from '../components/pages/partners/GainsPains.astro';
+import { C14, FUNDER_PAINS, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -43,15 +44,35 @@ const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_ME
 const lcfirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 const problemBluf = `${fact('PX-01').text}; ${lcfirst(expandSsc(fact('PX-03').text))}.`;
 
-// C8: numbers inside feature rows come from the register.
+// C2b / C8 (review round 14, M4): the three ranked pains (FUNDER_PAINS) and one C8 row for each, pain → how we relieve it → the registered
+// feature behind it. The regional FactCards stay in C2 as context; they are not the pains. Rows without a pain are gain creators.
+// Numbers inside feature rows come from the register.
 const hours = fact('PD-01').stat?.value;
 const featureRows = [
-  { feature: 'Accessible readiness assessment', means: 'each applicant is routed to a track that fits, rather than screened out.', outcome: 'The right career or foundation track', relieves: 'Millions of educated youth outside work and training' },
-  { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio', relieves: 'Employers can’t find the talent they need' },
-  { feature: 'Certification exam preparation, with the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a credential, not only a course record.', outcome: 'A recognized credential', relieves: 'Graduates whose degrees are not turning into jobs' },
-  { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcome: 'A path to first paid work', relieves: 'Graduate unemployment' },
-  { feature: 'Placement support', means: 'learners are matched to local, remote and global work.', outcome: 'Local, remote or global work', relieves: 'University-educated people without jobs' },
-  { feature: 'Monthly reports and outcome tracking after each course', means: 'you see enrollment, completion, placements and first earnings month by month.', outcome: 'Auditable results', relieves: 'Training that never reports results' },
+  {
+    ...painForRow(FUNDER_PAINS, 'P1'),
+    feature: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment',
+    means: 'learners get structured support from first profile to first client, and are matched to local, remote and global work.',
+    outcome: 'A path to first paid work',
+    facts: ['PD-15', 'PD-01', 'PD-19'],
+  },
+  {
+    ...painForRow(FUNDER_PAINS, 'P2'),
+    feature: 'Monthly reports, tracer surveys at 3, 6 and 12 months and documentary evidence of earnings',
+    means: 'you see enrollment, completion, placements and first earnings month by month, and can check results against payslips, offer letters, platform logs and bank receipts.',
+    outcome: 'Auditable results',
+    facts: ['PD-08', 'PD-09'],
+  },
+  {
+    ...painForRow(FUNDER_PAINS, 'P3'),
+    feature: 'An AI-ready curriculum, with entry-level tracks chosen from employer demand',
+    means: 'courses keep pace with employer demand as AI changes entry-level tasks.',
+    outcome: 'Tracks that follow what employers ask for',
+    facts: ['PD-02', 'PD-10'],
+  },
+  { feature: 'Accessible readiness assessment', means: 'each applicant is routed to a track that fits, rather than screened out.', outcome: 'The right career or foundation track' },
+  { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio' },
+  { feature: 'Certification exam preparation, with the exam fee for each trainee’s track (terms set per program)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
 ];
 ---
 
@@ -75,7 +96,11 @@ const featureRows = [
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
-  <Tone cmf="C2"><ProblemBand id="problem" title="For too many graduates, a degree is not turning into a job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} /></Tone>
+  <Tone cmf="C2">
+    <ProblemBand id="problem" title="For too many graduates, a degree is not turning into a job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']}>
+      <GainsPains slot="lead" painsHeading="What gets in the way" pains={FUNDER_PAINS.map(painForList)} />
+    </ProblemBand>
+  </Tone>
 
   <Tone cmf="C3">
     <HomeCost
@@ -98,7 +123,7 @@ const featureRows = [
       vignettes={[
         { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'A young woman outside Dhaka invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First earnings, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
-        { kind: 'Social', title: 'Certified, AI-ready talent', text: 'An employer hires certified, AI-ready talent without a long search.' },
+        { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready talent, including completers who passed an industry certification exam, without a long search.' },
       ]}
     />
   </Tone>

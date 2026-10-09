@@ -46,8 +46,11 @@ export const AI_SHIFT_NOTE_SURVEY = `The survey’s cohorts span 2014–2026, be
 export const CERT_NOTE_TEXT = `CodersTrust is not affiliated with or endorsed by these certifying bodies; it prepares learners for their exams.`;
 export const CERT_FACT_IDS: readonly string[] = ['PD-03', 'IN-08'];
 
-/** The register's mandated label for program results (PR-01, PR-02, PR-05; "graduates" is the register's own wording). It goes with every use of the figure. */
-export const PROGRAM_DATA_LABEL = `Program data — gross in-work rate among graduates, no comparison group`;
+/**
+ * The register's mandated label for program results (PR-01, PR-02, PR-05). It goes with every use of the figure. The denominator is
+ * "program completers": "graduates" is reserved for university-degree holders (doc 04 terminology; review round 14 m1).
+ */
+export const PROGRAM_DATA_LABEL = `Program data — gross in-work rate among program completers, no comparison group`;
 
 /**
  * A stat label that ends with PROGRAM_DATA_LABEL ("women placed (71%) in WSDFM. Program data — gross in-work rate …") split into the label

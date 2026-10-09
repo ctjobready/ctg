@@ -15,6 +15,7 @@ import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Sources from '../../components/facts/Sources.astro';
 import Icon from '../../components/system/Icon.astro';
 import Fact from '../../components/facts/Fact.astro';
+import GainsPains from '../../components/pages/partners/GainsPains.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -33,7 +34,7 @@ import DecisionSheet from '../../components/pages/programs/DecisionSheet.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, LAST_UPDATED, ROADMAP_PHASES, ctaFor, serviceNode, statValue, surveyShort } from '../../components/pages/programs/meta';
-import { ACCOUNTABILITY, C14, EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, TRAINED_REACH, GOVERNANCE } from '../../data/copy';
+import { ACCOUNTABILITY, C14, EMPATHY, FUNDER_PAINS, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SAFEGUARDING, SCALE, SCORECARD, SPEED, STEPS, STEPS_FACTS, TRAINED_REACH, GOVERNANCE, painForList, painForRow } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -88,7 +89,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     title="Educated young people are not in work, across three regions."
     bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
     factIds={['PX-01', 'PX-02', 'PX-09', 'PX-15']}
-  />
+  >
+    <GainsPains slot="lead" painsHeading="What gets in the way" pains={FUNDER_PAINS.map(painForList)} />
+  </ProblemSection>
 
   <!-- C3 -->
   <CostSection
@@ -131,7 +134,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     blocks={[
       { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
       { label: 'How we reach them', title: 'Accessible selection, blended delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
-      { label: 'What we deliver', title: 'Certified, AI-ready training and mentoring', text: 'Industry certification with the exam fee for each trainee’s track, then three months of milestone-based mentoring.', icon: 'award' },
+      { label: 'What we deliver', title: 'AI-ready training, certification preparation and mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
       { label: 'Where they work', title: 'Local, remote, overseas and freelance work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
     ]}
     factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
@@ -170,15 +173,33 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     ]}
   />
 
-  <!-- C8 -->
+  <!-- C8 (review round 14, M4): one row per ranked pain of C2 (pain → how we relieve it → the registered feature), then the gain creators -->
   <FeaturesTable
     title="Every inclusion answers a funder’s pain."
     rows={[
-      { feature: 'Certified training, three months of milestone-based mentoring and placement support, with a work-entry plan per track approved before enrollment', means: 'success is counted in paid work, not hours attended.', outcome: 'Results measured in paid work', relieves: 'Enrollment targets are met but employment lags' },
-      { feature: 'Outreach and accessible selection; entry-level tracks set per country from employer demand; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcome: 'Training that reaches hard-to-reach groups', relieves: 'The hardest-to-reach groups drop out' },
-      { feature: 'Baseline at enrollment, tracer surveys, documentary evidence of earnings and monthly reports', means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.', outcome: 'Auditable results', relieves: 'Outcomes are hard for your evaluators to audit' },
-      { feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)', means: 'completers hold a recognized credential.', outcome: 'A recognized credential' },
-      { feature: 'Placement support', means: 'completers are routed to local, remote and global work.', outcome: 'Local, remote or global work' },
+      {
+        ...painForRow(FUNDER_PAINS, 'P1'),
+        feature: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment',
+        means: 'success is counted in paid work, not hours attended; completers are routed to local, remote and global work.',
+        outcome: 'Results measured in paid work',
+        facts: ['PD-15', 'PD-01', 'PD-19'],
+      },
+      {
+        ...painForRow(FUNDER_PAINS, 'P2'),
+        feature: 'Baseline at enrollment, monthly reports, tracer surveys at 3, 6 and 12 months and documentary evidence of earnings',
+        means: 'your evaluators can check results against payslips, offer letters, platform logs and bank receipts.',
+        outcome: 'Auditable results',
+        facts: ['PD-08', 'PD-09'],
+      },
+      {
+        ...painForRow(FUNDER_PAINS, 'P3'),
+        feature: 'An AI-ready curriculum, with entry-level tracks set per country from employer demand',
+        means: 'courses keep pace with employer demand as AI changes entry-level tasks.',
+        outcome: 'Tracks that follow what employers ask for',
+        facts: ['PD-02', 'PD-10'],
+      },
+      { feature: 'Outreach and accessible selection; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcome: 'Training that reaches hard-to-reach groups' },
+      { feature: 'Certification exam preparation and the exam fee for each trainee’s track (terms set per program)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
     ]}
   />
 

@@ -21,10 +21,12 @@ interface Props {
   headlineFact?: string;
   /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
   plainLine?: boolean;
+  /** Relevance line set directly under the randomized-trial headline: which program the trial evaluated, and which it did not (TRIAL_SCOPE in src/data/copy.ts). */
+  trialScope?: string;
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band' } = Astro.props;
 const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
@@ -40,6 +42,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
     <p class="eyebrow">The evidence</p>
     <h2 class="proofband__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
     {plainLine && <PlainLine />}
+    {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="proofband">
@@ -82,6 +85,13 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
   }
   .proofband__title {
     color: var(--ctx-section-heading);
+  }
+  .proofband__scope {
+    max-width: var(--measure);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    color: var(--ctx-text);
   }
   .proofband {
     display: grid;

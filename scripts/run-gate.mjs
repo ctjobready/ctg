@@ -14,6 +14,8 @@
  * `--dist <dir>` (or env DIST_DIR) points the dist-based steps at another build output, for example a production build written
  * to a scratch folder:   npm run build -- --outDir /tmp/ctg-prod   then   npm run test:production-release -- --dist /tmp/ctg-prod
  *
+ * Both gates run check:privacy-origins (review round 14, m5): every third-party origin a built page can load is named in /privacy-policy/.
+ *
  * Production release (doc 08 §11 step 1, doc 10 §4): run it against a build made with SITE_ENV=production SITE_URL=https://coderstrust.global
  * BASE_PATH=/. It reads the private lists the same way CI does and FAILS CLOSED without them: the production fact holds
  * (env PROD_FACT_HOLDS or ../ctg-planning/prod-fact-holds.json) and the never-publish list (env NEVER_PUBLISH_JSON or
@@ -54,6 +56,7 @@ const GATES = {
       ['manifest:check (generated files in sync)', node('generate-from-manifest.mjs', '--check')],
       ['check:facts', nodeTs('check-facts.mjs', distRel)],
       ['check:permissions', node('check-permissions.mjs', dist)],
+      ['check:privacy-origins (every loadable third-party origin is named in /privacy-policy/)', node('check-privacy-origins.mjs', '--dist', dist)],
       ['test:permissions (rule and gate, scratch fixtures)', node('test-permissions.mjs')],
       ['test:repo-publication (audit, scratch fixtures)', node('test-repo-publication.mjs')],
       ...STATIC,
@@ -71,6 +74,7 @@ const GATES = {
     steps: [
       ['check:facts (production, with the private holds)', nodeTs('check-facts.mjs', distRel)],
       ['check:permissions (production: cleared only)', node('check-permissions.mjs', dist)],
+      ['check:privacy-origins (production)', node('check-privacy-origins.mjs', '--dist', dist)],
       ['check:repo-publication (committed files, private never-publish list)', node('check-repo-publication.mjs')],
       ['validate:jsonld', node('validate-jsonld.mjs', dist)],
       ['test:manifest', node('test-manifest.mjs', dist)],

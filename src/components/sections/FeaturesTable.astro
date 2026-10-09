@@ -7,6 +7,11 @@ import Icon from '../system/Icon.astro';
 /**
  * C8 Features → benefits: feature → "which means…" → outcome (fact or text); optional pain-reliever
  * column maps each feature 1:1 to a problem card.
+ *
+ * Review round 14, M4: on Home, YouthWIDE and the local-partners page the pain-reliever column is keyed to the ranked pains of the C2
+ * band. A row with `painId` ("P1" to "P3") carries `data-relieves` and shows the pain's number in the same circle as the C2 list; a row
+ * without one is a gain creator and shows the check icon. `facts` ties the row to the registered facts it rests on (`data-fact`, so the
+ * status gate and the production holds see it). scripts/check-facts.mjs checks that each C2 pain has exactly one row.
  */
 interface Row {
   feature: string;
@@ -16,6 +21,10 @@ interface Row {
   outcome?: string;
   /** Pain relieved (mirror of a problem-band card). */
   relieves?: string;
+  /** The C2 pain this row relieves, e.g. "P1". */
+  painId?: string;
+  /** Fact IDs the row rests on. */
+  facts?: string[];
 }
 interface Props {
   title: string;
@@ -25,6 +34,7 @@ interface Props {
 }
 const { title, lead, rows, id = 'features' } = Astro.props;
 const showPain = rows.some((r) => r.relieves);
+const painNumber = (painId: string) => painId.replace(/^P/, '');
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -43,11 +53,22 @@ const showPain = rows.some((r) => r.relieves);
       <tbody>
         {
           rows.map((r) => (
-            <tr>
+            <tr data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
               <th scope="row">{r.feature}</th>
               <td data-label="Which means…">{r.means}</td>
               <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? '—'}</td>
-              {showPain && <td data-label="Relieves">{r.relieves ? <span class="ft__pain"><Icon name="circle-check" size={16} />{r.relieves}</span> : '—'}</td>}
+              {showPain && (
+                <td data-label="Relieves">
+                  {r.relieves ? (
+                    <span class="ft__pain">
+                      {r.painId ? <span class="ft__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
+                      <span>{r.painId && <span class="sr-only">Pain {painNumber(r.painId)}: </span>}{r.relieves}</span>
+                    </span>
+                  ) : (
+                    '—'
+                  )}
+                </td>
+              )}
             </tr>
           ))
         }
@@ -108,5 +129,21 @@ const showPain = rows.some((r) => r.relieves);
     color: var(--success);
     margin-top: 4px;
     flex: none;
+  }
+  /* the pain's number: the same circle as the ranked list in the C2 band */
+  .ft__n {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

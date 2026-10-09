@@ -18,6 +18,16 @@
  * This file has no imports, so it can also be run directly to regenerate the CSV:
  *   node --experimental-strip-types -e "import('./src/components/pages/impact/outcomes-data.ts').then((m) => process.stdout.write(m.csvText()))" > public/data/outcomes-2026-aggregates.csv
  */
+/**
+ * The page's dates, in one place (review round 14, n3). The source snapshot (the survey results) and the page's last content change are
+ * different things: the first stays "October 2026"; the second is the date of the page's last editorial change and moves with it. The
+ * page header ("Source snapshot: October 2026 · Page last reviewed: …") and the JSON-LD `dateModified` both read PAGE_LAST_REVIEWED,
+ * so they cannot disagree. `datePublished` is the date the survey results were first published (the 7 October snapshot).
+ */
+export const SOURCE_SNAPSHOT = 'October 2026';
+export const DATE_PUBLISHED = '2026-10-07';
+export const PAGE_LAST_REVIEWED = '2026-10-09';
+
 export interface ShareCell {
   label: string;
   /** Published share of respondents, in percent (one decimal). */
