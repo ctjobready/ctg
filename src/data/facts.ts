@@ -40,13 +40,24 @@ export const AI_SHIFT_NOTE_SURVEY = `The survey’s cohorts span 2014–2026, be
 /**
  * Messaging framework rule 13 (F1, M2): vendor certifications are named only with this note, once, beside the first naming on a page.
  * `CERT_FACT_IDS` are the facts whose text names vendor certifications; `<CertNote>` renders the note and `<Fact>` adds it automatically.
- * scripts/check-facts.mjs fails the build for any page that names a vendor certification without the note.
+ * The note is shown inline, once per page, and is never also a fact's footnote (that would print the sentence twice).
+ * scripts/check-facts.mjs fails the build for any page that names a vendor certification without the note, and for any page that prints it twice.
  */
 export const CERT_NOTE_TEXT = `CodersTrust is not affiliated with or endorsed by these certifying bodies; it prepares learners for their exams.`;
 export const CERT_FACT_IDS: readonly string[] = ['PD-03', 'IN-08'];
 
 /** The register's mandated label for program results (PR-01, PR-02, PR-05; "graduates" is the register's own wording). It goes with every use of the figure. */
 export const PROGRAM_DATA_LABEL = `Program data — gross in-work rate among graduates, no comparison group`;
+
+/**
+ * A stat label that ends with PROGRAM_DATA_LABEL ("women placed (71%) in WSDFM. Program data — gross in-work rate …") split into the label
+ * proper and the evidence label, so a component can set the evidence label on its own line. The figure then carries the label once, from
+ * the register, and a component never adds a second, page-local one. Any other label comes back whole, with no evidence.
+ */
+export function splitProgramLabel(label: string): { text: string; evidence: string | null } {
+  const tail = `. ${PROGRAM_DATA_LABEL}`;
+  return label.endsWith(tail) ? { text: label.slice(0, -tail.length), evidence: PROGRAM_DATA_LABEL } : { text: label, evidence: null };
+}
 
 export const CAVEATS: Record<CaveatClass, string> = {
   S: `CodersTrust Impact Survey, October 2026: alumni who responded (not a random sample; the number invited and the response rate are not reported, so results may over-represent successful learners); self-reported; before-training status recalled; descriptive, not causal. Respondents are mostly university graduates (84.6%). ${AI_SHIFT_NOTE_SURVEY}`,
@@ -179,7 +190,7 @@ const rows: [string, Fact['group'], Row][] = [
   // H. Program design facts (YouthWIDE / delivery model)
   ['PD-01', 'design', { text: `100 training hours per certification (50 h lectures + 50 h hands-on labs) over 3–6 months, then three months of milestone-based one-to-one mentoring (profile live → first bids → first client → exam), then the alumni network`, stat: { value: '100', numeric: 100, decimals: 0, label: 'training hours per certification' }, sourceIds: ['PROGREC'] }],
   ['PD-02', 'design', { text: `Pricing is set per program. Standard inclusions: outreach and selection · blended training · AI-ready curriculum · certification exam preparation and the exam fee for each trainee’s track (exam terms set per program) · three months of mentoring · placement support · monthly reporting · outcome tracking for 12 months after each course. Items such as devices, stipends, connectivity and independent evaluation are budgeted separately where needed`, sourceIds: ['PROGREC'] }],
-  ['PD-03', 'design', { text: `Certifications by track: Meta Blueprint / Google Ads (digital marketing), Adobe Certified Professional (design, video), QuickBooks Online ProAdvisor (digital accounting), PCEP (Python), CWP (web)`, footnote: CERT_NOTE_TEXT, sourceIds: ['PROGREC'] }],
+  ['PD-03', 'design', { text: `Certifications by track: Meta Blueprint / Google Ads (digital marketing), Adobe Certified Professional (design, video), QuickBooks Online ProAdvisor (digital accounting), PCEP (Python), CWP (web)`, sourceIds: ['PROGREC'] }],
   ['PD-04', 'design', { text: `For grant-funded pilots: about three weeks from first conversation to agreement (Discovery wk 1 → Co-design wk 2 → Agreement wk 3); first cohort in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline`, stat: { value: '6–8 weeks', label: 'from signing to first cohort in training (grant-funded pilots)' }, sourceIds: ['PROGREC'] }],
   ['PD-05', 'design', { text: `Program options: Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale 10,000–25,000 trainees, 12–18 months rolling; National 100,000+ trainees, 3–5 years (a design option — not yet delivered at this size)`, sourceIds: ['PROGREC'] }],
   ['PD-06', 'design', { text: `Up to 10 certification cohorts in parallel from about month 5; classes of 20 (labs) and 40 (lectures); hub-and-spoke delivery with certified local facilitators for larger programs`, sourceIds: ['PROGREC'] }],

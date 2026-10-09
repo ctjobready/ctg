@@ -3,7 +3,7 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import { fact } from '../../../data/facts';
+import { fact, PROGRAM_DATA_LABEL } from '../../../data/facts';
 
 // ST-05 is already an anonymized outcome line; the program is shown beside it, so the line is shortened to "A participant …".
 const raw = fact('ST-05').text.split(' in Kosovo ')[1];
@@ -15,7 +15,7 @@ const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
   slug="kosovo-women-in-online-work"
   pageTitle="Kosovo Women in Online Work"
   description="Women in Online Work, a 2017 pilot in Kosovo with the World Bank Group: 102 of 150 women placed (68%). Placement is gross program data."
-  stats={[{ id: 'PR-02', evidence: 'Program data — gross in-work rate among graduates, no comparison group' }]}
+  stats={[{ id: 'PR-02' }]}
   context={[
     'In 2017 the World Bank Group sought market-oriented skills to help young refugee women in Kosovo find meaningful employment.',
     'The Women in Online Work (WoW) pilot tested whether online work suits young Kosovar women around the country.',
@@ -35,7 +35,7 @@ const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
   ]}
 >
   <Fragment slot="results">
-    <Callout tone="bluf" label="Program data — gross in-work rate among graduates, no comparison group">
+    <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
       <Fact id="PR-02" as="p" />
     </Callout>
     <p>Women in Online Work was a pilot with the World Bank Group in 2017. The figures above are from CodersTrust program records.</p>

@@ -11,8 +11,8 @@ interface Props {
   partner?: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
-  /** Outcome-first headline stat. */
-  stat?: { value: string; label: string };
+  /** Outcome-first headline stat; `evidence` is its evidence label, set on its own line under the label. */
+  stat?: { value: string; label: string; evidence?: string | null };
   href: string;
   class?: string;
 }
@@ -30,6 +30,7 @@ const a = linkAttrs(href);
       <p class="case__stat">
         <span class="case__value">{stat.value}</span>
         <span class="case__label">{stat.label}</span>
+        {stat.evidence && <span class="case__evid">{stat.evidence}</span>}
       </p>
     )}
     <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
@@ -53,5 +54,12 @@ const a = linkAttrs(href);
   .case__label {
     font-size: var(--fs-body-xs);
     color: var(--on-surface-variant);
+  }
+  .case__evid {
+    margin-top: 2px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
   }
 </style>

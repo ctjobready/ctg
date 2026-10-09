@@ -68,8 +68,8 @@ const FORUMS = [
   .filter((p): p is NonNullable<typeof p> => !!p && !p.data.political);
 
 // Public officials' endorsements stay out of evergreen pages: PA-10 (U.S. Department of State remarks) may appear only inside its
-// dated news item, and the Danish ambassador's remarks are treated the same way.
-const OFFICIAL_ENDORSERS = new Set(['james-gardiner', 'h-e-winnie-estrup-petersen']);
+// dated news item. (The Danish ambassador's entry is removed from the dataset itself, with its photo and permission row.)
+const OFFICIAL_ENDORSERS = new Set(['james-gardiner']);
 const quotes = endorsements.filter((e) => !OFFICIAL_ENDORSERS.has(e.id));
 // Quotes are verbatim; the migration glued some sentences together ("tomorrow.Thank"), so only the spacing after a full stop is restored.
 const tidy = (q: string) => q.replace(/^[“"]\s*/, '').replace(/\s*[”"]$/, '').replace(/([a-z]{2})\.([A-Z])/g, '$1. $2');

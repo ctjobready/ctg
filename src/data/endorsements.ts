@@ -1,5 +1,6 @@
 // Endorsements migrated from the legacy CodersTrust WordPress site (post type `endorsements`).
-// Quotes are verbatim from the rendered legacy homepage; do not edit wording (a missing space between two sentences is the one repair made).
+// Quotes are verbatim from the rendered legacy homepage; do not edit wording (repairs made: a missing space between two sentences, and the
+// closing quotation mark the legacy page left off the Sainz-Borgo quote).
 // Public officials in office (the Danish ambassador, H.E. Winnie Estrup Petersen; James Gardiner of the US Embassy) are not shown as endorsements on evergreen pages;
 // the ambassador's entry is removed from this dataset, and the recognition page filters out Gardiner (PA-10: his remarks stay in their dated news item). `date` is null because the
 // legacy site does not state when each quote was given (CMS publish dates are not quote dates).
@@ -34,7 +35,7 @@ export const endorsements: Endorsement[] = [
     id: "dr-juan-carlos-sainz-borgo",
     name: "Dr. Juan Carlos Sainz-Borgo",
     title: "Vice Rector University for Peace, Costa Rica",
-    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and Brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unring commitment to peace and education.",
+    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and Brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unring commitment to peace and education.”",
     photo: drJuanCarlosSainzBorgo,
     photoAlt: "Portrait of Dr. Juan Carlos Sainz-Borgo, Vice Rector University for Peace, Costa Rica",
     date: null,

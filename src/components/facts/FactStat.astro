@@ -1,9 +1,12 @@
 ---
 import Stat from '../system/Stat.astro';
 import FootnoteMarker from './FootnoteMarker.astro';
-import { fact } from '../../data/facts';
+import { fact, splitProgramLabel } from '../../data/facts';
 
-/** Stat bound to a fact: value, label, count-up (when numeric) and an automatic footnote marker. */
+/**
+ * Stat bound to a fact: value, label, count-up (when numeric) and an automatic footnote marker. A program-results label (PR-01, PR-02,
+ * PR-05) ends with the register's program-data label; it is set on its own ruled line under the label, once.
+ */
 interface Props {
   id: string;
   tone?: 'default' | 'dark' | 'accent';
@@ -18,11 +21,12 @@ const f = fact(id);
 if (!f.stat) throw new Error(`<FactStat id="${id}">: fact has no stat`);
 // Only count up values with a clean numeric target (not "6–8 weeks").
 const doCount = count ?? f.stat.numeric !== undefined;
+const { text: labelText, evidence } = splitProgramLabel(f.stat.label);
 ---
 
 <!-- display:contents keeps the wrapper out of the parent's flex/grid layout while carrying data-fact for the status gate. -->
 <div class="factstat" data-fact={id}>
-  <Stat value={f.stat.value} label={f.stat.label} tone={tone} size={size} align={align} count={doCount} class={className}>
+  <Stat value={f.stat.value} label={labelText} evidence={evidence ?? undefined} tone={tone} size={size} align={align} count={doCount} class={className}>
     <FootnoteMarker id={id} footnote={footnote} />
   </Stat>
 </div>

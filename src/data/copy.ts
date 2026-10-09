@@ -2,6 +2,8 @@
 // Pages import these instead of retyping them, so a wording change from review is one edit here.
 // Every number inside a block is a registered fact; render footnote markers for the IDs in `facts`.
 
+import { PROGRAM_DATA_LABEL } from './facts';
+
 export interface CopyBlock {
   text: string;
   /** Fact IDs whose footnote markers accompany the block. */
@@ -161,7 +163,8 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 };
 
 export const WOMEN_INCLUSION: CopyBlock = {
-  text: 'Two women-focused programs placed 68–71% of the women who completed them (WSDFM 71%; Women in Online Work, Kosovo, 68%); the Her Power cohort placed 47%.',
+  // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, closing the sentence).
+  text: `Two women-focused programs placed 68–71% of the women who completed them (WSDFM 71%; Women in Online Work, Kosovo, 68%); the Her Power cohort placed 47%. ${PROGRAM_DATA_LABEL}.`,
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 

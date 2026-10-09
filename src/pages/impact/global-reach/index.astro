@@ -9,7 +9,7 @@ import ReportSection from '../../../components/pages/impact/ReportSection.astro'
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { fact } from '../../../data/facts';
+import { fact, splitProgramLabel } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
@@ -21,10 +21,12 @@ const toc = [
   { id: 'map', label: 'Where programs have run' },
   { id: 'bangladesh', label: 'Selected programs in Bangladesh' },
 ];
+// Each reach figure carries its evidence label once, on its own line: the register's program-data label for PR-01 and PR-05, and the
+// case study's own label for PR-03 (whose register label has none).
 const programs = [
-  { name: 'WSDFM', slug: 'wsdfm-women-freelancers', partner: 'Commissioned by Porticus; evaluated by BIGD', years: 'Trained in 2020', focus: 'ICT skills for freelancing and local jobs for women', reachId: 'PR-01', reachText: 'women placed' },
-  { name: 'UNDP YES, Korail', slug: 'undp-yes-korail', partner: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh', years: '2017', focus: 'Skills for disadvantaged youth, linked to freelance marketplaces', reachId: 'PR-03', reachText: 'found their first job within 3 months (placement denominator not stated)' },
-  { name: 'Her Power', slug: 'her-power', partner: 'ICT Division / DoICT, Government of Bangladesh', years: '—', focus: 'Digital skills for women’s self-employment (national program)', reachId: 'PR-05', reachText: 'women placed (training cohort)' },
+  { name: 'WSDFM', slug: 'wsdfm-women-freelancers', partner: 'Commissioned by Porticus; evaluated by BIGD', years: 'Trained in 2020', focus: 'ICT skills for freelancing and local jobs for women', reachId: 'PR-01', reachText: 'women placed', evidence: splitProgramLabel(fact('PR-01').stat?.label ?? '').evidence },
+  { name: 'UNDP YES, Korail', slug: 'undp-yes-korail', partner: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh', years: '2017', focus: 'Skills for disadvantaged youth, linked to freelance marketplaces', reachId: 'PR-03', reachText: 'found their first job within 3 months', evidence: 'Program data — in-work rate, denominator not stated' },
+  { name: 'Her Power', slug: 'her-power', partner: 'ICT Division / DoICT, Government of Bangladesh', years: '—', focus: 'Digital skills for women’s self-employment (national program)', reachId: 'PR-05', reachText: 'women placed (training cohort)', evidence: splitProgramLabel(fact('PR-05').stat?.label ?? '').evidence },
 ];
 const d = discoveryCta();
 ---
@@ -50,7 +52,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="bangladesh" title="Selected programs in Bangladesh">
-    <p>Programs with a published case study. Results are program data (gross placement) unless the case study says otherwise.</p>
+    <p>Programs with a published case study. Each reach figure carries its own evidence label.</p>
     <section class="gr__table" aria-label="Table of selected programs" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Selected CodersTrust programs in Bangladesh</caption>
@@ -62,7 +64,7 @@ const d = discoveryCta();
               <td data-label="Partner">{p.partner}</td>
               <td data-label="Years">{p.years === '—' ? <><span class="sr-only">Not stated</span><span aria-hidden="true">—</span></> : p.years}</td>
               <td data-label="Focus">{p.focus}</td>
-              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
+              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}{p.evidence && <span class="gr__evid">{p.evidence}</span>}</td>
             </tr>
           ))}
         </tbody>
@@ -97,6 +99,12 @@ const d = discoveryCta();
     vertical-align: top;
     padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
+  }
+  .gr__evid {
+    display: block;
+    margin-top: 2px;
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
   }
   .gr__table thead th {
     background: var(--surface-container-low);

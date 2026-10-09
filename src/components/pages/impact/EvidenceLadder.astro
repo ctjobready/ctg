@@ -2,10 +2,12 @@
 import Fact from '../../facts/Fact.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
+import { fact, splitProgramLabel } from '../../../data/facts';
 
 /**
  * Evidence ladder: four kinds of evidence, strongest for cause first. Each rung says what it shows,
  * what it does not show and gives a one-line methods note (planning v1.3, P21/P22).
+ * The program-results rung shows PR-01 with the register's program-data label, once, on its own line; the rung's title and notes do not repeat it.
  */
 interface Props {
   /** Link each rung to its page (hub) or leave plain (inside the report). */
@@ -15,6 +17,7 @@ interface Props {
 }
 const { links = true, headingLevel = 3, class: className } = Astro.props;
 const H = `h${headingLevel}` as 'h3' | 'h4';
+const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
 ---
 
 <ol class:list={['ladder', className]} role="list">
@@ -48,15 +51,15 @@ const H = `h${headingLevel}` as 'h3' | 'h4';
   </li>
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">3</span>
-    <H class="ladder__title">Program results (gross placement)</H>
-    <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span><Fact id="PR-01" field="label" footnote={false} /></span></p>
+    <H class="ladder__title">Program results</H>
+    <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span>{pr01.text}</span>{pr01.evidence && <span class="ladder__evid">{pr01.evidence}</span>}</p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
       <dd>How many completers of a program were placed, from CodersTrust program records.</dd>
       <dt>What it does not show</dt>
       <dd>What would have happened without training; placement is gross, not net.</dd>
       <dt>Method</dt>
-      <dd>Program data; each case study states its own base.</dd>
+      <dd>Each case study states its own base.</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case studies<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -133,6 +136,14 @@ const H = `h${headingLevel}` as 'h3' | 'h4';
     color: var(--primary);
     letter-spacing: -1px;
     margin-bottom: 4px;
+  }
+  .ladder__evid {
+    display: block;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid var(--ctx-border);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
   }
   .ladder__dl {
     display: grid;

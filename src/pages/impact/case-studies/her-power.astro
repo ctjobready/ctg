@@ -7,6 +7,7 @@ import CopyText from '../../../components/pages/impact/CopyText.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Img from '../../../components/ui/Img.astro';
 import { WOMEN_INCLUSION } from '../../../data/copy';
+import { PROGRAM_DATA_LABEL } from '../../../data/facts';
 import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
 const maria = await getEntry('stories', 'maria-dewan');
@@ -19,7 +20,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
   slug="her-power"
   pageTitle="Her Power Case Study"
   description="Her Power, a project of Bangladesh’s ICT Division: 372 of 800 women in the training cohort placed (47%), shown with the program’s separate scale measures."
-  stats={[{ id: 'PR-05', evidence: 'Program records — gross placement' }]}
+  stats={[{ id: 'PR-05' }]}
   context={[
     'Her Power is a project of the ICT Division of the Government of Bangladesh. It aims to help women become entrepreneurs and self-employed through digital skills, using technology safely.',
     'CodersTrust provided the curriculum, training manuals and mentorship guidelines for the national program, trained trainers, and trained a cohort of women directly.',
@@ -43,7 +44,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
   </figure>
 
   <Fragment slot="results">
-    <Callout tone="bluf" label="Program records — gross placement, training cohort">
+    <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
       <Fact id="PR-05" as="p" />
     </Callout>
     <div class="hp__scale" data-fact="GV-01">

@@ -8,7 +8,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
-import { fact } from '../../../data/facts';
+import { fact, PROGRAM_DATA_LABEL } from '../../../data/facts';
 import { RCT_HEADLINE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
@@ -30,7 +30,7 @@ const excerpt = paras[2];
   pageTitle="WSDFM Case Study"
   description="WSDFM, commissioned by Porticus: 711 of 1,000 women placed, and a randomized trial by BIGD found income rose for women offered a place."
   stats={[
-    { id: 'PR-01', evidence: 'Program data — gross in-work rate among graduates, no comparison group' },
+    { id: 'PR-01' },
     { id: 'RC-01', evidence: 'BIGD randomized trial, May 2022' },
     { id: 'RC-02', evidence: 'BIGD randomized trial, May 2022' },
   ]}
@@ -59,7 +59,7 @@ const excerpt = paras[2];
   </figure>
 
   <Fragment slot="results">
-    <Callout tone="bluf" label="Program data — gross in-work rate among graduates, no comparison group">
+    <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
       <Fact id="PR-01" as="p" />
     </Callout>
 

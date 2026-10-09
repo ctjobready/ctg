@@ -10,8 +10,9 @@ import { fact } from '../../../data/facts';
 /**
  * C2–C3 (compressed, declared in doc 06 P8 v1.6): the investor view of the problem and its stakes in one band.
  * P1 educated young people aged 15–24 are not in work or training (PX-01); separately, university-educated
- * people of all working ages (ages 15+, a floor) are unemployed in these regions (PX-02, never a youth
- * figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
+ * people of all working ages (ages 15+, a floor) are unemployed across South Asia, the Middle East and North Africa (MENA) and
+ * Sub-Saharan Africa, named in full because "these regions" would have no antecedent (the PX-01 label above carries the register's
+ * short form; PX-02, never a youth figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
  * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
  * PX-08, which is global). Stakes: every cohort trained but not employed leaves the gap open (no claim that the gap is widening).
  */
@@ -40,7 +41,7 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
           <FactStat id="PX-01" />
           <FactStat id="PX-05" />
         </div>
-        <p class="th__more" data-fact="PX-02">Separately, <Fact id="PX-02" field="value" footnote={false} /> university-educated people of all working ages (15 and over) are unemployed in these regions, a floor figure rather than a youth figure.<FootnoteMarker id="PX-02" /></p>
+        <p class="th__more" data-fact="PX-02">Separately, <Fact id="PX-02" field="value" footnote={false} /> university-educated people of all working ages (15 and over) are unemployed across South Asia, the Middle East and North Africa (MENA) and Sub-Saharan Africa, a floor figure rather than a youth figure.<FootnoteMarker id="PX-02" /></p>
       </div>
     </article>
     <article class="card th__card" data-reveal>

@@ -9,7 +9,13 @@
 //     "Request the investor deck" are not false positives
 //   - WorldMap: every pin-tooltip detail must appear in the location table (equivalence contract)
 //   - vendor certifications (Meta Blueprint / Google Ads, Adobe Certified Professional, QuickBooks Online ProAdvisor, PCEP, CWP;
-//     messaging framework rule 13): a page whose visible text names one must also carry the non-affiliation note (CERT_NOTE_TEXT)
+//     messaging framework rule 13): a page whose visible text names one must also carry the non-affiliation note (CERT_NOTE_TEXT),
+//     exactly once (inline, via <CertNote>; no fact may also carry it as a footnote, which would print the sentence twice)
+//   - archive-only wording: no British "enquir*" (D6; write "inquir*") and no "tripled" (OC-03 is a ratio of medians) anywhere in a
+//     page's HTML (text, attributes, meta, JSON-LD), except on the archived posts under /news/<post>/ and on redirect stubs
+//     (legacy URLs); negative self-tests below
+//   - program-data label (PROGRAM_DATA_LABEL in src/data/facts.ts, on PR-01, PR-02 and PR-05): never printed twice in a row, and no
+//     page-local variant ("gross placement", "Program records — gross"); negative self-tests below
 //   - footnotes: markers and notes number in reading order (1, 2, 3 by first appearance), every marker has its note and every note
 //     its markers and back-links, a caveat prints in full once per page ("Same caveat as note N" afterwards), no empty
 //     "Notes and sources" band, and no sentence glued to an inline link. The self-test below runs the post-processing
@@ -32,7 +38,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const dist = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(root, 'dist');
-const { facts, CERT_NOTE_TEXT, CERT_FACT_IDS } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
+const { facts, CERT_NOTE_TEXT, CERT_FACT_IDS, PROGRAM_DATA_LABEL } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
 const { orderFootnotes, dropEmptyNotesBand, dropDoubledStops, spaceInlineLinks, postprocessPage } = await import(new URL('../src/lib/postprocess.ts', import.meta.url).href);
 
 /* ---- production fact holds (private list; staging never reads or reports it) ---- */
@@ -148,6 +154,50 @@ const problems = [];
 // "Meta Blueprint / Google Ads"; QuickBooks as software (a mentor's expertise) is not a certification and is not matched.
 const VENDOR_CERTS = [/Meta Blueprint/i, /Google Ads certif/i, /Adobe Certified/i, /QuickBooks (?:Online )?ProAdvisor/i, /\bPCEP\b/, /\bCWP\b/, /Google and Meta Certification/i];
 const namesVendorCert = (text) => VENDOR_CERTS.some((re) => re.test(text));
+/** A page's visible text must carry the non-affiliation note when it names a vendor certification, and never more than once. */
+function certNoteProblems(text) {
+  const copies = text.split(CERT_NOTE_TEXT).length - 1;
+  if (copies > 1) return [`prints the non-affiliation note ${copies} times (it belongs once per page, inline; a fact must not also carry it as a footnote)`];
+  if (copies === 0 && namesVendorCert(text)) return [`names a vendor certification but lacks the note "${CERT_NOTE_TEXT}"`];
+  return [];
+}
+
+/* ---- wording that may survive only inside the archived /news/<post>/ pages ---- */
+// "enquir*" is British (American spelling, D6: the public site says "inquiry"/"inquiries"); "tripled" overstates OC-03, which compares
+// medians (a ratio of medians, not an average; individual changes vary). Both are held to every page except the archive.
+const ARCHIVE_ONLY_WORDING = [
+  [/enquir/i, 'British spelling "enquir…" (write "inquiry"/"inquiries")'],
+  [/\btripled\b/i, '"tripled" (OC-03 is a ratio of medians, not an average; individual changes vary)'],
+];
+/**
+ * Archived news posts (/news/<post>/) keep their original wording, and redirect stubs only carry legacy URLs, so neither is held to the
+ * rule. Everything else is scanned as raw HTML: visible text, attributes (aria-label, title, data-*), meta descriptions and JSON-LD.
+ */
+const exemptFromArchiveRule = (path, html) => /^\/news\/[^/]+\/$/.test(path) || /<html\b[^>]*\bdata-redirect-stub\b/.test(html.slice(0, 600));
+function archiveWordingProblems(path, html) {
+  if (exemptFromArchiveRule(path, html)) return [];
+  const out = [];
+  for (const [re, why] of ARCHIVE_ONLY_WORDING) {
+    const m = re.exec(html);
+    if (!m) continue;
+    const count = (html.match(new RegExp(re.source, 'gi')) ?? []).length;
+    const around = html.slice(Math.max(0, m.index - 40), m.index + m[0].length + 40).replace(/\s+/g, ' ');
+    out.push(`${path}: ${why}, ${count} occurrence(s) outside the archived news posts: "…${around}…"`);
+  }
+  return out;
+}
+/* ---- program-data label (PROGRAM_DATA_LABEL, src/data/facts.ts): one per figure, never a page-local variant ---- */
+// PR-01, PR-02 and PR-05 end their stat label with the register's label; components set it on its own line and add no second one.
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const LABEL_TWICE = new RegExp(`${escapeRe(PROGRAM_DATA_LABEL)}[^A-Za-z]{0,12}${escapeRe(PROGRAM_DATA_LABEL)}`);
+const LABEL_VARIANT = /Program records — gross|gross placement/i;
+function programLabelProblems(text) {
+  const out = [];
+  if (LABEL_TWICE.test(text)) out.push('the program-data label is printed twice in a row (a figure carries it once)');
+  const v = LABEL_VARIANT.exec(text);
+  if (v) out.push(`page-local program-data label "${v[0]}" (the register's label is the only one: "${PROGRAM_DATA_LABEL}")`);
+  return out;
+}
 const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, ''));
 
 /* ---- footnote and link checks over one page's markup (shared by the self-test and the built-site scan) ---- */
@@ -240,6 +290,31 @@ function footnoteProblems(markup) {
   if (!DOUBLED_STOP.test('<span class="fact__stop">.</span></span>.') || DOUBLED_STOP.test(stopFix)) problems.push('self-test: the doubled-punctuation check does not recognise its fixtures');
   // the certification gate itself: a page naming a vendor needs the note
   if (!namesVendorCert('Certifications by track: Meta Blueprint / Google Ads (digital marketing), CWP (web)') || namesVendorCert('QuickBooks and Xero experience; Media Buying (Meta, Google Ads, YouTube)')) problems.push('self-test: the vendor-certification patterns misclassify their examples');
+  // the note is required once: a page that names a vendor without it, or prints it twice (inline plus a footnote), fails; once passes
+  const certPage = 'Certifications by track: Meta Blueprint / Google Ads (digital marketing), CWP (web).';
+  if (certNoteProblems(`${certPage} ${CERT_NOTE_TEXT}`).length) problems.push('self-test: the certification check rejected a page that carries the note once');
+  if (!certNoteProblems(certPage).length) problems.push('self-test: the certification check accepted a page that names a vendor without the note');
+  if (!certNoteProblems(`${certPage} ${CERT_NOTE_TEXT} Notes: ${CERT_NOTE_TEXT}`).length) problems.push('self-test: the certification check accepted a page that prints the note twice');
+  if (certNoteProblems('A page that names no vendor and carries no note.').length) problems.push('self-test: the certification check rejected a page without vendor names');
+  // archive-only wording ("enquir*", "tripled"): fails in text, attributes, meta and JSON-LD of any page except /news/<post>/ and redirect stubs
+  const brit = (where) => archiveWordingProblems(where, '<!doctype html><html lang="en"><head><title>x</title></head><body><main><p>Enquiry routes</p></main></body></html>');
+  if (!brit('/contact/').length) problems.push('self-test: the wording gate accepted "Enquiry" in the text of /contact/');
+  if (!archiveWordingProblems('/about/recognition/', '<body><a aria-label="Media enquiries" href="/x/">m</a></body>').length) problems.push('self-test: the wording gate accepted "enquiries" in an attribute');
+  if (!archiveWordingProblems('/investors/', '<head><meta name="description" content="Make an ENQUIRY."></head>').length) problems.push('self-test: the wording gate accepted "ENQUIRY" in a meta description (case-insensitive)');
+  if (!archiveWordingProblems('/partner-with-us/local-partners/', '<script type="application/ld+json">{"description":"Send an enquiry"}</script>').length) problems.push('self-test: the wording gate accepted "enquiry" in JSON-LD');
+  if (!archiveWordingProblems('/news/page/2/', '<body>Enquiry</body>').length) problems.push('self-test: the wording gate exempted a news listing page (only /news/<post>/ is exempt)');
+  if (brit('/news/some-archived-post/').length) problems.push('self-test: the wording gate flagged an archived /news/<post>/ page');
+  if (archiveWordingProblems('/old-slug/', '<!DOCTYPE html><html lang="en" data-redirect-stub><head><meta http-equiv="refresh" content="0;url=/news/enquiry-open/"></head></html>').length) problems.push('self-test: the wording gate flagged a redirect stub');
+  if (archiveWordingProblems('/contact/', '<body><p>Inquiry routes and media inquiries.</p></body>').length) problems.push('self-test: the wording gate flagged American spelling');
+  if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><li>does not mean every learner’s income Tripled.</li></body>').length) problems.push('self-test: the wording gate accepted "tripled" outside the archive');
+  if (archiveWordingProblems('/news/some-archived-post/', '<body>income tripled</body>').length) problems.push('self-test: the wording gate flagged "tripled" inside an archived post');
+  if (archiveWordingProblems('/our-model/', '<body>A triple-lens model; triplet; tripleshot</body>').length) problems.push('self-test: the wording gate flagged "triple" words that are not "tripled"');
+  // program-data label: once per figure; a second copy or a page-local variant fails
+  const okFig = `711 of 1,000 women placed (71%) in WSDFM 1 ${PROGRAM_DATA_LABEL} Women’s skills for freelancing 102 of 150 women placed (68%) in Kosovo 2 ${PROGRAM_DATA_LABEL} Women in Online Work`;
+  if (programLabelProblems(okFig).length) problems.push('self-test: the program-data label check rejected figures that each carry the label once');
+  if (!programLabelProblems(`women placed (71%) in WSDFM. ${PROGRAM_DATA_LABEL} 1 ${PROGRAM_DATA_LABEL} Women’s skills`).length) problems.push('self-test: the program-data label check accepted the label printed twice in a row');
+  if (!programLabelProblems('372 of 800 women placed (47%) in Her Power training Program records — gross placement Context').length) problems.push('self-test: the program-data label check accepted a page-local label');
+  if (programLabelProblems('What would have happened without training; placement is gross, not net. Each case study states its own base.').length) problems.push('self-test: the program-data label check flagged ordinary wording');
 }
 
 // The public dataset itself (D1, D15): no unverified facts and no restricted facts without a public scope.
@@ -247,7 +322,11 @@ for (const f of Object.values(facts)) {
   if (f.status === 'U') problems.push(`dataset: unverified (U) fact ${f.id} must stay in the private register`);
   if (f.status === 'R' && !(f.allow ?? []).length) problems.push(`dataset: restricted (R) fact ${f.id} has no public allow scope and must stay in the private register`);
 }
-if (!String(facts['PD-03']?.footnote ?? '').includes(CERT_NOTE_TEXT)) problems.push('dataset: PD-03 (vendor certifications) must carry the non-affiliation note in its footnote');
+// The non-affiliation note is the inline <CertNote> that <Fact>/<FactCard> add for CERT_FACT_IDS; no fact may repeat it as a footnote.
+for (const id of ['PD-03', 'IN-08']) if (!CERT_FACT_IDS.includes(id)) problems.push(`dataset: ${id} names vendor certifications, so it must be in CERT_FACT_IDS (that is what makes <Fact> add the inline non-affiliation note)`);
+for (const f of Object.values(facts)) {
+  if (String(f.footnote ?? '').includes(CERT_NOTE_TEXT) || String(f.caveatText ?? '').includes(CERT_NOTE_TEXT)) problems.push(`dataset: ${f.id} carries the non-affiliation note in its footnote; the inline note is the treatment (the sentence would print twice)`);
+}
 for (const id of CERT_FACT_IDS) if (!facts[id]) problems.push(`dataset: CERT_FACT_IDS names ${id}, which is not in the register`);
 
 /* ---- report CTA switch (src/lib/site.ts) ---- */
@@ -296,10 +375,12 @@ for (const file of htmlFiles(dist)) {
 
   // vendor certifications need the non-affiliation note (rule 13)
   const text = visibleText(markup);
-  if (namesVendorCert(text)) {
-    vendorPages++;
-    if (!text.includes(CERT_NOTE_TEXT)) problems.push(`${path}: names a vendor certification but lacks the note "${CERT_NOTE_TEXT}"`);
-  }
+  if (namesVendorCert(text)) vendorPages++;
+  for (const p of certNoteProblems(text)) problems.push(`${path}: ${p}`);
+  // archive-only wording: British "enquir*" (D6) and "tripled" (OC-03) outside the archived news posts
+  problems.push(...archiveWordingProblems(path, html));
+  // program-data label once per figure, no page-local variant (the archived posts keep their wording)
+  if (!exemptFromArchiveRule(path, html)) for (const p of programLabelProblems(text)) problems.push(`${path}: ${p}`);
   // footnotes in reading order, no empty notes band, no glued inline link
   if (markup.includes('class="fn"') || markup.includes('sources__note')) footnotePages++;
   for (const p of footnoteProblems(markup)) problems.push(`${path}: ${p}`);
@@ -321,6 +402,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note; ${footnotePages} page(s) with footnotes in reading order; report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

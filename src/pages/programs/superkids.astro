@@ -36,7 +36,7 @@ import { linkAttrs } from '../../lib/url';
 const path = '/programs/superkids/';
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. Public-sector agreements set targets, not delivered reach.';
-const enquiry = ctaFor('superkids');
+const inquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 // Only the safeguarding question (Q9) applies to SuperKids: Q1 ("Will this work in our country?") answers with the adult course menu
@@ -51,13 +51,13 @@ const jsonLd = [
 const courses = linkAttrs(COURSES_URL);
 ---
 
-<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={enquiry}>
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={inquiry}>
   <!-- C1 -->
   <HeroBand
     audience="SuperKids · For schools and education partners"
     title="Help young learners explore coding, creativity and robotics."
     lead="We help schools and partners bring STEAM, coding and robotics to young learners."
-    cta={enquiry}
+    cta={inquiry}
     artSeed="superkids"
   />
 
@@ -159,7 +159,7 @@ const courses = linkAttrs(COURSES_URL);
   />
 
   <!-- C13 -->
-  <CTABand id="cta" heading="Bring SuperKids to your school or program." cta={enquiry} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Bring SuperKids to your school or program." cta={inquiry} micro={MICRO_COMMITMENT} />
 
   <!-- C14 -->
   <NextSteps

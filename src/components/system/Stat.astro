@@ -13,9 +13,11 @@ interface Props {
   count?: boolean;
   /** Footnote / source marker or short note under the label. */
   note?: string;
+  /** Evidence label under the label, set apart by a rule (e.g. the register's program-data label); used by <FactStat>. */
+  evidence?: string;
   class?: string;
 }
-const { value, label, tone = 'default', size = 'md', align = 'start', count = true, note, class: className } = Astro.props;
+const { value, label, tone = 'default', size = 'md', align = 'start', count = true, note, evidence, class: className } = Astro.props;
 const fig = count ? parseFigure(value) : null;
 // Reserve width for the final value: D-DIN has no tabular figures.
 const widthCh = value.length;
@@ -47,6 +49,7 @@ const widthCh = value.length;
     }
   </p>
   <p class="stat__label">{label}<slot /></p>
+  {evidence && <p class="stat__evidence">{evidence}</p>}
   {note && <p class="stat__note">{note}</p>}
 </div>
 
@@ -99,6 +102,21 @@ const widthCh = value.length;
     line-height: var(--lh-body-xs);
     color: var(--stat-label);
     max-width: 28ch;
+  }
+  .stat__evidence {
+    margin: 2px 0 0;
+    padding-top: 4px;
+    border-top: 1px solid var(--stat-rule, var(--primary-fixed));
+    max-width: 28ch;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-medium);
+    color: var(--stat-evidence, var(--secondary));
+  }
+  .stat--dark .stat__evidence,
+  .stat--accent .stat__evidence {
+    --stat-rule: rgb(255 255 255 / 0.3);
+    --stat-evidence: var(--primary-fixed);
   }
   .stat__note {
     margin: 0;

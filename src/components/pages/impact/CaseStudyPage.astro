@@ -23,8 +23,11 @@ interface Props {
   /** <title> without the suffix. */
   pageTitle: string;
   description: string;
-  /** Register facts whose stats form the outcome-first row, each with its own evidence label (shown under the figure). */
-  stats: { id: string; evidence: string }[];
+  /**
+   * Register facts whose stats form the outcome-first row. A program-results stat (PR-01, PR-02, PR-05) carries its evidence label from the
+   * register, so it takes none here; `evidence` is for a stat whose register label has none (PR-03), and is shown under the figure.
+   */
+  stats: { id: string; evidence?: string }[];
   context: string[];
   challenges: string[];
   solution: string[];
@@ -51,7 +54,7 @@ const d = discoveryCta();
         stats.map((s) => (
           <div class="cs__stat">
             <FactStat id={s.id} />
-            <p class="cs__evidence">{s.evidence}</p>
+            {s.evidence && <p class="cs__evidence">{s.evidence}</p>}
           </div>
         ))
       }
