@@ -33,6 +33,12 @@
 //     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's words: the lead "What the discovery
 //     session covers:" (or "What the briefing covers:" where the CTA is a briefing), the three items joined with " · " and one final period,
 //     carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget" claim; PD-02 is a production hold); negative self-tests below
+//   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
+//     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
+//     registers (facts, caveats, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
+//     scripts/facts-guard-allow.json (page + exact text + reason; a stale entry fails). Not scanned: /news/<post>/ archive posts, redirect
+//     stubs, /styleguide/ (a component sample page) and the 404. Details at "number guard" below; `FACTS_GUARD_LIST=1 npm run check:facts`
+//     lists every figure the register allowed. Negative self-tests below.
 //   - report CTA: while REPORT_EDITION_READY (src/lib/site.ts) is false, no "Request the Impact Report" button, link or mailto
 //     subject may appear on any page
 //   - SITE_ENV=production only: production fact holds. A private hold list names facts that must not render in
@@ -49,7 +55,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const dist = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(root, 'dist');
-const { facts, CERT_NOTE_TEXT, CERT_FACT_IDS, PROGRAM_DATA_LABEL } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
+const { facts, CAVEATS, sources, CERT_NOTE_TEXT, CERT_FACT_IDS, PROGRAM_DATA_LABEL } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
+// The published survey aggregates behind the /impact/outcomes-2026/ charts and CSV: a second public dataset the number guard reads (see below).
+const { csvRows: outcomesCsvRows } = await import(new URL('../src/components/pages/impact/outcomes-data.ts', import.meta.url).href);
 const { orderFootnotes, dropEmptyNotesBand, dropDoubledStops, spaceInlineLinks, postprocessPage } = await import(new URL('../src/lib/postprocess.ts', import.meta.url).href);
 
 /* ---- production fact holds (private list; staging never reads or reports it) ---- */
@@ -349,6 +357,218 @@ function footnoteProblems(markup) {
   return out;
 }
 
+/* ---- number guard (doc 10 §1 "Facts guard"; WP1l) ---- */
+// Every number token in the visible copy of an evergreen page that carries a claim marker (%, pp / "percentage points", a leading "+" or "~",
+// a trailing "+", M / K / B / million / billion, $ or BDT, ×, or "about / at least / up to / over …" in front) must be a value the public
+// dataset registers, or sit in the small whitelist (scripts/facts-guard-allow.json, one page and one reason per entry). Unmarked numbers
+// (years, dates, list counts, step numbers, "100 hours") are not claims and are not read. Not held to it: the archived /news/<post>/ posts
+// (R8-m5: they keep their dated figures), redirect stubs, /styleguide/ (a component sample page, its tiles hold placeholder figures) and the 404.
+// Matching is by value, not by wording: "+10.3 pp", "10.3 percentage points" and "10.3 percentage-point" are one token; "62 million" and "62M",
+// "3.00×" and "3×", "68–71%" (68% and 71%) and "~15,000" (15,000) are normalised alike on the page and in the register, so a fact rendered in
+// a different format passes and a different number does not. Two limits, stated plainly: a value is matched wherever the register holds it
+// (a page cannot reuse 47% for something else and be caught here; the sentences that matter are pinned by the [PLAIN-LINE], [SESSION-AGENDA]
+// and tile checks), and a count below 1,000 must be followed by one of the three words that follow it in the register ("25+ classes" is
+// registered, "25+ years" is not; "up to 10 cohorts" passes for PD-06's "Up to 10 certification cohorts").
+const NUM = String.raw`(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?`;
+const NUM_RE = new RegExp(`(?<![\\w.,])${NUM}(?!\\d)`, 'g');
+// "+1 212 344 4111" (office telephone numbers) are contact details, not claims; removed before reading
+const PHONE_RE = /\+\d{1,3}[ \-\u{2011}]\d[\d \-\u{2011}]{6,}\d/gu;
+const APPROX_BEFORE = /\b(?:about|around|roughly|approximately|nearly|almost|more than|at least|up to|over)\s$/i;
+// "over 4 months", "over 15 years": a duration is not a count of people, jobs or money
+const DURATION_WORD = /^(?:years?|months?|weeks?|days?|hours?|minutes?)$/i;
+const MAGNITUDE = { k: 1e3, thousand: 1e3, m: 1e6, million: 1e6, b: 1e9, billion: 1e9 };
+const gap = (text, a, b) => /^\s?[–—-]\s?$/.test(text.slice(a, b));
+/**
+ * Every claim-marked number in a text: { kind, value, shown, words, around }. kind is pct | pp | mult | usd | bdt | num; value is normalised
+ * (separators stripped, M/K/B/million applied); shown is the text as printed (marker included, the whole range for "68–71%"); words are the
+ * (up to) three words after it.
+ */
+function numberTokens(input) {
+  const text = input.replace(PHONE_RE, ' ');
+  const occ = [...text.matchAll(NUM_RE)].map((m) => ({ i: m.index, j: m.index + m[0].length, raw: m[0] }));
+  for (const o of occ) {
+    const pre = /(?:([+~≈])?(US\$|\$|\bBDT|\bUSD|৳)\s?|([+~≈]))$/i.exec(text.slice(Math.max(0, o.i - 12), o.i));
+    const prefixLen = pre ? pre[0].length : 0;
+    // a sign glued to a letter or digit is part of a name ("WSIS+20 Forum"), not a "+41%"
+    o.sign = pre && !/\w/.test(text[o.i - prefixLen - 1] ?? '') ? (pre[1] ?? pre[3] ?? '') : '';
+    o.cur = pre?.[2] ? (/^(?:us)?\$$/i.test(pre[2]) ? '$' : pre[2] === '৳' ? 'BDT' : pre[2].toUpperCase()) : '';
+    const lead = text.slice(Math.max(0, o.i - prefixLen - 18), o.i - prefixLen);
+    const ap = APPROX_BEFORE.exec(lead);
+    o.approx = Boolean(ap);
+    o.start = o.i - prefixLen - (ap ? ap[0].length : 0);
+    const after = text.slice(o.j, o.j + 32);
+    let m;
+    o.unit = '';
+    if ((m = /^\s?(?:%|percent\b)/i.exec(after))) o.unit = 'pct';
+    else if ((m = /^\s?(?:pp\b|percentage[ -]points?\b)/i.exec(after))) o.unit = 'pp';
+    else if ((m = /^\s?×/.exec(after)) || (m = /^x(?![A-Za-z0-9])/.exec(after))) o.unit = 'mult';
+    else if ((m = /^\s(?:million|billion|thousand)\b/i.exec(after) ?? /^[MKB](?![A-Za-z])/.exec(after))) o.unit = 'mag:' + m[0].trim().toLowerCase();
+    o.ulen = m ? m[0].length : 0;
+    o.plus = /^\+(?![\dA-Za-z])/.test(after.slice(o.ulen));
+    o.end = o.j + o.ulen + (o.plus ? 1 : 0);
+  }
+  // ranges ("68–71%", "61–78 million", "$5–10"): the figures share the unit, the currency and the sign, but a magnitude only when the range ascends
+  // ("200,000–1.5 million" is not 200,000 million)
+  for (let k = 0; k + 1 < occ.length; k++) {
+    const a = occ[k];
+    const b = occ[k + 1];
+    if (!gap(text, a.j, b.i)) continue;
+    a.range = b;
+    b.rangeFrom = a;
+  }
+  const out = [];
+  for (const o of occ) {
+    let { unit, cur, sign, approx, plus } = o;
+    let shownStart = o.start;
+    let shownEnd = o.end;
+    if (o.range) {
+      const b = o.range;
+      const ascends = Number(o.raw.replace(/,/g, '')) <= Number(b.raw.replace(/,/g, ''));
+      if (!unit && b.unit && (!b.unit.startsWith('mag:') || ascends)) unit = b.unit;
+      shownEnd = b.end;
+    }
+    if (o.rangeFrom) {
+      cur = cur || o.rangeFrom.cur;
+      sign = sign || o.rangeFrom.sign;
+      approx = approx || o.rangeFrom.approx;
+      shownStart = o.rangeFrom.start;
+    }
+    let value = Number(o.raw.replace(/,/g, ''));
+    let kind;
+    if (unit === 'pp' || unit === 'pct' || unit === 'mult') kind = unit;
+    else {
+      if (unit.startsWith('mag:')) value *= MAGNITUDE[unit.slice(4)];
+      if (cur === '$' || cur === 'USD') kind = 'usd';
+      else if (cur === 'BDT') kind = 'bdt';
+      else if (unit || plus || sign || approx) kind = 'num';
+      else continue;
+    }
+    const words = [...text.slice(shownEnd, shownEnd + 60).matchAll(/[A-Za-z][A-Za-z’'-]*/g)].slice(0, 3).map((w) => w[0].toLowerCase());
+    // an approximator in front of a bare number ("over 15 years") is a claim only when the number counts something other than time
+    if (kind === 'num' && approx && !unit && !plus && !sign && DURATION_WORD.test(words[0] ?? '')) continue;
+    out.push({ kind, value: +value.toPrecision(12), shown: text.slice(shownStart, shownEnd).trim(), words, around: text.slice(Math.max(0, shownStart - 30), shownEnd + 30).trim() });
+  }
+  return out;
+}
+const tokenKey = (t) => `${t.kind}:${t.value}`;
+// A count below 1,000 ("25+", "10", "90+") could stand for anything, so the word that follows it on the page must be one of the three words that
+// follow the same value in the register ("up to 10 cohorts" for "Up to 10 certification cohorts in parallel"; "25+ years" is not "25+ classes").
+const isSmallCount = (t) => t.kind === 'num' && t.value < 1000;
+
+/** The register of number values: every marked number in the public dataset's wording, caveats and citations, plus the derivations below. */
+const numberRegistry = new Map(); // key -> { sources: Set(where it is registered), words: Set(words that follow it there) }
+const registryEntry = (key) => {
+  if (!numberRegistry.has(key)) numberRegistry.set(key, { sources: new Set(), words: new Set() });
+  return numberRegistry.get(key);
+};
+const isRegistered = (t) => {
+  const e = numberRegistry.get(tokenKey(t));
+  return Boolean(e) && (!isSmallCount(t) || e.words.has(t.words[0] ?? ''));
+};
+{
+  const add = (text, source) => {
+    if (!text) return;
+    for (const t of numberTokens(String(text))) {
+      const e = registryEntry(tokenKey(t));
+      e.sources.add(source);
+      for (const w of t.words.length ? t.words : ['']) e.words.add(w);
+    }
+  };
+  for (const f of Object.values(facts)) {
+    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.footnote, f.base, f.claim, f.caveatText]) add(s, f.id);
+  }
+  for (const [cls, text] of Object.entries(CAVEATS)) add(text, `caveat ${cls}`);
+  for (const s of Object.values(sources)) {
+    add(s.citation, `source ${s.id}`);
+    add(s.label, `source ${s.id}`);
+  }
+  // The survey aggregates behind the /impact/outcomes-2026/ charts and its CSV (src/components/pages/impact/outcomes-data.ts): every share and
+  // median is a row of the published CSV, and the module asserts at build time that each one reproduces a register headline (assertAgainstRegister)
+  const csvKind = { percent: 'pct', percent_change: 'pct', percentage_points: 'pp', median_usd: 'usd' };
+  for (const [id, , , type, value] of outcomesCsvRows()) {
+    registryEntry(`${csvKind[type]}:${Number(value)}`).sources.add(`outcomes-data ${id}`);
+  }
+  // Numbers derived in code from a fact, never typed: each one is named here with the fact it comes from and the sentence that carries it.
+  // This list is the only way to allow a derived value; the matcher is never loosened for it.
+  const DERIVED = [
+    // [PLAIN-LINE] (src/data/copy.ts, re-derived in plainLineWanted below): "about 10 more were in work" is RC-02's +10.3 pp rounded to a whole number
+    ['RC-02 rounded (the [PLAIN-LINE])', () => (typeof facts['RC-02']?.stat?.numeric === 'number' ? `about ${Math.round(facts['RC-02'].stat.numeric)} more` : '')],
+  ];
+  for (const [source, make] of DERIVED) add(make(), source);
+}
+
+// FACTS_GUARD_LIST=1 npm run check:facts  also prints every figure the register allowed, as printed, with the pages it is on and where it is registered (an audit aid)
+const FACTS_GUARD_LIST = Boolean(process.env.FACTS_GUARD_LIST);
+const guardLog = new Map();
+
+/** The whitelist (scripts/facts-guard-allow.json): numbers that carry a marker but are not claims. One page (or page prefix "/x/*") and one reason each. */
+function allowlistProblems(list) {
+  if (!Array.isArray(list)) return ['"allow" must be an array'];
+  const out = [];
+  const seen = new Set();
+  list.forEach((e, i) => {
+    const at = `allow[${i}]`;
+    if (!e || typeof e !== 'object') return out.push(`${at} must be an object { page, text, reason }`);
+    if (typeof e.page !== 'string' || !/^\/[^*]*\*?$/.test(e.page) || e.page === '/*') out.push(`${at}.page must be a page path such as "/news/" or a section prefix such as "/news/page/*" (never "/*" or "*")`);
+    if (typeof e.text !== 'string' || !/\d/.test(e.text)) out.push(`${at}.text must be the number as printed, such as "25,000+"`);
+    if (typeof e.reason !== 'string' || e.reason.trim().length < 15) out.push(`${at}.reason must say in a line why this is not a claim`);
+    const key = `${e.page} ${e.text}`;
+    if (seen.has(key)) out.push(`${at} repeats ${key}`);
+    seen.add(key);
+  });
+  return out;
+}
+const allowAppliesTo = (e, path) => (e.page.endsWith('*') ? path.startsWith(e.page.slice(0, -1)) : e.page === path);
+const loadAllowlist = () => {
+  const file = join(root, 'scripts', 'facts-guard-allow.json');
+  const spec = JSON.parse(readFileSync(file, 'utf8'));
+  return { list: spec.allow, bad: allowlistProblems(spec.allow) };
+};
+
+/** Archive posts, redirect stubs, the styleguide's samples and the 404 are not held to the guard (see the note above). */
+const NUMBER_GUARD_EXEMPT_PATHS = new Set(['/styleguide/', '/404.html']);
+const guardsNumbers = (path, html) => !exemptFromArchiveRule(path, html) && !NUMBER_GUARD_EXEMPT_PATHS.has(path);
+/**
+ * The copy of a page for the guard: its visible text, plus the title and the meta description (search results and link previews are copy too).
+ * Footnote-marker digits are set apart so they never read as part of a figure.
+ */
+function guardText(markup) {
+  const head = /<head\b[\s\S]*?<\/head>/i.exec(markup)?.[0] ?? '';
+  const title = /<title\b[^>]*>([\s\S]*?)<\/title>/i.exec(head)?.[1] ?? '';
+  const description = /<meta\b[^>]*\bname="description"[^>]*\bcontent="([^"]*)"/i.exec(head)?.[1] ?? '';
+  const body = markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<sup\b[^>]*\bclass="fn"[\s\S]*?<\/sup>/g, ' ⁿ ');
+  return decode(`${title} . ${description} . ${body}`.replace(/&nbsp;|&#160;/g, ' '))
+    .replace(/[\u{a0}\u{202f}\u{2009}]/gu, ' ')
+    .replace(/\u{2011}/gu, '-');
+}
+/** One page through the guard. `allow` is a list of whitelist entries (their `used` flag is set when one applies). */
+function numberGuardPage(path, html, allow = []) {
+  const res = { scanned: false, tokens: 0, byRegister: 0, byWhitelist: 0, problems: [] };
+  if (!guardsNumbers(path, html)) return res;
+  res.scanned = true;
+  const markup = html.replace(/<script\b[\s\S]*?<\/script>/gi, '').replace(/<style\b[\s\S]*?<\/style>/gi, '');
+  const reported = new Set();
+  for (const t of numberTokens(guardText(markup))) {
+    res.tokens++;
+    if (isRegistered(t)) {
+      res.byRegister++;
+      if (FACTS_GUARD_LIST) {
+        const row = guardLog.get(tokenKey(t)) ?? { shown: new Set(), pages: new Set(), sources: [...numberRegistry.get(tokenKey(t)).sources] };
+        row.shown.add(t.shown);
+        row.pages.add(path);
+        guardLog.set(tokenKey(t), row);
+      }
+      continue;
+    }
+    const hit = allow.find((e) => allowAppliesTo(e, path) && e.text === t.shown);
+    if (hit) { hit.used = true; res.byWhitelist++; continue; }
+    if (reported.has(t.shown)) continue;
+    reported.add(t.shown);
+    res.problems.push(`${path}: number "${t.shown}" is not a registered fact value (${t.kind}${isSmallCount(t) ? ', next word "' + (t.words[0] ?? '') + '"' : ''}): "…${t.around}…" — render it from a fact, or whitelist it with a reason in scripts/facts-guard-allow.json`);
+  }
+  return res;
+}
+
 /* ---- self-test: the post-processing on fixtures, then the checks above on its result (and on a broken page) ---- */
 {
   const mk = (fact, n, k) => `<sup class="fn" data-fact="${fact}"><a href="#fn-${n}" id="fn-ref-${n}-${k}" aria-label="Note ${n}">${n}</a></sup>`;
@@ -476,6 +696,68 @@ function footnoteProblems(markup) {
   agendaBad('a missing final period', ctaBand(agendaP(agendaWant.slice(0, -1))));
   agendaBad('an agenda without the PD-02 marker', ctaBand(agendaP(agendaWant, { fact: '' })));
   agendaBad('an agenda tied to the wrong fact', ctaBand(agendaP(agendaWant, { fact: 'PD-04' })));
+
+  // number guard: an unregistered figure on an evergreen page fails; registered figures pass in any format; archive posts, stubs, the styleguide
+  // and the 404 are exempt; the whitelist is per page and per text
+  const guardDoc = (body, head = '') => `<!doctype html><html lang="en"><head><title>Page</title>${head}</head><body><main>${body}</main></body></html>`;
+  const guardRun = (path, body, allow = [], head = '') => numberGuardPage(path, guardDoc(body, head), allow);
+  const guardFails = (why, path, body, allow, head) => {
+    const r = guardRun(path, body, allow, head);
+    if (r.problems.length !== 1) problems.push(`self-test: the number guard should flag ${why} once, flagged ${r.problems.length}`);
+  };
+  const guardPasses = (why, path, body, allow, head) => {
+    const r = guardRun(path, body, allow, head);
+    if (r.problems.length) problems.push(`self-test: the number guard rejected ${why}: ${r.problems.join('; ')}`);
+  };
+  guardFails('an unregistered "47.5%" on an evergreen page', '/our-model/', '<p>Employment rose 47.5% after training.</p>');
+  for (const fig of ['+47.5 pp', '47.5 percentage points', '$47.5', '+$47.5', '47.5×', '47.5M', '47.5K+', '47.5+', '~47.5', 'about 47', 'at least 47', '$47.5 million', 'BDT 47.5', '47.5 million', '47.5B']) guardFails(`an unregistered "${fig}"`, '/our-model/', `<p>Result: ${fig} in the cohort.</p>`);
+  guardFails('an unregistered figure in the meta description', '/our-model/', '<p>Nothing here.</p>', [], '<meta name="description" content="Up 47.5% in a year">');
+  if (numberGuardPage('/our-model/', '<!doctype html><html lang="en"><head><title>Up 47.5% in a year</title></head><body><main><p>Nothing here.</p></main></body></html>').problems.length !== 1) problems.push('self-test: the number guard accepted an unregistered figure in the title');
+  guardFails('an unregistered "47.5%" on a news listing page (only /news/<post>/ is exempt)', '/news/page/2/', '<p>Employment rose 47.5%.</p>');
+  guardPasses('"47.5%" on an archived /news/<post>/ page', '/news/some-archived-post/', '<p>Employment rose 47.5% and income $9.9M.</p>');
+  if (!guardRun('/our-model/', '').scanned || guardRun('/news/some-archived-post/', '').scanned || guardRun('/styleguide/', '').scanned) problems.push('self-test: the number guard scans the wrong pages');
+  if (numberGuardPage('/old-slug/', '<!DOCTYPE html><html lang="en" data-redirect-stub><head><title>47.5%</title></head><body>47.5%</body></html>').problems.length) problems.push('self-test: the number guard flagged a redirect stub');
+  guardPasses('"47.5%" on the styleguide (a component sample page)', '/styleguide/', '<p>47.5% and 1,234M+</p>');
+  if (numberGuardPage('/404.html', guardDoc('<p>47.5%</p>')).problems.length) problems.push('self-test: the number guard flagged the 404');
+  // numbers that are not claims carry no marker and are not read: years, dates, list counts, steps, durations, ages, bases
+  const unmarked = guardRun('/our-model/', '<p>Founded in 2014; the October 2026 survey; Nov–Dec 2021; steps 1, 2 and 3; 100 training hours; ages 18–35; 6–8 weeks; tracers at 3/6/12 months; n = 321; over 4 months; 1 of 3; Her Power 2.0.</p><p>Call +1 212 344 4111 or +880 1958\u{2011}220802. WSIS+20 Forum.</p>');
+  if (unmarked.problems.length || unmarked.tokens) problems.push(`self-test: the number guard read figures that carry no marker (${unmarked.tokens} token(s)): ${unmarked.problems.join('; ')}`);
+  // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
+  for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
+  guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
+  const ppAfterMarker = guardRun('/our-model/', '<p>+10.3 pp<sup class="fn" data-fact="RC-02"><a href="#fn-3" id="fn-ref-3-1" aria-label="Note 3">3</a></sup> percentage points more employment</p>');
+  if (ppAfterMarker.problems.length || ppAfterMarker.tokens !== 1) problems.push('self-test: the number guard read a footnote marker digit as part of the figure after it ("3 percentage points")');
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '$5M+', '$5 million', '+$27', '$27', 'BDT 2,354', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['68–73%', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  // chart data: the published survey aggregates (outcomes-data.ts) are part of the public dataset
+  guardPasses('a published survey share ("37.1%" Dhaka)', '/impact/outcomes-2026/', '<p>Dhaka 37.1%, Chattogram 8.2%</p>');
+  guardFails('"37.2%" (not a published share)', '/impact/outcomes-2026/', '<p>Dhaka 37.2%</p>');
+  // numbers derived from a fact in code: only the listed derivation passes ("about 10 more" is RC-02 rounded)
+  guardPasses('"about 10 more" (RC-02 rounded)', '/our-model/', '<p>About 10 more were in work.</p>');
+  guardFails('"about 11 more" (RC-02 rounds to 10)', '/our-model/', '<p>about 11 more were in work.</p>');
+  // counts below 1,000 are tied to the word after them: "25+ classes" is RC-08, "25+ years" is not a fact
+  guardPasses('"25+ classes" (RC-08)', '/our-model/', '<p>42% (25+ classes) freelanced.</p>');
+  guardFails('"25+ years" (a number that only matches RC-08 by value)', '/our-model/', '<p>An architect with 25+ years of experience.</p>');
+  guardPasses('"up to 10 cohorts" (PD-06: "Up to 10 certification cohorts")', '/our-model/', '<p>Run up to 10 cohorts in parallel.</p>');
+  guardFails('"over 100 young" (a count, not a duration)', '/our-model/', '<p>Over 100 young Bhutanese took part.</p>');
+  // the whitelist is per page and per exact text, and an entry that nothing uses is stale
+  const allowEntry = { page: '/our-model/', text: '47.5%', reason: 'a self-test entry that says why this is not a claim' };
+  const used = { ...allowEntry };
+  const whitelisted = guardRun('/our-model/', '<p>Employment rose 47.5%.</p>', [used]);
+  if (whitelisted.problems.length || whitelisted.byWhitelist !== 1 || !used.used) problems.push('self-test: the number guard rejected a whitelisted figure (or did not mark the entry used)');
+  guardFails('a whitelisted text on another page', '/about/', '<p>Employment rose 47.5%.</p>', [{ ...allowEntry }]);
+  guardFails('a different figure than the whitelisted text', '/our-model/', '<p>Employment rose 47.6%.</p>', [{ ...allowEntry }]);
+  guardPasses('a whitelisted figure on a page under a prefix entry', '/section/page/', '<p>47.5%</p>', [{ ...allowEntry, page: '/section/*' }]);
+  guardFails('a whitelisted figure outside its prefix', '/other/page/', '<p>47.5%</p>', [{ ...allowEntry, page: '/section/*' }]);
+  const staleEntry = { page: '/our-model/', text: '+10.3 pp', reason: 'a self-test entry that says why this is not a claim' };
+  guardRun('/our-model/', '<p>+10.3 pp</p>', [staleEntry]);
+  if (staleEntry.used) problems.push('self-test: a whitelist entry for a registered figure was marked used (the register applies first, so the entry is stale and must be reported)');
+  if (allowlistProblems([allowEntry, { ...allowEntry, page: '/about/' }]).length) problems.push('self-test: the whitelist validator rejected valid entries');
+  for (const [why, entry] of [['a wildcard page', { ...allowEntry, page: '*' }], ['the whole site as a prefix', { ...allowEntry, page: '/*' }], ['an entry with no reason', { ...allowEntry, reason: '' }], ['a one-word reason', { ...allowEntry, reason: 'year' }], ['an entry whose text holds no number', { ...allowEntry, text: 'ten percent' }], ['an entry with no page', { text: '47.5%', reason: allowEntry.reason }]]) {
+    if (!allowlistProblems([entry]).length) problems.push(`self-test: the whitelist validator accepted ${why}`);
+  }
+  if (!allowlistProblems([allowEntry, { ...allowEntry }]).length) problems.push('self-test: the whitelist validator accepted a duplicate entry');
+  if (!allowlistProblems({}).length) problems.push('self-test: the whitelist validator accepted a non-array');
 }
 
 // The public dataset itself (D1, D15): no unverified facts and no restricted facts without a public scope.
@@ -506,6 +788,10 @@ let vendorPages = 0;
 let footnotePages = 0;
 let plainLinePages = 0;
 let agendaPages = 0;
+const guard = { pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
+guardLog.clear(); // the self-tests above also pass through the guard
+const { list: allowList, bad: allowBad } = loadAllowlist();
+for (const p of allowBad) problems.push(`scripts/facts-guard-allow.json: ${p}`);
 const seenPaths = new Set();
 for (const file of htmlFiles(dist)) {
   pages++;
@@ -557,6 +843,17 @@ for (const file of htmlFiles(dist)) {
   if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(text)) problems.push(`${path}: ${p}`);
   // every statistic tile carries its fact's footnote marker (the styleguide's samples are not real tiles)
   if (path !== '/styleguide/') for (const p of tileProblems(markup)) problems.push(`${path}: ${p}`);
+  // number guard: every claim-marked figure in the copy is a registered fact value or whitelisted (archive posts, stubs, styleguide, 404 exempt)
+  {
+    const g = numberGuardPage(path, html, allowList);
+    if (g.scanned) {
+      guard.pages++;
+      guard.tokens += g.tokens;
+      guard.byRegister += g.byRegister;
+      guard.byWhitelist += g.byWhitelist;
+    }
+    problems.push(...g.problems);
+  }
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
     agendaPages++;
@@ -575,16 +872,21 @@ if (pages === 0) {
 }
 // A page that must carry the [PLAIN-LINE] or the [SESSION-AGENDA] has to be in the build at all.
 for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE] or [SESSION-AGENDA] cannot be checked`);
+// A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
+for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
 for (const [id, set] of heldPages) {
   const list = [...set].sort();
   problems.push(`production fact hold: ${id} (confirm item ${holds.get(id)}) is rendered on ${list.length} page(s): ${list.slice(0, 8).join(', ')}${list.length > 8 ? ` +${list.length - 8} more` : ''}`);
+}
+if (FACTS_GUARD_LIST) {
+  for (const [key, row] of [...guardLog].sort(([a], [b]) => a.localeCompare(b, 'en', { numeric: true }))) console.log(`${key.padEnd(18)} ${[...row.shown].slice(0, 4).join(' | ').padEnd(34)} ${String(row.pages.size).padStart(3)} page(s)  <- ${row.sources.slice(0, 4).join(', ')}${row.sources.length > 4 ? ` +${row.sources.length - 4}` : ''}`);
 }
 if (problems.length) {
   console.error(`check-facts: ${problems.length} problem(s)\n` + problems.map((p) => '  - ' + p).join('\n'));
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );
