@@ -55,6 +55,9 @@ export function organization(): JsonLdNode {
     '@type': 'Organization',
     '@id': ORG_ID,
     name: SITE_NAME,
+    // doc 09 §2: the entity's other name, as on the legacy site and coderstrust.global. `award` (PA-08, HolonIQ) is left out until that
+    // production hold (#3) closes.
+    alternateName: 'CodersTrust Global',
     url: `${PRODUCTION_ORIGIN}/`,
     logo: { '@type': 'ImageObject', url: PRODUCTION_ORIGIN + LOGO_PNG_PATH, width: 1200, height: 143 },
     image: PRODUCTION_ORIGIN + LOGO_PNG_PATH,
