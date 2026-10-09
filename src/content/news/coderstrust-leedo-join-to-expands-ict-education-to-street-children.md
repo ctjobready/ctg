@@ -4,14 +4,11 @@ date: 2022-06-19
 updated: 2023-08-11
 topic: programs-events
 excerpt: "CodersTrust and LEEDO start an initiative to give IT training to underprivileged street children in Dhaka."
-cover: ../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg
-coverAlt: "Photo from the news story: CodersTrust and LEEDO Collaborate to Extend ICT Education to Street Children,..."
+coverAlt: ""
 legacyUrl: "https://coderstrust.global/coderstrust-leedo-join-to-expands-ict-education-to-street-children/"
 tags: ["Featured News"]
 seoTitle: "ICT Education for Street Children with LEEDO"
 ---
-
-![](../../assets/images/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/leedo1.jpg)
 
 CodersTrust, a prominent EduTech Company, has embarked on an initiative to provide information technology training to underprivileged street children in Dhaka, aiming to empower them and foster self-reliance. This collaborative effort is being carried out in cooperation with LEEDO, an organization dedicated to the well-being and support of street children.
 
