@@ -26,7 +26,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED_UNIVERSITIES, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -201,7 +201,7 @@ const options = [
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     micro={MICRO_COMMITMENT}
   >
-    <CopyP block={SPEED} class="cta-speed" />
+    <CopyP block={SPEED_UNIVERSITIES} class="cta-speed" />
   </CTABand>
 
   <!-- C14 -->
