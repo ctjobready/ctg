@@ -36,7 +36,7 @@ const path = '/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
 // description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
-const description = 'Back the platform moving emerging-market youth into paid work through certified training. Thesis and traction here; the investor deck on request.';
+const description = 'Back the platform moving emerging-market youth into paid work through certification-focused training. Thesis and traction here; the deck on request.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
@@ -50,7 +50,7 @@ const featureRows = [
   { feature: 'Partner portals, marketing automation, CRM and AI chat — live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
 ];
 const learnEarnProsper = [
-  { title: 'Learn', text: 'Competency development through certified courses.' },
+  { title: 'Learn', text: 'Competency development through certification-focused courses.' },
   { title: 'Earn', text: 'Employment or freelance work, with mentoring and placement support.' },
   { title: 'Prosper', text: 'Career advancement along graduated levels.' },
 ];

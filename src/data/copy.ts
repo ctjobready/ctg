@@ -29,7 +29,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders turn grants into paid digital work for youth through mentored, certification-focused training.',
   universities: 'We help universities and colleges move students into paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through mentored, certification-focused training.',
-  investors: 'We help investors back the platform moving emerging-market youth into paid work through certified training.',
+  investors: 'We help investors back the platform moving emerging-market youth into paid work through mentored, certification-focused training.',
   localPartners: 'We help local organizations move young people into paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help degree holders move into digital work through a National University postgraduate diploma.',
 };
