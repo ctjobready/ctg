@@ -6,14 +6,16 @@ import type { CopyBlock } from '../../../data/copy';
  * Renders a shared copy block (src/data/copy.ts) verbatim, tagged with its fact IDs (data-fact) and
  * the footnote markers of those facts that carry a caveat. Never retype a block: pass it in.
  * `footnote` = true forces a marker (and a numbered source note) for every fact of the block.
+ * `lead` prints a bold lead-in label (ends with a colon; doc 06 "Lead-in labels") before the block's text.
  */
 interface Props {
   block: CopyBlock;
   as?: 'p' | 'div' | 'span';
   footnote?: boolean | 'auto';
+  lead?: string;
   class?: string;
 }
-const { block, as: Tag = 'p', footnote = 'auto', class: className } = Astro.props;
+const { block, as: Tag = 'p', footnote = 'auto', lead, class: className } = Astro.props;
 ---
 
-<Tag class={className} data-fact={block.facts.join(' ')}>{block.text}{block.facts.map((id) => <FootnoteMarker id={id} footnote={footnote} />)}</Tag>
+<Tag class={className} data-fact={block.facts.join(' ')}>{lead && <><strong>{lead}</strong>{' '}</>}{block.text}{block.facts.map((id) => <FootnoteMarker id={id} footnote={footnote} />)}</Tag>

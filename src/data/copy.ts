@@ -44,7 +44,7 @@ export const HEADLINE: Record<Audience, string> = {
   employers: 'Upskill your teams for AI — and hire job-ready digital talent.',
   investors: 'Invest in the infrastructure of emerging-market work.',
   localPartners: 'Deliver digital-skills programs that lead to paid work — in your community.',
-  nuPgd: 'Build the digital skills employers hire — alongside your degree.',
+  nuPgd: 'Build the digital skills employers are hiring for — alongside your degree.',
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
@@ -250,7 +250,7 @@ function trainedReach(): CopyBlock {
 export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, the curriculum for a national program to train 25,125 women (with 2,500 women trained directly), and 10,000 teachers trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
+  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and the curriculum for a national program to train 25,125 women (with 2,500 women trained directly); separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
   facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],
 };
 
@@ -329,16 +329,19 @@ export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 /** The first item differs by kind (round 12, Mi1: "districts" does not fit the international pages). */
 export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and locations';
 export const SESSION_AGENDA_FIRST_ITEM_BRIEFING = 'your priority groups and districts';
+/** The governments page serves ministries in any country, so its briefing names "locations"; "districts" stays on NationWIDE (Bangladesh's national program). */
+export const SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS = 'your priority groups and locations';
 /** The second and third items are shared. */
 export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
 export const SESSION_AGENDA_FACTS = ['PD-02'];
 /**
  * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline."
- * or, for the briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …".
+ * or, for the NationWIDE briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
+ * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …".
  */
-export const sessionAgendaText = (kind: 'discovery' | 'briefing' = 'discovery'): string => {
-  const lead = kind === 'briefing' ? SESSION_AGENDA_LEAD_BRIEFING : SESSION_AGENDA_LEAD;
-  const first = kind === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
+export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments' = 'discovery'): string => {
+  const lead = kind === 'discovery' ? SESSION_AGENDA_LEAD : SESSION_AGENDA_LEAD_BRIEFING;
+  const first = kind === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS : kind === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
   return `${lead} ${[first, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 };
 

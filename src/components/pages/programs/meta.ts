@@ -20,7 +20,7 @@ export const ROADMAP_PHASES = [
  * LAST_UPDATED is the date of the first publication of the program pages.
  * A page that changes gets its own entry in PAGE_UPDATED (2026-10-09: the programs index, YouthWIDE, JobReady@Campus, JobReady@Work, NationWIDE;
  * 2026-10-10: those five again, SuperKids and the NU Postgraduate Diploma index, after the round-16 wording changes, and the NU course pages
- * and the program pages once more after the round-17 heading changes).
+ * and the program pages once more after the round-17 heading changes; the program pages and the NU pages again after the round-18 wording changes, same date).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {

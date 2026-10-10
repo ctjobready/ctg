@@ -12,6 +12,8 @@ interface Item {
   facts: string[];
   /** Page sentence; defaults to the canonical text of the first fact. */
   text?: string;
+  /** Bold lead-in label printed before the sentence (ends with a colon; doc 06 "Lead-in labels"). */
+  lead?: string;
 }
 interface Props {
   heading: string;
@@ -26,7 +28,7 @@ const { heading, items } = Astro.props;
     {
       items.map((it) => (
         <li data-fact={it.facts.join(' ')}>
-          {it.text ?? fact(it.facts[0]).text}
+          {it.lead && <><strong>{it.lead}</strong>{' '}</>}{it.text ?? fact(it.facts[0]).text}
           {it.facts.map((f) => <FootnoteMarker id={f} />)}
         </li>
       ))

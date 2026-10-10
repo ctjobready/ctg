@@ -1,6 +1,6 @@
 ---
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
-import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
+import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
 
 /**
  * [SESSION-AGENDA] (plan v1.12, v1.13 wording): what the first conversation covers, as ONE sentence beside the C13 primary CTA: a bold lead,
@@ -10,19 +10,21 @@ import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST
  *   lead="discovery" (default)  "What the discovery session covers: your country, priority groups and locations; …"
  *                               where the primary CTA books a discovery session (development partners, foundations, YouthWIDE)
  *   lead="briefing"             "What the briefing covers: your priority groups and districts; …"
- *                               where the primary CTA is "Request a briefing" (governments, NationWIDE)
+ *                               where the primary CTA is "Request a briefing" for Bangladesh's national program (NationWIDE)
+ *   lead="governments"          "What the briefing covers: your priority groups and locations; …"
+ *                               the governments page (ministries in any country: "districts" does not fit)
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the paragraph carries the same fact marker (PD-02: data-fact and
  * the fact's own footnote marker if it ever gets one), and a production hold on PD-02 treats it like them. Put it in the CTABand slot, after the
  * micro-commitment line, which stays where it is. scripts/check-facts.mjs fails the build if one of the five pages that carry it lacks it.
  */
 interface Props {
-  lead?: 'discovery' | 'briefing';
+  lead?: 'discovery' | 'briefing' | 'governments';
   class?: string;
 }
 const { lead = 'discovery', class: className } = Astro.props;
-const leadText = lead === 'briefing' ? SESSION_AGENDA_LEAD_BRIEFING : SESSION_AGENDA_LEAD;
-const firstItem = lead === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
+const leadText = lead === 'discovery' ? SESSION_AGENDA_LEAD : SESSION_AGENDA_LEAD_BRIEFING;
+const firstItem = lead === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS : lead === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
 const items = `${[firstItem, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 ---
 

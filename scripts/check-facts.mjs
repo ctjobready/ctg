@@ -33,7 +33,7 @@
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
 //     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's exact words for THAT page: the lead "What
 //     the discovery session covers:" (development partners, foundations, YouthWIDE; first item "your country, priority groups and
-//     locations") or "What the briefing covers:" (governments, NationWIDE; first item "your priority groups and districts"), then the three
+//     locations") or "What the briefing covers:" (NationWIDE: first item "your priority groups and districts"; governments: "your priority groups and locations"), then the three
 //     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
 //     claim, so the three stand on the same fact); negative self-tests below
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
@@ -274,22 +274,24 @@ function plainLineProblems(markup, text, stat, required) {
 // lead, three items separated by semicolons and a single final period, tied to PD-02 (data-fact) like [PRICING] and FAQ Q8, whose "indicative
 // budget" claim it repeats. The wording is verbatim from the plan (doc 06 [SESSION-AGENDA], v1.13) and is declared here independently of
 // src/data/copy.ts, so a wording change has to be made in both places on purpose. Each page has its own exact sentence: the discovery-session
-// pages open with "your country, priority groups and locations" (the international pages), the briefing pages (governments, NationWIDE) with
-// "your priority groups and districts".
+// pages open with "your country, priority groups and locations" (the international pages); the briefing pages open with "your priority groups and
+// districts" (NationWIDE, Bangladesh's national program) or "your priority groups and locations" (governments: ministries in any country).
 const SESSION_AGENDA_LEAD_DISCOVERY = 'What the discovery session covers:';
 const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 const SESSION_AGENDA_FIRST_DISCOVERY = 'your country, priority groups and locations';
 const SESSION_AGENDA_FIRST_BRIEFING = 'your priority groups and districts';
+const SESSION_AGENDA_FIRST_GOVERNMENTS = 'your priority groups and locations';
 const SESSION_AGENDA_COMMON = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'];
 const sessionAgendaWanted = (lead, first) => `${lead} ${[first, ...SESSION_AGENDA_COMMON].join('; ')}.`;
 const SESSION_AGENDA_DISCOVERY = sessionAgendaWanted(SESSION_AGENDA_LEAD_DISCOVERY, SESSION_AGENDA_FIRST_DISCOVERY);
 const SESSION_AGENDA_BRIEFING = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_BRIEFING);
+const SESSION_AGENDA_GOVERNMENTS = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_GOVERNMENTS);
 /** page path -> the exact agenda sentence that page must carry */
 const SESSION_AGENDA_BY_PAGE = {
   '/partner-with-us/development-partners/': SESSION_AGENDA_DISCOVERY,
   '/partner-with-us/foundations/': SESSION_AGENDA_DISCOVERY,
   '/programs/youthwide/': SESSION_AGENDA_DISCOVERY,
-  '/partner-with-us/governments/': SESSION_AGENDA_BRIEFING,
+  '/partner-with-us/governments/': SESSION_AGENDA_GOVERNMENTS,
   '/programs/nationwide/': SESSION_AGENDA_BRIEFING,
 };
 const SESSION_AGENDA_PAGES = Object.keys(SESSION_AGENDA_BY_PAGE);
@@ -829,9 +831,11 @@ function numberGuardPage(path, html, allow = []) {
   const ctaBand = (inner) => `<main><section class="band band--airy" id="cta" aria-labelledby="cta-h"><div class="container"><div class="cta-band"><h2 id="cta-h">Let’s</h2><a href="/x/">Book</a><ul><li>A discovery session is a conversation, not a commitment.</li></ul>${inner}</div></div></section></main>`;
   const agendaWant = SESSION_AGENDA_DISCOVERY;
   const agendaWantB = SESSION_AGENDA_BRIEFING;
+  const agendaWantG = SESSION_AGENDA_GOVERNMENTS;
   if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the discovery agenda is no longer the plan wording');
   if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the briefing agenda is no longer the plan wording');
-  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB]]) {
+  if (agendaWantG !== 'What the briefing covers: your priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the governments briefing agenda is no longer the plan wording');
+  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB], ['governments briefing lead', agendaWantG]]) {
     const ok = ctaBand(agendaP(text));
     if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);
   }
@@ -839,7 +843,8 @@ function numberGuardPage(path, html, allow = []) {
   // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
   const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
   for (const p of ['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
-  for (const p of ['/partner-with-us/governments/', '/programs/nationwide/']) if (byPage(p) !== agendaWantB) problems.push(`self-test: ${p} must carry the briefing agenda ("your priority groups and districts")`);
+  if (byPage('/programs/nationwide/') !== agendaWantB) problems.push('self-test: /programs/nationwide/ must carry the briefing agenda ("your priority groups and districts")');
+  if (byPage('/partner-with-us/governments/') !== agendaWantG) problems.push('self-test: /partner-with-us/governments/ must carry the governments briefing agenda ("your priority groups and locations")');
   const agendaBad = (why, markup, wanted = agendaWant) => {
     if (!sessionAgendaProblems(markup, wanted).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
   };
@@ -861,6 +866,9 @@ function numberGuardPage(path, html, allow = []) {
   agendaBad('the discovery agenda on a briefing page', ctaBand(agendaP(agendaWant)), agendaWantB);
   agendaBad('"districts" in the first item on a discovery-session page', ctaBand(agendaP(agendaWant.replace('your country, priority groups and locations', 'your priority groups and districts'))));
   agendaBad('"your country, priority groups and locations" on a briefing page', ctaBand(agendaP(agendaWantB.replace('your priority groups and districts', 'your country, priority groups and locations'))), agendaWantB);
+  agendaBad('"districts" on the governments page', ctaBand(agendaP(agendaWantB)), agendaWantG);
+  agendaBad('"locations" on the NationWIDE briefing page', ctaBand(agendaP(agendaWantG)), agendaWantB);
+  agendaBad('the discovery agenda on the governments page', ctaBand(agendaP(agendaWant)), agendaWantG);
   agendaBad('the discovery lead over the briefing items on a briefing page', ctaBand(agendaP(agendaWantB.replace('What the briefing covers:', 'What the discovery session covers:'))), agendaWantB);
 
   // [POSITION] opens C6: the statement first (after, at most, the band's eyebrow and H2), then the verbatim [UNLIKE] sentence
