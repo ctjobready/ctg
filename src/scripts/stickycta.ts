@@ -2,7 +2,7 @@
  * Mobile sticky CTA bar (rendered by LandingLayout). One solid primary per viewport region: the bar steps aside, and
  * leaves the tab order (inert), while the hero's primary CTA or an in-flow CTA band is in view, and shows everywhere
  * else. The bar is position: fixed and the body reserves its height, so toggling it shifts no layout; motion is a CSS
- * transition that reduced motion switches off. Without JavaScript the bar simply stays visible.
+ * transition that reduced motion switches off. Without JavaScript the bar is not drawn (LandingLayout: html:not(.js)).
  */
 export {}; // a module: keeps `bar` out of the global script scope shared with promo.ts
 
@@ -10,7 +10,7 @@ const bar = document.querySelector<HTMLElement>('.sticky-cta');
 const targets = bar ? document.querySelectorAll('.hero__actions .btn--primary, #cta, .cta-band, [data-sticky-hide]') : [];
 
 if (bar && (!targets.length || !('IntersectionObserver' in window))) {
-  // Nothing to step aside for (or no observer support): show the bar, as it is without JavaScript.
+  // Nothing to step aside for (or no observer support): show the bar (it stays up, as there is no CTA it could overlap).
   bar.setAttribute('data-ready', '');
 } else if (bar) {
   const inView = new Set<Element>();

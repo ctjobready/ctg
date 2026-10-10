@@ -122,9 +122,13 @@ const withheld = href === '';
   .btn--outline:hover {
     background: var(--surface-container-low);
   }
+  /* The cyan fill is 2.54:1 against the PromoBar strip (WCAG 1.4.11 asks 3:1 for a component boundary), so the button
+     carries a white border (5.34:1 against the strip). It uses the 1px transparent border every .btn already has, so the
+     box does not change size; the label colours are untouched. */
   .btn--promo {
     background: var(--cyan);
     color: var(--on-cyan);
+    border-color: var(--surface);
     border-radius: var(--radius-sm);
     font-size: var(--fs-body-xs);
     line-height: 1.43;
@@ -133,6 +137,10 @@ const withheld = href === '';
   }
   .btn--promo:hover {
     background: var(--cyan-600);
+  }
+  /* The focus ring is white on the strip too (--ctx-focus), so it is kept 2px off the white border to read as a ring. */
+  .btn--promo:focus-visible {
+    outline-offset: 2px;
   }
   .btn--enroll {
     background: var(--enroll-bg);

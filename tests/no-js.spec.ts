@@ -144,6 +144,31 @@ test.describe('no JS', () => {
     });
   }
 
+  /**
+   * Extra (beyond the brief): the mobile sticky CTA bar steps aside through a script (src/scripts/stickycta.ts), so without
+   * JavaScript it could never leave the hero's own primary CTA and a phone visitor would see two solid primaries. It must not be displayed.
+   */
+  test.describe('sticky CTA bar', () => {
+    test.use({ viewport: MOBILE });
+    test('the mobile sticky CTA bar is not displayed without JavaScript (390)', async ({ page }) => {
+      const landing = pagesWithMarkup(/class="sticky-cta"/);
+      expect(landing.length, 'pages that render the sticky CTA bar').toBeGreaterThan(0);
+      const shown: string[] = [];
+      for (const p of landing) {
+        await open(page, p);
+        const state = await page.evaluate(() => {
+          const bar = document.querySelector('.sticky-cta');
+          const cs = bar && getComputedStyle(bar);
+          return { jsClass: document.documentElement.classList.contains('js'), present: !!bar, display: cs?.display, rects: bar?.getClientRects().length ?? 0 };
+        });
+        expect(state.jsClass, `${p.route}: JavaScript really is off`).toBe(false);
+        expect(state.present, `${p.route}: the bar is in the markup`).toBe(true);
+        if (state.display !== 'none' || state.rects > 0) shown.push(`${p.route} (display ${state.display})`);
+      }
+      expect(shown, 'pages that draw the sticky CTA bar without JavaScript').toEqual([]);
+    });
+  });
+
   test.describe('reachability', () => {
     test.use({ viewport: MOBILE });
     test('home: every destination offered by the JS menus is reachable without JS within two clicks (390)', async ({ page }) => {
@@ -197,5 +222,13 @@ test.describe('no JS: control (JS on)', () => {
     expect(info.hiddenReveals.length, 'reveal elements still hidden before they scroll into view').toBeGreaterThan(0);
     expect(info.wrongCountups.length, 'count-ups not yet at their final value').toBeGreaterThan(0);
     expect(info.deadControls.length, 'JS-only controls are shown when JS runs').toBeGreaterThan(0);
+  });
+  test.describe('sticky CTA bar', () => {
+    test.use({ viewport: MOBILE });
+    test('home: the sticky CTA bar is displayed (not display:none) at 390 when JS runs, so the no-JS assertion can fail', async ({ page }) => {
+      await open(page, pageByRoute('/'), 'domcontentloaded');
+      await expect(page.locator('html.js')).toHaveCount(1);
+      await expect.poll(() => page.evaluate(() => getComputedStyle(document.querySelector('.sticky-cta')!).display)).not.toBe('none');
+    });
   });
 });

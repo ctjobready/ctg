@@ -36,7 +36,7 @@ html {
 }
 
 @media (max-width: 767px) {
-  html:has(.has-sticky-cta) {
+  html.js:has(.has-sticky-cta) {
     scroll-padding-bottom: calc(72px + 24px);
   }
 }

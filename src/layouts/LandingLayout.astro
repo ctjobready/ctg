@@ -6,7 +6,7 @@ import type { BaseLayoutProps } from '../lib/layout';
 /**
  * T3 Landing (CMF): BaseLayout + optional sticky in-page CTA bar on mobile. The bar steps aside (and goes inert) while
  * the hero's primary CTA or an in-flow CTA band is in view, so a viewport region never holds two solid primaries
- * (src/scripts/stickycta.ts); without JavaScript it stays visible.
+ * (src/scripts/stickycta.ts); without JavaScript it is not shown (it could never step aside).
  */
 interface Props extends BaseLayoutProps {
   stickyCta?: { label: string; href: string };
@@ -44,8 +44,12 @@ const { stickyCta, ...base } = Astro.props;
     width: 100%;
   }
   /* Stepped aside: out of sight and (with the inert attribute) out of the tab order. With JavaScript the bar starts
-     hidden until the script has worked out whether a hero or band CTA is in view (no flash at load); without
-     JavaScript none of these rules match and the bar stays visible. */
+     hidden until the script has worked out whether a hero or band CTA is in view (no flash at load). Without JavaScript
+     nothing could ever step it aside, so it would sit over the hero's own primary CTA (two solid primaries in one view);
+     the bar is not drawn at all (BaseLayout adds .js to <html> before first paint) and the page's own CTAs carry the call. */
+  html:not(.js) .sticky-cta {
+    display: none;
+  }
   .sticky-cta[data-hidden],
   html.js .sticky-cta:not([data-ready]) {
     visibility: hidden;
@@ -62,7 +66,7 @@ const { stickyCta, ...base } = Astro.props;
   /* Room for the bar under the last footer row goes inside the footer (its own dark background fills it), not onto <body>,
      where the same 72 px showed as a white band under the footer. */
   @media (max-width: 767px) {
-    .has-sticky-cta #site-footer {
+    html.js .has-sticky-cta #site-footer {
       padding-bottom: calc(var(--btt-clear) + 72px + env(safe-area-inset-bottom));
     }
   }

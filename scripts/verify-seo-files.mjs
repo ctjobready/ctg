@@ -8,7 +8,7 @@
  *   robots meta  staging: every page and every redirect stub is noindex; production: only 404 and styleguide are noindex and
  *                redirect stubs carry no robots meta at all
  *   og:image     every card URL exists in dist/ as a 1200x630 PNG of at most 200 KB
- *   sitemap      lists real, indexable pages only (no stub, no 404, no styleguide, no noindex page)
+ *   sitemap      lists real, indexable pages only (no stub, no 404, no styleguide, no noindex page); every <loc> on the canonical origin
  *
  *   node scripts/verify-seo-files.mjs [dist]       env: SITE_URL, BASE_PATH, SITE_ENV (as astro.config.mjs)
  */
@@ -153,6 +153,12 @@ for (const c of cardsSeen) {
 }
 const sitemapIndex = read('sitemap-index.xml');
 if (!sitemapIndex || !/<loc>[^<]*sitemap-0\.xml<\/loc>/.test(sitemapIndex)) err('sitemap-index.xml missing or does not list sitemap-0.xml');
+// Every <loc>, the index's too, is on the canonical origin in every environment (the origin the page canonicals use).
+for (const f of fs.readdirSync(dist).filter((n) => /^sitemap-(index|\d+)\.xml$/.test(n))) {
+  for (const m of fs.readFileSync(path.join(dist, f), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    if (!m[1].startsWith(origin + '/')) err(`${f}: <loc> ${m[1]} is not on the canonical origin ${origin}`);
+  }
+}
 const sm = sitemapPaths(dist, base);
 for (const p of sm) {
   const f = distFile(dist, p);

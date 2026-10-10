@@ -18,7 +18,8 @@
  *   no other partner list is assumed) · heading levels do not skip downwards (warning)
  * Redirect stubs: robots follows the environment (staging: exactly `noindex`, like every staging page; production: no noindex),
  * a canonical that matches the refresh target, a visible fallback link (warning).
- * Sitemap: sitemap-index.xml and its sitemaps list exactly the non-stub pages except /404/ and /styleguide/.
+ * Sitemap: sitemap-index.xml and its sitemaps list exactly the non-stub pages except /404/ and /styleguide/, and every <loc>
+ * (the index's too) is on the canonical production origin in every environment, the origin the page canonicals use.
  *
  * Output: console summary, .work/qa/seo.json and seo.md (seo.production.* for SITE_ENV=production).
  */
@@ -352,7 +353,11 @@ const locs = [];
 if (!sitemapIndex) findings.error('sitemap-missing', 'sitemap-index.xml', 'no sitemap-index.xml in dist');
 else {
   const sitemapFiles = [...readFileSync(join(cfg.dist, 'sitemap-index.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const offCanonical = (loc, where) => {
+    if (!loc.startsWith(PRODUCTION_ORIGIN + '/')) findings.error('sitemap-off-canonical-origin', where, `sitemap <loc> ${loc} is not on the canonical origin ${PRODUCTION_ORIGIN} (every page canonical is, in every environment)`);
+  };
   for (const sm of sitemapFiles) {
+    offCanonical(sm, 'sitemap-index.xml');
     let rel;
     try {
       const u = new URL(sm);
@@ -365,10 +370,14 @@ else {
       findings.error('sitemap-file-missing', 'sitemap-index.xml', `${sm} is listed but ${rel} is not in dist`);
       continue;
     }
-    for (const m of readFileSync(join(cfg.dist, rel), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) locs.push(m[1]);
+    for (const m of readFileSync(join(cfg.dist, rel), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      locs.push(m[1]);
+      offCanonical(m[1], rel);
+    }
   }
-  const want = new Map(site.pages.filter((p) => !p.isStub && !NOT_IN_SITEMAP.has(p.route)).map((p) => [`${cfg.siteUrl}${publicPath(cfg, p.route)}`, p]));
-  const stubUrls = new Set(site.pages.filter((p) => p.isStub).map((p) => `${cfg.siteUrl}${publicPath(cfg, p.route)}`));
+  // Sitemap URLs are the page canonicals: the production origin + the base-less route, also on a staging build.
+  const want = new Map(site.pages.filter((p) => !p.isStub && !NOT_IN_SITEMAP.has(p.route)).map((p) => [`${PRODUCTION_ORIGIN}${p.route}`, p]));
+  const stubUrls = new Set(site.pages.filter((p) => p.isStub).map((p) => `${PRODUCTION_ORIGIN}${p.route}`));
   const seen = new Set();
   for (const loc of locs) {
     if (seen.has(loc)) findings.error('sitemap-duplicate', 'sitemap', `duplicate sitemap URL ${loc}`);

@@ -1,6 +1,6 @@
 // @ts-check
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
@@ -9,6 +9,7 @@ import { REDIRECTS } from './src/data/redirects.ts';
 import { OWN_HOSTS, PARTNER_HOSTS, externalRel, hostKey } from './src/lib/externalRel.ts';
 import { stagingMayRender } from './src/lib/permissionRule.mjs';
 import { coverRepeats } from './src/lib/newsCover.mjs';
+import { productionOrigin } from './scripts/manifest-lib.mjs';
 
 /**
  * Environment-driven build (planning/08 §2).
@@ -130,6 +131,32 @@ const newsPhotos = {
   ],
 };
 
+/**
+ * Sitemap URLs follow the canonical rule (planning/09 §3): every page's canonical is on the production origin in every environment
+ * (src/lib/url.ts canonicalUrl), so every <loc> in sitemap-index.xml and sitemap-N.xml is too. @astrojs/sitemap writes the deployment
+ * origin and base ("https://ctjobready.github.io/ctg/..." on staging); this integration runs right after it and re-points each <loc>
+ * at PRODUCTION_ORIGIN + the base-less path. A production build (SITE_URL = the production origin, no base) is left untouched.
+ * Staging robots.txt still lists no sitemap and disallows everything; the files exist there so the build can be checked as a preview of production.
+ */
+const PRODUCTION_ORIGIN = productionOrigin();
+/** @type {import('astro').AstroIntegration} */
+const canonicalSitemap = {
+  name: 'ctg-canonical-sitemap',
+  hooks: {
+    'astro:build:done': ({ dir, logger }) => {
+      const deployed = `${SITE_URL}${BASE}/`;
+      const canonical = `${PRODUCTION_ORIGIN}/`;
+      if (deployed === canonical) return;
+      const root = fileURLToPath(dir);
+      for (const name of readdirSync(root).filter((n) => /^sitemap-(index|\d+)\.xml$/.test(n))) {
+        const xml = readFileSync(`${root}${name}`, 'utf8');
+        writeFileSync(`${root}${name}`, xml.replaceAll(`<loc>${deployed}`, `<loc>${canonical}`));
+      }
+      logger.info(`sitemap <loc> URLs re-pointed from ${deployed} to ${canonical} (the canonical origin)`);
+    },
+  },
+};
+
 export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
@@ -147,6 +174,7 @@ export default defineConfig({
         return !/^\/(styleguide|404)\/?$/.test(path) && !stubPaths.has(path.endsWith('/') ? path : path + '/');
       },
     }),
+    canonicalSitemap, // after sitemap(): hooks run in this order
   ],
   vite: {
     define: {

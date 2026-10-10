@@ -29,7 +29,7 @@ it detects an AI agent, which Playwright reads as "server exited early".
 |---|---|---|
 | `a11y.spec.ts` | chromium | axe-core (wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa), 0 violations, every page at 390x844 and 1280x800, plus open mega-menus, open drawer and a visible map tooltip |
 | `reduced-motion.spec.ts` | chromium | `reducedMotion: 'reduce'`: no running or declared animation/transition longer than 1 ms on reveal, marquee and count-up elements (and nowhere else), final count-up values in place; includes a positive control |
-| `no-js.spec.ts` | chromium | JavaScript off: content visible, no reveal left hidden, stats final, nav reachable through the noscript nav, hover/focus menus and footer, location table visible; extra: no dead JS-only controls left visible |
+| `no-js.spec.ts` | chromium | JavaScript off: content visible, no reveal left hidden, stats final, nav reachable through the noscript nav, hover/focus menus and footer, location table visible; extra: no dead JS-only controls left visible; extra: the mobile sticky CTA bar is not displayed (with a JS-on positive control) |
 | `console.spec.ts` | chromium | 0 console errors, 0 uncaught exceptions, 0 failed same-origin requests on every page, also while driving the menus, drawer, accordions, carousels, marquee and copy button |
 | `map.spec.ts` | chromium | every pin/tooltip detail is in the always-visible table; pins are `aria-hidden`, not focusable, absent from the accessibility tree; table visible without JS |
 | `keyboard.spec.ts` | chromium | skip link, disclosure menus, drawer dialog and focus trap, accordions, carousel controls, marquee pause button |
