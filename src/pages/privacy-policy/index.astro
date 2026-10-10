@@ -1,7 +1,7 @@
 ---
 import LongformLayout from '../../layouts/LongformLayout.astro';
 import CopyEmail from '../../components/ui/CopyEmail.astro';
-import { CONTACT, OFFICES } from '../../lib/site';
+import { BANGLADESH_HQ, CONTACT, OFFICES } from '../../lib/site';
 import { promo } from '../../data/nav';
 import { NU_PGD_APPLY_URL } from '../../data/ctas';
 import { webPage } from '../../lib/schema';
@@ -9,8 +9,8 @@ import { url, linkAttrs } from '../../lib/url';
 
 const GITHUB_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
 const JOBREADY = 'https://jobready.global/';
-const UPDATED = '2026-10-08';
-const description = 'How the CodersTrust website handles data: no analytics cookies, no third-party trackers, and a plain list of every service involved.';
+const UPDATED = '2026-10-10';
+const description = 'How the CodersTrust website handles data: no analytics cookies, no trackers of its own, and a plain list of every service involved.';
 const toc = [
   { id: 'summary', label: 'In short' },
   { id: 'services', label: 'Every service involved' },
@@ -33,7 +33,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
   breadcrumbs={[{ label: 'Privacy policy' }]}
   jsonLd={jsonLd}
   eyebrow="Legal"
-  lead="This website is a static site. It sets no analytics cookies and uses no third-party trackers. This page names every service that touches your data, and when."
+  lead="This website is a static site. It sets no analytics cookies and loads no third-party trackers on its own; a video loads from YouTube only after you click play, and YouTube may then set its own cookies. This page names every service that touches your data, and when."
   toc={toc}
   updated={UPDATED}
 >
@@ -78,6 +78,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
       <h2 id="email-h">Email inquiries</h2>
       <p>Buttons that say "Book a discovery session", "Ask about due diligence" and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your inquiry. Your email provider handles the message on its way.</p>
       <p>Write to us at <CopyEmail email={CONTACT.email} trail="." /></p>
+      <p>Inquiries from the local-partners page go to our Bangladesh team at <CopyEmail email={BANGLADESH_HQ.email} trail="." /></p>
     </section>
 
     <section id="nu-form" aria-labelledby="nu-h">

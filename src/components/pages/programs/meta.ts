@@ -17,9 +17,10 @@ export const ROADMAP_PHASES = [
 
 /**
  * "Last updated" date of a program page (doc 09 §3): the day its content last changed, shown on the page and used as JSON-LD dateModified.
- * LAST_UPDATED is the date of the first publication of the program pages; the NU Postgraduate Diploma course pages have not changed since and keep it.
+ * LAST_UPDATED is the date of the first publication of the program pages.
  * A page that changes gets its own entry in PAGE_UPDATED (2026-10-09: the programs index, YouthWIDE, JobReady@Campus, JobReady@Work, NationWIDE;
- * 2026-10-10: those five again, SuperKids and the NU Postgraduate Diploma index, after the round-16 wording changes).
+ * 2026-10-10: those five again, SuperKids and the NU Postgraduate Diploma index, after the round-16 wording changes, and the NU course pages
+ * and the program pages once more after the round-17 heading changes).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
@@ -30,6 +31,7 @@ export const PAGE_UPDATED = {
   nationwide: '2026-10-10',
   superkids: '2026-10-10',
   nu: '2026-10-10',
+  nuCourse: '2026-10-10',
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

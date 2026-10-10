@@ -52,7 +52,7 @@ const cmpRows = [
     label: 'Independent evidence',
     cells: [
       { text: 'A randomized trial by BIGD of a CodersTrust program (WSDFM)', included: true, factId: 'RC-01' },
-      { text: 'Varies — a review of nine randomized trials of vocational training found three with significant employment impacts', factId: 'RC-06' },
+      { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
       'Varies',
       'Varies',
       '—',
@@ -121,7 +121,7 @@ const ways = [
   <div data-fact="ID-07 PA-01 PA-02 IN-06 GV-07">
     <GuideBand
       id="guide"
-      title="Delivered with a Bangladesh team beside you."
+      title="Delivered with a Bangladesh team beside you"
       empathy={EMPATHY.localPartners}
       authorityIds={['SC-11', 'GV-09']}
       partnerGroup={['government', 'development']}
@@ -138,7 +138,7 @@ const ways = [
     <HomeMechanism
       id="mechanism"
       tone="airy"
-      title="How a local partnership works."
+      title="How a local partnership works"
       positioning={POSITIONING.localPartners}
       blocks={[
         { label: 'Your organization', title: 'Mobilizes and hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
@@ -164,7 +164,7 @@ const ways = [
   <!-- C8 (review round 14, M4): one row per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting"; then the gain creators -->
   <FeaturesTable
     id="features"
-    title="What you get, and what it means for your community."
+    title="What you get, and what it means for your community"
     rows={[
       {
         ...painForRow(LOCAL_PARTNER_PAINS, 'P1'),
@@ -227,7 +227,7 @@ const ways = [
 
   <!-- C14 -->
   <Section id="next-steps" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After you write" title="What happens after you say yes." />
+    <SectionHeader id="next-h" eyebrow="After you write" title="What happens after you say yes" />
     <StepFlow steps={[
       { title: 'Discovery session', text: 'A conversation about your organization and the young people you reach.' },
       { title: 'Fit check and co-design', text: 'We shape the cohort, tracks, safeguarding and reporting with you.' },

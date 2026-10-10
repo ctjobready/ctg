@@ -264,6 +264,12 @@ export const SPEED: CopyBlock = {
   facts: ['PD-04'],
 };
 
+/** C13 urgency line for the universities page: a university's start follows its academic calendar, so it makes no grant-pilot timing claim (PD-04 is for grant-funded pilots). */
+export const SPEED_UNIVERSITIES: CopyBlock = {
+  text: 'Timing follows your academic calendar: tracks and campus labs are agreed in co-design before the first cohort starts.',
+  facts: [],
+};
+
 export const SURVEY_EMPLOYMENT: CopyBlock = {
   text: 'Among surveyed completers with paired employment answers, employment rose from 47.4% before training to 77.9% at the October 2026 survey.',
   facts: ['OC-01'],

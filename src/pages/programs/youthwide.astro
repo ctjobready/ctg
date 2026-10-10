@@ -106,7 +106,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C4 -->
   <FutureBand
-    title="What your reports will show."
+    title="What your reports will show"
     lead="Illustrative: reports show first earnings by priority group, and tracer surveys follow each cohort for a year."
     vignettes={[
       { kind: 'Functional', title: 'Monthly reports your board can read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
@@ -129,7 +129,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C6 -->
   <MechanismSection
-    title="One delivery model, from selection to paid work."
+    title="One delivery model, from selection to paid work"
     positioning={POSITIONING.youthwide}
     blocks={[
       { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
@@ -180,7 +180,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       {
         ...painForRow(FUNDER_PAINS, 'P1'),
         feature: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment',
-        means: 'success is counted in paid work, not hours attended; completers are routed to local, remote and global work.',
+        means: 'success is measured against agreed outcomes, including paid work, not attendance alone; completers are routed to local, remote and global work.',
         outcome: 'Results measured in paid work',
         facts: ['PD-15', 'PD-01', 'PD-19'],
       },
@@ -204,17 +204,17 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   />
 
   <Section id="roadmap" tone="airy" aria-labelledby="roadmap-h">
-    <SectionHeader id="roadmap-h" eyebrow="Execution roadmap" title="Five phases from agreement to parallel cohorts." lead="Timings come from the program design and are confirmed with you in co-design." />
+    <SectionHeader id="roadmap-h" eyebrow="Execution roadmap" title="Five phases from agreement to parallel cohorts" lead="Timings come from the program design and are confirmed with you in co-design." />
     <ExecutionRoadmap />
   </Section>
 
   <Section id="reports" aria-labelledby="reports-h">
-    <SectionHeader id="reports-h" eyebrow="Reporting" title="A sample monthly report, and what your reports show over time." lead="The layout below is empty on purpose: it shows the fields you will receive, not results." />
+    <SectionHeader id="reports-h" eyebrow="Reporting" title="A sample monthly report, and what your reports show over time" lead="The layout below is empty on purpose: it shows the fields you will receive, not results." />
     <ReportingBlock />
   </Section>
 
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps." />
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps" />
     <div data-fact={STEPS_FACTS.join(' ')}>
       <StepFlow steps={STEPS.map((s) => ({ title: s.title, text: s.text }))} />
     </div>
@@ -223,7 +223,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions funders ask" />
   <Section id="governance" tone="airy" aria-labelledby="governance-h">
-    <SectionHeader id="governance-h" eyebrow="Safeguarding and governance" title="Safeguarding, governance and reporting." />
+    <SectionHeader id="governance-h" eyebrow="Safeguarding and governance" title="Safeguarding, governance and reporting" />
     <div class="gov">
       <div class="gov__col" data-reveal>
         <h3 class="t-heading-l">Safeguarding</h3>
@@ -244,7 +244,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <ComparisonBand title="Compare the approaches." />
 
   <!-- C11 -->
-  <OfferSection title="Three ways to start, sized to your goals." lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={PROGRAM_OPTIONS}>
+  <OfferSection title="Three ways to start, sized to your goals" lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={PROGRAM_OPTIONS}>
     <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} footnote={true} /></div>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
     <div class="note">

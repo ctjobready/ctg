@@ -29,7 +29,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -107,7 +107,7 @@ const steps = [
 
   <!-- C4 · Future state -->
   <FutureBand
-    title="What your students leave with."
+    title="What your students leave with"
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'A certification beside the degree', text: 'Students who pass the exam add an industry certification beside their degree.' },
@@ -129,7 +129,7 @@ const steps = [
 
   <!-- C6 · Mechanism (JobReady@Campus) -->
   <MechanismBand
-    title="JobReady@Campus: training alongside the degree."
+    title="JobReady@Campus: training alongside the degree"
     positioning={POSITIONING.universities}
     blocks={[
       { label: 'Set up', title: 'Campus labs as learning centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
@@ -167,7 +167,7 @@ const steps = [
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What you get, and what it means for your students."
+    title="What you get, and what it means for your students"
     rows={[
       {
         feature: 'Industry certifications by track and three months of milestone-based mentoring',
@@ -235,12 +235,12 @@ const steps = [
     heading="Let’s bring JobReady@Campus to your students."
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
-    urgency={SPEED.text}
+    urgency={SPEED_UNIVERSITIES.text}
   />
 
   <!-- C14 · Next steps -->
   <StepsBand
-    title="What happens after you say yes."
+    title="What happens after you say yes"
     steps={[
       { title: 'Discovery session', text: 'A conversation about your students, programs and timeline.' },
       { title: 'Co-design', text: 'Tracks and campus labs are shaped with you.' },
