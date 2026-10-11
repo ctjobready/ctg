@@ -4,7 +4,6 @@ import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import Icon from '../../../components/system/Icon.astro';
 import CaseGrid from '../../../components/pages/impact/CaseGrid.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
@@ -29,7 +28,7 @@ const d = discoveryCta();
   <Hero variant="inner" eyebrow="Impact" title="Case Studies: Four Programs, Results with Their Bases" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Four programs" title="Read the Case Studies" lead="In-work figures are program data. Where a randomized trial evaluated the program, the case study says so and keeps the two kinds of evidence apart." />
+    <SectionHeader id="cases-h" eyebrow="Four programs" title="Read the Case Studies" lead="Where a randomized trial evaluated the program, the case study says so and keeps the two kinds of evidence apart." />
     <CaseGrid />
   </Section>
 
@@ -40,7 +39,6 @@ const d = discoveryCta();
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

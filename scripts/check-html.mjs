@@ -93,7 +93,6 @@ const A11Y_MARKUP = [
   ['a11y-empty-field-twin', /<span class="sr-only">Empty field<\/span>/, 'the sample report layout is one labeled figure; do not repeat "Empty field" fourteen times'],
   ['a11y-included-prefix', /<span class="sr-only">Included: <\/span>/, 'comparison-table check marks carry aria-label="Included", not a repeated hidden prefix'],
   ['a11y-pain-label', /<span class="sr-only">Pain \d+: <\/span>/, 'the internal "Pain" label must not reach assistive technology'],
-  ['a11y-back-link-name', /aria-label="Back to reference /, 'footnote back-links are named "Back to text, note N"'],
 ];
 for (const page of site.pages) {
   const src = readFileSync(page.file, 'utf8');

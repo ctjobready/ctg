@@ -14,7 +14,6 @@ import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
 import CTABand from '../components/ui/CTABand.astro';
-import Sources from '../components/facts/Sources.astro';
 import Section from '../components/ui/Section.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeRouter from '../components/pages/home/HomeRouter.astro';
@@ -73,7 +72,7 @@ const featureRows = [
   },
   { feature: 'Accessible readiness assessment', means: 'applicants are routed to a career or foundation track that fits them.', outcome: 'The right career or foundation track' },
   { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio' },
-  { feature: 'Certification exam preparation, with the exam fee included', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
+  { feature: 'Certification exam preparation (exam fee included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
 ];
 ---
 
@@ -193,5 +192,4 @@ const featureRows = [
     <ConversionNextSteps id="next-steps" title="What Happens After You Say Yes" timing={false} validate={C14.validate} firstAction={C14.firstAction} logos />
   </Tone>
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </LandingLayout>

@@ -5,12 +5,11 @@ import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import StoryGallery from '../../../components/pages/impact/StoryGallery.astro';
 import type { StoryCardData } from '../../../components/pages/impact/story-types';
 import { linkAttrs } from '../../../lib/url';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { fact, CAVEATS } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { webPage } from '../../../lib/schema';
 
@@ -97,13 +96,12 @@ const d = discoveryCta();
     <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Individual stories; not typical or promised outcomes." />
     <StoryGallery cards={cards} />
     <div class="st__notes">
-      <p><strong>Read these as individual stories.</strong> {CAVEATS.I} Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
+      <p><strong>Read these as individual stories.</strong> Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
       <p>Some learners, including participants in programs for refugees and residents of urban slums, are listed without photographs.</p>
     </div>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

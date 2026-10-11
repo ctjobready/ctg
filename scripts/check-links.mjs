@@ -8,7 +8,7 @@
  * Classes
  *   Routes   every internal href resolves to a dist page; on staging each starts with the base (/ctg/) or is external,
  *            mailto, tel or a fragment; routes end in "/" (trailingSlash: always)
- *   Anchors  every #id (same page and cross page, footnote markers included) exists on the target page
+ *   Anchors  every #id (same page and cross page) exists on the target page
  *   Assets   every src, srcset candidate, poster, link href, CSS url() (inline styles, <style>, built CSS files),
  *            web-manifest icon and download link resolves to a non-empty file in dist
  *   mailto   well-formed address that exists in the CTA library (src/data/ctas.ts) or the site's published contact

@@ -9,7 +9,6 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import Fact from '../../components/facts/Fact.astro';
-import Sources from '../../components/facts/Sources.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
@@ -18,7 +17,7 @@ import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import { SURVEY_EMPLOYMENT, RCT_HEADLINE } from '../../data/copy';
 
 const path = '/impact/';
-const description = desc('A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed. Survey results are self-reported.');
+const description = desc('A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed.');
 const jsonLd = [articleNode({ path, headline: 'Impact and Evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const sdgs = [
   { n: 4, label: 'Quality education', core: true },
@@ -82,7 +81,6 @@ const rc = reportCta();
   </Section>
 
   <CTABand id="cta" heading="Read the full Impact Report 2026." text="The partner edition covers the programs behind these results." cta={rc} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

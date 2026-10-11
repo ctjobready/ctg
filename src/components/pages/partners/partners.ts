@@ -2,7 +2,7 @@
  * Page-local helpers for the five audience landing pages (WP5b).
  * Everything here reads the facts register, so a number in a page string can never drift from it.
  */
-import { CAVEATS, fact, type CaveatClass } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 
 /**
  * Pull a phrase out of a fact's canonical text. The first capture group is returned when the
@@ -15,12 +15,6 @@ export function factPart(id: string, re: RegExp): string {
   return m[1] ?? m[0];
 }
 
-/** Same as factPart, for a caveat class text (for example the randomized-trial population). */
-export function caveatPart(cls: CaveatClass, re: RegExp): string {
-  const m = CAVEATS[cls].match(re);
-  if (!m) throw new Error(`caveatPart: /${re.source}/ not found in caveat ${cls}`);
-  return m[1] ?? m[0];
-}
 
 /** A fact's headline stat value ("6–8 weeks", "2 million"). */
 export function statValue(id: string): string {

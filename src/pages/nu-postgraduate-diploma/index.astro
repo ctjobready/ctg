@@ -13,7 +13,6 @@ import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -190,9 +189,8 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     firstAction="Submit the application form. Our admissions team will contact you with the next steps."
   />
 
-  <Section pad="sm" aria-label="Notes and sources">
+  <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(PAGE_UPDATED.nu)}>{formatDate(PAGE_UPDATED.nu)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

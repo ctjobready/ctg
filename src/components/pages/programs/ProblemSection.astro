@@ -2,8 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import FactCard from '../../facts/FactCard.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
-import { fact, sources } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 
 /**
  * C2 Problem. Same look as ProblemBand but accepts any number of FactCards and extra text-only pain
@@ -41,7 +40,6 @@ const scoped = (fid: string) => {
     id: fid,
     value: f.stat?.value,
     text: f.stat ? (sc.label ?? f.stat.label) : /\b(globally|worldwide)\b/i.test(f.text) ? f.text : `${sc.prefix}, ${lowerFirst(f.text)}`,
-    src: f.sourceIds.map((s) => sources[s]?.label).filter(Boolean).slice(0, 2),
   };
 };
 ---
@@ -57,8 +55,7 @@ const scoped = (fid: string) => {
           <article class="card" data-reveal data-fact={s.id}>
             <div class="card__body">
               {s.value && <p class="pcs__value">{s.value}</p>}
-              <p class:list={['pcs__label', !s.value && 'pcs__label--text']}>{s.text}<FootnoteMarker id={s.id} footnote="auto" /></p>
-              {s.src.length > 0 && <p class="card__meta pcs__src">Source: {s.src.join('; ')}</p>}
+              <p class:list={['pcs__label', !s.value && 'pcs__label--text']}>{s.text}</p>
             </div>
           </article>
         );
@@ -107,10 +104,6 @@ const scoped = (fid: string) => {
   /* The stat label (not the full-sentence variant) wraps in even lines. */
   .pcs__label:not(.pcs__label--text) {
     text-wrap: balance;
-  }
-  .pcs__src {
-    margin-top: auto !important;
-    padding-top: var(--space-sm);
   }
   .pcs__transition {
     margin: var(--space-lg) 0 0;

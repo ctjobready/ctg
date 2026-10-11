@@ -16,7 +16,6 @@ import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import Icon from '../../components/system/Icon.astro';
 import Badge from '../../components/system/Badge.astro';
 import Fact from '../../components/facts/Fact.astro';
@@ -176,7 +175,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       </div>
       <div class="mech-stats">
         <FactStat id="GV-09" />
-        <FactStat id="GV-01" footnote={true} />
+        <FactStat id="GV-01" />
         <FactStat id="PD-01" />
       </div>
     </MechanismSection>
@@ -264,7 +263,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C7 -->
   <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03', 'OC-05']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
-    <p class="proof-note" data-fact="OC-01 OC-05">The survey figures above are descriptive, not causal; the earning-timing figure describes when earnings began, not what caused them.</p>
+    <p class="proof-note" data-fact="OC-01 OC-05">The earning-timing figure describes when earnings began, not what caused them.</p>
   </ProofBand>
   <CaseStudyCarousel
     title="Proof in Practice"
@@ -302,7 +301,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         facts: ['PD-02', 'PD-10'],
       },
       { feature: 'Outreach and accessible selection; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcome: 'Training that reaches hard-to-reach groups' },
-      { feature: 'Certification exam preparation, with the exam fee included', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
+      { feature: 'Certification exam preparation (exam fee included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
       { feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; hub-and-spoke delivery; blended learning in existing labs; connectivity-light delivery', means: 'capacity stays in your system and rural labs can take part.', outcome: 'Trainers and curricula that stay in your system' },
       { feature: 'Pilot scorecard with cost per completer and per verified outcome; monthly reports', means: 'your budget is judged against verified outcomes.', outcome: 'Spending tied to verified outcomes' },
     ]}
@@ -345,12 +344,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C11 -->
   <OfferSection title="Three Ways to Start, Sized to Your Goals" lead="Each phase is planned with the agency or funder on the results of the one before. Program options are shown without prices; the indicative budget is shared in the discovery session." options={PROGRAM_OPTIONS}>
-    <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} footnote={true} /></div>
+    <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} /></div>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
     <div class="note">
       <span class="note__label">Scale</span>
       <CopyP block={SCALE} />
-      <p class="scale-note"><Fact id="GV-09" footnote={false} />.</p>
+      <p class="scale-note"><Fact id="GV-09" />.</p>
     </div>
     <div class="note">
       <span class="note__label">Services behind a phase</span>
@@ -432,9 +431,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <p class="next-timing"><Icon name="clock" size={16} /> <span data-fact="PD-04">{fact('PD-04').text}.</span></p>
   </NextSteps>
 
-  <Section pad="sm" aria-label="Notes and sources">
+  <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

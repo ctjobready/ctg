@@ -24,10 +24,10 @@ export function anchor(href: string, label: string): string {
 /** Plain-text paragraph for custom answers. */
 export const para = (text: string) => esc(text);
 
-export function buildFaq(sources: FaqSource[], astro?: { locals: App.Locals }): { q: string; a: string }[] {
+export function buildFaq(sources: FaqSource[]): { q: string; a: string }[] {
   return sources.map((s) => {
     if ('audience' in s) {
-      const item = faqItems(s.audience, [s.id], astro)[0];
+      const item = faqItems(s.audience, [s.id])[0];
       if (!item) throw new Error(`FAQ ${s.id} not found in audience ${s.audience}`);
       return item;
     }
@@ -36,7 +36,7 @@ export function buildFaq(sources: FaqSource[], astro?: { locals: App.Locals }): 
   });
 }
 
-/** FAQPage node built from the same entries (no footnote markers in the text). */
+/** FAQPage node built from the same entries. */
 export function faqNode(sources: FaqSource[], path: string): JsonLdNode {
   return faqPage(
     buildFaq(sources).map((i) => ({ q: i.q, a: stripHtml(i.a) })),

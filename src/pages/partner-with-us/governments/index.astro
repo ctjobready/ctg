@@ -21,7 +21,6 @@ import RiskReversalBand from '../../../components/sections/RiskReversalBand.astr
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import Section from '../../../components/ui/Section.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -131,7 +130,7 @@ const steps = [
     stats={['SC-06']}
     statements={[
       { facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' },
-      { facts: ['GV-07'], text: `A planned program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender} (planned; not yet started).` },
+      { facts: ['GV-07'], text: `A planned program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender}.` },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
@@ -273,6 +272,5 @@ const steps = [
   />
   <Reinforcement firstAction={C14.variants.governments} reminder={false} />
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />
 </LandingLayout>

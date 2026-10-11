@@ -46,13 +46,10 @@ for (const { route, h1 } of EVIDENCE) {
 
     expect(await shown(page, NOT_PRINTED), 'chrome or calls to action that would print').toEqual([]);
 
-    // the brief: H1, the first section's callout (the BLUF or the summary), a chart's data table, the first footnote and the sources
+    // the brief: H1, the first section's callout (the BLUF or the summary), a chart's data table
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toHaveText(h1);
     await expect(page.locator('.callout').first()).toBeVisible();
-    await expect(page.locator('main sup.fn').first()).toBeVisible();
-    await expect(page.locator('#sources .sources__note').first()).toBeVisible();
-    await expect(page.locator('#sources h2')).toBeVisible();
     const tables = page.locator('details[class$="__data"] table');
     if (route.includes('outcomes')) {
       expect(await tables.count(), 'chart data tables on the Outcomes page').toBeGreaterThan(5);
@@ -95,8 +92,6 @@ for (const { route, h1 } of EVIDENCE) {
     if (hasPdftotext()) {
       const text = spawnSync('pdftotext', ['-layout', file, '-'], { encoding: 'utf8' }).stdout.replace(/\s+/g, ' ');
       expect(text, 'PDF text carries the H1').toContain(h1);
-      const firstNote = await page.locator('#sources .sources__note .sources__claim').first().innerText();
-      expect(text, 'PDF text carries the first footnote').toContain(firstNote.replace(/\s+/g, ' ').trim().slice(0, 40));
       expect(text, 'PDF text carries the canonical URL').toContain(`${CANONICAL_ORIGIN}${route}`);
     }
   });

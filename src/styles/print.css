@@ -1,6 +1,5 @@
 /* Print (review round 15, enhancement 2): every page prints as a clean brief, and the evidence pages (/impact/independent-evaluation/,
-   /impact/outcomes-2026/) are the ones it is built around: the H1, the BLUF, the charts with their values and data tables, the footnotes and
-   the sources, in black type on white paper, with the page's canonical URL in a footer line.
+   /impact/outcomes-2026/) are the ones it is built around: the H1, the BLUF, the charts with their values and data tables, in black type on white paper, with the page's canonical URL in a footer line.
 
    What goes: site chrome (skip link, announcement bar, header, mega-menus and drawer, breadcrumbs, table of contents, footer, back-to-top,
    toasts, the mobile sticky CTA bar), calls to action (buttons, CTA bands, the "next step" asides), decorative art (hero art and photos,
@@ -127,7 +126,6 @@
   .carousel__controls,
   [class*='carousel__ctrl'],
   .gov-print,
-  .sources__back,
   .acc__chev,
   details[class$='__data'] > summary {
     display: none !important;
@@ -220,17 +218,12 @@
     text-underline-offset: 2px;
   }
   /* External links and citations carry their address on paper; internal links would print a path that is not the page's address */
-  .sources a[href^='http']::after,
   main a.link[href^='http']::after {
     content: ' (' attr(href) ')';
     font-size: 0.85em;
     overflow-wrap: anywhere;
     word-break: break-all;
   }
-  sup.fn a {
-    text-decoration: none;
-  }
-
   /* ---- tables and keep-together blocks ------------------------------------------------------------------------------------------------ */
   table {
     width: 100%;
@@ -250,7 +243,6 @@
   .stat,
   .plainline,
   blockquote,
-  .sources__note,
   .fit,
   .acc,
   [class$='__item'],

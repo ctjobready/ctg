@@ -2,7 +2,6 @@
 import Icon from '../../system/Icon.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import CopyBlock from './CopyBlock.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact } from '../../../data/facts';
 import { WOMEN_INCLUSION } from '../../../data/copy';
 
@@ -26,7 +25,7 @@ const { press = true, women = true, badge = true } = Astro.props;
       badge && (
         <p class="px__badge" data-fact="PA-08">
           <Icon name="award" size={20} />
-          <span>{fact('PA-08').text}<FootnoteMarker id="PA-08" /></span>
+          <span>{fact('PA-08').text}</span>
         </p>
       )
     }

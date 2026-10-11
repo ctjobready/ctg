@@ -2,15 +2,13 @@
 import { CERT_FACT_IDS, fact } from '../../data/facts';
 import { dropTitleEcho, terminalStop } from '../../lib/format';
 import CertNote from '../ui/CertNote.astro';
-import FootnoteMarker from './FootnoteMarker.astro';
 
 /**
  * Renders a Facts Register entry. Numbers are never typed into pages: use <Fact id="OC-01" />.
  * field: text (canonical sentence, default) | headline | value | from | label | prefix/suffix not needed (value includes them)
  *
  * A sentence (field text or headline) always ends with its period: register wording is often a caption without one, and the
- * reader should not meet "…during the course This is a timing measure only." The period is added before the footnote marker and
- * never doubled when the text already ends with punctuation. It is written as <span class="fact__stop">; when a page types its
+ * reader should not meet "…during the course This is a timing measure only." The period is added and never doubled when the text already ends with punctuation. It is written as <span class="fact__stop">; when a page types its
  * own punctuation straight after the fact (`<Fact id="X" />.`, `<Fact id="X" />, which…`), the finished-page pass
  * (dropDoubledStops in src/lib/postprocess.ts) removes the added one, so a page that already punctuated its own sentence keeps
  * exactly one mark.
@@ -18,14 +16,13 @@ import FootnoteMarker from './FootnoteMarker.astro';
 interface Props {
   id: string;
   field?: 'text' | 'headline' | 'value' | 'from' | 'label';
-  footnote?: boolean | 'auto';
   /** Wrapper element (default span). */
   as?: 'span' | 'p' | 'strong' | 'b' | 'div';
   /** The heading printed above this sentence in a card: the sentence's own "Heading: …" lead-in is not printed again (dropTitleEcho). */
   under?: string;
   class?: string;
 }
-const { id, field = 'text', footnote = 'auto', as: Tag = 'span', under, class: className } = Astro.props;
+const { id, field = 'text', as: Tag = 'span', under, class: className } = Astro.props;
 const f = fact(id);
 let out: string;
 if (field === 'text') out = under ? dropTitleEcho(under, f.text) : f.text;
@@ -41,4 +38,4 @@ const namesVendors = CERT_FACT_IDS.includes(id) && (field === 'text' || field ==
 const stop = field === 'text' || field === 'headline' ? terminalStop(out) : null;
 ---
 
-<Tag class:list={['fact', className]} data-fact={id}>{stop ? stop.body : out}{stop && <span class="fact__stop">.</span>}{stop?.close}<FootnoteMarker id={id} footnote={footnote} /></Tag>{namesVendors && <CertNote as="span" />}
+<Tag class:list={['fact', className]} data-fact={id}>{stop ? stop.body : out}{stop && <span class="fact__stop">.</span>}{stop?.close}</Tag>{namesVendors && <CertNote as="span" />}

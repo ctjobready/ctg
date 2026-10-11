@@ -1,5 +1,4 @@
 ---
-import FootnoteMarker from './FootnoteMarker.astro';
 import { PLAIN_LINE } from '../../data/copy';
 
 /**
@@ -16,7 +15,7 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<p class:list={['plainline', className]} data-plain-line data-fact={PLAIN_LINE.facts.join(' ')}>{PLAIN_LINE.text}{PLAIN_LINE.facts.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</p>
+<p class:list={['plainline', className]} data-plain-line data-fact={PLAIN_LINE.facts.join(' ')}>{PLAIN_LINE.text}</p>
 
 <style>
   .plainline {

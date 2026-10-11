@@ -8,7 +8,6 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CopyEmail from '../../components/ui/CopyEmail.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
-import Sources from '../../components/facts/Sources.astro';
 import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../components/pages/about/OfficeCard.astro';
 import { contactRoutes } from '../../components/pages/about/routes';
@@ -95,7 +94,6 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
     <PartnerStrip variant="grid" group="development" />
   </Section>
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

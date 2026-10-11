@@ -8,7 +8,6 @@ import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -58,5 +57,4 @@ const jsonLd = [
     cta={{ label: apply.label, href: apply.href }}
     secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}
   />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>

@@ -3,7 +3,7 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import { fact, PROGRAM_DATA_LABEL } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 
 // ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
 const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
@@ -14,7 +14,7 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 <CaseStudyPage
   slug="kosovo-women-in-online-work"
   pageTitle="Kosovo Women in Online Work"
-  description="Women in Online Work, a 2017 pilot in Kosovo with the World Bank Group: 102 of 150 women in work (68%). The in-work figure is gross program data."
+  description="Women in Online Work, a 2017 pilot in Kosovo with the World Bank Group: 102 of 150 women in work (68%)."
   stats={[{ id: 'PR-02' }]}
   context={[
     'In 2017 the World Bank Group sought market-oriented skills to help young women in Kosovo find meaningful employment.',
@@ -35,7 +35,7 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
   ]}
 >
   <Fragment slot="results">
-    <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
+    <Callout tone="bluf" label="Program results">
       <Fact id="PR-02" as="p" />
     </Callout>
     <p>Women in Online Work was a pilot with the World Bank Group in 2017. The figures above are from CodersTrust program records.</p>

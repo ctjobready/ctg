@@ -5,7 +5,6 @@ import Badge from '../../../components/system/Badge.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import { articleNode, desc, title, fundingCta } from '../../../components/pages/impact/page-utils';
@@ -22,7 +21,7 @@ const jsonLd = [
   articleNode({ path, headline: 'JobReady: CodersTrust’s Digital Education and Employment Platform', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
-const faq = faqItems('foundations', faqIds, Astro);
+const faq = faqItems('foundations', faqIds);
 
 type Status = 'Live' | 'Operating' | 'Pre-launch' | 'Roadmap';
 const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-launch': 'info', Roadmap: 'sale' };
@@ -119,7 +118,6 @@ const f = fundingCta();
     <p class="jr__micro">{MICRO_COMMITMENT} <a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP works</a></p>
   </aside>
 
-  <Sources class="jr__sources" landmark />
 </LongformLayout>
 
 <script>

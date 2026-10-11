@@ -22,7 +22,6 @@ import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import Section from '../../../components/ui/Section.astro';
 import Badge from '../../../components/system/Badge.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
@@ -51,7 +50,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations & CSR',
-  `Fund a supported path from learning to earning. A BIGD trial: women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income (significance not reported).`,
+  `Fund a supported path from learning to earning. A BIGD trial: women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income`,
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
@@ -259,6 +258,5 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   <NextStepsBand title="What Happens After You Say Yes" timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />
 </LandingLayout>

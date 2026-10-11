@@ -1,6 +1,5 @@
 ---
 import Icon from '../system/Icon.astro';
-import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
  * ComparisonTable ➕ — "approaches and trade-offs" (planning v1.2 §B), not verdicts. Cells are text.
@@ -64,7 +63,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
                       )}
                       {c.included && ' '}
                       <span class="cmp__text">{c.text}</span>
-                      {c.factId && <FootnoteMarker id={c.factId} footnote="auto" />}
+                      
                     </>
                   )}
                 </td>

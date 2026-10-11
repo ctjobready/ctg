@@ -3,7 +3,6 @@ import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact } from '../../../data/facts';
 
 /**
@@ -41,7 +40,6 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
             <h3 class="card__title">{titleCase(b.claim)}</h3>
             <p class="cost__data" data-fact={b.factId}>
               {clean(fact(b.factId).text)}
-              <FootnoteMarker id={b.factId} footnote="auto" />
             </p>
             <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
           </div>

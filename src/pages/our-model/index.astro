@@ -9,8 +9,6 @@ import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import MechanismBand from '../../components/sections/MechanismBand.astro';
-import FootnoteMarker from '../../components/facts/FootnoteMarker.astro';
-import Sources from '../../components/facts/Sources.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
 import { SAFEGUARDING, MICRO_COMMITMENT } from '../../data/copy';
@@ -58,7 +56,7 @@ const d = discoveryCta();
     <div class="grid-cards">
       {delivery.map((x) => (
         <FeatureCard icon={x.icon} title={x.title}>
-          <p class="card__text" data-fact={x.id}>{x.text}<FootnoteMarker id={x.id} /></p>
+          <p class="card__text" data-fact={x.id}>{x.text}</p>
         </FeatureCard>
       ))}
     </div>
@@ -66,7 +64,7 @@ const d = discoveryCta();
 
   <Section tone="airy" aria-labelledby="qa-h">
     <SectionHeader id="qa-h" eyebrow="Quality" title="Quality Assurance" />
-    <p class="om__text" data-fact="PD-16">{qa}<FootnoteMarker id="PD-16" /></p>
+    <p class="om__text" data-fact="PD-16">{qa}</p>
   </Section>
 
   <Section aria-labelledby="safe-h">
@@ -84,7 +82,6 @@ const d = discoveryCta();
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

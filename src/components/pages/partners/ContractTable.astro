@@ -2,7 +2,6 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Fact from '../../facts/Fact.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact } from '../../../data/facts';
 import { factPart } from './partners';
 
@@ -65,8 +64,6 @@ const rows: Row[] = [
   },
 ];
 
-const sc06Note = (fact('SC-06').footnote ?? '').match(/^(.*?deduplicated)\./)?.[1];
-if (!sc06Note) throw new Error('ContractTable: SC-06 footnote no longer has the expected wording');
 // SC-08 reads "10,000 teachers trained to teach online during COVID-19": the sentence takes the number and the rest, so "trained" is not repeated.
 const teachersNumber = factPart('SC-08', /([\d,]+) teachers trained to teach online during COVID-19/);
 const teachersTask = factPart('SC-08', /teachers trained (to teach online during COVID-19)/);
@@ -105,8 +102,8 @@ const { title, lead, id = 'contracts' } = Astro.props;
     </table>
   </section>
   <div class="ct__notes" data-reveal>
-    <p data-fact="GV-10">Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.<FootnoteMarker id="GV-10" footnote={true} /></p>
-    <p data-fact="SC-06"><Fact id="SC-06" />. {sc06Note}.</p>
+    <p data-fact="GV-10">Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.</p>
+    <p data-fact="SC-06"><Fact id="SC-06" /></p>
     <p data-fact="SC-08">Separately, CodersTrust trained {teachersNumber} teachers {teachersTask}.</p>
   </div>
 </Section>

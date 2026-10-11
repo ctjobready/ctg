@@ -12,7 +12,6 @@ import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import FactList from '../../components/facts/FactList.astro';
@@ -70,7 +69,7 @@ const options = [
   />
 
   <DefinitionBlock heading="What Is JobReady@Campus?">
-    <p data-fact="IN-09"><Fact id="IN-09" footnote={false} />.</p>
+    <p data-fact="IN-09"><Fact id="IN-09" />.</p>
   </DefinitionBlock>
 
   <!-- C2 -->
@@ -111,7 +110,7 @@ const options = [
     partnerGroup="academic"
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="PA-05"><Fact id="PA-05" footnote={false} />.</p>
+    <p data-fact="PA-05"><Fact id="PA-05" />.</p>
   </GuideSection>
 
   <!-- Partnership context (review round 3): National University's size and onboarding pipeline are shown apart from the track record and the outcome evidence. -->
@@ -227,9 +226,8 @@ const options = [
     firstAction={C14_FIRST}
   />
 
-  <Section pad="sm" aria-label="Notes and sources">
+  <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

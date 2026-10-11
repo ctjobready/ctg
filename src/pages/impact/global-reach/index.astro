@@ -3,13 +3,11 @@ import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Icon from '../../../components/system/Icon.astro';
 import WorldMap from '../../../components/ui/WorldMap.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { fact, splitProgramLabel } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
@@ -21,12 +19,10 @@ const toc = [
   { id: 'map', label: 'Where programs have run' },
   { id: 'bangladesh', label: 'Selected programs in Bangladesh' },
 ];
-// Each reach figure carries its evidence label once, on its own line: the register's program-data label for PR-01 and PR-05, and the
-// case study's own label for PR-03 (whose register label has none).
 const programs = [
-  { name: 'WSDFM', slug: 'wsdfm-women-freelancers', partner: 'Commissioned by Porticus; evaluated by BIGD', years: 'Trained in 2020', focus: 'ICT skills for freelancing and local jobs for women', reachId: 'PR-01', reachText: 'women in work', evidence: splitProgramLabel(fact('PR-01').stat?.label ?? '').evidence },
-  { name: 'UNDP YES, Korail', slug: 'undp-yes-korail', partner: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh', years: '2017', focus: 'Skills for disadvantaged youth, linked to freelance marketplaces', reachId: 'PR-03', reachText: 'of the 350 trained found their first job within 3 months', evidence: 'Program data — placement within 3 months among the 350 trained, no comparison group' },
-  { name: 'Her Power', slug: 'her-power', partner: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh', years: '2022–25', focus: 'Digital skills for women’s self-employment (national program)', reachId: 'PR-05', reachText: 'women in work (training cohort)', evidence: splitProgramLabel(fact('PR-05').stat?.label ?? '').evidence },
+  { name: 'WSDFM', slug: 'wsdfm-women-freelancers', partner: 'Commissioned by Porticus; evaluated by BIGD', years: 'Trained in 2020', focus: 'ICT skills for freelancing and local jobs for women', reachId: 'PR-01', reachText: 'women in work'},
+  { name: 'UNDP YES, Korail', slug: 'undp-yes-korail', partner: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh', years: '2017', focus: 'Skills for disadvantaged youth, linked to freelance marketplaces', reachId: 'PR-03', reachText: 'of the 350 trained found their first job within 3 months' },
+  { name: 'Her Power', slug: 'her-power', partner: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh', years: '2022–25', focus: 'Digital skills for women’s self-employment (national program)', reachId: 'PR-05', reachText: 'women in work (training cohort)'},
 ];
 const d = discoveryCta();
 ---
@@ -44,7 +40,7 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="map" title="Where Programs Have Run">
-    <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.<FootnoteMarker id="SC-03" footnote="auto" /></p>
+    <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.</p>
     <WorldMap caption="Where CodersTrust programs have run" />
     <Callout label="Locations are not programs">
       <p>A location is a country or territory where CodersTrust has run a program. It does not say how many programs ran there, or how large they were. The New York office is not a program location; offices are listed under the map.</p>
@@ -52,7 +48,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="bangladesh" title="Selected Programs in Bangladesh">
-    <p>Programs with a published case study. Each reach figure carries its own evidence label.</p>
+    <p>Programs with a published case study.</p>
     <section class="gr__table" aria-label="Table of selected programs" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Selected CodersTrust programs in Bangladesh</caption>
@@ -64,7 +60,7 @@ const d = discoveryCta();
               <td data-label="Partner">{p.partner}</td>
               <td data-label="Years">{p.years}</td>
               <td data-label="Focus">{p.focus}</td>
-              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}{p.evidence && <>{' '}<span class="gr__evid">{p.evidence}</span></>}</td>
+              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
             </tr>
           ))}
         </tbody>
@@ -74,7 +70,6 @@ const d = discoveryCta();
   </ReportSection>
 
   <NextStep heading="Talk to Us About a First Cohort." text="Tell us the country and priority groups; we outline a first cohort in a discovery session." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Sources class="gr__sources" landmark />
 </LongformLayout>
 
 <script>
