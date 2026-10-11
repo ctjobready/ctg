@@ -250,7 +250,7 @@ function trainedReach(): CopyBlock {
 export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and the curriculum for a national program to train 25,125 women (with 2,500 women trained directly); separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
+  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and the curriculum for a national program that trained 25,125 women (with 2,500 women trained directly); separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
   facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],
 };
 
