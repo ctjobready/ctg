@@ -13,7 +13,6 @@ import { futurePhotos } from '../../data/photos';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
-import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
@@ -48,7 +47,7 @@ const faqSources: FaqSource[] = [
   { audience: 'employers', id: 'Q5' },
   { audience: 'employers', id: 'Q1' },
   { audience: 'employers', id: 'Q12' },
-  { audience: 'employers', id: 'Q8' },
+  { audience: 'variants', id: 'Q8-employer' },
   { audience: 'employers', id: 'Q11' },
 ];
 
@@ -90,7 +89,7 @@ const approach = [
     factIds={['PX-05']}
     scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
     extra={[
-      { title: 'AI skills are the hardest to find', text: 'Globally, employers say AI skills are now the hardest to find, so hiring alone does not close the gap.', factIds: ['PX-05'] },
+      { title: 'Hiring Alone Does Not Close the Skills Gap', text: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need, so hiring alone does not close the gap.`, factIds: ['PX-05'] },
       { title: 'Your teams need upskilling for AI workflows', text: 'Training works best when it is built around the tasks in your own roles.', factIds: ['IN-10'] },
     ]}
   />
@@ -143,7 +142,7 @@ const approach = [
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="The evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
+  <ProofBand title="The evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
     <div class="proof-notes">
       <p data-fact="OC-07"><strong>From CodersTrust’s youth programs:</strong> <Fact id="OC-07" /></p>
       <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
@@ -164,7 +163,7 @@ const approach = [
     title="Each feature maps to what employers ask for."
     rows={[
       { feature: 'A placement team plus trainees from employer-demand certification tracks', means: 'you get a short route to job-ready candidates.', outcome: 'Job-ready candidates for your roles', relieves: 'You cannot find the digital talent you need' },
-      { feature: 'An AI-ready curriculum in every track', means: 'hires and trainees already work with AI tools.', outcome: 'People ready to work with AI tools', relieves: 'AI skills are the hardest to find' },
+      { feature: 'An AI-ready curriculum, with each track’s AI content and work-entry plan agreed before enrollment', means: 'hires and trainees already work with AI tools.', outcome: 'People ready to work with AI tools', relieves: 'Hiring Alone Does Not Close the Skills Gap' },
       { feature: 'A customized curriculum and interactive workshops', means: 'your team learns on tasks from your own roles.', outcome: 'A team trained on its own tasks', relieves: 'Your teams need upskilling for AI workflows' },
     ]}
   />
@@ -184,8 +183,6 @@ const approach = [
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions employers ask" />
 
-  <!-- C10 -->
-  <ComparisonBand title="Compare the approaches." />
 
   <!-- C11 -->
   <OfferSection

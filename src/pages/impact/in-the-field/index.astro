@@ -5,6 +5,7 @@ import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import { allNews } from '../../../components/pages/news/news';
 import { photo, type Photo } from '../../../data/photos';
 import { FIELD_NEWS_LABEL, FIELD_NEWS_PHOTOS } from '../../../data/fieldNews';
@@ -34,13 +35,13 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     id: 'superkids',
     eyebrow: 'Programs',
     title: 'SuperKids: STEAM learning for school students',
-    lead: 'Workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
+    lead: 'SuperKids is CodersTrust’s school STEAM and digital-skills program for children. These photographs show workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
     photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
   },
   {
     id: 'nationwide',
     eyebrow: 'Programs',
-    title: 'Classes and campuses: madrasa learners, examinations and graduates',
+    title: 'Classes and Campuses: Madrasah Learners, Examinations and Graduates',
     lead: 'Classes, an examination hall and a graduation day. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
@@ -80,6 +81,10 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     photos: reg(['recognition/speaking-students', 'recognition/excellence-award', 'recognition/supply-chain-award', 'recognition/nasdaq-sba', 'recognition/davos-sdg-lab', 'recognition/us-chamber', 'recognition/european-parliament', 'recognition/pope-francis', 'recognition/pm-bangladesh', 'general/panel-international-forum', 'field/team-award-presentation', 'field/plaque-presentation']),
   },
 ];
+
+// Program and training photographs lead; partnership, recognition and event groups sit after the "Leadership, Recognition and Events" heading.
+const programGroups = groups.filter((g) => g.eyebrow === 'Programs');
+const laterGroups = groups.filter((g) => g.eyebrow !== 'Programs');
 
 // The news photographs, by year of the post: alt text from src/data/fieldNews.ts, caption = event + month and year, asset id of the post (D13).
 const files = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/news/**/*.{jpg,png}', { eager: true });
@@ -132,7 +137,13 @@ const d = discoveryCta();
     </nav>
   </Section>
 
-  {groups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
+  {programGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
+
+  <Section pad="sm" aria-labelledby="itf-later-h">
+    <SectionHeader id="itf-later-h" eyebrow="Later in the archive" title="Leadership, Recognition and Events" lead="Partnership signings, awards, forums and meetings, then photographs from the news posts by year." />
+  </Section>
+
+  {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and events" title={`Partners, programs and events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 

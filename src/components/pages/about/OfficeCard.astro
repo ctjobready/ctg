@@ -28,7 +28,7 @@ const maps = mapsHref(`${name}, ${address.join(', ')}`);
     <p class="eyebrow">{city}</p>
     <H class="card__title">{name}</H>
     {role && <p class="card__text">{role}</p>}
-    <address class="office__addr">{address.map((l) => <span>{l}</span>)}</address>
+    <address class="office__addr">{address.map((l, i) => <>{i > 0 && ' '}<span>{l}</span></>)}</address>
     {note && <p class="card__text">{note}</p>}
     <ul class="office__rows" role="list">
       <li><Icon name="phone" size={18} /><a href={phoneHref}>{phone}</a></li>

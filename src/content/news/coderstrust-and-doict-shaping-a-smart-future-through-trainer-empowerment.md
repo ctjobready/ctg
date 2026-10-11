@@ -17,7 +17,7 @@ Dhaka, Bangladesh
 
 ![Officials seated around a long conference table in a meeting room](../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/tot-closing-ceremony-at-ict-4.jpg)
 
-CodersTrust has recently completed a transformative five-day Training of Trainers (ToT) program culminating in a successful collaboration with the Department of Information and Communication Technology (DoICT). This initiative, not only aligns with the visionary goals of Prime Minister Sheikh Hasina’s “Smart Bangladesh” vision but also emphasizes CodersTrust Bangladesh’s commitment to empowering trainers with essential skills for upcoming recruitment processes and the facilitation of impactful training sessions.
+CodersTrust has recently completed a transformative five-day Training of Trainers (ToT) program culminating in a successful collaboration with the Department of Information and Communication Technology (DoICT). This initiative not only aligns with the visionary goals of Prime Minister Sheikh Hasina’s “Smart Bangladesh” vision but also emphasizes CodersTrust Bangladesh’s commitment to empowering trainers with essential skills for upcoming recruitment processes and the facilitation of impactful training sessions.
 
 The formal closing ceremony was held on November 16th at The ICT Tower in Agargaon, Dhaka. The event was graced by the esteemed presence of Mr. Md Shamsul Arefin, Secretary of the Information and Communication Technology Division, Bangladesh, serving as the chief guest, with Mr. Md. Mostafa Kamal, Director General of DoICT, chairing the program. In this ceremonious event, trainers who successfully concluded the training sessions were privileged to receive certificates.
 

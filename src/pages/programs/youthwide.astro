@@ -46,7 +46,7 @@ import { url } from '../../lib/url';
 const path = '/programs/youthwide/';
 const LAST_UPDATED = PAGE_UPDATED.youthwide;
 const title = 'YouthWIDE: Fund Youth Digital Employment';
-const description = 'A randomized trial found women offered a CodersTrust place 10.3 points more likely to be employed. YouthWIDE is a country program for youth digital work.';
+const description = 'In a randomized trial, women offered a CodersTrust place were 10.3 percentage points more likely to be employed. YouthWIDE is a country program for youth.';
 const discovery = ctaFor('discovery');
 
 const hours = statValue('PD-01');
@@ -101,7 +101,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-      { claim: 'Employers say AI skills are the hardest to find.', factId: 'PX-05', scope: 'Globally', implication: 'Employers report that AI skills are the hardest to find, so tracks need to build them.' },
+      { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need.`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
     ]}
   />
 
@@ -113,7 +113,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     vignettes={[
       { kind: 'Functional', title: 'Monthly reports your board can read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
       { kind: 'Emotional', title: 'Confidence that the budget produced earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
-      { kind: 'Social', title: 'Evidence your evaluators can audit', text: 'Tracer results are backed by payslips, offer letters, platform logs and bank receipts.' },
+      { kind: 'Social', title: 'Evidence your evaluators can audit', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
     ]}
   />
 

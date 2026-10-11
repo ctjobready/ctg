@@ -32,7 +32,7 @@ import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
 
 const local = localCta();
-const FAQ_IDS = ['Q1', 'Q2', 'Q9', 'Q10'];
+const FAQ_IDS = ['Q1-local', 'Q9', 'Q10'];
 const path = '/partner-with-us/local-partners/';
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
 // GV-07 in the third-gender program wording the register uses ("program ... to provide digital-skills training to 5,000 third-gender people").
@@ -40,7 +40,7 @@ const thirdGender = fact('GV-07').text.match(/[\d,]+ third-gender people/)?.[0];
 if (!thirdGender) throw new Error('GV-07 no longer names the number of third-gender people');
 const jsonLd = [
   webPage({ path, name: 'Local implementing partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with us', path: '/partner-with-us/' }, { name: 'Local partners', path }] }),
-  faqJsonLd('governments', path, FAQ_IDS),
+  faqJsonLd('variants', path, FAQ_IDS),
 ];
 
 // C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
@@ -202,7 +202,7 @@ const ways = [
   </Section>
 
   <!-- C9 -->
-  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions local partners ask" />
+  <FAQBand id="faq" audience="variants" ids={FAQ_IDS} title="Questions local partners ask" />
 
   <!-- C10 -->
   <ComparisonBand id="compare" rows={cmpRows} facts={['PD-02', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06']} />

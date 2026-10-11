@@ -60,4 +60,4 @@ export function pressLogos(): LogoItem[] {
 
 /** PA-04 caption (verbatim). */
 export const PARTNER_CAPTION = 'Organizations we have worked with, 2014–2026.';
-export const PRESS_CAPTION = 'As covered in';
+export const PRESS_CAPTION = 'Press Coverage, 2014–2016';

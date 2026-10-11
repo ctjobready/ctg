@@ -1,6 +1,6 @@
 import { PROGRAM_DATA_LABEL } from './facts';
 
-export type FaqAudience = 'governments' | 'development-partners' | 'foundations' | 'universities' | 'employers' | 'investors' | 'home' | 'all';
+export type FaqAudience = 'governments' | 'development-partners' | 'foundations' | 'universities' | 'employers' | 'investors' | 'home' | 'variants' | 'all';
 export interface Faq {
   id: string;
   q: string;
@@ -11,7 +11,7 @@ export interface Faq {
   cite?: string[];
   /**
    * Pages whose 9b list (planning/04 §4.1–4.6) includes the question; `home` = Q1, Q2, Q3, Q5, Q7, Q8;
-   * `all` = the partner hub's complete Q1–Q14 list.
+   * `all` = the partner hub's complete Q1–Q14 list. `variants` = page-specific rewordings of a bank question (ids ending in -employer or -local), never listed in `all`.
    */
   audiences: FaqAudience[];
 }
@@ -32,6 +32,9 @@ export const faqs: Faq[] = [
   { id: 'Q12', q: `Do your learners only freelance?`, a: `No — salaried jobs remain the largest pathway; freelancing and business ownership grew the most in relative terms. Among surveyed completers, salaried employment rose from 38.3% before training to 53.3% at the October 2026 survey, freelancing from 6.2% to 14.0% and business ownership from 2.8% to 10.6%.`, evidence: ['OC-04'], cite: ['OC-04'], audiences: ['employers', 'all'] },
   { id: 'Q13', q: `Who are your typical learners?`, a: `Mostly university graduates from across Bangladesh, some of them already working before training. Among surveyed completers, 84.6% hold a bachelor’s degree or higher, 68.7% were aged 15–35 and 62.9% live outside Dhaka, across 58 of the country’s 64 districts; 47.4% were working before training.`, evidence: ['OC-09', 'OC-01'], cite: ['OC-09', 'OC-01'], audiences: ['universities', 'all'] },
   { id: 'Q14', q: `How is CodersTrust different from an online course platform?`, a: `Self-paced course platforms focus on content access; our programs add mentoring, certification and placement support, agreed in each program’s scope. Every program pairs 100 training hours per certification with three months of milestone-based mentoring, certification exam preparation (exam terms set per program), placement support and outcome tracking for 12 months.`, evidence: ['PD-01', 'PD-02'], audiences: ['all'] },
+  // Page-specific variants (not in the Q1–Q14 bank, so never listed in `all`).
+  { id: 'Q8-employer', q: `What does it cost?`, a: `Pricing is set per program and shared after the needs assessment. Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support; certification exam preparation and talent sourcing are scoped separately where needed.`, evidence: ['PD-02', 'IN-10'], audiences: ['variants'] },
+  { id: 'Q1-local', q: `Will This Work in Our District?`, a: `Each cohort is designed around the young people your organization reaches, your facilities and local demand. Tracks, facilitator training, safeguarding and reporting are agreed before enrollment.`, evidence: ['PD-06', 'PD-09'], audiences: ['variants'] },
 ];
 
 /** The questions tagged for one audience, in bank order (`faqsFor('all')` is the full Q1–Q14 list). */

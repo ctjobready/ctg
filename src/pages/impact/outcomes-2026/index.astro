@@ -36,7 +36,7 @@ if (readFileSync(csvPath, 'utf8') !== D.csvText()) throw new Error('public/data/
 
 const path = '/impact/outcomes-2026/';
 const csvHref = url('/data/outcomes-2026-aggregates.csv');
-const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey. Bases, charts and methods for every result.`);
+const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey. Self-reported; descriptive, not causal. Bases and methods shown.`);
 const pc = D.percent;
 
 const jsonLd = [
@@ -131,7 +131,7 @@ const reportLink = reportCta();
       <BaseStat id="OC-03" base="completers who reported income before and after training; the base for the medians is not reported separately" />
       <BaseStat id="OC-03b" base={`n = ${D.INCOME_BASE} paired income answers`} />
       <BaseStat id="OC-05" base={`n = ${D.SPEED_BASE} completers who first earned during or after training`} />
-      <BaseStat id="OC-06" base="responding completers; base not stated in the report" />
+      <BaseStat id="OC-06" base="responding completers (number not stated in the report)" />
       <BaseStat id="OC-02" base={`${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base} completers with no prior income were earning`} small />
     </div>
   </ReportSection>
@@ -215,7 +215,7 @@ const reportLink = reportCta();
 
   <ReportSection id="income-source" title="Main income source">
     <p data-fact="OC-07"><Fact id="OC-07" /></p>
-    <BarChart title="Main income source" items={source} max={100} note={`Base: valid respondents; base not stated in the report. This is the main income source, not where income is received or the quality of the job.`} />
+    <BarChart title="Main income source" items={source} max={100} note={`Base: valid respondents (number not stated in the report). This is the main income source, not where income is received or the quality of the job.`} />
   </ReportSection>
 
   <ReportSection id="experience" title="Learner experience">
@@ -223,7 +223,8 @@ const reportLink = reportCta();
     <ColumnChart
       title="Recommendation score, 0 to 10, among surveyed completers"
       items={recItems}
-      note={`Base: responding completers; base not stated in the report. Darker columns are scores of 7 or higher. Every score from 0 to 10 is shown, as a percentage only; shares are rounded, so they may not add up exactly. This is a distribution of scores, not a Net Promoter Score.`}
+      emphasisNote="7 or higher"
+      note={`Base: responding completers (number not stated in the report). Darker columns are scores of 7 or higher (7 to 10), which the data table also marks in text. Every score from 0 to 10 is shown, as a percentage only; shares are rounded, so they may not add up exactly. This is a distribution of scores, not a Net Promoter Score.`}
     />
   </ReportSection>
 
