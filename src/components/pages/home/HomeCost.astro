@@ -42,7 +42,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
               {clean(fact(b.factId).text)}
               <FootnoteMarker id={b.factId} footnote="auto" />
             </p>
-            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
           </div>
         </article>
       ))

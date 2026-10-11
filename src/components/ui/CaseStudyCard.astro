@@ -37,7 +37,7 @@ const a = linkAttrs(href);
     )}
     <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
     {(program || partner) && <p class="card__meta">{[program, partner].filter(Boolean).join(' · ')}</p>}
-    <span class="card__more" aria-hidden="true">Read the case study<Icon name="arrow-right" size={16} /></span>
+    <span class="card__more" aria-hidden="true">Read the case study<span class="sr-only">: {title}</span><Icon name="arrow-right" size={16} /></span>
   </div>
 </article>
 

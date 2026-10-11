@@ -4,7 +4,7 @@ import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
  * ComparisonTable ➕ — "approaches and trade-offs" (planning v1.2 §B), not verdicts. Cells are text.
- * A check icon (+ visually-hidden "Included:") marks only the highlighted organisation's own
+ * A check icon (labelled "Included" for assistive technology, with no text twin) marks only the highlighted organisation's own
  * inclusions (`included: true`); other approaches never get verdict icons (no ✗ / ⚠). "—" is
  * announced as "Not applicable". The first column is sticky on small screens.
  */
@@ -54,18 +54,15 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
               return (
                 <td class:list={[highlight === i && 'is-hl']} data-label={columns[i + 1]}>
                   {isNone(c.text) ? (
-                    <>
-                      <span class="sr-only">Not applicable</span>
-                      <span aria-hidden="true">—</span>
-                    </>
+                    <span role="img" aria-label="Not applicable">—</span>
                   ) : (
                     <>
                       {c.included && (
-                        <span class="cmp__mark">
+                        <span class="cmp__mark" role="img" aria-label="Included">
                           <Icon name="circle-check" size={20} />
-                          <span class="sr-only">Included: </span>
                         </span>
                       )}
+                      {c.included && ' '}
                       <span class="cmp__text">{c.text}</span>
                       {c.factId && <FootnoteMarker id={c.factId} footnote="auto" />}
                     </>

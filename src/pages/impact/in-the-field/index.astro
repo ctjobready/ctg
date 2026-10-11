@@ -35,13 +35,13 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     eyebrow: 'Programs',
     title: 'SuperKids: STEAM learning for school students',
     lead: 'Workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
-    photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/floor-activity', 'superkids/floor-activity-2', 'superkids/hall-seated', 'superkids/hall-seated-2', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
+    photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
   },
   {
     id: 'nationwide',
     eyebrow: 'Programs',
-    title: 'NationWIDE: madrasa and university learners',
-    lead: 'Classes, examinations and graduation days from the national program.',
+    title: 'Classes and campuses: madrasa learners, examinations and graduates',
+    lead: 'Classes, an examination hall and a graduation day. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
   {
@@ -49,13 +49,13 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     eyebrow: 'Programs',
     title: 'Women’s programs: Her Power, Kosovo, Albania and WSDFM',
     lead: 'Training rooms and ceremonies from programs for women learners.',
-    photos: reg(['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group', 'impact/her-power-training-lab', 'general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'impact/wsdfm-training-group', 'general/women-learners-classroom', 'general/classroom-girls', 'general/lab-women-screen', 'general/empowering-women-event']),
+    photos: reg(['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group', 'impact/her-power-training-lab', 'general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'impact/wsdfm-training-group', 'general/women-learners-classroom', 'general/lab-women-screen', 'general/empowering-women-event']),
   },
   {
     id: 'youth',
     eyebrow: 'Programs',
     title: 'UNDP YES and learner communities',
-    lead: 'Trainees from the UNDP-supported YES program, and learners and graduates across programs.',
+    lead: 'Trainees from the UNDP YES (Youth Employment through Skills) program, and learners and graduates across programs.',
     photos: reg(['general/yes-trainees-group', 'general/yes-collage', 'general/woman-learner-laptop', 'general/learner-mosaic']),
   },
   {
@@ -85,29 +85,31 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
 const files = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/news/**/*.{jpg,png}', { eager: true });
 const posts = (await allNews()).filter((p) => !p.data.political);
 const month = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-const years = new Map<number, Photo[]>();
+const years = new Map<number, { date: number; photo: Photo }[]>();
 for (const post of posts) {
   const year = post.data.date.getUTCFullYear();
   for (const e of FIELD_NEWS_PHOTOS.filter((x) => x.slug === post.id)) {
     const img = files[`../../../assets/images/news/${post.id}/${e.file}`]?.default;
     if (!img) throw new Error(`in-the-field: missing image ${post.id}/${e.file}`);
     const list = years.get(year) ?? [];
-    list.push({ src: img, alt: e.alt, assetId: `news-${post.id}`, caption: `${FIELD_NEWS_LABEL[post.id] ?? post.data.title}, ${month.format(post.data.date)}` });
+    const caption = e.caption ?? `${FIELD_NEWS_LABEL[post.id] ?? post.data.title}, ${month.format(post.data.date)}`;
+    list.push({ date: post.data.date.getTime(), photo: { src: img, alt: e.alt, assetId: `news-${post.id}`, caption } });
     years.set(year, list);
   }
 }
 // A year with a single photograph is joined to the next year, so every gallery holds at least two pictures.
 const byYear: { label: string; id: string; photos: Photo[] }[] = [];
-let carry: { from: number; photos: Photo[] } | undefined;
+let carry: { from: number; items: { date: number; photo: Photo }[] } | undefined;
 for (const [year, list] of [...years.entries()].sort((a, b) => a[0] - b[0])) {
-  const photos = [...(carry?.photos ?? []), ...list];
+  const items = [...(carry?.items ?? []), ...list];
   const from = carry?.from ?? year;
-  if (photos.length < 2) {
-    carry = { from, photos };
+  if (items.length < 2) {
+    carry = { from, items };
     continue;
   }
   const label = from === year ? String(year) : `${from}–${year}`;
-  byYear.push({ label, id: `news-${label.replace('–', '-')}`, photos });
+  // Newest post first within a gallery, like the years themselves; photographs of one post keep their order (stable sort).
+  byYear.push({ label, id: `news-${label.replace('–', '-')}`, photos: [...items].sort((x, y) => y.date - x.date).map((x) => x.photo) });
   carry = undefined;
 }
 byYear.reverse();
@@ -135,7 +137,7 @@ const d = discoveryCta();
   {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and events" title={`Partners, programs and events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
-    <p class="itf__note">These photographs come from the previous CodersTrust website. CodersTrust has permission from its trainees and learners to use them. People are named only where that site named them. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
+    <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
   </Section>
 
   <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />

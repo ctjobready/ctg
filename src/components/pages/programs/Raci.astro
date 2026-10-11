@@ -36,7 +36,7 @@ const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => n
             <tr>
               <th scope="row">{r.what}</th>
               {r.cells.map((c, i) => (
-                <td data-label={roles[i]}><span aria-hidden="true" class:list={['raci__v', c === '—' && 'raci__v--none']}>{c}</span><span class="sr-only">{say(c)}</span></td>
+                <td data-label={roles[i]}><span role="img" aria-label={say(c)} class:list={['raci__v', c === '—' && 'raci__v--none']}>{c}</span></td>
               ))}
             </tr>
           ))

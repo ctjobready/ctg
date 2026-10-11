@@ -1,6 +1,10 @@
 import { prefersReducedMotion } from './util';
 
-/** M2 — count to the final value in 1.2s (ease-out). Final text is already in the HTML. */
+/**
+ * M2 — count to the final value in 1.2s (ease-out). The final text is the element's only text node, in the HTML and while counting, so
+ * it is read once. The running number is drawn by a decorative ::after fed from data-anim (see Stat.astro); `is-counting` makes the real
+ * text transparent underneath it.
+ */
 interface Spec {
   el: HTMLElement;
   prefix: string;
@@ -11,6 +15,15 @@ interface Spec {
 }
 
 const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-countup]'));
+
+function show(el: HTMLElement, text: string) {
+  el.dataset.anim = text;
+  el.classList.add('is-counting');
+}
+function done(el: HTMLElement) {
+  el.classList.remove('is-counting');
+  delete el.dataset.anim;
+}
 
 function fmt(s: Spec, n: number): string {
   const body = s.grouped
@@ -33,7 +46,7 @@ if (nodes.length && !prefersReducedMotion() && 'IntersectionObserver' in window)
       grouped: el.dataset.grouped === 'true',
     };
     specs.set(el, spec);
-    el.textContent = fmt(spec, 0); // width is reserved in ch, so no layout shift
+    show(el, fmt(spec, 0)); // width is reserved in ch, so no layout shift
   }
 
   const run = (s: Spec) => {
@@ -42,9 +55,10 @@ if (nodes.length && !prefersReducedMotion() && 'IntersectionObserver' in window)
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / dur);
       const eased = 1 - Math.pow(1 - t, 3);
-      s.el.textContent = fmt(s, s.target * eased);
-      if (t < 1) requestAnimationFrame(tick);
-      else s.el.textContent = fmt(s, s.target);
+      if (t < 1) {
+        show(s.el, fmt(s, s.target * eased));
+        requestAnimationFrame(tick);
+      } else done(s.el);
     };
     requestAnimationFrame(tick);
   };
@@ -62,5 +76,5 @@ if (nodes.length && !prefersReducedMotion() && 'IntersectionObserver' in window)
   );
   specs.forEach((_s, el) => io.observe(el));
   // Never leave a half-counted number in print.
-  addEventListener('beforeprint', () => specs.forEach((s) => (s.el.textContent = fmt(s, s.target))));
+  addEventListener('beforeprint', () => specs.forEach((s) => done(s.el)));
 }

@@ -19,6 +19,9 @@ const tr = fact('PD-09').text.match(/tracers at (\d+)\/(\d+)\/(\d+) months/);
 if (!tr) throw new Error('PD-09 wording changed: update the reporting timeline');
 const tracers = [tr[1], tr[2], tr[3]];
 
+// The sample layout is one labeled figure for assistive technology: its fields are listed once, in the label, and every one is empty.
+const layoutLabel = `Sample monthly report layout with no data. Every field is empty. Fields: Program; Month; ${fields.map((f) => f.label).join('; ')}; Tracer results at ${tracers.join(', ')} months; Quarterly steering review.`;
+
 const timeline = [
   { when: 'At enrollment', title: 'Baseline', text: 'Every trainee’s starting point is recorded, so later results have something to be measured against.', ids: 'PD-09' },
   { when: 'Every month', title: 'Monthly report', text: `Enrollment and attendance, completion and certification, placements and first earnings, women and priority-group shares, and trainee satisfaction.`, ids: 'PD-08' },
@@ -33,7 +36,7 @@ const timeline = [
 ---
 
 <div class="rep">
-  <figure class="tmpl" data-reveal data-fact="PD-08">
+  <figure class="tmpl" data-reveal data-fact="PD-08" role="img" aria-label={layoutLabel}>
     <figcaption class="tmpl__cap">
       <span class="tmpl__tag">Sample layout · no data</span>
       <strong>Monthly report</strong>
@@ -42,15 +45,15 @@ const timeline = [
     <dl class="tmpl__fields">
       <div class="tmpl__row tmpl__row--head">
         <dt>Program</dt>
-        <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+        <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
         <dt>Month</dt>
-        <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+        <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
       </div>
       {
         fields.map((f) => (
           <div class="tmpl__row">
             <dt>{f.label}</dt>
-            <dd><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+            <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
           </div>
         ))
       }
@@ -58,13 +61,13 @@ const timeline = [
         <dt>Tracer results</dt>
         <dd>
           <ul role="list">
-            {tracers.map((m) => <li><span>{m}-month</span><span class="tmpl__blank" aria-hidden="true"></span><span class="sr-only">Empty field</span></li>)}
+            {tracers.map((m) => <li><span>{m}-month</span><span class="tmpl__blank" aria-hidden="true"></span></li>)}
           </ul>
         </dd>
       </div>
       <div class="tmpl__row">
         <dt>Quarterly steering review</dt>
-        <dd><span class="tmpl__blank tmpl__blank--tall" aria-hidden="true"></span><span class="sr-only">Empty field</span></dd>
+        <dd><span class="tmpl__blank tmpl__blank--tall" aria-hidden="true"></span></dd>
       </div>
     </dl>
   </figure>

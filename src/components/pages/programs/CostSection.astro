@@ -45,7 +45,7 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
                 <p class="cost__data"><Fact id={b.factId} /></p>
               )
             }
-            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
           </div>
         </article>
       ))

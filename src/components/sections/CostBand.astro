@@ -29,7 +29,7 @@ const { title, lead, blocks, transition = 'It doesn’t have to be this way.', i
           <div class="card__body">
             <h3 class="card__title">{b.claim}</h3>
             <p class="cost__data"><Fact id={b.factId} /></p>
-            <p class="cost__impl"><span class="cost__tag">What it means</span>{b.implication}</p>
+            <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
           </div>
         </article>
       ))

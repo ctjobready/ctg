@@ -40,10 +40,12 @@ const cols = [
             <th scope="row">{r.activity}</th>
             {cols.map(([label, key]) => (
               <td data-label={label}>
-                {r[key].map((role) => (
-                  <span class={`raci__pill raci__pill--${role}`} aria-hidden="true">{role}</span>
+                {r[key].map((role, i) => (
+                  <>
+                    {i > 0 && ' '}
+                    <span class={`raci__pill raci__pill--${role}`} role="img" aria-label={LABEL[role]}>{role}</span>
+                  </>
                 ))}
-                <span class="sr-only">{r[key].map((role) => LABEL[role]).join(', ')}</span>
               </td>
             ))}
           </tr>

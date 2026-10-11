@@ -26,7 +26,7 @@ const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
   <slot />
   <h3 class="t-heading-xl hw__title" id={`${id}-h`} data-reveal>{heading}</h3>
   <div data-fact={facts.join(' ')}>
-    <StepFlow steps={steps.map((s) => ({ title: s.title, text: s.text }))} />
+    <StepFlow level={4} steps={steps.map((s) => ({ title: s.title, text: s.text }))} />
   </div>
   {
     programs && (

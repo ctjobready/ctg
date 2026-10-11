@@ -3,8 +3,11 @@
 interface Props {
   steps: { title: string; text?: string }[];
   class?: string;
+  /** Heading level of each step: 3 under an H2 section, 4 when the steps follow their own H3 heading ("How it works in three steps"). */
+  level?: 3 | 4;
 }
-const { steps, class: className } = Astro.props;
+const { steps, class: className, level = 3 } = Astro.props;
+const Tag = level === 4 ? 'h4' : 'h3';
 ---
 
 <ol class:list={['steps', className]} role="list" style={`--n:${steps.length}`}>
@@ -13,7 +16,7 @@ const { steps, class: className } = Astro.props;
       <li class="steps__item" data-reveal>
         <span class="steps__num" aria-hidden="true">{i + 1}</span>
         <div>
-          <h3 class="steps__title"><span class="sr-only">Step {i + 1}: </span>{s.title}</h3>
+          <Tag class="steps__title"><span class="sr-only">Step {i + 1}: </span>{s.title}</Tag>
           {s.text && <p class="steps__text">{s.text}</p>}
         </div>
       </li>

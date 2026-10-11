@@ -13,7 +13,7 @@ import { listPages, pageByRoute } from './support/pages';
  * scroll-driven animation counts as motion.
  *
  * Real selectors (src/components, src/scripts): [data-reveal] (BaseLayout/reveal.ts), [data-marquee] with .marquee__inner,
- * .marquee__clone and [data-marquee-toggle] (PartnerStrip.astro/marquee.ts), [data-countup] with its sr-only twin
+ * .marquee__clone and [data-marquee-toggle] (PartnerStrip.astro/marquee.ts), [data-countup] (one DOM copy; the running number is a decorative ::after)
  * (Stat.astro/countup.ts).
  */
 

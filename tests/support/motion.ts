@@ -88,17 +88,10 @@ export function motionProbe(eps: number): MotionReport {
   const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-countup]'));
   const wrong: { where: string; actual: string; expected: string }[] = [];
   for (const el of counters) {
-    const twin = el.nextElementSibling;
-    let expected: string;
-    if (twin && twin.classList.contains('sr-only')) {
-      expected = (twin.textContent ?? '').trim();
-    } else {
-      const decimals = Number(el.dataset.decimals ?? 0);
-      const n = Number(el.dataset.value);
-      const body = el.dataset.grouped === 'true' ? n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) : n.toFixed(decimals);
-      expected = `${el.dataset.prefix ?? ''}${body}${el.dataset.suffix ?? ''}`;
-    }
-    const actual = (el.textContent ?? '').trim();
+    const expected = (el.dataset.final ?? '').trim();
+    // The real text is always the final value (read once); what is drawn while counting is data-anim, shown by a decorative ::after.
+    const actual = (el.classList.contains('is-counting') ? (el.dataset.anim ?? '') : (el.textContent ?? '')).trim();
+    if ((el.textContent ?? '').trim() !== expected) wrong.push({ where: `${describe(el)} (DOM text)`, actual: (el.textContent ?? '').trim(), expected });
     if (actual !== expected) wrong.push({ where: describe(el), actual, expected });
   }
 

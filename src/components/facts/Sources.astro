@@ -59,10 +59,13 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
             )}
             <p class="sources__back">
               {Array.from({ length: n.refs }, (_, k) => (
-                <a href={`#fn-ref-${n.n}-${k + 1}`} aria-label={`Back to reference ${n.n}${n.refs > 1 ? `.${k + 1}` : ''}`}>
-                  <Icon name="corner-up-left" size={14} />
-                  <span>Back{n.refs > 1 ? ` ${k + 1}` : ''}</span>
-                </a>
+                <>
+                  {k > 0 && ' '}
+                  <a href={`#fn-ref-${n.n}-${k + 1}`} aria-label={`Back${n.refs > 1 ? ` ${k + 1}` : ''} to text, note ${n.n}`}>
+                    <Icon name="corner-up-left" size={14} />
+                    <span>Back{n.refs > 1 ? ` ${k + 1}` : ''}</span>
+                  </a>
+                </>
               ))}
             </p>
           </li>
