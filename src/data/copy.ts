@@ -2,7 +2,7 @@
 // Pages import these instead of retyping them, so a wording change from review is one edit here.
 // Every number inside a block is a registered fact; render footnote markers for the IDs in `facts`.
 
-import { PROGRAM_DATA_LABEL, fact } from './facts';
+import { fact } from './facts';
 
 export interface CopyBlock {
   text: string;
@@ -29,7 +29,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through mentored, certification-focused training.',
-  investors: 'We help investors back the platform preparing emerging-market youth for paid work through certification-focused training.',
+  investors: 'We help investors back a platform that prepares emerging-market youth for paid work through certification-focused training.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
 };
@@ -255,7 +255,7 @@ export const SCALE: CopyBlock = {
 };
 
 export const PRICING: CopyBlock = {
-  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam terms set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam terms set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
   facts: ['PD-02'],
 };
 
@@ -277,7 +277,7 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, as a parenthetical closing the sentence, round 12 N1).
-  text: `Three women-focused programs: 47–71% of completers in work (WSDFM 71%; Women in Online Work, Kosovo, 68%; Her Power 47%; ${PROGRAM_DATA_LABEL}).`,
+  text: 'Three women-focused programs: 47–71% in work (WSDFM 71% and Women in Online Work, Kosovo, 68% of completers; Her Power 47% of its training cohort; program data — gross rates, no comparison group).',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
