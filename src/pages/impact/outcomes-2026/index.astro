@@ -128,7 +128,7 @@ const reportLink = reportCta();
     <Callout tone="bluf"><CopyText block={SURVEY_EMPLOYMENT} /></Callout>
     <div class="ro__stats">
       <BaseStat id="OC-01" base={`n = ${D.EMPLOYMENT_BASE} paired completers`} />
-      <BaseStat id="OC-03" base="completers who reported income before and after training; the base for the medians is not reported separately" />
+      <BaseStat id="OC-03" base={`n = ${D.INCOME_BASE} completers who reported income before and after training`} />
       <BaseStat id="OC-03b" base={`n = ${D.INCOME_BASE} paired income answers`} />
       <BaseStat id="OC-05" base={`n = ${D.SPEED_BASE} completers who first earned during or after training`} />
       <BaseStat id="OC-06" base="responding completers (number not stated in the report)" />
@@ -204,7 +204,7 @@ const reportLink = reportCta();
     </div>
     <div class="ro__measure" data-fact="OC-03c">
       <h3 class="t-heading-l">Median Individual Change</h3>
-      <div class="ro__stats ro__stats--one"><BaseStat id="OC-03c" base="completers with valid paired income answers" /></div>
+      <div class="ro__stats ro__stats--one"><BaseStat id="OC-03c" base={`n = ${D.INCOME_BASE} completers who reported income before and after training`} /></div>
     </div>
   </ReportSection>
 

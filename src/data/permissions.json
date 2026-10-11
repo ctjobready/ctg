@@ -48,7 +48,7 @@
   { "assetId": "partner-care", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "partner-ide", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "partner-pksf", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
-  { "assetId": "partner-save-the-children", "clearanceId": null, "status": "pending", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "partner-save-the-children", "clearanceId": "OWNER-2026-10-12-STC-LOGO", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
   { "assetId": "partner-ict-division", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "partner-doict", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "partner-bhtpa", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
