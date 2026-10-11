@@ -86,6 +86,20 @@ for (const page of site.pages) {
   }
 }
 
+/* Text-twin markup that reads out twice, or glues words together in text exports (WP3b): each pattern is a regression of a fixed component. */
+const A11Y_MARKUP = [
+  ['a11y-countup-twin', /data-countup[^>]*>[^<]*<\/span>\s*<span class="sr-only"/, 'a count-up number must have one DOM copy (no sr-only twin after [data-countup])'],
+  ['a11y-countup-hidden', /<span class="stat__num"[^>]*aria-hidden="true"[^>]*data-countup/, 'the count-up number is the only copy of the value, so it must not be aria-hidden'],
+  ['a11y-empty-field-twin', /<span class="sr-only">Empty field<\/span>/, 'the sample report layout is one labeled figure; do not repeat "Empty field" fourteen times'],
+  ['a11y-included-prefix', /<span class="sr-only">Included: <\/span>/, 'comparison-table check marks carry aria-label="Included", not a repeated hidden prefix'],
+  ['a11y-pain-label', /<span class="sr-only">Pain \d+: <\/span>/, 'the internal "Pain" label must not reach assistive technology'],
+  ['a11y-back-link-name', /aria-label="Back to reference /, 'footnote back-links are named "Back to text, note N"'],
+];
+for (const page of site.pages) {
+  const src = readFileSync(page.file, 'utf8');
+  for (const [code, re, message] of A11Y_MARKUP) if (re.test(src)) findings.error(code, '/' + page.rel, message);
+}
+
 /* group: rule -> template -> {count, pages, example} */
 const byRule = new Map();
 for (const m of messages) {
@@ -114,6 +128,7 @@ for (const r of ruleList) {
   }
   if (r.templates.size > 6) console.log(`       … ${r.templates.size - 6} more template(s)`);
 }
+for (const f of findings.items.filter((f) => String(f.code).startsWith('a11y-'))) console.log(`  FAIL ${f.code}: ${f.page} — ${f.message}`);
 for (const f of findings.items.filter((f) => f.page === '.htmlvalidate.json')) console.log(`  ${f.severity === 'error' ? 'FAIL' : 'WARN'} ${f.code}: ${f.message}`);
 console.log(`check-html: ${failures ? 'FAILED' : 'passed'} — ${errors} error(s), ${warnings} warning(s) across ${site.pages.length} pages; relaxed rules: ${relaxedInConfig.map((r) => r.rule).join(', ') || 'none'}`);
 

@@ -18,7 +18,7 @@
 const MARKER_RE = /<sup class="fn" data-fact="([^"]*)"><a href="#fn-(\d+)" id="fn-ref-(\d+)-(\d+)" aria-label="Note \d+">\d+<\/a><\/sup>/g;
 const LIST_RE = /(<ol class="sources__list"[^>]*>)([\s\S]*?)(<\/ol>)/g;
 const NOTE_RE = /<li class="sources__note" id="fn-(\d+)"[\s\S]*?<\/li>/g;
-const BACKLINK_RE = /<a href="#fn-ref-\d+-\d+" aria-label="Back to reference [\d.]+"/g;
+const BACKLINK_RE = /<a href="#fn-ref-\d+-\d+" aria-label="Back(?: \d+)? to text, note \d+"/g;
 const CAVEAT_RE = /<p class="sources__caveat" data-caveat="([^"]*)"([^>]*)>[\s\S]*?<\/p>/;
 const EMPTY_NOTES_BAND_RE = /<section class="band [^"]*" aria-label="Notes and sources"[^>]*><div class="container"[^>]*><\/div><\/section>/g;
 /**
@@ -64,7 +64,7 @@ export function orderFootnotes(html: string): string {
       let i = 0;
       note = note.replace(BACKLINK_RE, () => {
         i++;
-        return `<a href="#fn-ref-${n}-${i}" aria-label="Back to reference ${n}${total > 1 ? `.${i}` : ''}"`;
+        return `<a href="#fn-ref-${n}-${i}" aria-label="Back${total > 1 ? ` ${i}` : ''} to text, note ${n}"`;
       });
       return { n, html: note };
     });

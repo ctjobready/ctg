@@ -39,10 +39,11 @@ export function contentProbe(): ContentReport {
   const countups = Array.from(document.querySelectorAll<HTMLElement>('[data-countup]'));
   const wrongCountups = countups
     .map((el) => {
+      // The value is in the DOM once (no sr-only twin, so it is read once) and is always the final text; while counting, the running number is data-anim (a decorative ::after).
       const twin = el.nextElementSibling;
-      return { where: describe(el), actual: (el.textContent ?? '').trim(), expected: (twin?.textContent ?? '').trim(), hasTwin: !!twin?.classList.contains('sr-only') };
+      return { where: describe(el), actual: (el.classList.contains('is-counting') ? (el.dataset.anim ?? '') : (el.textContent ?? '')).trim(), expected: (el.dataset.final ?? '').trim(), hasTwin: !!twin?.classList.contains('sr-only') };
     })
-    .filter((c) => !c.hasTwin || c.actual !== c.expected || c.actual === '');
+    .filter((c) => c.hasTwin || c.actual !== c.expected || c.actual === '');
   const emptyStats = Array.from(document.querySelectorAll('.stat__num'))
     .filter((el) => (el.textContent ?? '').trim() === '')
     .map(describe);

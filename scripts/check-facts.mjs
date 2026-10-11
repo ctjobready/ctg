@@ -716,7 +716,7 @@ function numberGuardPage(path, html, allow = []) {
 /* ---- self-test: the post-processing on fixtures, then the checks above on its result (and on a broken page) ---- */
 {
   const mk = (fact, n, k) => `<sup class="fn" data-fact="${fact}"><a href="#fn-${n}" id="fn-ref-${n}-${k}" aria-label="Note ${n}">${n}</a></sup>`;
-  const back = (n, refs) => Array.from({ length: refs }, (_, i) => `<a href="#fn-ref-${n}-${i + 1}" aria-label="Back to reference ${n}${refs > 1 ? '.' + (i + 1) : ''}" data-astro-cid-x><span>Back ${i + 1}</span></a>`).join('');
+  const back = (n, refs) => Array.from({ length: refs }, (_, i) => `<a href="#fn-ref-${n}-${i + 1}" aria-label="Back${refs > 1 ? ' ' + (i + 1) : ''} to text, note ${n}" data-astro-cid-x><span>Back ${i + 1}</span></a>`).join('');
   const note = (n, fact, key, refs) => `<li class="sources__note" id="fn-${n}" tabindex="-1" data-fact="${fact}" data-astro-cid-x><p class="sources__claim" data-astro-cid-x>claim ${fact}</p><p class="sources__caveat" data-caveat="${key}" data-astro-cid-x>caveat ${key}</p><p class="sources__back" data-astro-cid-x>${back(n, refs)}</p></li>`;
   const page = (body, notesHtml) => `<main>${body}<section class="sources" id="sources"><ol class="sources__list" data-astro-cid-x>${notesHtml}</ol></section></main>`;
   // A is registered first (an early frontmatter, say) but met second; B is met first and twice

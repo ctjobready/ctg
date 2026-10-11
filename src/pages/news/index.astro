@@ -48,13 +48,13 @@ const jsonLd = [
         </div>
         <div class="card__body feat__body">
           <p class="card__meta feat__meta">
-            <Badge tone="eyebrow">Latest</Badge>
-            <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>
+            <Badge tone="eyebrow">Latest</Badge>{' '}
+            <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>{' '}
             <Badge tone="brand">{TOPICS[latest.data.topic]}</Badge>
           </p>
           <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
           <p class="card__text">{latest.data.excerpt}</p>
-          <span class="card__more" aria-hidden="true">Read more<Icon name="arrow-right" size={16} /></span>
+          <span class="card__more" aria-hidden="true">Read more<span class="sr-only">: {latest.data.title}</span><Icon name="arrow-right" size={16} /></span>
         </div>
       </article>
     </NewsGrid>

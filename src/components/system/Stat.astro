@@ -27,22 +27,21 @@ const widthCh = value.length;
   <p class="stat__value">
     {
       fig ? (
-        <>
-          <span
-            class="stat__num"
-            aria-hidden="true"
-            data-countup
-            data-value={fig.num}
-            data-prefix={fig.prefix}
-            data-suffix={fig.suffix}
-            data-decimals={fig.decimals}
-            data-grouped={fig.grouped}
-            style={`min-width:${widthCh}ch`}
-          >
-            {value}
-          </span>
-          <span class="sr-only">{value}</span>
-        </>
+        // One copy of the value in the DOM: text exports and assistive technology read it once, and it is the final value from the first
+        // paint. While counting, countup.ts shows the running number through a decorative ::after (data-anim) over this text.
+        <span
+          class="stat__num"
+          data-countup
+          data-final={value}
+          data-value={fig.num}
+          data-prefix={fig.prefix}
+          data-suffix={fig.suffix}
+          data-decimals={fig.decimals}
+          data-grouped={fig.grouped}
+          style={`min-width:${widthCh}ch`}
+        >
+          {value}
+        </span>
       ) : (
         <span class="stat__num" style={`min-width:${widthCh}ch`}>{value}</span>
       )
@@ -86,9 +85,23 @@ const widthCh = value.length;
     line-height: 1.15;
   }
   .stat__num {
+    position: relative;
     display: inline-block;
     text-align: inherit;
     white-space: nowrap;
+  }
+  /* Count-up (countup.ts): the real text stays in the DOM, transparent; the running number is generated content with an empty alt text,
+     so it is not read out as a second copy. */
+  .stat__num.is-counting {
+    color: transparent;
+  }
+  .stat__num.is-counting::after {
+    content: attr(data-anim);
+    content: attr(data-anim) / '';
+    position: absolute;
+    inset: 0;
+    text-align: inherit;
+    color: var(--stat-color);
   }
   .stat--start .stat__num {
     text-align: left;

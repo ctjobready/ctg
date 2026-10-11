@@ -13,5 +13,5 @@ const { steps, heading = 'How it works in three steps', id = 'how-it-works' } = 
 
 <SubBand pull id={id} aria-labelledby={`${id}-h`}>
   <h3 class="t-heading-xl" id={`${id}-h`}>{heading}</h3>
-  <StepFlow steps={[...steps]} />
+  <StepFlow level={4} steps={[...steps]} />
 </SubBand>

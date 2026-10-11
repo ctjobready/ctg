@@ -27,7 +27,7 @@ const { title = 'Choose where to start.', lead, id = 'offer' } = Astro.props;
         <li class="card offer__card" data-reveal>
           <div class="card__body">
             <p class="eyebrow">Option {i + 1}</p>
-            <h3 class="card__title">{o.name}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design option</Badge>}</h3>
+            <h3 class="card__title">{o.name}{o.name === 'National' && ' '}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design option</Badge>}</h3>
             <p class="offer__size">{o.size}</p>
             <p class="card__meta offer__duration">{o.duration}</p>
             <p class="card__text">{o.note}</p>
