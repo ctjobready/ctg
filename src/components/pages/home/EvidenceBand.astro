@@ -45,7 +45,7 @@ const trial = chart === 'trial';
 // where the page asks for it) ahead of the RC-01 headline, which is body text.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
-const employmentLine = headlineFact === 'RC-01' && !plainLine && statIds.includes('RC-02') ? `${fact('RC-02').text}.` : undefined;
+const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
 
 const stats = statIds.map((sid) => {
   const f = fact(sid);

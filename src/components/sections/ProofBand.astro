@@ -31,12 +31,11 @@ interface Props {
   eyebrow?: string;
 }
 const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Self-Reported Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
-// A band headed by the randomized trial carries a short H2; the fact's own headline (RC-01, a long sentence that leads with the income estimate)
-// is body text below it. When the band also shows RC-02, the +10.3 pp employment statement comes first (the [PLAIN-LINE] where the page asks
-// for it, else RC-02's own sentence), so the employment result is read before the income estimate.
+// A band headed by the randomized trial carries a short H2; the fact's own headline is body text below it. RC-01's headline leads with the
+// +10.3 pp employment result (WP7), so no separate RC-02 sentence is printed before it; the [PLAIN-LINE] still follows where a page asks for it.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
-const employmentLine = headlineFact === 'RC-01' && !plainLine && statIds.includes('RC-02') ? `${fact('RC-02').text}.` : undefined;
+const employmentLine: string | undefined = undefined;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
 const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
