@@ -48,7 +48,7 @@ const stats = statIds.map((sid) => {
   // "n = 47 completers (34 earning)" → "34 of 47 surveyed completers"
   const m = f.base?.match(/n = (\d+) completers \((\d+) earning\)/);
   const label = m ? `${f.stat.label} — ${m[2]} of ${m[1]} surveyed completers` : f.stat.label;
-  return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label };
+  return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label, detail: f.stat.detail };
 });
 
 // Survey chart: OC-01's before → after. Trial chart: RC-02's control group and women offered a place (a comparison of two groups at follow-up).
@@ -82,7 +82,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
       {
         stats.map((s, i) => (
           <div class="eb__stat" data-fact={s.id}>
-            <Stat value={s.value} label={s.label} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
+            <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
               <FootnoteMarker id={s.id} footnote="auto" />
             </Stat>
           </div>

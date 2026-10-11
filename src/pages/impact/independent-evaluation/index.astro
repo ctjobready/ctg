@@ -21,7 +21,7 @@ import { linkAttrs } from '../../../lib/url';
 const path = '/impact/independent-evaluation/';
 // H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
 const h1 = 'A randomized trial of CodersTrust’s training for women in Dhaka';
-const description = desc('A randomized trial by BIGD found CodersTrust’s WSDFM training raised women’s income by 41% for those offered a place and 54% for those who attended.');
+const description = desc('A BIGD randomized trial: women offered a place in CodersTrust’s WSDFM training were 10.3 points likelier to be employed and earned about $27 more a month.');
 const faqIds = ['Q4', 'Q3'];
 
 // RC-08 chart values must match the register text.
@@ -95,7 +95,8 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p class="ie__tbl">Figures from the BIGD report (May 2022): Table 4 for employment, income and hours worked, and Table 5 for freelancing.</p>
+    <p class="ie__tbl">Figures from the BIGD report (May 2022): Table 4 for employment, income and hours worked, and Table 5 for freelancing. The +41% is CodersTrust’s calculation from Table 4 (+BDT 2,354 on a control mean of BDT 5,715); the report prints the absolute amounts.</p>
+    <p data-fact="RC-12"><Fact id="RC-12" /> The study page is BIGD’s summary of the trial and the report gives the coefficients behind it, so the two sets of figures differ; this page uses the report’s.</p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -157,7 +158,6 @@ const d = discoveryCta();
   <ReportSection id="context" title="Context: how this compares">
     <p data-fact="RC-06"><strong>Context (external):</strong> <Fact id="RC-06" /></p>
     <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /> This is a design rationale, not a claim about the effect of mentoring.</p>
-    <p data-fact="RC-12"><Fact id="RC-12" /></p>
   </ReportSection>
 
   <ReportSection id="limits" title="Limitations">

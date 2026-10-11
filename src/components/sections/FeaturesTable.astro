@@ -31,8 +31,10 @@ interface Props {
   lead?: string;
   rows: Row[];
   id?: string;
+  /** Heading of the pain column ("Funder concern addressed" on funder pages). */
+  concernLabel?: string;
 }
-const { title, lead, rows, id = 'features' } = Astro.props;
+const { title, lead, rows, id = 'features', concernLabel = 'Concern addressed' } = Astro.props;
 const showPain = rows.some((r) => r.relieves);
 const painNumber = (painId: string) => painId.replace(/^P/, '');
 ---
@@ -47,7 +49,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
           <th scope="col">Feature</th>
           <th scope="col">Which means…</th>
           <th scope="col">Outcome</th>
-          {showPain && <th scope="col">Relieves</th>}
+          {showPain && <th scope="col">{concernLabel}</th>}
         </tr>
       </thead>
       <tbody>
@@ -56,16 +58,16 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
             <tr data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
               <th scope="row">{r.feature}</th>
               <td data-label="Which means…">{r.means}</td>
-              <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? '—'}</td>
+              <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? 'See the feature'}</td>
               {showPain && (
-                <td data-label="Relieves">
+                <td data-label={concernLabel}>
                   {r.relieves ? (
                     <span class="ft__pain">
                       {r.painId ? <span class="ft__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
                       <span>{r.painId && <span class="sr-only">Pain {painNumber(r.painId)}: </span>}{r.relieves}</span>
                     </span>
                   ) : (
-                    '—'
+                    <span class="ft__added">Added benefit</span>
                   )}
                 </td>
               )}
@@ -129,6 +131,10 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     color: var(--success);
     margin-top: 4px;
     flex: none;
+  }
+  .ft__added {
+    color: var(--on-surface-variant);
+    font-style: italic;
   }
   /* the pain's number: the same circle as the ranked list in the C2 band */
   .ft__n {

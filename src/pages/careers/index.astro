@@ -19,7 +19,7 @@ import falgun from '../../assets/images/pages/about/careers-team-falgun-celebrat
 import picnic from '../../assets/images/pages/about/careers-team-picnic.jpg';
 
 const apply = cta('careers');
-const description = 'Join CodersTrust and help move educated, unemployed young people into paid digital work. How we work, how to apply, and a speculative application route.';
+const description = 'Join CodersTrust and help prepare educated, unemployed young people for paid digital work. How we work, how to apply, and a speculative application route.';
 const jsonLd = [webPage({ path: '/careers/', name: 'Careers at CodersTrust', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers/' }] })];
 const expect = [
   { icon: 'users', title: 'Inclusive and flexible', text: 'A workplace that is active, flexible, diverse and inclusive, socially responsible and open to new thinking.' },
@@ -29,7 +29,7 @@ const expect = [
 ---
 
 <BaseLayout title="Careers" description={description} breadcrumbs={[{ label: 'Careers' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Careers" title="Work with us at CodersTrust" lead="Help move educated, unemployed young people into paid digital work. We are building a team that finds practical answers and delivers." artSeed="careers">
+  <Hero eyebrow="Careers" title="Work with us at CodersTrust" lead="Help prepare educated, unemployed young people for paid digital work. We are building a team that finds practical answers and delivers." artSeed="careers">
     <Fragment slot="actions">
       <Button href={apply.href} icon="mail">{apply.label}</Button>
       <Button variant="outline" href="#roles">Open roles</Button>

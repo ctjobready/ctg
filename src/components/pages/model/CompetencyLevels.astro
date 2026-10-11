@@ -28,11 +28,13 @@ const { class: className } = Astro.props;
     <li class="lv__item" data-reveal>
       <p class="eyebrow">Level 2</p>
       <h3 class="lv__title">Proficient</h3>
+      <p class="lv__planned">Planned: the content of this level is not yet published.</p>
     </li>
     <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
     <li class="lv__item" data-reveal>
       <p class="eyebrow">Level 3</p>
       <h3 class="lv__title">Expert</h3>
+      <p class="lv__planned">Planned: the content of this level is not yet published.</p>
     </li>
   </ol>
   <CertNote />
@@ -71,6 +73,10 @@ const { class: className } = Astro.props;
     font-size: var(--fs-heading-m);
     line-height: var(--lh-heading-m);
     color: var(--ctx-heading);
+  }
+  .lv__planned {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
   }
   .lv__bullets {
     margin: 0;

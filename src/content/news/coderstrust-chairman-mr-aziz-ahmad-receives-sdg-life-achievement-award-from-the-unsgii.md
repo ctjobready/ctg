@@ -1,17 +1,17 @@
 ---
-title: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII"
+title: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Lifetime Achievement Award from the UNGSII Foundation"
 date: 2025-01-22
 updated: 2025-01-27
 topic: recognition
-excerpt: "Aziz Ahmad accepts the Lifetime SDG Achievement Award from the UNGSII during Davos WEF Week 2025."
+excerpt: "Aziz Ahmad accepts the SDG Lifetime Achievement Award from the UNGSII Foundation during Davos WEF Week 2025."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-2.jpg
 coverAlt: "Six award recipients and guests standing in front of an SDG Achievers banner, some holding awards"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/"
 tags: []
-seoTitle: "Aziz Ahmad Receives SDG Life Achievement Award"
+seoTitle: "Aziz Ahmad: SDG Lifetime Achievement Award"
 ---
 
-Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust had the honor to accept the Lifetime SDG Achievement Award from the UNGSII during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development in driving progress across all 17 Sustainable Development Goals.
+Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust had the honor to accept the SDG Lifetime Achievement Award from the UNGSII Foundation during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development in driving progress across all 17 Sustainable Development Goals.
 
 ![Two photographs of award recipients and guests in front of an SDG Achievers banner](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award.png)
 
@@ -25,6 +25,6 @@ The award, described as both a milestone and a call to action, symbolizes the on
 
 The honor serves as an inspiration for CodersTrust and its global community to continue advancing its mission of empowering individuals through education and technology, working towards a future where sustainable development is a reality for all.
 
-![Guests posing together in front of a banner at the SDG Life Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-1.jpg)
+![Guests posing together in front of a banner at the SDG Lifetime Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-1.jpg)
 
-![A woman in a yellow suit and men in business dress posing together at the SDG Life Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-3.jpg)
+![A woman in a yellow suit and men in business dress posing together at the SDG Lifetime Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-3.jpg)

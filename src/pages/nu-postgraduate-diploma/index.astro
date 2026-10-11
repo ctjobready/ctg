@@ -35,7 +35,7 @@ import { pageUrl, webPage } from '../../lib/schema';
 
 const path = NU_PATH;
 const title = 'NU Postgraduate Diploma';
-const description = 'Build practical digital skills alongside your degree with the National University postgraduate diploma, delivered by CodersTrust.';
+const description = 'Build practical digital skills after your degree with the National University postgraduate diploma, delivered by CodersTrust.';
 const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const courses = await nuCourses();
@@ -133,9 +133,9 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="The evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-01']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="The evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-01']} chartTitle="Employment among surveyed completers of CodersTrust’s wider programs, not of this diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
-      <CopyP block={SURVEY_EMPLOYMENT} />
+      <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s wider programs, not from this diploma:" />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
     </div>
   </ProofBand>

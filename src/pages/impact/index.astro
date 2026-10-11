@@ -13,12 +13,12 @@ import Sources from '../../components/facts/Sources.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
-import { articleNode, desc, title, val, reportCta } from '../../components/pages/impact/page-utils';
+import { articleNode, desc, title, reportCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import { SURVEY_EMPLOYMENT, RCT_HEADLINE } from '../../data/copy';
 
 const path = '/impact/';
-const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey. A randomized trial by BIGD found income gains.`);
+const description = desc('A randomized trial found women offered a CodersTrust place 10.3 points more likely to be employed. Survey results are self-reported by completers.');
 const jsonLd = [articleNode({ path, headline: 'Impact and evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const sdgs = [
   { n: 4, label: 'Quality education', core: true },
@@ -46,8 +46,8 @@ const rc = reportCta();
   <Section pad="sm" aria-label="Summary">
     <div class="ih__bluf">
       <Callout tone="bluf" label="In short">
-        <CopyText block={SURVEY_EMPLOYMENT} />
         <CopyText block={RCT_HEADLINE} />
+        <CopyText block={SURVEY_EMPLOYMENT} />
       </Callout>
     </div>
   </Section>

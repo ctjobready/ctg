@@ -123,7 +123,7 @@ const featureRows = [
       title="Imagine the next 12 months."
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
-        { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'A young woman outside Dhaka invoices her first foreign client from her own laptop.' },
+        { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'For example: a young woman outside Dhaka invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First earnings, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
         { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready talent, including completers prepared for an industry certification exam, without a long search.' },
       ]}
@@ -155,14 +155,14 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Four programs, with their partners." items={caseStudyItems} />
+    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Three programs, with their partners." items={caseStudyItems} />
     <CaseQuote />
   </Tone>
 
   <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
 
   <Tone cmf="C8" tone="airy" join>
-    <FeaturesTable id="features" title="What you get — and what it means for your outcomes" rows={featureRows} />
+    <FeaturesTable id="features" title="What you get — and what it means for your outcomes" rows={featureRows} concernLabel="Funder concern addressed" />
     <FeatureSteps />
   </Tone>
 

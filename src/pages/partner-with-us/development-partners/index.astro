@@ -49,7 +49,7 @@ const primary = cta('discovery');
 
 const { title, description } = meta(
   'Youth Employment Implementing Partner',
-  `CodersTrust moves educated, unemployed youth into paid work. A randomized trial by BIGD found women’s income up ${factPart('RC-01', /income by (\d+%)/)} for those offered a place.`,
+  'A randomized trial by BIGD found women offered a CodersTrust place 10.3 points more likely to be employed. We train youth for paid digital work.',
 );
 
 const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
@@ -96,7 +96,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C3 · Agitation: cost of waiting -->
   <div class="pp-two">
     <CostBand
-      title="Every cohort that trains but does not place spends the budget for a fraction of the result."
+      title="Every cohort that trains but does not lead to work spends the budget for a fraction of the result."
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
@@ -130,7 +130,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <MechanismBand
     title="How YouthWIDE works"
     positioning={POSITIONING.developmentPartners}
-    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country, with Bangladesh as the evidence-rich reference implementation."
+    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country. It is designed for deployment in other countries; current outcome evidence comes from Bangladesh and Kosovo."
     blocks={[
       { label: 'Who we reach', title: 'Priority groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
       { label: 'How we reach them', title: 'Existing labs and colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
@@ -179,6 +179,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C8 · Features to benefits -->
   <FeaturesTable
     title="What you get, and what it means for your outcomes"
+    concernLabel="Funder concern addressed"
     rows={[
       {
         feature: `${HOURS} training hours per certification, three months of milestone-based mentoring, placement support`,

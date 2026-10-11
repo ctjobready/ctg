@@ -23,15 +23,15 @@ export type Audience =
 
 /** C1 value propositions — one sentence, at most 15 words (CMF). */
 export const VALUE_PROPOSITION: Record<Audience, string> = {
-  home: 'We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training.',
-  developmentPartners: 'We help development partners move educated, unemployed youth into paid work through mentored, certification-focused training.',
-  governments: 'We help governments move educated, unemployed youth into paid digital work through mentored, certification-focused training.',
-  foundations: 'We help funders turn grants into paid digital work for youth through mentored, certification-focused training.',
-  universities: 'We help universities and colleges move students into paid work through mentored, certification-focused training.',
+  home: 'We help partners prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
+  developmentPartners: 'We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.',
+  governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
+  foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
+  universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through mentored, certification-focused training.',
-  investors: 'We help investors back the platform moving emerging-market youth into paid work through mentored, certification-focused training.',
-  localPartners: 'We help local organizations move young people into paid digital work through mentored, certification-focused training.',
-  nuPgd: 'We help degree holders move into digital work through a National University postgraduate diploma.',
+  investors: 'We help investors back the platform preparing emerging-market youth for paid work through certification-focused training.',
+  localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
+  nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
 };
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
@@ -44,7 +44,7 @@ export const HEADLINE: Record<Audience, string> = {
   employers: 'Upskill your teams for AI — and hire job-ready digital talent.',
   investors: 'Invest in the infrastructure of emerging-market work.',
   localPartners: 'Deliver digital-skills programs that lead to paid work — in your community.',
-  nuPgd: 'Build the digital skills employers are hiring for — alongside your degree.',
+  nuPgd: 'Build the digital skills employers are hiring for — after your degree.',
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
@@ -66,7 +66,7 @@ export const ORIGIN: CopyBlock = {
 };
 
 export const RCT_HEADLINE: CopyBlock = {
-  text: 'A randomized trial by BIGD found CodersTrust’s WSDFM training raised women’s income by 41% for everyone offered a place — and by 54% for women who attended.',
+  text: fact('RC-01').headline ?? fact('RC-01').text,
   facts: ['RC-01'],
 };
 
@@ -95,7 +95,7 @@ export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationw
 
 /** The approved [UNLIKE] + [WE] wording (doc 04 §1), word for word. */
 const UNLIKE_APPROVED =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we take responsibility for the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
@@ -271,13 +271,13 @@ export const SPEED_UNIVERSITIES: CopyBlock = {
 };
 
 export const SURVEY_EMPLOYMENT: CopyBlock = {
-  text: 'Among surveyed completers with paired employment answers, employment rose from 47.4% before training to 77.9% at the October 2026 survey.',
+  text: 'Among completers with paired employment answers, employment rose from 47.4% before training to 77.9% (self-reported by surveyed completers, October 2026).',
   facts: ['OC-01'],
 };
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, as a parenthetical closing the sentence, round 12 N1).
-  text: `Two women-focused programs placed 68–71% of the women who completed them (WSDFM 71%; Women in Online Work, Kosovo, 68%); the Her Power cohort placed 47% (${PROGRAM_DATA_LABEL}).`,
+  text: `Three women-focused programs: 47–71% of completers in work (WSDFM 71%; Women in Online Work, Kosovo, 68%; Her Power 47%; ${PROGRAM_DATA_LABEL}).`,
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
@@ -361,7 +361,7 @@ export const DEFINITION_HEADING = 'What is CodersTrust?';
 
 export const HOME_META = {
   title: 'CodersTrust — From Learning to Earning for Youth',
-  description: 'CodersTrust trains and mentors unemployed youth for paid digital work. Surveyed completers: employment rose from 47.4% to 77.9% (October 2026 survey).',
+  description: 'A randomized trial found women offered a CodersTrust place 10.3 points more likely to be employed. We train and mentor youth for paid digital work.',
 };
 
 /** Investors page market section (no market-size figures on public pages, D2). */

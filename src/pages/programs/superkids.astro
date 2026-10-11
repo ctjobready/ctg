@@ -19,6 +19,7 @@ import { futurePhotos, galleryPhotos } from '../../data/photos';
 import PhotoGallery from '../../components/ui/PhotoGallery.astro';
 import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
+import FactStat from '../../components/facts/FactStat.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
@@ -38,7 +39,7 @@ import { linkAttrs } from '../../lib/url';
 const path = '/programs/superkids/';
 const LAST_UPDATED = PAGE_UPDATED.superkids;
 const title = 'SuperKids: STEAM, Coding and Robotics';
-const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. Public-sector agreements set targets, not delivered reach.';
+const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. 400+ learners since 2021; agreements with DoICT and NCTB set further targets.';
 const inquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
@@ -97,7 +98,7 @@ const courses = linkAttrs(COURSES_URL);
     showPartners={false}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These are agreements and targets, not delivered reach.</p>
+    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These agreements set targets for reach; they are not delivered reach.</p>
     <p data-fact="PA-03">Private-sector partners include Robi.</p>
   </GuideSection>
 
@@ -115,8 +116,9 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
-    <SectionHeader id="agreements-h" eyebrow="What is in place" title="Agreements and targets, not delivered reach" />
+    <SectionHeader id="agreements-h" eyebrow="What is in place" title="What has been delivered, and what is only agreed" />
     <div class="agree">
+      <div class="agree__delivered" data-reveal><FactStat id="SK-05" /></div>
       <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>
       <div class="agree__cards">
         <article class="card" data-reveal>
@@ -212,6 +214,9 @@ const courses = linkAttrs(COURSES_URL);
     color: var(--on-surface);
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
+  }
+  .agree__delivered {
+    max-width: 52rem;
   }
   .agree__cards {
     display: grid;

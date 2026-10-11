@@ -2,6 +2,7 @@
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import CopyBlock from '../home/CopyBlock.astro';
+import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
 import { SURVEY_EMPLOYMENT } from '../../../data/copy';
 
@@ -15,6 +16,7 @@ const badges = ['PA-06', 'PA-08'];
 
 <div class="ipx">
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
+  <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
   <div class="ipx__row">
     <div class="ipx__stat" data-reveal><FactStat id="SC-13" tone="accent" footnote={true} /></div>
     <ul class="ipx__badges" role="list">
@@ -45,6 +47,12 @@ const badges = ['PA-06', 'PA-08'];
     font-size: var(--fs-body-l);
     line-height: var(--lh-body-l);
     color: var(--ctx-heading);
+    max-width: 52rem;
+  }
+  .ipx__onboard {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--ctx-text);
     max-width: 52rem;
   }
   .ipx__row {

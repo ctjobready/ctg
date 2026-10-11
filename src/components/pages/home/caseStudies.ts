@@ -1,4 +1,4 @@
-// The four case-study cards used by Home and Investors (STRONG-IT / PR-04 is withheld: no card, no link).
+// The three case-study cards used by Home and Investors (STRONG-IT / PR-04 is withheld: no card, no link; UNDP YES, whose placement base is not stated, stays in its own case study and the Impact hub).
 // Card photographs are from the previous site (WP2): each is tagged with its D13 asset id, so the permissions gate sees it.
 import type { ImageMetadata } from 'astro';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
@@ -21,6 +21,5 @@ export function casePhoto(slug: string): CardPhoto | undefined {
 export const caseStudyItems = [
   { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-  { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', partner: 'Denominator not stated', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
   { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
 ];

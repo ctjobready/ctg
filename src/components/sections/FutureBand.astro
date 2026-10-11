@@ -24,6 +24,8 @@ interface Props {
   photos?: Photo[];
 }
 const { title, lead, vignettes, id = 'future', photos = [] } = Astro.props;
+// The framework labels (functional / emotional / social) are internal: only a vignette with its own category label ("Block coding") shows one.
+const FRAMEWORK_LABELS = new Set(['Functional', 'Emotional', 'Social']);
 const media = vignettes.map((v, i) => {
   const p = photos[i];
   if (v.image) return { src: v.image, alt: v.imageAlt ?? '', assetId: undefined as string | undefined };
@@ -41,7 +43,7 @@ const media = vignettes.map((v, i) => {
             {media[i] ? <Img src={media[i]!.src} alt={media[i]!.alt} width={720} height={480} widths={[360, 720]} sizes="(min-width:1024px) 380px, 90vw" assetId={media[i]!.assetId} /> : <HeroArt seed={v.title} shape="card" />}
           </div>
           <div class="card__body">
-            <p class="eyebrow">{v.kind}</p>
+            {!FRAMEWORK_LABELS.has(v.kind) && <p class="eyebrow">{v.kind}</p>}
             <h3 class="card__title">{v.title}</h3>
             <p class="card__text">{v.text}</p>
           </div>

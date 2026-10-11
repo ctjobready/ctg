@@ -23,7 +23,7 @@ import { webPage } from '../../lib/schema';
 
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
 const since = fact('ID-02').stat?.value;
-const description = `CodersTrust turns educated, unemployed youth in emerging markets into job-ready digital professionals. Founded in ${since}, with offices in New York and Dhaka.`;
+const description = `CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work. Founded in ${since}, with offices in New York and Dhaka.`;
 
 const principles = [
   {

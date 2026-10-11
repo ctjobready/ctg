@@ -36,12 +36,12 @@ const CARDS = [
   { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with us', line: 'Co-design a youth-employment program with CodersTrust.' },
   { file: 'investors', prefix: '/investors/', label: 'Investors', line: 'Invest in the infrastructure of emerging-market work.' },
   { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Choose the program that fits you.' },
-  { file: 'nu-postgraduate-diploma', prefix: '/nu-postgraduate-diploma/', label: 'NU Postgraduate Diploma', line: 'Build the digital skills employers are hiring for — alongside your degree.' },
+  { file: 'nu-postgraduate-diploma', prefix: '/nu-postgraduate-diploma/', label: 'NU Postgraduate Diploma', line: 'Build the digital skills employers are hiring for — after your degree.' },
   { file: 'our-model', prefix: '/our-model/', label: 'Our model', line: 'How the CodersTrust model works' },
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'What CodersTrust results show, what kind of evidence each one is, and what it does not show.' },
-  { file: 'about', prefix: '/about/', label: 'About', line: 'CodersTrust turns educated, unemployed youth in emerging markets into job-ready digital professionals.' },
+  { file: 'about', prefix: '/about/', label: 'About', line: 'CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' },
   { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MoUs, recognition, program events and leadership' },
-  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'Help move educated, unemployed young people into paid digital work.' },
+  { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'Help prepare educated, unemployed young people for paid digital work.' },
   { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you.' },
 ];
 

@@ -51,7 +51,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations & CSR',
-  `Fund a supported path from learning to earning. A randomized trial by BIGD found women’s income up ${factPart('RC-01', /income by (\d+%)/)} for those offered a place.`,
+  `Fund a supported path from learning to earning. A BIGD randomized trial: women offered a place earned about ${factPart('RC-04', /\+(\$\d+) a month/)} more a month.`,
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
@@ -137,8 +137,8 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
       positioning={POSITIONING.foundations}
       lead="Fund the platform, the cohorts, or both."
       blocks={[
-        { label: 'Funding vehicle 1', title: 'JobReady platform grant', text: 'A grant toward platform infrastructure. JobReady is being built as an AI-native platform, and its modules are rolling out in stages.', icon: 'layers' },
-        { label: 'Funding vehicle 2', title: 'YouthWIDE cohorts', text: 'Co-fundable country programs in South Asia, MENA and Sub-Saharan Africa, with Bangladesh as the evidence-rich reference implementation.', icon: 'globe' },
+        { label: 'Funding vehicle 1', title: 'JobReady platform grant', text: 'A grant toward platform infrastructure. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
+        { label: 'Funding vehicle 2', title: 'YouthWIDE cohorts', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
       ]}
       link={{ label: 'About the JobReady platform', href: LINKS.platform }}
     />
@@ -180,6 +180,7 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   <!-- C8 · Features to benefits -->
   <FeaturesTable
     title="What you get, and what it means for your grant"
+    concernLabel="Funder concern addressed"
     rows={[
       {
         feature: `Mentoring, placement support and outcome tracking for ${TRACKING_MONTHS} months, in the standard inclusions`,

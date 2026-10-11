@@ -337,7 +337,7 @@ const POSITION_PAGES = [
 // SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we take responsibility for the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 /** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence. */
 function positionProblems(markup, { unlike = true } = {}) {
   const band = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*)/.exec(markup);
@@ -619,7 +619,7 @@ const isRegistered = (t) => {
     }
   };
   for (const f of Object.values(facts)) {
-    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.footnote, f.base, f.claim, f.caveatText]) add(s, f.id);
+    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.stat?.detail, f.footnote, f.base, f.claim, f.caveatText]) add(s, f.id);
   }
   for (const [cls, text] of Object.entries(CAVEATS)) add(text, `caveat ${cls}`);
   for (const s of Object.values(sources)) {

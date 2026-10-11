@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust is committed to the vision of a Smart Bangladesh within 2041: Aziz Ahmad"
+title: "CodersTrust is committed to the vision of a Smart Bangladesh by 2041: Aziz Ahmad"
 date: 2023-11-04
 updated: 2023-11-22
 topic: leadership-advocacy
@@ -24,7 +24,7 @@ CodersTrust is actively engaged in providing training to the Bangladeshi populat
 
 Mr. Ahmad underlined the significance of developing IT skill sets in the competitive job market of the global economy and highlighted the necessity of upskilling Bangladeshi youth in the context of the Fourth Industrial Revolution. In today’s fast-evolving technological landscape, STEM students must continually reskill themselves, and CodersTrust plays a significant role there, he pointed out.
 
-“CodersTrust is committed to the vision of a Smart Bangladesh within 2041, championed by the honorable Prime Minister Sheikh Hasina,” he said.
+“CodersTrust is committed to the vision of a Smart Bangladesh by 2041, championed by the honorable Prime Minister Sheikh Hasina,” he said.
 
 Technology and entrepreneurship are pivotal aspects of the Prime Minister’s master plan for Smart Bangladesh, and CodersTrust’s years of experience in these domains make it a relevant and trusted partner, Mr. Ahmad added.
 

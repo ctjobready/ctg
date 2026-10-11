@@ -24,7 +24,7 @@ In this Digital Factory, every skilled young person becomes a creator of value. 
 
 ![Two men on a stage in front of an SDG Achievers banner, one holding a microphone](../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory-3.jpg)
 
-For decades, developing countries exported (unskilled) labour. We believe the future belongs to nations that export knowledge, expertise, innovation, and digital services. Bangladesh has every ingredient needed to become a global leader in the digital economy if we invest in the right skills and empower our youth.
+For decades, developing countries exported (unskilled) labor. We believe the future belongs to nations that export knowledge, expertise, innovation, and digital services. Bangladesh has every ingredient needed to become a global leader in the digital economy if we invest in the right skills and empower our youth.
 
 As CodersTrust Co-Founder and Global Chairman Aziz Ahmad often says:
 

@@ -15,7 +15,7 @@ seoTitle: "Training Partner for the BASIS-ASSET Project"
 
 On February 5, 2026, CodersTrust officially became a training partner under the BASIS-ASSET project. This strategic partnership marks a major step forward in our mission to equip the youth of Bangladesh with world-class IT skills.
 
-The CEO of CodersTrust, Md. Shamsul Haq, signed the agreement on behalf of CodersTrust. The signing ceremony was graced by the Administrator of BASIS, Mr. Abul Khair Mohammad Hafizullah Khan, Joint Secretary, Local Government Division, who signed on behalf of BASIS.
+The CEO of CodersTrust, Md. Shamsul Haque, signed the agreement on behalf of CodersTrust. The signing ceremony was graced by the Administrator of BASIS, Mr. Abul Khair Mohammad Hafizullah Khan, Joint Secretary, Local Government Division, who signed on behalf of BASIS.
 
 ![Four men seated at a table under the banner of the BASIS-ASSET Skills Training Provider contract signing ceremony](../../assets/images/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/basis-asset-2.jpg)
 
