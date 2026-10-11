@@ -34,7 +34,7 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
   <Hero variant={variant} eyebrow={eyebrow} title={title} lead={lead} artSeed={artSeed} headingLevel={headingLevel}>
     {
       audienceLinks.length > 0 && (
-        <nav class="herolinks" aria-label="Choose your audience" data-reveal>
+        <nav class="herolinks" aria-label="Choose your audience" data-hero-in>
           <ul>
             {audienceLinks.map((l) => (
               <li><a class="link" href={linkAttrs(l.href).href}>{l.label}</a></li>

@@ -31,16 +31,16 @@ const landscape = Astro.slots.has('media') ? mediaShape === 'landscape' : Boolea
 <section class:list={['hero', variant === 'home' && 'hero--home', !hasMedia && 'hero--text', landscape && hasMedia && 'hero--landscape', className]}>
   <div class="hero__inner container">
     <div class="hero__copy">
-      {eyebrow && <p class="hero__eyebrow" data-reveal>{eyebrow}</p>}
-      <Title class:list={['hero__title', variant === 'home' ? 't-display-5xl' : 't-display-4xl']} data-reveal>{title}</Title>
-      {lead && <p class="hero__lead" data-reveal>{lead}</p>}
+      {eyebrow && <p class="hero__eyebrow" data-hero-in>{eyebrow}</p>}
+      <Title class:list={['hero__title', variant === 'home' ? 't-display-5xl' : 't-display-4xl']} data-hero-in>{title}</Title>
+      {lead && <p class="hero__lead" data-hero-in>{lead}</p>}
       <slot />
-      {Astro.slots.has('actions') && <div class="hero__actions" data-reveal><slot name="actions" /></div>}
-      {Astro.slots.has('stats') && <div class="hero__stats" data-reveal><slot name="stats" /></div>}
+      {Astro.slots.has('actions') && <div class="hero__actions" data-hero-in><slot name="actions" /></div>}
+      {Astro.slots.has('stats') && <div class="hero__stats" data-hero-in><slot name="stats" /></div>}
     </div>
     {
       hasMedia && (
-        <div class:list={['hero__media', photo && 'hero__media--photo']} data-reveal>
+        <div class:list={['hero__media', photo && 'hero__media--photo']} data-hero-in>
           {
             Astro.slots.has('media') ? (
               <slot name="media" />

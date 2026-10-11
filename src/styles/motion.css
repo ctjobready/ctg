@@ -87,3 +87,18 @@
     transform: none !important;
   }
 }
+
+/* Hero entrance (above the fold): CSS-only, never waits for JavaScript and never hides content.
+   Copy rises 10px into place, staggered; opacity stays 1 so the hero paints immediately (LCP). */
+@keyframes ct-hero-rise {
+  from { transform: translateY(10px); }
+  to { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-in] {
+    animation: ct-hero-rise 600ms var(--ease-emphasized) both;
+  }
+  [data-hero-in]:nth-child(2) { animation-delay: 60ms; }
+  [data-hero-in]:nth-child(3) { animation-delay: 120ms; }
+  [data-hero-in]:nth-child(4) { animation-delay: 180ms; }
+}
