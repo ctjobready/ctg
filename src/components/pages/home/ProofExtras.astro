@@ -7,7 +7,7 @@ import { WOMEN_INCLUSION } from '../../../data/copy';
 
 /**
  * Extras that sit inside the Klein evidence band (C7) on Home:
- * the women-and-inclusion line, the HolonIQ badge and the "As covered in" press row (PA-09).
+ * the women-and-inclusion line, the HolonIQ badge and the "Press Coverage" row (PA-09).
  * The press logos are dark artwork, so the row sits on a white panel.
  */
 interface Props {
@@ -33,7 +33,7 @@ const { press = true, women = true, badge = true } = Astro.props;
   {
     press && (
       <div class="px__press" data-fact="PA-09">
-        <PartnerStrip kind="press" variant="grid" caption="As covered in, 2014–2016" />
+        <PartnerStrip kind="press" variant="grid" caption="Press Coverage, 2014–2016" />
       </div>
     )
   }

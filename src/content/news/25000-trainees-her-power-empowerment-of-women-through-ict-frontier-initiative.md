@@ -21,4 +21,4 @@ The objective of this project is to establish a framework and ecosystem that wil
 
 ## SCOPE
 
-CodersTrust will develop course curriculum, training manuals and mentorship guidelines for all the necessary competency areas required for the whole project and will conduct Training of Trainers (ToT) and women.
+CodersTrust will develop course curriculum, training manuals and mentorship guidelines for all the necessary competency areas required for the whole project and will conduct Training of Trainers (ToT) and train women.

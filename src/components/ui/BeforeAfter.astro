@@ -30,11 +30,13 @@ interface Props {
   mode?: 'change' | 'comparison';
   /** Draw the delta chip on the chart (default true). The difference stays in the description and the data table either way. */
   chip?: boolean;
+  /** Label of the difference row in the chart description and data table; defaults to "Change" (or "Difference" in comparison mode). */
+  diffLabel?: string;
   class?: string;
 }
-const { title, before, after, delta, unit = '%', note, mode = 'change', chip = true, class: className } = Astro.props;
+const { title, before, after, delta, unit = '%', note, mode = 'change', chip = true, diffLabel, class: className } = Astro.props;
 const comparison = mode === 'comparison';
-const diffWord = comparison ? 'Difference' : 'Change';
+const diffWord = diffLabel ?? (comparison ? 'Difference' : 'Change');
 
 const W = 480;
 const H = 320;

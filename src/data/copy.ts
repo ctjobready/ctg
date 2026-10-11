@@ -306,7 +306,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 /** "How it works in three steps" (C8d) for funded programs. */
 export const STEPS = [
   { title: 'Discover and co-design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
-  { title: 'Train and mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring: profile live, first bids, first client, exam.' },
+  { title: 'Train and mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring toward each track’s work-entry goal (for freelance tracks: profile live, first bids, first client, exam).' },
   { title: 'Place and report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];

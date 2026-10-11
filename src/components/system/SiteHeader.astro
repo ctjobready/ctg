@@ -42,7 +42,7 @@ const util = linkAttrs(utilityLink.href);
                       return (
                         <li>
                           <a class="mega__link" href={a.href} aria-current={isActive(it.href) && currentPath === it.href ? 'page' : undefined}>
-                            <span class="mega__title">{it.label}</span>
+                            <span class="mega__title">{it.label}</span>{' '}
                             {it.description && <span class="mega__desc">{it.description}</span>}
                           </a>
                         </li>

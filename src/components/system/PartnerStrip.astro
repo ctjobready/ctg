@@ -30,11 +30,11 @@ interface Item {
   fit?: LogoFit;
 }
 interface Props {
-  /** partners (default) or press outlets ("As covered in"). */
+  /** partners (default) or press outlets ("Press Coverage, 2014–2016"). */
   kind?: 'partners' | 'press';
   /** Filter partners by group. */
   group?: PartnerGroup | PartnerGroup[];
-  /** Caption above the strip; defaults to the PA-04 caption (partners) or "As covered in" (press). */
+  /** Caption above the strip; defaults to the PA-04 caption (partners) or "Press Coverage, 2014–2016" (press). */
   caption?: string | false;
   /**
    * Accessible name of the strip's landmark. Names must be unique on a page: by default the caption, extended with the

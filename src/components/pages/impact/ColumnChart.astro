@@ -12,9 +12,11 @@ interface Props {
   max?: number;
   unit?: string;
   valueHeader?: string;
+  /** Text that names the emphasized (darker) columns, for screen readers and the data table, so color is not the only cue. */
+  emphasisNote?: string;
   class?: string;
 }
-const { title, items, note, max: maxProp, unit = '%', valueHeader = 'Share', class: className } = Astro.props;
+const { title, items, note, max: maxProp, unit = '%', valueHeader = 'Share', emphasisNote, class: className } = Astro.props;
 const max = maxProp ?? Math.min(100, Math.ceil(Math.max(...items.map((i) => i.value)) / 10) * 10);
 const hasN = items.some((i) => i.n !== undefined);
 const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
@@ -30,7 +32,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
             <span class="colc__val">{fmt(it.value)}</span>
             <span class="colc__bar" aria-hidden="true"></span>
           </span>
-          <span class="colc__label">{it.label}</span>
+          <span class="colc__label">{it.label}{it.emphasis && emphasisNote && <span class="sr-only"> ({emphasisNote})</span>}</span>
         </li>
       ))
     }
@@ -45,7 +47,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
           <tr><th scope="col">Category</th><th scope="col">{valueHeader}</th>{hasN && <th scope="col">Respondents (n)</th>}</tr>
         </thead>
         <tbody>
-          {items.map((it) => <tr><th scope="row">{it.label}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
+          {items.map((it) => <tr><th scope="row">{it.label}{it.emphasis && emphasisNote ? ` (${emphasisNote})` : ''}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
         </tbody>
       </table>
     </section>

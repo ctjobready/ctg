@@ -61,9 +61,9 @@ const landmarkAttrs = landmark ? { 'aria-labelledby': `${id}-h` } : { role: 'non
               {Array.from({ length: n.refs }, (_, k) => (
                 <>
                   {k > 0 && ' '}
-                  <a href={`#fn-ref-${n.n}-${k + 1}`} aria-label={`Back${n.refs > 1 ? ` ${k + 1}` : ''} to text, note ${n.n}`}>
+                  <a href={`#fn-ref-${n.n}-${k + 1}`} aria-label={`Back to text, note ${n.n}${n.refs > 1 ? `, reference ${k + 1}` : ''}`}>
                     <Icon name="corner-up-left" size={14} />
-                    <span>Back{n.refs > 1 ? ` ${k + 1}` : ''}</span>
+                    <span>Back to text{n.refs > 1 ? `, reference ${k + 1}` : ''}</span>
                   </a>
                 </>
               ))}

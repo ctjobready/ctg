@@ -29,7 +29,7 @@ The speakers emphasized their concern about the spread of hate speech and privac
 
 In the wake of severe underemployment, and unemployment across the Globe, Ahmad founded CodersTrust to provide relevant skill sets among youth so that they can earn a living from the global market from anywhere they live, he informed the seminar.
 
-The seminar lauded Ahmad for the incredible work of his organization, CodersTrust. Ahmad shared his experience as a Lead Architect of AT&T once for its 21st Century Network and said some of those technologies still remain while some are now gone. His discussion touched on important points such as the fact that 45 percent of today’s workforces needs to be re-skilled and up-skilled to stay relevant.
+The seminar lauded Ahmad for the incredible work of his organization, CodersTrust. Ahmad shared his experience as a Lead Architect of AT&T once for its 21st Century Network and said some of those technologies still remain while some are now gone. His discussion touched on important points such as the fact that 45 percent of today’s workforce needs to be re-skilled and up-skilled to stay relevant.
 
 Discussion also centered around how artificial intelligence and automation are diversifying quickly. Billions of people still do not have the access to these technologies, and they are not generating any data, which creates the need to develop innovative approaches to embracing “digital good” and avoiding “digital bad.”
 

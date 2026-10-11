@@ -25,8 +25,10 @@ interface Props {
   trialScope?: string;
   links?: { label: string; href: string }[];
   id?: string;
+  /** Small label above the heading; defaults to "The evidence". */
+  eyebrow?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
 const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
@@ -39,7 +41,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
   <!-- Own header (not SectionHeader) so the RCT headline can carry its footnote marker (RC-01). -->
   <header class="proofband__head" data-reveal data-fact={headlineFact}>
-    <p class="eyebrow">The evidence</p>
+    <p class="eyebrow">{eyebrow}</p>
     <h2 class="proofband__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
     {plainLine && <PlainLine />}
     {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
@@ -55,6 +57,7 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
         before={{ label: 'Before', value: before, caption: 'before training' }}
         after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
         delta={delta}
+        diffLabel="Difference (descriptive, not causal)"
         unit={unit}
         tone="dark"
       />
