@@ -56,7 +56,7 @@ export const FIELD_NEWS_LABEL: Record<string, string> = {
 
 export const FIELD_NEWS_PHOTOS: FieldNewsPhoto[] = [
   { slug: "1000-trainees-enhancing-digital-government-economy-edge", file: "edge-signing.jpg", alt: "CodersTrust staff and university representatives standing together, holding a signed agreement, in front of a bookcase" },
-  { slug: "1000-trainees-enhancing-digital-government-economy-edge", file: "image-1.jpg", alt: "CodersTrust signing contract with Center for Project Management and Information Systems (PMIS) University of Dhaka in collaboration with Bangladesh Computer Council (BCC) under ICT and Telecommunication Ministry, Bangladesh" },
+  { slug: "1000-trainees-enhancing-digital-government-economy-edge", file: "image-1.jpg", alt: "CodersTrust signing a contract with the PMIS center at the University of Dhaka and the Bangladesh Computer Council" },
   { slug: "1000-trainees-sheikh-kamal-ict-incubator-training", file: "image-2.jpg", alt: "Officials signing an agreement at a table with a group standing behind them" },
   { slug: "25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative", file: "signing-with-her-power-project.jpg", alt: "Two people signing an agreement at a table, with CodersTrust and partner staff standing behind them" },
   { slug: "a-proud-milestone-for-coderstrust", file: "great-american-treasure-hunt-2.jpg", alt: "A man taking a selfie with a large audience seated in a hall behind him" },

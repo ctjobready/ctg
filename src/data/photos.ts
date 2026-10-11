@@ -79,8 +79,8 @@ const ALT: Record<string, string> = {
   'superkids/hall-seated-2': 'Children sitting on colorful mats in a classroom, some resting their chins on their hands as they listen',
   'superkids/mat-activity': 'Children kneeling and sitting on colorful floor mats working with printed activity sheets',
   'superkids/plaques-group': 'CodersTrust staff and guests standing together with children holding plaques, in front of a SuperKids and Miniso event backdrop',
-  'field/ccny-mou-signing': 'Two men signing at a table at the MoU signing ceremony between the City College of New York and CT USA (CodersTrust), with three people applauding behind them under the ceremony banner',
-  'field/team-award-presentation': 'A man in a white polo shaking hands with a young man in a black CT t-shirt and handing him a trophy, with CodersTrust team members in white CT polos behind them',
+  'field/ccny-mou-signing': 'Two men signing at a table at the City College of New York and CT USA (CodersTrust) MoU ceremony, with three people applauding behind them',
+  'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
   'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
 };
 
