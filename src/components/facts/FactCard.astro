@@ -1,5 +1,5 @@
 ---
-import { CERT_FACT_IDS, fact, sources } from '../../data/facts';
+import { CERT_FACT_IDS, fact } from '../../data/facts';
 import CertNote from '../ui/CertNote.astro';
 
 /** Stat + label + source line (problem/context facts). The number comes from the register. */
@@ -11,7 +11,6 @@ interface Props {
 }
 const { id, showText, class: className } = Astro.props;
 const f = fact(id);
-const src = f.sourceIds.map((s) => sources[s]?.label).filter(Boolean);
 const useText = showText ?? !f.stat;
 ---
 
@@ -21,7 +20,6 @@ const useText = showText ?? !f.stat;
     <p class:list={['factcard__label', useText && 'factcard__label--text']}>
       {useText ? f.text : f.stat?.label}    </p>
     {useText && CERT_FACT_IDS.includes(id) && <CertNote />}
-    {src.length > 0 && <p class="card__meta factcard__src">Source: {src.slice(0, 2).join('; ')}</p>}
   </div>
 </article>
 
@@ -44,9 +42,5 @@ const useText = showText ?? !f.stat;
   /* The stat label (not the full-sentence variant) wraps in even lines. */
   .factcard__label:not(.factcard__label--text) {
     text-wrap: balance;
-  }
-  .factcard__src {
-    margin-top: auto !important;
-    padding-top: var(--space-sm);
   }
 </style>

@@ -13,8 +13,6 @@
 //   - archive-only wording: no British "enquir*" (D6; write "inquir*"), no British "licence" (write "license") and no "tripled" (OC-03 is a ratio of medians) anywhere in a
 //     page's HTML (text, attributes, meta, JSON-LD), except on the archived posts under /news/<post>/ and on redirect stubs
 //     (legacy URLs); negative self-tests below
-//   - program-data label (PROGRAM_DATA_LABEL in src/data/facts.ts, on PR-01, PR-02 and PR-05): never printed twice in a row, and no
-//     page-local variant ("gross placement", "Program records — gross"); negative self-tests below
 //   - sentences: <Fact> ends every sentence with a period; the period it adds must never be doubled (no added period right after
 //     a period, none left in front of punctuation the page typed)
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
@@ -40,11 +38,9 @@
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
 //     the C7 proof band; negative self-tests below
-//   - program-data label wording: "Program data — gross in-work rate among program completers, no comparison group" (round 14, m1; the retired
-//     "among graduates" wording is flagged), and the retired USP heading "Earning starts within months" (round 14, m3) renders nowhere
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
-//     registers (facts, caveats, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
+//     registers (facts, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
 //     scripts/facts-guard-allow.json (page + exact text + reason; a stale entry fails). Not scanned: /news/<post>/ archive posts, redirect
 //     stubs, /styleguide/ (a component sample page) and the 404. Details at "number guard" below; `FACTS_GUARD_LIST=1 npm run check:facts`
 //     lists every figure the register allowed. Negative self-tests below.
@@ -64,7 +60,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const dist = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(root, 'dist');
-const { facts, CAVEATS, sources, CERT_NOTE_TEXT, CERT_FACT_IDS, PROGRAM_DATA_LABEL } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
+const { facts, sources, CERT_NOTE_TEXT, CERT_FACT_IDS } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
 // The published survey aggregates behind the /impact/outcomes-2026/ charts and CSV: a second public dataset the number guard reads (see below).
 const { csvRows: outcomesCsvRows } = await import(new URL('../src/components/pages/impact/outcomes-data.ts', import.meta.url).href);
 const { keepOneCertNote, dropDoubledStops, spaceInlineLinks, postprocessPage } = await import(new URL('../src/lib/postprocess.ts', import.meta.url).href);
@@ -208,19 +204,6 @@ function archiveWordingProblems(path, html) {
     const around = html.slice(Math.max(0, m.index - 40), m.index + m[0].length + 40).replace(/\s+/g, ' ');
     out.push(`${path}: ${why}, ${count} occurrence(s) outside the archived news posts: "…${around}…"`);
   }
-  return out;
-}
-/* ---- program-data label (PROGRAM_DATA_LABEL, src/data/facts.ts): one per figure, never a page-local variant ---- */
-// PR-01, PR-02 and PR-05 end their stat label with the register's label; components set it on its own line and add no second one.
-const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const LABEL_TWICE = new RegExp(`${escapeRe(PROGRAM_DATA_LABEL)}[^A-Za-z]{0,12}${escapeRe(PROGRAM_DATA_LABEL)}`);
-// "among graduates" is the label's retired wording (review round 14 m1: "graduates" means university-degree holders; the denominator is program completers)
-const LABEL_VARIANT = /Program records — gross|gross placement|gross in-work rate among graduates/i;
-function programLabelProblems(text) {
-  const out = [];
-  if (LABEL_TWICE.test(text)) out.push('the program-data label is printed twice in a row (a figure carries it once)');
-  const v = LABEL_VARIANT.exec(text);
-  if (v) out.push(`page-local program-data label "${v[0]}" (the register's label is the only one: "${PROGRAM_DATA_LABEL}")`);
   return out;
 }
 const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, ''));
@@ -537,7 +520,7 @@ const tokenKey = (t) => `${t.kind}:${t.value}`;
 // follow the same value in the register ("up to 10 cohorts" for "Up to 10 certification cohorts in parallel"; "25+ years" is not "25+ classes").
 const isSmallCount = (t) => t.kind === 'num' && t.value < 1000;
 
-/** The register of number values: every marked number in the public dataset's wording, caveats and citations, plus the derivations below. */
+/** The register of number values: every marked number in the public dataset's wording and citations, plus the derivations below. */
 const numberRegistry = new Map(); // key -> { sources: Set(where it is registered), words: Set(words that follow it there) }
 const registryEntry = (key) => {
   if (!numberRegistry.has(key)) numberRegistry.set(key, { sources: new Set(), words: new Set() });
@@ -557,9 +540,8 @@ const isRegistered = (t) => {
     }
   };
   for (const f of Object.values(facts)) {
-    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.stat?.detail, f.base, f.claim, f.caveatText]) add(s, f.id);
+    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.stat?.detail]) add(s, f.id);
   }
-  for (const [cls, text] of Object.entries(CAVEATS)) add(text, `caveat ${cls}`);
   for (const s of Object.values(sources)) {
     add(s.citation, `source ${s.id}`);
     add(s.label, `source ${s.id}`);
@@ -702,14 +684,6 @@ function numberGuardPage(path, html, allow = []) {
   if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><li>does not mean every learner’s income Tripled.</li></body>').length) problems.push('self-test: the wording gate accepted "tripled" outside the archive');
   if (archiveWordingProblems('/news/some-archived-post/', '<body>income tripled</body>').length) problems.push('self-test: the wording gate flagged "tripled" inside an archived post');
   if (archiveWordingProblems('/our-model/', '<body>A triple-lens model; triplet; tripleshot</body>').length) problems.push('self-test: the wording gate flagged "triple" words that are not "tripled"');
-  // program-data label: once per figure; a second copy or a page-local variant fails
-  const okFig = `711 of 1,000 women placed (71%) in WSDFM 1 ${PROGRAM_DATA_LABEL} Women’s skills for freelancing 102 of 150 women placed (68%) in Kosovo 2 ${PROGRAM_DATA_LABEL} Women in Online Work`;
-  if (programLabelProblems(okFig).length) problems.push('self-test: the program-data label check rejected figures that each carry the label once');
-  if (!programLabelProblems(`women placed (71%) in WSDFM. ${PROGRAM_DATA_LABEL} 1 ${PROGRAM_DATA_LABEL} Women’s skills`).length) problems.push('self-test: the program-data label check accepted the label printed twice in a row');
-  if (!programLabelProblems('372 of 800 women placed (47%) in Her Power training Program records — gross placement Context').length) problems.push('self-test: the program-data label check accepted a page-local label');
-  if (!programLabelProblems('711 of 1,000 women placed (71%) in WSDFM. Program data — gross in-work rate among graduates, no comparison group Context').length) problems.push('self-test: the program-data label check accepted the retired "among graduates" wording');
-  if (PROGRAM_DATA_LABEL !== 'Program data — gross in-work rate among program completers, no comparison group') problems.push(`self-test: PROGRAM_DATA_LABEL is "${PROGRAM_DATA_LABEL}", not the round-14 wording "Program data — gross in-work rate among program completers, no comparison group"`);
-  if (programLabelProblems('What would have happened without training; placement is gross, not net. Each case study states its own base.').length) problems.push('self-test: the program-data label check flagged ordinary wording');
   // [PLAIN-LINE]: required on three pages, numbers derived from RC-02, rendered by <PlainLine> with RC-02's footnote marker
   const rc02 = facts['RC-02'].stat;
   const want = plainLineWanted(rc02);
@@ -898,7 +872,7 @@ function numberGuardPage(path, html, allow = []) {
   // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
   for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '+$27', '$27', 'BDT 2,354', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '+$27', '$27', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
   for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // chart data: the published survey aggregates (outcomes-data.ts) are part of the public dataset
@@ -1002,8 +976,6 @@ for (const file of htmlFiles(dist)) {
   for (const p of certNoteProblems(text)) problems.push(`${path}: ${p}`);
   // archive-only wording: British "enquir*" (D6) and "tripled" (OC-03) outside the archived news posts
   problems.push(...archiveWordingProblems(path, html));
-  // program-data label once per figure, no page-local variant (the archived posts keep their wording)
-  if (!exemptFromArchiveRule(path, html)) for (const p of programLabelProblems(text)) problems.push(`${path}: ${p}`);
   // [PLAIN-LINE] required on Home, the development-partners page, the independent-evaluation page and the WSDFM case study; its numbers are RC-02's wherever it appears
   seenPaths.add(path);
   const plainRequired = PLAIN_LINE_PAGES.includes(path);

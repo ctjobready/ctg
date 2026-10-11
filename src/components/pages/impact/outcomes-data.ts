@@ -206,8 +206,8 @@ interface Headline {
   base?: number;
 }
 const HEADLINES: Headline[] = [
-  { id: 'OC-01', measure: 'Net gain in employment, among surveyed completers with paired employment answers', category: 'October 2026 survey vs before training', type: 'percentage_points', value: 30.5, fact: 'OC-01', base: EMPLOYMENT_BASE },
-  { id: 'OC-03', measure: 'Change in median monthly income (ratio of medians 3.00)', category: 'October 2026 survey vs before training', type: 'percent_change', value: 200, fact: 'OC-03' },
+  { id: 'OC-01', measure: 'Net gain in employment, among surveyed completers', category: 'October 2026 survey vs before training', type: 'percentage_points', value: 30.5, fact: 'OC-01', base: EMPLOYMENT_BASE },
+  { id: 'OC-03', measure: 'Change in median monthly income', category: 'October 2026 survey vs before training', type: 'percent_change', value: 200, fact: 'OC-03' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate instructors good or better', type: 'percent', value: 92.7, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate their overall experience good or better', type: 'percent', value: 86.9, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Recommendation score of 7 or more out of 10', type: 'percent', value: 71.6, fact: 'OC-06' },
@@ -300,19 +300,19 @@ function recs(): Rec[] {
     const note = statedBase === undefined ? NOT_STATED : base === undefined ? SHOWN_ON_PAGE(statedBase) : undefined;
     return { id, measure, category, type: 'percent', value: value.toFixed(1), base, note };
   };
-  const emp = 'Employed, among surveyed completers with paired employment answers';
+  const emp = 'Employed, among surveyed completers';
   out.push(pctRec('OC-01', emp, 'Before training', EMPLOYED.before, EMPLOYMENT_BASE));
   out.push(pctRec('OC-01', emp, 'At the October 2026 survey', EMPLOYED.after, EMPLOYMENT_BASE));
   out.push(pctRec('OC-01', 'Employed before training who reported no longer being employed', 'Share of those employed before training', EXIT.share));
   const none = 'Completers (2014–2023) with no income before training who were earning at the October 2026 survey';
   out.push(pctRec('OC-02', none, 'Earning', pct(NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
   out.push(pctRec('OC-02', none, 'Not earning', pct(NO_PRIOR.base - NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
-  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'Before training', type: 'median_usd', value: '82', base: INCOME_BASE });
-  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'At the October 2026 survey', type: 'median_usd', value: '245', base: INCOME_BASE });
-  for (const c of INCOME_DIRECTION) out.push(pctRec('OC-03b', 'Direction of paired monthly income change', c.label, c.pct, INCOME_BASE));
+  out.push({ id: 'OC-03', measure: 'Median monthly income (USD)', category: 'Before training', type: 'median_usd', value: '82', base: INCOME_BASE });
+  out.push({ id: 'OC-03', measure: 'Median monthly income (USD)', category: 'At the October 2026 survey', type: 'median_usd', value: '245', base: INCOME_BASE });
+  for (const c of INCOME_DIRECTION) out.push(pctRec('OC-03b', 'Direction of monthly income change', c.label, c.pct, INCOME_BASE));
   out.push({ id: 'OC-03c', measure: 'Median individual change in monthly income (USD)', category: 'Median change', type: 'median_usd', value: '82', base: INCOME_BASE });
   for (const t of EMPLOYMENT_TYPES) {
-    const m = 'Employment by type, among surveyed completers with paired employment answers';
+    const m = 'Employment by type, among surveyed completers';
     out.push(pctRec('OC-04', m, `${t.label}, before training`, t.before, EMPLOYMENT_BASE));
     out.push(pctRec('OC-04', m, `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE));
   }

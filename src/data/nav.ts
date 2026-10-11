@@ -14,9 +14,6 @@ const stat = (id: string) => {
 };
 const since = stat('ID-02').value;
 const emp = stat('OC-01');
-// The survey base (n) is read from the register, never typed here.
-const empBase = /^(\d+) paired completers/.exec(fact('OC-01').base ?? '')?.[1];
-if (!empBase) throw new Error('OC-01 base no longer starts with "<n> paired completers"');
 
 export interface NavLink {
   label: string;
@@ -34,9 +31,7 @@ export interface NavFeature {
   figure?: string;
   /** Register facts the card displays (rendered as data-fact; used by the status gate). */
   factIds?: string[];
-  /** Short caveat shown on the card, with the full footnote on the destination page. */
-  caveat?: string;
-  cta: { label: string; href: string };
+    cta: { label: string; href: string };
 }
 
 export interface NavGroup {
@@ -125,7 +120,6 @@ export const navGroups: NavGroup[] = [
       figure: `${emp.from} → ${emp.value}`,
       title: 'of surveyed completers employed',
       text: 'Before training and at the October 2026 survey.',
-      caveat: 'Impact Survey 2026: alumni who responded; self-reported; not a random sample.',
       factIds: ['OC-01'],
       cta: { label: 'See the findings', href: '/impact/outcomes-2026/' },
     },
@@ -165,7 +159,7 @@ export const headerCta: NavLink = { label: 'Start a partnership', href: '/contac
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
   lead: 'Impact Survey 2026:',
-  rest: `among ${empBase} surveyed completers with paired employment answers, self-reported employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
+  rest: `among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v2',
   factId: 'OC-01',

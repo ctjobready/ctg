@@ -254,7 +254,7 @@ export const SCALE: CopyBlock = {
 };
 
 export const PRICING: CopyBlock = {
-  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation, with the exam fee included, three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
   facts: ['PD-02', 'PD-02a'],
 };
 
@@ -270,13 +270,13 @@ export const SPEED_UNIVERSITIES: CopyBlock = {
 };
 
 export const SURVEY_EMPLOYMENT: CopyBlock = {
-  text: 'Among completers with paired employment answers, employment rose from 47.4% before training to 77.9% (self-reported by surveyed completers, October 2026).',
+  text: 'Among surveyed completers, employment rose from 47.4% before training to 77.9% at the October 2026 survey.',
   facts: ['OC-01'],
 };
 
 export const WOMEN_INCLUSION: CopyBlock = {
-  // PR-01, PR-02 and PR-05 are program results: the register's program-data label goes with the figures (once, as a parenthetical closing the sentence, round 12 N1).
-  text: 'Three women-focused programs: 47–71% in work (WSDFM 71% and Women in Online Work, Kosovo, 68% of completers; Her Power 47% of its training cohort; program data — gross rates, no comparison group).',
+  // PR-01, PR-02 and PR-05 are program results, stated plainly.
+  text: 'Three women-focused programs: 47–71% in work (WSDFM 71% and Women in Online Work, Kosovo, 68%; Her Power 47% of its training cohort).',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 

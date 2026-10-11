@@ -1,7 +1,6 @@
 ---
 import Img from '../../ui/Img.astro';
 import Icon from '../../system/Icon.astro';
-import { CAVEATS } from '../../../data/facts';
 import { mayRender } from '../../../lib/permissions';
 import type { ImageMetadata } from 'astro';
 
@@ -47,8 +46,7 @@ const imageAlt = props.imageAlt ?? '';
     {name && <p class="ls__name"><b>{name}</b><span>{program}</span></p>}
     {!name && <p class="ls__name"><span>{program}</span></p>}
     <p class="ls__caveat">
-      Individual story, not a typical or promised outcome{outlier && '; this one is an outlier'}.
-      {!factId && <span> {CAVEATS.I}</span>}
+      Individual story{outlier && '; an outlier'}.
     </p>
   </div>
 </article>

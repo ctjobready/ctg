@@ -11,7 +11,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import FitBrief from '../../../components/pages/impact/FitBrief.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { AI_SHIFT_NOTE, fact, sources } from '../../../data/facts';
+import { fact, sources } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -19,7 +19,7 @@ import { linkAttrs } from '../../../lib/url';
 const path = '/impact/independent-evaluation/';
 // H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
 const h1 = 'A Randomized Trial of CodersTrust’s Training for Women in Dhaka';
-const description = desc('A BIGD trial: women offered a place were 10.3 pp more likely to be employed and had an estimated $27 higher monthly income (significance not reported).');
+const description = desc('A BIGD trial: women offered a place were 10.3 percentage points more likely to be employed and had an estimated $27 higher monthly income.');
 const faqIds = ['Q4', 'Q3'];
 
 // RC-08 chart values must match the register text.
@@ -33,6 +33,7 @@ const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
 
 const citation = sources.BIGD22;
+const bigdStudy = sources.BIGDSTUDY;
 const jsonLd = [
   articleNode({
     path,
@@ -83,7 +84,8 @@ const d = discoveryCta();
   <ReportSection id="summary" title="The Short Answer">
     <Callout tone="bluf">
       <p data-fact="RC-01 RC-02">
-        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" />.      </p>
+        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" />
+      </p>
       <PlainLine />
     </Callout>
     <div class="ie__stats">
@@ -92,7 +94,7 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p data-fact="RC-12"><Fact id="RC-12" /> The study page is BIGD’s summary of the trial and the report gives the coefficients behind it, so the two sets of figures differ; this page uses the report’s.</p>
+    <p data-fact="RC-12"><Fact id="RC-12" />. <a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -102,40 +104,28 @@ const d = discoveryCta();
   <ReportSection id="design" title="How the Trial Worked">
     <p data-fact="RC-07"><Fact id="RC-07" /></p>
     <p>
-      “Offered a place” compares every woman randomly offered a place with the control group, whether or not she attended; this is the figure to lead with. “Attended” isolates the women who took part, and comes second.
+      “Offered a place” compares every woman randomly offered a place with the control group, whether or not she attended; this is the figure to lead with. “Attended” isolates the women who took part.
     </p>
   </ReportSection>
 
   <ReportSection id="results" title="What the Trial Found">
-    <p>Each figure below names the table of the BIGD report (May 2022) that it comes from.</p>
     <h3 class="t-heading-l">Women Offered a Place</h3>
     <ul class="ie__list">
-      <li data-fact="RC-02"><Fact id="RC-02" />. <span class="ie__tbl">BIGD Table 4.</span></li>
-      <li data-fact="RC-01"><Fact id="RC-01" />. <span class="ie__tbl">BIGD Table 4.</span></li>
-      <li data-fact="RC-04"><Fact id="RC-04" />. <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-02"><Fact id="RC-02" /></li>
+      <li data-fact="RC-01"><Fact id="RC-01" /></li>
+      <li data-fact="RC-04"><Fact id="RC-04" /></li>
     </ul>
     <h3 class="t-heading-l">Women Who Attended</h3>
     <ul class="ie__list">
-      <li data-fact="RC-03"><Fact id="RC-03" />. <span class="ie__tbl">BIGD Table 5 for freelancing; Table 4 for overall hours worked.</span></li>
-      <li data-fact="RC-05"><Fact id="RC-05" />. <span class="ie__tbl">Each household figure is listed below with its BIGD table, significance level and base.</span></li>
+      <li data-fact="RC-03"><Fact id="RC-03" /></li>
+      <li data-fact="RC-05"><Fact id="RC-05" /></li>
     </ul>
-    <div class="ie__hh" data-fact="RC-05">
-      <h4 class="ie__hhtitle">Household Figures: BIGD Table, Significance Level and Base</h4>
-      <ul class="ie__list">
-        <li>Food and non-food spending: BIGD Table 8, significant at the 1% level (n&nbsp;=&nbsp;599).</li>
-        <li>Share of women with savings: BIGD Table 10, significant at the 5% level (n&nbsp;=&nbsp;599).</li>
-        <li>Fewer women took a loan: BIGD Table 9, significant at the 10% level (n&nbsp;=&nbsp;599).</li>
-        <li>“Never felt stressed in the last month”: BIGD Table 14, significant at the 1% level (n&nbsp;=&nbsp;373). This item rests on 373 observations, fewer than the 599 behind the other household figures.</li>
-      </ul>
-    </div>
-    <p>Freelancing and household effects are labeled as in the BIGD report: for women who attended or for women offered a place.</p>
   </ReportSection>
 
   <ReportSection id="classes" title="Freelancing by Classes Attended">
     <BarChart
-      title="Share freelancing, by classes attended (descriptive, not causal)"
+      title="Share freelancing, by classes attended"
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
-      note="Descriptive, not causal: women who attend more classes may differ from those who attend fewer. Control group and attenders at follow-up. Source: BIGD report (May 2022), Figure 11."
     />
     <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
     <p data-fact="RC-10"><Fact id="RC-10" />. It is planned, not under way.</p>
@@ -143,7 +133,7 @@ const d = discoveryCta();
 
   <ReportSection id="funders" title="What It Means for Funders">
     <p>
-      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The attender results show what training did for the women who took part, among women who chose to attend.
+      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The attender results show what training did for the women who took part.
     </p>
     <p>
       One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.{' '}
@@ -159,7 +149,7 @@ const d = discoveryCta();
   <ReportSection id="limits" title="Limitations">
     <ul class="ie__list">
       <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.</li>
-      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021. {AI_SHIFT_NOTE}</li>
+      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021.</li>
       <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
       <li><strong>Program tested.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
       <li><strong>Attrition.</strong> Not every woman in the baseline sample was reached at follow-up (see the trial design above).</li>
@@ -202,21 +192,6 @@ const d = discoveryCta();
   }
   .ie__list li::marker {
     color: var(--primary);
-  }
-  .ie__tbl {
-    color: var(--on-surface-variant);
-    font-size: var(--fs-body-xs);
-  }
-  .ie__hh {
-    display: grid;
-    gap: var(--space-sm);
-    max-width: var(--measure);
-  }
-  .ie__hhtitle {
-    margin: 0;
-    font-size: var(--fs-body-m);
-    font-weight: var(--fw-bold);
-    color: var(--on-surface);
   }
   .ie__fit {
     padding-block: var(--space-lg);

@@ -2,7 +2,7 @@
 import Fact from '../../facts/Fact.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
-import { fact, splitProgramLabel } from '../../../data/facts';
+import { fact } from '../../../data/facts';
 
 /**
  * Evidence ladder: four kinds of evidence, strongest for cause first. Each rung says what it shows,
@@ -17,7 +17,7 @@ interface Props {
 }
 const { links = true, headingLevel = 3, class: className } = Astro.props;
 const H = `h${headingLevel}` as 'h3' | 'h4';
-const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
+const pr01Label = fact('PR-01').stat?.label ?? '';
 ---
 
 <div class:list={['ladder-box', className]}>
@@ -31,8 +31,6 @@ const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
       <dd>The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.</dd>
       <dt>What it does not show</dt>
       <dd>Results for other countries, groups or today’s standard track.</dd>
-      <dt>Method</dt>
-      <dd>Women offered a place come first (intent to treat); women who attended come second.</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -45,22 +43,18 @@ const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
       <dd>What alumni who responded report about work and income after training.</dd>
       <dt>What it does not show</dt>
       <dd>Cause: respondents are not a random sample and may over-represent successful learners.</dd>
-      <dt>Method</dt>
-      <dd>Online, self-reported, before-training status recalled; descriptive.</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Outcomes 2026<Icon name="arrow-right" size={16} /></a>}
   </li>
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">3</span>
     <H class="ladder__title">Program Results</H>
-    <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span>{pr01.text}</span>{pr01.evidence && <span class="ladder__evid">{pr01.evidence}</span>}</p>
+    <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span>{pr01Label}</span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
       <dd>How many completers of a program were in work, from CodersTrust program records.</dd>
       <dt>What it does not show</dt>
-      <dd>What would have happened without training; the in-work rate is gross, not net.</dd>
-      <dt>Method</dt>
-      <dd>Each case study states its own base.</dd>
+      <dd>What would have happened without training.</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case studies<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -73,8 +67,6 @@ const pr01 = splitProgramLabel(fact('PR-01').stat?.label ?? '');
       <dd>What the path can look like for one person.</dd>
       <dt>What it does not show</dt>
       <dd>A typical or promised outcome; some are outliers and say so.</dd>
-      <dt>Method</dt>
-      <dd>Reported by the learner; used with consent where a name appears.</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/stories/').href}>Success stories<Icon name="arrow-right" size={16} /></a>}
   </li>

@@ -24,7 +24,7 @@ interface Props {
   /**
    * Which chart the band carries. `survey` (default): the before/after employment of surveyed completers, from `chartId` (OC-01).
    * `trial`: the randomized trial's comparison, employment at follow-up for the control group beside women offered a place
-   * (RC-02; figures read from its footnote by RCT_COMPARISON). Home uses `trial` (review round 13, enhancement 2); the survey chart
+   * (RC-02; figures read from its text by RCT_COMPARISON). Home uses `trial` (review round 13, enhancement 2); the survey chart
    * stays on /impact/ and /impact/outcomes-2026/.
    */
   chart?: 'survey' | 'trial';
@@ -49,9 +49,7 @@ const employmentLine: string | undefined = undefined; // RC-01's headline now le
 const stats = statIds.map((sid) => {
   const f = fact(sid);
   if (!f.stat) throw new Error(`EvidenceBand: fact ${sid} has no stat`);
-  // "n = 47 completers (34 earning)" → "34 of 47 surveyed completers"
-  const m = f.base?.match(/n = (\d+) completers \((\d+) earning\)/);
-  const label = m ? `${f.stat.label} — ${m[2]} of ${m[1]} surveyed completers` : f.stat.label;
+  const label = f.stat.label;
   return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label, detail: f.stat.detail };
 });
 

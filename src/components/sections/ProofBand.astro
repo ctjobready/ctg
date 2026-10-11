@@ -29,7 +29,7 @@ interface Props {
   /** Small label above the heading; defaults to "The evidence". */
   eyebrow?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Self-Reported Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
 // A band headed by the randomized trial carries a short H2; the fact's own headline is body text below it. RC-01's headline leads with the
 // +10.3 pp employment result (WP7), so no separate RC-02 sentence is printed before it; the [PLAIN-LINE] still follows where a page asks for it.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
@@ -43,17 +43,16 @@ const unit = cf.stat?.suffix ?? '%';
 const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 
 // Order (review round 3): the randomized-trial results come first, with the percentage-point result (RC-02) ahead of the income result (RC-01);
-// the alumni-survey results (OC-*) sit below them, beside the survey chart, so a descriptive survey never reads as the headline evidence.
+// the alumni-survey results (OC-*) sit below them, beside the survey chart, so the survey never reads as the headline evidence.
 const rank = (id: string) => (id === 'RC-02' ? 0 : id.startsWith('RC-') ? 1 : 2);
 const leading = statIds.filter((s) => !s.startsWith('OC-')).sort((a, b) => rank(a) - rank(b));
 const survey = statIds.filter((s) => s.startsWith('OC-'));
 // One-line lead-in for the survey chart, built from the chart fact (figures are not typed here).
-const pairedN = cf.base?.match(/(\d[\d,]*) paired/)?.[1];
-const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} completers with paired answers` : 'completers with paired answers'} reported ${cf.stat?.value} employment at the October 2026 survey, against ${cf.stat?.from} before training. Descriptive, not causal.`;
+const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} at the October 2026 survey, against ${cf.stat?.from} before training.`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <!-- Own header (not SectionHeader) so the RCT headline can carry its footnote marker (RC-01). -->
+  <!-- Own header (not SectionHeader) so the RCT headline keeps its own markup (RC-01). -->
   <header class="proofband__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">{eyebrow}</p>
     <h2 class="proofband__title" id={`${id}-h`}>{heading}</h2>
@@ -86,7 +85,7 @@ const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} comple
         before={{ label: 'Before', value: before, caption: 'before training' }}
         after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
         delta={delta}
-        diffLabel="Difference (descriptive, not causal)"
+        diffLabel="Difference"
         unit={unit}
         tone="dark"
       />

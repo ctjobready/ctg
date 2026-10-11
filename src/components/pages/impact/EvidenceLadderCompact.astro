@@ -1,7 +1,6 @@
 ---
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
-import { PROGRAM_DATA_LABEL } from '../../../data/facts';
 
 /**
  * Compact evidence ladder (review round 9 enhancement 1): the four kinds of evidence from EvidenceLadder, one line each, strongest
@@ -18,9 +17,8 @@ const { id = 'ladder-compact', class: className } = Astro.props;
 
 const rungs = [
   { name: 'Randomized Trial (BIGD)', text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
-  { name: 'Impact Survey 2026', text: 'what surveyed completers report; descriptive, not causal', fact: 'OC-01' },
-  // the register's program-data label without its "Program data — " opening (the rung name already says program results)
-  { name: 'Program Results', text: PROGRAM_DATA_LABEL.replace(/^Program data — /, ''), fact: 'PR-01' },
+  { name: 'Impact Survey 2026', text: 'what surveyed completers report', fact: 'OC-01' },
+  { name: 'Program Results', text: 'in-work rates reported for each program', fact: 'PR-01' },
   { name: 'Learner Stories', text: 'individual journeys, not typical outcomes', fact: undefined },
 ];
 const readHref = linkAttrs('/impact/#evidence-ladder').href;

@@ -6,7 +6,6 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import { WOMEN_INCLUSION } from '../../../data/copy';
-import { PROGRAM_DATA_LABEL } from '../../../data/facts';
 import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
 const maria = await getEntry('stories', 'maria-dewan');
@@ -39,7 +38,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
   ]}
 >
   <Fragment slot="results">
-    <Callout tone="bluf" label={PROGRAM_DATA_LABEL}>
+    <Callout tone="bluf" label="Program results">
       <Fact id="PR-05" as="p" />
     </Callout>
     <div class="hp__scale" data-fact="GV-01">
