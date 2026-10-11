@@ -27,7 +27,7 @@
 //   - statistic tiles: every <Stat>/<FactStat> tile and <FactCard> stat tile carries its fact's footnote marker (doc 04 claims rule 15)
 //   - [PLAIN-LINE] (plan v1.10, v1.13): Home, /partner-with-us/development-partners/, /impact/independent-evaluation/ and the WSDFM case study
 //     (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it) must carry "For every 100
-//     women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)." rendered by
+//     women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
 //     <PlainLine> with RC-02's footnote marker; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
@@ -240,16 +240,16 @@ function programLabelProblems(text) {
 const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i, '').replace(/<!--[\s\S]*?-->/g, ''));
 
 /* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
-// "For every 100 women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points)."
+// "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)."
 // is built in src/data/copy.ts from RC-02's stat; it is required on Home, the development-partners page, the independent-evaluation page and the
 // WSDFM case study (its header leads with the randomized trial's plain-language line, the program result second),
 // and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
 // The expected sentence is derived here from the register on its own (not read from copy.ts), so a drift in either place fails the build.
 const PLAIN_LINE_PAGES = ['/', '/partner-with-us/development-partners/', '/impact/independent-evaluation/', '/impact/case-studies/wsdfm-women-freelancers/'];
-const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than in the control group \(([^)]*)\)\./;
+const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than among 100 comparable women in the control group \(([^)]*)\)\./;
 const plainLineWanted = (stat) => {
   const points = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)} percentage points`;
-  return { about: Math.round(stat.numeric), points, text: `For every 100 women offered a place, about ${Math.round(stat.numeric)} more were in work at follow-up than in the control group (${points}).` };
+  return { about: Math.round(stat.numeric), points, text: `For every 100 women offered a place, about ${Math.round(stat.numeric)} more were in work at follow-up than among 100 comparable women in the control group (${points}).` };
 };
 /** Problems with the plain-language line on one page: required = the page must carry it; the numbers are held on every page that has it. */
 function plainLineProblems(markup, text, stat, required) {
@@ -797,7 +797,7 @@ function numberGuardPage(path, html, allow = []) {
   const plainPage = (sentence, block = plainBlock(sentence)) => ({ markup: `<main><h2>x</h2>${block}</main>`, text: decode(`<main><h2>x</h2>${block}</main>`) });
   const plainOk = plainPage(want.text);
   if (plainLineProblems(plainOk.markup, plainOk.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check rejected the register-derived sentence: ${plainLineProblems(plainOk.markup, plainOk.text, rc02, true).join('; ')}`);
-  if (want.text !== 'For every 100 women offered a place, about 10 more were in work at follow-up than in the control group (+10.3 percentage points).') problems.push(`self-test: RC-02 no longer yields the plan's [PLAIN-LINE] sentence (derived: "${want.text}"); the plan wording needs a decision`);
+  if (want.text !== 'For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).') problems.push(`self-test: RC-02 no longer yields the plan's [PLAIN-LINE] sentence (derived: "${want.text}"); the plan wording needs a decision`);
   const plainBad = (why, sentence, ...rest) => {
     const pg = plainPage(sentence, ...rest);
     if (!plainLineProblems(pg.markup, pg.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check accepted ${why}`);
@@ -988,8 +988,9 @@ function numberGuardPage(path, html, allow = []) {
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
   const ppAfterMarker = guardRun('/our-model/', '<p>+10.3 pp<sup class="fn" data-fact="RC-02"><a href="#fn-3" id="fn-ref-3-1" aria-label="Note 3">3</a></sup> percentage points more employment</p>');
   if (ppAfterMarker.problems.length || ppAfterMarker.tokens !== 1) problems.push('self-test: the number guard read a footnote marker digit as part of the figure after it ("3 percentage points")');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '$5M+', '$5 million', '+$27', '$27', 'BDT 2,354', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
-  for (const fig of ['68–73%', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '+$27', '$27', 'BDT 2,354', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
+  for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // chart data: the published survey aggregates (outcomes-data.ts) are part of the public dataset
   guardPasses('a published survey share ("37.1%" Dhaka)', '/impact/outcomes-2026/', '<p>Dhaka 37.1%, Chattogram 8.2%</p>');
   guardFails('"37.2%" (not a published share)', '/impact/outcomes-2026/', '<p>Dhaka 37.2%</p>');

@@ -25,7 +25,7 @@ import type { ImageMetadata } from 'astro';
 // A program-results label (PR-01, PR-02, PR-05) ends with the register's program-data label, which is set on its own line below; only a
 // figure whose register label has none (PR-03) takes a label here, so no figure carries two.
 const ownEvidence: Record<string, string> = {
-  'undp-yes-korail': 'Program data — in-work rate, denominator not stated',
+  'undp-yes-korail': 'Program data — placement within 3 months among the 350 trained, no comparison group',
 };
 const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   const s = fact(c.factId).stat;

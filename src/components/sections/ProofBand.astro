@@ -8,6 +8,7 @@ import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 import { titleCase } from '../../lib/titleCase.mjs';
+import { TRIAL_BAND_HEADING } from '../../data/copy';
 
 /** C7 Proof (Klein band): FactStats + before→after chart derived from a fact + evidence links. */
 interface Props {
@@ -30,8 +31,12 @@ interface Props {
   eyebrow?: string;
 }
 const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Self-Reported Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
-// The fact's headline is also body text elsewhere (facts register wording is unchanged), so Title Case is applied here, for the heading only.
-const heading = titleCase(headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title);
+// A band headed by the randomized trial carries a short H2; the fact's own headline (RC-01, a long sentence that leads with the income estimate)
+// is body text below it. When the band also shows RC-02, the +10.3 pp employment statement comes first (the [PLAIN-LINE] where the page asks
+// for it, else RC-02's own sentence), so the employment result is read before the income estimate.
+const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
+const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+const employmentLine = headlineFact === 'RC-01' && !plainLine && statIds.includes('RC-02') ? `${fact('RC-02').text}.` : undefined;
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
 const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;
@@ -53,8 +58,10 @@ const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} comple
   <!-- Own header (not SectionHeader) so the RCT headline can carry its footnote marker (RC-01). -->
   <header class="proofband__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">{eyebrow}</p>
-    <h2 class="proofband__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
+    <h2 class="proofband__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
+    {employmentLine && <p class="lead proofband__employment" data-fact="RC-02">{employmentLine}<FootnoteMarker id="RC-02" footnote="auto" /></p>}
+    {headlineFact && headlineText && <p class="lead proofband__headline" data-fact={headlineFact}>{headlineText}<FootnoteMarker id={headlineFact} footnote="auto" /></p>}
     {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>

@@ -1,6 +1,5 @@
 ---
 import Icon from '../../system/Icon.astro';
-import FactStat from '../../facts/FactStat.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
@@ -8,9 +7,8 @@ import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
 
 /**
- * Extras inside the Klein traction band on Investors (C7): the survey sentence ([SURVEY], dated and qualified),
- * impact investment received (SC-13, historical traction only: no valuation, raise or terms), and the
- * AWS (PA-06) and HolonIQ (PA-08) badges. The HolonIQ years are to be confirmed, so none are printed.
+ * Extras inside the Klein traction band on Investors (C7): the survey sentence ([SURVEY], dated and qualified), the path to
+ * scale, and the AWS (PA-06) and HolonIQ (PA-08) badges. No investment, valuation or raise figure appears here or anywhere on the site.
  */
 const badges = ['PA-06', 'PA-08'];
 
@@ -25,13 +23,12 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
   <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}<FootnoteMarker id="GV-10" footnote="auto" />, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
   <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
   <div class="ipx__row">
-    <div class="ipx__stat" data-reveal><FactStat id="SC-13" tone="accent" footnote={true} /></div>
     <ul class="ipx__badges" role="list">
       {
         badges.map((id) => (
           <li data-fact={id}>
             <Icon name="award" size={20} />
-            <span>{fact(id).text}</span>
+            <span>{fact(id).text}<FootnoteMarker id={id} /></span>
           </li>
         ))
       }

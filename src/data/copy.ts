@@ -65,6 +65,9 @@ export const ORIGIN: CopyBlock = {
   facts: ['ID-02', 'PR-03a'],
 };
 
+/** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */
+export const TRIAL_BAND_HEADING = 'An Independent Randomized Trial';
+
 export const RCT_HEADLINE: CopyBlock = {
   text: fact('RC-01').headline ?? fact('RC-01').text,
   facts: ['RC-01'],
@@ -200,7 +203,7 @@ function plainLine(): CopyBlock {
   }
   const points = s.value.replace(/ pp$/, ' percentage points');
   return {
-    text: `For every 100 women offered a place, about ${Math.round(s.numeric)} more were in work at follow-up than in the control group (${points}).`,
+    text: `For every 100 women offered a place, about ${Math.round(s.numeric)} more were in work at follow-up than among 100 comparable women in the control group (${points}).`,
     facts: ['RC-02'],
   };
 }
@@ -282,7 +285,7 @@ export const WOMEN_INCLUSION: CopyBlock = {
 };
 
 export const GOVERNANCE: CopyBlock = {
-  text: 'CodersTrust lists offices in New York (CT USA, Inc.) and Dhaka (CodersTrust Bangladesh). The contracting entity, legal status and due-diligence documents are confirmed with funders during co-design.',
+  text: 'CodersTrust contracts through CT USA, Inc. in the United States and CodersTrust Bangladesh in Bangladesh; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.',
   facts: ['ID-07', 'PD-13'],
 };
 

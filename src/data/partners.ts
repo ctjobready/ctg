@@ -54,7 +54,7 @@ export const partners: Partner[] = [
   // Academic (PA-05)
   { id: 'national-university', name: 'National University, Bangladesh', group: 'academic', logo: 'national-university.png', bg: 'transparent', url: 'https://www.nu.ac.bd' },
   { id: 'upeace', name: 'University for Peace (UPEACE)', group: 'academic', logo: 'upeace.png', bg: 'transparent', url: 'https://www.upeace.org' },
-  // The City College of New York (CCNY) is not shown: its post says only that a partnership was explored.
+  { id: 'ccny', name: 'The City College of New York (CCNY), MoU partner since 2024', group: 'academic', logo: 'ccny.png', bg: 'white', url: 'https://www.ccny.cuny.edu' },
 ];
 
 // Media coverage since 2014 (PA-09). No BBC logo: no documented item.

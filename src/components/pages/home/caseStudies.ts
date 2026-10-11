@@ -1,4 +1,4 @@
-// The three case-study cards used by Home and Investors (STRONG-IT / PR-04 is withheld: no card, no link; UNDP YES, whose placement base is not stated, stays in its own case study and the Impact hub).
+// The three case-study cards used by Home and Investors (STRONG-IT / PR-04 is withheld: no card, no link; UNDP YES stays in its own case study and the Impact hub).
 // Card photographs are from the previous site (WP2): each is tagged with its D13 asset id, so the permissions gate sees it.
 import type { ImageMetadata } from 'astro';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
