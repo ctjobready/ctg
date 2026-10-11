@@ -21,6 +21,8 @@ export interface TableRow {
   targetGroup: string;
   skills: string;
   funderNote: string;
+  /** Fact whose footnote marker the table cell carries after the note (the location's `noteFactId`). */
+  noteFactId?: string;
 }
 
 export const tooltipFields = (l: ProgramLocation): TooltipFields => ({
@@ -39,6 +41,7 @@ export const tableRow = (l: ProgramLocation): TableRow => ({
   targetGroup: l.targetGroup,
   skills: l.skills,
   funderNote: [l.funder && `Funder: ${l.funder}`, l.note].filter(Boolean).join(' · ') || '—',
+  noteFactId: l.noteFactId,
 });
 
 /** Returns the list of tooltip details that the table row does not contain (empty = equivalent). */

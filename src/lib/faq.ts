@@ -13,8 +13,8 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 export function faqItems(audience: FaqAudience, ids?: string[], astro?: { locals: App.Locals }): { q: string; a: string }[] {
   let list = faqsFor(audience);
   if (ids) {
-    // An id outside the audience's own 9b list is still served from the full bank (`all`); an unknown id fails the build.
-    const bank = faqsFor('all');
+    // An id outside the audience's own 9b list is still served from the full bank (`all`) or from the page-specific variants (e.g. Q8-employer); an unknown id fails the build.
+    const bank = [...faqsFor('all'), ...faqsFor('variants')];
     list = ids.map((id) => {
       const f = list.find((x) => x.id === id) ?? bank.find((x) => x.id === id);
       if (!f) throw new Error(`faqItems: unknown FAQ id ${id}`);

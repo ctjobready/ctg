@@ -41,13 +41,13 @@ const PATH = '/partner-with-us/employers/';
 const primary = cta('work');
 const talent = cta('talent');
 
-const oc01 = fact('OC-01').stat!;
 const { title, description } = meta(
   'Corporate AI Training & Digital Talent',
-  `Upskill your teams for AI and hire job-ready digital talent. Among surveyed completers, employment rose from ${oc01.from} to ${oc01.value} (October 2026 survey).`,
+  'Upskill teams for AI and digital work, and hire job-ready digital talent through CodersTrust’s employer training and placement support.',
 );
 
-const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8', 'Q11'];
+// Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
+const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8-employer', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
 const steps = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
@@ -144,28 +144,6 @@ const steps = [
     </Callout>
   </SubBand>
 
-  <!-- C7 · Proof -->
-  <ProofBand
-    title="Independent Evidence and Survey Results"
-    headlineFact="RC-01"
-    trialScope={TRIAL_SCOPE.work.text}
-    statIds={['RC-02', 'RC-04']}
-    chartId="OC-01"
-    links={[
-      { label: 'The randomized trial', href: LINKS.trial },
-      { label: 'Outcomes 2026', href: LINKS.outcomes },
-    ]}
-  >
-    <EvidenceList
-      heading="What Surveyed Completers Report"
-      items={[
-        { facts: ['OC-01'], lead: 'From CodersTrust’s youth programs:', text: SURVEY_EMPLOYMENT.text },
-        { facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` },
-        { facts: ['PD-10'], text: 'Certification tracks are set from employer demand, per country.' },
-      ]}
-    />
-  </ProofBand>
-
   <!-- C8 · Features to benefits -->
   <FeaturesTable
     title="What You Get, and What It Means for Your Business"
@@ -214,6 +192,29 @@ const steps = [
       { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
     ]}
   />
+
+  <!-- C7 · Proof, moved below the employer offer (as on JobReady@Work); the youth-program evidence keeps its own label. -->
+  <ProofBand
+    title="Independent Evidence and Survey Results"
+    eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)"
+    headlineFact="RC-01"
+    trialScope={TRIAL_SCOPE.work.text}
+    statIds={['RC-02', 'RC-04']}
+    chartId="OC-01"
+    links={[
+      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'Outcomes 2026', href: LINKS.outcomes },
+    ]}
+  >
+    <EvidenceList
+      heading="What Surveyed Completers Report"
+      items={[
+        { facts: ['OC-01'], lead: 'From CodersTrust’s youth programs:', text: SURVEY_EMPLOYMENT.text },
+        { facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` },
+        { facts: ['PD-10'], text: 'Certification tracks are set from employer demand, per country.' },
+      ]}
+    />
+  </ProofBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand

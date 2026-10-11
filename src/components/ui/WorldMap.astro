@@ -2,6 +2,7 @@
 import { WORLD_LAND_PATH, WORLD_W, WORLD_H, LAT_TOP, LAT_SPAN } from '../../data/world-land';
 import { locations, OFFICES_LINE, type ProgramLocation } from '../../data/countries';
 import { assertMapEquivalence, tooltipFields, tableRow } from '../../lib/mapFields';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
  * WorldMap ➕ (M17) — inline SVG equirectangular map (Natural Earth 110m, public domain) with one pin
@@ -83,7 +84,7 @@ const pins = items.map((l) => {
             <td data-label="Years">{r.years}</td>
             <td data-label="Target group">{r.targetGroup}</td>
             <td data-label="Skills">{r.skills}</td>
-            <td data-label="Partner / note">{r.funderNote}</td>
+            <td data-label="Partner / note">{r.funderNote}{r.noteFactId && <FootnoteMarker id={r.noteFactId} footnote={true} />}</td>
           </tr>
         ))}
       </tbody>
