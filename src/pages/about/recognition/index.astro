@@ -11,6 +11,8 @@ import Quote from '../../../components/ui/Quote.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Sources from '../../../components/facts/Sources.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
+import { galleryPhotos } from '../../../data/photos';
 import { press } from '../../../data/press';
 import { endorsements } from '../../../data/endorsements';
 import { fact } from '../../../data/facts';
@@ -190,6 +192,8 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
       </Section>
     )
   }
+
+  <PhotoGallery id="photos" tone="white" eyebrow="In the field" title="Awards and forums in photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
     <SectionHeader id="kit-h" eyebrow="For journalists" title="Press kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />

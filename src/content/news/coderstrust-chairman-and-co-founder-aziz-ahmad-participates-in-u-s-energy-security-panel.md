@@ -23,3 +23,5 @@ CodersTrust Chairman and Co-founder Aziz Ahmad attended the panel on “Advancin
 During the event, Mr. Aziz Ahmad exchanged insights with Mike Sommers, President of the American Petroleum Institute (API), on AI, data security, natural gas, resilient infrastructure, and the role of trusted platforms in strengthening energy systems.
 
 CodersTrust continues to contribute to global conversations that drive innovation, sustainability, and secure energy solutions.
+
+![Panelists seated in front of American flags at the energy security panel](../../assets/images/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/us-secretary-of-energy-4.jpg)

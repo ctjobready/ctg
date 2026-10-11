@@ -9,6 +9,7 @@ import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
 import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
@@ -111,6 +112,7 @@ const steps = [
 
   <!-- C4 · Future state -->
   <FutureBand
+    photos={futurePhotos('partners-governments')}
     title="What your next budget cycle could show"
     lead="Illustrative, not case studies."
     vignettes={[

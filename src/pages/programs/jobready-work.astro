@@ -9,6 +9,7 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import Button from '../../components/system/Button.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../data/photos';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
@@ -105,6 +106,7 @@ const approach = [
 
   <!-- C4 -->
   <FutureBand
+    photos={futurePhotos('jobready-work')}
     title="What changes for your team"
     lead="Illustrative: a team applies AI tools in daily work, and new hires contribute early."
     vignettes={[

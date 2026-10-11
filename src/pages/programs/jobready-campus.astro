@@ -7,6 +7,7 @@ import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../data/photos';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
@@ -91,6 +92,7 @@ const options = [
 
   <!-- C4 -->
   <FutureBand
+    photos={futurePhotos('jobready-campus')}
     title="What your students leave with"
     lead="Illustrative: an industry certification beside the degree for students who pass the exam, and tracer results that show where students work."
     vignettes={[

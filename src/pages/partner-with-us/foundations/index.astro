@@ -9,6 +9,7 @@ import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
 import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
@@ -109,6 +110,7 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
 
   <!-- C4 · Future state -->
   <FutureBand
+    photos={futurePhotos('partners-foundations')}
     title="What a funded cohort could show"
     lead="Illustrative, not case studies."
     vignettes={[

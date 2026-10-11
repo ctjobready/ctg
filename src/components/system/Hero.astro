@@ -1,5 +1,8 @@
 ---
 import HeroArt from '../ui/HeroArt.astro';
+import Img from '../ui/Img.astro';
+import { heroPhoto } from '../../data/photos';
+import { mayRender } from '../../lib/permissions';
 
 interface Props {
   eyebrow?: string;
@@ -18,10 +21,14 @@ interface Props {
 }
 const { eyebrow, title, lead, variant = 'inner', art = true, artSeed, headingLevel = 1, mediaShape = 'portrait', class: className } = Astro.props;
 const Title = `h${headingLevel}` as 'h1' | 'h2';
+// A real photograph from the page's registry entry (src/data/photos.ts) takes the place of the generated art when the D13 rule lets it render.
+const candidate = art && !Astro.slots.has('media') ? heroPhoto(artSeed) : undefined;
+const photo = candidate && mayRender(candidate.assetId) ? candidate : undefined;
 const hasMedia = Astro.slots.has('media') || art;
+const landscape = Astro.slots.has('media') ? mediaShape === 'landscape' : Boolean(photo);
 ---
 
-<section class:list={['hero', variant === 'home' && 'hero--home', !hasMedia && 'hero--text', mediaShape === 'landscape' && Astro.slots.has('media') && 'hero--landscape', className]}>
+<section class:list={['hero', variant === 'home' && 'hero--home', !hasMedia && 'hero--text', landscape && hasMedia && 'hero--landscape', className]}>
   <div class="hero__inner container">
     <div class="hero__copy">
       {eyebrow && <p class="hero__eyebrow" data-reveal>{eyebrow}</p>}
@@ -33,8 +40,16 @@ const hasMedia = Astro.slots.has('media') || art;
     </div>
     {
       hasMedia && (
-        <div class="hero__media" data-reveal>
-          {Astro.slots.has('media') ? <slot name="media" /> : <HeroArt seed={artSeed ?? title} />}
+        <div class:list={['hero__media', photo && 'hero__media--photo']} data-reveal>
+          {
+            Astro.slots.has('media') ? (
+              <slot name="media" />
+            ) : photo ? (
+              <Img src={photo.src} alt={photo.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" fetchpriority="high" assetId={photo.assetId} />
+            ) : (
+              <HeroArt seed={artSeed ?? title} />
+            )
+          }
         </div>
       )
     }
@@ -136,6 +151,17 @@ const hasMedia = Astro.slots.has('media') || art;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  /* Brand treatment for a real photograph: a soft Klein-blue wash that deepens toward the base, so the photo sits in the system's palette. */
+  .hero__media--photo {
+    position: relative;
+  }
+  .hero__media--photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--secondary) 34%, transparent), color-mix(in srgb, var(--secondary) 6%, transparent) 55%, transparent);
   }
   @media (max-width: 767px) {
     .hero__media {

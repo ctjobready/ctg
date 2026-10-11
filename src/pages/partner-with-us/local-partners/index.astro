@@ -4,6 +4,7 @@ import HeroBand from '../../../components/sections/HeroBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
 import CostBand from '../../../components/sections/CostBand.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../../data/photos';
 import GuideBand from '../../../components/sections/GuideBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
@@ -107,6 +108,7 @@ const ways = [
 
   <!-- C4 -->
   <FutureBand
+    photos={futurePhotos('local-partners')}
     id="future"
     title="Imagine a cohort in your community."
     lead="Illustrative, not case studies."

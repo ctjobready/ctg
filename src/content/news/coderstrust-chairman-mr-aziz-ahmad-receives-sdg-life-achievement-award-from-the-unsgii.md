@@ -24,3 +24,7 @@ Acknowledging the collective effort behind CodersTrust’s success, Mr. Aziz ext
 The award, described as both a milestone and a call to action, symbolizes the ongoing effort needed to ensure that education remains a cornerstone of sustainable development. “This recognition is not just for me but for all of us,” Mr. Aziz emphasized. “It reminds us that together, we can create a world where no dream is too far, no opportunity is unreachable, and every individual has the tools to build a better future.”
 
 The honor serves as an inspiration for CodersTrust and its global community to continue advancing its mission of empowering individuals through education and technology, working towards a future where sustainable development is a reality for all.
+
+![Guests posing together in front of a banner at the SDG Life Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-1.jpg)
+
+![A woman in a yellow suit and men in business dress posing together at the SDG Life Achievement Award event](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-3.jpg)

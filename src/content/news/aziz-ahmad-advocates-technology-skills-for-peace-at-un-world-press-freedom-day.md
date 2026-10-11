@@ -36,3 +36,7 @@ Discussion also centered around how artificial intelligence and automation are d
 Ahmad also expressed his desire to regulate hate speech and propaganda, acknowledging the important balance between freedom of speech and keeping “digital good” in consideration.
 
 “A very loose framework can be initiated where we can balance our innovations with ethics and compliance bringing rich and poor, men and women and different genders, our conscious, sub-conscious thoughts to mitigate the challenges of uncertain future,” said Ahmad.
+
+![The United Nations meeting hall during the World Press Freedom Day session](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/un-world-press-freedom-day-hall.jpg)
+
+![A United Nations web broadcast showing Aziz Ahmad speaking at the session](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/un-web-tv-broadcast.jpg)

@@ -38,3 +38,5 @@ At a time when success is often associated with material wealth, Mr. Aziz’s jo
 
 Learn more about Bir Muktijoddha Ayub Ahmed Master Memorial Institute:
 [https://www.facebook.com/profile.php?id=61572984577021](https://www.facebook.com/profile.php?id=61572984577021)
+
+![Aziz Ahmad smiling in a greenhouse full of flowering plants](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-greenhouse.jpg)

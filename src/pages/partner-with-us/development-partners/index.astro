@@ -9,6 +9,7 @@ import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
 import CostBand from '../../../components/sections/CostBand.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
@@ -106,6 +107,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C4 · Future state -->
   <FutureBand
+    photos={futurePhotos('partners-development')}
     title="What your next reporting cycle could show"
     lead="Illustrative, not case studies."
     vignettes={[

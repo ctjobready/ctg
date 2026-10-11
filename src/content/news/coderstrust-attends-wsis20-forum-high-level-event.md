@@ -28,3 +28,7 @@ CodersTrust, a global EdTech company, is dedicated to fostering a skilled human 
 ![CodersTrust attends WSIS+20 Forum High-Level Event: photo 2 of 3](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg)
 
 ![CodersTrust attends WSIS+20 Forum High-Level Event: photo 3 of 3](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-1.jpg)
+
+![Two men holding a golden trophy at the WSIS+20 Forum High-Level Event](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-3.jpg)
+
+![A man and a woman posing with a golden trophy at the WSIS+20 Forum](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-4.jpg)

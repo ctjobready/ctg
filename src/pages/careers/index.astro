@@ -5,6 +5,8 @@ import Button from '../../components/system/Button.astro';
 import Icon from '../../components/system/Icon.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
+import PhotoGallery from '../../components/ui/PhotoGallery.astro';
+import { galleryPhotos } from '../../data/photos';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import Img from '../../components/ui/Img.astro';
 import Fact from '../../components/facts/Fact.astro';
@@ -67,6 +69,8 @@ const expect = [
       </figure>
     </div>
   </Section>
+
+  <PhotoGallery id="life" tone="white" eyebrow="Life at CodersTrust" title="Where we work" lead="Our Dhaka office and training labs." photos={galleryPhotos('careers')} />
 
   <Section id="roles" aria-labelledby="roles-h">
     <SectionHeader id="roles-h" eyebrow="Open roles" title="Current openings" />

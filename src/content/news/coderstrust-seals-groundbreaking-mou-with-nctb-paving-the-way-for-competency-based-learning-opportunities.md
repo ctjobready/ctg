@@ -35,3 +35,5 @@ CodersTrust Chairman Aziz Ahmad expressed gratitude for the collaboration and em
 ![CodersTrust Seals Groundbreaking MoU with NCTB, Paving the Way for Competency-based...: photo 4 of 4](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/mou-with-nctb-2.jpg)
 
 Under the collaboration, CodersTrust will provide comprehensive training to school teachers for effective delivery of education on advanced competencies like robotics and jointly develop learning programs and countrywide pilots for hands-on, experiential learning, following NCTB’s well-developed curriculum framework, leading to learning outcomes including computational thinking, logical reasoning, algorithms, problem-solving, critical thinking, and creativity.
+
+![CodersTrust and NCTB representatives around a table at the MoU meeting](../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/nctb-mou-meeting.jpg)

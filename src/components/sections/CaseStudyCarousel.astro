@@ -5,6 +5,7 @@ import Carousel from '../system/Carousel.astro';
 import CaseStudyCard from '../ui/CaseStudyCard.astro';
 import { fact, splitProgramLabel } from '../../data/facts';
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
+import { casePhoto } from '../pages/home/caseStudies';
 import type { ImageMetadata } from 'astro';
 
 /** C7 Proof in practice: scroll-snap carousel of case-study cards, each with an outcome stat from the register. */
@@ -17,6 +18,8 @@ interface Item {
   href: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
+  /** D13 asset id of the photo. */
+  assetId?: string;
 }
 interface Props {
   title: string;
@@ -30,7 +33,9 @@ const cards = items.map((it) => {
   if (!s) throw new Error(`CaseStudyCarousel: fact ${it.factId} has no stat`);
   // A program-results label (PR-01, PR-02, PR-05) carries the register's program-data label: it goes on its own line in the card, once.
   const { text, evidence } = splitProgramLabel(s.label);
-  return { ...it, stat: { value: s.value, label: text, evidence } };
+  // No picture given: the card takes the case study's own photograph (matched on the slug in its link).
+  const own = it.image ? undefined : casePhoto(/case-studies\/([^/]+)/.exec(it.href)?.[1] ?? '');
+  return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: { value: s.value, label: text, evidence } };
 });
 ---
 
@@ -38,7 +43,7 @@ const cards = items.map((it) => {
   <SectionHeader id={`${id}-h`} eyebrow="Proof in practice" title={title} lead={lead} />
   <div data-fact={items.map((i) => i.factId).join(' ')}>
     <Carousel label="Case studies" perView={3} count={cards.length}>
-      {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} stat={c.stat} href={c.href} />)}
+      {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} href={c.href} />)}
     </Carousel>
     <p class="cases__fn">Notes on these program figures{items.map((i) => <FootnoteMarker id={i.factId} footnote="auto" />)}</p>
   </div>

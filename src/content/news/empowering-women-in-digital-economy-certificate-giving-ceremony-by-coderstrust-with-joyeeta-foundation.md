@@ -31,3 +31,7 @@ Aziz Ahmad, Chairman of CodersTrust, joined the event virtually from Geneva, Swi
 CodersTrust is a global EdTech-based workforce development and skill-oriented education provider that has trained 130,000+ youth since 2014 across 15 countries and territories, and is onboarding 1.5M+ National University learners. Its programs range from K-12 STEM, coding, and robotics to professional skills and advanced technology skills for the digital era.
 
 CodersTrust’s mission is to transform underprivileged, disadvantaged, and marginalized communities, especially youth and women, into skilled professionals and connect them with work opportunities to enable financial independence and economic growth on a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, resulting in employment, upward social mobility, and durable social impact.
+
+![Women holding certificates at the Joyeeta Foundation certificate-giving ceremony](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/certificate-handover.jpg)
+
+![A woman speaking at the certificate-giving ceremony for the Account Management and Social Media Marketing course](../../assets/images/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/ms-khan-speech.jpg)

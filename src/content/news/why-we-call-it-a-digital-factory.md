@@ -39,3 +39,13 @@ The Digital Factory is not about manufacturing products. It is about manufacturi
 The future of Bangladesh will not be defined by what lies beneath its soil, but by what exists within the minds of its people.
 
 Let’s make Bangladesh a Digital Factory empowering millions of skilled minds to build, innovate, and compete with the world.
+
+![A meeting in a CodersTrust office with the company sign on the wall](../../assets/images/news/why-we-call-it-a-digital-factory/digital-factory-office-meeting.jpg)
+
+![Speakers seated at a panel table at an international forum](../../assets/images/news/why-we-call-it-a-digital-factory/digital-factory-panel.jpg)
+
+![A man shaking hands with Pope Francis, with a cardinal beside them](../../assets/images/news/why-we-call-it-a-digital-factory/digital-factory-pope.jpg)
+
+![A hall with American and other flags and a screen introducing Aziz Ahmad as a speaker](../../assets/images/news/why-we-call-it-a-digital-factory/digital-factory-speaker-screen.jpg)
+
+![Two men exchanging a certificate on stage in front of a Future of Work banner](../../assets/images/news/why-we-call-it-a-digital-factory/digital-factory-session.jpg)

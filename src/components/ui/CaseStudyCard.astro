@@ -11,19 +11,21 @@ interface Props {
   partner?: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
+  /** D13 asset id of the photo (data-asset). */
+  assetId?: string;
   /** Outcome-first headline stat; `evidence` is its evidence label, set on its own line under the label. */
   stat?: { value: string; label: string; evidence?: string | null };
   href: string;
   class?: string;
 }
-const { title, program, partner, image, imageAlt = '', stat, href, class: className } = Astro.props;
+const { title, program, partner, image, imageAlt = '', assetId, stat, href, class: className } = Astro.props;
 const a = linkAttrs(href);
 ---
 
 <article class:list={['card card--link case', className]} data-reveal>
   <div class="card__media">
     {/* No photo: the design system's seeded HeroArt composition (decorative, aria-hidden), distinct per card. */}
-    {image ? <Img src={image} alt={imageAlt} width={720} height={480} widths={[360, 720]} sizes="(min-width:1024px) 380px, 90vw" /> : <HeroArt seed={`case-${title}`} shape="card" />}
+    {image ? <Img src={image} alt={imageAlt} width={720} height={480} widths={[360, 720]} sizes="(min-width:1024px) 380px, 90vw" assetId={assetId} /> : <HeroArt seed={`case-${title}`} shape="card" />}
   </div>
   <div class="card__body">
     {stat && (

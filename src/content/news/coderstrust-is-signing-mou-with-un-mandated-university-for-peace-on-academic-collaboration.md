@@ -32,3 +32,5 @@ CodersTrust is a global digital workforce development company. With the power of
 ## About University for Peace
 
 The University for Peace (UPEACE) is an international graduate-only university and intergovernmental organization, established as a treaty organization by the United Nations General Assembly in 1980. Its chartered mission is to provide humanity with an international institution of higher education for peace with the aim of promoting among all human beings the spirit of understanding, tolerance and peaceful coexistence, to stimulate cooperation among peoples and to help lessen obstacles and threats to world peace and progress, in keeping with the noble aspirations proclaimed in the Charter of the United Nations.
+
+![A man and a woman standing in front of a University for Peace van](../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/upeace-campus-van.jpg)

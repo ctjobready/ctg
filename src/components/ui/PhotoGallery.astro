@@ -1,0 +1,93 @@
+---
+import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
+import Img from './Img.astro';
+import { mayRender } from '../../lib/permissions';
+import type { Photo } from '../../data/photos';
+
+/**
+ * PhotoGallery ➕ — "In the field": a quiet grid of real program photographs with descriptive alt text. No script: images are plain
+ * <img> (lazy, async-decoded, resized by astro:assets) in a list, so the gallery reads as a list of N figures to assistive technology
+ * and costs no JavaScript. A photo the D13 rule does not let render on this build is left out; with none left, the band is not rendered.
+ */
+interface Props {
+  photos: Photo[];
+  title?: string;
+  eyebrow?: string;
+  lead?: string;
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+  /** Names the list for assistive technology; defaults to the title. */
+  label?: string;
+  /** Plain caption under the grid (source line); optional. */
+  note?: string;
+}
+const { photos, title = 'In the field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', label, note } = Astro.props;
+const shown = photos.filter((p) => mayRender(p.assetId));
+---
+
+{
+  shown.length > 1 && (
+    <Section id={id} tone={tone} defer aria-labelledby={`${id}-h`}>
+      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+      <ul class="pg" aria-label={label ?? title}>
+        {shown.map((p, i) => (
+          <li class:list={['pg__item', i === 0 && shown.length >= 5 && 'pg__item--lead']}>
+            <figure class="pg__fig">
+              <Img src={p.src} alt={p.alt} width={i === 0 && shown.length >= 5 ? 960 : 640} widths={i === 0 && shown.length >= 5 ? [480, 960] : [320, 640]} sizes={i === 0 && shown.length >= 5 ? '(min-width:900px) 560px, 100vw' : '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw'} assetId={p.assetId} />
+            </figure>
+          </li>
+        ))}
+      </ul>
+      {note && <p class="pg__note">{note}</p>}
+    </Section>
+  )
+}
+
+<style>
+  .pg {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 600px) {
+    .pg {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .pg {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .pg__item--lead {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
+  .pg__fig {
+    margin: 0;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-container-low);
+    box-shadow: var(--shadow-card);
+    aspect-ratio: 4 / 3;
+  }
+  .pg__item--lead .pg__fig {
+    aspect-ratio: auto;
+  }
+  .pg__fig :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pg__note {
+    margin: var(--space-md) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

@@ -49,3 +49,5 @@ Eligible students are highly encouraged to explore this opportunity and become p
 - [Explore Programme Details](https://www.upeaceny.org/young-leaders-for-peace)
 - [Apply Now](https://forms.gle/DoG6Y5iWNrRvRdgt8)
 - [Download Brochure](https://www.upeaceny.org/_files/ugd/cb3bb5_52599eefe4a84fecb7dc5d38225a2b8e.pdf)
+
+![Two young women in Sustainable Development Goals t-shirts feeding sloths in a tree at a wildlife sanctuary](../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upeace-students-activity.jpg)

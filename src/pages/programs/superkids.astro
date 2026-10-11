@@ -15,6 +15,8 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
+import { futurePhotos, galleryPhotos } from '../../data/photos';
+import PhotoGallery from '../../components/ui/PhotoGallery.astro';
 import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
@@ -77,8 +79,9 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
   <FutureBand
+    photos={futurePhotos('superkids')}
     title="A classroom with coding, robotics and digital art"
-    lead="Illustrative: the pictures here are illustrations, not photographs of learners."
+    lead="Photographs from SuperKids workshops, events and school partnerships."
     vignettes={[
       { kind: 'Block coding', title: 'Learners build with blocks', text: 'Visual coding with blocks is a first step into programming.' },
       { kind: 'Robotics', title: 'Ideas become things that move', text: 'Learners design and program simple robots.' },
@@ -133,6 +136,8 @@ const courses = linkAttrs(COURSES_URL);
       </div>
     </div>
   </Section>
+
+  <PhotoGallery id="in-the-field" eyebrow="In the field" title="Inside SuperKids classrooms and events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions schools and partners ask" />

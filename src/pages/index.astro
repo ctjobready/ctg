@@ -28,6 +28,7 @@ import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
+import { futurePhotos } from '../data/photos';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
 import { C14, FUNDER_PAINS, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
@@ -117,6 +118,7 @@ const featureRows = [
 
   <Tone cmf="C4">
     <FutureBand
+      photos={futurePhotos('home')}
       id="future"
       title="Imagine the next 12 months."
       lead="Three illustrative scenarios, not case studies."

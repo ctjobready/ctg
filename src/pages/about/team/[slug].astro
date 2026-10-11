@@ -5,6 +5,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Img from '../../../components/ui/Img.astro';
+import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
+import { galleryPhotos } from '../../../data/photos';
 import Icon from '../../../components/system/Icon.astro';
 import Badge from '../../../components/system/Badge.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
@@ -108,6 +110,7 @@ const jsonLd = [
     </div>
   </section>
 
+  <PhotoGallery id="field" tone="white" eyebrow="In the field" title="Events, forums and awards" lead="Photographs from forums, meetings and award events." photos={galleryPhotos(p.id)} />
   {
     related.length > 0 && (
       <Section tone="airy" aria-labelledby="rel-h">

@@ -10,6 +10,10 @@ interface Props {
   title: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
+  /** D13 asset id of the photo (data-asset). */
+  assetId?: string;
+  /** CSS aspect-ratio of the media frame when the picture is not 16:9 (a banner with its own text must not be cropped). */
+  ratio?: string;
   badge?: string;
   meta?: { icon: string; label: string }[];
   /** Fee, only if published. */
@@ -19,13 +23,13 @@ interface Props {
   href: string;
   class?: string;
 }
-const { title, image, imageAlt = '', badge, meta = [], price, oldPrice, actionLabel = 'View course', href, class: className } = Astro.props;
+const { title, image, imageAlt = '', assetId, ratio, badge, meta = [], price, oldPrice, actionLabel = 'View course', href, class: className } = Astro.props;
 ---
 
 <article class:list={['course', className]}>
-  <div class="course__media">
+  <div class="course__media" style={ratio ? `aspect-ratio:${ratio}` : undefined}>
     {/* No photo: the design system's seeded HeroArt composition (16:9, decorative, aria-hidden), distinct per course. */}
-    {image ? <Img src={image} alt={imageAlt} width={640} height={360} widths={[320, 640]} sizes="(min-width:1024px) 360px, 90vw" /> : <HeroArt seed={`course-${title}`} shape="wide" />}
+    {image ? <Img src={image} alt={imageAlt} width={640} height={ratio ? Math.round((640 * Number(ratio.split("/")[1])) / Number(ratio.split("/")[0])) : 360} widths={[320, 640]} sizes="(min-width:1024px) 360px, 90vw" assetId={assetId} /> : <HeroArt seed={`course-${title}`} shape="wide" />}
     {badge && <Badge tone="sale" class="course__badge">{badge}</Badge>}
   </div>
   <div class="course__body">

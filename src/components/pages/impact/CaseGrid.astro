@@ -6,6 +6,7 @@ import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact, splitProgramLabel } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 import { CASE_STUDIES } from './case-studies';
+import { caseCardPhoto } from '../../../data/photos';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
@@ -30,7 +31,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   const s = fact(c.factId).stat;
   if (!s) throw new Error(`case card: ${c.factId} has no stat`);
   const { text, evidence } = splitProgramLabel(s.label);
-  return { ...c, stat: { ...s, label: text }, photo: photos[c.slug], evidence: evidence ?? ownEvidence[c.slug] };
+  return { ...c, stat: { ...s, label: text }, photo: photos[c.slug] ?? caseCardPhoto(c.slug), evidence: evidence ?? ownEvidence[c.slug] };
 });
 ---
 

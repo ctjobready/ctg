@@ -8,6 +8,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import SessionAgenda from '../../components/ui/SessionAgenda.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
+import { futurePhotos } from '../../data/photos';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
@@ -106,6 +107,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C4 -->
   <FutureBand
+    photos={futurePhotos('youthwide')}
     title="What your reports will show"
     lead="Illustrative: reports show first earnings by priority group, and tracer surveys follow each cohort for a year."
     vignettes={[
