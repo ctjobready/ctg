@@ -35,7 +35,7 @@ export const endorsements: Endorsement[] = [
     id: "dr-juan-carlos-sainz-borgo",
     name: "Dr. Juan Carlos Sainz-Borgo",
     title: "Vice Rector University for Peace, Costa Rica",
-    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and Brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unring commitment to peace and education.”",
+    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unerring commitment to peace and education.”",
     photo: drJuanCarlosSainzBorgo,
     photoAlt: "Portrait of Dr. Juan Carlos Sainz-Borgo, Vice Rector University for Peace, Costa Rica",
     date: null,

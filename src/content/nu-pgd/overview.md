@@ -7,7 +7,7 @@ legacyUrl: "https://coderstrust.global/nu-postgraduate-diploma/"
 verify: true
 ---
 
-CodersTrust offers Postgraduate Diploma courses of National University and serves as the Official Training Partner for Digital Career Skills and Credentials. CodersTrust's College Code with National University is 6634.
+CodersTrust offers Postgraduate Diploma courses of National University and has been the Official Training Partner for Digital Career Skills and Credentials since 2023. CodersTrust's College Code with National University is 6634.
 
 The diploma courses are designed for highly relevant, future-fit job roles, so that learners gain the technical knowledge to improve their domain in technical and IT skills. The program offers four high-demand courses with experienced mentors who have long been involved in upskilling learners in technology.
 

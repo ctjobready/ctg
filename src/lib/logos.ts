@@ -14,7 +14,7 @@ function find(map: Record<string, { default: ImageMetadata }>, file: string | nu
 /**
  * Optical corrections for the logo tiles (PartnerStrip). Every logo is shown at one grayscale/opacity treatment, so the
  * source artwork's own weight decides how loud it looks next to its neighbors: a solid block (UNDP, iDE) shrinks a
- * little and sits softer; thin or pale artwork (DANIDA, UPEACE, Porticus) is darkened a little. `scale` multiplies
+ * little and sits softer; thin or pale artwork (DANIDA, UPEACE, CCNY, Porticus) is darkened a little. `scale` multiplies
  * the tile's max logo height. Measured from the artwork files (share of ink pixels and their mean luminance).
  */
 export interface LogoFit {
@@ -30,6 +30,7 @@ export const LOGO_FIT: Record<string, LogoFit> = {
   'usa-today': { scale: 0.9, tone: 'soft' },
   danida: { tone: 'strong' },
   upeace: { tone: 'strong' },
+  ccny: { tone: 'strong' },
   porticus: { tone: 'strong' },
   bcc: { tone: 'strong' },
   wfp: { tone: 'strong' },

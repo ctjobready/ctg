@@ -7,7 +7,7 @@ import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
-import { RCT_COMPARISON } from '../../../data/copy';
+import { RCT_COMPARISON, TRIAL_BAND_HEADING } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -41,7 +41,11 @@ interface Props {
 }
 const { title, lead, statIds, chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
 const trial = chart === 'trial';
-const heading = titleCase(headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title);
+// Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
+// where the page asks for it) ahead of the RC-01 headline, which is body text.
+const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
+const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+const employmentLine = headlineFact === 'RC-01' && !plainLine && statIds.includes('RC-02') ? `${fact('RC-02').text}.` : undefined;
 
 const stats = statIds.map((sid) => {
   const f = fact(sid);
@@ -74,8 +78,10 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
   <header class="eb__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">The evidence</p>
-    <h2 class="eb__title" id={`${id}-h`}>{heading}{headlineFact && <FootnoteMarker id={headlineFact} footnote="auto" />}</h2>
+    <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
+    {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}<FootnoteMarker id="RC-02" footnote="auto" /></p>}
+    {headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}<FootnoteMarker id={headlineFact} footnote="auto" /></p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">
