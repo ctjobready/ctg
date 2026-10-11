@@ -3,6 +3,8 @@ name: "Samina Tasneem Chowdhury"
 outcome: "Completed 90+ projects as a freelance graphic designer on Fiverr"
 pathway: freelance
 program: "WSDFM"
+photo: ../../assets/images/stories/samina-tasneem-chowdhury.jpg
+photoAlt: "Portrait of Samina Tasneem Chowdhury, from her Fiverr profile"
 source: "CodersTrust program records (WSDFM case study)"
 ---
 

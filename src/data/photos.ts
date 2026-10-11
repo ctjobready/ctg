@@ -79,6 +79,10 @@ const ALT: Record<string, string> = {
   'superkids/hall-seated-2': 'Children sitting on colorful mats in a classroom, some resting their chins on their hands as they listen',
   'superkids/mat-activity': 'Children kneeling and sitting on colorful floor mats working with printed activity sheets',
   'superkids/plaques-group': 'CodersTrust staff and guests standing together with children holding plaques, in front of a SuperKids and Miniso event backdrop',
+  'superkids/learner-kolika': 'Portrait of Kolika, a SuperKids learner, wearing glasses and a black patterned top',
+  'superkids/learner-zuhaina': 'Portrait of Zuhaina, a SuperKids learner, with braided hair and pink hair clips',
+  'superkids/learner-nihal': 'Portrait of Nihal, a SuperKids learner, in a red top in front of a garden',
+  'superkids/learner-zaeem': 'Portrait of Zaeem, a SuperKids learner, in a dark blazer and red shirt',
   'field/ccny-mou-signing': 'Two men signing at a table at the City College of New York and CT USA (CodersTrust) MoU ceremony, with three people applauding behind them',
   'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
   'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
@@ -106,6 +110,10 @@ export const CAPTION: Record<string, string> = {
   'superkids/hall-seated-2': 'SuperKids session',
   'superkids/mat-activity': 'SuperKids hands-on activity',
   'superkids/plaques-group': 'SuperKids art competition event',
+  'superkids/learner-kolika': 'Kolika, SuperKids learner',
+  'superkids/learner-zuhaina': 'Zuhaina, SuperKids learner',
+  'superkids/learner-nihal': 'Nihal, SuperKids learner',
+  'superkids/learner-zaeem': 'Zaeem, SuperKids learner',
   'general/madrasa-students-lesson': 'NationWIDE: madrasa students in class',
   'general/madrasa-students-class': 'NationWIDE: madrasa students in class',
   'general/madrasa-students-hall': 'NationWIDE: madrasa students in a hall',
@@ -238,7 +246,7 @@ export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(
 
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
-  superkids: ['superkids/mou-signing', 'superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/steam-workshop', 'superkids/student-explains', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/tree-planting', 'superkids/floor-activity', 'superkids/students-seated', 'superkids/floor-activity-2', 'superkids/mou-signing-pen', 'superkids/event-audience', 'superkids/stem-group', 'superkids/plaques-group', 'superkids/hall-seated', 'superkids/hall-seated-2', 'superkids/mat-activity'],
+  superkids: ['superkids/mou-signing', 'superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/steam-workshop', 'superkids/student-explains', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/tree-planting', 'superkids/floor-activity', 'superkids/students-seated', 'superkids/floor-activity-2', 'superkids/mou-signing-pen', 'superkids/event-audience', 'superkids/stem-group', 'superkids/plaques-group', 'superkids/hall-seated', 'superkids/hall-seated-2', 'superkids/mat-activity', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   nationwide: ['general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps', 'general/madrasa-students-lesson', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],
