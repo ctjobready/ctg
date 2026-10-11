@@ -14,6 +14,7 @@ import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
+import FactStat from '../../components/facts/FactStat.astro';
 import FactList from '../../components/facts/FactList.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
@@ -94,10 +95,10 @@ const options = [
   <FutureBand
     photos={futurePhotos('jobready-campus')}
     title="What Your Students Leave With"
-    lead="Illustrative: an industry certification beside the degree for students who pass the exam, and tracer results that show where students work."
+    lead="Illustrative: an industry certification beside the degree for students who pass the exam, and baseline data and tracer surveys from your own students."
     vignettes={[
       { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree, with a first-client or first-job path.' },
-      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Tracer results show where students work, so your institution can discuss placement with confidence.' },
+      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and tracer surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
       { kind: 'Social', title: 'Capacity That Stays on Campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
   />
@@ -107,12 +108,20 @@ const options = [
     title="Universities Partner with CodersTrust."
     empathy={EMPATHY.universities}
     origin={ORIGIN}
-    statIds={['SC-04', 'SC-05']}
     partnerGroup="academic"
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
     <p data-fact="PA-05"><Fact id="PA-05" footnote={false} />.</p>
   </GuideSection>
+
+  <!-- Partnership context (review round 3): National University's size and onboarding pipeline are shown apart from the track record and the outcome evidence. -->
+  <Section id="partnership-context" pad="sm" aria-labelledby="partnership-context-h">
+    <SectionHeader id="partnership-context-h" eyebrow="National University" title="Partnership Context" lead="These figures describe the partnership’s potential reach; they are not learners trained by CodersTrust." />
+    <div class="ctx-stats">
+      <FactStat id="SC-05" />
+      <FactStat id="SC-04" />
+    </div>
+  </Section>
 
   <!-- C6 -->
   <MechanismSection
@@ -232,6 +241,12 @@ const options = [
   .incl > h3 {
     margin: 0 0 var(--space-md);
     color: var(--secondary);
+  }
+  .ctx-stats {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 40rem;
   }
   .proof-notes {
     margin-top: var(--space-lg);

@@ -15,7 +15,7 @@ seoTitle: "Sheikh Kamal ICT Incubator: 1,000 IT Trainees"
 
 ## OBJECTIVE
 
-Bangladesh Hi-Tech Park Authority is setting up Sheikh Kamal IT Training and Incubation Centers at eight locations across the Bangladesh, with an aim to develop tech-skilled manpower to work in the IT industry on a large scale.
+Bangladesh Hi-Tech Park Authority is setting up Sheikh Kamal IT Training and Incubation Centers at eight locations across Bangladesh, with an aim to develop tech-skilled manpower to work in the IT industry on a large scale.
 
 ## SCOPE
 

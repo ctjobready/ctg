@@ -47,7 +47,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
           <div class="card__body">
             <p class="case__stat">
               <span class="case__value">{c.stat.value}</span>{' '}
-              <span class="case__label">{c.stat.label}<FootnoteMarker id={c.factId} footnote="auto" /></span>
+              <span class="case__label">{c.stat.label}<FootnoteMarker id={c.factId} footnote="auto" /></span>{' '}
               {c.evidence && <span class="case__evid">{c.evidence}</span>}
             </p>
             <h3 class="card__title"><a class="card__link" href={a.href}>{c.name}</a></h3>

@@ -107,10 +107,10 @@ const approach = [
   <FutureBand
     photos={futurePhotos('jobready-work')}
     title="What Changes for Your Team"
-    lead="Illustrative: a team applies AI tools in daily work, and new hires contribute early."
+    lead="Illustrative: a team applies AI tools in daily work, and job-ready candidates are sourced for open roles."
     vignettes={[
       { kind: 'Functional', title: 'A Team That Uses AI Tools Every Day', text: 'Workshops start from tasks in your own roles, so the skills carry straight into daily work.' },
-      { kind: 'Emotional', title: 'New Hires Who Contribute Early', text: 'Candidates arrive ready to contribute, sourced through CodersTrust’s placement team, and those who pass the exam hold an industry certification.' },
+      { kind: 'Emotional', title: 'A Job-Ready Candidate Pipeline', text: 'Candidates are sourced through CodersTrust’s placement team and scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
       { kind: 'Social', title: 'Progress You Can Measure', text: 'Success measures are agreed before you start and checked in the progress evaluation.' },
     ]}
   />
@@ -137,26 +137,9 @@ const approach = [
     <div class="tracks" data-fact="IN-10 PA-07 IN-04">
       <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for." />
       <FeatureCard icon="sparkles" title="AI Leadership Programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
-      <FeatureCard icon="briefcase" title="Talent Through Our Placement Team" text="Job-ready candidates come through CodersTrust’s placement team. In pre-launch: the employer and gig-work (Earn) marketplace." />
+      <FeatureCard icon="briefcase" title="Talent Through Our Placement Team" text="Job-ready candidates are supplied through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and will add a self-serve hiring channel." />
     </div>
   </MechanismSection>
-
-  <!-- C7 -->
-  <ProofBand title="The evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
-    <div class="proof-notes">
-      <p data-fact="OC-07"><strong>From CodersTrust’s youth programs:</strong> <Fact id="OC-07" /></p>
-      <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
-      <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
-    </div>
-  </ProofBand>
-  <CaseStudyCarousel
-    title="Proof in Practice"
-    items={[
-      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
-    ]}
-  />
 
   <!-- C8 -->
   <FeaturesTable
@@ -195,6 +178,23 @@ const approach = [
   >
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
+
+  <!-- C7, moved below the employer offer (review round 3): the employer journey leads with the employer facts; this is the youth-program evidence. -->
+  <ProofBand title="The evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02', 'RC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
+    <div class="proof-notes">
+      <p data-fact="OC-07"><strong>From CodersTrust’s youth programs:</strong> <Fact id="OC-07" /></p>
+      <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
+      <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
+    </div>
+  </ProofBand>
+  <CaseStudyCarousel
+    title="Proof in Practice"
+    items={[
+      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+    ]}
+  />
 
   <!-- C12 -->
   <RiskSection

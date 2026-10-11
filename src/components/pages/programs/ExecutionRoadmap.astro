@@ -3,6 +3,7 @@ import PhaseList from './PhaseList.astro';
 import { fact } from '../../../data/facts';
 import { PROGRAM_OPTIONS } from '../../../data/copy';
 import { ROADMAP_PHASES } from './meta';
+import { pilotDurationText } from '../../../lib/format';
 
 /**
  * YouthWIDE execution roadmap: five phases in order, with an illustrative month ribbon (M1–M12) and
@@ -16,7 +17,7 @@ if (!pd06) throw new Error('PD-06 wording changed: update the roadmap');
 const [, parallel, fromMonth] = pd06;
 const startMonth = Number(fromMonth);
 const hours = fact('PD-01').stat?.value ?? '';
-const pilot = PROGRAM_OPTIONS[0].duration;
+const pilot = pilotDurationText(PROGRAM_OPTIONS[0].duration);
 
 const phases = [
   { title: ROADMAP_PHASES[0], text: 'Discovery, co-design and agreement, with tracks, priority groups, the scorecard and the work-entry plan set before enrollment.', factIds: ['PD-19', 'PD-11'] },
@@ -43,7 +44,7 @@ const quarters = [3, 6, 9, 12];
         <span class="ribbon__bar ribbon__bar--par" style={`grid-column:${startMonth} / -1;grid-row:7`}>Up to {parallel} cohorts from about month {fromMonth}</span>
       </div>
     </section>
-    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. Pilots run {pilot}. Tracer surveys follow each course.</figcaption>
+    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. {pilot} Tracer surveys follow each course.</figcaption>
   </figure>
 </div>
 

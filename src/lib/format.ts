@@ -79,6 +79,19 @@ export function dropTitleEcho(title: string, text: string): string {
 export function spokenSteps(text: string): string {
   return text.replace(/\s*→\s*/g, ', then ');
 }
+/**
+ * The pilot option's duration from the register ("8–14 months (tracking to month 23)") reads as if the pilot itself runs to month 23.
+ * Printed as a sentence: "A pilot runs 8–14 months; the first cohort’s 12-month tracer survey may fall around month 23." Any other
+ * duration, or wording that no longer matches, comes back unchanged.
+ */
+export function pilotDurationText(duration: string): string {
+  const m = /^(\d+–\d+ months) \(tracking to month (\d+)\)$/.exec(duration.trim());
+  return m ? `A pilot runs ${m[1]}; the first cohort’s 12-month tracer survey may fall around month ${m[2]}.` : duration;
+}
+/** Option-card duration line: the Pilot option gets the sentence above; Scale and National print as registered. */
+export function optionDuration(name: string, duration: string): string {
+  return name === 'Pilot' ? pilotDurationText(duration) : duration;
+}
 /** Strip tags for plain-text use (FAQ schema, meta descriptions). */
 export function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();

@@ -83,18 +83,11 @@ const share = {
     </header>
     <p class="archive-banner" role="note">
       <Icon name="calendar" size={18} />
-      {
-        updated ? (
-          <span>
-            Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; updated{' '}
-            <time datetime={isoDate(updated)}>{formatDate(updated)}</time>; titles, offices and figures reflect those dates.
-          </span>
-        ) : (
-          <span>
-            Published <time datetime={isoDate(date)}>{formatDate(date)}</time>; titles, offices and figures reflect that date.
-          </span>
-        )
-      }
+      <span>
+        Archived post, preserved as published. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
+        <a class="link" href={url('/impact/')}>Impact pages</a>.
+        Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
+      </span>
     </p>
     {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" />{heroCaption && <figcaption class="art__caption">{heroCaption}</figcaption>}</figure>}
     <div class="prose art__body"><slot /></div>

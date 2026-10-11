@@ -3,7 +3,7 @@
  * self-test in scripts/check-facts.mjs. Pure string functions with no imports, so the gate can load this file directly.
  *
  *  1. orderFootnotes   footnote markers and notes numbered by first appearance in the page (reading order), the Notes list in that
- *                      order, back-links renumbered, and a repeated caveat turned into "Same caveat as note N."
+ *                      order and back-links renumbered (each note keeps its own caveat-class line in full)
  *  2. dropEmptyNotesBand  the labelled "Notes and sources" band pages wrap <Sources> in, when <Sources> rendered nothing
  *  3. dropDoubledStops the period <Fact> adds to a sentence, removed where the page typed its own punctuation straight after the fact
  *  4. spaceInlineLinks Astro's HTML compression trims the space between a sentence and an inline link written on its own line
@@ -19,7 +19,6 @@ const MARKER_RE = /<sup class="fn" data-fact="([^"]*)"><a href="#fn-(\d+)" id="f
 const LIST_RE = /(<ol class="sources__list"[^>]*>)([\s\S]*?)(<\/ol>)/g;
 const NOTE_RE = /<li class="sources__note" id="fn-(\d+)"[\s\S]*?<\/li>/g;
 const BACKLINK_RE = /<a href="#fn-ref-\d+-\d+" aria-label="Back(?: \d+)? to text, note \d+(?:, reference \d+)?"/g;
-const CAVEAT_RE = /<p class="sources__caveat" data-caveat="([^"]*)"([^>]*)>[\s\S]*?<\/p>/;
 const EMPTY_NOTES_BAND_RE = /<section class="band [^"]*" aria-label="Notes and sources"[^>]*><div class="container"[^>]*><\/div><\/section>/g;
 /**
  * <Fact> adds a period to a sentence that has none (`<span class="fact__stop">.</span>`, before any closing quote and the footnote marker).
@@ -55,7 +54,6 @@ export function orderFootnotes(html: string): string {
     return `<sup class="fn" data-fact="${id}"><a href="#fn-${n}" id="fn-ref-${n}-${k}" aria-label="Note ${n}">${n}</a></sup>`;
   });
 
-  const firstWithCaveat = new Map<string, number>();
   out = out.replace(LIST_RE, (all: string, open: string, inner: string, close: string) => {
     const notes = [...inner.matchAll(NOTE_RE)].map((m) => {
       const n = newN.get(Number(m[1])) as number;
@@ -70,17 +68,8 @@ export function orderFootnotes(html: string): string {
     });
     if (!notes.length) return all;
     notes.sort((a, b) => a.n - b.n);
-    // The first note in reading order prints a caveat in full; later notes with the same caveat point back to it.
-    for (const note of notes) {
-      note.html = note.html.replace(CAVEAT_RE, (p: string, key: string, attrs: string) => {
-        const first = firstWithCaveat.get(key);
-        if (first === undefined) {
-          firstWithCaveat.set(key, note.n);
-          return p;
-        }
-        return `<p class="sources__same" data-caveat="${key}"${attrs}>Same caveat as <a href="#fn-${first}">note ${first}</a>.</p>`;
-      });
-    }
+    // Every note prints its own caveat-class line in full. (Round 3: a later note used to say "Same caveat as note N", which pointed
+    // at a note whose extra sentences do not apply to it, e.g. a source-specific footnote.)
     return open + notes.map((x) => x.html).join('') + close;
   });
   return out;

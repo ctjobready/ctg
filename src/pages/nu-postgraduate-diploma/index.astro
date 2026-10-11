@@ -26,7 +26,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
 import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
 import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { COURSES_URL } from '../../lib/site';
@@ -43,7 +43,7 @@ const courses = await nuCourses();
 const faqSources: FaqSource[] = [
   { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
   { q: 'Who Delivers the Diploma?', html: 'CodersTrust is National University’s official training partner for digital career skills and credentials, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. ${anchor(NU_CALL.href, NU_CALL.label)} to ask.` },
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
@@ -166,7 +166,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
       { icon: 'award', title: 'Recognition', text: 'Ask admissions about recognition before you decide.' },
     ]}
   >
-    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL.label}</a> to ask about fees, schedule, eligibility and recognition.</p>
+    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask about fees, schedule, eligibility and recognition.</p>
   </OfferSection>
 
   <!-- C12 -->

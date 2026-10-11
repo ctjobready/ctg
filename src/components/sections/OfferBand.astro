@@ -3,6 +3,7 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
+import { optionDuration } from '../../lib/format';
 import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /**
@@ -45,7 +46,7 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
             <p class="eyebrow">Option {i + 1}</p>
             <h3 class="card__title">{o.name}</h3>
             <p class="offer__volume">{o.volume}</p>
-            <p class="card__meta offer__duration">{o.duration}</p>
+            <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
             <p class="card__text">{blurbs[i]}</p>
           </div>
         </article>

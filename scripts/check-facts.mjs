@@ -17,7 +17,7 @@
 //   - program-data label (PROGRAM_DATA_LABEL in src/data/facts.ts, on PR-01, PR-02 and PR-05): never printed twice in a row, and no
 //     page-local variant ("gross placement", "Program records — gross"); negative self-tests below
 //   - footnotes: markers and notes number in reading order (1, 2, 3 by first appearance), every marker has its note and every note
-//     its markers and back-links, a caveat prints in full once per page ("Same caveat as note N" afterwards), no empty
+//     its markers and back-links, every note prints its own caveat line in full (never "Same caveat as note N"), no empty
 //     "Notes and sources" band, and no sentence glued to an inline link. The self-test below runs the post-processing
 //     (src/lib/postprocess.ts, applied by src/middleware.ts) on fixtures first, so a regression there fails with a reason.
 //   - sentences: <Fact> ends every sentence with a period; the period it adds must never be doubled (no added period right after
@@ -492,7 +492,7 @@ function footnoteProblems(markup) {
       else if (!notes.some((x) => x.n === Number(same[2]) && x.html.includes(`data-caveat="${same[1]}"`) && x.html.includes('class="sources__caveat"'))) out.push(`note ${note.n}: the note it points to does not print caveat ${same[1]} in full`);
     }
   }
-  for (const [key, count] of caveatFull) if (count > 1) out.push(`caveat ${key} is printed in full ${count} times (it should print once, then "Same caveat as note N")`);
+  if (/Same caveat as/.test(markup)) out.push('a note cross-references another note\'s caveat ("Same caveat as note N"); every note must print its own caveat-class line');
   if (EMPTY_NOTES_BAND.test(markup)) out.push('empty "Notes and sources" band');
   if (DOUBLED_STOP.test(markup)) out.push('a period <Fact> added stands in front of punctuation the page typed (doubled punctuation)');
   if (STOP_AFTER_STOP.test(markup)) out.push('<Fact> added a period after text that already ends with punctuation');
@@ -726,8 +726,8 @@ function numberGuardPage(path, html, allow = []) {
   if (reading !== 'B:1.1 A:2.1 B:1.2') problems.push(`self-test: orderFootnotes numbered the markers "${reading}", expected "B:1.1 A:2.1 B:1.2"`);
   const listed = [...fixed.matchAll(/<li class="sources__note" id="fn-(\d+)"[^>]*data-fact="([^"]*)"/g)].map((m) => `${m[1]}=${m[2]}`).join(' ');
   if (listed !== '1=B 2=A') problems.push(`self-test: orderFootnotes listed the notes "${listed}", expected "1=B 2=A"`);
-  if (!fixed.includes('<p class="sources__same" data-caveat="R" data-astro-cid-x>Same caveat as <a href="#fn-1">note 1</a>.</p>')) problems.push('self-test: the second note with the same caveat did not become "Same caveat as note 1"');
-  if (fixed.split('class="sources__caveat"').length !== 2) problems.push('self-test: the first note in reading order must keep the caveat in full, and only that one');
+  if (fixed.includes('Same caveat as')) problems.push('self-test: a note was turned into a "Same caveat as note N" cross-reference (each note must keep its own caveat line)');
+  if (fixed.split('class="sources__caveat"').length !== 3) problems.push('self-test: both notes must keep the caveat in full');
   for (const p of footnoteProblems(fixed)) problems.push('self-test: fixed fixture still fails — ' + p);
   if (orderFootnotes(fixed) !== fixed) problems.push('self-test: orderFootnotes is not idempotent');
   if (!footnoteProblems(broken).length) problems.push('self-test: the footnote checks accepted a page numbered out of reading order');
