@@ -9,7 +9,6 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import { PAGE_UPDATED, ctaFor, statValue } from '../../components/pages/programs/meta';
 import { MICRO_COMMITMENT, STEPS, STEPS_FACTS } from '../../data/copy';
@@ -93,7 +92,6 @@ const jsonLd = [
 
   <Section pad="sm" aria-label="Notes and sources">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </BaseLayout>
 

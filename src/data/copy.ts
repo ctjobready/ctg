@@ -210,9 +210,9 @@ function plainLine(): CopyBlock {
 export const PLAIN_LINE: CopyBlock = plainLine();
 
 /**
- * Employment at follow-up in the randomized trial, read from RC-02's footnote ("52.8% in the control group and 63.1% for women offered a
- * place (52.8% plus 10.3 percentage points)"), so the Home C7 comparison chart never retypes a figure. It throws if the footnote stops
- * reading that way or if the two rates no longer differ by RC-02's stat (+10.3 pp).
+ * Employment at follow-up in the randomized trial, read from RC-02's text ("on a control-group rate of 52.8%"), so the Home C7
+ * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10.3 pp). It throws
+ * if the text stops reading that way.
  */
 export interface RctComparison {
   control: number;
@@ -222,16 +222,12 @@ export interface RctComparison {
 }
 function rctComparison(): RctComparison {
   const rc02 = fact('RC-02');
-  const m = rc02.footnote?.match(/(\d+(?:\.\d+)?)% in the control group and (\d+(?:\.\d+)?)% for women offered a place/);
+  const m = rc02.text.match(/on a control-group rate of (\d+(?:\.\d+)?)%/);
   if (!m || !rc02.stat || rc02.stat.numeric === undefined) {
-    throw new Error(`RCT_COMPARISON: RC-02's footnote no longer reads "X% in the control group and Y% for women offered a place": "${rc02.footnote}"`);
+    throw new Error(`RCT_COMPARISON: RC-02's text no longer states "on a control-group rate of X%": "${rc02.text}"`);
   }
   const control = Number(m[1]);
-  const offered = Number(m[2]);
-  if (Math.abs(offered - control - rc02.stat.numeric) > 1e-9) {
-    throw new Error(`RCT_COMPARISON: ${offered} minus ${control} is not RC-02's ${rc02.stat.value}`);
-  }
-  return { control, offered, delta: rc02.stat.value };
+  return { control, offered: Math.round((control + rc02.stat.numeric) * 10) / 10, delta: rc02.stat.value };
 }
 export const RCT_COMPARISON: RctComparison = rctComparison();
 

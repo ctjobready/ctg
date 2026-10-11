@@ -2,8 +2,6 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Accordion from '../../ui/Accordion.astro';
-// Imported for its global .fn marker styles (answers carry footnote markers built in lib/faq.ts).
-import '../../facts/FootnoteMarker.astro';
 import { buildFaq, type FaqSource } from './faq';
 
 /** C9 Objections. Accordion from FAQ v1.2 entries plus page-specific entries; default slot follows it. */
@@ -16,7 +14,7 @@ interface Props {
   tone?: 'ice' | 'white' | 'airy';
 }
 const { sources, title = 'Questions people ask', lead, eyebrow = 'Objections, answered', id = 'faq', tone = 'ice' } = Astro.props;
-const items = buildFaq(sources, Astro);
+const items = buildFaq(sources);
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>

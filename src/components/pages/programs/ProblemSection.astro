@@ -2,7 +2,6 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import FactCard from '../../facts/FactCard.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact, sources } from '../../../data/facts';
 
 /**
@@ -57,7 +56,7 @@ const scoped = (fid: string) => {
           <article class="card" data-reveal data-fact={s.id}>
             <div class="card__body">
               {s.value && <p class="pcs__value">{s.value}</p>}
-              <p class:list={['pcs__label', !s.value && 'pcs__label--text']}>{s.text}<FootnoteMarker id={s.id} footnote="auto" /></p>
+              <p class:list={['pcs__label', !s.value && 'pcs__label--text']}>{s.text}</p>
               {s.src.length > 0 && <p class="card__meta pcs__src">Source: {s.src.join('; ')}</p>}
             </div>
           </article>

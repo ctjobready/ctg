@@ -3,8 +3,6 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Accordion from '../ui/Accordion.astro';
 import Icon from '../system/Icon.astro';
-// Imported for its global .fn marker styles (answers carry footnote markers built in lib/faq.ts).
-import '../facts/FootnoteMarker.astro';
 import { faqItems } from '../../lib/faq';
 import { linkAttrs } from '../../lib/url';
 import type { FaqAudience } from '../../data/faqs';
@@ -26,7 +24,7 @@ interface Props {
   name?: string;
 }
 const { audience, ids, title = 'Questions Partners Ask', lead, allLink, id = 'faq', name = `${id}-group` } = Astro.props;
-const items = faqItems(audience, ids, Astro);
+const items = faqItems(audience, ids);
 ---
 
 <Section id={id} tone="ice" aria-labelledby={`${id}-h`}>

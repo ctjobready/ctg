@@ -16,7 +16,6 @@ import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import Icon from '../../components/system/Icon.astro';
 import Badge from '../../components/system/Badge.astro';
 import Fact from '../../components/facts/Fact.astro';
@@ -176,7 +175,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       </div>
       <div class="mech-stats">
         <FactStat id="GV-09" />
-        <FactStat id="GV-01" footnote={true} />
+        <FactStat id="GV-01" />
         <FactStat id="PD-01" />
       </div>
     </MechanismSection>
@@ -345,12 +344,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C11 -->
   <OfferSection title="Three Ways to Start, Sized to Your Goals" lead="Each phase is planned with the agency or funder on the results of the one before. Program options are shown without prices; the indicative budget is shared in the discovery session." options={PROGRAM_OPTIONS}>
-    <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} footnote={true} /></div>
+    <div class="note note--key"><span class="note__label">Accountability</span><CopyP block={ACCOUNTABILITY} /></div>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
     <div class="note">
       <span class="note__label">Scale</span>
       <CopyP block={SCALE} />
-      <p class="scale-note"><Fact id="GV-09" footnote={false} />.</p>
+      <p class="scale-note"><Fact id="GV-09" />.</p>
     </div>
     <div class="note">
       <span class="note__label">Services behind a phase</span>
@@ -434,7 +433,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <Section pad="sm" aria-label="Notes and sources">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

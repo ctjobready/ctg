@@ -3,7 +3,6 @@ import Icon from '../../system/Icon.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
 
 /**
@@ -20,7 +19,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 
 <div class="ipx">
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
-  <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}<FootnoteMarker id="GV-10" footnote="auto" />, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
+  <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
   <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
   <div class="ipx__row">
     <ul class="ipx__badges" role="list">
@@ -28,7 +27,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
         badges.map((id) => (
           <li data-fact={id}>
             <Icon name="award" size={20} />
-            <span>{fact(id).text}<FootnoteMarker id={id} /></span>
+            <span>{fact(id).text}</span>
           </li>
         ))
       }

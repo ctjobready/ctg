@@ -4,7 +4,6 @@ import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import Icon from '../../../components/system/Icon.astro';
 import CaseGrid from '../../../components/pages/impact/CaseGrid.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
@@ -40,7 +39,6 @@ const d = discoveryCta();
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

@@ -2,7 +2,6 @@
 import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import Stat from '../../system/Stat.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
@@ -80,8 +79,8 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
     <p class="eyebrow">The evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
-    {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}<FootnoteMarker id="RC-02" footnote="auto" /></p>}
-    {headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}<FootnoteMarker id={headlineFact} footnote="auto" /></p>}
+    {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}</p>}
+    {headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">
@@ -90,7 +89,6 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
         stats.map((s, i) => (
           <div class="eb__stat" data-fact={s.id}>
             <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
-              <FootnoteMarker id={s.id} footnote="auto" />
             </Stat>
           </div>
         ))
@@ -110,7 +108,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
               unit={unit}
               tone="dark"
             />
-            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group<FootnoteMarker id="RC-02" footnote="auto" /></p>
+            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group</p>
           </>
         ) : (
           <>
@@ -122,7 +120,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
               unit={unit}
               tone="dark"
             />
-            <p class="eb__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+            <p class="eb__fn">Chart data: {cf.stat?.label}</p>
           </>
         )
       }

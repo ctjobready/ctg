@@ -17,7 +17,6 @@ import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
 import PhotoGallery from '../../components/ui/PhotoGallery.astro';
-import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
@@ -174,7 +173,6 @@ const courses = linkAttrs(COURSES_URL);
 
   <Section pad="sm" aria-label="Notes and sources">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

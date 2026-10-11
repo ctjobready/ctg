@@ -1,5 +1,4 @@
 ---
-import FootnoteMarker from '../facts/FootnoteMarker.astro';
 import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
 
 /**
@@ -28,7 +27,7 @@ const firstItem = lead === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS
 const items = `${[firstItem, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 ---
 
-<p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}{SESSION_AGENDA_FACTS.map((id) => <FootnoteMarker id={id} footnote="auto" />)}</p>
+<p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}</p>
 
 <style>
   .agenda {

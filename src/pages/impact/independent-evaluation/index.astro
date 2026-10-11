@@ -5,9 +5,7 @@ import BarChart from '../../../components/ui/BarChart.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
 import PlainLine from '../../../components/facts/PlainLine.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import FitBrief from '../../../components/pages/impact/FitBrief.astro';
@@ -55,7 +53,7 @@ const jsonLd = [
   }),
   faqJsonLd('foundations', path, faqIds),
 ];
-const faq = faqItems('foundations', faqIds, Astro);
+const faq = faqItems('foundations', faqIds);
 const toc = [
   { id: 'summary', label: 'The short answer' },
   { id: 'fit', label: 'Evidence-and-fit brief' },
@@ -85,8 +83,7 @@ const d = discoveryCta();
   <ReportSection id="summary" title="The Short Answer">
     <Callout tone="bluf">
       <p data-fact="RC-01 RC-02">
-        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
-      </p>
+        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" />.      </p>
       <PlainLine />
     </Callout>
     <div class="ie__stats">
@@ -95,7 +92,6 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p class="ie__tbl">Figures from the BIGD report (May 2022): Table 4 for employment, income and hours worked, and Table 5 for freelancing. The +41% is CodersTrust’s calculation from Table 4 (+BDT 2,354 on a control mean of BDT 5,715); the report prints the absolute amounts.</p>
     <p data-fact="RC-12"><Fact id="RC-12" /> The study page is BIGD’s summary of the trial and the report gives the coefficients behind it, so the two sets of figures differ; this page uses the report’s.</p>
   </ReportSection>
 
@@ -114,14 +110,14 @@ const d = discoveryCta();
     <p>Each figure below names the table of the BIGD report (May 2022) that it comes from.</p>
     <h3 class="t-heading-l">Women Offered a Place</h3>
     <ul class="ie__list">
-      <li data-fact="RC-02"><Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" /> <span class="ie__tbl">BIGD Table 4.</span></li>
-      <li data-fact="RC-01"><Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" /> <span class="ie__tbl">BIGD Table 4.</span></li>
-      <li data-fact="RC-04"><Fact id="RC-04" footnote={false} />.<FootnoteMarker id="RC-04" /> <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-02"><Fact id="RC-02" />. <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-01"><Fact id="RC-01" />. <span class="ie__tbl">BIGD Table 4.</span></li>
+      <li data-fact="RC-04"><Fact id="RC-04" />. <span class="ie__tbl">BIGD Table 4.</span></li>
     </ul>
     <h3 class="t-heading-l">Women Who Attended</h3>
     <ul class="ie__list">
-      <li data-fact="RC-03"><Fact id="RC-03" footnote={false} />.<FootnoteMarker id="RC-03" /> <span class="ie__tbl">BIGD Table 5 for freelancing; Table 4 for overall hours worked.</span></li>
-      <li data-fact="RC-05"><Fact id="RC-05" footnote={false} />.<FootnoteMarker id="RC-05" /> <span class="ie__tbl">Each household figure is listed below with its BIGD table, significance level and base.</span></li>
+      <li data-fact="RC-03"><Fact id="RC-03" />. <span class="ie__tbl">BIGD Table 5 for freelancing; Table 4 for overall hours worked.</span></li>
+      <li data-fact="RC-05"><Fact id="RC-05" />. <span class="ie__tbl">Each household figure is listed below with its BIGD table, significance level and base.</span></li>
     </ul>
     <div class="ie__hh" data-fact="RC-05">
       <h4 class="ie__hhtitle">Household Figures: BIGD Table, Significance Level and Base</h4>
@@ -162,7 +158,7 @@ const d = discoveryCta();
 
   <ReportSection id="limits" title="Limitations">
     <ul class="ie__list">
-      <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.<FootnoteMarker id="RC-01" footnote="auto" /></li>
+      <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.</li>
       <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021. {AI_SHIFT_NOTE}</li>
       <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
       <li><strong>Program tested.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
@@ -189,7 +185,6 @@ const d = discoveryCta();
     micro={MICRO_COMMITMENT}
   />
 
-  <Sources class="ie__sources" landmark />
 </LongformLayout>
 
 <style>

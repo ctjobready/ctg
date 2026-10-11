@@ -2,7 +2,6 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import FactStat from '../../facts/FactStat.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import Icon from '../../system/Icon.astro';
 import CopyText from './CopyText.astro';
@@ -60,7 +59,7 @@ const { title = 'We’ve Built This Path Since 2014.', empathy, stats = [], stat
             {statements.map((s) => (
               <li data-fact={s.facts.join(' ')}>
                 <Icon name="circle-check" size={20} />
-                <span>{endSentence(s.text ?? fact(s.facts[0]).text)}{(s.markers ?? s.facts).map((f) => <FootnoteMarker id={f} />)}</span>
+                <span>{endSentence(s.text ?? fact(s.facts[0]).text)}</span>
               </li>
             ))}
           </ul>

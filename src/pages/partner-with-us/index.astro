@@ -10,8 +10,6 @@ import CTABand from '../../components/ui/CTABand.astro';
 import Button from '../../components/system/Button.astro';
 import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
-import Sources from '../../components/facts/Sources.astro';
-import FootnoteMarker from '../../components/facts/FootnoteMarker.astro';
 import Tone from '../../components/pages/home/Tone.astro';
 import CopyBlock from '../../components/pages/home/CopyBlock.astro';
 import RaciTable from '../../components/pages/hub/RaciTable.astro';
@@ -92,7 +90,7 @@ const jsonLd = [
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
-      <p class="hub__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: for grant-funded pilots. Public procurement follows the agency’s own timeline.</p>
+      <p class="hub__fn text-muted t-body-xs">Timing: for grant-funded pilots. Public procurement follows the agency’s own timeline.</p>
       <h3 class="t-heading-xl hub__h3">Who Does What</h3>
       <RaciTable />
     </Section>
@@ -135,7 +133,6 @@ const jsonLd = [
     />
   </Tone>
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

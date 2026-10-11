@@ -3,7 +3,6 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import StepFlow from '../ui/StepFlow.astro';
 import { fact } from '../../data/facts';
-import FootnoteMarker from '../facts/FootnoteMarker.astro';
 import { endSentence } from './copyText';
 
 /** C14 Next steps: Discovery → Co-design → Agreement → First cohort; timing comes from PD-04. */
@@ -30,5 +29,5 @@ const steps = [
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
   <div data-fact="PD-04"><StepFlow steps={steps} /></div>
-  {timing && <p class="next__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: {endSentence(pd04.text)}</p>}
+  {timing && <p class="next__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
 </Section>

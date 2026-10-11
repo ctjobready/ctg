@@ -1,5 +1,4 @@
 ---
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import type { TimelineItem } from '../../../data/timeline';
 
 /**
@@ -22,7 +21,7 @@ const { items } = Astro.props;
           <h3 class="timeline__title">{it.title}</h3>
           <p class="timeline__text">
             {it.text}
-            {(it.factIds ?? []).map((id) => <FootnoteMarker id={id} />)}
+            
           </p>
         </li>
       ))

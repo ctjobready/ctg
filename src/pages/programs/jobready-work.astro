@@ -13,7 +13,6 @@ import { futurePhotos } from '../../data/photos';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
-import Sources from '../../components/facts/Sources.astro';
 import Fact from '../../components/facts/Fact.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
@@ -79,7 +78,7 @@ const approach = [
   />
 
   <DefinitionBlock heading="What Is JobReady@Work?">
-    <p data-fact="IN-10"><Fact id="IN-10" footnote={false} />.</p>
+    <p data-fact="IN-10"><Fact id="IN-10" />.</p>
   </DefinitionBlock>
 
   <!-- C2 -->
@@ -125,8 +124,8 @@ const approach = [
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
   >
     <ul class="guide-list" role="list">
-      <li data-fact="PA-06"><Fact id="PA-06" footnote={false} />.</li>
-      <li data-fact="PA-07"><Fact id="PA-07" footnote={false} />.</li>
+      <li data-fact="PA-06"><Fact id="PA-06" />.</li>
+      <li data-fact="PA-07"><Fact id="PA-07" />.</li>
       <li data-fact="GV-06">{contractScope('GV-06')}</li>
     </ul>
   </GuideSection>
@@ -226,7 +225,6 @@ const approach = [
 
   <Section pad="sm" aria-label="Notes and sources">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </LandingLayout>
 

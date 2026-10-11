@@ -22,8 +22,6 @@ import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Quote from '../../../components/ui/Quote.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import Section from '../../../components/ui/Section.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
@@ -172,8 +170,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   />
   <SubBand tone="airy" pull>
     <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role={`Quoted on the 2015 Korail pilot (${undpPilot}; typing speed and computer-application targets), not on later employment results`}>
-      {undpQuote}<FootnoteMarker id="PR-03a" />
-    </Quote>
+      {undpQuote}    </Quote>
   </SubBand>
 
   <!-- C8 · Features to benefits -->
@@ -254,6 +251,5 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <NextStepsBand title="What Happens After You Say Yes" timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
   <PageEnhancements />
 </LandingLayout>

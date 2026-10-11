@@ -41,10 +41,8 @@ html {
   }
 }
 
-/* In-page targets (headings with ids, footnotes, sections) clear the sticky header */
+/* In-page targets (headings with ids, sections) clear the sticky header */
 :where(h1, h2, h3, h4, h5, h6, section, article)[id],
-[id^='fn-'],
-[id^='fn-ref-'],
 :target {
   scroll-margin-top: calc(var(--header-h) + 16px);
 }

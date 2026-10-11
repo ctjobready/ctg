@@ -56,7 +56,6 @@ import Fact from '../components/facts/Fact.astro';
 import FactStat from '../components/facts/FactStat.astro';
 import FactList from '../components/facts/FactList.astro';
 import FactCard from '../components/facts/FactCard.astro';
-import Sources from '../components/facts/Sources.astro';
 import WorldMap from '../components/ui/WorldMap.astro';
 import { faqJsonLd } from '../lib/faq';
 import { fact } from '../data/facts';
@@ -539,7 +538,7 @@ const sectionLinks = [
   <!-- ===================================== FACTS UI ===================================== -->
   <Section id="facts" aria-labelledby="facts-h">
     <SectionHeader id="facts-h" eyebrow="Facts" title="Facts UI" lead="Numbers are never typed into pages. Fact, FactStat, FactCard and FactList render the register's canonical wording and add footnote markers automatically; Sources collects the numbered notes at the end of the page." />
-    <p class="t-body-l">Inline: <Fact id="SC-01" /> — and <Fact id="OC-01" field="value" /> employed, up from <Fact id="OC-01" field="from" footnote={false} />.</p>
+    <p class="t-body-l">Inline: <Fact id="SC-01" /> — and <Fact id="OC-01" field="value" /> employed, up from <Fact id="OC-01" field="from" />.</p>
     <h3 class="sg-h3">FactStat (Count-Up When Numeric)</h3>
     <div class="cluster sg-stats">
       <FactStat id="SC-01" />
@@ -614,7 +613,6 @@ const sectionLinks = [
     <WorldMap />
   </Section>
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <script>

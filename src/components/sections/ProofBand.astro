@@ -1,7 +1,6 @@
 ---
 import Section from '../ui/Section.astro';
 import FactStat from '../facts/FactStat.astro';
-import FootnoteMarker from '../facts/FootnoteMarker.astro';
 import PlainLine from '../facts/PlainLine.astro';
 import BeforeAfter from '../ui/BeforeAfter.astro';
 import Icon from '../system/Icon.astro';
@@ -59,8 +58,8 @@ const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} comple
     <p class="eyebrow">{eyebrow}</p>
     <h2 class="proofband__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
-    {employmentLine && <p class="lead proofband__employment" data-fact="RC-02">{employmentLine}<FootnoteMarker id="RC-02" footnote="auto" /></p>}
-    {headlineFact && headlineText && <p class="lead proofband__headline" data-fact={headlineFact}>{headlineText}<FootnoteMarker id={headlineFact} footnote="auto" /></p>}
+    {employmentLine && <p class="lead proofband__employment" data-fact="RC-02">{employmentLine}</p>}
+    {headlineFact && headlineText && <p class="lead proofband__headline" data-fact={headlineFact}>{headlineText}</p>}
     {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
@@ -91,7 +90,7 @@ const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} comple
         unit={unit}
         tone="dark"
       />
-      <p class="proofband__fn">Chart data: {cf.stat?.label}<FootnoteMarker id={chartId} footnote="auto" /></p>
+      <p class="proofband__fn">Chart data: {cf.stat?.label}</p>
     </div>
   </div>
   {

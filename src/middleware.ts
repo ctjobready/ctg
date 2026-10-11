@@ -2,8 +2,8 @@ import { defineMiddleware } from 'astro:middleware';
 import { postprocessPage } from './lib/postprocess';
 
 /**
- * Finishes every HTML page after it has rendered (src/lib/postprocess.ts): footnotes numbered in reading order, no empty
- * "Notes and sources" band, a space before inline links that Astro's HTML compression glued to the sentence before them.
+ * Finishes every HTML page after it has rendered (src/lib/postprocess.ts): one non-affiliation note per page, no doubled
+ * full stop after a fact, and a space before inline links that Astro's HTML compression glued to the sentence before them.
  * Non-HTML responses (llms.txt, robots.txt, redirects) pass through untouched.
  */
 export const onRequest = defineMiddleware(async (_context, next) => {

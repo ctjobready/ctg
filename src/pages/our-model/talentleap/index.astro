@@ -4,8 +4,6 @@ import Accordion from '../../../components/ui/Accordion.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import CertNote from '../../../components/ui/CertNote.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
@@ -39,7 +37,7 @@ const jsonLd = [
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqJsonLd('foundations', path, faqIds),
 ];
-const faq = faqItems('foundations', faqIds, Astro);
+const faq = faqItems('foundations', faqIds);
 const toc = [
   { id: 'glance', label: 'At a glance' },
   { id: 'how', label: 'How TalentLEAP works' },
@@ -79,7 +77,7 @@ const d = discoveryCta();
           <span class="tl__num" aria-hidden="true">{i + 1}</span>
           <div>
             <h3 class="tl__steptitle"><span class="sr-only">Step {i + 1}: </span>{s.name}</h3>
-            <p>{s.text}{i === 1 && <FootnoteMarker id="PD-01" footnote="auto" />}</p>
+            <p>{s.text}</p>
           </div>
         </li>
       ))}
@@ -97,7 +95,7 @@ const d = discoveryCta();
     <ul class="tl__list">
       <li><strong>Competency-based rather than time-based.</strong> Learning is organized around individual skill units that are assessed, not around hours attended alone.</li>
       <li><strong>Milestone-based mentoring.</strong> Mentoring follows milestones (profile live, first bids, first client, exam), and attendance is tracked.</li>
-      <li><strong>Demand-led tracks.</strong> Tracks are set from current employer demand in each country, and each track’s work-entry plan is approved before enrollment.<FootnoteMarker id="PD-19" footnote="auto" /></li>
+      <li><strong>Demand-led tracks.</strong> Tracks are set from current employer demand in each country, and each track’s work-entry plan is approved before enrollment.</li>
     </ul>
     <Callout label="Design rationale, not a proof of mentoring">
       <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
@@ -123,7 +121,6 @@ const d = discoveryCta();
   <NextStep heading="See How TalentLEAP Would Run in Your Program." text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
 
   <p class="tl__author">Author: CodersTrust Learning Design</p>
-  <Sources class="tl__sources" landmark />
 </LongformLayout>
 
 <style>

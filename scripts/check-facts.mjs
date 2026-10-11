@@ -4,31 +4,25 @@
 //   - an R fact may appear only under the path prefixes in its `allow` list (none = nowhere)
 //   - every data-fact ID must exist in the dataset (removed/withheld facts are therefore unknown IDs)
 //   - internal source codes (IR26/GD26/ID26/BIGD22) must not appear anywhere in rendered markup
-//   - internal wording ("investor deck", "to verify", ...) is scanned structurally inside citation/footnote
-//     blocks (the Sources list and footnote markers), so ordinary calls to action such as
-//     "Request the investor deck" are not false positives
+//   - internal wording ("investor deck", "to verify", ...) is scanned in the rendered page, outside <script>/<style>; ordinary calls
+//     to action such as "Request the investor deck" are allowed (ALLOWED below)
 //   - WorldMap: every pin-tooltip detail must appear in the location table (equivalence contract)
 //   - vendor certifications (Meta Blueprint / Google Ads, Adobe Certified Professional, QuickBooks Online ProAdvisor, PCEP, CWP;
 //     messaging framework rule 13): a page whose visible text names one must also carry the non-affiliation note (CERT_NOTE_TEXT),
-//     exactly once (inline, via <CertNote>; no fact may also carry it as a footnote, which would print the sentence twice)
+//     exactly once (inline, via <CertNote>; src/lib/postprocess.ts keeps the first copy on a finished page)
 //   - archive-only wording: no British "enquir*" (D6; write "inquir*"), no British "licence" (write "license") and no "tripled" (OC-03 is a ratio of medians) anywhere in a
 //     page's HTML (text, attributes, meta, JSON-LD), except on the archived posts under /news/<post>/ and on redirect stubs
 //     (legacy URLs); negative self-tests below
 //   - program-data label (PROGRAM_DATA_LABEL in src/data/facts.ts, on PR-01, PR-02 and PR-05): never printed twice in a row, and no
 //     page-local variant ("gross placement", "Program records — gross"); negative self-tests below
-//   - footnotes: markers and notes number in reading order (1, 2, 3 by first appearance), every marker has its note and every note
-//     its markers and back-links, every note prints its own caveat line in full (never "Same caveat as note N"), no empty
-//     "Notes and sources" band, and no sentence glued to an inline link. The self-test below runs the post-processing
-//     (src/lib/postprocess.ts, applied by src/middleware.ts) on fixtures first, so a regression there fails with a reason.
 //   - sentences: <Fact> ends every sentence with a period; the period it adds must never be doubled (no added period right after
 //     a period, none left in front of punctuation the page typed)
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
 //     outside the archived /news/ posts and the styleguide; negative self-tests below
-//   - statistic tiles: every <Stat>/<FactStat> tile and <FactCard> stat tile carries its fact's footnote marker (doc 04 claims rule 15)
 //   - [PLAIN-LINE] (plan v1.10, v1.13): Home, /partner-with-us/development-partners/, /impact/independent-evaluation/ and the WSDFM case study
 //     (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it) must carry "For every 100
 //     women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
-//     <PlainLine> with RC-02's footnote marker; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
+//     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
 //     /programs/youthwide/ must show, inside the C13 CTA band (#cta, and for the Bangladesh briefing #cta-governments), ONE paragraph in the plan's exact words for THAT page: the lead "What
@@ -73,7 +67,7 @@ const dist = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(root,
 const { facts, CAVEATS, sources, CERT_NOTE_TEXT, CERT_FACT_IDS, PROGRAM_DATA_LABEL } = await import(new URL('../src/data/facts.ts', import.meta.url).href);
 // The published survey aggregates behind the /impact/outcomes-2026/ charts and CSV: a second public dataset the number guard reads (see below).
 const { csvRows: outcomesCsvRows } = await import(new URL('../src/components/pages/impact/outcomes-data.ts', import.meta.url).href);
-const { orderFootnotes, dropEmptyNotesBand, dropDoubledStops, spaceInlineLinks, postprocessPage } = await import(new URL('../src/lib/postprocess.ts', import.meta.url).href);
+const { keepOneCertNote, dropDoubledStops, spaceInlineLinks, postprocessPage } = await import(new URL('../src/lib/postprocess.ts', import.meta.url).href);
 
 /* ---- production fact holds (private list; staging never reads or reports it) ---- */
 const production = process.env.SITE_ENV === 'production';
@@ -130,7 +124,7 @@ const heldPages = new Map(); // fact id -> Set(page paths where it is rendered)
 
 // Anywhere in the page (rendered markup outside <script>/<style>).
 const TOKENS = [[/\b(IR26|GD26|ID26|BIGD22)\b/, 'internal source code']];
-// Only inside citation / footnote blocks (Sources section, footnote markers).
+// Internal wording that must not render on any page.
 const CITATION_WORDING = [
   [/investor (full )?deck/i, 'investor deck named'],
   [/grant deck/i, 'grant deck named'],
@@ -150,14 +144,6 @@ const DISCIPLINE = [
 const ALLOWED = [/Request the investor deck/gi, /Investor(%20| )deck(%20| )request/gi];
 
 const decode = (t) => t.replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
-
-/** Citation/footnote blocks: the Sources section(s) and every footnote marker. */
-function citationBlocks(markup) {
-  const out = [];
-  for (const m of markup.matchAll(/<section\b[^>]*\bclass="[^"]*\bsources\b[^"]*"[^>]*>[\s\S]*?<\/section>/g)) out.push(m[0]);
-  for (const m of markup.matchAll(/<sup\b[^>]*\bclass="[^"]*\bfn\b[^"]*"[^>]*>[\s\S]*?<\/sup>/g)) out.push(m[0]);
-  return out;
-}
 
 /** WorldMap equivalence: each tooltip card's details must be present in the table row for the same location. */
 function mapGaps(markup) {
@@ -193,7 +179,7 @@ const namesVendorCert = (text) => VENDOR_CERTS.some((re) => re.test(text));
 /** A page's visible text must carry the non-affiliation note when it names a vendor certification, and never more than once. */
 function certNoteProblems(text) {
   const copies = text.split(CERT_NOTE_TEXT).length - 1;
-  if (copies > 1) return [`prints the non-affiliation note ${copies} times (it belongs once per page, inline; a fact must not also carry it as a footnote)`];
+  if (copies > 1) return [`prints the non-affiliation note ${copies} times (it belongs once per page, inline)`];
   if (copies === 0 && namesVendorCert(text)) return [`names a vendor certification but lacks the note "${CERT_NOTE_TEXT}"`];
   return [];
 }
@@ -261,10 +247,10 @@ function plainLineProblems(markup, text, stat, required) {
   if (m[2] !== want.points) out.push(`[PLAIN-LINE] says "(${m[2]})" but RC-02 is "${want.points}" (the stat value with "pp" spelled out)`);
   if (!out.length && !text.includes(want.text)) out.push(`[PLAIN-LINE] differs from the register-derived sentence "${want.text}"`);
   if (required) {
-    // rendered by <PlainLine>, with RC-02's footnote marker, as body text (a paragraph, not a stat tile)
-    const block = /<p\b[^>]*\bdata-plain-line\b[^>]*>([\s\S]*?)<\/p>/.exec(markup);
+    // rendered by <PlainLine>, tagged data-fact="RC-02", as body text (a paragraph, not a stat tile)
+    const block = /<p\b[^>]*\bdata-plain-line\b[^>]*>/.exec(markup);
     if (!block) out.push('[PLAIN-LINE] is not rendered by <PlainLine> (no <p data-plain-line>)');
-    else if (!/<sup class="fn" data-fact="RC-02">/.test(block[1])) out.push('[PLAIN-LINE] lacks RC-02’s footnote marker');
+    else if (!/\bdata-fact="RC-02"/.test(block[0])) out.push('[PLAIN-LINE] is not tagged data-fact="RC-02"');
   }
   return out;
 }
@@ -424,18 +410,6 @@ function trialScopeProblems(markup, wanted) {
   return out;
 }
 
-/* ---- statistic tiles carry their fact's footnote (doc 04 claims rule 15, doc 06 "Tiles, footnotes and links") ---- */
-// Every <Stat>/<FactStat> tile (.stat__label) and every <FactCard> stat tile (.factcard__label, not its full-sentence --text variant) must hold a
-// footnote marker; the styleguide's sample tiles are exempt.
-const TILE_LABEL = /<p class="(?:stat__label|factcard__label)"[^>]*>([\s\S]*?)<\/p>/g;
-function tileProblems(markup) {
-  const out = [];
-  for (const m of markup.matchAll(TILE_LABEL)) {
-    if (!/<sup class="fn"/.test(m[1])) out.push(`a statistic tile ("${decode(m[1]).slice(0, 70)}") carries no footnote marker`);
-  }
-  return out;
-}
-
 /* ---- copy conventions (doc 06 global rules, R10/WP11 F29-F41): curly apostrophes; "pp" only once "percentage points" is spelled out ---- */
 // The archived /news/ posts keep their wording and the styleguide holds samples, so neither is held to these two rules.
 const exemptFromConventions = (path) => path.startsWith('/news/') || path === '/styleguide/';
@@ -452,48 +426,12 @@ function conventionProblems(text) {
   return out;
 }
 
-/* ---- footnote and link checks over one page's markup (shared by the self-test and the built-site scan) ---- */
-const MARKER_G = /<sup class="fn" data-fact="([^"]*)"><a href="#fn-(\d+)" id="fn-ref-(\d+)-(\d+)" aria-label="Note \d+">(\d+)<\/a><\/sup>/g;
+/* ---- page-markup checks (shared by the self-test and the built-site scan): sentences and inline links ---- */
 const GLUED_LINK = /([\p{L}\p{N}.,;:!?%)”’'"])(<a class="link[ "])/u;
-const DOUBLED_STOP = /<span class="fact__stop">\.<\/span>[”’"]*(?:<sup class="fn" data-fact="[^"]*"><a [^>]*>\d+<\/a><\/sup>)?<\/(?:span|p|strong|b|div)>\s?[.,;:)!?—–]/;
+const DOUBLED_STOP = /<span class="fact__stop">\.<\/span>[”’"]*<\/(?:span|p|strong|b|div)>\s?[.,;:)!?—–]/;
 const STOP_AFTER_STOP = /[.!?…][”’"')]*<span class="fact__stop">/;
-const EMPTY_NOTES_BAND = /<section class="band [^"]*" aria-label="Notes and sources"[^>]*><div class="container"[^>]*><\/div><\/section>/;
-function footnoteProblems(markup) {
+function markupProblems(markup) {
   const out = [];
-  const markers = [...markup.matchAll(MARKER_G)].map((m) => ({ fact: m[1], n: Number(m[2]), idN: Number(m[3]), k: Number(m[4]), text: Number(m[5]) }));
-  const notes = [...markup.matchAll(/<li class="sources__note" id="fn-(\d+)"[^>]*?data-fact="([^"]*)"[\s\S]*?<\/li>/g)].map((m) => ({ n: Number(m[1]), fact: m[2], html: m[0] }));
-  // markers: number by first appearance, ref index by appearance within the note, label equals number
-  const first = [];
-  const perNote = new Map();
-  for (const m of markers) {
-    if (m.idN !== m.n || m.text !== m.n) out.push(`footnote marker for ${m.fact} is inconsistent (href #fn-${m.n}, id fn-ref-${m.idN}-${m.k}, text ${m.text})`);
-    if (!first.includes(m.n)) first.push(m.n);
-    const k = (perNote.get(m.n) ?? 0) + 1;
-    perNote.set(m.n, k);
-    if (m.k !== k) out.push(`footnote ${m.n}: reference ${m.k} appears as reference ${k} in reading order`);
-  }
-  if (!first.every((n, i) => n === i + 1)) out.push(`footnote markers are not numbered in reading order (first appearances: ${first.join(', ')})`);
-  // notes: ascending 1..N, one per numbered marker, same fact as the marker, back-links to every reference
-  if (!notes.every((x, i) => x.n === i + 1)) out.push(`Notes list is not in reading order (${notes.map((x) => x.n).join(', ')})`);
-  for (const n of first) if (!notes.some((x) => x.n === n)) out.push(`footnote ${n} has a marker but no note`);
-  const caveatFull = new Map();
-  for (const note of notes) {
-    const refs = markers.filter((m) => m.n === note.n);
-    if (!refs.length) out.push(`note ${note.n} (${note.fact}) has no marker`);
-    for (const r of refs) if (r.fact !== note.fact) out.push(`footnote ${note.n}: marker is for ${r.fact}, note is for ${note.fact}`);
-    const back = [...note.html.matchAll(/<a href="#fn-ref-(\d+)-(\d+)"/g)].map((m) => `${m[1]}-${m[2]}`);
-    const want = refs.map((r) => `${note.n}-${r.k}`);
-    if (back.join() !== want.join()) out.push(`note ${note.n}: back-links [${back.join(' ')}] do not match its references [${want.join(' ')}]`);
-    const cav = note.html.match(/<p class="sources__caveat" data-caveat="([^"]*)"/);
-    if (cav) caveatFull.set(cav[1], (caveatFull.get(cav[1]) ?? 0) + 1);
-    const same = note.html.match(/<p class="sources__same" data-caveat="([^"]*)"[^>]*>Same caveat as <a href="#fn-(\d+)">note (\d+)<\/a>\./);
-    if (same) {
-      if (same[2] !== same[3] || Number(same[2]) >= note.n) out.push(`note ${note.n}: "Same caveat as note ${same[2]}" must point to an earlier note`);
-      else if (!notes.some((x) => x.n === Number(same[2]) && x.html.includes(`data-caveat="${same[1]}"`) && x.html.includes('class="sources__caveat"'))) out.push(`note ${note.n}: the note it points to does not print caveat ${same[1]} in full`);
-    }
-  }
-  if (/Same caveat as/.test(markup)) out.push('a note cross-references another note\'s caveat ("Same caveat as note N"); every note must print its own caveat-class line');
-  if (EMPTY_NOTES_BAND.test(markup)) out.push('empty "Notes and sources" band');
   if (DOUBLED_STOP.test(markup)) out.push('a period <Fact> added stands in front of punctuation the page typed (doubled punctuation)');
   if (STOP_AFTER_STOP.test(markup)) out.push('<Fact> added a period after text that already ends with punctuation');
   const glue = markup.match(new RegExp(GLUED_LINK.source, 'gu'));
@@ -619,7 +557,7 @@ const isRegistered = (t) => {
     }
   };
   for (const f of Object.values(facts)) {
-    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.stat?.detail, f.footnote, f.base, f.claim, f.caveatText]) add(s, f.id);
+    for (const s of [f.text, f.headline, f.stat?.value, f.stat?.label, f.stat?.from, f.stat?.detail, f.base, f.claim, f.caveatText]) add(s, f.id);
   }
   for (const [cls, text] of Object.entries(CAVEATS)) add(text, `caveat ${cls}`);
   for (const s of Object.values(sources)) {
@@ -674,7 +612,6 @@ const NUMBER_GUARD_EXEMPT_PATHS = new Set(['/styleguide/', '/404.html']);
 const guardsNumbers = (path, html) => !exemptFromArchiveRule(path, html) && !NUMBER_GUARD_EXEMPT_PATHS.has(path);
 /**
  * The copy of a page for the guard: its visible text, plus the title and the meta description (search results and link previews are copy too).
- * Footnote-marker digits are set apart so they never read as part of a figure.
  */
 function guardText(markup) {
   const head = /<head\b[\s\S]*?<\/head>/i.exec(markup)?.[0] ?? '';
@@ -715,36 +652,19 @@ function numberGuardPage(path, html, allow = []) {
 
 /* ---- self-test: the post-processing on fixtures, then the checks above on its result (and on a broken page) ---- */
 {
-  const mk = (fact, n, k) => `<sup class="fn" data-fact="${fact}"><a href="#fn-${n}" id="fn-ref-${n}-${k}" aria-label="Note ${n}">${n}</a></sup>`;
-  const back = (n, refs) => Array.from({ length: refs }, (_, i) => `<a href="#fn-ref-${n}-${i + 1}" aria-label="Back${refs > 1 ? ' ' + (i + 1) : ''} to text, note ${n}" data-astro-cid-x><span>Back ${i + 1}</span></a>`).join('');
-  const note = (n, fact, key, refs) => `<li class="sources__note" id="fn-${n}" tabindex="-1" data-fact="${fact}" data-astro-cid-x><p class="sources__claim" data-astro-cid-x>claim ${fact}</p><p class="sources__caveat" data-caveat="${key}" data-astro-cid-x>caveat ${key}</p><p class="sources__back" data-astro-cid-x>${back(n, refs)}</p></li>`;
-  const page = (body, notesHtml) => `<main>${body}<section class="sources" id="sources"><ol class="sources__list" data-astro-cid-x>${notesHtml}</ol></section></main>`;
-  // A is registered first (an early frontmatter, say) but met second; B is met first and twice
-  const broken = page(`<p>One${mk('B', 2, 1)} two${mk('A', 1, 1)} three${mk('B', 2, 2)}</p>`, note(1, 'A', 'R', 1) + note(2, 'B', 'R', 2));
-  const fixed = orderFootnotes(broken);
-  const reading = [...fixed.matchAll(MARKER_G)].map((m) => `${m[1]}:${m[2]}.${m[4]}`).join(' ');
-  if (reading !== 'B:1.1 A:2.1 B:1.2') problems.push(`self-test: orderFootnotes numbered the markers "${reading}", expected "B:1.1 A:2.1 B:1.2"`);
-  const listed = [...fixed.matchAll(/<li class="sources__note" id="fn-(\d+)"[^>]*data-fact="([^"]*)"/g)].map((m) => `${m[1]}=${m[2]}`).join(' ');
-  if (listed !== '1=B 2=A') problems.push(`self-test: orderFootnotes listed the notes "${listed}", expected "1=B 2=A"`);
-  if (fixed.includes('Same caveat as')) problems.push('self-test: a note was turned into a "Same caveat as note N" cross-reference (each note must keep its own caveat line)');
-  if (fixed.split('class="sources__caveat"').length !== 3) problems.push('self-test: both notes must keep the caveat in full');
-  for (const p of footnoteProblems(fixed)) problems.push('self-test: fixed fixture still fails — ' + p);
-  if (orderFootnotes(fixed) !== fixed) problems.push('self-test: orderFootnotes is not idempotent');
-  if (!footnoteProblems(broken).length) problems.push('self-test: the footnote checks accepted a page numbered out of reading order');
-  // references of one note met in the opposite order to their registration: back-links follow reading order
-  const swapped = orderFootnotes(page(`<p>${mk('A', 1, 2)}${mk('A', 1, 1)}</p>`, note(1, 'A', 'R', 2)));
-  for (const p of footnoteProblems(swapped)) problems.push('self-test: swapped references — ' + p);
-  const emptyBand = '<main><section class="band band--white band--pad-sm" aria-label="Notes and sources" data-astro-cid-x><div class="container" data-astro-cid-x></div></section></main>';
-  if (dropEmptyNotesBand(emptyBand).includes('Notes and sources')) problems.push('self-test: dropEmptyNotesBand left the empty band');
-  if (!footnoteProblems(emptyBand).length) problems.push('self-test: the checks accepted an empty "Notes and sources" band');
+  // a page that prints the non-affiliation note twice keeps only the first copy (postprocess.keepOneCertNote)
+  const certTwice = `<p data-cert-note class="certnote">${CERT_NOTE_TEXT}</p><p>between</p><span class="certnote" data-cert-note>${CERT_NOTE_TEXT}</span>`;
+  const certOnce = keepOneCertNote(certTwice);
+  if (certOnce.split(CERT_NOTE_TEXT).length - 1 !== 1 || !certOnce.includes('between')) problems.push('self-test: keepOneCertNote did not keep exactly the first note');
+  if (keepOneCertNote(certOnce) !== certOnce) problems.push('self-test: keepOneCertNote is not idempotent');
   const glued = '<p>independent evaluation welcome.<a class="link" href="/x/">How partnerships work</a> (<a class="link" href="/y/">y</a>)</p><script>var s=\'a.<a class="link">\'</script>';
   const spaced = spaceInlineLinks(glued);
   if (!spaced.includes('welcome. <a class="link"')) problems.push('self-test: spaceInlineLinks did not restore the space');
   if (spaced.includes('( <a') || !spaced.includes("var s='a.<a class=\"link\">'")) problems.push('self-test: spaceInlineLinks touched an opening bracket or script text');
-  if (postprocessPage(postprocessPage(broken + glued)) !== postprocessPage(broken + glued)) problems.push('self-test: postprocessPage is not idempotent');
+  if (postprocessPage(postprocessPage(glued)) !== postprocessPage(glued)) problems.push('self-test: postprocessPage is not idempotent');
   // the period <Fact> adds to a sentence: kept at the end of a sentence, dropped where the page types its own punctuation
   const stopFix = dropDoubledStops(
-    '<p><span class="fact" data-fact="A">text<span class="fact__stop">.</span><sup class="fn" data-fact="A"><a href="#fn-1" id="fn-ref-1-1" aria-label="Note 1">1</a></sup></span>. Next</p>' +
+    '<p><span class="fact" data-fact="A">text<span class="fact__stop">.</span></span>. Next</p>' +
       '<p><span class="fact" data-fact="B">cap<span class="fact__stop">.</span></span> More.</p>' +
       '<p><span class="fact" data-fact="C">“q<span class="fact__stop">.</span>”</span>, said</p>' +
       '<li><span class="fact" data-fact="D">item<span class="fact__stop">.</span></span></li>',
@@ -754,7 +674,7 @@ function numberGuardPage(path, html, allow = []) {
   if (!DOUBLED_STOP.test('<span class="fact__stop">.</span></span>.') || DOUBLED_STOP.test(stopFix)) problems.push('self-test: the doubled-punctuation check does not recognise its fixtures');
   // the certification gate itself: a page naming a vendor needs the note
   if (!namesVendorCert('Certifications by track: Meta Blueprint / Google Ads (digital marketing), CWP (web)') || namesVendorCert('QuickBooks and Xero experience; Media Buying (Meta, Google Ads, YouTube)')) problems.push('self-test: the vendor-certification patterns misclassify their examples');
-  // the note is required once: a page that names a vendor without it, or prints it twice (inline plus a footnote), fails; once passes
+  // the note is required once: a page that names a vendor without it, or prints it twice (inline, or twice in the built page), fails; once passes
   const certPage = 'Certifications by track: Meta Blueprint / Google Ads (digital marketing), CWP (web).';
   if (certNoteProblems(`${certPage} ${CERT_NOTE_TEXT}`).length) problems.push('self-test: the certification check rejected a page that carries the note once');
   if (!certNoteProblems(certPage).length) problems.push('self-test: the certification check accepted a page that names a vendor without the note');
@@ -793,7 +713,7 @@ function numberGuardPage(path, html, allow = []) {
   // [PLAIN-LINE]: required on three pages, numbers derived from RC-02, rendered by <PlainLine> with RC-02's footnote marker
   const rc02 = facts['RC-02'].stat;
   const want = plainLineWanted(rc02);
-  const plainBlock = (sentence) => `<p class="plainline" data-plain-line data-fact="RC-02" data-astro-cid-x>${sentence}<sup class="fn" data-fact="RC-02"><a href="#fn-2" id="fn-ref-2-1" aria-label="Note 2">2</a></sup></p>`;
+  const plainBlock = (sentence) => `<p class="plainline" data-plain-line data-fact="RC-02" data-astro-cid-x>${sentence}</p>`;
   const plainPage = (sentence, block = plainBlock(sentence)) => ({ markup: `<main><h2>x</h2>${block}</main>`, text: decode(`<main><h2>x</h2>${block}</main>`) });
   const plainOk = plainPage(want.text);
   if (plainLineProblems(plainOk.markup, plainOk.text, rc02, true).length) problems.push(`self-test: the [PLAIN-LINE] check rejected the register-derived sentence: ${plainLineProblems(plainOk.markup, plainOk.text, rc02, true).join('; ')}`);
@@ -806,8 +726,8 @@ function numberGuardPage(path, html, allow = []) {
   plainBad('"+10.4 percentage points" (a number that differs from RC-02)', want.text.replace('+10.3', '+10.4'));
   plainBad('"about 11 more" (RC-02 rounds to 10)', want.text.replace('about 10', 'about 11'));
   plainBad('"(+10.3 pp)" instead of "percentage points"', want.text.replace('percentage points', 'pp'));
-  plainBad('a sentence typed by hand with no <PlainLine> block', want.text, `<p>${want.text}<sup class="fn" data-fact="RC-02"><a href="#fn-2" id="fn-ref-2-1" aria-label="Note 2">2</a></sup></p>`);
-  plainBad('the sentence without RC-02’s footnote marker', want.text, `<p class="plainline" data-plain-line data-fact="RC-02">${want.text}</p>`);
+  plainBad('a sentence typed by hand with no <PlainLine> block', want.text, `<p>${want.text}</p>`);
+  plainBad('the sentence without its data-fact (RC-02)', want.text, `<p class="plainline" data-plain-line>${want.text}</p>`);
   if (plainLineProblems(plainOk.markup, plainOk.text, { ...rc02, numeric: 10.6 }, true).length !== 2) problems.push('self-test: the [PLAIN-LINE] check did not notice that RC-02 changed (10.6 would give "about 11" and "+10.6 percentage points")');
   const stray = plainPage(want.text.replace('+10.3', '+10.4'));
   if (!plainLineProblems(stray.markup, stray.text, rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] but carries it with a wrong number was accepted');
@@ -819,13 +739,6 @@ function numberGuardPage(path, html, allow = []) {
   if (!conventionProblems('Employment among surveyed completers +30.5 pp View chart data').length) problems.push('self-test: the copy-convention check accepted a bare "pp" that is never spelled out');
   if (!conventionProblems('+30.5 pp ... much later text ................................................... percentage points').length) problems.push('self-test: the copy-convention check accepted "percentage points" far after the first "pp"');
   if (conventionProblems('He said \'hello\' and the 8pp-wide column; opposite; apple').length) problems.push('self-test: the copy-convention check flagged quotes or words that merely contain "pp"');
-  // statistic tiles carry their footnote marker
-  const sup = '<sup class="fn" data-fact="SC-05"><a href="#fn-1" id="fn-ref-1-1" aria-label="Note 1">1</a></sup>';
-  const tile = (label) => `<div class="stat stat--md" data-astro-cid-x><p class="stat__value">3M+</p><p class="stat__label" data-astro-cid-x>${label}</p></div>`;
-  if (tileProblems(tile(`students at National University${sup}`)).length) problems.push('self-test: the tile check rejected a tile with its footnote marker');
-  if (!tileProblems(tile('students at National University')).length) problems.push('self-test: the tile check accepted a statistic tile with no footnote marker');
-  if (!tileProblems(`<article class="card factcard" data-fact="PX-05"><p class="factcard__label" data-astro-cid-x>of employers globally report difficulty finding talent</p></article>`).length) problems.push('self-test: the tile check accepted a FactCard stat tile with no footnote marker');
-  if (tileProblems(`<article class="card factcard" data-fact="PX-06"><p class="factcard__label factcard__label--text" data-astro-cid-x>A sentence card</p></article>`).length) problems.push('self-test: the tile check flagged a FactCard sentence (not a tile)');
   // [SESSION-AGENDA]: beside the C13 CTA as ONE paragraph (lead, items joined with " · ", one final period), tied to PD-02, in the plan's words
   const agendaP = (text, { tag = 'p', fact = 'PD-02', attrs = '' } = {}) => `<${tag} class="agenda" data-session-agenda${fact ? ` data-fact="${fact}"` : ''}${attrs} data-astro-cid-x><span class="agenda__lead">${text.split(': ')[0]}:</span> ${text.split(': ').slice(1).join(': ')}</${tag}>`;
   const ctaBand = (inner) => `<main><section class="band band--airy" id="cta" aria-labelledby="cta-h"><div class="container"><div class="cta-band"><h2 id="cta-h">Let’s</h2><a href="/x/">Book</a><ul><li>A discovery session is a conversation, not a commitment.</li></ul>${inner}</div></div></section></main>`;
@@ -839,7 +752,6 @@ function numberGuardPage(path, html, allow = []) {
     const ok = ctaBand(agendaP(text));
     if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);
   }
-  if (sessionAgendaProblems(ctaBand(agendaP(agendaWant).replace('</p>', '<sup class="fn" data-fact="PD-02"><a href="#fn-9" id="fn-ref-9-1" aria-label="Note 9">9</a></sup></p>')), agendaWant).length) problems.push('self-test: the [SESSION-AGENDA] check rejected an agenda that carries a footnote marker');
   // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
   const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
   for (const p of ['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
@@ -934,7 +846,7 @@ function numberGuardPage(path, html, allow = []) {
   const scopeNu = TRIAL_SCOPE_BY_PAGE['/nu-postgraduate-diploma/'];
   if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
   const proofPage = (headInner, after = '') => `<main><section class="band band--klein band--pad-md" id="proof-band" aria-labelledby="proof-band-h"><div class="container"><header class="proofband__head" data-reveal data-fact="RC-01"><p class="eyebrow">The evidence</p>${headInner}</header><div class="proofband"><div class="proofband__stats"></div></div>${after}</div></section></main>`;
-  const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…<sup class="fn" data-fact="RC-01"><a href="#fn-1" id="fn-ref-1-1" aria-label="Note 1">1</a></sup></h2>';
+  const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…</h2>';
   const trialLine = (text) => `<p class="proofband__scope" data-trial-scope data-astro-cid-x>${text}</p>`;
   const trialOk = (why, markup, wanted) => {
     const r = trialScopeProblems(markup, wanted);
@@ -986,8 +898,6 @@ function numberGuardPage(path, html, allow = []) {
   // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
   for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  const ppAfterMarker = guardRun('/our-model/', '<p>+10.3 pp<sup class="fn" data-fact="RC-02"><a href="#fn-3" id="fn-ref-3-1" aria-label="Note 3">3</a></sup> percentage points more employment</p>');
-  if (ppAfterMarker.problems.length || ppAfterMarker.tokens !== 1) problems.push('self-test: the number guard read a footnote marker digit as part of the figure after it ("3 percentage points")');
   for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '+$27', '$27', 'BDT 2,354', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
   for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
@@ -1027,11 +937,8 @@ for (const f of Object.values(facts)) {
   if (f.status === 'U') problems.push(`dataset: unverified (U) fact ${f.id} must stay in the private register`);
   if (f.status === 'R' && !(f.allow ?? []).length) problems.push(`dataset: restricted (R) fact ${f.id} has no public allow scope and must stay in the private register`);
 }
-// The non-affiliation note is the inline <CertNote> that <Fact>/<FactCard> add for CERT_FACT_IDS; no fact may repeat it as a footnote.
+// The non-affiliation note is the inline <CertNote> that <Fact>/<FactCard> add for CERT_FACT_IDS.
 for (const id of ['PD-03', 'IN-08']) if (!CERT_FACT_IDS.includes(id)) problems.push(`dataset: ${id} names vendor certifications, so it must be in CERT_FACT_IDS (that is what makes <Fact> add the inline non-affiliation note)`);
-for (const f of Object.values(facts)) {
-  if (String(f.footnote ?? '').includes(CERT_NOTE_TEXT) || String(f.caveatText ?? '').includes(CERT_NOTE_TEXT)) problems.push(`dataset: ${f.id} carries the non-affiliation note in its footnote; the inline note is the treatment (the sentence would print twice)`);
-}
 for (const id of CERT_FACT_IDS) if (!facts[id]) problems.push(`dataset: CERT_FACT_IDS names ${id}, which is not in the register`);
 
 /* ---- report CTA switch (src/lib/site.ts) ---- */
@@ -1047,7 +954,6 @@ if (!rc02Stat || typeof rc02Stat.numeric !== 'number' || rc02Stat.suffix !== ' p
 let pages = 0;
 let refs = 0;
 let vendorPages = 0;
-let footnotePages = 0;
 let plainLinePages = 0;
 let agendaPages = 0;
 let positionPages = 0;
@@ -1088,7 +994,6 @@ for (const file of htmlFiles(dist)) {
     }
   };
   report(scan, [...TOKENS, ...DISCIPLINE], '');
-  for (const block of citationBlocks(markup)) report(decode(block), CITATION_WORDING, ' in citation block');
   for (const g of mapGaps(markup)) problems.push(`${path}: ${g}`);
 
   // vendor certifications need the non-affiliation note (rule 13)
@@ -1106,8 +1011,6 @@ for (const file of htmlFiles(dist)) {
   if (rc02Stat) for (const p of plainLineProblems(markup, text, rc02Stat, plainRequired)) problems.push(`${path}: ${p}`);
   // curly apostrophes and "pp" spelled out (the archived posts and the styleguide samples are exempt)
   if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(text)) problems.push(`${path}: ${p}`);
-  // every statistic tile carries its fact's footnote marker (the styleguide's samples are not real tiles)
-  if (path !== '/styleguide/') for (const p of tileProblems(markup)) problems.push(`${path}: ${p}`);
   // number guard: every claim-marked figure in the copy is a registered fact value or whitelisted (archive posts, stubs, styleguide, 404 exempt)
   {
     const g = numberGuardPage(path, html, allowList);
@@ -1141,9 +1044,8 @@ for (const file of htmlFiles(dist)) {
     const extra = SESSION_AGENDA_EXTRA_BANDS[path];
     if (extra) for (const p of sessionAgendaProblems(markup, extra.wanted, extra.id)) problems.push(`${path}: ${p}`);
   }
-  // footnotes in reading order, no empty notes band, no glued inline link
-  if (markup.includes('class="fn"') || markup.includes('sources__note')) footnotePages++;
-  for (const p of footnoteProblems(markup)) problems.push(`${path}: ${p}`);
+  // sentences and inline links: no doubled period from <Fact>, no link glued to the text before it
+  for (const p of markupProblems(markup)) problems.push(`${path}: ${p}`);
   // the withheld report CTA must not leak
   if (reportWithheld) for (const re of REPORT_CTA) if (re.test(html)) problems.push(`${path}: report CTA rendered while REPORT_EDITION_READY is false (${re})`);
 }
@@ -1169,6 +1071,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; ${footnotePages} page(s) with footnotes in reading order; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

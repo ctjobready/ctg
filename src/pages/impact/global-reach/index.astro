@@ -3,8 +3,6 @@ import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Icon from '../../../components/system/Icon.astro';
 import WorldMap from '../../../components/ui/WorldMap.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
@@ -44,7 +42,7 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="map" title="Where Programs Have Run">
-    <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.<FootnoteMarker id="SC-03" footnote="auto" /></p>
+    <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.</p>
     <WorldMap caption="Where CodersTrust programs have run" />
     <Callout label="Locations are not programs">
       <p>A location is a country or territory where CodersTrust has run a program. It does not say how many programs ran there, or how large they were. The New York office is not a program location; offices are listed under the map.</p>
@@ -74,7 +72,6 @@ const d = discoveryCta();
   </ReportSection>
 
   <NextStep heading="Talk to Us About a First Cohort." text="Tell us the country and priority groups; we outline a first cohort in a discovery session." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
-  <Sources class="gr__sources" landmark />
 </LongformLayout>
 
 <script>

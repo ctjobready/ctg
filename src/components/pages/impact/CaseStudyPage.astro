@@ -8,7 +8,6 @@ import CTABand from '../../ui/CTABand.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import PlainLine from '../../facts/PlainLine.astro';
-import Sources from '../../facts/Sources.astro';
 import Img from '../../ui/Img.astro';
 import PhotoGallery from '../../ui/PhotoGallery.astro';
 import { caseCardPhoto, galleryPhotos } from '../../../data/photos';
@@ -127,7 +126,6 @@ const d = discoveryCta();
 
   <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

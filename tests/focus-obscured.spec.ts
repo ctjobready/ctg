@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { VIEWPORTS, attachJson, open, vpLabel } from './support/browser';
 import { inspectFocus, inspectTarget, type FocusStop, type TargetStop } from './support/focus';
-import { pagesWithMarkup } from './support/pages';
 import { templatePages } from './support/templates';
 
 /**
@@ -10,7 +9,7 @@ import { templatePages } from './support/templates';
  * PromoBar and the mobile CTA bar in place:
  *   1. Tab forward through up to 80 focus stops from the top of the page;
  *   2. Shift+Tab backwards through up to 40 stops from the last focusable element (footer, back-to-top);
- *   3. follow every in-page anchor, table-of-contents link and footnote marker/back link (up to 60 per page) with the keyboard.
+ *   3. follow every in-page anchor and table-of-contents link (up to 60 per page) with the keyboard.
  * At every stop the focused element (or the link target) must not be covered by sticky/fixed UI: see tests/support/focus.ts
  * for the exact rule (centre of the visible part hit-tests to sticky/fixed UI = failure). A second, softer group of
  * assertions checks that a focus indicator is drawn ("focus always visible", doc 10 §3).
@@ -86,7 +85,7 @@ for (const vp of VIEWPORTS) {
         assertStops(stops, `(backward from the end, ${stops.length} stops)`);
       });
 
-      test(`${t.label} (${t.page.route}): in-page anchors, TOC and footnote links land clear of sticky UI`, async ({ page }, testInfo) => {
+      test(`${t.label} (${t.page.route}): in-page anchors and TOC links land clear of sticky UI`, async ({ page }, testInfo) => {
         await open(page, t.page);
         const links = await page.evaluate((limit) => {
           const seen = new Set<string>();
@@ -96,7 +95,7 @@ for (const vp of VIEWPORTS) {
             const sameDocument = (a.getAttribute('href') ?? '').startsWith('#') || (a.origin === location.origin && a.pathname === location.pathname);
             if (!sameDocument || a.hash.length < 2 || seen.has(a.hash) || a.getClientRects().length === 0) continue;
             seen.add(a.hash);
-            const kind = a.closest('sup.fn') ? 'footnote marker' : a.closest('.sources__back') ? 'footnote back link' : a.closest('[data-toc]') ? 'table of contents' : 'anchor';
+            const kind = a.closest('[data-toc]') ? 'table of contents' : 'anchor';
             out.push({ hash: a.hash, kind, text: (a.getAttribute('aria-label') ?? a.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 40) });
             if (out.length >= limit) break;
           }
@@ -126,27 +125,5 @@ for (const vp of VIEWPORTS) {
         expect(problems, `anchors followed: ${links.length}`).toEqual([]);
       });
     }
-  });
-}
-
-/**
- * Extra (beyond the brief): the focus ring of a link can only enclose the link if its box has a height. The footnote
- * markers are links inside a `line-height: 0` <sup>, so their boxes are 0px tall and the 2px outline collapses into a
- * thin strip across the superscript. One sweep over every page that has footnote markers, reported once per viewport.
- */
-for (const vp of VIEWPORTS) {
-  test(`focus ring can enclose every footnote marker (extra) ${vpLabel(vp)}`, async ({ page }) => {
-    test.setTimeout(300_000);
-    await page.setViewportSize(vp);
-    const withMarkers = pagesWithMarkup(/<sup class="fn"/);
-    expect(withMarkers.length, 'pages with footnote markers').toBeGreaterThan(0);
-    const collapsed: string[] = [];
-    for (const p of withMarkers) {
-      await open(page, p);
-      const heights = await page.evaluate(() => Array.from(document.querySelectorAll<HTMLElement>('sup.fn a')).map((a) => Math.round(a.getBoundingClientRect().height)));
-      const tooShort = heights.filter((h) => h < 10).length;
-      if (tooShort) collapsed.push(`${p.route}: ${tooShort} of ${heights.length} markers have a ${Math.min(...heights)}px-tall box`);
-    }
-    expect(collapsed, 'footnote markers whose focus ring cannot enclose them (box height < 10px)').toEqual([]);
   });
 }

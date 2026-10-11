@@ -1,5 +1,4 @@
 ---
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { fact } from '../../../data/facts';
 
 /**
@@ -29,7 +28,7 @@ const { heading, items } = Astro.props;
       items.map((it) => (
         <li data-fact={it.facts.join(' ')}>
           {it.lead && <><strong>{it.lead}</strong>{' '}</>}{it.text ?? fact(it.facts[0]).text}
-          {it.facts.map((f) => <FootnoteMarker id={f} />)}
+          
         </li>
       ))
     }

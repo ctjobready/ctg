@@ -6,8 +6,6 @@ import Icon from '../../../components/system/Icon.astro';
 import BarChart from '../../../components/ui/BarChart.astro';
 import BeforeAfter from '../../../components/ui/BeforeAfter.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
@@ -25,10 +23,10 @@ import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
 
 D.assertConsistent();
 D.assertPublication();
-// Every headline share in the data must appear in its register entry (the entry's own text, base and footnote).
+// Every headline share in the data must appear in its register entry (the entry's own text, base and stat detail).
 D.assertAgainstRegister((id) => {
   const f = fact(id);
-  return [f.text, f.base, f.footnote].filter(Boolean).join(' ');
+  return [f.text, f.base, f.stat?.detail].filter(Boolean).join(' ');
 });
 // The downloadable CSV must be exactly what this module generates (published percentages and medians, no counts).
 const csvPath = join(process.cwd(), 'public/data/outcomes-2026-aggregates.csv');
@@ -137,7 +135,7 @@ const reportLink = reportCta();
   </ReportSection>
 
   <ReportSection id="respondents" title="Who Responded">
-    <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" footnote={false} /> were already working). <Fact id="OC-09" /></p>
+    <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" /> were already working). <Fact id="OC-09" /></p>
     <ColumnChart
       title="Respondents by age group"
       items={ageItems}
@@ -159,7 +157,7 @@ const reportLink = reportCta();
   </ReportSection>
 
   <ReportSection id="employment" title="Employment">
-    <p data-fact="OC-01">Among {D.EMPLOYMENT_BASE} completers with paired employment responses, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey.<FootnoteMarker id="OC-01" footnote="auto" /> Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed (the base for that share is those employed before training, not all {D.EMPLOYMENT_BASE}; its size is not stated in the report).</p>
+    <p data-fact="OC-01">Among {D.EMPLOYMENT_BASE} completers with paired employment responses, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed (the base for that share is those employed before training, not all {D.EMPLOYMENT_BASE}; its size is not stated in the report).</p>
     <BeforeAfter
       title="Employment among surveyed completers"
       before={{ label: 'Before', value: before, caption: 'before training' }}
@@ -255,7 +253,6 @@ const reportLink = reportCta();
     <NextStep heading="Want the full report?" text="The Impact Report 2026 (partner edition) covers the programs behind these results." cta={reportLink} />
   </ReportSection>
 
-  <Sources class="ro__sources" landmark />
 </LongformLayout>
 
 <style>

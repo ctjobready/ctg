@@ -2,85 +2,36 @@
  * Build-time HTML passes that need the finished page, run for every HTML page by src/middleware.ts and exercised by the
  * self-test in scripts/check-facts.mjs. Pure string functions with no imports, so the gate can load this file directly.
  *
- *  1. orderFootnotes   footnote markers and notes numbered by first appearance in the page (reading order), the Notes list in that
- *                      order and back-links renumbered (each note keeps its own caveat-class line in full)
- *  2. dropEmptyNotesBand  the labelled "Notes and sources" band pages wrap <Sources> in, when <Sources> rendered nothing
- *  3. dropDoubledStops the period <Fact> adds to a sentence, removed where the page typed its own punctuation straight after the fact
- *  4. spaceInlineLinks Astro's HTML compression trims the space between a sentence and an inline link written on its own line
+ *  1. keepOneCertNote  the non-affiliation note (rule 13) prints once per page: the first copy stays, later copies go
+ *  2. dropDoubledStops the period <Fact> adds to a sentence, removed where the page typed its own punctuation straight after the fact
+ *  3. spaceInlineLinks Astro's HTML compression trims the space between a sentence and an inline link written on its own line
  *                      ("welcome.How partnerships work"); one space is put back before `<a class="link">`
  *
- * The passes read markup written by src/components/facts/FootnoteMarker.astro, src/components/facts/Sources.astro,
- * src/lib/faq.ts and src/components/ui/Section.astro. If that markup changes, the passes leave the page as it was and the
- * checks in scripts/check-facts.mjs (reading order, anchors, empty band, glued links) fail the build.
+ * The passes read markup written by src/components/ui/CertNote.astro and src/components/facts/Fact.astro. If that markup
+ * changes, the passes leave the page as it was and the checks in scripts/check-facts.mjs fail the build.
  */
 
-/** `<sup class="fn" data-fact="RC-01"><a href="#fn-3" id="fn-ref-3-2" aria-label="Note 3">3</a></sup>` */
-const MARKER_RE = /<sup class="fn" data-fact="([^"]*)"><a href="#fn-(\d+)" id="fn-ref-(\d+)-(\d+)" aria-label="Note \d+">\d+<\/a><\/sup>/g;
-const LIST_RE = /(<ol class="sources__list"[^>]*>)([\s\S]*?)(<\/ol>)/g;
-const NOTE_RE = /<li class="sources__note" id="fn-(\d+)"[\s\S]*?<\/li>/g;
-const BACKLINK_RE = /<a href="#fn-ref-\d+-\d+" aria-label="Back(?: \d+)? to text, note \d+(?:, reference \d+)?"/g;
-const EMPTY_NOTES_BAND_RE = /<section class="band [^"]*" aria-label="Notes and sources"[^>]*><div class="container"[^>]*><\/div><\/section>/g;
+/** A rendered CertNote: `<p class="certnote" data-cert-note>…</p>` or the `span` form. */
+const CERT_NOTE_RE = /<(p|span)\b[^>]*\bdata-cert-note\b[^>]*>[^<]*<\/\1>/g;
 /**
- * <Fact> adds a period to a sentence that has none (`<span class="fact__stop">.</span>`, before any closing quote and the footnote marker).
+ * <Fact> adds a period to a sentence that has none (`<span class="fact__stop">.</span>`, before any closing quote).
  * When the fact's element is followed directly by punctuation the page typed (`<Fact id="X" />.`), the added period goes.
  */
-const DOUBLED_STOP_RE = /<span class="fact__stop">\.<\/span>([”’"]*)((?:<sup class="fn" data-fact="[^"]*"><a [^>]*>\d+<\/a><\/sup>)?)(<\/(?:span|p|strong|b|div)>)(?=\s?[.,;:)!?—–])/g;
+const DOUBLED_STOP_RE = /<span class="fact__stop">\.<\/span>([”’"]*)(<\/(?:span|p|strong|b|div)>)(?=\s?[.,;:)!?—–])/g;
 /** A letter, digit or sentence mark directly followed by an inline link: the space was trimmed. */
 const GLUED_LINK_RE = /([\p{L}\p{N}.,;:!?%)”’'"])(<a class="link[ "])/gu;
 
-export function orderFootnotes(html: string): string {
-  if (!html.includes('class="fn"') && !html.includes('sources__note')) return html;
-
-  // Number by first appearance. A marker is identified by its old (note, ref) pair; its new ref index counts that note's markers in reading order.
-  const newN = new Map<number, number>();
-  const seenRefs = new Map<number, number>();
-  const newK = new Map<string, number>();
-  for (const m of html.matchAll(MARKER_RE)) {
-    const oldN = Number(m[2]);
-    if (!newN.has(oldN)) newN.set(oldN, newN.size + 1);
-    const k = (seenRefs.get(oldN) ?? 0) + 1;
-    seenRefs.set(oldN, k);
-    newK.set(`${oldN}-${m[4]}`, k);
-  }
-  // A note no marker points to keeps its relative place, after the numbered ones.
-  for (const m of html.matchAll(NOTE_RE)) {
-    const oldN = Number(m[1]);
-    if (!newN.has(oldN)) newN.set(oldN, newN.size + 1);
-  }
-
-  let out = html.replace(MARKER_RE, (_all, id: string, oldN: string, _same: string, oldK: string) => {
-    const n = newN.get(Number(oldN)) as number;
-    const k = newK.get(`${oldN}-${oldK}`) as number;
-    return `<sup class="fn" data-fact="${id}"><a href="#fn-${n}" id="fn-ref-${n}-${k}" aria-label="Note ${n}">${n}</a></sup>`;
+export function keepOneCertNote(html: string): string {
+  let seen = false;
+  return html.replace(CERT_NOTE_RE, (note) => {
+    if (seen) return '';
+    seen = true;
+    return note;
   });
-
-  out = out.replace(LIST_RE, (all: string, open: string, inner: string, close: string) => {
-    const notes = [...inner.matchAll(NOTE_RE)].map((m) => {
-      const n = newN.get(Number(m[1])) as number;
-      let note = m[0].replace(/id="fn-\d+"/, `id="fn-${n}"`);
-      const total = (note.match(BACKLINK_RE) ?? []).length;
-      let i = 0;
-      note = note.replace(BACKLINK_RE, () => {
-        i++;
-        return `<a href="#fn-ref-${n}-${i}" aria-label="Back to text, note ${n}${total > 1 ? `, reference ${i}` : ''}"`;
-      });
-      return { n, html: note };
-    });
-    if (!notes.length) return all;
-    notes.sort((a, b) => a.n - b.n);
-    // Every note prints its own caveat-class line in full. (Round 3: a later note used to say "Same caveat as note N", which pointed
-    // at a note whose extra sentences do not apply to it, e.g. a source-specific footnote.)
-    return open + notes.map((x) => x.html).join('') + close;
-  });
-  return out;
-}
-
-export function dropEmptyNotesBand(html: string): string {
-  return html.replace(EMPTY_NOTES_BAND_RE, '');
 }
 
 export function dropDoubledStops(html: string): string {
-  return html.replace(DOUBLED_STOP_RE, '$1$2$3');
+  return html.replace(DOUBLED_STOP_RE, '$1$2');
 }
 
 export function spaceInlineLinks(html: string): string {
@@ -92,5 +43,5 @@ export function spaceInlineLinks(html: string): string {
 }
 
 export function postprocessPage(html: string): string {
-  return spaceInlineLinks(dropDoubledStops(dropEmptyNotesBand(orderFootnotes(html))));
+  return spaceInlineLinks(dropDoubledStops(keepOneCertNote(html)));
 }

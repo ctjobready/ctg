@@ -9,7 +9,6 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Img from '../../../components/ui/Img.astro';
 import Quote from '../../../components/ui/Quote.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Sources from '../../../components/facts/Sources.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
 import { galleryPhotos } from '../../../data/photos';
@@ -201,7 +200,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
       <div class="kit__block">
         <h3 class="t-heading-m">Boilerplate</h3>
         <div class="kit__boiler">
-          <p data-fact="ID-01"><Fact id="ID-01" footnote={false} /></p>
+          <p data-fact="ID-01"><Fact id="ID-01" /></p>
           <ul class="kit__facts" role="list">
             <li><Fact id="ID-02" /></li>
             <li><Fact id="SC-01" /></li>
@@ -246,7 +245,6 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
     cta={{ label: media.label, href: media.href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
   />
-  <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 
 <style>

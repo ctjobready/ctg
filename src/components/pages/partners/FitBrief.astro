@@ -1,6 +1,5 @@
 ---
 import Fact from '../../facts/Fact.astro';
-import FootnoteMarker from '../../facts/FootnoteMarker.astro';
 import { caveatPart, factPart, HOURS } from './partners';
 
 /**
@@ -21,11 +20,11 @@ const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
   <dl class="fit__grid">
     <div class="fit__item" data-fact="RC-01 RC-07">
       <dt>What was evaluated</dt>
-      <dd>The WSDFM program, a {evaluatedHours}-hour predecessor of today’s {HOURS}-hour track.<FootnoteMarker id="RC-01" /></dd>
+      <dd>The WSDFM program, a {evaluatedHours}-hour predecessor of today’s {HOURS}-hour track.</dd>
     </div>
     <div class="fit__item" data-fact="RC-01">
       <dt>Who took part</dt>
-      <dd>{population.charAt(0).toUpperCase() + population.slice(1)}.<FootnoteMarker id="RC-01" /></dd>
+      <dd>{population.charAt(0).toUpperCase() + population.slice(1)}.</dd>
     </div>
     <div class="fit__item" data-fact="RC-01 RC-02">
       <dt>Offered-place effects first, attenders second</dt>
@@ -33,7 +32,7 @@ const districts = factPart('OC-09', /(\d+ of \d+ districts)/);
     </div>
     <div class="fit__item" data-fact="OC-01 OC-09">
       <dt>What the 2026 survey adds</dt>
-      <dd>Descriptive outcomes among surveyed completers across {districts}, not causal.<FootnoteMarker id="OC-09" /></dd>
+      <dd>Descriptive outcomes among surveyed completers across {districts}, not causal.</dd>
     </div>
     <div class="fit__item" data-fact="PD-01">
       <dt>What a new pilot must establish</dt>

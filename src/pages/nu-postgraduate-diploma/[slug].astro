@@ -9,7 +9,6 @@ import Icon from '../../components/system/Icon.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import Sources from '../../components/facts/Sources.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import PhaseList from '../../components/pages/programs/PhaseList.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
@@ -90,7 +89,6 @@ const jsonLd = [
 
   <Section pad="sm" aria-label="Notes and sources">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-    <Sources />
   </Section>
 </BaseLayout>
 

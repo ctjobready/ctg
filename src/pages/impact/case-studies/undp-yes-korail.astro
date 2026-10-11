@@ -3,7 +3,6 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import FootnoteMarker from '../../../components/facts/FootnoteMarker.astro';
 import Quote from '../../../components/ui/Quote.astro';
 import { fact } from '../../../data/facts';
 
@@ -45,7 +44,7 @@ const quoteOf = (id: string) => {
     <div class="uy__quote">
       <h3 class="t-heading-l">The Partner’s View of the 2015 Pilot</h3>
       <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role="2015 Korail pilot, 40 students, typing speed and computer-application targets">{pq[1]}</Quote>
-      <p class="uy__scope" data-fact="PR-03a">This quotation describes the 2015 pilot only; it is not a statement about the 2017 project or about employment results.<FootnoteMarker id="PR-03a" footnote={true} /></p>
+      <p class="uy__scope" data-fact="PR-03a">This quotation describes the 2015 pilot only; it is not a statement about the 2017 project or about employment results.</p>
     </div>
   </Fragment>
 
