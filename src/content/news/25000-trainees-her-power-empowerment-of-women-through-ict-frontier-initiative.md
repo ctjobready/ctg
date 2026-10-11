@@ -17,7 +17,7 @@ CodersTrust signing contract with Department of Information and Communication Te
 
 ## OBJECTIVE
 
-The objective of this project is to establish a framework and ecosystem that will create a platform and train and facilitate 25,125 women in becoming professionals and entrepreneurs in the field of information and communication technology (ICT). Those smart women entrepreneurs would be a ‘supportive’ force in building smart Bangladesh.
+The objective of this project is to establish a framework and ecosystem that will create a platform and train and facilitate 25,125 women in becoming professionals and entrepreneurs in the field of information and communication technology (ICT). Those women entrepreneurs would be a ‘supportive’ force in building Bangladesh’s ICT sector.
 
 ## SCOPE
 
