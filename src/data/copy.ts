@@ -135,7 +135,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-02', 'RC-01'],
   },
   nationwide: {
-    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers NationWIDE, a Bangladesh initiative. ${UNLIKE_APPROVED}`,
+    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh, a national initiative. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'RC-01'],
   },
   campus: {
@@ -317,26 +317,26 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
  * covers, as ONE sentence beside the C13 primary CTA: the lead, three items separated by semicolons and a single final period. It is shown
  * on the development-partners and foundations pages and on YouthWIDE, where the CTA books a discovery session (first item: your country,
- * priority groups and locations), and on the governments page and NationWIDE, where the primary CTA is a briefing (first item: your priority
+ * priority groups and locations), and on the governments page and YouthWIDE in Bangladesh, where the primary CTA is a briefing (first item: your priority
  * groups and districts); see <SessionAgenda>. The micro-commitment line stays where it is.
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02: `facts` becomes its
  * data-fact marker exactly as [PRICING]'s does, so the agenda, [PRICING] and Q8 stand or fall together.
  */
 export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
-/** The lead on the pages whose primary CTA is "Request a briefing" (governments, NationWIDE). */
+/** The lead on the pages whose primary CTA is "Request a briefing" (governments, YouthWIDE in Bangladesh). */
 export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 /** The first item differs by kind (round 12, Mi1: "districts" does not fit the international pages). */
 export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and locations';
 export const SESSION_AGENDA_FIRST_ITEM_BRIEFING = 'your priority groups and districts';
-/** The governments page serves ministries in any country, so its briefing names "locations"; "districts" stays on NationWIDE (Bangladesh's national program). */
+/** The governments page serves ministries in any country, so its briefing names "locations"; "districts" stays on YouthWIDE in Bangladesh (Bangladesh's national program). */
 export const SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS = 'your priority groups and locations';
 /** The second and third items are shared. */
 export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
 export const SESSION_AGENDA_FACTS = ['PD-02'];
 /**
  * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline."
- * or, for the NationWIDE briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
+ * or, for the YouthWIDE Bangladesh briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
  * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …".
  */
 export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments' = 'discovery'): string => {
@@ -361,7 +361,7 @@ export const DEFINITION_HEADING = 'What is CodersTrust?';
 
 export const HOME_META = {
   title: 'CodersTrust — From Learning to Earning for Youth',
-  description: 'A randomized trial found women offered a CodersTrust place 10.3 points more likely to be employed. We train and mentor youth for paid digital work.',
+  description: 'A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed. We train youth for paid digital work.',
 };
 
 /** Investors page market section (no market-size figures on public pages, D2). */
@@ -370,7 +370,7 @@ export const INVESTOR_MARKET: CopyBlock = {
   facts: ['PX-09', 'PX-08', 'PX-05', 'PX-10'],
 };
 
-/** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE, NationWIDE), after the program options. */
+/** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
 export const ACCOUNTABILITY: CopyBlock = {
   text: 'Every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.',
   facts: ['PD-11'],
