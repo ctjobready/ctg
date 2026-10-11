@@ -48,6 +48,7 @@ const LINKS_STEP = ['test:static › links by URI class', node('check-links.mjs'
 const BUDGET_STEP = ['test:static › budgets', node('check-budget.mjs', '--dist', dist)];
 const SEO_STEP = ['test:static › SEO lint', node('check-seo.mjs', '--dist', dist)];
 const CONTENT_STEP = ['test:static › content rules', node('check-content-rules.mjs', '--dist', dist)];
+const TITLE_CASE_STEP = ['check:title-case (every <title> and heading in Title Case; proves itself on fixtures first)', node('check-title-case.mjs', '--dist', dist)];
 const STATIC = [HTML_STEP, LINKS_STEP, BUDGET_STEP, SEO_STEP, CONTENT_STEP];
 
 const GATES = {
@@ -64,6 +65,7 @@ const GATES = {
       ['test:permissions (rule and gate, scratch fixtures)', node('test-permissions.mjs')],
       ['test:repo-publication (audit, scratch fixtures)', node('test-repo-publication.mjs')],
       ...STATIC,
+      TITLE_CASE_STEP,
       ['test:redirects', node('test-redirects.mjs', dist)],
       ['test:manifest', node('test-manifest.mjs', dist)],
       ['validate:jsonld', node('validate-jsonld.mjs', dist)],
@@ -93,6 +95,7 @@ const GATES = {
       ['test:static › links by URI class (production)', LINKS_STEP[1]],
       ['test:static › budgets (production)', BUDGET_STEP[1]],
       ['test:static › content rules (production)', CONTENT_STEP[1]],
+      ['check:title-case (production)', TITLE_CASE_STEP[1]],
     ],
   },
   'edge-release': {

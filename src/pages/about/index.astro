@@ -28,21 +28,21 @@ const description = `CodersTrust trains and mentors educated, unemployed youth i
 const principles = [
   {
     icon: 'target',
-    title: 'Outcomes over outputs',
+    title: 'Outcomes over Outputs',
     text: 'We judge a program by whether young people end up working and earning, not by how many attended.',
     factId: 'PD-09',
     link: { label: 'See the outcomes', href: '/impact/' },
   },
   {
     icon: 'users',
-    title: 'Inclusion by design',
+    title: 'Inclusion by Design',
     text: 'Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
     factId: 'PD-14',
     link: { label: 'How our model works', href: '/our-model/' },
   },
   {
     icon: 'scale',
-    title: 'Evidence before claims',
+    title: 'Evidence Before Claims',
     text: 'We say what a randomized trial shows and what a survey only describes, and we keep the two apart.',
     factId: 'RC-01',
     field: 'headline' as const,
@@ -50,7 +50,7 @@ const principles = [
   },
   {
     icon: 'handshake',
-    title: 'Partnership and accountability',
+    title: 'Partnership and Accountability',
     text: 'Partners agree the scorecard before the first cohort and see progress in reports every month.',
     factId: 'PD-08',
     link: { label: 'Governance and accountability', href: '/about/governance/' },
@@ -79,14 +79,14 @@ const jsonLd = [
   </Hero>
 
   <Section id="story" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="Our story" title="Built since 2014" />
+    <SectionHeader id="story-h" eyebrow="Our story" title="Built Since 2014" />
     <div class="about-story">
       <CopyBlock class="lead" block={ORIGIN} />
     </div>
   </Section>
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
-    <SectionHeader id="mission-h" eyebrow="Mission and vision" title="Why we exist, and where we are heading" />
+    <SectionHeader id="mission-h" eyebrow="Mission and vision" title="Why We Exist, and Where We Are Heading" />
     <div class="grid-cards grid-cards--2">
       <article class="card" data-reveal>
         <div class="card__body">
@@ -104,19 +104,19 @@ const jsonLd = [
   </Section>
 
   <Section id="glance" aria-labelledby="glance-h">
-    <SectionHeader id="glance-h" eyebrow="At a glance" title="Where we are today" />
+    <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
     <div class="about-stats">
       {['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
     </div>
   </Section>
 
   <Section id="timeline" tone="ice" aria-labelledby="timeline-h">
-    <SectionHeader id="timeline-h" eyebrow="Our story" title="From a Copenhagen launch to national programs" lead="Milestones that rest on registered facts." />
+    <SectionHeader id="timeline-h" eyebrow="Our story" title="From a Copenhagen Launch to National Programs" lead="Milestones that rest on registered facts." />
     <StoryTimeline items={timeline} />
   </Section>
 
   <Section id="founders" aria-labelledby="founders-h">
-    <SectionHeader id="founders-h" eyebrow="Founders" title="The people who started it">
+    <SectionHeader id="founders-h" eyebrow="Founders" title="The People Who Started It">
       <p class="lead"><Fact id="ID-03" /></p>
     </SectionHeader>
     <div class="grid-cards grid-cards--2 about-founders">
@@ -126,7 +126,7 @@ const jsonLd = [
   </Section>
 
   <Section id="how-we-work" tone="airy" aria-labelledby="how-h">
-    <SectionHeader id="how-h" eyebrow="How we work" title="Four principles behind every program" />
+    <SectionHeader id="how-h" eyebrow="How we work" title="Four Principles Behind Every Program" />
     <div class="grid-cards grid-cards--2 grid-cards--stretch">
       {
         principles.map((p) => (
@@ -155,7 +155,7 @@ const jsonLd = [
   </Section>
 
   <Section id="recognition" tone="ice" aria-labelledby="rec-h">
-    <SectionHeader id="rec-h" eyebrow="Recognition" title="Recognized by peers, covered by the press" />
+    <SectionHeader id="rec-h" eyebrow="Recognition" title="Recognized by Peers, Covered by the Press" />
     <div class="about-rec">
       <p class="lead"><Fact id="PA-08" /></p>
       <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and media<Icon name="arrow-right" size={16} /></a>
@@ -164,7 +164,7 @@ const jsonLd = [
 
   <CTABand
     id="about-cta"
-    heading="Talk to the team"
+    heading="Talk to the Team"
     text="Tell us your goals and priority groups, and we will outline a first cohort with you."
     cta={{ label: 'Book a discovery session', href: ctaHref('discovery') }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}

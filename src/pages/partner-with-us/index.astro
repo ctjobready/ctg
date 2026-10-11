@@ -50,9 +50,9 @@ const pd04 = fact('PD-04');
 const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => m[2]);
 const steps = [
   { title: `Discovery · week ${wk[0]}`, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: `Co-design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
+  { title: `Co-Design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
   { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and the pilot scorecard are agreed.' },
-  { title: `First cohort · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
+  { title: `First Cohort · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
 ];
 
 const diligence = cta('diligence');
@@ -71,14 +71,14 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with us' }]} jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
     <HeroBand variant="inner" audience="Partnerships" title="Partner with CodersTrust" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} artSeed="partner-hub" />
   </Tone>
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
-      <SectionHeader id="audiences-h" eyebrow="Choose your route" title="Who are you partnering as?" lead="Each route has its own evidence, offer and next step." />
+      <SectionHeader id="audiences-h" eyebrow="Choose your route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
       <div class="grid-cards grid-cards--4">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
         <CategoryCard title="Not sure where you fit?" icon="message-circle" text="Tell us your goals and we will point you to the right route." href="/contact/" />
@@ -88,12 +88,12 @@ const jsonLd = [
 
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="How partnering works" title="From first conversation to first cohort" lead="Four steps, then monthly reports. Who does what is clear from the start." />
+      <SectionHeader id="how-h" eyebrow="How partnering works" title="From First Conversation to First Cohort" lead="Four steps, then monthly reports. Who does what is clear from the start." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
       <p class="hub__fn text-muted t-body-xs">Timing<FootnoteMarker id="PD-04" footnote={false} />: for grant-funded pilots. Public procurement follows the agency’s own timeline.</p>
-      <h3 class="t-heading-xl hub__h3">Who does what</h3>
+      <h3 class="t-heading-xl hub__h3">Who Does What</h3>
       <RaciTable />
     </Section>
   </Tone>
@@ -106,7 +106,7 @@ const jsonLd = [
     <Section id="due-diligence" aria-labelledby="dd-h">
       <div class="dd">
         <div class="dd__copy">
-          <SectionHeader id="dd-h" eyebrow="Due diligence" title="Know who you are contracting with" />
+          <SectionHeader id="dd-h" eyebrow="Due diligence" title="Know Who You Are Contracting With" />
           <CopyBlock block={GOVERNANCE} class="dd__text" />
           <div class="cluster dd__actions">
             <a class="link" href={governance.href}>Read about governance and accountability<Icon name="arrow-right" size={16} /></a>
@@ -126,7 +126,7 @@ const jsonLd = [
     <CTABand
       id="cta"
       tone="klein"
-      heading="Let’s find the right partnership."
+      heading="Let’s Find the Right Partnership."
       text="Tell us your goals and your priority groups, and we will outline a first cohort with you."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}

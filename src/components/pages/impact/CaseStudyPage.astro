@@ -64,7 +64,7 @@ const d = discoveryCta();
   title={chkTitle(pageTitle)}
   description={desc(description)}
   path={c.path}
-  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies', href: '/impact/case-studies/' }, { label: c.name }]}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies', href: '/impact/case-studies/' }, { label: c.name }]}
   jsonLd={jsonLd}
   ogType="article"
 >
@@ -87,7 +87,7 @@ const d = discoveryCta();
   </Hero>
 
   <Section aria-labelledby="context-h">
-    <SectionHeader id="context-h" eyebrow="Context" title="Why this program" />
+    <SectionHeader id="context-h" eyebrow="Context" title="Why This Program" />
     <div class="cs__prose">
       {context.map((p) => <p>{p}</p>)}
       <slot name="context" />
@@ -101,31 +101,31 @@ const d = discoveryCta();
         <ul class="cs__list" aria-labelledby="challenges-h">{challenges.map((x) => <li>{x}</li>)}</ul>
       </div>
       <div data-reveal>
-        <h2 class="t-heading-2xl" id="solution-h">What CodersTrust did</h2>
+        <h2 class="t-heading-2xl" id="solution-h">What CodersTrust Did</h2>
         <ul class="cs__list" aria-labelledby="solution-h">{solution.map((x) => <li>{x}</li>)}</ul>
       </div>
     </div>
   </Section>
 
   <Section id="results" aria-labelledby="results-h">
-    <SectionHeader id="results-h" eyebrow="Results" title="What happened" />
+    <SectionHeader id="results-h" eyebrow="Results" title="What Happened" />
     <div class="cs__results"><slot name="results" /></div>
   </Section>
   <slot name="after-results" />
 
   <Section tone="airy" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="In a learner’s words" title="A learner story" lead="Individual stories, not typical or promised outcomes." />
+    <SectionHeader id="story-h" eyebrow="In a learner’s words" title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
     <slot name="story" />
   </Section>
 
-  <PhotoGallery id="in-the-field" tone="white" eyebrow="In the field" title="From the program" photos={galleryPhotos(slug).filter((p) => p.assetId !== hero?.assetId)} />
+  <PhotoGallery id="in-the-field" tone="white" eyebrow="In the Field" title="From the Program" photos={galleryPhotos(slug).filter((p) => p.assetId !== hero?.assetId)} />
 
   <Section aria-labelledby="related-h" pad="sm">
-    <h2 class="t-heading-2xl" id="related-h">Where the model runs next</h2>
+    <h2 class="t-heading-2xl" id="related-h">Where the Model Runs Next</h2>
     <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" tone="klein" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>

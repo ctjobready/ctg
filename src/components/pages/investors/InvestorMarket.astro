@@ -14,7 +14,7 @@ const fullSentence = new Set(['PX-10']);
 ---
 
 <div class="mk" data-fact={INVESTOR_MARKET.facts.join(' ')}>
-  <h3 class="t-heading-xl mk__title" data-reveal>Market opportunity</h3>
+  <h3 class="t-heading-xl mk__title" data-reveal>Market Opportunity</h3>
   <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
   <div class="grid-cards grid-cards--4 mk__grid">
     {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} showText={fullSentence.has(id) ? true : undefined} />)}

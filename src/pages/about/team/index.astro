@@ -14,13 +14,13 @@ const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.
 const groups = [
   { key: 'founders', title: 'Founders and Chair', lead: 'The people who started CodersTrust in 2014.' },
   { key: 'advisors', title: 'Advisors', lead: undefined },
-  { key: 'executive', title: 'Executive team', lead: 'The leaders of strategy, growth, business and technology.' },
-  { key: 'management', title: 'Bangladesh leadership', lead: 'The managers who run training, projects and operations at CodersTrust Bangladesh.' },
+  { key: 'executive', title: 'Executive Team', lead: 'The leaders of strategy, growth, business and technology.' },
+  { key: 'management', title: 'Bangladesh Leadership', lead: 'The managers who run training, projects and operations at CodersTrust Bangladesh.' },
 ] as const;
 const description = 'Meet the founders, advisors, executive team and Bangladesh leadership of CodersTrust, the workforce-development organization behind the JobReady platform.';
 const jsonLd = [
   {
-    ...webPage({ path: '/about/team/', name: 'Leadership and team', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }] }),
+    ...webPage({ path: '/about/team/', name: 'Leadership and Team', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Team', path: '/about/team/' }] }),
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: team.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(`/about/team/${p.id}/`), name: p.data.name })),
@@ -30,7 +30,7 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About us" title="Leadership and team" lead="Founders, advisors and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
+  <Hero eyebrow="About us" title="Leadership and Team" lead="Founders, advisors and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
   {
     groups.map((g, i) => {
       const people = team.filter((p) => p.data.group === g.key);

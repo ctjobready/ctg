@@ -1,4 +1,5 @@
 ---
+import { titleCase } from '../../lib/titleCase.mjs';
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Fact from '../facts/Fact.astro';
@@ -27,7 +28,7 @@ const { title, lead, blocks, transition = 'It doesn’t have to be this way.', i
       blocks.map((b) => (
         <article class="card cost" data-reveal>
           <div class="card__body">
-            <h3 class="card__title">{b.claim}</h3>
+            <h3 class="card__title">{titleCase(b.claim)}</h3>
             <p class="cost__data"><Fact id={b.factId} /></p>
             <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
           </div>

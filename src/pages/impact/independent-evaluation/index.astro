@@ -20,7 +20,7 @@ import { linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
 // H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
-const h1 = 'A randomized trial of CodersTrust’s training for women in Dhaka';
+const h1 = 'A Randomized Trial of CodersTrust’s Training for Women in Dhaka';
 const description = desc('A BIGD randomized trial: women offered a place in WSDFM training were 10.3 percentage points more likely to be employed and earned about $27 more a month.');
 const faqIds = ['Q4', 'Q3'];
 
@@ -76,13 +76,13 @@ const d = discoveryCta();
   description={description}
   path={path}
   heading={h1}
-  eyebrow="Independent evaluation"
+  eyebrow="Independent Evaluation"
   updated="2026-10-10"
   toc={toc}
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent evaluation' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="summary" title="The short answer">
+  <ReportSection id="summary" title="The Short Answer">
     <Callout tone="bluf">
       <p data-fact="RC-01 RC-02">
         <Fact id="RC-01" field="headline" /> <Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" />
@@ -103,28 +103,28 @@ const d = discoveryCta();
     <FitBrief />
   </div>
 
-  <ReportSection id="design" title="How the trial worked">
+  <ReportSection id="design" title="How the Trial Worked">
     <p data-fact="RC-07"><Fact id="RC-07" /></p>
     <p>
       “Offered a place” compares every woman randomly offered a place with the control group, whether or not she attended; this is the figure to lead with. “Attended” isolates the women who took part, and comes second.
     </p>
   </ReportSection>
 
-  <ReportSection id="results" title="What the trial found">
+  <ReportSection id="results" title="What the Trial Found">
     <p>Each figure below names the table of the BIGD report (May 2022) that it comes from.</p>
-    <h3 class="t-heading-l">Women offered a place</h3>
+    <h3 class="t-heading-l">Women Offered a Place</h3>
     <ul class="ie__list">
       <li data-fact="RC-01"><Fact id="RC-01" footnote={false} />.<FootnoteMarker id="RC-01" /> <span class="ie__tbl">BIGD Table 4.</span></li>
       <li data-fact="RC-02"><Fact id="RC-02" footnote={false} />.<FootnoteMarker id="RC-02" /> <span class="ie__tbl">BIGD Table 4.</span></li>
       <li data-fact="RC-04"><Fact id="RC-04" footnote={false} />.<FootnoteMarker id="RC-04" /> <span class="ie__tbl">BIGD Table 4.</span></li>
     </ul>
-    <h3 class="t-heading-l">Women who attended</h3>
+    <h3 class="t-heading-l">Women Who Attended</h3>
     <ul class="ie__list">
       <li data-fact="RC-03"><Fact id="RC-03" footnote={false} />.<FootnoteMarker id="RC-03" /> <span class="ie__tbl">BIGD Table 5 for freelancing; Table 4 for overall hours worked.</span></li>
       <li data-fact="RC-05"><Fact id="RC-05" footnote={false} />.<FootnoteMarker id="RC-05" /> <span class="ie__tbl">Each household figure is listed below with its BIGD table, significance level and base.</span></li>
     </ul>
     <div class="ie__hh" data-fact="RC-05">
-      <h4 class="ie__hhtitle">Household figures: BIGD table, significance level and base</h4>
+      <h4 class="ie__hhtitle">Household Figures: BIGD Table, Significance Level and Base</h4>
       <ul class="ie__list">
         <li>Food and non-food spending: BIGD Table 8, significant at the 1% level (n&nbsp;=&nbsp;599).</li>
         <li>Share of women with savings: BIGD Table 10, significant at the 5% level (n&nbsp;=&nbsp;599).</li>
@@ -135,7 +135,7 @@ const d = discoveryCta();
     <p>Freelancing and household effects are labeled as in the BIGD report: for women who attended or for women offered a place.</p>
   </ReportSection>
 
-  <ReportSection id="classes" title="Freelancing by classes attended">
+  <ReportSection id="classes" title="Freelancing by Classes Attended">
     <BarChart
       title="Share freelancing, by classes attended (descriptive, not causal)"
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
@@ -145,7 +145,7 @@ const d = discoveryCta();
     <p data-fact="RC-10"><Fact id="RC-10" />. It is planned, not under way.</p>
   </ReportSection>
 
-  <ReportSection id="funders" title="What it means for funders">
+  <ReportSection id="funders" title="What It Means for Funders">
     <p>
       The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The attender results show what training did for the women who took part, among women who chose to attend.
     </p>
@@ -155,7 +155,7 @@ const d = discoveryCta();
     </p>
   </ReportSection>
 
-  <ReportSection id="context" title="Context: how this compares">
+  <ReportSection id="context" title="Context: How This Compares">
     <p data-fact="RC-06"><strong>Context (external):</strong> <Fact id="RC-06" /></p>
     <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /> This is a design rationale, not a claim about the effect of mentoring.</p>
   </ReportSection>
@@ -177,12 +177,12 @@ const d = discoveryCta();
     </Callout>
   </ReportSection>
 
-  <ReportSection id="faq" title="Questions about the evidence">
+  <ReportSection id="faq" title="Questions About the Evidence">
     <Accordion items={faq} name="ie-faq" openFirst />
   </ReportSection>
 
   <NextStep
-    heading="Talk to us about a first cohort."
+    heading="Talk to Us About a First Cohort."
     text="A discovery session sets priority groups, tracks and the pilot scorecard."
     cta={{ label: d.label, href: d.href }}
     secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }}

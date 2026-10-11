@@ -72,12 +72,12 @@ export const navGroups: NavGroup[] = [
   },
   {
     id: 'model',
-    label: 'Our model',
+    label: 'Our Model',
     href: '/our-model/',
     items: [
       { label: 'How it works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
-      { label: 'JobReady platform', href: '/our-model/jobready-platform/', description: 'Our learning and work platform, rolling out in stages.' },
+      { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Our learning and work platform, rolling out in stages.' },
     ],
     feature: {
       kind: 'model',
@@ -114,10 +114,10 @@ export const navGroups: NavGroup[] = [
       { label: 'Impact overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
       { label: 'Outcomes 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
       { label: 'Independent evaluation (RCT)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
-      { label: 'Case studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
-      { label: 'Success stories', href: '/impact/stories/', description: 'Learners in their own words.' },
-      { label: 'Global reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
-      { label: 'In the field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
+      { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
+      { label: 'Success Stories', href: '/impact/stories/', description: 'Learners in their own words.' },
+      { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
+      { label: 'In the Field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
     ],
     feature: {
       kind: 'stat',
@@ -132,7 +132,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     id: 'partner',
-    label: 'Partner with us',
+    label: 'Partner with Us',
     href: '/partner-with-us/',
     items: [
       { label: 'Development partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },

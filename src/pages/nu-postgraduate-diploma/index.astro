@@ -41,10 +41,10 @@ const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const courses = await nuCourses();
 
 const faqSources: FaqSource[] = [
-  { q: 'Is the NU Postgraduate Diploma right for me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
-  { q: 'Who delivers the diploma?', html: 'CodersTrust is National University’s official training partner for digital career skills and credentials, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
-  { q: 'Where do I find eligibility, schedule and fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. ${anchor(NU_CALL.href, NU_CALL.label)} to ask.` },
-  { q: 'How do I apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
+  { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
+  { q: 'Who Delivers the Diploma?', html: 'CodersTrust is National University’s official training partner for digital career skills and credentials, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. ${anchor(NU_CALL.href, NU_CALL.label)} to ask.` },
+  { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
 const jsonLd = [
@@ -71,32 +71,32 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C2 -->
   <ProblemSection
-    title="A degree alone is not producing job offers."
+    title="A Degree Alone Is Not Producing Job Offers."
     bluf="You want interviews, a first digital job and credentials employers recognize."
     factIds={['PX-03', 'PX-05']}
     scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
-    extra={[{ title: 'It is hard to know which skills to pick', text: 'Which skills and certifications to add next is not obvious, and the wrong choice costs time.' }]}
+    extra={[{ title: 'It Is Hard to Know Which Skills to Pick', text: 'Which skills and certifications to add next is not obvious, and the wrong choice costs time.' }]}
   />
 
   <!-- C3 -->
   <CostSection
-    title="Employers are asking for different skills."
+    title="Employers Are Asking for Different Skills."
     lead="AI is shifting which entry-level skills employers ask for, and a degree alone does not show them."
     blocks={[
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what you can do, so practical skills matter.' },
-      { claim: 'AI skills are growing in demand.', factId: 'PX-08', scope: 'Globally', implication: 'Employers look for AI skills alongside the degree.' },
+      { claim: 'AI Skills Are Growing in Demand.', factId: 'PX-08', scope: 'Globally', implication: 'Employers look for AI skills alongside the degree.' },
     ]}
   />
 
   <!-- C4 -->
   <FutureBand
     photos={futurePhotos('nu-pgd')}
-    title="What you can take from the diploma"
+    title="What You Can Take from the Diploma"
     lead="Illustrative: you finish with practical digital skills and a clearer route into work."
     vignettes={[
-      { kind: 'Functional', title: 'Practical digital skills', text: 'You build skills employers ask for, in digital marketing or ICT.' },
-      { kind: 'Emotional', title: 'A clearer idea of what to add next', text: 'A structured course replaces guesswork about which skills to pick.' },
-      { kind: 'Social', title: 'A route into work you can explain', text: 'You can tell employers what you can do.' },
+      { kind: 'Functional', title: 'Practical Digital Skills', text: 'You build skills employers ask for, in digital marketing or ICT.' },
+      { kind: 'Emotional', title: 'A Clearer Idea of What to Add Next', text: 'A structured course replaces guesswork about which skills to pick.' },
+      { kind: 'Social', title: 'A Route into Work You Can Explain', text: 'You can tell employers what you can do.' },
     ]}
   />
 
@@ -142,27 +142,27 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C8 -->
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How it works" title="How it works in three steps" />
+    <SectionHeader id="steps-h" eyebrow="How it works" title="How It Works in Three Steps" />
     <StepFlow
       steps={[
         { title: 'Apply', text: 'Complete the application form.' },
         { title: 'Learn', text: 'Attend the diploma courses.' },
-        { title: 'Move into work', text: 'Take your new skills into interviews, freelance work or your next role.' },
+        { title: 'Move into Work', text: 'Take your new skills into interviews, freelance work or your next role.' },
       ]}
     />
   </Section>
 
   <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions applicants ask" />
+  <FaqSection sources={faqSources} title="Questions Applicants Ask" />
 
   <!-- C11 -->
   <OfferSection
-    title="Fees, schedule and eligibility are confirmed with admissions."
+    title="Fees, Schedule and Eligibility Are Confirmed with Admissions."
     lead="Details are shared by the admissions team before you apply."
     cards={[
       { icon: 'clipboard-check', title: 'Eligibility', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'calendar-check', title: 'Intake and schedule', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'hand-coins', title: 'Fees and payment', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'calendar-check', title: 'Intake and Schedule', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Confirmed with admissions before you apply.' },
       { icon: 'award', title: 'Recognition', text: 'Ask admissions about recognition before you decide.' },
     ]}
   >
@@ -171,21 +171,21 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C12 -->
   <RiskSection
-    title="Talk to admissions before you decide."
+    title="Talk to Admissions Before You Decide."
     points={[
-      { icon: 'phone', title: 'Ask first', text: 'Call with your eligibility and recognition questions before you apply.' },
-      { icon: 'handshake', title: 'Applying starts a conversation', text: 'After you apply, our admissions team contacts you with the next steps.' },
+      { icon: 'phone', title: 'Ask First', text: 'Call with your eligibility and recognition questions before you apply.' },
+      { icon: 'handshake', title: 'Applying Starts a Conversation', text: 'After you apply, our admissions team contacts you with the next steps.' },
     ]}
   />
 
   <!-- C13 -->
-  <CTABand id="cta" heading="Ready to apply?" cta={apply} secondary={NU_CALL} />
+  <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL} />
 
   <!-- C14 -->
   <NextSteps
     steps={[
-      { title: 'Submit the application form', text: 'It takes you to the standalone application form.' },
-      { title: 'Admissions contacts you', text: 'Our admissions team shares the next steps.' },
+      { title: 'Submit the Application Form', text: 'It takes you to the standalone application form.' },
+      { title: 'Admissions Contacts You', text: 'Our admissions team shares the next steps.' },
     ]}
     firstAction="Submit the application form. Our admissions team will contact you with the next steps."
   />

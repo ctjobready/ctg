@@ -9,7 +9,7 @@ applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdN0J_VMgh0FYMTTx9DNRVYn840X
 modules: ["Fundamentals of Digital Marketing", "WordPress Design (Practical)", "AdWords & PPC", "Content Marketing (Practical)", "Affiliate & E-mail Marketing (Practical)", "E-Commerce", "Social Media Marketing", "Search Engine Optimization (SEO) - Practical", "Web & Google Analytics (Practical)", "Internship/ Project Work & Seminar"]
 internship: "The students are required to undergo an internship in Digital Marketing Firm for gaining practical experience in the field."
 faqs:
-  - q: "What is Digital Marketing, and why is it important in today’s business landscape?"
+  - q: "What Is Digital Marketing, and Why Is It Important in Today’s Business Landscape?"
     a: "Digital Marketing encompasses all online channels and methods to promote products or services. In the current business environment, where consumers are highly active online, digital marketing provides a powerful means to reach and engage the target audience, increase brand visibility, and drive business growth."
   - q: "How does the Postgraduate Diploma in Digital Marketing prepare students for real-world challenges in the industry?"
     a: "The PGD in Digital Marketing is designed to equip students with practical skills and knowledge. From fundamental concepts to hands-on experience in areas like SEO, social media marketing, and web analytics, the program ensures that students are ready to implement effective digital marketing strategies and contribute to the success of businesses in the real world."

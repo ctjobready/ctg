@@ -18,7 +18,7 @@ interface Props {
   programs?: boolean;
   id?: string;
 }
-const { steps = STEPS, heading = 'How it works in three steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
+const { steps = STEPS, heading = 'How It Works in Three Steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
 const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
 ---
 

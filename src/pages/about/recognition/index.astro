@@ -83,12 +83,12 @@ const kit = [
 ];
 
 const description = 'HolonIQ South Asia EdTech 100 listing, founder honors, media coverage from 2014 to 2016, and a press kit with logos and boilerplate for CodersTrust.';
-const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and media', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and media', path: '/about/recognition/' }] })];
+const jsonLd = [webPage({ path: '/about/recognition/', name: 'Recognition and Media', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Recognition and Media', path: '/about/recognition/' }] })];
 const media = { href: ctaHref('media'), label: 'Media inquiries' };
 ---
 
-<BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About us" title="Recognition and media" lead="CodersTrust is listed in the HolonIQ South Asia EdTech 100, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
+<BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
+  <Hero eyebrow="About us" title="Recognition and Media" lead="CodersTrust is listed in the HolonIQ South Asia EdTech 100, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
       <Button variant="outline" href="#press-kit">Press kit</Button>
@@ -107,7 +107,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
   </Section>
 
   <Section id="honors" tone="airy" aria-labelledby="honors-h">
-    <SectionHeader id="honors-h" eyebrow="Founder honors" title="Honors received by Aziz Ahmad" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
+    <SectionHeader id="honors-h" eyebrow="Founder honors" title="Honors Received by Aziz Ahmad" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
     <ul class="rec-honors" role="list" data-fact="PA-11">
       {
         honors.map((h) => (
@@ -134,7 +134,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
   </Section>
 
   <Section id="coverage" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="In the press" title="Media coverage, 2014 to 2016" lead="Coverage of CodersTrust’s first years, shown as published. Links go to the original article where we hold it." />
+    <SectionHeader id="coverage-h" eyebrow="In the press" title="Media Coverage, 2014 to 2016" lead="Coverage of CodersTrust’s first years, shown as published. Links go to the original article where we hold it." />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -161,7 +161,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
   {
     quotes.length > 0 && (
       <Section id="endorsements" tone="airy" aria-labelledby="end-h">
-        <SectionHeader id="end-h" eyebrow="Endorsements" title="In their words" />
+        <SectionHeader id="end-h" eyebrow="Endorsements" title="In Their Words" />
         <div class="rec-quotes">
           {quotes.map((e) => (
             <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
@@ -177,7 +177,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
   {
     FORUMS.length > 0 && (
       <Section id="forums" aria-labelledby="forums-h">
-        <SectionHeader id="forums-h" eyebrow="Forums and events" title="Where CodersTrust has taken part" lead="Selected appearances, each documented in a dated news post." />
+        <SectionHeader id="forums-h" eyebrow="Forums and events" title="Where CodersTrust Has Taken Part" lead="Selected appearances, each documented in a dated news post." />
         <ul class="rec-forums" role="list">
           {FORUMS.map((f) => (
             <li>
@@ -193,10 +193,10 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
     )
   }
 
-  <PhotoGallery id="photos" tone="white" eyebrow="In the field" title="Awards and forums in photographs" photos={galleryPhotos('recognition')} />
+  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
-    <SectionHeader id="kit-h" eyebrow="For journalists" title="Press kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />
+    <SectionHeader id="kit-h" eyebrow="For journalists" title="Press Kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />
     <div class="kit">
       <div class="kit__block">
         <h3 class="t-heading-m">Boilerplate</h3>
@@ -211,7 +211,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
         <p class="card__meta">CodersTrust, "Learn. Earn. Prosper."</p>
       </div>
       <div class="kit__block">
-        <h3 class="t-heading-m">Logo files</h3>
+        <h3 class="t-heading-m">Logo Files</h3>
         <ul class="kit__logos" role="list">
           {kit.map((k) => (
             <li class="card kit__logo">
@@ -232,7 +232,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
         <p class="card__meta">Do not recolor, stretch, rotate or add effects to the logos. Leave clear space around the logo at least as tall as the letter "C".</p>
       </div>
       <div class="kit__block">
-        <h3 class="t-heading-m">Media contact</h3>
+        <h3 class="t-heading-m">Media Contact</h3>
         <p>For interviews, background and quotes, write to the team. Include your outlet, your deadline and the topic.</p>
         <p><Button href={media.href} icon="mail">{media.label}</Button></p>
       </div>
@@ -241,7 +241,7 @@ const media = { href: ctaHref('media'), label: 'Media inquiries' };
 
   <CTABand
     id="rec-cta"
-    heading="Working on a story about youth employment?"
+    heading="Working on a Story About Youth Employment?"
     text="We can talk about what the evidence shows and what it does not."
     cta={{ label: media.label, href: media.href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}

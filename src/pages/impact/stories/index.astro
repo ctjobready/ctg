@@ -85,16 +85,16 @@ const cards = [...caseCards, ...anon, ...legacyCards];
 const description = desc('Learner stories from CodersTrust programs, in learners’ own words. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'Success stories', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' }),
+  articleNode({ path, headline: 'Success Stories', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' }),
 ];
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success stories' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Success stories: learners in their own words" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
+<BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learners in Their Own Words" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
 
   <Section aria-labelledby="stories-h">
-    <SectionHeader id="stories-h" eyebrow="Learners" title="What learners report" lead="Individual stories; not typical or promised outcomes." />
+    <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Individual stories; not typical or promised outcomes." />
     <StoryGallery cards={cards} />
     <div class="st__notes">
       <p><strong>Read these as individual stories.</strong> {CAVEATS.I} Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
@@ -102,7 +102,7 @@ const d = discoveryCta();
     </div>
   </Section>
 
-  <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 

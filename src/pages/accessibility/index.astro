@@ -14,7 +14,7 @@ const toc = [
   { id: 'limits', label: 'Known limitations' },
   { id: 'feedback', label: 'Tell us about a barrier' },
 ];
-const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statement', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Accessibility', path: '/accessibility/' }] })];
+const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility Statement', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Accessibility', path: '/accessibility/' }] })];
 ---
 
 <LongformLayout
@@ -29,12 +29,12 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statemen
 >
   <div class="prose lp">
     <section id="target" aria-labelledby="target-h">
-      <h2 id="target-h">Our target</h2>
+      <h2 id="target-h">Our Target</h2>
       <p>The target for this website is the Web Content Accessibility Guidelines (WCAG) 2.2, level AA. That includes the newer success criteria, such as focus not being hidden behind sticky page elements (2.4.11) and large enough touch targets (2.5.8). This statement describes the target and the measures we take. It is not a certificate of conformance, and we keep working on gaps.</p>
     </section>
 
     <section id="measures" aria-labelledby="measures-h">
-      <h2 id="measures-h">What we have done</h2>
+      <h2 id="measures-h">What We Have Done</h2>
       <ul>
         <li><strong>Structure.</strong> Every page has one main heading, a logical heading order, landmarks, and a "Skip to main content" link as the first item.</li>
         <li><strong>Keyboard.</strong> Menus, the mobile drawer, accordions, carousels and filters work with a keyboard. Focus is always visible, and the sticky header and announcement bar do not cover the element that has focus.</li>
@@ -48,12 +48,12 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statemen
     </section>
 
     <section id="map" aria-labelledby="map-h">
-      <h2 id="map-h">The world map</h2>
+      <h2 id="map-h">The World Map</h2>
       <p>The map on the <a href={url('/impact/global-reach/')}>global reach</a> page is a supplementary visual. Its pins are hidden from assistive technology and are not focus targets. Everything a pin shows is also in the location table on the same page, which is always visible and can be read and navigated by keyboard and screen reader. The table carries every detail the map shows.</p>
     </section>
 
     <section id="limits" aria-labelledby="limits-h">
-      <h2 id="limits-h">Known limitations</h2>
+      <h2 id="limits-h">Known Limitations</h2>
       <ul>
         <li><strong>Older news posts.</strong> News articles are carried over from our earlier website as published. Some photos in them have generic or empty alternative text, and some posts link to long web addresses. We are improving these as we edit posts.</li>
         <li><strong>Embedded and external content.</strong> Videos play on YouTube, and their captions and controls are YouTube’s. Pages we link to, such as jobready.global and the application form for the National University diploma, are run by others and may not meet the same standard.</li>
@@ -62,7 +62,7 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility statemen
     </section>
 
     <section id="feedback" aria-labelledby="feedback-h">
-      <h2 id="feedback-h">Tell us about a barrier</h2>
+      <h2 id="feedback-h">Tell Us About a Barrier</h2>
       <p>If something on this site is hard to use, or you need information in another format, write to <CopyEmail email={CONTACT.email} trail="." /> Please tell us the page, what you were trying to do, and the device or assistive technology you use. We will look into it and tell you what we can do.</p>
       <p>You can also call <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>.</p>
     </section>

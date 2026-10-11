@@ -40,8 +40,8 @@ const description = desc(`Surveyed completers: employment rose from ${val('OC-01
 const pc = D.percent;
 
 const jsonLd = [
-  webPage({ path, name: 'Impact Survey 2026: what happened after training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED }),
-  articleNode({ path, headline: 'Impact Survey 2026: what happened after training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED, author: 'CodersTrust' }),
+  webPage({ path, name: 'Impact Survey 2026: What Happened After Training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED }),
+  articleNode({ path, headline: 'Impact Survey 2026: What Happened After Training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED, author: 'CodersTrust' }),
   {
     ...dataset({
       path,
@@ -99,7 +99,7 @@ const reportLink = reportCta();
 
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
-  heading="Impact Survey 2026: what happened after training"
+  heading="Impact Survey 2026: What Happened After Training"
   eyebrow="Outcomes 2026 · surveyed completers"
   lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience, each with its own base."
   description={description}
@@ -110,7 +110,7 @@ const reportLink = reportCta();
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Outcomes 2026' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="ladder" title="Evidence ladder and how to read this report">
+  <ReportSection id="ladder" title="Evidence Ladder and How to Read This Report">
     <p>This survey is the second rung of four kinds of evidence. It reports what surveyed completers say; it does not show that training caused any change.</p>
     <EvidenceLadder links={false} headingLevel={3} />
     <Callout label="How to read this report">
@@ -136,7 +136,7 @@ const reportLink = reportCta();
     </div>
   </ReportSection>
 
-  <ReportSection id="respondents" title="Who responded">
+  <ReportSection id="respondents" title="Who Responded">
     <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" footnote={false} /> were already working). <Fact id="OC-09" /></p>
     <ColumnChart
       title="Respondents by age group"
@@ -177,7 +177,7 @@ const reportLink = reportCta();
     <p data-fact="OC-04" class="ro__src">Chart data: <Fact id="OC-04" field="label" /></p>
   </ReportSection>
 
-  <ReportSection id="speed" title="Speed to earnings">
+  <ReportSection id="speed" title="Speed to Earnings">
     <p data-fact="OC-05"><Fact id="OC-05" /></p>
     <ColumnChart
       title="Cumulative share of surveyed completers who first earned during or after training, by when they started earning"
@@ -190,35 +190,35 @@ const reportLink = reportCta();
     </Callout>
   </ReportSection>
 
-  <ReportSection id="income" title="Income: three separate measures">
+  <ReportSection id="income" title="Income: Three Separate Measures">
     <p>Income is reported three ways. Each measure has its own base, and they are not interchangeable.</p>
     <div class="ro__measure" data-fact="OC-03">
-      <h3 class="t-heading-l">Median monthly income</h3>
+      <h3 class="t-heading-l">Median Monthly Income</h3>
       <p><Fact id="OC-03" /></p>
       <p class="ro__base">Base: completers who reported income before and after training. The survey tables do not report a separate base for the medians, so none is shown here.</p>
     </div>
     <div class="ro__measure" data-fact="OC-03b">
-      <h3 class="t-heading-l">Direction of paired income change</h3>
+      <h3 class="t-heading-l">Direction of Paired Income Change</h3>
       <BarChart title="Paired monthly income change" items={incomeItems} note={`Base: n = ${D.INCOME_BASE} completers with paired income answers.`} />
       <p class="ro__src"><Fact id="OC-03b" /></p>
     </div>
     <div class="ro__measure" data-fact="OC-03c">
-      <h3 class="t-heading-l">Median individual change</h3>
+      <h3 class="t-heading-l">Median Individual Change</h3>
       <div class="ro__stats ro__stats--one"><BaseStat id="OC-03c" base="completers with valid paired income answers" /></div>
     </div>
   </ReportSection>
 
-  <ReportSection id="careers" title="Career outcomes">
+  <ReportSection id="careers" title="Career Outcomes">
     <p data-fact="OC-08"><Fact id="OC-08" /></p>
     <BarChart title="Career and education outcomes reported" items={career} max={100} note={`Base: n = ${D.CAREER.statedBase} surveyed completers. Each respondent appears once.`} />
   </ReportSection>
 
-  <ReportSection id="income-source" title="Main income source">
+  <ReportSection id="income-source" title="Main Income Source">
     <p data-fact="OC-07"><Fact id="OC-07" /></p>
-    <BarChart title="Main income source" items={source} max={100} note={`Base: valid respondents (number not stated in the report). This is the main income source, not where income is received or the quality of the job.`} />
+    <BarChart title="Main Income Source" items={source} max={100} note={`Base: valid respondents (number not stated in the report). This is the main income source, not where income is received or the quality of the job.`} />
   </ReportSection>
 
-  <ReportSection id="experience" title="Learner experience">
+  <ReportSection id="experience" title="Learner Experience">
     <p data-fact="OC-06"><Fact id="OC-06" /></p>
     <ColumnChart
       title="Recommendation score, 0 to 10, among surveyed completers"
@@ -228,12 +228,12 @@ const reportLink = reportCta();
     />
   </ReportSection>
 
-  <ReportSection id="no-prior-income" title="Completers with no prior income">
+  <ReportSection id="no-prior-income" title="Completers with No Prior Income">
     <p data-fact="OC-02"><Fact id="OC-02" /></p>
     <BarChart title="Completers (2014–2023) with no income before training" items={priorItems} max={100} note={`Small base: n = ${D.NO_PRIOR.base}. Read with care.`} />
   </ReportSection>
 
-  <ReportSection id="methodology" title={'Methodology & limitations'} anchorOnHeading>
+  <ReportSection id="methodology" title={'Methodology & Limitations'} anchorOnHeading>
     <Callout tone="caveat" label="Survey caveat"><p data-fact="OC-01">{CAVEATS.S}</p></Callout>
     <ul class="ro__list">
       <li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
@@ -247,7 +247,7 @@ const reportLink = reportCta();
     </ul>
   </ReportSection>
 
-  <ReportSection id="download" title="Download the data">
+  <ReportSection id="download" title="Download the Data">
     <p>The published aggregates are available as a CSV: one row per published percentage or median, with its base where the Impact Report states one. The file holds percentages and medians only; no counts are reconstructed from them.</p>
     <p><a class="ro__dl" href={csvHref} download>
       <Icon name="download" size={18} />Download outcomes-2026-aggregates.csv

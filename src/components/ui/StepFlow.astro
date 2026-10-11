@@ -8,6 +8,8 @@ interface Props {
 }
 const { steps, class: className, level = 3 } = Astro.props;
 const Tag = level === 4 ? 'h4' : 'h3';
+// step titles are often shared with body text (timelines, tables), so Title Case is applied here, for the heading only
+import { titleCase } from '../../lib/titleCase.mjs';
 ---
 
 <ol class:list={['steps', className]} role="list" style={`--n:${steps.length}`}>
@@ -16,7 +18,7 @@ const Tag = level === 4 ? 'h4' : 'h3';
       <li class="steps__item" data-reveal>
         <span class="steps__num" aria-hidden="true">{i + 1}</span>
         <div>
-          <Tag class="steps__title"><span class="sr-only">Step {i + 1}: </span>{s.title}</Tag>
+          <Tag class="steps__title"><span class="sr-only">Step {i + 1}: </span>{titleCase(s.title)}</Tag>
           {s.text && <p class="steps__text">{s.text}</p>}
         </div>
       </li>

@@ -8,11 +8,11 @@ import { fact } from '../../data/facts';
  * supports, with the scope in the sentence, so a card heading never generalizes past the evidence.
  */
 /** PX-06: the freelancing-platform postings result. */
-export const CLAIM_PX06 = 'On one major freelancing platform, automation-prone postings fell after ChatGPT’s release.';
+export const CLAIM_PX06 = 'On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.';
 /** RC-06: the review of vocational-training trials. */
-export const CLAIM_RC06 = 'A review of nine trials found only three with significant employment impacts.';
+export const CLAIM_RC06 = 'A Review of Nine Trials Found Only Three with Significant Employment Impacts.';
 /** PX-11: coastal-district out-migration (measured for one district, census 2001–2011; the perfect tense keeps the heading from reading as today's rate, and it claims no cause). */
-export const CLAIM_PX11 = 'Climate-exposed coastal districts have been losing their young people.';
+export const CLAIM_PX11 = 'Climate-Exposed Coastal Districts Have Been Losing Their Young People.';
 
 /**
  * First mention of SSC in a sentence taken from the register ("... 2.0% for SSC holders"): spelled out once, so a reader who does not know

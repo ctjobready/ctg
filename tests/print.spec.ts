@@ -16,8 +16,8 @@ import { pageByRoute } from './support/pages';
  */
 const CANONICAL_ORIGIN = 'https://coderstrust.global';
 const EVIDENCE = [
-  { route: '/impact/independent-evaluation/', h1: 'A randomized trial of CodersTrust’s training for women in Dhaka' },
-  { route: '/impact/outcomes-2026/', h1: 'Impact Survey 2026: what happened after training' },
+  { route: '/impact/independent-evaluation/', h1: 'A Randomized Trial of CodersTrust’s Training for Women in Dhaka' },
+  { route: '/impact/outcomes-2026/', h1: 'Impact Survey 2026: What Happened After Training' },
 ];
 
 /** The chrome and the calls to action that never print. */

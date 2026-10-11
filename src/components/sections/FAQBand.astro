@@ -25,7 +25,7 @@ interface Props {
   /** Accordion group name (exclusive). */
   name?: string;
 }
-const { audience, ids, title = 'Questions partners ask', lead, allLink, id = 'faq', name = `${id}-group` } = Astro.props;
+const { audience, ids, title = 'Questions Partners Ask', lead, allLink, id = 'faq', name = `${id}-group` } = Astro.props;
 const items = faqItems(audience, ids, Astro);
 ---
 

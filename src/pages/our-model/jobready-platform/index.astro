@@ -19,7 +19,7 @@ const JOBREADY = 'https://jobready.global/';
 const description = desc('JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Partner portals, CRM and AI chat are live.');
 const faqIds = ['Q11'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: CodersTrust’s digital education and employment platform', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady platform' } }),
+  articleNode({ path, headline: 'JobReady: CodersTrust’s Digital Education and Employment Platform', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds, Astro);
@@ -36,8 +36,8 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
 // Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
 const roadmap = [
-  { icon: 'route', title: 'Personalized learning', text: 'The platform is designed to personalize each learner’s path, building on the TalentLEAP competency model.' },
-  { icon: 'trending-up', title: 'Adaptive learning', text: 'The platform is designed to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
+  { icon: 'route', title: 'Personalized Learning', text: 'The platform is designed to personalize each learner’s path, building on the TalentLEAP competency model.' },
+  { icon: 'trending-up', title: 'Adaptive Learning', text: 'The platform is designed to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
 ];
 const toc = [
   { id: 'jobs', label: 'Four jobs' },
@@ -50,27 +50,27 @@ const f = fundingCta();
 
 <LongformLayout
   title={title('JobReady Platform')}
-  heading="JobReady: CodersTrust’s digital education and employment platform"
-  eyebrow="Our model"
+  heading="JobReady: CodersTrust’s Digital Education and Employment Platform"
+  eyebrow="Our Model"
   lead={/[.!?]$/.test(fact('IN-04').text) ? fact('IN-04').text : `${fact('IN-04').text}.`}
   description={description}
   path={path}
   updated="2026-10-08"
   toc={toc}
-  breadcrumbs={[{ label: 'Our model', href: '/our-model/' }, { label: 'JobReady platform' }]}
+  breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="jobs" title="Four jobs, one platform">
+  <ReportSection id="jobs" title="Four Jobs, One Platform">
     <p data-fact="IN-04">JobReady is built around four jobs. The table below says which capabilities are live today.</p>
     <div class="jr__cards">
       <FeatureCard icon="graduation-cap" title="Train" text="Trains youth through courses that prepare for industry certification; the course storefront operates at jobready.global." />
-      <FeatureCard icon="briefcase" title="Connect to work" text="Connects learners to local, remote and global work." />
-      <FeatureCard icon="users" title="Supply talent" text="Supplies employers with job-ready talent." />
-      <FeatureCard icon="landmark" title="Equip institutions" text="Gives institutions a digital delivery platform." />
+      <FeatureCard icon="briefcase" title="Connect to Work" text="Connects learners to local, remote and global work." />
+      <FeatureCard icon="users" title="Supply Talent" text="Supplies employers with job-ready talent." />
+      <FeatureCard icon="landmark" title="Equip Institutions" text="Gives institutions a digital delivery platform." />
     </div>
   </ReportSection>
 
-  <ReportSection id="status" title="Rollout status">
+  <ReportSection id="status" title="Rollout Status">
     <p>Categories of capability and their status, as of this page’s last update.</p>
     <section class="jr__table" aria-label="Platform capabilities and status" tabindex="0" data-scroll data-stack>
       <table>
@@ -94,7 +94,7 @@ const f = fundingCta();
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
   </ReportSection>
 
-  <ReportSection id="roadmap" title="AI-native roadmap: what the platform is designed to do">
+  <ReportSection id="roadmap" title="AI-Native Roadmap: What the Platform Is Designed to Do">
     <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. Everything below is roadmap, described as what the platform is designed to do, and none of it is presented as live.</p>
     <div class="jr__cards jr__cards--roadmap" data-fact="IN-06">
       {roadmap.map((r) => (
@@ -105,12 +105,12 @@ const f = fundingCta();
     </div>
   </ReportSection>
 
-  <ReportSection id="faq" title="Questions about the platform">
+  <ReportSection id="faq" title="Questions About the Platform">
     <Accordion items={faq} name="jr-faq" openFirst />
   </ReportSection>
 
   <aside class="jr__next" aria-label="Fund the platform">
-    <h2 class="jr__nexttitle">Fund the platform’s next stage.</h2>
+    <h2 class="jr__nexttitle">Fund the Platform’s Next Stage.</h2>
     <p>A platform grant helps CodersTrust roll out the remaining modules.</p>
     <div class="jr__actions">
       <Button href={f.href} iconEnd="arrow-right">{f.label}</Button>

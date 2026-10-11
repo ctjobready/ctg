@@ -1,5 +1,5 @@
 ---
-title: "Enhanced technology skills can ensure peace, says Aziz Ahmad"
+title: "Enhanced Technology Skills Can Ensure Peace, Says Aziz Ahmad"
 date: 2023-05-04
 updated: 2024-06-25
 topic: leadership-advocacy

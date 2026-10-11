@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust brings Discovery Education, the Global Leader of STEM Education, to Bangladeshi Schools and Learners"
+title: "CodersTrust Brings Discovery Education, the Global Leader of STEM Education, to Bangladeshi Schools and Learners"
 date: 2023-06-15
 updated: 2023-08-30
 topic: partnerships

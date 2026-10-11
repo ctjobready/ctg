@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust partners up with University for Peace (UPEACE) to offer Next Generation Skills training for Global Development and Peace in the Digital Era"
+title: "CodersTrust Partners up with University for Peace (UPEACE) to Offer Next Generation Skills Training for Global Development and Peace in the Digital Era"
 date: 2023-06-01
 updated: 2024-11-05
 topic: partnerships

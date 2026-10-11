@@ -11,7 +11,7 @@ internship: "The students are required to undergo an internship in Information &
 faqs:
   - q: "How long does it take to complete the Postgraduate Diploma in ICT?"
     a: "The program typically takes 12 months to complete, with a total of 40 credit hours spread across 10 subjects."
-  - q: "What can I expect from the course structure?"
+  - q: "What Can I Expect from the Course Structure?"
     a: "The course structure is designed to provide a comprehensive learning experience, covering a range of subjects such as Introduction to ICT, Office Automation, Java Programming, System Maintenance and Troubleshooting, Computer Networks Maintenance, Mobile Application Development, and Web Application & Website Design."
   - q: "What kind of skills will I develop through this program?"
     a: "Throughout the program, students develop proficiency in areas such as programming languages, system maintenance, troubleshooting, network management, database administration, mobile application development, and web design. They also enhance problem-solving and critical thinking abilities."

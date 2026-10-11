@@ -20,11 +20,11 @@ const popular = [
 ];
 ---
 
-<BaseLayout title="Page not found" description="The page you were looking for could not be found. Find your way from here." path="/404/" noindex promo={false}>
+<BaseLayout title="Page Not Found" description="The page you were looking for could not be found. Find your way from here." path="/404/" noindex promo={false}>
   <section class="nf">
     <div class="container nf__inner">
       <p class="eyebrow">Error 404</p>
-      <h1 class="t-display-4xl">We can’t find that page</h1>
+      <h1 class="t-display-4xl">We Can’t Find That Page</h1>
       <p class="lead">The link may be out of date or mistyped. Tell us who you are and we will point you to the right place.</p>
       <div class="cluster">
         <Button href="/" iconEnd="arrow-right">Go to the home page</Button>
@@ -34,7 +34,7 @@ const popular = [
   </section>
 
   <Section tone="airy" aria-labelledby="router-h">
-    <SectionHeader id="router-h" eyebrow="Start here" title="Who are you?" lead="Each path leads to the evidence and the next step for your role." />
+    <SectionHeader id="router-h" eyebrow="Start here" title="Who Are You?" lead="Each path leads to the evidence and the next step for your role." />
     <div class="grid-cards">
       {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       <CategoryCard title="Learners" icon="book-open" text="Browse courses on JobReady.global" href={COURSES_URL} />
@@ -42,7 +42,7 @@ const popular = [
   </Section>
 
   <Section aria-labelledby="popular-h">
-    <SectionHeader id="popular-h" title="Popular pages" />
+    <SectionHeader id="popular-h" title="Popular Pages" />
     <ul class="nf__links" role="list">
       {
         popular.map((p) => (

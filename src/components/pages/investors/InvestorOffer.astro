@@ -12,13 +12,13 @@ interface Props {
 }
 const { id = 'offer' } = Astro.props;
 const items = [
-  { icon: 'phone', title: 'An introduction call', text: 'A conversation about your investment focus and the thesis. It comes first.' },
-  { icon: 'file-lock', title: 'The deck and data room, under NDA', text: 'The investor deck and the data room follow the call, under NDA.' },
+  { icon: 'phone', title: 'An Introduction Call', text: 'A conversation about your investment focus and the thesis. It comes first.' },
+  { icon: 'file-lock', title: 'The Deck and Data Room, Under NDA', text: 'The investor deck and the data room follow the call, under NDA.' },
 ];
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The offer" title="What you receive" lead="This page shows thesis and traction only. The rest is shared in conversation, in the four steps below." />
+  <SectionHeader id={`${id}-h`} eyebrow="The offer" title="What You Receive" lead="This page shows thesis and traction only. The rest is shared in conversation, in the four steps below." />
   <ol class="grid-cards grid-cards--2 io" role="list">
     {
       items.map((it, i) => (

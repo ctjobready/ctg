@@ -17,7 +17,7 @@ interface Props {
   id?: string;
 }
 const {
-  title = 'Three ways to start, sized to your goals',
+  title = 'Three Ways to Start, Sized to Your Goals',
   lead = 'Pricing is set per program, and we share an indicative budget in the discovery session.',
   blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
   id = 'offer',
@@ -53,7 +53,7 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
     }
   </div>
   <div class="offer__incl" data-reveal>
-    <h3 class="t-heading-l" data-fact="PD-02">Standard inclusions</h3>
+    <h3 class="t-heading-l" data-fact="PD-02">Standard Inclusions</h3>
     <ul role="list">
       {includes.map((s) => <li><Icon name="circle-check" size={20} />{s}</li>)}
     </ul>

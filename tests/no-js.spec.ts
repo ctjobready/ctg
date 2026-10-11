@@ -91,7 +91,7 @@ test.describe('no JS', () => {
             expect.soft(expected.filter((h) => !navHrefs.includes(h)), 'group hubs, top links and the header CTA missing from the no-JS nav').toEqual([]);
             const footerHrefs = await visibleHrefs(page, 'footer');
             expect.soft(footerHrefs.length, 'visible footer links').toBeGreaterThan(15);
-            const footerItems = nav.groups.filter((g) => ['About', 'Programs', 'Impact', 'Partner with us'].includes(g.label)).flatMap((g) => g.links.filter((l) => !l.overview).map((l) => l.href));
+            const footerItems = nav.groups.filter((g) => ['About', 'Programs', 'Impact', 'Partner with Us'].includes(g.label)).flatMap((g) => g.links.filter((l) => !l.overview).map((l) => l.href));
             expect.soft(footerItems.filter((h) => !footerHrefs.includes(h)), 'footer is missing destinations that the mega-menus list').toEqual([]);
           });
         }

@@ -41,7 +41,7 @@ const checklist = [
 
 const description = "CodersTrust’s offices, leadership, safeguarding and data-protection arrangements, and how funders can ask about due diligence.";
 const jsonLd = [
-  webPage({ path: '/about/governance/', name: 'Governance and accountability', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Governance', path: '/about/governance/' }] }),
+  webPage({ path: '/about/governance/', name: 'Governance and Accountability', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Governance', path: '/about/governance/' }] }),
   // Both offices are already on the Organization node of every page (organization() in src/lib/schema.ts).
   faqJsonLd('governments', '/about/governance/', FAQ_IDS),
 ];
@@ -49,7 +49,7 @@ const jsonLd = [
 
 <BaseLayout title="Governance and Accountability" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Governance' }]} jsonLd={jsonLd}>
   <div data-fact="ID-07 PD-13" id="hero">
-    <Hero eyebrow="For funders, procurement teams and partners" title="Governance and accountability" lead={GOVERNANCE.text} artSeed="governance">
+    <Hero eyebrow="For funders, procurement teams and partners" title="Governance and Accountability" lead={GOVERNANCE.text} artSeed="governance">
       <p class="gov-updated">Last updated <time datetime={isoDate(UPDATED)}>{formatDate(UPDATED)}</time></p>
       <Fragment slot="actions">
         <Button href={diligence.href} iconEnd="arrow-right">{diligence.label}</Button>
@@ -59,7 +59,7 @@ const jsonLd = [
   </div>
 
   <Section id="offices" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to find us" lead="CodersTrust lists two offices. Legal form, registration and how the two relate are confirmed with funders during co-design." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust lists two offices. Legal form, registration and how the two relate are confirmed with funders during co-design." />
     <div class="grid-cards grid-cards--2">
       <OfficeCard {...usa} role="Office in New York" />
       <OfficeCard {...bd} role="Headquarters in Dhaka" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
@@ -67,7 +67,7 @@ const jsonLd = [
   </Section>
 
   <Section id="leadership" tone="airy" aria-labelledby="lead-h">
-    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who leads CodersTrust" lead="The Chairman and the head of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="The Chairman and the head of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
     <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
       {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
@@ -75,7 +75,7 @@ const jsonLd = [
   </Section>
 
   <Section id="safeguarding" aria-labelledby="safe-h">
-    <SectionHeader id="safe-h" eyebrow="Safeguarding" title="How people are protected" />
+    <SectionHeader id="safe-h" eyebrow="Safeguarding" title="How People Are Protected" />
     <div class="gov-text">
       <CopyBlock class="lead" block={SAFEGUARDING} />
       <p data-fact="PD-12">Funders receive privacy-appropriate data.</p>
@@ -83,17 +83,17 @@ const jsonLd = [
   </Section>
 
   <Section id="anti-fraud" tone="ice" aria-labelledby="fraud-h">
-    <SectionHeader id="fraud-h" eyebrow="Anti-fraud and data protection" title="How results are evidenced and records are kept" />
+    <SectionHeader id="fraud-h" eyebrow="Anti-fraud and data protection" title="How Results Are Evidenced and Records Are Kept" />
     <div class="grid-cards grid-cards--2">
       <article class="card" data-reveal>
         <div class="card__body">
-          <h3 class="card__title">Evidence of results</h3>
+          <h3 class="card__title">Evidence of Results</h3>
           <p class="card__text"><Fact id="PD-09" /></p>
         </div>
       </article>
       <article class="card" data-reveal>
         <div class="card__body">
-          <h3 class="card__title">Consent and records</h3>
+          <h3 class="card__title">Consent and Records</h3>
           <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policy documents are discussed with funders during co-design rather than published on this site.</p>
         </div>
       </article>
@@ -101,7 +101,7 @@ const jsonLd = [
   </Section>
 
   <Section id="evidence" aria-labelledby="evid-h">
-    <SectionHeader id="evid-h" eyebrow="Independent evidence" title="Judged by independent evaluators, and by you" />
+    <SectionHeader id="evid-h" eyebrow="Independent evidence" title="Judged by Independent Evaluators, and by You" />
     <div class="gov-text">
       <CopyBlock class="lead" block={RCT_HEADLINE} />
       <p data-fact="PD-08">Funders also receive monthly reports from the first cohort, and independent evaluation is welcome.</p>
@@ -109,10 +109,10 @@ const jsonLd = [
     </div>
   </Section>
 
-  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions on safeguarding, evidence and funding" />
+  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions on Safeguarding, Evidence and Funding" />
 
   <Section id="checklist" tone="airy" aria-labelledby="check-h">
-    <SectionHeader id="check-h" eyebrow="Due diligence" title="What we confirm with you in co-design" />
+    <SectionHeader id="check-h" eyebrow="Due diligence" title="What We Confirm with You in Co-Design" />
     <div class="gov-check" data-fact="PD-13">
       <p>These items are confirmed with the funder during co-design. This list is a checklist for the conversation: tell us which documents you need and by when, and we confirm what is available for your program.</p>
       <ul class="gov-check__list" role="list">
@@ -124,18 +124,18 @@ const jsonLd = [
 
   <CTABand
     id="diligence-cta"
-    heading="Ask about due diligence"
+    heading="Ask About Due Diligence"
     text="Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared."
     cta={{ label: diligence.label, href: diligence.href }}
     secondary={{ label: 'Read our evidence', href: '/impact/' }}
   />
 
   <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="What happens next" title="From your question to a clarification call" />
+    <SectionHeader id="next-h" eyebrow="What Happens Next" title="From Your Question to a Clarification Call" />
     <StepFlow steps={[
-      { title: 'Your question', text: 'Tell us the organization, the program or grant under consideration and what you need.' },
-      { title: 'Our reply', text: 'We reply with what can be shared.' },
-      { title: 'Clarification call', text: 'We talk through anything that needs clarifying.' },
+      { title: 'Your Question', text: 'Tell us the organization, the program or grant under consideration and what you need.' },
+      { title: 'Our Reply', text: 'We reply with what can be shared.' },
+      { title: 'Clarification Call', text: 'We talk through anything that needs clarifying.' },
     ]} />
   </Section>
 

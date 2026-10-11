@@ -24,7 +24,7 @@ const path = '/impact/in-the-field/';
 const description = desc('Photographs from CodersTrust programs, partner meetings and events, grouped by program, partner and year, with captions and descriptions.');
 const jsonLd = [
   webPage({ path, name: 'In the field: CodersTrust photo archive', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'In the field', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
+  articleNode({ path, headline: 'In the Field', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
 ];
 
 const reg = (keys: string[]): Photo[] => keys.map(photo);
@@ -34,7 +34,7 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   {
     id: 'superkids',
     eyebrow: 'Programs',
-    title: 'SuperKids: STEAM learning for school students',
+    title: 'SuperKids: STEAM Learning for School Students',
     lead: 'SuperKids is CodersTrust’s school STEAM and digital-skills program for children. These photographs show workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
     photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
   },
@@ -48,35 +48,35 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   {
     id: 'women',
     eyebrow: 'Programs',
-    title: 'Women’s programs: Her Power, Kosovo, Albania and WSDFM',
+    title: 'Women’s Programs: Her Power, Kosovo, Albania and WSDFM',
     lead: 'Training rooms and ceremonies from programs for women learners.',
     photos: reg(['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group', 'impact/her-power-training-lab', 'general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'impact/wsdfm-training-group', 'general/women-learners-classroom', 'general/lab-women-screen', 'general/empowering-women-event']),
   },
   {
     id: 'youth',
     eyebrow: 'Programs',
-    title: 'UNDP YES and learner communities',
+    title: 'UNDP YES and Learner Communities',
     lead: 'Trainees from the UNDP YES (Youth Employment through Skills) program, and learners and graduates across programs.',
     photos: reg(['general/yes-trainees-group', 'general/yes-collage', 'general/woman-learner-laptop', 'general/learner-mosaic']),
   },
   {
     id: 'campus-work',
     eyebrow: 'Programs',
-    title: 'JobReady: campuses, labs and workplaces',
+    title: 'JobReady: Campuses, Labs and Workplaces',
     lead: 'Where learners train, and the offices and team behind the programs.',
     photos: reg(['general/students-campus-smiling', 'nu-pgd/students-laptops', 'general/computer-lab-rows', 'general/office-support-headset', 'general/office-meeting', 'general/office-exterior', 'general/team-tshirts', 'about/careers-team-falgun-celebration', 'about/careers-team-picnic']),
   },
   {
     id: 'partners',
     eyebrow: 'Partners',
-    title: 'Partnerships and MoU signings',
+    title: 'Partnerships and MoU Signings',
     lead: 'Agreements and affiliations with government bodies and universities.',
     photos: reg(['general/dict-hitech-mou', 'general/nctb-meeting', 'general/nu-affiliation-group', 'general/nu-affiliation-meeting', 'field/ccny-mou-signing']),
   },
   {
     id: 'recognition',
     eyebrow: 'Recognition',
-    title: 'Recognition and advocacy',
+    title: 'Recognition and Advocacy',
     lead: 'Awards, forums and meetings with institutions and leaders.',
     photos: reg(['recognition/speaking-students', 'recognition/excellence-award', 'recognition/supply-chain-award', 'recognition/nasdaq-sba', 'recognition/davos-sdg-lab', 'recognition/us-chamber', 'recognition/european-parliament', 'recognition/pope-francis', 'recognition/pm-bangladesh', 'general/panel-international-forum', 'field/team-award-presentation', 'field/plaque-presentation']),
   },
@@ -126,8 +126,8 @@ const jump = [
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the field" lead="Photographs from CodersTrust programs, partner meetings and events, grouped by program, partner and year. Each picture has a short caption and a description for screen readers." artSeed="field-hub" />
+<BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, grouped by program, partner and year. Each picture has a short caption and a description for screen readers." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a group">
     <nav class="itf__jump" aria-label="Groups of photographs">
@@ -145,13 +145,13 @@ const d = discoveryCta();
 
   {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
-  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and events" title={`Partners, programs and events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and events" title={`Partners, Programs and Events,${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

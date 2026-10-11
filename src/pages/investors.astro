@@ -55,10 +55,10 @@ const learnEarnProsper = [
   { title: 'Prosper', text: 'Career advancement along graduated levels.' },
 ];
 const mechanismBlocks = [
-  { label: 'Learn', title: 'Courses, bootcamps and university programs', text: 'AI-ready digital skills, with preparation for industry certification.', icon: 'graduation-cap' },
-  { label: 'Earn', title: 'Jobs, freelance work and gigs', text: 'Placement support and mentoring into paid work.', icon: 'briefcase' },
-  { label: 'Prosper', title: 'Career paths and continuing development', text: 'Graduated competency levels through TalentLEAP.', icon: 'trending-up' },
-  { label: 'Institutions', title: 'A digital delivery platform', text: 'Partner portals for governments, universities and partners.', icon: 'building-2' },
+  { label: 'Learn', title: 'Courses, Bootcamps and University Programs', text: 'AI-ready digital skills, with preparation for industry certification.', icon: 'graduation-cap' },
+  { label: 'Earn', title: 'Jobs, Freelance Work and Gigs', text: 'Placement support and mentoring into paid work.', icon: 'briefcase' },
+  { label: 'Prosper', title: 'Career Paths and Continuing Development', text: 'Graduated competency levels through TalentLEAP.', icon: 'trending-up' },
+  { label: 'Institutions', title: 'A Digital Delivery Platform', text: 'Partner portals for governments, universities and partners.', icon: 'building-2' },
 ];
 ---
 
@@ -83,7 +83,7 @@ const mechanismBlocks = [
   <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The model" title="A multi-sided model: learn, earn, prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
+    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
       <InvestorMarket />
     </HomeMechanism>
   </Tone>
@@ -103,29 +103,29 @@ const mechanismBlocks = [
       <InvestorProofExtras />
     </EvidenceBand>
   </Tone>
-  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in practice" lead="Three programs, with their partners." items={caseStudyItems} /></Tone>
+  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
-    <FeaturesTable id="features" title="What the platform does — and what it means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
+    <FeaturesTable id="features" title="What the Platform Does — And What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
     <FeatureSteps id="how-it-works" steps={learnEarnProsper} facts={['ID-06', 'IN-04']} programs={false}>
       <PlatformStatus />
     </FeatureSteps>
   </Tone>
 
-  <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions investors ask" eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
+  <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
 
-  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
+  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches." /></Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
   <Tone cmf="C12">
     <RiskReversalBand
       id="risk"
-      title="Start with a conversation, not a commitment."
+      title="Start with a Conversation, Not a Commitment."
       points={[
-        { icon: 'phone', title: 'An introduction call first', text: 'We start by understanding your focus.' },
-        { icon: 'file-lock', title: 'The deck and data room under NDA', text: 'They follow the call, once an NDA is in place.' },
-        { icon: 'handshake', title: 'You decide what happens next', text: 'The call does not commit either side.' },
+        { icon: 'phone', title: 'An Introduction Call First', text: 'We start by understanding your focus.' },
+        { icon: 'file-lock', title: 'The Deck and Data Room Under NDA', text: 'They follow the call, once an NDA is in place.' },
+        { icon: 'handshake', title: 'You Decide What Happens Next', text: 'The call does not commit either side.' },
       ]}
     />
   </Tone>
@@ -134,7 +134,7 @@ const mechanismBlocks = [
     <CTABand
       id="cta"
       tone="klein"
-      heading="Let’s talk about backing the platform."
+      heading="Let’s Talk About Backing the Platform."
       cta={{ label: investor.label, href: investor.href }}
       secondary={{ label: 'Meet the leadership team', href: '/about/team/' }}
       micro="An introduction call comes first; the deck follows under NDA."
@@ -144,13 +144,13 @@ const mechanismBlocks = [
   <Tone cmf="C14">
     <ConversionNextSteps
       id="next-steps"
-      title="What happens after you ask"
+      title="What Happens After You Ask"
       lead="Four steps, at your pace."
       steps={[
-        { title: 'Introduction call', text: 'A conversation about your investment focus and the thesis.' },
+        { title: 'Introduction Call', text: 'A conversation about your investment focus and the thesis.' },
         { title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
-        { title: 'Deck and data room', text: 'You receive the investor deck and access to the data room.' },
-        { title: 'Your questions', text: 'We answer your questions and agree what comes next.' },
+        { title: 'Deck and Data Room', text: 'You receive the investor deck and access to the data room.' },
+        { title: 'Your Questions', text: 'We answer your questions and agree what comes next.' },
       ]}
       validate={C14.validate}
       reminder={{ text: C14.variants.investors, facts: [] }}
