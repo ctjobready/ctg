@@ -36,14 +36,14 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
 export const HEADLINE: Record<Audience, string> = {
-  home: 'Turn Youth Unemployment into Digital Employment — With Evidence.',
+  home: 'Turn Youth Unemployment into Digital Employment — with Evidence.',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
   governments: 'Turn Graduates and Digital Labs into a National Digital Workforce.',
   foundations: 'Fund a Supported Path from Learning to Earning.',
   universities: 'Help Your Graduates Build Job-Ready Digital Skills.',
-  employers: 'Upskill Your Teams for AI — And Hire Job-Ready Digital Talent.',
+  employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
   investors: 'Invest in the Infrastructure of Emerging-Market Work.',
-  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — In Your Community.',
+  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.',
   nuPgd: 'Build the Digital Skills Employers Are Hiring for — After Your Degree.',
 };
 
@@ -360,7 +360,7 @@ export const C14 = {
 export const DEFINITION_HEADING = 'What Is CodersTrust?';
 
 export const HOME_META = {
-  title: 'CodersTrust — From Learning to Earning for Youth',
+  title: 'CodersTrust — from Learning to Earning for Youth',
   description: 'A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed. We train youth for paid digital work.',
 };
 

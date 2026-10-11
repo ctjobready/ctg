@@ -74,7 +74,7 @@ function selfTest() {
     ['What is the cost of a 100 hours course?', 'What Is the Cost of a 100 Hours Course?'],
     ['YouthWIDE in Bangladesh: how it works', 'YouthWIDE in Bangladesh: How It Works'],
     ['Why e-commerce needs AI and a "quoted phrase" too', 'Why E-Commerce Needs AI and a "quoted phrase" Too'],
-    ['Up to date — and ready for the world', 'Up to Date — And Ready for the World'],
+    ['Up to date — and ready for the world', 'Up to Date — and Ready for the World'],
     ['JobReady@Campus vs JobReady@Work', 'JobReady@Campus vs JobReady@Work'],
   ];
   const problems = [];

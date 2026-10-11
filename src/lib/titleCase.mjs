@@ -3,7 +3,7 @@
  *
  * - First and last word, and every major word, are capitalized (nouns, verbs incl. Is/Are/Be, adjectives, adverbs, pronouns,
  *   subordinating conjunctions such as If/Because/That).
- * - MINOR words stay lower case unless first/last or right after a colon, an em dash or a sentence-ending ? or !.
+ * - MINOR words stay lower case unless first/last or right after a colon or a sentence-ending ? or !. A dash does not force a capital.
  * - Hyphenated and slashed compounds: every part is capitalized except minor words ("Job-Ready", "Two-Year", "Built-in").
  * - Tokens that already contain a capital after their first letter (CodersTrust, YouthWIDE, JobReady@Campus, AI, BIGD, NGOs,
  *   MoU, U.S., iDE, eBay ...) are brand/acronym/mixed-case tokens and are never altered. Tokens that start with a digit are left alone.
@@ -11,7 +11,7 @@
  */
 
 export const MINOR = new Set([
-  'a', 'an', 'the', 'and', 'but', 'or', 'nor', 'for', 'so', 'yet', 'as', 'at', 'by', 'in', 'of', 'off', 'on', 'per', 'to', 'up', 'via', 'vs', 'with',
+  'a', 'an', 'the', 'and', 'but', 'or', 'nor', 'for', 'so', 'yet', 'as', 'at', 'by', 'in', 'of', 'off', 'on', 'per', 'to', 'via', 'vs', 'with',
   'from', 'into', 'onto', 'over',
 ]);
 /** lower-case abbreviations that are never capitalized */
@@ -41,7 +41,7 @@ export function titleCase(input) {
     const p = parts[i];
     if (i % 2 === 1) {
       // separator: an em/en dash or a spaced hyphen starts a new clause
-      if (isDashSep(p)) force = true;
+      if (isDashSep(p)) force = false; // a dash does not start a capitalized clause (Chicago); minor words after it stay lower case
       continue;
     }
     if (p === '') continue;
