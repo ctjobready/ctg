@@ -8,7 +8,7 @@ cover: ../../assets/images/news/coderstrust-seals-groundbreaking-mou-with-nctb-p
 coverAlt: "Officials exchanging signed MoU folders in front of the NCTB and CodersTrust banner"
 coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/"
-tags: ["Featured News", "k-12 Education", "Latest News", "NationWIDE"]
+tags: ["Featured News", "k-12 Education", "Latest News", "YouthWIDE"]
 seoTitle: "NCTB MoU on Competency-Based Learning"
 ---
 

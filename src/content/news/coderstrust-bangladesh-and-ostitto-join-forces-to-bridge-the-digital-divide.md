@@ -7,7 +7,7 @@ excerpt: "CodersTrust Bangladesh signs an MoU with Ostitto Bangladesh, a non-pro
 cover: ../../assets/images/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/mou-with-ostitto-and-ct-1.jpg
 coverAlt: "CodersTrust Bangladesh and Ostitto Bangladesh representatives at the MoU signing"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/"
-tags: ["Latest News", "NationWIDE", "News and Events", "Third-gender Training"]
+tags: ["Latest News", "YouthWIDE", "News and Events", "Third-gender Training"]
 seoTitle: "Ostitto MoU to Bridge the Digital Divide"
 ---
 

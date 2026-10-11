@@ -62,7 +62,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Training cohort',
     factId: 'PR-05',
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',
-    related: { label: 'See NationWIDE, the national initiative', href: '/programs/nationwide/' },
+    related: { label: 'See YouthWIDE in Bangladesh, the national initiative', href: '/programs/youthwide/#governments' },
   },
 ];
 

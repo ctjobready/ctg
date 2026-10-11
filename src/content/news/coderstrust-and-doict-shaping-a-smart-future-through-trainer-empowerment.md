@@ -7,7 +7,7 @@ excerpt: "CodersTrust and the DoICT conclude a five-day Training of Trainers pro
 cover: ../../assets/images/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/tot-closing-ceremony-at-ict-4.jpg
 coverAlt: "Officials seated around a long conference table in a meeting room"
 legacyUrl: "https://coderstrust.global/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/"
-tags: ["Featured News", "Latest News", "NationWIDE"]
+tags: ["Featured News", "Latest News", "YouthWIDE"]
 seoTitle: "DoICT Training of Trainers Program Concludes"
 ---
 
