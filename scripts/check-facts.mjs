@@ -31,9 +31,9 @@
 //     <PlainLine> with RC-02's footnote marker; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
-//     /programs/nationwide/ must show, inside the C13 CTA band (#cta), ONE paragraph in the plan's exact words for THAT page: the lead "What
+//     /programs/youthwide/ must show, inside the C13 CTA band (#cta, and for the Bangladesh briefing #cta-governments), ONE paragraph in the plan's exact words for THAT page: the lead "What
 //     the discovery session covers:" (development partners, foundations, YouthWIDE; first item "your country, priority groups and
-//     locations") or "What the briefing covers:" (NationWIDE: first item "your priority groups and districts"; governments: "your priority groups and locations"), then the three
+//     locations") or "What the briefing covers:" (YouthWIDE in Bangladesh: first item "your priority groups and districts"; governments: "your priority groups and locations"), then the three
 //     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
 //     claim, so the three stand on the same fact); negative self-tests below
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
@@ -270,12 +270,12 @@ function plainLineProblems(markup, text, stat, required) {
 }
 
 /* ---- [SESSION-AGENDA] (plan v1.12 round-11 enhancement) ---- */
-// Beside the C13 primary CTA on the governments, development-partners and foundations pages, YouthWIDE and NationWIDE: ONE paragraph, the
+// Beside the C13 primary CTA on the governments, development-partners and foundations pages, YouthWIDE (also its governments band): ONE paragraph, the
 // lead, three items separated by semicolons and a single final period, tied to PD-02 (data-fact) like [PRICING] and FAQ Q8, whose "indicative
 // budget" claim it repeats. The wording is verbatim from the plan (doc 06 [SESSION-AGENDA], v1.13) and is declared here independently of
 // src/data/copy.ts, so a wording change has to be made in both places on purpose. Each page has its own exact sentence: the discovery-session
 // pages open with "your country, priority groups and locations" (the international pages); the briefing pages open with "your priority groups and
-// districts" (NationWIDE, Bangladesh's national program) or "your priority groups and locations" (governments: ministries in any country).
+// districts" (YouthWIDE in Bangladesh, the national initiative) or "your priority groups and locations" (governments: ministries in any country).
 const SESSION_AGENDA_LEAD_DISCOVERY = 'What the discovery session covers:';
 const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 const SESSION_AGENDA_FIRST_DISCOVERY = 'your country, priority groups and locations';
@@ -292,14 +292,15 @@ const SESSION_AGENDA_BY_PAGE = {
   '/partner-with-us/foundations/': SESSION_AGENDA_DISCOVERY,
   '/programs/youthwide/': SESSION_AGENDA_DISCOVERY,
   '/partner-with-us/governments/': SESSION_AGENDA_GOVERNMENTS,
-  '/programs/nationwide/': SESSION_AGENDA_BRIEFING,
 };
+/** WP4c: NationWIDE merged into YouthWIDE; the merged page also carries the Bangladesh briefing agenda in its own governments C13 band (#cta-governments). */
+const SESSION_AGENDA_EXTRA_BANDS = { '/programs/youthwide/': { id: 'cta-governments', wanted: SESSION_AGENDA_BRIEFING } };
 const SESSION_AGENDA_PAGES = Object.keys(SESSION_AGENDA_BY_PAGE);
 const SESSION_AGENDA_FACT = 'PD-02';
 /** Problems with the agenda on one page: one paragraph inside the C13 band (#cta), in the plan's exact words for that page (`wanted`), with the PD-02 marker. */
-function sessionAgendaProblems(markup, wanted) {
-  const band = /<section\b[^>]*\bid="cta"[^>]*>[\s\S]*?<\/section>/.exec(markup);
-  if (!band) return ['the C13 call-to-action band (#cta) is missing, so the [SESSION-AGENDA] has no CTA to sit beside'];
+function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
+  const band = new RegExp(`<section\\b[^>]*\\bid="${bandId}"[^>]*>[\\s\\S]*?<\\/section>`).exec(markup);
+  if (!band) return [`the C13 call-to-action band (#${bandId}) is missing, so the [SESSION-AGENDA] has no CTA to sit beside`];
   const open = /<([a-z][a-z0-9]*)\b([^>]*)\bdata-session-agenda\b([^>]*)>/.exec(band[0]);
   if (!open) return ['the [SESSION-AGENDA] (what the discovery session or briefing covers) is missing from the C13 band'];
   const out = [];
@@ -329,7 +330,6 @@ const POSITION_PAGES = [
   '/partner-with-us/employers/',
   '/partner-with-us/local-partners/',
   '/programs/youthwide/',
-  '/programs/nationwide/',
   '/programs/jobready-campus/',
   '/programs/jobready-work/',
   '/programs/superkids/',
@@ -843,7 +843,7 @@ function numberGuardPage(path, html, allow = []) {
   // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
   const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
   for (const p of ['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
-  if (byPage('/programs/nationwide/') !== agendaWantB) problems.push('self-test: /programs/nationwide/ must carry the briefing agenda ("your priority groups and districts")');
+  if (SESSION_AGENDA_EXTRA_BANDS["/programs/youthwide/"]?.wanted !== agendaWantB) problems.push("self-test: the #cta-governments band on /programs/youthwide/ must carry the briefing agenda (\"your priority groups and districts\")");
   if (byPage('/partner-with-us/governments/') !== agendaWantG) problems.push('self-test: /partner-with-us/governments/ must carry the governments briefing agenda ("your priority groups and locations")');
   const agendaBad = (why, markup, wanted = agendaWant) => {
     if (!sessionAgendaProblems(markup, wanted).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
@@ -867,7 +867,7 @@ function numberGuardPage(path, html, allow = []) {
   agendaBad('"districts" in the first item on a discovery-session page', ctaBand(agendaP(agendaWant.replace('your country, priority groups and locations', 'your priority groups and districts'))));
   agendaBad('"your country, priority groups and locations" on a briefing page', ctaBand(agendaP(agendaWantB.replace('your priority groups and districts', 'your country, priority groups and locations'))), agendaWantB);
   agendaBad('"districts" on the governments page', ctaBand(agendaP(agendaWantB)), agendaWantG);
-  agendaBad('"locations" on the NationWIDE briefing page', ctaBand(agendaP(agendaWantG)), agendaWantB);
+  agendaBad('"locations" on the YouthWIDE briefing band (Bangladesh)', ctaBand(agendaP(agendaWantG)), agendaWantB);
   agendaBad('the discovery agenda on the governments page', ctaBand(agendaP(agendaWant)), agendaWantG);
   agendaBad('the discovery lead over the briefing items on a briefing page', ctaBand(agendaP(agendaWantB.replace('What the briefing covers:', 'What the discovery session covers:'))), agendaWantB);
 
@@ -1137,6 +1137,8 @@ for (const file of htmlFiles(dist)) {
   if (SESSION_AGENDA_PAGES.includes(path)) {
     agendaPages++;
     for (const p of sessionAgendaProblems(markup, SESSION_AGENDA_BY_PAGE[path])) problems.push(`${path}: ${p}`);
+    const extra = SESSION_AGENDA_EXTRA_BANDS[path];
+    if (extra) for (const p of sessionAgendaProblems(markup, extra.wanted, extra.id)) problems.push(`${path}: ${p}`);
   }
   // footnotes in reading order, no empty notes band, no glued inline link
   if (markup.includes('class="fn"') || markup.includes('sources__note')) footnotePages++;

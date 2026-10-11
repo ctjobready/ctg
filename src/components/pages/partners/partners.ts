@@ -82,7 +82,7 @@ export const LINKS = {
   model: '/our-model/',
   governance: '/about/governance/',
   hub: '/partner-with-us/',
-  nationwide: '/programs/nationwide/',
+  nationwide: '/programs/youthwide/#governments',
   youthwide: '/programs/youthwide/',
   campus: '/programs/jobready-campus/',
   work: '/programs/jobready-work/',

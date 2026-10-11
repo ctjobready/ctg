@@ -92,8 +92,7 @@ export const navGroups: NavGroup[] = [
     label: 'Programs',
     href: '/programs/',
     items: [
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'A country program for development partners and funders.' },
-      { label: 'NationWIDE', href: '/programs/nationwide/', description: 'National initiative with priority groups.' },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Youth digital employment: a Bangladesh national initiative and country cohorts.' },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'Universities and colleges.' },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'Corporate training and talent.' },
       { label: 'NU Postgraduate Diploma', href: '/nu-postgraduate-diploma/', description: 'Digital Marketing and ICT diplomas.' },

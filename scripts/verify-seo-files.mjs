@@ -48,7 +48,7 @@ else if (siteEnv === 'production') {
 
 // ---- llms.txt ------------------------------------------------------------------------------------
 const llms = read('llms.txt');
-const PRIORITY = ['/', '/about/', '/our-model/talentleap/', '/impact/outcomes-2026/', '/impact/independent-evaluation/', '/programs/youthwide/', '/programs/nationwide/', '/partner-with-us/', '/investors/', '/nu-postgraduate-diploma/'];
+const PRIORITY = ['/', '/about/', '/our-model/talentleap/', '/impact/outcomes-2026/', '/impact/independent-evaluation/', '/programs/youthwide/', '/partner-with-us/', '/investors/', '/nu-postgraduate-diploma/'];
 let llmsLinks = 0;
 if (llms === null) err('llms.txt missing');
 else {

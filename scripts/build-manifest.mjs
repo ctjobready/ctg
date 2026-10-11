@@ -103,7 +103,9 @@ const PAGES = {
   '/mentors/': ['MOVE', '/about/mentors/'],
   '/talentleap/': ['MOVE', '/our-model/talentleap/'],
   '/workforce-development/': ['MOVE', '/partner-with-us/development-partners/'],
-  '/nationwide/': ['MOVE', '/programs/nationwide/'],
+  '/nationwide/': ['MOVE', '/programs/youthwide/'],
+  // NationWIDE was renamed YouthWIDE and its page merged into /programs/youthwide/ (WP4c); the short-lived program URL redirects too.
+  '/programs/nationwide/': ['MOVE', '/programs/youthwide/'],
   '/superkids/': ['MOVE', '/programs/superkids/'],
   '/nu-postgraduate-diploma/': ['KEEP', '/nu-postgraduate-diploma/'],
   '/case-studies/': ['MOVE', '/impact/case-studies/'],
