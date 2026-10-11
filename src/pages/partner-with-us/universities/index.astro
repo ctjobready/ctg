@@ -52,9 +52,9 @@ const optionText: Record<string, string> = {
   Scale: 'Expand to more cohorts and campuses on the pilot’s results.',
 };
 const steps = [
-  { title: 'Set up', text: 'Agree tracks and campus labs in a discovery session.' },
-  { title: 'Train and certify', text: `${HOURS} training hours per certification.` },
-  { title: 'Mentor and place', text: 'Three months of milestone-based mentoring, placement support and tracers.' },
+  { title: 'Set Up', text: 'Agree tracks and campus labs in a discovery session.' },
+  { title: 'Train and Certify', text: `${HOURS} training hours per certification.` },
+  { title: 'Mentor and Place', text: 'Three months of milestone-based mentoring, placement support and tracers.' },
 ];
 ---
 
@@ -62,7 +62,7 @@ const steps = [
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Universities' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Universities' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('universities', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
@@ -79,7 +79,7 @@ const steps = [
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="For too many graduates, a degree is not turning into a job."
+    title="For Too Many Graduates, a Degree Is Not Turning into a Job."
     bluf="Capable students finish their degrees, and employers still say they cannot find the skills they need."
     factIds={['PX-03', 'PX-05']}
   >
@@ -100,7 +100,7 @@ const steps = [
       title="Globally, Employers Report Difficulty Finding Talent"
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
+        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
       ]}
     />
@@ -109,12 +109,12 @@ const steps = [
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-universities')}
-    title="What your students leave with"
+    title="What Your Students Leave With"
     lead="Illustrative, not case studies."
     vignettes={[
-      { kind: 'Functional', title: 'A certification beside the degree', text: 'Students who pass the exam add an industry certification beside their degree.' },
-      { kind: 'Emotional', title: 'Placement results you can discuss', text: `Tracer results at ${TRACER_MONTHS} show where students work.` },
-      { kind: 'Social', title: 'Capacity that stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
+      { kind: 'Functional', title: 'A Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree.' },
+      { kind: 'Emotional', title: 'Placement Results You Can Discuss', text: `Tracer results at ${TRACER_MONTHS} show where students work.` },
+      { kind: 'Social', title: 'Capacity That Stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
     ]}
   />
 
@@ -131,13 +131,13 @@ const steps = [
 
   <!-- C6 · Mechanism (JobReady@Campus) -->
   <MechanismBand
-    title="JobReady@Campus: training alongside the degree"
+    title="JobReady@Campus: Training Alongside the Degree"
     positioning={POSITIONING.universities}
     blocks={[
-      { label: 'Set up', title: 'Campus labs as learning centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
-      { label: 'Certify', title: 'Industry certification tracks', text: `${HOURS} training hours per certification, with certification exam preparation; exam eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
-      { label: 'Mentor and place', title: 'Mentoring and placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months.`, icon: 'users' },
-      { label: 'Alongside studies', title: 'In parallel with the degree', text: 'Training runs in parallel with academic studies, with professional internships.', icon: 'graduation-cap' },
+      { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
+      { label: 'Certify', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, with certification exam preparation; exam eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
+      { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months.`, icon: 'users' },
+      { label: 'Alongside studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships.', icon: 'graduation-cap' },
     ]}
     link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
   />
@@ -149,7 +149,7 @@ const steps = [
 
   <!-- C7 · Proof -->
   <ProofBand
-    title="Independent evidence and survey results"
+    title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
     statIds={['RC-02', 'RC-04']}
     chartId="OC-01"
@@ -159,7 +159,7 @@ const steps = [
     ]}
   >
     <EvidenceList
-      heading="What surveyed completers report"
+      heading="What Surveyed Completers Report"
       items={[
         { facts: ['OC-09'], text: `Among surveyed completers, ${degreeShare}: degree holders are our core learners.` },
         { facts: ['OC-03'] },
@@ -169,7 +169,7 @@ const steps = [
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What you get, and what it means for your students"
+    title="What You Get, and What It Means for Your Students"
     rows={[
       {
         feature: 'Industry certifications by track and three months of milestone-based mentoring',
@@ -202,39 +202,39 @@ const steps = [
   <FAQBand
     audience="universities"
     ids={FAQ_IDS}
-    title="Questions universities ask"
+    title="Questions Universities Ask"
     lead="Right for you if you want employer-demand tracks with certification preparation alongside degrees. Not right if you want to replace the degree."
   />
 
   <!-- C10 · Differentiation -->
   <ComparisonBand
-    title="Compare the approaches."
+    title="Compare the Approaches."
     lead="Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists: campus labs, certified local facilitators and Training of Trainers. Provision varies by provider and program."
   />
 
   <!-- C11 · Offer -->
   <OfferCards
-    title="Choose where to start."
+    title="Choose Where to Start."
     cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: o.duration, text: optionText[o.name], facts: ['PD-05'] }))}
     inclusions
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
-    title="Start with a pilot. Decide on evidence."
+    title="Start with a Pilot. Decide on Evidence."
     lead={SCORECARD.text}
     points={[
-      { icon: 'rocket', title: 'A pilot comes first', text: 'Start with a first campus program and see its results.' },
-      { icon: 'target', title: 'Scorecard thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
-      { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale.' },
-      { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with a first campus program and see its results.' },
+      { icon: 'target', title: 'Scorecard Thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
+      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}
   />
 
   <!-- C13 · Call to action -->
   <CTABand
     id="cta"
-    heading="Let’s bring JobReady@Campus to your students."
+    heading="Let’s Bring JobReady@Campus to Your Students."
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
     urgency={SPEED_UNIVERSITIES.text}
@@ -242,13 +242,13 @@ const steps = [
 
   <!-- C14 · Next steps -->
   <StepsBand
-    title="What happens after you say yes"
+    title="What Happens After You Say Yes"
     steps={[
-      { title: 'Discovery session', text: 'A conversation about your students, programs and timeline.' },
-      { title: 'Co-design', text: 'Tracks and campus labs are shaped with you.' },
+      { title: 'Discovery Session', text: 'A conversation about your students, programs and timeline.' },
+      { title: 'Co-Design', text: 'Tracks and campus labs are shaped with you.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
       { title: 'First cohort in training', text: 'Certified facilitators begin the first cohort in your labs.' },
-      { title: 'Monthly reports', text: 'Enrollment, completion, certification and placements follow each month.' },
+      { title: 'Monthly Reports', text: 'Enrollment, completion, certification and placements follow each month.' },
     ]}
   />
   <Reinforcement reminder={false} />

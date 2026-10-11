@@ -7,6 +7,7 @@ import BeforeAfter from '../ui/BeforeAfter.astro';
 import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
+import { titleCase } from '../../lib/titleCase.mjs';
 
 /** C7 Proof (Klein band): FactStats + before→after chart derived from a fact + evidence links. */
 interface Props {
@@ -29,7 +30,8 @@ interface Props {
   eyebrow?: string;
 }
 const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
-const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
+// The fact's headline is also body text elsewhere (facts register wording is unchanged), so Title Case is applied here, for the heading only.
+const heading = titleCase(headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title);
 const cf = fact(chartId);
 const after = cf.stat?.numeric;
 const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) : undefined;

@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust visited BIMSTEC Headquarters: Highlights Potential for Science, Technology, and Innovation Cooperation"
+title: "CodersTrust Visited BIMSTEC Headquarters: Highlights Potential for Science, Technology, and Innovation Cooperation"
 date: 2023-03-21
 updated: 2024-06-25
 topic: leadership-advocacy

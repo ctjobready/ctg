@@ -14,6 +14,7 @@ import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import { allNews, coverAlt, newsHref, newsMentioning, TOPICS } from '../../../components/pages/news/news';
 import { person, webPage, pageUrl } from '../../../lib/schema';
 import { PRODUCTION_ORIGIN } from '../../../lib/site';
+import { titleCase } from '../../../lib/titleCase.mjs';
 import { linkAttrs, stripBase, url } from '../../../lib/url';
 
 export async function getStaticPaths() {
@@ -47,7 +48,7 @@ const DESCRIPTIONS: Record<string, string> = {
 };
 const description = DESCRIPTIONS[p.id] ?? firstPara;
 if (description.length > 155) throw new Error(`Team profile ${p.id}: the meta description is ${description.length} characters (limit 155). Add a complete sentence to DESCRIPTIONS in this file.`);
-const titleFull = `${d.name}, ${d.role}`;
+const titleFull = titleCase(`${d.name}, ${d.role}`);
 const title = titleFull.length + ' | CodersTrust'.length <= 60 ? titleFull : d.name;
 const img = d.photo ? await getImage({ src: d.photo, width: 800, height: 800, format: 'jpg' }) : undefined;
 const imgUrl = img ? PRODUCTION_ORIGIN + stripBase(img.src) : undefined;
@@ -110,11 +111,11 @@ const jsonLd = [
     </div>
   </section>
 
-  <PhotoGallery id="field" tone="white" eyebrow="In the field" title="Events, forums and awards" lead="Photographs from forums, meetings and award events." photos={galleryPhotos(p.id)} />
+  <PhotoGallery id="field" tone="white" eyebrow="In the Field" title="Events, Forums and Awards" lead="Photographs from forums, meetings and award events." photos={galleryPhotos(p.id)} />
   {
     related.length > 0 && (
       <Section tone="airy" aria-labelledby="rel-h">
-        <SectionHeader id="rel-h" eyebrow="In the news" title="Related news" />
+        <SectionHeader id="rel-h" eyebrow="In the news" title="Related News" />
         <div class="grid-cards">
           {related.map((n) => <NewsCard title={n.data.title} date={n.data.date} topic={TOPICS[n.data.topic]} excerpt={n.data.excerpt} image={n.data.cover} imageAlt={coverAlt(n.data.coverAlt)} href={newsHref(n)} />)}
         </div>
@@ -125,7 +126,7 @@ const jsonLd = [
   {
     colleagues.length > 0 && (
       <Section tone="airy" aria-labelledby="team-h">
-        <SectionHeader id="team-h" eyebrow="Team" title="More of the team" />
+        <SectionHeader id="team-h" eyebrow="Team" title="More of the Team" />
         <div class="grid-cards">
           {colleagues.map((c) => <TeamCard name={c.data.name} role={c.data.role} photo={c.data.photo} alt={c.data.photoAlt} assetId={`team-${c.id}`} href={`/about/team/${c.id}/`} expertise={c.data.expertise} chips={2} />)}
         </div>

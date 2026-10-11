@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust provides corporate training to Akij Group, one of the largest conglomerates of South Asia"
+title: "CodersTrust Provides Corporate Training to Akij Group, One of the Largest Conglomerates of South Asia"
 date: 2023-08-16
 updated: 2023-09-05
 topic: programs-events
@@ -11,7 +11,7 @@ tags: ["Corporate Training", "Latest News"]
 seoTitle: "Corporate Training for the Akij Group"
 ---
 
-## Akij Group receives training on Modern Corporate Skills, Digital Marketing and Soft Skills
+## Akij Group Receives Training on Modern Corporate Skills, Digital Marketing and Soft Skills
 
 Dhaka, Bangladesh
 

@@ -79,11 +79,11 @@ const ratio = (a: string, b: string) => {
 const grade = (r: number) => (r >= 7 ? 'AAA' : r >= 4.5 ? 'AA' : r >= 3 ? 'AA large / graphics' : 'fails text');
 const all = tokens.color.tokens as Tok[];
 const groups: [string, string[]][] = [
-  ['Brand blue', ['primary', 'on-primary', 'blue-600', 'blue-700', 'primary-container', 'on-primary-container', 'inverse-primary', 'primary-fixed', 'primary-fixed-dim', 'powder-blue', 'enroll-bg', 'promo-strip']],
-  ['Klein blue', ['secondary', 'on-secondary', 'klein-600', 'secondary-container', 'on-secondary-container', 'secondary-fixed', 'secondary-fixed-dim']],
-  ['Career orange + cyan', ['tertiary', 'on-tertiary', 'orange-600', 'tertiary-container', 'on-tertiary-container', 'tertiary-fixed-dim', 'cyan', 'cyan-600', 'on-cyan']],
+  ['Brand Blue', ['primary', 'on-primary', 'blue-600', 'blue-700', 'primary-container', 'on-primary-container', 'inverse-primary', 'primary-fixed', 'primary-fixed-dim', 'powder-blue', 'enroll-bg', 'promo-strip']],
+  ['Klein Blue', ['secondary', 'on-secondary', 'klein-600', 'secondary-container', 'on-secondary-container', 'secondary-fixed', 'secondary-fixed-dim']],
+  ['Career Orange + Cyan', ['tertiary', 'on-tertiary', 'orange-600', 'tertiary-container', 'on-tertiary-container', 'tertiary-fixed-dim', 'cyan', 'cyan-600', 'on-cyan']],
   ['Surfaces', ['surface', 'surface-container-low', 'surface-container', 'surface-container-high', 'surface-container-highest', 'surface-dim', 'surface-variant', 'inverse-surface', 'inverse-on-surface', 'hero-gradient-center', 'hero-gradient-edge']],
-  ['Text + lines', ['on-surface', 'on-surface-variant', 'outline', 'outline-variant']],
+  ['Text + Lines', ['on-surface', 'on-surface-variant', 'outline', 'outline-variant']],
   ['States', ['success', 'success-subtle', 'success-strong', 'warning', 'warning-subtle', 'warning-strong', 'error', 'error-container', 'on-error-container', 'info', 'info-subtle', 'sale-badge-bg', 'sale-badge-border']],
 ];
 const byName = new Map(all.map((t) => [t.name, t]));
@@ -125,15 +125,15 @@ const shadows = [...(tokens.shadow.tokens as { name: string; value: string }[]),
 // ---- Sample content -----------------------------------------------------------------
 const partners = ['Example Partner 1', 'Example Partner 2', 'Example Partner 3', 'Example Partner 4', 'Example Partner 5', 'Example Partner 6', 'Example Partner 7'].map((name) => ({ name }));
 const faqs = [
-  { q: 'What does a styleguide FAQ item look like?', a: '<p>Answers can contain <strong>HTML</strong>, such as <a href="#accordion">links</a> and lists.</p>' },
-  { q: 'Does the accordion animate?', a: '<p>Yes: height and chevron animate in 200 ms where <code>::details-content</code> is supported, with a Web Animations fallback. Reduced motion disables it.</p>' },
-  { q: 'Is it keyboard accessible?', a: '<p>It is a native <code>details</code>/<code>summary</code>, so Enter and Space toggle it.</p>' },
+  { q: 'What Does a Styleguide FAQ Item Look Like?', a: '<p>Answers can contain <strong>HTML</strong>, such as <a href="#accordion">links</a> and lists.</p>' },
+  { q: 'Does the Accordion Animate?', a: '<p>Yes: height and chevron animate in 200 ms where <code>::details-content</code> is supported, with a Web Animations fallback. Reduced motion disables it.</p>' },
+  { q: 'Is It Keyboard Accessible?', a: '<p>It is a native <code>details</code>/<code>summary</code>, so Enter and Space toggle it.</p>' },
 ];
 const timeline = [
   { year: '2014', title: 'Founded', text: 'Sample milestone text for the styleguide.' },
-  { year: '2018', title: 'Second milestone', text: 'Sample milestone text for the styleguide.' },
-  { year: '2022', title: 'Third milestone', text: 'Sample milestone text for the styleguide.' },
-  { year: '2026', title: 'Latest milestone', text: 'Sample milestone text for the styleguide.' },
+  { year: '2018', title: 'Second Milestone', text: 'Sample milestone text for the styleguide.' },
+  { year: '2022', title: 'Third Milestone', text: 'Sample milestone text for the styleguide.' },
+  { year: '2026', title: 'Latest Milestone', text: 'Sample milestone text for the styleguide.' },
 ];
 const jsonLd = [faqJsonLd('home', '/styleguide/', ['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'])];
 const sectionLinks = [
@@ -176,7 +176,7 @@ const sectionLinks = [
 
   <!-- ===================================== TOKENS ===================================== -->
   <Section id="tokens" aria-labelledby="tokens-h">
-    <SectionHeader id="tokens-h" eyebrow="Foundations" title="Color tokens" lead="AA theme values. Contrast ratios are computed against white and Deep Ink; ‘large’ means ≥ 24px or bold 19px+." />
+    <SectionHeader id="tokens-h" eyebrow="Foundations" title="Color Tokens" lead="AA theme values. Contrast ratios are computed against white and Deep Ink; ‘large’ means ≥ 24px or bold 19px+." />
     {
       swatchGroups.map((g) => (
         <div class="sg-block">
@@ -197,7 +197,7 @@ const sectionLinks = [
       ))
     }
     <div class="sg-block">
-      <h3>Extension colors (light-theme values, decoration only)</h3>
+      <h3>Extension Colors (Light-Theme Values, Decoration Only)</h3>
       <ul class="sg-swatches" role="list">
         {extColors.map((s) => (
           <li class="sg-sw">
@@ -213,7 +213,7 @@ const sectionLinks = [
     </div>
 
     <div class="sg-block">
-      <h3>Spacing, radius, elevation</h3>
+      <h3>Spacing, Radius, Elevation</h3>
       <ul class="sg-meta" role="list">
         {spacing.map((s) => <li><span class="sg-space" style={`width:var(--${s.name})`} /> <code>--{s.name}</code> {s.value}</li>)}
       </ul>
@@ -238,7 +238,7 @@ const sectionLinks = [
       ))}
     </ul>
     <div class="sg-block prose">
-      <h3>Running text and links</h3>
+      <h3>Running Text and Links</h3>
       <p>Body copy uses <code>on-surface-variant</code>. An <a href="#type">inline link</a> grows its underline from the left on hover (M8). <strong>Bold</strong> uses the real D-DIN Bold — no synthesis.</p>
       <ul><li>List item with a primary marker</li><li>Second item</li></ul>
       <blockquote>A block quote in the prose style.</blockquote>
@@ -247,9 +247,9 @@ const sectionLinks = [
 
   <!-- ===================================== BUTTONS ===================================== -->
   <Section id="buttons" aria-labelledby="btn-h">
-    <SectionHeader id="btn-h" eyebrow="Components" title="Buttons, badges, icons, logo" />
+    <SectionHeader id="btn-h" eyebrow="Components" title="Buttons, Badges, Icons, Logo" />
     <div class="sg-block">
-      <h3>Buttons — variants</h3>
+      <h3>Buttons — Variants</h3>
       <div class="cluster">
         <Button variant="primary" iconEnd="arrow-right">Primary</Button>
         <Button variant="secondary">Secondary</Button>
@@ -264,14 +264,14 @@ const sectionLinks = [
       <p class="text-muted t-body-xs">Hover, focus (Tab) and press states are live. One <code>primary</code> per viewport region.</p>
     </div>
     <div class="sg-block">
-      <h3>Buttons on dark bands</h3>
+      <h3>Buttons on Dark Bands</h3>
       <div class="sg-dark">
         <Section tone="klein" pad="sm"><div class="cluster"><Button variant="inverse" iconEnd="arrow-right">Inverse (white) on Klein</Button><a class="link" href="#buttons">Text link on Klein</a></div></Section>
         <Section tone="deep-ink" pad="sm"><div class="cluster"><Button variant="inverse">Inverse on Deep Ink</Button><a class="link" href="#buttons">Text link on Deep Ink</a></div></Section>
       </div>
     </div>
     <div class="sg-block">
-      <h3>CTA library (mailto)</h3>
+      <h3>CTA Library (Mailto)</h3>
       <div class="cluster">
         <Button variant="outline" size="sm" href={cta('discovery').href}>{cta('discovery').label}</Button>
         <Button variant="outline" size="sm" href={cta('investor').href}>{cta('investor').label}</Button>
@@ -285,7 +285,7 @@ const sectionLinks = [
       </div>
     </div>
     <div class="sg-block">
-      <h3>Icons (Lucide, stroke 1.75)</h3>
+      <h3>Icons (Lucide, Stroke 1.75)</h3>
       <ul class="sg-icons" role="list">
         {['arrow-right', 'arrow-up-right', 'chevron-down', 'search', 'menu', 'book-open', 'clock', 'video', 'play', 'shield', 'code', 'pen', 'user', 'star', 'users', 'globe', 'landmark', 'graduation-cap', 'briefcase', 'rocket', 'mail', 'phone', 'map-pin', 'copy', 'check', 'x', 'circle-check', 'triangle-alert', 'circle-x', 'facebook', 'linkedin', 'youtube'].map((n) => <li><Icon name={n} size={28} /><span>{n}</span></li>)}
       </ul>
@@ -303,13 +303,13 @@ const sectionLinks = [
     </div>
     <div class="sg-block">
       <h3>Breadcrumbs</h3>
-      <Breadcrumbs label="Breadcrumb (example)" items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case studies', href: '/impact/case-studies/' }, { label: 'Example case study' }]} />
+      <Breadcrumbs label="Breadcrumb (example)" items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies', href: '/impact/case-studies/' }, { label: 'Example case study' }]} />
     </div>
   </Section>
 
   <!-- ===================================== HERO ===================================== -->
   <div id="hero">
-    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." artSeed="styleguide-home">
+    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn Youth Unemployment into Digital Employment — At Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." artSeed="styleguide-home">
       <Fragment slot="actions">
         <Button iconEnd="arrow-right" href="/contact/">Primary action</Button>
         <Button variant="outline" href="/impact/">Secondary action</Button>
@@ -320,7 +320,7 @@ const sectionLinks = [
         <Stat value="15" label="Sample stat — countries" />
       </Fragment>
     </Hero>
-    <Hero headingLevel={2} variant="inner" eyebrow="Inner page hero" title="Inner-page H1 with the display-4xl scale" lead="Text-only variant: no media column." art={false}>
+    <Hero headingLevel={2} variant="inner" eyebrow="Inner page hero" title="Inner-Page H1 with the Display-4xl Scale" lead="Text-only variant: no media column." art={false}>
       <Fragment slot="actions"><Button href="/contact/">Talk to us</Button></Fragment>
     </Hero>
   </div>
@@ -328,36 +328,36 @@ const sectionLinks = [
   <!-- ===================================== CARDS ===================================== -->
   <Section id="cards" aria-labelledby="cards-h">
     <SectionHeader id="cards-h" eyebrow="Components" title="Cards" lead="Audience router, programs, features, case studies, news and people. Hover or focus any linked card (M5)." />
-    <h3 class="sg-h3">CategoryCard — audience router (M6)</h3>
+    <h3 class="sg-h3">CategoryCard — Audience Router (M6)</h3>
     <div class="grid-cards">
       {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
     </div>
 
     <h3 class="sg-h3">ProgramCard · FeatureCard</h3>
     <div class="grid-cards">
-      <ProgramCard title="Program name" text="One or two sentences describing the program and who it serves." icon="rocket" href="/programs/" meta={['For development partners', 'Cohort-based']} />
-      <FeatureCard icon="shield" title="Feature with consequence" text="What the feature is, in one sentence." means="the partner gets a result they can verify." />
-      <FeatureCard icon="target" title="Linked feature" text="A feature card that links somewhere." href="/our-model/" />
+      <ProgramCard title="Program Name" text="One or two sentences describing the program and who it serves." icon="rocket" href="/programs/" meta={['For development partners', 'Cohort-based']} />
+      <FeatureCard icon="shield" title="Feature with Consequence" text="What the feature is, in one sentence." means="the partner gets a result they can verify." />
+      <FeatureCard icon="target" title="Linked Feature" text="A feature card that links somewhere." href="/our-model/" />
     </div>
 
     <h3 class="sg-h3">CaseStudyCard · NewsCard · PersonCard</h3>
     <div class="grid-cards">
-      <CaseStudyCard title="Case study title that may wrap to two lines" program="Program" partner="Partner" stat={{ value: '88.8%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
-      <NewsCard title="News article headline that wraps onto two lines when long" date="2026-10-08" topic="Impact" excerpt="A short excerpt of the article, two lines at most, to help readers choose." href="/news/" />
+      <CaseStudyCard title="Case Study Title That May Wrap to Two Lines" program="Program" partner="Partner" stat={{ value: '88.8%', label: 'Sample outcome statistic' }} href="/impact/case-studies/" />
+      <NewsCard title="News Article Headline That Wraps onto Two Lines When Long" date="2026-10-08" topic="Impact" excerpt="A short excerpt of the article, two lines at most, to help readers choose." href="/news/" />
       <PersonCard assetId="example-person-portrait" name="Person Name" role="Role / title" href="/about/team/" bio="Two-line bio teaser for the listing card." />
     </div>
 
     <h3 class="sg-h3">CourseCard</h3>
     <div class="grid-cards">
       <CourseCard title="Postgraduate Diploma in Digital Marketing" badge="Sample badge" meta={[{ icon: 'clock', label: '12 months' }, { icon: 'video', label: 'Online + lab' }, { icon: 'book-open', label: 'Internship' }]} href="/nu-postgraduate-diploma/" actionLabel="View course" />
-      <CourseCard title="Course with fee hierarchy" price="Fee shown" oldPrice="Old fee" meta={[{ icon: 'clock', label: '6 months' }]} href="/nu-postgraduate-diploma/" />
+      <CourseCard title="Course with Fee Hierarchy" price="Fee shown" oldPrice="Old fee" meta={[{ icon: 'clock', label: '6 months' }]} href="/nu-postgraduate-diploma/" />
     </div>
   </Section>
 
   <!-- ===================================== PROOF ===================================== -->
   <Section id="proof" tone="airy" aria-labelledby="proof-h">
-    <SectionHeader id="proof-h" eyebrow="Components" title="Proof: stats, stories, testimonials, partners" />
-    <h3 class="sg-h3">Stat (count-up M2) — on light</h3>
+    <SectionHeader id="proof-h" eyebrow="Components" title="Proof: Stats, Stories, Testimonials, Partners" />
+    <h3 class="sg-h3">Stat (Count-up M2) — On Light</h3>
     <div class="cluster sg-stats">
       <Stat value="61.5%" label="Decimal percent" />
       <Stat value="12,345+" label="Grouped with suffix" />
@@ -366,7 +366,7 @@ const sectionLinks = [
       <Stat value="12" label="Centered" align="center" count={false} />
     </div>
 
-    <h3 class="sg-h3">Stat on Klein / Deep Ink band</h3>
+    <h3 class="sg-h3">Stat on Klein / Deep Ink Band</h3>
     <div class="sg-inline-band"><Section tone="klein" pad="sm">
       <div class="cluster sg-stats">
         <Stat tone="dark" value="61.5%" label="White numerals on Klein" size="lg" />
@@ -382,34 +382,34 @@ const sectionLinks = [
       <ProgressBar label="Sample rate C (bright)" value={62} tone="bright" />
     </div>
 
-    <h3 class="sg-h3">SuccessStoryCard (photo grayscale → color, M22) · Testimonial</h3>
+    <h3 class="sg-h3">SuccessStoryCard (Photo Grayscale → Color, M22) · Testimonial</h3>
     <div class="grid-cards">
       <SuccessStoryCard assetId="example-story-1" outcome="Outcome-led sentence in the learner's voice." name="Learner Name" role="Role, location" href="/impact/stories/" />
       <SuccessStoryCard outcome="A story that has a video available." name="Another Learner" role="Role, location" href="/impact/stories/" video />
       <Testimonial assetId="example-testimonial" quote="A longer quote in a quiet, spacious layout, set in body-l with room to breathe." name="Person Name" role="Organization" rating={5} />
     </div>
 
-    <h3 class="sg-h3">Carousel + CarouselControls (M14; scroll-snap, no autoplay)</h3>
+    <h3 class="sg-h3">Carousel + CarouselControls (M14; Scroll-Snap, No Autoplay)</h3>
     <Carousel label="Sample stories" perView={3}>
       {Array.from({ length: 6 }, (_, i) => <SuccessStoryCard outcome={`Story ${i + 1}: outcome-led sentence.`} name={`Learner ${i + 1}`} role="Role, location" href="/impact/stories/" />)}
     </Carousel>
     <p class="t-body-xs text-muted">Static controls (count known at build time):</p>
     <CarouselControls count={5} index={2} label="demo" />
 
-    <h3 class="sg-h3">PartnerStrip — grid and marquee (M13)</h3>
+    <h3 class="sg-h3">PartnerStrip — Grid and Marquee (M13)</h3>
     <PartnerStrip caption="Organizations we have worked with, 2014–2026 (sample names)" items={partners} />
     <PartnerStrip variant="marquee" caption="Marquee variant — pauses on hover/focus and via the button" items={partners} />
   </Section>
 
   <!-- ===================================== DATA ===================================== -->
   <Section id="data" aria-labelledby="data-h">
-    <SectionHeader id="data-h" eyebrow="Components" title="Data and charts" lead="Each chart has an accessible table fallback (open ‘View chart data’)." />
+    <SectionHeader id="data-h" eyebrow="Components" title="Data and Charts" lead="Each chart has an accessible table fallback (open ‘View chart data’)." />
     <div class="sg-two">
       <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 33.3, caption: 'before training' }} after={{ label: 'October 2026 survey', value: 61.5, caption: 'surveyed completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
       <BarChart title="Horizontal bar chart (sample)" items={[{ label: 'First measure', value: 40.1 }, { label: 'Second measure', value: 30.2 }, { label: 'Third measure', value: 20.3 }, { label: 'Fourth measure', value: 9.4 }]} note="Sample data for the styleguide." />
     </div>
 
-    <h3 class="sg-h3">ComparisonTable (approaches and trade-offs; sticky first column on mobile; icon only for our own inclusions)</h3>
+    <h3 class="sg-h3">ComparisonTable (Approaches and Trade-Offs; Sticky First Column on Mobile; Icon Only for Our Own Inclusions)</h3>
     <ComparisonTable
       caption="Sample comparison of approaches"
       columns={['Aspect', 'Our model', 'Conventional programs', 'Self-paced platforms', 'Doing nothing']}
@@ -424,42 +424,42 @@ const sectionLinks = [
 
   <!-- ===================================== STRUCTURE ===================================== -->
   <Section id="structure" tone="ice" aria-labelledby="struct-h">
-    <SectionHeader id="struct-h" eyebrow="Components" title="Structure: accordion, timeline, steps, model" />
+    <SectionHeader id="struct-h" eyebrow="Components" title="Structure: Accordion, Timeline, Steps, Model" />
     <h3 class="sg-h3" id="accordion">Accordion / FAQ (M15)</h3>
     <Accordion items={faqs} name="sg-faq" openFirst />
 
-    <h3 class="sg-h3">Timeline (M16 — scroll to fill the line)</h3>
+    <h3 class="sg-h3">Timeline (M16 — Scroll to Fill the Line)</h3>
     <Timeline items={timeline} />
 
     <h3 class="sg-h3">StepFlow</h3>
-    <StepFlow steps={[{ title: 'Discovery', text: 'Understand goals and priority groups.' }, { title: 'Co-design', text: 'Shape the program with you.' }, { title: 'Agreement', text: 'Agree scope and timeline.' }, { title: 'Launch', text: 'Start the first cohort.' }]} />
+    <StepFlow steps={[{ title: 'Discovery', text: 'Understand goals and priority groups.' }, { title: 'Co-Design', text: 'Shape the program with you.' }, { title: 'Agreement', text: 'Agree scope and timeline.' }, { title: 'Launch', text: 'Start the first cohort.' }]} />
 
     <h3 class="sg-h3">ModelDiagram</h3>
     <ModelDiagram
       caption="Sample content: four numbered blocks with animated connectors."
       blocks={[
-        { label: 'Who', title: 'Educated, unemployed youth', text: 'The learners the program serves.', icon: 'users' },
-        { label: 'How', title: 'Demand-led training', text: 'Tracks chosen from employer demand.', icon: 'graduation-cap' },
-        { label: 'What', title: 'Credential plus mentoring', text: 'Certification and one-to-one support.', icon: 'award' },
-        { label: 'Where', title: 'Local, remote, global work', text: 'Placement into paid digital work.', icon: 'globe' },
+        { label: 'Who', title: 'Educated, Unemployed Youth', text: 'The learners the program serves.', icon: 'users' },
+        { label: 'How', title: 'Demand-Led Training', text: 'Tracks chosen from employer demand.', icon: 'graduation-cap' },
+        { label: 'What', title: 'Credential Plus Mentoring', text: 'Certification and one-to-one support.', icon: 'award' },
+        { label: 'Where', title: 'Local, Remote, Global Work', text: 'Placement into paid digital work.', icon: 'globe' },
       ]}
     />
   </Section>
 
   <!-- ===================================== BANDS ===================================== -->
   <Section id="bands-top" pad="none" aria-label="Band variants">
-    <h2 class="sg-bands-title" id="bands">Band variants</h2>
+    <h2 class="sg-bands-title" id="bands">Band Variants</h2>
   </Section>
-  <Section tone="white" pad="sm" aria-label="White band"><SectionHeader eyebrow="white" title="White band" lead="Default canvas. Cards use the system shadow." /><Quote cite="Person Name" role="Organization">A pull quote on a white band.</Quote></Section>
-  <Section tone="airy" pad="sm" aria-label="Airy band"><SectionHeader eyebrow="airy" title="Airy Blue band" lead="Soft section band (surface-container-low)." /><div class="cluster"><Badge>Badge</Badge><Button variant="outline">Outline</Button></div></Section>
-  <Section tone="ice" pad="sm" aria-label="Ice band"><SectionHeader eyebrow="ice" title="Ice Cyan band" lead="Info callouts and highlights (surface-container)." /><div class="cluster"><Badge tone="info">Info</Badge></div></Section>
-  <Section tone="klein" pad="sm" aria-label="Klein band"><SectionHeader eyebrow="klein" title="Klein impact band" lead="Deliberate high-contrast moment. White headings, Powder body, orange numerals allowed." /><Quote cite="Person Name" role="Organization" size="lg">A pull quote on Klein.</Quote></Section>
-  <Section tone="white" pad="sm" aria-label="Spacer band"><SectionHeader eyebrow="white" title="Never two dark bands in a row" lead="A white band separates Klein from Deep Ink." /></Section>
-  <Section tone="deep-ink" pad="sm" aria-label="Deep Ink band"><SectionHeader eyebrow="deep-ink" title="Deep Ink band" lead="Footer and rare dark moments." /><div class="cluster"><Button variant="inverse">Inverse button</Button><a class="link" href="#bands">Link on Deep Ink</a></div></Section>
+  <Section tone="white" pad="sm" aria-label="White band"><SectionHeader eyebrow="white" title="White Band" lead="Default canvas. Cards use the system shadow." /><Quote cite="Person Name" role="Organization">A pull quote on a white band.</Quote></Section>
+  <Section tone="airy" pad="sm" aria-label="Airy band"><SectionHeader eyebrow="airy" title="Airy Blue Band" lead="Soft section band (surface-container-low)." /><div class="cluster"><Badge>Badge</Badge><Button variant="outline">Outline</Button></div></Section>
+  <Section tone="ice" pad="sm" aria-label="Ice band"><SectionHeader eyebrow="ice" title="Ice Cyan Band" lead="Info callouts and highlights (surface-container)." /><div class="cluster"><Badge tone="info">Info</Badge></div></Section>
+  <Section tone="klein" pad="sm" aria-label="Klein band"><SectionHeader eyebrow="klein" title="Klein Impact Band" lead="Deliberate high-contrast moment. White headings, Powder body, orange numerals allowed." /><Quote cite="Person Name" role="Organization" size="lg">A pull quote on Klein.</Quote></Section>
+  <Section tone="white" pad="sm" aria-label="Spacer band"><SectionHeader eyebrow="white" title="Never Two Dark Bands in a Row" lead="A white band separates Klein from Deep Ink." /></Section>
+  <Section tone="deep-ink" pad="sm" aria-label="Deep Ink band"><SectionHeader eyebrow="deep-ink" title="Deep Ink Band" lead="Footer and rare dark moments." /><div class="cluster"><Button variant="inverse">Inverse button</Button><a class="link" href="#bands">Link on Deep Ink</a></div></Section>
 
   <CTABand
     id="cta-airy"
-    heading="CTA band: one primary action"
+    heading="CTA Band: One Primary Action"
     text="Outcome-framed promise in one sentence."
     cta={{ label: 'Book a discovery session', href: cta('discovery').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
@@ -469,7 +469,7 @@ const sectionLinks = [
   <CTABand
     id="cta-klein"
     tone="klein"
-    heading="CTA band on Klein"
+    heading="CTA Band on Klein"
     cta={{ label: 'Request a briefing', href: cta('briefing').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     micro="A discovery session is a conversation, not a commitment."
@@ -477,9 +477,9 @@ const sectionLinks = [
 
   <!-- ===================================== MOTION ===================================== -->
   <Section id="motion" aria-labelledby="motion-h">
-    <SectionHeader id="motion-h" eyebrow="Motion" title="Motion and micro-interactions" lead="All of it respects prefers-reduced-motion: animations are removed and final states are shown." />
+    <SectionHeader id="motion-h" eyebrow="Motion" title="Motion and Micro-Interactions" lead="All of it respects prefers-reduced-motion: animations are removed and final states are shown." />
 
-    <h3 class="sg-h3">HeroArt — seeded compositions (M12 pills fill in sequence)</h3>
+    <h3 class="sg-h3">HeroArt — Seeded Compositions (M12 Pills Fill in Sequence)</h3>
     <div class="sg-art">
       {['alpha', 'bravo', 'charlie', 'delta'].map((s) => <div class="sg-art__item"><HeroArt seed={s} /></div>)}
     </div>
@@ -487,24 +487,24 @@ const sectionLinks = [
       {['echo', 'foxtrot'].map((s) => <div class="sg-art__item"><HeroArt seed={s} shape="wide" /></div>)}
     </div>
 
-    <h3 class="sg-h3">Reveal with 60 ms stagger (M1) — scroll this into view</h3>
+    <h3 class="sg-h3">Reveal with 60 Ms Stagger (M1) — Scroll This into View</h3>
     <div class="grid-cards">
-      <FeatureCard icon="zap" title="Reveal one" text="Fades in and rises 16 px." />
-      <FeatureCard icon="zap" title="Reveal two" text="Staggered by 60 ms." />
-      <FeatureCard icon="zap" title="Reveal three" text="Staggered by 120 ms." />
+      <FeatureCard icon="zap" title="Reveal One" text="Fades in and rises 16 px." />
+      <FeatureCard icon="zap" title="Reveal Two" text="Staggered by 60 ms." />
+      <FeatureCard icon="zap" title="Reveal Three" text="Staggered by 120 ms." />
     </div>
 
-    <h3 class="sg-h3">Scroll-driven reveal (CSS <code>animation-timeline: view()</code>, where supported)</h3>
+    <h3 class="sg-h3">Scroll-Driven Reveal (CSS <code>animation-timeline: view()</code>, Where Supported)</h3>
     <div class="sg-view" data-reveal="view">This block uses <code>data-reveal="view"</code>.</div>
 
-    <h3 class="sg-h3">Copy email + toast (M18), LiteVideo facade</h3>
+    <h3 class="sg-h3">Copy Email + Toast (M18), LiteVideo Facade</h3>
     <div class="cluster"><CopyEmail /></div>
     <div class="sg-two">
       <LiteVideo id="dQw4w9WgXcQ" title="Sample video facade (no request until click)" />
       <Quote cite="Person Name" role="Organization">Video loads from youtube-nocookie.com only after the visitor clicks play.</Quote>
     </div>
 
-    <h3 class="sg-h3">Interaction index</h3>
+    <h3 class="sg-h3">Interaction Index</h3>
     <section class="sg-table-wrap" aria-label="Micro-interactions table" tabindex="0" data-scroll data-stack="inline">
       <table class="sg-table">
         <caption class="sr-only">Micro-interactions implemented</caption>
@@ -540,7 +540,7 @@ const sectionLinks = [
   <Section id="facts" aria-labelledby="facts-h">
     <SectionHeader id="facts-h" eyebrow="Facts" title="Facts UI" lead="Numbers are never typed into pages. Fact, FactStat, FactCard and FactList render the register's canonical wording and add footnote markers automatically; Sources collects the numbered notes at the end of the page." />
     <p class="t-body-l">Inline: <Fact id="SC-01" /> — and <Fact id="OC-01" field="value" /> employed, up from <Fact id="OC-01" field="from" footnote={false} />.</p>
-    <h3 class="sg-h3">FactStat (count-up when numeric)</h3>
+    <h3 class="sg-h3">FactStat (Count-up When Numeric)</h3>
     <div class="cluster sg-stats">
       <FactStat id="SC-01" />
       <FactStat id="OC-01" />
@@ -555,32 +555,32 @@ const sectionLinks = [
 
   <!-- ===================================== CMF BANDS ===================================== -->
   <div id="cmf">
-    <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF section bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
-    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn youth unemployment into digital employment — at scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF Section Bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
+    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn Youth Unemployment into Digital Employment — At Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <DefinitionBand id="band-definition" />
-    <RouterBand id="band-router" title="What brings you here?" />
-    <ProblemBand id="band-problem" title="For too many graduates, a degree is not turning into a job." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
-    <CostBand id="band-cost" title="Every year of waiting costs a cohort." blocks={[
-      { claim: 'On one major freelancing platform, automation-prone postings fell after ChatGPT.', factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
-      { claim: 'Climate-exposed coastal districts have been losing their young people.', factId: 'PX-11', implication: 'Many leave before local work exists.' },
-      { claim: 'A review of nine trials found only three with significant employment impacts.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
+    <RouterBand id="band-router" title="What Brings You Here?" />
+    <ProblemBand id="band-problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
+    <CostBand id="band-cost" title="Every Year of Waiting Costs a Cohort." blocks={[
+      { claim: 'On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT.', factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
+      { claim: 'Climate-Exposed Coastal Districts Have Been Losing Their Young People.', factId: 'PX-11', implication: 'Many leave before local work exists.' },
+      { claim: 'A Review of Nine Trials Found Only Three with Significant Employment Impacts.', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
     ]} />
-    <FutureBand id="band-future" title="Imagine the next 12 months." vignettes={[
-      { kind: 'Functional', title: 'First foreign client, billed from home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
-      { kind: 'Emotional', title: 'First paychecks, not just certificates', text: 'Monthly reports show who is earning, not only who completed.' },
-      { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready completers, including those prepared for an industry certification exam, without a long search.' },
+    <FutureBand id="band-future" title="Imagine the Next 12 Months." vignettes={[
+      { kind: 'Functional', title: 'First Foreign Client, Billed from Home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
+      { kind: 'Emotional', title: 'First Paychecks, Not Just Certificates', text: 'Monthly reports show who is earning, not only who completed.' },
+      { kind: 'Social', title: 'AI-Ready Talent', text: 'An employer hires AI-ready completers, including those prepared for an industry certification exam, without a long search.' },
     ]} />
-    <GuideBand id="band-guide" title="We’ve built this path since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
-    <MechanismBand id="band-mechanism" title="One path from learning to earning" link={{ label: 'How our model works', href: '/our-model/' }} />
-    <FeaturesTable id="band-features" title="Built around outcomes, not attendance" rows={[
+    <GuideBand id="band-guide" title="We’ve Built This Path Since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
+    <MechanismBand id="band-mechanism" title="One Path from Learning to Earning" link={{ label: 'How our model works', href: '/our-model/' }} />
+    <FeaturesTable id="band-features" title="Built Around Outcomes, Not Attendance" rows={[
       { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },
       { feature: 'Certification exam preparation', means: 'each track prepares learners for a credential employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
       { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
       { feature: 'Outcome tracking after each course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
     ]} />
-    <ProofBand id="band-proof" title="Independent evidence and survey results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
-    <CaseStudyCarousel id="band-cases" title="Proof in practice" items={[
-      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+    <ProofBand id="band-proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+    <CaseStudyCarousel id="band-cases" title="Proof in Practice" items={[
+      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
@@ -589,7 +589,7 @@ const sectionLinks = [
     <ComparisonBand id="band-compare" />
     <OfferBand id="band-offer" />
     <RiskReversalBand id="band-risk" />
-    <CTABand id="band-cta" heading="Talk to us about a first cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['In your inquiry, include two suitable times for a discovery conversation.']} />
+    <CTABand id="band-cta" heading="Talk to Us About a First Cohort." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} urgency={`For grant-funded pilots: first cohort in training ${fact('PD-04').stat?.value} after signing.`} micro="A discovery session is a conversation, not a commitment." reinforce={['In your inquiry, include two suitable times for a discovery conversation.']} />
     <NextStepsBand id="band-next" />
     <NewsTeaserBand id="band-news" fallback={[
       { title: 'Sample news headline one', date: '2026-10-07', topic: 'Impact', excerpt: 'Shown only when the news collection is empty.', href: '/news/' },
@@ -600,16 +600,16 @@ const sectionLinks = [
 
   <!-- ===================================== PARTNERS & MAP ===================================== -->
   <Section id="partners" aria-labelledby="partners-h">
-    <SectionHeader id="partners-h" eyebrow="Components" title="Partner logos, press and world map" />
-    <h3 class="sg-h3">PartnerStrip — all partners, marquee (PA-04 caption)</h3>
+    <SectionHeader id="partners-h" eyebrow="Components" title="Partner Logos, Press and World Map" />
+    <h3 class="sg-h3">PartnerStrip — All Partners, Marquee (PA-04 Caption)</h3>
     <PartnerStrip variant="marquee" label="All partners, marquee (example)" />
-    <h3 class="sg-h3">PartnerStrip — development partners, static grid, linked</h3>
+    <h3 class="sg-h3">PartnerStrip — Development Partners, Static Grid, Linked</h3>
     <PartnerStrip group="development" variant="grid" link />
-    <h3 class="sg-h3">Government and academic groups</h3>
+    <h3 class="sg-h3">Government and Academic Groups</h3>
     <PartnerStrip group={['government', 'academic']} variant="grid" caption="Government and academic partners" />
-    <h3 class="sg-h3">Press variant ("Press Coverage")</h3>
+    <h3 class="sg-h3">Press Variant ("Press Coverage")</h3>
     <PartnerStrip kind="press" variant="grid" link />
-    <h3 class="sg-h3">WorldMap (M17) with table fallback</h3>
+    <h3 class="sg-h3">WorldMap (M17) with Table Fallback</h3>
     <WorldMap />
   </Section>
 

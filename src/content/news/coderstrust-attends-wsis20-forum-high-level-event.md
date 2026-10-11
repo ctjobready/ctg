@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust attends WSIS+20 Forum High-Level Event"
+title: "CodersTrust Attends WSIS+20 Forum High-Level Event"
 date: 2024-05-29
 updated: 2024-11-05
 topic: leadership-advocacy

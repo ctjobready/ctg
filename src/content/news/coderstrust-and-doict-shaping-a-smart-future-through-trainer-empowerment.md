@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust and DoICT Shaping a Smart Future through Trainer Empowerment"
+title: "CodersTrust and DoICT Shaping a Smart Future Through Trainer Empowerment"
 date: 2023-11-16
 updated: 2023-11-22
 topic: programs-events

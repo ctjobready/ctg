@@ -17,17 +17,17 @@ interface Props {
 const { id = 'ladder-compact', class: className } = Astro.props;
 
 const rungs = [
-  { name: 'Randomized trial (BIGD)', text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
+  { name: 'Randomized Trial (BIGD)', text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
   { name: 'Impact Survey 2026', text: 'what surveyed completers report; descriptive, not causal', fact: 'OC-01' },
   // the register's program-data label without its "Program data — " opening (the rung name already says program results)
-  { name: 'Program results', text: PROGRAM_DATA_LABEL.replace(/^Program data — /, ''), fact: 'PR-01' },
-  { name: 'Learner stories', text: 'individual journeys, not typical outcomes', fact: undefined },
+  { name: 'Program Results', text: PROGRAM_DATA_LABEL.replace(/^Program data — /, ''), fact: 'PR-01' },
+  { name: 'Learner Stories', text: 'individual journeys, not typical outcomes', fact: undefined },
 ];
 const readHref = linkAttrs('/impact/#evidence-ladder').href;
 ---
 
 <div class:list={['lc', className]} data-reveal>
-  <h3 class="lc__title" id={`${id}-h`}>Four kinds of evidence, from strongest to weakest for cause and effect</h3>
+  <h3 class="lc__title" id={`${id}-h`}>Four Kinds of Evidence, from Strongest to Weakest for Cause and Effect</h3>
   <ol class="lc__list" role="list" aria-labelledby={`${id}-h`}>
     {
       rungs.map((r, i) => (

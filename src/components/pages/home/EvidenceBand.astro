@@ -1,4 +1,5 @@
 ---
+import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import Stat from '../../system/Stat.astro';
 import FootnoteMarker from '../../facts/FootnoteMarker.astro';
@@ -40,7 +41,7 @@ interface Props {
 }
 const { title, lead, statIds, chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
 const trial = chart === 'trial';
-const heading = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title;
+const heading = titleCase(headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title);
 
 const stats = statIds.map((sid) => {
   const f = fact(sid);

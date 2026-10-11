@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust is committed to the vision of a Smart Bangladesh by 2041: Aziz Ahmad"
+title: "CodersTrust Is Committed to the Vision of a Smart Bangladesh by 2041: Aziz Ahmad"
 date: 2023-11-04
 updated: 2023-11-22
 topic: leadership-advocacy

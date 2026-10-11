@@ -36,15 +36,15 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
 export const HEADLINE: Record<Audience, string> = {
-  home: 'Turn youth unemployment into digital employment — with evidence.',
-  developmentPartners: 'Youth employment results you can report — not just training numbers.',
-  governments: 'Turn graduates and digital labs into a national digital workforce.',
-  foundations: 'Fund a supported path from learning to earning.',
-  universities: 'Help your graduates build job-ready digital skills.',
-  employers: 'Upskill your teams for AI — and hire job-ready digital talent.',
-  investors: 'Invest in the infrastructure of emerging-market work.',
-  localPartners: 'Deliver digital-skills programs that lead to paid work — in your community.',
-  nuPgd: 'Build the digital skills employers are hiring for — after your degree.',
+  home: 'Turn Youth Unemployment into Digital Employment — With Evidence.',
+  developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
+  governments: 'Turn Graduates and Digital Labs into a National Digital Workforce.',
+  foundations: 'Fund a Supported Path from Learning to Earning.',
+  universities: 'Help Your Graduates Build Job-Ready Digital Skills.',
+  employers: 'Upskill Your Teams for AI — And Hire Job-Ready Digital Talent.',
+  investors: 'Invest in the Infrastructure of Emerging-Market Work.',
+  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — In Your Community.',
+  nuPgd: 'Build the Digital Skills Employers Are Hiring for — After Your Degree.',
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
@@ -305,9 +305,9 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 
 /** "How it works in three steps" (C8d) for funded programs. */
 export const STEPS = [
-  { title: 'Discover and co-design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
-  { title: 'Train and mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring toward each track’s work-entry goal (for freelance tracks: profile live, first bids, first client, exam).' },
-  { title: 'Place and report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
+  { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
+  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring toward each track’s work-entry goal (for freelance tracks: profile live, first bids, first client, exam).' },
+  { title: 'Place and Report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 
@@ -357,7 +357,7 @@ export const C14 = {
 };
 
 /** "What is CodersTrust?" sits in DefinitionBand directly below each hero (GEO definition, not C1 copy). */
-export const DEFINITION_HEADING = 'What is CodersTrust?';
+export const DEFINITION_HEADING = 'What Is CodersTrust?';
 
 export const HOME_META = {
   title: 'CodersTrust — From Learning to Earning for Youth',

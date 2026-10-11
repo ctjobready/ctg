@@ -65,7 +65,7 @@ const hours = statValue('PD-01');
 const tracking = fact('PD-02').text.match(/tracking for (\d+ months)/)?.[1] ?? '';
 
 const faqSources: FaqSource[] = [
-  { q: 'Is YouthWIDE right for our agency?', html: `Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
+  { q: 'Is YouthWIDE Right for Our Agency?', html: `Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
   ...['Q2', 'Q3', 'Q7', 'Q8', 'Q9', 'Q14'].map((id) => ({ audience: 'foundations' as const, id })),
   ...['Q1', 'Q6', 'Q10'].map((id) => ({ audience: 'governments' as const, id })),
 ];
@@ -139,9 +139,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="What a National Program Can Look Like"
       lead="Illustrative: a government lab becomes a blended-learning center, and monthly reports to the agency show completers moving into work."
       vignettes={[
-        { kind: 'Functional', title: 'A government lab becomes a blended-learning center', text: 'Seats are confirmed per program in existing government digital labs and colleges.' },
-        { kind: 'Emotional', title: 'Budgets that buy earnings', text: 'Monthly reports will show young people moving into work, locally, remotely and abroad, with certification results reported separately.' },
-        { kind: 'Social', title: 'Capacity that stays in your system', text: 'Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.' },
+        { kind: 'Functional', title: 'A Government Lab Becomes a Blended-Learning Center', text: 'Seats are confirmed per program in existing government digital labs and colleges.' },
+        { kind: 'Emotional', title: 'Budgets That Buy Earnings', text: 'Monthly reports will show young people moving into work, locally, remotely and abroad, with certification results reported separately.' },
+        { kind: 'Social', title: 'Capacity That Stays in Your System', text: 'Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.' },
       ]}
     />
 
@@ -164,10 +164,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="Delivered Through the Labs and Colleges You Already Have"
       positioning={POSITIONING.nationwide}
       blocks={[
-        { label: 'Where it runs', title: 'Government digital labs and colleges', text: 'Labs that can serve as blended-learning centers, with seats confirmed per program.', icon: 'building' },
-        { label: 'Who delivers', title: 'Trained trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
-        { label: 'What trainees receive', title: 'Certification preparation by track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
-        { label: 'What you receive', title: 'Monthly reports', text: 'Reports to the agency show completers moving into work.', icon: 'chart-bar' },
+        { label: 'Where it runs', title: 'Government Digital Labs and Colleges', text: 'Labs that can serve as blended-learning centers, with seats confirmed per program.', icon: 'building' },
+        { label: 'Who delivers', title: 'Trained Trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
+        { label: 'What trainees receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
+        { label: 'What you receive', title: 'Monthly Reports', text: 'Reports to the agency show completers moving into work.', icon: 'chart-bar' },
       ]}
       factIds={['GV-09', 'GV-01', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
     >
@@ -193,7 +193,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
       factIds={['PX-01', 'PX-02', 'PX-09', 'PX-15']}
     >
-      <GainsPains slot="lead" painsHeading="What gets in the way" pains={FUNDER_PAINS.map(painForList)} />
+      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemSection>
 
     <!-- C3 -->
@@ -212,9 +212,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="What Your Reports Will Show"
       lead="Illustrative: reports show first earnings by priority group, and tracer surveys follow each cohort for a year."
       vignettes={[
-        { kind: 'Functional', title: 'Monthly reports your board can read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
-        { kind: 'Emotional', title: 'Confidence that the budget produced earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
-        { kind: 'Social', title: 'Evidence your evaluators can audit', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+        { kind: 'Functional', title: 'Monthly Reports Your Board Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
+        { kind: 'Emotional', title: 'Confidence That the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
+        { kind: 'Social', title: 'Evidence Your Evaluators Can Audit', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
       ]}
     />
 
@@ -232,13 +232,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
     <!-- C6 -->
     <MechanismSection
-      title="One Delivery Model, From Selection to Paid Work"
+      title="One Delivery Model, from Selection to Paid Work"
       positioning={POSITIONING.youthwide}
       blocks={[
-        { label: 'Who we reach', title: 'Educated, unemployed and underemployed youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
-        { label: 'How we reach them', title: 'Accessible selection, blended delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
-        { label: 'What we deliver', title: 'AI-ready training, certification preparation and mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
-        { label: 'Where they work', title: 'Local, remote, overseas and freelance work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
+        { label: 'Who we reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
+        { label: 'How we reach them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
+        { label: 'What we deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
+        { label: 'Where they work', title: 'Local, Remote, Overseas and Freelance Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
       ]}
       factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
       link={{ label: 'How our model works', href: '/our-model/' }}
@@ -246,14 +246,14 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       <DeliveryGrid
         heading="The Delivery Model in Detail"
         items={[
-          { icon: 'graduation-cap', title: 'Training and mentoring', factId: 'PD-01' },
-          { icon: 'award', title: 'Certifications by track', factId: 'PD-03' },
-          { icon: 'users', title: 'Cohorts in parallel', factId: 'PD-06' },
-          { icon: 'wifi', title: 'Connectivity-light delivery', factId: 'PD-07' },
-          { icon: 'clipboard-check', title: 'Accessible readiness assessment', factId: 'PD-14' },
-          { icon: 'layers', title: 'Foundation tracks', factId: 'PD-17' },
-          { icon: 'briefcase', title: 'Placement support', factId: 'PD-15' },
-          { icon: 'shield-check', title: 'Quality assurance', factId: 'PD-16' },
+          { icon: 'graduation-cap', title: 'Training and Mentoring', factId: 'PD-01' },
+          { icon: 'award', title: 'Certifications by Track', factId: 'PD-03' },
+          { icon: 'users', title: 'Cohorts in Parallel', factId: 'PD-06' },
+          { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07' },
+          { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14' },
+          { icon: 'layers', title: 'Foundation Tracks', factId: 'PD-17' },
+          { icon: 'briefcase', title: 'Placement Support', factId: 'PD-15' },
+          { icon: 'shield-check', title: 'Quality Assurance', factId: 'PD-16' },
         ]}
       />
       <div class="wep-block">
@@ -271,7 +271,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <CaseStudyCarousel
     title="Proof in Practice"
     items={[
-      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
@@ -311,12 +311,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   />
 
   <Section id="roadmap" tone="airy" aria-labelledby="roadmap-h">
-    <SectionHeader id="roadmap-h" eyebrow="Execution Roadmap" title="Five Phases From Agreement to Parallel Cohorts" lead="Timings come from the program design and are confirmed with you in co-design." />
+    <SectionHeader id="roadmap-h" eyebrow="Execution Roadmap" title="Five Phases from Agreement to Parallel Cohorts" lead="Timings come from the program design and are confirmed with you in co-design." />
     <ExecutionRoadmap />
   </Section>
 
   <Section id="reports" aria-labelledby="reports-h">
-    <SectionHeader id="reports-h" eyebrow="Reporting" title="A Sample Monthly Report, and What Your Reports Show Over Time" lead="The layout below is empty on purpose: it shows the fields you will receive, not results." />
+    <SectionHeader id="reports-h" eyebrow="Reporting" title="A Sample Monthly Report, and What Your Reports Show over Time" lead="The layout below is empty on purpose: it shows the fields you will receive, not results." />
     <ReportingBlock />
   </Section>
 
@@ -376,12 +376,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C12 -->
   <RiskSection
-    title="Start With a Pilot. Decide on Evidence."
+    title="Start with a Pilot. Decide on Evidence."
     points={[
-      { icon: 'rocket', title: 'A pilot comes first', text: 'Prove the model in your labs before you commit to a wider phase.', factIds: ['PD-05'] },
-      { icon: 'target', title: 'A missed threshold triggers a corrective plan', text: 'Thresholds are agreed with you before the first cohort starts, and there is a review gate before each phase.', factIds: ['PD-11'] },
-      { icon: 'handshake', title: 'Expansion is your decision', text: 'You choose whether and how far to scale, on the pilot’s results.', factIds: ['PD-11'] },
-      { icon: 'shield', title: 'Independent evaluation is welcome', text: 'We support a third-party evaluation of outcomes where you want one.', factIds: ['PD-08'] },
+      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Prove the model in your labs before you commit to a wider phase.', factIds: ['PD-05'] },
+      { icon: 'target', title: 'A Missed Threshold Triggers a Corrective Plan', text: 'Thresholds are agreed with you before the first cohort starts, and there is a review gate before each phase.', factIds: ['PD-11'] },
+      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale, on the pilot’s results.', factIds: ['PD-11'] },
+      { icon: 'shield', title: 'Independent Evaluation Is Welcome', text: 'We support a third-party evaluation of outcomes where you want one.', factIds: ['PD-08'] },
     ]}
   >
     <Fragment slot="lead">
@@ -397,7 +397,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <CTABand
     id="cta-governments"
     tone="klein"
-    heading="Governments: Start With a Briefing That Fits Your Timeline."
+    heading="Governments: Start with a Briefing That Fits Your Timeline."
     cta={briefing}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
   >

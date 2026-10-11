@@ -1,5 +1,5 @@
 ---
-title: "CodersTrust Chairman and Co-founder Aziz Ahmad Participates in U.S. Energy Security Panel"
+title: "CodersTrust Chairman and Co-Founder Aziz Ahmad Participates in U.S. Energy Security Panel"
 date: 2026-01-16
 updated: 2026-08-01
 topic: leadership-advocacy

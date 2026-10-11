@@ -26,7 +26,7 @@ interface Props {
   class?: string;
   landmark?: boolean;
 }
-const { title = 'Notes and sources', id = 'sources', class: className, landmark = false } = Astro.props;
+const { title = 'Notes and Sources', id = 'sources', class: className, landmark = false } = Astro.props;
 const notes = footnotesFor(Astro).notes();
 // A claim label is often a stat label ("youth trained since 2014"): in the Notes list it opens an entry, so it starts with a capital. Only here; the register's wording is untouched.
 const capitalize = (s: string) => s.replace(/^\p{Ll}/u, (c) => c.toUpperCase());

@@ -22,7 +22,7 @@ interface Props {
   /** Plain caption under the grid (source line); optional. */
   note?: string;
 }
-const { photos, title = 'In the field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', label, note } = Astro.props;
+const { photos, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', label, note } = Astro.props;
 const shown = photos.filter((p) => mayRender(p.assetId));
 // A gallery whose photos carry captions is a uniform grid (the first photo is not enlarged), so every caption sits under its own picture.
 const captioned = shown.some((p) => p.caption);

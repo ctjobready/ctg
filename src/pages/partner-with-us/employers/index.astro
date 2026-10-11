@@ -51,8 +51,8 @@ const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
 const steps = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-  { title: 'Train and certify', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
-  { title: 'Support and measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
+  { title: 'Train and Certify', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
+  { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
 ];
 ---
 
@@ -60,7 +60,7 @@ const steps = [
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Employers' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Employers' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('employers', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
@@ -77,7 +77,7 @@ const steps = [
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="The talent you need is hard to find."
+    title="The Talent You Need Is Hard to Find."
     bluf="Your roles need digital skills, and your teams need AI skills now."
     factIds={['PX-05']}
   >
@@ -95,11 +95,11 @@ const steps = [
   <!-- C3 · Agitation -->
   <div class="pp-two">
     <CostSection
-      title="AI is changing the skills your teams need."
+      title="AI Is Changing the Skills Your Teams Need."
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'Jobs requiring AI skills are growing and paying more.', factId: 'PX-08', scope: 'Globally', implication: 'Waiting means competing for the same scarce talent.' },
-        { claim: 'AI is reshaping the workforce.', factId: 'PX-07', scope: 'Globally', implication: 'Training plans need to keep pace with how roles are changing.' },
+        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More.', factId: 'PX-08', scope: 'Globally', implication: 'Waiting means competing for the same scarce talent.' },
+        { claim: 'AI Is Reshaping the Workforce.', factId: 'PX-07', scope: 'Globally', implication: 'Training plans need to keep pace with how roles are changing.' },
       ]}
     />
   </div>
@@ -107,12 +107,12 @@ const steps = [
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-employers')}
-    title="What changes for your team"
+    title="What Changes for Your Team"
     lead="Illustrative, not case studies."
     vignettes={[
-      { kind: 'Functional', title: 'A team fluent in AI workflows', text: 'Your team applies AI tools in daily work.' },
-      { kind: 'Emotional', title: 'Hires who arrive ready', text: 'New hires arrive ready to contribute, and those who pass the exam hold an industry certification.' },
-      { kind: 'Social', title: 'A reliable pipeline', text: 'Digital talent comes through CodersTrust’s placement team.' },
+      { kind: 'Functional', title: 'A Team Fluent in AI Workflows', text: 'Your team applies AI tools in daily work.' },
+      { kind: 'Emotional', title: 'Hires Who Arrive Ready', text: 'New hires arrive ready to contribute, and those who pass the exam hold an industry certification.' },
+      { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent comes through CodersTrust’s placement team.' },
     ]}
   />
 
@@ -127,14 +127,14 @@ const steps = [
 
   <!-- C6 · Mechanism (JobReady@Work) -->
   <MechanismBand
-    title="JobReady@Work: built around your roles"
+    title="JobReady@Work: Built Around Your Roles"
     positioning={POSITIONING.employers}
     lead="JobReady@Work is corporate training custom-developed for each organization."
     blocks={[
-      { label: 'Assess', title: 'Needs assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
-      { label: 'Design', title: 'Customized solution and curriculum', text: 'A comprehensive curriculum built for your organization.', icon: 'pen' },
-      { label: 'Deliver', title: 'Interactive workshops', text: 'Soft-skills and hard-skills tracks, including preparation for an industry certification where a track offers one.', icon: 'users' },
-      { label: 'Measure', title: 'Progress evaluation and support', text: 'Post-training support and a progress evaluation, so outcomes are measurable.', icon: 'chart-bar' },
+      { label: 'Assess', title: 'Needs Assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
+      { label: 'Design', title: 'Customized Solution and Curriculum', text: 'A comprehensive curriculum built for your organization.', icon: 'pen' },
+      { label: 'Deliver', title: 'Interactive Workshops', text: 'Soft-skills and hard-skills tracks, including preparation for an industry certification where a track offers one.', icon: 'users' },
+      { label: 'Measure', title: 'Progress Evaluation and Support', text: 'Post-training support and a progress evaluation, so outcomes are measurable.', icon: 'chart-bar' },
     ]}
     link={{ label: 'About JobReady@Work', href: LINKS.work }}
   />
@@ -146,7 +146,7 @@ const steps = [
 
   <!-- C7 · Proof -->
   <ProofBand
-    title="Independent evidence and survey results"
+    title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
     trialScope={TRIAL_SCOPE.work.text}
     statIds={['RC-02', 'RC-04']}
@@ -157,7 +157,7 @@ const steps = [
     ]}
   >
     <EvidenceList
-      heading="What surveyed completers report"
+      heading="What Surveyed Completers Report"
       items={[
         { facts: ['OC-01'], lead: 'From CodersTrust’s youth programs:', text: SURVEY_EMPLOYMENT.text },
         { facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` },
@@ -168,7 +168,7 @@ const steps = [
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What you get, and what it means for your business"
+    title="What You Get, and What It Means for Your Business"
     rows={[
       {
         feature: 'A placement team, plus trainees from employer-demand certification tracks',
@@ -196,41 +196,41 @@ const steps = [
   <FAQBand
     audience="employers"
     ids={FAQ_IDS}
-    title="Questions employers ask"
+    title="Questions Employers Ask"
     lead="Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool."
   />
 
   <!-- C10 · Differentiation -->
   <ComparisonBand
-    title="Compare the approaches."
+    title="Compare the Approaches."
     lead="Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists. Provision varies by provider and program."
   />
 
   <!-- C11 · Offer -->
   <OfferCards
-    title="Choose how to work with us."
+    title="Choose How to Work with Us."
     cards={[
-      { eyebrow: 'Option 1', title: 'A training program scoped to your team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
-      { eyebrow: 'Option 2', title: 'Talent through the placement team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
+      { eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
+      { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
     ]}
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
-    title="Start with a pilot team. Decide on evidence."
+    title="Start with a Pilot Team. Decide on Evidence."
     lead="Success measures are agreed before you start (completion, certification and the skills you name) and checked in the progress evaluation."
     points={[
-      { icon: 'rocket', title: 'Pilot team first', text: 'Start with one team and see what changes.' },
-      { icon: 'target', title: 'Measures you set', text: 'Completion, certification and the skills you name are agreed before you start.' },
-      { icon: 'handshake', title: 'Scaling up is your decision', text: 'You choose whether and how far to scale.' },
-      { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+      { icon: 'rocket', title: 'Pilot Team First', text: 'Start with one team and see what changes.' },
+      { icon: 'target', title: 'Measures You Set', text: 'Completion, certification and the skills you name are agreed before you start.' },
+      { icon: 'handshake', title: 'Scaling up Is Your Decision', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}
   />
 
   <!-- C13 · Call to action: one solid primary, one outline -->
   <DualCtaBand
     id="cta"
-    heading="Let’s plan your first team program."
+    heading="Let’s Plan Your First Team Program."
     primary={{ label: primary.label, href: primary.href }}
     secondary={{ label: talent.label, href: talent.href }}
     micro={MICRO_COMMITMENT}
@@ -238,13 +238,13 @@ const steps = [
 
   <!-- C14 · Next steps -->
   <StepsBand
-    title="What happens after you say yes"
+    title="What Happens After You Say Yes"
     steps={[
-      { title: 'Discovery session', text: 'A conversation about your roles, team size and timeline.' },
-      { title: 'Needs assessment', text: 'We scope the skills your roles need.' },
+      { title: 'Discovery Session', text: 'A conversation about your roles, team size and timeline.' },
+      { title: 'Needs Assessment', text: 'We scope the skills your roles need.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
-      { title: 'First workshop or cohort', text: 'Training starts with your pilot team.' },
-      { title: 'Progress evaluation', text: 'Results are checked against the measures you set.' },
+      { title: 'First Workshop or Cohort', text: 'Training starts with your pilot team.' },
+      { title: 'Progress Evaluation', text: 'Results are checked against the measures you set.' },
     ]}
   />
   <Reinforcement reminder={false} />

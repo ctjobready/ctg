@@ -59,7 +59,7 @@ const courses = linkAttrs(COURSES_URL);
   <!-- C1 -->
   <HeroBand
     audience="SuperKids · For schools and education partners"
-    title="Help young learners explore coding, creativity and robotics."
+    title="Help Young Learners Explore Coding, Creativity and Robotics."
     lead="We help schools and partners bring STEAM, coding and robotics to young learners."
     cta={inquiry}
     artSeed="superkids"
@@ -71,7 +71,7 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C2 -->
   <ProblemSection
-    title="Digital and AI skills are in growing demand."
+    title="Digital and AI Skills Are in Growing Demand."
     bluf="SuperKids brings the first steps of STEAM, coding and robotics into the classroom."
     factIds={['PX-08']}
     scope={{ 'PX-08': { prefix: 'Globally' } }}
@@ -81,18 +81,18 @@ const courses = linkAttrs(COURSES_URL);
   <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
   <FutureBand
     photos={futurePhotos('superkids')}
-    title="A classroom with coding, robotics and digital art"
+    title="A Classroom with Coding, Robotics and Digital Art"
     lead="Photographs from SuperKids workshops, events and school partnerships."
     vignettes={[
-      { kind: 'Block coding', title: 'Learners build with blocks', text: 'Visual coding with blocks is a first step into programming.' },
-      { kind: 'Robotics', title: 'Ideas become things that move', text: 'Learners design and program simple robots.' },
-      { kind: 'Digital art', title: 'Creativity meets technology', text: 'Graphic design for kids brings art into the digital classroom.' },
+      { kind: 'Block coding', title: 'Learners Build with Blocks', text: 'Visual coding with blocks is a first step into programming.' },
+      { kind: 'Robotics', title: 'Ideas Become Things That Move', text: 'Learners design and program simple robots.' },
+      { kind: 'Digital art', title: 'Creativity Meets Technology', text: 'Graphic design for kids brings art into the digital classroom.' },
     ]}
   />
 
   <!-- C5 -->
   <GuideSection
-    title="Public-sector agreements and a private-sector partner"
+    title="Public-Sector Agreements and a Private-Sector Partner"
     empathy="You want children to build digital skills early."
     origin={ORIGIN}
     showPartners={false}
@@ -103,11 +103,11 @@ const courses = linkAttrs(COURSES_URL);
   </GuideSection>
 
   <!-- C6 -->
-  <MechanismSection title="How SuperKids runs" positioning={POSITIONING.superkids} lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
+  <MechanismSection title="How SuperKids Runs" positioning={POSITIONING.superkids} lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
     <div class="courses">
-      <FeatureCard icon="blocks" title="Block coding" text="Visual coding with blocks." />
+      <FeatureCard icon="blocks" title="Block Coding" text="Visual coding with blocks." />
       <FeatureCard icon="bot" title="Robotics" text="Building and programming simple robots." />
-      <FeatureCard icon="palette" title="Graphic design for kids" text="Digital art and design." />
+      <FeatureCard icon="palette" title="Graphic Design for Kids" text="Digital art and design." />
     </div>
     <p class="courses__more" data-reveal>
       Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
@@ -116,7 +116,7 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
-    <SectionHeader id="agreements-h" eyebrow="What is in place" title="What has been delivered, and what is only agreed" />
+    <SectionHeader id="agreements-h" eyebrow="What is in place" title="What Has Been Delivered, and What Is Only Agreed" />
     <div class="agree">
       <div class="agree__delivered" data-reveal><FactStat id="SK-05" /></div>
       <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>
@@ -139,19 +139,19 @@ const courses = linkAttrs(COURSES_URL);
     </div>
   </Section>
 
-  <PhotoGallery id="in-the-field" eyebrow="In the field" title="Inside SuperKids classrooms and events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
+  <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
 
   <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions schools and partners ask" />
+  <FaqSection sources={faqSources} title="Questions Schools and Partners Ask" />
 
   <!-- C11 -->
   <OfferSection
-    title="Options are shaped with you in a discovery session."
+    title="Options Are Shaped with You in a Discovery Session."
     lead="We do not publish prices. Bring these three things to the conversation."
     cards={[
-      { icon: 'school', title: 'Your school or organization', text: 'Location, age groups and the approximate number of learners.' },
-      { icon: 'target', title: 'Your goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
-      { icon: 'calendar-check', title: 'Your timeline', text: 'When you would like to begin, and two suitable times for a conversation.' },
+      { icon: 'school', title: 'Your School or Organization', text: 'Location, age groups and the approximate number of learners.' },
+      { icon: 'target', title: 'Your Goals', text: 'Which of STEAM, coding, robotics and digital art you want to start with.' },
+      { icon: 'calendar-check', title: 'Your Timeline', text: 'When you would like to begin, and two suitable times for a conversation.' },
     ]}
   >
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
@@ -159,22 +159,22 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C12 -->
   <RiskSection
-    title="A conversation first. Safeguarding always."
+    title="A Conversation First. Safeguarding Always."
     points={[
-      { icon: 'handshake', title: 'Talk before you commit', text: MICRO_COMMITMENT },
-      { icon: 'shield', title: 'Safeguarding is agreed before enrollment', text: SAFEGUARDING.text, factIds: ['PD-12'] },
+      { icon: 'handshake', title: 'Talk Before You Commit', text: MICRO_COMMITMENT },
+      { icon: 'shield', title: 'Safeguarding Is Agreed Before Enrollment', text: SAFEGUARDING.text, factIds: ['PD-12'] },
     ]}
   />
 
   <!-- C13 -->
-  <CTABand id="cta" heading="Bring SuperKids to your school or program." cta={inquiry} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Bring SuperKids to Your School or Program." cta={inquiry} micro={MICRO_COMMITMENT} />
 
   <!-- C14 -->
   <NextSteps
     steps={[
       { title: 'Discovery', text: 'A conversation about your learners and goals.' },
       { title: 'Agreement', text: 'Scope and schedule are agreed together.' },
-      { title: 'Pilot classes', text: 'Classes begin with your learners.' },
+      { title: 'Pilot Classes', text: 'Classes begin with your learners.' },
     ]}
     firstAction={C14_FIRST}
   />

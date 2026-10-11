@@ -57,7 +57,7 @@ const manuals = factPart('GV-01', /[\d,]+ manuals and guidelines published and d
 const thirdGender = factPart('GV-07', /[\d,]+ third-gender people/);
 const nationalSize = factPart('PD-05', /National ([\d,]+\+) trainees/);
 const steps = [
-  { title: 'Briefing and co-design with the agency', text: STEPS[0].text.replace('A discovery session sets', 'The briefing and co-design sessions set') },
+  { title: 'Briefing and Co-Design with the Agency', text: STEPS[0].text.replace('A discovery session sets', 'The briefing and co-design sessions set') },
   STEPS[1],
   STEPS[2],
 ];
@@ -67,7 +67,7 @@ const steps = [
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Governments' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Governments' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('governments', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
@@ -84,7 +84,7 @@ const steps = [
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title={`In Bangladesh, graduate unemployment is ${rates.graduate}.`}
+    title={`In Bangladesh, Graduate Unemployment Is ${rates.graduate}.`}
     bluf={`That compares with ${rates.ssc} for holders of the Secondary School Certificate (SSC). Budgets that count enrollment cannot show who is earning.`}
     factIds={['PX-03']}
   >
@@ -101,24 +101,24 @@ const steps = [
 
   <!-- C3 · Agitation -->
   <CostSection
-    title="Every training cycle without placement tracking repeats the same result."
+    title="Every Training Cycle Without Placement Tracking Repeats the Same Result."
     transition="It doesn’t have to be this way."
     blocks={[
       { claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
-      { claim: 'Jobs now ask for AI-ready skills.', factId: 'PX-08', scope: 'Globally', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
+      { claim: 'Jobs Now Ask for AI-Ready Skills.', factId: 'PX-08', scope: 'Globally', implication: 'A training cycle without placement tracking repeats the same enrollment-only result.' },
     ]}
   />
 
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-governments')}
-    title="What your next budget cycle could show"
+    title="What Your Next Budget Cycle Could Show"
     lead="Illustrative, not case studies."
     vignettes={[
-      { kind: 'Functional', title: 'Young people in work', text: 'Monthly reports will show young people moving into work locally, remotely and abroad, with certification results reported separately.' },
-      { kind: 'Emotional', title: 'Employers find job-ready talent', text: 'Employers find job-ready talent, including young people prepared for industry certification exams.' },
-      { kind: 'Social', title: 'Capacity that stays', text: 'Trained facilitators and localized curricula stay in your system after the program.' },
+      { kind: 'Functional', title: 'Young People in Work', text: 'Monthly reports will show young people moving into work locally, remotely and abroad, with certification results reported separately.' },
+      { kind: 'Emotional', title: 'Employers Find Job-Ready Talent', text: 'Employers find job-ready talent, including young people prepared for industry certification exams.' },
+      { kind: 'Social', title: 'Capacity That Stays', text: 'Trained facilitators and localized curricula stay in your system after the program.' },
     ]}
   />
   <SubBand pull>
@@ -139,24 +139,24 @@ const steps = [
 
   <!-- C6 · Mechanism (YouthWIDE-style delivery) -->
   <MechanismBand
-    title="A national delivery model, built on labs that already exist"
+    title="A National Delivery Model, Built on Labs That Already Exist"
     positioning={POSITIONING.governments}
     lead={`YouthWIDE-style delivery aims to train ${NATIONWIDE_TARGET} vulnerable youth by 2030. That is a national ambition that depends on government and donor commitments, not a result.`}
     blocks={[
-      { label: 'Who we reach', title: 'Vulnerable and unemployed youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
-      { label: 'How we reach them', title: 'Government digital labs', text: `${labs} that can serve as blended-learning centers, with seats confirmed per program.`, icon: 'landmark' },
-      { label: 'What we deliver', title: 'Capacity that stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then preparation for industry certification.`, icon: 'award' },
-      { label: 'Where they work', title: 'Placement and monthly reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
+      { label: 'Who we reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
+      { label: 'How we reach them', title: 'Government Digital Labs', text: `${labs} that can serve as blended-learning centers, with seats confirmed per program.`, icon: 'landmark' },
+      { label: 'What we deliver', title: 'Capacity That Stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then preparation for industry certification.`, icon: 'award' },
+      { label: 'Where they work', title: 'Placement and Monthly Reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
     ]}
     link={{ label: 'See YouthWIDE in Bangladesh', href: LINKS.nationwide }}
   />
   <SubBand>
-    <Callout eyebrow="How we scale"><CopyText block={SCALE} /></Callout>
+    <Callout eyebrow="How We Scale"><CopyText block={SCALE} /></Callout>
   </SubBand>
 
   <!-- C7 · Proof -->
   <ProofBand
-    title="Independent evidence and survey results"
+    title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
     statIds={['RC-02', 'RC-04']}
     chartId="OC-01"
@@ -165,22 +165,22 @@ const steps = [
       { label: 'Outcomes 2026', href: LINKS.outcomes },
     ]}
   >
-    <EvidenceList heading="What surveyed completers report" items={[{ facts: ['OC-03'] }]} />
+    <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
   </ProofBand>
-  <ContractTable title="Six government contracts, scope by scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
+  <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
   <CaseStudyCarousel
-    title="The Her Power cohort, beside two other women-focused programs"
+    title="The Her Power Cohort, Beside Two Other Women-Focused Programs"
     lead={WOMEN_INCLUSION.text}
     items={[
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
-      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
     ]}
   />
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What you get, and what it means for your agency"
+    title="What You Get, and What It Means for Your Agency"
     rows={[
       {
         feature: 'Certification tracks chosen from employer demand, then mentoring and placement support',
@@ -213,22 +213,22 @@ const steps = [
   <FAQBand
     audience="governments"
     ids={FAQ_IDS}
-    title="Questions ministries ask"
+    title="Questions Ministries Ask"
     lead={`Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`}
     allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation -->
   <ComparisonBand
-    title="Compare the approaches."
+    title="Compare the Approaches."
     lead="Our approach rests on independent evidence of our own training and on infrastructure that already exists: labs, colleges and Training of Trainers. Provision varies by provider and program."
   />
 
   <!-- C11 · Offer -->
-  <OfferBand title="Choose where to start." />
+  <OfferBand title="Choose Where to Start." />
   <SubBand tone="airy" pull>
     <EvidenceList
-      heading="Services we can scope for an agency"
+      heading="Services We Can Scope for an Agency"
       items={[
         { facts: ['GV-01'], text: 'Curriculum development, manuals and Training of Trainers.' },
         { facts: ['GV-05'], text: 'LMS and operation training for staff.' },
@@ -238,20 +238,20 @@ const steps = [
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
-    title="Phased rollout, with review gates"
+    title="Phased Rollout, with Review Gates"
     lead={SCORECARD.text}
     points={[
-      { icon: 'rocket', title: 'Pilot first', text: 'We start with a pilot, not a national rollout.' },
-      { icon: 'target', title: 'Review gates', text: 'Thresholds are agreed with the agency before the first cohort; a missed threshold triggers a corrective plan.' },
-      { icon: 'handshake', title: 'The agency decides on expansion', text: 'You choose whether and how far to scale.' },
-      { icon: 'shield', title: 'Independent evaluation welcome', text: 'We support third-party evaluation of outcomes.' },
+      { icon: 'rocket', title: 'Pilot First', text: 'We start with a pilot, not a national rollout.' },
+      { icon: 'target', title: 'Review Gates', text: 'Thresholds are agreed with the agency before the first cohort; a missed threshold triggers a corrective plan.' },
+      { icon: 'handshake', title: 'The Agency Decides on Expansion', text: 'You choose whether and how far to scale.' },
+      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}
   />
 
   <!-- C13 · Call to action -->
   <CTABand
     id="cta"
-    heading="Let’s plan a first phase with your ministry."
+    heading="Let’s Plan a First Phase with Your Ministry."
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'See government programs', href: LINKS.nationwide }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
@@ -261,14 +261,14 @@ const steps = [
 
   <!-- C14 · Next steps -->
   <StepsBand
-    title="What happens after you say yes"
+    title="What Happens After You Say Yes"
     lead="Your agency’s procurement timeline sets the pace."
     steps={[
       { title: 'Briefing', text: 'A briefing for your ministry or agency, shaped to its procurement timeline.' },
       { title: 'Co-design with the agency', text: 'Priority groups, tracks, labs and the pilot scorecard are agreed together.' },
       { title: 'Agreement', text: 'Scope and schedule follow the agency’s own procurement timeline.' },
-      { title: 'Launch in existing labs', text: 'Seats are confirmed per program.' },
-      { title: 'Monthly reports', text: 'Enrollment, completion, certification, placements and first earnings.' },
+      { title: 'Launch in Existing Labs', text: 'Seats are confirmed per program.' },
+      { title: 'Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings.' },
     ]}
   />
   <Reinforcement firstAction={C14.variants.governments} reminder={false} />

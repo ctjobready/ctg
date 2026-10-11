@@ -61,7 +61,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with us', href: LINKS.hub }, { label: 'Development partners & NGOs' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development partners & NGOs' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
@@ -78,7 +78,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="Enrollment targets are met. Employment lags."
+    title="Enrollment Targets Are Met. Employment Lags."
     bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part."
     factIds={['PX-01']}
   >
@@ -96,7 +96,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C3 · Agitation: cost of waiting -->
   <div class="pp-two">
     <CostBand
-      title="Every cohort that trains but does not lead to work spends the budget for a fraction of the result."
+      title="Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result."
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
@@ -108,12 +108,12 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-development')}
-    title="What your next reporting cycle could show"
+    title="What Your Next Reporting Cycle Could Show"
     lead="Illustrative, not case studies."
     vignettes={[
-      { kind: 'Functional', title: 'Earnings in your monthly reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
-      { kind: 'Emotional', title: 'Evidence your evaluators can audit', text: `Tracer results at ${TRACER_MONTHS}, designed to be backed by payslips, offer letters, platform logs and bank receipts.` },
-      { kind: 'Social', title: 'Work on their own terms', text: 'Young people earning from jobs, freelance clients and businesses of their own.' },
+      { kind: 'Functional', title: 'Earnings in Your Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
+      { kind: 'Emotional', title: 'Evidence Your Evaluators Can Audit', text: `Tracer results at ${TRACER_MONTHS}, designed to be backed by payslips, offer letters, platform logs and bank receipts.` },
+      { kind: 'Social', title: 'Work on Their Own Terms', text: 'Young people earning from jobs, freelance clients and businesses of their own.' },
     ]}
   />
 
@@ -128,14 +128,14 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C6 · Mechanism (YouthWIDE) -->
   <MechanismBand
-    title="How YouthWIDE works"
+    title="How YouthWIDE Works"
     positioning={POSITIONING.developmentPartners}
     lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country. It is designed for deployment in other countries; current outcome evidence comes from Bangladesh and Kosovo."
     blocks={[
-      { label: 'Who we reach', title: 'Priority groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
-      { label: 'How we reach them', title: 'Existing labs and colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
-      { label: 'What we deliver', title: 'Certification and mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where they work', title: 'Local, remote and global work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Who we reach', title: 'Priority Groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
+      { label: 'How we reach them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
+      { label: 'What we deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
+      { label: 'Where they work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
     ]}
     link={{ label: 'How our model works', href: LINKS.model }}
   />
@@ -148,7 +148,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C7 · Proof -->
   <ProofBand
-    title="Independent evidence and survey results"
+    title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
     plainLine
     statIds={['RC-02', 'RC-04']}
@@ -159,13 +159,13 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       { label: 'Conducting due diligence? See our governance and evidence', href: LINKS.governance },
     ]}
   >
-    <EvidenceList heading="What surveyed completers report" items={[{ facts: ['OC-03'] }]} />
+    <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
     <FitBrief />
   </ProofBand>
   <CaseStudyCarousel
-    title="Program results, with the case studies behind them"
+    title="Program Results, with the Case Studies Behind Them"
     items={[
-      { title: 'Women’s skills for freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
@@ -178,7 +178,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What you get, and what it means for your outcomes"
+    title="What You Get, and What It Means for Your Outcomes"
     concernLabel="Funder concern addressed"
     rows={[
       {
@@ -217,30 +217,30 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <FAQBand
     audience="development-partners"
     ids={FAQ_IDS}
-    title="Questions partners ask"
+    title="Questions Partners Ask"
     lead="Right for you if you fund youth employment and want results you can report. Not right if you want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
     allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation -->
   <ComparisonBand
-    title="Compare the approaches."
+    title="Compare the Approaches."
     lead="Provision varies by provider and program. This describes what a CodersTrust supported cohort includes where the agreed program scope specifies it, and how the other routes typically differ."
   />
 
   <!-- C11 · Offer -->
-  <OfferBand title="Choose where to start." />
+  <OfferBand title="Choose Where to Start." />
   <SubBand tone="airy" pull>
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <RiskReversalBand title="Start with a pilot. Decide on evidence." lead={SCORECARD.text} />
+  <RiskReversalBand title="Start with a Pilot. Decide on Evidence." lead={SCORECARD.text} />
 
   <!-- C13 · Call to action -->
   <CTABand
     id="cta"
-    heading="Let’s design your first cohort."
+    heading="Let’s Design Your First Cohort."
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
     urgency={SPEED.text}
@@ -251,7 +251,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C14 · Next steps -->
   <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step. -->
-  <NextStepsBand title="What happens after you say yes" timing={false} />
+  <NextStepsBand title="What Happens After You Say Yes" timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>

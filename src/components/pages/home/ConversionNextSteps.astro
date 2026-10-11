@@ -35,9 +35,9 @@ const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].m
 const cohort = pd04.stat?.value ?? '';
 const flow = steps ?? [
   { title: `Discovery · week ${wk[0]}`, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: `Co-design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
+  { title: `Co-Design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
   { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and success measures are agreed.' },
-  { title: `First cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
+  { title: `First Cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
 ];
 // With the logo row below, the row is the validation; the sentence naming a few of the same organizations would only repeat it.
 const notes = [

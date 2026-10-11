@@ -40,9 +40,9 @@ const cards = items.map((it) => {
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Proof in practice" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Proof in Practice" title={title} lead={lead} />
   <div data-fact={items.map((i) => i.factId).join(' ')}>
-    <Carousel label="Case studies" perView={3} count={cards.length}>
+    <Carousel label="Case Studies" perView={3} count={cards.length}>
       {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} href={c.href} />)}
     </Carousel>
     <p class="cases__fn">Notes on these program figures{items.map((i) => <FootnoteMarker id={i.factId} footnote="auto" />)}</p>

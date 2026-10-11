@@ -24,13 +24,13 @@ const toc = [
   { id: 'children', label: 'Children' },
   { id: 'changes', label: 'Changes and contact' },
 ];
-const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Privacy policy', path: '/privacy-policy/' }] })];
+const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy-policy/' }] })];
 ---
 
 <LongformLayout
   title="Privacy Policy"
   description={description}
-  breadcrumbs={[{ label: 'Privacy policy' }]}
+  breadcrumbs={[{ label: 'Privacy Policy' }]}
   jsonLd={jsonLd}
   eyebrow="Legal"
   lead="This website is a static site. It sets no analytics cookies and loads no third-party trackers on its own; a video loads from YouTube only after you click play, and YouTube may then set its own cookies. This page names every service that touches your data, and when."
@@ -39,7 +39,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
 >
   <div class="prose lp">
     <section id="summary" aria-labelledby="summary-h">
-      <h2 id="summary-h">In short</h2>
+      <h2 id="summary-h">In Short</h2>
       <ul>
         <li>We run no analytics and set no analytics cookies. We use no advertising or third-party tracking scripts.</li>
         <li>The site has no forms. Inquiries are emails that you send yourself.</li>
@@ -49,7 +49,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
     </section>
 
     <section id="services" aria-labelledby="services-h">
-      <h2 id="services-h">Every service involved</h2>
+      <h2 id="services-h">Every Service Involved</h2>
       <section class="lp__table" aria-label="Services table" tabindex="0" data-scroll data-stack>
         <table>
           <caption class="sr-only">Services that process data when you use this website, and when</caption>
@@ -70,25 +70,25 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
     </section>
 
     <section id="hosting" aria-labelledby="hosting-h">
-      <h2 id="hosting-h">Hosting and server logs</h2>
+      <h2 id="hosting-h">Hosting and Server Logs</h2>
       <p>This site is hosted on GitHub Pages. When you load a page, the host’s servers record standard log data, which includes your IP address, the page requested and your browser type. We do not add analytics, and we do not use this data to identify visitors. Read <a href={GITHUB_PRIVACY} rel={linkAttrs(GITHUB_PRIVACY).rel}>GitHub’s privacy statement<span class="sr-only"> (opens docs.github.com)</span></a> for how the host handles logs.</p>
     </section>
 
     <section id="email" aria-labelledby="email-h">
-      <h2 id="email-h">Email inquiries</h2>
+      <h2 id="email-h">Email Inquiries</h2>
       <p>Buttons that say "Book a discovery session", "Ask about due diligence" and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your inquiry. Your email provider handles the message on its way.</p>
       <p>Write to us at <CopyEmail email={CONTACT.email} trail="." /></p>
       <p>Inquiries from the local-partners page go to our Bangladesh team at <CopyEmail email={BANGLADESH_HQ.email} trail="." /></p>
     </section>
 
     <section id="nu-form" aria-labelledby="nu-h">
-      <h2 id="nu-h">National University applications</h2>
+      <h2 id="nu-h">National University Applications</h2>
       <p>Applications for the National University postgraduate diploma use an existing Google Form. When you open it you leave this site and go to a page run by Google (<a href={NU_PGD_APPLY_URL} rel={linkAttrs(NU_PGD_APPLY_URL).rel}>application form<span class="sr-only"> (opens docs.google.com)</span></a>). What you enter goes to Google Forms and to the admissions team, and Google’s own privacy policy applies to it.</p>
       <p>One news post, about the University for Peace (UPEACE) Young Leaders for Peace summer programme, links to an application form that is also hosted on Google Forms. The same applies: opening it takes you to a page run by Google, what you enter goes to Google Forms and to whoever runs that application, and Google’s own privacy policy applies.</p>
     </section>
 
     <section id="links" aria-labelledby="links-h">
-      <h2 id="links-h">Links to other sites</h2>
+      <h2 id="links-h">Links to Other Sites</h2>
       <p>Course catalog links go to <a href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>jobready.global<span class="sr-only"> (opens jobready.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and "Open in Maps" links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
     </section>
 
@@ -98,13 +98,13 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
     </section>
 
     <section id="storage" aria-labelledby="storage-h">
-      <h2 id="storage-h">Your browser storage</h2>
+      <h2 id="storage-h">Your Browser Storage</h2>
       <p>If you close the announcement bar at the top of the page, the site saves a small note in your browser’s local storage (the key is <code>{promo.storageKey}</code>) so that the bar stays closed on your next visit. It is a functional setting, it stays on your device, and we never receive it. That is why we do not ask for consent for it. You can remove it at any time by clearing this site’s data in your browser.</p>
       <p>We set no cookies of our own.</p>
     </section>
 
     <section id="rights" aria-labelledby="rights-h">
-      <h2 id="rights-h">Your rights</h2>
+      <h2 id="rights-h">Your Rights</h2>
       <p>Depending on where you live, you may have the right to ask what personal data we hold about you, to have it corrected or deleted, to object to our use of it, and to complain to your local data-protection authority. To exercise these rights, email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.</p>
     </section>
 
@@ -114,7 +114,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy policy', desc
     </section>
 
     <section id="changes" aria-labelledby="changes-h">
-      <h2 id="changes-h">Changes and contact</h2>
+      <h2 id="changes-h">Changes and Contact</h2>
       <p>If we add or change a service that touches your data, we update this page before the change goes live. The "Last updated" date above shows the current version.</p>
       <p>This website is run by CodersTrust. Questions about privacy go to <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, or by post to either office:</p>
       <ul>

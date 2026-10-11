@@ -1,5 +1,5 @@
 ---
-title: "1000 People to be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training"
+title: "1000 People to Be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training"
 date: 2023-01-05
 updated: 2023-08-11
 topic: partnerships

@@ -1,4 +1,5 @@
 ---
+import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Fact from '../../facts/Fact.astro';
@@ -37,7 +38,7 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
       blocks.map((b) => (
         <article class="card cost" data-reveal>
           <div class="card__body">
-            <h3 class="card__title">{b.claim}</h3>
+            <h3 class="card__title">{titleCase(b.claim)}</h3>
             {
               needsScope(b) ? (
                 <p class="cost__data" data-fact={b.factId}>{b.scope}, {lowerFirst(fact(b.factId).text)}<FootnoteMarker id={b.factId} footnote="auto" /></p>

@@ -98,15 +98,15 @@ const featureRows = [
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
   <Tone cmf="C2">
-    <ProblemBand id="problem" title="For too many graduates, a degree is not turning into a job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']}>
-      <GainsPains slot="lead" painsHeading="What gets in the way" pains={FUNDER_PAINS.map(painForList)} />
+    <ProblemBand id="problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']}>
+      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemBand>
   </Tone>
 
   <Tone cmf="C3">
     <HomeCost
       id="cost"
-      title="Every year of waiting costs a cohort."
+      title="Every Year of Waiting Costs a Cohort."
       blocks={[
         { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
         { icon: 'waves', claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
@@ -120,24 +120,24 @@ const featureRows = [
     <FutureBand
       photos={futurePhotos('home')}
       id="future"
-      title="Imagine the next 12 months."
+      title="Imagine the Next 12 Months."
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
-        { kind: 'Functional', title: 'A first foreign client, billed from home', text: 'For example: a young woman outside Dhaka invoices her first foreign client from her own laptop.' },
-        { kind: 'Emotional', title: 'First earnings, not just certificates', text: 'Monthly reports will show who is earning, not only who completed.' },
-        { kind: 'Social', title: 'AI-ready talent', text: 'An employer hires AI-ready talent, including completers prepared for an industry certification exam, without a long search.' },
+        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'For example: a young woman outside Dhaka invoices her first foreign client from her own laptop.' },
+        { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'Monthly reports will show who is earning, not only who completed.' },
+        { kind: 'Social', title: 'AI-Ready Talent', text: 'An employer hires AI-ready talent, including completers prepared for an industry certification exam, without a long search.' },
       ]}
     />
   </Tone>
 
   <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
 
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One path from learning to earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
 
   <Tone cmf="C7">
     <EvidenceBand
       id="proof-band"
-      title="Independent evidence and survey results"
+      title="Independent Evidence and Survey Results"
       headlineFact="RC-01"
       chart="trial"
       chip={false}
@@ -155,32 +155,32 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in practice" lead="Three programs, with their partners." items={caseStudyItems} />
+    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} />
     <CaseQuote />
   </Tone>
 
   <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
 
   <Tone cmf="C8" tone="airy" join>
-    <FeaturesTable id="features" title="What you get — and what it means for your outcomes" rows={featureRows} concernLabel="Funder concern addressed" />
+    <FeaturesTable id="features" title="What You Get — And What It Means for Your Outcomes" rows={featureRows} concernLabel="Funder concern addressed" />
     <FeatureSteps />
   </Tone>
 
   <Tone cmf="C9" tone="white">
-    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions partners ask" allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faqs' }} />
+    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the approaches." /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches." /></Tone>
 
   <Tone cmf="C11"><HomeOffer id="offer" /></Tone>
 
-  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a pilot. Decide on evidence." lead={SCORECARD.text} /></Tone>
+  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Pilot. Decide on Evidence." lead={SCORECARD.text} /></Tone>
 
   <Tone cmf="C13">
     <CTABand
       id="cta"
       tone="klein"
-      heading="Let’s design your first cohort."
+      heading="Let’s Design Your First Cohort."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
       urgency={SPEED.text}
@@ -190,7 +190,7 @@ const featureRows = [
 
   <Tone cmf="C14">
     <!-- The 6–8 week start is stated in the C13 urgency line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. -->
-    <ConversionNextSteps id="next-steps" title="What happens after you say yes" timing={false} validate={C14.validate} firstAction={C14.firstAction} logos />
+    <ConversionNextSteps id="next-steps" title="What Happens After You Say Yes" timing={false} validate={C14.validate} firstAction={C14.firstAction} logos />
   </Tone>
 
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>

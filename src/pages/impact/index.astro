@@ -19,7 +19,7 @@ import { SURVEY_EMPLOYMENT, RCT_HEADLINE } from '../../data/copy';
 
 const path = '/impact/';
 const description = desc('A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed. Survey results are self-reported.');
-const jsonLd = [articleNode({ path, headline: 'Impact and evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
+const jsonLd = [articleNode({ path, headline: 'Impact and Evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const sdgs = [
   { n: 4, label: 'Quality education', core: true },
   { n: 5, label: 'Gender equality', core: true },
@@ -31,17 +31,17 @@ const sdgs = [
 ];
 const explore = [
   { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'The Impact Survey 2026: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
-  { icon: 'flask-conical', title: 'Independent evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
-  { icon: 'file-text', title: 'Case studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
-  { icon: 'message-square-quote', title: 'Success stories', text: 'Learners in their own words. Individual stories, not typical outcomes.', href: '/impact/stories/' },
-  { icon: 'globe', title: 'Global reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
-  { icon: 'image', title: 'In the field', text: 'Photographs from programs, partner meetings and events, grouped by program and year.', href: '/impact/in-the-field/' },
+  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
+  { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
+  { icon: 'message-square-quote', title: 'Success Stories', text: 'Learners in their own words. Individual stories, not typical outcomes.', href: '/impact/stories/' },
+  { icon: 'globe', title: 'Global Reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
+  { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partner meetings and events, grouped by program and year.', href: '/impact/in-the-field/' },
 ];
 const rc = reportCta();
 ---
 
 <BaseLayout title={title('Impact and Evidence')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Impact and evidence" lead="What CodersTrust results show, what kind of evidence each one is, and what it does not show." artSeed="impact-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Impact and Evidence" lead="What CodersTrust results show, what kind of evidence each one is, and what it does not show." artSeed="impact-hub" />
 
   <Section pad="sm" aria-label="Summary">
     <div class="ih__bluf">
@@ -53,21 +53,21 @@ const rc = reportCta();
   </Section>
 
   <Section id="evidence-ladder" tone="airy" aria-labelledby="ladder-h">
-    <SectionHeader id="ladder-h" eyebrow="Results at a glance" title="The evidence ladder: four kinds of evidence" lead="Strongest for cause first. Each rung says what it shows, what it does not show and how it was made." />
+    <SectionHeader id="ladder-h" eyebrow="Results at a glance" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows, what it does not show and how it was made." />
     <EvidenceLadder />
   </Section>
 
   <!-- No headlineFact here: the randomized-trial sentence is the "In short" callout above, so this band is headed by what it shows (trial and survey figures). -->
-  <ProofBand id="proof" title="Independent evidence and survey results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'How to read this evidence', href: '/impact/#evidence-ladder' }]} />
+  <ProofBand id="proof" title="Independent Evidence and Survey Results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }, { label: 'How to read this evidence', href: '/impact/#evidence-ladder' }]} />
 
   <CaseStudyCarousel
     id="cases"
-    title="Four programs, in depth"
+    title="Four Programs, in Depth"
     items={CASE_STUDIES.map((c) => ({ title: c.name, program: c.program, factId: c.factId, href: c.path }))}
   />
 
   <Section aria-labelledby="explore-h">
-    <SectionHeader id="explore-h" eyebrow="Explore" title="Go deeper" />
+    <SectionHeader id="explore-h" eyebrow="Explore" title="Go Deeper" />
     <div class="grid-cards">
       {explore.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
     </div>

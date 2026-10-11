@@ -30,16 +30,16 @@ const madrasah = px12.text
   .filter((part) => !/^75%/.test(part))
   .join('; ');
 const groups: Group[] = [
-  { title: 'Unemployed graduates', status: 'Delivered', tone: 'success', note: { text: `Graduate unemployment is ${rates.graduate}, against ${rates.ssc} for SSC holders (see the national challenge above).`, factIds: ['PX-03', 'OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
-  { title: 'Madrasah youth', status: 'Aims to reach', tone: 'info', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
-  { title: 'Climate-vulnerable coastal youth', status: 'Aims to reach', tone: 'info', factIds: ['PX-11'] },
-  { title: 'Indigenous communities', status: 'Aims to reach', tone: 'info', factIds: ['PX-13'] },
-  { title: 'Third-gender people', status: 'Agreed', tone: 'brand', factIds: ['GV-07', 'PX-14'] },
+  { title: 'Unemployed Graduates', status: 'Delivered', tone: 'success', note: { text: `Graduate unemployment is ${rates.graduate}, against ${rates.ssc} for SSC holders (see the national challenge above).`, factIds: ['PX-03', 'OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
+  { title: 'Madrasah Youth', status: 'Aims to reach', tone: 'info', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
+  { title: 'Climate-Vulnerable Coastal Youth', status: 'Aims to reach', tone: 'info', factIds: ['PX-11'] },
+  { title: 'Indigenous Communities', status: 'Aims to reach', tone: 'info', factIds: ['PX-13'] },
+  { title: 'Third-Gender People', status: 'Agreed', tone: 'brand', factIds: ['GV-07', 'PX-14'] },
 ];
 ---
 
 <div class="pg">
-  <h3 class="pg__title t-heading-xl" data-reveal>Five priority groups</h3>
+  <h3 class="pg__title t-heading-xl" data-reveal>Five Priority Groups</h3>
   <p class="pg__lead" data-reveal><Fact id="IN-03" /></p>
   <ul class="pg__grid" role="list">
     {

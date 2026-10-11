@@ -11,7 +11,7 @@ tags: []
 seoTitle: "Socio-Technology for Unity at Build Peace 2023"
 ---
 
-## CodersTrust creates digital spaces that actively contribute to building and sustaining harmony by transforming conflicts on a global scale
+## CodersTrust Creates Digital Spaces That Actively Contribute to Building and Sustaining Harmony by Transforming Conflicts on a Global Scale
 
 ![Seven conference participants wearing lanyards standing together outdoors](../../assets/images/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/build-peace-2023-conference-2024-2.jpg)
 

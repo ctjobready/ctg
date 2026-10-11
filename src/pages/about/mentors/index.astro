@@ -29,21 +29,21 @@ const apply = cta('mentor');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners to their first client.';
 const jsonLd = [
   {
-    ...webPage({ path: '/about/mentors/', name: 'Instructors and mentors', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Mentors', path: '/about/mentors/' }] }),
+    ...webPage({ path: '/about/mentors/', name: 'Instructors and Mentors', description, type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Mentors', path: '/about/mentors/' }] }),
     mainEntity: { '@type': 'ItemList', itemListElement: mentors.map((m, i) => ({ '@type': 'ListItem', position: i + 1, name: m.name })) },
   },
 ];
 ---
 
 <BaseLayout title="Instructors and Mentors" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Mentors' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About us" title="Instructors and mentors" lead="Practitioners who teach and mentor CodersTrust learners, from the first profile to the first client." art={false}>
+  <Hero eyebrow="About us" title="Instructors and Mentors" lead="Practitioners who teach and mentor CodersTrust learners, from the first profile to the first client." art={false}>
     <Fragment slot="actions">
       <Button href={apply.href} icon="mail">{apply.label}</Button>
     </Fragment>
   </Hero>
 
   <Section id="mentors" aria-labelledby="mentors-h">
-    <SectionHeader id="mentors-h" eyebrow="Our practitioners" title="Meet some of our mentors">
+    <SectionHeader id="mentors-h" eyebrow="Our practitioners" title="Meet Some of Our Mentors">
       <p class="lead"><Fact id="SC-09" /></p>
     </SectionHeader>
     <div class="grid-cards grid-cards--4">
@@ -53,7 +53,7 @@ const jsonLd = [
 
   <CTABand
     id="mentor-cta"
-    heading="Become a mentor"
+    heading="Become a Mentor"
     text="Do you work in digital marketing, design, video, development, accounting or another digital field? Tell us about your experience and availability."
     cta={{ label: apply.label, href: apply.href }}
     secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}

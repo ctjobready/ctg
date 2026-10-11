@@ -24,7 +24,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
 ---
 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let’s talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
+  <Hero eyebrow="Contact" title="Let’s Talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
     <Fragment slot="actions">
       <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a discovery session</Button>
       <Button variant="outline" href="#offices">Offices and phone</Button>
@@ -32,7 +32,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
   </Hero>
 
   <Section id="routes" aria-labelledby="routes-h">
-    <SectionHeader id="routes-h" eyebrow="Inquiry routes" title="Who are you writing as?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
+    <SectionHeader id="routes-h" eyebrow="Inquiry routes" title="Who Are You Writing As?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
     <p class="ct-copy"><CopyEmail /></p>
     <ul class="ct-routes" role="list">
       {
@@ -58,7 +58,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
   </Section>
 
   <Section id="offices" tone="airy" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where we work from" lead="Write to the address of the office that is closest to your work." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="Write to the address of the office that is closest to your work." />
     <div class="grid-cards grid-cards--2">
       {OFFICES.map((o) => <OfficeCard {...o} role={o.id === 'usa' ? 'Office in New York' : 'Headquarters in Dhaka'} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
     </div>
@@ -81,12 +81,12 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
   </Section>
 
   <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After you write" title="What happens next" />
+    <SectionHeader id="next-h" eyebrow="After you write" title="What Happens Next" />
     <div class="ct-next">
       <StepFlow steps={[
-        { title: 'Your inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
-        { title: 'A conversation', text: 'We talk through your goals, priority groups and timeline.' },
-        { title: 'A first cohort, designed with you', text: 'We shape tracks, safeguarding and reporting together.' },
+        { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
+        { title: 'A Conversation', text: 'We talk through your goals, priority groups and timeline.' },
+        { title: 'A First Cohort, Designed with You', text: 'We shape tracks, safeguarding and reporting together.' },
       ]} />
       <ul class="ct-c14" role="list">
         <li><CopyBlock block={C14.reminder} /></li>

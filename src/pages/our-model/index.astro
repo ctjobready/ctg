@@ -22,19 +22,19 @@ const lead = `One integrated path: an accessible assessment, ${val('PD-01')} tra
 // Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
 const delivery = [
-  { icon: 'clipboard-check', title: 'Accessible readiness assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Selection uses a customized psychometric analysis, a written test and an interview; a small number may not be selected, and the reasons are reported.' },
-  { icon: 'layers', title: 'Foundation tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
-  { icon: 'graduation-cap', title: 'Blended training with certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, from a live profile to first bids, a first client and the exam, and then learners join the alumni network.` },
-  { icon: 'wifi', title: 'Connectivity-light delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
-  { icon: 'network', title: 'Hub-and-spoke delivery at scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
-  { icon: 'briefcase', title: 'Placement support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
+  { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Selection uses a customized psychometric analysis, a written test and an interview; a small number may not be selected, and the reasons are reported.' },
+  { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
+  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, from a live profile to first bids, a first client and the exam, and then learners join the alumni network.` },
+  { icon: 'wifi', title: 'Connectivity-Light Delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
+  { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
+  { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
 const qa = 'Programs use common practical-assessment rubrics, sampled moderation of portfolios and assessments, and trainer observation, with remediation before the next cohort. Completion, competency and external-exam results are reported separately.';
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our model' }]}>
-  <Hero variant="inner" eyebrow="Our model" title="How the CodersTrust model works" lead={lead} artSeed="our-model-hub">
+<BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
+  <Hero variant="inner" eyebrow="Our Model" title="How the CodersTrust Model Works" lead={lead} artSeed="our-model-hub">
     <Fragment slot="actions">
       <Button href="/impact/" iconEnd="arrow-right">See the evidence</Button>
     </Fragment>
@@ -42,19 +42,19 @@ const d = discoveryCta();
 
   <MechanismBand
     id="path"
-    title="One integrated path, from assessment to career"
+    title="One Integrated Path, from Assessment to Career"
     lead="Learn. Earn. Prosper. Each stage hands the learner to the next, and every course is followed by tracked outcomes."
     blocks={[
-      { label: 'Assess and place', title: 'Readiness assessment', text: 'Tests and an interview route each applicant to a career track or a foundation track.', icon: 'clipboard-check' },
-      { label: 'Learn', title: 'Skill units and certification', text: 'Blended training on a track set from employer demand, with certification exam preparation (exam terms set per program).', icon: 'graduation-cap' },
-      { label: 'Earn', title: 'Mentoring and placement', text: 'Three months of milestone-based one-to-one mentoring, then placement support into local, remote and global work.', icon: 'briefcase' },
-      { label: 'Prosper', title: 'Career paths', text: 'Progressive levels, continuing professional development and the alumni network.', icon: 'trending-up' },
+      { label: 'Assess and place', title: 'Readiness Assessment', text: 'Tests and an interview route each applicant to a career track or a foundation track.', icon: 'clipboard-check' },
+      { label: 'Learn', title: 'Skill Units and Certification', text: 'Blended training on a track set from employer demand, with certification exam preparation (exam terms set per program).', icon: 'graduation-cap' },
+      { label: 'Earn', title: 'Mentoring and Placement', text: 'Three months of milestone-based one-to-one mentoring, then placement support into local, remote and global work.', icon: 'briefcase' },
+      { label: 'Prosper', title: 'Career Paths', text: 'Progressive levels, continuing professional development and the alumni network.', icon: 'trending-up' },
     ]}
     link={{ label: 'How TalentLEAP works', href: '/our-model/talentleap/' }}
   />
 
   <Section aria-labelledby="delivery-h">
-    <SectionHeader id="delivery-h" eyebrow="Delivery model" title="How a program is delivered" lead="The design choices that make the path work for learners who start from different places." />
+    <SectionHeader id="delivery-h" eyebrow="Delivery model" title="How a Program Is Delivered" lead="The design choices that make the path work for learners who start from different places." />
     <div class="grid-cards">
       {delivery.map((x) => (
         <FeatureCard icon={x.icon} title={x.title}>
@@ -65,25 +65,25 @@ const d = discoveryCta();
   </Section>
 
   <Section tone="airy" aria-labelledby="qa-h">
-    <SectionHeader id="qa-h" eyebrow="Quality" title="Quality assurance" />
+    <SectionHeader id="qa-h" eyebrow="Quality" title="Quality Assurance" />
     <p class="om__text" data-fact="PD-16">{qa}<FootnoteMarker id="PD-16" /></p>
   </Section>
 
   <Section aria-labelledby="safe-h">
-    <SectionHeader id="safe-h" eyebrow="Safeguarding and data" title="Safeguarding and data are agreed per program" />
+    <SectionHeader id="safe-h" eyebrow="Safeguarding and data" title="Safeguarding and Data Are Agreed per Program" />
     <div class="om__text"><CopyText block={SAFEGUARDING} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/about/governance/').href}>Governance and accountability<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section tone="ice" aria-labelledby="go-h">
-    <SectionHeader id="go-h" eyebrow="Go deeper" title="The mechanism and the platform" />
+    <SectionHeader id="go-h" eyebrow="Go Deeper" title="The Mechanism and the Platform" />
     <div class="grid-cards grid-cards--2">
       <ProgramCard icon="route" title="TalentLEAP" text="CodersTrust’s competency-based talent development model: skill units, graduated levels and mentoring." href="/our-model/talentleap/" linkLabel="How TalentLEAP works" />
-      <ProgramCard icon="layout-dashboard" title="JobReady platform" text="The digital education and employment platform, being built as an AI-native platform and rolling out in stages." href="/our-model/jobready-platform/" linkLabel="See the rollout status" />
+      <ProgramCard icon="layout-dashboard" title="JobReady Platform" text="The digital education and employment platform, being built as an AI-native platform and rolling out in stages." href="/our-model/jobready-platform/" linkLabel="See the rollout status" />
     </div>
   </Section>
 
-  <CTABand id="cta" heading="Talk to us about a first cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
   <Section pad="sm" aria-label="Notes and sources"><Sources /></Section>
 </BaseLayout>
 

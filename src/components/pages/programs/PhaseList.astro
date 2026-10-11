@@ -1,4 +1,5 @@
 ---
+import { titleCase } from '../../../lib/titleCase.mjs';
 /**
  * Numbered cards in reading order (ordered list). Used for the YouthWIDE execution roadmap and the
  * JobReady@Work approach. Each item may carry the fact IDs it rests on.
@@ -23,7 +24,7 @@ const { items, cols = 4, label, class: className } = Astro.props;
     items.map((it, i) => (
       <li class="phases__item" data-reveal data-fact={it.factIds?.join(' ')}>
         <span class="phases__num" aria-hidden="true">{i + 1}</span>
-        <h3 class="phases__title"><span class="sr-only">Step {i + 1}: </span>{it.title}</h3>
+        <h3 class="phases__title"><span class="sr-only">Step {i + 1}: </span>{titleCase(it.title)}</h3>
         {it.text && <p class="phases__text">{it.text}</p>}
       </li>
     ))

@@ -24,11 +24,11 @@ const layoutLabel = `Sample monthly report layout with no data. Every field is e
 
 const timeline = [
   { when: 'At enrollment', title: 'Baseline', text: 'Every trainee’s starting point is recorded, so later results have something to be measured against.', ids: 'PD-09' },
-  { when: 'Every month', title: 'Monthly report', text: `Enrollment and attendance, completion and certification, placements and first earnings, women and priority-group shares, and trainee satisfaction.`, ids: 'PD-08' },
-  { when: 'Every quarter', title: 'Steering review', text: 'You and CodersTrust review the reports together; independent evaluation is welcome.', ids: 'PD-08' },
+  { when: 'Every month', title: 'Monthly Report', text: `Enrollment and attendance, completion and certification, placements and first earnings, women and priority-group shares, and trainee satisfaction.`, ids: 'PD-08' },
+  { when: 'Every quarter', title: 'Steering Review', text: 'You and CodersTrust review the reports together; independent evaluation is welcome.', ids: 'PD-08' },
   ...tracers.map((m, i) => ({
     when: `${m} months after each course`,
-    title: `Tracer survey ${i + 1}`,
+    title: `Tracer Survey ${i + 1}`,
     text: i === 0 ? 'The first tracer survey after the course, with documents behind the answers.' : i === 1 ? 'The second tracer survey, which shows who started earning.' : 'The third tracer survey, a year after the course.',
     ids: 'PD-09',
   })),
@@ -73,7 +73,7 @@ const timeline = [
   </figure>
 
   <div class="time" data-reveal data-fact="PD-08 PD-09">
-    <h3 class="time__title">What your reports show over time</h3>
+    <h3 class="time__title">What Your Reports Show over Time</h3>
     <p class="time__lead">A fixed rhythm of evidence, from the first day to a year after each course. It is a schedule of what is measured, not a set of results.</p>
     <ol class="time__list" role="list">
       {
