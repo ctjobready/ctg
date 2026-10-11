@@ -4,7 +4,8 @@ import FactStat from '../../facts/FactStat.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
-import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+import FootnoteMarker from '../../facts/FootnoteMarker.astro';
+import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
 
 /**
  * Extras inside the Klein traction band on Investors (C7): the survey sentence ([SURVEY], dated and qualified),
@@ -12,10 +13,16 @@ import { SURVEY_EMPLOYMENT } from '../../../data/copy';
  * AWS (PA-06) and HolonIQ (PA-08) badges. The HolonIQ years are to be confirmed, so none are printed.
  */
 const badges = ['PA-06', 'PA-08'];
+
+// Path to scale: built from figures the page already shows (GV-10 contract scopes; PD-05's National option), none typed here.
+const scopes = fact('GV-10').text.match(/ranging from ([\d,]+\+ professionals to [\d,]+\+ digital-lab staff)/)?.[1];
+if (!scopes) throw new Error('GV-10 wording changed: update the Path to Scale paragraph on Investors');
+const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 ---
 
 <div class="ipx">
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
+  <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}<FootnoteMarker id="GV-10" footnote="auto" />, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
   <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
   <div class="ipx__row">
     <div class="ipx__stat" data-reveal><FactStat id="SC-13" tone="accent" footnote={true} /></div>

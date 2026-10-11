@@ -1,5 +1,5 @@
 ---
-// P9 — Programs hub /programs/ (T2): six program cards, the shared path behind them, the headline evidence, and one discovery CTA.
+// P9 — Programs hub /programs/ (T2): five program cards, the shared path behind them, the headline evidence, and one discovery CTA.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Badge from '../../components/system/Badge.astro';
@@ -47,9 +47,10 @@ const jsonLd = [
   <Hero
     eyebrow="Programs"
     title="CodersTrust Programs"
-    lead="CodersTrust runs six programs, each for a different partner: funders and governments, universities, employers, degree holders and schools."
+    lead="CodersTrust runs five programs, each for a different partner: funders and governments, universities, employers, degree holders and schools."
     artSeed="programs-hub"
   >
+    <p class="hub__who">For governments and funders: YouthWIDE. For universities and colleges: JobReady@Campus. For employers: JobReady@Work. For degree holders: NU Postgraduate Diploma. For schools: SuperKids.</p>
     <Fragment slot="actions">
       <a class="link" href="#programs-grid">Compare the programs</a>
     </Fragment>
@@ -58,7 +59,7 @@ const jsonLd = [
   <DefinitionBlock />
 
   <Section id="programs-grid" aria-labelledby="programs-h">
-    <SectionHeader id="programs-h" eyebrow="Six programs" title="Choose the Program That Fits You." lead="Each card says who the program is for and what it means in practice." />
+    <SectionHeader id="programs-h" eyebrow="Five programs" title="Choose the Program That Fits You." lead="Each card says who the program is for and what it means in practice." />
     <ul class="grid-cards grid-cards--stretch hub" role="list" data-fact="IN-02 IN-01 IN-09 IN-10 SC-04">
       {
         programs.map((p) => (
@@ -70,6 +71,7 @@ const jsonLd = [
         ))
       }
     </ul>
+    <p class="hub__phase" data-reveal>Delivery is phased: pilots, then regional expansion, then multi-year national phases; a 100,000+ phase is a design option we have not yet delivered at that size.</p>
   </Section>
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
@@ -109,6 +111,17 @@ const jsonLd = [
   }
   .hub__aud {
     margin: 0;
+  }
+  .hub__who {
+    margin: var(--space-md) 0 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-base);
+    color: var(--on-surface-variant);
+  }
+  .hub__phase {
+    margin: var(--space-lg) 0 0;
+    max-width: var(--measure);
+    color: var(--on-surface-variant);
   }
   .updated {
     margin: 0 0 var(--space-md);

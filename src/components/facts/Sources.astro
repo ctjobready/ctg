@@ -9,9 +9,8 @@ import { linkAttrs } from '../../lib/url';
  *
  * Numbers and order: this component lists the notes in the order the page registered them. The reading order (markers and notes
  * numbered by first appearance in the page body) is applied to the finished page by orderFootnotes() in src/lib/postprocess.ts,
- * which src/middleware.ts runs for every page. The same pass keeps the first note that carries a caveat as the only one that prints
- * it and turns the later ones into "Same caveat as note N." (linked), so every caveat paragraph is rendered in full here and tagged
- * with data-caveat (the caveat's identity) for that pass.
+ * which src/middleware.ts runs for every page. Every note prints its own caveat-class line in full, tagged with data-caveat (the
+ * caveat's identity); a note never points to another note's caveat, because the other note's extra sentences may not apply.
  *
  * An empty band: pages wrap this component in a labelled <Section aria-label="Notes and sources">. When there are no notes the
  * same pass removes the empty band, so no empty landmark reaches the page.

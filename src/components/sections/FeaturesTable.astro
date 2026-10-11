@@ -63,7 +63,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
                 <td data-label={concernLabel}>
                   {r.relieves ? (
                     <span class="ft__pain">
-                      {r.painId ? <span class="ft__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
+                      {r.painId ? <span class="ft__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}{' '}
                       <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
                     </span>
                   ) : (

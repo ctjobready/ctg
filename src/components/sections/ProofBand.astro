@@ -29,7 +29,7 @@ interface Props {
   /** Small label above the heading; defaults to "The evidence". */
   eyebrow?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment among surveyed completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Self-Reported Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
 // The fact's headline is also body text elsewhere (facts register wording is unchanged), so Title Case is applied here, for the heading only.
 const heading = titleCase(headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : title);
 const cf = fact(chartId);
@@ -38,6 +38,15 @@ const before = cf.stat?.from ? parseFloat(cf.stat.from.replace(/[^0-9.]/g, '')) 
 if (after === undefined || before === undefined) throw new Error(`ProofBand: fact ${chartId} needs stat.numeric and stat.from`);
 const unit = cf.stat?.suffix ?? '%';
 const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
+
+// Order (review round 3): the randomized-trial results come first, with the percentage-point result (RC-02) ahead of the income result (RC-01);
+// the alumni-survey results (OC-*) sit below them, beside the survey chart, so a descriptive survey never reads as the headline evidence.
+const rank = (id: string) => (id === 'RC-02' ? 0 : id.startsWith('RC-') ? 1 : 2);
+const leading = statIds.filter((s) => !s.startsWith('OC-')).sort((a, b) => rank(a) - rank(b));
+const survey = statIds.filter((s) => s.startsWith('OC-'));
+// One-line lead-in for the survey chart, built from the chart fact (figures are not typed here).
+const pairedN = cf.base?.match(/(\d[\d,]*) paired/)?.[1];
+const chartLead = `In a non-random alumni survey, ${pairedN ? `${pairedN} completers with paired answers` : 'completers with paired answers'} reported ${cf.stat?.value} employment at the October 2026 survey, against ${cf.stat?.from} before training. Descriptive, not causal.`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
@@ -49,11 +58,24 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
     {trialScope && <p class="proofband__scope" data-trial-scope>{trialScope}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
-  <div class="proofband">
-    <div class="proofband__stats">
-      {statIds.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
-    </div>
+  {
+    leading.length > 0 && (
+      <div class="proofband__lead-stats">
+        {leading.map((s, i) => <FactStat id={s} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
+      </div>
+    )
+  }
+  <p class="proofband__sub eyebrow">Alumni survey results</p>
+  <div class:list={['proofband', survey.length === 0 && 'proofband--solo']}>
+    {
+      survey.length > 0 && (
+        <div class="proofband__stats">
+          {survey.map((s, i) => <FactStat id={s} tone={(leading.length + i) % 2 === 0 ? 'dark' : 'accent'} size="lg" />)}
+        </div>
+      )
+    }
     <div class="proofband__chart">
+      <p class="proofband__chartlead">{chartLead}</p>
       <BeforeAfter
         title={chartTitle}
         before={{ label: 'Before', value: before, caption: 'before training' }}
@@ -98,6 +120,28 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
     font-weight: var(--fw-medium);
     color: var(--ctx-text);
   }
+  .proofband__lead-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-gutter);
+    margin-bottom: var(--space-xl, 56px);
+  }
+  @media (min-width: 1024px) {
+    .proofband__lead-stats {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    }
+  }
+  .proofband__sub {
+    margin: 0 0 var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
+  }
+  .proofband__chartlead {
+    margin: 0 0 var(--space-sm);
+    max-width: var(--measure);
+    font-size: var(--fs-body-base);
+    color: var(--ctx-text);
+  }
   .proofband {
     display: grid;
     gap: var(--space-lg);
@@ -126,6 +170,9 @@ const delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
       grid-template-columns: 1fr 1fr;
       gap: 56px;
       align-items: center;
+    }
+    .proofband--solo {
+      grid-template-columns: minmax(0, 40rem);
     }
   }
 </style>

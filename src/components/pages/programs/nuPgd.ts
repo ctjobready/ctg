@@ -20,6 +20,10 @@ export const NU_NAME = 'National University Postgraduate Diploma';
 /** Standalone Google Form (never embedded) and the secondary phone route, both from the CTA library. */
 export const NU_APPLY = { label: CTAS['nu-pgd'].label, href: CTAS['nu-pgd'].href as string };
 export const NU_CALL = CTAS['nu-pgd'].secondary as { label: string; href: string };
+/** The number in the call label ("Call to Enroll: +880 1958-220802"), for sentences that name it on their own. */
+export const NU_CALL_NUMBER = NU_CALL.label.replace(/^[^:]*:\s*/, '');
+/** "Call +880 1958-220802" as link text: a non-breaking space after "Call" keeps the whole phone link on one line (html-validate tel-non-breaking). */
+export const NU_CALL_TEXT = `Call ${NU_CALL_NUMBER}`;
 
 /**
  * Legacy FAQ indexes that describe the course itself. They exclude the unapproved admissions facts (duration, eligibility, mode, award,

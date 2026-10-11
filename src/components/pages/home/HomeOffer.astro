@@ -4,6 +4,7 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import Badge from '../../system/Badge.astro';
 import CopyBlock from './CopyBlock.astro';
+import { optionDuration } from '../../../lib/format';
 import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE } from '../../../data/copy';
 
 /**
@@ -29,7 +30,7 @@ const { title = 'Choose Where to Start.', lead, id = 'offer' } = Astro.props;
             <p class="eyebrow">Option {i + 1}</p>
             <h3 class="card__title">{o.name}{o.name === 'National' && ' '}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design Option</Badge>}</h3>
             <p class="offer__size">{o.size}</p>
-            <p class="card__meta offer__duration">{o.duration}</p>
+            <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
             <p class="card__text">{o.note}</p>
           </div>
         </li>

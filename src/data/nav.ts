@@ -58,7 +58,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Leadership & team', href: '/about/team/', description: 'Founders, advisors and the executive team.' },
       { label: 'Instructors & mentors', href: '/about/mentors/', description: 'The practitioners who teach and mentor learners.' },
       { label: 'Recognition & media', href: '/about/recognition/', description: 'Awards, endorsements and press coverage.' },
-      { label: 'Careers', href: '/careers/', description: 'Open roles and life at CodersTrust.' },
+      { label: 'Careers', href: '/careers/', description: 'Working at CodersTrust and how to apply.' },
       { label: 'Contact', href: '/contact/', description: 'Offices, email and phone.' },
     ],
     feature: {

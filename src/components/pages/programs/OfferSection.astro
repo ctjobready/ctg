@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
+import { optionDuration } from '../../../lib/format';
 
 /**
  * C11 Offer. Option cards (program options from PD-05, no prices, or custom cards) followed by the
@@ -42,7 +43,7 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
               <p class="eyebrow">Option {i + 1}</p>
               <h3 class="card__title">{o.name}</h3>
               <p class="offer__volume">{o.size}</p>
-              <p class="card__meta offer__duration">{o.duration}</p>
+              <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
               <p class="card__text">{o.note}</p>
             </div>
           </article>

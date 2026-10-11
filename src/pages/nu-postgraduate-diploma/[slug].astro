@@ -15,7 +15,7 @@ import PhaseList from '../../components/pages/programs/PhaseList.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, para, type FaqSource } from '../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
 import { SURVEY_EMPLOYMENT } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
@@ -35,7 +35,7 @@ const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const LAST_UPDATED = PAGE_UPDATED.nuCourse;
 
 const faqSources: FaqSource[] = [
-  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `Fees, schedule, eligibility and recognition are confirmed with admissions before you apply. ${anchor(NU_CALL.href, NU_CALL.label)} to ask.` },
+  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `Fees, schedule, eligibility and recognition are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   ...c.faqs.map((f) => ({ q: f.q, html: para(f.a) })),
   { q: 'Is This the Right Course for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
 ];

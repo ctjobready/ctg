@@ -64,7 +64,7 @@ const d = discoveryCta();
               <td data-label="Partner">{p.partner}</td>
               <td data-label="Years">{p.years === '—' ? <><span class="sr-only">Not stated</span><span aria-hidden="true">—</span></> : p.years}</td>
               <td data-label="Focus">{p.focus}</td>
-              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}{p.evidence && <span class="gr__evid">{p.evidence}</span>}</td>
+              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}{p.evidence && <>{' '}<span class="gr__evid">{p.evidence}</span></>}</td>
             </tr>
           ))}
         </tbody>

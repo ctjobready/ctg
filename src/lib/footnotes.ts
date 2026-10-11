@@ -8,7 +8,7 @@ import { CAVEATS, fact, sources, type Fact, type Source } from '../data/facts';
  * reader meets the markers (a page's frontmatter can build FAQ answers, with their markers, before the body renders). The reading
  * order is therefore settled once per page, after rendering, by `orderFootnotes()` in src/lib/postprocess.ts (run by
  * src/middleware.ts): markers and notes are numbered by first appearance in the page, the Notes list follows that order, and a
- * repeated caveat becomes "Same caveat as note N." scripts/check-facts.mjs fails the build for any page where that did not happen.
+ * each note keeps its own caveat-class line in full. scripts/check-facts.mjs fails the build for any page where the order was not settled.
  */
 export interface Note {
   n: number;
@@ -19,7 +19,7 @@ export interface Note {
   caveat?: string;
   /**
    * Identity of the caveat text for de-duplication: the class letter, or `fact:<ID>` when the fact words its own caveat.
-   * Notes that share a key print the caveat once (the first in reading order) and "Same caveat as note N." afterwards.
+   * Notes that share a key print the same caveat text, each in full (never "Same caveat as note N").
    */
   caveatKey?: string;
   /** Public plain-language extra note, if any. */

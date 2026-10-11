@@ -26,11 +26,10 @@ import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
-import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, SAFEGUARDING } from '../../data/copy';
+import { MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -157,14 +156,8 @@ const courses = linkAttrs(COURSES_URL);
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 
-  <!-- C12 -->
-  <RiskSection
-    title="A Conversation First. Safeguarding Always."
-    points={[
-      { icon: 'handshake', title: 'Talk Before You Commit', text: MICRO_COMMITMENT },
-      { icon: 'shield', title: 'Safeguarding Is Agreed Before Enrollment', text: SAFEGUARDING.text, factIds: ['PD-12'] },
-    ]}
-  />
+  <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
+       above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->
 
   <!-- C13 -->
   <CTABand id="cta" heading="Bring SuperKids to Your School or Program." cta={inquiry} micro={MICRO_COMMITMENT} />
