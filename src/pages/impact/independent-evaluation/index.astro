@@ -32,7 +32,6 @@ const classes = [
 const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
 
-const citation = sources.BIGD22;
 const bigdStudy = sources.BIGDSTUDY;
 const jsonLd = [
   articleNode({
@@ -63,8 +62,6 @@ const toc = [
   { id: 'classes', label: 'Freelancing by classes attended' },
   { id: 'funders', label: 'What it means for funders' },
   { id: 'context', label: 'Context' },
-  { id: 'limits', label: 'Limitations' },
-  { id: 'cite', label: 'Citation' },
   { id: 'faq', label: 'Questions' },
 ];
 const d = discoveryCta();
@@ -94,7 +91,7 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p data-fact="RC-12"><Fact id="RC-12" />. <a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -103,9 +100,6 @@ const d = discoveryCta();
 
   <ReportSection id="design" title="How the Trial Worked">
     <p data-fact="RC-07"><Fact id="RC-07" /></p>
-    <p>
-      “Offered a place” compares every woman randomly offered a place with the control group, whether or not she attended; this is the figure to lead with. “Attended” isolates the women who took part.
-    </p>
   </ReportSection>
 
   <ReportSection id="results" title="What the Trial Found">
@@ -128,7 +122,7 @@ const d = discoveryCta();
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
     />
     <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
-    <p data-fact="RC-10"><Fact id="RC-10" />. It is planned, not under way.</p>
+    <p data-fact="RC-10"><Fact id="RC-10" />.</p>
   </ReportSection>
 
   <ReportSection id="funders" title="What It Means for Funders">
@@ -143,24 +137,7 @@ const d = discoveryCta();
 
   <ReportSection id="context" title="Context: How This Compares">
     <p data-fact="RC-06"><strong>Context (external):</strong> <Fact id="RC-06" /></p>
-    <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /> This is a design rationale, not a claim about the effect of mentoring.</p>
-  </ReportSection>
-
-  <ReportSection id="limits" title="Limitations">
-    <ul class="ie__list">
-      <li><strong>Population.</strong> Women aged 18–35 with SSC or above in Dhaka; results may differ for other groups and places.</li>
-      <li><strong>Timing.</strong> The women trained in 2020, when the program moved online during COVID-19, and were surveyed in November–December 2021.</li>
-      <li><strong>Follow-up length.</strong> Women were surveyed once at follow-up, so the results describe outcomes at that point, not longer-run effects.</li>
-      <li><strong>Program tested.</strong> The trial tested a 200-hour predecessor program. CodersTrust’s standard track today is 100 hours, so the trial does not measure today’s track.</li>
-      <li><strong>Attrition.</strong> Not every woman in the baseline sample was reached at follow-up (see the trial design above).</li>
-    </ul>
-  </ReportSection>
-
-  <ReportSection id="cite" title="Citation">
-    <Callout label="Cite this evaluation">
-      <p data-fact="RC-07">{citation.citation}</p>
-      <p>Evaluated program: the Women’s Skill Development for Freelancing Marketplace (WSDFM), commissioned by Porticus. <a class="link" href={linkAttrs('/impact/case-studies/wsdfm-women-freelancers/').href}>WSDFM case study<Icon name="arrow-right" size={16} /></a></p>
-    </Callout>
+    <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
   </ReportSection>
 
   <ReportSection id="faq" title="Questions About the Evidence">
