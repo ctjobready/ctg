@@ -5,7 +5,7 @@ updated: 2025-01-22
 topic: programs-events
 excerpt: "CodersTrust holds a Career Carnival at its Banani, Dhaka head office to create job placement opportunities for students and alumni."
 cover: ../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg
-coverAlt: "Photo from the news story: CodersTrust Organizes Career Carnival for Students and Affiliates"
+coverAlt: "A large group of participants posing in front of the CodersTrust building entrance, decorated with balloons"
 legacyUrl: "https://coderstrust.global/coderstrust-organizes-career-carnival-for-students-and-affiliates/"
 tags: []
 seoTitle: "Career Carnival for Students and Affiliates"
@@ -13,7 +13,7 @@ seoTitle: "Career Carnival for Students and Affiliates"
 
 CodersTrust recently organized a ‘Career Carnival’ at its head office in Banani, Dhaka. The event aimed to provide unique job placement opportunities for its students and alumni. The Chairman of CodersTrust, Mr. Aziz Ahmad, inaugurated the event virtually from New York, USA.
 
-![Photo from the news story: CodersTrust Organizes Career Carnival for Students and Affiliates](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg)
+![A large group of participants posing in front of the CodersTrust building entrance, decorated with balloons](../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg)
 
 Around 20 prominent companies, including Bdjobs, Priyo Shop, Technosoft, and House of Bookkeepers, participated in the event, offering over 60 job openings in fields such as Web Development, Accounts Management, Graphics Design, Digital Marketing, SEO, and Content Writing. The event saw an overwhelming response, with more than 1,000 students and alumni attending in person.
 

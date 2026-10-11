@@ -18,7 +18,7 @@ const path = '/impact/stories/';
 
 // Stories from groups that need a documented release (UNDP YES Korail settlement residents; Kosovo participants, described
 // by the program as refugee women) and the withheld STRONG-IT story are not kept in this public repository; the Korail
-// and Kosovo outcomes appear below only as anonymized lines from the facts register (ST-01, ST-02, ST-05).
+// and Kosovo outcomes appear below as register lines (ST-01, ST-02, ST-05) with the names the previous site published, and without photos.
 // Photos of people whose age is not documented are replaced by the illustration.
 const NO_PHOTO = new Set(['mysha-k-diya']);
 
@@ -76,9 +76,9 @@ const legacyCards = named
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-anon', name: 'A Women in Online Work participant', role: 'Kosovo · Individual result; not typical', pathway: 'job', outcome: `A participant ${fact('ST-05').text.split(' in Kosovo ')[1].replace('; earning', ' and is earning')}.` },
-  { key: 'yes-anon-1', name: 'A UNDP YES learner', role: 'Korail · Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”` },
-  { key: 'yes-anon-2', name: 'A UNDP YES learner', role: 'Korail · An outlier; individual result, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}”` },
+  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work · Kosovo · Individual result; not typical', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
+  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES · Korail · Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
+  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES · Korail · An outlier; individual result, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}”`, assetId: 'story-shamim-ahmed' },
 ];
 const cards = [...caseCards, ...anon, ...legacyCards];
 
@@ -98,7 +98,7 @@ const d = discoveryCta();
     <StoryGallery cards={cards} />
     <div class="st__notes">
       <p><strong>Read these as individual stories.</strong> {CAVEATS.I} Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
-      <p>Learners from some groups, including participants in programs for refugees and residents of urban slums, are shown as outcome lines without names or photos.</p>
+      <p>Learners from some groups, including participants in programs for refugees and residents of urban slums, are shown as outcome lines, named as the previous CodersTrust site named them and without photos.</p>
     </div>
   </Section>
 

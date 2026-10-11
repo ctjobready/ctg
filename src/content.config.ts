@@ -46,6 +46,8 @@ const news = defineCollection({
        * The H1 and the NewsArticle headline keep the full headline.
        */
       seoTitle: z.string().max(46).optional(),
+      /** More photographs from the old post that the body does not place inline; shown as a PhotoGallery under the text. */
+      gallery: z.array(z.object({ image: image(), alt: z.string() })).default([]),
     }),
 });
 

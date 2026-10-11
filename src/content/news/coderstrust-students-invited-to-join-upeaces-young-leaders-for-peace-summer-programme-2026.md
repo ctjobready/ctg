@@ -5,9 +5,20 @@ updated: 2026-08-01
 topic: programs-events
 excerpt: "CodersTrust learners are invited to apply for UPEACE's Young Leaders for Peace Summer Programme 2026 in San Jose, Costa Rica."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
-coverAlt: "CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer...: photo 1 of 6"
+coverAlt: "A man in a white shirt standing beside young students who hold their certificates, in front of a University for Peace banner"
 legacyUrl: "https://coderstrust.global/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/"
 tags: ["Latest News", "UPEACE"]
+gallery:
+  - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-2.jpg
+    alt: "Students in matching t-shirts standing together in front of a colorful mural"
+  - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-5.jpg
+    alt: "Students and staff working together outdoors in a wooded area, some holding shovels"
+  - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-6.jpg
+    alt: "Students seated at tables in a classroom while a presenter speaks in front of a wall screen"
+  - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-7.jpg
+    alt: "Students in life jackets sitting together on a boat on a river"
+  - image: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students-8.jpg
+    alt: "Students sitting around a long table in a University for Peace classroom while a man speaks"
 seoTitle: "Young Leaders for Peace Summer Programme 2026"
 ---
 

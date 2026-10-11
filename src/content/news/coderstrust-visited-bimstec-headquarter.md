@@ -5,13 +5,15 @@ updated: 2024-06-25
 topic: leadership-advocacy
 excerpt: "A CodersTrust delegation visits the BIMSTEC Secretariat in Dhaka to discuss cooperation in science, technology, and innovation."
 cover: ../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec.jpg
-coverAlt: "CodersTrust visited BIMSTEC Headquarters: Highlights Potential for Science,...: cover image"
+coverAlt: "Four people seated in leather armchairs in front of the flags of BIMSTEC member countries"
 legacyUrl: "https://coderstrust.global/coderstrust-visited-bimstec-headquarter/"
 tags: []
 seoTitle: "Visit to the BIMSTEC Secretariat in Dhaka"
 ---
 
-![Photo from the news story: CodersTrust visited BIMSTEC Headquarters: Highlights Potential for Science,...](../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec-2-1.jpg)
+![Delegates seated along a long table in a meeting room with the flags of BIMSTEC countries behind them](../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec-2-1.jpg)
+
+![Four men standing together with a gift bag in front of the flags of BIMSTEC member countries](../../assets/images/news/coderstrust-visited-bimstec-headquarter/coderstrust-at-bimstec-3.jpg)
 
 A delegation from CodersTrust, led by the CEO and Country Director, recently visited the Secretariat of the Bay of Bengal Initiative for Multi-Sectoral Technical and Economic Cooperation (BIMSTEC) in Dhaka. The delegation had a productive meeting with the Secretary General of BIMSTEC, H.E. Tenzin Lekphel, and his team. The purpose of the visit was to discuss potential collaboration between CodersTrust and BIMSTEC under the theme of “Peoples to Peoples Contacts,” with a specific focus on promoting Science, Technology, and Innovation Cooperation among the BIMSTEC member countries.
 

@@ -18,6 +18,8 @@ interface Props {
   class?: string;
 }
 const { src, alt, width, height, widths, sizes, loading = 'lazy', fetchpriority, assetId, class: className } = Astro.props;
+// Vector logos (SVG) pass through unchanged: they are not resized or re-encoded.
+const isSvg = typeof src !== 'string' && src.format === 'svg';
 ---
 
 {
@@ -31,12 +33,12 @@ const { src, alt, width, height, widths, sizes, loading = 'lazy', fetchpriority,
       alt={alt}
       width={width}
       height={height}
-      widths={widths}
-      sizes={sizes}
+      widths={isSvg ? undefined : widths}
+      sizes={isSvg ? undefined : sizes}
       loading={loading}
       decoding="async"
       fetchpriority={fetchpriority}
-      format="webp"
+      format={isSvg ? 'svg' : 'webp'}
     />
   )
 }

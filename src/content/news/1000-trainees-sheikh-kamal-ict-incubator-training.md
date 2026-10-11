@@ -5,13 +5,13 @@ updated: 2023-08-11
 topic: partnerships
 excerpt: "CodersTrust is to train 1,000 people in high-demand IT skills at the Sheikh Kamal IT Training and Incubation Centers across Bangladesh."
 cover: ../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/sheikh-kamal-it-centre.jpg
-coverAlt: "1000 People to be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training: cover image"
+coverAlt: "Architect’s rendering of the Sheikh Kamal IT Centre, a curved glass building with palm trees in front"
 legacyUrl: "https://coderstrust.global/1000-trainees-sheikh-kamal-ict-incubator-training/"
 tags: []
 seoTitle: "Sheikh Kamal ICT Incubator: 1,000 IT Trainees"
 ---
 
-![Photo from the news story: 1000 People to be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training](../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/image-2.jpg)
+![Officials signing an agreement at a table with a group standing behind them](../../assets/images/news/1000-trainees-sheikh-kamal-ict-incubator-training/image-2.jpg)
 
 ## OBJECTIVE
 

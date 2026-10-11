@@ -5,7 +5,7 @@ updated: 2025-01-27
 topic: recognition
 excerpt: "Aziz Ahmad accepts the Lifetime SDG Achievement Award from the UNGSII during Davos WEF Week 2025."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-2.jpg
-coverAlt: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII: cover image"
+coverAlt: "Six award recipients and guests standing in front of an SDG Achievers banner, some holding awards"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/"
 tags: []
 seoTitle: "Aziz Ahmad Receives SDG Life Achievement Award"
@@ -13,7 +13,7 @@ seoTitle: "Aziz Ahmad Receives SDG Life Achievement Award"
 
 Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust had the honor to accept the Lifetime SDG Achievement Award from the UNGSII during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development in driving progress across all 17 Sustainable Development Goals.
 
-![Photo from the news story: CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Life Achievement Award from the UNGSII](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award.png)
+![Two photographs of award recipients and guests in front of an SDG Achievers banner](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award.png)
 
 In his acceptance speech, Mr. Aziz honored the legacy of CodersTrust’s late co-founder, Ferdinand Kjærulff. A Danish captain with an extraordinary dream, Ferdinand envisioned a world where technology and education empower individuals to unlock their potential and rewrite their futures. While he is not with us today, his vision lives on in every life transformed by CodersTrust. This award is dedicated to his memory and his unwavering belief in the power of human potential.
 

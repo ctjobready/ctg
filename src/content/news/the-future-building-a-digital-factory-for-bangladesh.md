@@ -5,13 +5,13 @@ updated: 2026-08-01
 topic: insights
 excerpt: "Aziz Ahmad outlines a vision of Bangladesh as a digital factory, with AI and digital skills reaching every district, town, and village."
 cover: ../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg
-coverAlt: "Photo from the news story: The Future: Building a Digital Factory for Bangladesh"
+coverAlt: "Speakers seated at a table under a rural economic growth event banner, with a man speaking into a microphone"
 legacyUrl: "https://coderstrust.global/the-future-building-a-digital-factory-for-bangladesh/"
 tags: ["Aziz Ahmad", "Latest News"]
 seoTitle: "Building a Digital Factory for Bangladesh"
 ---
 
-![Photo from the news story: The Future: Building a Digital Factory for Bangladesh](../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg)
+![Speakers seated at a table under a rural economic growth event banner, with a man speaking into a microphone](../../assets/images/news/the-future-building-a-digital-factory-for-bangladesh/technical-excellence.jpg)
 
 Looking ahead, Chairman and Co Founder Aziz Ahmad shared a bold vision for Bangladesh’s future, one where AI, digital technologies, and human capital become the nation’s greatest competitive advantage. He believes Bangladesh’s most valuable natural resource is not beneath the ground, but in the minds of its young people.
 

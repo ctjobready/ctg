@@ -55,7 +55,7 @@ const TEMPLATES = [
   [/^\/impact\/independent-evaluation\/$/, 'independent evaluation', ['ScholarlyArticle']],
   [/^\/impact\/case-studies\/$/, 'case studies listing', []],
   [/^\/impact\/case-studies\/[^/]+\/$/, 'case study', ['Article']],
-  [/^\/impact\/(stories|global-reach)\/$/, 'impact listing', []],
+  [/^\/impact\/(stories|global-reach|in-the-field)\/$/, 'impact listing', []],
   [/^\/about\/$/, 'about', ['AboutPage']],
   [/^\/about\/team\/$/, 'team listing', []],
   [/^\/about\/team\/[^/]+\/$/, 'team profile', ['Person']],

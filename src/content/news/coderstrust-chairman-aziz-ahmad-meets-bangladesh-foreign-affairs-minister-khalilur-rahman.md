@@ -4,14 +4,14 @@ date: 2026-09-13
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad holds a courtesy meeting with Bangladesh's Foreign Minister to discuss CodersTrust's mission."
 cover: ../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg
-coverAlt: "Photo from the news story: CodersTrust Chairman Aziz Ahmad Meets Bangladesh Foreign Affairs Minister Khalilur Rahman"
+coverAlt: "Two men in suits posing together indoors"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/"
 tags: ["Aziz Ahmad"]
 seoTitle: "Aziz Ahmad Meets Bangladesh Foreign Minister"
 political: true
 ---
 
-![Photo from the news story: CodersTrust Chairman Aziz Ahmad Meets Bangladesh Foreign Affairs Minister Khalilur Rahman](../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg)
+![Two men in suits posing together indoors](../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg)
 
 Mr. Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust held a warm and insightful courtesy meeting with Hon’ble Foreign Minister of Bangladesh and President of UN General Assembly.
 

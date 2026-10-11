@@ -5,14 +5,14 @@ updated: 2023-08-11
 topic: leadership-advocacy
 excerpt: "US Embassy Economic Officer James Gardiner stresses skill development and access to US digital platforms for Bangladeshi ICT professionals."
 cover: ../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development.jpg
-coverAlt: "Gardiner Emphasizes on Skill Development and Access to US Digital Platform for Bangladesh: cover image"
+coverAlt: "A man speaking into a microphone at the CodersTrust Certificate and Award Giving Ceremony 2022, with guests seated at a table beside him"
 legacyUrl: "https://coderstrust.global/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/"
 tags: ["Featured News"]
 seoTitle: "Gardiner on Skills and US Digital Platforms"
 political: true
 ---
 
-![Photo from the news story: Gardiner Emphasizes on Skill Development and Access to US Digital Platform for Bangladesh](../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development-1.jpg)
+![A man speaking into a microphone at the CodersTrust Certificate and Award Giving Ceremony 2022, with guests seated at a table beside him](../../assets/images/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/gardinar-emphasizes-skill-development-1.jpg)
 
 James Gardiner, the Economic Officer, responsible for technology issues at the US Embassy, highlighted the importance of continuous education, skill development, and access to US digital platforms for Bangladeshi professionals working in the ICT industry. He shared this insight during the Certificate and Award Giving Ceremony organized by CodersTrust at their Banani main office on Tuesday, according to a press release.
 

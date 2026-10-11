@@ -5,13 +5,13 @@ updated: 2023-08-30
 topic: partnerships
 excerpt: "CodersTrust brings Discovery Education STEM and coding content to Bangladeshi learners under its SuperKids offering."
 cover: ../../assets/images/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/image-2023-06-15t16-10-59-630z.jpg
-coverAlt: "Photo from the news story: CodersTrust brings Discovery Education, the Global Leader of STEM Education, to..."
+coverAlt: "A man shaking hands with another man while holding a signed document, with colleagues standing around them in front of a blue backdrop"
 legacyUrl: "https://coderstrust.global/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/"
 tags: ["Featured News"]
 seoTitle: "Discovery Education for Bangladeshi Schools"
 ---
 
-![Photo from the news story: CodersTrust brings Discovery Education, the Global Leader of STEM Education, to...](../../assets/images/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/image-2023-06-15t16-10-59-630z.jpg)
+![A man shaking hands with another man while holding a signed document, with colleagues standing around them in front of a blue backdrop](../../assets/images/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/image-2023-06-15t16-10-59-630z.jpg)
 
 CodersTrust, a leading global EdTech company, is set to offer STEM (Science, Technology, Engineering and Mathematics) and Coding education for Bangladeshi learners under its SuperKids offering in collaboration with global leader of STEM Education, Discovery Education.
 

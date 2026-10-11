@@ -5,7 +5,7 @@ updated: 2025-01-22
 topic: recognition
 excerpt: "A November HolonIQ report places CodersTrust among South Asia's Top 100 EdTech companies."
 cover: ../../assets/images/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/ct-in-top-100.jpg
-coverAlt: "Photo from the news story: CodersTrust Earns Recognition Among Top 100 EdTech Companies in South Asia"
+coverAlt: "Graphic of the HolonIQ 2023 South Asia EdTech 100 list"
 legacyUrl: "https://coderstrust.global/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/"
 tags: ["HolonIQ", "South Asia EdTech"]
 seoTitle: "Named a Top 100 EdTech Company in South Asia"
@@ -15,7 +15,7 @@ Dhaka, Bangladesh
 
 In Holon IQ’s latest report published in November, CodersTrust has secured its position among South Asia’s Top 100 EdTech companies. The report, focusing on growth, innovation, and impact, identifies the most promising EdTech startups in the region.
 
-![Photo from the news story: CodersTrust Earns Recognition Among Top 100 EdTech Companies in South Asia](../../assets/images/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/ct-in-top-100.jpg)
+![Graphic of the HolonIQ 2023 South Asia EdTech 100 list](../../assets/images/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/ct-in-top-100.jpg)
 
 Mr. Aziz Ahmad, Co-Founder and Chairman of CodersTrust, commented on this recognition, stating, ‘This acknowledgment coincides with CodersTrust’s triple-digit growth phase and serves as validation for our potential and impact in skill development, especially for youth, women, and underprivileged communities globally. The CodersTrust team remains dedicated to amplifying our social impact on a global scale through a sustainable, market-based business model.’
 

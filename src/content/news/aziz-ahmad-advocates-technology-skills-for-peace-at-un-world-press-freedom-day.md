@@ -5,13 +5,13 @@ updated: 2024-06-25
 topic: leadership-advocacy
 excerpt: "Speaking on UN World Press Freedom Day, Aziz Ahmad says closing the digital divide and building technology skills can support peace."
 cover: ../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg
-coverAlt: "Photo from the news story: Enhanced technology skills can ensure peace, says Aziz Ahmad"
+coverAlt: "Three people seated at a United Nations conference table with name plates in front of them"
 legacyUrl: "https://coderstrust.global/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/"
 tags: []
 seoTitle: "Aziz Ahmad on Technology Skills and Peace"
 ---
 
-![Photo from the news story: Enhanced technology skills can ensure peace, says Aziz Ahmad](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg)
+![Three people seated at a United Nations conference table with name plates in front of them](../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg)
 
 “We need to embrace all technology advancements with a clear understanding on digital good and digital bad and address the digital divide by reducing gaps in the society at large,” said Aziz Ahmad, Co-Founder and Chairman CodersTrust and CEO of UTC Associates, Inc. at a recent technology seminar held at the United Nations in New York City.
 

@@ -5,14 +5,14 @@ updated: 2025-11-19
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad leads a seven-member delegation to the U.S. Embassy in Dhaka to discuss youth empowerment."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/us-embassy-august-2025.jpg
-coverAlt: "CodersTrust Chairman Mr. Aziz Ahmad Leads Delegation to U.S. Embassy to Discuss Youth...: cover image"
+coverAlt: "Seven people standing behind a table in a meeting room, one holding a document folder"
 coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/"
 tags: ["Aziz Ahmad"]
 seoTitle: "Aziz Ahmad Leads Delegation to U.S. Embassy"
 ---
 
-![Photo from the news story: CodersTrust Chairman Mr. Aziz Ahmad Leads Delegation to U.S. Embassy to Discuss Youth...](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/us-embassy-august-2025-2.jpg)
+![Seven people standing behind a table in a meeting room, one holding a document folder](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/us-embassy-august-2025-2.jpg)
 
 CodersTrust Chairman and Co-founder Mr. Aziz Ahmad led a seven-member delegation to the U.S. Embassy in Dhaka at the invitation of Mr. Paul Frost, Commercial Counselor. The meeting was described as highly engaging and productive, with Mr. Frost expressing strong interest in CodersTrust’s ongoing initiatives and impact.
 
