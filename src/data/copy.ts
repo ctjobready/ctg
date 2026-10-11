@@ -237,7 +237,7 @@ export const RCT_COMPARISON: RctComparison = rctComparison();
 
 /**
  * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are
- * about 970 of the 150,000+ enrollments (SC-03's footnote). Used wherever the two figures sit side by side (the C5 guide bands). The
+ * a smaller share (no enrollment figures are given here). Used wherever the two figures sit side by side (the C5 guide bands). The
  * count of other locations is SC-03's 15 less Bangladesh, so it is derived, not typed.
  */
 function trainedReach(): CopyBlock {
@@ -258,8 +258,8 @@ export const SCALE: CopyBlock = {
 };
 
 export const PRICING: CopyBlock = {
-  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam terms set per program), three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
-  facts: ['PD-02'],
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions: outreach and selection, blended training, an AI-ready curriculum, certification exam preparation, with the exam fee included, three months of mentoring, placement support, monthly reporting and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them. AI-ready curriculum: each track’s AI content and work-entry plan are agreed with you before enrollment; we do not yet publish a track-by-track breakdown.',
+  facts: ['PD-02', 'PD-02a'],
 };
 
 export const SPEED: CopyBlock = {

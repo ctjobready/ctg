@@ -307,10 +307,10 @@ function recs(): Rec[] {
   const none = 'Completers (2014–2023) with no income before training who were earning at the October 2026 survey';
   out.push(pctRec('OC-02', none, 'Earning', pct(NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
   out.push(pctRec('OC-02', none, 'Not earning', pct(NO_PRIOR.base - NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
-  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'Before training', type: 'median_usd', value: '82', note: NOT_STATED });
-  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'At the October 2026 survey', type: 'median_usd', value: '245', note: NOT_STATED });
+  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'Before training', type: 'median_usd', value: '82', base: INCOME_BASE });
+  out.push({ id: 'OC-03', measure: 'Median monthly income (USD), ratio of medians 3.00', category: 'At the October 2026 survey', type: 'median_usd', value: '245', base: INCOME_BASE });
   for (const c of INCOME_DIRECTION) out.push(pctRec('OC-03b', 'Direction of paired monthly income change', c.label, c.pct, INCOME_BASE));
-  out.push({ id: 'OC-03c', measure: 'Median individual change in monthly income (USD)', category: 'Median change', type: 'median_usd', value: '82', note: NOT_STATED });
+  out.push({ id: 'OC-03c', measure: 'Median individual change in monthly income (USD)', category: 'Median change', type: 'median_usd', value: '82', base: INCOME_BASE });
   for (const t of EMPLOYMENT_TYPES) {
     const m = 'Employment by type, among surveyed completers with paired employment answers';
     out.push(pctRec('OC-04', m, `${t.label}, before training`, t.before, EMPLOYMENT_BASE));

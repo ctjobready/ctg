@@ -4,12 +4,12 @@ OC-01,"Employed, among surveyed completers with paired employment answers",At th
 OC-01,Employed before training who reported no longer being employed,Share of those employed before training,percent,5.9,,published; base not stated in the report
 OC-02,Completers (2014–2023) with no income before training who were earning at the October 2026 survey,Earning,percent,72.3,47,published
 OC-02,Completers (2014–2023) with no income before training who were earning at the October 2026 survey,Not earning,percent,27.7,47,published
-OC-03,"Median monthly income (USD), ratio of medians 3.00",Before training,median_usd,82,,published; base not stated in the report
-OC-03,"Median monthly income (USD), ratio of medians 3.00",At the October 2026 survey,median_usd,245,,published; base not stated in the report
+OC-03,"Median monthly income (USD), ratio of medians 3.00",Before training,median_usd,82,277,published
+OC-03,"Median monthly income (USD), ratio of medians 3.00",At the October 2026 survey,median_usd,245,277,published
 OC-03b,Direction of paired monthly income change,Increased,percent,72.2,277,published
 OC-03b,Direction of paired monthly income change,Unchanged,percent,22.0,277,published
 OC-03b,Direction of paired monthly income change,Decreased,percent,5.8,277,published
-OC-03c,Median individual change in monthly income (USD),Median change,median_usd,82,,published; base not stated in the report
+OC-03c,Median individual change in monthly income (USD),Median change,median_usd,82,277,published
 OC-04,"Employment by type, among surveyed completers with paired employment answers","Salaried employment, before training",percent,38.3,321,published
 OC-04,"Employment by type, among surveyed completers with paired employment answers","Salaried employment, at the October 2026 survey",percent,53.3,321,published
 OC-04,"Employment by type, among surveyed completers with paired employment answers","Freelancing, before training",percent,6.2,321,published

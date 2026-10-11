@@ -24,7 +24,7 @@ const {
   columns = ['Approach', 'CodersTrust supported cohort', 'Conventional skills programs', 'Self-paced course platforms', 'Freelance marketplaces alone', 'Doing nothing'],
   rows = [
     { label: 'Track choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
-    { label: 'Certification', cells: [{ text: 'Certification exam preparation (exam terms set per program)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
+    { label: 'Certification', cells: [{ text: 'Certification exam preparation, with the exam fee included', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
     { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
     { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
     { label: 'Outcome tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
@@ -40,7 +40,7 @@ const {
     },
     { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
   ],
-  facts = ['PD-10', 'PD-19', 'PD-02', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
+  facts = ['PD-10', 'PD-19', 'PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
   id = 'compare',
 } = Astro.props;
 if (!columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing nothing" column');
