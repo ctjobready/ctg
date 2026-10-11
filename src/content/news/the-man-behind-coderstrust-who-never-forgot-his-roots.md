@@ -4,7 +4,7 @@ date: 2026-08-04
 topic: insights
 excerpt: "A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives."
 cover: ../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg
-coverAlt: "The Man Behind CodersTrust Who Never Forgot His Roots: photo 1 of 3"
+coverAlt: "Aziz Ahmad, Co-Founder and Chairman of CodersTrust, working on his farm"
 legacyUrl: "https://coderstrust.global/the-man-behind-coderstrust-who-never-forgot-his-roots/"
 tags: ["Aziz Ahmad", "Latest News"]
 seoTitle: "Aziz Ahmad, Who Never Forgot His Roots"
@@ -12,7 +12,7 @@ seoTitle: "Aziz Ahmad, Who Never Forgot His Roots"
 
 ## For CodersTrust Chairman Aziz Ahmad, True Wealth Lies in Changing Lives
 
-![The Man Behind CodersTrust Who Never Forgot His Roots: photo 1 of 3](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg)
+![Aziz Ahmad, Co-Founder and Chairman of CodersTrust, working on his farm](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg)
 
 Success is often measured by wealth, titles, or recognition. But for Aziz Ahmad, Co-Founder and Chairman of CodersTrust, success has always meant something far greater—creating opportunities for others.
 
@@ -26,9 +26,9 @@ Beyond technology, Mr. Aziz remains deeply connected to Bangladesh’s roots thr
 
 This vision is further reflected in the Bir Muktijoddha Ayub Ahmed Master Memorial Institute, an educational initiative being developed with support from his farming income. The institute aims to provide quality education to underprivileged children, helping them build brighter futures while contributing to a more educated and prosperous Bangladesh.
 
-![The Man Behind CodersTrust Who Never Forgot His Roots: photo 2 of 3](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming-8.jpg)
+![Schoolchildren in uniform posing in front of a school building](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming-8.jpg)
 
-![The Man Behind CodersTrust Who Never Forgot His Roots: photo 3 of 3](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming-9.jpg)
+![A man at a blackboard in a classroom, with young girls in uniform seated at desks](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming-9.jpg)
 
 Throughout his journey, Mr. Aziz has demonstrated that technology should serve humanity. Whether through expanding access to digital skills, creating employment opportunities, or investing in education at the grassroots level, his mission has remained consistent—empowering people to transform their own lives with dignity and opportunity.
 

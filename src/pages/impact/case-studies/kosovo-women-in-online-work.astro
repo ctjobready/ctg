@@ -5,10 +5,10 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import { fact, PROGRAM_DATA_LABEL } from '../../../data/facts';
 
-// ST-05 is already an anonymized outcome line; the program is shown beside it, so the line is shortened to "A participant …".
-const raw = fact('ST-05').text.split(' in Kosovo ')[1];
-if (!raw) throw new Error('ST-05 text no longer has the expected "A … participant in Kosovo <outcome>" shape');
-const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
+// ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
+const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
+if (!raw) throw new Error('ST-05 text no longer has the expected "<Name>, a … participant in Kosovo, <outcome>" shape');
+const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 ---
 
 <CaseStudyPage
@@ -42,6 +42,6 @@ const outcome = `A participant ${raw.replace('; earning', ' and is earning')}.`;
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory program="Women in Online Work, Kosovo" outcome={outcome} />
+    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo" outcome={outcome} />
   </Fragment>
 </CaseStudyPage>

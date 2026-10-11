@@ -118,6 +118,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Case studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success stories', href: '/impact/stories/', description: 'Learners in their own words.' },
       { label: 'Global reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
+      { label: 'In the field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
     ],
     feature: {
       kind: 'stat',

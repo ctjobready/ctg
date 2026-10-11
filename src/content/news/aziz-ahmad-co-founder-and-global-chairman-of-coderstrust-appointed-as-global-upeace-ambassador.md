@@ -5,13 +5,13 @@ updated: 2026-08-19
 topic: recognition
 excerpt: "Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, is appointed a Global Ambassador of the University for Peace (UPEACE)."
 cover: ../../assets/images/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/upeace-ambassador.jpg
-coverAlt: "Photo from the news story: Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, Appointed as Global UPEACE..."
+coverAlt: "Four men posing together, one holding a certificate folder"
 legacyUrl: "https://coderstrust.global/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/"
 tags: ["Aziz Ahmad", "Latest News"]
 seoTitle: "Aziz Ahmad Appointed Global UPEACE Ambassador"
 ---
 
-![Photo from the news story: Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, Appointed as Global UPEACE...](../../assets/images/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/upeace-ambassador.jpg)
+![Four men posing together, one holding a certificate folder](../../assets/images/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/upeace-ambassador.jpg)
 
 Dhaka, Bangladesh
 

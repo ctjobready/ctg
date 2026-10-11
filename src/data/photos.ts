@@ -70,21 +70,115 @@ const ALT: Record<string, string> = {
   'nu-pgd/digital-marketing': 'PGD in Digital Marketing course banner from National University and CodersTrust',
   'nu-pgd/ict': 'PGD in Information and Communication Technology course banner from National University and CodersTrust',
   'nu-pgd/students-laptops': 'Students seated together at a table, one smiling toward the camera',
+  'impact/her-power-training-lab': 'Women working on laptops in a Her Power training lab',
+  'impact/wsdfm-training-group': 'Women trainees and a CodersTrust Bangladesh banner at a WSDFM training session',
+  'about/careers-team-falgun-celebration': 'The CodersTrust Bangladesh team gathered at the office entrance for a festival celebration',
+  'about/careers-team-picnic': 'A group photo of the CodersTrust Bangladesh team outdoors at a company picnic',
+  'superkids/stem-group': 'A large group of children and instructors posing together on colorful floor mats in front of a SuperKids STEM Education banner',
+  'superkids/hall-seated': 'Children seated on floor mats in a classroom listening to a SuperKids session, with adults standing at the back',
+  'superkids/hall-seated-2': 'Children sitting on colorful mats in a classroom, some resting their chins on their hands as they listen',
+  'superkids/mat-activity': 'Children kneeling and sitting on colorful floor mats working with printed activity sheets',
+  'superkids/plaques-group': 'CodersTrust staff and guests standing together with children holding plaques, in front of a SuperKids and Miniso event backdrop',
+  'field/ccny-mou-signing': 'Two men signing at a table at the City College of New York and CT USA (CodersTrust) MoU ceremony, with three people applauding behind them',
+  'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
+  'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
 };
+
+/** Short caption under a photograph in the "In the field" archive: program, event or place, and a year only where the source states it. */
+export const CAPTION: Record<string, string> = {
+  'superkids/mou-signing': 'MoU signing for the SuperKids STEAM program',
+  'superkids/mou-signing-pen': 'Signing the SuperKids MoU',
+  'superkids/classroom-uniform': 'SuperKids computer class',
+  'superkids/students-seated': 'SuperKids session for school students',
+  'superkids/robotics-desk': 'Hands-on lesson at the Future Innovator STEAM workshop',
+  'superkids/robotics-session': 'Robotics Essentials session, SuperKids STEAM workshop',
+  'superkids/steam-workshop': 'Future Innovator STEAM workshop',
+  'superkids/circuit-building': 'Building a circuit at a SuperKids workshop',
+  'superkids/student-explains': 'A student presents her project, SuperKids STEAM workshop',
+  'superkids/certificate-ceremony': 'SuperKids certificate-giving ceremony',
+  'superkids/art-competition': 'SuperKids art competition winners',
+  'superkids/tree-planting': 'Tree planting at a SuperKids event',
+  'superkids/floor-activity': 'SuperKids creative activity session',
+  'superkids/floor-activity-2': 'SuperKids hands-on activity',
+  'superkids/event-audience': 'Audience at a SuperKids event',
+  'superkids/stem-group': 'SuperKids STEM Education session',
+  'superkids/hall-seated': 'SuperKids session',
+  'superkids/hall-seated-2': 'SuperKids session',
+  'superkids/mat-activity': 'SuperKids hands-on activity',
+  'superkids/plaques-group': 'SuperKids art competition event',
+  'general/madrasa-students-lesson': 'NationWIDE: madrasa students in class',
+  'general/madrasa-students-class': 'NationWIDE: madrasa students in class',
+  'general/madrasa-students-hall': 'NationWIDE: madrasa students in a hall',
+  'general/exam-hall': 'NationWIDE: an examination hall',
+  'general/graduates-caps': 'NationWIDE: graduates at a convocation',
+  'general/her-power-laptops-1': 'Her Power laptop distribution',
+  'general/her-power-laptops-2': 'Her Power laptop distribution',
+  'general/her-power-group': 'Her Power program event',
+  'impact/her-power-training-lab': 'Her Power training lab',
+  'general/kosovo-women-screens': 'Women in Online Work, Kosovo',
+  'general/kosovo-woman-training': 'Women in Online Work, Kosovo',
+  'general/albania-trainees-group': 'CodersTrust trainees, World Bank project, Albania',
+  'general/yes-trainees-group': 'UNDP-supported YES program trainees',
+  'general/yes-collage': 'UNDP-supported YES program trainees',
+  'general/woman-learner-laptop': 'A learner at a training center',
+  'general/women-learners-classroom': 'Women learners in a training classroom',
+  'general/classroom-girls': 'Girls and women learners in a classroom',
+  'impact/wsdfm-training-group': 'WSDFM training session',
+  'general/students-campus-smiling': 'JobReady@Campus: students on campus',
+  'general/lab-women-screen': 'Women learners in a training lab',
+  'general/computer-lab-rows': 'A CodersTrust training lab',
+  'general/office-support-headset': 'CodersTrust office',
+  'general/office-meeting': 'CodersTrust office',
+  'general/office-exterior': 'CodersTrust office, Dhaka',
+  'general/team-tshirts': 'The CodersTrust team',
+  'about/careers-team-falgun-celebration': 'The CodersTrust Bangladesh team at a festival celebration',
+  'about/careers-team-picnic': 'The CodersTrust Bangladesh team at a company picnic',
+  'nu-pgd/students-laptops': 'Students at a table',
+  'general/learner-mosaic': 'CodersTrust learners and graduates',
+  'general/dict-hitech-mou': 'Agreement with the Hi-Tech Park Authority and DoICT',
+  'general/nctb-meeting': 'MoU meeting with NCTB',
+  'general/nu-affiliation-group': 'Affiliation with National University',
+  'general/nu-affiliation-meeting': 'Affiliation meeting with National University',
+  'field/ccny-mou-signing': 'MoU signing with the City College of New York, 12 April 2024 (date on the ceremony banner)',
+  'general/empowering-women-event': 'CodersTrust Bangladesh women empowerment event',
+  'general/panel-international-forum': 'Panel at an international forum',
+  'general/un-panel': 'Panel at the United Nations',
+  'field/team-award-presentation': 'Award presentation at a CodersTrust team event',
+  'field/plaque-presentation': 'Presenting a framed medal',
+  'recognition/speaking-students': 'Aziz Ahmad addressing an audience',
+  'recognition/davos-sdg-lab': 'SDG Lab, Davos',
+  'recognition/us-chamber': 'Roundtable at the US Chamber of Commerce',
+  'recognition/european-parliament': 'European Parliament committee room',
+  'recognition/pope-francis': 'Meeting Pope Francis',
+  'recognition/nasdaq-sba': 'Nasdaq closing bell ceremony, US Small Business Administration',
+  'recognition/pm-bangladesh': 'With the Prime Minister of Bangladesh at an event',
+  'recognition/excellence-award': 'Business excellence award event, Dhaka',
+  'recognition/supply-chain-award': 'Supply chain diversity and sustainability excellence awards',
+};
+
 
 export interface Photo {
   src: ImageMetadata;
   alt: string;
   assetId: string;
+  /** Short caption (program, event or place; a year only where the source states it). */
+  caption?: string;
 }
 
-export const assetIdFor = (key: string) => `legacy-${key.replace(/\//g, '-')}`;
+/** Photos that already had a D13 row under another id before the registry (see permissions.json). */
+const ASSET_ID: Record<string, string> = {
+  'impact/her-power-training-lab': 'case-her-power-training-lab',
+  'impact/wsdfm-training-group': 'case-wsdfm-training-group',
+  'about/careers-team-falgun-celebration': 'careers-team-falgun',
+  'about/careers-team-picnic': 'careers-team-picnic',
+};
+export const assetIdFor = (key: string) => ASSET_ID[key] ?? `legacy-${key.replace(/\//g, '-')}`;
 
 export function photo(key: string): Photo {
   const file = files[`../assets/images/pages/${key}.jpg`];
   const alt = ALT[key];
   if (!file || !alt) throw new Error(`photos: no file or alt text for "${key}"`);
-  return { src: file.default, alt, assetId: assetIdFor(key) };
+  return { src: file.default, alt, assetId: assetIdFor(key), ...(CAPTION[key] && { caption: CAPTION[key] }) };
 }
 
 /**
@@ -120,6 +214,7 @@ const HERO: Record<string, string> = {
   'impact-hub': 'general/her-power-group',
   'case-studies-hub': 'general/classroom-girls',
   'stories-hub': 'general/learner-mosaic',
+  'field-hub': 'general/classroom-girls',
 };
 export const heroPhoto = (seed?: string): Photo | undefined => (seed && HERO[seed] ? photo(HERO[seed]) : undefined);
 
@@ -143,7 +238,7 @@ export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(
 
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
-  superkids: ['superkids/mou-signing', 'superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/steam-workshop', 'superkids/student-explains', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/tree-planting', 'superkids/floor-activity', 'superkids/students-seated', 'superkids/floor-activity-2', 'superkids/mou-signing-pen', 'superkids/event-audience'],
+  superkids: ['superkids/mou-signing', 'superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/steam-workshop', 'superkids/student-explains', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/tree-planting', 'superkids/floor-activity', 'superkids/students-seated', 'superkids/floor-activity-2', 'superkids/mou-signing-pen', 'superkids/event-audience', 'superkids/stem-group', 'superkids/plaques-group', 'superkids/hall-seated', 'superkids/hall-seated-2', 'superkids/mat-activity'],
   nationwide: ['general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps', 'general/madrasa-students-lesson', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],

@@ -5,13 +5,13 @@ updated: 2023-08-11
 topic: insights
 excerpt: "The story of a student who turned to freelancing training after her father could no longer afford her education."
 cover: ../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg
-coverAlt: "Photo from the news story: CodersTrust Revolutionizes Training for Freelancing Career: Teaching You the Right Way..."
+coverAlt: "Trainees working at laptops in a training room"
 legacyUrl: "https://coderstrust.global/coderstrust-teaching-you-freelancing-the-right-way/"
 tags: ["Featured News"]
 seoTitle: "Freelancing Training: One Student’s Story"
 ---
 
-![Photo from the news story: CodersTrust Revolutionizes Training for Freelancing Career: Teaching You the Right Way...](../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg)
+![Trainees working at laptops in a training room](../../assets/images/news/coderstrust-teaching-you-freelancing-the-right-way/coders-trust-7-1-1-scaled.jpg)
 
 On a sunny afternoon, a student returned home from her tuition classes only to receive distressing news from her father. He informed her that due to financial difficulties resulting from business losses, he could no longer afford to support her education. Devastated by this realization, the student, who aspired to attend a private university in the capital, found herself searching for alternative solutions to fund her studies.
 

@@ -4,7 +4,7 @@ date: 2025-01-22
 topic: recognition
 excerpt: "CodersTrust is named in HolonIQ's 2024 South Asia EdTech 100."
 cover: ../../assets/images/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/holoniq-24.jpg
-coverAlt: "Photo from the news story: CodersTrust Recognized Among HolonIQ’s 2024 South Asia EdTech 100"
+coverAlt: "Graphic of the HolonIQ 2024 South Asia EdTech 100 list"
 legacyUrl: "https://coderstrust.global/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/"
 tags: ["HolonIQ", "South Asia EdTech"]
 seoTitle: "Named in HolonIQ’s 2024 South Asia EdTech 100"
@@ -12,7 +12,7 @@ seoTitle: "Named in HolonIQ’s 2024 South Asia EdTech 100"
 
 CodersTrust, a global EdTech company with its headquarters in NYC, announced it has been honored as one of the most dynamic and innovative EdTech startups in HolonIQ’s 2024 South Asia EdTech 100. This prestigious recognition highlights CodersTrust’s contributions to transforming education, empowering learners, and bridging the skills gap in South Asia’s fast-evolving workforce.
 
-![Photo from the news story: CodersTrust Recognized Among HolonIQ’s 2024 South Asia EdTech 100](../../assets/images/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/holoniq-24.jpg)
+![Graphic of the HolonIQ 2024 South Asia EdTech 100 list](../../assets/images/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/holoniq-24.jpg)
 
 ***Note: This marks the second time CodersTrust has made the prestigious list.***
 

@@ -35,18 +35,18 @@ export const partners: Partner[] = [
   { id: 'care', name: 'CARE', group: 'development', logo: 'care.png', bg: 'transparent', url: 'https://www.care.org' },
   { id: 'ide', name: 'iDE', group: 'development', logo: 'ide.png', bg: 'transparent', url: 'https://www.ideglobal.org' },
   { id: 'pksf', name: 'PKSF', group: 'development', logo: 'pksf.png', bg: 'transparent', url: 'https://pksf-bd.org' },
-  { id: 'save-the-children', name: 'Save the Children', group: 'development', logo: 'save-the-children.png', bg: 'transparent', url: 'https://www.savethechildren.org' },
+  { id: 'save-the-children', name: 'Save the Children', group: 'development', logo: 'save-the-children.svg', bg: 'transparent', url: 'https://www.savethechildren.org' },
 
   // Government of Bangladesh (PA-02)
   { id: 'ict-division', name: 'ICT Division', group: 'government', logo: 'ict-division.png', bg: 'transparent', url: 'https://ictd.gov.bd' },
   { id: 'doict', name: 'DoICT', group: 'government', logo: 'doict.png', bg: 'transparent' },
   { id: 'bhtpa', name: 'Bangladesh Hi-Tech Park Authority', group: 'government', logo: 'bhtpa.png', bg: 'transparent' },
   { id: 'nsda', name: 'National Skills Development Authority (NSDA)', group: 'government', logo: 'nsda.png', bg: 'white' },
-  { id: 'bcc', name: 'Bangladesh Computer Council (BCC)', group: 'government', logo: 'bcc.png', bg: 'white', url: 'https://bcc.gov.bd' },
+  { id: 'bcc', name: 'Bangladesh Computer Council (BCC)', group: 'government', logo: 'bcc.svg', bg: 'transparent', url: 'https://bcc.gov.bd' },
 
   // Private sector (PA-03, PA-06)
-  { id: 'grameenphone-academy', name: 'Grameenphone Academy', group: 'private', logo: 'grameenphone-academy.png', bg: 'transparent', url: 'https://www.grameenphone.com' },
-  { id: 'robi', name: 'Robi', group: 'private', logo: 'robi.png', bg: 'transparent', url: 'https://www.robi.com.bd' },
+  { id: 'grameenphone-academy', name: 'Grameenphone Academy', group: 'private', logo: 'grameenphone-academy.svg', bg: 'transparent', url: 'https://www.grameenphone.com' },
+  { id: 'robi', name: 'Robi', group: 'private', logo: 'robi.svg', bg: 'transparent', url: 'https://www.robi.com.bd' },
   { id: 'accenture', name: 'Accenture', group: 'private', logo: 'accenture.png', bg: 'transparent', url: 'https://www.accenture.com' },
   { id: 'basis', name: 'BASIS', group: 'private', logo: 'basis.png', bg: 'transparent', url: 'https://basis.org.bd' },
   { id: 'aws', name: 'AWS', group: 'private', logo: 'aws.png', bg: 'transparent', url: 'https://aws.amazon.com' },

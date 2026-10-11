@@ -5,7 +5,7 @@ updated: 2024-11-05
 topic: leadership-advocacy
 excerpt: "CodersTrust takes part in the WSIS+20 Forum High-Level Event in Geneva, held May 27 to 31, 2024."
 cover: ../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg
-coverAlt: "CodersTrust attends WSIS+20 Forum High-Level Event: photo 2 of 3"
+coverAlt: "Three people taking a selfie in front of the WSIS+20 Forum screen"
 legacyUrl: "https://coderstrust.global/coderstrust-attends-wsis20-forum-high-level-event/"
 tags: []
 seoTitle: "WSIS+20 Forum High-Level Event in Geneva"
@@ -13,7 +13,7 @@ seoTitle: "WSIS+20 Forum High-Level Event in Geneva"
 
 CodersTrust participates in the Technological Achievements and Global Recognition program of WSIS+20 Forum in Geneva
 
-![CodersTrust attends WSIS+20 Forum High-Level Event: photo 1 of 3](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-1.jpg)
+![A man wearing a lanyard standing in front of a large WSIS+20 Forum High-Level Event 2024 screen](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-1.jpg)
 
 Geneva, Switzerland
 
@@ -25,9 +25,9 @@ The WSIS+20 Forum High-Level Event 2024 marks a significant milestone: twenty ye
 
 CodersTrust, a global EdTech company, is dedicated to fostering a skilled human workforce. We envision a future where millions of young individuals actively participate in the global job market or pursue entrepreneurship. Our goal is to assist in establishing a sustainable economic base by providing digital skills training in Bangladesh and on the global stage.
 
-![CodersTrust attends WSIS+20 Forum High-Level Event: photo 2 of 3](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg)
+![Three people taking a selfie in front of the WSIS+20 Forum screen](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-2.jpg)
 
-![CodersTrust attends WSIS+20 Forum High-Level Event: photo 3 of 3](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-1.jpg)
+![A man wearing a lanyard standing in front of a large WSIS+20 Forum High-Level Event 2024 screen](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-1.jpg)
 
 ![Two men holding a golden trophy at the WSIS+20 Forum High-Level Event](../../assets/images/news/coderstrust-attends-wsis20-forum-high-level-event/wsis-3.jpg)
 

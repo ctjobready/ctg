@@ -5,7 +5,7 @@ updated: 2024-11-05
 topic: partnerships
 excerpt: "CodersTrust and the UN-mandated University for Peace sign a partnership in San Jose, Costa Rica, to offer Next Generation Skills training."
 cover: ../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg
-coverAlt: "Photo from the news story: CodersTrust partners up with UN University for Peace (UPEACE) to offer Next Generation..."
+coverAlt: "Two men shaking hands while exchanging a signed document"
 legacyUrl: "https://coderstrust.global/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/"
 tags: ["Featured News"]
 seoTitle: "UPEACE Partnership for Next Generation Skills"
@@ -15,7 +15,7 @@ Global EdTech company CodersTrust and the University for Peace, an university an
 
 Aziz Ahmad, Chairman of CodersTrust and Professor Francisco Rojas Aravena, Rector of University for Peace signed the agreement. Dr. Juan Carlos Sainz Borgo, Vice Rector of University for Peace and Md. Shamsul Haque, CEO of CodersTrust was present among others.
 
-![Photo from the news story: CodersTrust partners up with UN University for Peace (UPEACE) to offer Next Generation...](../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg)
+![Two men shaking hands while exchanging a signed document](../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg)
 
 UPEACE Rector Professor Francisco Rojas Aravena praised CodersTrust for its focus on youths and women from underprivileged, underserved and underemployed backgrounds. Emphasizing on innovation for peace, Professor Aravena said next-generation skills and technologies like Artificial Intelligence should be leveraged for the peace and prosperity of humanity, addressing any concerns. He recalled his visit to Bangladesh and termed its relationship with Bangladesh as permanent.
 

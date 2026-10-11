@@ -4,13 +4,13 @@ date: 2026-09-23
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad visits City College Downtown to discuss collaboration with its Continuing and Professional Studies Program."
 cover: ../../assets/images/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/aziz-ahmad-visits-city-college-downtown.jpg
-coverAlt: "Photo from the news story: CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Explore Global Partnership"
+coverAlt: "Two men in suits standing in an office in front of a window and a bookshelf"
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/"
 tags: ["Aziz Ahmad"]
 seoTitle: "Aziz Ahmad Visits City College Downtown"
 ---
 
-![Photo from the news story: CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Explore Global Partnership](../../assets/images/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/aziz-ahmad-visits-city-college-downtown.jpg)
+![Two men in suits standing in an office in front of a window and a bookshelf](../../assets/images/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/aziz-ahmad-visits-city-college-downtown.jpg)
 
 Aziz Ahmad, Chairman of CodersTrust and CEO of UTC Associates, recently visited City College Downtown, where he met with representatives to discuss opportunities for collaboration between CodersTrust and the Continuing and Professional Studies Program at the City College of New York (CCNY).
 
