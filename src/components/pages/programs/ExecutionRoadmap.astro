@@ -18,6 +18,11 @@ const [, parallel, fromMonth] = pd06;
 const startMonth = Number(fromMonth);
 const hours = fact('PD-01').stat?.value ?? '';
 const pilot = pilotDurationText(PROGRAM_OPTIONS[0].duration);
+// Two review points, read from the same pilot duration as the sentence above (the register's "8–14 months (tracking to month 23)").
+const pilotTiming = PROGRAM_OPTIONS[0].duration.trim().match(/^(\d+–\d+) months \(tracking to month (\d+)\)$/);
+if (!pilotTiming) throw new Error('PROGRAM_OPTIONS pilot duration changed: update the review points');
+const [, pilotMonths, trackerMonth] = pilotTiming;
+const reviewPoints = `Two review points: at pilot completion (months ${pilotMonths}) — enrollment, completion, certification, first paid work and cost per completer; and around month ${trackerMonth} for the first cohort — 12-month tracer results and verified earnings evidence.`;
 
 const phases = [
   { title: ROADMAP_PHASES[0], text: 'Discovery, co-design and agreement, with tracks, priority groups, the scorecard and the work-entry plan set before enrollment.', factIds: ['PD-19', 'PD-11'] },
@@ -33,18 +38,24 @@ const quarters = [3, 6, 9, 12];
 <div class="road" data-reveal>
   <PhaseList items={phases} cols={5} label="Execution roadmap phases" />
   <figure class="ribbon" data-fact="PD-06 PD-08 PD-05">
+    <p class="ribbon__tag">Illustrative template</p>
     <section class="ribbon__scroll" aria-label="Illustrative month ribbon" tabindex="0">
       <div class="ribbon__grid" role="img" aria-label={`Illustrative month ribbon, months 1 to 12. Monthly reports run throughout. A quarterly steering review falls in months ${quarters.join(', ')}. Up to ${parallel} cohorts run in parallel from about month ${fromMonth}.`}>
         {months.map((m) => <><span class="ribbon__m" style={`grid-column:${m};grid-row:1`}>M{m}</span>{' '}</>)}
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:2">Monthly reports</span>
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:2">Monthly reports</span>{' '}
         <span class="ribbon__bar ribbon__bar--report" style="grid-column:1 / -1;grid-row:3"></span>
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:4">Quarterly steering review</span>
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:4">Quarterly steering review</span>{' '}
         {quarters.map((m) => <span class="ribbon__dot" style={`grid-column:${m};grid-row:5`}></span>)}
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:6">Cohorts in parallel</span>
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:6">Cohorts in parallel</span>{' '}
         <span class="ribbon__bar ribbon__bar--par" style={`grid-column:${startMonth} / -1;grid-row:7`}>Up to {parallel} cohorts from about month {fromMonth}</span>
       </div>
     </section>
-    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. {pilot} Tracer surveys follow each course.</figcaption>
+    <ul class="sr-only">
+      <li>Monthly reports from month 1.</li>
+      <li>Quarterly steering reviews in months {quarters.join(', ')}.</li>
+      <li>Up to {parallel} cohorts in parallel from about month {fromMonth}.</li>
+    </ul>
+    <figcaption class="ribbon__cap">Illustrative: dates are set in co-design. {pilot} {reviewPoints} Tracer surveys follow each course.</figcaption>
   </figure>
 </div>
 
@@ -64,6 +75,12 @@ const quarters = [3, 6, 9, 12];
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-default);
     box-shadow: var(--shadow-card);
+  }
+  .ribbon__tag {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    color: var(--ctx-muted);
   }
   .ribbon__scroll {
     overflow-x: auto;

@@ -16,7 +16,8 @@ import type { CopyBlock } from '../../../data/copy';
 interface Props {
   title: string;
   empathy: string;
-  origin: CopyBlock;
+  /** Optional history line; a page that already prints it elsewhere omits it. */
+  origin?: CopyBlock;
   statIds?: string[];
   method?: { text: string; factId?: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
@@ -31,7 +32,7 @@ const { title, empathy, origin, statIds = [], method, partnerGroup, showPartners
   <div class:list={['guide', statIds.length === 0 && 'guide--one']}>
     <div class="guide__copy" data-reveal>
       <p class="lead">{empathy}</p>
-      <CopyP block={origin} class="guide__origin" />
+      {origin && <CopyP block={origin} class="guide__origin" />}
       <div class="guide__auth"><slot /></div>
       {
         method && (

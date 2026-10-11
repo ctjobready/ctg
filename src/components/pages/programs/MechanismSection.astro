@@ -16,7 +16,7 @@ interface Props {
   eyebrow?: string;
   /** C6a positioning statement (data/copy.ts POSITIONING), shown in the band header. */
   positioning?: { text: string; facts: string[] };
-  blocks?: { label: string; title: string; text?: string; icon?: string }[];
+  blocks?: { label: string; title: string; text?: string; icon?: string; factId?: string }[];
   /** Fact IDs the diagram text rests on (data-fact for the status gate). */
   factIds?: string[];
   link?: { label: string; href: string };

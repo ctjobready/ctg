@@ -52,7 +52,7 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
       ))
     }
   </div>
-  <p class="cost__transition" data-reveal>{transition}</p>
+  {transition && <p class="cost__transition" data-reveal>{transition}</p>}
 </Section>
 
 <style>

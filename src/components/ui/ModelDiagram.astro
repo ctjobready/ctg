@@ -1,9 +1,11 @@
 ---
 import Icon from '../system/Icon.astro';
+import FootnoteMarker from '../facts/FootnoteMarker.astro';
 
 /** ModelDiagram ➕ — four numbered blocks (Who → How → What → Where) with animated connectors. */
 interface Props {
-  blocks: { label: string; title: string; text?: string; icon?: string }[];
+  /** factId: the fact whose footnote marker follows the block text (optional). */
+  blocks: { label: string; title: string; text?: string; icon?: string; factId?: string }[];
   caption?: string;
   class?: string;
 }
@@ -19,7 +21,7 @@ const { blocks, caption, class: className } = Astro.props;
           <p class="eyebrow model__label">{b.label}</p>
           {b.icon && <Icon name={b.icon} size={32} strokeWidth={1.5} class="model__icon" />}
           <h3 class="model__title">{b.title}</h3>
-          {b.text && <p class="model__text">{b.text}</p>}
+          {b.text && <p class="model__text">{b.text}{b.factId && <FootnoteMarker id={b.factId} footnote={true} />}</p>}
           {i < blocks.length - 1 && <span class="model__conn" aria-hidden="true"><Icon name="arrow-right" size={20} /></span>}
         </li>
       ))

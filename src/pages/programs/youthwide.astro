@@ -98,7 +98,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   />
 
   <!-- GEO definition + page BLUF -->
-  <DefinitionBlock heading="What Is CodersTrust?">
+  <DefinitionBlock heading="What Is YouthWIDE?">
     <p data-fact="IN-01 IN-02">YouthWIDE (Youth Workforce Inclusion for Digital Economy) is CodersTrust’s youth digital-employment program. In Bangladesh it is a national initiative that aims to train {target} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments, not a delivered figure. In other countries it runs as co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.</p>
     <p data-fact="PD-01 PD-02">Each trainee gets {hours} training hours per certification and three months of milestone-based mentoring, with placement support and outcome tracking for {tracking} after each course.</p>
     <nav class="audience" aria-label="Choose your route">
@@ -125,9 +125,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <CostSection
       id="national-cost"
       title="Every Training Cycle Without Placement Tracking Repeats the Result."
+      transition=""
       blocks={[
         { claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks need to follow current employer demand.' },
       ]}
     />
 
@@ -139,7 +139,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       lead="Illustrative: a government lab becomes a blended-learning center, and monthly reports to the agency are designed to track each cohort from enrollment to first earnings."
       vignettes={[
         { kind: 'Functional', title: 'A Government Lab Becomes a Blended-Learning Center', text: 'Seats are confirmed per program in existing government digital labs and colleges.' },
-        { kind: 'Emotional', title: 'Budgets That Buy Earnings', text: 'Monthly reports are designed to show young people moving into work, locally, remotely and abroad, with certification results reported separately.' },
+        { kind: 'Emotional', title: 'Budgets Tied to Verified Work Outcomes', text: 'Monthly reports are designed to show young people moving into work, locally, remotely and abroad, with certification results reported separately.' },
         { kind: 'Social', title: 'Capacity That Stays in Your System', text: 'Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.' },
       ]}
     />
@@ -149,7 +149,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       id="national-guide"
       title="A Track Record with Bangladesh’s Government"
       empathy={EMPATHY.governments}
-      origin={ORIGIN}
       statIds={['SC-06', 'SC-04']}
       partnerGroup={['government', 'academic']}
       method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
@@ -163,7 +162,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="Delivered Through the Labs and Colleges You Already Have"
       positioning={POSITIONING.nationwide}
       blocks={[
-        { label: 'Where it runs', title: 'Government Digital Labs and Colleges', text: 'Labs that can serve as blended-learning centers, with seats confirmed per program.', icon: 'building' },
+        { label: 'Where it runs', title: 'Government Digital Labs and Colleges', text: '9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.', icon: 'building', factId: 'GV-09' },
         { label: 'Who delivers', title: 'Trained Trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
         { label: 'What trainees receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
         { label: 'What you receive', title: 'Monthly Reports', text: 'Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.', icon: 'chart-bar' },
@@ -212,8 +211,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       lead="Illustrative: reports show first earnings by priority group, and tracer surveys follow each cohort for a year."
       vignettes={[
         { kind: 'Functional', title: 'Monthly Reports Your Board Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
-        { kind: 'Emotional', title: 'Confidence That the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
-        { kind: 'Social', title: 'Evidence Your Evaluators Can Audit', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+        { kind: 'Emotional', title: 'Visibility into Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
+        { kind: 'Social', title: 'Evidence Designed for Evaluator Review', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
       ]}
     />
 
@@ -426,7 +425,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { title: 'Discovery', text: 'A conversation about your goals, priority groups and timeline.' },
       { title: 'Co-Design', text: 'We shape tracks, cohorts, safeguarding, the scorecard and reporting with you.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
-      { title: 'First Cohort', text: 'Training starts within the window below after signing (grant-funded pilots).' },
+      { title: 'First Cohort', text: 'Training starts within the window below after signing.' },
     ]}
     firstAction={C14_FIRST}
   >

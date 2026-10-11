@@ -69,7 +69,7 @@ const options = [
     artSeed="jobready-campus"
   />
 
-  <DefinitionBlock>
+  <DefinitionBlock heading="What Is JobReady@Campus?">
     <p data-fact="IN-09"><Fact id="IN-09" footnote={false} />.</p>
   </DefinitionBlock>
 
@@ -97,7 +97,7 @@ const options = [
     title="What Your Students Leave With"
     lead="Illustrative: an industry certification beside the degree for students who pass the exam, and baseline data and tracer surveys from your own students."
     vignettes={[
-      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree, with a first-client or first-job path.' },
+      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree, with a first-client or first-job path. Certification is not guaranteed; eligibility, exam fees, attempts and retakes are agreed in the program scope.' },
       { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and tracer surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
       { kind: 'Social', title: 'Capacity That Stays on Campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
@@ -142,9 +142,9 @@ const options = [
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-01', 'OC-09', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
+  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'OC-09', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]}>
     <div class="proof-notes">
-      <p data-fact="OC-09">Among surveyed completers, <b>{degree}</b> hold a bachelor’s degree or higher: degree holders are our core learners.</p>
+      <p data-fact="OC-09">Among surveyed completers, <b>{degree}</b> hold a bachelor’s degree or higher; university graduates are a central audience for CodersTrust programs.</p>
       <CopyP block={SURVEY_EMPLOYMENT} />
     </div>
   </ProofBand>

@@ -13,7 +13,7 @@ political: true
 
 ![Two men in suits posing together indoors](../../assets/images/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/meeting-with-honble-foreign-minister-of-bangladesh.jpg)
 
-Mr. Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, held a warm and insightful courtesy meeting with the Hon’ble Foreign Minister of Bangladesh and President of the UN General Assembly.
+Mr. Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, held a warm and insightful courtesy meeting with the Hon’ble Foreign Minister of Bangladesh, who is also President of the UN General Assembly.
 
 The discussion focused on CodersTrust’s mission to empower Bangladesh’s youth with future-ready digital skills, while supporting the country’s growing role in the global digital economy. They also emphasized the importance of public-private partnerships, global collaboration, and technology-driven education in creating sustainable opportunities for employment and entrepreneurship.
 
