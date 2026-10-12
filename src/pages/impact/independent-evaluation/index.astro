@@ -14,7 +14,7 @@ import { articleNode, desc, title, discoveryCta } from '../../../components/page
 import { fact, sources } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
-import { linkAttrs } from '../../../lib/url';
+import { hostOf, linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
 // H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
@@ -91,7 +91,7 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -172,11 +172,6 @@ const d = discoveryCta();
   }
   .ie__fit {
     padding-block: var(--space-lg);
-    border-top: 1px solid var(--outline-variant);
-  }
-  :global(.ie__sources) {
-    margin-top: var(--space-lg);
-    padding-top: var(--space-lg);
     border-top: 1px solid var(--outline-variant);
   }
 </style>

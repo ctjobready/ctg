@@ -44,3 +44,9 @@ Reports: `.work/qa/a11y-summary.{json,md}` (axe results by rule and by page), `f
 disables an axe rule; a failing check is a finding.
 
 The page list comes from `dist/**/index.html` plus `404.html`, minus redirect stubs (a meta refresh in `<head>`).
+
+**WebKit and `upgrade-insecure-requests`.** Every page carries a CSP `<meta>` with `upgrade-insecure-requests` (`src/lib/site.ts`),
+which is correct for production (HTTPS only). The local preview is plain HTTP, and WebKit honours the directive by requesting the
+page's same-origin subresources over https, which fail with a TLS error, so the CSS and scripts never load. `bypassCSP` does not
+stop this in WebKit. `open()` in `tests/support/browser.ts` therefore removes that one token from the HTML of documents loaded in
+WebKit (a route that fulfils the document, every other directive kept). Chromium and Firefox run the policy exactly as built.

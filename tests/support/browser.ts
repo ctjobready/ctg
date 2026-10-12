@@ -15,6 +15,32 @@ export const DESKTOP = { width: 1280, height: 800 } as const;
 export const VIEWPORTS = [MOBILE, DESKTOP] as const;
 export const vpLabel = (v: { width: number; height: number }): string => `${v.width}x${v.height}`;
 
+const upgradeShimmed = new WeakSet<Page>();
+
+/**
+ * WebKit only. Every built page carries a CSP <meta> with upgrade-insecure-requests (src/lib/site.ts). Production is
+ * HTTPS-only, where that directive changes nothing; the local preview is HTTP only, and WebKit honours the directive by
+ * rewriting the page's same-origin subresources to https, which fail with a TLS error, so the CSS and scripts never load
+ * (Playwright's bypassCSP does not stop it in WebKit). For documents loaded in WebKit this removes that one token from the
+ * HTML before the page runs; every other directive stays in force. Chromium and Firefox keep the policy exactly as built.
+ */
+export async function serveWithoutUpgradeForLocalHttp(page: Page): Promise<void> {
+  if (upgradeShimmed.has(page)) return;
+  upgradeShimmed.add(page);
+  if (page.context().browser()?.browserType().name() !== 'webkit') return;
+  await page.route('**/*', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.fallback();
+    const response = await route.fetch();
+    const html = await response.text();
+    const stripped = html.replace(/;\s*upgrade-insecure-requests(?=\s*")/, '');
+    if (stripped === html) return route.fulfill({ response });
+    const headers = { ...response.headers() };
+    delete headers['content-length'];
+    delete headers['content-encoding'];
+    return route.fulfill({ status: response.status(), headers, body: stripped });
+  });
+}
+
 /** Navigate to a built page (path relative to the baseURL) and require HTTP 200. */
 export async function open(
   page: Page,
@@ -22,6 +48,7 @@ export async function open(
   waitUntil: 'load' | 'domcontentloaded' | 'networkidle' | 'commit' = 'load',
 ): Promise<Response> {
   const rel = typeof target === 'string' ? target : target.rel;
+  await serveWithoutUpgradeForLocalHttp(page);
   const response = await page.goto(rel, { waitUntil });
   expect(response, `no HTTP response for ${rel}`).not.toBeNull();
   expect(response!.status(), `HTTP status of ${rel}`).toBe(200);
