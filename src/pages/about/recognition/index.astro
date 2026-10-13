@@ -36,6 +36,7 @@ const HONOR_POSTS: [RegExp, string | null][] = [
 // news post), so the card says so and spells out the council's name.
 const HONOR_NOTES: [RegExp, string][] = [
   [/NYNJMSDC/, 'Presented by the New York & New Jersey Minority Supplier Development Council to UTC Associates, the technology consulting company Aziz Ahmad leads'],
+  [/NOVA/, 'He received the NOVA Award in 2022 for his contribution to the green technology industry'],
 ];
 const honors = fact('PA-11')
   .text.split(': ')
@@ -49,6 +50,12 @@ const honors = fact('PA-11')
     const note = HONOR_NOTES.find(([re]) => re.test(label))?.[1] ?? m?.[3];
     return { label, year: m?.[2], note, post: slug ? post(slug) : undefined };
   });
+// The NYNJMSDC Partnership Award was received by UTC Associates, the company Aziz Ahmad leads, so it is shown as related
+// recognition rather than as one of his personal honors (owner decision, 2026-10-13).
+const COMPANY_AWARD = /NYNJMSDC/;
+const COMPANY_AWARD_TITLE = 'UTC Associates, Led by Aziz Ahmad: NYNJMSDC Partnership Award';
+const personalHonors = honors.filter((h) => !COMPANY_AWARD.test(h.label));
+const relatedRecognition = honors.filter((h) => COMPANY_AWARD.test(h.label)).map((h) => ({ ...h, label: COMPANY_AWARD_TITLE }));
 
 // Media coverage (PA-09): the eight registered items, with years, oldest first. Links only where the original URL is known.
 const PA09 = ['Forbes', 'The Wall Street Journal', 'TechCrunch', 'Tech in Asia', 'Gulf News', 'USA Today', 'The Times of India', 'World Bank'];
@@ -87,10 +94,10 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust is listed in the HolonIQ South Asia EdTech 100, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
-      <Button variant="outline" href="#press-kit">Press Kit</Button>
+      <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
@@ -106,10 +113,10 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   </Section>
 
   <Section id="honors" tone="airy" aria-labelledby="honors-h">
-    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Honors Received by Aziz Ahmad" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
+    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
     <ul class="rec-honors" role="list" data-fact="PA-11">
       {
-        honors.map((h) => (
+        personalHonors.map((h) => (
           <li class="card rec-honor" data-reveal>
             <div class="card__body">
               {h.year && <p class="eyebrow">{h.year}</p>}
@@ -132,8 +139,35 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </ul>
   </Section>
 
+  {
+    relatedRecognition.length > 0 && (
+      <Section id="related" tone="ice" aria-labelledby="related-h">
+        <SectionHeader id="related-h" eyebrow="Company Recognition" title="Related Recognition" />
+        <ul class="rec-honors" role="list" data-fact="PA-11">
+          {relatedRecognition.map((h) => (
+            <li class="card rec-honor" data-reveal>
+              <div class="card__body">
+                {h.year && <p class="eyebrow">{h.year}</p>}
+                <h3 class="card__title">{h.label}</h3>
+                {h.note && <p class="card__meta">{h.note}</p>}
+                {
+                  h.post && (
+                    <p>
+                      <a class="link" href={url(newsHref(h.post))}>Read the Announcement<Icon name="arrow-right" size={16} /></a>
+                      <span class="card__meta rec-honor__date"> Published <time datetime={isoDate(h.post.data.date)}>{formatDate(h.post.data.date)}</time></span>
+                    </p>
+                  )
+                }
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
   <Section id="coverage" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Media Coverage, 2014 to 2016" lead="Coverage of CodersTrust’s first years, shown as published. Links go to the original article where we hold it." />
+    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Media Coverage, 2014 to 2016" lead="Coverage of CodersTrust’s first years, shown as published. Original articles are linked where available." />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -153,7 +187,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </ul>
     <aside class="rec-note" data-fact="ID-03" aria-label="Note on founder attribution">
       <Icon name="info" size={20} />
-      <p>2014 press described Morten Lund as a co-founder of CodersTrust. CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff. Press items are shown as published, and roles are never restated from press.</p>
+      <p>Some 2014 coverage described Morten Lund as a co-founder; CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
     </aside>
   </Section>
 
