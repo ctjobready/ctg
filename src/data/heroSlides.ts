@@ -123,7 +123,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     eyebrow: 'Placement and Trust',
     title: 'Strong Placement, Trusted by Governments',
     lead: 'Partner-funded programs placed learners in work, and governments and national institutions trust CodersTrust to train their people.',
-    stats: [{ factId: 'PR-04' }, { factId: 'GV-12' }],
+    stats: [{ factId: 'PR-06' }, { factId: 'GV-12' }],
     links: [
       { label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' },
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'outline' },
