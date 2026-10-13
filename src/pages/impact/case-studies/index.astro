@@ -25,7 +25,7 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Case Studies')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Case Studies: Four Programs, Results with Their Bases" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Four Programs Connecting Learners to Paid Work" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
     <SectionHeader id="cases-h" eyebrow="Four Programs" title="Read the Case Studies" lead="Where a randomized trial evaluated the program, the case study says so and keeps the two kinds of evidence apart." />
@@ -38,7 +38,7 @@ const d = discoveryCta();
     <p class="ch__link"><a class="link" href={linkAttrs('/impact/').href}>How the Evidence Fits Together<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." text="Each case study says what its figures do and do not show. A discovery session sets the scorecard for your own program." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

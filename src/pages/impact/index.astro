@@ -61,20 +61,26 @@ const d = discoveryCta();
   <GlanceBand
     id="glance"
     tone="ice"
-    cols={5}
     title="At a Glance"
     lead="The strongest results, each with its detail page. Trial figures are for a predecessor program; survey figures are among surveyed completers."
-    items={[
-      { id: 'SC-16', href: '/impact/global-reach/' },
-      { id: 'RC-13', href: '/impact/independent-evaluation/' },
-      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      { id: 'RC-14', href: '/impact/independent-evaluation/' },
-      { id: 'OC-03', href: '/impact/outcomes-2026/' },
-      { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'OC-02', href: '/impact/outcomes-2026/', also: ['OC-05'] },
-      { id: 'OC-04', href: '/impact/outcomes-2026/', also: ['OC-07'] },
-      { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
-      { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+    groups={[
+      { title: 'Randomized Trial', cols: 3, items: [
+        { id: 'RC-13', href: '/impact/independent-evaluation/' },
+        { id: 'RC-06a', href: '/impact/independent-evaluation/' },
+        { id: 'RC-14', href: '/impact/independent-evaluation/' },
+      ] },
+      { title: 'Surveyed Completers', cols: 5, items: [
+        { id: 'OC-03', href: '/impact/outcomes-2026/' },
+        { id: 'OC-01', href: '/impact/outcomes-2026/' },
+        { id: 'OC-02', href: '/impact/outcomes-2026/' },
+        { id: 'OC-05', href: '/impact/outcomes-2026/' },
+        { id: 'OC-04', href: '/impact/outcomes-2026/', also: ['OC-07'] },
+      ] },
+      { title: 'Program Delivery and Contract Scope', cols: 3, items: [
+        { id: 'SC-16', href: '/impact/global-reach/' },
+        { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+      ] },
     ]}
   />
 

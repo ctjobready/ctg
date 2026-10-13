@@ -58,7 +58,7 @@ const { title, description } = meta(
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
-const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
+const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
 <LandingLayout
@@ -154,7 +154,7 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
-      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'WSDFM, commissioned by Porticus, was independently evaluated by BIGD in a randomized controlled trial.' },
+      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'BIGD separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.' },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"

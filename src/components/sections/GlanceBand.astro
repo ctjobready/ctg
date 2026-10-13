@@ -19,7 +19,9 @@ interface Tile {
   also?: string[];
 }
 interface Props {
-  items: Tile[];
+  items?: Tile[];
+  /** Labelled groups of tiles (band variant): each group is a level-3 heading over its own grid. */
+  groups?: { title: string; items: Tile[]; cols?: number }[];
   title?: string;
   lead?: string;
   eyebrow?: string;
@@ -29,8 +31,8 @@ interface Props {
   cols?: number;
   tone?: 'white' | 'airy' | 'ice';
 }
-const { items, title = 'At a Glance', lead, eyebrow = 'The Results', id = 'glance', variant = 'band', cols, tone = 'airy' } = Astro.props;
-const tiles = items.map((t) => {
+const { items = [], groups, title = 'At a Glance', lead, eyebrow = 'The Results', id = 'glance', variant = 'band', cols, tone = 'airy' } = Astro.props;
+const toTile = (t: Tile) => {
   const f = fact(t.id);
   if (!f.stat) throw new Error(`<GlanceBand>: fact ${t.id} has no stat`);
   return {
@@ -40,8 +42,13 @@ const tiles = items.map((t) => {
     note: f.stat.glance?.note,
     facts: [t.id, ...(t.also ?? [])].join(' '),
   };
-});
+};
+const tiles = items.map(toTile);
 const columns = cols ?? Math.min(6, tiles.length);
+const grouped = (groups ?? []).map((g) => {
+  const gt = g.items.map(toTile);
+  return { title: g.title, tiles: gt, columns: g.cols ?? Math.min(6, gt.length) };
+});
 ---
 
 {
@@ -64,6 +71,24 @@ const columns = cols ?? Math.min(6, tiles.length);
   ) : (
     <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
       <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+      {grouped.map((g) => (
+        <div class="glance__group">
+          <h3 class="glance__group-title">{g.title}</h3>
+          <ul class="glance__grid" style={`--glance-cols:${g.columns}`} role="list">
+            {g.tiles.map((t) => (
+              <li>
+                <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
+                  <span class="glance__value">{t.value}</span>
+                  <span class="glance__desc">{t.label}</span>
+                  {t.note && <span class="glance__note">{t.note}</span>}
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {tiles.length > 0 && (
       <ul class="glance__grid" style={`--glance-cols:${columns}`} role="list">
         {tiles.map((t) => (
           <li>
@@ -76,11 +101,20 @@ const columns = cols ?? Math.min(6, tiles.length);
           </li>
         ))}
       </ul>
+      )}
     </Section>
   )
 }
 
 <style>
+  .glance__group + .glance__group {
+    margin-top: var(--space-xl, 2.5rem);
+  }
+  .glance__group-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-heading-l, 1.25rem);
+    color: var(--secondary);
+  }
   .glance__strip-title {
     margin: 0 0 var(--space-sm);
     font-size: var(--fs-heading-l, 1.25rem);

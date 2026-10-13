@@ -12,6 +12,7 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import PhaseList from '../../components/pages/programs/PhaseList.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, para, type FaqSource } from '../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../components/pages/programs/meta';
@@ -34,8 +35,8 @@ const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const applyLink = linkAttrs(apply.href);
 const LAST_UPDATED = PAGE_UPDATED.nuCourse;
-// The course's own eligibility statement on the current site (Digital Marketing: open to various educational backgrounds; ICT: honors degree or equivalent).
-const eligibilityId = slug === 'digital-marketing' ? 'NU-07' : 'NU-08';
+// One eligibility rule on every NU page: the overview rule (NU-01), so the three pages never differ.
+const eligibilityId = 'NU-01';
 
 const faqSources: FaqSource[] = [
   { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. Intake dates and the teaching location are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
@@ -93,7 +94,10 @@ const jsonLd = [
 
   <Section id="curriculum" tone="airy" aria-labelledby="curriculum-h">
     <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead="Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions." />
-    <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} />
+    <details class="mods">
+      <summary>View All {c.modules.length} Modules</summary>
+      <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} />
+    </details>
     <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
@@ -101,6 +105,14 @@ const jsonLd = [
     <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Employment Among Surveyed Completers" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
     <CopyP block={SURVEY_EMPLOYMENT} class="outcome-note" />
     <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <Section id="after-apply" tone="airy" aria-labelledby="after-h">
+    <SectionHeader id="after-h" eyebrow="Next Steps" title="What Happens After You Apply" />
+    <StepFlow steps={[
+      { title: 'Submit the Application Form', text: 'It takes you to the standalone application form.' },
+      { title: 'Admissions Contacts You', text: 'Our admissions team shares the next steps.' },
+    ]} />
   </Section>
 
   <FaqSection sources={faqSources} title="Questions About This Course" />
@@ -113,6 +125,17 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  .mods > summary {
+    cursor: pointer;
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .mods[open] > summary {
+    margin-bottom: var(--space-md);
+  }
   .roles h3 {
     margin: 0 0 var(--space-sm);
     color: var(--secondary);

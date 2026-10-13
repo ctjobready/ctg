@@ -4,6 +4,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
+import PageNav from '../../../components/pages/about/PageNav.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Img from '../../../components/ui/Img.astro';
@@ -96,10 +97,16 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
-      <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
+
+  <PageNav links={[
+    { label: 'Industry Recognition', href: '#listing' },
+    { label: 'Founder Honors', href: '#honors' },
+    { label: 'Media Coverage', href: '#coverage' },
+    { label: 'Press Kit', href: '#press-kit' },
+  ]} />
 
   <Section id="listing" aria-labelledby="listing-h">
     <SectionHeader id="listing-h" eyebrow="Industry Recognition" title="HolonIQ South Asia EdTech 100" />
@@ -142,7 +149,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   {
     relatedRecognition.length > 0 && (
       <Section id="related" tone="ice" aria-labelledby="related-h">
-        <SectionHeader id="related-h" eyebrow="Company Recognition" title="Related Recognition" />
+        <SectionHeader id="related-h" eyebrow="Related Recognition" title="Recognition of Aziz Ahmad’s Other Work" />
         <ul class="rec-honors" role="list" data-fact="PA-11">
           {relatedRecognition.map((h) => (
             <li class="card rec-honor" data-reveal>
@@ -267,7 +274,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
       <div class="kit__block">
         <h3 class="t-heading-m">Media Contact</h3>
         <p>For interviews, background and quotes, write to the team. Include your outlet, your deadline and the topic.</p>
-        <p><Button href={media.href} icon="mail">{media.label}</Button></p>
+        <p><a class="link" href={media.href}>{media.label}<Icon name="arrow-right" size={16} /></a></p>
       </div>
     </div>
   </Section>

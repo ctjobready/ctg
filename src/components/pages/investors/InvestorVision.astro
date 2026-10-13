@@ -12,17 +12,17 @@ interface Props {
   id?: string;
 }
 const { id = 'vision' } = Astro.props;
-// ID-05: "By 2032, to be among the top three … globally, focused on developing and emerging markets — offering …"
-const [lead, ...tail] = fact('ID-05').text.split(' — ');
-const detail = tail.join(' — ');
+// IN-05 leads (3M+ learners and professionals on JobReady by June 30, 2032); ID-05 follows in one sentence (the top-three vision, cut before its "— offering …" clause).
+const lead = fact('IN-05').text.replace(/^Ambition: /, 'The ambition is ');
+const detail = `The longer-term vision: ${fact('ID-05').text.split(' — ')[0].replace(/^By 2032, to be/, 'by 2032, to be')}`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Where It Is Heading" title="The Vision: A Top-Three Platform for Emerging-Market Work" />
+  <SectionHeader id={`${id}-h`} eyebrow="Where It Is Heading" title="The Ambition and the Vision" />
   <div class="vis">
-    <div class="vis__copy" data-fact="ID-05" data-reveal>
+    <div class="vis__copy" data-fact="IN-05 ID-05" data-reveal>
       <p class="vis__lead">{lead}.</p>
-      {detail && <p class="vis__detail">{detail.charAt(0).toUpperCase() + detail.slice(1).replace(/\.$/, '')}.</p>}
+      <p class="vis__detail">{detail}.</p>
       <p class="vis__note">A long-term ambition, not a commitment.</p>
     </div>
     <div class="vis__stat" data-reveal>

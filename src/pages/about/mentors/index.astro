@@ -9,7 +9,10 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import PageNav from '../../../components/pages/about/PageNav.astro';
+import Icon from '../../../components/system/Icon.astro';
 import { cta } from '../../../lib/mailto';
+import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 // Mentor photos are stored as path strings relative to src/content/ (see src/content.config.ts).
@@ -25,6 +28,7 @@ const mentors = (await getCollection('mentors'))
   .map((m) => ({ ...m.data, expertise: m.data.expertise.map(tidyExpertise) }))
   .sort((a, b) => a.name.localeCompare(b.name));
 const apply = cta('mentor');
+const discovery = cta('discovery');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners toward employment and freelance work.';
 const jsonLd = [
   {
@@ -37,9 +41,15 @@ const jsonLd = [
 <BaseLayout title="Instructors and Mentors" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Mentors' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="Instructors and Mentors" lead="Practitioners who teach and mentor CodersTrust learners toward employment and freelance work." art={false}>
     <Fragment slot="actions">
-      <Button href={apply.href} icon="mail">{apply.label}</Button>
+      <Button href={discovery.href} icon="mail">{discovery.label}</Button>
+      <a class="link" href="#mentor-cta">{apply.label}<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
+
+  <PageNav links={[
+    { label: 'Our Mentors', href: '#mentors' },
+    { label: 'Become a Mentor', href: '#mentor-cta' },
+  ]} />
 
   <Section id="mentors" aria-labelledby="mentors-h">
     <SectionHeader id="mentors-h" eyebrow="Our Practitioners" title="Meet Some of Our Mentors">

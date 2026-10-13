@@ -35,8 +35,7 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
 // Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
 const roadmap = [
-  { icon: 'route', title: 'Personalized Learning', text: 'The platform is designed to personalize each learner’s path, building on the TalentLEAP competency model.' },
-  { icon: 'trending-up', title: 'Adaptive Learning', text: 'The platform is designed to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
+  { icon: 'route', title: 'Planned Personalized and Adaptive Learning', text: 'The platform is designed to personalize each learner’s path and to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
 ];
 const toc = [
   { id: 'jobs', label: 'Four jobs' },
@@ -110,9 +109,9 @@ const f = fundingCta();
 
   <aside class="jr__next" aria-label="Fund the platform">
     <h2 class="jr__nexttitle">Fund the Platform’s Next Stage.</h2>
-    <p>A platform grant helps CodersTrust roll out the remaining modules.</p>
+    <p>A platform grant helps CodersTrust roll out the remaining modules. Details are shared in the introductory call.</p>
     <div class="jr__actions">
-      <Button href={f.href} iconEnd="arrow-right">{f.label}</Button>
+      <Button href={f.href} iconEnd="arrow-right">Discuss a Platform Grant for JobReady’s Next Stage</Button>
       <a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
       <a class="link" href={linkAttrs('/investors/').href}>For Investors<Icon name="arrow-right" size={16} /></a>
     </div>

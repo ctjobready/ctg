@@ -12,7 +12,7 @@ import MechanismBand from '../../components/sections/MechanismBand.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
-import { SAFEGUARDING, MICRO_COMMITMENT } from '../../data/copy';
+import { SAFEGUARDING, MICRO_COMMITMENT, RCT_HEADLINE, SURVEY_EMPLOYMENT } from '../../data/copy';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/our-model/';
@@ -87,6 +87,12 @@ const d = discoveryCta();
       <ProgramCard icon="route" title="TalentLEAP" text="CodersTrust’s competency-based talent development model: skill units, graduated levels and mentoring." href="/our-model/talentleap/" linkLabel="How TalentLEAP Works" />
       <ProgramCard icon="layout-dashboard" title="JobReady Platform" text="The digital education and employment platform, being built as an AI-native platform and rolling out in stages." href="/our-model/jobready-platform/" linkLabel="See the Rollout Status" />
     </div>
+  </Section>
+
+  <Section id="evidence" tone="airy" aria-labelledby="evid-h">
+    <SectionHeader id="evid-h" eyebrow="Evidence" title="Evidence Behind the Approach" />
+    <div class="om__text"><CopyText block={RCT_HEADLINE} /><CopyText block={SURVEY_EMPLOYMENT} /></div>
+    <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
