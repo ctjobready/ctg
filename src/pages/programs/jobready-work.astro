@@ -64,7 +64,7 @@ const approach = [
   { title: 'Interactive Workshops', text: 'Your team learns on tasks from your own roles.' },
   { title: 'Progress Evaluation', text: 'Checked against the measures you set.' },
   { title: 'Post-Training Support', text: 'Support continues after the workshops.' },
-  { title: 'Measurable Outcomes', text: 'Success measures are agreed before you start.' },
+  { title: 'Measurable Outcomes', text: 'Results are checked against the success measures agreed before the program began.' },
 ].map((s) => ({ ...s, factIds: ['IN-10'] }));
 const approachGroups = [
   { title: 'Scope', items: approach.slice(0, 2), start: 1, cols: 2 as const },
@@ -114,7 +114,7 @@ const approachGroups = [
       { label: 'Training', text: 'Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership programs with AIvolve.', facts: ['IN-10', 'PA-07'] },
       { label: 'Certification Preparation', text: 'Preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.', facts: ['PD-03'] },
       { label: 'Talent', text: 'Job-ready candidates through CodersTrust’s placement team, scoped against the experience and credentials available.', facts: ['IN-04'] },
-      { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set.', facts: ['IN-10'] },
+      { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
       { label: 'Agreed Before You Start', text: 'The skills and team size from the needs assessment, the success measures, and the scope and price of the program.', facts: ['IN-10', 'PD-02'] },
     ]}
   />
@@ -145,8 +145,8 @@ const approachGroups = [
         </div>
       ))
     }
-    <div class="tracks" data-fact="IN-10 PA-07 IN-04">
-      <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for." />
+    <div class="tracks" data-fact="IN-10 PA-07 IN-04 PD-03 PD-10">
+      <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for. Certification tracks are chosen from employer demand." />
       <FeatureCard icon="sparkles" title="AI Leadership Programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
       <FeatureCard icon="briefcase" title="Candidate Sourcing Through CodersTrust’s Placement Team" text="Job-ready candidates are introduced through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and is designed to add a self-serve hiring channel." />
     </div>
@@ -161,11 +161,7 @@ const approachGroups = [
       { id: 'SC-15', label: 'Corporate Delivery', stat: true },
     ]}
     broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
-    broader={[
-      { label: 'Evidence Below', href: '#proof-band' },
-      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
-      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
-    ]}
+    broader={[{ label: 'See the Evidence Below', href: '#proof-band' }]}
   />
 
   <!-- C9: only the questions about the program itself; the audience page answers the rest -->
@@ -187,7 +183,6 @@ const approachGroups = [
   <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
     <div class="proof-notes">
       <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
-      <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
     </div>
   </ProofBand>
   <!-- C12 -->
@@ -202,7 +197,7 @@ const approachGroups = [
   />
 
   <!-- C13: one solid primary; the talent action is outline -->
-  <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={work} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
+  <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
 
   <!-- C14 -->
   <NextSteps

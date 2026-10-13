@@ -143,7 +143,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['RC-01', 'PD-06'],
   },
   youthwide: {
-    text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, the program through which funders deploy its integrated training-to-earnings model in a country. ${UNLIKE_APPROVED}`,
+    text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, which funders use to deploy its training-to-earnings model in a country. ${UNLIKE_APPROVED}`,
     facts: ['IN-02', 'RC-01'],
   },
   nationwide: {

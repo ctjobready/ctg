@@ -169,7 +169,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     href: NU_PGD_APPLY_URL,
     // Non-breaking spaces: html-validate (tel-non-breaking) treats every space in a tel: link as a phone-number break.
     // The label shows the number (the same one as the tel: href and the Bangladesh office in src/lib/site.ts), in its non-breaking form.
-    secondary: { label: 'Call\u00A0to\u00A0Enroll:\u00A0+880\u00A01958\u2011220802', href: 'tel:+8801958220802' },
+    secondary: { label: 'Call\u00A0Admissions:\u00A0+880\u00A01958\u2011220802', href: 'tel:+8801958220802' },
   },
 };
 

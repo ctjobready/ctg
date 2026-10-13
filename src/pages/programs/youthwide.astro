@@ -10,7 +10,6 @@ import ReviewPanels from '../../components/pages/hub/ReviewPanels.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
-import CTABand from '../../components/ui/CTABand.astro';
 import SessionAgenda from '../../components/ui/SessionAgenda.astro';
 import EmailFallback from '../../components/ui/EmailFallback.astro';
 import Hero from '../../components/system/Hero.astro';
@@ -67,13 +66,18 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 const rates = graduateRates();
 
 const hours = statValue('PD-01');
-const tracking = fact('PD-02').text.match(/tracking for (\d+ months)/)?.[1] ?? '';
 
 const faqSources: FaqSource[] = [
   { q: 'Is YouthWIDE Right for Our Agency?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing government labs and colleges. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
   // Q9 (safeguarding) is not repeated here: the Safeguarding block in the governance section is the page's one statement of it.
-  ...['Q2', 'Q3', 'Q7', 'Q8', 'Q14'].map((id) => ({ audience: 'foundations' as const, id })),
-  ...['Q1', 'Q6', 'Q10'].map((id) => ({ audience: 'governments' as const, id })),
+  // WP24c: the six decision questions (fit, country, national scale, outcomes, speed, cost); the national-scale answer leads with Her Power, in short paragraphs.
+  { audience: 'governments' as const, id: 'Q1' },
+  {
+    q: 'Can You Deliver at National Scale?',
+    html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="GV-01 GV-11 SC-08">We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Separately, 10,000 teachers were trained to teach online during COVID-19.</p><p data-fact="PD-06 GV-09 PD-05">Larger programs run hub-and-spoke: up to 10 cohorts in parallel, with certified local facilitators and blended delivery in existing labs and colleges. In Bangladesh, 9,000+ government digital labs could host blended learning; lab access and seats are confirmed per program. A 100,000+ phase is a design option; we have not yet delivered a program at that size.`,
+    evidence: ['SC-06', 'GV-10'],
+  },
+  ...['Q3', 'Q7', 'Q8'].map((id) => ({ audience: 'foundations' as const, id })),
 ];
 
 const jsonLd = [
@@ -102,13 +106,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       lead="We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training."
       artSeed="youthwide"
     >
-      <nav class="routes" aria-label="Partnership routes" data-hero-in>
-        <a class="link" href={url('/partner-with-us/development-partners/')}>For Development Partners: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href={url('/partner-with-us/governments/')}>For Governments: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
-      </nav>
       <Fragment slot="actions">
         <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
-        {briefing.href && <a class="link" href={briefing.href}>{briefing.label}</a>}
+        <nav class="routes" aria-label="Other Ways to Start">
+          {briefing.href && <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>}
+          <a class="link" href={url('/partner-with-us/development-partners/')}>For Development Partners: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
+          <a class="link" href={url('/partner-with-us/governments/')}>For Governments: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
+        </nav>
       </Fragment>
     </Hero>
   </div>
@@ -131,8 +135,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- GEO definition + page BLUF -->
   <DefinitionBlock heading="What Is YouthWIDE?">
-    <p data-fact="IN-01 IN-02">YouthWIDE (Youth Workforce Inclusion for Digital Economy) is CodersTrust’s youth digital-employment program. In Bangladesh it is a national initiative that aims to train {target} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments, not a delivered figure. In other countries it runs as co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.</p>
-    <p data-fact="PD-01 PD-02">Each trainee gets {hours} training hours per certification and three months of milestone-based mentoring, with placement support and outcome tracking for {tracking} after each course.</p>
+    <p data-fact="IN-01 IN-02">YouthWIDE (Youth Workforce Inclusion for Digital Economy) is CodersTrust’s youth digital-employment program. In Bangladesh it is a national initiative with a 2030 target of training {target} vulnerable youth for digital employment; the target depends on government and donor commitments and is not a delivered figure. Elsewhere it runs as co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. Current outcome evidence comes from Bangladesh and Kosovo.</p>
+    <p data-fact="PD-01 PD-02">Each program combines mentored, certification-focused training, placement support and outcome tracking as agreed in the program scope; the training hours and mentoring are set out under Program at a Glance below.</p>
     <nav class="audience" aria-label="Choose Your Route">
       <a class="audience__link" href="#governments"><span class="audience__label">For Governments and Ministries</span><span class="audience__text">The Bangladesh national initiative: priority groups, government labs and phased delivery.</span><Icon name="arrow-right" size={16} /></a>
       <a class="audience__link" href="#funders"><span class="audience__label">For Funders and Development Partners</span><span class="audience__text">Co-funded country cohorts: delivery model, evidence, reporting and governance.</span><Icon name="arrow-right" size={16} /></a>
@@ -141,7 +145,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <ProgramGlance
     rows={[
-      { label: 'Who It Is For', text: 'Ministries, agencies, development partners and funders who want educated, unemployed youth in paid digital work.' },
+      { label: 'Who It Is For', text: 'Ministries, agencies, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; hub-and-spoke delivery for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification, then three months of milestone-based mentoring.`, facts: ['PD-01'] },
       { label: 'Certification Preparation', text: 'Each track prepares learners for an industry certification, with the exam fee included.', facts: ['PD-02'] },
@@ -158,7 +162,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C2 -->
   <ProblemSection
     eyebrow="The Challenge"
-    title="Educated Young People Are Not in Work in Bangladesh and Across Three Regions"
+    title="Educated Young People Struggle to Enter Work in Bangladesh and Across Three Regions"
     bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
     factIds={['PX-01', 'PX-02']}
   >
@@ -182,38 +186,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
       { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-      { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
     ]}
   />
-
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('youthwide')}
-    title="What Your Reports Will Show"
-    lead="Illustrative: monthly reports follow each cohort from enrollment to first earnings."
-    vignettes={[
-      { kind: 'Functional', title: 'Monthly Reports Your Board or Agency Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
-      { kind: 'Emotional', title: 'Visibility into Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
-      { kind: 'Social', title: 'Evidence Designed for Evaluator Review', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
-    ]}
-  >
-    <div class="aud">
-      <div class="aud__col">
-        <h3 class="aud__h">Government Delivery</h3>
-        <ul class="aud__list" role="list">
-          <li><strong>A Government Lab Becomes a Blended-Learning Center.</strong> Seats are confirmed per program in existing government digital labs and colleges.</li>
-          <li><strong>Capacity That Can Stay in Your System.</strong> Where included in the program scope, trained facilitators and localized curricula remain after the program.</li>
-        </ul>
-      </div>
-      <div class="aud__col">
-        <h3 class="aud__h">Funders and Development Partners</h3>
-        <ul class="aud__list" role="list">
-          <li><strong>First Earnings by Priority Group.</strong> Reports show first earnings for each priority group agreed with you.</li>
-          <li><strong>A Year of Tracer Surveys.</strong> Tracer surveys follow each cohort for a year after the course.</li>
-        </ul>
-      </div>
-    </div>
-  </FutureBand>
 
   <!-- C5 -->
   <GuideSection
@@ -236,6 +210,35 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       </div>
     </div>
   </GuideSection>
+
+  <!-- C4 -->
+  <FutureBand
+    photos={futurePhotos('youthwide')}
+    title="What Your Reports Will Show"
+    lead="Illustrative: monthly reports follow each cohort from enrollment to first earnings."
+    vignettes={[
+      { kind: 'Functional', title: 'Monthly Reports Your Board or Agency Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
+      { kind: 'Emotional', title: 'Visibility into Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
+      { kind: 'Social', title: 'Evidence Your Evaluators Can Check', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+    ]}
+  >
+    <div class="aud">
+      <div class="aud__col">
+        <h3 class="aud__h">Government Delivery</h3>
+        <ul class="aud__list" role="list">
+          <li><strong>A Government Lab Becomes a Blended-Learning Center.</strong> Seats are confirmed per program in existing government digital labs and colleges.</li>
+          <li><strong>Capacity That Can Stay in Your System.</strong> Where included in the program scope, trained facilitators and localized curricula remain after the program.</li>
+        </ul>
+      </div>
+      <div class="aud__col">
+        <h3 class="aud__h">Funders and Development Partners</h3>
+        <ul class="aud__list" role="list">
+          <li><strong>First Earnings by Priority Group.</strong> Reports show first earnings for each priority group agreed with you.</li>
+          <li><strong>A Year of Tracer Surveys.</strong> Tracer surveys follow each cohort for a year after the course.</li>
+        </ul>
+      </div>
+    </div>
+  </FutureBand>
 
   <!-- C6 -->
   <MechanismSection
@@ -275,10 +278,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <DeliveryGrid
       heading="The Delivery Model in Detail"
       items={[
-        { icon: 'graduation-cap', title: 'Training and Mentoring', factId: 'PD-01' },
+        { icon: 'graduation-cap', title: 'Training and Mentoring', factId: 'PD-01', text: 'Training hours per certification and milestone-based mentoring, as set out under Program at a Glance.' },
         { icon: 'award', title: 'Certifications by Track', factId: 'PD-03' },
         { icon: 'users', title: 'Cohorts in Parallel', factId: 'PD-06' },
-        { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07' },
+        { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
         { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14' },
         { icon: 'layers', title: 'Foundation Tracks', factId: 'PD-17' },
         { icon: 'briefcase', title: 'Placement Support', factId: 'PD-15' },
@@ -372,7 +375,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <SectionHeader id="governance-h" eyebrow="Safeguarding and Governance" title="Safeguarding, Governance and Reporting" />
     <div class="gov">
       <div class="gov__col" data-reveal>
-        <h3 class="t-heading-l">Safeguarding</h3>
+        <h3 class="t-heading-l">Protected by Design</h3>
         <CopyP block={SAFEGUARDING} />
         <p><a class="link" href={url('/about/governance/')}>How Governance and Accountability Work<Icon name="arrow-right" size={16} /></a></p>
       </div>
@@ -425,56 +428,56 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <DecisionSheet />
   </RiskSection>
 
-  <!-- C13: one primary button (the funders' discovery session); the Bangladesh briefing for governments is a text link in its own band, so two primary buttons never stand in one view -->
-  <CTABand
-    id="cta"
-    heading="Funders: Talk to Us About a First Cohort"
-    cta={discovery}
-    secondary={{ label: 'Read the Evidence', href: '/impact/' }}
-    micro={MICRO_COMMITMENT}
-  >
-    <CopyP block={SPEED} class="cta-speed" />
-    <SessionAgenda />
-  </CTABand>
-  {
-    briefing.href && (
-      <Section id="cta-governments" tone="airy" pad="md" aria-labelledby="cta-governments-h">
-        <div class="gov-cta">
-          <h2 id="cta-governments-h" class="t-heading-xl" data-reveal>Governments: Start with a Briefing That Fits Your Timeline</h2>
-          <p class="gov-cta__text" data-reveal>Public procurement follows the agency’s own timeline — we start with a briefing that fits it.</p>
-          <p data-reveal>
-            <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
-          </p>
-          {briefing.href.startsWith('mailto:') && <EmailFallback href={briefing.href} />}
-          <SessionAgenda lead="briefing" />
-        </div>
-      </Section>
-    )
-  }
+  <!-- C13 + C14 (WP24c): ONE "Choose Your Entry Point" chooser (the funders' discovery card holds the page's one primary button; the Bangladesh briefing for
+       governments is a text link in its own card, so two primary buttons never stand in one view) and ONE shared "What Happens Next".
+       The cards keep the ids #cta and #cta-governments (each carries its SESSION-AGENDA, checked by scripts/check-facts.mjs). -->
+  <Section id="entry-point" tone="airy" aria-labelledby="entry-point-h">
+    <SectionHeader id="entry-point-h" eyebrow="Get Started" title="Choose Your Entry Point" lead="Funders start with a discovery session. Governments start with a briefing that fits the agency’s timeline." />
+    <div class="entry">
+      {
+        discovery.href && (
+          <section id="cta" class="entry__card" aria-labelledby="cta-h" data-reveal>
+            <h3 id="cta-h" class="t-heading-l entry__title">Funders: Talk to Us About a First Cohort</h3>
+            <CopyP block={SPEED} class="cta-speed" />
+            <div class="entry__actions">
+              <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
+              <a class="link" href={url('/impact/')}>Read the Evidence</a>
+            </div>
+            {discovery.href.startsWith('mailto:') && <EmailFallback href={discovery.href} />}
+            <p class="entry__micro">{MICRO_COMMITMENT}</p>
+            <SessionAgenda />
+          </section>
+        )
+      }
+      {
+        briefing.href && (
+          <section id="cta-governments" class="entry__card" aria-labelledby="cta-governments-h" data-reveal>
+            <h3 id="cta-governments-h" class="t-heading-l entry__title">Governments: Start with a Briefing</h3>
+            <p class="entry__text">Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.</p>
+            <p class="entry__actions">
+              <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
+            </p>
+            {briefing.href.startsWith('mailto:') && <EmailFallback href={briefing.href} />}
+            <SessionAgenda lead="briefing" />
+          </section>
+        )
+      }
+    </div>
+  </Section>
 
-  <!-- C14 -->
   <NextSteps
-    id="next-steps-governments"
-    title="What Happens Next for Governments"
+    title="What Happens Next"
     steps={[
-      { title: 'Briefing', text: 'We present YouthWIDE and the evidence to your team.' },
-      { title: 'Co-Design with the Agency', text: 'Priority groups, tracks, labs and the scorecard are shaped together.' },
-      { title: 'Agreement', text: 'Agreed on the agency’s own procurement timeline.' },
-      { title: 'Launch in Existing Labs', text: 'Seats are confirmed per program.' },
+      { title: 'Briefing or Discovery', text: 'Governments start with a briefing; funders start with a discovery session about goals, priority groups and timeline.' },
+      { title: 'Co-Design', text: 'Priority groups, tracks, labs, safeguarding, the scorecard and reporting are shaped together with you.' },
+      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed, on the agency’s own procurement timeline where it applies.' },
+      { title: 'First Cohort', text: 'Training starts in existing labs and colleges within the window below after signing; seats are confirmed per program.' },
       { title: 'Monthly Reports', text: 'Monthly reports are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.' },
     ]}
-    firstAction={C14.variants.governments}
-  />
-  <NextSteps
-    title="What Happens Next for Funders"
-    tone="airy"
-    steps={[
-      { title: 'Discovery', text: 'A conversation about your goals, priority groups and timeline.' },
-      { title: 'Co-Design', text: 'We shape tracks, cohorts, safeguarding, the scorecard and reporting with you.' },
-      { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
-      { title: 'First Cohort', text: 'Training starts within the window below after signing.' },
+    roleActions={[
+      { role: 'Governments', text: C14.variants.governments },
+      { role: 'Funders', text: C14_FIRST },
     ]}
-    firstAction={C14_FIRST}
   >
     <p class="next-timing"><Icon name="clock" size={16} /> <span data-fact="PD-04">{fact('PD-04').text}.</span></p>
   </NextSteps>
@@ -581,24 +584,50 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     color: var(--secondary);
   }
   .routes {
-    margin-top: var(--space-md);
+    flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs) var(--space-lg);
   }
-  .gov-cta {
+  /* Choose Your Entry Point (WP24c): two cards, funders and governments */
+  .entry {
     display: grid;
-    justify-items: center;
-    text-align: center;
-    gap: var(--space-sm);
-    max-width: 46rem;
-    margin-inline: auto;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
   }
-  .gov-cta > :global(*) {
+  @media (min-width: 900px) {
+    .entry {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .entry__card {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-left: 4px solid var(--secondary);
+    border-radius: var(--radius-default);
+    color: var(--on-surface);
+    scroll-margin-top: var(--space-xl, 56px);
+  }
+  .entry__card > :global(*) {
     margin: 0;
   }
-  .gov-cta__text {
+  .entry__title {
+    color: var(--secondary);
+  }
+  .entry__text,
+  .entry__micro {
     color: var(--on-surface-variant);
+  }
+  .entry__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-lg);
   }
   /* The 2030 target sits in the mechanism band with its fact and a "Target" label, never in the hero */
   .mech-target {
@@ -714,7 +743,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     margin: 0;
     max-width: 40rem;
     font-size: var(--fs-body-base);
-    color: var(--ctx-text);
+    color: var(--on-surface-variant);
   }
   .next-timing {
     margin: var(--space-md) 0 0;

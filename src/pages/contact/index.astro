@@ -20,9 +20,9 @@ import { webPage } from '../../lib/schema';
 const routes = contactRoutes();
 // Twelve-plus routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
 const GROUPS = [
-  { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local'] },
+  { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local', 'diligence', 'report'] },
   { id: 'hire', title: 'Hire or Train', ids: ['campus', 'work', 'talent'] },
-  { id: 'study', title: 'Study, Apply or Ask', ids: ['nu-pgd', 'learners', 'diligence', 'report', 'media'] },
+  { id: 'study', title: 'Study or Contact the Media', ids: ['nu-pgd', 'learners', 'media'] },
 ].map((g) => ({ ...g, routes: g.ids.map((id) => routes.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r) }));
 const grouped = new Set(GROUPS.flatMap((g) => g.ids));
 const ungrouped = routes.filter((r) => !grouped.has(r.id));
@@ -32,9 +32,8 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
 ---
 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
+  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. Each inquiry button opens a prefilled email to the CodersTrust team; fill in the details and send. NU Postgraduate Diploma applicants use the application form or the admissions phone line." artSeed="contact">
     <Fragment slot="actions">
-      <Button href="#routes" iconEnd="arrow-down">See Inquiry Routes</Button>
       <a class="link" href="#offices">Offices and Phone<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
@@ -105,6 +104,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
       ]} />
       <ul class="ct-c14" role="list">
         <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>
+        <li data-fact="PD-04">Public procurement follows the agency’s own timeline.</li>
       </ul>
     </div>
     <PartnerStrip variant="grid" group="development" />

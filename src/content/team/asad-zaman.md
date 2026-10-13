@@ -6,11 +6,11 @@ group: executive
 order: 8
 photo: ../../assets/images/team/asad-zaman.jpg
 photoAlt: "Portrait of Asad Zaman, Chief Growth Officer"
-expertise: ["Business Development", "Development Partners and NGOs", "TVET", "EdTech", "Labor Market", "Strategic Planning"]
+expertise: ["Business Development", "Development Partners and NGOs", "Technical and Vocational Education and Training (TVET)", "EdTech", "Labor Market", "Strategic Planning"]
 legacyUrl: "https://coderstrust.global/team-member/h-m-asad-uz-zaman/"
 ---
 
-Asad Zaman is the Chief Growth Officer of CodersTrust. He is an AI, EdTech, TVET, labor-market, and migration strategist with 20+ years of experience, including 14 years at UNDP. He has worked across Asia and Africa in project leadership, private-sector development, strategic partnerships, resource mobilization, and digital transformation.
+Asad Zaman is the Chief Growth Officer of CodersTrust. He is an AI, EdTech, technical and vocational education and training (TVET), labor-market, and migration strategist with 20+ years of experience, including 14 years at UNDP. He has worked across Asia and Africa in project leadership, private-sector development, strategic partnerships, resource mobilization, and digital transformation.
 
 He led national and cross-country initiatives in skills development, education, migration, e-governance, and South-South Cooperation, organized high-level UN events, built global partnerships, and authored research on future skills and training reforms.
 

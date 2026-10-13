@@ -12,7 +12,6 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import CopyP from '../../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
-import StepFlow from '../../../components/ui/StepFlow.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
@@ -64,6 +63,10 @@ const jsonLd = [
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
     </Fragment>
+    <dl slot="stats" class="keyfacts">
+      <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+    </dl>
   </Hero>
 
   <DefinitionBlock />
@@ -112,7 +115,7 @@ const jsonLd = [
         ))}
       </ol>
     </details>
-    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors &amp; Mentors<Icon name="arrow-right" size={16} /></a></p>
+    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="why" aria-labelledby="why-h">
@@ -137,14 +140,6 @@ const jsonLd = [
     <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <Section id="after-apply" aria-labelledby="after-h">
-    <SectionHeader id="after-h" eyebrow="Next Steps" title="What Happens After You Apply" />
-    <StepFlow steps={[
-      { title: 'Submit the Application Form', text: 'It takes you to the standalone application form.' },
-      { title: 'Admissions Contacts You', text: 'Our admissions team shares the next steps.' },
-    ]} />
-  </Section>
-
   <Section id="also-consider" tone="airy" aria-labelledby="also-h">
     <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={copy.alsoConsider} />
     <p><a class="link" href={url(`${NU_PATH}${other}/`)}>View the Course<Icon name="arrow-right" size={16} /></a> or <a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
@@ -152,7 +147,13 @@ const jsonLd = [
 
   <FaqSection sources={faqSources} title="Questions About This Course" />
 
-  <CTABand id="cta" heading={`Apply for the ${c.title}`} cta={apply} secondary={NU_CALL} />
+  <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
+  <CTABand id="cta" heading="Ready to Apply?" text="Submit the application form. Our admissions team will contact you with the next steps." cta={apply} secondary={NU_CALL}>
+    <ol class="after" aria-label="What Happens After You Apply">
+      <li><strong>Submit the Application Form.</strong> It takes you to the standalone application form.</li>
+      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the next steps.</li>
+    </ol>
+  </CTABand>
 
   <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
@@ -160,6 +161,53 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  .after {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 40rem;
+    text-align: left;
+  }
+  .after li {
+    color: var(--ctx-text);
+  }
+  .after strong {
+    color: var(--ctx-section-heading);
+  }
+  .keyfacts {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .keyfacts div {
+    display: grid;
+    gap: 2px;
+  }
+  .keyfacts dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .keyfacts dd {
+    margin: 0;
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  /* a figure in the key-facts row is a label, not a sentence: no full stop */
+  .keyfacts :global(.fact__stop) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .keyfacts {
+      grid-template-columns: repeat(2, minmax(0, auto));
+    }
+  }
   .mods > summary {
     cursor: pointer;
     font-weight: var(--fw-bold);

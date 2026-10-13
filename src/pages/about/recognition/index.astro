@@ -95,8 +95,9 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received international honors, and its work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
+      <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
@@ -105,6 +106,8 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     { label: 'Industry Recognition', href: '#listing' },
     { label: 'Founder Honors', href: '#honors' },
     { label: 'Forums and Events', href: '#forums' },
+    { label: 'University Partnership', href: '#endorsements' },
+    { label: 'Awards and Forums in Photographs', href: '#photos' },
     { label: 'Early Press Coverage', href: '#coverage' },
     { label: 'Press Kit', href: '#press-kit' },
   ]} />
@@ -196,7 +199,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   {
     quotes.length > 0 && (
       <Section id="endorsements" tone="airy" aria-labelledby="end-h">
-        <SectionHeader id="end-h" eyebrow="Endorsements" title="What University for Peace Says" />
+        <SectionHeader id="end-h" eyebrow="University Partnership" title="What University for Peace Says" />
         <div class="rec-quotes">
           {quotes.map((e) => (
             <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
@@ -212,7 +215,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="coverage" tone="airy" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Early Coverage of CodersTrust’s First Years, 2014–2016" lead="Shown as published. Original articles are linked where available." />
+    <SectionHeader id="coverage-h" eyebrow="For Journalists" title="Early Coverage of CodersTrust’s First Years, 2014–2016" lead="Shown as published. Original articles are linked where available." />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -232,7 +235,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </ul>
     <aside class="rec-note" data-fact="ID-03" aria-label="Note on founder attribution">
       <Icon name="info" size={20} />
-      <p>Some 2014 coverage described Morten Lund as a co-founder; CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
+      <p>Some 2014 coverage described Morten Lund as a co-founder. CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
     </aside>
   </Section>
 

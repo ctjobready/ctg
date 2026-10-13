@@ -37,7 +37,12 @@ const DISCIPLINE_GROUPS = [
   { title: 'Education and Language', disciplines: ['Education', 'IELTS'] },
 ];
 const disciplineOf = (role: string) => role.slice(role.lastIndexOf(',') + 1).trim();
-const groups = DISCIPLINE_GROUPS.map((g) => ({ ...g, mentors: mentors.filter((m) => g.disciplines.includes(disciplineOf(m.role))) })).filter((g) => g.mentors.length > 0);
+// WP24c: a person's role title and their field can differ. Md. Hazrat Ali Nahid is "Team Lead, Education", but his listed expertise is
+// accounting software (QuickBooks, Xero, Zoho Books, Wave, FreshBooks, Sage 50, Payroll), so he sits under the accounting group.
+const GROUP_OVERRIDE: Record<string, string> = { 'md-hazrat-ali-nahid': 'Accounting and Spreadsheets' };
+const groupOf = (m: { id: string; role: string }) => GROUP_OVERRIDE[m.id] ?? DISCIPLINE_GROUPS.find((g) => g.disciplines.includes(disciplineOf(m.role)))?.title;
+const slugOf = (t: string) => `mentors-${t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+const groups = DISCIPLINE_GROUPS.map((g) => ({ ...g, id: slugOf(g.title), mentors: mentors.filter((m) => groupOf(m) === g.title) })).filter((g) => g.mentors.length > 0);
 const ungrouped = mentors.filter((m) => !groups.some((g) => g.mentors.includes(m)));
 if (ungrouped.length > 0) throw new Error(`Mentors: no discipline group for ${ungrouped.map((m) => `${m.name} (${m.role})`).join(', ')}`);
 // SC-09 states two 150+ figures; they are shown as two sentences so neither reads as a total for the other.
@@ -65,6 +70,7 @@ const jsonLd = [
 
   <PageNav links={[
     { label: 'Our Mentors', href: '#mentors' },
+    ...groups.map((g) => ({ label: g.title, href: `#${g.id}` })),
     { label: 'Become a Mentor', href: '#mentor-cta' },
   ]} />
 
@@ -75,7 +81,7 @@ const jsonLd = [
     {
       groups.map((g) => (
         <div class="mn-group">
-          <h3 class="mn-group__title t-heading-xl">{g.title}</h3>
+          <h2 class="mn-group__title t-heading-xl" id={g.id}>{g.title}</h2>
           <div class="grid-cards grid-cards--4">
             {g.mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} />)}
           </div>
@@ -87,7 +93,7 @@ const jsonLd = [
   <CTABand
     id="mentor-cta"
     heading="Become a Mentor"
-    text="Do you work in digital marketing, design, video, development, accounting or another digital field? Tell us about your experience and availability."
+    text="Do you work in digital marketing, design, video, development, accounting, education and language teaching or another digital field? Tell us about your experience and availability."
     cta={{ label: apply.label, href: apply.href }}
     secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}
   />
@@ -103,5 +109,6 @@ const jsonLd = [
   .mn-group__title {
     margin: 0 0 var(--space-md);
     color: var(--secondary);
+    scroll-margin-top: var(--space-xl, 56px);
   }
 </style>

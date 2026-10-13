@@ -128,7 +128,7 @@ collection('stories', 'stories', (file, fm) => {
 // ---- team
 const GROUPS = ['founders', 'advisors', 'executive', 'management'];
 const EXPECTED_ROLES = {
-  'aziz-ahmad': 'Co-founder & Chairman',
+  'aziz-ahmad': 'Co-founder and Chairman',
   'ferdinand-kjaerulff': 'Co-founder',
   'shamsul-haque': 'CEO, CodersTrust Bangladesh',
   'faruque-hossain': 'Advisor; former Chairman, National Skills Development Authority',
@@ -138,8 +138,8 @@ const EXPECTED_ROLES = {
   'asad-zaman': 'Chief Growth Officer',
   'rezaul-karim-khan': 'Chief Business Officer',
   'hazrat-ali-nahid': 'Team Lead, Education',
-  'fahim-sheikh': 'Marketing, Project & Training Operations',
-  'zahurul-islam': 'Finance & Accounts',
+  'fahim-sheikh': 'Marketing, Project and Training Operations',
+  'zahurul-islam': 'Finance and Accounts',
   'mahzabin-akter': 'Service Delivery',
 };
 collection('team', 'team', (file, fm, body, slug) => {

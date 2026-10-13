@@ -9,7 +9,6 @@ import PhotoGallery from '../../components/ui/PhotoGallery.astro';
 import { galleryPhotos } from '../../data/photos';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import Img from '../../components/ui/Img.astro';
-import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import { cta } from '../../lib/mailto';
 import { CAREERS_EMAIL } from '../../lib/site';
@@ -29,19 +28,14 @@ const expect = [
 
 <BaseLayout title="Careers" description={description} breadcrumbs={[{ label: 'Careers' }]} jsonLd={jsonLd}>
   <Hero eyebrow="Careers" title="Work with Us at CodersTrust" lead="Help prepare educated, unemployed young people for paid digital work. We are building a team that finds practical answers and delivers." artSeed="careers">
+    <p class="cr-note">We’re not hiring for specific roles right now, but we welcome speculative applications.</p>
     <Fragment slot="actions">
       <Button href={apply.href} icon="mail">{apply.label}</Button>
     </Fragment>
   </Hero>
 
-  <Section id="hiring" pad="sm">
-    <p class="cr-note">We’re not hiring for specific roles right now, but we welcome speculative applications.</p>
-  </Section>
-
   <Section id="why" aria-labelledby="why-h">
-    <SectionHeader id="why-h" eyebrow="Our Mission" title="Why Join CodersTrust">
-      <p class="lead"><Fact id="ID-04" /></p>
-    </SectionHeader>
+    <SectionHeader id="why-h" eyebrow="Our Work" title="Why Join CodersTrust" lead="The work you would join, in numbers." />
     <div class="cr-stats">
       {['SC-01', 'SC-03', 'SC-11'].map((id) => <FactStat id={id} />)}
     </div>
@@ -62,6 +56,9 @@ const expect = [
         ))
       }
     </div>
+  </Section>
+
+  <Section id="team-photos" pad="sm" aria-label="The CodersTrust Bangladesh team">
     <div class="cr-photos">
       <figure data-reveal>
         <Img src={falgun} alt="The CodersTrust Bangladesh team gathered at the office entrance for a festival celebration." width={800} widths={[480, 800]} sizes="(min-width:900px) 580px, 100vw" assetId="careers-team-falgun" />
@@ -96,7 +93,7 @@ const expect = [
   </Section>
 
   <Section id="eoe" aria-labelledby="eoe-h">
-    <SectionHeader id="eoe-h" eyebrow="Equal Opportunity" title="Everyone Is Equal Here" />
+    <SectionHeader id="eoe-h" eyebrow="Equal Opportunity" title="We Judge People on Merit" />
     <p class="cr-eoe">We believe every person is equal, and we judge people on their work and merit. Inclusion comes first in how we operate.</p>
   </Section>
 

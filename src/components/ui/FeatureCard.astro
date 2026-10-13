@@ -24,7 +24,7 @@ const a = href ? linkAttrs(href) : undefined;
     </h3>
     {text && <p class="card__text">{text}</p>}
     <slot />
-    {means && <p class="feature__means"><span class="feature__means-label">Which means</span> {means}</p>}
+    {means && <p class="feature__means"><span class="feature__means-label">In Practice</span> {means.charAt(0).toUpperCase() + means.slice(1)}</p>}
   </div>
 </article>
 

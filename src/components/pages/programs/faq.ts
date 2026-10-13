@@ -10,7 +10,7 @@ import type { FaqAudience } from '../../../data/faqs';
  * admissions notes). One source of truth feeds both the visible accordion and the FAQPage JSON-LD.
  */
 export type FaqSource =
-  | { audience: FaqAudience; id: string }
+  | { audience: FaqAudience; id: string; /** WP24c: the page's own wording of the question (the shared answer is kept). */ q?: string }
   | { q: string; html: string; evidence?: string[] };
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -29,7 +29,7 @@ export function buildFaq(sources: FaqSource[]): { q: string; a: string }[] {
     if ('audience' in s) {
       const item = faqItems(s.audience, [s.id])[0];
       if (!item) throw new Error(`FAQ ${s.id} not found in audience ${s.audience}`);
-      return item;
+      return s.q ? { ...item, q: s.q } : item;
     }
     const ev = s.evidence?.length ? ` data-fact="${s.evidence.join(' ')}"` : '';
     return { q: s.q, a: `<p${ev}>${s.html}</p>` };

@@ -31,7 +31,7 @@ export const NU_CALL = CTAS['nu-pgd'].secondary as { label: string; href: string
 /** The number in the call label ("Call to Enroll: +880 1958-220802"), for sentences that name it on their own. */
 export const NU_CALL_NUMBER = NU_CALL.label.replace(/^[^:]*:\s*/, '');
 /** "Call +880 1958-220802" as link text: a non-breaking space after "Call" keeps the whole phone link on one line (html-validate tel-non-breaking). */
-export const NU_CALL_TEXT = `Call ${NU_CALL_NUMBER}`;
+export const NU_CALL_TEXT = NU_CALL.label;
 
 /**
  * (Retired in WP20a: course pages now answer from their module names, see nuModuleFaqs; the legacy answers are generic and are no longer shown.)
@@ -64,10 +64,10 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
       { title: 'Channels and Commerce', text: 'Separate modules cover AdWords & PPC, Social Media Marketing and E-Commerce.' },
       { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
     ],
-    alsoConsider: 'Prefer programming, databases and networks? This is the course for those modules.',
+    alsoConsider: 'Prefer programming, databases and networks? The NU Postgraduate Diploma in ICT is the course for those modules.',
   },
   ict: {
-    short: 'Practical ICT: programming, databases, networks, mobile and web development.',
+    short: 'Practical information and communication technology (ICT): programming, databases, networks, mobile and web development.',
     lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University postgraduate diploma delivered by CodersTrust.',
     description: 'A National University postgraduate diploma in ICT, delivered by CodersTrust: programming, databases, networks, mobile and web development.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
@@ -78,7 +78,7 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
       { title: 'Apps, Web and Media', text: 'Modules on Mobile Application Development, Web Application & Web Site Design, and Multimedia Design and Developments.' },
       { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
     ],
-    alsoConsider: 'Prefer SEO, social media and advertising? This is the course for those modules.',
+    alsoConsider: 'Prefer SEO, social media and advertising? The NU Postgraduate Diploma in Digital Marketing is the course for those modules.',
   },
 };
 
@@ -117,7 +117,7 @@ export function nuModuleFaqs(c: NuCourse): { q: string; html: string }[] {
   const last = names[names.length - 1];
   return [
     { q: 'What Will I Study?', html: `${c.modules.length} modules: ${names.slice(0, -1).join('; ')}; and ${last.toLowerCase().startsWith('internship') ? 'a final module of ' + last.toLowerCase() : last}.` },
-    { q: 'What Will I Be Able to Do After This Course?', html: `You will have completed the ${c.modules.length} modules listed above, including a final module of internship, project work and a seminar. What you can do next depends on your own experience, portfolio and the local market.` },
+    { q: 'What Will I Be Able to Do After This Course?', html: `You can explain the digital skills and project work you completed in the ${c.modules.length} modules listed above, including the final module of internship, project work and a seminar. What you do next depends on your own experience, portfolio and the local market.` },
   ];
 }
 const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

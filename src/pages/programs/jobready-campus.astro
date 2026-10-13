@@ -33,7 +33,6 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED_UNIVERSITIES, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
 import { fact } from '../../data/facts';
-import { CLAIM_PX06 } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 
@@ -47,7 +46,11 @@ const hours = statValue('PD-01');
 
 const faqSources: FaqSource[] = [
   { audience: 'variants' as const, id: 'Q3-institution' },
-  { audience: 'universities' as const, id: 'Q13' },
+  {
+    q: 'Who Are Your Typical Learners?',
+    html: 'Mostly university graduates from across Bangladesh, some of them already working before training. Across CodersTrust’s wider programs, among surveyed completers, 84.6% hold a bachelor’s degree or higher, 68.7% were aged 15–35 and 62.9% live outside Dhaka, across 58 of the country’s 64 districts; 47.4% were working before training.',
+    evidence: ['OC-09', 'OC-01'],
+  },
 ];
 
 const jsonLd = [
@@ -97,13 +100,24 @@ const options = [
 
   <ProgramGlance
     rows={[
-      { label: 'Who It Is For', text: 'Universities and colleges whose students need a practical route into digital work beside the degree.', facts: ['IN-09'] },
+      { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
       { label: 'Delivery', text: 'Training runs in parallel with academic studies, in on-campus labs used as blended-learning centers, with faculty members as coordinators.', facts: ['IN-09', 'PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification, then three months of milestone-based mentoring.`, facts: ['PD-01'] },
       { label: 'Certification Preparation', text: 'Preparation for industry-recognized certifications, with the exam fee included; eligibility, attempts and retakes are agreed in the program scope.', facts: ['IN-09', 'PD-03'] },
       { label: 'Placement Support', text: 'Mentoring and placement support lead into freelance, local, remote and overseas work, with professional internships where employer placements are available.', facts: ['IN-09', 'PD-15'] },
       { label: 'Reporting', text: 'Baseline data, tracer surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
       { label: 'Agreed Before Enrollment', text: 'The tracks and campus labs, set in a discovery session, and the program scope.', facts: ['PD-02'] },
+    ]}
+  />
+
+  <!-- C2 (WP24c): a short problem band, built only from content this page already states -->
+  <ProblemSection
+    title="Capable Students Still Struggle to Find Work"
+    bluf={EMPATHY.universities}
+    factIds={['PX-03']}
+    extra={[
+      { title: 'Employers Cannot See the Skills', text: 'Employers cannot see the skills your students have.' },
+      { title: 'No Placement Results to Publish', text: 'Institutions are asked for placement results they cannot yet show.' },
     ]}
   />
 
@@ -145,7 +159,7 @@ const options = [
   >
     <div class="incl">
       <h3 class="t-heading-xl" data-reveal>What a Campus Program Includes</h3>
-      <FactList ids={['PD-01', 'PD-03', 'PD-06']} />
+      <FactList ids={['PD-03', 'PD-06']} />
     </div>
   </MechanismSection>
 
@@ -166,7 +180,7 @@ const options = [
     rows={[
       { feature: 'Industry Certifications by Track and Three Months of Milestone-Based Mentoring', means: 'each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
       { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
-      { feature: 'Tracer Surveys, Documentary Evidence of Earnings and Monthly Reports', means: 'your institution has outcome data it can report.', outcome: 'Placement results you can discuss', relieves: 'No placement results to publish' },
+      { feature: 'Tracer Surveys, Documentary Evidence of Earnings and Monthly Reports', means: 'your institution has outcome data it can report.', outcome: 'Placement evidence you can report', relieves: 'No placement results to publish' },
       { feature: 'Certified Local Facilitators and Campus Labs as Blended-Learning Centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },
     ]}
   />
@@ -176,7 +190,7 @@ const options = [
       <StepFlow
         steps={[
           { title: 'Set Up', text: 'Agree tracks and campus labs in a discovery session.' },
-          { title: 'Prepare for Certification', text: `${hours} training hours per certification.` },
+          { title: 'Prepare for Certification', text: 'Training toward an industry certification, as set out under Program at a Glance.' },
           { title: 'Mentor and Place', text: 'Three months of milestone-based mentoring, with placement support alongside, and tracer surveys.' },
         ]}
       />

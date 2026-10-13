@@ -8,7 +8,8 @@ import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import StepFlow from '../../../components/ui/StepFlow.astro';
-import FAQBand from '../../../components/sections/FAQBand.astro';
+import FaqSection from '../../../components/pages/programs/FaqSection.astro';
+import { faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import Fact from '../../../components/facts/Fact.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../../components/pages/about/OfficeCard.astro';
@@ -17,14 +18,18 @@ import ContractingPanel from '../../../components/pages/about/ContractingPanel.a
 import PageNav from '../../../components/pages/about/PageNav.astro';
 import { diligenceCta } from '../../../components/pages/about/routes';
 import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
-import { faqJsonLd } from '../../../lib/faq';
 import { formatDate, isoDate } from '../../../lib/format';
 import { webPage } from '../../../lib/schema';
 import { OFFICES } from '../../../lib/site';
 import { linkAttrs } from '../../../lib/url';
 
 const UPDATED = '2026-10-10';
-const FAQ_IDS = ['Q3', 'Q9', 'Q10'];
+// WP24c: Q3 reads "How Do You Track and Verify Outcomes?" here (the shared answer is kept)
+const faqSources: FaqSource[] = [
+  { audience: 'governments', id: 'Q3', q: 'How Do You Track and Verify Outcomes?' },
+  { audience: 'governments', id: 'Q9' },
+  { audience: 'governments', id: 'Q10' },
+];
 const diligence = diligenceCta();
 const [usa, bd] = OFFICES;
 // RC-01's headline restated for a due-diligence reader: the intent-to-treat employment result only.
@@ -47,7 +52,7 @@ const description = "CodersTrust’s offices, leadership, safeguarding and data-
 const jsonLd = [
   webPage({ path: '/about/governance/', name: 'Governance and Accountability', description, dateModified: UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }, { name: 'Governance', path: '/about/governance/' }] }),
   // Both offices are already on the Organization node of every page (organization() in src/lib/schema.ts).
-  faqJsonLd('governments', '/about/governance/', FAQ_IDS),
+  faqNode(faqSources, '/about/governance/'),
 ];
 ---
 
@@ -64,11 +69,14 @@ const jsonLd = [
 
   <PageNav links={[
     { label: 'Contracting and Accountability', href: '#contracting' },
-    { label: 'Offices', href: '#offices' },
-    { label: 'Leadership', href: '#leadership' },
-    { label: 'Safeguarding', href: '#safeguarding' },
-    { label: 'Evidence', href: '#evidence' },
-    { label: 'Due Diligence', href: '#checklist' },
+    { label: 'Where to Find Us', href: '#offices' },
+    { label: 'Who Leads CodersTrust', href: '#leadership' },
+    { label: 'How People Are Protected', href: '#safeguarding' },
+    { label: 'How Results Are Evidenced and Records Are Kept', href: '#anti-fraud' },
+    { label: 'Independent Evaluation and Funder Reporting', href: '#evidence' },
+    { label: 'Common Due-Diligence Questions', href: '#faq' },
+    { label: 'What We Confirm with You in Co-Design', href: '#checklist' },
+    { label: 'From Your Question to a Clarification Call', href: '#next' },
   ]} />
 
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
@@ -82,7 +90,7 @@ const jsonLd = [
   </Section>
 
   <Section id="leadership" tone="airy" aria-labelledby="lead-h">
-    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="Aziz Ahmad is Chairman, and Md. Shamsul Haque is CEO of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="Aziz Ahmad is Chairman. Md. Shamsul Haque is CEO of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
     <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
       {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
@@ -103,13 +111,13 @@ const jsonLd = [
       <article class="card" data-reveal>
         <div class="card__body">
           <h3 class="card__title">Evidence of Results</h3>
-          <p class="card__text"><Fact id="PD-09" /></p>
+          <p class="card__text" data-fact="PD-09">As agreed in the program scope, each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.</p>
         </div>
       </article>
       <article class="card" data-reveal>
         <div class="card__body">
           <h3 class="card__title">Consent and Records</h3>
-          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policies are shared with partners during due diligence.</p>
+          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected. Harassment and fraud response and referral pathways are agreed for each program. Policies are shared with partners during due diligence.</p>
         </div>
       </article>
     </div>
@@ -119,12 +127,12 @@ const jsonLd = [
     <SectionHeader id="evid-h" eyebrow="Independent Evidence" title="Independent Evaluation and Funder Reporting" />
     <div class="gov-text">
       <p class="lead" data-fact="RC-01"><strong>Independent evaluation is welcome.</strong> {trialLine}</p>
-      <p data-fact="PD-08">Funders also receive monthly reports from the first cohort.</p>
+      <p data-fact="PD-08">As agreed in the program scope, funders receive monthly reports from the first cohort.</p>
       <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </Section>
 
-  <FAQBand id="faq" audience="governments" ids={FAQ_IDS} title="Questions on Safeguarding, Evidence and Funding" />
+  <FaqSection id="faq" sources={faqSources} title="Common Due-Diligence Questions" eyebrow="Questions" />
 
   <Section id="checklist" tone="airy" aria-labelledby="check-h">
     <SectionHeader id="check-h" eyebrow="Due Diligence" title="What We Confirm with You in Co-Design" />

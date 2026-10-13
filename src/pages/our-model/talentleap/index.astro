@@ -14,7 +14,8 @@ import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
 import { MICRO_COMMITMENT } from '../../../data/copy';
-import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { faqItems } from '../../../lib/faq';
+import { faqPage } from '../../../lib/schema';
 import { linkAttrs } from '../../../lib/url';
 
 const path = '/our-model/talentleap/';
@@ -46,20 +47,23 @@ const glance = [
   { id: 'RC-02', value: stat('RC-02').value, label: stat('RC-02').label, note: stat('RC-02').detail },
 ];
 const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
+// WP24c: the outcomes answer names the supported TalentLEAP cohort, so it reads as scoped (a plan agreed in the program scope), not as a promise for every cohort
+const faq = faqItems('foundations', faqIds).map((f) =>
+  f.q === 'How Do You Prove Outcomes?' ? { ...f, a: f.a.replace('For every cohort, as agreed in the program scope, we plan', 'For every supported TalentLEAP cohort, as agreed in the program scope, we plan') } : f,
+);
 const jsonLd = [
   articleNode({ path, headline: 'What Is TalentLEAP? CodersTrust’s Competency-Based Talent Development Model', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
-  faqJsonLd('foundations', path, faqIds),
+  faqPage(faq, path),
 ];
-const faq = faqItems('foundations', faqIds);
 const toc = [
-  { id: 'glance', label: 'At a glance' },
+  { id: 'glance', label: 'At a Glance' },
   { id: 'how', label: 'How TalentLEAP Works' },
-  { id: 'example', label: 'Example: Digital Marketing' },
-  { id: 'different', label: 'What makes it different' },
-  { id: 'results', label: 'Results from CodersTrust programs' },
-  { id: 'faq', label: 'Questions' },
+  { id: 'example', label: 'Example: The Digital Marketing Career Path' },
+  { id: 'different', label: 'What Makes TalentLEAP Different' },
+  { id: 'results', label: 'Results from CodersTrust Programs' },
+  { id: 'faq', label: 'Questions About TalentLEAP' },
 ];
 const d = discoveryCta();
 ---
@@ -85,7 +89,11 @@ const d = discoveryCta();
 
   <ReportSection id="how" title="How TalentLEAP Works">
     <StagePipeline title="The Stage Pipeline" id="stage-pipeline" />
-    <p data-fact="PD-01 PD-14 PD-15 PD-16">Applicants first take an accessible readiness assessment (tests and an interview); a small number may not be selected, and the reasons are reported. Each track then teaches individual skill units, assessed against common rubrics, in 100 training hours per certification, half of them hands-on labs, with certification exam preparation (exam fee included). Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client), then career paths, continuing professional development and the alumni network.</p>
+    <dl class="tl__rows">
+      <div class="tl__row" data-fact="PD-14 PD-16"><dt>Assess</dt><dd>Applicants first take an accessible readiness assessment (tests and an interview); a small number may not be selected, and the reasons are reported.</dd></div>
+      <div class="tl__row" data-fact="PD-01 PD-16"><dt>Learn and Certify</dt><dd>Each track teaches individual skill units, assessed against common rubrics, in 100 training hours per certification, half of them hands-on labs.</dd></div>
+      <div class="tl__row" data-fact="PD-01 PD-15"><dt>Earn and Prosper</dt><dd>Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client), then career paths, continuing professional development and the alumni network.</dd></div>
+    </dl>
     <p data-fact="PD-01 PD-03 PD-14 PD-15 ID-06">Certifications run by track, for example Meta Blueprint and Google Ads for digital marketing, Adobe Certified Professional for design and video, QuickBooks Online ProAdvisor for digital accounting, PCEP for Python and CWP for web.</p>
     <CertNote />
   </ReportSection>
@@ -101,7 +109,7 @@ const d = discoveryCta();
       <li><strong>Milestone-based mentoring.</strong> Mentoring follows milestones toward each track’s agreed work-entry goal, with placement support alongside, and attendance is tracked.</li>
       <li><strong>Demand-led tracks.</strong> Tracks are set from current employer demand in each country, and each track’s work-entry plan is approved before enrollment.</li>
     </ul>
-    <Callout label="Design Rationale, Not a Proof of Mentoring">
+    <Callout label="Why Mentoring Is Milestone-Based">
       <p data-fact="RC-11"><Fact id="RC-11" /></p>
       <p>The randomized trial’s program included three months of mentoring, but the trial did not isolate the effect of mentoring, so this page makes no claim that mentoring itself is proven.</p>
     </Callout>
@@ -109,7 +117,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="results" title="Results from CodersTrust Programs">
-    <p>These are results for CodersTrust programs, each with the evidence it rests on (see At a Glance). The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.</p>
+    <p>The results below are for CodersTrust programs, each labeled with the evidence it rests on (see At a Glance). The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.</p>
     <p class="tl__links"><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
@@ -121,6 +129,30 @@ const d = discoveryCta();
 </LongformLayout>
 
 <style>
+  .tl__rows {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+  }
+  .tl__row {
+    display: grid;
+    gap: 2px;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 4px solid var(--primary);
+    background: var(--surface-container-low);
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+  }
+  .tl__row dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .tl__row dd {
+    margin: 0;
+  }
   .tl__links {
     display: flex;
     flex-wrap: wrap;

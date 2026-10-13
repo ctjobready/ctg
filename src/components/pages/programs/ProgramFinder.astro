@@ -10,7 +10,7 @@ import { linkAttrs } from '../../../lib/url';
  */
 const rows = [
   { who: 'A Government, Development Partner or Funder', choose: 'YouthWIDE', href: '/programs/youthwide/', outcome: 'Young people in paid digital work, from monthly reports on paid-work outcomes', start: 'Request a Discovery Session or, for a ministry, a briefing' },
-  { who: 'A University or College', choose: 'JobReady@Campus', href: '/programs/jobready-campus/', outcome: 'Students on a supported route to a recognized credential beside the degree', start: 'Bring JobReady@Campus to Your Institution' },
+  { who: 'A University or College', choose: 'JobReady@Campus', href: '/programs/jobready-campus/', outcome: 'Certification attempts, completions and placement evidence from student tracer surveys', start: 'Bring JobReady@Campus to Your Institution' },
   { who: 'An Employer', choose: 'JobReady@Work', href: '/programs/jobready-work/', outcome: 'Your team learning on tasks from your own roles', start: 'Plan a Training Program' },
   { who: 'A School or Education Partner', choose: 'SuperKids', href: '/programs/superkids/', outcome: 'Young learners building STEAM, coding, robotics and digital art skills', start: 'Request a Discovery Session' },
   { who: 'A Degree Holder in Bangladesh', choose: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', outcome: 'Digital skills added to the degree you hold', start: 'Apply Now' },
@@ -39,6 +39,7 @@ const rows = [
       </tbody>
     </table>
   </section>
+  <p class="pf__route">Deciding as an institution? <a class="link" href={linkAttrs('/partner-with-us/').href}>Start with Partner with Us.</a></p>
 </Section>
 
 <script>
@@ -67,6 +68,9 @@ const rows = [
   .pf thead th {
     background: var(--surface-container-low);
     color: var(--secondary);
+  }
+  .pf__route {
+    margin: var(--space-md) 0 0;
   }
   .pf tbody th {
     color: var(--on-surface);

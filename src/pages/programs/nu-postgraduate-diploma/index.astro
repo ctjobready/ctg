@@ -16,7 +16,6 @@ import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
-import CopyP from '../../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../../components/pages/programs/ProblemSection.astro';
 import CostSection from '../../../components/pages/programs/CostSection.astro';
@@ -25,11 +24,10 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../../components/pages/programs/RiskSection.astro';
-import NextSteps from '../../../components/pages/programs/NextSteps.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, ORIGIN, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06 } from '../../../components/sections/copyText';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
@@ -104,7 +102,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C2 -->
   <ProblemSection
-    title="A Degree Alone Is Not Producing Job Offers"
+    title="A Degree Alone May Not Be Enough for Today’s Digital Jobs"
     bluf="You are aiming for interviews, a first digital job and credentials employers recognize."
     factIds={['PX-03', 'PX-05']}
     scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
@@ -163,9 +161,8 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </GuideSection>
 
   <!-- C7 -->
-  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'Read the Full Findings', href: '/impact/' }]}>
     <div class="proof-notes">
-      <CopyP block={SURVEY_EMPLOYMENT} />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
     </div>
   </ProofBand>
@@ -177,7 +174,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
       steps={[
         { title: 'Apply', text: 'Complete the application form.' },
         { title: 'Learn', text: 'Attend the diploma courses.' },
-        { title: 'Move into Work', text: 'Take your new skills into interviews, freelance work or your next role.' },
+        { title: 'Prepare for Work', text: 'Take your new skills into interviews, freelance work or your next role.' },
       ]}
     />
   </Section>
@@ -199,18 +196,13 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     ]}
   />
 
-  <!-- C13 -->
-  <CTABand id="cta" heading="Ready to Apply?" cta={apply} secondary={NU_CALL} />
-
-  <!-- C14 -->
-  <NextSteps
-    title="What Happens After You Apply"
-    steps={[
-      { title: 'Submit the Application Form', text: 'It takes you to the standalone application form.' },
-      { title: 'Admissions Contacts You', text: 'Our admissions team shares the next steps.' },
-    ]}
-    firstAction="Submit the application form. Our admissions team will contact you with the next steps."
-  />
+  <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
+  <CTABand id="cta" heading="Ready to Apply?" text="Submit the application form. Our admissions team will contact you with the next steps." cta={apply} secondary={NU_CALL}>
+    <ol class="after" aria-label="What Happens After You Apply">
+      <li><strong>Submit the Application Form.</strong> It takes you to the standalone application form.</li>
+      <li><strong>Admissions Contacts You.</strong> Our admissions team shares the next steps.</li>
+    </ol>
+  </CTABand>
 
   <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(PAGE_UPDATED.nu)}>{formatDate(PAGE_UPDATED.nu)}</time></p>
@@ -237,6 +229,21 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   .proof-notes :global(p) {
     margin: 0;
     color: var(--ctx-text);
+  }
+  .after {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 40rem;
+    text-align: left;
+  }
+  .after li {
+    color: var(--ctx-text);
+  }
+  .after strong {
+    color: var(--ctx-section-heading);
   }
   .keyfacts {
     margin: 0;

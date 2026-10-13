@@ -11,17 +11,17 @@ import ProgramCard from '../../components/ui/ProgramCard.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import { fact } from '../../data/facts';
 import CopyText from '../../components/pages/impact/CopyText.astro';
+import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
 import { SAFEGUARDING, MICRO_COMMITMENT, RCT_HEADLINE, SURVEY_EMPLOYMENT } from '../../data/copy';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/our-model/';
-const description = desc('One integrated path: assessment, training with certification preparation, three months of milestone-based mentoring and placement, with outcomes tracked.');
 const lead = 'One integrated path: assessment, certification-focused training, three months of milestone-based mentoring, placement support and tracked outcomes.';
+const description = desc(lead);
 // "What Is CodersTrust?" is followed by the problem in one line and the strongest proof, both restated from register facts (PX-01, RC-02).
-const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
-const proof = `In a randomized trial of CodersTrust’s predecessor program, ${lowerFirst(fact('RC-02').text)}.`;
+const proof = `In a randomized trial of CodersTrust’s predecessor program, women offered a place were ${fact('RC-02').stat!.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points')} more likely to be employed.`;
 // Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
 const startingPoints = [
@@ -31,7 +31,7 @@ const startingPoints = [
 ];
 const atScale = [
   { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client). Learners then join the alumni network.` },
-  { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
+  { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'From about month 5, programs can run up to 10 certification cohorts in parallel, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
 const qa = 'Programs use common practical-assessment rubrics, sampled moderation of portfolios and assessments, and trainer observation, with remediation before the next cohort. Completion, competency and external-exam results are reported separately.';
@@ -47,12 +47,12 @@ const d = discoveryCta();
   </Hero>
 
   <DefinitionBlock>
-    <p data-fact="PX-01">Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.</p>
+    <p data-fact="PX-01">An estimated {fact('PX-01').stat!.value} educated young people aged 15–24 are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.</p>
     <p data-fact="RC-02">{proof}</p>
   </DefinitionBlock>
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
-    <SectionHeader id="path-h" eyebrow="How It Works" title="One Integrated Path, from Assessment to Career" lead="Learn. Earn. Prosper. Each stage prepares learners for the next, and every supported cohort includes agreed outcome tracking." />
+    <SectionHeader id="path-h" eyebrow="How It Works" title="One Integrated Path, from Assessment to Career" lead="Learn. Earn. Prosper. Each stage prepares learners for the next, and every supported cohort agrees an outcome-tracking plan before delivery begins." />
     <p class="om__scope">
       For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. <a class="link" href={linkAttrs('/programs/jobready-work/').href}>JobReady@Work</a>, the <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>NU Postgraduate Diploma</a> and <a class="link" href={linkAttrs('/programs/superkids/').href}>SuperKids</a> have their own delivery structures.
     </p>
@@ -86,7 +86,7 @@ const d = discoveryCta();
   </Section>
 
   <Section aria-labelledby="safe-h">
-    <SectionHeader id="safe-h" eyebrow="Safeguarding and Data" title="Safeguarding and Data Are Agreed per Program" />
+    <SectionHeader id="safe-h" eyebrow="Safeguarding and Data" title="Safeguarding and Data Protection Are Agreed per Program" />
     <div class="om__text"><CopyText block={SAFEGUARDING} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
   </Section>
@@ -104,6 +104,13 @@ const d = discoveryCta();
     <div class="om__text"><CopyText block={RCT_HEADLINE} /><CopyText block={SURVEY_EMPLOYMENT} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
+
+  <!-- WP24c: a compact partner Q&A band, built only from the shared FAQ answers -->
+  <FaqSection
+    sources={['Q3', 'Q7', 'Q8', 'Q9'].map((id) => ({ audience: 'foundations' as const, id }))}
+    title="Questions Partners Ask"
+    eyebrow="Partner Questions"
+  />
 
   <CTABand id="cta" heading="Start with a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>

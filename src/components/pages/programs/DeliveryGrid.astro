@@ -7,6 +7,8 @@ interface Item {
   icon: string;
   title: string;
   factId: string;
+  /** WP24c: a plain-language line in place of the register sentence (the fact stays the card's marker). */
+  text?: string;
 }
 interface Props {
   items: Item[];
@@ -25,7 +27,7 @@ const { items, heading, class: className } = Astro.props;
           <span class="dg__icon" aria-hidden="true"><Icon name={it.icon} size={24} strokeWidth={1.75} /></span>
           <div>
             <h4 class="dg__title">{it.title}</h4>
-            <p class="dg__text"><Fact id={it.factId} under={it.title} /></p>
+            <p class="dg__text">{it.text ? it.text : <Fact id={it.factId} under={it.title} />}</p>
           </div>
         </li>
       ))

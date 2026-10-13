@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
-import Button from '../../components/system/Button.astro';
 import Badge from '../../components/system/Badge.astro';
 import Icon from '../../components/system/Icon.astro';
 import Section from '../../components/ui/Section.astro';
@@ -20,6 +19,7 @@ import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
+import { endSentence } from '../../components/sections/copyText';
 
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
 const since = fact('ID-02').stat?.value;
@@ -31,7 +31,7 @@ const sc02Stat = sc02.stat!;
 const trial = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income than the control group (about +$27 a month).');
 if (trial === RCT_HEADLINE.text) throw new Error('About: RC-01 headline wording changed; update the trial line');
 
-const sdgLine = fact('ID-09').text.replace('aligns with seven SDGs', 'contributes to seven SDGs');
+const sdgLine = endSentence(fact('ID-09').text.replace('aligns with seven SDGs', 'contributes to seven SDGs'));
 if (sdgLine === fact('ID-09').text || !/Quality Education, Gender Equality, and Decent Work and Economic Growth/.test(sdgLine)) throw new Error('About: ID-09 wording changed; update the SDG line');
 
 const principles = [
@@ -58,7 +58,7 @@ const principles = [
   {
     icon: 'handshake',
     title: 'Partnership and Accountability',
-    text: 'Partners agree the scorecard before the first cohort and see progress in reports every month.',
+    text: 'As agreed in the program scope, partners set the scorecard before the first cohort and receive monthly reports.',
     factId: 'PD-08',
     link: { label: 'Governance and Accountability', href: '/about/governance/' },
   },
@@ -80,7 +80,7 @@ const jsonLd = [
 <BaseLayout title="About CodersTrust" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
     <Fragment slot="actions">
-      <Button href="/impact/" iconEnd="arrow-right">See Our Impact</Button>
+      <a class="link" href={linkAttrs('/impact/').href}>See Our Impact<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
@@ -91,6 +91,7 @@ const jsonLd = [
     { label: 'Our Story', href: '#story' },
     { label: 'Founders', href: '#founders' },
     { label: 'How We Work', href: '#how-we-work' },
+    { label: 'Global Goals', href: '#sdgs' },
     { label: 'Recognition', href: '#recognition' },
   ]} />
 
@@ -116,7 +117,7 @@ const jsonLd = [
     <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
     <div class="about-stats">
       <FactStat id="SC-01" />
-      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Stat.detail} count={sc02Stat.numeric !== undefined} /></div>
+      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note="111,268 direct; 40,043 through courseware" count={sc02Stat.numeric !== undefined} /></div>
       {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
     </div>
   </Section>
