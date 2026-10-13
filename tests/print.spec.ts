@@ -49,7 +49,8 @@ for (const { route, h1 } of EVIDENCE) {
     // the brief: H1, the first section's callout (the BLUF or the summary), a chart's data table
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toHaveText(h1);
-    await expect(page.locator('.callout').first()).toBeVisible();
+    // WP22: Outcomes 2026 states its direct answer as the lead under the H1 instead of a callout
+    await expect(page.locator('.callout, main p.lead').first()).toBeVisible();
     const tables = page.locator('details[class$="__data"] table');
     if (route.includes('outcomes')) {
       expect(await tables.count(), 'chart data tables on the Outcomes page').toBeGreaterThan(5);
