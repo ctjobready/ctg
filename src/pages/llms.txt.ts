@@ -24,7 +24,7 @@ const PRIORITY: Item[] = [
   { name: 'YouthWIDE', path: '/programs/youthwide/' },
   { name: 'Partner with us', path: '/partner-with-us/' },
   { name: 'Investors', path: '/investors/' },
-  { name: 'NU Postgraduate Diploma', path: '/nu-postgraduate-diploma/' },
+  { name: 'NU Postgraduate Diploma', path: '/programs/nu-postgraduate-diploma/' },
 ];
 
 const REFERENCE: Item[] = [
@@ -74,7 +74,8 @@ function llmsTxt(): string {
     '',
     '## Deprioritised',
     `- Redirect stubs: legacy ${PRODUCTION_ORIGIN.replace('https://', '')} paths (old posts, archives, feeds and course pages) that forward to the pages above. Follow them to the destination; do not cite or index the stub.`,
-    `- Styleguide (${PRODUCTION_ORIGIN}/styleguide/): an internal component gallery for quality checks, not content.`,
+    // the component gallery is not part of a production build (WP20a), so only the other builds name it
+    ...(__SITE_ENV__ === 'production' ? [] : [`- Styleguide (${PRODUCTION_ORIGIN}/styleguide/): an internal component gallery for quality checks, not content.`]),
     '',
   ].join('\n');
 }

@@ -14,6 +14,7 @@ const stat = (id: string) => {
 const since = stat('ID-02').value;
 const emp = stat('OC-01');
 const trial = stat('RC-02');
+const trialPoints = `+${trial.numeric} Percentage Points`;
 
 export interface NavLink {
   label: string;
@@ -22,6 +23,10 @@ export interface NavLink {
   description?: string;
   /** Listed in the footer column (default true). Hub overview links are not: the column heading already links to the hub. */
   footer?: boolean;
+  /** Sub-heading of the menu section the link sits under (mega menu and mobile drawer); links without one come first, unheaded. */
+  group?: string;
+  /** Only in the header menus (the NU course pages and the Courses link): teaser lists elsewhere show the program links alone. */
+  menuOnly?: boolean;
 }
 
 export interface NavFeature {
@@ -44,6 +49,9 @@ export interface NavGroup {
   items: NavLink[];
   feature: NavFeature;
 }
+
+const PARTNER_PROGRAMS = 'For Partners and Institutions';
+const LEARNER_PROGRAMS = 'For Learners';
 
 export const navGroups: NavGroup[] = [
   {
@@ -91,17 +99,20 @@ export const navGroups: NavGroup[] = [
     href: '/programs/',
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.', footer: false },
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Youth digital employment: a Bangladesh national initiative and country cohorts.' },
-      { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'Universities and colleges.' },
-      { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'Corporate training and talent.' },
-      { label: 'NU Postgraduate Diploma', href: '/nu-postgraduate-diploma/', description: 'Digital Marketing and ICT diplomas.' },
-      { label: 'SuperKids', href: '/programs/superkids/', description: 'K-12 STEAM, robotics and coding.' },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'National Youth Employment Program.', group: PARTNER_PROGRAMS },
+      { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
+      { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
+      { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
+      { label: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: 'For degree holders.', group: LEARNER_PROGRAMS },
+      { label: 'Digital Marketing Diploma', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
+      { label: 'ICT Diploma', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
+      { label: 'Courses', href: COURSES_URL, description: 'Short, self-paced courses on JobReady.global.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
     ],
     feature: {
       kind: 'pilot',
-      eyebrow: 'Start Small',
-      title: 'Start with a Pilot',
-      text: 'Launch a first cohort, measure results, then scale.',
+      eyebrow: 'Choose Your Path',
+      title: 'Partner Programs or a Postgraduate Diploma?',
+      text: 'Institutions and employers start with a partner program. Degree holders apply to the NU diploma.',
       cta: { label: 'Find the Right Program', href: '/programs/' },
     },
   },
@@ -111,20 +122,20 @@ export const navGroups: NavGroup[] = [
     href: '/impact/',
     items: [
       { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
-      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
-      { label: 'Independent Evaluation (Randomized Trial)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
+      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
+      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
       { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
       { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
-      { label: 'In the Field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
+      { label: 'Photo Archive', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },
     ],
     feature: {
       kind: 'stat',
-      eyebrow: 'Impact Survey 2026',
-      title: 'Employment Among Surveyed Completers',
-      text: `Before training: ${emp.from}. At the October 2026 survey: ${emp.value}.`,
-      factIds: ['OC-01'],
-      cta: { label: 'See the Findings', href: '/impact/outcomes-2026/' },
+      eyebrow: 'Randomized Trial of a Predecessor Program',
+      title: 'More Employment for Women Offered a Place',
+      figure: trialPoints,
+      factIds: ['RC-02'],
+      cta: { label: 'Read the Trial Results', href: '/impact/independent-evaluation/' },
     },
   },
   {
@@ -136,8 +147,8 @@ export const navGroups: NavGroup[] = [
       { label: 'Development Partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Foundations & CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
-      { label: 'Investors', href: '/investors/', description: 'The investment case.' },
-      { label: 'Local Partners', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
+      { label: 'Investors', href: '/investors/', description: 'Back JobReady’s staged platform rollout.' },
+      { label: 'Local Partners in Bangladesh', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
     ],
@@ -158,12 +169,14 @@ export const topLinks: NavLink[] = [{ label: 'News', href: '/news/' }];
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
 
 /** Primary header CTA. */
-export const headerCta: NavLink = { label: 'Request a Discovery Session', href: '/contact/' };
+export const headerCta: NavLink = { label: 'Talk to Us', href: '/contact/' };
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
   lead: 'Randomized trial of a predecessor program:',
   rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed. Surveyed completers: ${emp.from} employed before training, ${emp.value} at the October 2026 survey.`,
+  /** The same two statements for a phone (up to 575 px): both labels kept, three lines at 375 px. */
+  short: `women offered a place: +${trial.numeric} percentage points employed. Surveyed completers: ${emp.from} to ${emp.value} employed.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v3',
   factId: 'RC-02 OC-01',
@@ -173,10 +186,11 @@ export const promo = {
 
 /** Footer columns mirror the mega-menus (planning/03 §3.3). */
 export const footerColumns = navGroups
-  .filter((g) => ['about', 'programs', 'impact', 'partner'].includes(g.id))
+  .filter((g) => ['about', 'model', 'programs', 'impact', 'partner'].includes(g.id))
   .map((g) => ({ id: g.id, title: g.label, href: g.href, links: g.items.filter((i) => i.footer !== false).map(({ label, href }) => ({ label, href })) }));
 
 export const footerBottomLinks: NavLink[] = [
+  ...topLinks,
   { label: 'Privacy', href: '/privacy-policy/' },
   { label: 'Accessibility', href: '/accessibility/' },
 ];
@@ -187,7 +201,7 @@ export const audiences = [
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations & CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
   { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'The Investment Case', href: '/investors/' },
-  { id: 'local-partners', title: 'Local Partners', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
+  { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
 ] as const;

@@ -53,7 +53,7 @@ export interface HeroSlide {
 }
 
 /** Program links, in slide order. Labels and one-line descriptors are the navigation's own (src/data/nav.ts), so the two stay in step. */
-const PROGRAM_HREFS = ['/programs/youthwide/', '/programs/jobready-campus/', '/programs/jobready-work/', '/nu-postgraduate-diploma/', '/programs/superkids/'] as const;
+const PROGRAM_HREFS = ['/programs/youthwide/', '/programs/jobready-campus/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/', '/programs/superkids/'] as const;
 
 function navLink(href: string): NavLink {
   const item = navGroups.flatMap((g) => g.items).find((i) => i.href === href);

@@ -74,9 +74,8 @@ import { linkAttrs } from '../../lib/url';
           ))
         }
         <li>
-          Looking for courses?{' '}
           <a href={COURSES_URL} rel={linkAttrs(COURSES_URL).rel}>
-            JobReady.global
+            Courses
             <Icon name="arrow-up-right" size={14} />
             <span class="sr-only">{linkAttrs(utilityLink.href).srText}</span>
           </a>
@@ -243,7 +242,7 @@ import { linkAttrs } from '../../lib/url';
   }
   @media (min-width: 1024px) {
     .footer__main {
-      grid-template-columns: 1.35fr repeat(4, minmax(0, 1fr));
+      grid-template-columns: 1.2fr repeat(5, minmax(0, 1fr));
     }
     .footer__brand {
       grid-column: auto;

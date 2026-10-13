@@ -7,6 +7,9 @@ import { formatDate, isoDate, truncate } from '../../../lib/format';
 import { newsArticle } from '../../../lib/schema';
 import { absoluteUrl, canonicalUrl, linkAttrs, url } from '../../../lib/url';
 import { ctaHref } from '../../../lib/mailto';
+import { CTAS } from '../../../data/ctas';
+import EmailFallback from '../../ui/EmailFallback.astro';
+import { NEWS_CTA, type NewsAudience } from './news';
 
 /**
  * T6 news article shell. Like the shared ArticleLayout, but with a separate <title> (kept within 60
@@ -33,8 +36,12 @@ interface Props {
   imageAsset?: string;
   /** Caption of the hero photo (the italic line the post had under its first image, which the hero now stands in for). */
   heroCaption?: string;
+  /** Who the post is about: picks the closing call to action (NEWS_CTA). */
+  audience?: NewsAudience;
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general' } = Astro.props;
+const closing = NEWS_CTA[audience];
+const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
 const published = date.toISOString();
 const SUFFIX = ' | CodersTrust';
@@ -107,9 +114,11 @@ const share = {
 
   <section class="art__cta" aria-labelledby="art-cta-h">
     <div class="container container--narrow art__cta-inner">
-      <h2 id="art-cta-h" class="t-heading-xl">Working on Youth Employment?</h2>
-      <p>Tell us your goals and priority groups. A discovery session is a conversation, not a commitment.</p>
-      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Request a Discovery Session</Button>
+      <h2 id="art-cta-h" class="t-heading-xl">{closing.heading}</h2>
+      <p>{closing.text}</p>
+      <Button href={closingHref} iconEnd="arrow-right">{CTAS[closing.cta].label}</Button>
+      <EmailFallback href={closingHref} />
+      <p><a class="link" href={url(closing.offer.href)}>{closing.offer.label}<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </section>
 

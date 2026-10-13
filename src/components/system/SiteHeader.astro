@@ -37,15 +37,26 @@ const util = linkAttrs(utilityLink.href);
               <div class="mega" id={`mega-${g.id}`} data-mega-panel role="group" aria-label={`${g.label} menu`}>
                 <div class="mega__inner container container--wide">
                   <ul class="mega__links" role="list">
-                    {g.items.map((it) => {
+                    {g.items.map((it, i) => {
                       const a = linkAttrs(it.href);
                       return (
-                        <li>
-                          <a class="mega__link" href={a.href} aria-current={isActive(it.href) && currentPath === it.href ? 'page' : undefined}>
-                            <span class="mega__title">{it.label}</span>{' '}
-                            {it.description && <span class="mega__desc">{it.description}</span>}
-                          </a>
-                        </li>
+                        <>
+                          {it.group && it.group !== g.items[i - 1]?.group && (
+                            <li class="mega__group">
+                              <p class="mega__group-title">{it.group}</p>
+                            </li>
+                          )}
+                          <li>
+                            <a class="mega__link" href={a.href} rel={a.rel} aria-current={isActive(it.href) && currentPath === it.href ? 'page' : undefined}>
+                              <span class="mega__title">
+                                {it.label}
+                                {a.external && <Icon name="arrow-up-right" size={14} />}
+                              </span>{' '}
+                              {it.description && <span class="mega__desc">{it.description}</span>}
+                              {a.external && <span class="sr-only">{a.srText}</span>}
+                            </a>
+                          </li>
+                        </>
                       );
                     })}
                   </ul>
@@ -126,7 +137,11 @@ const util = linkAttrs(utilityLink.href);
         </button>
       </div>
       <nav class="drawer__nav" aria-label="Mobile">
+        <Button class="drawer__cta" href={headerCta.href} iconEnd="arrow-right">{headerCta.label}</Button>
         <ul role="list">
+          <li>
+            <a class="drawer__top" href={linkAttrs('/').href} aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
+          </li>
           {
             navGroups.map((g) => (
               <li>
@@ -144,11 +159,25 @@ const util = linkAttrs(utilityLink.href);
                           </a>
                         </li>
                       )}
-                      {g.items.map((it) => (
-                        <li>
-                          <a href={linkAttrs(it.href).href}>{it.label}</a>
-                        </li>
-                      ))}
+                      {g.items.map((it, i) => {
+                        const a = linkAttrs(it.href);
+                        return (
+                          <>
+                            {it.group && it.group !== g.items[i - 1]?.group && (
+                              <li class="drawer__subhead">
+                                <p>{it.group}</p>
+                              </li>
+                            )}
+                            <li>
+                              <a href={a.href} rel={a.rel}>
+                                {it.label}
+                                {a.external && <Icon name="arrow-up-right" size={16} />}
+                                {a.external && <span class="sr-only">{a.srText}</span>}
+                              </a>
+                            </li>
+                          </>
+                        );
+                      })}
                     </ul>
                   </div>
                 </details>
@@ -176,7 +205,6 @@ const util = linkAttrs(utilityLink.href);
           <li><a href={`mailto:${CONTACT.email}`}><Icon name="mail" size={18} />{CONTACT.email}</a></li>
           <li><a href={CONTACT.phoneHref}><Icon name="phone" size={18} />{CONTACT.phone}</a></li>
         </ul>
-        <Button class="drawer__cta" href={headerCta.href} iconEnd="arrow-right">{headerCta.label}</Button>
       </div>
     </div>
   </dialog>
@@ -273,6 +301,11 @@ const util = linkAttrs(utilityLink.href);
   .site-header__util:hover {
     color: var(--primary);
   }
+  /* Courses leads to another site: it stays a quiet text link beside the primary actions, with its external-link icon. */
+  .site-header__util {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
   .site-header :global(.site-header__cta) {
     display: none;
   }
@@ -349,6 +382,23 @@ const util = linkAttrs(utilityLink.href);
     border-radius: var(--radius-default);
     text-decoration: none;
     transition: background-color var(--dur-base) ease;
+  }
+  .mega__group {
+    grid-column: 1 / -1;
+    margin-top: var(--space-sm);
+  }
+  .mega__group-title {
+    margin: 0;
+    padding: 0 12px;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .mega__title :global(svg) {
+    margin-left: 4px;
+    vertical-align: -2px;
   }
   .mega__link:hover,
   .mega__link:focus-visible {
@@ -523,6 +573,21 @@ const util = linkAttrs(utilityLink.href);
   }
   .drawer__group .acc__body ul {
     padding-bottom: var(--space-sm);
+  }
+  .drawer__subhead p {
+    margin: var(--space-sm) 0 0;
+    padding-left: var(--space-sm);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .drawer__group .acc__body a :global(svg) {
+    margin-left: 4px;
+  }
+  .drawer__nav > :global(.drawer__cta) {
+    margin: var(--space-sm) 0 var(--space-xs, 8px);
   }
   .drawer__foot {
     flex: none;

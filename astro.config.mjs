@@ -157,6 +157,21 @@ const canonicalSitemap = {
   },
 };
 
+/**
+ * The component gallery (src/pages/_styleguide.astro) is a development and staging page: a production build does not contain it
+ * (WP20a). The file name starts with "_" so Astro does not route it by itself; this integration adds the /styleguide/ route
+ * everywhere except under SITE_ENV=production. Its tests and checks accept the page being absent.
+ */
+/** @type {import('astro').AstroIntegration} */
+const styleguideRoute = {
+  name: 'ctg-styleguide-route',
+  hooks: {
+    'astro:config:setup': ({ injectRoute }) => {
+      if (SITE_ENV !== 'production') injectRoute({ pattern: '/styleguide', entrypoint: './src/pages/_styleguide.astro' });
+    },
+  },
+};
+
 export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
@@ -174,6 +189,7 @@ export default defineConfig({
         return !/^\/(styleguide|404)\/?$/.test(path) && !stubPaths.has(path.endsWith('/') ? path : path + '/');
       },
     }),
+    styleguideRoute,
     canonicalSitemap, // after sitemap(): hooks run in this order
   ],
   vite: {

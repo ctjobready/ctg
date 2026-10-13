@@ -23,12 +23,14 @@ interface Props {
   partnerGroup?: PartnerGroup | PartnerGroup[];
   showPartners?: boolean;
   id?: string;
+  /** Small heading above the title (default "Our Track Record"; a band about a partner's scale says "Context"). */
+  eyebrow?: string;
 }
-const { title, empathy, origin, statIds = [], method, partnerGroup, showPartners = true, id = 'guide' } = Astro.props;
+const { eyebrow = 'Our Track Record', title, empathy, origin, statIds = [], method, partnerGroup, showPartners = true, id = 'guide' } = Astro.props;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Our Track Record" title={title} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} />
   <div class:list={['guide', statIds.length === 0 && 'guide--one']}>
     <div class="guide__copy" data-reveal>
       <p class="lead">{empathy}</p>

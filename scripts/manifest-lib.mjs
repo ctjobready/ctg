@@ -339,13 +339,14 @@ export function siteRoutes() {
       const stem = m[1];
       const base = '/' + prefix;
       if (stem === '404') continue; // 404.html is not a route
+      if (stem.startsWith('_')) continue; // Astro does not route a page whose name starts with an underscore (the styleguide is injected by astro.config.mjs)
       if (stem === 'index') routes.add(base);
       else if (stem.startsWith('[')) {
         const key = base + stem;
         let slugs;
         if (key === '/news/[slug]') slugs = content.news.filter((n) => !n.draft).map((n) => n.id);
         else if (key === '/about/team/[slug]') slugs = content.team.map((t) => t.id);
-        else if (key === '/nu-postgraduate-diploma/[slug]') slugs = content.nuPgd.filter((n) => n.kind === 'course').map((n) => n.slug ?? n.id);
+        else if (key === '/programs/nu-postgraduate-diploma/[slug]') slugs = content.nuPgd.filter((n) => n.kind === 'course').map((n) => n.slug ?? n.id);
         else throw new Error(`siteRoutes(): unknown dynamic route ${key}; teach scripts/manifest-lib.mjs how to expand it`);
         for (const s of slugs) routes.add(`${base}${s}/`);
       } else routes.add(`${base}${stem}/`);
