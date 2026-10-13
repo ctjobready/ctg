@@ -148,10 +148,9 @@ export const CAREER: Dist = {
 
 // ---- Main income source (OC-07; base not stated) --------------------------------------------
 /**
- * The Impact Report's chart splits foreign-client freelancing (7.1%) from a job abroad (4.7%), but each share is rounded on its own and the two
- * add to 11.8%, while the report's own summary (OC-07) is 11.9%. The page showed both, so the chart and its summary disagreed (review round 9).
- * Only the counts could settle which rounding is right, and none is held (see the file header), so the two are shown as the one share the report
- * states: 11.9% named foreign-client freelancing or a job abroad as their main income source. The shares then add to 100.0%.
+ * The Impact Report's chart shows foreign-client freelancing (7.1%) and a job abroad (4.7%) as two bars, as the published report does. Each
+ * share is rounded on its own, so the two add to 11.8% while the report's summary of them is 11.9%; the summary is held as its own CSV row
+ * (OC-07-summary) and the page states the combined share as "about 12%". The shares add to 99.9% (one-decimal rounding).
  */
 export const SOURCE: Dist = {
   id: 'OC-07',
@@ -160,7 +159,8 @@ export const SOURCE: Dist = {
     { label: 'Job in Bangladesh', pct: 48.4 },
     { label: 'Own Business', pct: 11.6 },
     { label: 'Freelancing in Bangladesh', pct: 6.2 },
-    { label: 'Freelancing for Foreign Clients or Job Abroad', pct: 11.9 },
+    { label: 'Freelancing for Foreign Clients', pct: 7.1 },
+    { label: 'Job Abroad', pct: 4.7 },
     { label: 'Other', pct: 16.9 },
     { label: 'No Current Income', pct: 5.0 },
   ],
@@ -209,6 +209,8 @@ interface Headline {
   fact: string;
   /** Stated base, where the report gives one. */
   base?: number;
+  /** The wording the register states for this figure, where it is not the bare one-decimal share (e.g. "About 12%"). */
+  registerText?: string;
 }
 const HEADLINES: Headline[] = [
   { id: 'OC-01', measure: 'Net gain in employment, among surveyed completers', category: 'October 2026 survey vs. before training', type: 'percentage_points', value: 30.5, fact: 'OC-01', base: EMPLOYMENT_BASE },
@@ -216,6 +218,7 @@ const HEADLINES: Headline[] = [
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate instructors good or better', type: 'percent', value: 92.7, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate their overall experience good or better', type: 'percent', value: 86.9, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Recommendation score of 7 or more out of 10', type: 'percent', value: 71.6, fact: 'OC-06' },
+  { id: 'OC-07-summary', measure: 'Main income source, summary shares', category: 'Freelancing for foreign clients or a job abroad', type: 'percent', value: 11.9, fact: 'OC-07', registerText: 'About 12%' },
   { id: 'OC-07-summary', measure: 'Main income source, summary shares', category: 'Work as the main income source', type: 'percent', value: 78.0, fact: 'OC-07' },
   { id: 'OC-08-summary', measure: 'Career and education outcomes, summary shares', category: 'Report a specific career or education outcome', type: 'percent', value: 59.5, fact: 'OC-08', base: CAREER.statedBase },
   { id: 'OC-08-summary', measure: 'Career and education outcomes, summary shares', category: 'Gained a new income source', type: 'percent', value: 37.4, fact: 'OC-08', base: CAREER.statedBase },
@@ -255,10 +258,11 @@ export function assertConsistent(): void {
   must(scores.length === 11 && scores.every((c, i) => c.label === String(i)), 'the recommendation-score distribution must show every score from 0 to 10, in order (no fold, no merged buckets)');
   must(near(sumTenths(scores.slice(7)), 716, Math.ceil(scores.slice(7).length / 2)), 'scores of 7+ should be 71.6% within rounding');
   must(pct(NO_PRIOR.earning, NO_PRIOR.base) === 72.3, 'no-prior-income earners should be 72.3%');
-  // Work as the main income source is the first four cells (78.1% summed from the one-decimal shares against the 78.0% headline), and the merged cell is the 11.9% headline itself.
-  must(near(sumTenths(SOURCE.cells.slice(0, 4)), 780), 'work as main income source should be 78.0% within rounding');
-  must(SOURCE.cells[3].pct === 11.9 && SOURCE.cells[3].label.includes('Foreign Clients or Job Abroad'), 'foreign-client freelancing or job abroad should be the one 11.9% cell');
-  must(sumTenths(SOURCE.cells) === 1000, 'main income source shares should add to exactly 100.0% (no components that disagree with the 11.9% summary)');
+  // Work as the main income source is the first five cells (78.0% summed from the one-decimal shares).
+  must(near(sumTenths(SOURCE.cells.slice(0, 5)), 780), 'work as main income source should be 78.0% within rounding');
+  must(SOURCE.cells[3].pct === 7.1 && SOURCE.cells[4].pct === 4.7, 'foreign-client freelancing (7.1) and job abroad (4.7) should be separate cells');
+  must(near(SOURCE.cells[3].pct + SOURCE.cells[4].pct, 12, 0.5), 'foreign-client freelancing plus job abroad should round to about 12%');
+  must(near(sumTenths(SOURCE.cells), 1000, 2), 'main income source shares should add to 99.9–100.1% within one-decimal rounding');
   must(near(1000 - tenths(CAREER.cells[7].pct), 595), 'specific career or education outcome should be 59.5%');
   must(near(tenths(CAREER.cells[0].pct) + tenths(CAREER.cells[1].pct) + tenths(CAREER.cells[2].pct), 374), 'new income source should be 37.4%');
   must(DISTRICTS.cells.every((c) => c.label === OTHER_DISTRICTS || c.pct >= DISTRICT_FOLD_BELOW), `every district under ${DISTRICT_FOLD_BELOW}% must be combined into "${OTHER_DISTRICTS}"`);
@@ -268,13 +272,13 @@ export function assertConsistent(): void {
 /** Checks the data against the register text it publishes: every headline share must appear in its fact, and so must each chart's key figures. */
 export function assertAgainstRegister(factText: (id: string) => string): void {
   const has = (id: string, figure: string) => must(factText(id).includes(figure), `register entry ${id} does not contain "${figure}"`);
-  for (const h of HEADLINES) has(h.fact, h.type === 'percentage_points' ? `${h.value.toFixed(1)} percentage-point` : h.type === 'percent_change' ? `about ${(100 + h.value) / 100}×` : `${h.value.toFixed(1)}%`);
+  for (const h of HEADLINES) has(h.fact, h.registerText ?? (h.type === 'percentage_points' ? `${h.value.toFixed(1)} percentage-point` : h.type === 'percent_change' ? `about ${(100 + h.value) / 100}×` : `${h.value.toFixed(1)}%`));
   for (const v of [EMPLOYED.before, EMPLOYED.after]) has('OC-01', `${v.toFixed(1)}%`);
   for (const t of EMPLOYMENT_TYPES) for (const v of [t.before, t.after]) has('OC-04', `${v.toFixed(1)}%`);
   for (const c of INCOME_DIRECTION) has('OC-03b', `${c.pct.toFixed(1)}%`);
   for (const i of [0, 2, 3, 4]) has('OC-05', `${SPEED[i].pct.toFixed(1)}%`);
   has('OC-02', `${pct(NO_PRIOR.earning, NO_PRIOR.base).toFixed(1)}%`);
-  has('OC-07', `${SOURCE.cells[3].pct.toFixed(1)}%`);
+  has('OC-07', 'About 12%');
   has('OC-01', `${EXIT.share.toFixed(1)}%`);
 }
 

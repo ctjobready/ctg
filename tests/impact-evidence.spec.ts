@@ -5,7 +5,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  * WP24b: the Impact section tells apart the kinds of evidence (cycle-4 review round 9).
  *  - every proof figure on an Impact page carries an evidence-type badge (Randomized Trial · Surveyed Completers · Program Record · Individual Story);
  *  - /impact/ keeps program records in their own group, never beside the trial, and holds one table of every reported program result;
- *  - the Outcomes 2026 income-source chart agrees with its 11.9% summary;
+ *  - the Outcomes 2026 income-source chart shows 7.1% and 4.7% as separate bars with an "about 12%" summary;
  *  - long lists (stories, photographs) show a first set and keep the rest behind a disclosure.
  */
 const TYPES = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Individual Story'];
@@ -146,13 +146,16 @@ test.describe('/impact/ program-results table', () => {
 test.describe('Outcomes 2026', () => {
   test.use({ viewport: DESKTOP });
 
-  test('the income-source chart shows the 11.9% share, not two components that add to 11.8%', async ({ page }) => {
+  test('the income-source chart shows 7.1% and 4.7% as separate bars, and the summary says about 12%', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const sec = page.locator('#income-source');
-    await expect(sec).toContainText('11.9%');
+    await expect(sec).toContainText('Freelancing for Foreign Clients');
+    await expect(sec).toContainText('7.1%');
+    await expect(sec).toContainText('Job Abroad');
+    await expect(sec).toContainText('4.7%');
+    await expect(sec).toContainText(/about 12%/i);
     const text = await sec.innerText();
-    expect(text).not.toMatch(/(^|[^\d.])7\.1%/);
-    expect(text).not.toMatch(/(^|[^\d.])4\.7%/);
+    expect(text).not.toContain('11.9%');
   });
 
   test('the employment sentence reads plainly and the 58.8% label has no stray comma', async ({ page }) => {
