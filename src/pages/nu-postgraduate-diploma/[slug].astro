@@ -19,7 +19,7 @@ import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCo
 import { SURVEY_EMPLOYMENT } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
-import { ORG_ID, course as courseNode, ref, webPage } from '../../lib/schema';
+import { ORG_ID, course as courseNode, pageUrl, ref, webPage } from '../../lib/schema';
 import { linkAttrs, url } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -47,6 +47,7 @@ const jsonLd = [
   webPage({ path, name: c.title, description: copy.description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path: NU_PATH }, { name: c.title, path }] }),
   {
     ...courseNode({ path, name: c.title, description: copy.description }),
+    offers: { '@type': 'Offer', category: 'Paid', price: '50000', priceCurrency: 'BDT', url: pageUrl(path) },
     provider: [ref(ORG_ID), { '@type': 'EducationalOrganization', name: 'National University, Bangladesh', url: 'https://www.nu.ac.bd' }],
   },
   faqNode(faqSources, path),
@@ -69,7 +70,7 @@ const jsonLd = [
       <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
       <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-12" /></dd></div>
       <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
