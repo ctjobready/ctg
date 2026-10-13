@@ -1,0 +1,105 @@
+PAGE /impact/case-studies/undp-yes-korail/
+
+TITLE: UNDP YES Korail Case Study | CodersTrust
+META DESCRIPTION: UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% graduated, 67% of the 350 trained found a first job within 3 months.
+
+- Home ›
+- Impact ›
+- Case Studies ›
+- UNDP YES, Korail
+
+Case Study · UNDP, Government of Bangladesh, Swanirvar Bangladesh
+
+# UNDP YES: Korail Youth into Freelance Work, 2017
+
+Skills training for disadvantaged youth in Dhaka’s largest slum, linked to freelance marketplaces.
+
+[button: Jump to the Results]
+
+67%
+
+of the 350 trained found their first job within 3 months
+
+[image: Young trainees standing together for a group photograph in a training room, from the UNDP YES (Youth Employment through Skills) program]
+
+Context
+
+## Why This Program
+
+Young people in Dhaka’s urban slums face limited access to education and training, discrimination, and little exposure to careers or networks.
+
+In 2017 CodersTrust trained disadvantaged youth in Korail, Dhaka’s largest slum, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Beyond jobs, awareness of the opportunity grew across Korail, and graduates went on to mentor local youth.
+
+### The Partner’s View of the 2015 Pilot
+
+The initiative successfully met and surpassed targets for average typing speed [and] computer application use for the students.
+
+UNDP Innovation Facility, 2015 Year in Review 2015 Korail pilot, 40 students, typing speed and computer-application targets
+
+This quotation describes the 2015 pilot only; it is not a statement about the 2017 project or about employment results.
+
+## Challenges
+
+- Day labor pulled young people away from training.
+- No electricity, computers or money to study.
+- No computer literacy and too little English to work with clients.
+- No follow-up mentoring to find employment after training.
+
+## What CodersTrust Did
+
+- An awareness campaign, courtyard meetings and parent counseling in Korail.
+- A fully equipped lab to practice and work.
+- Fundraising and bank loans for students.
+- A basic English communication module.
+- One-to-one mentoring for students.
+
+Results
+
+## What Happened
+
+Program Results, 2017
+
+UNDP YES (Youth Employment through Skills), Korail settlement, Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 trained; 97.5% graduated; 67% of the 350 trained found their first job within 3 months; average earnings $100+ and rising.
+
+Base. The 67% is the share of the 350 trained who found their first job within 3 months.
+
+In a Learner’s Words
+
+## A Learner Story
+
+Individual stories, not typical or promised outcomes.
+
+Learner Story
+
+Reported: “Earned $600 in 3 months.”
+
+Aklima Akder UNDP YES, Korail
+
+Individual story.
+
+Learner Story
+
+Reported: “Earned $32K in 3 years.”
+
+Shamim Ahmed UNDP YES, Korail
+
+Individual story; an outlier.
+
+In the Field
+
+## From the Program
+
+- [image: A young woman learner working at a laptop in a training center] A UNDP YES graduate at her laptop
+- [image: Four photographs of UNDP YES (Youth Employment through Skills) trainees in classrooms and group portraits] UNDP YES (Youth Employment through Skills) trainees in class and in group portraits
+
+## Where the Model Runs Next
+
+See How YouthWIDE Deploys the Model All Case Studies
+
+## Talk to Us About a First Cohort.
+
+[button: Book a Discovery Session (opens your email app)]
+
+Read the evidence
+
+- A discovery session is a conversation, not a commitment.
