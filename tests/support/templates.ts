@@ -36,7 +36,7 @@ export function screenshotPages(): { slug: string; page: SitePage }[] {
     route('development-partners', '/partner-with-us/development-partners/'),
     route('governments', '/partner-with-us/governments/'),
     route('foundations', '/partner-with-us/foundations/'),
-    route('investors', '/investors/'),
+    route('investors', '/partner-with-us/investors/'),
     route('programs', '/programs/'),
     route('youthwide', '/programs/youthwide/'),
     route('our-model', '/our-model/'),

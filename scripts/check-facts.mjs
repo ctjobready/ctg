@@ -291,7 +291,7 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
 // body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
 const POSITION_PAGES = [
   '/',
-  '/investors/',
+  '/partner-with-us/investors/',
   '/partner-with-us/governments/',
   '/partner-with-us/development-partners/',
   '/partner-with-us/foundations/',
@@ -679,7 +679,7 @@ function numberGuardPage(path, html, allow = []) {
   const brit = (where) => archiveWordingProblems(where, '<!doctype html><html lang="en"><head><title>x</title></head><body><main><p>Enquiry routes</p></main></body></html>');
   if (!brit('/contact/').length) problems.push('self-test: the wording gate accepted "Enquiry" in the text of /contact/');
   if (!archiveWordingProblems('/about/recognition/', '<body><a aria-label="Media enquiries" href="/x/">m</a></body>').length) problems.push('self-test: the wording gate accepted "enquiries" in an attribute');
-  if (!archiveWordingProblems('/investors/', '<head><meta name="description" content="Make an ENQUIRY."></head>').length) problems.push('self-test: the wording gate accepted "ENQUIRY" in a meta description (case-insensitive)');
+  if (!archiveWordingProblems('/partner-with-us/investors/', '<head><meta name="description" content="Make an ENQUIRY."></head>').length) problems.push('self-test: the wording gate accepted "ENQUIRY" in a meta description (case-insensitive)');
   if (!archiveWordingProblems('/partner-with-us/local-partners/', '<script type="application/ld+json">{"description":"Send an enquiry"}</script>').length) problems.push('self-test: the wording gate accepted "enquiry" in JSON-LD');
   if (!archiveWordingProblems('/news/page/2/', '<body>Enquiry</body>').length) problems.push('self-test: the wording gate exempted a news listing page (only /news/<post>/ is exempt)');
   if (brit('/news/some-archived-post/').length) problems.push('self-test: the wording gate flagged an archived /news/<post>/ page');

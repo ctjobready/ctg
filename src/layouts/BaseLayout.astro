@@ -92,7 +92,7 @@ const nodes = [
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">Skip to Main Content</a>
-    {showPromo && <PromoBar lead={promoData.lead} message={promoData.rest} shortMessage={promoData.short} actionLabel={promoData.action.label} href={promoData.action.href} storageKey={promoData.storageKey} factId={promoData.factId} />}
+    {showPromo && <PromoBar lead={promoData.lead} message={promoData.rest} shortMessage={promoData.short} links={promoData.links} storageKey={promoData.storageKey} factId={promoData.factId} />}
     <SiteHeader />
     <main id="main" tabindex="-1">
       {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}

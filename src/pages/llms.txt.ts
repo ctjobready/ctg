@@ -23,7 +23,7 @@ const PRIORITY: Item[] = [
   { name: 'Independent Evaluation', path: '/impact/independent-evaluation/' },
   { name: 'YouthWIDE', path: '/programs/youthwide/' },
   { name: 'Partner with us', path: '/partner-with-us/' },
-  { name: 'Investors', path: '/investors/' },
+  { name: 'Investors', path: '/partner-with-us/investors/' },
   { name: 'NU Postgraduate Diploma', path: '/programs/nu-postgraduate-diploma/' },
 ];
 

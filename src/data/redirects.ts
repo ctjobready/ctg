@@ -307,6 +307,7 @@ export const REDIRECTS: { from: string; to: string; kind: 'internal' | 'external
   { from: '/harnessing-socio-technology-for-positive-impact-and-unity-globally/feed/', to: '/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/', kind: 'internal' },
   { from: '/header/header-1-mobile/', to: '/', kind: 'internal' },
   { from: '/header/header-2/', to: '/', kind: 'internal' },
+  { from: '/investors/', to: '/partner-with-us/investors/', kind: 'internal' },
   { from: '/job-category/', to: '/careers/', kind: 'internal' },
   { from: '/job-category/accountant-finance/', to: '/careers/', kind: 'internal' },
   { from: '/job-category/accountant-finance/feed/', to: '/careers/', kind: 'internal' },

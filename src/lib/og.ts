@@ -11,8 +11,8 @@ export const DEFAULT_OG: OgCard = { src: '/og/default.png', alt: 'CodersTrust: L
 /** Path prefix -> section card, longest prefix first. */
 const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
   { prefix: '/programs/nu-postgraduate-diploma/', card: { src: '/og/nu-postgraduate-diploma.png', alt: 'CodersTrust: NU Postgraduate Diploma. Build the digital skills employers are hiring for — after your degree.' } },
+  { prefix: '/partner-with-us/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Invest in the infrastructure of emerging-market work.' } },
   { prefix: '/partner-with-us/', card: { src: '/og/partner-with-us.png', alt: 'CodersTrust: Partner with us. Co-design a youth-employment program with CodersTrust.' } },
-  { prefix: '/investors/', card: { src: '/og/investors.png', alt: 'CodersTrust: Investors. Invest in the infrastructure of emerging-market work.' } },
   { prefix: '/our-model/', card: { src: '/og/our-model.png', alt: 'CodersTrust: Our model. How the CodersTrust model works.' } },
   { prefix: '/programs/', card: { src: '/og/programs.png', alt: 'CodersTrust: Programs. Choose the program that fits you.' } },
   { prefix: '/careers/', card: { src: '/og/careers.png', alt: 'CodersTrust: Careers. Help prepare educated, unemployed young people for paid digital work.' } },

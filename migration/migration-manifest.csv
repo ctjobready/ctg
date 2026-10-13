@@ -17,6 +17,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /mentors/,23736,page,MOVE,/about/mentors/,none,none,stub+edge
 /nationwide/,12656,page,MOVE,/programs/youthwide/,none,none,stub+edge
 /programs/nationwide/,none,page,MOVE,/programs/youthwide/,none,none,stub+edge
+/investors/,none,page,MOVE,/partner-with-us/investors/,none,none,stub+edge
 /news/,5287,page,KEEP,/news/,none,none,route
 /ngs-category-page-new-layout/,19316,page,DROP,https://jobready.global/,none,none,stub+edge
 /nu-postgraduate-diploma/,21235,page,MOVE,/programs/nu-postgraduate-diploma/,none,none,stub+edge

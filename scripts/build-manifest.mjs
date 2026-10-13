@@ -106,6 +106,8 @@ const PAGES = {
   '/nationwide/': ['MOVE', '/programs/youthwide/'],
   // NationWIDE was renamed YouthWIDE and its page merged into /programs/youthwide/ (WP4c); the short-lived program URL redirects too.
   '/programs/nationwide/': ['MOVE', '/programs/youthwide/'],
+  // Investors moved under Partner with Us (WP24a, owner: investors are funding partners); the short-lived top-level URL redirects.
+  '/investors/': ['MOVE', '/partner-with-us/investors/'],
   '/superkids/': ['MOVE', '/programs/superkids/'],
   '/nu-postgraduate-diploma/': ['MOVE', '/programs/nu-postgraduate-diploma/'],
   '/case-studies/': ['MOVE', '/impact/case-studies/'],

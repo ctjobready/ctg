@@ -2,7 +2,7 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import Button from './Button.astro';
-import { navGroups, topLinks, utilityLink, headerCta } from '../../data/nav';
+import { navGroups, nestItems, topLinks, utilityLink, headerCta } from '../../data/nav';
 import { linkAttrs, stripBase } from '../../lib/url';
 import { spokenSteps } from '../../lib/format';
 import { CONTACT } from '../../lib/site';
@@ -12,6 +12,8 @@ const isActive = (href: string) =>
   href !== '/' && !/^https?:/.test(href) && (currentPath === href || currentPath.startsWith(href));
 const groupActive = (g: (typeof navGroups)[number]) => g.items.some((i) => isActive(i.href) && i.href !== '/');
 const util = linkAttrs(utilityLink.href);
+// Each menu's items with nested children under their parent (the NU diploma tracks), in menu order.
+const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
 ---
 
 <header class="site-header" data-site-header>
@@ -21,7 +23,7 @@ const util = linkAttrs(utilityLink.href);
     <nav class="site-nav" aria-label="Primary">
       <ul class="site-nav__list" role="list">
         {
-          navGroups.map((g) => (
+          menus.map((g) => (
             <li class="site-nav__item" data-mega>
               <button
                 class="site-nav__trigger"
@@ -37,11 +39,11 @@ const util = linkAttrs(utilityLink.href);
               <div class="mega" id={`mega-${g.id}`} data-mega-panel role="group" aria-label={`${g.label} menu`}>
                 <div class="mega__inner container container--wide">
                   <ul class="mega__links" role="list">
-                    {g.items.map((it, i) => {
+                    {g.nodes.map((it, i) => {
                       const a = linkAttrs(it.href);
                       return (
                         <>
-                          {it.group && it.group !== g.items[i - 1]?.group && (
+                          {it.group && it.group !== g.nodes[i - 1]?.group && (
                             <li class="mega__group">
                               <p class="mega__group-title">{it.group}</p>
                             </li>
@@ -55,6 +57,21 @@ const util = linkAttrs(utilityLink.href);
                               {it.description && <span class="mega__desc">{it.description}</span>}
                               {a.external && <span class="sr-only">{a.srText}</span>}
                             </a>
+                            {it.children.length > 0 && (
+                              <ul class="mega__sub" role="list" aria-label={`${it.label} tracks`}>
+                                {it.children.map((c) => {
+                                  const ca = linkAttrs(c.href);
+                                  return (
+                                    <li>
+                                      <a class="mega__link mega__link--child" href={ca.href} rel={ca.rel} aria-current={currentPath === c.href ? 'page' : undefined}>
+                                        <span class="mega__title">{c.label}</span>{' '}
+                                        {c.description && <span class="mega__desc">{c.description}</span>}
+                                      </a>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            )}
                           </li>
                         </>
                       );
@@ -144,7 +161,7 @@ const util = linkAttrs(utilityLink.href);
             <a class="drawer__top" href={linkAttrs('/').href} aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
           </li>
           {
-            navGroups.map((g) => (
+            menus.map((g) => (
               <li>
                 <details class="acc drawer__group" name="drawer-group">
                   <summary>
@@ -160,11 +177,11 @@ const util = linkAttrs(utilityLink.href);
                           </a>
                         </li>
                       )}
-                      {g.items.map((it, i) => {
+                      {g.nodes.map((it, i) => {
                         const a = linkAttrs(it.href);
                         return (
                           <>
-                            {it.group && it.group !== g.items[i - 1]?.group && (
+                            {it.group && it.group !== g.nodes[i - 1]?.group && (
                               <li class="drawer__subhead">
                                 <p>{it.group}</p>
                               </li>
@@ -175,6 +192,15 @@ const util = linkAttrs(utilityLink.href);
                                 {a.external && <Icon name="arrow-up-right" size={16} />}
                                 {a.external && <span class="sr-only">{a.srText}</span>}
                               </a>
+                              {it.children.length > 0 && (
+                                <ul class="drawer__sub" role="list" aria-label={`${it.label} tracks`}>
+                                  {it.children.map((c) => (
+                                    <li>
+                                      <a href={linkAttrs(c.href).href}>{c.label}</a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
                             </li>
                           </>
                         );
@@ -384,6 +410,15 @@ const util = linkAttrs(utilityLink.href);
     text-decoration: none;
     transition: background-color var(--dur-base) ease;
   }
+  /* Nested tracks (the NU diploma): indented under their parent, as a real child list. */
+  .mega__sub {
+    list-style: none;
+    margin: 2px 0 0 12px;
+    padding: 0 0 0 var(--space-sm);
+    border-left: 2px solid var(--primary-fixed);
+    display: grid;
+    gap: 2px;
+  }
   .mega__group {
     grid-column: 1 / -1;
     margin-top: var(--space-sm);
@@ -574,6 +609,15 @@ const util = linkAttrs(utilityLink.href);
   }
   .drawer__group .acc__body ul {
     padding-bottom: var(--space-sm);
+  }
+  /* Nested tracks (the NU diploma): indented under their parent. */
+  .drawer__group .acc__body ul.drawer__sub {
+    margin-left: var(--space-md);
+    padding: 0 0 0 var(--space-sm);
+    border-left: 2px solid var(--primary-fixed);
+  }
+  .drawer__group .acc__body .drawer__sub a {
+    min-height: 40px;
   }
   .drawer__subhead p {
     margin: var(--space-sm) 0 0;

@@ -1,8 +1,8 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { footerColumns, footerBottomLinks, utilityLink } from '../../data/nav';
-import { ENTITY_DEFINITION, OFFICES, SOCIAL, SITE_TAGLINE, COPYRIGHT_YEAR, SITE_NAME, COURSES_URL } from '../../lib/site';
+import { footerColumns, footerBottomLinks } from '../../data/nav';
+import { ENTITY_DEFINITION, OFFICES, SOCIAL, SITE_TAGLINE, COPYRIGHT_YEAR, SITE_NAME } from '../../lib/site';
 import { linkAttrs } from '../../lib/url';
 ---
 
@@ -32,11 +32,27 @@ import { linkAttrs } from '../../lib/url';
             <a href={linkAttrs(col.href).href}>{col.title}</a>
           </h2>
           <ul role="list">
-            {col.links.map((l) => (
-              <li>
-                <a href={linkAttrs(l.href).href}>{l.label}</a>
-              </li>
-            ))}
+            {col.links.map((l) => {
+              const a = linkAttrs(l.href);
+              return (
+                <li>
+                  <a href={a.href} rel={a.rel}>
+                    {l.label}
+                    {a.external && <Icon name="arrow-up-right" size={14} />}
+                    {a.external && <span class="sr-only">{a.srText}</span>}
+                  </a>
+                  {l.children && (
+                    <ul class="footer__sub" role="list" aria-label={`${l.label} tracks`}>
+                      {l.children.map((c) => (
+                        <li>
+                          <a href={linkAttrs(c.href).href}>{c.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </nav>
       ))
@@ -73,13 +89,6 @@ import { linkAttrs } from '../../lib/url';
             </li>
           ))
         }
-        <li>
-          <a href={COURSES_URL} rel={linkAttrs(COURSES_URL).rel}>
-            Courses
-            <Icon name="arrow-up-right" size={14} />
-            <span class="sr-only">{linkAttrs(utilityLink.href).srText}</span>
-          </a>
-        </li>
       </ul>
     </div>
   </div>
@@ -178,6 +187,15 @@ import { linkAttrs } from '../../lib/url';
     align-items: center;
     min-height: 32px;
     color: var(--inverse-on-surface);
+  }
+  .footer__col li a :global(svg) {
+    margin-left: 4px;
+  }
+  /* Nested tracks (the NU diploma): indented under their parent. */
+  .footer__sub {
+    margin: 0 0 0 4px;
+    padding: 0 0 0 var(--space-sm);
+    border-left: 1px solid var(--on-surface-variant);
   }
   .footer__offices {
     display: grid;

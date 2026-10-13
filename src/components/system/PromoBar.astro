@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import Icon from './Icon.astro';
+import { linkAttrs } from '../../lib/url';
 
 interface Props {
   /** Bold lead-in ("Impact Report 2026:"). */
@@ -11,6 +12,8 @@ interface Props {
   shortMessage?: string;
   actionLabel?: string;
   href?: string;
+  /** Text links after the message (secondary actions: never a button). */
+  links?: { label: string; href: string }[];
   dismissible?: boolean;
   /** Storage key: change it to show a new announcement to people who dismissed the old one. */
   storageKey?: string;
@@ -19,13 +22,14 @@ interface Props {
   /** Accessible name of the region; only a page that shows a second bar needs another one. */
   label?: string;
 }
-const { lead, message, shortMessage, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId, label = 'Announcement' } = Astro.props;
+const { lead, message, shortMessage, actionLabel, href, links = [], dismissible = true, storageKey = 'ct-promo-v2', factId, label = 'Announcement' } = Astro.props;
 ---
 
 <section class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} aria-label={label}>
   <div class="promo-bar__inner">
     <p class="promo-bar__text">
       {lead && <strong>{lead}</strong>}{lead && message ? ' ' : ''}{shortMessage ? <><span class="promo-bar__long">{message}</span><span class="promo-bar__short">{shortMessage}</span></> : message}<slot />
+      {links.map((l) => <>{' '}<a class="promo-bar__link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={14} /></a></>)}
     </p>
     {actionLabel && href && <Button variant="promo" href={href}>{actionLabel}</Button>}
   </div>
@@ -58,6 +62,20 @@ const { lead, message, shortMessage, actionLabel, href, dismissible = true, stor
     margin: 0;
     font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
     text-align: center;
+  }
+  .promo-bar__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: var(--space-sm);
+    padding: 2px;
+    font: var(--fw-bold) var(--fs-body-xs) / 1.43 var(--font-sans);
+    color: var(--on-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .promo-bar__link:hover {
+    text-decoration-thickness: 2px;
   }
   /* a real space follows the lead-in (text extraction and screen readers read "2026: among"); this only widens it slightly */
   .promo-bar__text strong {

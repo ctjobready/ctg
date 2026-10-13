@@ -109,7 +109,7 @@ export const HOME_HERO = {
     { label: 'Development Partners', href: '/partner-with-us/development-partners/' },
     { label: 'Governments', href: '/partner-with-us/governments/' },
     { label: 'Foundations', href: '/partner-with-us/foundations/' },
-    { label: 'Investors', href: '/investors/' },
+    { label: 'Investors', href: '/partner-with-us/investors/' },
   ],
   primary: { label: discovery.label, href: discovery.href },
   secondary: { label: 'See the Evidence', href: '/impact/' },

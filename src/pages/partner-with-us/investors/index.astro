@@ -2,34 +2,34 @@
 // P8 Investors (doc 06 P8; matrix 4.4; D2): thesis + results only. C1 → C14 in order with the declared C2–C3
 // compression. For impact investors only (owner, 2026-10-14). No market-size figures, valuation, raise, revenue, growth or pipeline; no partner references
 // or reply-time promises (confirm list #13, #17).
-import LandingLayout from '../layouts/LandingLayout.astro';
-import HeroBand from '../components/sections/HeroBand.astro';
-import EvidenceBand from '../components/pages/home/EvidenceBand.astro';
-import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../components/sections/FeaturesTable.astro';
-import ComparisonBand from '../components/sections/ComparisonBand.astro';
-import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
-import CTABand from '../components/ui/CTABand.astro';
-import Section from '../components/ui/Section.astro';
-import Tone from '../components/pages/home/Tone.astro';
-import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
-import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
-import { caseStudyItems } from '../components/pages/home/caseStudies';
-import InvestorDefinition from '../components/pages/investors/InvestorDefinition.astro';
-import InvestorThesis from '../components/pages/investors/InvestorThesis.astro';
-import InvestorVision from '../components/pages/investors/InvestorVision.astro';
-import InvestorGuide from '../components/pages/investors/InvestorGuide.astro';
-import InvestorMarket from '../components/pages/investors/InvestorMarket.astro';
-import InvestorProofExtras from '../components/pages/investors/InvestorProofExtras.astro';
-import InvestorFit from '../components/pages/investors/InvestorFit.astro';
-import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
-import FaqBlock from '../components/pages/hub/FaqBlock.astro';
-import { HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../data/copy';
-import { cta } from '../lib/mailto';
-import { faqJsonLd } from '../lib/faq';
-import { webPage } from '../lib/schema';
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import HeroBand from '../../../components/sections/HeroBand.astro';
+import EvidenceBand from '../../../components/pages/home/EvidenceBand.astro';
+import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
+import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
+import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import Section from '../../../components/ui/Section.astro';
+import Tone from '../../../components/pages/home/Tone.astro';
+import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
+import ConversionNextSteps from '../../../components/pages/home/ConversionNextSteps.astro';
+import { caseStudyItems } from '../../../components/pages/home/caseStudies';
+import InvestorDefinition from '../../../components/pages/investors/InvestorDefinition.astro';
+import InvestorThesis from '../../../components/pages/investors/InvestorThesis.astro';
+import InvestorVision from '../../../components/pages/investors/InvestorVision.astro';
+import InvestorGuide from '../../../components/pages/investors/InvestorGuide.astro';
+import InvestorMarket from '../../../components/pages/investors/InvestorMarket.astro';
+import InvestorProofExtras from '../../../components/pages/investors/InvestorProofExtras.astro';
+import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
+import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
+import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
+import { HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { cta } from '../../../lib/mailto';
+import { faqJsonLd } from '../../../lib/faq';
+import { webPage } from '../../../lib/schema';
 
-const path = '/investors/';
+const path = '/partner-with-us/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
 // description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
@@ -70,7 +70,7 @@ const mechanismBlocks = [
 ];
 ---
 
-<LandingLayout title={title} description={description} jsonLd={jsonLd} breadcrumbs={[{ label: 'Investors' }]} stickyCta={{ label: investor.label, href: investor.href }}>
+<LandingLayout title={title} description={description} jsonLd={jsonLd} breadcrumbs={[{ label: 'Partner with Us', href: '/partner-with-us/' }, { label: 'Investors' }]} stickyCta={{ label: investor.label, href: investor.href }}>
   <Tone cmf="C1">
     <HeroBand
       variant="inner"

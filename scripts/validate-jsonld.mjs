@@ -42,7 +42,7 @@ const TEMPLATES = [
   [/^\/$/, 'home', []],
   [/^\/partner-with-us\/$/, 'partner hub', []],
   [/^\/partner-with-us\/[^/]+\/$/, 'partner landing', []],
-  [/^\/investors\/$/, 'investors', ['WebPage']],
+  [/^\/partner-with-us\/investors\/$/, 'investors', ['WebPage']],
   [/^\/programs\/$/, 'programs hub', []],
   [/^\/programs\/nu-postgraduate-diploma\/$/, 'NU PGD overview', []],
   [/^\/programs\/nu-postgraduate-diploma\/[^/]+\/$/, 'NU PGD course', ['Course']],
@@ -325,7 +325,7 @@ for (const file of walkFiles(dist)) {
 
   // What planning/09 forbids.
   for (const bad of ['AggregateRating', 'Review', 'HowTo', 'Event']) if (nested.has(bad)) err(`${bad} markup is not allowed (planning/09 §2)`);
-  if (route === '/investors/' && /\b(TAM|SAM|SOM)\b/.test(blocks[0])) err('market-size term (TAM/SAM/SOM) in the investors JSON-LD');
+  if (route === '/partner-with-us/investors/' && /\b(TAM|SAM|SOM)\b/.test(blocks[0])) err('market-size term (TAM/SAM/SOM) in the investors JSON-LD');
   for (const n of walkNodes(graph)) {
     if (typesOf(n).includes('Course')) {
       if (has(n, 'offers') || JSON.stringify(n).includes('"Offer"')) warn('Course carries an Offer: only after the admissions fact set is approved (planning/09 §2)');
