@@ -3,12 +3,8 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Quote from '../../../components/ui/Quote.astro';
 import { fact } from '../../../data/facts';
 
-// PR-03a: the partner quote, shown in full with its scope line (never beside the 2017 results without it).
-const pq = fact('PR-03a').text.match(/“([^”]+)”/);
-if (!pq) throw new Error('PR-03a no longer contains the quotation');
 // ST-01 and ST-02 name the learners as the previous site did (Aklima Akder, Shamim Ahmed); the reported outcome is the quoted part.
 const quoteOf = (id: string) => {
   const m = fact(id).text.match(/“([^”]+)”/);
@@ -20,15 +16,16 @@ const quoteOf = (id: string) => {
 <CaseStudyPage
   slug="undp-yes-korail"
   pageTitle="UNDP YES Korail Case Study"
-  description="UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% graduated, 67% of the 350 trained found a first job within 3 months."
+  storyEyebrow="In a Learner’s Words"
+  description="UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% completed the program, 67% of the 350 trained found a first job within 3 months."
   stats={[{ id: 'PR-03' }]}
   context={[
-    'Young people in Dhaka’s urban slums face limited access to education and training, discrimination, and little exposure to careers or networks.',
-    'In 2017 CodersTrust trained disadvantaged youth in Korail, Dhaka’s largest slum, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Beyond jobs, awareness of the opportunity grew across Korail, and graduates went on to mentor local youth.',
+    'Young people in Dhaka’s urban informal settlements face limited access to education and training, discrimination, and little exposure to careers or networks.',
+    'In 2017 CodersTrust trained young people from the Korail settlement in Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Beyond jobs, awareness of the opportunity grew across Korail, and program completers went on to mentor local youth.',
   ]}
   challenges={[
     'Day labor pulled young people away from training.',
-    'No electricity, computers or money to study.',
+    'Limited access to electricity, computers and money to study.',
     'No computer literacy and too little English to work with clients.',
     'No follow-up mentoring to find employment after training.',
   ]}
@@ -40,14 +37,6 @@ const quoteOf = (id: string) => {
     'One-to-one mentoring for students.',
   ]}
 >
-  <Fragment slot="context">
-    <div class="uy__quote">
-      <h3 class="t-heading-l">The Partner’s View of the 2015 Pilot</h3>
-      <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role="2015 Korail pilot, 40 students, typing speed and computer-application targets">{pq[1]}</Quote>
-      <p class="uy__scope" data-fact="PR-03a">This quotation describes the 2015 pilot only; it is not a statement about the 2017 project or about employment results.</p>
-    </div>
-  </Fragment>
-
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results, 2017">
       <Fact id="PR-03" as="p" />
@@ -63,22 +52,6 @@ const quoteOf = (id: string) => {
 </CaseStudyPage>
 
 <style>
-  .uy__quote {
-    display: grid;
-    gap: var(--space-md);
-    max-width: var(--measure);
-    padding: var(--space-gutter);
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-md);
-    background: var(--surface-container-low);
-  }
-  .uy__quote > :global(*) {
-    margin: 0;
-  }
-  .uy__scope {
-    font-size: var(--fs-body-xs);
-    color: var(--outline);
-  }
   .uy__gap {
     height: var(--space-md);
   }

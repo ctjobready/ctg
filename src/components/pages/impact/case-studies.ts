@@ -23,8 +23,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'wsdfm-women-freelancers',
     path: `${base}wsdfm-women-freelancers/`,
-    name: 'Women’s Skills for Freelancing (WSDFM)',
-    heading: 'WSDFM: Women’s Skills for Freelancing, Evaluated by a Randomized Trial',
+    name: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)',
+    heading: 'WSDFM: Evaluated by a Randomized Trial',
     program: 'Commissioned by Porticus',
     partner: 'Independently evaluated by BIGD',
     factId: 'PR-01',
@@ -50,7 +50,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',
-    summary: 'Skills training for disadvantaged youth in Dhaka’s largest slum, linked to freelance marketplaces.',
+    summary: 'Skills training for young people from the Korail settlement in Dhaka, linked to freelance marketplaces.',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
