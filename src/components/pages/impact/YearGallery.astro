@@ -1,0 +1,85 @@
+---
+import Section from '../../ui/Section.astro';
+import Img from '../../ui/Img.astro';
+import { mayRender } from '../../../lib/permissions';
+import type { Photo } from '../../../data/photos';
+
+/**
+ * One year of news photographs, without a header of its own (WP24b): the page's year header (the disclosure's heading) already names the year, so
+ * this block repeats neither an eyebrow nor a second title. Every figure keeps the captioned-card markup of <PhotoGallery>; a photograph the D13 rule
+ * does not let render on this build is left out.
+ */
+interface Props {
+  photos: Photo[];
+  /** Names the list for assistive technology. */
+  label: string;
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { photos, label, id, tone = 'white' } = Astro.props;
+const shown = photos.filter((p) => mayRender(p.assetId));
+---
+
+{
+  shown.length > 0 && (
+    <Section id={id} tone={tone} pad="sm">
+      <ul class="yg" aria-label={label}>
+        {shown.map((p) => (
+          <li>
+            <figure class="yg__fig">
+              <div class="yg__frame"><Img src={p.src} alt={p.alt} width={640} widths={[320, 640]} sizes="(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw" assetId={p.assetId} /></div>
+              {p.caption && <figcaption class="yg__cap">{p.caption}</figcaption>}
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+<style>
+  .yg {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 600px) {
+    .yg {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .yg {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .yg__fig {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .yg__frame {
+    aspect-ratio: 4 / 3;
+    background: var(--surface-container-low);
+  }
+  .yg__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .yg__cap {
+    padding: var(--space-xs) var(--space-sm) var(--space-sm);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

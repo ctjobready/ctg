@@ -3,6 +3,7 @@ import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Accordion from '../../../components/ui/Accordion.astro';
 import BarChart from '../../../components/ui/BarChart.astro';
 import Icon from '../../../components/system/Icon.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import PlainLine from '../../../components/facts/PlainLine.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
@@ -12,7 +13,8 @@ import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
-import { faqItems, faqJsonLd } from '../../../lib/faq';
+import { faqItems } from '../../../lib/faq';
+import { faqPage } from '../../../lib/schema';
 import { hostOf, linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
@@ -31,6 +33,8 @@ const classes = [
 const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
 
+// The shared bank words Q3 "How Do You Prove Outcomes?"; this page asks how outcomes are tracked, which is what its answer covers (WP24b). The JSON-LD uses the same words.
+const faq = faqItems('foundations', faqIds).map((f) => (f.q === 'How Do You Prove Outcomes?' ? { ...f, q: 'How Do You Track Outcomes?' } : f));
 const bigdStudy = sources.BIGDSTUDY;
 const jsonLd = [
   articleNode({
@@ -50,15 +54,14 @@ const jsonLd = [
       },
     ],
   }),
-  faqJsonLd('foundations', path, faqIds),
+  faqPage(faq, path),
 ];
-const faq = faqItems('foundations', faqIds);
 const toc = [
   { id: 'summary', label: 'The Short Answer' },
   { id: 'fit', label: 'Evidence-and-Fit Brief' },
   { id: 'design', label: 'How the Trial Worked' },
   { id: 'results', label: 'What the Trial Found' },
-  { id: 'classes', label: 'Freelancing by Classes Attended' },
+  { id: 'classes', label: 'Freelancing Share by Classes Attended' },
   { id: 'context', label: 'How This Compares with Other Training Trials' },
   { id: 'funders', label: 'What It Means for Funders' },
   { id: 'faq', label: 'Questions About the Evidence' },
@@ -90,15 +93,18 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="summary" title="The Short Answer">
+    <p class="ie__type"><EvidenceTag type="Randomized Trial" /> <span>Predecessor WSDFM program, women in Dhaka</span></p>
     <Callout tone="bluf">
       <PlainLine />
       <p data-fact="RC-01">{incomeLine}</p>
     </Callout>
     <!-- Headline results are stated once, in the callout above (WP20d). The results for women who attended, the household effects and the comparison with other
          trials are supporting detail below and add new information only. -->
-    <p class="ie__more">Supporting detail, including results for women who attended and household effects: <a class="link" href="#results">What the Trial Found<Icon name="arrow-right" size={16} /></a></p>
-    <p class="ie__more"><a class="link" href="#context">How This Compares with Other Training Trials<Icon name="arrow-right" size={16} /></a></p>
-    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
+    <ul class="ie__links" role="list" aria-label="More on the trial">
+      <li><a class="link" href="#results">What the Trial Found, Including Women Who Attended<Icon name="arrow-right" size={16} /></a></li>
+      <li><a class="link" href="#context">How This Compares with Other Training Trials<Icon name="arrow-right" size={16} /></a></li>
+      <li><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></li>
+    </ul>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -124,13 +130,13 @@ const d = discoveryCta();
     </ul>
   </ReportSection>
 
-  <ReportSection id="classes" title="Freelancing by Classes Attended">
+  <ReportSection id="classes" title="Freelancing Share by Classes Attended">
+    <p>Women who attended more classes were more likely to be freelancing at follow-up.</p>
     <BarChart
-      title="Share Freelancing, by Classes Attended"
+      title="Freelancing Share by Classes Attended"
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
     />
     <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
-    <p data-fact="RC-10"><Fact id="RC-10" />.</p>
   </ReportSection>
 
   <ReportSection id="context" title="How This Compares with Other Training Trials">
@@ -144,8 +150,10 @@ const d = discoveryCta();
       The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The study also reports results for women who attended.
     </p>
     <p>
-      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.{' '}
-      <a class="link" href={linkAttrs('/partner-with-us/').href}>How Partnerships Work<Icon name="arrow-right" size={16} /></a>
+      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
+    </p>
+    <p data-fact="RC-10"><Fact id="RC-10" />.{' '}
+      <a class="link" href={linkAttrs('/partner-with-us/').href}>See How Partnerships Work<Icon name="arrow-right" size={16} /></a>
     </p>
   </ReportSection>
 
@@ -164,9 +172,21 @@ const d = discoveryCta();
 </LongformLayout>
 
 <style>
-  .ie__more {
+  .ie__links {
+    list-style: none;
     margin: var(--space-md) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .ie__type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-sm);
     color: var(--on-surface-variant);
+    font-size: var(--fs-body-sm);
   }
   .ie__intro {
     margin: 0 0 var(--space-sm);

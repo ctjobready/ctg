@@ -5,6 +5,7 @@ import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import CopyText from '../../../components/pages/impact/CopyText.astro';
 import Fact from '../../../components/facts/Fact.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { WOMEN_INCLUSION } from '../../../data/copy';
 import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
@@ -45,6 +46,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
 
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results">
+      <EvidenceTag type="Program Record" />
       <Fact id="PR-05" as="p" />
     </Callout>
     <div class="hp__scale" data-fact="GV-01">
@@ -62,6 +64,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
       factId="ST-06"
       name="Maria Dewan"
       program="Her Power"
+      tag
       outcome="Won a company logo design on Freelancer.com, then built a freelance portfolio."
       excerpt={excerpt}
       image={maria.data.photo}

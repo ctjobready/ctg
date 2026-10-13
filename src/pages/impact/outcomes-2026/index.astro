@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Icon from '../../../components/system/Icon.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import BarChart from '../../../components/ui/BarChart.astro';
 import BeforeAfter from '../../../components/ui/BeforeAfter.astro';
 import Fact from '../../../components/facts/Fact.astro';
@@ -118,6 +119,7 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="summary" title="Summary">
+    <p class="ro__type"><EvidenceTag type="Surveyed Completers" /> <span>Every figure on this page is from the Impact Survey 2026.</span></p>
     <h3 class="t-heading-l ro__group">Earnings and Work</h3>
     <div class="ro__stats">
       <FactStat id="OC-03" />
@@ -142,7 +144,7 @@ const d = discoveryCta();
     <EvidenceLadder links={false} headingLevel={3} />
   </ReportSection>
 
-  <ReportSection id="respondents" title="Who Responded">
+  <ReportSection id="respondents" title="Who Responded" eyebrow="Chapter 1 of 4: The Respondents">
     <p data-fact="OC-01 OC-09">Nearly half of respondents were employed before training ({val('OC-01', 'from')}). <Fact id="OC-09" /></p>
     <p>Employment results rest on n = {D.EMPLOYMENT_BASE} paired answers and income results on n = {D.INCOME_BASE}.</p>
     <ColumnChart
@@ -161,8 +163,8 @@ const d = discoveryCta();
     />
   </ReportSection>
 
-  <ReportSection id="employment" title="Employment">
-    <p data-fact="OC-01">Among surveyed completers, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
+  <ReportSection id="employment" title="Employment" eyebrow="Chapter 2 of 4: Work and Earnings">
+    <p data-fact="OC-01">{val('OC-01')} of surveyed completers reported being employed at the October 2026 survey, compared with {val('OC-01', 'from')} before training. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
     <BeforeAfter
       title="Employment Before and After Training"
       before={{ label: 'Before', value: before, caption: 'Before Training' }}
@@ -204,7 +206,7 @@ const d = discoveryCta();
     </div>
   </ReportSection>
 
-  <ReportSection id="careers" title="Career Outcomes">
+  <ReportSection id="careers" title="Career Outcomes" eyebrow="Chapter 3 of 4: Careers and Income Sources">
     <p data-fact="OC-08"><Fact id="OC-08" /></p>
     <BarChart title="Career and Education Outcomes Reported" items={career} max={100} />
   </ReportSection>
@@ -214,7 +216,7 @@ const d = discoveryCta();
     <BarChart title="Share of Surveyed Completers by Main Income Source" items={source} max={100} />
   </ReportSection>
 
-  <ReportSection id="experience" title="Learner Experience">
+  <ReportSection id="experience" title="Learner Experience" eyebrow="Chapter 4 of 4: Experience and Method">
     <p data-fact="OC-06"><Fact id="OC-06" /></p>
     <ColumnChart
       title="Recommendation Score, 0 to 10, Among Surveyed Completers"
@@ -252,6 +254,15 @@ const d = discoveryCta();
     display: grid;
     gap: var(--space-lg) var(--space-gutter);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  }
+  .ro__type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    max-width: none;
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-sm);
   }
   .ro__group {
     margin: var(--space-lg) 0 var(--space-sm);

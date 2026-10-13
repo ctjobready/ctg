@@ -1,5 +1,6 @@
 ---
 import Img from '../../ui/Img.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
 import { mayRender } from '../../../lib/permissions';
 import type { StoryCardData } from './story-types';
 
@@ -13,8 +14,10 @@ interface Props {
   cards: StoryCardData[];
   /** Show the pathway filter (default). A short featured set passes false. */
   filter?: boolean;
+  /** Show this many cards, then keep the rest behind a "Show More Stories" disclosure (default: all). No script is needed to open it. */
+  visible?: number;
 }
-const { filter = true } = Astro.props;
+const { filter = true, visible } = Astro.props;
 const cards = Astro.props.cards.filter((c) => !c.assetId || mayRender(c.assetId));
 const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other Pathways' };
 /** Learners without a published photograph get a monogram of their initials, in the same place a portrait would be. */
@@ -22,6 +25,8 @@ const initials = (name: string) => {
   const w = name.replace(/\./g, '').split(/\s+/).filter(Boolean);
   return ((w[0]?.[0] ?? '') + (w.length > 1 ? (w[w.length - 1]?.[0] ?? '') : '')).toUpperCase();
 };
+const first = visible === undefined ? cards : cards.slice(0, visible);
+const rest = visible === undefined ? [] : cards.slice(visible);
 const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) => cards.some((c) => c.pathway === p));
 ---
 
@@ -34,14 +39,14 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
   )}
   {filter && <p class="sgf__status sr-only" role="status" aria-live="polite" data-filter-status></p>}
   <ul class="grid-cards sgrid" role="list">
-    {
-      cards.map((c) => (
+    {first.map((c) => (
         <li data-pathway={c.pathway}>
           <article class="sc" data-asset={c.assetId}>
             <div class="sc__media">
               {c.image ? <Img src={c.image} alt={c.imageAlt ?? ''} width={600} height={450} widths={[300, 600]} sizes="(min-width:1024px) 360px, 90vw" assetId={c.assetId} /> : <span class="sc__monogram" aria-hidden="true">{initials(c.name)}</span>}
             </div>
             <div class="sc__body">
+              <p class="sc__tag"><EvidenceTag type="Individual Story" /></p>
               <p class="sc__outcome">{c.outcome}</p>
               {c.steps && (
                 <dl class="sc__steps">
@@ -56,9 +61,38 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
             </div>
           </article>
         </li>
-      ))
-    }
+      ))}
   </ul>
+  {rest.length > 0 && (
+    <details class="sg-more">
+      <summary class="link">Show More Stories</summary>
+      <ul class="grid-cards sgrid" role="list">
+        {rest.map((c) => (
+        <li data-pathway={c.pathway}>
+          <article class="sc" data-asset={c.assetId}>
+            <div class="sc__media">
+              {c.image ? <Img src={c.image} alt={c.imageAlt ?? ''} width={600} height={450} widths={[300, 600]} sizes="(min-width:1024px) 360px, 90vw" assetId={c.assetId} /> : <span class="sc__monogram" aria-hidden="true">{initials(c.name)}</span>}
+            </div>
+            <div class="sc__body">
+              <p class="sc__tag"><EvidenceTag type="Individual Story" /></p>
+              <p class="sc__outcome">{c.outcome}</p>
+              {c.steps && (
+                <dl class="sc__steps">
+                  <div><dt>Starting Point</dt><dd>{c.steps.start}</dd></div>
+                  <div><dt>What They Did</dt><dd>{c.steps.did}</dd></div>
+                  <div><dt>Where They Are Now</dt><dd>{c.steps.now}</dd></div>
+                </dl>
+              )}
+              <p class="sc__name">{c.name}</p>
+              {c.role && <p class="sc__role">{c.role}</p>}
+              {c.caveat && <p class="sc__caveat">{c.caveat}</p>}
+            </div>
+          </article>
+        </li>
+      ))}
+      </ul>
+    </details>
+  )}
 </div>
 
 <style>
@@ -145,6 +179,9 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
   .sc__steps {
     margin: 0;
   }
+  .sc__tag {
+    display: flex;
+  }
   .sc__outcome {
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
@@ -195,6 +232,18 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
   .sgrid > li {
     min-width: 0;
   }
+  .sg-more {
+    margin-top: var(--space-lg);
+  }
+  .sg-more > summary {
+    cursor: pointer;
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 10px;
+  }
+  .sg-more > .sgrid {
+    margin-top: var(--space-md);
+  }
   .sgrid > li[hidden] {
     display: none;
   }
@@ -209,6 +258,9 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
       b.addEventListener('click', () => {
         const f = b.dataset.filter ?? 'all';
         buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        // A pathway filter may match stories behind the disclosure: open it so the matches are visible.
+        const more = root.querySelector<HTMLDetailsElement>('details.sg-more');
+        if (more && f !== 'all') more.open = true;
         let shown = 0;
         items.forEach((li) => {
           const on = f === 'all' || li.dataset.pathway === f;

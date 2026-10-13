@@ -23,8 +23,10 @@ interface Props {
   id?: string;
   /** Link to more stories. */
   more?: boolean;
+  /** Show the "Individual Story" evidence tag (Impact pages, WP24b). */
+  tag?: boolean;
 }
-const { story, excerpt, outcome, program, tone = 'white', id = 'learner-voice', more = true } = Astro.props;
+const { story, excerpt, outcome, program, tone = 'white', id = 'learner-voice', more = true, tag = false } = Astro.props;
 const entry = await getEntry('stories', story);
 if (!entry) throw new Error(`LearnerVoice: story ${story} is missing`);
 const source = `${entry.data.quote ?? ''}\n${entry.body ?? ''}`;
@@ -44,6 +46,7 @@ const stories = linkAttrs('/impact/stories/');
     imageAlt={entry.data.photoAlt ?? `Portrait of ${entry.data.name}`}
     assetId={`story-${story}`}
     eyebrow="Individual Learner Story"
+    tag={tag}
   />
   {more && <p class="lv__more"><a class="link" href={stories.href}>More Learner Stories<Icon name="arrow-right" size={16} /></a></p>}
 </Section>

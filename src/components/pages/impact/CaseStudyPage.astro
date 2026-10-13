@@ -7,6 +7,8 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import CTABand from '../../ui/CTABand.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { evidenceOf } from './evidence';
 import PlainLine from '../../facts/PlainLine.astro';
 import Img from '../../ui/Img.astro';
 import PhotoGallery from '../../ui/PhotoGallery.astro';
@@ -48,13 +50,15 @@ interface Props {
   trialLink?: boolean;
   /** Eyebrow of the learner-story section: "In a Learner’s Words" only where a direct quote follows the story; "Learner Experience" otherwise. */
   storyEyebrow?: string;
+  /** Title of the learner-story band (default "A Learner Story"; "Two Learner Journeys" where two learners follow). */
+  storyTitle?: string;
   /**
    * A real program photograph for the hero, in place of the generated art (D13: it renders on staging only when its permissions row allows it,
    * otherwise the art stands in). The photo is shown once, here; the page does not repeat it lower down.
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroNote, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience' } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroNote, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
@@ -81,6 +85,7 @@ const d = discoveryCta();
       {
         stats.map((s) => (
           <div class="cs__stat">
+            {evidenceOf(s.id) && <EvidenceTag type={evidenceOf(s.id)!} />}
             <FactStat id={s.id} />
             {s.evidence && <p class="cs__evidence">{s.evidence}</p>}
           </div>
@@ -121,7 +126,7 @@ const d = discoveryCta();
   <slot name="after-results" />
 
   <Section tone="airy" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow={storyEyebrow} title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
+    <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} lead="Individual stories, not typical or promised outcomes." />
     <slot name="story" />
   </Section>
 
@@ -141,6 +146,7 @@ const d = discoveryCta();
     display: grid;
     gap: 4px;
     align-content: start;
+    justify-items: start;
     max-width: 15rem;
   }
   .cs__note {

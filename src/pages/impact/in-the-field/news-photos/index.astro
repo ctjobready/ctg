@@ -4,7 +4,7 @@ import Hero from '../../../../components/system/Hero.astro';
 import Icon from '../../../../components/system/Icon.astro';
 import Section from '../../../../components/ui/Section.astro';
 import CTABand from '../../../../components/ui/CTABand.astro';
-import PhotoGallery from '../../../../components/ui/PhotoGallery.astro';
+import YearGallery from '../../../../components/pages/impact/YearGallery.astro';
 import { newsGalleries } from '../../../../components/pages/impact/news-galleries';
 import { linkAttrs } from '../../../../lib/url';
 import { articleNode, desc, title, discoveryCta } from '../../../../components/pages/impact/page-utils';
@@ -12,7 +12,7 @@ import { MICRO_COMMITMENT } from '../../../../data/copy';
 import { webPage } from '../../../../lib/schema';
 
 /**
- * News Photo Archive (WP20d): the photographs from the previous site's news posts, by year of the post, moved here from /impact/in-the-field/ so
+ * News Photographs (WP20d, renamed WP24b): the photographs from the previous site's news posts, by year of the post, moved here from /impact/in-the-field/ so
  * that page holds the program, partner and recognition collections only. Plain, lazy-loaded, responsive images in lists, no script apart from
  * the disclosure helper below. Every picture has alt text that says what is visible and a short caption; a photograph the D13 rule does not let
  * render on a build is left out (PhotoGallery).
@@ -20,8 +20,8 @@ import { webPage } from '../../../../lib/schema';
 const path = '/impact/in-the-field/news-photos/';
 const description = desc('Photographs from CodersTrust news posts, by year, with the event named in each caption. Part of the In the Field photo collections.');
 const jsonLd = [
-  webPage({ path, name: 'News Photo Archive: CodersTrust news photographs by year', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'News Photo Archive', description, datePublished: '2026-10-14', dateModified: '2026-10-14', author: 'CodersTrust' }),
+  webPage({ path, name: 'News Photographs: CodersTrust news photographs by year', description, type: 'CollectionPage' }),
+  articleNode({ path, headline: 'News Photographs', description, datePublished: '2026-10-14', dateModified: '2026-10-14', author: 'CodersTrust' }),
 ];
 
 const byYear = await newsGalleries();
@@ -29,8 +29,8 @@ const jump = byYear.map((y) => ({ id: y.id, label: y.label }));
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('News Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field', href: '/impact/in-the-field/' }, { label: 'News Photo Archive' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="News Archive" title="News Photo Archive" lead="Photographs from CodersTrust news posts, by year of the post. The program, partner and recognition collections are on In the Field." artSeed="field-hub" />
+<BaseLayout title={title('News Photographs')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field', href: '/impact/in-the-field/' }, { label: 'News Photographs' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="In the Field" title="News Photographs" lead="Photographs from CodersTrust news posts, by year of the post. The program, partner and recognition collections are on In the Field." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a year">
     <nav class="npa__jump" aria-label="Years of news photographs">
@@ -47,8 +47,8 @@ const d = discoveryCta();
   {
     byYear.map((y, i) => (
       <details class="itf__year" id={y.id} open={i === 0}>
-        <summary class="itf__sum"><span class="container itf__sum-in">News Photographs, {y.label}</span></summary>
-        <PhotoGallery id={`${y.id}-gallery`} eyebrow="News and Events" title={`Partners, Programs and Events, ${y.label}`} lead="Photographs from the news posts of that year, newest first." photos={y.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />
+        <summary class="itf__sum"><h2 class="container itf__sum-in">News Photographs, {y.label}</h2></summary>
+        <YearGallery id={`${y.id}-gallery`} label={`News photographs, ${y.label}, newest first`} photos={y.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />
       </details>
     ))
   }
@@ -57,7 +57,7 @@ const d = discoveryCta();
     <p class="npa__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a>.</p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Seen a program like the one you need? A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <script>
@@ -95,6 +95,8 @@ const d = discoveryCta();
     outline-offset: -2px;
   }
   .itf__sum-in {
+    margin: 0;
+    font: inherit;
     display: flex;
     justify-content: space-between;
     align-items: center;

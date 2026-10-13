@@ -1,0 +1,183 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import StatusTag from '../../system/StatusTag.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+import { evidenceOf } from './evidence';
+
+/**
+ * At a Glance for /impact/ (WP24b): the same scannable tiles as the shared <GlanceBand>, with the evidence type on every proof figure. Each group is
+ * one kind of evidence (a trial result never sits beside a program record), and each tile carries its own measure: the figure and label come from
+ * the register (stat.value, stat.glance ?? stat.label), `label` and `note` override the wording for this page only, and no number is typed here.
+ *   - the evidence type (EvidenceTag) is read from the fact id (RC- trial, OC- survey, PR- program record, ST- story);
+ *   - `status` adds a StatusTag (Delivered, Agreement, Target) to a reach or ambition tile that is not an outcome.
+ */
+type Status = 'Delivered' | 'Agreement' | 'Target' | 'Planned';
+interface Tile {
+  id: string;
+  href: string;
+  label?: string;
+  note?: string;
+  /** Other facts the tile's note rests on, added to data-fact. */
+  also?: string[];
+  status?: Status;
+}
+interface Props {
+  groups: { title: string; items: Tile[]; cols?: number }[];
+  title?: string;
+  lead?: string;
+  eyebrow?: string;
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { groups, title = 'At a Glance', lead, eyebrow = 'Headline Results', id = 'glance', tone = 'ice' } = Astro.props;
+const toTile = (t: Tile) => {
+  const f = fact(t.id);
+  if (!f.stat) throw new Error(`<ImpactGlance>: fact ${t.id} has no stat`);
+  return {
+    ...t,
+    value: f.stat.value,
+    label: t.label ?? f.stat.glance?.label ?? f.stat.label,
+    note: t.note ?? f.stat.glance?.note,
+    facts: [t.id, ...(t.also ?? [])].join(' '),
+    evidence: evidenceOf(t.id),
+  };
+};
+const grouped = groups.map((g) => {
+  const tiles = g.items.map(toTile);
+  return { title: g.title, tiles, columns: g.cols ?? Math.min(6, tiles.length) };
+});
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  {
+    grouped.map((g) => (
+      <div class="glance__group">
+        {g.title && <h3 class="glance__group-title">{g.title}</h3>}
+        <ul class:list={['glance__grid', g.columns === 4 && 'glance__grid--four']} style={`--glance-cols:${g.columns}`} role="list">
+          {g.tiles.map((t) => (
+            <li>
+              <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
+                {(t.evidence || t.status) && (
+                  <span class="glance__tags">
+                    {t.evidence && <EvidenceTag type={t.evidence} />}
+                    {t.status && <StatusTag status={t.status} />}
+                  </span>
+                )}
+                <span class="glance__value">{t.value}</span>
+                <span class="glance__desc">{t.label}</span>
+                {t.note && <span class="glance__note">{t.note}</span>}
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</Section>
+
+<style>
+  .glance__group + .glance__group {
+    margin-top: var(--space-xl, 2.5rem);
+  }
+  .glance__group-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-heading-l, 1.25rem);
+    color: var(--secondary);
+  }
+  .glance__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+  .glance__grid > li {
+    min-width: 0;
+  }
+  .glance__tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    height: 100%;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .glance__tile:hover {
+    border-color: var(--primary);
+  }
+  .glance__tile > :global(svg) {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    color: var(--primary);
+  }
+  .glance__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+  .glance__value {
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.15;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--secondary);
+    white-space: nowrap;
+  }
+  .glance__desc {
+    font-size: var(--fs-body-sm, 0.9375rem);
+    font-weight: var(--fw-semibold, 600);
+    text-wrap: balance;
+  }
+  .glance__note {
+    font-size: var(--fs-body-xs, 0.8125rem);
+    color: var(--on-surface-variant);
+    text-wrap: balance;
+  }
+  /* A phone shows two tiles a row; a last tile on its own row takes the whole row. */
+  @media (max-width: 719px) {
+    /* The tile is still one link; the arrow is dropped where it would sit on top of the evidence tag. */
+    .glance__tile > :global(svg) {
+      display: none;
+    }
+    .glance__tags {
+      padding-right: 0;
+    }
+    .glance__grid > li:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+    .glance__value {
+      font-size: var(--fs-heading-xl);
+    }
+  }
+  @media (min-width: 720px) {
+    .glance__grid {
+      grid-template-columns: repeat(min(var(--glance-cols), 3), minmax(0, 1fr));
+    }
+    .glance__grid--four {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .glance__grid,
+    .glance__grid--four {
+      grid-template-columns: repeat(var(--glance-cols), minmax(0, 1fr));
+    }
+  }
+</style>

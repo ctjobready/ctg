@@ -7,6 +7,8 @@ import GalleryDisclosure from '../../../components/pages/programs/GalleryDisclos
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Icon from '../../../components/system/Icon.astro';
 import { photo, type Photo } from '../../../data/photos';
+import { mayRender } from '../../../lib/permissions';
+import { newsGalleries } from '../../../components/pages/impact/news-galleries';
 import { linkAttrs } from '../../../lib/url';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -91,34 +93,40 @@ const laterGroups = groups.filter((g) => g.id === 'partners' || g.id === 'recogn
 
 const jump = [...programGroups, ...laterGroups].map((g) => ({ id: g.id, label: g.title.split(':')[0] }));
 const newsHref = linkAttrs('/impact/in-the-field/news-photos/').href;
+// The news photographs span the years of the posts in the archive (read from the data, so the line cannot drift from it).
+const newsYears = (await newsGalleries()).flatMap((y) => y.label.split('–').map(Number));
+const newsSpan = `${Math.min(...newsYears)}–${Math.max(...newsYears)}`;
+// "View Full Collection (N Photographs)": N counts the photographs that may render on this build, the same rule the gallery applies.
+const fullLabel = (g: { photos: Photo[] }) => `View Full Collection (${g.photos.filter((p) => mayRender(p.assetId)).length} Photographs)`;
 const d = discoveryCta();
 ---
 
 <BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the Field: Photo Archive" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The dated news photographs are in the News Photo Archive." artSeed="field-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="In the Field: Photo Archive" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The news photographs have their own page." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a collection">
     <nav class="itf__jump" aria-label="Collections of photographs">
       <ul>
         {jump.map((j) => <li><a class="link" href={`#${j.id}`}>{j.label}</a></li>)}
-        <li><a class="link" href={newsHref}>News Photo Archive<Icon name="arrow-right" size={16} /></a></li>
+        <li><a class="link" href={newsHref}>News Photographs<Icon name="arrow-right" size={16} /></a></li>
       </ul>
     </nav>
   </Section>
 
-  {programGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel="View Full Collection" tone={i % 2 === 0 ? 'white' : 'airy'} />)}
+  {programGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
-    <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partnerships, Recognition and News" lead="Partnership signings, awards, forums and meetings. Photographs from the news posts, by year, are in the News Photo Archive." />
+    <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partnerships, Recognition and News" lead="Partnership signings, awards, forums and meetings. The photographs from news posts have their own page, News Photographs." />
   </Section>
 
-  {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel="View Full Collection" tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
-    <p class="itf__note">Photographs are used with the consent of those pictured. The dated news photographs are in the <a class="link" href={newsHref}>News Photo Archive</a>; the stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
+    <p class="itf__news"><a class="link" href={newsHref}>News Photographs<Icon name="arrow-right" size={16} /></a> Photographs from news posts, {newsSpan}.</p>
+    <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Seen a program like the one you need? A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>
@@ -129,6 +137,13 @@ const d = discoveryCta();
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs) var(--space-md);
+  }
+  .itf__news {
+    margin: 0 0 var(--space-sm);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+    align-items: center;
   }
   .itf__note {
     margin: 0;

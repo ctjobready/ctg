@@ -1,5 +1,8 @@
 ---
 import Icon from '../../system/Icon.astro';
+import StatusTag from '../../system/StatusTag.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { evidenceOf, wsdfmFigureLabel } from './evidence';
 import Img from '../../ui/Img.astro';
 import HeroArt from '../../ui/HeroArt.astro';
 import { fact } from '../../../data/facts';
@@ -24,7 +27,7 @@ import type { ImageMetadata } from 'astro';
 const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   const s = fact(c.factId).stat;
   if (!s) throw new Error(`case card: ${c.factId} has no stat`);
-  return { ...c, stat: s, photo: photos[c.slug] ?? caseCardPhoto(c.slug) };
+  return { ...c, stat: s, resultLabel: c.factId === 'PR-01' ? wsdfmFigureLabel() : s.label, evidence: evidenceOf(c.factId), photo: photos[c.slug] ?? caseCardPhoto(c.slug) };
 });
 ---
 
@@ -45,7 +48,10 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
               <div><dt>Scope &amp; Delivery</dt><dd>{c.scope}</dd></div>
               <div class="case__result">
                 <dt>Result</dt>
-                <dd><span class="case__value">{c.stat.value}</span>{' '}<span class="case__label">{c.stat.label}</span></dd>
+                <dd>
+                  <span class="case__tags"><StatusTag status="Delivered" />{c.evidence && <EvidenceTag type={c.evidence} />}</span>
+                  <span class="case__value">{c.stat.value}</span>{' '}<span class="case__label">{c.resultLabel}</span>
+                </dd>
               </div>
             </dl>
             <span class="card__more" aria-hidden="true">Read the Case Study<span class="sr-only">: {c.name}</span><Icon name="arrow-right" size={16} /></span>
@@ -86,6 +92,12 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+  .case__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
   }
   .case__value {
     font-size: var(--fs-heading-2xl);

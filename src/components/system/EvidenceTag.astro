@@ -2,32 +2,34 @@
 import Icon from './Icon.astro';
 
 /**
- * EvidenceTag (WP24a, Benchmark): a small tag that says what kind of evidence a headline figure rests on, so trial figures, survey figures and
- * program records are never read as one undifferentiated group. It sits beside StatusTag (which says whether a figure is delivered, agreed, a target
- * or planned); the two answer different questions.
- *  - Randomized Trial: BIGD's randomized trial of the predecessor WSDFM program (and the nine-trial review it is compared with)
- *  - Surveyed Completers: the Impact Survey 2026 among surveyed completers
- *  - Program Record: a named program's own records (WSDFM, Kosovo, UNDP YES Korail, Her Power)
+ * EvidenceTag: says what kind of evidence a figure is, so a reader can tell a trial result from a survey result or a program record at a glance.
+ * It extends the StatusTag system (same pill, same rules) with a second axis: StatusTag says how far a figure has come (Delivered, Agreement, Target,
+ * Planned); EvidenceTag says where it comes from.
+ *  - Randomized Trial: the BIGD randomized trial of the predecessor WSDFM program (women offered a place, or women who attended)
+ *  - Surveyed Completers: the CodersTrust Impact Survey, October 2026 (what alumni who responded report)
+ *  - Program Record: a program's own records, as reported for that program and its base (WSDFM, Kosovo, UNDP YES Korail, Her Power)
  *  - Contract Scope: people in the training and curriculum scopes of government contracts (agreements, not delivered training)
- *  - Individual Story: one learner's account
+ *  - Individual Story: one learner's own account; not typical or promised
  * The meaning is carried by the words and a distinct icon, never by color alone (WCAG 1.4.1). Title Case, one line, decorative icon.
+ * Place it in the flow directly above or beside the figure it describes. Used on the Impact pages (WP24b) and the partner Results at a Glance (WP24a).
  */
-type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
+type Evidence = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 interface Props {
-  type: EvidenceType;
+  type: Evidence;
   class?: string;
 }
 const { type, class: className } = Astro.props;
-const icon: Record<EvidenceType, string> = {
+const icon: Record<Evidence, string> = {
   'Randomized Trial': 'flask-conical',
   'Surveyed Completers': 'clipboard-list',
-  'Program Record': 'file-check',
+  'Program Record': 'file-text',
   'Contract Scope': 'scroll-text',
-  'Individual Story': 'user',
+  'Individual Story': 'quote',
 };
+const slug = type.toLowerCase().replace(/\s+/g, '-');
 ---
 
-<span class:list={['evidence-tag', className]} data-evidence={type}><Icon name={icon[type]} size={14} strokeWidth={2} /><span>{type}</span></span>
+<span class:list={['evidence-tag', `evidence-tag--${slug}`, className]} data-evidence={type}><Icon name={icon[type]} size={14} strokeWidth={2} /><span>{type}</span></span>
 
 <style is:global>
   .evidence-tag {
@@ -36,12 +38,38 @@ const icon: Record<EvidenceType, string> = {
     gap: 6px;
     height: 24px;
     padding: 0 10px 0 8px;
-    border-radius: var(--radius-sm, 6px);
+    border-radius: var(--radius-pill);
     font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
-    border: 1px solid var(--primary-fixed);
-    background: var(--surface-container-low);
-    color: var(--secondary);
+    border: 1px solid currentColor;
     white-space: nowrap;
     vertical-align: middle;
+    /* In a grid or flex column the tag keeps its own width instead of stretching across the cell. */
+    justify-self: start;
+    align-self: flex-start;
+    width: fit-content;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+  .evidence-tag--randomized-trial {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .evidence-tag--surveyed-completers {
+    background: var(--info-subtle);
+    color: var(--on-surface);
+  }
+  .evidence-tag--program-record {
+    background: var(--surface);
+    color: var(--secondary);
+  }
+  .evidence-tag--contract-scope {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    border-style: dotted;
+  }
+  .evidence-tag--individual-story {
+    background: var(--tertiary-fixed);
+    color: var(--on-tertiary-fixed);
+    border-style: dashed;
   }
 </style>

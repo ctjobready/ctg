@@ -3,6 +3,7 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
 
 // ST-01 and ST-02 name the learners as the previous site did (Aklima Akder, Shamim Ahmed); the reported outcome is the quoted part.
@@ -21,11 +22,12 @@ if (!shamim) throw new Error('ST-02 no longer spells out its quoted amount');
   slug="undp-yes-korail"
   pageTitle="UNDP YES Korail Case Study"
   storyEyebrow="In a Learner’s Words"
+  storyTitle="Two Learner Journeys"
   description="UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% completed the program, 67% of the 350 trained found a first job within 3 months."
   stats={[{ id: 'PR-03' }]}
   context={[
     'Young people in Dhaka’s urban informal settlements face limited access to education and training, discrimination, and little exposure to careers or networks.',
-    'In 2017 CodersTrust trained young people from the Korail settlement in Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Beyond jobs, awareness of the opportunity grew across Korail, and program completers went on to mentor local youth.',
+    'In 2017 CodersTrust trained young people from the Korail settlement in Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh. Program completers went on to mentor local youth.',
   ]}
   challenges={[
     'Day labor pulled young people away from training.',
@@ -42,15 +44,16 @@ if (!shamim) throw new Error('ST-02 no longer spells out its quoted amount');
 >
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results, 2017">
+      <EvidenceTag type="Program Record" />
       <Fact id="PR-03" as="p" />
       <p><strong>Base.</strong> The 67% is the share of the 350 trained who found their first job within 3 months.</p>
     </Callout>
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory factId="ST-01" name="Aklima Akder" assetId="story-aklima-akder" program="UNDP YES, Korail" outcome={`Reported: “${quoteOf('ST-01')}.”`} />
+    <LearnerStory factId="ST-01" name="Aklima Akder" assetId="story-aklima-akder" program="UNDP YES, Korail" outcome={`“${quoteOf('ST-01')}”`} excerpt="Reported by the learner." tag />
     <div class="uy__gap"></div>
-    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={`Reported earnings of ${shamim} over three years.`} outlier />
+    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={`“${quoteOf('ST-02')}”`} excerpt={`Reported earnings of ${shamim} over three years.`} outlier tag />
   </Fragment>
 </CaseStudyPage>
 

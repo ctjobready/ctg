@@ -3,6 +3,8 @@ import LongformLayout from '../../../layouts/LongformLayout.astro';
 import Icon from '../../../components/system/Icon.astro';
 import WorldMap from '../../../components/ui/WorldMap.astro';
 import Fact from '../../../components/facts/Fact.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
+import { evidenceOf } from '../../../components/pages/impact/evidence';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
@@ -52,7 +54,7 @@ const d = discoveryCta();
     <section class="gr__table" aria-label="Table of selected programs" tabindex="0" data-scroll data-stack>
       <table>
         <caption class="sr-only">Selected CodersTrust Programs in Bangladesh</caption>
-        <thead><tr><th scope="col">Program</th><th scope="col">Partner</th><th scope="col">Years</th><th scope="col">Focus</th><th scope="col">Reach</th></tr></thead>
+        <thead><tr><th scope="col">Program</th><th scope="col">Partner</th><th scope="col">Years</th><th scope="col">Focus</th><th scope="col">Result</th></tr></thead>
         <tbody>
           {programs.map((p) => (
             <tr>
@@ -60,7 +62,7 @@ const d = discoveryCta();
               <td data-label="Partner">{p.partner}</td>
               <td data-label="Years">{p.years}</td>
               <td data-label="Focus">{p.focus}</td>
-              <td data-label="Reach" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText}</td>
+              <td data-label="Result" data-fact={p.reachId}><Fact id={p.reachId} field="value" /> {p.reachText} <EvidenceTag type={evidenceOf(p.reachId)!} /></td>
             </tr>
           ))}
         </tbody>

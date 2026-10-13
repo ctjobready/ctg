@@ -8,6 +8,8 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
+import { wsdfmRecordLine } from '../../../components/pages/impact/evidence';
 import { fact } from '../../../data/facts';
 import { RCT_HEADLINE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
@@ -32,7 +34,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
   pageTitle="WSDFM Case Study"
   description="WSDFM, commissioned by Porticus: a randomized trial of the predecessor program found income rose for women offered a place; 711 of 1,000 women in work."
   plainLine
-  heroNote="The first figure below is from program records; the trial figures are from the randomized trial of the predecessor program."
+  heroNote={`${wsdfmRecordLine()}. The trial figures below come from a separate randomized trial of the predecessor program, not from these records.`}
   trialLink
   stats={[
     { id: 'PR-01' },
@@ -65,12 +67,13 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
 
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results">
+      <EvidenceTag type="Program Record" />
       <Fact id="PR-01" as="p" />
     </Callout>
 
     <div>
       <h3 class="t-heading-l">What the Randomized Trial Found</h3>
-      <p class="wf__evid">BIGD randomized trial, May 2022</p>
+      <p class="wf__evid"><EvidenceTag type="Randomized Trial" /> BIGD randomized trial, May 2022</p>
       <CopyText block={RCT_HEADLINE} class="wf__lead" />
     </div>
 
@@ -87,7 +90,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
 
     <div class="wf__attend" data-fact="RC-03">
       <h3 class="t-heading-m">Women Who Attended</h3>
-      <p class="wf__evid">BIGD randomized trial, May 2022</p>
+      <p class="wf__evid"><EvidenceTag type="Randomized Trial" /> BIGD randomized trial, May 2022</p>
       <p><Fact id="RC-03" as="span" /></p>
     </div>
 
@@ -99,6 +102,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
       factId="ST-03"
       name="Samina Tasneem Chowdhury"
       program="WSDFM, first batch"
+      tag
       outcome="Completed 90+ projects as a freelance graphic designer on Fiverr."
       excerpt={excerpt}
       image={samina.data.photo}

@@ -2,7 +2,7 @@
 import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
-import Fact from '../../../components/facts/Fact.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
 
 // ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
@@ -45,6 +45,7 @@ const results = [
 >
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results">
+      <EvidenceTag type="Program Record" />
       <dl class="kw__results" data-fact="PR-02">
         {results.map((r) => <div><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
       </dl>
@@ -53,7 +54,7 @@ const results = [
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo, 2017" outcome={outcome} />
+    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo, 2017" outcome={outcome} tag />
   </Fragment>
 </CaseStudyPage>
 

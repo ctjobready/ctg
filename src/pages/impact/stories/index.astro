@@ -104,9 +104,9 @@ const legacyCards = named
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2017', caveat: 'Individual result; not typical', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
-  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
-  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual result; an outlier, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}” (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
+  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2017', caveat: 'Individual story; not typical or promised', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
+  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; not typical or promised', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
+  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}” (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
 ];
 const cards = [...anon, ...legacyCards];
 const goDeeper = [
@@ -126,16 +126,16 @@ const d = discoveryCta();
 <BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
   <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learner Experiences" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
 
-  <PageNav links={[{ label: 'Two Stories in Three Steps', href: '#steps' }, { label: 'What Learners Report', href: '#stories' }, { label: 'Go Deeper', href: '#go-deeper' }]} />
+  <PageNav links={[{ label: 'Two Learner Journeys', href: '#steps' }, { label: 'What Learners Report', href: '#stories' }, { label: 'Go Deeper', href: '#go-deeper' }]} />
 
   <Section id="steps" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="Learner Journeys" title="Two Stories in Three Steps" lead="Where the learner’s own story text covers where they started, what they did and where they are now." />
+    <SectionHeader id="steps-h" eyebrow="In Three Steps" title="Two Learner Journeys" lead="Where the learner’s own story text covers where they started, what they did and where they are now." />
     <StoryGallery cards={caseCards} filter={false} />
   </Section>
 
   <Section id="stories" tone="airy" aria-labelledby="stories-h">
     <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Filter by pathway to see how each learner reached paid work." />
-    <StoryGallery cards={cards} />
+    <StoryGallery cards={cards} visible={9} />
     <div class="st__notes">
       <p>Some results are outliers and are labeled as such. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and Evidence</a>.</p>
       <p>Some learners, including participants in programs for refugees and residents of urban informal settlements, are listed without photographs.</p>

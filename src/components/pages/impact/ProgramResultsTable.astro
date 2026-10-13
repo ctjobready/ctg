@@ -1,0 +1,111 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { linkAttrs } from '../../../lib/url';
+import { programResultRows } from './evidence';
+
+/**
+ * "Every Reported Program Result in One Table" (WP24b, from the Kimi benchmark): Program · Partner · Geography · Trained · Completed · Certified · In Work ·
+ * Evidence Type, for the four programs the register reports. Every count, base and share is read from the register (see programResultRows); a measure
+ * the register does not report for a program is a dash, never an invented number. At 640 px and below each row stacks into a card (data-stack).
+ */
+interface Props {
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { id = 'program-results', tone = 'white' } = Astro.props;
+const rows = programResultRows();
+const cols = [
+  { key: 'trained', label: 'Trained' },
+  { key: 'completed', label: 'Completed' },
+  { key: 'certified', label: 'Certified' },
+] as const;
+---
+
+<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+  <SectionHeader
+    id={`${id}-h`}
+    eyebrow="Program Results"
+    title="Every Reported Program Result in One Table"
+    lead="Each row reports its own base, so read across a row, not down a column. A dash means no figure is reported for that program."
+  />
+  <section class="prt" aria-label="Every reported program result" tabindex="0" data-scroll data-stack data-fact={rows.map((r) => r.id).join(' ')}>
+    <table>
+      <caption class="sr-only">Every Reported Program Result, by Program</caption>
+      <thead>
+        <tr>
+          <th scope="col">Program</th>
+          <th scope="col">Partner</th>
+          <th scope="col">Geography</th>
+          <th scope="col">Trained</th>
+          <th scope="col">Completed</th>
+          <th scope="col">Certified</th>
+          <th scope="col">In Work</th>
+          <th scope="col">Evidence Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr data-fact={r.id}>
+              <th scope="row"><a class="link" href={linkAttrs(`/impact/case-studies/${r.slug}/`).href}>{r.program}</a></th>
+              <td data-label="Partner">{r.partner}</td>
+              <td data-label="Geography">{r.geography}</td>
+              {cols.map((c) => (
+                <td data-label={c.label}>
+                  {r[c.key] ? r[c.key] : <><span aria-hidden="true">—</span><span class="sr-only">Not reported</span></>}
+                </td>
+              ))}
+              <td data-label="In Work">{r.inWork}</td>
+              <td data-label="Evidence Type"><EvidenceTag type="Program Record" /></td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+  <p class="prt__link"><a class="link" href={linkAttrs('/impact/case-studies/').href}>Read the Case Studies<Icon name="arrow-right" size={16} /></a></p>
+</Section>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
+
+<style>
+  .prt {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+  }
+  .prt table {
+    width: 100%;
+    min-width: 960px;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    border-collapse: collapse;
+  }
+  .prt th,
+  .prt td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .prt thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  .prt tbody th {
+    font-weight: var(--fw-bold);
+  }
+  .prt tbody tr:last-child th,
+  .prt tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .prt__link {
+    margin: var(--space-md) 0 0;
+  }
+</style>

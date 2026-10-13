@@ -1,0 +1,68 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * "Independent Evidence and Survey Results" on /impact/ (WP24b): the two kinds of proof the At a Glance band and the evidence ladder already show with
+ * their figures, so this band states no figure again (review round 9, Kimi): it says what each kind of evidence can and cannot show and links to the full
+ * report. The trial comes first, then the survey, which describes outcomes but does not show cause.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'proof' } = Astro.props;
+const routes = [
+  {
+    type: 'Randomized Trial' as const,
+    title: 'The Randomized Trial',
+    text: 'BIGD compared women offered a place in the predecessor WSDFM program with a control group, which lets it test cause for that program and population.',
+    link: { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' },
+  },
+  {
+    type: 'Surveyed Completers' as const,
+    title: 'Impact Survey 2026',
+    text: 'Alumni who responded report their work and income before training and at the October 2026 survey. It describes outcomes; it does not show that training caused them.',
+    link: { label: 'Read Outcomes 2026', href: '/impact/outcomes-2026/' },
+  },
+];
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader
+    id={`${id}-h`}
+    eyebrow="Trial and Survey Evidence"
+    title="Independent Evidence and Survey Results"
+    lead="Read the trial first, then the survey. The figures for both are in At a Glance above."
+  />
+  <div class="grid-cards grid-cards--2">
+    {
+      routes.map((r) => (
+        <article class="card er" data-reveal>
+          <div class="card__body">
+            <EvidenceTag type={r.type} />
+            <h3 class="card__title">{r.title}</h3>
+            <p class="card__text">{r.text}</p>
+            <p class="er__link"><a class="link" href={linkAttrs(r.link.href).href}>{r.link.label}<Icon name="arrow-right" size={16} /></a></p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <p class="er__more"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>How to Read This Evidence<Icon name="arrow-right" size={16} /></a></p>
+</Section>
+
+<style>
+  .er .card__body {
+    align-items: flex-start;
+  }
+  .er__link {
+    margin: auto 0 0;
+    padding-top: var(--space-sm);
+  }
+  .er__more {
+    margin: var(--space-md) 0 0;
+  }
+</style>
