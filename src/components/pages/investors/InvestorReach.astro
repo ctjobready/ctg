@@ -1,0 +1,160 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import Stat from '../../system/Stat.astro';
+import StatusTag from '../../system/StatusTag.astro';
+import Fact from '../../facts/Fact.astro';
+import { fact } from '../../../data/facts';
+import { PROGRAM_OPTIONS } from '../../../data/copy';
+
+/**
+ * Reach to Date (Investors, WP24a): its own band, apart from the outcome evidence (the trial and the survey) that follows it, so reach and results
+ * are never read as one group. Two groups: what has been delivered since 2014 (SC-01, SC-02, SC-03) and the people in government contract scopes
+ * (SC-06, an agreement, never delivered reach). The program results (WSDFM, Kosovo, Her Power) are not tiles here: they appear once, in Proof in Practice.
+ * Also the path to scale (built from GV-10 and PD-05), the NU pipeline (SC-04, not counted in the reach) and the AWS (PA-06) and HolonIQ (PA-08) badges.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'reach' } = Astro.props;
+const delivered = ['SC-01', 'SC-02', 'SC-03'] as const;
+const contracted = 'SC-06';
+const stat = (sid: string) => {
+  const s = fact(sid).stat;
+  if (!s) throw new Error(`InvestorReach: ${sid} needs a stat`);
+  return s;
+};
+// One note row under the delivered tiles: the register's detail lines for SC-02 and SC-03, read from it, so the tiles stay level.
+const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
+  const detail = stat(sid).detail;
+  if (!detail) throw new Error(`InvestorReach: ${sid} needs a stat detail`);
+  return detail;
+});
+const badges = ['PA-06', 'PA-08'];
+// Path to scale: built from figures the page already shows (GV-10 contract scopes; PD-05's National option), none typed here.
+const scopes = fact('GV-10').text.match(/ranging from ([\d,]+\+ professionals to [\d,]+\+ digital-lab staff)/)?.[1];
+if (!scopes) throw new Error('GV-10 wording changed: update the Path to Scale paragraph on Investors');
+const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
+---
+
+<Section id={id} tone="white" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Our Reach" title="Reach to Date" lead="What has been delivered, and the people in government contract scopes, kept apart." />
+  <div class="ir">
+    <div class="ir__group ir__group--delivered" data-reveal>
+      <h3 class="ir__h t-heading-l">Delivered Since 2014</h3>
+      <div class="ir__tiles">
+        {
+          delivered.map((sid) => (
+            <div class="ir__tile" data-fact={sid}>
+              <StatusTag status="Delivered" />
+              <Stat value={stat(sid).value} label={stat(sid).label} size="lg" count={stat(sid).numeric !== undefined} />
+            </div>
+          ))
+        }
+      </div>
+      <p class="ir__notes" data-fact="SC-02 SC-03">{notes.join(' ')}</p>
+    </div>
+    <div class="ir__group ir__group--contracted" data-reveal>
+      <h3 class="ir__h t-heading-l">Contracted Scope</h3>
+      <div class="ir__tiles ir__tiles--one">
+        <div class="ir__tile" data-fact={contracted}>
+          <StatusTag status="Agreement" />
+          <Stat value={stat(contracted).value} label={stat(contracted).label} size="lg" count={stat(contracted).numeric !== undefined} />
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="ir__p" data-fact="GV-10 PD-05" data-reveal><strong>Path to scale.</strong> Delivery grows in phases, building on government contract training scopes that range from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
+  <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the reach above: <Fact id="SC-04" /></p>
+  <p class="ir__p" data-reveal>The outcomes behind these figures appear once, in <a class="link" href="#cases">Proof in Practice</a>.</p>
+  <ul class="ir__badges" role="list" data-reveal>
+    {
+      badges.map((bid) => (
+        <li data-fact={bid}>
+          <Icon name="award" size={20} />
+          <span>{fact(bid).text}</span>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .ir {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  .ir__group {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+    min-width: 0;
+  }
+  .ir__h {
+    margin: 0;
+    color: var(--secondary);
+  }
+  .ir__tiles {
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ir__tiles--one {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ir__tile {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    align-content: start;
+    min-width: 0;
+  }
+  .ir__notes,
+  .ir__p {
+    margin: 0;
+    max-width: 52rem;
+    color: var(--on-surface-variant);
+  }
+  .ir__notes {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+  }
+  .ir__p {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .ir__badges {
+    list-style: none;
+    margin: var(--space-md) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  .ir__badges li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px var(--space-md);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-pill);
+    color: var(--on-surface);
+    font-size: var(--fs-body-xs);
+  }
+  .ir__badges :global(.icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  @media (min-width: 900px) {
+    .ir {
+      grid-template-columns: 3fr 1fr;
+      gap: 56px;
+    }
+    .ir__group--delivered .ir__tiles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

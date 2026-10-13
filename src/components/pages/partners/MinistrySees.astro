@@ -1,0 +1,84 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import { fact } from '../../../data/facts';
+import { TRACER_MONTHS } from './partners';
+
+/**
+ * "What a Ministry Sees" (WP24a, Benchmark; Governments): a Month 1 / Month 6 / Month 12 strip built only from commitments the register already states
+ * and the page already makes: monthly reports from the first cohort (PD-08), and tracer surveys at 3, 6 and 12 months (PD-09). Scope-aware: it is what is
+ * planned for every cohort "as agreed in the program scope", never an unscoped promise. No figure is typed here; the tracer months are parsed from PD-09.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'ministry-sees' } = Astro.props;
+if (!/monthly reports/i.test(fact('PD-08').text) || !/follow-up surveys at/i.test(fact('PD-09').text)) throw new Error('MinistrySees: PD-08 or PD-09 changed; update the strip');
+const months = TRACER_MONTHS.match(/\d+/g) ?? [];
+const [, six, twelve] = months;
+if (six !== '6' || twelve !== '12') throw new Error(`MinistrySees: PD-09 tracer months are ${TRACER_MONTHS}; the strip names the 6- and 12-month surveys`);
+const steps = [
+  { when: 'Month 1', title: 'Monthly Reports Begin', text: 'Enrollment and attendance, completion and certification, placements and first earnings, with women and priority-group shares.', ids: 'PD-08' },
+  { when: `Month ${six}`, title: `The ${six}-Month Tracer Survey`, text: 'Follow-up results against the baseline taken at enrollment, with documentary evidence of work and earnings where available.', ids: 'PD-09' },
+  { when: `Month ${twelve}`, title: `The ${twelve}-Month Tracer Survey`, text: 'The last follow-up survey of the outcome-tracking period, reported alongside the monthly reports and the quarterly steering review.', ids: 'PD-08 PD-09' },
+];
+---
+
+<Section id={id} tone="airy" pad="sm" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Reporting" title="What a Ministry Sees" lead="Planned for every cohort, as agreed in the program scope. Reports run monthly; tracer surveys follow the course." />
+  <ol class="ms" role="list">
+    {
+      steps.map((s) => (
+        <li class="ms__step" data-fact={s.ids} data-reveal>
+          <p class="ms__when">{s.when}</p>
+          <p class="ms__title">{s.title}</p>
+          <p class="ms__text">{s.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+<style>
+  .ms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 720px) {
+    .ms {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .ms__step {
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-top: 3px solid var(--primary);
+    border-radius: var(--radius-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .ms__step > * {
+    margin: 0;
+  }
+  .ms__when {
+    font-size: var(--fs-heading-xl);
+    line-height: 1.15;
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .ms__title {
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+  }
+  .ms__text {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+</style>

@@ -21,6 +21,8 @@ import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import InShort from '../../../components/pages/partners/InShort.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import { localCta } from '../../../components/pages/about/routes';
@@ -47,6 +49,7 @@ const jsonLd = [
 
 // C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
 const cmpRows = [
+  { label: 'Track Choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
   { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
   { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
   { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
@@ -68,13 +71,13 @@ const cmpRows = [
 const localSteps = [
   { title: 'Tell the Bangladesh Team', text: 'Describe your organization, your district and the groups you work with, and we shape the cohort, tracks, safeguarding and reporting together.' },
   { title: 'Host, Train and Mentor', text: `Certified local facilitators deliver the localized curriculum in your labs, classrooms or centers: ${HOURS} training hours per certification, then three months of milestone-based mentoring.` },
-  { title: 'Place and Report', text: `Placement support into local, remote and global work, with monthly reports to the funder, where a funder is involved, and tracer surveys at ${TRACER_MONTHS}.` },
+  { title: 'Place and Report', text: `Placement support into local, remote and global work, then tracer surveys at ${TRACER_MONTHS}.` },
 ];
 
 const ways = [
   { icon: 'building-2', title: 'Host a Cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
   { icon: 'graduation-cap', title: 'Supply Certified Facilitators', text: 'Put trainers through certified facilitator training so delivery capacity stays in your community.' },
-  { icon: 'users', title: 'Mobilize Priority Groups', text: 'Reach the young people central programs miss, with women a priority in every group.' },
+  { icon: 'users', title: 'Mobilize Priority Groups', text: 'Reach the young people national programs miss, with women a priority in every group.' },
 ];
 ---
 
@@ -89,7 +92,6 @@ const ways = [
   <HeroBand audience="For Bangladeshi NGOs, Colleges, Chambers and Associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
 
   <InShort
-    title="Local Partners in Short"
     bullets={[
       'Delivery through certified local facilitators, in your own labs, classrooms or centers.',
       'Training, preparation for industry certification and three months of milestone-based mentoring, with placement support alongside.',
@@ -110,19 +112,21 @@ const ways = [
     <p data-fact="GV-09">Where government lab access is confirmed, cohorts can run in public digital labs; your organization can also host cohorts in its own labs, classrooms or centers.</p>
   </DefinitionPlus>
   <ForNotFor
-    forText="You are a Bangladeshi NGO, college, chamber or association that reaches young people central programs miss."
+    forText="You are a Bangladeshi NGO, college, chamber or association that reaches young people national programs miss."
     notText="Your organization works outside Bangladesh; see the Development Partners and Governments pages for other countries."
   />
 
+  <LearnerVoice story="samina-tasneem-chowdhury" excerpt="Today, she is an inspiration to the young people in her community." program="WSDFM" tone="white" />
+
   <!-- C2 -->
-  <ProblemBand id="problem" title="Local Organizations Reach the Young People Central Programs Miss" bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']}>
+  <ProblemBand id="problem" title="Local Organizations Reach the Young People National Programs Miss" bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']}>
     <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
   </ProblemBand>
 
   <!-- C3 -->
   <CostBand
     id="cost"
-    title="Cohorts That Train but Do Not Place Cost Community Trust"
+    title="Cohorts That Train Without Placement Cost Community Trust"
     blocks={[
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Skills that were enough last year may not open doors next year, so tracks have to follow current demand.' },
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
@@ -137,7 +141,7 @@ const ways = [
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'A Cohort in Your Own Lab', text: 'A college computer lab or an NGO center runs a cohort led by certified local facilitators.' },
-      { kind: 'Emotional', title: 'Reports That Show Earnings', text: 'Where a funder is involved, monthly reports show who is earning, not only who completed.' },
+      { kind: 'Emotional', title: 'Reports That Show Earnings', text: 'Reports show who is earning, not only who completed.' },
       { kind: 'Social', title: 'Completers in Paid Digital Work', text: 'Young people from your district move into paid digital work, and the skills stay in the community.' },
     ]}
   />
@@ -239,6 +243,7 @@ const ways = [
   </Section>
 
   <!-- C12 -->
+  <DueDiligenceView compact id="due-diligence" />
   <RiskReversalBand
     id="risk"
     title="Start with a Pilot Cohort. Decide on Evidence"

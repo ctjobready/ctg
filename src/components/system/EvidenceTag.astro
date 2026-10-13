@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * EvidenceTag (WP24a, Benchmark): a small tag that says what kind of evidence a headline figure rests on, so trial figures, survey figures and
+ * program records are never read as one undifferentiated group. It sits beside StatusTag (which says whether a figure is delivered, agreed, a target
+ * or planned); the two answer different questions.
+ *  - Randomized Trial: BIGD's randomized trial of the predecessor WSDFM program (and the nine-trial review it is compared with)
+ *  - Surveyed Completers: the Impact Survey 2026 among surveyed completers
+ *  - Program Record: a named program's own records (WSDFM, Kosovo, UNDP YES Korail, Her Power)
+ *  - Contract Scope: people in the training and curriculum scopes of government contracts (agreements, not delivered training)
+ *  - Individual Story: one learner's account
+ * The meaning is carried by the words and a distinct icon, never by color alone (WCAG 1.4.1). Title Case, one line, decorative icon.
+ */
+type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
+interface Props {
+  type: EvidenceType;
+  class?: string;
+}
+const { type, class: className } = Astro.props;
+const icon: Record<EvidenceType, string> = {
+  'Randomized Trial': 'flask-conical',
+  'Surveyed Completers': 'clipboard-list',
+  'Program Record': 'file-check',
+  'Contract Scope': 'scroll-text',
+  'Individual Story': 'user',
+};
+---
+
+<span class:list={['evidence-tag', className]} data-evidence={type}><Icon name={icon[type]} size={14} strokeWidth={2} /><span>{type}</span></span>
+
+<style is:global>
+  .evidence-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    padding: 0 10px 0 8px;
+    border-radius: var(--radius-sm, 6px);
+    font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface-container-low);
+    color: var(--secondary);
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+</style>

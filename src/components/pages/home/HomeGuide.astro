@@ -3,15 +3,14 @@ import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
 import { fact } from '../../../data/facts';
-import PartnerStrip from '../../system/PartnerStrip.astro';
+import PartnerRelationships from './PartnerRelationships.astro';
 import CopyBlock from './CopyBlock.astro';
 import { EMPATHY, ORIGIN, type CopyBlock as CopyBlockData } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
-import { PARTNER_CAPTION } from '../../../lib/logos';
 
 /**
  * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the method signal
- * (TalentLEAP) and four authority figures with the partner logo marquee (the marquee is the partner line).
+ * (TalentLEAP) and four authority figures, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
  */
 interface Props {
   id?: string;
@@ -52,7 +51,7 @@ const team = linkAttrs('/about/team/');
       <FactStat id="SC-04" />
     </div>
   </div>
-  <PartnerStrip variant="marquee" caption={PARTNER_CAPTION} />
+  <PartnerRelationships />
 </Section>
 
 <style>

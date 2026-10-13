@@ -1,9 +1,11 @@
 ---
 /**
- * P5 Foundations & CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
+ * P5 Foundations and CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
  * C1 to C14 in order, as the numbered table in doc 06 P5.
  */
-import GlanceBand from '../../../components/sections/GlanceBand.astro';
+import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import CategoryCard from '../../../components/system/CategoryCard.astro';
 import InShort from '../../../components/pages/partners/InShort.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
@@ -54,14 +56,18 @@ const reportCta = cta('report');
 const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
-  'Fund Youth Employment: Foundations & CSR',
+  'Fund Youth Employment: Foundations and CSR',
   `Fund a supported path from learning to earning. A BIGD trial of a predecessor program: women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income`,
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 // PD-18 names SDG-mapped reporting and co-branded certificates and events; neither is in the standard inclusions (PD-02), so they are part of a funder's program only where the scope agrees them (WP21).
-const pd18 = endSentence(fact('PD-18').text).replace('SDG-mapped reporting tailored to their CSR framework, co-branded certificates and events', 'SDG-mapped reporting tailored to their CSR framework and co-branded certificates and events (both where agreed in the program scope)');
-if (!pd18.includes('where agreed in the program scope')) throw new Error('Foundations: PD-18 wording changed; update the scope qualifier');
+// WP24a: scope-aware and without the "pipeline" wording: the SDG-mapped reporting and the co-branded items are part of a funder's program only where the scope agrees them,
+// and what a funder gains is reporting on how the funded cohort progressed into work.
+const pd18 = endSentence(fact('PD-18').text)
+  .replace(/^What funders gain: /, 'Funders receive ')
+  .replace('SDG-mapped reporting tailored to their CSR framework, co-branded certificates and events, and a pipeline of job-ready talent', 'SDG-mapped reporting tailored to their CSR framework and co-branded certificates and events, where agreed in the program scope, and reporting that shows how the funded cohort progressed into work');
+if (!pd18.includes('where agreed in the program scope') || !pd18.includes('how the funded cohort progressed into work')) throw new Error('Foundations: PD-18 wording changed; update the scope-aware rewrite');
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
@@ -69,7 +75,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations & CSR' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Foundations and CSR' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('foundations', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
@@ -86,7 +92,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       'Fund a supported path from learning to earning: training with certification preparation, mentoring and placement support.',
       'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
       'Reporting that fits your framework: monthly reports, a quarterly steering review and, where agreed in the program scope, SDG-mapped reporting.',
-      'Two ways to fund: YouthWIDE cohorts or the JobReady platform. Expansion is always your decision.',
+      'Two ways to fund: YouthWIDE Cohort Grants or JobReady Platform Grants. Expansion is always your decision.',
     ]}
     links={[
       { label: 'How It Works', href: '#mechanism' },
@@ -102,21 +108,18 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     forText="You want to fund outcomes you can see."
     notText="You want a one-off donation with no reporting."
   />
-  <GlanceBand
-    variant="strip"
-    id="glance"
-    title="Results at a Glance"
-    cols={4}
-    items={[
+  <PartnerGlance
+    lead={[{ id: 'RC-04', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' }]}
+    more={[
+      { id: 'RC-02', href: '/impact/independent-evaluation/' },
       { id: 'RC-13', href: '/impact/independent-evaluation/' },
       { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
+  <LearnerVoice story="samina-tasneem-chowdhury" excerpt="She has completed 90+ projects on Fiverr so far." program="WSDFM" tone="white" />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -178,19 +181,18 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       positioning={POSITIONING.foundations}
       blocks={[
         { label: 'Funding Vehicle 1', title: 'JobReady Platform Grant', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
-        { label: 'Funding Vehicle 2', title: 'YouthWIDE Cohorts', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
+        { label: 'Funding Vehicle 2', title: 'YouthWIDE Cohort Grants', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
       ]}
       link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
     />
   </div>
-  <SubBand>
-    <Callout eyebrow="Choose Your Route">
-      <p class="cluster">
-        <a class="link" href="#cohort-grants">Fund YouthWIDE Cohorts<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href="#platform-grants">Fund the JobReady Platform<Icon name="arrow-right" size={16} /></a>
-      </p>
-    </Callout>
-  </SubBand>
+  <Section id="route-chooser" pad="sm" aria-labelledby="route-h">
+    <h2 class="rc__title" id="route-h">Choose Your Route</h2>
+    <div class="grid-cards grid-cards--2">
+      <CategoryCard title="YouthWIDE Cohort Grants" icon="globe" text="Co-fund country programs, cohort by cohort." href="#cohort-grants" />
+      <CategoryCard title="JobReady Platform Grants" icon="layers" text="Fund platform infrastructure, not cohorts." href="#platform-grants" />
+    </div>
+  </Section>
   <SubBand>
     <Callout eyebrow="Reporting and Recognition">
       <p data-fact="PD-18">{pd18}</p>
@@ -224,8 +226,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
-
-  <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
@@ -274,14 +274,15 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   />
 
   <!-- C11 · Offer -->
-  <OfferBand id="cohort-grants" eyebrow="Track 1 · Cohort Grants" title="Choose a Cohort Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See Platform Grants below." />
+  <OfferBand id="cohort-grants" eyebrow="Track 1 · YouthWIDE Cohort Grants" title="Choose a YouthWIDE Cohort Grants Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below." />
   <SubBand tone="airy" pull id="platform-grants">
-    <Callout eyebrow="Track 2 · Platform Grants, an Alternative Funding Vehicle"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
+    <Callout eyebrow="Track 2 · JobReady Platform Grants, an Alternative Funding Vehicle"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. Platform-grant details are discussed in the introduction call.</p></Callout>
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <ReviewCycle scorecard />
+  <DueDiligenceView compact id="due-diligence" />
 
   <!-- C13 · Call to action -->
   <CTABand
@@ -301,3 +302,11 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <PageEnhancements />
 </LandingLayout>
+
+<style>
+  .rc__title {
+    margin: 0 0 var(--space-md);
+    font-size: var(--fs-heading-l);
+    color: var(--secondary);
+  }
+</style>

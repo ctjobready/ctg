@@ -1,65 +1,15 @@
 ---
-import Icon from '../../system/Icon.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import Fact from '../../facts/Fact.astro';
-import FactStat from '../../facts/FactStat.astro';
-import Stat from '../../system/Stat.astro';
-import StatusTag from '../../system/StatusTag.astro';
-import { fact } from '../../../data/facts';
-import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { SURVEY_EMPLOYMENT } from '../../../data/copy';
 
 /**
- * Extras inside the Klein traction band on Investors (C7): the survey sentence ([SURVEY], dated and qualified), the path to
- * scale, and the AWS (PA-06) and HolonIQ (PA-08) badges. No investment, valuation or raise figure appears here or anywhere on the site.
+ * Extra inside the Klein evidence band on Investors (C7): the survey sentence ([SURVEY], dated and qualified), beside the trial it is kept apart from.
+ * Reach (the SC tiles, the path to scale, the badges) is its own band, InvestorReach; the program results appear once, in Proof in Practice.
  */
-const badges = ['PA-06', 'PA-08'];
-// Traction tiles (one pattern: status tag + the register's stat and its basis label). SC-06 counts the people in contract scopes, which are agreements.
-const reach = [
-  { id: 'SC-01', status: 'Delivered' },
-  { id: 'SC-02', status: 'Delivered' },
-  { id: 'SC-03', status: 'Delivered' },
-  { id: 'SC-06', status: 'Agreement' },
-] as const;
-// One note row under the reach tiles (WP22): the register's detail lines for SC-02 and SC-03, read from it, so the four tiles stay level.
-const reachNotes = (['SC-02', 'SC-03'] as const).map((id) => {
-  const detail = fact(id).stat?.detail;
-  if (!detail) throw new Error(`InvestorProofExtras: ${id} needs a stat detail`);
-  return detail;
-});
-// Program results, each on its own registered basis (program records, PR-01, PR-02, PR-05).
-const programs = ['PR-01', 'PR-02', 'PR-05'];
-
-// Path to scale: built from figures the page already shows (GV-10 contract scopes; PD-05's National option), none typed here.
-const scopes = fact('GV-10').text.match(/ranging from ([\d,]+\+ professionals to [\d,]+\+ digital-lab staff)/)?.[1];
-if (!scopes) throw new Error('GV-10 wording changed: update the Path to Scale paragraph on Investors');
-const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 ---
 
 <div class="ipx">
-  <h3 class="ipx__h t-heading-l">Reach to Date</h3>
-  <div class="ipx__tiles ipx__tiles--4">
-    {reach.map((r, i) => <div class="ipx__tile" data-fact={r.id}><StatusTag status={r.status} /><Stat value={fact(r.id).stat!.value} label={fact(r.id).stat!.label} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={fact(r.id).stat!.numeric !== undefined} /></div>)}
-  </div>
-  <p class="ipx__notes" data-fact="SC-02 SC-03">{reachNotes.join(' ')}</p>
-  <h3 class="ipx__h t-heading-l">Results from Partner-Funded Programs</h3>
-  <div class="ipx__tiles ipx__tiles--3">
-    {programs.map((id, i) => <div class="ipx__tile"><StatusTag status="Delivered" /><FactStat id={id} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" /></div>)}
-  </div>
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
-  <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
-  <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the reach above: <Fact id="SC-04" /></p>
-  <div class="ipx__row">
-    <ul class="ipx__badges" role="list">
-      {
-        badges.map((id) => (
-          <li data-fact={id}>
-            <Icon name="award" size={20} />
-            <span>{fact(id).text}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
 </div>
 
 <style>
@@ -67,79 +17,12 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
     margin-top: var(--space-lg);
     padding-top: var(--space-lg);
     border-top: 1px solid var(--ctx-border);
-    display: grid;
-    gap: var(--space-md);
-  }
-  .ipx > * {
-    margin: 0;
-  }
-  .ipx__h {
-    color: var(--ctx-section-heading);
-  }
-  .ipx__tiles {
-    display: grid;
-    gap: var(--space-lg) var(--space-gutter);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (min-width: 900px) {
-    .ipx__tiles--4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-    .ipx__tiles--3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .ipx__tile {
-    display: grid;
-    gap: var(--space-xs);
-    justify-items: start;
-    align-content: start;
-    min-width: 0;
-  }
-  .ipx__notes {
-    font-size: var(--fs-body-xs);
-    line-height: var(--lh-body-xs);
-    color: var(--ctx-text);
-    max-width: 52rem;
   }
   .ipx__survey {
+    margin: 0;
     font-size: var(--fs-body-l);
     line-height: var(--lh-body-l);
     color: var(--ctx-heading);
     max-width: 52rem;
-  }
-  .ipx__onboard {
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body-m);
-    color: var(--ctx-text);
-    max-width: 52rem;
-  }
-  .ipx__row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-md) var(--space-lg);
-  }
-  .ipx__badges {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-  }
-  .ipx__badges li {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 6px var(--space-md);
-    border: 1px solid var(--ctx-border);
-    border-radius: var(--radius-pill);
-    color: var(--ctx-heading);
-    font-size: var(--fs-body-xs);
-  }
-  .ipx__badges :global(.icon) {
-    color: var(--ctx-accent);
-    flex: none;
   }
 </style>

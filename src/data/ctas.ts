@@ -97,7 +97,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   work: {
     key: 'work',
-    label: 'Plan a Training Program',
+    label: 'Plan Your First Team Program',
     subject: 'JobReady@Work inquiry — [company]',
     body: ['Company', 'Team size', 'Skills needed', 'Timeline'],
   },

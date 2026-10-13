@@ -4,6 +4,8 @@
  * C1 to C14 in order, as the numbered table in doc 06 P6.
  */
 import InShort from '../../../components/pages/partners/InShort.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -48,7 +50,7 @@ const { title, description } = meta(
   `JobReady@Campus helps degree holders prepare for digital work with mentoring. Among surveyed completers, ${degreeShare}.`,
 );
 
-const FAQ_IDS = ['Q1', 'Q10', 'Q8'];
+const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8'];
 const options = programOptions().filter((o) => o.name === 'Multi-Cohort Pilot Program' || o.name === 'Scale');
 const optionText: Record<string, string> = {
   'Multi-Cohort Pilot Program': 'Prove the model with a first campus program.',
@@ -99,6 +101,18 @@ const steps = [
     forText="You want employer-demand tracks with certification preparation alongside degrees."
     notText="You want to replace the degree."
   />
+
+  <!-- Compact NU proof band, before the challenge (WP24a) -->
+  <PairedEvidence
+    title="National University Scale, Not CodersTrust Delivery"
+    lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
+    items={[
+      { id: 'SC-04', label: 'Official Training Partner' },
+      { id: 'SC-05', label: 'National University' },
+      { id: 'PA-05', label: 'University Partners' },
+    ]}
+  />
+  <LearnerVoice story="maria-dewan" excerpt="Maria Dewan was a third-year Biology student when she first came across the Her Power project implemented by CodersTrust." program="Her Power" tone="white" />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -163,16 +177,7 @@ const steps = [
     ]}
     link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
   />
-  <!-- C7 · Proof: the National University partnership first, then the broader evidence from the youth programs -->
-  <PairedEvidence
-    title="The National University Partnership"
-    lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
-    items={[
-      { id: 'SC-04', label: 'Official Training Partner' },
-      { id: 'SC-05', label: 'National University' },
-      { id: 'PA-05', label: 'University Partners' },
-    ]}
-  />
+  <!-- C7 · Proof: the broader evidence from the youth programs (the National University partnership band opens the page, before the challenge) -->
   <ProofBand
     title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
@@ -245,6 +250,7 @@ const steps = [
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
+  <DueDiligenceView compact id="due-diligence" />
   <RiskReversalBand
     title="Start with a Pilot. Decide on Evidence"
     lead={SCORECARD.text.replace('expansion is the funder’s decision', 'expansion is your institution’s decision')}

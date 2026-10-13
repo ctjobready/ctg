@@ -3,10 +3,10 @@
  * P4 Development partners & NGOs: /partner-with-us/development-partners/ (T3, implements doc 04 matrix 4.1).
  * C1 to C14 in order, as the numbered table in doc 06 P4.
  */
-import GlanceBand from '../../../components/sections/GlanceBand.astro';
+import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import InShort from '../../../components/pages/partners/InShort.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
-import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -55,7 +55,7 @@ const { title, description } = meta(
   'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
 );
 
-const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
+const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
 const oc01 = fact('OC-01').stat!;
 const undpQuote = factPart('PR-03a', /“([^”]+)”/);
 const undpPilot = factPart('PR-03a', /\((\d+ students)/);
@@ -65,13 +65,13 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners & NGOs' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners and NGOs' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
   <HeroBand
-    audience="For Development Partners & INGOs"
+    audience="For Development Partners and NGOs"
     title={HEADLINE.developmentPartners}
     lead={VALUE_PROPOSITION.developmentPartners}
     cta={{ label: primary.label, href: primary.href }}
@@ -99,21 +99,17 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     forText="You fund youth employment and want results you can report."
     notText="You want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
   />
-  <GlanceBand
-    variant="strip"
-    id="glance"
-    title="Results at a Glance"
-    cols={4}
-    items={[
+  <PartnerGlance
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' }]}
+    more={[
       { id: 'RC-13', href: '/impact/independent-evaluation/' },
       { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       { id: 'OC-03', href: '/impact/outcomes-2026/' },
-      { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
+  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -123,7 +119,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   >
     <GainsPains
       slot="lead"
-      gains={['Employment results you can report', 'Confidence that the budget produced earnings', 'A reputation as a funder whose programs place people']}
+      gains={['A portfolio with employment results you can report', 'Confidence that the budget produced earnings', 'A reputation as a funder whose programs place people']}
       pains={[
         { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are often met, while employment results lag behind.' },
         { q: 'Why do the hardest-to-reach groups drop out?', text: 'They drop out, or are never reached in the first place.' },
@@ -135,7 +131,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C3 · Agitation: cost of waiting -->
   <div class="pp-two">
     <CostBand
-      title="Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result"
+      title="Training Without Placement Spends Budget Without Earnings"
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
@@ -177,12 +173,6 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     ]}
     link={{ label: 'How Our Model Works', href: LINKS.model }}
   />
-  <SubBand>
-    <Callout eyebrow="The Result Line">
-      <p data-fact="OC-01">Among surveyed completers, employment was {oc01.value} at the October 2026 survey, against {oc01.from} before training.</p>
-      <a class="link" href={url(LINKS.methodology)}>See the Survey Methodology<Icon name="arrow-right" size={16} /></a>
-    </Callout>
-  </SubBand>
 
   <!-- C7 · Proof -->
   <ProofBand
@@ -208,7 +198,6 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
-  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
   <SubBand tone="airy" pull>
     <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role={`Quoted on the 2015 Korail pilot (${undpPilot}; typing speed and computer-application targets), not on later employment results`}>
       {undpQuote}    </Quote>
@@ -270,8 +259,14 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13) -->
-  <ReviewCycle scorecard />
+  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the hub; here the four diligence answers and a link to it -->
+  <DueDiligenceView compact id="due-diligence" />
+  <SubBand>
+    <Callout eyebrow="Reporting and Review">
+      <p>Monthly reports, quarterly steering reviews and the pilot scorecard are set out once, on the partnership overview.</p>
+      <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
+    </Callout>
+  </SubBand>
 
   <!-- C13 · Call to action -->
   <CTABand

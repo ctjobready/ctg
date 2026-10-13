@@ -1,0 +1,185 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Results at a Glance for the audience pages (WP24a): three lead tiles chosen for the audience, then the secondary tiles below under their own
+ * heading. Every tile names the kind of evidence it rests on (EvidenceTag), so a trial figure, a survey figure, a program record and a contract
+ * scope are never read as one undifferentiated group. Figures, labels and notes are read from the facts register (stat.value,
+ * stat.glance ?? stat.label); a page may reword a label or add a caveat, never retype a number.
+ */
+type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
+interface Tile {
+  id: string;
+  href: string;
+  /** Page-specific wording for the tile's label (the register's glance label is the default). */
+  label?: string;
+  /** A short caveat after the register's note ("contracted scopes, not a delivered-training total"). */
+  caveat?: string;
+  /** Other facts the tile's note rests on, added to data-fact. */
+  also?: string[];
+  /** Evidence type; the default follows the fact id (RC trial, OC survey, PR program record, GV contract scope). */
+  evidence?: EvidenceType;
+}
+interface Props {
+  lead: [Tile, Tile, Tile];
+  more: Tile[];
+  title?: string;
+  moreTitle?: string;
+  id?: string;
+}
+const { lead, more, title = 'Results at a Glance', moreTitle = 'More Results', id = 'glance' } = Astro.props;
+const defaultType = (fid: string): EvidenceType => {
+  const kind = fid.slice(0, 2);
+  if (kind === 'RC') return 'Randomized Trial';
+  if (kind === 'OC') return 'Surveyed Completers';
+  if (kind === 'PR') return 'Program Record';
+  if (kind === 'GV' || kind === 'SC') return 'Contract Scope';
+  throw new Error(`PartnerGlance: no default evidence type for ${fid}`);
+};
+const toTile = (t: Tile) => {
+  const f = fact(t.id);
+  if (!f.stat) throw new Error(`<PartnerGlance>: fact ${t.id} has no stat`);
+  const note = [f.stat.glance?.note, t.caveat].filter(Boolean).join(' ');
+  return {
+    ...t,
+    value: f.stat.value,
+    // "+10.3 pp ... in percentage points" says the unit twice: the value carries it.
+    label: (t.label ?? f.stat.glance?.label ?? f.stat.label).replace(', in percentage points,', ''),
+    note: note || undefined,
+    type: t.evidence ?? defaultType(t.id),
+    facts: [t.id, ...(t.also ?? [])].join(' '),
+  };
+};
+const leadTiles = lead.map(toTile);
+const moreTiles = more.map(toTile);
+---
+
+<Section class="pg" id={id} tone="white" pad="sm" aria-labelledby={`${id}-h`}>
+  <h2 class="pg__title" id={`${id}-h`}>{title}</h2>
+  <ul class="pg__lead" role="list">
+    {
+      leadTiles.map((t) => (
+        <li>
+          <a class="pg__tile pg__tile--lead" href={linkAttrs(t.href).href} data-fact={t.facts}>
+            <EvidenceTag type={t.type} />
+            <span class="pg__value">{t.value}</span>
+            <span class="pg__desc">{t.label}</span>
+            {t.note && <span class="pg__note">{t.note}</span>}
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <h3 class="pg__more-title">{moreTitle}</h3>
+  <ul class="pg__more" role="list">
+    {
+      moreTiles.map((t) => (
+        <li>
+          <a class="pg__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
+            <EvidenceTag type={t.type} />
+            <span class="pg__value pg__value--sm">{t.value}</span>
+            <span class="pg__desc">{t.label}</span>
+            {t.note && <span class="pg__note">{t.note}</span>}
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .pg__title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-heading-l, 1.25rem);
+    color: var(--secondary);
+  }
+  .pg__more-title {
+    margin: var(--space-lg) 0 var(--space-sm);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-bold);
+    color: var(--on-surface-variant);
+  }
+  .pg__lead,
+  .pg__more {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
+  }
+  .pg__tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    height: 100%;
+    padding: var(--space-md);
+    padding-right: 40px;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .pg__tile:hover {
+    border-color: var(--primary);
+  }
+  .pg__tile :global(svg:last-child) {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    color: var(--primary);
+  }
+  .pg__tile :global(.evidence-tag svg:last-child) {
+    position: static;
+  }
+  .pg__value {
+    margin-top: 4px;
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.15;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--secondary);
+    overflow-wrap: anywhere;
+  }
+  .pg__value--sm {
+    font-size: var(--fs-heading-xl);
+  }
+  .pg__desc {
+    font-size: var(--fs-body-sm, 0.9375rem);
+    font-weight: var(--fw-semibold, 600);
+  }
+  .pg__note {
+    font-size: var(--fs-body-xs, 0.8125rem);
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 720px) {
+    .pg__lead {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .pg__more {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .pg__more {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  /* A phone: the secondary tiles are a compact list (figure, evidence type and label; the notes stay on the detail page). */
+  @media (max-width: 719px) {
+    .pg__more .pg__note {
+      display: none;
+    }
+  }
+</style>

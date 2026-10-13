@@ -4,7 +4,12 @@
  * C1 to C14 in order, as the numbered table in doc 06 P3.
  */
 import InShort from '../../../components/pages/partners/InShort.astro';
-import GlanceBand from '../../../components/sections/GlanceBand.astro';
+import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import { caseStudyItems } from '../../../components/pages/home/caseStudies';
+import MinistrySees from '../../../components/pages/partners/MinistrySees.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
+import StatusTag from '../../../components/system/StatusTag.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -55,7 +60,9 @@ const { title, description } = meta(
   VALUE_PROPOSITION.governments,
 );
 
-const FAQ_IDS = ['Q7-government', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
+// The Her Power tile reads as the Home and Investors cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts).
+const herPowerLabel = caseStudyItems.find((i) => i.factId === 'PR-05')?.statLabel;
+const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q9', 'Q10', 'Q8'];
 const rates = graduateRates();
 const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
 const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
@@ -112,22 +119,23 @@ const steps = [
       <p>YouthWIDE is designed for deployment in other countries, with tracks set per country from local employer demand. See <a class="link" href="#scale">How We Scale</a>, or write to us for a briefing.</p>
     </Callout>
   </SubBand>
-  <GlanceBand
-    variant="strip"
-    id="glance"
-    title="Results at a Glance"
-    cols={4}
-    items={[
+  <PartnerGlance
+    lead={[
+      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in Six Government Contract Scopes', caveat: 'These are contracted scopes, not a delivered-training total.', also: ['SC-06', 'GV-10'] },
+      { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
+      { id: 'RC-02', href: '/impact/independent-evaluation/' },
+    ]}
+    more={[
+      { id: 'OC-01', href: '/impact/outcomes-2026/' },
+      { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'RC-13', href: '/impact/independent-evaluation/' },
       { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      { id: 'OC-03', href: '/impact/outcomes-2026/' },
-      { id: 'OC-01', href: '/impact/outcomes-2026/' },
       { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
-      { id: 'GV-12', href: '/partner-with-us/governments/', label: 'people in the contracted training and curriculum scopes of six government contracts', also: ['SC-06', 'GV-10'] },
     ]}
   />
+  <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
 
   <SubBand>
     <Callout eyebrow="Evidence for Government Programs">
@@ -198,8 +206,7 @@ const steps = [
   <MechanismBand
     title="A National Delivery Model, Built on Labs That Already Exist"
     positioning={POSITIONING.governments}
-    lead={`YouthWIDE-style delivery aims to train ${NATIONWIDE_TARGET} vulnerable youth by 2030. That is a national ambition that depends on government and donor commitments, not a result.`}
-    blocks={[
+        blocks={[
       { label: 'Who We Reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Government Digital Labs', text: `${labs} in Bangladesh that could host blended learning; lab access and seats are confirmed per program.`, icon: 'landmark', factId: 'GV-09' },
       { label: 'What We Deliver', title: 'Capacity That Stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then preparation for industry certification.`, icon: 'award' },
@@ -207,6 +214,11 @@ const steps = [
     ]}
     link={{ label: 'See YouthWIDE in Bangladesh', href: LINKS.nationwide }}
   />
+  <SubBand id="national-target">
+    <Callout eyebrow="A National Target">
+      <p data-fact="IN-01"><StatusTag status="Target" /> YouthWIDE-style delivery aims to train {NATIONWIDE_TARGET} vulnerable youth by 2030. That is a national ambition that depends on government and donor commitments, not a result.</p>
+    </Callout>
+  </SubBand>
   <SubBand id="scale">
     <Callout eyebrow="How We Scale"><CopyText block={SCALE} /></Callout>
   </SubBand>
@@ -229,7 +241,7 @@ const steps = [
   <SubBand>
     <Callout eyebrow="Delivery Context: Coastal Districts">
       <Fact id="PX-11" as="p" />
-      <p>Where young people leave, training has to connect them to work locally, remotely or abroad.</p>
+      <p>Where young people leave, training can help connect them to work locally, remotely or abroad.</p>
     </Callout>
   </SubBand>
   <CaseStudyCarousel
@@ -248,8 +260,8 @@ const steps = [
     rows={[
       {
         feature: 'Certification Tracks Chosen from Employer Demand, Then Mentoring and Placement Support',
-        means: 'each track prepares graduates for an industry certification, and mentoring and placement support point them toward work.',
-        outcome: 'A supported route to a recognized credential',
+        means: 'certification, mentoring and placement support point them toward paid work.',
+        outcome: 'Graduates prepared for work',
         relieves: 'Graduates struggle to find work',
       },
       {
@@ -272,12 +284,14 @@ const steps = [
     ]}
   />
   <HowItWorks steps={steps} />
+  <MinistrySees />
 
   <!-- C9 · Objections -->
   <FAQBand
     audience="governments"
     ids={FAQ_IDS}
     title="Questions Ministries Ask"
+    lead="The scale answer points to the contracts table, which sets out each contract and its scope."
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
@@ -300,6 +314,7 @@ const steps = [
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
+  <DueDiligenceView compact id="due-diligence" />
   <RiskReversalBand
     title="Phased Rollout, with Review Gates"
     lead={SCORECARD.text}

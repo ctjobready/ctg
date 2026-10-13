@@ -68,11 +68,20 @@ test.describe('reduced motion: control (motion allowed)', () => {
     const late = await page.evaluate(motionProbe, EPS_MS);
     expect(late.reveal.total, 'reveal elements on home').toBeGreaterThan(0);
     expect(late.reveal.moving.length, 'reveal animation detected').toBeGreaterThan(0);
-    expect(late.marquee.roots, 'marquees on home').toBeGreaterThan(0);
-    expect(late.marquee.moving.length, 'marquee animation detected').toBeGreaterThan(0);
-    expect(late.marquee.pauseButtonsVisible.length, 'marquee pause button shown when motion is allowed').toBeGreaterThan(0);
     const sweep = await page.evaluate(globalMotionProbe, EPS_MS);
     expect(sweep.declaredTotal, 'declared animations/transitions detected').toBeGreaterThan(0);
     expect(sweep.running.length, 'running animations detected').toBeGreaterThan(0);
+  });
+
+  // WP24a: Home's partner logos are grouped relationship cards, no longer a marquee; the marquee probe is checked on the component gallery (staging builds only).
+  test('styleguide: the probes detect marquee motion', async ({ page }) => {
+    const sg = listPages().find((p) => p.route === '/styleguide/');
+    test.skip(!sg, 'the component gallery is not part of a production build');
+    await open(page, sg!, 'domcontentloaded');
+    await page.waitForLoadState('load');
+    const late = await page.evaluate(motionProbe, EPS_MS);
+    expect(late.marquee.roots, 'marquees in the gallery').toBeGreaterThan(0);
+    expect(late.marquee.moving.length, 'marquee animation detected').toBeGreaterThan(0);
+    expect(late.marquee.pauseButtonsVisible.length, 'marquee pause button shown when motion is allowed').toBeGreaterThan(0);
   });
 });

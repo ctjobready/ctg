@@ -38,7 +38,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 export const HEADLINE: Record<Audience, string> = {
   home: 'Turn Youth Unemployment into a Digital Workforce — with Evidence',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
-  governments: 'Build a National Digital Workforce from Graduates and Digital Labs',
+  governments: 'Build a National Digital Workforce Through Graduates and Digital Labs',
   foundations: 'Fund a Supported Path from Learning to Earning',
   universities: 'Help Your Students and Graduates Build Job-Ready Digital Skills',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
@@ -56,7 +56,7 @@ export const EMPATHY: Record<Audience, string> = {
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   investors: 'Impact investors need to tell a model that is working from one that is only promised.',
-  localPartners: 'You reach young people that central programs miss, often without the curriculum, certification and placement links to finish the job.',
+  localPartners: 'You reach young people that national programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 
@@ -114,11 +114,11 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['PD-08'],
   },
   developmentPartners: {
-    text: `For development partners and INGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model that tracks outcomes after every course. ${UNLIKE_APPROVED}`,
+    text: `For development partners and NGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model with outcome tracking after each course, as agreed in the program scope. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   governments: {
-    text: `For governments who need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. ${UNLIKE_APPROVED}`,
+    text: `For governments that need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   foundations: {
@@ -126,7 +126,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['RC-01', 'PD-11'],
   },
   universities: {
-    text: `For universities and colleges who need their degree holders in paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. ${UNLIKE_APPROVED}`,
+    text: `For universities and colleges that need to prepare their degree holders for paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   employers: {
@@ -135,7 +135,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-10', 'IN-04'],
   },
   investors: {
-    text: `For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. Its results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
+    text: `For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. CodersTrust’s program results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {

@@ -19,6 +19,8 @@ import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
 import { MICRO_COMMITMENT, SPEED } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { cta } from '../../lib/mailto';
+import DueDiligenceView from '../../components/pages/hub/DueDiligenceView.astro';
+import ProtectedByDesign from '../../components/pages/hub/ProtectedByDesign.astro';
 import { faqJsonLd } from '../../lib/faq';
 import { pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
@@ -33,15 +35,15 @@ const description = 'Co-design a youth-employment program with CodersTrust. Pick
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
 
-// Six decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (nav.ts). Investors
+// Six decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). Investors
 // sit with the "Not sure where you fit?" helper below the grid, so the grid is 3 × 2 with no orphan card.
 const audiences = [
   { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
   { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: national programs for youth employment.' },
   { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can verify.' },
-  { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges and chambers delivering locally.' },
-  { title: 'Make Graduates Job-Ready', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
+  { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
+  { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges, chambers and associations delivering locally.' },
 ];
 const investors = { title: 'Investors', href: '/partner-with-us/investors/' };
 
@@ -52,16 +54,7 @@ const steps = [
   { title: `Discovery · week ${wk[0]}`, text: 'A conversation about your goals, priority groups and timeline.' },
   { title: `Co-Design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
   { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and the pilot scorecard are agreed.' },
-  { title: `First Cohort · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
-];
-
-const diligence = cta('diligence');
-// Every item restates a registered arrangement (ID-07, PD-02, PD-09, PD-12, PD-08); nothing new is promised.
-const ddItems = [
-  { icon: 'building-2', title: 'Contracting Entities', text: 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and the funder’s requirements.', href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' },
-  { icon: 'file-check', title: 'Monthly Reports and Tracers', text: `Planned for every cohort, as agreed in the program scope: tracers at ${TRACER_MONTHS} and monthly reports.`, href: '#review-cycle', link: 'What the Reports Cover', ids: 'PD-08 PD-09' },
-  { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records, grievance handling and referral pathways are agreed and documented before enrollment.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
-  { icon: 'search-check', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.', href: '/impact/independent-evaluation/', link: 'Independent Evaluation', ids: 'PD-08 RC-01' },
+  { title: `First Cohort Starting Training · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
 ];
 
 const jsonLd = [
@@ -97,6 +90,9 @@ const jsonLd = [
           <a class="link" href={linkAttrs('/contact/').href}>Talk to Us<Icon name="arrow-right" size={16} /></a>
           <a class="link" href={linkAttrs(investors.href).href}>Impact Investor? See Investors<Icon name="arrow-right" size={16} /></a>
         </p>
+        <p class="hub__helper-programs">
+          <span>Already know the program you need? </span><a class="link" href={linkAttrs('/programs/').href}>See Programs<Icon name="arrow-right" size={16} /></a>
+        </p>
       </div>
     </Section>
   </Tone>
@@ -116,25 +112,9 @@ const jsonLd = [
     <ReviewCycle title="Monthly Reports and Quarterly Reviews" scorecard sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
   </Tone>
 
-  <Tone cmf="DILIGENCE" tone="ice">
-    <Section id="due-diligence" aria-labelledby="dd-h">
-      <SectionHeader id="dd-h" eyebrow="Due Diligence" title="Due Diligence in One View" lead="What a funder or procurement team asks first, with the page that answers it." />
-      <ul class="ddv" role="list">
-        {ddItems.map((d) => (
-          <li class="ddv__item" data-fact={d.ids} data-reveal>
-            <Icon name={d.icon} size={28} strokeWidth={1.5} class="ddv__icon" />
-            <h3 class="ddv__title t-heading-m">{d.title}</h3>
-            <p class="ddv__text">{d.text}</p>
-            <a class="link ddv__link" href={linkAttrs(d.href).href}>{d.link}<Icon name="arrow-right" size={16} /></a>
-          </li>
-        ))}
-      </ul>
-      <p class="cluster ddv__more">
-        <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href={diligence.href}>{diligence.label}<Icon name="arrow-right" size={16} /></a>
-      </p>
-    </Section>
-  </Tone>
+  <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView /></Tone>
+
+  <Tone cmf="SAFEGUARDING" tone="airy"><ProtectedByDesign /></Tone>
 
   <Tone cmf="FAQ">
     <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Six questions partners ask before they start. Each audience page answers the rest." />
@@ -183,6 +163,10 @@ const jsonLd = [
   .hub__helper-text {
     color: var(--on-surface);
   }
+  .hub__helper-programs {
+    grid-column: 2;
+    color: var(--on-surface-variant);
+  }
   .hub__helper-links {
     grid-column: 2;
     gap: var(--space-xs) var(--space-lg);
@@ -194,54 +178,8 @@ const jsonLd = [
     .hub__helper-links {
       grid-column: auto;
     }
-  }
-  .ddv {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-md);
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 720px) {
-    .ddv {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .hub__helper-programs {
+      grid-column: 2 / -1;
     }
-  }
-  @media (min-width: 1100px) {
-    .ddv {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-  .ddv__item {
-    padding: var(--space-gutter);
-    background: var(--surface);
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-default);
-    box-shadow: var(--shadow-card);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-  .ddv__item > * {
-    margin: 0;
-  }
-  .ddv__item :global(.ddv__icon) {
-    color: var(--primary);
-  }
-  .ddv__title {
-    color: var(--secondary);
-  }
-  .ddv__text {
-    flex: 1;
-    color: var(--on-surface-variant);
-  }
-  .ddv__link {
-    align-self: flex-start;
-    min-height: 24px;
-  }
-  .ddv__more {
-    margin: var(--space-md) 0 0;
-    gap: var(--space-xs) var(--space-lg);
   }
 </style>

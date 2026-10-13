@@ -153,7 +153,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
-      { label: 'Local Partners in Bangladesh', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
+      { label: 'Local Partners in Bangladesh', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges, chambers and associations delivering locally.' },
       { label: 'Investors', href: '/partner-with-us/investors/', description: 'For impact investors: back JobReady’s staged rollout.' },
     ],
     feature: {
@@ -237,6 +237,6 @@ export const audiences = [
   { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
-  { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
+  { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
   { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'For impact investors backing JobReady', href: '/partner-with-us/investors/' },
 ] as const;

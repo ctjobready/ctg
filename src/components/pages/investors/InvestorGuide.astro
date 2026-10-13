@@ -1,7 +1,6 @@
 ---
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
-import Fact from '../../facts/Fact.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import LeadershipStrip from './LeadershipStrip.astro';
 import { EMPATHY, ORIGIN } from '../../../data/copy';
@@ -10,17 +9,15 @@ import { governmentPartners } from '../../sections/copyText';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * C5 Guide (Investors), empathy first: empathy ([EMP] P8) → ORIGIN → programs since 2014 (ID-08) and the
- * founders (ID-03) → distribution through governments, development partners, universities and private-sector
- * partners (PA-02, PA-01, PA-05, PA-03) → leadership strip → TalentLEAP (IN-06) and the partner marquee.
+ * C5 Guide (Investors), empathy first and before the vision (credibility before the future state, as on Home): empathy ([EMP] P8) → ORIGIN →
+ * distribution through governments, development partners, universities and private-sector partners (PA-02, PA-01, PA-05, PA-03) → the founders
+ * (the cards carry ID-03; no separate sentence) → current leadership → TalentLEAP (IN-06).
  */
 interface Props {
   id?: string;
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
-// ID-03 as a sentence part ("Founders: A and B." becomes "founded by A and B"), so the register's wording is not retyped.
-const founders = fact('ID-03').text.replace(/^Founders:\s*/, '').replace(/\.$/, '');
 const channels = [
   { icon: 'landmark', label: 'Governments', fact: 'PA-02' },
   { icon: 'globe', label: 'Development Partners', fact: 'PA-01' },
@@ -36,7 +33,6 @@ const channels = [
       <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014, with Institutions That Reach Youth</h2>
       <CopyBlock block={ORIGIN} class="ig__origin" />
-      <p class="ig__founders" data-fact="ID-08 ID-03"><Fact id="ID-08" /> CodersTrust was founded by {founders}.</p>
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths with progressive levels.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>
@@ -93,7 +89,6 @@ const channels = [
     line-height: var(--lh-body-m);
     color: var(--on-surface);
   }
-  .ig__founders,
   .ig__method {
     color: var(--on-surface-variant);
   }

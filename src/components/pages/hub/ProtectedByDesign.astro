@@ -1,0 +1,88 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * "Protected by Design" (WP24a, Benchmark): a short band that lists the safeguarding and data-protection commitments the register already states
+ * (PD-12, repeated in the safeguarding FAQ answer, Q9): consent-based data, protected records, grievance handling, referral pathways and the arrangements
+ * for participants under 18. Nothing is added; each program's own design agrees and documents them before enrollment.
+ */
+interface Props {
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { id = 'protected-by-design', tone = 'airy' } = Astro.props;
+const items = [
+  { icon: 'file-lock', title: 'Consent-Based Data', text: 'Data is collected with consent.' },
+  { icon: 'shield', title: 'Protected Records', text: 'Records are protected, and funders receive privacy-appropriate data.' },
+  { icon: 'message-circle', title: 'Grievance Handling', text: 'A grievance route, with harassment and fraud response.' },
+  { icon: 'handshake', title: 'Referral Pathways', text: 'Referral pathways are specified in each program’s design.' },
+  { icon: 'users', title: 'Under 18', text: 'Guardian consent and supervision for any participant under 18.' },
+];
+---
+
+<Section id={id} tone={tone} pad="sm" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Safeguarding" title="Protected by Design" lead="Specified for each program and agreed and documented before enrollment." />
+  <ul class="pbd" role="list">
+    {
+      items.map((i) => (
+        <li class="pbd__item" data-fact="PD-12" data-reveal>
+          <Icon name={i.icon} size={24} strokeWidth={1.5} class="pbd__icon" />
+          <p class="pbd__title">{i.title}</p>
+          <p class="pbd__text">{i.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="pbd__more"><a class="link" href={linkAttrs('/about/governance/#safeguarding').href}>How People Are Protected<Icon name="arrow-right" size={16} /></a></p>
+</Section>
+
+<style>
+  .pbd {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 640px) {
+    .pbd {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .pbd {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+  .pbd__item {
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .pbd__item > * {
+    margin: 0;
+  }
+  .pbd__item :global(.pbd__icon) {
+    color: var(--primary);
+  }
+  .pbd__title {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .pbd__text {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .pbd__more {
+    margin: var(--space-md) 0 0;
+  }
+</style>

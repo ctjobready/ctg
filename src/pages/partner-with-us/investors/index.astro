@@ -8,12 +8,10 @@ import EvidenceBand from '../../../components/pages/home/EvidenceBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
-import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Section from '../../../components/ui/Section.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
-import ConversionNextSteps from '../../../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../../../components/pages/home/caseStudies';
 import InvestorDefinition from '../../../components/pages/investors/InvestorDefinition.astro';
 import InvestorThesis from '../../../components/pages/investors/InvestorThesis.astro';
@@ -21,6 +19,7 @@ import InvestorVision from '../../../components/pages/investors/InvestorVision.a
 import InvestorGuide from '../../../components/pages/investors/InvestorGuide.astro';
 import InvestorMarket from '../../../components/pages/investors/InvestorMarket.astro';
 import InvestorProofExtras from '../../../components/pages/investors/InvestorProofExtras.astro';
+import InvestorReach from '../../../components/pages/investors/InvestorReach.astro';
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
@@ -41,7 +40,7 @@ const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), 
 
 const featureRows = [
   { feature: 'Employer and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'The platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
-  { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every program', means: 'Learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
+  { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every supported cohort', means: 'Learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
   { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'Courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'Learners need different support as they progress' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'Institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
@@ -86,9 +85,9 @@ const mechanismBlocks = [
 
   <Tone cmf="C2-C3 (compressed)"><InvestorThesis id="thesis" /></Tone>
 
-  <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
-
   <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
+
+  <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
 
   <Tone cmf="C6">
     <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }}>
@@ -96,11 +95,12 @@ const mechanismBlocks = [
     </HomeMechanism>
   </Tone>
 
+  <Tone cmf="C7"><InvestorReach id="reach" /></Tone>
   <Tone cmf="C7">
     <EvidenceBand
       id="proof-band"
-      title="Reach and Evidence"
-      bandHeading="Reach and Evidence"
+      title="Independent Evidence"
+      bandHeading="Independent Evidence"
       trialHeading="An Independent Randomized Trial"
       headlineFact="RC-01"
       chart="trial"
@@ -117,7 +117,7 @@ const mechanismBlocks = [
       <InvestorProofExtras />
     </EvidenceBand>
   </Tone>
-  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner." items={caseStudyItems} /></Tone>
+  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three featured case studies, each with its partner." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
     <FeaturesTable id="features" title="What JobReady Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
@@ -129,18 +129,6 @@ const mechanismBlocks = [
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
-  <Tone cmf="C12">
-    <RiskReversalBand
-      id="risk"
-      title="Start with a Conversation, Not a Commitment"
-      points={[
-        { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'It is a conversation about your funding priorities.' },
-        { icon: 'handshake', title: 'You Decide What Happens Next', text: 'You choose whether to continue after the call.' },
-        { icon: 'file-lock', title: 'An NDA Comes First', text: 'An NDA is in place before the deck and data room are shared.' },
-      ]}
-    />
-  </Tone>
-
   <Tone cmf="C13">
     <CTABand
       id="cta"
@@ -148,21 +136,6 @@ const mechanismBlocks = [
       heading="Let’s Talk About Backing the Platform"
       cta={{ label: investor.label, href: investor.href }}
       secondary={{ label: 'Meet the Leadership Team', href: '/about/team/' }}
-    />
-  </Tone>
-
-  <Tone cmf="C14">
-    <ConversionNextSteps
-      id="next-steps"
-      title="What Happens After You Ask"
-      lead="Four steps, at your pace."
-      steps={[
-        { title: 'Introduction Call', text: 'A conversation about your funding priorities and the thesis.' },
-        { title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
-        { title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
-        { title: 'Your Questions', text: 'We answer your questions and agree what comes next.' },
-      ]}
-      firstAction="Your first step: an introduction call. In your inquiry, include two suitable times for it."
     />
   </Tone>
 

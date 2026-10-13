@@ -4,6 +4,8 @@
  * C1 to C14 in order, as the numbered table in doc 06 P7.
  */
 import InShort from '../../../components/pages/partners/InShort.astro';
+import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -45,12 +47,12 @@ const primary = cta('work');
 const talent = cta('talent');
 
 const { title, description } = meta(
-  'Corporate AI Training & Digital Talent',
+  'Corporate AI Training and Digital Talent',
   'Upskill teams for AI and digital work, and hire job-ready digital talent through CodersTrust’s employer training and placement support.',
 );
 
 // Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
-const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8-employer', 'Q11'];
+const FAQ_IDS = ['Q5', 'Q1-employer', 'Q12', 'Q8-employer', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
 const steps = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
@@ -75,11 +77,20 @@ const steps = [
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-employers"
   />
+  <!-- Routes under the hero: the two offers, one per need (WP24a). Hiring sits near the top (the employer's own decision); training is detailed further down. -->
+  <SubBand>
+    <Callout eyebrow="Your Next Step">
+      <p class="cluster">
+        <span>Need training? <a class="link" href="#train-your-team">Train Your Team<Icon name="arrow-right" size={16} /></a></span>
+        <span>Need talent? <a class="link" href="#hire-talent">Hire Talent<Icon name="arrow-right" size={16} /></a></span>
+      </p>
+    </Callout>
+  </SubBand>
   <InShort
     bullets={[
-      'Training custom-developed for your roles, from a needs assessment to interactive workshops.',
-      'Job-ready talent introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
-      'An AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
+      'Training is custom-developed for your roles, from a needs assessment to interactive workshops.',
+      'Job-ready talent is introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
+      'CodersTrust is an AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
       'Start with a pilot team; success measures are agreed before you start.',
     ]}
     links={[
@@ -98,19 +109,12 @@ const steps = [
     notText="You need talent beyond the experience and credentials available in the candidate pool."
   />
 
-  <!-- Routes: the two offers, one per audience. Hiring sits near the top (the employer's own decision); training is detailed further down. -->
-  <SubBand>
-    <Callout eyebrow="Train the Team You Have. Hire the Talent You Need.">
-      <p class="cluster">
-        <a class="link" href="#train-your-team">Train Your Team<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href="#hire-talent">Hire Talent<Icon name="arrow-right" size={16} /></a>
-      </p>
-    </Callout>
-  </SubBand>
   <Section id="hire-talent" tone="airy" pad="sm" aria-labelledby="hire-h">
     <SectionHeader id="hire-h" eyebrow="Hire Talent" title="Job-Ready Talent Through the Placement Team" lead="Job-ready candidates are introduced through CodersTrust’s placement team. Talent requests are scoped against the experience and credentials available in the candidate pool." />
     <p data-fact="IN-04"><a class="link" href={talent.href}>{talent.label}<Icon name="arrow-right" size={16} /></a></p>
   </Section>
+
+  <LearnerVoice story="mysha-k-diya" excerpt="A paying job after only two months of Digital Accounting training is a huge accomplishment for me, made possible by the mentorship of CodersTrust." program="Digital Accounting course, CodersTrust Bangladesh" tone="white" />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -148,7 +152,7 @@ const steps = [
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'A Team Fluent in AI Workflows', text: 'Your team applies AI tools in daily work.' },
-      { kind: 'Emotional', title: 'Candidates Scoped to Your Roles', text: 'Candidates are scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
+      { kind: 'Emotional', title: 'Candidates Scoped to the Available Candidate Pool', text: 'Candidates are scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
       { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent is introduced through CodersTrust’s placement team.' },
     ]}
   />
@@ -166,10 +170,10 @@ const steps = [
   <MechanismBand
     title="JobReady@Work: Built Around Your Roles"
     positioning={POSITIONING.employers}
-    lead="JobReady@Work is corporate training custom-developed for each organization."
+    lead="JobReady@Work begins with the roles, tasks and outcomes your organization needs to improve."
     blocks={[
       { label: 'Assess', title: 'Needs Assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
-      { label: 'Design', title: 'Customized Solution and Curriculum', text: 'A comprehensive curriculum built for your organization.', icon: 'pen' },
+      { label: 'Design', title: 'Customized Solution and Curriculum', text: 'A curriculum built from your roles, tasks and required tools.', icon: 'pen' },
       { label: 'Deliver', title: 'Interactive Workshops', text: 'Soft-skills and hard-skills tracks, including preparation for an industry certification where a track offers one.', icon: 'users' },
       { label: 'Measure', title: 'Progress Evaluation and Support', text: 'Post-training support and a progress evaluation, so outcomes are measurable.', icon: 'chart-bar' },
     ]}
@@ -187,7 +191,7 @@ const steps = [
     rows={[
       {
         feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
-        means: 'access to candidates from CodersTrust’s placement team, matched to each role’s requirements.',
+        means: 'access to candidates from CodersTrust’s placement team, scoped against the experience and credentials available for each role.',
         outcome: 'Job-ready candidates for your roles',
         relieves: 'You cannot find the digital talent you need',
       },
@@ -261,12 +265,13 @@ const steps = [
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
+  <DueDiligenceView compact id="due-diligence" />
   <RiskReversalBand
     title="Start with a Pilot Team. Decide on Evidence"
-    lead="Success measures are agreed before you start (completion, certification and the skills you name) and checked in the progress evaluation."
+    lead="Success measures are agreed before you start (completion, certification and the role-specific skills you prioritize) and checked in the progress evaluation."
     points={[
       { icon: 'rocket', title: 'Pilot Team First', text: 'Start with one team and see what changes.' },
-      { icon: 'target', title: 'Measures You Set', text: 'Completion, certification and the skills you name are agreed before you start.' },
+      { icon: 'target', title: 'Measures You Set', text: 'Completion, certification and the role-specific skills you prioritize are agreed before you start.' },
       { icon: 'handshake', title: 'Scaling Up Is Your Decision', text: 'You choose whether and how far to scale.' },
       { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}

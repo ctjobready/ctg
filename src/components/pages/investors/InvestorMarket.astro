@@ -5,12 +5,16 @@ import { INVESTOR_MARKET } from '../../../data/copy';
  * Market opportunity (C6, Investors): the four sectors. The two context figures behind it (PX-08, PX-05) are stated once, in the thesis band above,
  * and are not repeated here (WP20c). NO market-size figures (TAM / SAM / SOM): sizing and method are shared under NDA (D2; IN-07 never renders).
  */
-const intro = INVESTOR_MARKET.text.replace(/^Market opportunity:\s*/, '').replace(/\.$/, '');
+// WP24a: one plain sentence (the register's text has a dash and a lowercase opening). The sectors are read from the register's own list.
+const sectors = INVESTOR_MARKET.text.match(/four sectors in emerging markets — (.+?)\.?$/)?.[1];
+if (!sectors) throw new Error('INVESTOR_MARKET wording changed: update the sectors sentence on Investors');
+// Colon and semicolons: the third item contains "and" itself.
+const intro = `The four sectors involved, all in emerging markets: ${sectors.replace(/, HR tech and /, '; HR tech; and ').replace(/^skill training, /, 'skill training; ')}.`;
 ---
 
 <div class="mk">
   <h3 class="t-heading-xl mk__title" data-reveal>The Sectors Involved</h3>
-  <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
+  <p class="mk__intro" data-reveal>{intro}</p>
 </div>
 
 <style>

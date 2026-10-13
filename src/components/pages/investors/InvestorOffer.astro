@@ -4,35 +4,39 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 
 /**
- * C11 Offer (Investors): the offer is the deck request: an introduction call, then the deck and data room under
- * NDA. Thesis and results only; no financial terms are published (D2).
+ * C11 Offer (Investors): the offer is the deck request, shown once as one four-step sequence (WP24a, replacing the separate offer, low-risk and next-steps bands):
+ * an introduction call, an NDA, the deck and data room, then your questions. Each step carries its own reassurance (the call commits neither side, you decide
+ * whether to continue). Thesis and results only; no financial terms are published (D2).
  */
 interface Props {
   id?: string;
 }
 const { id = 'offer' } = Astro.props;
-const items = [
-  { icon: 'phone', title: 'An Introduction Call', text: 'A conversation about your funding priorities and the thesis. It comes first.' },
-  { icon: 'file-lock', title: 'The Deck and Data Room, Under NDA', text: 'Shared after the introduction call, under NDA.' },
+const steps = [
+  { icon: 'phone', title: 'Introduction Call', text: 'A conversation about your funding priorities and the thesis. The call does not commit either side.' },
+  { icon: 'file-lock', title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
+  { icon: 'folder-open', title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
+  { icon: 'message-circle', title: 'Your Questions', text: 'We answer your questions and agree what comes next. You decide whether to continue.' },
 ];
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title="What You Receive" lead="This page covers the thesis and results only. The rest is shared in conversation, in the four steps below." />
-  <ol class="grid-cards grid-cards--2 io" role="list">
+  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title="What Happens After You Ask" lead="Four steps, at your pace. This page covers the thesis and results only; the rest is shared in conversation." />
+  <ol class="grid-cards io" role="list">
     {
-      items.map((it, i) => (
+      steps.map((s, i) => (
         <li class="card" data-reveal>
           <div class="card__body">
-            <Icon name={it.icon} size={36} strokeWidth={1.5} class="io__icon" />
-            <p class="eyebrow">You Receive</p>
-            <h3 class="card__title">{it.title}</h3>
-            <p class="card__text">{it.text}</p>
+            <Icon name={s.icon} size={36} strokeWidth={1.5} class="io__icon" />
+            <p class="eyebrow">Step {i + 1}</p>
+            <h3 class="card__title">{s.title}</h3>
+            <p class="card__text">{s.text}</p>
           </div>
         </li>
       ))
     }
   </ol>
+  <p class="io__first" data-reveal>Your first step: an introduction call. In your inquiry, include two suitable times for it.</p>
 </Section>
 
 <style>
@@ -43,5 +47,15 @@ const items = [
   }
   .io :global(.io__icon) {
     color: var(--primary);
+  }
+  .io__first {
+    margin: var(--space-lg) 0 0;
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  @media (min-width: 1024px) {
+    .io.io {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 </style>

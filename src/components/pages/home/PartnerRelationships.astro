@@ -1,0 +1,77 @@
+---
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import { PARTNER_CAPTION } from '../../../lib/logos';
+
+/**
+ * The partner logo wall as relationship cards (WP24a, Benchmark): the same registered partner logos (src/data/partners.ts, PA-04), grouped by the kind of
+ * relationship instead of one undifferentiated run: funders and development partners, government programs, education partners, employers.
+ * Relationships, not endorsements: the caption says so, and no card implies that an organization endorses CodersTrust. Logos follow the permissions rule
+ * of PartnerStrip (a logo that may not render shows the organization's name).
+ */
+const groups = [
+  { title: 'Funders and Development Partners', group: 'development', label: 'Funders and development partners' },
+  { title: 'Government Programs', group: 'government', label: 'Government program partners' },
+  { title: 'Education Partners', group: 'academic', label: 'Education partners' },
+  { title: 'Employers', group: 'private', label: 'Employer and private-sector partners' },
+] as const;
+---
+
+<div class="rel">
+  <p class="rel__caption" data-reveal>{PARTNER_CAPTION} These are working relationships, not endorsements.</p>
+  <ul class="rel__cards" role="list">
+    {
+      groups.map((g) => (
+        <li class="rel__card" data-reveal>
+          <h3 class="rel__title">{g.title}</h3>
+          <PartnerStrip variant="grid" group={g.group} caption={false} label={g.label} />
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .rel {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .rel__caption {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .rel__cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .rel__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .rel__card {
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-lg);
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    min-width: 0;
+  }
+  .rel__title {
+    margin: 0;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+  }
+</style>
