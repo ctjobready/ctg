@@ -16,13 +16,13 @@ import { linkAttrs } from '../../lib/url';
 
 const path = '/our-model/';
 const description = desc('One integrated path: assessment, training with certification preparation, three months of milestone-based mentoring and placement, with outcomes tracked.');
-const lead = `One integrated path: an accessible assessment, ${val('PD-01')} training hours per certification, three months of milestone-based mentoring, placement support and outcome tracking after each course.`;
+const lead = `One integrated path: an accessible assessment, ${val('PD-01')} training hours per certification, three months of milestone-based mentoring, with placement support alongside, and outcome tracking after each course.`;
 // Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
 const delivery = [
   { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Selection uses a customized psychometric analysis, a written test and an interview; a small number may not be selected, and the reasons are reported.' },
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
-  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, from a live profile to first bids, a first client and the exam, and then learners join the alumni network.` },
+  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client), and then learners join the alumni network.` },
   { icon: 'wifi', title: 'Connectivity-Light Delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
   { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
@@ -34,7 +34,8 @@ const d = discoveryCta();
 <BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
   <Hero variant="inner" eyebrow="Our Model" title="How the CodersTrust Model Works" lead={lead} artSeed="our-model-hub">
     <Fragment slot="actions">
-      <Button href="/impact/" iconEnd="arrow-right">See the Evidence</Button>
+      <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
+      <a class="link" href={linkAttrs('/impact/').href}>See the Evidence</a>
     </Fragment>
   </Hero>
 
@@ -45,7 +46,7 @@ const d = discoveryCta();
     blocks={[
       { label: 'Assess and Place', title: 'Readiness Assessment', text: 'Tests and an interview route each applicant to a career track or a foundation track.', icon: 'clipboard-check' },
       { label: 'Learn', title: 'Skill Units and Certification', text: 'Blended training on a track set from employer demand, with certification exam preparation and the exam fee included.', icon: 'graduation-cap' },
-      { label: 'Earn', title: 'Mentoring and Placement', text: 'Three months of milestone-based one-to-one mentoring, then placement support into local, remote and global work.', icon: 'briefcase' },
+      { label: 'Earn', title: 'Mentoring and Placement', text: 'Three months of milestone-based one-to-one mentoring, with placement support alongside.', icon: 'briefcase' },
       { label: 'Prosper', title: 'Career Paths', text: 'Progressive levels, continuing professional development and the alumni network.', icon: 'trending-up' },
     ]}
     link={{ label: 'How TalentLEAP Works', href: '/our-model/talentleap/' }}

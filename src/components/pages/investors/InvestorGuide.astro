@@ -1,7 +1,6 @@
 ---
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
-import PartnerStrip from '../../system/PartnerStrip.astro';
 import Fact from '../../facts/Fact.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import LeadershipStrip from './LeadershipStrip.astro';
@@ -9,7 +8,6 @@ import { EMPATHY, ORIGIN } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { governmentPartners } from '../../sections/copyText';
 import { linkAttrs } from '../../../lib/url';
-import { PARTNER_CAPTION } from '../../../lib/logos';
 
 /**
  * C5 Guide (Investors), empathy first: empathy ([EMP] P8) → ORIGIN → programs since 2014 (ID-08) and the
@@ -61,7 +59,6 @@ const channels = [
   </div>
   <h3 class="t-heading-l ig__lead-h" data-reveal>Leadership</h3>
   <LeadershipStrip />
-  <PartnerStrip variant="marquee" caption={PARTNER_CAPTION} />
 </Section>
 
 <style>

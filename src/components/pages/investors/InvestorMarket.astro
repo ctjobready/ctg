@@ -4,22 +4,17 @@ import { INVESTOR_MARKET } from '../../../data/copy';
 
 /**
  * Market opportunity (C6, Investors): the four sectors, four context facts with their sources, and the closing
- * line. NO market-size figures (TAM / SAM / SOM): sizing and method are in the investor deck (D2; IN-07 never renders).
+ * line. NO market-size figures (TAM / SAM / SOM): sizing and method are shared under NDA (D2; IN-07 never renders).
  */
-const [sectors, closingTail] = INVESTOR_MARKET.text.split('. Market sizing');
-const intro = sectors.replace(/^Market opportunity:\s*/, '');
-const closing = closingTail ? `Market sizing${closingTail}` : '';
-// PX-10 carries two figures (257 million NEET and the 12.4% youth unemployment rate): show its full sentence, not only the stat label.
-const fullSentence = new Set(['PX-10']);
+const intro = INVESTOR_MARKET.text.replace(/^Market opportunity:\s*/, '').replace(/\.$/, '');
 ---
 
 <div class="mk" data-fact={INVESTOR_MARKET.facts.join(' ')}>
   <h3 class="t-heading-xl mk__title" data-reveal>Market Opportunity</h3>
   <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
-  <div class="grid-cards grid-cards--4 mk__grid">
-    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} showText={fullSentence.has(id) ? true : undefined} />)}
+  <div class="grid-cards grid-cards--2 mk__grid">
+    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} />)}
   </div>
-  {closing && <p class="mk__closing" data-reveal>{closing}</p>}
 </div>
 
 <style>

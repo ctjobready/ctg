@@ -2,7 +2,7 @@
 title: "National University Postgraduate Diploma"
 slug: overview
 kind: overview
-applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdN0J_VMgh0FYMTTx9DNRVYn840X0XGTVwhVzmjC6YsmJf1rg/viewform"
+applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
 legacyUrl: "https://coderstrust.global/nu-postgraduate-diploma/"
 verify: true
 ---

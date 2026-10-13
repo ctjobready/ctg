@@ -126,7 +126,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['RC-01', 'IN-10'],
   },
   investors: {
-    text: `For governments, development partners, foundations and employers who need youth moved into paid digital work, with results that are measured, reported and open to independent evaluation, CodersTrust offers an integrated training-to-earnings model as country programs. ${UNLIKE_APPROVED}`,
+    text: `For impact and growth investors who need a platform that moves emerging-market youth into paid digital work, CodersTrust offers an integrated training-to-earnings model, with results that are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {
@@ -210,7 +210,7 @@ function plainLine(): CopyBlock {
 export const PLAIN_LINE: CopyBlock = plainLine();
 
 /**
- * Employment at follow-up in the randomized trial, read from RC-02's text ("on a control-group rate of 52.8%"), so the Home C7
+ * Employment at follow-up in the randomized trial, read from RC-02's text ("than the control group (52.8%)"), so the Home C7
  * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10.3 pp). It throws
  * if the text stops reading that way.
  */
@@ -222,9 +222,9 @@ export interface RctComparison {
 }
 function rctComparison(): RctComparison {
   const rc02 = fact('RC-02');
-  const m = rc02.text.match(/on a control-group rate of (\d+(?:\.\d+)?)%/);
+  const m = rc02.text.match(/than the control group \((\d+(?:\.\d+)?)%\)/);
   if (!m || !rc02.stat || rc02.stat.numeric === undefined) {
-    throw new Error(`RCT_COMPARISON: RC-02's text no longer states "on a control-group rate of X%": "${rc02.text}"`);
+    throw new Error(`RCT_COMPARISON: RC-02's text no longer states "than the control group (X%)": "${rc02.text}"`);
   }
   const control = Number(m[1]);
   return { control, offered: Math.round((control + rc02.stat.numeric) * 10) / 10, delta: rc02.stat.value };
@@ -249,8 +249,8 @@ function trainedReach(): CopyBlock {
 export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and the curriculum for a national program that trained 25,125 women (with 2,500 women trained directly); separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
-  facts: ['GV-10', 'GV-01', 'SC-08', 'PD-06'],
+  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and a national program that trained 25,125 women across 130 upazilas, for which CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
+  facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
 export const PRICING: CopyBlock = {
@@ -276,7 +276,7 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
-  text: 'Three women-focused programs: 47–71% in work (WSDFM 71% and Women in Online Work, Kosovo, 68%; Her Power 47% of its training cohort).',
+  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 47% of its training cohort.',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
@@ -296,7 +296,7 @@ export const SCORECARD: CopyBlock = {
 };
 
 export const PROGRAM_OPTIONS = [
-  { name: 'Pilot', size: '1,000–2,500 trainees', duration: '8–14 months (tracking to month 23)', note: 'Prove the model in one country or region.' },
+  { name: 'Multi-Cohort Pilot Program', size: '1,000–2,500 trainees', duration: '8–14 months (tracking to month 23)', note: 'Prove the model in one country or region.' },
   { name: 'Scale', size: '10,000–25,000 trainees', duration: '12–18 months rolling', note: 'Expand to more cohorts and locations on the pilot’s results.' },
   { name: 'National', size: '100,000+ trainees', duration: '3–5 years', note: 'A design option we plan phase by phase; not yet delivered at this size.' },
 ] as const;
@@ -305,7 +305,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 /** "How it works in three steps" (C8d) for funded programs. */
 export const STEPS = [
   { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
-  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring toward each track’s work-entry goal (for freelance tracks: profile live, first bids, first client, exam).' },
+  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
   { title: 'Place and Report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
@@ -351,7 +351,7 @@ export const C14 = {
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
-    investors: 'Your first step: an introduction call. The deck and data room follow under NDA.',
+    investors: 'Your first step: an introduction call.',
   },
 };
 
@@ -365,8 +365,8 @@ export const HOME_META = {
 
 /** Investors page market section (no market-size figures on public pages, D2). */
 export const INVESTOR_MARKET: CopyBlock = {
-  text: 'Market opportunity: four sectors in emerging markets — skill training, freelance marketplaces and job sites, HR tech and higher-ed EdTech. Market sizing and method are in the investor deck.',
-  facts: ['PX-09', 'PX-08', 'PX-05', 'PX-10'],
+  text: 'Market opportunity: four sectors in emerging markets — skill training, freelance marketplaces and job sites, HR tech and higher-ed EdTech.',
+  facts: ['PX-08', 'PX-05'],
 };
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */

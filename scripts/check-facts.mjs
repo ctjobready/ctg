@@ -872,9 +872,10 @@ function numberGuardPage(path, html, allow = []) {
   // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
   for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '154M–435M', '~15,000', '+$27', '$27', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
-  for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  // D1 (owner decision, 2026-10-13): the online gig-work range (154M–435M, PX-09), the 257M youth figure (PX-10) and the 10M+ labor-market figure (PX-15) are withdrawn from the public dataset and must not render
+  for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000', '435M', '257M', '10M+']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // chart data: the published survey aggregates (outcomes-data.ts) are part of the public dataset
   guardPasses('a published survey share ("37.1%" Dhaka)', '/impact/outcomes-2026/', '<p>Dhaka 37.1%, Chattogram 8.2%</p>');
   guardFails('"37.2%" (not a published share)', '/impact/outcomes-2026/', '<p>Dhaka 37.2%</p>');

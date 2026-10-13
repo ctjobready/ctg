@@ -13,7 +13,6 @@ import CTABand from '../components/ui/CTABand.astro';
 import Section from '../components/ui/Section.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
-import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
 import InvestorDefinition from '../components/pages/investors/InvestorDefinition.astro';
@@ -22,7 +21,6 @@ import InvestorVision from '../components/pages/investors/InvestorVision.astro';
 import InvestorGuide from '../components/pages/investors/InvestorGuide.astro';
 import InvestorMarket from '../components/pages/investors/InvestorMarket.astro';
 import InvestorProofExtras from '../components/pages/investors/InvestorProofExtras.astro';
-import PlatformStatus from '../components/pages/investors/PlatformStatus.astro';
 import InvestorFit from '../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../components/pages/hub/FaqBlock.astro';
@@ -43,15 +41,10 @@ const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), 
 
 const featureRows = [
   { feature: 'Employer and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'the platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
-  { feature: 'TalentLEAP competency units, with levels Competent → Proficient → Expert; mentoring, certification and placement in every program', means: 'learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths with progressive levels', relieves: 'Online learning sells content, not earnings' },
+  { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every program', means: 'learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
   { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'the platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
-];
-const learnEarnProsper = [
-  { title: 'Learn', text: 'Competency development through certification-focused courses.' },
-  { title: 'Earn', text: 'Employment or freelance work, with mentoring and placement support.' },
-  { title: 'Prosper', text: 'Career advancement along graduated levels.' },
 ];
 const mechanismBlocks = [
   { label: 'Learn', title: 'Courses, Bootcamps and University Programs', text: 'AI-ready digital skills, with preparation for industry certification.', icon: 'graduation-cap' },
@@ -106,9 +99,6 @@ const mechanismBlocks = [
 
   <Tone cmf="C8" join>
     <FeaturesTable id="features" title="What the Platform Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
-    <FeatureSteps id="how-it-works" steps={learnEarnProsper} facts={['ID-06', 'IN-04']} programs={false}>
-      <PlatformStatus />
-    </FeatureSteps>
   </Tone>
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
@@ -136,7 +126,7 @@ const mechanismBlocks = [
       heading="Let’s Talk About Backing the Platform."
       cta={{ label: investor.label, href: investor.href }}
       secondary={{ label: 'Meet the Leadership Team', href: '/about/team/' }}
-      micro="An introduction call comes first; the deck follows under NDA."
+      micro="The deck and data room follow under NDA."
     />
   </Tone>
 
@@ -148,7 +138,7 @@ const mechanismBlocks = [
       steps={[
         { title: 'Introduction Call', text: 'A conversation about your investment focus and the thesis.' },
         { title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
-        { title: 'Deck and Data Room', text: 'You receive the investor deck and access to the data room.' },
+        { title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
         { title: 'Your Questions', text: 'We answer your questions and agree what comes next.' },
       ]}
       validate={C14.validate}
