@@ -242,7 +242,8 @@ export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(
 
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
-  superkids: ['superkids/mou-signing', 'superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/steam-workshop', 'superkids/student-explains', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing-pen', 'superkids/stem-group', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
+  // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MoU photographs follow.
+  superkids: ['superkids/robotics-desk', 'superkids/student-explains', 'superkids/stem-group', 'superkids/classroom-uniform', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   nationwide: ['general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps', 'general/madrasa-students-lesson', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],

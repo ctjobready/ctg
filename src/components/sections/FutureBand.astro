@@ -52,6 +52,7 @@ const media = vignettes.map((v, i) => {
     }
   </div>
   {media.some((m) => m && m.assetId) && <p class="fb__note">Photographs are from past CodersTrust programs, shown for context.</p>}
+  <slot />
 </Section>
 
 <style>
