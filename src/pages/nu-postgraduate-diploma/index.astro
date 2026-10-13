@@ -1,6 +1,6 @@
 ---
 // P15 — NU Postgraduate Diploma /nu-postgraduate-diploma/ (T3 conversion page; doc 04 matrix 4.7).
-// Gate: duration, schedule, fee, eligibility, delivery mode, internship terms and award are NOT published until
+// Gate: duration, schedule, eligibility, delivery mode, internship terms and award are NOT published until
 // NU and CodersTrust approve the admissions fact set. "Apply Now" is a plain link to the standalone Google Form.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -75,7 +75,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
       <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-06" /></dd></div>
       <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
       <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
@@ -179,11 +179,11 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     cards={[
       { icon: 'clipboard-check', title: 'Eligibility', text: 'Honors / Diploma holders with a minimum CGPA of 2.25.' },
       { icon: 'calendar-check', title: 'Intake and Schedule', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Pay instantly online, transfer via mobile merchant accounts, visit CTBD branches for cash or POS payments, or make a bank deposit. The fee is confirmed with admissions before you apply.' },
+      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Program fee: BDT 50,000. Pay instantly online, transfer via mobile merchant accounts, visit CTBD branches for cash or POS payments, or make a bank deposit.' },
       { icon: 'award', title: 'Recognition', text: 'CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh.' },
     ]}
   >
-    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask about fees, schedule, eligibility and recognition.</p>
+    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask about fees, payment, schedule, eligibility and recognition.</p>
   </OfferSection>
 
   <!-- C12 -->
