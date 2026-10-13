@@ -8,7 +8,8 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
-import MechanismBand from '../../components/sections/MechanismBand.astro';
+import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import { fact } from '../../data/facts';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
@@ -17,14 +18,19 @@ import { linkAttrs } from '../../lib/url';
 
 const path = '/our-model/';
 const description = desc('One integrated path: assessment, training with certification preparation, three months of milestone-based mentoring and placement, with outcomes tracked.');
-const lead = `One integrated path: an accessible assessment, ${val('PD-01')} training hours per certification, three months of milestone-based mentoring, with placement support alongside, and outcome tracking after each course.`;
+const lead = 'One integrated path: assessment, certification-focused training, three months of milestone-based mentoring, placement support and tracked outcomes.';
+// "What Is CodersTrust?" is followed by the problem in one line and the strongest proof, both restated from register facts (PX-01, RC-02).
+const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+const proof = `In a randomized trial of CodersTrust’s predecessor program, ${lowerFirst(fact('RC-02').text)}.`;
 // Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
-const delivery = [
+const startingPoints = [
   { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Selection uses a customized psychometric analysis, a written test and an interview; a small number may not be selected, and the reasons are reported.' },
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
-  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client), and then learners join the alumni network.` },
   { icon: 'wifi', title: 'Connectivity-Light Delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
+];
+const atScale = [
+  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client). Learners then join the alumni network.` },
   { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'Up to 10 certification cohorts run in parallel from about month 5, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
@@ -40,29 +46,33 @@ const d = discoveryCta();
     </Fragment>
   </Hero>
 
-  <MechanismBand
-    id="path"
-    title="One Integrated Path, from Assessment to Career"
-    lead="Learn. Earn. Prosper. Each stage hands the learner to the next, and every course is followed by tracked outcomes."
-    blocks={[
-      { label: 'Assess and Place', title: 'Readiness Assessment', text: 'Tests and an interview route each applicant to a career track or a foundation track.', icon: 'clipboard-check' },
-      { label: 'Learn', title: 'Skill Units and Certification', text: 'Blended training on a track set from employer demand, with certification exam preparation and the exam fee included.', icon: 'graduation-cap' },
-      { label: 'Earn', title: 'Mentoring and Placement', text: 'Three months of milestone-based one-to-one mentoring, with placement support alongside.', icon: 'briefcase' },
-      { label: 'Prosper', title: 'Career Paths', text: 'Progressive levels, continuing professional development and the alumni network.', icon: 'trending-up' },
-    ]}
-    link={{ label: 'How TalentLEAP Works', href: '/our-model/talentleap/' }}
-  />
+  <DefinitionBlock>
+    <p data-fact="PX-01">Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.</p>
+    <p data-fact="RC-02">{proof}</p>
+  </DefinitionBlock>
 
-  <Section id="stages" tone="airy" aria-labelledby="stages-h">
-    <SectionHeader id="stages-h" eyebrow="TalentLEAP" title="The Stages a Learner Moves Through" lead="Five steps carry each learner through the three TalentLEAP stages: Learn, Earn and Prosper." />
+  <Section id="path" tone="airy" aria-labelledby="path-h">
+    <SectionHeader id="path-h" eyebrow="How It Works" title="One Integrated Path, from Assessment to Career" lead="Learn. Earn. Prosper. Each stage prepares learners for the next, and every course is followed by tracked outcomes." />
+    <p class="om__scope">
+      For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. <a class="link" href={linkAttrs('/programs/jobready-work/').href}>JobReady@Work</a>, the <a class="link" href={linkAttrs('/nu-postgraduate-diploma/').href}>NU Postgraduate Diploma</a> and <a class="link" href={linkAttrs('/programs/superkids/').href}>SuperKids</a> have their own delivery structures.
+    </p>
     <StagePipeline id="stage-pipeline" />
     <p class="om__link"><a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section aria-labelledby="delivery-h">
     <SectionHeader id="delivery-h" eyebrow="Delivery Model" title="How a Program Is Delivered" lead="The design choices that make the path work for learners who start from different places." />
+    <h3 class="om__group t-heading-xl">Supporting Different Starting Points</h3>
     <div class="grid-cards">
-      {delivery.map((x) => (
+      {startingPoints.map((x) => (
+        <FeatureCard icon={x.icon} title={x.title}>
+          <p class="card__text" data-fact={x.id}>{x.text}</p>
+        </FeatureCard>
+      ))}
+    </div>
+    <h3 class="om__group t-heading-xl">Delivering at Scale</h3>
+    <div class="grid-cards">
+      {atScale.map((x) => (
         <FeatureCard icon={x.icon} title={x.title}>
           <p class="card__text" data-fact={x.id}>{x.text}</p>
         </FeatureCard>
@@ -95,7 +105,7 @@ const d = discoveryCta();
     <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Start with a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>
@@ -109,5 +119,17 @@ const d = discoveryCta();
   }
   .om__link {
     margin: var(--space-md) 0 0;
+  }
+  .om__scope {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-lg);
+    color: var(--on-surface-variant);
+  }
+  .om__group {
+    margin: var(--space-xl, 56px) 0 var(--space-md);
+    color: var(--secondary);
+  }
+  .om__group:first-of-type {
+    margin-top: var(--space-lg);
   }
 </style>

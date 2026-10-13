@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * StatusTag: a small tag that says what kind of figure a tile shows, so a long inline qualifier is not needed beside it.
+ *  - Delivered: work already done, backed by program records or a survey
+ *  - Agreement: reach set by a signed agreement; not delivered reach
+ *  - Target: a goal that depends on funding, partners or government commitments
+ *  - Planned: a program or level that is planned but not yet running
+ * The meaning is carried by the word and a distinct icon, never by color alone (WCAG 1.4.1). Title Case, one line, decorative icon.
+ * Place it in the flow directly above or beside the figure it describes.
+ */
+type Status = 'Delivered' | 'Agreement' | 'Target' | 'Planned';
+interface Props {
+  status: Status;
+  class?: string;
+}
+const { status, class: className } = Astro.props;
+const icon: Record<Status, string> = { Delivered: 'circle-check', Agreement: 'handshake', Target: 'target', Planned: 'calendar-check' };
+---
+
+<span class:list={['status-tag', `status-tag--${status.toLowerCase()}`, className]} data-status={status}><Icon name={icon[status]} size={14} strokeWidth={2} /><span>{status}</span></span>
+
+<style is:global>
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    padding: 0 10px 0 8px;
+    border-radius: var(--radius-pill);
+    font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
+    border: 1px solid currentColor;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .status-tag--delivered {
+    background: var(--success-subtle);
+    color: var(--success-strong);
+  }
+  .status-tag--agreement {
+    background: var(--badge-info-bg, var(--info-subtle));
+    color: var(--on-surface);
+  }
+  .status-tag--target {
+    background: var(--sale-badge-bg);
+    color: var(--on-tertiary-container);
+  }
+  .status-tag--planned {
+    background: var(--surface);
+    color: var(--secondary);
+    border-style: dashed;
+  }
+</style>

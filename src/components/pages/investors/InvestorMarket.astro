@@ -1,20 +1,16 @@
 ---
-import FactCard from '../../facts/FactCard.astro';
 import { INVESTOR_MARKET } from '../../../data/copy';
 
 /**
- * Market opportunity (C6, Investors): the four sectors, four context facts with their sources, and the closing
- * line. NO market-size figures (TAM / SAM / SOM): sizing and method are shared under NDA (D2; IN-07 never renders).
+ * Market opportunity (C6, Investors): the four sectors. The two context figures behind it (PX-08, PX-05) are stated once, in the thesis band above,
+ * and are not repeated here (WP20c). NO market-size figures (TAM / SAM / SOM): sizing and method are shared under NDA (D2; IN-07 never renders).
  */
 const intro = INVESTOR_MARKET.text.replace(/^Market opportunity:\s*/, '').replace(/\.$/, '');
 ---
 
-<div class="mk" data-fact={INVESTOR_MARKET.facts.join(' ')}>
+<div class="mk">
   <h3 class="t-heading-xl mk__title" data-reveal>Market Opportunity</h3>
   <p class="mk__intro" data-reveal>{intro.charAt(0).toUpperCase() + intro.slice(1)}.</p>
-  <div class="grid-cards grid-cards--2 mk__grid">
-    {INVESTOR_MARKET.facts.map((id) => <FactCard id={id} />)}
-  </div>
 </div>
 
 <style>

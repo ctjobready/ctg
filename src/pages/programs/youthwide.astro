@@ -13,11 +13,13 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import SessionAgenda from '../../components/ui/SessionAgenda.astro';
 import EmailFallback from '../../components/ui/EmailFallback.astro';
-import HeroBand from '../../components/sections/HeroBand.astro';
+import Hero from '../../components/system/Hero.astro';
+import Button from '../../components/system/Button.astro';
+import StatusTag from '../../components/system/StatusTag.astro';
+import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
 import PhotoGallery from '../../components/ui/PhotoGallery.astro';
-import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
@@ -54,7 +56,7 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const path = '/programs/youthwide/';
-const LAST_UPDATED = PAGE_UPDATED.youthwide;
+const LAST_UPDATED = '2026-10-14'; // WP20c: the day the review round 5 cycle 3 wording changes landed (PAGE_UPDATED.youthwide is 2026-10-11)
 const target = statValue('IN-01');
 const title = 'YouthWIDE: Youth Digital Employment Program';
 const description = `YouthWIDE prepares educated, unemployed youth for paid digital work: a national initiative in Bangladesh and co-funded country cohorts elsewhere.`;
@@ -92,17 +94,27 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'YouthWIDE' }]} jsonLd={jsonLd} stickyCta={discovery}>
   <!-- C1 -->
-  <HeroBand
-    audience="YouthWIDE · Youth Digital Employment Program"
-    title="Prepare Educated Youth for Paid Digital Work."
-    lead="We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training."
-    cta={discovery}
-    secondary={briefing}
-    artSeed="youthwide"
-  />
+  <!-- WP20c: the ministry briefing is a text link beside the one primary button (not a second button) -->
+  <div id="hero">
+    <Hero
+      eyebrow="YouthWIDE · Youth Digital Employment Program"
+      title="Prepare Educated Youth for Paid Digital Work."
+      lead="We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training."
+      artSeed="youthwide"
+    >
+      <nav class="routes" aria-label="Partnership routes" data-hero-in>
+        <a class="link" href={url('/partner-with-us/development-partners/')}>For Development Partners: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href={url('/partner-with-us/governments/')}>For Governments: See the Partnership Route<Icon name="arrow-right" size={16} /></a>
+      </nav>
+      <Fragment slot="actions">
+        <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
+        {briefing.href && <a class="link" href={briefing.href}>{briefing.label}</a>}
+      </Fragment>
+    </Hero>
+  </div>
   <InShort
     bullets={[
-      'The program through which funders and agencies deploy the CodersTrust model in a country, in phases, through existing labs and colleges.',
+      'YouthWIDE is the program through which funders and agencies deploy the CodersTrust model in a country, in phases, through existing labs and colleges.',
       'Priority groups are reached with outreach and accessible selection, with women a priority in every group.',
       'Results you can report: monthly reports, tracer surveys and documentary evidence of earnings where available.',
       'Start with a pilot; the scorecard and the decision to expand stay with you.',
@@ -114,6 +126,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { label: 'Options', href: '#offer' },
       { label: 'Next Steps', href: '#next-steps' },
     ]}
+    contracting={false}
   />
 
   <!-- GEO definition + page BLUF -->
@@ -145,13 +158,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C2 -->
   <ProblemSection
     eyebrow="The Challenge"
-    title="Educated Young People Are Not in Work, in Bangladesh and Across Three Regions."
+    title="Educated Young People Are Not in Work in Bangladesh and Across Three Regions."
     bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
     factIds={['PX-01', 'PX-02']}
   >
     <div class="aud aud--stack">
       <div class="aud__col" id="governments">
-        <h3 class="aud__h">Government Delivery</h3>
+        <h3 class="aud__h">Why Graduates Are a Priority</h3>
         <p class="aud__lead" data-fact="PX-03">In Bangladesh, graduate unemployment is {rates.graduate}, against {rates.ssc} for holders of the Secondary School Certificate (SSC). The national initiative works with five priority groups.</p>
         <PriorityGroups />
       </div>
@@ -164,7 +177,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C3 -->
   <CostSection
-    title="Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result."
+    title="Training Without Work Entry Spends the Budget Without the Result."
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
       { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
@@ -189,7 +202,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         <h3 class="aud__h">Government Delivery</h3>
         <ul class="aud__list" role="list">
           <li><strong>A Government Lab Becomes a Blended-Learning Center.</strong> Seats are confirmed per program in existing government digital labs and colleges.</li>
-          <li><strong>Capacity That Stays in Your System.</strong> Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.</li>
+          <li><strong>Capacity That Can Stay in Your System.</strong> Where included in the program scope, trained facilitators and localized curricula remain after the program.</li>
         </ul>
       </div>
       <div class="aud__col">
@@ -240,18 +253,18 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <div class="aud">
       <div class="aud__col">
         <h3 class="aud__h">Government Delivery</h3>
-        <p class="aud__lead" data-fact="GV-09">Delivered through the labs and colleges you already have: 9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.</p>
+        <p class="aud__lead" data-fact="GV-09">Delivered through the labs and colleges you already have; lab access and seats are confirmed per program.</p>
         <p class="aud__lead">Trained trainers deliver it: Training of Trainers, curriculum and manuals, and certified local facilitators. Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.</p>
         <div class="mech-target" data-reveal>
-          <Badge tone="sale">Target</Badge>
+          <StatusTag status="Target" />
           <FactStat id="IN-01" />
           <p class="mech-target__note">A national ambition for 2030 that depends on government and donor commitments; not a delivered figure.</p>
         </div>
         <div class="mech-stats">
-          <FactStat id="GV-09" />
-          <FactStat id="GV-13" />
+          <div class="mech-stat"><FactStat id="GV-09" /></div>
+          <div class="mech-stat"><StatusTag status="Delivered" /><FactStat id="GV-13" /></div>
         </div>
-        <p class="mech-target__note" data-fact="GV-01">Her Power, the national program, <Fact id="GV-01" as="span" />.</p>
+        <p class="mech-target__note" data-fact="GV-01"><Fact id="GV-01" as="span" />. <a class="link" href="#cases">See the results under Proof in Practice</a>.</p>
       </div>
       <div class="aud__col">
         <h3 class="aud__h">Funders and Development Partners</h3>
@@ -278,11 +291,26 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     </div>
   </MechanismSection>
   <!-- C7 -->
-  <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03', 'OC-05']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
-    <p class="proof-note" data-fact="OC-01 OC-05">The earning-timing figure describes when earnings began, not what caused them.</p>
-  </ProofBand>
+  <EvidenceBand
+    id="proof-band"
+    title="Trial and Survey Evidence"
+    bandHeading="Trial and Survey Evidence"
+    trialHeading="An Independent Randomized Trial"
+    headlineFact="RC-01"
+    chart="trial"
+    chip={false}
+    plainLine
+    lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
+    statIds={['RC-02']}
+    surveyStatIds={['OC-03', 'OC-05']}
+    links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}
+  >
+    <p class="proof-note" data-fact="OC-05">The {statValue('OC-05')} figure describes when earnings began, not what caused them.</p>
+  </EvidenceBand>
   <CaseStudyCarousel
-    title="Proof in Practice"
+    id="cases"
+    eyebrow="Proof in Practice"
+    title="Results from Delivered Programs"
     items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
@@ -365,7 +393,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <div class="note">
       <span class="note__label">Scale</span>
       <CopyP block={SCALE} />
-      <p class="scale-note"><Fact id="GV-09" />.</p>
     </div>
     <div class="note">
       <span class="note__label">Services Behind a Phase</span>
@@ -542,6 +569,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   .aud__list strong {
     color: var(--secondary);
   }
+  .routes {
+    margin-top: var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+  }
   .gov-cta {
     display: grid;
     justify-items: center;
@@ -577,6 +610,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     display: grid;
     gap: var(--space-md);
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mech-stat {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    align-content: start;
   }
   .svc {
     margin: 0;
