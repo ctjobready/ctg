@@ -5,9 +5,11 @@ import Badge from '../../../components/system/Badge.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import FactStat from '../../../components/facts/FactStat.astro';
+import StatusTag from '../../../components/system/StatusTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
-import { articleNode, desc, title, fundingCta } from '../../../components/pages/impact/page-utils';
+import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
@@ -18,7 +20,7 @@ const JOBREADY = 'https://jobready.global/';
 const description = desc('JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Partner portals, CRM and AI chat are live.');
 const faqIds = ['Q11'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: CodersTrust’s Digital Education and Employment Platform', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: CodersTrust’s Digital Education and Employment Platform', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -28,7 +30,7 @@ const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 's
 const rows: { job: string; capability: string; status: Status; note: string }[] = [
   { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
   { job: 'Connect to Work and Supply Talent', capability: 'Employer and gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until it launches, placement support is provided by CodersTrust’s placement team, and marketplaces such as Upwork and Fiverr are also used.' },
-  { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Give institutions a digital delivery platform.' },
+  { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Live today.' },
   // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
   { job: 'Across the Platform', capability: 'Marketing automation, CRM and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
 ];
@@ -40,10 +42,12 @@ const roadmap = [
 const toc = [
   { id: 'jobs', label: 'Four jobs' },
   { id: 'status', label: 'Rollout status' },
-  { id: 'roadmap', label: 'AI-native roadmap' },
+  { id: 'why', label: 'Why JobReady' },
+  { id: 'roadmap', label: 'Planned adaptive learning' },
   { id: 'faq', label: 'Questions' },
 ];
 const f = fundingCta();
+const d = discoveryCta();
 ---
 
 <LongformLayout
@@ -53,7 +57,7 @@ const f = fundingCta();
   lead="JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Modules are rolling out in stages."
   description={description}
   path={path}
-  updated="2026-10-08"
+  updated="2026-10-14"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
@@ -61,7 +65,7 @@ const f = fundingCta();
   <ReportSection id="jobs" title="Four Jobs, One Platform">
     <p data-fact="IN-04">JobReady is built around four jobs. The table below says which capabilities are live today.</p>
     <div class="jr__cards">
-      <FeatureCard icon="graduation-cap" title="Train" text="Trains youth through courses that prepare for industry certification; the course storefront operates at jobready.global." />
+      <FeatureCard icon="graduation-cap" title="Train" text="Trains youth through courses that prepare for industry certification." />
       <FeatureCard icon="briefcase" title="Connect to Work" text="Designed to connect learners to local, remote and global work." />
       <FeatureCard icon="users" title="Supply Talent" text="Designed to supply employers with job-ready talent." />
       <FeatureCard icon="landmark" title="Equip Institutions" text="Gives institutions a digital delivery platform." />
@@ -86,14 +90,23 @@ const f = fundingCta();
         </tbody>
       </table>
     </section>
-    <Callout label="Not Presented as Live">
-      <p>The employer and gig-work marketplace is in pre-launch, and the AI features below are on the roadmap. AI chat, which is live, is the one AI module in the table above.</p>
+    <Callout label="What Is Live Today">
+      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer and gig-work marketplace is in pre-launch, and the adaptive learning below is planned. AI chat is live; it is the only AI capability shown as live in the table above.</p>
     </Callout>
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
   </ReportSection>
 
-  <ReportSection id="roadmap" title="AI-Native Roadmap: What the Platform Is Designed to Do">
-    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. Everything below is roadmap, described as what the platform is designed to do, and none of it is presented as live.</p>
+  <ReportSection id="why" title="Why JobReady">
+    <p>JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
+    <div class="jr__why">
+      <div class="jr__whystat"><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
+      <div class="jr__whystat"><FactStat id="SC-04" /></div>
+      <div class="jr__whystat"><StatusTag status="Agreement" /><FactStat id="SC-06" /></div>
+    </div>
+  </ReportSection>
+
+  <ReportSection id="roadmap" title="Planned Adaptive Learning">
+    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. This is roadmap, described as what the platform is designed to do, and it is not live.</p>
     <div class="jr__cards jr__cards--roadmap" data-fact="IN-06">
       {roadmap.map((r) => (
         <FeatureCard icon={r.icon} title={r.title} text={r.text}>
@@ -107,11 +120,12 @@ const f = fundingCta();
     <Accordion items={faq} name="jr-faq" openFirst />
   </ReportSection>
 
-  <aside class="jr__next" aria-label="Fund the platform">
-    <h2 class="jr__nexttitle">Fund the Platform’s Next Stage.</h2>
-    <p>A platform grant helps CodersTrust roll out the remaining modules. Details are shared in the introductory call.</p>
+  <aside class="jr__next" aria-label="Talk to us about JobReady">
+    <h2 class="jr__nexttitle">Talk to Us About JobReady.</h2>
+    <p>A discovery session covers how JobReady fits your program. A platform grant helps CodersTrust roll out the remaining modules; details are shared in the introductory call.</p>
     <div class="jr__actions">
-      <Button href={f.href} iconEnd="arrow-right">Discuss a Platform Grant for JobReady’s Next Stage</Button>
+      <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
+      <a class="link" href={f.href}>Discuss a Platform Grant for JobReady’s Next Stage</a>
       <a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
       <a class="link" href={linkAttrs('/investors/').href}>For Investors<Icon name="arrow-right" size={16} /></a>
     </div>
@@ -139,6 +153,22 @@ const f = fundingCta();
   @media (min-width: 1024px) {
     .jr__cards {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .jr__why {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jr__whystat {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    align-content: start;
+  }
+  @media (min-width: 768px) {
+    .jr__why {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .jr__table {

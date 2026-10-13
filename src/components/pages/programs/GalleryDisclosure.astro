@@ -1,0 +1,120 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Img from '../../ui/Img.astro';
+import { mayRender } from '../../../lib/permissions';
+import type { Photo } from '../../../data/photos';
+
+/**
+ * A compact "In the field" gallery (WP20c, SuperKids): the first `visible` photographs show in a grid; the rest sit behind a native
+ * <details> disclosure ("View More Photos"), so a long set does not push the final call to action down. No script. A photograph the
+ * D13 rule does not let render is left out, as in PhotoGallery. The markup of a figure matches PhotoGallery's.
+ */
+interface Props {
+  photos: Photo[];
+  visible?: number;
+  title?: string;
+  eyebrow?: string;
+  lead?: string;
+  id?: string;
+}
+const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field' } = Astro.props;
+const shown = photos.filter((p) => mayRender(p.assetId));
+const first = shown.slice(0, visible);
+const rest = shown.slice(visible);
+const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
+---
+
+{
+  first.length > 1 && (
+    <Section id={id} tone="airy" defer aria-labelledby={`${id}-h`}>
+      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+      <ul class="gd" aria-label={title}>
+        {first.map((p) => (
+          <li>
+            <figure class:list={['gd__fig', p.caption && 'gd__fig--cap']}>
+              <div class="gd__frame"><Img src={p.src} alt={p.alt} width={640} widths={[320, 640]} sizes={sizes} assetId={p.assetId} /></div>
+              {p.caption && <figcaption class="gd__cap">{p.caption}</figcaption>}
+            </figure>
+          </li>
+        ))}
+      </ul>
+      {rest.length > 0 && (
+        <details class="gd__more">
+          <summary class="link">View More Photos</summary>
+          <ul class="gd" aria-label={`${title}, more photographs`}>
+            {rest.map((p) => (
+              <li>
+                <figure class:list={['gd__fig', p.caption && 'gd__fig--cap']}>
+                  <div class="gd__frame"><Img src={p.src} alt={p.alt} width={640} widths={[320, 640]} sizes={sizes} assetId={p.assetId} /></div>
+                  {p.caption && <figcaption class="gd__cap">{p.caption}</figcaption>}
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </Section>
+  )
+}
+
+<style>
+  .gd {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 600px) {
+    .gd {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .gd__fig {
+    margin: 0;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-container-low);
+    box-shadow: var(--shadow-card);
+    aspect-ratio: 4 / 3;
+  }
+  .gd__frame {
+    width: 100%;
+    height: 100%;
+  }
+  .gd__fig--cap {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+  }
+  .gd__fig--cap .gd__frame {
+    aspect-ratio: 4 / 3;
+    height: auto;
+    background: var(--surface-container-low);
+  }
+  .gd__cap {
+    padding: var(--space-xs) var(--space-sm) var(--space-sm);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .gd__fig :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gd__more {
+    margin-top: var(--space-md);
+  }
+  .gd__more > summary {
+    cursor: pointer;
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 10px;
+  }
+</style>

@@ -2,6 +2,8 @@
 import Icon from '../../system/Icon.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import Fact from '../../facts/Fact.astro';
+import FactStat from '../../facts/FactStat.astro';
+import StatusTag from '../../system/StatusTag.astro';
 import { fact } from '../../../data/facts';
 import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
 
@@ -10,6 +12,15 @@ import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
  * scale, and the AWS (PA-06) and HolonIQ (PA-08) badges. No investment, valuation or raise figure appears here or anywhere on the site.
  */
 const badges = ['PA-06', 'PA-08'];
+// Traction tiles (one pattern: status tag + the register's stat and its basis label). SC-06 counts the people in contract scopes, which are agreements.
+const reach = [
+  { id: 'SC-01', status: 'Delivered' },
+  { id: 'SC-02', status: 'Delivered' },
+  { id: 'SC-03', status: 'Delivered' },
+  { id: 'SC-06', status: 'Agreement' },
+] as const;
+// Program results, each on its own registered basis (program records, PR-01, PR-02, PR-05).
+const programs = ['PR-01', 'PR-02', 'PR-05'];
 
 // Path to scale: built from figures the page already shows (GV-10 contract scopes; PD-05's National option), none typed here.
 const scopes = fact('GV-10').text.match(/ranging from ([\d,]+\+ professionals to [\d,]+\+ digital-lab staff)/)?.[1];
@@ -18,6 +29,14 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 ---
 
 <div class="ipx">
+  <h3 class="ipx__h t-heading-l">Traction to Date</h3>
+  <div class="ipx__tiles ipx__tiles--4">
+    {reach.map((r, i) => <div class="ipx__tile"><StatusTag status={r.status} /><FactStat id={r.id} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" /></div>)}
+  </div>
+  <h3 class="ipx__h t-heading-l">Results from Partner-Funded Programs</h3>
+  <div class="ipx__tiles ipx__tiles--3">
+    {programs.map((id, i) => <div class="ipx__tile"><StatusTag status="Delivered" /><FactStat id={id} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" /></div>)}
+  </div>
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
   <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
   <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
@@ -45,6 +64,29 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
   }
   .ipx > * {
     margin: 0;
+  }
+  .ipx__h {
+    color: var(--ctx-section-heading);
+  }
+  .ipx__tiles {
+    display: grid;
+    gap: var(--space-lg) var(--space-gutter);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 900px) {
+    .ipx__tiles--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .ipx__tiles--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .ipx__tile {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    align-content: start;
+    min-width: 0;
   }
   .ipx__survey {
     font-size: var(--fs-body-l);

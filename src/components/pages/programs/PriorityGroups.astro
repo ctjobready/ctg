@@ -1,20 +1,22 @@
 ---
 import Badge from '../../system/Badge.astro';
+import StatusTag from '../../system/StatusTag.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
 import { graduateRates } from '../../sections/copyText';
 
 /**
- * YouthWIDE priority groups (Bangladesh national initiative) (IN-03), one card per group, each labeled with exactly one of three statuses:
- *  - "Delivered": unemployed graduates (most surveyed completers across CodersTrust programs hold a bachelor's degree or higher)
- *  - "Planned": third-gender people (GV-07, a program to train a stated number; enrollment is not stated)
- *  - "Aims to Reach": madrasah, coastal and indigenous youth (no delivered program is claimed)
+ * YouthWIDE priority groups (Bangladesh national initiative) (IN-03), one card per group, each labeled with exactly one tag:
+ *  - "Priority Group": unemployed graduates (WP20c: the card describes who the surveyed completers are, not a delivered YouthWIDE result, so it
+ *    does not carry a "Delivered" tag)
+ *  - "Planned" (StatusTag): third-gender people (GV-07, a program to train a stated number; enrollment is not stated)
+ *  - "Target" (StatusTag): madrasah, coastal and indigenous youth (YouthWIDE aims to reach them; no delivered program is claimed)
  * Group sizes overlap and are never added together (IN-03 footnote). Women are a priority in every group.
  */
 interface Group {
   title: string;
-  status: string;
-  tone: 'brand' | 'info' | 'success' | 'eyebrow';
+  /** A status tag for a group with a stated target or plan; the others get a plain "Priority Group" badge. */
+  status?: 'Target' | 'Planned';
   /** Plain sentence (with data-fact IDs), or fact IDs rendered with their canonical wording. */
   note?: { text: string; factIds: string[]; source?: string[]; delivered?: { text: string; markerId: string } };
   factIds?: string[];
@@ -29,25 +31,26 @@ const madrasah = px12.text
   .filter((part) => !/^75%/.test(part))
   .join('; ');
 const groups: Group[] = [
-  { title: 'Unemployed Graduates', status: 'Delivered', tone: 'success', note: { text: `Graduate unemployment is ${rates.graduate}, against ${rates.ssc} for SSC holders (see the national challenge above).`, factIds: ['PX-03', 'OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
-  { title: 'Madrasah Youth', status: 'Aims to Reach', tone: 'info', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
-  { title: 'Climate-Vulnerable Coastal Youth', status: 'Aims to Reach', tone: 'info', factIds: ['PX-11'] },
-  { title: 'Indigenous Communities', status: 'Aims to Reach', tone: 'info', factIds: ['PX-13'] },
-  { title: 'Third-Gender People', status: 'Planned', tone: 'brand', factIds: ['GV-07', 'PX-14'] },
+  // The graduate-unemployment rate is stated once, in the challenge band above, and is not repeated in this card.
+  { title: 'Unemployed Graduates', note: { text: '', factIds: ['OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
+  { title: 'Madrasah Youth', status: 'Target', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
+  { title: 'Climate-Vulnerable Coastal Youth', status: 'Target', factIds: ['PX-11'] },
+  { title: 'Indigenous Communities', status: 'Target', factIds: ['PX-13'] },
+  { title: 'Third-Gender People', status: 'Planned', factIds: ['GV-07', 'PX-14'] },
 ];
 ---
 
 <div class="pg">
   <h3 class="pg__title t-heading-xl" data-reveal>Five Priority Groups</h3>
-  <p class="pg__lead" data-reveal><Fact id="IN-03" /></p>
+  <p class="pg__lead" data-reveal data-fact="IN-03 GV-07">Women are a priority in every group. Beyond unemployed graduates, YouthWIDE aims to reach madrasah, coastal and indigenous youth; third-gender programming is planned.</p>
   <ul class="pg__grid" role="list">
     {
       groups.map((g) => (
         <li class="card pg__card" data-reveal data-fact={[...(g.factIds ?? []), ...(g.note?.factIds ?? [])].join(' ')}>
           <div class="card__body">
-            <p><Badge tone={g.tone}>{g.status}</Badge></p>
+            <p>{g.status ? <StatusTag status={g.status} /> : <Badge tone="brand">Priority Group</Badge>}</p>
             <h3 class="card__title">{g.title}</h3>
-            {g.note && <p class="card__text">{g.note.text}</p>}
+            {g.note?.text && <p class="card__text">{g.note.text}</p>}
             {g.note?.delivered && <p class="card__text">{g.note.delivered.text}</p>}
             {g.factIds?.map((id) => <p class="card__text"><Fact id={id} /></p>)}
           </div>
@@ -55,7 +58,6 @@ const groups: Group[] = [
       ))
     }
   </ul>
-  <p class="pg__foot" data-reveal>Madrasah, coastal and indigenous youth are groups YouthWIDE aims to reach; no delivered program for them is claimed. “Agreed” means a program has been agreed with partners, not that training has been delivered.</p>
 </div>
 
 <style>

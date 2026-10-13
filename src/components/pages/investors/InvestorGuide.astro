@@ -19,6 +19,8 @@ interface Props {
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
+// ID-03 as a sentence part ("Founders: A and B." becomes "founded by A and B"), so the register's wording is not retyped.
+const founders = fact('ID-03').text.replace(/^Founders:\s*/, '').replace(/\.$/, '');
 const channels = [
   { icon: 'landmark', label: 'Governments', fact: 'PA-02' },
   { icon: 'globe', label: 'Development Partners', fact: 'PA-01' },
@@ -34,7 +36,7 @@ const channels = [
       <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014, with Institutions That Reach Youth</h2>
       <CopyBlock block={ORIGIN} class="ig__origin" />
-      <p class="ig__founders" data-fact="ID-08 ID-03"><Fact id="ID-08" /> <Fact id="ID-03" /></p>
+      <p class="ig__founders" data-fact="ID-08 ID-03"><Fact id="ID-08" /> CodersTrust was founded by {founders}.</p>
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths with progressive levels.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>
@@ -57,8 +59,10 @@ const channels = [
       </ul>
     </div>
   </div>
-  <h3 class="t-heading-l ig__lead-h" data-reveal>Leadership</h3>
-  <LeadershipStrip />
+  <h3 class="t-heading-l ig__lead-h" data-reveal>Founders</h3>
+  <LeadershipStrip groups={['founders']} label="Founders" />
+  <h3 class="t-heading-l ig__lead-h" data-reveal>Current Leadership</h3>
+  <LeadershipStrip groups={['executive']} label="Current leadership" />
 </Section>
 
 <style>
@@ -142,7 +146,7 @@ const channels = [
     color: var(--on-surface-variant);
   }
   .ig__lead-h {
-    margin: 0 0 var(--space-md);
+    margin: var(--space-lg) 0 var(--space-md);
     color: var(--secondary);
   }
   @media (min-width: 1024px) {

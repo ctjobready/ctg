@@ -24,20 +24,12 @@ const { class: className } = Astro.props;
       </ul>
     </li>
     <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
-    <li class="lv__item" data-reveal>
-      <p class="eyebrow">Level 2</p>
-      <h3 class="lv__title">Proficient</h3>
-      <p class="lv__planned">Planned</p>
-    </li>
-    <li class="lv__arrow" aria-hidden="true"><Icon name="arrow-right" size={24} /></li>
-    <li class="lv__item" data-reveal>
-      <p class="eyebrow">Level 3</p>
-      <h3 class="lv__title">Expert</h3>
-      <p class="lv__planned">Planned</p>
+    <li class="lv__item lv__item--planned" data-reveal>
+      <p class="lv__planned">Proficient and Expert levels are planned.</p>
     </li>
   </ol>
   <CertNote />
-  <figcaption class="lv__cap">Example only: the Digital Marketing career path. Competent is the published first level; Proficient and Expert are planned.</figcaption>
+  <figcaption class="lv__cap">Example only: the Digital Marketing career path. Competent is the published first level.</figcaption>
 </figure>
 
 <style>
@@ -74,8 +66,12 @@ const { class: className } = Astro.props;
     color: var(--ctx-heading);
   }
   .lv__planned {
-    font-size: var(--fs-body-xs);
+    font-size: var(--fs-body-base);
     color: var(--on-surface-variant);
+  }
+  .lv__item--planned {
+    border-style: dashed;
+    align-content: center;
   }
   .lv__bullets {
     margin: 0;
@@ -104,7 +100,7 @@ const { class: className } = Astro.props;
   }
   @media (min-width: 900px) {
     .lv__list {
-      grid-template-columns: minmax(0, 1.5fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.5fr) 24px minmax(0, 1fr);
       align-items: stretch;
       gap: var(--space-sm);
     }

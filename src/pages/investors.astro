@@ -24,7 +24,7 @@ import InvestorProofExtras from '../components/pages/investors/InvestorProofExtr
 import InvestorFit from '../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../components/pages/hub/FaqBlock.astro';
-import { C14, HEADLINE, POSITIONING, RCT_HEADLINE, VALUE_PROPOSITION } from '../data/copy';
+import { C14, HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../data/copy';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
 import { webPage } from '../lib/schema';
@@ -45,6 +45,22 @@ const featureRows = [
   { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'the platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
+];
+// The four rows an investor weighs (WP20c): the tracking row is scope-aware, "as agreed in the program scope", like the FAQ answer and the TalentLEAP page.
+const compareRows = [
+  { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
+  { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
+  { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort, as agreed in the program scope: tracers at 3, 6 and 12 months; monthly reports.' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
+  {
+    label: 'Independent Evidence',
+    cells: [
+      { text: 'Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome and budgeted separately', factId: 'RC-01' },
+      { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
+      'Varies',
+      'Varies',
+      'None',
+    ],
+  },
 ];
 const mechanismBlocks = [
   { label: 'Learn', title: 'Courses, Bootcamps and University Programs', text: 'AI-ready digital skills, with preparation for industry certification.', icon: 'graduation-cap' },
@@ -83,10 +99,15 @@ const mechanismBlocks = [
   <Tone cmf="C7">
     <EvidenceBand
       id="proof-band"
-      title={RCT_HEADLINE.text}
+      title="Traction and Evidence"
+      bandHeading="Traction and Evidence"
+      trialHeading="An Independent Randomized Trial"
       headlineFact="RC-01"
-      lead="Traction and outcomes. Survey figures are among surveyed completers, at the October 2026 survey."
-      statIds={['SC-01', 'SC-02', 'SC-03', 'SC-06']}
+      chart="trial"
+      chip={false}
+      plainLine
+      lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, at the October 2026 survey."
+      statIds={['RC-02']}
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
@@ -98,12 +119,12 @@ const mechanismBlocks = [
   <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
-    <FeaturesTable id="features" title="What the Platform Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
+    <FeaturesTable id="features" title="What JobReady Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
   </Tone>
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches." withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} lead="Four capabilities that set a platform apart from content alone: certification, work entry, outcome tracking and independent evidence." /></Tone>
+  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches." withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches: certification, work entry, outcome tracking and independent evidence." rows={compareRows} /></Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
@@ -114,7 +135,7 @@ const mechanismBlocks = [
       points={[
         { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'It is a conversation about your investment focus.' },
         { icon: 'handshake', title: 'You Decide What Happens Next', text: 'You choose whether to continue after the call.' },
-        { icon: 'info', title: 'Thesis and Traction Here', text: 'This page shows thesis and traction only.' },
+        { icon: 'file-lock', title: 'An NDA Comes First', text: 'An NDA is in place before the deck and data room are shared.' },
       ]}
     />
   </Tone>
@@ -141,7 +162,6 @@ const mechanismBlocks = [
         { title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
         { title: 'Your Questions', text: 'We answer your questions and agree what comes next.' },
       ]}
-      validate={C14.validate}
       reminder={{ text: C14.variants.investors, facts: [] }}
       firstAction="In your inquiry, include two suitable times for an introduction call."
     />

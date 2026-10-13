@@ -42,7 +42,7 @@ export const HEADLINE: Record<Audience, string> = {
   foundations: 'Fund a Supported Path from Learning to Earning.',
   universities: 'Help Your Graduates Build Job-Ready Digital Skills.',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
-  investors: 'Invest in the Infrastructure of Emerging-Market Work.',
+  investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work.',
   localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.',
   nuPgd: 'Build Practical Digital Skills After Your Degree.',
 };
@@ -55,7 +55,7 @@ export const EMPATHY: Record<Audience, string> = {
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
-  investors: 'You are weighing a market with real demand for skills, and you need to distinguish a model that is working from one that is only promised.',
+  investors: 'Investors weighing a market with real demand for skills need to distinguish a model that is working from one that is only promised.',
   localPartners: 'You reach young people that central programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, and the job offers did not follow — and it is hard to know which skills to add next.',
 };
@@ -135,7 +135,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-10', 'IN-04'],
   },
   investors: {
-    text: `For impact and growth investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs, with results that are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
+    text: `For impact and growth investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. Its results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {

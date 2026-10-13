@@ -16,7 +16,8 @@ import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
-import PhotoGallery from '../../components/ui/PhotoGallery.astro';
+import GalleryDisclosure from '../../components/pages/programs/GalleryDisclosure.astro';
+import StatusTag from '../../components/system/StatusTag.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
@@ -37,11 +38,19 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = PAGE_UPDATED.superkids;
+const LAST_UPDATED = '2026-10-14'; // WP20c: the day the review round 5 cycle 3 wording changes landed (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
-const description = 'SuperKids brings STEAM, coding and robotics to young learners through schools and partners. 400+ learners since 2021; agreements with DoICT and NCTB set further targets.';
+const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021; DoICT and NCTB agreements set targets.';
 const inquiry = ctaFor('superkids');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
+
+// GV-08 in three sentences, built from the register's own wording so no figure is typed here: the DoICT agreement, the NCTB agreement,
+// and the plain statement that these are agreement targets, not delivered reach.
+const gv08 = fact('GV-08').text.match(/agreements with DoICT \(([^;]+); target reach ([^)]+)\) and NCTB \(([^)]+)\)/);
+if (!gv08) throw new Error('GV-08 wording changed: update the SuperKids agreement sentences');
+const doictScope = gv08[1];
+const doictReach = gv08[2];
+const nctbScope = gv08[3];
 
 // Only the safeguarding question (Q9) applies to SuperKids: Q1 ("Will this work in our country?") answers with the adult course menu
 // and Q8 ("What does it cost?") with the adult program inclusions, and neither describes a K-12 program. Pricing is covered in C11.
@@ -60,13 +69,13 @@ const courses = linkAttrs(COURSES_URL);
   <HeroBand
     audience="SuperKids · For Schools and Education Partners"
     title="Help Young Learners Explore Coding, Creativity and Robotics."
-    lead="We help schools and partners bring STEAM, coding and robotics to young learners."
+    lead="We help schools and partners bring STEAM, coding, robotics and digital art to young learners, so children build digital skills early."
     cta={inquiry}
     artSeed="superkids"
   />
 
   <DefinitionBlock heading="What Is SuperKids?">
-    <p>SuperKids is CodersTrust’s K-12 STEAM program: robotics, coding and digital art for young learners, offered through schools and education partners.</p>
+    <p>SuperKids is CodersTrust’s K-12 STEAM program: coding, robotics and digital art for young learners, offered through schools and education partners.</p>
   </DefinitionBlock>
 
   <ProgramGlance
@@ -82,10 +91,9 @@ const courses = linkAttrs(COURSES_URL);
 
   <!-- C2 -->
   <ProblemSection
-    title="Young Learners Need a First Step into Digital Skills."
-    bluf="SuperKids brings the first steps of STEAM, coding and robotics into the classroom."
+    title="Digital Skills Start Early."
+    bluf="SuperKids brings the first steps of STEAM, coding, robotics and digital art into the classroom."
     factIds={[]}
-    transition="It doesn’t have to be this way."
   />
 
   <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
@@ -109,7 +117,7 @@ const courses = linkAttrs(COURSES_URL);
     showPartners={false}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
-    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These agreements set targets for reach; they are not delivered reach.</p>
+    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These are agreement targets, not delivered reach.</p>
     <p data-fact="PA-03">Private-sector partners include Robi.</p>
   </GuideSection>
 
@@ -139,19 +147,23 @@ const courses = linkAttrs(COURSES_URL);
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
     <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="What Has Been Delivered, and What Is Only Agreed" />
     <div class="agree">
-      <div class="agree__delivered" data-reveal><FactStat id="SK-05" /></div>
-      <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>
+      <div class="agree__delivered" data-reveal><StatusTag status="Delivered" /><FactStat id="SK-05" /></div>
+      <div class="agree__fact" data-reveal data-fact="GV-08">
+        <p>The DoICT agreement covers {doictScope}, with a target reach of {doictReach}.</p>
+        <p>The NCTB agreement covers {nctbScope}.</p>
+        <p>These are agreement targets, not delivered reach.</p>
+      </div>
       <div class="agree__cards">
         <article class="card" data-reveal>
           <div class="card__body">
-            <p class="eyebrow">Agreement</p>
+            <p><StatusTag status="Agreement" /></p>
             <h3 class="card__title">DoICT</h3>
             <p class="card__text">Primary-school STEM and robotics.</p>
           </div>
         </article>
         <article class="card" data-reveal>
           <div class="card__body">
-            <p class="eyebrow">Agreement</p>
+            <p><StatusTag status="Agreement" /></p>
             <h3 class="card__title">NCTB</h3>
             <p class="card__text">Competency-based experiential learning.</p>
           </div>
@@ -176,7 +188,7 @@ const courses = linkAttrs(COURSES_URL);
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 
-  <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
+  <GalleryDisclosure id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} visible={6} />
 
   <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
        above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->
@@ -241,6 +253,15 @@ const courses = linkAttrs(COURSES_URL);
   }
   .agree__delivered {
     max-width: 52rem;
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+  }
+  .agree__fact > :global(p) {
+    margin: 0 0 var(--space-xs);
+  }
+  .agree__fact > :global(p:last-child) {
+    margin-bottom: 0;
   }
   .agree__cards {
     display: grid;

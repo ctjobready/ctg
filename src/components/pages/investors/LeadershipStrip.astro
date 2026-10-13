@@ -9,15 +9,17 @@ import { linkAttrs } from '../../../lib/url';
  */
 interface Props {
   groups?: string[];
+  /** Accessible name of the list (default "Leadership"). */
+  label?: string;
 }
-const { groups = ['founders', 'executive'] } = Astro.props;
+const { groups = ['founders', 'executive'], label = 'Leadership' } = Astro.props;
 const all = await getCollection('team');
 const people = all
   .filter((p) => groups.includes(p.data.group))
   .sort((a, b) => groups.indexOf(a.data.group) - groups.indexOf(b.data.group) || a.data.order - b.data.order);
 ---
 
-<ul class="lead-strip" role="list" aria-label="Leadership">
+<ul class="lead-strip" role="list" aria-label={label}>
   {
     people.map((p) => {
       const a = linkAttrs(`/about/team/${p.data.slug}/`);

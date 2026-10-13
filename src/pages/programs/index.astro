@@ -1,34 +1,40 @@
 ---
-// P9 — Programs hub /programs/ (T2): five program cards, the shared path behind them, the headline evidence, and one discovery CTA.
+// P9 — Programs hub /programs/ (T2): five program cards, a selection table, the shared path behind them, the headline evidence and one discovery CTA.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
-import Badge from '../../components/system/Badge.astro';
+import Button from '../../components/system/Button.astro';
+import Icon from '../../components/system/Icon.astro';
+import StatusTag from '../../components/system/StatusTag.astro';
+import FactStat from '../../components/facts/FactStat.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import ProofBand from '../../components/sections/ProofBand.astro';
+import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
+import ProgramFinder from '../../components/pages/programs/ProgramFinder.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import { PAGE_UPDATED, ctaFor, statValue } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, STEPS, STEPS_FACTS } from '../../data/copy';
+import { MICRO_COMMITMENT, PROGRAM_OPTIONS, STEPS, STEPS_FACTS } from '../../data/copy';
+import { linkAttrs } from '../../lib/url';
 import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
-const LAST_UPDATED = PAGE_UPDATED.programs;
+const LAST_UPDATED = '2026-10-14'; // WP20c: the day the review round 5 cycle 3 wording changes landed (PAGE_UPDATED.programs is 2026-10-10)
 // R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
 // is a diploma), so the H1, title and structured-data name are "CodersTrust programs". The meta description is the plan's P9 wording.
 const title = 'Programs';
 const description = 'Explore CodersTrust programs: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Postgraduate Diploma.';
 const discovery = ctaFor('discovery');
+const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders get monthly reports designed to track paid-work outcomes, not only enrollment.' },
-  { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.' },
-  { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.' },
-  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
-  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and Education Partners', text: 'STEAM, coding and robotics for young learners.', means: 'a school can bring coding and robotics into the classroom.' },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', outcome: 'Train youth and track paid work.', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders get monthly reports designed to track paid-work outcomes, not only enrollment.' },
+  { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', outcome: 'Add digital skills and certification preparation beside the degree.', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.' },
+  { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', outcome: 'Train teams for current roles and access job-ready talent.', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.' },
+  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', outcome: 'Add practical digital skills after your degree.', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
+  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', outcome: 'Bring STEAM, coding, robotics and digital art into the classroom.', audience: 'Schools and Education Partners', text: 'STEAM, coding, robotics and digital art for young learners.', means: 'a school can bring STEAM, coding, robotics and digital art into the classroom.' },
 ];
 
 const jsonLd = [
@@ -46,45 +52,70 @@ const jsonLd = [
   <Hero
     eyebrow="Programs"
     title="CodersTrust Programs"
-    lead="CodersTrust offers four partner programs, for funders and governments, universities, employers and schools, and the NU Postgraduate Diploma for degree holders."
+    lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Postgraduate Diploma for degree holders."
     artSeed="programs-hub"
   >
-    <p class="hub__who">For governments and funders: YouthWIDE. For universities and colleges: JobReady@Campus. For employers: JobReady@Work. For degree holders: NU Postgraduate Diploma. For schools: SuperKids.</p>
     <Fragment slot="actions">
-      <a class="link" href="#programs-grid">Compare the programs</a>
+      <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
+      <a class="link" href="#find">Find Your Program</a>
     </Fragment>
   </Hero>
 
   <DefinitionBlock />
 
   <Section id="programs-grid" aria-labelledby="programs-h">
-    <SectionHeader id="programs-h" eyebrow="Five Programs" title="Choose the Program That Fits You." lead="Each card says who the program is for and what it means in practice." />
+    <SectionHeader id="programs-h" eyebrow="Five Routes" title="Choose the Program That Fits Your Goal" lead="Each card says who the program is for and what it means in practice." />
     <ul class="grid-cards grid-cards--stretch hub" role="list" data-fact="IN-02 IN-01 IN-09 IN-10 SC-04">
       {
         programs.map((p) => (
           <li>
             <FeatureCard icon={p.icon} title={p.title} text={p.text} means={p.means} href={p.href}>
-              <p class="hub__aud"><Badge tone="brand">{p.audience}</Badge></p>
+              <p class="hub__out">{p.outcome}</p>
+              <p class="hub__aud"><strong>Best For:</strong> {p.audience}</p>
             </FeatureCard>
           </li>
         ))
       }
     </ul>
-    <p class="hub__phase" data-reveal>Delivery is phased: pilots, then regional expansion, then multi-year national phases; a 100,000+ phase is a design option we have not yet delivered at that size.</p>
+    <p class="hub__phase" data-reveal data-fact="PD-05">In YouthWIDE and JobReady@Campus supported cohorts, delivery is phased: pilots, then regional expansion, then multi-year national phases. A {nationalSize} phase is a design option we have not yet delivered at that size.</p>
   </Section>
 
+  <ProgramFinder />
+
   <Section id="path" tone="airy" aria-labelledby="path-h">
-    <SectionHeader id="path-h" eyebrow="The Path" title="How Supported Employment Cohorts Work" lead="In YouthWIDE and JobReady@Campus cohorts, each program adapts the same three steps to its partner." />
+    <SectionHeader id="path-h" eyebrow="The Path" title="How YouthWIDE and JobReady@Campus Cohorts Work" lead="Each program adapts the same three steps to its partner." />
     <div data-fact={STEPS_FACTS.join(' ')}>
       <StepFlow steps={STEPS.map((s) => ({ title: s.title, text: s.text }))} />
     </div>
+    <p class="hub__more"><a class="link" href={linkAttrs('/our-model/').href}>See the Full Delivery Model<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'SC-01', 'SC-03']} links={[{ label: 'See the Evidence', href: '/impact/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
+  <EvidenceBand
+    id="proof-band"
+    title="Trial and Survey Evidence"
+    bandHeading="Trial and Survey Evidence"
+    trialHeading="An Independent Randomized Trial"
+    headlineFact="RC-01"
+    chart="trial"
+    chip={false}
+    plainLine
+    lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
+    statIds={['RC-02']}
+    surveyStatIds={['OC-01']}
+    links={[{ label: 'See the Evidence', href: '/impact/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}
+  />
+
+  <Section id="reach" pad="sm" aria-labelledby="reach-h">
+    <SectionHeader id="reach-h" eyebrow="Reach" title="Where the Programs Have Run" />
+    <div class="hub__reach">
+      <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
+      <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-03" /></div>
+    </div>
+  </Section>
 
   <CTABand
     id="cta"
-    heading="Not Sure Which Fits?"
+    heading="Not Sure Which Program Fits?"
     text="Tell us who you are and what you want to achieve, and we will point you to the right program."
     cta={discovery}
     micro={MICRO_COMMITMENT}
@@ -107,14 +138,31 @@ const jsonLd = [
   .hub > li > :global(.card) {
     width: 100%;
   }
+  .hub__out {
+    margin: 0 0 var(--space-xs);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
   .hub__aud {
     margin: 0;
   }
-  .hub__who {
-    margin: var(--space-md) 0 0;
-    max-width: var(--measure);
-    font-size: var(--fs-body-base);
-    color: var(--on-surface-variant);
+  .hub__more {
+    margin: var(--space-lg) 0 0;
+  }
+  .hub__reach {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hub__reach > div {
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+  }
+  @media (min-width: 768px) {
+    .hub__reach {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   .hub__phase {
     margin: var(--space-lg) 0 0;
