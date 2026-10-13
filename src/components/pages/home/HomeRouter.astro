@@ -18,9 +18,9 @@ const { id = 'router' } = Astro.props;
 const text = (aid: string) => audiences.find((a) => a.id === aid)?.text;
 // WP19, item 9: the four funder routes are the cards; the other four audiences are one "Also for" line of links.
 const cards = [
-  { title: 'Development Partners & NGOs', icon: 'globe', text: text('development-partners'), href: '/partner-with-us/development-partners/' },
+  { title: 'Development Partners and NGOs', icon: 'globe', text: text('development-partners'), href: '/partner-with-us/development-partners/' },
   { title: 'Governments', icon: 'landmark', text: text('governments'), href: '/partner-with-us/governments/' },
-  { title: 'Foundations & CSR', icon: 'heart-handshake', text: text('foundations'), href: '/partner-with-us/foundations/' },
+  { title: 'Foundations and CSR', icon: 'heart-handshake', text: text('foundations'), href: '/partner-with-us/foundations/' },
   { title: 'Investors', icon: 'trending-up', text: text('investors'), href: '/partner-with-us/investors/' },
 ];
 const also = [
