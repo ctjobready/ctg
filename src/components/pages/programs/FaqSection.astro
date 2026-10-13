@@ -13,7 +13,7 @@ interface Props {
   id?: string;
   tone?: 'ice' | 'white' | 'airy';
 }
-const { sources, title = 'Questions people ask', lead, eyebrow = 'Objections, answered', id = 'faq', tone = 'ice' } = Astro.props;
+const { sources, title = 'Questions people ask', lead, eyebrow = 'Objections, Answered', id = 'faq', tone = 'ice' } = Astro.props;
 const items = buildFaq(sources);
 ---
 

@@ -23,7 +23,7 @@ interface Props {
   allLink?: { label: string; href: string };
   id?: string;
 }
-const { audience, ids, title, eyebrow = 'Objections, answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
+const { audience, ids, title, eyebrow = 'Objections, Answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
 const items = faqItems(audience, ids);
 ---
 

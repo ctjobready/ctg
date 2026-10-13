@@ -24,7 +24,7 @@ interface Props {
   photos?: Photo[];
 }
 const { title, lead, vignettes, id = 'future', photos = [] } = Astro.props;
-// The framework labels (functional / emotional / social) are internal: only a vignette with its own category label ("Block coding") shows one.
+// The framework labels (functional / emotional / social) are internal: only a vignette with its own category label ("Block Coding") shows one.
 const FRAMEWORK_LABELS = new Set(['Functional', 'Emotional', 'Social']);
 const media = vignettes.map((v, i) => {
   const p = photos[i];
@@ -34,7 +34,7 @@ const media = vignettes.map((v, i) => {
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="What success looks like" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="What Success Looks Like" title={title} lead={lead} />
   <div class="grid-cards">
     {
       vignettes.map((v, i) => (

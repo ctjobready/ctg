@@ -38,15 +38,15 @@ const quarters = [3, 6, 9, 12];
 <div class="road" data-reveal>
   <PhaseList items={phases} cols={5} label="Execution roadmap phases" />
   <figure class="ribbon" data-fact="PD-06 PD-08 PD-05">
-    <p class="ribbon__tag">Illustrative template</p>
+    <p class="ribbon__tag">Illustrative Template</p>
     <section class="ribbon__scroll" aria-label="Illustrative month ribbon" tabindex="0">
       <div class="ribbon__grid" role="img" aria-label={`Illustrative month ribbon, months 1 to 12. Monthly reports run throughout. A quarterly steering review falls in months ${quarters.join(', ')}. Up to ${parallel} cohorts run in parallel from about month ${fromMonth}.`}>
         {months.map((m) => <><span class="ribbon__m" style={`grid-column:${m};grid-row:1`}>M{m}</span>{' '}</>)}
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:2">Monthly reports</span>{' '}
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:2">Monthly Reports</span>{' '}
         <span class="ribbon__bar ribbon__bar--report" style="grid-column:1 / -1;grid-row:3"></span>
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:4">Quarterly steering review</span>{' '}
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:4">Quarterly Steering Review</span>{' '}
         {quarters.map((m) => <span class="ribbon__dot" style={`grid-column:${m};grid-row:5`}></span>)}
-        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:6">Cohorts in parallel</span>{' '}
+        <span class="ribbon__label" style="grid-column:1 / -1;grid-row:6">Cohorts in Parallel</span>{' '}
         <span class="ribbon__bar ribbon__bar--par" style={`grid-column:${startMonth} / -1;grid-row:7`}>Up to {parallel} cohorts from about month {fromMonth}</span>
       </div>
     </section>

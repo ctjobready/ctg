@@ -100,7 +100,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <DefinitionBlock heading="What Is YouthWIDE?">
     <p data-fact="IN-01 IN-02">YouthWIDE (Youth Workforce Inclusion for Digital Economy) is CodersTrust’s youth digital-employment program. In Bangladesh it is a national initiative that aims to train {target} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments, not a delivered figure. In other countries it runs as co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.</p>
     <p data-fact="PD-01 PD-02">Each trainee gets {hours} training hours per certification and three months of milestone-based mentoring, with placement support and outcome tracking for {tracking} after each course.</p>
-    <nav class="audience" aria-label="Choose your route">
+    <nav class="audience" aria-label="Choose Your Route">
       <a class="audience__link" href="#governments"><span class="audience__label">For Governments and Ministries</span><span class="audience__text">The Bangladesh national initiative: priority groups, government labs and phased delivery.</span><Icon name="arrow-right" size={16} /></a>
       <a class="audience__link" href="#funders"><span class="audience__label">For Funders and Development Partners</span><span class="audience__text">Co-funded country cohorts: delivery model, evidence, reporting and governance.</span><Icon name="arrow-right" size={16} /></a>
     </nav>
@@ -161,10 +161,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="Delivered Through the Labs and Colleges You Already Have"
       positioning={POSITIONING.nationwide}
       blocks={[
-        { label: 'Where it runs', title: 'Government Digital Labs and Colleges', text: '9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.', icon: 'building', factId: 'GV-09' },
-        { label: 'Who delivers', title: 'Trained Trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
-        { label: 'What trainees receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
-        { label: 'What you receive', title: 'Monthly Reports', text: 'Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.', icon: 'chart-bar' },
+        { label: 'Where It Runs', title: 'Government Digital Labs and Colleges', text: '9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.', icon: 'building', factId: 'GV-09' },
+        { label: 'Who Delivers', title: 'Trained Trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
+        { label: 'What Trainees Receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
+        { label: 'What You Receive', title: 'Monthly Reports', text: 'Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.', icon: 'chart-bar' },
       ]}
       factIds={['GV-09', 'GV-01', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
     >
@@ -232,13 +232,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="One Delivery Model, from Selection to Paid Work"
       positioning={POSITIONING.youthwide}
       blocks={[
-        { label: 'Who we reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
-        { label: 'How we reach them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
-        { label: 'What we deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
-        { label: 'Where they work', title: 'Local, Remote, Overseas and Freelance Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
+        { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
+        { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
+        { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
+        { label: 'Where They Work', title: 'Local, Remote, Overseas and Freelance Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
       ]}
       factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
-      link={{ label: 'How our model works', href: '/our-model/' }}
+      link={{ label: 'How Our Model Works', href: '/our-model/' }}
     >
       <DeliveryGrid
         heading="The Delivery Model in Detail"
@@ -277,31 +277,31 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C8 (review round 14, M4): one row per ranked pain of C2 (pain → how we relieve it → the registered feature), then the gain creators -->
   <FeaturesTable
     title="Each Feature Maps to What Funders and Agencies Ask For."
-    concernLabel="Funder concern addressed"
+    concernLabel="Funder Concern Addressed"
     rows={[
       {
         ...painForRow(FUNDER_PAINS, 'P1'),
-        feature: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment',
+        feature: 'Placement Support, Three Months of Milestone-Based Mentoring and a Work-Entry Plan per Track Approved Before Enrollment',
         means: 'success is measured against agreed outcomes, including paid work, not attendance alone; completers are routed to local, remote and global work.',
         outcome: 'Results measured in paid work',
         facts: ['PD-15', 'PD-01', 'PD-19'],
       },
       {
         ...painForRow(FUNDER_PAINS, 'P2'),
-        feature: 'Baseline at enrollment, monthly reports, tracer surveys at 3, 6 and 12 months and documentary evidence of earnings',
+        feature: 'Baseline at Enrollment, Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence of Earnings',
         means: 'your evaluators can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
         outcome: 'Auditable results',
         facts: ['PD-08', 'PD-09'],
       },
       {
         ...painForRow(FUNDER_PAINS, 'P3'),
-        feature: 'An AI-ready curriculum, with entry-level tracks set per country from employer demand',
+        feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Set per Country from Employer Demand',
         means: 'courses keep pace with employer demand as AI changes entry-level tasks.',
         outcome: 'Tracks that follow what employers ask for',
         facts: ['PD-02', 'PD-10'],
       },
       { feature: 'Outreach and accessible selection; blended delivery in existing labs; safeguarding specified per program', means: 'priority groups can join a local lab and train for work that local employers want.', outcome: 'Training that reaches hard-to-reach groups' },
-      { feature: 'Certification exam preparation (exam fee included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
+      { feature: 'Certification Exam Preparation (Exam Fee Included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
       { feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; hub-and-spoke delivery; blended learning in existing labs; connectivity-light delivery', means: 'capacity stays in your system and rural labs can take part.', outcome: 'Trainers and curricula that stay in your system' },
       { feature: 'Pilot scorecard with cost per completer and per verified outcome; monthly reports', means: 'your budget is judged against verified outcomes.', outcome: 'Spending tied to verified outcomes' },
     ]}
@@ -327,7 +327,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       <div class="gov__col" data-reveal>
         <h3 class="t-heading-l">Safeguarding</h3>
         <CopyP block={SAFEGUARDING} />
-        <p><a class="link" href={url('/about/governance/')}>How governance and accountability work<Icon name="arrow-right" size={16} /></a></p>
+        <p><a class="link" href={url('/about/governance/')}>How Governance and Accountability Work<Icon name="arrow-right" size={16} /></a></p>
       </div>
       <div class="gov__col" data-reveal>
         <h3 class="t-heading-l">Governance</h3>
@@ -352,14 +352,14 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       <p class="scale-note"><Fact id="GV-09" />.</p>
     </div>
     <div class="note">
-      <span class="note__label">Services behind a phase</span>
+      <span class="note__label">Services Behind a Phase</span>
       <ul class="svc">
         <li data-fact="GV-01">{endSentence(fact('GV-01').text)}</li>
         <li data-fact="GV-05">{contractScope('GV-05')}</li>
       </ul>
     </div>
     <div class="note">
-      <span class="note__label">Partners and funders</span>
+      <span class="note__label">Partners and Funders</span>
       <p>Development partners and foundations can also fund a phase in Bangladesh. <a class="link" href={cofunding.href}>{cofunding.label}<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </OfferSection>

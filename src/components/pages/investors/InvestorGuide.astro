@@ -23,23 +23,23 @@ const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
 const channels = [
   { icon: 'landmark', label: 'Governments', fact: 'PA-02' },
-  { icon: 'globe', label: 'Development partners', fact: 'PA-01' },
+  { icon: 'globe', label: 'Development Partners', fact: 'PA-01' },
   { icon: 'graduation-cap', label: 'Universities', fact: 'PA-05' },
-  { icon: 'building-2', label: 'Private-sector partners', fact: 'PA-03' },
+  { icon: 'building-2', label: 'Private-Sector Partners', fact: 'PA-03' },
 ];
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <div class="ig">
     <div class="ig__copy">
-      <p class="eyebrow" data-reveal>Our track record</p>
+      <p class="eyebrow" data-reveal>Our Track Record</p>
       <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014, with Institutions That Reach Youth</h2>
       <CopyBlock block={ORIGIN} class="ig__origin" />
       <p class="ig__founders" data-fact="ID-08 ID-03"><Fact id="ID-08" /> <Fact id="ID-03" /></p>
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths with progressive levels.{' '}
-        <a class="link" href={talentleap.href}>How TalentLEAP works<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>
       </p>
     </div>
     <div class="ig__channels" data-reveal>

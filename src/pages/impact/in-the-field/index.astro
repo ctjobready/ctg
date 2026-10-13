@@ -140,12 +140,12 @@ const d = discoveryCta();
   {programGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
-    <SectionHeader id="itf-later-h" eyebrow="Later in the archive" title="Leadership, Recognition and Events" lead="Partnership signings, awards, forums and meetings, then photographs from the news posts by year." />
+    <SectionHeader id="itf-later-h" eyebrow="Later in the Archive" title="Leadership, Recognition and Events" lead="Partnership signings, awards, forums and meetings, then photographs from the news posts by year." />
   </Section>
 
   {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
-  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and events" title={`Partners, Programs and Events,${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and Events" title={`Partners, Programs and Events,${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>

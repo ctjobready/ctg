@@ -40,13 +40,13 @@ const flow = steps ?? [
 ];
 // With the logo row below, the row is the validation; the sentence naming a few of the same organizations would only repeat it.
 const notes = [
-  validate && !logos && { icon: 'handshake', label: 'Who has worked with us', body: validate },
-  reminder && { icon: 'calendar-check', label: 'What to expect', body: reminder },
+  validate && !logos && { icon: 'handshake', label: 'Who Has Worked with Us', body: validate },
+  reminder && { icon: 'calendar-check', label: 'What to Expect', body: reminder },
 ].filter(Boolean) as { icon: string; label: string; body: CopyBlockData }[];
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Next steps" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} />
   <StepFlow steps={flow} />
   {timing && <p class="ns__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
 
@@ -62,7 +62,7 @@ const notes = [
     }
     <div class="ns__note ns__note--first">
       <Icon name="mail-check" size={28} strokeWidth={1.5} />
-      <p class="ns__label">Your first step</p>
+      <p class="ns__label">Your First Step</p>
       <p>{firstAction}</p>
     </div>
   </div>

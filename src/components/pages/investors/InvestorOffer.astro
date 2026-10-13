@@ -18,14 +18,14 @@ const items = [
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The offer" title="What You Receive" lead="This page shows thesis and traction only. The rest is shared in conversation, in the four steps below." />
+  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title="What You Receive" lead="This page shows thesis and traction only. The rest is shared in conversation, in the four steps below." />
   <ol class="grid-cards grid-cards--2 io" role="list">
     {
       items.map((it, i) => (
         <li class="card" data-reveal>
           <div class="card__body">
             <Icon name={it.icon} size={36} strokeWidth={1.5} class="io__icon" />
-            <p class="eyebrow">You receive</p>
+            <p class="eyebrow">You Receive</p>
             <h3 class="card__title">{it.title}</h3>
             <p class="card__text">{it.text}</p>
           </div>

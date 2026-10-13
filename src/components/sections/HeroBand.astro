@@ -3,10 +3,11 @@ import Hero from '../system/Hero.astro';
 import Button from '../system/Button.astro';
 import FactStat from '../facts/FactStat.astro';
 import { linkAttrs } from '../../lib/url';
+import { titleCase } from '../../lib/titleCase.mjs';
 
 /** C1 Hero band: Hero + audience eyebrow + up to 3 FactStats + primary/secondary CTA. */
 interface Props {
-  /** Audience mirror ("For governments, development partners and funders"); program pages lead with the program name. */
+  /** Audience mirror ("For Governments, Development Partners and Funders"); program pages lead with the program name. */
   audience?: string;
   /**
    * Replaces the text eyebrow with audience links (Home: Development partners · Governments · Foundations). Plain text links,
@@ -37,7 +38,7 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
         <nav class="herolinks" aria-label="Choose your audience" data-hero-in>
           <ul>
             {audienceLinks.map((l) => (
-              <li><a class="link" href={linkAttrs(l.href).href}>{l.label}</a></li>
+              <li><a class="link" href={linkAttrs(l.href).href}>{titleCase(l.label)}</a></li>
             ))}
           </ul>
         </nav>
@@ -45,7 +46,7 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
     }
     <Fragment slot="actions">
       <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
-      {secondary && <Button variant="outline" href={secondary.href}>{secondary.label}</Button>}
+      {secondary && <Button variant="outline" href={secondary.href}>{titleCase(secondary.label)}</Button>}
     </Fragment>
     {stats.length > 0 && <Fragment slot="stats">{stats.map((s) => <FactStat id={s} />)}</Fragment>}
   </Hero>

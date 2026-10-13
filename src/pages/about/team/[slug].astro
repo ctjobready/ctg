@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 const { p, news, team } = Astro.props;
 const d = p.data;
 const { Content } = await render(p);
-const groupLabel = { founders: 'Founders and Chair', advisors: 'Advisor', executive: 'Executive team', management: 'Bangladesh leadership' }[d.group];
+const groupLabel = { founders: 'Founders and Chair', advisors: 'Advisor', executive: 'Executive Team', management: 'Bangladesh Leadership' }[d.group];
 const path = `/about/team/${p.id}/`;
 const related = newsMentioning(news, d.name, 3);
 // A profile with no news about the person shows three colleagues instead (same group first, then by team order), so it is
@@ -115,11 +115,11 @@ const jsonLd = [
   {
     related.length > 0 && (
       <Section tone="airy" aria-labelledby="rel-h">
-        <SectionHeader id="rel-h" eyebrow="In the news" title="Related News" />
+        <SectionHeader id="rel-h" eyebrow="In the News" title="Related News" />
         <div class="grid-cards">
           {related.map((n) => <NewsCard title={n.data.title} date={n.data.date} topic={TOPICS[n.data.topic]} excerpt={n.data.excerpt} image={n.data.cover} imageAlt={coverAlt(n.data.coverAlt)} href={newsHref(n)} />)}
         </div>
-        <p class="prof__all"><a class="link" href={url('/news/')}>All news<Icon name="arrow-right" size={16} /></a></p>
+        <p class="prof__all"><a class="link" href={url('/news/')}>All News<Icon name="arrow-right" size={16} /></a></p>
       </Section>
     )
   }
@@ -134,7 +134,7 @@ const jsonLd = [
     )
   }
   <Section pad="sm" aria-label="Back to the team">
-    <p class="prof__back"><a class="link" href={url('/about/team/')}><Icon name="arrow-left" size={16} />All leadership and team</a></p>
+    <p class="prof__back"><a class="link" href={url('/about/team/')}><Icon name="arrow-left" size={16} />All Leadership and Team</a></p>
   </Section>
 </BaseLayout>
 

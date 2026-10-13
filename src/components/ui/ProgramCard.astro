@@ -14,7 +14,7 @@ interface Props {
   linkLabel?: string;
   class?: string;
 }
-const { title, text, icon = 'rocket', href, badge, meta = [], linkLabel = 'Learn more', class: className } = Astro.props;
+const { title, text, icon = 'rocket', href, badge, meta = [], linkLabel = 'Learn More', class: className } = Astro.props;
 const a = linkAttrs(href);
 ---
 

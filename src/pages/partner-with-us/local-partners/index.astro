@@ -38,18 +38,18 @@ const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersT
 const thirdGender = fact('GV-07').text.match(/[\d,]+ third-gender people/)?.[0];
 if (!thirdGender) throw new Error('GV-07 no longer names the number of third-gender people');
 const jsonLd = [
-  webPage({ path, name: 'Local Implementing Partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local partners', path }] }),
+  webPage({ path, name: 'Local Implementing Partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
 ];
 
 // C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
 const cmpRows = [
-  { label: 'Certification', cells: [{ text: 'Certification exam preparation (exam fee included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
-  { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
-  { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-  { label: 'Outcome tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
+  { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
+  { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
+  { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
+  { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
   {
-    label: 'Independent evidence',
+    label: 'Independent Evidence',
     cells: [
       { text: 'Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome and budgeted separately', factId: 'RC-01' },
       { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
@@ -78,12 +78,12 @@ const ways = [
 <LandingLayout
   title="Local Implementing Partners"
   description={description}
-  breadcrumbs={[{ label: 'Partner with Us', href: '/partner-with-us/' }, { label: 'Local partners' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: '/partner-with-us/' }, { label: 'Local Partners' }]}
   jsonLd={jsonLd}
   stickyCta={{ label: local.label, href: local.href }}
 >
   <!-- C1 -->
-  <HeroBand audience="For Bangladeshi NGOs, colleges, chambers and associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
+  <HeroBand audience="For Bangladeshi NGOs, Colleges, Chambers and Associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
 
   <!-- GEO definition + page BLUF -->
   <DefinitionPlus id="definition">
@@ -130,7 +130,7 @@ const ways = [
       variant="grid"
       method={{
         text: `CodersTrust Bangladesh works from its headquarters in ${BANGLADESH_HQ.city} and campuses in Mirpur and Agrabad, Chattogram. ${C14.validate.text} A planned program with the Bangladesh Computer Council and Bandhu Welfare Society aims to train ${thirdGender}. Our TalentLEAP method organizes skills into career paths with progressive levels.`,
-        link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' },
+        link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' },
       }}
     />
   </div>
@@ -143,17 +143,17 @@ const ways = [
       title="How a Local Partnership Works"
       positioning={POSITIONING.localPartners}
       blocks={[
-        { label: 'Your organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
+        { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
         { label: 'With CodersTrust', title: 'Trains and Certifies', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and Placement', text: 'Three months of milestone-based mentoring, then placement support into local, remote and global work.', icon: 'handshake' },
         { label: 'Throughout', title: 'Monthly Reporting', text: 'The funder sees enrollment, completion, certification, placements and first earnings every month.', icon: 'chart-bar' },
       ]}
-      link={{ label: 'How our model works', href: '/our-model/' }}
+      link={{ label: 'How Our Model Works', href: '/our-model/' }}
     />
   </div>
 
   <!-- C7 -->
-  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
   <CaseStudyCarousel
     id="cases"
     title="Women-Focused Programs in Practice"
@@ -170,28 +170,28 @@ const ways = [
     rows={[
       {
         ...painForRow(LOCAL_PARTNER_PAINS, 'P1'),
-        feature: 'Certified-facilitator training, a localized curriculum and preparation for industry certification',
+        feature: 'Certified-Facilitator Training, a Localized Curriculum and Preparation for Industry Certification',
         means: 'local capacity that stays after a funded cohort ends, with a curriculum and a certification route you do not have to build yourself.',
         outcome: 'Certified facilitators from your community',
         facts: ['PD-06', 'PD-02'],
       },
       {
         ...painForRow(LOCAL_PARTNER_PAINS, 'P2'),
-        feature: 'Three months of milestone-based mentoring, then placement support into local, remote and global work',
+        feature: 'Three Months of Milestone-Based Mentoring, Then Placement Support into Local, Remote and Global Work',
         means: 'your completers get a route into work that your organization does not have to build alone.',
         outcome: 'Work-entry connections for your completers',
         facts: ['PD-01', 'PD-15'],
       },
       {
         ...painForRow(LOCAL_PARTNER_PAINS, 'P3'),
-        feature: 'Monthly reports to the funder',
+        feature: 'Monthly Reports to the Funder',
         means: 'the funder receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
         outcome: 'Progress you and the funder can both see',
         facts: ['PD-08'],
       },
-      { feature: 'Blended delivery in existing labs and colleges', means: 'a low capital cost for you and for the funder.', outcome: 'A cohort in a lab or classroom you already have' },
-      { feature: 'Connectivity-light delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
-      { feature: 'Consent-based data practice and safeguarding agreed per program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
+      { feature: 'Blended Delivery in Existing Labs and Colleges', means: 'a low capital cost for you and for the funder.', outcome: 'A cohort in a lab or classroom you already have' },
+      { feature: 'Connectivity-Light Delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
+      { feature: 'Consent-Based Data Practice and Safeguarding Agreed per Program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
     ]}
   />
   <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">
@@ -209,7 +209,7 @@ const ways = [
 
   <!-- C11 -->
   <Section id="offer" tone="airy" aria-labelledby="offer-h">
-    <SectionHeader id="offer-h" eyebrow="Ways to partner" title="Three Ways to Partner with Us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
+    <SectionHeader id="offer-h" eyebrow="Ways to Partner" title="Three Ways to Partner with Us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
     <div class="grid-cards grid-cards--stretch" data-fact="PD-06 PD-05">
       {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
     </div>
@@ -229,7 +229,7 @@ const ways = [
 
   <!-- C14 -->
   <Section id="next-steps" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After you write" title="What Happens After You Say Yes" />
+    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens After You Say Yes" />
     <StepFlow steps={[
       { title: 'Discovery Session', text: 'A conversation about your organization and the young people you reach.' },
       { title: 'Fit Check and Co-Design', text: 'We shape the cohort, tracks, safeguarding and reporting with you.' },

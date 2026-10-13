@@ -12,7 +12,7 @@
  * Every percentage reproduces a register headline (checked in `assertConsistent` and `assertAgainstRegister`).
  *
  * Grouping: education categories are shown as grouped in the source; every district under 3.0% is combined into
- * "Other districts" (the only place the below-3% fold applies); the 0–10 recommendation score shows all eleven scores.
+ * "Other Districts" (the only place the below-3% fold applies); the 0–10 recommendation score shows all eleven scores.
  * Shares are rounded to one decimal, so a group may add to 99.9 or 100.1.
  *
  * This file has no imports, so it can also be run directly to regenerate the CSV:
@@ -54,34 +54,34 @@ export const MIN_CELL = 10;
 // ---- Who responded (OC-09) -------------------------------------------------------------------
 export const AGE: Dist = {
   id: 'OC-09-age',
-  measure: 'Respondents by age group',
+  measure: 'Respondents by Age Group',
   cells: [
     { label: '15–24', pct: 15.2 },
     { label: '25–35', pct: 53.5 },
     { label: '36–45', pct: 23.3 },
-    { label: '46 and over', pct: 8.0 },
+    { label: '46 and Over', pct: 8.0 },
   ],
 };
 
 /** Education categories as grouped in the source. */
 export const EDUCATION: Dist = {
   id: 'OC-09-education',
-  measure: 'Respondents by highest education',
+  measure: 'Respondents by Highest Education',
   cells: [
-    { label: 'Higher Secondary Certificate (HSC) or below', pct: 11.0 },
+    { label: 'Higher Secondary Certificate (HSC) or Below', pct: 11.0 },
     { label: 'Diploma', pct: 4.4 },
-    { label: 'Bachelor’s degree', pct: 34.2 },
-    { label: 'Master’s degree or higher', pct: 50.4 },
+    { label: 'Bachelor’s Degree', pct: 34.2 },
+    { label: 'Master’s Degree or Higher', pct: 50.4 },
   ],
 };
 
 /**
  * District of residence. The Impact Report does not state the base for this question, so only the published shares are
- * kept. Every district under 3.0% is combined into "Other districts" (page text: "Districts under 3% are combined into
+ * kept. Every district under 3.0% is combined into "Other Districts" (page text: "Districts under 3% are combined into
  * Other districts"); that remainder is 100% minus the shares shown.
  */
 export const DISTRICT_FOLD_BELOW = 3.0;
-export const OTHER_DISTRICTS = 'Other districts';
+export const OTHER_DISTRICTS = 'Other Districts';
 /** Districts at or above DISTRICT_FOLD_BELOW; the smaller ones are not listed anywhere. */
 const DISTRICT_SHARES: ShareCell[] = [
   { label: 'Dhaka', pct: 37.1 },
@@ -93,7 +93,7 @@ const DISTRICT_SHARES: ShareCell[] = [
 const tenths = (p: number) => Math.round(p * 10);
 export const DISTRICTS: { id: string; measure: string; cells: ShareCell[] } = {
   id: 'OC-09-district',
-  measure: 'Respondents by district of residence',
+  measure: 'Respondents by District of Residence',
   cells: [
     ...DISTRICT_SHARES,
     { label: OTHER_DISTRICTS, pct: (1000 - DISTRICT_SHARES.reduce((s, c) => s + tenths(c.pct), 0)) / 10 },
@@ -103,9 +103,9 @@ export const DISTRICTS: { id: string; measure: string; cells: ShareCell[] } = {
 // ---- Employment by type (OC-04, stated base 321) ---------------------------------------------
 export const EMPLOYMENT_BASE = 321;
 export const EMPLOYMENT_TYPES = [
-  { label: 'Salaried employment', before: 38.3, after: 53.3 },
+  { label: 'Salaried Employment', before: 38.3, after: 53.3 },
   { label: 'Freelancing', before: 6.2, after: 14.0 },
-  { label: 'Business ownership', before: 2.8, after: 10.6 },
+  { label: 'Business Ownership', before: 2.8, after: 10.6 },
 ];
 export const EMPLOYED = { before: 47.4, after: 77.9 };
 /** Share of those employed before training who reported they were no longer employed (OC-01). The report states no count for it. */
@@ -114,11 +114,11 @@ export const EXIT = { share: 5.9 };
 // ---- Speed to earnings (OC-05, stated base 170; cumulative) ---------------------------------
 export const SPEED_BASE = 170;
 export const SPEED: ShareCell[] = [
-  { label: 'During the course', pct: 23.5 },
-  { label: 'Within 3 months', pct: 38.2 },
-  { label: 'Within 6 months', pct: 58.8 },
-  { label: 'Within 12 months', pct: 77.1 },
-  { label: 'Within 2 years', pct: 90.6 },
+  { label: 'During the Course', pct: 23.5 },
+  { label: 'Within 3 Months', pct: 38.2 },
+  { label: 'Within 6 Months', pct: 58.8 },
+  { label: 'Within 12 Months', pct: 77.1 },
+  { label: 'Within 2 Years', pct: 90.6 },
 ];
 
 // ---- Income direction (OC-03b, stated base 277) ---------------------------------------------
@@ -132,17 +132,17 @@ export const INCOME_DIRECTION: ShareCell[] = [
 // ---- Career outcomes (OC-08, stated base 321) ------------------------------------------------
 export const CAREER: Dist = {
   id: 'OC-08',
-  measure: 'Career and education outcomes reported',
+  measure: 'Career and Education Outcomes Reported',
   statedBase: 321,
   cells: [
-    { label: 'Freelancing or remote job', pct: 19.0 },
-    { label: 'New job', pct: 11.5 },
-    { label: 'Started a business', pct: 6.9 },
-    { label: 'Better position', pct: 6.2 },
-    { label: 'Higher education', pct: 8.1 },
+    { label: 'Freelancing or Remote Job', pct: 19.0 },
+    { label: 'New Job', pct: 11.5 },
+    { label: 'Started a Business', pct: 6.9 },
+    { label: 'Better Position', pct: 6.2 },
+    { label: 'Higher Education', pct: 8.1 },
     { label: 'Promotion', pct: 4.4 },
-    { label: 'Salary increase', pct: 3.4 },
-    { label: 'Other or no change', pct: 40.5 },
+    { label: 'Salary Increase', pct: 3.4 },
+    { label: 'Other or No Change', pct: 40.5 },
   ],
 };
 
@@ -152,12 +152,12 @@ export const SOURCE: Dist = {
   measure: 'Main income source',
   cells: [
     { label: 'Job in Bangladesh', pct: 48.4 },
-    { label: 'Own business', pct: 11.6 },
+    { label: 'Own Business', pct: 11.6 },
     { label: 'Freelancing in Bangladesh', pct: 6.2 },
-    { label: 'Freelancing for foreign clients', pct: 7.1 },
-    { label: 'Job abroad', pct: 4.7 },
+    { label: 'Freelancing for Foreign Clients', pct: 7.1 },
+    { label: 'Job Abroad', pct: 4.7 },
     { label: 'Other', pct: 16.9 },
-    { label: 'No current income', pct: 5.0 },
+    { label: 'No Current Income', pct: 5.0 },
   ],
 };
 
@@ -256,7 +256,7 @@ export function assertConsistent(): void {
   must(near(1000 - tenths(CAREER.cells[7].pct), 595), 'specific career or education outcome should be 59.5%');
   must(near(tenths(CAREER.cells[0].pct) + tenths(CAREER.cells[1].pct) + tenths(CAREER.cells[2].pct), 374), 'new income source should be 37.4%');
   must(DISTRICTS.cells.every((c) => c.label === OTHER_DISTRICTS || c.pct >= DISTRICT_FOLD_BELOW), `every district under ${DISTRICT_FOLD_BELOW}% must be combined into "${OTHER_DISTRICTS}"`);
-  must(DISTRICTS.cells[DISTRICTS.cells.length - 1].label === OTHER_DISTRICTS, '"Other districts" should come last');
+  must(DISTRICTS.cells[DISTRICTS.cells.length - 1].label === OTHER_DISTRICTS, '"Other Districts" should come last');
 }
 
 /** Checks the data against the register text it publishes: every headline share must appear in its fact, and so must each chart's key figures. */
@@ -301,13 +301,13 @@ function recs(): Rec[] {
     return { id, measure, category, type: 'percent', value: value.toFixed(1), base, note };
   };
   const emp = 'Employed, among surveyed completers';
-  out.push(pctRec('OC-01', emp, 'Before training', EMPLOYED.before, EMPLOYMENT_BASE));
+  out.push(pctRec('OC-01', emp, 'Before Training', EMPLOYED.before, EMPLOYMENT_BASE));
   out.push(pctRec('OC-01', emp, 'At the October 2026 survey', EMPLOYED.after, EMPLOYMENT_BASE));
   out.push(pctRec('OC-01', 'Employed before training who reported no longer being employed', 'Share of those employed before training', EXIT.share));
   const none = 'Completers (2014–2023) with no income before training who were earning at the October 2026 survey';
   out.push(pctRec('OC-02', none, 'Earning', pct(NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
-  out.push(pctRec('OC-02', none, 'Not earning', pct(NO_PRIOR.base - NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
-  out.push({ id: 'OC-03', measure: 'Median monthly income (USD)', category: 'Before training', type: 'median_usd', value: '82', base: INCOME_BASE });
+  out.push(pctRec('OC-02', none, 'Not Earning', pct(NO_PRIOR.base - NO_PRIOR.earning, NO_PRIOR.base), NO_PRIOR.base));
+  out.push({ id: 'OC-03', measure: 'Median monthly income (USD)', category: 'Before Training', type: 'median_usd', value: '82', base: INCOME_BASE });
   out.push({ id: 'OC-03', measure: 'Median monthly income (USD)', category: 'At the October 2026 survey', type: 'median_usd', value: '245', base: INCOME_BASE });
   for (const c of INCOME_DIRECTION) out.push(pctRec('OC-03b', 'Direction of monthly income change', c.label, c.pct, INCOME_BASE));
   out.push({ id: 'OC-03c', measure: 'Median individual change in monthly income (USD)', category: 'Median change', type: 'median_usd', value: '82', base: INCOME_BASE });

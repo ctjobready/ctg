@@ -47,7 +47,7 @@ const faqSources: FaqSource[] = ['Q9'].map((id) => ({ audience: 'foundations' as
 
 const jsonLd = [
   webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
-  serviceNode({ path, name: 'SuperKids', description: 'STEAM, robotics, coding and digital art for young learners, offered through schools and education partners.', audience: 'Schools and education partners', areaServed: ['Bangladesh'] }),
+  serviceNode({ path, name: 'SuperKids', description: 'STEAM, robotics, coding and digital art for young learners, offered through schools and education partners.', audience: 'Schools and Education Partners', areaServed: ['Bangladesh'] }),
   faqNode(faqSources, path),
 ];
 const courses = linkAttrs(COURSES_URL);
@@ -56,7 +56,7 @@ const courses = linkAttrs(COURSES_URL);
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'SuperKids' }]} jsonLd={jsonLd} stickyCta={inquiry}>
   <!-- C1 -->
   <HeroBand
-    audience="SuperKids · For schools and education partners"
+    audience="SuperKids · For Schools and Education Partners"
     title="Help Young Learners Explore Coding, Creativity and Robotics."
     lead="We help schools and partners bring STEAM, coding and robotics to young learners."
     cta={inquiry}
@@ -82,9 +82,9 @@ const courses = linkAttrs(COURSES_URL);
     title="A Classroom with Coding, Robotics and Digital Art"
     lead="Photographs from SuperKids workshops, events and school partnerships."
     vignettes={[
-      { kind: 'Block coding', title: 'Learners Build with Blocks', text: 'Visual coding with blocks is a first step into programming.' },
+      { kind: 'Block Coding', title: 'Learners Build with Blocks', text: 'Visual coding with blocks is a first step into programming.' },
       { kind: 'Robotics', title: 'Ideas Become Things That Move', text: 'Learners design and program simple robots.' },
-      { kind: 'Digital art', title: 'Creativity Meets Technology', text: 'Graphic design for kids brings art into the digital classroom.' },
+      { kind: 'Digital Art', title: 'Creativity Meets Technology', text: 'Graphic design for kids brings art into the digital classroom.' },
     ]}
   />
 
@@ -94,7 +94,7 @@ const courses = linkAttrs(COURSES_URL);
     empathy="You want children to build digital skills early."
     origin={ORIGIN}
     showPartners={false}
-    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }}
+    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
     <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These agreements set targets for reach; they are not delivered reach.</p>
     <p data-fact="PA-03">Private-sector partners include Robi.</p>
@@ -108,13 +108,13 @@ const courses = linkAttrs(COURSES_URL);
       <FeatureCard icon="palette" title="Graphic Design for Kids" text="Digital art and design." />
     </div>
     <p class="courses__more" data-reveal>
-      Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
+      Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
     </p>
   </MechanismSection>
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
-    <SectionHeader id="agreements-h" eyebrow="What is in place" title="What Has Been Delivered, and What Is Only Agreed" />
+    <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="What Has Been Delivered, and What Is Only Agreed" />
     <div class="agree">
       <div class="agree__delivered" data-reveal><FactStat id="SK-05" /></div>
       <p class="agree__fact" data-reveal data-fact="GV-08"><Fact id="GV-08" /></p>

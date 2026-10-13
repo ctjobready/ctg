@@ -28,7 +28,7 @@ interface Props {
   transition?: string;
   id?: string;
 }
-const { eyebrow = 'The challenge', title, bluf, factIds = [], extra = [], scope = {}, transition, id = 'problem' } = Astro.props;
+const { eyebrow = 'The Challenge', title, bluf, factIds = [], extra = [], scope = {}, transition, id = 'problem' } = Astro.props;
 const total = factIds.length + extra.length;
 const grid = total === 4 ? 'grid-cards grid-cards--4' : total === 2 ? 'grid-cards grid-cards--2' : total === 1 ? 'grid-cards pcs-one' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);

@@ -30,7 +30,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The cost of waiting" title={title} />
+  <SectionHeader id={`${id}-h`} eyebrow="The Cost of Waiting" title={title} />
   <div class="grid-cards">
     {
       blocks.map((b) => (
@@ -41,7 +41,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
             <p class="cost__data" data-fact={b.factId}>
               {clean(fact(b.factId).text)}
             </p>
-            <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
+            <p class="cost__impl"><span class="cost__tag">What It Means</span>{' '}{b.implication}</p>
           </div>
         </article>
       ))

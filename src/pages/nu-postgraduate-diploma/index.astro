@@ -1,7 +1,7 @@
 ---
 // P15 — NU Postgraduate Diploma /nu-postgraduate-diploma/ (T3 conversion page; doc 04 matrix 4.7).
 // Gate: duration, schedule, fee, eligibility, delivery mode, internship terms and award are NOT published until
-// NU and CodersTrust approve the admissions fact set. "Apply now" is a plain link to the standalone Google Form.
+// NU and CodersTrust approve the admissions fact set. "Apply Now" is a plain link to the standalone Google Form.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
@@ -112,7 +112,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </GuideSection>
 
   <!-- C6 -->
-  <MechanismSection title="The National University Postgraduate Diploma" lead="Courses delivered by CodersTrust under National University’s official training partnership." eyebrow="The courses" factIds={['SC-04']}>
+  <MechanismSection title="The National University Postgraduate Diploma" lead="Courses delivered by CodersTrust under National University’s official training partnership." eyebrow="The Courses" factIds={['SC-04']}>
     <div class="courses" data-fact="SC-04">
       {
         courses.map((c) => (
@@ -124,7 +124,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
             ratio="808 / 555"
             meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
             href={`${path}${c.slug}/`}
-            actionLabel="View course"
+            actionLabel="View Course"
           />
         ))
       }
@@ -132,7 +132,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="The evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment among surveyed completers of CodersTrust’s wider programs, not of this diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="The Evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
       <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s wider programs, not from this diploma:" />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
@@ -141,7 +141,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C8 -->
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How it works" title="How It Works in Three Steps" />
+    <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" />
     <StepFlow
       steps={[
         { title: 'Apply', text: 'Complete the application form.' },

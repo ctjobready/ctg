@@ -8,7 +8,7 @@ import { graduateRates } from '../../sections/copyText';
  * YouthWIDE priority groups (Bangladesh national initiative) (IN-03), one card per group, each labeled with exactly one of three statuses:
  *  - "Delivered": unemployed graduates (most surveyed completers across CodersTrust programs hold a bachelor's degree or higher)
  *  - "Planned": third-gender people (GV-07, a program to train a stated number; enrollment is not stated)
- *  - "Aims to reach": madrasah, coastal and indigenous youth (no delivered program is claimed)
+ *  - "Aims to Reach": madrasah, coastal and indigenous youth (no delivered program is claimed)
  * Group sizes overlap and are never added together (IN-03 footnote). Women are a priority in every group.
  */
 interface Group {
@@ -30,9 +30,9 @@ const madrasah = px12.text
   .join('; ');
 const groups: Group[] = [
   { title: 'Unemployed Graduates', status: 'Delivered', tone: 'success', note: { text: `Graduate unemployment is ${rates.graduate}, against ${rates.ssc} for SSC holders (see the national challenge above).`, factIds: ['PX-03', 'OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
-  { title: 'Madrasah Youth', status: 'Aims to reach', tone: 'info', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
-  { title: 'Climate-Vulnerable Coastal Youth', status: 'Aims to reach', tone: 'info', factIds: ['PX-11'] },
-  { title: 'Indigenous Communities', status: 'Aims to reach', tone: 'info', factIds: ['PX-13'] },
+  { title: 'Madrasah Youth', status: 'Aims to Reach', tone: 'info', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
+  { title: 'Climate-Vulnerable Coastal Youth', status: 'Aims to Reach', tone: 'info', factIds: ['PX-11'] },
+  { title: 'Indigenous Communities', status: 'Aims to Reach', tone: 'info', factIds: ['PX-13'] },
   { title: 'Third-Gender People', status: 'Planned', tone: 'brand', factIds: ['GV-07', 'PX-14'] },
 ];
 ---

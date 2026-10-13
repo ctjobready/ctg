@@ -4,6 +4,7 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
+import { titleCase } from '../../../lib/titleCase.mjs';
 
 /**
  * What funders receive monthly (PD-08). The list is parsed from the register's wording so it cannot drift:
@@ -30,7 +31,7 @@ const icons = ['users-round', 'award', 'briefcase', 'search-check', 'heart-hands
         <li class="card mr__item" data-reveal>
           <div class="card__body">
             <Icon name={icons[i % icons.length]} size={32} strokeWidth={1.5} class="mr__icon" />
-            <p class="mr__label">{r}</p>
+            <p class="mr__label">{titleCase(r)}</p>
           </div>
         </li>
       ))

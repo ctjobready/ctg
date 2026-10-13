@@ -31,23 +31,23 @@ interface Props {
   lead?: string;
   rows: Row[];
   id?: string;
-  /** Heading of the pain column ("Funder concern addressed" on funder pages). */
+  /** Heading of the pain column ("Funder Concern Addressed" on funder pages). */
   concernLabel?: string;
 }
-const { title, lead, rows, id = 'features', concernLabel = 'Concern addressed' } = Astro.props;
+const { title, lead, rows, id = 'features', concernLabel = 'Concern Addressed' } = Astro.props;
 const showPain = rows.some((r) => r.relieves);
 const painNumber = (painId: string) => painId.replace(/^P/, '');
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="What you get" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="What You Get" title={title} lead={lead} />
   <section class="ft" aria-label="Features and benefits" tabindex="0" data-scroll data-stack data-reveal>
     <table>
       <caption class="sr-only">{title}</caption>
       <thead>
         <tr>
           <th scope="col">Feature</th>
-          <th scope="col">Which means…</th>
+          <th scope="col">Which Means…</th>
           <th scope="col">Outcome</th>
           {showPain && <th scope="col">{concernLabel}</th>}
         </tr>
@@ -57,7 +57,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
           rows.map((r) => (
             <tr data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
               <th scope="row">{r.feature}</th>
-              <td data-label="Which means…">{r.means}</td>
+              <td data-label="Which Means…">{r.means}</td>
               <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? 'See the feature'}</td>
               {showPain && (
                 <td data-label={concernLabel}>

@@ -26,10 +26,10 @@ interface Props {
   trialScope?: string;
   links?: { label: string; href: string }[];
   id?: string;
-  /** Small label above the heading; defaults to "The evidence". */
+  /** Small label above the heading; defaults to "The Evidence". */
   eyebrow?: string;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The evidence' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The Evidence' } = Astro.props;
 // A band headed by the randomized trial carries a short H2; the fact's own headline is body text below it. RC-01's headline leads with the
 // +10.3 pp employment result (WP7), so no separate RC-02 sentence is printed before it; the [PLAIN-LINE] still follows where a page asks for it.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
@@ -69,7 +69,7 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
       </div>
     )
   }
-  <p class="proofband__sub eyebrow">Alumni survey results</p>
+  <p class="proofband__sub eyebrow">Alumni Survey Results</p>
   <div class:list={['proofband', survey.length === 0 && 'proofband--solo']}>
     {
       survey.length > 0 && (
@@ -82,8 +82,8 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
       <p class="proofband__chartlead">{chartLead}</p>
       <BeforeAfter
         title={chartTitle}
-        before={{ label: 'Before', value: before, caption: 'before training' }}
-        after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+        before={{ label: 'Before', value: before, caption: 'Before Training' }}
+        after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
         delta={delta}
         diffLabel="Difference"
         unit={unit}

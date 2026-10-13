@@ -44,7 +44,7 @@ const related = relatedNews(all, post);
 >
   {showHero && cover && <Img slot="hero" src={cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} />}
   <Content />
-  {d.gallery.length > 0 && <PhotoGallery slot="gallery" id="photos" title="More Photographs" eyebrow="From this story" tone="white" photos={d.gallery.map((g) => ({ src: g.image, alt: g.alt, assetId: asset }))} />}
+  {d.gallery.length > 0 && <PhotoGallery slot="gallery" id="photos" title="More Photographs" eyebrow="From This Story" tone="white" photos={d.gallery.map((g) => ({ src: g.image, alt: g.alt, assetId: asset }))} />}
   <Fragment slot="related">
     {
       related.map((p) => (

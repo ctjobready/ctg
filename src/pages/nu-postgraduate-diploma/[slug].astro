@@ -58,7 +58,7 @@ const jsonLd = [
   </Hero>
 
   <Section id="who" aria-labelledby="who-h">
-    <SectionHeader id="who-h" eyebrow="Who it is for" title="For Degree Holders Who Want a Digital Career" lead="Right for you if you hold a degree and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global." />
+    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Degree Holders Who Want a Digital Career" lead="Right for you if you hold a degree and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global." />
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
@@ -74,13 +74,13 @@ const jsonLd = [
   <Section id="curriculum" tone="airy" aria-labelledby="curriculum-h">
     <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead="Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions." />
     <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} />
-    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and mentors<Icon name="arrow-right" size={16} /></a></p>
+    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="outcomes" aria-labelledby="outcomes-h">
     <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="What CodersTrust Training Has Achieved" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
     <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s wider programs, not from this diploma:" class="outcome-note" />
-    <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the full findings<Icon name="arrow-right" size={16} /></a></p>
+    <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <FaqSection sources={faqSources} title="Questions About This Course" />

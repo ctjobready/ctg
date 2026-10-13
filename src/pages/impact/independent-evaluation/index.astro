@@ -24,10 +24,10 @@ const faqIds = ['Q4', 'Q3'];
 
 // RC-08 chart values must match the register text.
 const classes = [
-  { label: 'Control group', value: 12 },
-  { label: 'Attended 1–10 classes', value: 16 },
-  { label: 'Attended 11–24 classes', value: 21 },
-  { label: 'Attended 25 or more classes', value: 42 },
+  { label: 'Control Group', value: 12 },
+  { label: 'Attended 1–10 Classes', value: 16 },
+  { label: 'Attended 11–24 Classes', value: 21 },
+  { label: 'Attended 25 or More Classes', value: 42 },
 ];
 const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
@@ -75,7 +75,7 @@ const d = discoveryCta();
   eyebrow="Independent Evaluation"
   updated="2026-10-10"
   toc={toc}
-  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent evaluation' }]}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent Evaluation' }]}
   jsonLd={jsonLd}
 >
   <ReportSection id="summary" title="The Short Answer">
@@ -91,7 +91,7 @@ const d = discoveryCta();
       <FactStat id="RC-04" />
       <FactStat id="RC-03" />
     </div>
-    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
+    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
   </ReportSection>
 
   <div id="fit" class="ie__fit">
@@ -118,7 +118,7 @@ const d = discoveryCta();
 
   <ReportSection id="classes" title="Freelancing by Classes Attended">
     <BarChart
-      title="Share freelancing, by classes attended"
+      title="Share Freelancing, by Classes Attended"
       items={classes.map((c) => ({ label: c.label, value: c.value }))}
     />
     <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
@@ -131,7 +131,7 @@ const d = discoveryCta();
     </p>
     <p>
       One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.{' '}
-      <a class="link" href={linkAttrs('/partner-with-us/').href}>How partnerships work<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={linkAttrs('/partner-with-us/').href}>How Partnerships Work<Icon name="arrow-right" size={16} /></a>
     </p>
   </ReportSection>
 

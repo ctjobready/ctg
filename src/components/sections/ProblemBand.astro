@@ -12,7 +12,7 @@ interface Props {
   factIds: string[];
   id?: string;
 }
-const { eyebrow = 'The challenge', title, bluf, factIds, id = 'problem' } = Astro.props;
+const { eyebrow = 'The Challenge', title, bluf, factIds, id = 'problem' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>

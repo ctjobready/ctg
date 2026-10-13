@@ -49,20 +49,20 @@ export const navGroups: NavGroup[] = [
     label: 'About',
     href: '/about/',
     items: [
-      { label: 'Our story', href: '/about/', description: 'How CodersTrust began and where it is heading.' },
-      { label: 'Leadership & team', href: '/about/team/', description: 'Founders, advisors and the executive team.' },
-      { label: 'Instructors & mentors', href: '/about/mentors/', description: 'The practitioners who teach and mentor learners.' },
-      { label: 'Recognition & media', href: '/about/recognition/', description: 'Awards, endorsements and press coverage.' },
+      { label: 'Our Story', href: '/about/', description: 'How CodersTrust began and where it is heading.' },
+      { label: 'Leadership & Team', href: '/about/team/', description: 'Founders, advisors and the executive team.' },
+      { label: 'Instructors & Mentors', href: '/about/mentors/', description: 'The practitioners who teach and mentor learners.' },
+      { label: 'Recognition & Media', href: '/about/recognition/', description: 'Awards, endorsements and press coverage.' },
       { label: 'Careers', href: '/careers/', description: 'Working at CodersTrust and how to apply.' },
       { label: 'Contact', href: '/contact/', description: 'Offices, email and phone.' },
     ],
     feature: {
       kind: 'about',
       eyebrow: `Since ${since}`,
-      title: 'From learning to earning, for youth',
+      title: 'From Learning to Earning, for Youth',
       factIds: ['ID-02'],
       text: 'A workforce-development organization for the next generation of digital professionals.',
-      cta: { label: 'Read our story', href: '/about/' },
+      cta: { label: 'Read Our Story', href: '/about/' },
     },
   },
   {
@@ -70,16 +70,16 @@ export const navGroups: NavGroup[] = [
     label: 'Our Model',
     href: '/our-model/',
     items: [
-      { label: 'How it works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
+      { label: 'How It Works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
       { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Our learning and work platform, rolling out in stages.' },
     ],
     feature: {
       kind: 'model',
-      eyebrow: 'The cycle',
+      eyebrow: 'The Cycle',
       title: 'Learn → Earn → Prosper',
       text: 'Competency development, then employment, then career advancement.',
-      cta: { label: 'See how it works', href: '/our-model/' },
+      cta: { label: 'See How It Works', href: '/our-model/' },
     },
   },
   {
@@ -95,8 +95,8 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'pilot',
-      eyebrow: 'Start small',
-      title: 'Start with a pilot',
+      eyebrow: 'Start Small',
+      title: 'Start with a Pilot',
       text: 'Launch a first cohort, measure results, then scale.',
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },
@@ -106,9 +106,9 @@ export const navGroups: NavGroup[] = [
     label: 'Impact',
     href: '/impact/',
     items: [
-      { label: 'Impact overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
+      { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
       { label: 'Outcomes 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
-      { label: 'Independent evaluation (RCT)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
+      { label: 'Independent Evaluation (RCT)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
       { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Learners in their own words.' },
       { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
@@ -121,7 +121,7 @@ export const navGroups: NavGroup[] = [
       title: 'of surveyed completers employed',
       text: 'Before training and at the October 2026 survey.',
       factIds: ['OC-01'],
-      cta: { label: 'See the findings', href: '/impact/outcomes-2026/' },
+      cta: { label: 'See the Findings', href: '/impact/outcomes-2026/' },
     },
   },
   {
@@ -129,20 +129,20 @@ export const navGroups: NavGroup[] = [
     label: 'Partner with Us',
     href: '/partner-with-us/',
     items: [
-      { label: 'Development partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
+      { label: 'Development Partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Foundations & CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
       { label: 'Investors', href: '/investors/', description: 'Thesis and traction.' },
-      { label: 'Local partners', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
+      { label: 'Local Partners', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
     ],
     feature: {
       kind: 'discovery',
-      eyebrow: 'A conversation, not a commitment',
-      title: 'Book a discovery session',
+      eyebrow: 'A Conversation, Not a Commitment',
+      title: 'Book a Discovery Session',
       text: 'Tell us your goals; we will outline a first cohort.',
-      cta: { label: 'Book a discovery session', href: ctaHref('discovery') },
+      cta: { label: 'Book a Discovery Session', href: ctaHref('discovery') },
     },
   },
 ];
@@ -154,7 +154,7 @@ export const topLinks: NavLink[] = [{ label: 'News', href: '/news/' }];
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
 
 /** Primary header CTA. */
-export const headerCta: NavLink = { label: 'Start a partnership', href: '/contact/' };
+export const headerCta: NavLink = { label: 'Start a Partnership', href: '/contact/' };
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
@@ -163,7 +163,7 @@ export const promo = {
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v2',
   factId: 'OC-01',
-  action: { label: 'See the findings', href: '/impact/outcomes-2026/' },
+  action: { label: 'See the Findings', href: '/impact/outcomes-2026/' },
   hideOnPath: '/impact/outcomes-2026/',
 };
 
@@ -179,11 +179,11 @@ export const footerBottomLinks: NavLink[] = [
 
 /** Audience router (Home, 404, partner hub): who are you? */
 export const audiences = [
-  { id: 'development-partners', title: 'Development partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
+  { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations & CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
   { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Thesis and traction', href: '/investors/' },
-  { id: 'local-partners', title: 'Local partners', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
+  { id: 'local-partners', title: 'Local Partners', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
 ] as const;

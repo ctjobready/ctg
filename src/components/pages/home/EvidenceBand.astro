@@ -69,12 +69,12 @@ if (trial) {
   delta = `+${(after - before).toFixed(cf.stat?.decimals ?? 1)} pp`;
 }
 const unit = trial ? '%' : (cf.stat?.suffix ?? '%');
-const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 2021), randomized trial' : 'Self-Reported Employment Among Surveyed Completers');
+const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 2021), Randomized Trial' : 'Self-Reported Employment Among Surveyed Completers');
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
   <header class="eb__head" data-reveal data-fact={headlineFact}>
-    <p class="eyebrow">The evidence</p>
+    <p class="eyebrow">The Evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
     {plainLine && <PlainLine />}
     {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}</p>}
@@ -99,8 +99,8 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
             <BeforeAfter
               mode="comparison"
               title={chartHeading}
-              before={{ label: 'Control group', value: before }}
-              after={{ label: 'Offered a place', value: after }}
+              before={{ label: 'Control Group', value: before }}
+              after={{ label: 'Offered a Place', value: after }}
               delta={delta}
               chip={chip}
               unit={unit}
@@ -112,8 +112,8 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at follow-up (Nov–Dec 
           <>
             <BeforeAfter
               title={chartHeading}
-              before={{ label: 'Before', value: before, caption: 'before training' }}
-              after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+              before={{ label: 'Before', value: before, caption: 'Before Training' }}
+              after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
               delta={delta}
               unit={unit}
               tone="dark"

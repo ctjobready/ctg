@@ -17,7 +17,7 @@ interface Props {
   caption?: string;
   class?: string;
 }
-const { items = locations, caption = 'Where CodersTrust programs have run', class: className } = Astro.props;
+const { items = locations, caption = 'Where CodersTrust Programs Have Run', class: className } = Astro.props;
 assertMapEquivalence(items);
 const rowsData = items.map((l) => tableRow(l));
 
@@ -47,7 +47,7 @@ const pins = items.map((l) => {
               <div class="wmap__card" id={`wmap-card-${p.id}`}>
                 <p class="wmap__country">{p.tip.name} <span>{p.tip.years}</span></p>
                 <dl>
-                  <dt>Target group</dt>
+                  <dt>Target Group</dt>
                   <dd>{p.tip.targetGroup}</dd>
                   <dt>Skills</dt>
                   <dd>{p.tip.skills}</dd>
@@ -71,9 +71,9 @@ const pins = items.map((l) => {
         <tr>
           <th scope="col">Location</th>
           <th scope="col">Years</th>
-          <th scope="col">Target group</th>
+          <th scope="col">Target Group</th>
           <th scope="col">Skills</th>
-          <th scope="col">Partner / note</th>
+          <th scope="col">Partner / Note</th>
         </tr>
       </thead>
       <tbody>
@@ -81,9 +81,9 @@ const pins = items.map((l) => {
           <tr>
             <th scope="row">{r.location}<span class="wmap__region">{r.region}</span></th>
             <td data-label="Years">{r.years}</td>
-            <td data-label="Target group">{r.targetGroup}</td>
+            <td data-label="Target Group">{r.targetGroup}</td>
             <td data-label="Skills">{r.skills}</td>
-            <td data-label="Partner / note">{r.funderNote}</td>
+            <td data-label="Partner / Note">{r.funderNote}</td>
           </tr>
         ))}
       </tbody>

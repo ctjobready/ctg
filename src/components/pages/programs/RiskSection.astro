@@ -20,7 +20,7 @@ interface Props {
   points?: Point[];
   id?: string;
 }
-const { eyebrow = 'Low risk', title, lead, points = [], id = 'risk' } = Astro.props;
+const { eyebrow = 'Low Risk', title, lead, points = [], id = 'risk' } = Astro.props;
 const grid = points.length === 4 ? 'grid-cards grid-cards--4' : points.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 ---
 

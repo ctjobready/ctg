@@ -24,11 +24,11 @@ const description = 'Explore CodersTrust programs: YouthWIDE, JobReady@Campus, J
 const discovery = ctaFor('discovery');
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, development partners and funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders see paid-work outcomes in monthly reports, not only enrollment.' },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders see paid-work outcomes in monthly reports, not only enrollment.' },
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.' },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.' },
-  { icon: 'book-open', href: '/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audience: 'Degree holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
-  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and education partners', text: 'STEAM, coding and robotics for young learners.', means: 'a school can bring coding and robotics into the classroom.' },
+  { icon: 'book-open', href: '/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
+  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and Education Partners', text: 'STEAM, coding and robotics for young learners.', means: 'a school can bring coding and robotics into the classroom.' },
 ];
 
 const jsonLd = [
@@ -58,7 +58,7 @@ const jsonLd = [
   <DefinitionBlock />
 
   <Section id="programs-grid" aria-labelledby="programs-h">
-    <SectionHeader id="programs-h" eyebrow="Five programs" title="Choose the Program That Fits You." lead="Each card says who the program is for and what it means in practice." />
+    <SectionHeader id="programs-h" eyebrow="Five Programs" title="Choose the Program That Fits You." lead="Each card says who the program is for and what it means in practice." />
     <ul class="grid-cards grid-cards--stretch hub" role="list" data-fact="IN-02 IN-01 IN-09 IN-10 SC-04">
       {
         programs.map((p) => (
@@ -74,13 +74,13 @@ const jsonLd = [
   </Section>
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
-    <SectionHeader id="path-h" eyebrow="The path behind every program" title="Train, Mentor, Place and Report." lead="Funded programs share one path. Each program adapts it to its partner." />
+    <SectionHeader id="path-h" eyebrow="The Path Behind Every Program" title="Train, Mentor, Place and Report." lead="Funded programs share one path. Each program adapts it to its partner." />
     <div data-fact={STEPS_FACTS.join(' ')}>
       <StepFlow steps={STEPS.map((s) => ({ title: s.title, text: s.text }))} />
     </div>
   </Section>
 
-  <ProofBand title="The evidence" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'SC-01', 'SC-03']} links={[{ label: 'See the evidence', href: '/impact/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+  <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'SC-01', 'SC-03']} links={[{ label: 'See the Evidence', href: '/impact/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
 
   <CTABand
     id="cta"

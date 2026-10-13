@@ -51,28 +51,28 @@ const hours = fact('PD-01').stat?.value;
 const featureRows = [
   {
     ...painForRow(FUNDER_PAINS, 'P1'),
-    feature: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment',
+    feature: 'Placement Support, Three Months of Milestone-Based Mentoring and a Work-Entry Plan per Track Approved Before Enrollment',
     means: 'learners get structured support from first profile to first client, and are matched to local, remote and global work.',
     outcome: 'A path to first paid work',
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
   {
     ...painForRow(FUNDER_PAINS, 'P2'),
-    feature: 'Monthly reports, tracer surveys at 3, 6 and 12 months and documentary evidence of earnings',
+    feature: 'Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence of Earnings',
     means: 'you see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
     outcome: 'Auditable results',
     facts: ['PD-08', 'PD-09'],
   },
   {
     ...painForRow(FUNDER_PAINS, 'P3'),
-    feature: 'An AI-ready curriculum, with entry-level tracks chosen from employer demand',
+    feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Chosen from Employer Demand',
     means: 'courses keep pace with employer demand as AI changes entry-level tasks.',
     outcome: 'Tracks that follow what employers ask for',
     facts: ['PD-02', 'PD-10'],
   },
-  { feature: 'Accessible readiness assessment', means: 'applicants are routed to a career or foundation track that fits them.', outcome: 'The right career or foundation track' },
-  { feature: `${hours} training hours per certification, with hands-on labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio' },
-  { feature: 'Certification exam preparation (exam fee included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
+  { feature: 'Accessible Readiness Assessment', means: 'applicants are routed to a career or foundation track that fits them.', outcome: 'The right career or foundation track' },
+  { feature: `${hours} Training Hours per Certification, with Hands-on Labs`, means: 'learners practice on real tasks, not only lectures.', outcome: 'An employer-ready portfolio' },
+  { feature: 'Certification Exam Preparation (Exam Fee Included)', means: 'each track prepares learners for an industry certification.', outcome: 'A supported route to a recognized credential' },
 ];
 ---
 
@@ -131,7 +131,7 @@ const featureRows = [
 
   <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
 
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How our model works', href: '/our-model/' }} /></Tone>
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
   <Tone cmf="C7">
     <EvidenceBand
@@ -145,7 +145,7 @@ const featureRows = [
       statIds={['RC-02', 'OC-03', 'OC-02', 'OC-05']}
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
-        { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+        { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
       ]}
     >
       <EvidenceLadderCompact slot="ladder" />
@@ -161,12 +161,12 @@ const featureRows = [
   <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
 
   <Tone cmf="C8" tone="airy" join>
-    <FeaturesTable id="features" title="What You Get — and What It Means for Your Outcomes" rows={featureRows} concernLabel="Funder concern addressed" />
+    <FeaturesTable id="features" title="What You Get — and What It Means for Your Outcomes" rows={featureRows} concernLabel="Funder Concern Addressed" />
     <FeatureSteps />
   </Tone>
 
   <Tone cmf="C9" tone="white">
-    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All partner FAQs', href: '/partner-with-us/#faqs' }} />
+    <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
   <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches." /></Tone>

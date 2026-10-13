@@ -39,13 +39,13 @@ const rows: Row[] = [
     direct: `${SCOPE} ${factPart('GV-02', /[\d,]+ youth/)}`,
   },
   {
-    contract: 'SKIT incubator (Bangladesh Hi-Tech Park Authority)',
+    contract: 'SKIT Incubator (Bangladesh Hi-Tech Park Authority)',
     facts: ['GV-03'],
     scope: 'High-demand IT skills training, Barishal',
     direct: `${SCOPE} ${factPart('GV-03', /[\d,]+ people/)}`,
   },
   {
-    contract: 'NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)',
+    contract: 'NHRDF (National Human Resource Development Fund, Implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
     direct: `${SCOPE} initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
@@ -77,15 +77,15 @@ const { title, lead, id = 'contracts' } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Government contracts" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Government Contracts" title={title} lead={lead} />
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
       <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Counts are contract training scopes, not delivered scale.</caption>
       <thead>
         <tr>
           <th scope="col">Contract</th>
-          <th scope="col">CodersTrust scope</th>
-          <th scope="col">Direct training</th>
+          <th scope="col">CodersTrust Scope</th>
+          <th scope="col">Direct Training</th>
         </tr>
       </thead>
       <tbody>
@@ -93,8 +93,8 @@ const { title, lead, id = 'contracts' } = Astro.props;
           rows.map((r) => (
             <tr data-fact={r.facts.join(' ')}>
               <th scope="row">{r.contract}</th>
-              <td data-label="CodersTrust scope">{r.scope}</td>
-              <td class="ct__num" data-label="Direct training">{r.direct}</td>
+              <td data-label="CodersTrust Scope">{r.scope}</td>
+              <td class="ct__num" data-label="Direct Training">{r.direct}</td>
             </tr>
           ))
         }
