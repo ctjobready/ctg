@@ -27,7 +27,7 @@ const picture = mayRender(p.assetId) ? p : undefined;
 const cards = hero.proof.map((c) => {
   const f = fact(c.factId);
   if (!f.stat) throw new Error(`HomeHero: fact ${c.factId} has no stat`);
-  return { ...c, value: f.stat.value, label: f.stat.label };
+  return { ...c, value: c.value ?? f.stat.value, label: c.caption ?? f.stat.label };
 });
 ---
 
@@ -65,7 +65,14 @@ const cards = hero.proof.map((c) => {
         cards.map((c) => (
           <li class="hh__card" data-fact={c.factId}>
             <p class="hh__eyebrow">{c.eyebrow}</p>
-            <Stat value={c.value} label={c.label} size="lg" count={false} />
+            {c.unit ? (
+              <div class="hh__fig">
+                <p class="hh__figvalue"><span class="hh__num">{c.value}</span> <span class="hh__unit">{c.unit}</span></p>
+                <p class="hh__figlabel">{c.label}</p>
+              </div>
+            ) : (
+              <Stat value={c.value} label={c.label} size="lg" count={false} />
+            )}
           </li>
         ))
       }
@@ -240,6 +247,33 @@ const cards = hero.proof.map((c) => {
   }
   .hh__card :global(.stat__label) {
     max-width: none;
+  }
+  /* A card whose figure carries a unit ("+10.3 percentage points"): the unit sits beside the number, smaller, and may wrap. */
+  .hh__fig {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hh__fig > * {
+    margin: 0;
+  }
+  .hh__figvalue {
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--secondary);
+    line-height: 1.15;
+  }
+  .hh__num {
+    font-size: var(--fs-display-5xl);
+  }
+  .hh__unit {
+    font-size: var(--fs-heading-l);
+    letter-spacing: 0;
+  }
+  .hh__figlabel {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
   }
   .hh__eyebrow {
     margin: 0 0 4px;

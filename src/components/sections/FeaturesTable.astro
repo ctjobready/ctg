@@ -48,14 +48,17 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
         <li class="fc__card" data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
           {showPain && (
             <div class="fc__concern">
-              <p class="fc__label">{concernLabel}</p>
               {r.relieves ? (
-                <p class="fc__pain">
-                  {r.painId ? <span class="fc__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
-                  <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
-                </p>
+                <>
+                  <p class="fc__label">{concernLabel}</p>
+                  <p class="fc__pain">
+                    {r.painId ? <span class="fc__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
+                    <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
+                  </p>
+                </>
               ) : (
-                <p class="fc__pain fc__pain--added">Added benefit</p>
+                // WP19, item 16: a row that answers no ranked concern is a benefit, not a funder concern, so it carries its own label.
+                <p class="fc__label fc__label--added">Added Benefit</p>
               )}
             </div>
           )}
@@ -124,6 +127,9 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     text-transform: uppercase;
     color: var(--on-primary-container);
     margin-bottom: 4px !important;
+  }
+  .fc__label--added {
+    margin-bottom: 0 !important;
   }
   .fc__pain {
     display: flex;

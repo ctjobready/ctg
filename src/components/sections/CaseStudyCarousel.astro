@@ -24,9 +24,11 @@ interface Props {
   title: string;
   lead?: string;
   items: Item[];
+  /** The small label over the heading (default "Program Results", so it never repeats a heading titled "Proof in Practice"). */
+  eyebrow?: string;
   id?: string;
 }
-const { title, lead, items, id = 'cases' } = Astro.props;
+const { title, lead, items, eyebrow = 'Program Results', id = 'cases' } = Astro.props;
 const cards = items.map((it) => {
   const s = fact(it.factId).stat;
   if (!s) throw new Error(`CaseStudyCarousel: fact ${it.factId} has no stat`);
@@ -37,7 +39,7 @@ const cards = items.map((it) => {
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Proof in Practice" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <div data-fact={items.map((i) => i.factId).join(' ')}>
     <Carousel label="Case Studies" perView={3} count={cards.length}>
       {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} href={c.href} />)}

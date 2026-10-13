@@ -8,6 +8,7 @@ import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
 import { RCT_COMPARISON, TRIAL_BAND_HEADING } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
+import { endSentence } from '../../sections/copyText';
 
 /**
  * C7 evidence band (Klein). Page-local variant of the shared ProofBand with one difference: where a survey
@@ -39,13 +40,21 @@ interface Props {
   /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
   plainLine?: boolean;
   links?: { label: string; href: string }[];
+  /**
+   * Home (WP19, item 25): the band's H2 is `bandHeading` ("Trial and Survey Evidence") and the trial gets its own sub-heading `trialHeading`
+   * ("An Independent Randomized Trial") over its headline, plain line and chart, so the survey tiles under their own sub-heading are never
+   * nested under the trial heading. Without them the H2 is the trial heading, as on Investors.
+   */
+  bandHeading?: string;
+  trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const split = !!trialHeading;
 const trial = chart === 'trial';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
 // where the page asks for it) ahead of the RC-01 headline, which is body text.
-const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
+const heading = bandHeading ?? (headlineFact ? TRIAL_BAND_HEADING : titleCase(title));
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
 const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
 
@@ -81,14 +90,17 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   <header class="eb__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">The Evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
-    {plainLine && <PlainLine />}
+    {!split && plainLine && <PlainLine />}
     {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}</p>}
-    {headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
+    {!split && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">
     <div class="eb__group">
-      {surveyStats.length > 0 && <h3 class="eb__sub t-heading-l">From the Randomized Trial</h3>}
+      {split && <h3 class="eb__sub t-heading-l">{trialHeading}</h3>}
+      {!split && surveyStats.length > 0 && <h3 class="eb__sub t-heading-l">From the Randomized Trial</h3>}
+      {split && plainLine && <PlainLine />}
+      {split && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
       <div class="eb__stats">
         {
           stats.map((s, i) => (
@@ -114,7 +126,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
               unit={unit}
               tone="dark"
             />
-            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group</p>
+            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group.</p>
           </>
         ) : (
           <>
@@ -126,7 +138,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
               unit={unit}
               tone="dark"
             />
-            <p class="eb__fn">Chart data: {cf.stat?.label}</p>
+            <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
           </>
         )
       }
@@ -188,6 +200,10 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   .eb__sub {
     margin: 0 0 var(--space-md);
     color: var(--ctx-section-heading);
+  }
+  .eb__group > .eb__headline,
+  .eb__group > :global(.plainline) {
+    margin: 0 0 var(--space-md);
   }
   .eb__survey {
     margin-top: var(--space-xl, 56px);

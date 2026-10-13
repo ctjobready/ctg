@@ -13,6 +13,7 @@ const stat = (id: string) => {
 };
 const since = stat('ID-02').value;
 const emp = stat('OC-01');
+const trial = stat('RC-02');
 
 export interface NavLink {
   label: string;
@@ -79,7 +80,7 @@ export const navGroups: NavGroup[] = [
     feature: {
       kind: 'model',
       eyebrow: 'The Cycle',
-      title: 'Learn → Earn → Prosper',
+      title: 'One Path from Learning to Earning',
       text: 'Competency development, then employment, then career advancement.',
       cta: { label: 'See How It Works', href: '/our-model/' },
     },
@@ -111,7 +112,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
       { label: 'Outcomes 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
-      { label: 'Independent Evaluation (RCT)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
+      { label: 'Independent Evaluation (Randomized Trial)', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
       { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
       { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
@@ -120,9 +121,8 @@ export const navGroups: NavGroup[] = [
     feature: {
       kind: 'stat',
       eyebrow: 'Impact Survey 2026',
-      figure: `${emp.from} → ${emp.value}`,
-      title: 'of surveyed completers employed',
-      text: 'Before training and at the October 2026 survey.',
+      title: 'Employment Among Surveyed Completers',
+      text: `Before training: ${emp.from}. At the October 2026 survey: ${emp.value}.`,
       factIds: ['OC-01'],
       cta: { label: 'See the Findings', href: '/impact/outcomes-2026/' },
     },
@@ -136,7 +136,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Development Partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Foundations & CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
-      { label: 'Investors', href: '/investors/', description: 'Thesis and traction.' },
+      { label: 'Investors', href: '/investors/', description: 'The investment case.' },
       { label: 'Local Partners', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges and chambers delivering locally.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
@@ -158,15 +158,15 @@ export const topLinks: NavLink[] = [{ label: 'News', href: '/news/' }];
 export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
 
 /** Primary header CTA. */
-export const headerCta: NavLink = { label: 'Start a Partnership', href: '/contact/' };
+export const headerCta: NavLink = { label: 'Request a Discovery Session', href: '/contact/' };
 
 /** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. */
 export const promo = {
-  lead: 'Impact Survey 2026:',
-  rest: `among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey.`,
+  lead: 'Randomized trial of a predecessor program:',
+  rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed. Surveyed completers: ${emp.from} employed before training, ${emp.value} at the October 2026 survey.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
-  storageKey: 'ct-promo-v2',
-  factId: 'OC-01',
+  storageKey: 'ct-promo-v3',
+  factId: 'RC-02 OC-01',
   action: { label: 'See the Findings', href: '/impact/outcomes-2026/' },
   hideOnPath: '/impact/outcomes-2026/',
 };
@@ -186,7 +186,7 @@ export const audiences = [
   { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations & CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Thesis and traction', href: '/investors/' },
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'The Investment Case', href: '/investors/' },
   { id: 'local-partners', title: 'Local Partners', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },

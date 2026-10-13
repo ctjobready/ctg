@@ -23,7 +23,7 @@ export type Audience =
 
 /** C1 value propositions — one sentence, at most 15 words (CMF). */
 export const VALUE_PROPOSITION: Record<Audience, string> = {
-  home: 'We help partners prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
+  home: 'Help educated, unemployed youth reach paid digital work through training, mentoring and placement support.',
   developmentPartners: 'We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.',
   governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
@@ -104,10 +104,14 @@ const UNLIKE_APPROVED =
 const WORK_POSITIONING =
   'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.';
 
+/** Home's closing sentences (WP19, item 13): two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins them for Home only. */
+const HOME_POSITIONING =
+  'Most programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
+
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
-    text: `For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01'],
+    text: `For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. ${HOME_POSITIONING}`,
+    facts: ['PD-08'],
   },
   developmentPartners: {
     text: `For development partners and INGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model that tracks outcomes after every course. ${UNLIKE_APPROVED}`,
@@ -254,7 +258,7 @@ function trainedReach(): CopyBlock {
 export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and a national program that trained 25,125 women across 130 upazilas, for which CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs run hub-and-spoke — up to 10 cohorts in parallel, certified local facilitators and blended delivery in existing labs and colleges.',
+  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and a national program that trained 25,125 women across 130 sub-districts (upazilas), for which CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
@@ -317,7 +321,7 @@ export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 
 /** Home C13 backward-planning line (WP17): the same registered timing as SPEED (PD-04), stated as a plan to work back from. */
 export const BACKWARD_PLAN: CopyBlock = {
-  text: 'For grant-funded pilots, allow about three weeks from first conversation to agreement, then 6–8 weeks from signing to training.',
+  text: 'Allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Work backward from your intended training start date.',
   facts: ['PD-04'],
 };
 
@@ -370,8 +374,9 @@ export const C14 = {
 export const DEFINITION_HEADING = 'What Is CodersTrust?';
 
 export const HOME_META = {
-  title: 'CodersTrust — from Learning to Earning for Youth',
-  description: 'A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed. We train youth for paid digital work.',
+  // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
+  title: 'CodersTrust: From Learning to Earning for Youth',
+  description: 'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. We prepare youth for work.',
 };
 
 /** Investors page market section (no market-size figures on public pages, D2). */

@@ -262,7 +262,7 @@ export function assertConsistent(): void {
 /** Checks the data against the register text it publishes: every headline share must appear in its fact, and so must each chart's key figures. */
 export function assertAgainstRegister(factText: (id: string) => string): void {
   const has = (id: string, figure: string) => must(factText(id).includes(figure), `register entry ${id} does not contain "${figure}"`);
-  for (const h of HEADLINES) has(h.fact, h.type === 'percentage_points' ? `${h.value.toFixed(1)} percentage-point` : h.type === 'percent_change' ? `+${h.value}%` : `${h.value.toFixed(1)}%`);
+  for (const h of HEADLINES) has(h.fact, h.type === 'percentage_points' ? `${h.value.toFixed(1)} percentage-point` : h.type === 'percent_change' ? `about ${(100 + h.value) / 100}×` : `${h.value.toFixed(1)}%`);
   for (const v of [EMPLOYED.before, EMPLOYED.after]) has('OC-01', `${v.toFixed(1)}%`);
   for (const t of EMPLOYMENT_TYPES) for (const v of [t.before, t.after]) has('OC-04', `${v.toFixed(1)}%`);
   for (const c of INCOME_DIRECTION) has('OC-03b', `${c.pct.toFixed(1)}%`);

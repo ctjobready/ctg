@@ -1,7 +1,7 @@
 ---
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
-import PartnerStrip from '../../system/PartnerStrip.astro';
+import { linkAttrs } from '../../../lib/url';
 import { fact } from '../../../data/facts';
 
 /**
@@ -16,14 +16,15 @@ const { id = 'recognition' } = Astro.props;
 ---
 
 <Section id={id} tone="white" pad="sm" aria-labelledby={`${id}-h`}>
-  <h2 class="rec__title t-heading-l" id={`${id}-h`}>Recognized by Third Parties</h2>
+  <h2 class="rec__title t-heading-l" id={`${id}-h`}>Recognition and Historical Coverage</h2>
   <p class="rec__badge" data-fact="PA-08">
     <Icon name="award" size={20} />
     <span>{fact('PA-08').text}</span>
   </p>
-  <div class="rec__press" data-fact="PA-09">
-    <PartnerStrip kind="press" variant="grid" caption="Press Coverage, 2014–2016" />
-  </div>
+  <p class="rec__press" data-fact="PA-09">
+    Press coverage, 2014–2016, including Forbes, The Wall Street Journal and TechCrunch.{' '}
+    <a class="link" href={linkAttrs('/about/recognition/').href}>See All Recognition and Media<Icon name="arrow-right" size={16} /></a>
+  </p>
 </Section>
 
 <style>
@@ -47,6 +48,7 @@ const { id = 'recognition' } = Astro.props;
     flex: none;
   }
   .rec__press {
-    background: var(--surface);
+    margin: 0;
+    color: var(--on-surface);
   }
 </style>

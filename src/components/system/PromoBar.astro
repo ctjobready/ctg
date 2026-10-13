@@ -77,6 +77,12 @@ const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-p
   .promo-bar__close:hover {
     background: var(--blue-600);
   }
+  /* A two-part announcement (WP19): on a wide screen the text stops short of the full width, so its action sits beside it, not on a row of its own. */
+  @media (min-width: 900px) {
+    .promo-bar__text {
+      max-width: 62rem;
+    }
+  }
   @media (max-width: 575px) {
     .promo-bar__inner {
       justify-content: flex-start;

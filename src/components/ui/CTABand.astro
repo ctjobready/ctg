@@ -11,6 +11,8 @@ import EmailFallback from './EmailFallback.astro';
 interface Props {
   heading: string;
   text?: string;
+  /** A small heading and a line between the lead and the button (Home, WP19: the timing sits before the ask). */
+  plan?: { heading: string; text: string };
   cta: { label: string; href: string };
   urgency?: string;
   micro?: string;
@@ -20,7 +22,7 @@ interface Props {
   tone?: 'airy' | 'klein';
   id?: string;
 }
-const { heading, text, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id } = Astro.props;
+const { heading, text, plan, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id } = Astro.props;
 const dark = tone === 'klein';
 // An empty href is a withheld call to action (src/lib/mailto.ts ctaWithheld): without its primary CTA the band has nothing to ask for.
 const withheld = !cta.href;
@@ -31,6 +33,14 @@ const withheld = !cta.href;
   <div class="cta-band">
     <h2 id={`${id ?? 'cta'}-h`} class="cta-band__title" data-reveal>{heading}</h2>
     {text && <p class="lead cta-band__text" data-reveal>{text}</p>}
+    {
+      plan && (
+        <div class="cta-band__plan" data-reveal>
+          <h3 class="cta-band__plan-title">{plan.heading}</h3>
+          <p>{plan.text}</p>
+        </div>
+      )
+    }
     <div class="cta-band__actions" data-reveal>
       <Button variant={dark ? 'inverse' : 'primary'} href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
       {
@@ -100,6 +110,18 @@ const withheld = !cta.href;
     max-width: 40rem;
   }
   .cta-band__title {
+    color: var(--ctx-section-heading);
+  }
+  .cta-band__plan {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 40rem;
+  }
+  .cta-band__plan > * {
+    margin: 0;
+  }
+  .cta-band__plan-title {
+    font: var(--fw-bold) var(--fs-body-l) / var(--lh-body-l) var(--font-sans);
     color: var(--ctx-section-heading);
   }
 </style>

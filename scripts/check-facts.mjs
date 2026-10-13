@@ -312,6 +312,8 @@ const UNLIKE_SENTENCE =
 // This changes only the closing sentence of THIS page's statement: the rule for every other page, and every claims rule, is unchanged. The
 // sentence is declared here independently of src/data/copy.ts (WORK_POSITIONING), so a change to it must be made twice on purpose.
 const POSITION_EMPLOYER_CLOSING = {
+  // WP19, item 13: Home replaces the long [UNLIKE] sentence with two plain sentences; declared here independently of src/data/copy.ts (HOME_POSITIONING).
+  '/': 'Most programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.',
   '/programs/jobready-work/': 'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.',
 };
 /** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence). */
