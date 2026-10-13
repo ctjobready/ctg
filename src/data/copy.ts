@@ -57,7 +57,7 @@ export const EMPATHY: Record<Audience, string> = {
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   investors: 'Investors weighing a market with real demand for skills need to distinguish a model that is working from one that is only promised.',
   localPartners: 'You reach young people that central programs miss, often without the curriculum, certification and placement links to finish the job.',
-  nuPgd: 'You worked hard for your degree, and the job offers did not follow — and it is hard to know which skills to add next.',
+  nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 
 export const ORIGIN: CopyBlock = {
@@ -98,7 +98,7 @@ export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationw
 
 /** The approved [UNLIKE] + [WE] wording (doc 04 §1), word for word. */
 const UNLIKE_APPROVED =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 
 /** JobReady@Work's closing sentence: what an employer gets from the program itself (all of it from IN-10 and the page's own steps). */
 const WORK_POSITIONING =
@@ -259,7 +259,8 @@ function trainedReach(): CopyBlock {
 export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
-  text: 'We scale in phases, starting from what we have done: government contracts with training scopes ranging from 120+ professionals to 3,120+ digital-lab staff, and a national program that trained 25,125 women across 130 sub-districts (upazilas), for which CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
+  // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas); CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
@@ -379,6 +380,13 @@ export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments'
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
   validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
+  // WP21: one validation line per audience (the closing strip no longer repeats the same three organizations on every partner page); each uses names from one registered partner fact.
+  validateFor: {
+    foundations: { text: 'Development and NGO partners include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
+    governments: { text: 'Government partners include Bangladesh’s ICT Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.', facts: ['PA-02'] } as CopyBlock,
+    universities: { text: 'University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).', facts: ['PA-05'] } as CopyBlock,
+    employers: { text: 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.', facts: ['PA-03'] } as CopyBlock,
+  },
   reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   variants: {

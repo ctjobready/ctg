@@ -33,7 +33,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -292,7 +292,7 @@ const steps = [
       { title: 'Progress Evaluation', text: 'Results are checked against the measures you set.' },
     ]}
   />
-  <Reinforcement logos={false} reminder={false} />
+  <Reinforcement logos={false} reminder={false} validate={C14.validateFor.employers} />
 
   <PageEnhancements />
 </LandingLayout>

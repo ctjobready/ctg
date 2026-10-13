@@ -33,7 +33,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -276,7 +276,7 @@ const steps = [
       { title: 'Monthly Reports', text: 'Enrollment, completion, certification and placements follow each month.' },
     ]}
   />
-  <Reinforcement logos={false} reminder={false} />
+  <Reinforcement logos={false} reminder={false} validate={C14.validateFor.universities} />
 
   <PageEnhancements />
 </LandingLayout>

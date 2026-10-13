@@ -32,10 +32,10 @@ export function governmentPartners(): string {
     .replace('NSDA and BCC', 'the National Skills Development Authority (NSDA) and the Bangladesh Computer Council (BCC)');
 }
 
-/** The two PX-03 rates, read from the register ("graduate unemployment is 13.5% vs 2.0% for SSC holders"), so a page sentence never retypes them. */
+/** The two PX-03 rates, read from the register ("graduate unemployment is 13.5% vs. 2.0% for SSC holders"), so a page sentence never retypes them. */
 export function graduateRates(): { graduate: string; ssc: string } {
-  const m = fact('PX-03').text.match(/graduate unemployment is ([\d.]+%) vs ([\d.]+%) for/);
-  if (!m) throw new Error(`graduateRates: PX-03 no longer reads "graduate unemployment is X% vs Y% for ...": "${fact('PX-03').text}"`);
+  const m = fact('PX-03').text.match(/graduate unemployment is ([\d.]+%) vs\.? ([\d.]+%) for/);
+  if (!m) throw new Error(`graduateRates: PX-03 no longer reads "graduate unemployment is X% vs. Y% for ...": "${fact('PX-03').text}"`);
   return { graduate: m[1], ssc: m[2] };
 }
 

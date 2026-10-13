@@ -112,11 +112,11 @@ export const CAPTION: Record<string, string> = {
   'superkids/learner-zuhaina': 'Zuhaina, SuperKids learner',
   'superkids/learner-nihal': 'Nihal, SuperKids learner',
   'superkids/learner-zaeem': 'Zaeem, SuperKids learner',
-  'general/madrasa-students-lesson': 'Madrasah students in a lesson',
-  'general/madrasa-students-class': 'Madrasah students listening in class',
-  'general/madrasa-students-hall': 'Madrasah students in a large hall',
+  'general/madrasa-students-lesson': 'Students in a classroom lesson',
+  'general/madrasa-students-class': 'Students listening in class',
+  'general/madrasa-students-hall': 'Students seated in a large hall',
   'general/exam-hall': 'An examination hall',
-  'general/graduates-caps': 'Program completers at a convocation',
+  'general/graduates-caps': 'Graduates at a convocation',
   'general/her-power-laptops-1': 'Laptop handover, Her Power distribution ceremony',
   'general/her-power-laptops-2': 'A participant receives a laptop, Her Power distribution ceremony',
   'general/her-power-group': 'Her Power program event',
@@ -195,7 +195,6 @@ const HERO: Record<string, string> = {
   youthwide: 'general/yes-trainees-group',
   'jobready-campus': 'general/students-campus-smiling',
   'jobready-work': 'general/office-meeting',
-  nationwide: 'general/madrasa-students-lesson',
   superkids: 'superkids/steam-workshop',
   investors: 'general/lab-women-screen',
   'partner-hub': 'general/woman-learner-laptop',
@@ -224,13 +223,12 @@ export const heroPhoto = (seed?: string): Photo | undefined => (seed && HERO[see
 
 /** Three pictures for a page's "what success looks like" band (FutureBand), in vignette order. */
 const FUTURE: Record<string, [string, string, string]> = {
-  'nu-pgd': ['nu-pgd/students-laptops', 'general/students-campus-smiling', 'general/graduates-caps'],
+  'nu-pgd': ['nu-pgd/students-laptops', 'general/lab-women-screen', 'general/learner-mosaic'],
   // Home (WP19, item 12): none of these three is used by the hero or the carousel above it.
   home: ['general/her-power-laptops-2', 'general/office-meeting', 'general/office-support-headset'],
   youthwide: ['general/woman-learner-laptop', 'general/yes-collage', 'general/classroom-girls'],
-  'jobready-campus': ['general/graduates-caps', 'general/woman-learner-laptop', 'general/lab-women-screen'],
+  'jobready-campus': ['general/graduates-caps', 'general/office-support-headset', 'general/computer-lab-rows'],
   'jobready-work': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/lab-women-screen'],
-  nationwide: ['general/lab-women-screen', 'general/classroom-girls', 'general/dict-hitech-mou'],
   superkids: ['superkids/classroom-uniform', 'superkids/circuit-building', 'superkids/mat-activity'],
   'partners-development': ['general/computer-lab-rows', 'general/yes-collage', 'general/albania-trainees-group'],
   'partners-employers': ['general/office-support-headset', 'general/computer-lab-rows', 'general/classroom-girls'],
@@ -245,7 +243,8 @@ export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(
 const GALLERY: Record<string, string[]> = {
   // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MoU photographs follow.
   superkids: ['superkids/robotics-desk', 'superkids/student-explains', 'superkids/stem-group', 'superkids/classroom-uniform', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
-  nationwide: ['general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps', 'general/madrasa-students-lesson', 'general/dict-hitech-mou'],
+  // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
+  youthwide: ['general/her-power-laptops-1', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],
   'undp-yes-korail': ['general/yes-trainees-group', 'general/woman-learner-laptop', 'general/yes-collage'],

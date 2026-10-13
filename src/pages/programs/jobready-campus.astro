@@ -15,6 +15,7 @@ import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import InShort from '../../components/pages/partners/InShort.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import FactList from '../../components/facts/FactList.astro';
@@ -72,6 +73,23 @@ const options = [
   />
 
   <RouteLink kicker="The Partnership Route" label="For Universities: Start Here" href="/partner-with-us/universities/" />
+
+  <!-- WP21: In Short, built only from content this page already states (no figure added) -->
+  <InShort
+    bullets={[
+      'JobReady@Campus runs mentored, certification-focused training in on-campus labs, in parallel with academic studies.',
+      'Campus labs work as blended-learning centers, with faculty members as coordinators and certified local facilitators.',
+      'Your institution builds placement evidence from its own students: baseline data, tracer surveys and monthly reports.',
+      'Start with a pilot on your campus; the scorecard and the decision to expand stay with you.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
+    contracting={false}
+  />
 
   <DefinitionBlock heading="What Is JobReady@Campus?">
     <p data-fact="IN-09"><Fact id="IN-09" />.</p>
@@ -169,7 +187,7 @@ const options = [
   <FaqSection sources={faqSources} title="Questions Institutions Ask" />
 
   <!-- C11 -->
-  <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options} recommended={0}>
+  <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices." options={options} recommended={0}>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
   </OfferSection>
 

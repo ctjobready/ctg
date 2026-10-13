@@ -306,7 +306,7 @@ const POSITION_PAGES = [
 // SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 // WP18b: JobReady@Work is an employer offer for a single organization's team, not a youth-program comparison, so its statement closes with an
 // employer-specific sentence instead of the [UNLIKE] sentence (which names training-only programs and the BIGD trial of the youth programs).
 // This changes only the closing sentence of THIS page's statement: the rule for every other page, and every claims rule, is unchanged. The
@@ -796,7 +796,7 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a list before the statement', mech(`<ul><li>01 Who we reach</li></ul>${posBlock()}`));
   posBad('a band with no statement', mech(`${headerHtml}</header><p>Just text.</p>`));
   posBad('a page with no C6 band', '<main><p>nothing</p></main>');
-  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('whole path', 'path')}`)}</header>`));
+  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('the path from training toward paid work', 'the path')}`)}</header>`));
   posBad('a statement without the [UNLIKE] sentence', mech(`${headerHtml}${posBlock(posFor)}</header>`));
   posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);

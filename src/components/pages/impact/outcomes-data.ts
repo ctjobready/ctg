@@ -206,8 +206,8 @@ interface Headline {
   base?: number;
 }
 const HEADLINES: Headline[] = [
-  { id: 'OC-01', measure: 'Net gain in employment, among surveyed completers', category: 'October 2026 survey vs before training', type: 'percentage_points', value: 30.5, fact: 'OC-01', base: EMPLOYMENT_BASE },
-  { id: 'OC-03', measure: 'Change in median monthly income', category: 'October 2026 survey vs before training', type: 'percent_change', value: 200, fact: 'OC-03' },
+  { id: 'OC-01', measure: 'Net gain in employment, among surveyed completers', category: 'October 2026 survey vs. before training', type: 'percentage_points', value: 30.5, fact: 'OC-01', base: EMPLOYMENT_BASE },
+  { id: 'OC-03', measure: 'Change in median monthly income', category: 'October 2026 survey vs. before training', type: 'percent_change', value: 200, fact: 'OC-03' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate instructors good or better', type: 'percent', value: 92.7, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Rate their overall experience good or better', type: 'percent', value: 86.9, fact: 'OC-06' },
   { id: 'OC-06-summary', measure: 'Learner experience, among responding completers', category: 'Recommendation score of 7 or more out of 10', type: 'percent', value: 71.6, fact: 'OC-06' },

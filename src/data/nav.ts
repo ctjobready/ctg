@@ -98,14 +98,14 @@ export const navGroups: NavGroup[] = [
     label: 'Programs',
     href: '/programs/',
     items: [
-      { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.', footer: false },
+      { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
       { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'National Youth Employment Program.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
       { label: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: 'For degree holders.', group: LEARNER_PROGRAMS },
-      { label: 'Digital Marketing Diploma', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
-      { label: 'ICT Diploma', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
+      { label: 'NU Postgraduate Diploma in Digital Marketing', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, menuOnly: true },
+      { label: 'NU Postgraduate Diploma in ICT', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, menuOnly: true },
       { label: 'Courses', href: COURSES_URL, description: 'Short, self-paced courses on JobReady.global.', group: LEARNER_PROGRAMS, footer: false, menuOnly: true },
     ],
     feature: {

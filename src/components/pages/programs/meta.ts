@@ -26,11 +26,11 @@ export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
-  campus: '2026-10-10',
-  work: '2026-10-10',
+  campus: '2026-10-14',
+  work: '2026-10-14',
   superkids: '2026-10-10',
-  nu: '2026-10-10',
-  nuCourse: '2026-10-10',
+  nu: '2026-10-14',
+  nuCourse: '2026-10-14',
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

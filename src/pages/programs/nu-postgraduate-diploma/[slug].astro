@@ -17,7 +17,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
 import { SURVEY_EMPLOYMENT } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
@@ -44,7 +44,7 @@ const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
 
 const faqSources: FaqSource[] = [
   ...nuModuleFaqs(c),
-  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
+  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
   { q: 'Is This the Right Course for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
 ];
 
@@ -73,14 +73,15 @@ const jsonLd = [
     <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Postgraduate Diploma." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
-      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-09" /></dd></div>
+      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div class="ba__row"><dt>Credit Hours and Subjects</dt><dd><Fact id="NU-09" /></dd></div>
       <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE}</dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
       <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
 
@@ -139,7 +140,7 @@ const jsonLd = [
   </Section>
 
   <Section id="also-consider" tone="airy" aria-labelledby="also-h">
-    <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={NU_COURSE_COPY[other].alsoConsider} />
+    <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={copy.alsoConsider} />
     <p><a class="link" href={url(`${NU_PATH}${other}/`)}>View the Course<Icon name="arrow-right" size={16} /></a> or <a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
