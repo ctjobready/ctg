@@ -119,6 +119,7 @@ const util = linkAttrs(utilityLink.href);
     <noscript>
       <nav class="nav-noscript" aria-label="Primary (without scripts)">
         <ul role="list">
+          <li><a href={linkAttrs('/').href}>Home</a></li>
           {navGroups.map((g) => <li><a href={linkAttrs(g.href).href}>{g.label}</a></li>)}
           {topLinks.map((l) => <li><a href={linkAttrs(l.href).href}>{l.label}</a></li>)}
           <li><a href={linkAttrs(headerCta.href).href}>{headerCta.label}</a></li>
