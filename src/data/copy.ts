@@ -100,6 +100,10 @@ export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationw
 const UNLIKE_APPROVED =
   'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
 
+/** JobReady@Work's closing sentence: what an employer gets from the program itself (all of it from IN-10 and the page's own steps). */
+const WORK_POSITIONING =
+  'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.';
+
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
     text: `For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly. ${UNLIKE_APPROVED}`,
@@ -146,8 +150,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-09', 'RC-01'],
   },
   work: {
-    text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${UNLIKE_APPROVED}`,
-    facts: ['IN-10', 'RC-01'],
+    // WP18b: an employer-specific closing sentence in place of [UNLIKE] (which is about youth programs); scripts/check-facts.mjs pins it for this page only.
+    text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${WORK_POSITIONING}`,
+    facts: ['IN-10'],
   },
   // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
   // supports a comparison with other approaches, so the statement stops at what GV-08 and the page definition already say.

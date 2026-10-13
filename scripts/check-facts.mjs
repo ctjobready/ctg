@@ -307,8 +307,15 @@ const POSITION_PAGES = [
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
   'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the whole path to earnings, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
-/** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence. */
-function positionProblems(markup, { unlike = true } = {}) {
+// WP18b: JobReady@Work is an employer offer for a single organization's team, not a youth-program comparison, so its statement closes with an
+// employer-specific sentence instead of the [UNLIKE] sentence (which names training-only programs and the BIGD trial of the youth programs).
+// This changes only the closing sentence of THIS page's statement: the rule for every other page, and every claims rule, is unchanged. The
+// sentence is declared here independently of src/data/copy.ts (WORK_POSITIONING), so a change to it must be made twice on purpose.
+const POSITION_EMPLOYER_CLOSING = {
+  '/programs/jobready-work/': 'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.',
+};
+/** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence). */
+function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE } = {}) {
   const band = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*)/.exec(markup);
   if (!band) return ['the C6 band (#mechanism) is missing, so the positioning statement has nowhere to open'];
   const pos = /<div\b[^>]*\bclass="[^"]*\bpos\b[^"]*"[^>]*>([\s\S]*?)<\/div>/.exec(band[1]);
@@ -325,8 +332,9 @@ function positionProblems(markup, { unlike = true } = {}) {
   const statement = text ? decode(text[1]) : '';
   if (!statement) out.push('the positioning statement has no text');
   else if (unlike) {
-    if (!statement.endsWith(` ${UNLIKE_SENTENCE}`)) out.push('the positioning statement does not end with the verbatim [UNLIKE] sentence as its own sentence');
-    else if (!/[.!?]$/.test(statement.slice(0, -UNLIKE_SENTENCE.length - 1))) out.push('the positioning statement runs the audience sentence into [UNLIKE] (they are two sentences)');
+    const which = closing === UNLIKE_SENTENCE ? '[UNLIKE]' : 'employer';
+    if (!statement.endsWith(` ${closing}`)) out.push(`the positioning statement does not end with the verbatim ${which} sentence as its own sentence`);
+    else if (!/[.!?]$/.test(statement.slice(0, -closing.length - 1))) out.push(`the positioning statement runs the audience sentence into the ${which} sentence (they are two sentences)`);
   }
   return out;
 }
@@ -355,7 +363,8 @@ function painMapProblems(markup) {
   if (c8 === null) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
   if (c2 === null || c8 === null) return out;
   const pains = [...c2.matchAll(/<li\b[^>]*\bdata-pain="([^"]*)"/g)].map((m) => m[1]);
-  const rows = [...c8.matchAll(/<tr\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
+  // WP18b: the C8 rows are concern-led cards (<li>); a table row (<tr>) is still read
+  const rows = [...c8.matchAll(/<(?:tr|li)\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
   if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
   for (const id of PAIN_IDS) {
     const n = rows.filter((r) => r === id).length;
@@ -773,6 +782,10 @@ function numberGuardPage(path, html, allow = []) {
   posOk('the statement before the header (nothing precedes it)', mech(`${posBlock()}${headerHtml}</header><div class="diagram"><svg></svg></div>`));
   posOk('a lead line that follows the statement', mech(`${headerHtml}${posBlock()}<p class="sh__lead lead">A lead.</p></header>`));
   posOk('SuperKids’ audience-only statement (no [UNLIKE] pending approval)', mech(`${headerHtml}${posBlock(posFor)}</header>`), { unlike: false });
+  const empClosing = POSITION_EMPLOYER_CLOSING['/programs/jobready-work/'];
+  posOk('the employer closing sentence on a page that declares one (JobReady@Work)', mech(`${headerHtml}${posBlock(`${posFor} ${empClosing}`)}</header>`), { closing: empClosing });
+  posBad('the [UNLIKE] sentence on a page that declares an employer closing', mech(`${headerHtml}${posBlock()}</header>`), { closing: empClosing });
+  posBad('the employer closing sentence on a page that must carry [UNLIKE]', mech(`${headerHtml}${posBlock(`${posFor} ${empClosing}`)}</header>`));
   posBad('a lead line before the statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock()}</header>`));
   posBad('a model block before the statement', mech(`<div class="diagram"><svg></svg></div>${posBlock()}`));
   posBad('a paragraph before the statement', mech(`<p>The model: learn, earn, prosper.</p>${posBlock()}`));
@@ -998,7 +1011,7 @@ for (const file of htmlFiles(dist)) {
   // [POSITION] opens C6 on the 13 pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval)
   if (POSITION_PAGES.includes(path)) {
     positionPages++;
-    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path) })) problems.push(`${path}: ${p}`);
+    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path), closing: POSITION_EMPLOYER_CLOSING[path] ?? UNLIKE_SENTENCE })) problems.push(`${path}: ${p}`);
   }
   // three ranked pains in C2 and one C8 row for each, on the three bespoke pages (round 14, M4)
   if (PAIN_PAGES.includes(path)) {

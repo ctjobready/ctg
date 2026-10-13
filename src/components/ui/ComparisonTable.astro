@@ -35,7 +35,7 @@ const isNone = (t: string) => t === '—' || t === '-';
 const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm).map((c) => c.factId).filter((f): f is string => !!f))])].join(' ');
 ---
 
-<section class:list={['cmp', className]} aria-label={caption} tabindex="0" data-scroll data-stack data-reveal data-fact={dataFacts || undefined}>
+<section class:list={['cmp', className]} aria-label={caption} tabindex="0" data-scroll data-reveal data-fact={dataFacts || undefined}>
   <table>
     <caption class="sr-only">{caption}</caption>
     <thead>
@@ -76,9 +76,104 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
   </table>
 </section>
 
-<script>
-  import '../../scripts/tablestack';
-</script>
+<!-- Phone layout (≤ 640 px): one card per approach, listing what it typically includes, in the table's own order. The table above is hidden at that width, so assistive technology reads one version. -->
+<ul class:list={['cmp-cards', className]} role="list" aria-label={caption}>
+  {
+    columns.slice(1).map((col, ci) => (
+      <li class:list={['cmp-card', highlight === ci && 'is-hl']}>
+        <p class="cmp-card__title">{col}</p>
+        <dl class="cmp-card__list">
+          {rows.map((r) => {
+            const c = norm(r.cells[ci] ?? '');
+            return (
+              <div class="cmp-card__row">
+                <dt>{r.label}</dt>
+                <dd>
+                  {isNone(c.text) ? (
+                    <span role="img" aria-label="Not applicable">—</span>
+                  ) : (
+                    <>
+                      {c.included && (
+                        <span class="cmp__mark" role="img" aria-label="Included">
+                          <Icon name="circle-check" size={20} />
+                        </span>
+                      )}
+                      {c.included && ' '}
+                      <span class="cmp__text">{c.text}</span>
+                    </>
+                  )}
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .cmp-cards {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+  }
+  .cmp-card {
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .cmp-card.is-hl {
+    border-color: var(--secondary);
+  }
+  .cmp-card__title {
+    margin: 0;
+    padding: 12px var(--space-md);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--primary-fixed);
+  }
+  .cmp-card.is-hl .cmp-card__title {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+  }
+  .cmp-card__list {
+    margin: 0;
+  }
+  .cmp-card__row {
+    padding: 10px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .cmp-card__row:last-child {
+    border-bottom: 0;
+  }
+  .cmp-card__row dt {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+    margin-bottom: 2px;
+  }
+  .cmp-card__row dd {
+    margin: 0;
+    color: var(--on-surface-variant);
+  }
+  @media (max-width: 640px) {
+    .cmp {
+      display: none;
+    }
+    .cmp-cards {
+      display: grid;
+    }
+  }
+</style>
 
 <style>
   .cmp {

@@ -18,6 +18,8 @@ interface Props {
   facts?: string[];
   /** Home (WP17): drop the "Doing Nothing" column and add the line that invites the reader to compare their current program. */
   withoutDoingNothing?: boolean;
+  /** Show only these rows, in the order given (Investors, WP18b: only the capabilities a platform investor weighs). */
+  onlyRows?: string[];
   /** A line under the table. */
   note?: string;
   id?: string;
@@ -46,13 +48,15 @@ const {
   ],
   facts = ['PD-10', 'PD-19', 'PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
   withoutDoingNothing = false,
+  onlyRows,
   note,
   id = 'compare',
 } = Astro.props;
 if (!withoutDoingNothing && !columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing Nothing" column');
 const nothing = columns.findIndex((c) => /doing nothing/i.test(c));
 const shownColumns = withoutDoingNothing && nothing > 0 ? columns.filter((_, i) => i !== nothing) : columns;
-const shownRows = withoutDoingNothing && nothing > 0 ? rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => i !== nothing - 1) })) : rows;
+const droppedNothing = withoutDoingNothing && nothing > 0 ? rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => i !== nothing - 1) })) : rows;
+const shownRows = onlyRows ? onlyRows.map((l) => droppedNothing.find((r) => r.label === l)).filter((r): r is NonNullable<typeof r> => !!r) : droppedNothing;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>

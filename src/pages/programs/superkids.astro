@@ -125,6 +125,16 @@ const courses = linkAttrs(COURSES_URL);
     </p>
   </MechanismSection>
 
+  <!-- What a school receives (WP18b): built only from content already on this page (the courses, the delivery model, the safeguarding FAQ). -->
+  <Section id="school-receives" tone="ice" aria-labelledby="school-receives-h">
+    <SectionHeader id="school-receives-h" eyebrow="What You Get" title="What Your School Receives" lead="Courses for young learners, delivered with you, with safeguarding explained up front." />
+    <div class="receives">
+      <FeatureCard icon="blocks" title="Courses in STEAM, Coding, Robotics and Digital Art" text="Block coding, robotics, and graphic design for kids, within a K-12 STEAM program." />
+      <FeatureCard icon="school" title="Delivery Through Schools and Education Partners" text="Courses are taught through schools and education partners, shaped with you in a discovery session." />
+      <FeatureCard icon="shield-check" title="Safeguarding, Answered Up Front" text="How safeguarding works is explained in the questions below, before you ask." href="#faq" />
+    </div>
+  </Section>
+
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
     <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="What Has Been Delivered, and What Is Only Agreed" />
@@ -197,6 +207,16 @@ const courses = linkAttrs(COURSES_URL);
   }
   @media (min-width: 900px) {
     .courses {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .receives {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .receives {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }

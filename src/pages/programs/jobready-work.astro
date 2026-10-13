@@ -155,6 +155,22 @@ const approach = [
     </div>
   </MechanismSection>
 
+  <!-- Proof band directly after the mechanism (WP18b): the employer delivery record leads; the youth-program evidence follows the offer below. -->
+  <PairedEvidence
+    title="The Delivery Record for Employers"
+    items={[
+      { id: 'PA-06', label: 'Cloud Training' },
+      { id: 'PA-07', label: 'AI Leadership' },
+      { id: 'SC-15', label: 'Corporate Delivery', stat: true },
+    ]}
+    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
+    broader={[
+      { label: 'Evidence Below', href: '#proof-band' },
+      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
+    ]}
+  />
+
   <!-- C8 -->
   <FeaturesTable
     title="Each Feature Maps to What Employers Ask For."
@@ -179,22 +195,6 @@ const approach = [
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Employers Ask" />
-
-
-  <PairedEvidence
-    title="The Delivery Record for Employers"
-    items={[
-      { id: 'PA-06', label: 'Cloud Training' },
-      { id: 'PA-07', label: 'AI Leadership' },
-      { id: 'SC-15', label: 'Corporate Delivery', stat: true },
-    ]}
-    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
-    broader={[
-      { label: 'Evidence Below', href: '#proof-band' },
-      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
-      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
-    ]}
-  />
 
   <!-- C11 -->
   <OfferSection

@@ -80,25 +80,20 @@ const d = discoveryCta();
 >
   <ReportSection id="summary" title="The Short Answer">
     <Callout tone="bluf">
-      <p data-fact="RC-01 RC-02">
-        <Fact id="RC-01" field="headline" /> <Fact id="RC-02" />
+      <p data-fact="RC-01">
+        <Fact id="RC-01" field="headline" />
       </p>
       <PlainLine />
     </Callout>
-    <div class="ie__stats">
+    <!-- Two primary figures (WP18b): employment and estimated monthly income for women offered a place. The income in dollars, the results for
+         women who attended and the household effects are supporting detail in "What the Trial Found", not repeated here. -->
+    <div class="ie__stats ie__stats--primary">
       <FactStat id="RC-02" />
       <FactStat id="RC-01" />
-      <FactStat id="RC-04" />
-      <FactStat id="RC-03" />
     </div>
+    <p class="ie__more">Supporting detail, including results for women who attended and household effects: <a class="link" href="#results">What the Trial Found<Icon name="arrow-right" size={16} /></a></p>
     <h3 class="t-heading-l" id="comparison">Employment Effect over Four Times the Average Across Nine Training Trials</h3>
     <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
-    <div class="ie__stats">
-      <FactStat id="RC-06a" />
-      <FactStat id="RC-13" />
-      <FactStat id="RC-14" />
-    </div>
-    <p data-fact="RC-14"><Fact id="RC-14" /></p>
     <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
   </ReportSection>
 
@@ -122,6 +117,7 @@ const d = discoveryCta();
       <li data-fact="RC-03"><Fact id="RC-03" /></li>
       <li data-fact="RC-13"><Fact id="RC-13" /></li>
       <li data-fact="RC-05"><Fact id="RC-05" /></li>
+      <li data-fact="RC-14"><Fact id="RC-14" /></li>
     </ul>
   </ReportSection>
 
@@ -168,6 +164,15 @@ const d = discoveryCta();
     display: grid;
     gap: var(--space-lg) var(--space-gutter);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  }
+  .ie__stats--primary {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    max-width: 44rem;
+    margin-top: var(--space-md);
+  }
+  .ie__more {
+    margin: var(--space-md) 0 var(--space-lg);
+    color: var(--on-surface-variant);
   }
   .ie__list {
     margin: 0;

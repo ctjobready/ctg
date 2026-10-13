@@ -59,6 +59,21 @@ function list(body: string, heading: string): string[] {
   return block ? block.split('\n').filter((l) => l.startsWith('- ')).map((l) => l.slice(2).trim()) : [];
 }
 
+/**
+ * "Related Career Areas" (WP18b). The legacy "Career opportunities" list cannot be grouped cleanly under the courses' own module names:
+ * only some roles follow from a module (an SEO role from the SEO module), the rest (Entrepreneur, Freelancer, Business Analyst,
+ * Network Engineer, ...) follow from no single module, and a mapping beyond the module list would be invented. So the list stays flat,
+ * split into single titles ("A or B", "A & B"), and drops the senior titles (Director, Manager, Architect), which a postgraduate
+ * diploma does not lead to by itself. The text of every kept title is the legacy text, unchanged.
+ */
+const SENIOR_TITLE = /\b(Director|Manager|Architect)\b/;
+export function relatedCareerAreas(raw: string[]): string[] {
+  return raw
+    .flatMap((r) => r.split(/\s+or\s+|\s+&\s+(?=[A-Z][a-z])/))
+    .map((r) => r.trim())
+    .filter((r) => r && !SENIOR_TITLE.test(r));
+}
+
 export async function nuOverview() {
   const all = await getCollection('nuPgd');
   const overview = all.find((e) => e.data.kind === 'overview');
@@ -76,7 +91,7 @@ export async function nuCourses(): Promise<NuCourse[]> {
         slug: e.data.slug,
         title: e.data.title,
         modules: (e.data.modules ?? []).map((m) => (/^Internship/i.test(m) ? 'Internship, project work and seminar' : m)),
-        roles: list(e.body ?? '', 'Career opportunities'),
+        roles: relatedCareerAreas(list(e.body ?? '', 'Career opportunities')),
         faqs: (e.data.faqs ?? []).filter((_, i) => keep.includes(i)),
       };
     });

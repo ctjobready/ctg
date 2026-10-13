@@ -69,9 +69,12 @@ const toCard = (s: (typeof all)[number]): StoryCardData => {
   };
 };
 const caseCards = caseIds.map((id) => toCard(named.find((s) => s.id === id)!));
+// WP18b: concrete examples lead (Samina’s 90+ projects, Maria’s first logo-design win, Erlisa’s full-time online contract, then the learners
+// who report a first job, client or sale); the two endorsements whose excerpt praises the program without a concrete result follow last.
+const ENDORSEMENTS = new Set(['aysha-akter-bipasha', 'arfias-islam-rudro']);
 const legacyCards = named
   .filter((s) => !caseIds.includes(s.id))
-  .sort((a, b) => a.data.name.localeCompare(b.data.name))
+  .sort((a, b) => Number(ENDORSEMENTS.has(a.id)) - Number(ENDORSEMENTS.has(b.id)) || a.data.name.localeCompare(b.data.name))
   .map(toCard);
 
 const anon: StoryCardData[] = [

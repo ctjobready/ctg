@@ -37,6 +37,12 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     'Accessible, interactive digital learning materials.',
   ]}
 >
+  <!-- WP18b: the delivery band leads with CodersTrust's own role (GV-11), then the generic practices of the list below it. -->
+  <Fragment slot="solution-lead">
+    <p class="hp__role" data-fact="GV-11"><strong>CodersTrust’s role:</strong> <Fact id="GV-11" as="span" /></p>
+    <p class="hp__practices">Practices used in delivery:</p>
+  </Fragment>
+
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results">
       <Fact id="PR-05" as="p" />
@@ -44,10 +50,6 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     <div class="hp__scale" data-fact="GV-01">
       <h3 class="t-heading-m">Program Scale: A Different Measure</h3>
       <p>The in-work figure above covers 800 tracked women from the 2,500 that CodersTrust trained directly. The national program’s reach is counted separately: <Fact id="GV-01" as="span" /></p>
-    </div>
-    <div class="hp__scale" data-fact="GV-11">
-      <h3 class="t-heading-m">CodersTrust’s Role</h3>
-      <p><Fact id="GV-11" as="span" /></p>
     </div>
     <div class="hp__compare">
       <h3 class="t-heading-m">Alongside Other Women-Focused Programs</h3>
@@ -75,6 +77,18 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     display: grid;
     gap: var(--space-xs);
     max-width: var(--measure);
+  }
+  .hp__role {
+    margin: 0 0 var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-left: 4px solid var(--tertiary);
+    background: var(--surface);
+    color: var(--on-surface);
+  }
+  .hp__practices {
+    margin: 0 0 var(--space-xs);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
   }
   .hp__scale > :global(*),
   .hp__compare > :global(*) {

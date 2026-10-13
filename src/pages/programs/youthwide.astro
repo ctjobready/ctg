@@ -1,8 +1,9 @@
 ---
 // P10 — YouthWIDE /programs/youthwide/ (T3 conversion page; doc 04 matrices 4.1, 4.2 and 4.3; C1 → C14).
 // One page for both audiences (WP4c: NationWIDE was renamed YouthWIDE and merged in): governments and ministries (the Bangladesh national
-// initiative, #governments) and funders and development partners (country cohorts, #funders). The shared bands (hero, evidence, features,
-// FAQ, comparison, offer, risk, call to action) follow the two routes.
+// initiative, #governments) and funders and development partners (country cohorts, #funders). WP18b: C2–C6 are ONE shared sequence; each
+// band carries two compact audience sub-blocks ("Government Delivery", "Funders and Development Partners") instead of two stacked journeys.
+// The evidence, features, FAQ, comparison, offer, risk and call-to-action bands follow.
 import InShort from '../../components/pages/partners/InShort.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import ReviewPanels from '../../components/pages/hub/ReviewPanels.astro';
@@ -11,6 +12,7 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import SessionAgenda from '../../components/ui/SessionAgenda.astro';
+import EmailFallback from '../../components/ui/EmailFallback.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos, galleryPhotos } from '../../data/photos';
@@ -136,162 +138,145 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     ]}
   />
 
-  <!-- ===== Route 1: governments and ministries (the Bangladesh national initiative, formerly NationWIDE) ===== -->
-  <div id="governments" class="route">
-    <!-- C2 -->
-    <ProblemSection
-      id="national-problem"
-      eyebrow="For Governments and Ministries"
-      title="For Too Many Graduates, a Degree Is Not Turning into a Job."
-      bluf={`In Bangladesh, graduate unemployment is ${rates.graduate}, against ${rates.ssc} for holders of the Secondary School Certificate (SSC), and employers worldwide say they cannot find the skills they need. The national initiative works with five priority groups.`}
-      factIds={['PX-03', 'PX-05']}
-      scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
-    >
-      <PriorityGroups />
-    </ProblemSection>
+  <!-- ===== C2–C6: ONE shared sequence for both audiences (WP18b). Each band carries two compact sub-blocks, "Government Delivery"
+       (the Bangladesh national initiative, formerly NationWIDE; anchor #governments) and "Funders and Development Partners"
+       (country cohorts; anchor #funders), each keeping its own content. ===== -->
 
-    <!-- C3 -->
-    <CostSection
-      id="national-cost"
-      title="Without Placement Tracking, Agencies Cannot See What Training Delivers."
-      transition=""
-      blocks={[
-        { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
-      ]}
-    />
-
-    <!-- C4 -->
-    <FutureBand
-      id="national-future"
-      photos={futurePhotos('nationwide')}
-      title="What a National Program Can Look Like"
-      lead="Illustrative: a government lab becomes a blended-learning center, and monthly reports to the agency are designed to track each cohort from enrollment to first earnings."
-      vignettes={[
-        { kind: 'Functional', title: 'A Government Lab Becomes a Blended-Learning Center', text: 'Seats are confirmed per program in existing government digital labs and colleges.' },
-        { kind: 'Emotional', title: 'Budgets Tied to Verified Work Outcomes', text: 'Monthly reports are designed to show young people moving into work, locally, remotely and abroad, with certification results reported separately.' },
-        { kind: 'Social', title: 'Capacity That Stays in Your System', text: 'Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.' },
-      ]}
-    />
-
-    <!-- C5 -->
-    <GuideSection
-      id="national-guide"
-      title="A Track Record with Bangladesh’s Government"
-      empathy={EMPATHY.governments}
-      statIds={['SC-06', 'SC-04']}
-      partnerGroup={['government', 'academic']}
-      method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
-    >
-      <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.</p>
-    </GuideSection>
-
-    <!-- C6 -->
-    <MechanismSection
-      id="national-mechanism"
-      title="Delivered Through the Labs and Colleges You Already Have"
-      positioning={POSITIONING.nationwide}
-      blocks={[
-        { label: 'Where It Runs', title: 'Government Digital Labs and Colleges', text: '9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.', icon: 'building', factId: 'GV-09' },
-        { label: 'Who Delivers', title: 'Trained Trainers', text: 'Training of Trainers, curriculum and manuals, and certified local facilitators.', icon: 'users' },
-        { label: 'What Trainees Receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
-        { label: 'What You Receive', title: 'Monthly Reports', text: 'Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.', icon: 'chart-bar' },
-      ]}
-      factIds={['GV-09', 'GV-01', 'GV-13', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
-    >
-      <div class="mech-target" data-reveal>
-        <Badge tone="sale">Target</Badge>
-        <FactStat id="IN-01" />
-        <p class="mech-target__note">A national ambition for 2030 that depends on government and donor commitments; not a delivered figure.</p>
+  <!-- C2 -->
+  <ProblemSection
+    eyebrow="The Challenge"
+    title="Educated Young People Are Not in Work, in Bangladesh and Across Three Regions."
+    bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
+    factIds={['PX-01', 'PX-02']}
+  >
+    <div class="aud aud--stack">
+      <div class="aud__col" id="governments">
+        <h3 class="aud__h">Government Delivery</h3>
+        <p class="aud__lead" data-fact="PX-03">In Bangladesh, graduate unemployment is {rates.graduate}, against {rates.ssc} for holders of the Secondary School Certificate (SSC). The national initiative works with five priority groups.</p>
+        <PriorityGroups />
       </div>
-      <div class="mech-stats">
-        <FactStat id="GV-09" />
-        <FactStat id="GV-13" />
-        <FactStat id="PD-01" />
+      <div class="aud__col" id="funders">
+        <h3 class="aud__h">Funders and Development Partners</h3>
+        <GainsPains painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
       </div>
-      <p class="mech-target__note" data-fact="GV-01">Her Power, the national program, <Fact id="GV-01" as="span" />.</p>
-    </MechanismSection>
-  </div>
+    </div>
+  </ProblemSection>
 
-  <!-- ===== Route 2: funders and development partners (country cohorts) ===== -->
-  <div id="funders" class="route">
-    <!-- C2 -->
-    <ProblemSection
-      eyebrow="For Funders and Development Partners"
-      title="Educated Young People Are Not in Work, Across Three Regions."
-      bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
-      factIds={['PX-01', 'PX-02']}
-    >
-      <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
-    </ProblemSection>
+  <!-- C3 -->
+  <CostSection
+    title="Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result."
+    blocks={[
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
+      { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+      { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need.`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
+    ]}
+  />
 
-    <!-- C3 -->
-    <CostSection
-      title="Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result."
-      blocks={[
-        { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-        { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need.`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
+  <!-- C4 -->
+  <FutureBand
+    photos={futurePhotos('youthwide')}
+    title="What Your Reports Will Show"
+    lead="Illustrative: monthly reports follow each cohort from enrollment to first earnings."
+    vignettes={[
+      { kind: 'Functional', title: 'Monthly Reports Your Board or Agency Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
+      { kind: 'Emotional', title: 'Visibility into Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
+      { kind: 'Social', title: 'Evidence Designed for Evaluator Review', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+    ]}
+  >
+    <div class="aud">
+      <div class="aud__col">
+        <h3 class="aud__h">Government Delivery</h3>
+        <ul class="aud__list" role="list">
+          <li><strong>A Government Lab Becomes a Blended-Learning Center.</strong> Seats are confirmed per program in existing government digital labs and colleges.</li>
+          <li><strong>Capacity That Stays in Your System.</strong> Trained facilitators and localized curricula remain after the program, and employers find job-ready talent.</li>
+        </ul>
+      </div>
+      <div class="aud__col">
+        <h3 class="aud__h">Funders and Development Partners</h3>
+        <ul class="aud__list" role="list">
+          <li><strong>First Earnings by Priority Group.</strong> Reports show first earnings for each priority group agreed with you.</li>
+          <li><strong>A Year of Tracer Surveys.</strong> Tracer surveys follow each cohort for a year after the course.</li>
+        </ul>
+      </div>
+    </div>
+  </FutureBand>
+
+  <!-- C5 -->
+  <GuideSection
+    title={`We Have Built This Path Since ${statValue('ID-02')}.`}
+    empathy={EMPATHY.developmentPartners}
+    origin={ORIGIN}
+    statIds={['SC-01', 'SC-03', 'SC-06', 'SC-04']}
+    partnerGroup={['government', 'academic', 'development']}
+    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
+  >
+    <div class="aud aud--stack">
+      <div class="aud__col">
+        <h3 class="aud__h">Government Delivery</h3>
+        <p>{EMPATHY.governments}</p>
+        <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.</p>
+      </div>
+      <div class="aud__col">
+        <h3 class="aud__h">Funders and Development Partners</h3>
+        <CopyP block={TRAINED_REACH} />
+      </div>
+    </div>
+  </GuideSection>
+
+  <!-- C6 -->
+  <MechanismSection
+    title="One Delivery Model, from Selection to Paid Work"
+    positioning={POSITIONING.youthwide}
+    blocks={[
+      { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
+      { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
+      { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
+      { label: 'Where They Work', title: 'Local, Remote, Overseas and Freelance Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
+    ]}
+    factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
+    link={{ label: 'How Our Model Works', href: '/our-model/' }}
+  >
+    <div class="aud">
+      <div class="aud__col">
+        <h3 class="aud__h">Government Delivery</h3>
+        <p class="aud__lead" data-fact="GV-09">Delivered through the labs and colleges you already have: 9,000+ government digital labs in Bangladesh that could host blended learning; lab access and seats are confirmed per program.</p>
+        <p class="aud__lead">Trained trainers deliver it: Training of Trainers, curriculum and manuals, and certified local facilitators. Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.</p>
+        <div class="mech-target" data-reveal>
+          <Badge tone="sale">Target</Badge>
+          <FactStat id="IN-01" />
+          <p class="mech-target__note">A national ambition for 2030 that depends on government and donor commitments; not a delivered figure.</p>
+        </div>
+        <div class="mech-stats">
+          <FactStat id="GV-09" />
+          <FactStat id="GV-13" />
+        </div>
+        <p class="mech-target__note" data-fact="GV-01">Her Power, the national program, <Fact id="GV-01" as="span" />.</p>
+      </div>
+      <div class="aud__col">
+        <h3 class="aud__h">Funders and Development Partners</h3>
+        <p class="aud__lead">Country cohorts are designed with you: priority groups, tracks, safeguarding and the scorecard are agreed in co-design before enrollment.</p>
+        <p class="aud__lead">Tracks come from the entry-level menu, set per country from employer demand. Before enrollment each track’s demand and work-entry plan is approved with you.</p>
+      </div>
+    </div>
+    <DeliveryGrid
+      heading="The Delivery Model in Detail"
+      items={[
+        { icon: 'graduation-cap', title: 'Training and Mentoring', factId: 'PD-01' },
+        { icon: 'award', title: 'Certifications by Track', factId: 'PD-03' },
+        { icon: 'users', title: 'Cohorts in Parallel', factId: 'PD-06' },
+        { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07' },
+        { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14' },
+        { icon: 'layers', title: 'Foundation Tracks', factId: 'PD-17' },
+        { icon: 'briefcase', title: 'Placement Support', factId: 'PD-15' },
+        { icon: 'shield-check', title: 'Quality Assurance', factId: 'PD-16' },
       ]}
     />
-
-    <!-- C4 -->
-    <FutureBand
-      photos={futurePhotos('youthwide')}
-      title="What Your Reports Will Show"
-      lead="Illustrative: reports show first earnings by priority group, and tracer surveys follow each cohort for a year."
-      vignettes={[
-        { kind: 'Functional', title: 'Monthly Reports Your Board Can Read', text: 'Enrollment, completion, certification, placements and first earnings arrive every month, with women’s and priority-group shares reported.' },
-        { kind: 'Emotional', title: 'Visibility into Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own.' },
-        { kind: 'Social', title: 'Evidence Designed for Evaluator Review', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
-      ]}
-    />
-
-    <!-- C5 -->
-    <GuideSection
-      title={`We Have Built This Path Since ${statValue('ID-02')}.`}
-      empathy={EMPATHY.developmentPartners}
-      origin={ORIGIN}
-      statIds={['SC-01', 'SC-03']}
-      partnerGroup="development"
-      method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
-    >
-      <CopyP block={TRAINED_REACH} />
-    </GuideSection>
-
-    <!-- C6 -->
-    <MechanismSection
-      title="One Delivery Model, from Selection to Paid Work"
-      positioning={POSITIONING.youthwide}
-      blocks={[
-        { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design. Women are a priority in every group.', icon: 'users' },
-        { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
-        { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
-        { label: 'Where They Work', title: 'Local, Remote, Overseas and Freelance Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
-      ]}
-      factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
-      link={{ label: 'How Our Model Works', href: '/our-model/' }}
-    >
-      <DeliveryGrid
-        heading="The Delivery Model in Detail"
-        items={[
-          { icon: 'graduation-cap', title: 'Training and Mentoring', factId: 'PD-01' },
-          { icon: 'award', title: 'Certifications by Track', factId: 'PD-03' },
-          { icon: 'users', title: 'Cohorts in Parallel', factId: 'PD-06' },
-          { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07' },
-          { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14' },
-          { icon: 'layers', title: 'Foundation Tracks', factId: 'PD-17' },
-          { icon: 'briefcase', title: 'Placement Support', factId: 'PD-15' },
-          { icon: 'shield-check', title: 'Quality Assurance', factId: 'PD-16' },
-        ]}
-      />
-      <div class="wep-block">
-        <h3 class="t-heading-xl" data-reveal>Work-Entry Plan per Track</h3>
-        <p class="wep-lead" data-reveal>Tracks come from the entry-level menu, set per country from employer demand. Before enrollment each track’s demand and work-entry plan is approved with you.</p>
-        <WorkEntryPlan />
-      </div>
-    </MechanismSection>
-  </div>
-
+    <div class="wep-block">
+      <h3 class="t-heading-xl" data-reveal>Work-Entry Plan per Track</h3>
+      <WorkEntryPlan />
+    </div>
+  </MechanismSection>
   <!-- C7 -->
   <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03', 'OC-05']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
     <p class="proof-note" data-fact="OC-01 OC-05">The earning-timing figure describes when earnings began, not what caused them.</p>
@@ -410,16 +395,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <DecisionSheet />
   </RiskSection>
 
-  <!-- C13: governments and ministries, then funders and development partners -->
-  <CTABand
-    id="cta-governments"
-    tone="klein"
-    heading="Governments: Start with a Briefing That Fits Your Timeline."
-    cta={briefing}
-    urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
-  >
-    <SessionAgenda lead="briefing" />
-  </CTABand>
+  <!-- C13: one primary button (the funders' discovery session); the Bangladesh briefing for governments is a text link in its own band, so two primary buttons never stand in one view -->
   <CTABand
     id="cta"
     heading="Funders: Talk to Us About a First Cohort."
@@ -430,6 +406,21 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <CopyP block={SPEED} class="cta-speed" />
     <SessionAgenda />
   </CTABand>
+  {
+    briefing.href && (
+      <Section id="cta-governments" tone="airy" pad="md" aria-labelledby="cta-governments-h">
+        <div class="gov-cta">
+          <h2 id="cta-governments-h" class="t-heading-xl" data-reveal>Governments: Start with a Briefing That Fits Your Timeline.</h2>
+          <p class="gov-cta__text" data-reveal>Public procurement follows the agency’s own timeline — we start with a briefing that fits it.</p>
+          <p data-reveal>
+            <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
+          </p>
+          {briefing.href.startsWith('mailto:') && <EmailFallback href={briefing.href} />}
+          <SessionAgenda lead="briefing" />
+        </div>
+      </Section>
+    )
+  }
 
   <!-- C14 -->
   <NextSteps
@@ -502,12 +493,72 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  .route {
+  /* Audience sub-blocks inside the shared C2–C6 bands (WP18b): two columns from 900 px, stacked on a phone; `--stack` keeps them stacked
+     where the content is wide (priority-group cards, ranked pains, the partner strip's neighbor) */
+  .aud {
+    margin-top: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .aud:not(.aud--stack) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .aud__col {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-left: 4px solid var(--secondary);
+    border-radius: var(--radius-default);
+    color: var(--on-surface);
     scroll-margin-top: var(--space-xl, 56px);
+  }
+  .aud__col > :global(*) {
+    margin: 0;
+  }
+  .aud__h {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+  .aud__lead {
+    max-width: 52rem;
+  }
+  .aud__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .aud__list strong {
+    color: var(--secondary);
+  }
+  .gov-cta {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-sm);
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .gov-cta > :global(*) {
+    margin: 0;
+  }
+  .gov-cta__text {
+    color: var(--on-surface-variant);
   }
   /* The 2030 target sits in the mechanism band with its fact and a "Target" label, never in the hero */
   .mech-target {
-    margin-top: var(--space-lg);
+    margin-top: var(--space-xs);
     padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
     border-left: 4px solid var(--tertiary);
     display: grid;
@@ -523,15 +574,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     color: var(--on-surface-variant);
   }
   .mech-stats {
-    margin-top: var(--space-lg);
     display: grid;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (min-width: 768px) {
-    .mech-stats {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
   .svc {
     margin: 0;

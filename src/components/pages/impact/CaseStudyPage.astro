@@ -21,7 +21,7 @@ import { caseBySlug } from './case-studies';
 /**
  * Template for the four case-study pages (T5): outcome-first header (stat row) → context → challenges →
  * CodersTrust solution → results → learner story → related program → discovery CTA.
- * Slots: `context` (extra context), `results`, `story`, `after-results`.
+ * Slots: `context` (extra context), `solution-lead` (CodersTrust's own role, set above the generic practices), `results`, `story`, `after-results`.
  */
 interface Props {
   slug: string;
@@ -103,6 +103,7 @@ const d = discoveryCta();
       </div>
       <div data-reveal>
         <h2 class="t-heading-2xl" id="solution-h">What CodersTrust Did</h2>
+        <slot name="solution-lead" />
         <ul class="cs__list" aria-labelledby="solution-h">{solution.map((x) => <li>{x}</li>)}</ul>
       </div>
     </div>

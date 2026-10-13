@@ -21,7 +21,7 @@ import { webPage } from '../../../lib/schema';
  * site named them. A photograph the D13 rule does not let render on a build is left out (PhotoGallery).
  */
 const path = '/impact/in-the-field/';
-const description = desc('Photographs from CodersTrust programs, partner meetings and events, grouped by program, partner and year, with captions and descriptions.');
+const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program collections and dated news galleries.');
 const jsonLd = [
   webPage({ path, name: 'In the field: CodersTrust photo archive', description, type: 'CollectionPage' }),
   articleNode({ path, headline: 'In the Field', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
@@ -137,7 +137,7 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, grouped by program, partner and year. Each picture has a short caption and a description for screen readers." artSeed="field-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, organized into program collections and dated news galleries." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a group">
     <nav class="itf__jump" aria-label="Groups of photographs">
@@ -155,7 +155,16 @@ const d = discoveryCta();
 
   {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
-  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and Events" title={`Partners, Programs and Events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  <!-- Dated news galleries (WP18b): one native <details> disclosure per year, closed except the latest year. The disclosure carries the jump-link id
+       and the script below opens it when a link, the address bar or the back button points at it or at a photograph inside it. -->
+  {
+    byYear.map((y, i) => (
+      <details class="itf__year" id={y.id} open={i === 0}>
+        <summary class="itf__sum"><span class="container itf__sum-in">News Photographs, {y.label}</span></summary>
+        <PhotoGallery id={`${y.id}-gallery`} eyebrow="News and Events" title={`Partners, Programs and Events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />
+      </details>
+    ))
+  }
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
@@ -164,7 +173,68 @@ const d = discoveryCta();
   <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
+<script>
+  // Open the year disclosure a link, the address bar or the back button points at (itself or anything inside it), then scroll to the target.
+  function revealHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const target = document.getElementById(id);
+    const box = target?.closest('details.itf__year');
+    if (target && box && !(box as HTMLDetailsElement).open) {
+      (box as HTMLDetailsElement).open = true;
+      requestAnimationFrame(() => target.scrollIntoView());
+    }
+  }
+  revealHash();
+  addEventListener('hashchange', revealHash);
+</script>
+
 <style>
+  .itf__sum {
+    cursor: pointer;
+    list-style: none;
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface);
+    color: var(--secondary);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-m);
+    min-height: 44px;
+  }
+  .itf__sum::-webkit-details-marker {
+    display: none;
+  }
+  .itf__sum:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .itf__sum-in {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+  }
+  .itf__sum-in::after {
+    content: '';
+    flex: none;
+    width: 0.6em;
+    height: 0.6em;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+  .itf__year[open] > .itf__sum .itf__sum-in::after {
+    transform: rotate(-135deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .itf__sum-in::after {
+      transition: none;
+    }
+  }
+  .itf__year > :global(.band) {
+    border-top: 1px solid var(--outline-variant);
+  }
   .itf__jump ul {
     list-style: none;
     margin: 0;

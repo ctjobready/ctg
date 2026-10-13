@@ -25,7 +25,7 @@ interface Props {
   id?: string;
 }
 const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
-const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
+const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : blocks.length === 4 ? 'grid-cards grid-cards--4' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(fact(b.factId).text);
 ---

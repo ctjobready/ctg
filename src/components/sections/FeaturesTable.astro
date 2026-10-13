@@ -5,13 +5,14 @@ import Fact from '../facts/Fact.astro';
 import Icon from '../system/Icon.astro';
 
 /**
- * C8 Features → benefits: feature → "which means…" → outcome (fact or text); optional pain-reliever
- * column maps each feature 1:1 to a problem card.
+ * C8 Features → benefits as concern-led cards (WP18b, review round 5 cycle 2: the four-column table read as a wall of cells).
+ * Each card carries the concern it answers, what is included, and the practical benefit; the concern label maps each card 1:1 to a
+ * problem card (Home, YouthWIDE, local partners).
  *
- * Review round 14, M4: on Home, YouthWIDE and the local-partners page the pain-reliever column is keyed to the ranked pains of the C2
- * band. A row with `painId` ("P1" to "P3") carries `data-relieves` and shows the pain's number in the same circle as the C2 list; a row
- * without one is a gain creator and shows the check icon. `facts` ties the row to the registered facts it rests on (`data-fact`, so the
- * status gate and the production holds see it). scripts/check-facts.mjs checks that each C2 pain has exactly one row.
+ * Review round 14, M4: on Home, YouthWIDE and the local-partners page the concern is keyed to the ranked pains of the C2 band. A row
+ * with `painId` ("P1" to "P3") carries `data-relieves` and shows the pain's number in the same circle as the C2 list; a row without
+ * one is a gain creator and shows "Added benefit". `facts` ties the row to the registered facts it rests on (`data-fact`, so the
+ * status gate and the production holds see it). scripts/check-facts.mjs checks that each C2 pain has exactly one card.
  */
 interface Row {
   feature: string;
@@ -31,7 +32,7 @@ interface Props {
   lead?: string;
   rows: Row[];
   id?: string;
-  /** Heading of the pain column ("Funder Concern Addressed" on funder pages). */
+  /** Label above the concern ("Funder Concern Addressed" on funder pages). */
   concernLabel?: string;
 }
 const { title, lead, rows, id = 'features', concernLabel = 'Concern Addressed' } = Astro.props;
@@ -41,103 +42,117 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="What You Get" title={title} lead={lead} />
-  <section class="ft" aria-label="Features and benefits" tabindex="0" data-scroll data-stack data-reveal>
-    <table>
-      <caption class="sr-only">{title}</caption>
-      <thead>
-        <tr>
-          <th scope="col">Feature</th>
-          <th scope="col">Which Means…</th>
-          <th scope="col">Outcome</th>
-          {showPain && <th scope="col">{concernLabel}</th>}
-        </tr>
-      </thead>
-      <tbody>
-        {
-          rows.map((r) => (
-            <tr data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
-              <th scope="row">{r.feature}</th>
-              <td data-label="Which Means…">{r.means}</td>
-              <td data-label="Outcome">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? 'See the feature'}</td>
-              {showPain && (
-                <td data-label={concernLabel}>
-                  {r.relieves ? (
-                    <span class="ft__pain">
-                      {r.painId ? <span class="ft__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}{' '}
-                      <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
-                    </span>
-                  ) : (
-                    <span class="ft__added">Added benefit</span>
-                  )}
-                </td>
+  <ul class="fc" role="list" aria-label="Features and benefits" data-reveal>
+    {
+      rows.map((r) => (
+        <li class="fc__card" data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
+          {showPain && (
+            <div class="fc__concern">
+              <p class="fc__label">{concernLabel}</p>
+              {r.relieves ? (
+                <p class="fc__pain">
+                  {r.painId ? <span class="fc__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
+                  <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
+                </p>
+              ) : (
+                <p class="fc__pain fc__pain--added">Added benefit</p>
               )}
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </section>
+            </div>
+          )}
+          <div class="fc__part">
+            <p class="fc__label">What Is Included</p>
+            <p class="fc__included">{r.feature}</p>
+          </div>
+          <div class="fc__part">
+            <p class="fc__label">Practical Benefit</p>
+            <p class="fc__benefit">{r.outcomeFactId ? <Fact id={r.outcomeFactId} field="text" /> : r.outcome ?? 'See the feature'}</p>
+            <p class="fc__means">{r.means}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
 </Section>
 
-<script>
-  import '../../scripts/tablestack';
-</script>
-
 <style>
-  .ft {
-    overflow-x: auto;
+  .fc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 720px) {
+    .fc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .fc {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .fc__card {
+    display: grid;
+    align-content: start;
+    background: var(--surface);
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-default);
-    background: var(--surface);
     box-shadow: var(--shadow-card);
+    overflow: hidden;
   }
-  table {
-    width: 100%;
-    min-width: 760px;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
-  th,
-  td {
-    text-align: left;
-    vertical-align: top;
-    padding: 14px var(--space-md);
-    border-bottom: 1px solid var(--outline-variant);
-    color: var(--on-surface-variant);
-  }
-  thead th {
+  .fc__concern {
+    padding: 12px var(--space-md);
     background: var(--surface-container-low);
-    color: var(--secondary);
+    border-bottom: 1px solid var(--primary-fixed);
   }
-  tbody th {
-    color: var(--on-surface);
-    font-weight: var(--fw-medium);
-    position: sticky;
-    left: 0;
-    background: var(--surface);
-    min-width: 11rem;
-    box-shadow: 1px 0 0 var(--outline-variant);
+  .fc__part {
+    padding: 12px var(--space-md);
   }
-  tbody tr:last-child th,
-  tbody tr:last-child td {
-    border-bottom: 0;
+  .fc__part + .fc__part {
+    border-top: 1px solid var(--outline-variant);
   }
-  .ft__pain {
-    display: inline-flex;
-    gap: 6px;
+  .fc__card p {
+    margin: 0;
+  }
+  .fc__label {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+    margin-bottom: 4px !important;
+  }
+  .fc__pain {
+    display: flex;
+    gap: 8px;
     align-items: flex-start;
+    color: var(--secondary);
+    font-weight: var(--fw-medium);
   }
-  .ft__pain :global(.icon) {
+  .fc__pain :global(.icon) {
     color: var(--success);
-    margin-top: 4px;
+    margin-top: 3px;
     flex: none;
   }
-  .ft__added {
+  .fc__pain--added {
     color: var(--on-surface-variant);
-    font-style: italic;
+  }
+  .fc__included {
+    color: var(--on-surface);
+  }
+  .fc__benefit {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .fc__means {
+    margin-top: 4px !important;
+    color: var(--on-surface-variant);
   }
   /* the pain's number: the same circle as the ranked list in the C2 band */
-  .ft__n {
+  .fc__n {
     flex: none;
     width: 22px;
     height: 22px;
