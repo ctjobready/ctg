@@ -1,7 +1,7 @@
 ---
-title: "Enhanced Technology Skills Can Ensure Peace, Says Aziz Ahmad"
+title: "Enhanced Technology Skills Can Support Peace, Says Aziz Ahmad"
 date: 2023-05-04
-updated: 2024-06-25
+updated: 2026-10-13
 topic: leadership-advocacy
 excerpt: "Speaking on UN World Press Freedom Day, Aziz Ahmad says closing the digital divide and building technology skills can support peace."
 cover: ../../assets/images/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/aziz-ahmad-at-un-1.jpg
@@ -17,7 +17,7 @@ seoTitle: "Aziz Ahmad on Technology Skills and Peace"
 
 Aziz Ahmad is a globally renowned technology innovator, entrepreneur, and speaker. He recently presented at a seminar on “Data Collection and Distribution Process as Enablers for the Exercise of Human Rights” held at United Nations Headquarters in New York organized by the United Nations University for Peace as a side event in observance of World Press Freedom Day 2023.
 
-Peace and prosperity can be ensured by enhancing the technology skills among the youths so that they can become the resources instead of becoming the burden of the society, Ahmad underscored.
+Peace and prosperity can be supported by enhancing the technology skills among the youths so that they can become resources for society, Ahmad underscored.
 
 The Bangladeshi-American technology investor joined the discussion with Jayashri Wyatt, Chief of the Education Outreach Section, Outreach Division, Department of Global Communications, United Nations, Amy Larsen, Director, Strategy and Management at Democracy Forward, Microsoft, Dr. Chris Wiggins, Chief Data Scientist, New York Times and Professor at the Data Science Institute, Columbia University and Dr. Mona Sloane, Senior Research Scientist & Associate Professor, NYU Center for Responsible AI as the panellists.
 

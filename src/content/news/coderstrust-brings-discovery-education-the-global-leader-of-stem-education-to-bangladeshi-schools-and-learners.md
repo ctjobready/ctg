@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Brings Discovery Education, the Global Leader of STEM Education, to Bangladeshi Schools and Learners"
 date: 2023-06-15
-updated: 2023-08-30
+updated: 2026-10-13
 topic: partnerships
 excerpt: "CodersTrust brings Discovery Education STEM and coding content to Bangladeshi learners under its SuperKids offering."
 cover: ../../assets/images/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/image-2023-06-15t16-10-59-630z.jpg
@@ -19,6 +19,6 @@ The organizations officially initiated the collaboration in Dhaka on Wednesday. 
 
 According to Discovery Education, it is the global leader in standards-based digital content for K-12, transforming teaching and learning with award-winning digital textbooks, multimedia content, professional development, and the largest professional learning community of its kind. According to the company, it serves over 5 million educators and 50+ million students in over 100 countries, and its services are in half of U.S. classrooms, 50 percent of all primary schools in the U.K., and countries around the globe.
 
-CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider that has trained 130,000+ learners since 2014 across 15 countries and territories, and is onboarding 1.5M+ National University learners. Through this collaboration, CodersTrust SuperKids will be offering Discovery Education’s world-class educational products to private, public and international schools, government, NGOs, and individual K-12 learners in Bangladesh.
+CodersTrust is a global EdTech-based digital workforce development and skill-oriented education provider that has trained learners since 2014 across 15 countries and territories, and is onboarding 1.5M+ National University learners. Through this collaboration, CodersTrust SuperKids will be offering Discovery Education’s world-class educational products to private, public and international schools, government, NGOs, and individual K-12 learners in Bangladesh.
 
 Aziz Ahmad congratulated both Discovery Education and CodersTrust and termed it as a historic milestone for developing the next generation of Bangladesh as future-ready leaders and global citizens. “Looking forward to working closely together and making this collaboration a great success”, he said. Discovery Education’s Executive Director Martin Creel remarked, “Discovery Education is known for EduTech solutions from Coding to Math to Science and also STEM Connect across the globe. With this collaboration, we add Bangladesh to a world-wide network of teachers and learners. And we are so excited about it”.

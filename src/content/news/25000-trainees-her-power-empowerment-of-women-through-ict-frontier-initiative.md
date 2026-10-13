@@ -1,7 +1,7 @@
 ---
-title: "25,000+ Trainees | CodersTrust Signs Contract with Her Power: Empowerment of Women Through ICT Frontier Initiative"
+title: "Her Power Contract Aims to Train 25,125 Women: Empowerment of Women Through ICT Frontier Initiative"
 date: 2023-04-13
-updated: 2024-09-30
+updated: 2026-10-13
 topic: partnerships
 excerpt: "CodersTrust signs a contract with the DoICT for Her Power, which aims to train and support 25,125 women as ICT professionals and entrepreneurs."
 cover: ../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg

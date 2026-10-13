@@ -1,7 +1,7 @@
 ---
 title: "Why We Call It a Digital Factory"
 date: 2026-07-18
-updated: 2026-08-01
+updated: 2026-10-13
 topic: insights
 excerpt: "Why Bangladesh's greatest natural resource is its young people, and what a digital factory means for them."
 cover: ../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory.jpg
@@ -34,7 +34,7 @@ This is more than a slogan. It is a roadmap for national transformation.
 
 Our mission is to ensure that every motivated young person regardless of geography, gender, or economic background has access to world-class digital education and the opportunity to compete in the global marketplace. We envision a Bangladesh where every community contributes to the digital economy, where entrepreneurship flourishes, where AI accelerates innovation, and where human capital becomes the country’s greatest competitive advantage.
 
-The Digital Factory is not about manufacturing products. It is about manufacturing opportunity. It is about equipping millions of young people with the skills to compete globally, create prosperity locally, and build a stronger Bangladesh for generations to come.
+The Digital Factory is not about manufacturing products. It is about manufacturing opportunity. It is about equipping young people with the skills to compete globally, create prosperity locally, and build a stronger Bangladesh for generations to come.
 
 The future of Bangladesh will not be defined by what lies beneath its soil, but by what exists within the minds of its people.
 
