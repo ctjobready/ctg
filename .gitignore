@@ -4,7 +4,6 @@ dist/
 .astro/
 .cache/
 # local tooling / reports
-subagent-model-scores.csv
 .work/
 *.log
 .DS_Store
