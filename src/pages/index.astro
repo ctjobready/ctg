@@ -2,7 +2,7 @@
 // P1 Home (doc 06 P1, CMF C1 → C14). Section order is fixed by the spec; rhythm between light, Airy Blue,
 // Ice Cyan, Klein and Deep Ink bands is set with the page-local <Tone> wrapper (never two dark bands in a row).
 import LandingLayout from '../layouts/LandingLayout.astro';
-import HeroBand from '../components/sections/HeroBand.astro';
+import HeroSlider from '../components/sections/HeroSlider.astro';
 import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
@@ -28,8 +28,9 @@ import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { futurePhotos } from '../data/photos';
+import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HEADLINE, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -78,19 +79,7 @@ const featureRows = [
 
 <LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
   <Tone cmf="C1">
-    <HeroBand
-      variant="home"
-      audienceLinks={[
-        { label: 'Development partners', href: '/partner-with-us/development-partners/' },
-        { label: 'Governments', href: '/partner-with-us/governments/' },
-        { label: 'Foundations', href: '/partner-with-us/foundations/' },
-      ]}
-      title={HEADLINE.home}
-      lead={VALUE_PROPOSITION.home}
-      cta={{ label: discovery.label, href: discovery.href }}
-      secondary={{ label: 'See the evidence', href: '/impact/' }}
-      artSeed="home"
-    />
+    <HeroSlider id="hero" label="CodersTrust Highlights" slides={HOME_SLIDES} />
   </Tone>
 
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>

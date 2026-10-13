@@ -1,0 +1,530 @@
+---
+/**
+ * Home hero slider (WP13). Six slides, one heading level 1 (the first slide) and level 2 on the rest. Every slide is in the markup, stacked,
+ * so a reader without JavaScript (and a print) gets all of them. Only when src/scripts/heroSlider.ts has run (the `is-ready` class on the
+ * region) do the slides overlap in one grid cell, the others leave the accessibility tree and the tab order, and the controls appear.
+ * Pattern: WAI-ARIA Authoring Practices carousel (region, slides with roledescription "slide", a labelled previous and next, a slide picker,
+ * a pause control). Figures come from the facts register (src/data/facts.ts) and carry data-fact for the facts gate.
+ */
+import Button from '../system/Button.astro';
+import Icon from '../system/Icon.astro';
+import Stat from '../system/Stat.astro';
+import Fact from '../facts/Fact.astro';
+import HeroArt from '../ui/HeroArt.astro';
+import Img from '../ui/Img.astro';
+import { fact } from '../../data/facts';
+import { heroPhoto } from '../../data/photos';
+import type { HeroSlide, HeroSlideStat } from '../../data/heroSlides';
+import { mayRender } from '../../lib/permissions';
+import { linkAttrs } from '../../lib/url';
+
+interface Props {
+  /** The region's id; the track and the controls are named after it. */
+  id?: string;
+  /** Accessible name of the carousel region. */
+  label: string;
+  slides: HeroSlide[];
+}
+const { id = 'hero', label, slides } = Astro.props;
+if (slides.length < 2) throw new Error('HeroSlider: needs at least two slides');
+const total = slides.length;
+const trackId = `${id}-slides`;
+
+/** The figure a tile shows, read from the register (throws when the fact has no stat, so a bad id fails the build). */
+const figure = (s: HeroSlideStat) => {
+  const f = fact(s.factId);
+  if (!f.stat) throw new Error(`HeroSlider: fact ${s.factId} has no stat`);
+  return { factId: s.factId, value: f.stat.value, label: s.caption ? s.caption(f) : f.stat.label };
+};
+/** The photograph of a photo panel, when the D13 rule lets it render; otherwise the generated art (Hero.astro's rule). */
+const photoFor = (s: HeroSlide) => {
+  const p = s.photoSeed ? heroPhoto(s.photoSeed) : undefined;
+  return p && mayRender(p.assetId) ? p : undefined;
+};
+---
+
+<section class="hs" id={id} aria-roledescription="carousel" aria-label={label} data-hero-slider>
+  <div class="hs__track" id={trackId} data-hs-track aria-live="polite">
+    {
+      slides.map((s, i) => {
+        const Heading = i === 0 ? 'h1' : 'h2';
+        const photo = s.panel === 'photo' ? photoFor(s) : undefined;
+        return (
+          <div class:list={['hs__slide', i === 0 && 'is-active']} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${total}: ${s.title}`} data-hs-slide>
+            <div class="hs__inner container">
+              <div class="hs__copy">
+                {s.audience && (
+                  <nav class="hs__audience" aria-label="Choose your audience" data-hero-in={i === 0 ? '' : undefined}>
+                    <ul>
+                      {s.audience.map((a) => (
+                        <li>
+                          <a class="link" href={linkAttrs(a.href).href}>{a.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
+                {s.eyebrow && <p class="hs__eyebrow" data-hero-in={i === 0 ? '' : undefined}>{s.eyebrow}</p>}
+                <Heading class:list={['hs__title', i === 0 ? 't-display-5xl' : 't-display-4xl']} data-hero-in={i === 0 ? '' : undefined}>{s.title}</Heading>
+                {s.fact ? (
+                  <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
+                ) : (
+                  s.lead && <p class="hs__lead" data-hero-in={i === 0 ? '' : undefined}>{s.lead}</p>
+                )}
+                {s.links && (
+                  <div class="hero__actions hs__actions" data-hero-in={i === 0 ? '' : undefined}>
+                    {s.links.map((l) => (
+                      <Button href={l.href} variant={l.variant ?? 'primary'} iconEnd={(l.variant ?? 'primary') === 'primary' ? 'arrow-right' : undefined}>
+                        {l.label}
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {s.panel === 'photo' && (
+                <div class:list={['hs__media', 'hero__media', photo ? 'hs__media--photo' : 'hs__media--art']} data-hero-in={i === 0 ? '' : undefined}>
+                  {photo ? (
+                    <Img src={photo.src} alt={photo.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" fetchpriority="high" assetId={photo.assetId} />
+                  ) : (
+                    <HeroArt seed={s.photoSeed ?? s.id} />
+                  )}
+                </div>
+              )}
+              {s.panel === 'stats' && (
+                <div class="hs__stats">
+                  {(s.stats ?? []).map((st) => {
+                    const v = figure(st);
+                    return (
+                      <div class="hs__stat" data-fact={v.factId}>
+                        <Stat value={v.value} label={v.label} count={false} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              {s.panel === 'programs' && (
+                <ul class="hs__programs">
+                  {(s.programs ?? []).map((p) => (
+                    <li>
+                      <a class="hs__program" href={linkAttrs(p.href).href}>
+                        <strong>{p.label}</strong>
+                        {p.description && <span>{p.description}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <div class="hs__controls container" data-hs-bar>
+    <div class="hs__nav">
+      <button type="button" class="hs__arrow" data-hs-prev aria-controls={trackId} aria-label="Previous slide">
+        <Icon name="chevron-left" size={20} />
+      </button>
+      <div class="hs__dots" role="group" aria-label="Choose a slide">
+        {
+          slides.map((s, i) => (
+            <button
+              type="button"
+              class:list={['hs__dot', i === 0 && 'is-active']}
+              data-hs-dot
+              aria-controls={trackId}
+              aria-label={`Show slide ${i + 1} of ${total}: ${s.title}`}
+              aria-current={i === 0 ? 'true' : undefined}
+            />
+          ))
+        }
+      </div>
+      <button type="button" class="hs__arrow" data-hs-next aria-controls={trackId} aria-label="Next slide">
+        <Icon name="chevron-right" size={20} />
+      </button>
+    </div>
+    <button type="button" class="hs__toggle" data-hs-toggle aria-controls={trackId}>
+      <span data-hs-icon="pause"><Icon name="pause" size={16} /></span>
+      <span data-hs-icon="play" hidden><Icon name="play" size={16} /></span>
+      <span data-hs-toggle-label>Pause</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  /* Hidden attributes win over the display rules below (the pause and play glyphs swap through [hidden]). */
+  .hs [hidden] {
+    display: none !important;
+  }
+
+  .hs {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--hero-gradient-edge);
+  }
+  /* The hero's settle entrance (Hero.astro): a transform-only gradient that plays once and never repeats. */
+  .hs::before {
+    content: '';
+    position: absolute;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hs::before {
+      animation: ct-hero-settle 3s var(--ease-emphasized) both;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs::before {
+      animation: none;
+    }
+  }
+
+  /* Without the carousel (no JavaScript, or before the script has run): the slides stack, each with its own heading and links. */
+  .hs__track {
+    display: block;
+  }
+  .hs__slide {
+    min-width: 0;
+    padding-block: var(--space-section-mobile);
+  }
+  @media (min-width: 768px) {
+    .hs__slide {
+      padding-block: var(--space-section-desktop) calc(var(--space-section-desktop) * 0.8);
+    }
+  }
+  .hs__inner {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .hs__inner {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+  .hs__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gutter);
+    min-width: 0;
+  }
+  .hs__copy > * {
+    margin: 0;
+  }
+  .hs__audience ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-sm);
+    row-gap: 2px;
+    min-height: 32px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+  }
+  .hs__audience li {
+    display: inline-flex;
+    align-items: center;
+  }
+  /* the separator trails each link, so a wrapped line ends with it rather than starting with it */
+  .hs__audience li:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-sm);
+    color: var(--outline);
+  }
+  .hs__audience a {
+    --ctx-link: var(--secondary);
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding-block: 3px;
+  }
+  @media (max-width: 480px) {
+    .hs__audience ul {
+      padding-inline: 12px;
+      column-gap: 6px;
+    }
+    .hs__audience li:not(:last-child)::after {
+      margin-left: 6px;
+    }
+  }
+  .hs__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    color: var(--secondary);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+  }
+  .hs__title {
+    color: var(--on-surface);
+    max-width: 24ch;
+  }
+  .hs__lead {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface-variant);
+    max-width: 34em;
+  }
+  .hs__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  /* Panels: a photograph (the hero's own frame), stat tiles or the program list. */
+  .hs__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 3 / 2;
+    justify-self: center;
+    box-shadow: var(--shadow-card);
+    background: var(--surface-container-low);
+  }
+  .hs__media--art {
+    aspect-ratio: 4 / 5;
+    max-width: 420px;
+  }
+  .hs__media :global(img),
+  .hs__media :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Brand treatment for a real photograph: a soft Klein-blue wash that deepens toward the base (as Hero.astro). */
+  .hs__media--photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--secondary) 34%, transparent), color-mix(in srgb, var(--secondary) 6%, transparent) 55%, transparent);
+  }
+  .hs__stats {
+    display: grid;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 420px;
+    justify-self: center;
+  }
+  .hs__stat {
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .hs__programs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    width: 100%;
+    max-width: 480px;
+    justify-self: center;
+  }
+  .hs__program {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 44px;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    text-decoration: none;
+  }
+  .hs__program:hover {
+    border-color: var(--primary-fixed);
+  }
+  .hs__program strong {
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+  }
+  .hs__program span {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 768px) {
+    .hs__media,
+    .hs__stats,
+    .hs__programs {
+      justify-self: end;
+    }
+  }
+
+  /* The controls exist only with the carousel. */
+  .hs__controls {
+    display: none;
+  }
+
+  /* Carousel: the slides share one grid cell, so the region is as tall as its tallest slide (no layout shift between slides). */
+  .hs.is-ready .hs__track {
+    display: grid;
+  }
+  .hs.is-ready .hs__slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--dur-slow) var(--ease-standard),
+      visibility 0s linear var(--dur-slow);
+  }
+  .hs.is-ready .hs__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity var(--dur-slow) var(--ease-standard),
+      visibility 0s;
+  }
+  .hs.is-ready .hs__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-md);
+    padding-block-end: var(--space-lg);
+  }
+  .hs__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .hs__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color var(--dur-base) ease,
+      color var(--dur-base) ease,
+      border-color var(--dur-base) ease;
+  }
+  .hs__arrow:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+  }
+  .hs__dots {
+    display: flex;
+    align-items: center;
+  }
+  /* 24 x 24 hit box (WCAG 2.2 target size); the visible dot is the ::before, and the active one widens. */
+  .hs__dot {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+  }
+  .hs__dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    transition:
+      width var(--dur-base) var(--ease-standard),
+      background-color var(--dur-base) ease;
+  }
+  .hs__dot.is-active::before {
+    width: 24px;
+    background: var(--primary);
+  }
+  .hs__toggle {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    color: var(--primary);
+    font: inherit;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+  }
+  .hs__toggle:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+  }
+  /* Phone width: the arrows, the slide picker and the Pause control share one row (the arrows keep a 40 px target). */
+  @media (max-width: 480px) {
+    .hs__nav {
+      gap: 4px;
+    }
+    .hs__arrow {
+      width: 40px;
+      height: 40px;
+    }
+    .hs__toggle {
+      padding: 0 12px;
+      gap: 6px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs.is-ready .hs__slide,
+    .hs.is-ready .hs__slide.is-active {
+      transition: none;
+    }
+  }
+
+  /* Print: every slide prints in order (the carousel's stacking and the controls do not). Calls to action and the controls do not. */
+  @media print {
+    .hs__track,
+    .hs.is-ready .hs__track {
+      display: block;
+    }
+    .hs__slide,
+    .hs.is-ready .hs__slide,
+    .hs.is-ready .hs__slide.is-active {
+      grid-area: auto;
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+      break-inside: avoid;
+    }
+    .hs__controls,
+    .hs.is-ready .hs__controls,
+    .hs__actions,
+    .hs__media {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/heroSlider';
+</script>
