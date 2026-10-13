@@ -52,13 +52,13 @@ const jsonLd = [
       <p class="gov-updated">Last updated <time datetime={isoDate(UPDATED)}>{formatDate(UPDATED)}</time></p>
       <Fragment slot="actions">
         <Button href={diligence.href} iconEnd="arrow-right">{diligence.label}</Button>
-        <Button variant="outline" href="#offices">See the Offices</Button>
+        <a class="link" href="#offices">See the Offices<Icon name="arrow-right" size={16} /></a>
       </Fragment>
     </Hero>
   </div>
 
   <Section id="offices" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust lists two offices. Legal form, registration and how the two relate are confirmed with funders during co-design." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust lists two offices, in New York and Dhaka." />
     <div class="grid-cards grid-cards--2">
       <OfficeCard {...usa} role="Office in New York" />
       <OfficeCard {...bd} role="Headquarters in Dhaka" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
@@ -93,7 +93,7 @@ const jsonLd = [
       <article class="card" data-reveal>
         <div class="card__body">
           <h3 class="card__title">Consent and Records</h3>
-          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policy documents are discussed with funders during co-design rather than published on this site.</p>
+          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policy documents are not published on this site.</p>
         </div>
       </article>
     </div>
@@ -113,7 +113,7 @@ const jsonLd = [
   <Section id="checklist" tone="airy" aria-labelledby="check-h">
     <SectionHeader id="check-h" eyebrow="Due Diligence" title="What We Confirm with You in Co-Design" />
     <div class="gov-check" data-fact="PD-13">
-      <p>These items are confirmed with the funder during co-design. This list is a checklist for the conversation: tell us which documents you need and by when, and we confirm what is available for your program.</p>
+      <p>This list is a checklist for the conversation: tell us which documents you need and by when, and we confirm what is available for your program.</p>
       <ul class="gov-check__list" role="list">
         {checklist.map((c) => <li>{c}</li>)}
       </ul>

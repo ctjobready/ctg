@@ -14,7 +14,7 @@ import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
 import TeamCard from '../../components/pages/about/TeamCard.astro';
 import { fact } from '../../data/facts';
-import { ORIGIN, MICRO_COMMITMENT } from '../../data/copy';
+import { MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING } from '../../data/copy';
 import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
@@ -73,16 +73,9 @@ const jsonLd = [
   <Hero eyebrow="About Us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
     <Fragment slot="actions">
       <Button href="/impact/" iconEnd="arrow-right">See Our Impact</Button>
-      <Button variant="outline" href="/about/team/">Meet the Team</Button>
+      <a class="link" href={linkAttrs('/about/team/').href}>Meet the Team<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
-
-  <Section id="story" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="Our Story" title="Built Since 2014" />
-    <div class="about-story">
-      <CopyBlock class="lead" block={ORIGIN} />
-    </div>
-  </Section>
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
     <SectionHeader id="mission-h" eyebrow="Mission and Vision" title="Why We Exist, and Where We Are Heading" />
@@ -109,7 +102,13 @@ const jsonLd = [
     </div>
   </Section>
 
-  <Section id="timeline" tone="ice" aria-labelledby="timeline-h">
+  <Section id="proof" tone="airy" aria-labelledby="proof-h">
+    <SectionHeader id="proof-h" eyebrow="The Evidence" title={TRIAL_BAND_HEADING} />
+    <CopyBlock class="lead" block={RCT_HEADLINE} />
+    <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
+
+  <Section id="story" tone="ice" aria-labelledby="timeline-h">
     <SectionHeader id="timeline-h" eyebrow="Our Story" title="From a Copenhagen Launch to National Programs" lead="Milestones that rest on registered facts." />
     <StoryTimeline items={timeline} />
   </Section>
@@ -173,14 +172,6 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
-  .about-story {
-    display: grid;
-    gap: var(--space-md);
-    max-width: var(--measure);
-  }
-  .about-story > * {
-    margin: 0;
-  }
   .about-statement {
     margin: 0;
     font-size: var(--fs-heading-m);
