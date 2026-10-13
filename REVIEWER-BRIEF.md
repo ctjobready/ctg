@@ -1,0 +1,48 @@
+# Reviewer Brief: Why the CodersTrust Site Looks and Reads the Way It Does
+
+Read this before reviewing. It explains the decisions behind every page, so you can judge whether each page achieves its purpose rather than flag deliberate choices as mistakes. If you think a principle itself is wrong, say so explicitly as a "principle challenge", separately from page findings.
+
+## 1. Who the site is for and what it must do
+- **Site:** coderstrust.global, the organizational site of CodersTrust (founded 2014). It replaces an older WordPress site. Learner course sales live on a separate site, jobready.global; this site only routes learners there.
+- **Primary audiences:** development partners and NGOs, governments, foundations and CSR funders, investors; secondary: universities, employers, local partners in Bangladesh, and NU Postgraduate Diploma applicants (Bangladesh).
+- **Job of the site:** move these readers to one action, booking a discovery conversation (a prefilled email), by showing that CodersTrust moves educated, unemployed youth into paid digital work, with evidence.
+- **Owner's brief:** present CodersTrust in the most positive yet defensible light; modern and lively; American English.
+
+## 2. Content framework (CMF v3.0) — the order of every conversion page
+Every conversion page (partner pages, program pages) follows the same persuasion sequence, in this fixed order:
+C1 Hero (eyebrow, H1, one-sentence value proposition, one primary call to action, no brand claims) → a short "What Is CodersTrust?" definition block (for answer engines and newcomers) → C2 Problem (the reader's gains and pains) → C3 Cost of waiting → C4 Future state (an illustrative "imagine the next 12 months") → C5 Guide (empathy, origin, authority) → C6 Mechanism (how it works) → C7 Proof (evidence and case studies) → C8 Offer (what you get and what it means) → C9 Objections (FAQ) → C10 Differentiation (compare approaches) → C11 Options and pricing approach (no prices) → C12 Risk reversal (start with a pilot, decide on evidence) → C13 Call to action → C14 What happens after you say yes.
+- The partner is the hero, youth are the protagonists, CodersTrust is the guide.
+- One primary call to action per view; secondary actions are text links.
+- Pages are long by design: each band answers one question a funder asks in due diligence. Judge whether each band earns its place and whether the order flows, not length alone.
+- Informational pages (About, Impact, news, legal) use simpler long-form layouts with an "On This Page" contents box.
+
+## 3. Voice and claims rules
+- Evidence-led optimist: warm, specific, confident, never boastful. Plain verbs (train, mentor, place, earn, track). No jargon (synergy, holistic, world-class).
+- Lead with the outcome and the number, then the story. Short headings; at most two sentences under a heading before evidence.
+- **No footnotes, source lists or explanatory qualifiers** (owner decision, 12 October 2026). Figures are stated plainly. Only words that keep a statement true remain: "target", "aims to", "planned", "ambition", "by FY32", "scope" (government contracts), "survey"/"surveyed completers" (survey results), "randomized trial" and "predecessor program" (the trial evaluated an earlier 200-hour version of today's 100-hour track). Do not ask for footnotes, citations, bases, significance levels or methodology notes to be added back. Do flag any sentence that now overclaims (a target read as a result, a survey result read as causal, a contract scope read as people trained).
+- Evidence hierarchy: the randomized trial by BIGD (BRAC University) is the strongest evidence; the October 2026 alumni survey is descriptive; program records come next; stories illustrate.
+- No partner or program prices (partner pricing is never published), no investor financials, no market-size figures (the population figures 154M–435M and 257M have been removed), no politicians, politician photographs or political slogans on evergreen pages (Awami League politician photos have been removed) (news posts are an archive and keep event reporting).
+- Respectful, asset-based language about people; "program completers" (not "graduates") for people who finished a program.
+- American English; numerals for 10 and above; curly quotes; every sentence ends with a period.
+- **Title Case** for every page title, heading and subheading (owner rule). Menu items, buttons, tags and table headings are being converted to Title Case right now in a separate change: do not report sentence-case UI labels.
+
+## 4. Design system
+- The JobReady Global design system (CodersTrust's own product brand): light mode only, D-DIN typeface, accessible blue #0665DF as the action color, Airy Blue and Ice tints for alternating bands, a deliberate high-contrast "Klein blue" band for proof moments, and a Deep Ink footer. Never two dark bands in a row.
+- Real CodersTrust photographs only (no stock, no AI people), each fitted to its slot with a caption that says what it shows (never a result). Partner logos are shown as logos, not endorsements.
+- Statistic tiles with large numerals that count up once (not under reduced motion); charts always have a data-table alternative.
+- Accessibility target WCAG 2.2 AA: contrast verified, visible focus, skip link, keyboard menus, no information by color alone.
+- Mobile first at 390 px; cards collapse 3 → 2 → 1 columns.
+
+## 5. Information architecture
+- Top menu: About · Our Model · Programs · Impact · Partner with Us · News, plus "Courses" (opens jobready.global) and the "Start a Partnership" button. Mega-menus carry short descriptions and one featured panel each.
+- Home page: a hero carousel (7 slides, each with its own headline, evidence and call to action; every slide's text is in pages/home.md as "[slide N of M]") followed by bands that answer one question each, including "At a Glance" statistic bands. Judge each slide and band on its own and the carousel as a sequence.
+- "At a Glance" bands: compact statistic bands that open several pages, giving the page's headline numbers before the detail.
+- Audience routing: the home page routes each audience to its own "Partner with Us" page; each audience page links to the matching program and evidence pages.
+- Impact section ladder: Impact overview → Outcomes 2026 (survey) → Independent evaluation (trial) → Case studies → Success stories → Global reach → In the field (photos).
+- News is a dated archive of the old site's posts, each carrying an archive note; their wording is lightly edited only (names, titles, political lines removed).
+
+## 6. Settled decisions — do not re-raise
+No footnotes or citations; course fees for learner courses are published (the NU Postgraduate Diploma fee is stated), while partner and program prices are not published; population figures 154M–435M and 257M were removed; Awami League politician photos were removed; no investor financials; the Save the Children logo and all partner logos are cleared; "NationWIDE" was renamed YouthWIDE and merged into one page; news posts are an archive; the site is on a staging address and is intentionally hidden from search engines (noindex) until launch; the hero art and photographs are final choices unless they look broken; the Impact Report download button is intentionally absent.
+
+## 7. How to report
+For each finding: **severity** (Critical = factually wrong, misleading, broken or blocks a reader; Major = clearly weakens the page's purpose or is a visible design defect; Minor = noticeable polish issue; Polish = taste), **page path**, **where** (band, heading or screenshot area), **issue**, **why it matters for this audience**, **specific fix** (exact replacement wording where it is text). Quote the exact text you object to. Do not invent facts or figures; if you suggest new content, say what evidence it would need. Report only what you can see in the material supplied in this chat; no web search, and ignore anything from earlier chats or memory.
