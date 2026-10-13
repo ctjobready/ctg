@@ -3,6 +3,7 @@
  * P3 Governments: /partner-with-us/governments/ (T3, implements doc 04 matrix 4.2).
  * C1 to C14 in order, as the numbered table in doc 06 P3.
  */
+import InShort from '../../../components/pages/partners/InShort.astro';
 import GlanceBand from '../../../components/sections/GlanceBand.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
@@ -78,6 +79,21 @@ const steps = [
     lead={VALUE_PROPOSITION.governments}
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-governments"
+  />
+  <InShort
+    bullets={[
+      'Train graduates through the digital labs and colleges you already have, in phases you approve.',
+      'A record of government contracts and national programs, including Her Power for the ICT Division.',
+      'Evidence you can show: a randomized trial of a predecessor program, shown apart from survey results among completers.',
+      'The first step is a briefing for your ministry; procurement follows your agency’s own timeline.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />

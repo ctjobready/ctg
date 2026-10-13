@@ -20,7 +20,10 @@ import { linkAttrs } from '../../../lib/url';
 interface Props {
   title: string;
   lead?: string;
+  /** Trial tiles, under their own heading ("From the Randomized Trial"). */
   statIds: string[];
+  /** Survey tiles, under their own heading ("From the October 2026 Survey"), apart from the trial (WP17, item 4). */
+  surveyStatIds?: string[];
   /**
    * Which chart the band carries. `survey` (default): the before/after employment of surveyed completers, from `chartId` (OC-01).
    * `trial`: the randomized trial's comparison, employment at follow-up for the control group beside women offered a place
@@ -38,7 +41,7 @@ interface Props {
   links?: { label: string; href: string }[];
   id?: string;
 }
-const { title, lead, statIds, chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], id = 'proof-band' } = Astro.props;
 const trial = chart === 'trial';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
 // where the page asks for it) ahead of the RC-01 headline, which is body text.
@@ -46,12 +49,14 @@ const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
 const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
 
-const stats = statIds.map((sid) => {
+const tile = (sid: string) => {
   const f = fact(sid);
   if (!f.stat) throw new Error(`EvidenceBand: fact ${sid} has no stat`);
   const label = f.stat.label;
   return { id: sid, value: f.stat.value, numeric: f.stat.numeric !== undefined, label, detail: f.stat.detail };
-});
+};
+const stats = statIds.map(tile);
+const surveyStats = surveyStatIds.map(tile);
 
 // Survey chart: OC-01's before → after. Trial chart: RC-02's control group and women offered a place (a comparison of two groups at follow-up).
 const cf = fact(trial ? 'RC-02' : chartId);
@@ -82,15 +87,18 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">
-    <div class="eb__stats">
-      {
-        stats.map((s, i) => (
-          <div class="eb__stat" data-fact={s.id}>
-            <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
-            </Stat>
-          </div>
-        ))
-      }
+    <div class="eb__group">
+      {surveyStats.length > 0 && <h3 class="eb__sub t-heading-l">From the Randomized Trial</h3>}
+      <div class="eb__stats">
+        {
+          stats.map((s, i) => (
+            <div class="eb__stat" data-fact={s.id}>
+              <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
+              </Stat>
+            </div>
+          ))
+        }
+      </div>
     </div>
     <div class="eb__chart">
       {
@@ -124,6 +132,20 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
       }
     </div>
   </div>
+  {
+    surveyStats.length > 0 && (
+      <div class="eb__survey" data-reveal>
+        <h3 class="eb__sub t-heading-l">From the October 2026 Survey</h3>
+        <div class="eb__stats eb__stats--survey">
+          {surveyStats.map((s, i) => (
+            <div class="eb__stat" data-fact={s.id}>
+              <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric} />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
   <slot name="ladder" />
   {
     links.length > 0 && (
@@ -162,6 +184,20 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   }
   .eb__stat {
     min-width: 0;
+  }
+  .eb__sub {
+    margin: 0 0 var(--space-md);
+    color: var(--ctx-section-heading);
+  }
+  .eb__survey {
+    margin-top: var(--space-xl, 56px);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
+  }
+  @media (min-width: 720px) {
+    .eb__stats--survey {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
   .eb__fn {
     margin: var(--space-xs) 0 0;

@@ -1,0 +1,252 @@
+---
+/**
+ * Home hero (WP17, owner decision 2026-10-14: hybrid). A stable hero that never rotates: the page's only h1, a value proposition of at most
+ * 15 words, ONE primary action, one secondary text link, the audience links, and the three strongest proof cards (the randomized trial, the
+ * survey, the scale), always visible. The "Results and Programs" carousel (HeroSlider) sits directly below it.
+ * LCP: the photograph is the hero's only image and loads eagerly with high priority; the carousel's images are lazy. Figures are read from the
+ * facts register (data/heroSlides.ts names the facts) and carry data-fact for the facts gate.
+ */
+import Button from '../../system/Button.astro';
+import Icon from '../../system/Icon.astro';
+import Stat from '../../system/Stat.astro';
+import HeroArt from '../../ui/HeroArt.astro';
+import Img from '../../ui/Img.astro';
+import { fact } from '../../../data/facts';
+import { photo } from '../../../data/photos';
+import { HOME_HERO } from '../../../data/heroSlides';
+import { mayRender } from '../../../lib/permissions';
+import { linkAttrs } from '../../../lib/url';
+
+interface Props {
+  id?: string;
+}
+const { id = 'hero' } = Astro.props;
+const hero = HOME_HERO;
+const p = photo(hero.photo);
+const picture = mayRender(p.assetId) ? p : undefined;
+const cards = hero.proof.map((c) => {
+  const f = fact(c.factId);
+  if (!f.stat) throw new Error(`HomeHero: fact ${c.factId} has no stat`);
+  return { ...c, value: f.stat.value, label: f.stat.label };
+});
+---
+
+<section class="hh" id={id} aria-label="CodersTrust">
+  <div class="hh__inner container">
+    <div class="hh__copy">
+      <nav class="hh__audience" aria-label="Choose your audience" data-hero-in>
+        <ul>
+          {hero.audience.map((a) => <li><a class="link" href={linkAttrs(a.href).href}>{a.label}</a></li>)}
+        </ul>
+      </nav>
+      <h1 class="hh__title t-display-5xl" data-hero-in>{hero.title}</h1>
+      <p class="hh__lead" data-hero-in>{hero.lead}</p>
+      <div class="hero__actions hh__actions" data-hero-in>
+        <Button href={hero.primary.href} variant="primary" iconEnd="arrow-right">{hero.primary.label}</Button>
+        <a class="link hh__secondary" href={linkAttrs(hero.secondary.href).href}>{hero.secondary.label}<Icon name="arrow-right" size={16} /></a>
+      </div>
+    </div>
+    <div class="hh__visual">
+      {
+        picture ? (
+          <div class="hh__media" data-hero-in>
+            <Img src={picture.src} alt={picture.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" fetchpriority="high" assetId={picture.assetId} />
+          </div>
+        ) : (
+          <div class="hh__media"><HeroArt seed="home" /></div>
+        )
+      }
+    </div>
+  </div>
+  <div class="hh__proof container">
+    <h2 class="sr-only">The Strongest Proof</h2>
+    <ul class="hh__cards" role="list">
+      {
+        cards.map((c) => (
+          <li class="hh__card" data-fact={c.factId}>
+            <p class="hh__eyebrow">{c.eyebrow}</p>
+            <Stat value={c.value} label={c.label} size="lg" count={false} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hh {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding-block: var(--space-section-mobile) var(--space-lg);
+    background: var(--hero-gradient-edge);
+  }
+  @media (min-width: 768px) {
+    .hh {
+      padding-block: var(--space-section-desktop) var(--space-lg);
+    }
+  }
+  .hh::before {
+    content: '';
+    position: absolute;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 85% 120% at 50% 50%, var(--hero-gradient-center), var(--hero-gradient-edge));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hh::before {
+      animation: ct-hero-settle 3s var(--ease-emphasized) both;
+    }
+  }
+  .hh__inner {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .hh__inner {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 56px;
+    }
+  }
+  .hh__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-gutter);
+    min-width: 0;
+  }
+  .hh__copy > * {
+    margin: 0;
+  }
+  .hh__audience ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-sm);
+    row-gap: 2px;
+    min-height: 32px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--primary-fixed);
+    background: var(--surface);
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+  }
+  .hh__audience li {
+    display: inline-flex;
+    align-items: center;
+  }
+  .hh__audience li:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-sm);
+    color: var(--outline);
+  }
+  .hh__audience a {
+    --ctx-link: var(--secondary);
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding-block: 3px;
+  }
+  .hh__title {
+    color: var(--on-surface);
+    max-width: 24ch;
+  }
+  .hh__lead {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface-variant);
+    max-width: 36em;
+  }
+  .hh__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    align-items: center;
+  }
+  .hh__secondary {
+    font-weight: var(--fw-bold);
+  }
+  .hh__visual {
+    position: relative;
+    min-width: 0;
+  }
+  .hh__media {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    border-radius: var(--radius-lg);
+    background: var(--surface-container-low);
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 640px) {
+    .hh__media {
+      height: 280px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hh__media {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+  }
+  .hh__media :global(img),
+  .hh__media :global(svg) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hh__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--secondary) 34%, transparent), color-mix(in srgb, var(--secondary) 6%, transparent) 55%, transparent);
+  }
+  .hh__proof {
+    margin-top: var(--space-lg);
+  }
+  .hh__cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .hh__cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+  }
+  .hh__card {
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    border-top: 4px solid var(--secondary);
+  }
+  .hh__card :global(.stat) {
+    --stat-color: var(--secondary);
+  }
+  .hh__card :global(.stat__label) {
+    max-width: none;
+  }
+  .hh__eyebrow {
+    margin: 0 0 4px;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+</style>

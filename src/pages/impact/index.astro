@@ -13,6 +13,7 @@ import Fact from '../../components/facts/Fact.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
+import LearnerVoice from '../../components/pages/impact/LearnerVoice.astro';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import { SURVEY_EMPLOYMENT, RCT_HEADLINE, MICRO_COMMITMENT } from '../../data/copy';
@@ -52,6 +53,11 @@ const d = discoveryCta();
     </div>
   </Section>
 
+  <Section id="evidence-ladder" pad="sm" aria-labelledby="ladder-h">
+    <SectionHeader id="ladder-h" eyebrow="Read the Evidence" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows and what it does not show." />
+    <EvidenceLadder variant="matrix" />
+  </Section>
+
   <GlanceBand
     id="glance"
     tone="ice"
@@ -85,13 +91,10 @@ const d = discoveryCta();
     ]}
   />
 
-  <Section id="evidence-ladder" tone="airy" aria-labelledby="ladder-h">
-    <SectionHeader id="ladder-h" eyebrow="Results at a Glance" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows, what it does not show and how it was made." />
-    <EvidenceLadder />
-  </Section>
-
   <!-- No headlineFact here: the randomized-trial sentence is the "In Short" callout above, so this band is headed by what it shows (trial and survey figures). -->
   <ProofBand id="proof" title="Independent Evidence and Survey Results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }, { label: 'How to Read This Evidence', href: '/impact/#evidence-ladder' }]} />
+
+  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
 
   <CaseStudyCarousel
     id="cases"

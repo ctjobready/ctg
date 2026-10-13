@@ -5,7 +5,7 @@ import ComparisonTable from '../ui/ComparisonTable.astro';
 
 /**
  * C10 Comparison = approaches and trade-offs, not verdicts (planning v1.2 §B). Categories, never named
- * competitors (D8). Always includes a "Doing Nothing" column. Cells are text; a check icon marks only
+ * competitors (D8). Includes a "Doing Nothing" column unless `withoutDoingNothing` is set (Home, WP17). Cells are text; a check icon marks only
  * CodersTrust's own inclusions (`included`), never a verdict on another approach.
  */
 type Cell = string | { text: string; included?: boolean; factId?: string };
@@ -16,6 +16,10 @@ interface Props {
   rows?: { label: string; cells: Cell[] }[];
   /** Fact IDs the default cells rest on (data-fact for the status gate). */
   facts?: string[];
+  /** Home (WP17): drop the "Doing Nothing" column and add the line that invites the reader to compare their current program. */
+  withoutDoingNothing?: boolean;
+  /** A line under the table. */
+  note?: string;
   id?: string;
 }
 const {
@@ -41,12 +45,27 @@ const {
     { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
   ],
   facts = ['PD-10', 'PD-19', 'PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
+  withoutDoingNothing = false,
+  note,
   id = 'compare',
 } = Astro.props;
-if (!columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing Nothing" column');
+if (!withoutDoingNothing && !columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing Nothing" column');
+const nothing = columns.findIndex((c) => /doing nothing/i.test(c));
+const shownColumns = withoutDoingNothing && nothing > 0 ? columns.filter((_, i) => i !== nothing) : columns;
+const shownRows = withoutDoingNothing && nothing > 0 ? rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => i !== nothing - 1) })) : rows;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Compare Approaches" title={title} lead={lead} />
-  <ComparisonTable caption="Approaches to Getting into Digital Work: What Each Typically Includes" columns={columns} rows={rows} highlight={0} facts={facts} />
+  <ComparisonTable caption="Approaches to Getting into Digital Work: What Each Typically Includes" columns={shownColumns} rows={shownRows} highlight={0} facts={facts} />
+  {note && <p class="cmpb__note">{note}</p>}
 </Section>
+
+<style>
+  .cmpb__note {
+    margin: var(--space-md) 0 0;
+    max-width: 52rem;
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+</style>

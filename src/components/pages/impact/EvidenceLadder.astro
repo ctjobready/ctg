@@ -14,12 +14,52 @@ interface Props {
   links?: boolean;
   headingLevel?: 3 | 4;
   class?: string;
+  /** `matrix` (WP17): the same four rungs as one compact table (kind of evidence, key figure, what it shows, what it does not show). */
+  variant?: 'cards' | 'matrix';
 }
-const { links = true, headingLevel = 3, class: className } = Astro.props;
+const { links = true, headingLevel = 3, class: className, variant = 'cards' } = Astro.props;
+/** What each rung shows and does not show, once: the cards and the matrix read the same wording. */
+const TEXT = {
+  trial: { shows: 'The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.', not: 'Results for other countries, groups or today’s standard track.' },
+  survey: { shows: 'What alumni who responded report about work and income after training.', not: 'Cause: respondents are not a random sample and may over-represent successful learners.' },
+  records: { shows: 'How many completers of a program were in work, from CodersTrust program records.', not: 'What would have happened without training.' },
+  stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
+};
+const matrix = [
+  { n: 1, name: 'Randomized Trial (BIGD)', figure: { value: fact('RC-02').stat?.value ?? '', label: fact('RC-02').stat?.label ?? '', id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
+  { n: 2, name: 'Impact Survey 2026 (Surveyed Completers)', figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Outcomes 2026' },
+  { n: 3, name: 'Program Results', figure: { value: fact('PR-01').stat?.value ?? '', label: fact('PR-01').stat?.label ?? '', id: 'PR-01' }, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
+  { n: 4, name: 'Learner Stories', figure: undefined, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
+];
 const H = `h${headingLevel}` as 'h3' | 'h4';
 const pr01Label = fact('PR-01').stat?.label ?? '';
 ---
 
+{variant === 'matrix' ? (
+  <section class:list={['lm', className]} aria-label="Evidence ladder matrix" tabindex="0" data-scroll data-stack data-reveal>
+    <table>
+      <caption class="sr-only">The Evidence Ladder: What Each Kind of Evidence Shows and Does Not Show</caption>
+      <thead>
+        <tr>
+          <th scope="col">Kind of Evidence</th>
+          <th scope="col">Key Figure</th>
+          <th scope="col">What It Shows</th>
+          <th scope="col">What It Does Not Show</th>
+        </tr>
+      </thead>
+      <tbody>
+        {matrix.map((r) => (
+          <tr data-fact={r.figure?.id}>
+            <th scope="row"><span class="lm__n" aria-hidden="true">{r.n}</span> {r.name}</th>
+            <td data-label="Key Figure">{r.figure ? <><strong class="lm__fig">{r.figure.value}</strong> <span>{r.figure.label}</span></> : 'Individual learner stories'}{links && <a class="link lm__link" href={linkAttrs(r.href).href}>{r.link}<Icon name="arrow-right" size={16} /></a>}</td>
+            <td data-label="What It Shows">{r.text.shows}</td>
+            <td data-label="What It Does Not Show">{r.text.not}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+) : (
 <div class:list={['ladder-box', className]}>
 <ol class="ladder" role="list">
   <li class="ladder__rung" data-reveal>
@@ -28,9 +68,9 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
     <p class="ladder__fig"><Fact id="RC-02" field="value" /> <span><Fact id="RC-02" field="label" /></span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
-      <dd>The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.</dd>
+      <dd>{TEXT.trial.shows}</dd>
       <dt>What it does not show</dt>
-      <dd>Results for other countries, groups or today’s standard track.</dd>
+      <dd>{TEXT.trial.not}</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -40,9 +80,9 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
     <p class="ladder__fig"><Fact id="OC-01" field="value" /> <span><Fact id="OC-01" field="label" /></span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
-      <dd>What alumni who responded report about work and income after training.</dd>
+      <dd>{TEXT.survey.shows}</dd>
       <dt>What it does not show</dt>
-      <dd>Cause: respondents are not a random sample and may over-represent successful learners.</dd>
+      <dd>{TEXT.survey.not}</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Outcomes 2026<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -52,9 +92,9 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
     <p class="ladder__fig"><Fact id="PR-01" field="value" /> <span>{pr01Label}</span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
-      <dd>How many completers of a program were in work, from CodersTrust program records.</dd>
+      <dd>{TEXT.records.shows}</dd>
       <dt>What it does not show</dt>
-      <dd>What would have happened without training.</dd>
+      <dd>{TEXT.records.not}</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/case-studies/').href}>Case Studies<Icon name="arrow-right" size={16} /></a>}
   </li>
@@ -64,16 +104,78 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
     <p class="ladder__fig"><span>Individual learner stories</span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
-      <dd>What the path can look like for one person.</dd>
+      <dd>{TEXT.stories.shows}</dd>
       <dt>What it does not show</dt>
-      <dd>A typical or promised outcome; some are outliers and say so.</dd>
+      <dd>{TEXT.stories.not}</dd>
     </dl>
     {links && <a class="link" href={linkAttrs('/impact/stories/').href}>Success Stories<Icon name="arrow-right" size={16} /></a>}
   </li>
 </ol>
 </div>
+)}
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
+  /* Matrix variant: one compact table; stacked cards at 640 px and below (utilities.css, data-stack). */
+  .lm {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  .lm table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .lm th,
+  .lm td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  .lm thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  .lm tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    min-width: 12rem;
+  }
+  .lm tbody tr:last-child th,
+  .lm tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .lm__n {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+  }
+  .lm__fig {
+    color: var(--secondary);
+    font-size: var(--fs-heading-m);
+  }
+  .lm__link {
+    display: flex;
+    margin-top: 4px;
+    font-weight: var(--fw-medium);
+  }
   /* Four rungs sit as 1 × 4, 2 × 2 or 4 × 1, never 3 + 1: the columns follow the width of the space the ladder is in
      (the report page keeps a table of contents beside it), not the window. */
   .ladder-box {

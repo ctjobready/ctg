@@ -10,6 +10,7 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import MechanismBand from '../../components/sections/MechanismBand.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
+import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
 import { SAFEGUARDING, MICRO_COMMITMENT } from '../../data/copy';
 import { linkAttrs } from '../../lib/url';
@@ -51,6 +52,12 @@ const d = discoveryCta();
     ]}
     link={{ label: 'How TalentLEAP Works', href: '/our-model/talentleap/' }}
   />
+
+  <Section id="stages" tone="airy" aria-labelledby="stages-h">
+    <SectionHeader id="stages-h" eyebrow="TalentLEAP" title="The Stages a Learner Moves Through" lead="Five steps carry each learner through the three TalentLEAP stages: Learn, Earn and Prosper." />
+    <StagePipeline id="stage-pipeline" />
+    <p class="om__link"><a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
 
   <Section aria-labelledby="delivery-h">
     <SectionHeader id="delivery-h" eyebrow="Delivery Model" title="How a Program Is Delivered" lead="The design choices that make the path work for learners who start from different places." />

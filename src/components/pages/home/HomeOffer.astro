@@ -5,7 +5,7 @@ import Icon from '../../system/Icon.astro';
 import Badge from '../../system/Badge.astro';
 import CopyBlock from './CopyBlock.astro';
 import { optionDuration } from '../../../lib/format';
-import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE } from '../../../data/copy';
+import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE, type CopyBlock as CopyBlockData } from '../../../data/copy';
 
 /**
  * C11 Offer (funder-facing pages): three program options (PD-05, no prices), then the PRICING and SCALE
@@ -15,9 +15,11 @@ import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE 
 interface Props {
   title?: string;
   lead?: string;
+  /** The pricing explainer (default: the shared PRICING block). Home passes it without the AI-ready curriculum sentence, which its FAQ states once. */
+  pricing?: CopyBlockData;
   id?: string;
 }
-const { title = 'Choose Where to Start.', lead, id = 'offer' } = Astro.props;
+const { title = 'Choose Where to Start.', lead, pricing = PRICING, id = 'offer' } = Astro.props;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
@@ -46,7 +48,7 @@ const { title = 'Choose Where to Start.', lead, id = 'offer' } = Astro.props;
   <div class="offer__two">
     <div class="offer__panel" data-reveal>
       <h3 class="t-heading-l"><Icon name="clipboard-list" size={24} strokeWidth={1.5} />How Pricing Works</h3>
-      <CopyBlock block={PRICING} />
+      <CopyBlock block={pricing} />
     </div>
     <div class="offer__panel" data-reveal>
       <h3 class="t-heading-l"><Icon name="layers" size={24} strokeWidth={1.5} />How We Scale</h3>

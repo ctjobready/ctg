@@ -1,0 +1,77 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+
+/**
+ * Program at a Glance (WP17, item 7): a decision-ready summary near the top of a program page. A decision maker reads who the program is
+ * for, how it is delivered, what training and mentoring include, the certification preparation, the placement support, the reporting and
+ * what is agreed before enrollment, without scrolling the page. Every row is written from content the page already states; JobReady@Work
+ * and SuperKids carry their own fields (no youth-cohort inclusions). `facts` ties a row to the register facts it rests on (data-fact).
+ */
+interface Row {
+  label: string;
+  text: string;
+  facts?: string[];
+}
+interface Props {
+  rows: Row[];
+  title?: string;
+  lead?: string;
+  id?: string;
+}
+const { rows, title = 'Program at a Glance', lead, id = 'program-glance' } = Astro.props;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Decision Summary" title={title} lead={lead} />
+  <dl class="pg">
+    {
+      rows.map((r) => (
+        <div class="pg__row" data-fact={r.facts?.join(' ')} data-reveal>
+          <dt>{r.label}</dt>
+          <dd>{r.text}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>
+
+<style>
+  .pg {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 720px) {
+    .pg {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .pg {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .pg__row {
+    padding: var(--space-md) var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
+  }
+  .pg dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--on-primary-container);
+  }
+  .pg dd {
+    margin: 0;
+    color: var(--on-surface);
+  }
+</style>

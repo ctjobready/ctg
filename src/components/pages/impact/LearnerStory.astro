@@ -24,6 +24,8 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   assetId?: string;
+  /** Eyebrow of a named story (default "Learner Story"). */
+  eyebrow?: string;
 }
 const props = Astro.props;
 const { factId, program, outcome, outlier = false, assetId } = props;
@@ -40,7 +42,7 @@ const imageAlt = props.imageAlt ?? '';
     {image ? <Img src={image} alt={imageAlt} width={480} height={480} widths={[240, 480]} sizes="160px" assetId={assetId} /> : <Icon name="user" size={44} strokeWidth={1.25} />}
   </div>
   <div class="ls__body">
-    <p class="eyebrow">{name ? 'Learner Story' : 'Learner Outcome, Shared Without a Name'}</p>
+    <p class="eyebrow">{name ? (props.eyebrow ?? 'Learner Story') : 'Learner Outcome, Shared Without a Name'}</p>
     <p class="ls__outcome">{outcome}</p>
     {excerpt && <p class="ls__excerpt">{excerpt}</p>}
     {name && <p class="ls__name"><b>{name}</b><span>{program}</span></p>}

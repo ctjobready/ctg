@@ -3,6 +3,9 @@
 // Ice Cyan, Klein and Deep Ink bands is set with the page-local <Tone> wrapper (never two dark bands in a row).
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
+import HomeHero from '../components/pages/home/HomeHero.astro';
+import HomeRecognition from '../components/pages/home/HomeRecognition.astro';
+import LearnerVoice from '../components/pages/impact/LearnerVoice.astro';
 import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
@@ -31,15 +34,21 @@ import { futurePhotos } from '../data/photos';
 import GlanceBand from '../components/sections/GlanceBand.astro';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
+import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PRICING, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
-import { CLAIM_PX06, CLAIM_PX11, CLAIM_RC06, expandSsc } from '../components/sections/copyText';
+import { CLAIM_PX06, CLAIM_RC06, expandSsc } from '../components/sections/copyText';
+
+const CLAIM_PX05 = 'Globally, Most Employers Report Difficulty Finding the Talent They Need.';
 import { cta } from '../lib/mailto';
 import { faqJsonLd } from '../lib/faq';
 import { webPage } from '../lib/schema';
 
 const discovery = cta('discovery');
-const FAQ_IDS = ['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'];
+// Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
+const FAQ_IDS = ['Q1', 'Q3', 'Q5'];
+// The pricing explainer without its AI-ready curriculum sentence, which FAQ Q5 states once on this page.
+const pricing = { ...PRICING, text: PRICING.text.replace(/ AI-ready curriculum: each track.*$/, '') };
+if (pricing.text === PRICING.text) throw new Error('index: PRICING no longer ends with the AI-ready curriculum sentence');
 const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 
 // C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
@@ -79,8 +88,9 @@ const featureRows = [
 ---
 
 <LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
-  <Tone cmf="C1">
-    <HeroSlider id="hero" label="CodersTrust Highlights" slides={HOME_SLIDES} />
+  <Tone cmf="C1"><HomeHero id="hero" /></Tone>
+  <Tone cmf="RESULTS">
+    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" slides={HOME_SLIDES} />
   </Tone>
 
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
@@ -98,7 +108,7 @@ const featureRows = [
       title="Every Year of Waiting Costs a Cohort."
       blocks={[
         { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-        { icon: 'waves', claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+        { icon: 'users', claim: CLAIM_PX05, factId: 'PX-05', implication: 'Each cohort that waits finishes training without a route into the roles employers cannot fill.' },
         { icon: 'trending-down', claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after={VALUE_PROPOSITION.home}
@@ -121,14 +131,14 @@ const featureRows = [
 
   <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
 
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} ribbonLine="TalentLEAP carries each learner from Learn to Earn to Prosper: we train, mentor, place and track." link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
   <Tone cmf="GLANCE">
     <GlanceBand
       id="glance"
       tone="airy"
       title="At a Glance"
-      lead="The strongest results in one place. Trial figures are for a predecessor program; survey figures are among surveyed completers."
+      lead="The strongest results in one place. Trial figures are for a predecessor program; survey figures are among surveyed completers at the October 2026 survey."
       items={[
         { id: 'SC-16', href: '/impact/global-reach/' },
         { id: 'RC-13', href: '/impact/independent-evaluation/' },
@@ -151,24 +161,26 @@ const featureRows = [
       chart="trial"
       chip={false}
       plainLine
-      lead="The results speak in paychecks. Survey figures are among surveyed completers, at the October 2026 survey."
-      statIds={['RC-02', 'OC-03', 'OC-02', 'OC-05']}
+      lead="Two kinds of evidence, kept apart: a randomized trial of a predecessor program, and a survey of completers."
+      statIds={['RC-02', 'RC-01']}
+      surveyStatIds={['OC-03', 'OC-02', 'OC-05']}
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
       ]}
     >
       <EvidenceLadderCompact slot="ladder" />
-      <ProofExtras />
+      <ProofExtras badge={false} press={false} />
     </EvidenceBand>
   </Tone>
 
   <Tone cmf="C7" join>
     <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} />
+    <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="airy" />
     <CaseQuote />
   </Tone>
 
-  <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
+  <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
 
   <Tone cmf="C8" tone="airy" join>
     <FeaturesTable id="features" title="What You Get — and What It Means for Your Outcomes" rows={featureRows} concernLabel="Funder Concern Addressed" />
@@ -179,9 +191,9 @@ const featureRows = [
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches." /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches." withoutDoingNothing note="Compare these approaches with your current program on track choice, mentoring, work-entry support and outcome tracking." /></Tone>
 
-  <Tone cmf="C11"><HomeOffer id="offer" /></Tone>
+  <Tone cmf="C11"><HomeOffer id="offer" pricing={pricing} /></Tone>
 
   <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Pilot. Decide on Evidence." lead={SCORECARD.text} /></Tone>
 
@@ -192,14 +204,16 @@ const featureRows = [
       heading="Let’s Design Your First Cohort."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
-      urgency={SPEED.text}
+      urgency={BACKWARD_PLAN.text}
       micro={MICRO_COMMITMENT}
     />
   </Tone>
 
   <Tone cmf="C14">
     <!-- The 6–8 week start is stated in the C13 urgency line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. -->
-    <ConversionNextSteps id="next-steps" title="What Happens After You Say Yes" timing={false} validate={C14.validate} firstAction={C14.firstAction} logos />
+    <ConversionNextSteps id="next-steps" title="What Happens After You Contact Us" lead="Your inquiry starts a discovery conversation, not a program commitment." timing={false} firstAction={C14.firstAction} />
   </Tone>
+
+  <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
 
 </LandingLayout>

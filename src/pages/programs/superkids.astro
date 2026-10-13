@@ -26,6 +26,8 @@ import MechanismSection from '../../components/pages/programs/MechanismSection.a
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import { fact } from '../../data/facts';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
 import { MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING } from '../../data/copy';
@@ -66,6 +68,17 @@ const courses = linkAttrs(COURSES_URL);
   <DefinitionBlock heading="What Is SuperKids?">
     <p>SuperKids is CodersTrust’s K-12 STEAM program: robotics, coding and digital art for young learners, offered through schools and education partners.</p>
   </DefinitionBlock>
+
+  <ProgramGlance
+    rows={[
+      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early.' },
+      { label: 'Delivery', text: 'Courses taught through schools and education partners, shaped with you in a discovery session.' },
+      { label: 'Courses', text: 'Block coding, robotics, and graphic design for kids.' },
+      { label: 'Delivered So Far', text: `${fact('SK-05').text}.`, facts: ['SK-05'] },
+      { label: 'Agreements', text: 'Agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB) set targets for reach; they are not delivered reach.', facts: ['GV-08'] },
+      { label: 'Agreed Before You Start', text: 'Your location, age groups and approximate number of learners, your goals and your timeline. Prices are not published.', facts: ['PD-02'] },
+    ]}
+  />
 
   <!-- C2 -->
   <ProblemSection

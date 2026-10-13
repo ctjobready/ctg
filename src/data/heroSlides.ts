@@ -4,11 +4,14 @@ import { navGroups, type NavLink } from './nav';
 import { cta } from '../lib/mailto';
 
 /**
- * Slides of the home hero (WP13, reworked in WP13b; rendered by src/components/sections/HeroSlider.astro, driven by src/scripts/heroSlider.ts).
- * Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register sentence); no number is typed here.
- * Slide 1 is the positioning hero the page has always opened with. Slides 2 to 6 highlight the impact and the key programs.
- * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the first is eager, the rest lazy.
- * Titles and eyebrows are Title Case (src/lib/titleCase.mjs). The first slide's title is the page's only h1; the others are h2.
+ * The home hero (WP17, hybrid) and the "Results and Programs" carousel below it (WP13, WP13b; rendered by src/components/sections/HeroSlider.astro,
+ * driven by src/scripts/heroSlider.ts). Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register
+ * sentence); no number is typed here.
+ * HOME_HERO is the stable hero: the page's only h1, one value proposition, one primary action, one text link, the audience links and the three
+ * strongest proof cards, always visible. HOME_SLIDES are the carousel slides: the trial first, then scale, income and employment, speed to
+ * earning, placement (named programs), government and National University trust, and the programs (employment programs first, SuperKids last).
+ * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
+ * Titles and eyebrows are Title Case (src/lib/titleCase.mjs). Every carousel slide title is an h2.
  */
 
 export interface HeroSlideStat {
@@ -63,21 +66,36 @@ function before(f: Fact): string {
 
 const discovery = cta('discovery');
 
+/** The stable home hero. */
+export const HOME_HERO = {
+  title: HEADLINE.home,
+  lead: VALUE_PROPOSITION.home,
+  audience: [
+    { label: 'Development Partners', href: '/partner-with-us/development-partners/' },
+    { label: 'Governments', href: '/partner-with-us/governments/' },
+    { label: 'Foundations', href: '/partner-with-us/foundations/' },
+    { label: 'Investors', href: '/investors/' },
+  ],
+  primary: { label: discovery.label, href: discovery.href },
+  secondary: { label: 'See the Evidence', href: '/impact/' },
+  photo: 'general/women-learners-classroom',
+  /** The three proof cards: the trial, the survey, the scale. */
+  proof: [
+    { eyebrow: 'Randomized Trial', factId: 'RC-02' },
+    { eyebrow: 'Impact Survey 2026', factId: 'OC-01' },
+    { eyebrow: 'Reach Since 2014', factId: 'SC-16' },
+  ] as { eyebrow: string; factId: string }[],
+};
+
 export const HOME_SLIDES: HeroSlide[] = [
   {
-    id: 'positioning',
-    title: HEADLINE.home,
-    lead: VALUE_PROPOSITION.home,
-    audience: [
-      { label: 'Development Partners', href: '/partner-with-us/development-partners/' },
-      { label: 'Governments', href: '/partner-with-us/governments/' },
-      { label: 'Foundations', href: '/partner-with-us/foundations/' },
-    ],
-    links: [
-      { label: discovery.label, href: discovery.href, variant: 'primary' },
-      { label: 'See the Evidence', href: '/impact/', variant: 'outline' },
-    ],
-    photo: 'general/women-learners-classroom',
+    id: 'evidence',
+    eyebrow: 'Independent Evaluation',
+    title: 'Evidence from a Randomized Trial',
+    fact: { id: 'RC-13', field: 'text' },
+    proof: { factId: 'RC-06a', caption: (f) => f.stat?.glance?.label ?? '' },
+    links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
+    photo: 'general/classroom-girls',
   },
   {
     id: 'scale',
@@ -89,22 +107,13 @@ export const HOME_SLIDES: HeroSlide[] = [
     photo: 'general/madrasa-students-hall',
   },
   {
-    id: 'evidence',
-    eyebrow: 'Independent Evaluation',
-    title: 'Evidence from a Randomized Trial',
-    fact: { id: 'RC-13', field: 'text' },
-    proof: { factId: 'RC-06a', caption: (f) => f.stat?.glance?.label ?? '' },
-    links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
-    photo: 'general/classroom-girls',
-  },
-  {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
-    title: 'Outcomes Among Surveyed Completers',
+    title: 'Income and Employment Among Surveyed Completers',
     lead: 'Median monthly income and employment, before training and at the October 2026 survey.',
     stats: [
-      { factId: 'OC-03', caption: (f) => `median monthly income, up from ${before(f)} before training` },
-      { factId: 'OC-01', caption: (f) => `employed among surveyed completers, up from ${before(f)} before training` },
+      { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
+      { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
     ],
     links: [{ label: 'Read the 2026 Survey Results', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/woman-learner-laptop',
@@ -119,16 +128,22 @@ export const HOME_SLIDES: HeroSlide[] = [
     photo: 'general/lab-women-screen',
   },
   {
-    id: 'placement-trust',
-    eyebrow: 'Placement and Trust',
-    title: 'Strong Placement, Trusted by Governments',
-    lead: 'Partner-funded programs placed learners in work, and governments and national institutions trust CodersTrust to train their people.',
-    stats: [{ factId: 'PR-06' }, { factId: 'GV-12' }],
-    links: [
-      { label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' },
-      { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'outline' },
-    ],
+    id: 'placement',
+    eyebrow: 'Placement',
+    title: 'Strong Placement in Partner-Funded Programs',
+    lead: 'Three partner-funded programs report their own placement results.',
+    stats: [{ factId: 'PR-06' }],
+    links: [{ label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' }],
     photo: 'general/yes-trainees-group',
+  },
+  {
+    id: 'government-trust',
+    eyebrow: 'Trust',
+    title: 'Trusted by Governments and National University',
+    lead: 'Governments and national institutions trust CodersTrust to train their people.',
+    stats: [{ factId: 'GV-12' }, { factId: 'SC-04' }],
+    links: [{ label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' }],
+    photo: 'general/nu-affiliation-group',
   },
   {
     id: 'programs',

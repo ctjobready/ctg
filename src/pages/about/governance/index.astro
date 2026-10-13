@@ -13,6 +13,7 @@ import Fact from '../../../components/facts/Fact.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../../components/pages/about/OfficeCard.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
+import ContractingPanel from '../../../components/pages/about/ContractingPanel.astro';
 import { diligenceCta } from '../../../components/pages/about/routes';
 import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
@@ -56,6 +57,8 @@ const jsonLd = [
       </Fragment>
     </Hero>
   </div>
+
+  <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
 
   <Section id="offices" aria-labelledby="offices-h">
     <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust lists two offices, in New York and Dhaka." />

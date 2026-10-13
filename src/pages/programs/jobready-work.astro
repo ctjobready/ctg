@@ -14,6 +14,9 @@ import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import Fact from '../../components/facts/Fact.astro';
+import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import InShort from '../../components/pages/partners/InShort.astro';
+import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -80,6 +83,18 @@ const approach = [
   <DefinitionBlock heading="What Is JobReady@Work?">
     <p data-fact="IN-10"><Fact id="IN-10" />.</p>
   </DefinitionBlock>
+
+  <ProgramGlance
+    rows={[
+      { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles.', facts: ['IN-10'] },
+      { label: 'Delivery', text: 'A program custom-developed for each organization: a needs assessment, a customized curriculum and interactive workshops.', facts: ['IN-10'] },
+      { label: 'Training', text: 'Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership programs with AIvolve.', facts: ['IN-10', 'PA-07'] },
+      { label: 'Certification Preparation', text: 'Preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.', facts: ['PD-03'] },
+      { label: 'Talent', text: 'Job-ready candidates through CodersTrust’s placement team, scoped against the experience and credentials available.', facts: ['IN-04'] },
+      { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set.', facts: ['IN-10'] },
+      { label: 'Agreed Before You Start', text: 'The skills and team size from the needs assessment, the success measures, and the scope and price of the program.', facts: ['IN-10', 'PD-02'] },
+    ]}
+  />
 
   <!-- C2 -->
   <ProblemSection
@@ -165,6 +180,21 @@ const approach = [
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Employers Ask" />
 
+
+  <PairedEvidence
+    title="The Delivery Record for Employers"
+    items={[
+      { id: 'PA-06', label: 'Cloud Training' },
+      { id: 'PA-07', label: 'AI Leadership' },
+      { id: 'SC-15', label: 'Corporate Delivery', stat: true },
+    ]}
+    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
+    broader={[
+      { label: 'Evidence Below', href: '#proof-band' },
+      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
+    ]}
+  />
 
   <!-- C11 -->
   <OfferSection

@@ -3,6 +3,9 @@
 // One page for both audiences (WP4c: NationWIDE was renamed YouthWIDE and merged in): governments and ministries (the Bangladesh national
 // initiative, #governments) and funders and development partners (country cohorts, #funders). The shared bands (hero, evidence, features,
 // FAQ, comparison, offer, risk, call to action) follow the two routes.
+import InShort from '../../components/pages/partners/InShort.astro';
+import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import ReviewPanels from '../../components/pages/hub/ReviewPanels.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
@@ -95,6 +98,21 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     secondary={briefing}
     artSeed="youthwide"
   />
+  <InShort
+    bullets={[
+      'The program through which funders and agencies deploy the CodersTrust model in a country, in phases, through existing labs and colleges.',
+      'Priority groups are reached with outreach and accessible selection, with women a priority in every group.',
+      'Results you can report: monthly reports, tracer surveys and documentary evidence of earnings where available.',
+      'Start with a pilot; the scorecard and the decision to expand stay with you.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
+  />
 
   <!-- GEO definition + page BLUF -->
   <DefinitionBlock heading="What Is YouthWIDE?">
@@ -105,6 +123,18 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       <a class="audience__link" href="#funders"><span class="audience__label">For Funders and Development Partners</span><span class="audience__text">Co-funded country cohorts: delivery model, evidence, reporting and governance.</span><Icon name="arrow-right" size={16} /></a>
     </nav>
   </DefinitionBlock>
+
+  <ProgramGlance
+    rows={[
+      { label: 'Who It Is For', text: 'Ministries, agencies, development partners and funders who want educated, unemployed youth in paid digital work.' },
+      { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; hub-and-spoke delivery for larger programs.', facts: ['PD-06'] },
+      { label: 'Training and Mentoring', text: `${hours} training hours per certification, then three months of milestone-based mentoring.`, facts: ['PD-01'] },
+      { label: 'Certification Preparation', text: 'Each track prepares learners for an industry certification, with the exam fee included.', facts: ['PD-02'] },
+      { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
+      { label: 'Reporting', text: 'Monthly reports, tracer surveys and documentary evidence of earnings where available.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Agreed Before Enrollment', text: 'Priority groups, tracks, each track’s work-entry plan, safeguarding and the pilot scorecard.', facts: ['PD-11', 'PD-12'] },
+    ]}
+  />
 
   <!-- ===== Route 1: governments and ministries (the Bangladesh national initiative, formerly NationWIDE) ===== -->
   <div id="governments" class="route">
@@ -367,12 +397,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C12 -->
   <RiskSection
     title="Start with a Pilot. Decide on Evidence."
-    points={[
-      { icon: 'rocket', title: 'A Pilot Comes First', text: 'Prove the model in your labs before you commit to a wider phase.', factIds: ['PD-05'] },
-      { icon: 'target', title: 'A Missed Threshold Triggers a Corrective Plan', text: 'Thresholds are agreed with you before the first cohort starts, and there is a review gate before each phase.', factIds: ['PD-11'] },
-      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale, on the pilot’s results.', factIds: ['PD-11'] },
-      { icon: 'shield', title: 'Independent Evaluation Is Welcome', text: 'We support a third-party evaluation of outcomes where you want one.', factIds: ['PD-08'] },
-    ]}
   >
     <Fragment slot="lead">
       <CopyP block={SCORECARD} />
@@ -380,6 +404,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         {measures.map((m) => <li><Icon name="circle-check" size={18} />{m}</li>)}
       </ul>
     </Fragment>
+    <p class="risk__pilot" data-fact="PD-05 PD-11">A pilot comes first: prove the model in your labs before you commit to a wider phase. Thresholds are agreed with you before the first cohort starts, and there is a review gate before each phase.</p>
+    <ReviewPanels sample={{ label: 'See the Sample Monthly Report', href: '#reports' }} />
     <DecisionSheet />
   </RiskSection>
 
@@ -437,6 +463,11 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 </LandingLayout>
 
 <style>
+  .risk__pilot {
+    margin: 0 0 var(--space-md);
+    max-width: 52rem;
+    color: var(--on-surface);
+  }
   /* Audience switch under the definition: two anchor links to the two routes */
   .audience {
     margin-top: var(--space-md);
