@@ -1,0 +1,28 @@
+---
+/**
+ * Fallback line under a terminal mailto call to action (CTABand, DualCtaBand): when the visitor's email app does not open, the
+ * address the button writes to is printed beside it. The address is read from the link itself, so the line can never name another
+ * recipient. It is plain text, not a second mailto link.
+ */
+interface Props {
+  href: string;
+}
+const { href } = Astro.props;
+const address = /^mailto:([^?]+)/i.exec(href)?.[1];
+const recipient = address ? decodeURIComponent(address) : undefined;
+---
+
+{recipient && <p class="email-fallback">If your email app does not open, write to <span class="email-fallback__addr">{recipient}</span>.</p>}
+
+<style>
+  .email-fallback {
+    margin: 0;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
+  }
+  .email-fallback__addr {
+    font-weight: var(--fw-medium);
+    overflow-wrap: anywhere;
+  }
+</style>

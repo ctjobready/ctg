@@ -23,6 +23,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Section from '../../../components/ui/Section.astro';
+import Icon from '../../../components/system/Icon.astro';
 import Badge from '../../../components/system/Badge.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -143,6 +144,14 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
     />
   </div>
   <SubBand>
+    <Callout eyebrow="Choose Your Route">
+      <p class="cluster">
+        <a class="link" href="#offer">Fund YouthWIDE Cohorts<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href="#platform-grant">Fund the JobReady Platform<Icon name="arrow-right" size={16} /></a>
+      </p>
+    </Callout>
+  </SubBand>
+  <SubBand>
     <Callout eyebrow="Reporting and Recognition">
       <p data-fact="PD-18">{endSentence(fact('PD-18').text)}</p>
       <ul class="cluster" role="list" data-fact="ID-09">
@@ -224,9 +233,9 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   />
 
   <!-- C11 · Offer -->
-  <OfferBand title="Choose Where to Start." />
-  <SubBand tone="airy" pull>
-    <Callout eyebrow="Option: JobReady Platform Grant"><Fact id="IN-04" as="p" /></Callout>
+  <OfferBand eyebrow="Cohort Grants" title="Choose Where to Start." />
+  <SubBand tone="airy" pull id="platform-grant">
+    <Callout eyebrow="Option: JobReady Platform Grant"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>
 

@@ -18,6 +18,7 @@ import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Section from '../../../components/ui/Section.astro';
+import Fact from '../../../components/facts/Fact.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
@@ -30,9 +31,8 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
 import { EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_PX06 } from '../../../components/sections/copyText';
+import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
-import { optionDuration } from '../../../lib/format';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
 
@@ -53,7 +53,7 @@ const optionText: Record<string, string> = {
 };
 const steps = [
   { title: 'Set Up', text: 'Agree tracks and campus labs in a discovery session.' },
-  { title: 'Train and Certify', text: `${HOURS} training hours per certification.` },
+  { title: 'Prepare for Certification', text: `${HOURS} training hours per certification.` },
   { title: 'Mentor and Place', text: 'Three months of milestone-based mentoring, placement support and tracers.' },
 ];
 ---
@@ -121,7 +121,6 @@ const steps = [
   <!-- C5 · Guide (empathy first) -->
   <PartnerGuideBand
     empathy={EMPATHY.universities}
-    stats={['SC-05']}
     statements={[
       { facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' },
     ]}
@@ -129,13 +128,17 @@ const steps = [
     partnerGroup="academic"
   />
 
+  <SubBand>
+    <Callout eyebrow="NU Partnership"><Fact id="SC-05" as="p" /></Callout>
+  </SubBand>
+
   <!-- C6 · Mechanism (JobReady@Campus) -->
   <MechanismBand
     title="JobReady@Campus: Training Alongside the Degree"
     positioning={POSITIONING.universities}
     blocks={[
       { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
-      { label: 'Certify', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, with certification exam preparation; exam eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
+      { label: 'Prepare for Certification', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, with certification exam preparation; exam eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
       { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months.`, icon: 'users' },
       { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships.', icon: 'graduation-cap' },
     ]}
@@ -215,7 +218,7 @@ const steps = [
   <!-- C11 · Offer -->
   <OfferCards
     title="Choose Where to Start."
-    cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: optionDuration(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
+    cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
     inclusions
   />
 
@@ -251,7 +254,7 @@ const steps = [
       { title: 'Monthly Reports', text: 'Enrollment, completion, certification and placements follow each month.' },
     ]}
   />
-  <Reinforcement reminder={false} />
+  <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />
 </LandingLayout>

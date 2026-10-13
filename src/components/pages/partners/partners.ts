@@ -3,6 +3,7 @@
  * Everything here reads the facts register, so a number in a page string can never drift from it.
  */
 import { fact } from '../../../data/facts';
+import type { CopyBlock } from '../../../data/copy';
 
 /**
  * Pull a phrase out of a fact's canonical text. The first capture group is returned when the
@@ -40,6 +41,15 @@ export const TRACER_MONTHS = `${tracerNums.slice(0, -1).join(', ')} and ${tracer
 /** "6–8 weeks" */
 export const FIRST_COHORT = statValue('PD-04');
 export const NATIONWIDE_TARGET = statValue('IN-01');
+
+/**
+ * First-cohort timing line for the contact and local-partner pages (grant-funded pilots): a plan, not a promise. It replaces
+ * C14.reminder on those pages; the PD-04 and PD-08 facts it rests on are unchanged.
+ */
+export const FIRST_COHORT_REMINDER: CopyBlock = {
+  text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.',
+  facts: ['PD-04', 'PD-08'],
+};
 
 /** Sentence-case an inclusion fragment from PD-02, as OfferBand does. */
 export function pricingParts(): { lead: string; inclusions: string[]; separate: string } {

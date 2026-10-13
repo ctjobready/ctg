@@ -36,13 +36,13 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility Statemen
     <section id="measures" aria-labelledby="measures-h">
       <h2 id="measures-h">What We Have Done</h2>
       <ul>
-        <li><strong>Structure.</strong> Every page has one main heading, a logical heading order, landmarks, and a "Skip to Main Content" link as the first item.</li>
-        <li><strong>Keyboard.</strong> Menus, the mobile drawer, accordions, carousels and filters work with a keyboard. Focus is always visible, and the sticky header and announcement bar do not cover the element that has focus.</li>
-        <li><strong>Color and type.</strong> Text and controls use an accessible color theme that meets AA contrast. Pages reflow to a 320 px width without sideways scrolling, and text can be enlarged.</li>
+        <li><strong>Structure.</strong> Pages are built with one main heading, a logical heading order and landmarks, and a "Skip to Main Content" link comes first.</li>
+        <li><strong>Keyboard.</strong> Menus, the mobile drawer, accordions, carousels and filters work with a keyboard. Focus is visible, and the sticky header and announcement bar are designed not to cover the element that has focus.</li>
+        <li><strong>Color and type.</strong> Text and controls use a color theme designed to meet AA contrast. Pages are designed to reflow to a 320 px width without sideways scrolling, and text can be enlarged.</li>
         <li><strong>Motion.</strong> Animations stop for visitors who ask their device for reduced motion, and the final values of counters are in the page without animation. The logo marquee has a pause button.</li>
-        <li><strong>Works without JavaScript.</strong> Content, statistics, links and the news topic filter are available when scripts do not run.</li>
-        <li><strong>Images, charts and maps.</strong> Images have meaningful alternative text or are marked decorative. Charts have a data table, and the map has a location table (below).</li>
-        <li><strong>Testing.</strong> Every page is checked with automated accessibility tests at phone and desktop widths.</li>
+        <li><strong>Works without JavaScript.</strong> Core content, statistics and links are in the page HTML, so they remain available when scripts do not run.</li>
+        <li><strong>Images, charts and maps.</strong> Images have alternative text or are marked decorative; photos in older news posts are an exception (see Known Limitations). Charts have a data table, and the map has a location table (below).</li>
+        <li><strong>Testing.</strong> Pages are checked with automated accessibility tests at phone and desktop widths.</li>
         <li><strong>Before launch.</strong> A manual screen-reader pass (VoiceOver, NVDA, TalkBack) is scheduled before launch, because automated tests alone do not show how a page is experienced.</li>
       </ul>
     </section>
@@ -55,7 +55,7 @@ const jsonLd = [webPage({ path: '/accessibility/', name: 'Accessibility Statemen
     <section id="limits" aria-labelledby="limits-h">
       <h2 id="limits-h">Known Limitations</h2>
       <ul>
-        <li><strong>Older news posts.</strong> News articles are carried over from our earlier website as published. Some photos in them have generic or empty alternative text, and some posts link to long web addresses. We are improving these as we edit posts.</li>
+        <li><strong>Older news posts.</strong> News articles are carried over from our earlier website and lightly edited. Some photos in them have generic or empty alternative text, and some posts link to long web addresses. We are improving these as we edit posts.</li>
         <li><strong>Embedded and external content.</strong> Videos play on YouTube, and their captions and controls are YouTube’s. Pages we link to, such as jobready.global and the application form for the National University diploma, are run by others and may not meet the same standard.</li>
         <li><strong>Press logos.</strong> Third-party logos are shown as supplied by their owners.</li>
       </ul>

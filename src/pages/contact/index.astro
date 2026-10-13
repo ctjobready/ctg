@@ -11,7 +11,7 @@ import StepFlow from '../../components/ui/StepFlow.astro';
 import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../components/pages/about/OfficeCard.astro';
 import { contactRoutes } from '../../components/pages/about/routes';
-import { C14 } from '../../data/copy';
+import { FIRST_COHORT_REMINDER } from '../../components/pages/partners/partners';
 import { ctaHref } from '../../lib/mailto';
 import { OFFICES, SOCIAL } from '../../lib/site';
 import { linkAttrs } from '../../lib/url';
@@ -80,7 +80,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
   </Section>
 
   <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens Next" />
+    <SectionHeader id="next-h" eyebrow="After You Write" title="For Program and Funding Inquiries" />
     <div class="ct-next">
       <StepFlow steps={[
         { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
@@ -88,7 +88,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
         { title: 'A First Cohort, Designed with You', text: 'We shape tracks, safeguarding and reporting together.' },
       ]} />
       <ul class="ct-c14" role="list">
-        <li><CopyBlock block={C14.reminder} /></li>
+        <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>
       </ul>
     </div>
     <PartnerStrip variant="grid" group="development" />

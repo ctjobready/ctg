@@ -10,6 +10,8 @@ import { pricingParts } from './partners';
  * and styling as OfferBand. No prices: budgets are shared in the discovery session.
  */
 interface Card {
+  /** Anchor for an in-page route to this card. */
+  id?: string;
   eyebrow: string;
   title: string;
   /** Big line (volume), when the option has one. */
@@ -35,7 +37,7 @@ const pricing = pricingParts();
   <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
     {
       cards.map((c) => (
-        <article class="card oc" data-reveal data-fact={c.facts?.join(' ')}>
+        <article id={c.id} class="card oc" data-reveal data-fact={c.facts?.join(' ')}>
           <div class="card__body">
             <p class="eyebrow">{c.eyebrow}</p>
             <h3 class="card__title">{c.title}</h3>

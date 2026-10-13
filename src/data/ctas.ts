@@ -48,7 +48,7 @@ export const CTA_RECIPIENT = CONTACT.email;
 
 /** Existing NU Postgraduate Diploma application form. */
 export const NU_PGD_APPLY_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSdN0J_VMgh0FYMTTx9DNRVYn840X0XGTVwhVzmjC6YsmJf1rg/viewform';
+  'https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform';
 
 export const CTAS: Record<CtaKey, CtaDef> = {
   discovery: {
@@ -85,8 +85,8 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   investor: {
     key: 'investor',
-    label: 'Request the Investor Deck',
-    subject: 'Investor deck request — [firm]',
+    label: 'Request an Introduction Call',
+    subject: 'Introduction call request — [firm]',
     body: ['Firm', 'Name & role', 'Investment focus', 'Preferred time for an introduction call'],
   },
   campus: {

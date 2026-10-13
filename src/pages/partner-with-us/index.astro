@@ -3,6 +3,7 @@
 // receive monthly → due diligence (governance) → full FAQ Q1–Q14 → CTA band.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
+import DefinitionBand from '../../components/sections/DefinitionBand.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
@@ -73,6 +74,8 @@ const jsonLd = [
   <Tone cmf="HERO">
     <HeroBand variant="inner" audience="Partnerships" title="Partner with CodersTrust" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} artSeed="partner-hub" />
   </Tone>
+
+  <DefinitionBand />
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">

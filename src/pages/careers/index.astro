@@ -34,6 +34,10 @@ const expect = [
     </Fragment>
   </Hero>
 
+  <Section id="hiring" pad="sm">
+    <p class="cr-note">We’re not hiring for specific roles right now, but we welcome speculative applications.</p>
+  </Section>
+
   <Section id="why" aria-labelledby="why-h">
     <SectionHeader id="why-h" eyebrow="Why CodersTrust" title="A Mission You Can Measure">
       <p class="lead"><Fact id="ID-04" /></p>
@@ -108,6 +112,13 @@ const expect = [
     .cr-stats {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
+  .cr-note {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface);
   }
   .cr-icon {
     display: inline-flex;
