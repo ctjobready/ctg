@@ -12,7 +12,7 @@ interface Props {
   max?: number;
   unit?: string;
   valueHeader?: string;
-  /** Text that names the emphasized (darker) columns, for screen readers and the data table, so color is not the only cue. */
+  /** One line that names the emphasized (darker) columns and what they add up to ("Scores of 7 or higher: 71.6%"), so color is not the only cue. It is printed once, under the plot, never repeated on each label. */
   emphasisNote?: string;
   class?: string;
 }
@@ -32,11 +32,12 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
             <span class="colc__val">{fmt(it.value)}</span>
             <span class="colc__bar" aria-hidden="true"></span>
           </span>
-          <span class="colc__label">{it.label}{it.emphasis && emphasisNote && <span class="sr-only"> ({emphasisNote})</span>}</span>
+          <span class="colc__label">{it.label}</span>
         </li>
       ))
     }
   </ul>
+  {emphasisNote && <p class="colc__emph"><strong>{emphasisNote}</strong> (darker columns)</p>}
   {note && <p class="colc__note">{note}</p>}
   <details class="colc__data">
     <summary>View Chart Data as a Table</summary>
@@ -47,7 +48,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
           <tr><th scope="col">Category</th><th scope="col">{valueHeader}</th>{hasN && <th scope="col">Respondents (n)</th>}</tr>
         </thead>
         <tbody>
-          {items.map((it) => <tr><th scope="row">{it.label}{it.emphasis && emphasisNote ? ` (${emphasisNote})` : ''}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
+          {items.map((it) => <tr><th scope="row">{it.label}</th><td>{fmt(it.value)}</td>{hasN && <td>{it.n ?? '—'}</td>}</tr>)}
         </tbody>
       </table>
     </section>
@@ -112,6 +113,10 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
     padding-top: 6px;
     overflow-wrap: anywhere;
     hyphens: auto;
+  }
+  .colc__emph {
+    margin: var(--space-sm) 0 0;
+    color: var(--ctx-text);
   }
   .colc__note {
     margin: var(--space-md) 0 0;

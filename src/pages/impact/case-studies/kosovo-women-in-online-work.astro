@@ -9,6 +9,15 @@ import { fact } from '../../../data/facts';
 const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
 if (!raw) throw new Error('ST-05 text no longer has the expected "<Name>, a … participant in Kosovo, <outcome>" shape');
 const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
+
+// PR-02 reads "<program>, 2017: <in work>; <earnings>; <contracts>; <ventures>". The page shows the first three as labeled lines (the venture count is an owner-confirmation item).
+const parts = fact('PR-02').text.split(': ')[1]?.split('; ');
+if (!parts || parts.length < 3) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
+const results = [
+  { label: 'In Work', text: parts[0] },
+  { label: 'Online Earnings', text: parts[1] },
+  { label: 'Online Contracts', text: parts[2] },
+];
 ---
 
 <CaseStudyPage
@@ -21,7 +30,7 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
     'The Women in Online Work (WoW) pilot prepared young women in Kosovo, around the country, for online work.',
   ]}
   challenges={[
-    'Weak infrastructure in a post-war country.',
+    'Limited infrastructure.',
     'Few child- and elder-care options, leaving little time to learn.',
     'Cultural attitudes that discourage women from working.',
     'Few training materials designed for online learning.',
@@ -36,12 +45,36 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 >
   <Fragment slot="results">
     <Callout tone="bluf" label="Program Results">
-      <Fact id="PR-02" as="p" />
+      <dl class="kw__results" data-fact="PR-02">
+        {results.map((r) => <div><dt>{r.label}</dt><dd>{r.text}</dd></div>)}
+      </dl>
     </Callout>
     <p>Women in Online Work was a pilot with the World Bank Group in 2017. The figures above are from CodersTrust program records.</p>
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo" outcome={outcome} />
+    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo, 2017" outcome={outcome} />
   </Fragment>
 </CaseStudyPage>
+
+<style>
+  .kw__results {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+  }
+  .kw__results > div {
+    display: grid;
+    gap: 2px;
+  }
+  .kw__results dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+  .kw__results dd {
+    margin: 0;
+  }
+</style>

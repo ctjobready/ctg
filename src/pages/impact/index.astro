@@ -16,7 +16,8 @@ import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
 import LearnerVoice from '../../components/pages/impact/LearnerVoice.astro';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
-import { SURVEY_EMPLOYMENT, RCT_HEADLINE, MICRO_COMMITMENT } from '../../data/copy';
+import PageNav from '../../components/pages/about/PageNav.astro';
+import { IMPACT_ANSWER, MICRO_COMMITMENT } from '../../data/copy';
 
 const path = '/impact/';
 const description = desc('A randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed.');
@@ -30,13 +31,28 @@ const sdgs = [
   { n: 9, label: 'Industry and Innovation', core: false },
   { n: 10, label: 'Reduced Inequalities', core: false },
 ];
+// Go Deeper, grouped by what kind of record each page is (WP20d).
 const explore = [
-  { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'The Impact Survey 2026: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
-  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
-  { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
-  { icon: 'message-square-quote', title: 'Success Stories', text: 'Individual learner stories, not typical or promised outcomes.', href: '/impact/stories/' },
-  { icon: 'globe', title: 'Global Reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
-  { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partner meetings and events, grouped by program and year.', href: '/impact/in-the-field/' },
+  { group: 'Evidence', items: [
+    { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'The Impact Survey 2026: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
+    { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
+  ] },
+  { group: 'Program Evidence', items: [
+    { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
+    { icon: 'globe', title: 'Global Reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
+  ] },
+  { group: 'Human Stories and Field Record', items: [
+    { icon: 'message-square-quote', title: 'Success Stories', text: 'Individual learner stories, not typical or promised outcomes.', href: '/impact/stories/' },
+    { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partner meetings and events, grouped by program collection.', href: '/impact/in-the-field/' },
+  ] },
+];
+const onThisPage = [
+  { label: 'In Short', href: '#summary' },
+  { label: 'Evidence Ladder', href: '#evidence-ladder' },
+  { label: 'At a Glance', href: '#glance' },
+  { label: 'Independent Evidence', href: '#proof' },
+  { label: 'Four Programs', href: '#cases' },
+  { label: 'Go Deeper', href: '#explore' },
 ];
 const d = discoveryCta();
 ---
@@ -44,17 +60,18 @@ const d = discoveryCta();
 <BaseLayout title={title('Impact and Evidence')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
   <Hero variant="inner" eyebrow="Impact" title="Impact and Evidence" lead="What CodersTrust results show, what kind of evidence each one is, and what it does not show." artSeed="impact-hub" />
 
-  <Section pad="sm" aria-label="Summary">
+  <Section id="summary" pad="sm" aria-label="Summary">
     <div class="ih__bluf">
       <Callout tone="bluf" label="In Short">
-        <CopyText block={RCT_HEADLINE} />
-        <CopyText block={SURVEY_EMPLOYMENT} />
+        <CopyText block={IMPACT_ANSWER} />
       </Callout>
     </div>
   </Section>
 
+  <PageNav links={onThisPage} />
+
   <Section id="evidence-ladder" pad="sm" aria-labelledby="ladder-h">
-    <SectionHeader id="ladder-h" eyebrow="Read the Evidence" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows and what it does not show." />
+    <SectionHeader id="ladder-h" eyebrow="How to Read the Evidence" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows and what it does not show." />
     <EvidenceLadder variant="matrix" />
   </Section>
 
@@ -62,24 +79,24 @@ const d = discoveryCta();
     id="glance"
     tone="ice"
     title="At a Glance"
-    lead="The strongest results, each with its detail page. Trial figures are for a predecessor program; survey figures are among surveyed completers."
+    eyebrow="Headline Results"
+    lead="The strongest results, grouped by what they show, each with its detail page. Trial figures are for a predecessor program; survey figures are among surveyed completers."
     groups={[
-      { title: 'Randomized Trial', cols: 3, items: [
+      { title: 'Reach', cols: 2, items: [
+        { id: 'SC-16', href: '/impact/global-reach/' },
+        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+      ] },
+      { title: 'Speed to Earning', cols: 2, items: [
+        { id: 'OC-05', href: '/impact/outcomes-2026/' },
+        { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
+      ] },
+      { title: 'Earnings and Work', cols: 3, items: [
+        { id: 'OC-01', href: '/impact/outcomes-2026/' },
+        { id: 'OC-03', href: '/impact/outcomes-2026/' },
+        { id: 'OC-04', href: '/impact/outcomes-2026/', also: ['OC-07'] },
         { id: 'RC-13', href: '/impact/independent-evaluation/' },
         { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-        { id: 'RC-14', href: '/impact/independent-evaluation/' },
-      ] },
-      { title: 'Surveyed Completers', cols: 5, items: [
-        { id: 'OC-03', href: '/impact/outcomes-2026/' },
-        { id: 'OC-01', href: '/impact/outcomes-2026/' },
-        { id: 'OC-02', href: '/impact/outcomes-2026/' },
-        { id: 'OC-05', href: '/impact/outcomes-2026/' },
-        { id: 'OC-04', href: '/impact/outcomes-2026/', also: ['OC-07'] },
-      ] },
-      { title: 'Program Delivery and Contract Scope', cols: 3, items: [
-        { id: 'SC-16', href: '/impact/global-reach/' },
-        { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
-        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+        { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02'] },
       ] },
     ]}
   />
@@ -98,7 +115,7 @@ const d = discoveryCta();
   />
 
   <!-- No headlineFact here: the randomized-trial sentence is the "In Short" callout above, so this band is headed by what it shows (trial and survey figures). -->
-  <ProofBand id="proof" title="Independent Evidence and Survey Results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }, { label: 'How to Read This Evidence', href: '/impact/#evidence-ladder' }]} />
+  <ProofBand id="proof" eyebrow="Trial and Survey Evidence" title="Independent Evidence and Survey Results" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }, { label: 'How to Read This Evidence', href: '/impact/#evidence-ladder' }]} />
 
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
 
@@ -108,11 +125,18 @@ const d = discoveryCta();
     items={CASE_STUDIES.map((c) => ({ title: c.name, program: c.program, factId: c.factId, href: c.path }))}
   />
 
-  <Section aria-labelledby="explore-h">
-    <SectionHeader id="explore-h" eyebrow="Explore" title="Go Deeper" />
-    <div class="grid-cards">
-      {explore.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
-    </div>
+  <Section id="explore" aria-labelledby="explore-h">
+    <SectionHeader id="explore-h" eyebrow="More Impact Pages" title="Go Deeper" />
+    {
+      explore.map((g) => (
+        <div class="ih__group">
+          <h3 class="ih__group-title">{g.group}</h3>
+          <div class="grid-cards grid-cards--2">
+            {g.items.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
+          </div>
+        </div>
+      ))
+    }
   </Section>
 
   <Section tone="ice" aria-labelledby="sdg-h" pad="sm">
@@ -123,12 +147,20 @@ const d = discoveryCta();
     </ul>
   </Section>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program." text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>
   .ih__bluf {
     max-width: var(--measure);
+  }
+  .ih__group + .ih__group {
+    margin-top: var(--space-xl, 2.5rem);
+  }
+  .ih__group-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-heading-l, 1.25rem);
+    color: var(--secondary);
   }
   .ih__sdgtext {
     margin: var(--space-sm) 0 var(--space-md);

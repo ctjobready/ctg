@@ -26,13 +26,15 @@ const TEXT = {
   stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
 };
 const matrix = [
-  { n: 1, name: 'Randomized Trial (BIGD)', figure: { value: fact('RC-02').stat?.value ?? '', label: fact('RC-02').stat?.label ?? '', id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
-  { n: 2, name: 'Impact Survey 2026 (Surveyed Completers)', figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Outcomes 2026' },
+  { n: 1, name: 'Randomized Trial', figure: { value: fact('RC-02').stat?.value ?? '', label: fact('RC-02').stat?.label ?? '', id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
+  { n: 2, name: 'Impact Survey 2026', figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Outcomes 2026' },
   { n: 3, name: 'Program Results', figure: { value: fact('PR-01').stat?.value ?? '', label: fact('PR-01').stat?.label ?? '', id: 'PR-01' }, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
   { n: 4, name: 'Learner Stories', figure: undefined, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
 ];
 const H = `h${headingLevel}` as 'h3' | 'h4';
 const pr01Label = fact('PR-01').stat?.label ?? '';
+/** The Learner Stories rung shows one real example from the register (ST-03), not a placeholder. */
+const storyExample = fact('ST-03').text;
 ---
 
 {variant === 'matrix' ? (
@@ -49,9 +51,9 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
       </thead>
       <tbody>
         {matrix.map((r) => (
-          <tr data-fact={r.figure?.id}>
+          <tr data-fact={r.figure?.id ?? 'ST-03'}>
             <th scope="row"><span class="lm__n" aria-hidden="true">{r.n}</span> {r.name}</th>
-            <td data-label="Key Figure">{r.figure ? <><strong class="lm__fig">{r.figure.value}</strong> <span>{r.figure.label}</span></> : 'Individual learner stories'}{links && <a class="link lm__link" href={linkAttrs(r.href).href}>{r.link}<Icon name="arrow-right" size={16} /></a>}</td>
+            <td data-label="Key Figure">{r.figure ? <><strong class="lm__fig">{r.figure.value}</strong> <span>{r.figure.label}</span></> : <><strong class="lm__eg">Example:</strong> <span>{storyExample}</span></>}{links && <a class="link lm__link" href={linkAttrs(r.href).href}>{r.link}<Icon name="arrow-right" size={16} /></a>}</td>
             <td data-label="What It Shows">{r.text.shows}</td>
             <td data-label="What It Does Not Show">{r.text.not}</td>
           </tr>
@@ -64,7 +66,7 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
 <ol class="ladder" role="list">
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">1</span>
-    <H class="ladder__title">Randomized Trial (BIGD)</H>
+    <H class="ladder__title">Randomized Trial</H>
     <p class="ladder__fig"><Fact id="RC-02" field="value" /> <span><Fact id="RC-02" field="label" /></span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
@@ -76,7 +78,7 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
   </li>
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">2</span>
-    <H class="ladder__title">Impact Survey 2026 (Surveyed Completers)</H>
+    <H class="ladder__title">Impact Survey 2026</H>
     <p class="ladder__fig"><Fact id="OC-01" field="value" /> <span><Fact id="OC-01" field="label" /></span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
@@ -101,7 +103,7 @@ const pr01Label = fact('PR-01').stat?.label ?? '';
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">4</span>
     <H class="ladder__title">Learner Stories</H>
-    <p class="ladder__fig"><span>Individual learner stories</span></p>
+    <p class="ladder__fig" data-fact="ST-03"><span><strong>Example:</strong> {storyExample}</span></p>
     <dl class="ladder__dl">
       <dt>What it shows</dt>
       <dd>{TEXT.stories.shows}</dd>

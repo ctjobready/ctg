@@ -11,6 +11,10 @@ const quoteOf = (id: string) => {
   if (!m) throw new Error(`${id} has no quoted outcome`);
   return m[1];
 };
+// ST-02 spells the quoted "$32K" out once, in brackets: "(about $32,000; …)".
+const spelledOut = (id: string) => /\((about \$[\d,]+)/.exec(fact(id).text)?.[1];
+const shamim = spelledOut('ST-02');
+if (!shamim) throw new Error('ST-02 no longer spells out its quoted amount');
 ---
 
 <CaseStudyPage
@@ -46,7 +50,7 @@ const quoteOf = (id: string) => {
   <Fragment slot="story">
     <LearnerStory factId="ST-01" name="Aklima Akder" assetId="story-aklima-akder" program="UNDP YES, Korail" outcome={`Reported: “${quoteOf('ST-01')}.”`} />
     <div class="uy__gap"></div>
-    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={`Reported: “${quoteOf('ST-02')}.”`} outlier />
+    <LearnerStory factId="ST-02" name="Shamim Ahmed" assetId="story-shamim-ahmed" program="UNDP YES, Korail" outcome={`Reported: “${quoteOf('ST-02')}” (${shamim}).`} outlier />
   </Fragment>
 </CaseStudyPage>
 

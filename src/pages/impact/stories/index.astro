@@ -4,6 +4,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import FeatureCard from '../../../components/ui/FeatureCard.astro';
+import PageNav from '../../../components/pages/about/PageNav.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import StoryGallery from '../../../components/pages/impact/StoryGallery.astro';
 import type { StoryCardData } from '../../../components/pages/impact/story-types';
@@ -68,7 +70,31 @@ const toCard = (s: (typeof all)[number]): StoryCardData => {
     assetId: `story-${s.id}`,
   };
 };
-const caseCards = caseIds.map((id) => toCard(named.find((s) => s.id === id)!));
+// Three fields (Starting Point · What They Did · Where They Are Now) only where the learner's story text supports all three: Samina Tasneem Chowdhury and Maria Dewan.
+// Each field is built from the story file's own words; the phrases it rests on must appear in the file, or the build stops.
+const STEPS: Record<string, { start: string; did: string; now: string; needs: string[] }> = {
+  'samina-tasneem-chowdhury': {
+    start: 'A trainee from the first batch of the WSDFM project, from a middle-income family in Bangladesh.',
+    did: 'During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr.',
+    now: 'She continues to work as a freelancer and has completed 90+ projects on Fiverr so far.',
+    needs: ['a trainee from the first batch', 'middle-income family in Bangladesh', 'During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr.', 'She continues to work as a freelancer', 'She has completed 90+ projects on Fiverr so far.'],
+  },
+  'maria-dewan': {
+    start: 'A third-year Biology student when she first came across the Her Power project implemented by CodersTrust.',
+    did: 'She enrolled in the Graphic Design course and showed her skills by winning a company logo design on Freelancer.com.',
+    now: 'She has continued her journey in the freelance space, with a growing portfolio, gradually winning more clients and higher-paying projects.',
+    needs: ['was a third-year Biology student when she first came across the Her Power project implemented by CodersTrust', 'She enrolled in the Graphic Design course', 'She showed her skills by winning a company logo design on Freelancer.com', 'She has continued her journey in the freelance space, with a growing portfolio, gradually winning more clients and higher-paying projects.'],
+  },
+};
+for (const [id, st] of Object.entries(STEPS)) {
+  const body = (all.find((s) => s.id === id)?.body ?? '').replace(/\s+/g, ' ');
+  for (const phrase of st.needs) if (!body.includes(phrase)) throw new Error(`story ${id}: "${phrase}" is not in the story text`);
+}
+const caseCards = caseIds.map((id) => {
+  const c = toCard(named.find((s) => s.id === id)!);
+  const st = STEPS[id];
+  return { ...c, steps: { start: st.start, did: st.did, now: st.now } };
+});
 // WP18b: concrete examples lead (Samina’s 90+ projects, Maria’s first logo-design win, Erlisa’s full-time online contract, then the learners
 // who report a first job, client or sale); the two endorsements whose excerpt praises the program without a concrete result follow last.
 const ENDORSEMENTS = new Set(['aysha-akter-bipasha', 'arfias-islam-rudro']);
@@ -78,11 +104,16 @@ const legacyCards = named
   .map(toCard);
 
 const anon: StoryCardData[] = [
-  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work · Kosovo · Individual result; not typical', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
-  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES · Korail · Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
-  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES · Korail · An outlier; individual result, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}”`, assetId: 'story-shamim-ahmed' },
+  { key: 'wow-erlisa-zherka', name: 'Erlisa Zherka', role: 'Women in Online Work, Kosovo, 2017', caveat: 'Individual result; not typical', pathway: 'job', outcome: `She ${fact('ST-05').text.split(' in Kosovo, ')[1].replace('; earning', ' and is earning')}.`, assetId: 'story-erlisa-zherka' },
+  { key: 'yes-aklima-akder', name: 'Aklima Akder', role: 'UNDP YES, Korail, 2017', caveat: 'Individual result; not typical', pathway: 'freelance', outcome: `“${quoted('ST-01')}”`, assetId: 'story-aklima-akder' },
+  { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual result; an outlier, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}” (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
 ];
-const cards = [...caseCards, ...anon, ...legacyCards];
+const cards = [...anon, ...legacyCards];
+const goDeeper = [
+  { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
+  { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'What surveyed completers report about work and income, each result with its base.', href: '/impact/outcomes-2026/' },
+  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
+];
 
 const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
@@ -93,18 +124,32 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learner Outcomes and Experiences" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learner Experiences" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
 
-  <Section aria-labelledby="stories-h">
-    <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Individual stories; not typical or promised outcomes." />
+  <PageNav links={[{ label: 'Two Stories in Three Steps', href: '#steps' }, { label: 'What Learners Report', href: '#stories' }, { label: 'Go Deeper', href: '#go-deeper' }]} />
+
+  <Section id="steps" aria-labelledby="steps-h">
+    <SectionHeader id="steps-h" eyebrow="Learner Journeys" title="Two Stories in Three Steps" lead="Where the learner’s own story text covers where they started, what they did and where they are now." />
+    <StoryGallery cards={caseCards} filter={false} />
+  </Section>
+
+  <Section id="stories" tone="airy" aria-labelledby="stories-h">
+    <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Filter by pathway to see how each learner reached paid work." />
     <StoryGallery cards={cards} />
     <div class="st__notes">
-      <p><strong>Read these as individual stories.</strong> Some results are outliers and say so. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and evidence</a>.</p>
-      <p>Some learners, including participants in programs for refugees and residents of urban slums, are listed without photographs.</p>
+      <p>Some results are outliers and are labeled as such. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and Evidence</a>.</p>
+      <p>Some learners, including participants in programs for refugees and residents of urban informal settlements, are listed without photographs.</p>
     </div>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <Section id="go-deeper" aria-labelledby="go-deeper-h">
+    <SectionHeader id="go-deeper-h" eyebrow="Beyond Individual Stories" title="Go Deeper" />
+    <div class="grid-cards">
+      {goDeeper.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
+    </div>
+  </Section>
+
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

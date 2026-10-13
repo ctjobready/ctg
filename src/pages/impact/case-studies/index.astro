@@ -6,10 +6,10 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Icon from '../../../components/system/Icon.astro';
 import CaseGrid from '../../../components/pages/impact/CaseGrid.astro';
-import CopyText from '../../../components/pages/impact/CopyText.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../../components/pages/impact/case-studies';
-import { WOMEN_INCLUSION, MICRO_COMMITMENT } from '../../../data/copy';
+import { MICRO_COMMITMENT } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { itemList } from '../../../components/pages/impact/jsonld';
 import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
@@ -22,30 +22,91 @@ const jsonLd = [
   articleNode({ path, headline: 'CodersTrust Case Studies', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' }),
 ];
 const d = discoveryCta();
+
+// Side by Side: the three women-focused programs, one row each. The result and the base are read from the register (PR-01, PR-02, PR-05);
+// no figure is typed here. Each stat label carries the in-work share; each stat value is the count in its base.
+const share = (label: string): string => {
+  const m = /(\d+(?:\.\d+)?%)/.exec(label);
+  if (!m) throw new Error(`side by side: no share in "${label}"`);
+  return `${m[1]} in work`;
+};
+const sideBySide = [
+  { id: 'PR-01', program: 'WSDFM', slug: 'wsdfm-women-freelancers', base: (v: string, _l: string) => `${v} women` },
+  { id: 'PR-02', program: 'Women in Online Work, Kosovo', slug: 'kosovo-women-in-online-work', base: (v: string, _l: string) => `${v} women` },
+  { id: 'PR-05', program: 'Her Power', slug: 'her-power', base: (v: string, l: string) => `${v} ${l.replace(/, in work: .*$/, '')}` },
+].map((r) => {
+  const st = fact(r.id).stat!;
+  return { id: r.id, program: r.program, href: linkAttrs(`/impact/case-studies/${r.slug}/`).href, result: share(st.label), base: r.base(st.value, st.label) };
+});
 ---
 
 <BaseLayout title={title('Case Studies')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
   <Hero variant="inner" eyebrow="Impact" title="Four Programs Connecting Learners to Paid Work" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Four Programs" title="Read the Case Studies" lead="Where a randomized trial evaluated the program, the case study says so and keeps the two kinds of evidence apart." />
+    <SectionHeader id="cases-h" eyebrow="Four Programs" title="Read the Case Studies" lead="A case study reports one program’s result, its base and what the figures do not show; a success story is one learner’s own account." />
     <CaseGrid />
   </Section>
 
   <Section tone="airy" aria-labelledby="women-h" pad="sm">
-    <h2 class="t-heading-2xl" id="women-h">Women-Focused Programs, Side by Side</h2>
-    <div class="ch__text"><CopyText block={WOMEN_INCLUSION} /></div>
-    <p class="ch__link"><a class="link" href={linkAttrs('/impact/').href}>How the Evidence Fits Together<Icon name="arrow-right" size={16} /></a></p>
+    <p class="eyebrow">Women-Focused Programs</p>
+    <h2 class="t-heading-2xl" id="women-h">Side by Side</h2>
+    <p class="ch__text">Each program reports its own result against its own base. Read them side by side, not as one total.</p>
+    <section class="ch__table" aria-label="Women-focused programs, side by side" tabindex="0" data-scroll data-stack data-fact="PR-01 PR-02 PR-05">
+      <table>
+        <caption class="sr-only">Women-Focused Programs, Side by Side</caption>
+        <thead><tr><th scope="col">Program</th><th scope="col">Result</th><th scope="col">Base</th></tr></thead>
+        <tbody>
+          {sideBySide.map((r) => (
+            <tr data-fact={r.id}>
+              <th scope="row"><a class="link" href={r.href}>{r.program}</a></th>
+              <td data-label="Result">{r.result}</td>
+              <td data-label="Base">{r.base}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+    <p class="ch__link"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>How the Evidence Fits Together<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort." text="Each case study says what its figures do and do not show. A discovery session sets the scorecard for your own program." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." text="Each case study says what its figures do and do not show. A discovery session sets the scorecard for your own program." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
 
 <style>
   .ch__text {
     max-width: var(--measure);
-    margin-top: var(--space-md);
+    margin: var(--space-sm) 0 var(--space-md);
     font-size: var(--fs-body-m);
+  }
+  .ch__table {
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+  }
+  .ch__table table {
+    width: 100%;
+    min-width: 520px;
+  }
+  .ch__table th,
+  .ch__table td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .ch__table thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  .ch__table tbody tr:last-child th,
+  .ch__table tbody tr:last-child td {
+    border-bottom: 0;
   }
   .ch__link {
     margin: var(--space-md) 0 0;

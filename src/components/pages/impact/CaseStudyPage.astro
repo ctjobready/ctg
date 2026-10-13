@@ -42,6 +42,10 @@ interface Props {
    * under the summary; the program result (the first stat tile, with its program-data label) comes second.
    */
   plainLine?: boolean;
+  /** One short clarifying line under the summary (WSDFM: which figure is program records and which is the trial). No figure is typed in it. */
+  heroNote?: string;
+  /** The closing band's second link: the randomized trial's results (WSDFM only) or, by default, how to read the evidence. */
+  trialLink?: boolean;
   /** Eyebrow of the learner-story section: "In a Learner’s Words" only where a direct quote follows the story; "Learner Experience" otherwise. */
   storyEyebrow?: string;
   /**
@@ -50,7 +54,7 @@ interface Props {
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroPhoto, storyEyebrow = 'Learner Experience' } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroNote, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience' } = Astro.props;
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
@@ -72,6 +76,7 @@ const d = discoveryCta();
   <Hero variant="inner" eyebrow={`Case Study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
     {showPhoto && hero && <Img slot="media" src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} widths={[480, hero.width]} sizes="(min-width:1024px) 520px, 90vw" loading="eager" fetchpriority="high" assetId={hero.assetId} />}
     {plainLine && <PlainLine />}
+    {heroNote && <p class="cs__note" data-hero-note>{heroNote}</p>}
     <Fragment slot="stats">
       {
         stats.map((s) => (
@@ -127,7 +132,7 @@ const d = discoveryCta();
     <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={trialLink ? { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' } : { label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 
 </BaseLayout>
 
@@ -137,6 +142,12 @@ const d = discoveryCta();
     gap: 4px;
     align-content: start;
     max-width: 15rem;
+  }
+  .cs__note {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-s, var(--fs-body-m));
+    color: var(--on-surface-variant);
   }
   .cs__evidence {
     margin: 0;
