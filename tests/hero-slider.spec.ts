@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { pageByRoute } from './support/pages';
@@ -10,7 +11,11 @@ import { pageByRoute } from './support/pages';
  *   - reduced motion: no autoplay and no pause control;
  *   - only the showing slide is exposed to assistive technology (one heading, the others inert and hidden);
  *   - without JavaScript every slide is present, stacked, with its links, and no controls show;
- *   - switching slides does not move the layout, and the controls keep a 24 px target at phone width.
+ *   - switching slides does not move the layout, and the controls keep a 24 px target at phone width;
+ *   - the pill of the active dot follows the slide (the visual state, not only aria-current);
+ *   - the region does not change height when the script runs (no layout shift on load);
+ *   - every slide has its own cleared photograph; the first loads eagerly, the others lazily;
+ *   - no slide leaves more than 48 px of unused space between its content and the controls (1280 and 390).
  * The autoplay checks use the real 7 s step, so they take a few seconds each.
  */
 
@@ -19,6 +24,21 @@ const STEP_WAIT_MS = 7600;
 /** Index of the slide that carries is-active (-1 when none does). */
 async function activeIndex(page: Page): Promise<number> {
   return page.evaluate(() => Array.from(document.querySelectorAll('[data-hs-slide]')).findIndex((s) => s.classList.contains('is-active')));
+}
+
+/**
+ * Unused space, in px, between the showing slide's content (the copy column and the visual column with its photograph and proof card)
+ * and the controls bar under the slides. Measured on the live layout.
+ */
+async function unusedBelow(page: Page): Promise<number> {
+  return page.evaluate(() => {
+    const active = document.querySelector('[data-hs-slide].is-active');
+    const controls = document.querySelector('[data-hs-bar]');
+    if (!active || !controls) return Number.NaN;
+    const parts = Array.from(active.querySelectorAll('.hs__copy, .hs__visual')).filter((el) => el.getBoundingClientRect().height > 0);
+    const contentBottom = Math.max(...parts.map((el) => el.getBoundingClientRect().bottom));
+    return Math.round(controls.getBoundingClientRect().top - contentBottom);
+  });
 }
 
 test.describe('home hero slider', () => {
@@ -218,5 +238,88 @@ test.describe('home hero slider without JavaScript', () => {
     await expect(hero.getByRole('link', { name: 'Read the 2026 Survey Results' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'YouthWIDE' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'For Governments' })).toBeVisible();
+  });
+});
+
+test.describe('home hero slider layout', () => {
+  test.use({ viewport: DESKTOP });
+
+  test('the pill of the active dot follows the slide, not only aria-current', async ({ page }) => {
+    await open(page, pageByRoute('/'));
+    const dots = page.locator('[data-hs-dot]');
+    const pill = (i: number) => dots.nth(i).evaluate((el) => parseFloat(getComputedStyle(el, '::before').width));
+    await expect.poll(() => pill(0)).toBe(24);
+    await dots.nth(3).click();
+    await expect.poll(() => activeIndex(page)).toBe(3);
+    await expect.poll(() => pill(3)).toBe(24);
+    await expect.poll(() => pill(0)).toBe(8);
+    await expect(dots.nth(3)).toHaveClass(/is-active/);
+    await expect(dots.nth(3)).toHaveAttribute('aria-current', 'true');
+    await expect(dots.nth(0)).not.toHaveClass(/is-active/);
+    await expect(dots.nth(0)).not.toHaveAttribute('aria-current', 'true');
+  });
+
+  test('the region does not change height when the script runs (no layout shift on load)', async ({ page }) => {
+    await page.addInitScript(() => {
+      const w = window as unknown as { __shift: number };
+      w.__shift = 0;
+      new PerformanceObserver((list) => {
+        for (const e of list.getEntries() as unknown as { value: number; hadRecentInput: boolean }[]) {
+          if (!e.hadRecentInput) w.__shift += e.value;
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+    await open(page, pageByRoute('/'));
+    await expect(page.locator('[data-hs-toggle]')).toBeVisible();
+    await page.waitForTimeout(1000);
+    const shift = await page.evaluate(() => (window as unknown as { __shift: number }).__shift);
+    expect(shift, 'cumulative layout shift on the home page after load').toBeLessThan(0.01);
+  });
+
+  test('each slide has its own cleared photograph; the first loads eagerly, the others lazily', async ({ page }) => {
+    await open(page, pageByRoute('/'));
+    const permissions = JSON.parse(readFileSync(new URL('../src/data/permissions.json', import.meta.url), 'utf8')) as {
+      assetId: string;
+      status: string;
+    }[];
+    const slides = page.locator('[data-hs-slide]');
+    await expect(slides).toHaveCount(6);
+    const assets: string[] = [];
+    for (let i = 0; i < 6; i++) {
+      const img = slides.nth(i).locator('img');
+      await expect(img, `photograph on slide ${i + 1}`).toHaveCount(1);
+      await expect(img).toHaveAttribute('loading', i === 0 ? 'eager' : 'lazy');
+      await expect(img).toHaveAttribute('alt', /.+/);
+      const asset = (await img.getAttribute('data-asset')) ?? '';
+      assets.push(asset);
+      expect(permissions.find((p) => p.assetId === asset)?.status, `slide ${i + 1} photograph ${asset} is cleared`).toBe('cleared');
+    }
+    expect(new Set(assets).size, 'each slide shows a different photograph').toBe(6);
+  });
+
+  test('no slide leaves more than 48 px of unused space below its content (1280)', async ({ page }) => {
+    await open(page, pageByRoute('/'));
+    const dots = page.locator('[data-hs-dot]');
+    for (let i = 0; i < 6; i++) {
+      await dots.nth(i).click();
+      await expect.poll(() => activeIndex(page)).toBe(i);
+      await page.waitForTimeout(450);
+      expect(await unusedBelow(page), `unused space below the content on slide ${i + 1}`).toBeLessThanOrEqual(48);
+    }
+  });
+});
+
+test.describe('home hero slider layout at phone width', () => {
+  test.use({ viewport: MOBILE });
+
+  test('no slide leaves more than 48 px of unused space below its content (390)', async ({ page }) => {
+    await open(page, pageByRoute('/'));
+    const dots = page.locator('[data-hs-dot]');
+    for (let i = 0; i < 6; i++) {
+      await dots.nth(i).click();
+      await expect.poll(() => activeIndex(page)).toBe(i);
+      await page.waitForTimeout(450);
+      expect(await unusedBelow(page), `unused space below the content on slide ${i + 1}`).toBeLessThanOrEqual(48);
+    }
   });
 });

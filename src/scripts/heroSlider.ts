@@ -9,7 +9,9 @@
  *     restart on hover or focus. The Play control restarts it on the visitor's explicit request;
  *   - the slides that are not showing leave the accessibility tree and the tab order (`inert`, and `visibility: hidden` in CSS);
  *   - the region announces slide changes (aria-live polite) only while it is not rotating (aria-live off while it rotates).
- * Without this script the markup shows every slide stacked and has no controls (the `is-ready` class is what switches the carousel on).
+ * The carousel layout is CSS (html.js is set before first paint), so it does not change when this script runs. This script keeps the
+ * showing slide, the dots (is-active and aria-current), the inert hidden slides and the live region in step, and adds `is-ready` (the
+ * controls show). Without JavaScript the slides stack and there are no controls.
  */
 
 const STEP_MS = 7000;
@@ -43,8 +45,11 @@ function setup(root: HTMLElement): void {
       s.classList.toggle('is-active', on);
       s.toggleAttribute('inert', !on);
     });
+    // The pill that shows the active dot is styled from `is-active`; aria-current carries the same state to assistive technology.
     dots.forEach((d, n) => {
-      if (n === index) d.setAttribute('aria-current', 'true');
+      const on = n === index;
+      d.classList.toggle('is-active', on);
+      if (on) d.setAttribute('aria-current', 'true');
       else d.removeAttribute('aria-current');
     });
   }

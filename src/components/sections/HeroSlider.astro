@@ -1,8 +1,12 @@
 ---
 /**
- * Home hero slider (WP13). Six slides, one heading level 1 (the first slide) and level 2 on the rest. Every slide is in the markup, stacked,
- * so a reader without JavaScript (and a print) gets all of them. Only when src/scripts/heroSlider.ts has run (the `is-ready` class on the
- * region) do the slides overlap in one grid cell, the others leave the accessibility tree and the tab order, and the controls appear.
+ * Home hero slider (WP13; layout and photographs reworked in WP13b). Six slides, one heading level 1 (the first slide) and level 2 on the rest.
+ * Each slide has a copy column (eyebrow, heading, lead or register sentence, figures or programs, links) and a visual column (one cleared
+ * photograph; the evidence slide adds a Klein-blue proof band: a card over the photograph on the desktop visual column, under it on phones). Every slide is in the markup. Without JavaScript the slides
+ * stack, with no controls (print prints them in order). With JavaScript, html.js is set before first paint (BaseLayout), so the carousel
+ * layout is in place from the first paint: the slides share one grid cell, the showing one is `.is-active`, and the controls keep their space.
+ * The region therefore never changes height when src/scripts/heroSlider.ts runs. The script sets `is-ready` (the controls show), the
+ * active slide, the dots, the inert state of the hidden slides and the live region.
  * Pattern: WAI-ARIA Authoring Practices carousel (region, slides with roledescription "slide", a labelled previous and next, a slide picker,
  * a pause control). Figures come from the facts register (src/data/facts.ts) and carry data-fact for the facts gate.
  */
@@ -13,7 +17,7 @@ import Fact from '../facts/Fact.astro';
 import HeroArt from '../ui/HeroArt.astro';
 import Img from '../ui/Img.astro';
 import { fact } from '../../data/facts';
-import { heroPhoto } from '../../data/photos';
+import { photo } from '../../data/photos';
 import type { HeroSlide, HeroSlideStat } from '../../data/heroSlides';
 import { mayRender } from '../../lib/permissions';
 import { linkAttrs } from '../../lib/url';
@@ -36,75 +40,58 @@ const figure = (s: HeroSlideStat) => {
   if (!f.stat) throw new Error(`HeroSlider: fact ${s.factId} has no stat`);
   return { factId: s.factId, value: f.stat.value, label: s.caption ? s.caption(f) : f.stat.label };
 };
-/** The photograph of a photo panel, when the D13 rule lets it render; otherwise the generated art (Hero.astro's rule). */
-const photoFor = (s: HeroSlide) => {
-  const p = s.photoSeed ? heroPhoto(s.photoSeed) : undefined;
-  return p && mayRender(p.assetId) ? p : undefined;
-};
+
+const views = slides.map((s, i) => {
+  const p = photo(s.photo);
+  return {
+    s,
+    i,
+    first: i === 0,
+    Heading: i === 0 ? 'h1' : 'h2',
+    picture: mayRender(p.assetId) ? p : undefined,
+    stats: (s.stats ?? []).map(figure),
+    proof: s.proof ? figure(s.proof) : undefined,
+  };
+});
 ---
 
 <section class="hs" id={id} aria-roledescription="carousel" aria-label={label} data-hero-slider>
   <div class="hs__track" id={trackId} data-hs-track aria-live="polite">
     {
-      slides.map((s, i) => {
-        const Heading = i === 0 ? 'h1' : 'h2';
-        const photo = s.panel === 'photo' ? photoFor(s) : undefined;
-        return (
-          <div class:list={['hs__slide', i === 0 && 'is-active']} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${total}: ${s.title}`} data-hs-slide>
-            <div class="hs__inner container">
-              <div class="hs__copy">
-                {s.audience && (
-                  <nav class="hs__audience" aria-label="Choose your audience" data-hero-in={i === 0 ? '' : undefined}>
-                    <ul>
-                      {s.audience.map((a) => (
-                        <li>
-                          <a class="link" href={linkAttrs(a.href).href}>{a.label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                )}
-                {s.eyebrow && <p class="hs__eyebrow" data-hero-in={i === 0 ? '' : undefined}>{s.eyebrow}</p>}
-                <Heading class:list={['hs__title', i === 0 ? 't-display-5xl' : 't-display-4xl']} data-hero-in={i === 0 ? '' : undefined}>{s.title}</Heading>
-                {s.fact ? (
-                  <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
-                ) : (
-                  s.lead && <p class="hs__lead" data-hero-in={i === 0 ? '' : undefined}>{s.lead}</p>
-                )}
-                {s.links && (
-                  <div class="hero__actions hs__actions" data-hero-in={i === 0 ? '' : undefined}>
-                    {s.links.map((l) => (
-                      <Button href={l.href} variant={l.variant ?? 'primary'} iconEnd={(l.variant ?? 'primary') === 'primary' ? 'arrow-right' : undefined}>
-                        {l.label}
-                      </Button>
+      views.map(({ s, i, first, Heading, picture, stats, proof }) => (
+        <div class:list={['hs__slide', first && 'is-active']} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${total}: ${s.title}`} data-hs-slide>
+          <div class="hs__inner container">
+            <div class="hs__copy">
+              {s.audience && (
+                <nav class="hs__audience" aria-label="Choose your audience" data-hero-in={first ? '' : undefined}>
+                  <ul>
+                    {s.audience.map((a) => (
+                      <li>
+                        <a class="link" href={linkAttrs(a.href).href}>{a.label}</a>
+                      </li>
                     ))}
-                  </div>
-                )}
-              </div>
-              {s.panel === 'photo' && (
-                <div class:list={['hs__media', 'hero__media', photo ? 'hs__media--photo' : 'hs__media--art']} data-hero-in={i === 0 ? '' : undefined}>
-                  {photo ? (
-                    <Img src={photo.src} alt={photo.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading="eager" fetchpriority="high" assetId={photo.assetId} />
-                  ) : (
-                    <HeroArt seed={s.photoSeed ?? s.id} />
-                  )}
-                </div>
+                  </ul>
+                </nav>
               )}
-              {s.panel === 'stats' && (
+              {s.eyebrow && <p class="hs__eyebrow" data-hero-in={first ? '' : undefined}>{s.eyebrow}</p>}
+              <Heading class:list={['hs__title', first ? 't-display-5xl' : 't-display-4xl']} data-hero-in={first ? '' : undefined}>{s.title}</Heading>
+              {s.fact ? (
+                <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
+              ) : (
+                s.lead && <p class="hs__lead" data-hero-in={first ? '' : undefined}>{s.lead}</p>
+              )}
+              {stats.length > 0 && (
                 <div class="hs__stats">
-                  {(s.stats ?? []).map((st) => {
-                    const v = figure(st);
-                    return (
-                      <div class="hs__stat" data-fact={v.factId}>
-                        <Stat value={v.value} label={v.label} count={false} />
-                      </div>
-                    );
-                  })}
+                  {stats.map((v) => (
+                    <div class="hs__stat" data-fact={v.factId}>
+                      <Stat value={v.value} label={v.label} size="lg" count={false} />
+                    </div>
+                  ))}
                 </div>
               )}
-              {s.panel === 'programs' && (
+              {s.programs && (
                 <ul class="hs__programs">
-                  {(s.programs ?? []).map((p) => (
+                  {s.programs.map((p) => (
                     <li>
                       <a class="hs__program" href={linkAttrs(p.href).href}>
                         <strong>{p.label}</strong>
@@ -114,10 +101,35 @@ const photoFor = (s: HeroSlide) => {
                   ))}
                 </ul>
               )}
+              {s.links && (
+                <div class="hero__actions hs__actions" data-hero-in={first ? '' : undefined}>
+                  {s.links.map((l) => (
+                    <Button href={l.href} variant={l.variant ?? 'primary'} iconEnd={(l.variant ?? 'primary') === 'primary' ? 'arrow-right' : undefined}>
+                      {l.label}
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class="hs__visual">
+              {picture ? (
+                <div class="hs__media" data-hero-in={first ? '' : undefined}>
+                  <Img src={picture.src} alt={picture.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading={first ? 'eager' : 'lazy'} fetchpriority={first ? 'high' : undefined} assetId={picture.assetId} />
+                </div>
+              ) : (
+                <div class="hs__media">
+                  <HeroArt seed={s.id} />
+                </div>
+              )}
+              {proof && (
+                <div class="hs__proof" data-fact={proof.factId}>
+                  <Stat value={proof.value} label={proof.label} size="lg" tone="dark" count={false} />
+                </div>
+              )}
             </div>
           </div>
-        );
-      })
+        </div>
+      ))
     }
   </div>
 
@@ -152,7 +164,7 @@ const photoFor = (s: HeroSlide) => {
   </div>
 </section>
 
-<style>
+<style is:global>
   /* Hidden attributes win over the display rules below (the pause and play glyphs swap through [hidden]). */
   .hs [hidden] {
     display: none !important;
@@ -162,7 +174,13 @@ const photoFor = (s: HeroSlide) => {
     position: relative;
     isolation: isolate;
     overflow: clip;
+    padding-block-start: var(--space-section-mobile);
     background: var(--hero-gradient-edge);
+  }
+  @media (min-width: 768px) {
+    .hs {
+      padding-block-start: var(--space-section-desktop);
+    }
   }
   /* The hero's settle entrance (Hero.astro): a transform-only gradient that plays once and never repeats. */
   .hs::before {
@@ -184,28 +202,32 @@ const photoFor = (s: HeroSlide) => {
     }
   }
 
-  /* Without the carousel (no JavaScript, or before the script has run): the slides stack, each with its own heading and links. */
-  .hs__track {
-    display: block;
-  }
+  /* Slide: the copy column and the visual column. From the desktop breakpoint they sit side by side, centred vertically in the slide.
+     Below it the copy stays at the top of the slide (the headings keep their place from slide to slide) and the photograph fills the rest
+     of the region, so no slide has an empty band under its content. Without JavaScript the slides stack with room between them. */
   .hs__slide {
     min-width: 0;
-    padding-block: var(--space-section-mobile);
-  }
-  @media (min-width: 768px) {
-    .hs__slide {
-      padding-block: var(--space-section-desktop) calc(var(--space-section-desktop) * 0.8);
-    }
+    display: flex;
+    align-items: stretch;
+    padding-block: var(--space-lg);
   }
   .hs__inner {
+    width: 100%;
     display: grid;
     gap: var(--space-lg);
-    align-items: center;
+    align-items: stretch;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
+    .hs__slide {
+      align-items: center;
+    }
     .hs__inner {
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      grid-template-rows: none;
+      align-items: center;
+      gap: 56px;
     }
   }
   .hs__copy {
@@ -251,15 +273,6 @@ const photoFor = (s: HeroSlide) => {
     align-items: center;
     padding-block: 3px;
   }
-  @media (max-width: 480px) {
-    .hs__audience ul {
-      padding-inline: 12px;
-      column-gap: 6px;
-    }
-    .hs__audience li:not(:last-child)::after {
-      margin-left: 6px;
-    }
-  }
   .hs__eyebrow {
     display: inline-flex;
     align-items: center;
@@ -280,7 +293,7 @@ const photoFor = (s: HeroSlide) => {
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
     color: var(--on-surface-variant);
-    max-width: 34em;
+    max-width: 36em;
   }
   .hs__actions {
     display: flex;
@@ -289,65 +302,75 @@ const photoFor = (s: HeroSlide) => {
     align-items: center;
   }
 
-  /* Panels: a photograph (the hero's own frame), stat tiles or the program list. */
-  .hs__media {
-    position: relative;
+  /* Evidence proof: one figure on a Klein-blue band (white numeral, pale label). Below the desktop breakpoint it sits under the photograph;
+     on the desktop visual column it is a card over the foot of the photograph. */
+  .hs__proof {
+    padding: 14px var(--space-md);
     border-radius: var(--radius-lg);
-    overflow: hidden;
-    width: 100%;
-    max-width: 560px;
-    aspect-ratio: 3 / 2;
-    justify-self: center;
+    background: var(--secondary);
     box-shadow: var(--shadow-card);
-    background: var(--surface-container-low);
   }
-  .hs__media--art {
-    aspect-ratio: 4 / 5;
-    max-width: 420px;
+  .hs .hs__proof .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .hs__media :global(img),
-  .hs__media :global(svg) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .hs .hs__proof .stat__label {
+    max-width: none;
   }
-  /* Brand treatment for a real photograph: a soft Klein-blue wash that deepens toward the base (as Hero.astro). */
-  .hs__media--photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(to top, color-mix(in srgb, var(--secondary) 34%, transparent), color-mix(in srgb, var(--secondary) 6%, transparent) 55%, transparent);
+  @media (min-width: 1024px) {
+    .hs__proof {
+      position: absolute;
+      left: var(--space-md);
+      bottom: var(--space-md);
+      width: min(400px, calc(100% - 2 * var(--space-md)));
+      padding: var(--space-md) var(--space-lg);
+    }
   }
+  /* Figure tiles: the numeral in Klein blue, and the label on the full width of the tile (no narrow column). */
   .hs__stats {
     display: grid;
-    gap: var(--space-md);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
     width: 100%;
-    max-width: 420px;
-    justify-self: center;
   }
   .hs__stat {
-    padding: var(--space-lg);
+    padding: var(--space-md);
     border-radius: var(--radius-lg);
     background: var(--surface);
     box-shadow: var(--shadow-card);
   }
+  .hs .hs__stat .stat {
+    --stat-color: var(--secondary);
+  }
+  .hs .hs__stat .stat__label {
+    max-width: none;
+  }
+
+  /* Programs: a grid of links (two columns at phone width, three on the desktop copy column). */
   .hs__programs {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-sm);
     width: 100%;
-    max-width: 480px;
-    justify-self: center;
+  }
+  @media (min-width: 1024px) {
+    .hs__programs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .hs__programs li {
+    display: flex;
   }
   .hs__program {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    min-height: 44px;
-    padding: var(--space-md) var(--space-lg);
+    gap: 4px;
+    padding: var(--space-md);
     border-radius: var(--radius-lg);
     border: 1px solid transparent;
     background: var(--surface);
@@ -367,45 +390,91 @@ const photoFor = (s: HeroSlide) => {
     line-height: var(--lh-body-xs);
     color: var(--on-surface-variant);
   }
-  @media (min-width: 768px) {
-    .hs__media,
-    .hs__stats,
-    .hs__programs {
-      justify-self: end;
+
+  /* The photograph: a 4:3 frame on the desktop visual column; below the desktop breakpoint it fills the space the copy leaves (see the slide rule),
+     with the Klein wash of Hero.astro. */
+  .hs__visual {
+    position: relative;
+    min-width: 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .hs__media {
+    position: relative;
+    flex: 1 1 0;
+    min-height: 180px;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--surface-container-low);
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 1024px) {
+    .hs__visual {
+      display: block;
+      min-height: 0;
+    }
+    .hs__media {
+      flex: none;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
     }
   }
+  /* The image is taken out of the flow, so its intrinsic height never sets the height of a slide: the frame's own size does. */
+  .hs__media img,
+  .hs__media svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hs__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, color-mix(in srgb, var(--secondary) 34%, transparent), color-mix(in srgb, var(--secondary) 6%, transparent) 55%, transparent);
+  }
 
-  /* The controls exist only with the carousel. */
+  /* Carousel (html.js is set before first paint): the slides share one grid cell from the start, so the region keeps its height
+     when the script runs. The controls keep their space from the start and show once the script has run (is-ready). */
   .hs__controls {
     display: none;
   }
-
-  /* Carousel: the slides share one grid cell, so the region is as tall as its tallest slide (no layout shift between slides). */
-  .hs.is-ready .hs__track {
+  .js .hs__track {
     display: grid;
   }
-  .hs.is-ready .hs__slide {
+  .js .hs__slide {
     grid-area: 1 / 1;
-    opacity: 0;
+    padding-block: 0;
     visibility: hidden;
+    opacity: 0;
     transition:
       opacity var(--dur-slow) var(--ease-standard),
       visibility 0s linear var(--dur-slow);
   }
-  .hs.is-ready .hs__slide.is-active {
-    opacity: 1;
+  .js .hs__slide.is-active {
     visibility: visible;
+    opacity: 1;
     transition:
       opacity var(--dur-slow) var(--ease-standard),
       visibility 0s;
   }
-  .hs.is-ready .hs__controls {
+  .js .hs__controls {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-sm) var(--space-md);
+    margin-block-start: var(--space-md);
     padding-block-end: var(--space-lg);
+    visibility: hidden;
+  }
+  .js .hs.is-ready .hs__controls {
+    visibility: visible;
   }
   .hs__nav {
     display: flex;
@@ -436,7 +505,7 @@ const photoFor = (s: HeroSlide) => {
     display: flex;
     align-items: center;
   }
-  /* 24 x 24 hit box (WCAG 2.2 target size); the visible dot is the ::before, and the active one widens. */
+  /* 24 x 24 hit box (WCAG 2.2 target size); the visible dot is the ::before, and the active one (is-active, set by the script) widens. */
   .hs__dot {
     width: 24px;
     height: 24px;
@@ -482,6 +551,19 @@ const photoFor = (s: HeroSlide) => {
   }
   /* Phone width: the arrows, the slide picker and the Pause control share one row (the arrows keep a 40 px target). */
   @media (max-width: 480px) {
+    .hs__audience ul {
+      padding-inline: 12px;
+      column-gap: 6px;
+    }
+    .hs__audience li:not(:last-child)::after {
+      margin-left: 6px;
+    }
+    .hs__stat {
+      padding: 12px;
+    }
+    .hs__program {
+      padding: 12px 14px;
+    }
     .hs__nav {
       gap: 4px;
     }
@@ -495,32 +577,50 @@ const photoFor = (s: HeroSlide) => {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hs.is-ready .hs__slide,
-    .hs.is-ready .hs__slide.is-active {
+    .js .hs__slide,
+    .js .hs__slide.is-active {
       transition: none;
     }
   }
 
-  /* Print: every slide prints in order (the carousel's stacking and the controls do not). Calls to action and the controls do not. */
+  /* Print: every slide prints in order (the carousel's stacking and the controls do not); calls to action, photographs and the controls do not. */
   @media print {
     .hs__track,
-    .hs.is-ready .hs__track {
+    .js .hs__track {
       display: block;
     }
     .hs__slide,
-    .hs.is-ready .hs__slide,
-    .hs.is-ready .hs__slide.is-active {
+    .js .hs__slide,
+    .js .hs__slide.is-active {
       grid-area: auto;
-      opacity: 1;
+      padding-block: var(--space-md);
       visibility: visible;
+      opacity: 1;
       transition: none;
       break-inside: avoid;
     }
     .hs__controls,
-    .hs.is-ready .hs__controls,
+    .js .hs__controls,
+    .js .hs.is-ready .hs__controls,
     .hs__actions,
     .hs__media {
       display: none !important;
+    }
+    .hs__visual {
+      display: block;
+      min-height: 0;
+    }
+    .hs__proof {
+      position: static;
+      width: auto;
+      margin-block-start: var(--space-md);
+      border: 1px solid #000;
+      background: none;
+      box-shadow: none;
+    }
+    .hs .hs__proof .stat {
+      --stat-color: #000;
+      --stat-label: #000;
     }
   }
 </style>

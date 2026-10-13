@@ -4,14 +4,15 @@ import { navGroups, type NavLink } from './nav';
 import { cta } from '../lib/mailto';
 
 /**
- * Slides of the home hero (WP13; rendered by src/components/sections/HeroSlider.astro, driven by src/scripts/heroSlider.ts).
+ * Slides of the home hero (WP13, reworked in WP13b; rendered by src/components/sections/HeroSlider.astro, driven by src/scripts/heroSlider.ts).
  * Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register sentence); no number is typed here.
  * Slide 1 is the positioning hero the page has always opened with. Slides 2 to 6 highlight the impact and the key programs.
+ * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the first is eager, the rest lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs). The first slide's title is the page's only h1; the others are h2.
  */
 
 export interface HeroSlideStat {
-  /** Register fact whose stat (value and label) the tile shows. */
+  /** Register fact whose stat (value and label) the figure shows. */
   factId: string;
   /** Caption under the figure, built from the register; the register's own label when omitted. */
   caption?: (f: Fact) => string;
@@ -25,21 +26,23 @@ export interface HeroSlideLink {
 
 export interface HeroSlide {
   id: string;
-  /** The panel beside the copy: a photograph (or generated art), stat tiles, or the list of programs. */
-  panel: 'photo' | 'stats' | 'programs';
   eyebrow?: string;
   /** The heading: the page's h1 on the first slide, an h2 on the others. */
   title: string;
   lead?: string;
   /** A register sentence, rendered with <Fact>, in place of the lead. */
   fact?: { id: string; field: 'text' | 'headline' };
+  /** Figures in white tiles under the lead. */
   stats?: HeroSlideStat[];
+  /** One figure on a Klein-blue band (the evidence proof): a card over the photograph on desktop, under it on phones. */
+  proof?: HeroSlideStat;
+  /** Program links, in a grid. */
   programs?: NavLink[];
   links?: HeroSlideLink[];
   /** First slide only: audience links above the heading. */
   audience?: { label: string; href: string }[];
-  /** The photo key of the page (src/data/photos.ts heroPhoto), or the seed of the generated art used when the photo may not render. */
-  photoSeed?: string;
+  /** Key of the photograph registry (src/data/photos.ts, photo()). */
+  photo: string;
 }
 
 /** Program links, in slide order. Labels and one-line descriptors are the navigation's own (src/data/nav.ts), so the two stay in step. */
@@ -63,7 +66,6 @@ const discovery = cta('discovery');
 export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'positioning',
-    panel: 'photo',
     title: HEADLINE.home,
     lead: VALUE_PROPOSITION.home,
     audience: [
@@ -75,29 +77,28 @@ export const HOME_SLIDES: HeroSlide[] = [
       { label: discovery.label, href: discovery.href, variant: 'primary' },
       { label: 'See the Evidence', href: '/impact/', variant: 'outline' },
     ],
-    photoSeed: 'home',
+    photo: 'general/women-learners-classroom',
   },
   {
     id: 'scale',
-    panel: 'stats',
     eyebrow: 'Impact at Scale',
     title: 'Reach That Spans Continents',
     lead: 'Learners trained in programs across Asia, Africa, Europe and the Americas.',
     stats: [{ factId: 'SC-01' }, { factId: 'SC-03' }],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
+    photo: 'general/madrasa-students-hall',
   },
   {
     id: 'evidence',
-    panel: 'stats',
     eyebrow: 'Independent Evaluation',
     title: 'Evidence from a Randomized Trial',
     fact: { id: 'RC-01', field: 'headline' },
-    stats: [{ factId: 'RC-02' }],
+    proof: { factId: 'RC-02' },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
+    photo: 'general/classroom-girls',
   },
   {
     id: 'outcomes',
-    panel: 'stats',
     eyebrow: 'Impact Survey 2026',
     title: 'Outcomes Among Surveyed Completers',
     lead: 'Employment and median monthly income, before training and at the October 2026 survey.',
@@ -106,18 +107,18 @@ export const HOME_SLIDES: HeroSlide[] = [
       { factId: 'OC-03', caption: (f) => `median monthly income, up from ${before(f)} before training` },
     ],
     links: [{ label: 'Read the 2026 Survey Results', href: '/impact/outcomes-2026/', variant: 'primary' }],
+    photo: 'general/woman-learner-laptop',
   },
   {
     id: 'programs',
-    panel: 'programs',
     eyebrow: 'Our Programs',
     title: 'Key Programs',
     lead: 'Programs for youth, universities, employers and schools.',
     programs: PROGRAM_HREFS.map(navLink),
+    photo: 'general/computer-lab-rows',
   },
   {
     id: 'women-government',
-    panel: 'stats',
     eyebrow: 'Women and Government',
     title: 'Women’s Programs and Government Scale',
     lead: 'Results from programs for women and from government training contracts.',
@@ -126,5 +127,6 @@ export const HOME_SLIDES: HeroSlide[] = [
       { label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' },
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'outline' },
     ],
+    photo: 'general/her-power-laptops-1',
   },
 ];
