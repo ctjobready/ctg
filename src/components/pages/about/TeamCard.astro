@@ -16,13 +16,12 @@ interface Props {
   /** Profile link (team). Omit for a non-linked card (mentors). */
   href?: string;
   expertise?: string[];
-  /** How many expertise chips show before "+N more". */
+  /** How many expertise chips show (at most 3: no "N more" disclosure, the card stays short). */
   chips?: number;
 }
 const { name, role, photo, alt, assetId, href, expertise = [], chips = 3 } = Astro.props;
 const a = href ? linkAttrs(href) : undefined;
-const shown = expertise.slice(0, chips);
-const more = expertise.slice(chips);
+const shown = expertise.slice(0, Math.min(chips, 3));
 const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 ---
 
@@ -38,16 +37,6 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
         <ul class="tc__chips" role="list" aria-label={`Expertise of ${name}`}>
           {shown.map((e) => <li>{e}</li>)}
         </ul>
-      )
-    }
-    {
-      more.length > 0 && (
-        <details class="tc__more">
-          <summary>{more.length} More {more.length === 1 ? 'Area' : 'Areas'}</summary>
-          <ul class="tc__chips" role="list">
-            {more.map((e) => <li>{e}</li>)}
-          </ul>
-        </details>
       )
     }
     {a && <span class="card__more" aria-hidden="true">Read Profile</span>}
@@ -110,21 +99,5 @@ const initials = name.replace(/^(Md\.|Mr\.|Dr\.)\s+/i, '').split(/\s+/).map((w) 
     background: var(--surface-container-low);
     color: var(--on-surface-variant);
     border: 1px solid var(--primary-fixed);
-  }
-  .tc__more {
-    position: relative;
-    z-index: 2;
-    font-size: var(--fs-body-xs);
-  }
-  .tc__more summary {
-    cursor: pointer;
-    color: var(--primary);
-    font-weight: var(--fw-medium);
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-  }
-  .tc__more[open] summary {
-    margin-bottom: var(--space-sm);
   }
 </style>

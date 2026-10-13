@@ -21,8 +21,10 @@ interface Props {
   reinforce?: string[];
   tone?: 'airy' | 'klein';
   id?: string;
+  /** Who the fallback address belongs to when it is a specific team ("the Bangladesh team at"). */
+  fallbackLabel?: string;
 }
-const { heading, text, plan, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id } = Astro.props;
+const { heading, text, plan, cta, urgency, micro, secondary, reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
 const dark = tone === 'klein';
 // An empty href is a withheld call to action (src/lib/mailto.ts ctaWithheld): without its primary CTA the band has nothing to ask for.
 const withheld = !cta.href;
@@ -51,7 +53,7 @@ const withheld = !cta.href;
         )
       }
     </div>
-    {cta.href.startsWith('mailto:') && <EmailFallback href={cta.href} />}
+    {cta.href.startsWith('mailto:') && <EmailFallback href={cta.href} recipientLabel={fallbackLabel} />}
     {(urgency || micro) && (
       <ul class="cta-band__notes" role="list" data-reveal>
         {urgency && <li>{urgency}</li>}

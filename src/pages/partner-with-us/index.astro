@@ -8,16 +8,15 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import Button from '../../components/system/Button.astro';
 import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
-import CopyBlock from '../../components/pages/home/CopyBlock.astro';
 import RaciTable from '../../components/pages/hub/RaciTable.astro';
+import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
+import { TRACER_MONTHS, TRACKING_MONTHS } from '../../components/pages/partners/partners';
 import ReviewCycle from '../../components/pages/hub/ReviewCycle.astro';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
-import { GOVERNANCE, MICRO_COMMITMENT, SPEED } from '../../data/copy';
-import { navGroups } from '../../data/nav';
+import { MICRO_COMMITMENT, SPEED } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { cta } from '../../lib/mailto';
 import { faqJsonLd } from '../../lib/faq';
@@ -28,23 +27,23 @@ import { linkAttrs } from '../../lib/url';
 const HUB_FAQ = ['Q1', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
-const BLUF =
-  'We co-design youth-employment programs with governments, development partners, foundations, universities, employers and local implementing partners — and track every cohort’s outcomes for 12 months after each course.';
+// Tracking is scope-conditional, as on the audience pages: it is part of each program's agreed scope (PD-02), not a blanket promise.
+const BLUF = `We co-design youth-employment programs with governments, development partners, foundations, universities, employers and local implementing partners, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope.`;
 const description = 'Co-design a youth-employment program with CodersTrust. Choose your route: governments, funders, universities, employers, local partners or investors.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
 
-// Audience cards in the order of the nav menu (nav.ts): funders first, then investors, local partners, universities, employers. Descriptions reuse nav.ts where the menu already says it.
-const navText = (href: string) => navGroups.find((g) => g.id === 'partner')?.items.find((i) => i.href === href)?.description;
+// Six decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (nav.ts). Investors
+// sit with the "Not sure where you fit?" helper below the grid, so the grid is 3 × 2 with no orphan card.
 const audiences = [
-  { title: 'Development Partners & NGOs', icon: 'globe', href: '/partner-with-us/development-partners/' },
-  { title: 'Governments', icon: 'landmark', href: '/partner-with-us/governments/' },
-  { title: 'Foundations & CSR', icon: 'heart-handshake', href: '/partner-with-us/foundations/' },
-  { title: 'Investors', icon: 'trending-up', href: '/investors/' },
-  { title: 'Local Partners (Bangladesh)', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'NGOs, colleges and chambers delivering locally.' },
-  { title: 'Universities & Colleges', icon: 'graduation-cap', href: '/partner-with-us/universities/' },
-  { title: 'Employers', icon: 'briefcase', href: '/partner-with-us/employers/' },
-].map((a) => ({ ...a, text: a.text ?? navText(a.href) }));
+  { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
+  { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: national programs for youth employment.' },
+  { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can verify.' },
+  { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges and chambers delivering locally.' },
+  { title: 'Make Graduates Job-Ready', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
+  { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
+];
+const investors = { title: 'Investors', href: '/investors/' };
 
 // Partnering steps: the weeks and the cohort window are parsed from PD-04 (never retyped).
 const pd04 = fact('PD-04');
@@ -57,7 +56,13 @@ const steps = [
 ];
 
 const diligence = cta('diligence');
-const governance = linkAttrs('/about/governance/');
+// Every item restates a registered arrangement (ID-07, PD-02, PD-09, PD-12, PD-08); nothing new is promised.
+const ddItems = [
+  { icon: 'building-2', title: 'Contracting Entities', text: 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and the funder’s requirements.', href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' },
+  { icon: 'file-check', title: 'Monthly Reports and Tracers', text: `Planned for every cohort, as agreed in the program scope: tracers at ${TRACER_MONTHS} and monthly reports.`, href: '#review-cycle', link: 'What the Reports Cover', ids: 'PD-08 PD-09' },
+  { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records, grievance handling and referral pathways are agreed and documented before enrollment.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
+  { icon: 'search-check', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.', href: '/impact/independent-evaluation/', link: 'Independent Evaluation', ids: 'PD-08 RC-01' },
+];
 
 const jsonLd = [
   webPage({ path, name: `${title} | CodersTrust`, description, type: 'CollectionPage' }),
@@ -65,7 +70,7 @@ const jsonLd = [
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#audiences`,
     name: 'Partnership routes',
-    itemListElement: audiences.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
+    itemListElement: [...audiences, investors].map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
     isPartOf: ref(ORG_ID),
   },
   faqJsonLd('all', path, HUB_FAQ),
@@ -82,22 +87,28 @@ const jsonLd = [
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
       <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
-      <div class="grid-cards grid-cards--4">
+      <div class="grid-cards">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
-        <CategoryCard title="Not sure where you fit?" icon="message-circle" text="Tell us your goals and we will point you to the right route." href="/contact/" />
+      </div>
+      <div class="hub__helper" data-reveal>
+        <Icon name="message-circle" size={28} strokeWidth={1.5} class="hub__helper-icon" />
+        <p class="hub__helper-text"><strong>Not sure where you fit?</strong> Tell us your goals and we will point you to the right route.</p>
+        <p class="cluster hub__helper-links">
+          <a class="link" href={linkAttrs('/contact/').href}>Talk to Us<Icon name="arrow-right" size={16} /></a>
+          <a class="link" href={linkAttrs(investors.href).href}>Investing in the Platform? See Investors<Icon name="arrow-right" size={16} /></a>
+        </p>
       </div>
     </Section>
   </Tone>
 
+  <WhyPartner />
+
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="How Partnering Works" title="From First Conversation to First Cohort" lead="Four steps, then monthly reports. Who does what is clear from the start." />
+      <SectionHeader id="how-h" eyebrow="How Partnering Works" title="Your First 90 Days" lead="From first conversation to first cohort in four steps, then monthly reports. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
-      <p class="hub__fn text-muted t-body-xs">Timing: for grant-funded pilots. Public procurement follows the agency’s own timeline.</p>
-      <h3 class="t-heading-xl hub__h3">Who Does What</h3>
-      <RaciTable />
     </Section>
   </Tone>
 
@@ -107,22 +118,33 @@ const jsonLd = [
 
   <Tone cmf="DILIGENCE" tone="ice">
     <Section id="due-diligence" aria-labelledby="dd-h">
-      <div class="dd">
-        <div class="dd__copy">
-          <SectionHeader id="dd-h" eyebrow="Due Diligence" title="Know Who You Are Contracting With" />
-          <CopyBlock block={GOVERNANCE} class="dd__text" />
-          <div class="cluster dd__actions">
-            <a class="link" href={governance.href}>Read About Governance and Accountability<Icon name="arrow-right" size={16} /></a>
-            <Button variant="outline" size="sm" href={diligence.href}>{diligence.label}</Button>
-          </div>
-        </div>
-        <Icon name="shield" size={96} strokeWidth={1} class="dd__icon" />
-      </div>
+      <SectionHeader id="dd-h" eyebrow="Due Diligence" title="Due Diligence in One View" lead="What a funder or procurement team asks first, with the page that answers it." />
+      <ul class="ddv" role="list">
+        {ddItems.map((d) => (
+          <li class="ddv__item" data-fact={d.ids} data-reveal>
+            <Icon name={d.icon} size={28} strokeWidth={1.5} class="ddv__icon" />
+            <h3 class="ddv__title t-heading-m">{d.title}</h3>
+            <p class="ddv__text">{d.text}</p>
+            <a class="link ddv__link" href={linkAttrs(d.href).href}>{d.link}<Icon name="arrow-right" size={16} /></a>
+          </li>
+        ))}
+      </ul>
+      <p class="cluster ddv__more">
+        <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href={diligence.href}>{diligence.label}<Icon name="arrow-right" size={16} /></a>
+      </p>
     </Section>
   </Tone>
 
   <Tone cmf="FAQ">
     <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Six questions partners ask before they start. Each audience page answers the rest." />
+  </Tone>
+
+  <Tone cmf="ROLES" tone="airy">
+    <Section id="who-does-what" aria-labelledby="raci-h">
+      <SectionHeader id="raci-h" eyebrow="Roles" title="Who Does What" lead="Who is responsible, accountable, consulted and informed at each step of a partnership." />
+      <RaciTable />
+    </Section>
   </Tone>
 
   <Tone cmf="CTA">
@@ -141,45 +163,85 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
-  .hub__fn {
-    margin: var(--space-md) 0 0;
-  }
-  .hub__h3 {
-    margin: var(--space-lg) 0 var(--space-md);
-    color: var(--secondary);
-  }
-  .dd {
+  .hub__helper {
+    margin-top: var(--space-md);
+    padding: var(--space-md) var(--space-gutter);
     display: grid;
-    gap: var(--space-lg);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-xs) var(--space-md);
     align-items: center;
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
   }
-  .dd__copy {
-    display: grid;
-    gap: var(--space-md);
-  }
-  .dd__copy :global(.sh) {
-    margin-bottom: 0;
-  }
-  .dd__text {
+  .hub__helper > p {
     margin: 0;
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--on-surface);
-    max-width: 44rem;
   }
-  .dd__actions {
-    gap: var(--space-md) var(--space-lg);
-  }
-  .dd :global(.dd__icon) {
-    display: none;
+  .hub__helper :global(.hub__helper-icon) {
     color: var(--primary);
   }
+  .hub__helper-text {
+    color: var(--on-surface);
+  }
+  .hub__helper-links {
+    grid-column: 2;
+    gap: var(--space-xs) var(--space-lg);
+  }
   @media (min-width: 900px) {
-    .dd {
-      grid-template-columns: minmax(0, 1fr) auto;
+    .hub__helper {
+      grid-template-columns: auto minmax(0, 1fr) auto;
     }
-    .dd :global(.dd__icon) {
-      display: block;
+    .hub__helper-links {
+      grid-column: auto;
     }
+  }
+  .ddv {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 720px) {
+    .ddv {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .ddv {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .ddv__item {
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .ddv__item > * {
+    margin: 0;
+  }
+  .ddv__item :global(.ddv__icon) {
+    color: var(--primary);
+  }
+  .ddv__title {
+    color: var(--secondary);
+  }
+  .ddv__text {
+    flex: 1;
+    color: var(--on-surface-variant);
+  }
+  .ddv__link {
+    align-self: flex-start;
+    min-height: 24px;
+  }
+  .ddv__more {
+    margin: var(--space-md) 0 0;
+    gap: var(--space-xs) var(--space-lg);
   }
 </style>

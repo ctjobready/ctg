@@ -6,13 +6,15 @@
  */
 interface Props {
   href: string;
+  /** Who the address belongs to, when it is not the general team ("the Bangladesh team at"). */
+  recipientLabel?: string;
 }
-const { href } = Astro.props;
+const { href, recipientLabel } = Astro.props;
 const address = /^mailto:([^?]+)/i.exec(href)?.[1];
 const recipient = address ? decodeURIComponent(address) : undefined;
 ---
 
-{recipient && <p class="email-fallback">If your email app does not open, write to <span class="email-fallback__addr">{recipient}</span>.</p>}
+{recipient && <p class="email-fallback">If your email app does not open, write to {recipientLabel ? `${recipientLabel} ` : ''}<span class="email-fallback__addr">{recipient}</span>.</p>}
 
 <style>
   .email-fallback {

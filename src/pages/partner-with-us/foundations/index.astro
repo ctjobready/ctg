@@ -36,6 +36,7 @@ import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import FitBrief from '../../../components/pages/partners/FitBrief.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
@@ -58,6 +59,9 @@ const { title, description } = meta(
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
+// PD-18 names co-branded certificates and events; they are part of a funder's program only where the scope agrees them.
+const pd18 = endSentence(fact('PD-18').text).replace('co-branded certificates and events', 'co-branded certificates and events where agreed in the program scope');
+if (!pd18.includes('where agreed in the program scope')) throw new Error('Foundations: PD-18 wording changed; update the scope qualifier');
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
@@ -82,18 +86,22 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       'Fund a supported path from learning to earning: training with certification preparation, mentoring and placement support.',
       'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
       'Reporting that fits your framework: monthly reports, a quarterly steering review and SDG-mapped reporting.',
-      'Two ways to fund, YouthWIDE cohorts or the JobReady platform; expansion is always your decision.',
+      'Two ways to fund: YouthWIDE cohorts or the JobReady platform. Expansion is always your decision.',
     ]}
     links={[
       { label: 'How It Works', href: '#mechanism' },
       { label: 'Evidence', href: '#proof-band' },
       { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#offer' },
+      { label: 'Options', href: '#cohort-grants' },
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <ForNotFor
+    forText="You want to fund outcomes you can see."
+    notText="You want a one-off donation with no reporting."
+  />
   <GlanceBand
     variant="strip"
     id="glance"
@@ -176,14 +184,14 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <SubBand>
     <Callout eyebrow="Choose Your Route">
       <p class="cluster">
-        <a class="link" href="#offer">Fund YouthWIDE Cohorts<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href="#platform-grant">Fund the JobReady Platform<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href="#cohort-grants">Fund YouthWIDE Cohorts<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href="#platform-grants">Fund the JobReady Platform<Icon name="arrow-right" size={16} /></a>
       </p>
     </Callout>
   </SubBand>
   <SubBand>
     <Callout eyebrow="Reporting and Recognition">
-      <p data-fact="PD-18">{endSentence(fact('PD-18').text)}</p>
+      <p data-fact="PD-18">{pd18}</p>
       <ul class="cluster" role="list" data-fact="ID-09">
         <li><Badge tone="eyebrow">SDG 4: Quality Education</Badge></li>
         <li><Badge tone="eyebrow">SDG 5: Gender Equality</Badge></li>
@@ -224,7 +232,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     rows={[
       {
         feature: `Mentoring, Placement Support and Outcome Tracking for ${TRACKING_MONTHS} Months, in the Standard Inclusions`,
-        means: 'your grant is accountable for first paid work, not attendance.',
+        means: 'results are measured against first paid work, not attendance, using the agreed scorecard.',
         outcome: 'A grant followed through to first paid work',
         relieves: 'Grants buy hours, rarely earnings',
       },
@@ -241,7 +249,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
         relieves: 'Accountable implementers are hard to find',
       },
       {
-        feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework, with Co-Branded Certificates and Events',
+        feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework, with Co-Branded Certificates and Events Where Agreed in the Program Scope',
         means: 'reporting that fits your framework.',
         outcome: 'Reports mapped to the SDGs',
       },
@@ -254,7 +262,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     audience="foundations"
     ids={FAQ_IDS}
     title="Questions Funders Ask"
-    lead="Right for you if you want to fund outcomes you can see. Not right if you want a one-off donation with no reporting."
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
@@ -265,10 +272,10 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   />
 
   <!-- C11 · Offer -->
-  <OfferBand eyebrow="Cohort Grants" title="Choose Where to Start." />
-  <SubBand tone="airy" pull id="platform-grant">
-    <Callout eyebrow="Option: JobReady Platform Grant"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
-    <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
+  <OfferBand id="cohort-grants" eyebrow="Track 1 · Cohort Grants" title="Choose a Cohort Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See Platform Grants below." />
+  <SubBand tone="airy" pull id="platform-grants">
+    <Callout eyebrow="Track 2 · Platform Grants, an Alternative Funding Vehicle"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
+    <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. Platform-grant details are discussed in the introduction call.</p></Callout>
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
@@ -287,7 +294,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <!-- C14 · Next steps -->
   <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step (doc 04 §4). -->
-  <NextStepsBand title="What Happens After You Say Yes" timing={false} />
+  <NextStepsBand title="What Happens After You Say Yes" lead="Cohort grants follow these steps. A platform grant starts with the introduction call." timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />

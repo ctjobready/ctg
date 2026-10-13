@@ -1,0 +1,48 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Purpose-labeled link between an audience page and its program page (WP20b, IA): the audience page says what the program page
+ * holds ("See Campus Delivery Details"), and the program page points back ("For Universities: Start Here"). A text link, never a button.
+ */
+interface Props {
+  /** What this link is for, in a few words ("See the Program"). */
+  kicker: string;
+  label: string;
+  href: string;
+  id?: string;
+}
+const { kicker, label, href, id = 'route-link' } = Astro.props;
+---
+
+<Section id={id} tone="white" pad="sm" aria-label={kicker}>
+  <p class="rl">
+    <span class="rl__kicker">{kicker}</span>
+    <a class="link" href={linkAttrs(href).href}>{label}<Icon name="arrow-right" size={16} /></a>
+  </p>
+</Section>
+
+<style>
+  .rl {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-md);
+  }
+  .rl__kicker {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .rl :global(.link) {
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+  }
+</style>

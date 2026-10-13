@@ -8,6 +8,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
+import RouteLink from '../../components/pages/partners/RouteLink.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
@@ -44,8 +45,8 @@ const campus = ctaFor('campus');
 const hours = statValue('PD-01');
 
 const faqSources: FaqSource[] = [
-  { q: 'Is JobReady@Campus Right for Our Institution?', html: 'Right for you if you want employer-demand tracks with certification preparation alongside degrees. Not right if you want to replace the degree.' },
-  ...['Q1', 'Q13', 'Q3', 'Q10', 'Q8'].map((id) => ({ audience: 'universities' as const, id })),
+  { audience: 'variants' as const, id: 'Q3-institution' },
+  { audience: 'universities' as const, id: 'Q13' },
 ];
 
 const jsonLd = [
@@ -55,7 +56,7 @@ const jsonLd = [
 ];
 
 const options = [
-  { ...PROGRAM_OPTIONS[0], note: 'Prove the model with a first campus program.' },
+  { ...PROGRAM_OPTIONS[0], name: 'First Multi-Cohort Program', note: 'Prove the model with a first campus program.' },
   { ...PROGRAM_OPTIONS[1], note: 'Expand to more cohorts and campuses on the pilot’s results.' },
 ];
 ---
@@ -70,6 +71,8 @@ const options = [
     artSeed="jobready-campus"
   />
 
+  <RouteLink kicker="The Partnership Route" label="For Universities: Start Here" href="/partner-with-us/universities/" />
+
   <DefinitionBlock heading="What Is JobReady@Campus?">
     <p data-fact="IN-09"><Fact id="IN-09" />.</p>
   </DefinitionBlock>
@@ -83,24 +86,6 @@ const options = [
       { label: 'Placement Support', text: 'Mentoring and placement support lead into freelance, local, remote and overseas work, with professional internships where employer placements are available.', facts: ['IN-09', 'PD-15'] },
       { label: 'Reporting', text: 'Baseline data, tracer surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
       { label: 'Agreed Before Enrollment', text: 'The tracks and campus labs, set in a discovery session, and the program scope.', facts: ['PD-02'] },
-    ]}
-  />
-
-  <!-- C2 -->
-  <ProblemSection
-    title="For Too Many Graduates, a Degree Is Not Turning into a Job."
-    bluf="Employers worldwide cannot find the skills they need, and institutions lack placement results they can publish."
-    factIds={['PX-03', 'PX-05']}
-    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
-    extra={[{ title: 'Institutions Lack Placement Results to Publish', text: 'Without tracer data, a university cannot show where its degree holders end up working.' }]}
-  />
-
-  <!-- C3 -->
-  <CostSection
-    title="Globally, Employers Report Difficulty Finding Talent"
-    blocks={[
-      { claim: 'Employers Want AI Skills Alongside the Degree.', factId: 'PX-08', scope: 'Globally', implication: 'A degree alone does not show the skills employers are asking for.' },
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Students need practical skills matched to current demand, with a work-entry plan agreed before training.' },
     ]}
   />
 
@@ -130,7 +115,7 @@ const options = [
 
   <!-- C6 -->
   <MechanismSection
-    title="Skills Training That Runs Beside the Academic Program"
+    title="How the Campus Model Works"
     positioning={POSITIONING.campus}
     blocks={[
       { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
@@ -148,6 +133,7 @@ const options = [
 
   <!-- C7: the National University partnership first (its size and onboarding pipeline are shown apart from the track record and the outcome evidence), then the broader evidence -->
   <PairedEvidence
+    eyebrow="Delivery Context: National University"
     title="The National University Partnership"
     lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
     items={[
@@ -156,34 +142,18 @@ const options = [
     ]}
   />
 
-  <!-- C7 -->
-  <ProofBand title="Evidence from CodersTrust’s Wider Programs" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'OC-09', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
-    <div class="proof-notes">
-      <p data-fact="OC-09">Among surveyed completers, <b>{degree}</b> hold a bachelor’s degree or higher; university graduates are a central audience for CodersTrust programs.</p>
-      <CopyP block={SURVEY_EMPLOYMENT} />
-    </div>
-  </ProofBand>
-  <CaseStudyCarousel
-    title="Proof in Practice"
-    items={[
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
-    ]}
-  />
-
   <!-- C8 -->
   <FeaturesTable
     title="Each Feature Maps to What Institutions Ask For."
     rows={[
       { feature: 'Industry Certifications by Track and Three Months of Milestone-Based Mentoring', means: 'each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
-      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot find the skills they need' },
+      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
       { feature: 'Tracer Surveys, Documentary Evidence of Earnings and Monthly Reports', means: 'your institution has outcome data it can report.', outcome: 'Placement results you can discuss', relieves: 'No placement results to publish' },
       { feature: 'Certified Local Facilitators and Campus Labs as Blended-Learning Centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },
     ]}
   />
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How It Works" title="Three Steps from Set-Up to Placement" />
+    <SectionHeader id="steps-h" eyebrow="From Set-Up to Placement" title="Three Steps from Set-Up to Placement" />
     <div data-fact="PD-01 PD-02 PD-08 PD-09">
       <StepFlow
         steps={[
@@ -198,11 +168,8 @@ const options = [
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Institutions Ask" />
 
-  <!-- C10 -->
-  <ComparisonBand title="Compare the Approaches." />
-
   <!-- C11 -->
-  <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options}>
+  <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices; the indicative budget is shared in the discovery session." options={options} recommended={0}>
     <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
   </OfferSection>
 
@@ -224,7 +191,7 @@ const options = [
     id="cta"
     heading="Bring Industry Skills to Your Campus."
     cta={campus}
-    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+    secondary={{ label: 'For Universities: Start Here', href: '/partner-with-us/universities/' }}
     micro={MICRO_COMMITMENT}
   >
     <CopyP block={SPEED_UNIVERSITIES} class="cta-speed" />

@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
+import Badge from '../../system/Badge.astro';
 import { optionDuration } from '../../../lib/format';
 
 /**
@@ -25,9 +26,11 @@ interface Props {
   lead?: string;
   options?: readonly Option[];
   cards?: CardItem[];
+  /** Index of the option to mark "Recommended First Step" (the pilot). */
+  recommended?: number;
   id?: string;
 }
-const { eyebrow = 'Start', title, lead, options, cards, id = 'offer' } = Astro.props;
+const { eyebrow = 'Start', title, lead, options, cards, recommended, id = 'offer' } = Astro.props;
 const count = (options?.length ?? 0) + (cards?.length ?? 0);
 const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 ---
@@ -41,6 +44,7 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
           <article class="card offer" data-reveal data-fact="PD-05">
             <div class="card__body">
               <p class="eyebrow">Option {i + 1}</p>
+              {recommended === i && <p class="offer__rec"><Badge tone="sale">Recommended First Step</Badge></p>}
               <h3 class="card__title">{o.name}</h3>
               <p class="offer__volume">{o.size}</p>
               <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
@@ -70,6 +74,9 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 </Section>
 
 <style>
+  .offer__rec {
+    margin: 0 0 var(--space-xs);
+  }
   .offer__volume {
     font-size: var(--fs-heading-l);
     font-weight: var(--fw-bold);

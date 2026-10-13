@@ -10,6 +10,7 @@ import Button from '../../components/system/Button.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
+import RouteLink from '../../components/pages/partners/RouteLink.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
@@ -45,10 +46,6 @@ const talent = ctaFor('talent');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 const faqSources: FaqSource[] = [
-  { q: 'Is JobReady@Work Right for Us?', html: 'Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool.', evidence: ['IN-10', 'IN-04'] },
-  { audience: 'employers', id: 'Q5' },
-  { audience: 'employers', id: 'Q1' },
-  { audience: 'employers', id: 'Q12' },
   { audience: 'variants', id: 'Q8-employer' },
   { audience: 'employers', id: 'Q11' },
 ];
@@ -80,6 +77,8 @@ const approach = [
     artSeed="jobready-work"
   />
 
+  <RouteLink kicker="The Partnership Route" label="For Employers: Start Here" href="/partner-with-us/employers/" />
+
   <DefinitionBlock heading="What Is JobReady@Work?">
     <p data-fact="IN-10"><Fact id="IN-10" />.</p>
   </DefinitionBlock>
@@ -93,39 +92,6 @@ const approach = [
       { label: 'Talent', text: 'Job-ready candidates through CodersTrust’s placement team, scoped against the experience and credentials available.', facts: ['IN-04'] },
       { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set.', facts: ['IN-10'] },
       { label: 'Agreed Before You Start', text: 'The skills and team size from the needs assessment, the success measures, and the scope and price of the program.', facts: ['IN-10', 'PD-02'] },
-    ]}
-  />
-
-  <!-- C2 -->
-  <ProblemSection
-    title="You Cannot Find the Digital Talent You Need."
-    bluf="Hiring alone is not closing the gap, and your teams need AI skills now."
-    factIds={['PX-05']}
-    scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
-    extra={[
-      { title: 'Hiring Alone Does Not Close the Skills Gap', text: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need, so hiring alone does not close the gap.`, factIds: ['PX-05'] },
-      { title: 'Your Teams Need Upskilling for AI Workflows', text: 'Training works best when it is built around the tasks in your own roles.', factIds: ['IN-10'] },
-    ]}
-  />
-
-  <!-- C3 -->
-  <CostSection
-    title="AI Is Changing the Skills Your Teams Need."
-    blocks={[
-      { claim: 'Jobs That Need AI Skills Are Growing Fast.', factId: 'PX-08', scope: 'Globally', implication: 'Employers are creating roles that need AI skills, and training plans need to keep pace.' },
-      { claim: 'AI Is Changing the Job Mix by 2030.', factId: 'PX-07', scope: 'Globally', implication: 'Upskilling now keeps your team ahead of the change.' },
-    ]}
-  />
-
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('jobready-work')}
-    title="What Changes for Your Team"
-    lead="Illustrative: a team applies AI tools in daily work, and job-ready candidates are sourced for open roles."
-    vignettes={[
-      { kind: 'Functional', title: 'A Team That Uses AI Tools Every Day', text: 'Workshops start from tasks in your own roles, so the skills carry straight into daily work.' },
-      { kind: 'Emotional', title: 'A Job-Ready Candidate Pipeline', text: 'Candidates are sourced through CodersTrust’s placement team and scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
-      { kind: 'Social', title: 'Progress You Can Measure', text: 'Success measures are agreed before you start and checked in the progress evaluation.' },
     ]}
   />
 
@@ -151,7 +117,7 @@ const approach = [
     <div class="tracks" data-fact="IN-10 PA-07 IN-04">
       <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for." />
       <FeatureCard icon="sparkles" title="AI Leadership Programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
-      <FeatureCard icon="briefcase" title="Talent Through Our Placement Team" text="Job-ready candidates are supplied through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and is designed to add a self-serve hiring channel." />
+      <FeatureCard icon="briefcase" title="Candidate Sourcing Through CodersTrust’s Placement Team" text="Job-ready candidates are introduced through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and is designed to add a self-serve hiring channel." />
     </div>
   </MechanismSection>
 
@@ -171,30 +137,8 @@ const approach = [
     ]}
   />
 
-  <!-- C8 -->
-  <FeaturesTable
-    title="Each Feature Maps to What Employers Ask For."
-    rows={[
-      { feature: 'A Placement Team Plus Trainees from Employer-Demand Certification Tracks', means: 'you get a short route to job-ready candidates.', outcome: 'Job-ready candidates for your roles', relieves: 'You cannot find the digital talent you need' },
-      { feature: 'An AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment', means: 'your training includes AI content agreed before enrollment.', outcome: 'People ready to work with AI tools', relieves: 'Hiring Alone Does Not Close the Skills Gap' },
-      { feature: 'A Customized Curriculum and Interactive Workshops', means: 'your team learns on tasks from your own roles.', outcome: 'A team trained on its own tasks', relieves: 'Your teams need upskilling for AI workflows' },
-    ]}
-  />
-  <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" lead="Success measures are agreed during the needs assessment, before the program starts." />
-    <div data-fact="IN-10 PD-03">
-      <StepFlow
-        steps={[
-          { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-          { title: 'Prepare for Certification', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
-          { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
-        ]}
-      />
-    </div>
-  </Section>
-
-  <!-- C9 -->
-  <FaqSection sources={faqSources} title="Questions Employers Ask" />
+  <!-- C9: only the questions about the program itself; the audience page answers the rest -->
+  <FaqSection sources={faqSources} title="Questions About the Program" />
 
   <!-- C11 -->
   <OfferSection
@@ -202,29 +146,20 @@ const approach = [
     lead="Pick one or both."
     cards={[
       { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.' },
-      { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates through CodersTrust’s placement team.' },
+      { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.' },
     ]}
   >
     <p class="note note--key" data-fact="PD-02">Pricing is set per program and shared after the needs assessment.</p>
   </OfferSection>
 
   <!-- C7, moved below the employer offer (review round 3): the employer journey leads with the employer facts; this is the youth-program evidence. -->
-  <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02', 'RC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
+  <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
     <div class="proof-notes">
       <p data-fact="OC-07"><strong>From CodersTrust’s youth programs:</strong> <Fact id="OC-07" /></p>
       <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
       <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
     </div>
   </ProofBand>
-  <CaseStudyCarousel
-    title="Proof in Practice"
-    items={[
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
-    ]}
-  />
-
   <!-- C12 -->
   <RiskSection
     title="Start with a Pilot Team. Decide on Evidence."

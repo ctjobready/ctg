@@ -2,6 +2,7 @@
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../system/Icon.astro';
+import Badge from '../system/Badge.astro';
 import { fact } from '../../data/facts';
 import { offerDurationText, parseProgramOptions } from './copyText';
 
@@ -17,8 +18,11 @@ interface Props {
   /** Small label above the title (default "Start"). */
   eyebrow?: string;
   id?: string;
+  /** Mark the first (pilot) option "Recommended First Step" (default on). */
+  recommendFirst?: boolean;
 }
 const {
+  recommendFirst = true,
   title = 'Three Ways to Start, Sized to Your Goals',
   lead = 'Pricing is set per program, and we share an indicative budget in the discovery session.',
   blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
@@ -40,6 +44,7 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
         <article class="card offer" data-reveal data-fact="PD-05">
           <div class="card__body">
             <p class="eyebrow">Option {i + 1}</p>
+            {recommendFirst && i === 0 && <p class="offer__rec"><Badge tone="sale">Recommended First Step</Badge></p>}
             <h3 class="card__title">{o.name}</h3>
             <p class="offer__volume">{o.volume}</p>
             <p class="card__meta offer__duration">{offerDurationText(o.name, o.duration)}</p>
@@ -59,6 +64,9 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
 </Section>
 
 <style>
+  .offer__rec {
+    margin: 0 0 var(--space-xs);
+  }
   .offer__volume {
     font-size: var(--fs-heading-l);
     font-weight: var(--fw-bold);

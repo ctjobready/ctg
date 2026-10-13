@@ -53,7 +53,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
                   <p class="fc__label">{concernLabel}</p>
                   <p class="fc__pain">
                     {r.painId ? <span class="fc__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
-                    <span>{r.painId && <span class="sr-only">Concern {painNumber(r.painId)}: </span>}{r.relieves}</span>
+                    <span>{r.relieves}</span>
                   </p>
                 </>
               ) : (

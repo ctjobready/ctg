@@ -28,8 +28,10 @@ interface Props {
   id?: string;
   /** Small label above the heading; defaults to "The Evidence". */
   eyebrow?: string;
+  /** Short form: the survey result as one sentence instead of the before-and-after chart (pages whose offer the youth programs did not evaluate). */
+  compact?: boolean;
 }
-const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The Evidence' } = Astro.props;
+const { title, lead, statIds, chartId = 'OC-01', chartTitle = 'Employment Among Surveyed Completers', headlineFact, plainLine = false, trialScope, links = [], id = 'proof-band', eyebrow = 'The Evidence', compact = false } = Astro.props;
 // A band headed by the randomized trial carries a short H2; the fact's own headline is body text below it. RC-01's headline leads with the
 // +10.3 pp employment result (WP7), so no separate RC-02 sentence is printed before it; the [PLAIN-LINE] still follows where a page asks for it.
 const heading = headlineFact ? TRIAL_BAND_HEADING : titleCase(title);
@@ -69,7 +71,7 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
       </div>
     )
   }
-  <p class="proofband__sub eyebrow">Alumni Survey Results</p>
+  {!compact && <p class="proofband__sub eyebrow">Alumni Survey Results</p>}
   <div class:list={['proofband', survey.length === 0 && 'proofband--solo']}>
     {
       survey.length > 0 && (
@@ -78,8 +80,9 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
         </div>
       )
     }
-    <div class="proofband__chart">
+    <div class="proofband__chart" data-fact={compact ? chartId : undefined}>
       <p class="proofband__chartlead">{chartLead}</p>
+      {!compact && <>
       <BeforeAfter
         title={chartTitle}
         before={{ label: 'Before', value: before, caption: 'Before Training' }}
@@ -90,6 +93,7 @@ const chartLead = `Among surveyed completers, employment was ${cf.stat?.value} a
         tone="dark"
       />
       <p class="proofband__fn">Chart data: {cf.stat?.label}</p>
+      </>}
     </div>
   </div>
   {

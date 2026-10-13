@@ -39,7 +39,7 @@ const expect = [
   </Section>
 
   <Section id="why" aria-labelledby="why-h">
-    <SectionHeader id="why-h" eyebrow="Why CodersTrust" title="A Mission You Can Measure">
+    <SectionHeader id="why-h" eyebrow="Our Mission" title="Why Join CodersTrust">
       <p class="lead"><Fact id="ID-04" /></p>
     </SectionHeader>
     <div class="cr-stats">
@@ -78,18 +78,18 @@ const expect = [
     <SectionHeader id="roles-h" eyebrow="Roles" title="Send a Speculative Application" />
     <div class="cr-roles card" data-reveal>
       <div class="card__body">
-        <h3 class="card__title">We’re Not Hiring for Specific Roles Right Now</h3>
-        <p class="card__text">Send a speculative application. Tell us what you do well, where you are based and what you would like to work on, and we will keep it on file for when a role opens.</p>
-        <p><Button href={apply.href} icon="mail" variant="outline">Send a Speculative Application</Button></p>
+        <h3 class="card__title">Speculative Applications Welcome</h3>
+        <p class="card__text">Tell us what you do well, where you are based and what you would like to work on, and we will keep it on file for when a role opens.</p>
+        <p><a class="link" href={apply.href}>{apply.label}<Icon name="arrow-right" size={16} /></a></p>
       </div>
     </div>
   </Section>
 
   <Section id="apply" tone="ice" aria-labelledby="apply-h">
-    <SectionHeader id="apply-h" eyebrow="How to Apply" title="From CV to Offer" lead="Applications go to the CodersTrust Bangladesh HR team." />
+    <SectionHeader id="apply-h" eyebrow="How to Apply" title="When a Role Opens" lead="Applications go to the CodersTrust Bangladesh HR team." />
     <StepFlow steps={[
-      { title: 'Resume Assessment', text: 'We scan and sort resumes to find the best candidates.' },
-      { title: 'In-Person Interview', text: 'Shortlisted candidates are invited to a face-to-face interview.' },
+      { title: 'Your Application', text: 'Send your CV. We keep it on file for when a role opens.' },
+      { title: 'Application Review', text: 'We review applications and invite shortlisted candidates to interview.' },
       { title: 'Employment Offer', text: 'The selected candidate receives an offer letter and package details.' },
     ]} />
     <p class="cr-mail">Send your CV to <a href={apply.href}>{CAREERS_EMAIL}</a>.</p>
@@ -97,7 +97,7 @@ const expect = [
 
   <Section id="eoe" aria-labelledby="eoe-h">
     <SectionHeader id="eoe-h" eyebrow="Equal Opportunity" title="Everyone Is Equal Here" />
-    <p class="cr-eoe">We believe every person is equal, and we judge people on their work and merit. We put inclusion at the front of how we operate and build tolerance and understanding into everything we do.</p>
+    <p class="cr-eoe">We believe every person is equal, and we judge people on their work and merit. Inclusion comes first in how we operate.</p>
   </Section>
 
 </BaseLayout>

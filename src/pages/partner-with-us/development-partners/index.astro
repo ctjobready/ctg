@@ -34,11 +34,13 @@ import Callout from '../../../components/pages/partners/Callout.astro';
 import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import FitBrief from '../../../components/pages/partners/FitBrief.astro';
-import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import RouteLink from '../../../components/pages/partners/RouteLink.astro';
+import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SPEED, STEPS, SURVEY_EMPLOYMENT, TRAINED_REACH, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -49,11 +51,12 @@ const PATH = '/partner-with-us/development-partners/';
 const primary = cta('discovery');
 
 const { title, description } = meta(
-  'Youth Employment Implementing Partner',
+  'Youth Employment for Development Partners',
   'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
 );
 
 const FAQ_IDS = ['Q1', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
+const oc01 = fact('OC-01').stat!;
 const undpQuote = factPart('PR-03a', /“([^”]+)”/);
 const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 ---
@@ -89,8 +92,13 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
+  <RouteLink kicker="See the Program" label="How YouthWIDE Works" href={LINKS.youthwide} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <ForNotFor
+    forText="You fund youth employment and want results you can report."
+    notText="You want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
+  />
   <GlanceBand
     variant="strip"
     id="glance"
@@ -106,7 +114,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="Enrollment Targets Are Met. Employment Lags."
+    title="Enrollment Targets Are Often Met. Employment Results Lag."
     bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part."
     factIds={['PX-01']}
   >
@@ -114,7 +122,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       slot="lead"
       gains={['Employment results you can report', 'Confidence that the budget produced earnings', 'A reputation as a funder whose programs place people']}
       pains={[
-        { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are met, but employment lags.' },
+        { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are often met, while employment results lag behind.' },
         { q: 'Why do the hardest-to-reach groups drop out?', text: 'They drop out, or are never reached in the first place.' },
         { q: 'How can your evaluators audit the outcomes?', text: 'Outcomes are hard to audit without a baseline and documentary evidence.' },
       ]}
@@ -149,14 +157,13 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <PartnerGuideBand
     empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
-    statements={[{ facts: TRAINED_REACH.facts, text: TRAINED_REACH.text }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />
 
   <!-- C6 · Mechanism (YouthWIDE) -->
   <MechanismBand
-    title="How YouthWIDE Works"
+    title="An Integrated Path from Training to Earnings"
     positioning={POSITIONING.developmentPartners}
     lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country. It is designed for deployment in other countries; current outcome evidence comes from Bangladesh and Kosovo."
     blocks={[
@@ -169,7 +176,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   />
   <SubBand>
     <Callout eyebrow="The Result Line">
-      <CopyText block={SURVEY_EMPLOYMENT} />
+      <p data-fact="OC-01">Among surveyed completers, employment was {oc01.value} at the October 2026 survey, against {oc01.from} before training.</p>
       <a class="link" href={url(LINKS.methodology)}>See the Survey Methodology<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>
@@ -213,7 +220,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
         feature: `${HOURS} Training Hours per Certification, Three Months of Milestone-Based Mentoring, Placement Support`,
         means: 'success is measured against agreed outcomes, including paid work, not attendance alone. A work-entry plan per track is approved before enrollment.',
         outcome: 'Results measured in paid work',
-        relieves: 'Enrollment targets are met, but employment lags',
+        relieves: 'Enrollment targets are often met, while employment results lag behind',
       },
       {
         feature: 'Outreach and accessible selection; tracks set per country from employer demand; safeguarding and data protection specified per program',
@@ -234,19 +241,17 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       },
       {
         feature: 'Placement Support',
-        means: 'completers reach local, remote and global work.',
+        means: 'placement support points completers toward local, remote and global work.',
         outcome: 'Local, remote or global work',
       },
     ]}
   />
-  <HowItWorks steps={STEPS} />
 
   <!-- C9 · Objections -->
   <FAQBand
     audience="development-partners"
     ids={FAQ_IDS}
     title="Questions Partners Ask"
-    lead="Right for you if you fund youth employment and want results you can report. Not right if you want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 

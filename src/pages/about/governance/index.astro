@@ -27,12 +27,14 @@ const UPDATED = '2026-10-10';
 const FAQ_IDS = ['Q3', 'Q9', 'Q10'];
 const diligence = diligenceCta();
 const [usa, bd] = OFFICES;
+// RC-01's headline restated for a due-diligence reader: the intent-to-treat result leads, then the attender result (same figures, same trial).
+const trialLine = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income (about +$27 a month).');
+if (trialLine === RCT_HEADLINE.text) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
 const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
 
 // PD-13 list, restated as items confirmed with the funder during co-design (no document is promised as ready).
 const checklist = [
-  'Contracting entity',
-  'Legal entity and status',
+  'Contracting entity and legal status',
   'Audited accounts',
   'Safeguarding policy',
   'Anti-fraud policy',
@@ -71,15 +73,15 @@ const jsonLd = [
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
 
   <Section id="offices" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust lists two offices, in New York and Dhaka." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust has offices in New York and Dhaka." />
     <div class="grid-cards grid-cards--2">
-      <OfficeCard {...usa} role="Office in New York" />
-      <OfficeCard {...bd} role="Headquarters in Dhaka" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
+      <OfficeCard {...usa} city="New York · Office" />
+      <OfficeCard {...bd} name="CodersTrust Bangladesh Ltd." city="Dhaka · Headquarters" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
     </div>
   </Section>
 
   <Section id="leadership" tone="airy" aria-labelledby="lead-h">
-    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="The Chairman and the head of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="The Chairman, Aziz Ahmad, and the CEO of CodersTrust Bangladesh, Md. Shamsul Haque. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
     <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
       {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
@@ -113,10 +115,10 @@ const jsonLd = [
   </Section>
 
   <Section id="evidence" aria-labelledby="evid-h">
-    <SectionHeader id="evid-h" eyebrow="Independent Evidence" title="Judged by Independent Evaluators, and by You" />
+    <SectionHeader id="evid-h" eyebrow="Independent Evidence" title="Independent Evaluation and Funder Reporting" />
     <div class="gov-text">
-      <CopyBlock class="lead" block={RCT_HEADLINE} />
-      <p data-fact="PD-08">Funders also receive monthly reports from the first cohort, and independent evaluation is welcome.</p>
+      <p class="lead" data-fact="RC-01"><strong>Independent evaluation is welcome.</strong> {trialLine}</p>
+      <p data-fact="PD-08">Funders also receive monthly reports from the first cohort.</p>
       <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
     </div>
   </Section>
@@ -130,17 +132,10 @@ const jsonLd = [
       <ul class="gov-check__list" role="list">
         {checklist.map((c) => <li>{c}</li>)}
       </ul>
-      <div class="gov-print"><Button variant="outline" size="sm" icon="printer" data-print>Print This Checklist</Button></div>
+      <p><a class="link" href={diligence.href}>{diligence.label}<Icon name="arrow-right" size={16} /></a></p>
+      <div class="gov-print"><button type="button" class="link gov-print__btn" data-print><Icon name="printer" size={16} />Print This Checklist</button></div>
     </div>
   </Section>
-
-  <CTABand
-    id="diligence-cta"
-    heading="Ask About Due Diligence"
-    text="Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared."
-    cta={{ label: diligence.label, href: diligence.href }}
-    secondary={{ label: 'Read our evidence', href: '/impact/' }}
-  />
 
   <Section id="next" aria-labelledby="next-h">
     <SectionHeader id="next-h" eyebrow="What Happens Next" title="From Your Question to a Clarification Call" />
@@ -150,6 +145,14 @@ const jsonLd = [
       { title: 'Clarification Call', text: 'We talk through anything that needs clarifying.' },
     ]} />
   </Section>
+
+  <CTABand
+    id="diligence-cta"
+    heading="Ask About Due Diligence"
+    text="Send the program or grant you are considering and the questions you need answered. We will reply with what can be shared."
+    cta={{ label: diligence.label, href: diligence.href }}
+    secondary={{ label: 'Read our evidence', href: '/impact/' }}
+  />
 
 </BaseLayout>
 
@@ -217,6 +220,18 @@ const jsonLd = [
   /* The print button needs JavaScript, so it only shows when the page has set the js flag. */
   .gov-print {
     display: none;
+  }
+  .gov-print__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    min-height: 24px;
   }
   :global(html.js) .gov-print {
     display: block;

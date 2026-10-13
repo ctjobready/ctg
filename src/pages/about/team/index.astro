@@ -33,7 +33,7 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Leadership and Team" lead="Founders, advisors, executive management and the people who lead CodersTrust in New York, Dhaka and Chattogram, including the CEO of CodersTrust Bangladesh." art={false} />
+  <Hero eyebrow="About Us" title="Leadership and Team" lead="The founders, advisors, executive team and Bangladesh leadership of CodersTrust." art={false} />
   <PageNav links={groups.map((g) => ({ label: g.title, href: `#${g.key}` }))} />
   {
     groups.map((g, i) => {
@@ -46,7 +46,7 @@ const jsonLd = [
           <div class="team-grid" style={`--cols-md:${perRow(3)};--cols-lg:${perRow(4)}`}>
             {people.map((p) => (
               <div class="team-cell">
-                <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={2} />
+                <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} expertise={p.data.expertise} chips={3} />
               </div>
             ))}
           </div>

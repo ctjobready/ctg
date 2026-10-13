@@ -314,6 +314,8 @@ const UNLIKE_SENTENCE =
 const POSITION_EMPLOYER_CLOSING = {
   // WP19, item 13: Home replaces the long [UNLIKE] sentence with two plain sentences; declared here independently of src/data/copy.ts (HOME_POSITIONING).
   '/': 'Most programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.',
+  // WP20b: Employers' "Where We Stand" is employer-specific too (the [UNLIKE] sentence describes the youth-cohort model); declared independently of src/data/copy.ts (POSITIONING.employers).
+  '/partner-with-us/employers/': 'Training is customized to your roles; talent requests are scoped against the experience and credentials available in the candidate pool.',
   '/programs/jobready-work/': 'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.',
 };
 /** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence). */

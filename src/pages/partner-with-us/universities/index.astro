@@ -26,7 +26,8 @@ import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBan
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
-import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
+import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
@@ -47,7 +48,7 @@ const { title, description } = meta(
   `JobReady@Campus helps degree holders prepare for digital work with mentoring. Among surveyed completers, ${degreeShare}.`,
 );
 
-const FAQ_IDS = ['Q1', 'Q13', 'Q3', 'Q10', 'Q8'];
+const FAQ_IDS = ['Q1', 'Q10', 'Q8'];
 const options = programOptions().filter((o) => o.name === 'Multi-Cohort Pilot Program' || o.name === 'Scale');
 const optionText: Record<string, string> = {
   'Multi-Cohort Pilot Program': 'Prove the model with a first campus program.',
@@ -91,8 +92,13 @@ const steps = [
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
+  <RouteLink kicker="See the Program" label="See Campus Delivery Details" href={LINKS.campus} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <ForNotFor
+    forText="You want employer-demand tracks with certification preparation alongside degrees."
+    notText="You want to replace the degree."
+  />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -114,7 +120,7 @@ const steps = [
   <!-- C3 · Agitation -->
   <div class="pp-two">
     <CostSection
-      title="Globally, Employers Report Difficulty Finding Talent"
+      title="Every Cohort Without Placement Evidence Weakens Your Employment Story"
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'Jobs Requiring AI Skills Are Growing and Paying More.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
@@ -153,16 +159,10 @@ const steps = [
       { label: 'Set Up', title: 'Campus Labs as Learning Centers', text: 'On-campus labs become blended-learning centers with certified local facilitators; faculty members act as coordinators.', icon: 'landmark' },
       { label: 'Prepare for Certification', title: 'Industry Certification Tracks', text: `${HOURS} training hours per certification, with certification exam preparation; exam eligibility, attempts and terms are agreed in the program scope.`, icon: 'award' },
       { label: 'Mentor and Place', title: 'Mentoring and Placement', text: `Three months of milestone-based mentoring and placement support, with outcome tracking for ${TRACKING_MONTHS} months.`, icon: 'users' },
-      { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships.', icon: 'graduation-cap' },
+      { label: 'Alongside Studies', title: 'In Parallel with the Degree', text: 'Training runs in parallel with academic studies, with professional internships where employer placements are available.', icon: 'graduation-cap' },
     ]}
     link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
   />
-  <SubBand>
-    <Callout eyebrow="A Delivery Platform for Institutions">
-      <p data-fact="IN-04">Institutions can use JobReady partner portals as a digital delivery platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.</p>
-    </Callout>
-  </SubBand>
-
   <!-- C7 · Proof: the National University partnership first, then the broader evidence from the youth programs -->
   <PairedEvidence
     title="The National University Partnership"
@@ -221,14 +221,13 @@ const steps = [
       },
     ]}
   />
-  <HowItWorks steps={steps} />
 
   <!-- C9 · Objections -->
   <FAQBand
     audience="universities"
     ids={FAQ_IDS}
     title="Questions Universities Ask"
-    lead="Right for you if you want employer-demand tracks with certification preparation alongside degrees. Not right if you want to replace the degree."
+    allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation -->
@@ -242,16 +241,17 @@ const steps = [
     title="Choose Where to Start."
     cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
     inclusions
+    recommended={0}
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
     title="Start with a Pilot. Decide on Evidence."
-    lead={SCORECARD.text}
+    lead={SCORECARD.text.replace('expansion is the funder’s decision', 'expansion is your institution’s decision')}
     points={[
       { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with a first campus program and see its results.' },
       { icon: 'target', title: 'Scorecard Thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
-      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale.' },
+      { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'Expansion is your institution’s decision.' },
       { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}
   />
