@@ -1,13 +1,13 @@
 PAGE /ctg/
 TITLE: CodersTrust: From Learning to Earning for Youth
-META DESCRIPTION: A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. We prepare youth for work.
+META DESCRIPTION: Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Training, mentoring and placement.
 
 - Development Partners
 - Governments
 - Foundations
 - Investors
 
-# Turn Youth Unemployment into a Digital Workforce — with Evidence.
+# Turn Youth Unemployment into a Digital Workforce — with Evidence
 
 Help educated, unemployed youth reach paid digital work through training, mentoring and placement support.
 
@@ -40,13 +40,15 @@ CodersTrust is a workforce-development organization that trains and mentors educ
 
 ## Results and Programs
 
+Results from the trial, the survey and program records, then our programs.
+
 [slide 1 of 7]
 
 Independent Evaluation
 
 ## About 10 More Women in Work for Every 100 Offered a Place
 
-A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. For women who attended, income was 54% higher.
+A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed, and their monthly income was an estimated 41% higher than the control group’s. For women who attended, income was 54% higher.
 
 See the Trial
 
@@ -60,7 +62,7 @@ Employment effect for women offered a place: +10.3 percentage points, against 2.
 
 Impact Survey 2026
 
-## Income and Employment Among Surveyed Completers
+## Median Income Rose from $82 to $245 Among Surveyed Completers
 
 Median monthly income, and share employed, before training and at the October 2026 survey.
 
@@ -80,12 +82,13 @@ Read the 2026 Survey Results
 
 Placement
 
-## Placement Results, Program by Program
+## Placement Results by Program
 
-Three partner-funded programs report their own in-work results.
+Four programs, each with its partner, report their own in-work results.
 - WSDFM: 71% in work.
 - Women in Online Work, Kosovo: 68% in work.
 - UNDP YES, Korail: 67% in work within three months.
+- Her Power: 47% of 800 tracked women in work.
 
 See the Case Studies
 
@@ -95,9 +98,9 @@ See the Case Studies
 
 Impact Survey 2026
 
-## Most New Earners Started Within Six Months
+## 58.8% of Surveyed New Earners Started Within Six Months
 
-Among surveyed completers, most new earners started within six months of training.
+Among surveyed completers who first earned during or after training, most started within six months.
 
 58.8%
 
@@ -111,7 +114,7 @@ See How Fast Completers Earn
 
 Impact at Scale
 
-## Programs in 15 Countries and Territories
+## 130,000+ Young People Trained in 15 Countries and Territories
 
 Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.
 
@@ -155,39 +158,9 @@ For schools and young learners.
 
 [image: Rows of computers in a CodersTrust training lab]
 
-Start Here
-
-## What Brings You Here?
-
-Choose your role to see the evidence and next step that matter to you.
-
-Development Partners & NGOs
-
-Evidence-led delivery for your portfolio
-
-Governments
-
-National programs for youth employment
-
-Foundations & CSR
-
-Fund outcomes you can verify
-
-Investors
-
-For impact investors backing JobReady
-
-Also for: Local Partners, Universities & Colleges, Employers, NU Postgraduate Diploma Applicants
-
-Conducting Due Diligence? See Our Governance and Evidence
-
-Learners: Courses on JobReady.global
-
-(opens jobready.global)
-
 The Challenge
 
-## For Too Many Graduates, a Degree Is Not Turning into a Job.
+## For Too Many Graduates, a Degree Is Not Turning into a Job
 
 An estimated 62 million young people aged 15–24 with higher-secondary education or more (range 61–78 million) are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa. In Bangladesh, graduate unemployment is 13.5% vs. 2.0% for holders of the Secondary School Certificate (SSC).
 
@@ -216,7 +189,7 @@ graduate unemployment in Bangladesh, vs. 2.0% for Secondary School Certificate (
 
 The Cost of Waiting
 
-## Every Year of Waiting Costs a Cohort.
+## Tracks and Evidence Fall Behind While You Wait
 
 ### Automation-Prone Freelance Postings Fell After ChatGPT
 
@@ -225,14 +198,6 @@ Within eight months of ChatGPT’s release, postings for automation-prone writin
 What It Means
 
 Tracks have to follow current employer demand, not last year’s job market.
-
-### Most Employers Report Difficulty Finding Talent
-
-Globally, 72% of employers report difficulty finding the talent they need; AI skills are now the hardest to find.
-
-What It Means
-
-Delaying updates to tracks and work-entry support risks preparing learners for yesterday’s demand.
 
 ### Only Three of Nine Training Trials Showed an Employment Impact
 
@@ -250,11 +215,11 @@ Our Track Record
 
 You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.
 
-TalentLEAP, our method, organizes skills into career paths with progressive levels.
+Our method organizes skills into career paths with progressive levels. We call it TalentLEAP.
 
 How TalentLEAP Works
 
@@ -298,7 +263,7 @@ Organizations we have worked with, 2014–2026.
 
 What Success Looks Like
 
-## Imagine the Next 12 Months.
+## Imagine the Next 12 Months
 
 Three illustrative scenarios, not case studies.
 
@@ -318,7 +283,7 @@ You review monthly reports showing who is earning, not only who completed.
 
 ### AI-Ready Talent
 
-Employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam, without a long search.
+Employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.
 
 Photographs are from past CodersTrust programs, shown for context.
 
@@ -326,7 +291,7 @@ How It Works
 
 ## One Path from Learning to Earning
 
-Where We Stand
+Our Approach
 
 For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. Most programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.
 - Who We Reach
@@ -370,7 +335,7 @@ Trial figures are for a predecessor program. Survey figures are among surveyed c
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 Employment at Follow-Up (Nov–Dec 2021), Randomized Trial
 
@@ -402,7 +367,7 @@ Program Results
 
 ## Proof in Practice
 
-Three programs, with their partners.
+Three of our four case studies, each with its partner.
 
 [image: Women trainees and a CodersTrust Bangladesh banner at a WSDFM training session]
 
@@ -428,7 +393,7 @@ World Bank Group
 
 372 of 800
 
-tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%
+tracked women in work (47%), from the 2,500 trained directly by CodersTrust
 
 ### Her Power
 
@@ -454,7 +419,9 @@ More Learner Stories
 
 ## Recognition and Historical Coverage
 
-CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024
+### HolonIQ South Asia EdTech 100
+
+CodersTrust was listed in 2023 (STEAM category) and 2024.
 
 Press coverage, 2014–2016, including Forbes, The Wall Street Journal and TechCrunch. See All Recognition and Media
 
@@ -467,13 +434,13 @@ Trained youth who never reach paid work
 
 What Is Included
 
-Placement Support, Three Months of Milestone-Based Mentoring and a Work-Entry Plan per Track Approved Before Enrollment
+Placement Support and Three Months of Milestone-Based Mentoring
 
 Practical Benefit
 
 A Path to First Paid Work
 
-Learners get structured support from first profile to first client, and are matched to local, remote and global work.
+Learners get structured support from first profile to first client, with placement support toward local, remote and global work. Each track’s work-entry plan is approved before enrollment.
 - Funder Concern Addressed
 
 Results you cannot verify or report
@@ -577,7 +544,7 @@ All Partner FAQs
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Different routes suit different people. This is what each one typically includes.
 | Approach | CodersTrust Supported Cohort | Self-Paced Course Platforms | Freelance Marketplaces Alone |
@@ -590,7 +557,7 @@ Compare these approaches with your current program on track choice, mentoring, w
 
 The Offer
 
-## Choose Where to Start.
+## Choose Where to Start
 
 Use the discovery session to choose a starting scope for your goals, country and delivery capacity. The options below are program sizes, not a commitment required to begin the conversation.
 - Option 1
@@ -640,11 +607,11 @@ Pricing is set per program, and we share an indicative budget in the discovery s
 
 ### How We Scale
 
-We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.
+We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.
 
 Low Risk
 
-## Start with a Multi-Cohort Pilot. Decide on Evidence.
+## Start with a Multi-Cohort Pilot. Decide on Evidence
 
 A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.
 - ### Expansion Review on Real Results
@@ -660,9 +627,37 @@ You choose whether and how far to scale.
 
 We support third-party evaluation of outcomes.
 
-## Let’s Design Your First Cohort.
+Your Next Step
 
-Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs.
+## What Brings You Here?
+
+Choose your role to see the evidence and next step that matter to you.
+
+Development Partners & NGOs
+
+Evidence-led delivery for your portfolio
+
+Governments
+
+National programs for youth employment
+
+Foundations & CSR
+
+Fund outcomes you can verify
+
+Investors
+
+For impact investors backing JobReady
+
+Also for: Local Partners, Universities & Colleges, Employers, NU Postgraduate Diploma Applicants
+
+Conducting Due Diligence? See Our Governance and Evidence
+
+Learners: Courses on JobReady.global
+
+(opens jobready.global)
+
+## Let’s Design Your First Cohort
 
 ### Planning a Grant-Funded Cohort?
 
@@ -671,6 +666,10 @@ Allow about three weeks from the first conversation to agreement, then 6–8 wee
 [button: Request a Discovery Session (opens your email app)]
 
 Read the evidence
+
+Governments: Request a Briefing for Your Ministry
+
+Impact investors: Request an Introduction Call
 
 If your email app does not open, write to contact@coderstrust.global.
 - A discovery session is a conversation, not a commitment.
@@ -701,34 +700,34 @@ News
 
 ## Latest News
 
-[image: Two men in suits standing in an office in front of a window and a bookshelf]
+[image: Two men signing documents at a desk]
 
-September 23, 2026
+July 27, 2026
 
-Leadership & Advocacy
+Partnerships & MoUs
 
-### CodersTrust Chairman Aziz Ahmad Visits City College Downtown to Explore Global Partnership
+### CodersTrust Bangladesh Partners with US-Based RemoteIntegrity, to Expand Global Career Opportunities
 
-Aziz Ahmad visits City College Downtown to discuss collaboration with its Continuing and Professional Studies Program.
+CodersTrust Bangladesh signs an MoU with RemoteIntegrity, a Florida-based US technology organization, to widen global career opportunities.
 
-[image: Four men posing together, one holding a certificate folder]
+[image: A man in a white shirt standing beside young students who hold their certificates, in front of a University for Peace banner]
 
-August 18, 2026
+April 17, 2026
 
-Recognition
+Programs & Events
 
-### Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, Appointed as Global UPEACE Ambassador
+### CodersTrust Students Were Invited to Join UPEACE’s “Young Leaders for Peace” Summer Programme 2026
 
-Aziz Ahmad, Co-Founder and Global Chairman of CodersTrust, is appointed a Global Ambassador of the University for Peace (UPEACE).
+CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica.
 
-[image: Aziz Ahmad, Co-Founder and Chairman of CodersTrust, working on his farm]
+[image: Six men standing behind a table at the BASIS-ASSET Skills Training Provider contract signing ceremony, two of them shaking hands]
 
-August 4, 2026
+February 6, 2026
 
-Insights
+Partnerships & MoUs
 
-### The Man Behind CodersTrust Who Never Forgot His Roots
+### CodersTrust and BASIS-ASSET Collaborate to Build Bangladesh’s IT Future
 
-A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives.
+On February 5, 2026, CodersTrust became a training partner under the BASIS-ASSET project to equip Bangladeshi youth with IT skills.
 
 All News

@@ -113,7 +113,7 @@ Trial figures are for a predecessor program. Survey figures are among surveyed c
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 

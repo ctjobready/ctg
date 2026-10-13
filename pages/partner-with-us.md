@@ -223,7 +223,7 @@ Consulted
 
 Informed
 
-## Let’s Find the Right Partnership.
+## Let’s Find the Right Partnership
 
 Tell us your goals and your priority groups, and we will outline a first cohort with you.
 

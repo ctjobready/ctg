@@ -272,7 +272,7 @@ Presenting a framed medal
 
 Photographs are used with the consent of those pictured. The dated news photographs are in the News Photo Archive; the stories behind them are in the news and on the case study pages.
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 

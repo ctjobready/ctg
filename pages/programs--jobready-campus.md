@@ -8,7 +8,7 @@ META DESCRIPTION: JobReady@Campus helps universities and colleges prepare studen
 
 JobReady@Campus · For Universities and Colleges
 
-# Give Your Students a Practical Route into Digital Work.
+# Give Your Students a Practical Route into Digital Work
 
 We help universities and colleges prepare students for paid work through mentored, certification-focused training.
 
@@ -96,7 +96,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## Universities Partner with CodersTrust.
+## Universities Partner with CodersTrust
 
 You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.
 
@@ -117,7 +117,7 @@ How It Works
 
 ## How the Campus Model Works
 
-Where We Stand
+Our Approach
 
 For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, training with industry-certification preparation that runs in parallel with academic studies. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 - When
@@ -171,7 +171,7 @@ Broader Evidence from Our Youth Programs
 
 What You Get
 
-## Each Feature Maps to What Institutions Ask For.
+## Each Feature Maps to What Institutions Ask For
 - Concern Addressed
 
 Degree holders struggle to find work
@@ -282,7 +282,7 @@ Pricing is set per program, and we share an indicative budget in the discovery s
 
 Low Risk
 
-## Start with a Pilot. Decide on Evidence.
+## Start with a Pilot. Decide on Evidence
 
 A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.
 - ### A Pilot Comes First
@@ -298,7 +298,7 @@ You choose whether and how far to scale.
 
 We support a third-party evaluation of outcomes.
 
-## Bring Industry Skills to Your Campus.
+## Bring Industry Skills to Your Campus
 
 [button: Bring JobReady@Campus to Your Institution (opens your email app)]
 

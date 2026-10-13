@@ -31,10 +31,10 @@ How to Read the Evidence
 
 Strongest for cause first. Each rung says what it shows and what it does not show.
 | Kind of Evidence | Key Figure | What It Shows | What It Does Not Show |
-| Randomized Trial | +10.3 pp more employment, in percentage points, for women offered a place (randomized trial of a predecessor program)The Randomized Trial | The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group. | Results for other countries, groups or today’s standard track. |
-| Impact Survey 2026 | 77.9% employed, up from 47.4% before training, among surveyed completers at the October 2026 surveyOutcomes 2026 | What alumni who responded report about work and income after training. | Cause: respondents are not a random sample and may over-represent successful learners. |
-| Program Results | 711 of 1,000 WSDFM: 71% in workCase Studies | How many completers of a program were in work, from CodersTrust program records. | What would have happened without training. |
-| Learner Stories | Example: Samina Tasneem Chowdhury (WSDFM) completed 90+ projects on FiverrSuccess Stories | What the path can look like for one person. | A typical or promised outcome; some are outliers and say so. |
+| Randomized Trial | +10.3 pp more employment, in percentage points, for women offered a place (randomized trial of a predecessor program) The Randomized Trial | The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group. | Results for other countries, groups or today’s standard track. |
+| Impact Survey 2026 | 77.9% employed, up from 47.4% before training, among surveyed completers at the October 2026 survey Outcomes 2026 | What alumni who responded report about work and income after training. | Cause: respondents are not a random sample and may over-represent successful learners. |
+| Program Results | 711 of 1,000 WSDFM: 71% in work Case Studies | How many completers of a program were in work, from CodersTrust program records. | What would have happened without training. |
+| Learner Stories | Example: Samina Tasneem Chowdhury (WSDFM) completed 90+ projects on Fiverr Success Stories | What the path can look like for one person. | A typical or promised outcome; some are outliers and say so. |
 
 Headline Results
 
@@ -258,7 +258,7 @@ CodersTrust’s training-to-employment model aligns with seven SDGs, with a prim
 - SDG 9 · Industry and Innovation
 - SDG 10 · Reduced Inequalities
 
-## Discuss the Evidence for Your Program.
+## Discuss the Evidence for Your Program
 
 A discovery session sets priority groups, tracks and the pilot scorecard.
 

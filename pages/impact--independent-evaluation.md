@@ -28,7 +28,7 @@ Last updated October 10, 2026
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 Supporting detail, including results for women who attended and household effects: What the Trial Found
 
@@ -128,7 +128,7 @@ Yes — a randomized controlled trial by BIGD (BRAC University) of CodersTrust�
 
 For every cohort, as agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of earnings is collected where available: offer letters document job offers; payslips document employment earnings; platform logs or bank receipts document freelance earnings. Monthly reports cover enrollment, completion, certification, placements and first earnings. Independent evaluation is welcome.
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 A discovery session sets priority groups, tracks and the pilot scorecard.
 

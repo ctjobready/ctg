@@ -8,7 +8,7 @@ META DESCRIPTION: JobReady@Work builds custom AI-ready training for your team an
 
 JobReady@Work · For Employers
 
-# Build the Digital Capabilities Your Teams Need Now.
+# Build the Digital Capabilities Your Teams Need Now
 
 We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.
 
@@ -99,7 +99,7 @@ How It Works
 
 ## A Program Built Around Your Roles
 
-Where We Stand
+Our Approach
 
 For employers who need teams ready to use AI in their daily work, CodersTrust offers JobReady@Work, training custom-developed for each organization. Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.
 
@@ -196,7 +196,7 @@ From CodersTrust’s Youth Programs (Not Corporate Training)
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.
 
@@ -216,7 +216,7 @@ Certification tracks are chosen from employer demand.
 
 Low Risk
 
-## Start with a Pilot Team. Decide on Evidence.
+## Start with a Pilot Team. Decide on Evidence
 - ### A Pilot Team Comes First
 
 Start with one team before you widen the program.
@@ -230,7 +230,7 @@ You choose whether and how far to scale.
 
 We support a third-party evaluation of outcomes.
 
-## Tell Us About Your Team and Your Roles.
+## Tell Us About Your Team and Your Roles
 
 [button: Plan a Training Program (opens your email app)]
 

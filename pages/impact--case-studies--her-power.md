@@ -100,7 +100,7 @@ See How YouthWIDE Deploys the Model
 
 All Case Studies
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 

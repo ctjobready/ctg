@@ -8,7 +8,7 @@ META DESCRIPTION: A randomized trial of a predecessor program found women offere
 
 For Development Partners & INGOs
 
-# Youth Employment Results You Can Report — Not Just Training Numbers.
+# Youth Employment Results You Can Report — Not Just Training Numbers
 
 We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.
 
@@ -82,7 +82,7 @@ of the 350 trained in UNDP YES, Korail, found their first job within 3 months
 
 The Challenge
 
-## Enrollment Targets Are Often Met. Paid Work Lags.
+## Enrollment Targets Are Often Met. Paid Work Lags
 
 You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part.
 
@@ -108,9 +108,9 @@ estimated young people aged 15–24 with higher-secondary education or more not 
 
 The Cost of Waiting
 
-## Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result.
+## Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -118,7 +118,7 @@ What It Means
 
 Tracks have to follow current employer demand, not last year’s job market.
 
-### A Review of Nine Trials Found Only Three with Significant Employment Impacts.
+### A Review of Nine Trials Found Only Three with Significant Employment Impacts
 
 A review of nine randomized trials of vocational training by World Bank economist David McKenzie (2017) found only three with significant employment impacts.
 
@@ -156,7 +156,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.
 
@@ -193,7 +193,7 @@ How It Works
 
 ## An Integrated Path from Training to Earnings
 
-Where We Stand
+Our Approach
 
 For development partners and INGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model that tracks outcomes after every course. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 
@@ -239,7 +239,7 @@ The Evidence
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -460,7 +460,7 @@ Safeguarding, Governance and Due Diligence
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Provision varies by provider and program. This describes what a CodersTrust supported cohort includes where the agreed program scope specifies it, and how the other routes typically differ.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone | Doing Nothing |
@@ -474,7 +474,7 @@ Provision varies by provider and program. This describes what a CodersTrust supp
 
 Start
 
-## Choose Where to Start.
+## Choose Where to Start
 
 Pricing is set per program, and we share an indicative budget in the discovery session.
 
@@ -528,7 +528,7 @@ Every pilot is judged on cost per completer and per verified outcome, with thres
 
 Reporting and Review
 
-## Start with a Pilot. Decide on Evidence.
+## Start with a Pilot. Decide on Evidence
 
 Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end.
 
@@ -557,7 +557,7 @@ For example, earnings in at least three of six months above an agreed minimum.
 - Decide on Expansion. Expansion is the funder’s decision, taken on the scorecard results.
 - Commission an Independent Evaluation. Independent evaluation is welcome, and we support it.
 
-## Let’s Design Your First Cohort.
+## Let’s Design Your First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 

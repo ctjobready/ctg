@@ -122,7 +122,7 @@ UNDP YES, Korail is not in this table because it reports a different measure: 67
 
 How the Evidence Fits Together
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 Each case study says what its figures do and do not show. A discovery session sets the scorecard for your own program.
 

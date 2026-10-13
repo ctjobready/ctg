@@ -189,7 +189,7 @@ The fee, duration, eligibility and recognition details are in Before You Apply a
 
 Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see JobReady.global.
 
-## Apply for the NU Postgraduate Diploma in Digital Marketing.
+## Apply for the NU Postgraduate Diploma in Digital Marketing
 
 [button: Apply Now (opens docs.google.com)]
 

@@ -477,7 +477,7 @@ The published aggregates are available as a CSV, with one row per published perc
 
 Download outcomes-2026-aggregates.csv
 
-## Discuss the Evidence for Your Program.
+## Discuss the Evidence for Your Program
 
 A discovery session sets priority groups, tracks and the pilot scorecard.
 

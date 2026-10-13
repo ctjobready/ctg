@@ -68,7 +68,7 @@ The Evidence
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Women offered a place had an estimated 41% higher monthly income (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Women offered a place had an estimated 41% higher monthly income than the control group (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 The Randomized Trial
 

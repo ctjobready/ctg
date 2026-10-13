@@ -228,7 +228,7 @@ What surveyed completers report about work and income, each result with its base
 
 The randomized trial by BIGD, with its design, limits and context.
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 

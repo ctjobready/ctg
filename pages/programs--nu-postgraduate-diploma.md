@@ -8,7 +8,7 @@ META DESCRIPTION: Build practical digital skills after your degree with the Nati
 
 National University Postgraduate Diploma
 
-# Build Practical Digital Skills After Your Degree.
+# Build Practical Digital Skills After Your Degree
 
 We help degree holders prepare for digital work through a National University postgraduate diploma.
 
@@ -60,7 +60,7 @@ CodersTrust is an affiliated college (College Code: 6634) under the National Uni
 
 The Challenge
 
-## A Degree Alone Is Not Producing Job Offers.
+## A Degree Alone Is Not Producing Job Offers
 
 You are aiming for interviews, a first digital job and credentials employers recognize.
 
@@ -78,11 +78,11 @@ Which skills and certifications to add next is not obvious, and the wrong choice
 
 The Cost of Waiting
 
-## Employers Are Asking for Different Skills.
+## Employers Are Asking for Different Skills
 
 AI is shifting which entry-level skills employers ask for, and a degree alone does not show them.
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -90,7 +90,7 @@ What It Means
 
 A degree alone does not show employers what you can do, so practical skills matter.
 
-### AI Skills Are Growing in Demand.
+### AI Skills Are Growing in Demand
 
 Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium.
 
@@ -197,7 +197,7 @@ From CodersTrust’s Wider Programs (Not This Diploma)
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.
 
@@ -275,7 +275,7 @@ Read Before You Apply or call +880 1958‑220802 to ask admissions.
 
 Low Risk
 
-## Talk to Admissions Before You Decide.
+## Talk to Admissions Before You Decide
 - ### Ask First
 
 Call with your eligibility and recognition questions before you apply.

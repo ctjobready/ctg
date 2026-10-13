@@ -8,7 +8,7 @@ META DESCRIPTION: Bangladeshi NGOs, colleges and chambers can deliver CodersTrus
 
 For Bangladeshi NGOs, Colleges, Chambers and Associations
 
-# Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.
+# Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community
 
 We help local organizations prepare young people for paid digital work through mentored, certification-focused training.
 
@@ -51,7 +51,7 @@ Your organization works outside Bangladesh; see the Development Partners and Gov
 
 The Challenge
 
-## Local Organizations Reach the Young People Central Programs Miss.
+## Local Organizations Reach the Young People Central Programs Miss
 
 They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings.
 
@@ -78,9 +78,9 @@ Priority groups: unemployed graduates · madrasah youth · climate-vulnerable co
 
 The Cost of Waiting
 
-## Cohorts That Train but Do Not Place Cost Community Trust.
+## Cohorts That Train but Do Not Place Cost Community Trust
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -88,7 +88,7 @@ What It Means
 
 Skills that were enough last year may not open doors next year, so tracks have to follow current demand.
 
-### A Review of Nine Trials Found Only Three with Significant Employment Impacts.
+### A Review of Nine Trials Found Only Three with Significant Employment Impacts
 
 A review of nine randomized trials of vocational training by World Bank economist David McKenzie (2017) found only three with significant employment impacts.
 
@@ -100,7 +100,7 @@ It doesn’t have to be this way.
 
 What Success Looks Like
 
-## Imagine a Cohort in Your Community.
+## Imagine a Cohort in Your Community
 
 Illustrative, not case studies.
 
@@ -164,7 +164,7 @@ How It Works
 
 ## How a Local Partnership Works
 
-Where We Stand
+Our Approach
 
 For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 - Your Organization
@@ -200,7 +200,7 @@ The Evidence
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -398,7 +398,7 @@ Reach the young people central programs miss, with women a priority in every gro
 
 Low Risk
 
-## Start with a Pilot Cohort. Decide on Evidence.
+## Start with a Pilot Cohort. Decide on Evidence
 - ### Expansion Review on Real Results
 
 Review early results at three months; any expansion decision uses the scorecard measures available then.
@@ -412,7 +412,7 @@ You choose whether and how far to take part.
 
 We support third-party evaluation of outcomes.
 
-## Let’s Plan Your First Local Cohort.
+## Let’s Plan Your First Local Cohort
 
 Tell the Bangladesh team about your organization, your district and the groups you work with.
 

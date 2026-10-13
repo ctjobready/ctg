@@ -8,7 +8,7 @@ META DESCRIPTION: Upskill teams for AI and digital work, and hire job-ready digi
 
 For Employers
 
-# Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.
+# Upskill Your Teams for AI — and Hire Job-Ready Digital Talent
 
 We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.
 
@@ -63,7 +63,7 @@ Hire JobReady Talent
 
 The Challenge
 
-## The Talent You Need Is Hard to Find.
+## The Talent You Need Is Hard to Find
 
 Your roles need digital skills, and your teams need AI skills now.
 
@@ -88,9 +88,9 @@ of employers globally report difficulty finding talent
 
 The Cost of Waiting
 
-## AI Is Changing the Skills Your Teams Need.
+## AI Is Changing the Skills Your Teams Need
 
-### Jobs Requiring AI Skills Are Growing and Paying More.
+### Jobs Requiring AI Skills Are Growing and Paying More
 
 Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium.
 
@@ -98,7 +98,7 @@ What It Means
 
 Waiting means competing for the same scarce talent.
 
-### AI Is Reshaping the Workforce.
+### AI Is Reshaping the Workforce
 
 Globally, AI and information processing are expected to create 11M jobs and displace 9M by 2030; across all trends 170M created vs. 92M displaced.
 
@@ -136,7 +136,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.
 
@@ -163,7 +163,7 @@ How It Works
 
 ## JobReady@Work: Built Around Your Roles
 
-Where We Stand
+Our Approach
 
 CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles; talent requests are scoped against the experience and credentials available in the candidate pool.
 
@@ -292,7 +292,7 @@ From CodersTrust’s Youth Programs (Not Corporate Training)
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.
 
@@ -313,7 +313,7 @@ Among surveyed completers, employment was 77.9% at the October 2026 survey, agai
 
 Start
 
-## Choose How to Work with Us.
+## Choose How to Work with Us
 
 Pricing is set per program, and we share an indicative budget in the discovery session.
 
@@ -331,7 +331,7 @@ Job-ready candidates introduced through CodersTrust’s placement team. Requests
 
 Low Risk
 
-## Start with a Pilot Team. Decide on Evidence.
+## Start with a Pilot Team. Decide on Evidence
 
 Success measures are agreed before you start (completion, certification and the skills you name) and checked in the progress evaluation.
 - ### Pilot Team First
@@ -347,7 +347,7 @@ You choose whether and how far to scale.
 
 We support third-party evaluation of outcomes.
 
-## Let’s Plan Your First Team Program.
+## Let’s Plan Your First Team Program
 
 [button: Plan a Training Program (opens your email app)]
 

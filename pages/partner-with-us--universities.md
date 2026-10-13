@@ -8,7 +8,7 @@ META DESCRIPTION: JobReady@Campus helps degree holders prepare for digital work 
 
 For Universities and Colleges
 
-# Help Your Students and Graduates Build Job-Ready Digital Skills.
+# Help Your Students and Graduates Build Job-Ready Digital Skills
 
 We help universities and colleges prepare students for paid work through mentored, certification-focused training.
 
@@ -51,7 +51,7 @@ You want to replace the degree.
 
 The Challenge
 
-## For Too Many Graduates, a Degree Is Not Turning into a Job.
+## For Too Many Graduates, a Degree Is Not Turning into a Job
 
 Capable students finish their degrees, and employers still say they cannot find the skills they need.
 
@@ -83,7 +83,7 @@ The Cost of Waiting
 
 ## Every Cohort Without Placement Evidence Weakens Your Employment Story
 
-### Jobs Requiring AI Skills Are Growing and Paying More.
+### Jobs Requiring AI Skills Are Growing and Paying More
 
 Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium.
 
@@ -91,7 +91,7 @@ What It Means
 
 Students who graduate without those skills start behind.
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -129,7 +129,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.
 
@@ -149,7 +149,7 @@ How It Works
 
 ## JobReady@Campus: Training Alongside the Degree
 
-Where We Stand
+Our Approach
 
 For universities and colleges who need their degree holders in paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 - Set Up
@@ -205,7 +205,7 @@ The Evidence
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -311,7 +311,7 @@ Safeguarding, Governance and Due Diligence
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists: campus labs, certified local facilitators and Training of Trainers. Provision varies by provider and program.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone | Doing Nothing |
@@ -325,7 +325,7 @@ Preparation for a recognized credential is built into each track, and delivery u
 
 Start
 
-## Choose Where to Start.
+## Choose Where to Start
 
 Pricing is set per program, and we share an indicative budget in the discovery session.
 
@@ -365,7 +365,7 @@ Devices, stipends, connectivity and independent evaluation are budgeted separate
 
 Low Risk
 
-## Start with a Pilot. Decide on Evidence.
+## Start with a Pilot. Decide on Evidence
 
 A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is your institution’s decision, and independent evaluation is welcome.
 - ### A Pilot Comes First
@@ -381,7 +381,7 @@ Expansion is your institution’s decision.
 
 We support third-party evaluation of outcomes.
 
-## Let’s Bring JobReady@Campus to Your Students.
+## Let’s Bring JobReady@Campus to Your Students
 
 [button: Bring JobReady@Campus to Your Institution (opens your email app)]
 

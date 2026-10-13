@@ -8,7 +8,7 @@ META DESCRIPTION: YouthWIDE prepares educated, unemployed youth for paid digital
 
 YouthWIDE · Youth Digital Employment Program
 
-# Prepare Educated Youth for Paid Digital Work.
+# Prepare Educated Youth for Paid Digital Work
 
 We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.
 
@@ -83,7 +83,7 @@ Priority groups, tracks, each track’s work-entry plan, safeguarding and the pi
 
 The Challenge
 
-## Educated Young People Are Not in Work in Bangladesh and Across Three Regions.
+## Educated Young People Are Not in Work in Bangladesh and Across Three Regions
 
 Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa.
 
@@ -161,9 +161,9 @@ AI is shifting which entry-level skills employers ask for, so last year’s cour
 
 The Cost of Waiting
 
-## Training Without Work Entry Spends the Budget Without the Result.
+## Training Without Work Entry Spends the Budget Without the Result
 
-### A Review of Nine Trials Found Only Three with Significant Employment Impacts.
+### A Review of Nine Trials Found Only Three with Significant Employment Impacts
 
 A review of nine randomized trials of vocational training by World Bank economist David McKenzie (2017) found only three with significant employment impacts.
 
@@ -171,7 +171,7 @@ What It Means
 
 Too many funders receive attendance and completion counts but little evidence of earnings.
 
-### Each Cohort Is Documented from a Baseline at Enrollment, with Tracer Results at 3, 6 and 12 Months.
+### Each Cohort Is Documented from a Baseline at Enrollment, with Tracer Results at 3, 6 and 12 Months
 
 We document results through a baseline at enrollment and follow-up surveys at 3, 6 and 12 months; where available, offer letters, payslips and platform or bank records document work and earnings.
 
@@ -179,7 +179,7 @@ What It Means
 
 Without that record, an agency cannot see who entered work or began earning after training.
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -187,7 +187,7 @@ What It Means
 
 Tracks have to follow current employer demand, not last year’s job market.
 
-### 72% of Employers Worldwide Report Difficulty Finding the Talent They Need.
+### 72% of Employers Worldwide Report Difficulty Finding the Talent They Need
 
 Globally, 72% of employers report difficulty finding the talent they need; AI skills are now the hardest to find.
 
@@ -233,7 +233,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## We Have Built This Path Since 2014.
+## We Have Built This Path Since 2014
 
 You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.
 
@@ -296,7 +296,7 @@ How It Works
 
 ## One Delivery Model, from Selection to Paid Work
 
-Where We Stand
+Our Approach
 
 For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, the program through which funders deploy its integrated training-to-earnings model in a country. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 - Who We Reach
@@ -406,7 +406,7 @@ Trial figures are for a predecessor program. Survey figures are among surveyed c
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -476,7 +476,7 @@ ICT Division / Department of ICT (DoICT)
 
 What You Get
 
-## Each Feature Maps to What Funders and Agencies Ask For.
+## Each Feature Maps to What Funders and Agencies Ask For
 - Funder Concern Addressed
 
 Trained youth who never reach paid work
@@ -746,7 +746,7 @@ Independent evaluation is welcome and, where you want one, budgeted separately.
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Different routes suit different people. This is what each one typically includes.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone | Doing Nothing |
@@ -804,7 +804,7 @@ Pricing is set per program, and we share an indicative budget in the discovery s
 
 Scale
 
-We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.
+We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.
 
 Services Behind a Phase
 - CodersTrust’s role in Her Power: curriculum, training manuals and mentorship guidelines; Training of Trainers; 2,500 women trained directly; 54,609 manuals and guidelines distributed.
@@ -816,7 +816,7 @@ Development partners and foundations can also fund a phase in Bangladesh. Explor
 
 Low Risk
 
-## Start with a Pilot. Decide on Evidence.
+## Start with a Pilot. Decide on Evidence
 
 A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.
 - Completion
@@ -854,7 +854,7 @@ Decision sheet
 | Who Decides Expansion | The funder. | Left blank |
 | Scoped Separately | Devices, stipends, connectivity and independent evaluation, where a program needs them. | Left blank |
 
-## Funders: Talk to Us About a First Cohort.
+## Funders: Talk to Us About a First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 
@@ -867,7 +867,7 @@ For grant-funded pilots: about three weeks from first conversation to agreement,
 
 What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.
 
-## Governments: Start with a Briefing That Fits Your Timeline.
+## Governments: Start with a Briefing That Fits Your Timeline
 
 Public procurement follows the agency’s own timeline — we start with a briefing that fits it.
 

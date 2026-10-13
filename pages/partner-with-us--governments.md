@@ -8,7 +8,7 @@ META DESCRIPTION: We help governments prepare educated, unemployed youth for pai
 
 For Ministries and Public Agencies
 
-# Build a National Digital Workforce from Graduates and Digital Labs.
+# Build a National Digital Workforce from Graduates and Digital Labs
 
 We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.
 
@@ -100,7 +100,7 @@ Her Power Case Study
 
 The Challenge
 
-## In Bangladesh, Graduate Unemployment Is 13.5%.
+## In Bangladesh, Graduate Unemployment Is 13.5%
 
 That compares with 2.0% for holders of the Secondary School Certificate (SSC). Budgets that count enrollment cannot show who is earning.
 
@@ -126,9 +126,9 @@ graduate unemployment in Bangladesh, vs. 2.0% for Secondary School Certificate (
 
 The Cost of Waiting
 
-## Without Placement Tracking, Agencies Cannot See What Training Delivers.
+## Without Placement Tracking, Agencies Cannot See What Training Delivers
 
-### A Review of Nine Trials Found Only Three with Significant Employment Impacts.
+### A Review of Nine Trials Found Only Three with Significant Employment Impacts
 
 A review of nine randomized trials of vocational training by World Bank economist David McKenzie (2017) found only three with significant employment impacts.
 
@@ -136,7 +136,7 @@ What It Means
 
 Placement and tracking have to be built into the national program from the start, not added afterward.
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -144,7 +144,7 @@ What It Means
 
 Tracks have to follow current employer demand.
 
-### Jobs Increasingly Require AI Skills.
+### Jobs Increasingly Require AI Skills
 
 Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium.
 
@@ -186,7 +186,7 @@ From the October 2026 Survey
 
 Our Track Record
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 You answer for training budgets that must show up as young people in work, not only as seats filled.
 
@@ -216,7 +216,7 @@ How It Works
 
 ## A National Delivery Model, Built on Labs That Already Exist
 
-Where We Stand
+Our Approach
 
 For governments who need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 
@@ -252,13 +252,13 @@ See YouthWIDE in Bangladesh
 
 How We Scale
 
-We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.
+We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.
 
 The Evidence
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -447,7 +447,7 @@ Safeguarding, Governance and Due Diligence
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Our approach rests on independent evidence of our own training and on infrastructure that already exists: labs, colleges and Training of Trainers. Provision varies by provider and program.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone | Doing Nothing |
@@ -461,7 +461,7 @@ Our approach rests on independent evidence of our own training and on infrastruc
 
 Start
 
-## Choose Where to Start.
+## Choose Where to Start
 
 Pricing is set per program, and we share an indicative budget in the discovery session.
 
@@ -531,7 +531,7 @@ You choose whether and how far to scale.
 
 We support third-party evaluation of outcomes.
 
-## Let’s Plan a First Phase with Your Ministry.
+## Let’s Plan a First Phase with Your Ministry
 
 [button: Request a Briefing for Your Ministry (opens your email app)]
 

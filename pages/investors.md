@@ -7,7 +7,7 @@ META DESCRIPTION: For impact investors: back the platform moving emerging-market
 
 For Impact Investors
 
-# Invest in the Platform Connecting Emerging-Market Youth to Work.
+# Invest in the Platform Connecting Emerging-Market Youth to Work
 
 We help impact investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.
 
@@ -23,11 +23,11 @@ CodersTrust is building JobReady, an AI-native digital education and employment 
 
 The Thesis
 
-## Skills and Work Are Not Connecting.
+## Skills and Work Are Not Connecting
 
 Educated young people are not in work or training, and employers cannot find skills. Courses that sell content do not close the gap, and AI is raising the bar for entry work.
 
-### Educated Young People Are Not in Work or Training; Employers Cannot Find Skills.
+### Educated Young People Are Not in Work or Training; Employers Cannot Find Skills
 
 62 million
 
@@ -39,11 +39,11 @@ of employers globally report difficulty finding talent
 
 Separately, 19M+ university-educated people of all working ages (15 and over) are unemployed across South Asia, the Middle East and North Africa (MENA) and Sub-Saharan Africa, a floor figure rather than a youth figure.
 
-### Online Learning Sells Content, Not Earnings.
+### Online Learning Sells Content, Not Earnings
 
 Many online courses provide content without the work-entry support that turns skills into income: mentoring, certification and placement.
 
-### AI Is Raising the Bar for Entry Work.
+### AI Is Raising the Bar for Entry Work
 
 Globally, jobs requiring AI skills grew 69% vs. 9% for all jobs, with a 62% wage premium
 
@@ -120,7 +120,7 @@ Chief Growth Officer
 
 Chief Business Officer
 
-Where We Stand
+Our Approach
 
 For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. Its results are measured, reported and open to independent evaluation. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 
@@ -170,7 +170,7 @@ Trial figures are for a predecessor program. Survey figures are among surveyed c
 
 For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).
 
-In the BIGD trial, their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+In the BIGD trial, their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -250,7 +250,7 @@ Program Results
 
 ## Proof in Practice
 
-Three programs, with their partners.
+Three of our four case studies, each with its partner.
 
 [image: Women trainees and a CodersTrust Bangladesh banner at a WSDFM training session]
 
@@ -276,7 +276,7 @@ World Bank Group
 
 372 of 800
 
-tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%
+tracked women in work (47%), from the 2,500 trained directly by CodersTrust
 
 ### Her Power
 
@@ -381,7 +381,7 @@ Yes — a randomized controlled trial by BIGD (BRAC University) of CodersTrust�
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 Four capabilities of CodersTrust’s supported cohorts, against other approaches: certification, work entry, outcome tracking and independent evidence.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone |
@@ -408,7 +408,7 @@ Shared after the introduction call, under NDA.
 
 Low Risk
 
-## Start with a Conversation, Not a Commitment.
+## Start with a Conversation, Not a Commitment
 - ### The Call Does Not Commit Either Side
 
 It is a conversation about your funding priorities.
@@ -419,7 +419,7 @@ You choose whether to continue after the call.
 
 An NDA is in place before the deck and data room are shared.
 
-## Let’s Talk About Backing the Platform.
+## Let’s Talk About Backing the Platform
 
 [button: Request an Introduction Call (opens your email app)]
 

@@ -79,7 +79,7 @@ WSDFM (Women’s Skill Development for Freelancing Marketplace), commissioned by
 
 BIGD randomized trial, May 2022
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 Employment Status at Follow-Up: Women Offered a Place vs. the Control Group
 - Control Group
@@ -134,7 +134,7 @@ See How YouthWIDE Deploys the Model
 
 All Case Studies
 
-## Talk to Us About a First Cohort.
+## Talk to Us About a First Cohort
 
 [button: Request a Discovery Session (opens your email app)]
 

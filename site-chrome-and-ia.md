@@ -203,32 +203,32 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
 ## Sitemap: H1 and H2 Outline per Page
 
 ### /ctg/
-- H1: Turn Youth Unemployment into a Digital Workforce — with Evidence.
+- H1: Turn Youth Unemployment into a Digital Workforce — with Evidence
   - H2: The Strongest Proof
   - H2: What Is CodersTrust?
   - H2: Results and Programs
   - H2: About 10 More Women in Work for Every 100 Offered a Place
-  - H2: Income and Employment Among Surveyed Completers
-  - H2: Placement Results, Program by Program
-  - H2: Most New Earners Started Within Six Months
-  - H2: Programs in 15 Countries and Territories
+  - H2: Median Income Rose from $82 to $245 Among Surveyed Completers
+  - H2: Placement Results by Program
+  - H2: 58.8% of Surveyed New Earners Started Within Six Months
+  - H2: 130,000+ Young People Trained in 15 Countries and Territories
   - H2: Government Contracts and National University Partnership
   - H2: Find the Program for Your Partnership
-  - H2: What Brings You Here?
-  - H2: For Too Many Graduates, a Degree Is Not Turning into a Job.
-  - H2: Every Year of Waiting Costs a Cohort.
-  - H2: We’ve Built This Path Since 2014.
-  - H2: Imagine the Next 12 Months.
+  - H2: For Too Many Graduates, a Degree Is Not Turning into a Job
+  - H2: Tracks and Evidence Fall Behind While You Wait
+  - H2: We’ve Built This Path Since 2014
+  - H2: Imagine the Next 12 Months
   - H2: One Path from Learning to Earning
   - H2: Trial and Survey Evidence
   - H2: Proof in Practice
   - H2: Recognition and Historical Coverage
   - H2: What Your Partnership Includes
   - H2: Questions Partners Ask
-  - H2: Compare the Approaches.
-  - H2: Choose Where to Start.
-  - H2: Start with a Multi-Cohort Pilot. Decide on Evidence.
-  - H2: Let’s Design Your First Cohort.
+  - H2: Compare the Approaches
+  - H2: Choose Where to Start
+  - H2: Start with a Multi-Cohort Pilot. Decide on Evidence
+  - H2: What Brings You Here?
+  - H2: Let’s Design Your First Cohort
   - H2: What Happens After You Contact Us
   - H2: Latest News
 
@@ -259,7 +259,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Four Programs, in Depth
   - H2: Go Deeper
   - H2: Alignment with the Sustainable Development Goals
-  - H2: Discuss the Evidence for Your Program.
+  - H2: Discuss the Evidence for Your Program
 
 ### /ctg/careers/
 - H1: Work with Us at CodersTrust
@@ -287,9 +287,9 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Not Sure Which Program Fits?
 
 ### /ctg/investors/
-- H1: Invest in the Platform Connecting Emerging-Market Youth to Work.
+- H1: Invest in the Platform Connecting Emerging-Market Youth to Work
   - H2: What Is CodersTrust?
-  - H2: Skills and Work Are Not Connecting.
+  - H2: Skills and Work Are Not Connecting
   - H2: The Ambition and the Vision
   - H2: A Record Built Since 2014, with Institutions That Reach Youth
   - H2: A Multi-Sided Model: Learn, Earn, Prosper
@@ -297,10 +297,10 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Proof in Practice
   - H2: What JobReady Does — and What It Means
   - H2: Questions Investors Ask
-  - H2: Compare the Approaches.
+  - H2: Compare the Approaches
   - H2: What You Receive
-  - H2: Start with a Conversation, Not a Commitment.
-  - H2: Let’s Talk About Backing the Platform.
+  - H2: Start with a Conversation, Not a Commitment
+  - H2: Let’s Talk About Backing the Platform
   - H2: What Happens After You Ask
 
 ### /ctg/our-model/
@@ -312,7 +312,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Safeguarding and Data Are Agreed per Program
   - H2: Explore TalentLEAP and the JobReady Platform
   - H2: Evidence Behind the Approach
-  - H2: Start with a First Cohort.
+  - H2: Start with a First Cohort
 
 ### /ctg/about/team/
 - H1: Leadership and Team
@@ -343,7 +343,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Two Stories in Three Steps
   - H2: What Learners Report
   - H2: Go Deeper
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/privacy-policy/
 - H1: Privacy Policy
@@ -369,7 +369,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Due Diligence in One View
   - H2: Partner FAQs
   - H2: Who Does What
-  - H2: Let’s Find the Right Partnership.
+  - H2: Let’s Find the Right Partnership
 
 ### /ctg/about/governance/
 - H1: Governance and Accountability
@@ -399,44 +399,44 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Working on a Story About Youth Employment?
 
 ### /ctg/programs/superkids/
-- H1: Help Young Learners Explore Coding, Creativity and Robotics.
+- H1: Help Young Learners Explore Coding, Creativity and Robotics
   - H2: In Short
   - H2: What Is SuperKids?
   - H2: Program at a Glance
-  - H2: Digital Skills Start Early.
+  - H2: Digital Skills Start Early
   - H2: A Classroom with Coding, Robotics and Digital Art
   - H2: Public-Sector Agreements and a Private-Sector Partner
   - H2: How SuperKids Runs
   - H2: What Your School Receives
   - H2: What Has Been Delivered, and What Is Only Agreed
   - H2: Questions Schools and Partners Ask
-  - H2: Options Are Shaped with You in a Discovery Session.
+  - H2: Options Are Shaped with You in a Discovery Session
   - H2: Inside SuperKids Classrooms and Events
-  - H2: Bring SuperKids to Your School or Program.
+  - H2: Bring SuperKids to Your School or Program
   - H2: What Happens Next
 
 ### /ctg/programs/youthwide/
-- H1: Prepare Educated Youth for Paid Digital Work.
+- H1: Prepare Educated Youth for Paid Digital Work
   - H2: In Short
   - H2: What Is YouthWIDE?
   - H2: Program at a Glance
-  - H2: Educated Young People Are Not in Work in Bangladesh and Across Three Regions.
-  - H2: Training Without Work Entry Spends the Budget Without the Result.
+  - H2: Educated Young People Are Not in Work in Bangladesh and Across Three Regions
+  - H2: Training Without Work Entry Spends the Budget Without the Result
   - H2: What Your Reports Will Show
-  - H2: We Have Built This Path Since 2014.
+  - H2: We Have Built This Path Since 2014
   - H2: One Delivery Model, from Selection to Paid Work
   - H2: Trial and Survey Evidence
   - H2: Results from Delivered Programs
-  - H2: Each Feature Maps to What Funders and Agencies Ask For.
+  - H2: Each Feature Maps to What Funders and Agencies Ask For
   - H2: From Agreement to Monthly Reports
   - H2: Program Photographs from Bangladesh, Kosovo and Albania
   - H2: Questions Funders and Agencies Ask
   - H2: Safeguarding, Governance and Reporting
-  - H2: Compare the Approaches.
+  - H2: Compare the Approaches
   - H2: Three Ways to Start, Sized to Your Goals
-  - H2: Start with a Pilot. Decide on Evidence.
-  - H2: Funders: Talk to Us About a First Cohort.
-  - H2: Governments: Start with a Briefing That Fits Your Timeline.
+  - H2: Start with a Pilot. Decide on Evidence
+  - H2: Funders: Talk to Us About a First Cohort
+  - H2: Governments: Start with a Briefing That Fits Your Timeline
   - H2: What Happens Next for Governments
   - H2: What Happens Next for Funders
 
@@ -444,13 +444,13 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
 - H1: Four Programs Connecting Learners to Paid Work
   - H2: Read the Case Studies
   - H2: Three Women-Focused Programs, Side by Side
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/impact/global-reach/
 - H1: Global Reach: Where CodersTrust Programs Have Run
   - H2: Where Programs Have Run
   - H2: Selected Programs in Bangladesh
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/impact/in-the-field/
 - H1: In the Field: Photo Archive
@@ -462,7 +462,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Partnerships, Recognition and News
   - H2: Partnerships and MoU Signings
   - H2: Recognition and Advocacy
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/impact/outcomes-2026/
 - H1: Impact Survey 2026: What Happened After Training
@@ -478,7 +478,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Completers with No Prior Income
   - H2: Methodology and Limitations
   - H2: Download the Data
-  - H2: Discuss the Evidence for Your Program.
+  - H2: Discuss the Evidence for Your Program
 
 ### /ctg/our-model/talentleap/
 - H1: What Is TalentLEAP?
@@ -488,7 +488,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: What Makes TalentLEAP Different
   - H2: Results from CodersTrust Programs
   - H2: Questions About TalentLEAP
-  - H2: See How TalentLEAP Would Run in Your Program.
+  - H2: See How TalentLEAP Would Run in Your Program
 
 ### /ctg/about/team/asad-zaman/
 - H1: Asad Zaman
@@ -504,7 +504,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: More of the Team
 
 ### /ctg/programs/jobready-work/
-- H1: Build the Digital Capabilities Your Teams Need Now.
+- H1: Build the Digital Capabilities Your Teams Need Now
   - H2: In Short
   - H2: What Is JobReady@Work?
   - H2: Program at a Glance
@@ -514,8 +514,8 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Questions About the Program
   - H2: A Training Program for Your Team, and Talent When You Need It
   - H2: An Independent Randomized Trial
-  - H2: Start with a Pilot Team. Decide on Evidence.
-  - H2: Tell Us About Your Team and Your Roles.
+  - H2: Start with a Pilot Team. Decide on Evidence
+  - H2: Tell Us About Your Team and Your Roles
   - H2: What Happens Next
 
 ### /ctg/about/team/fahim-sheikh/
@@ -539,20 +539,20 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: More of the Team
 
 ### /ctg/programs/jobready-campus/
-- H1: Give Your Students a Practical Route into Digital Work.
+- H1: Give Your Students a Practical Route into Digital Work
   - H2: In Short
   - H2: What Is JobReady@Campus?
   - H2: Program at a Glance
   - H2: What a Campus Cohort Can Produce
-  - H2: Universities Partner with CodersTrust.
+  - H2: Universities Partner with CodersTrust
   - H2: How the Campus Model Works
   - H2: The National University Partnership
-  - H2: Each Feature Maps to What Institutions Ask For.
+  - H2: Each Feature Maps to What Institutions Ask For
   - H2: Three Steps from Set-Up to Placement
   - H2: Questions Institutions Ask
   - H2: Two Ways to Start a Campus Program
-  - H2: Start with a Pilot. Decide on Evidence.
-  - H2: Bring Industry Skills to Your Campus.
+  - H2: Start with a Pilot. Decide on Evidence
+  - H2: Bring Industry Skills to Your Campus
   - H2: What Happens Next
 
 ### /ctg/about/team/mahzabin-akter/
@@ -560,23 +560,23 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: More of the Team
 
 ### /ctg/partner-with-us/employers/
-- H1: Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.
+- H1: Upskill Your Teams for AI — and Hire Job-Ready Digital Talent
   - H2: In Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
   - H2: Job-Ready Talent Through the Placement Team
-  - H2: The Talent You Need Is Hard to Find.
-  - H2: AI Is Changing the Skills Your Teams Need.
+  - H2: The Talent You Need Is Hard to Find
+  - H2: AI Is Changing the Skills Your Teams Need
   - H2: What Changes for Your Team
-  - H2: We’ve Built This Path Since 2014.
+  - H2: We’ve Built This Path Since 2014
   - H2: JobReady@Work: Built Around Your Roles
   - H2: What You Get, and What It Means for Your Business
   - H2: Questions Employers Ask
   - H2: The Delivery Record for Employers
   - H2: An Independent Randomized Trial
-  - H2: Choose How to Work with Us.
-  - H2: Start with a Pilot Team. Decide on Evidence.
-  - H2: Let’s Plan Your First Team Program.
+  - H2: Choose How to Work with Us
+  - H2: Start with a Pilot Team. Decide on Evidence
+  - H2: Let’s Plan Your First Team Program
   - H2: What Happens After You Say Yes
 
 ### /ctg/about/team/faruque-hossain/
@@ -594,49 +594,49 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Why JobReady
   - H2: Planned Adaptive Learning
   - H2: Questions About the Platform
-  - H2: Talk to Us About JobReady.
+  - H2: Talk to Us About JobReady
 
 ### /ctg/partner-with-us/foundations/
-- H1: Fund a Supported Path from Learning to Earning.
+- H1: Fund a Supported Path from Learning to Earning
   - H2: In Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
   - H2: Results at a Glance
-  - H2: Grants Buy Hours. You Want Earnings.
-  - H2: Every Year of Delay Leaves a Cohort Without a Route to Work.
+  - H2: Grants Buy Hours. You Want Earnings
+  - H2: Every Year of Delay Leaves a Cohort Without a Route to Work
   - H2: What a Funded Cohort Could Show
-  - H2: We’ve Built This Path Since 2014.
+  - H2: We’ve Built This Path Since 2014
   - H2: Two Ways to Fund the Path
   - H2: An Independent Randomized Trial
   - H2: Program Results, with the Case Studies Behind Them
   - H2: What You Get, and What It Means for Your Grant
   - H2: Questions Funders Ask
-  - H2: Compare the Approaches.
+  - H2: Compare the Approaches
   - H2: Choose a Cohort Starting Point
-  - H2: Start with a Pilot. Decide on Evidence.
-  - H2: Let’s Explore a Funding Partnership.
+  - H2: Start with a Pilot. Decide on Evidence
+  - H2: Let’s Explore a Funding Partnership
   - H2: What Happens After You Say Yes
 
 ### /ctg/partner-with-us/governments/
-- H1: Build a National Digital Workforce from Graduates and Digital Labs.
+- H1: Build a National Digital Workforce from Graduates and Digital Labs
   - H2: In Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
   - H2: Results at a Glance
-  - H2: In Bangladesh, Graduate Unemployment Is 13.5%.
-  - H2: Without Placement Tracking, Agencies Cannot See What Training Delivers.
+  - H2: In Bangladesh, Graduate Unemployment Is 13.5%
+  - H2: Without Placement Tracking, Agencies Cannot See What Training Delivers
   - H2: What Your Next Budget Cycle Could Show
-  - H2: We’ve Built This Path Since 2014.
+  - H2: We’ve Built This Path Since 2014
   - H2: A National Delivery Model, Built on Labs That Already Exist
   - H2: An Independent Randomized Trial
   - H2: Six Government Contracts, Scope by Scope
   - H2: Her Power, Beside Two Other Women-Focused Programs
   - H2: What You Get, and What It Means for Your Agency
   - H2: Questions Ministries Ask
-  - H2: Compare the Approaches.
-  - H2: Choose Where to Start.
+  - H2: Compare the Approaches
+  - H2: Choose Where to Start
   - H2: Phased Rollout, with Review Gates
-  - H2: Let’s Plan a First Phase with Your Ministry.
+  - H2: Let’s Plan a First Phase with Your Ministry
   - H2: What Happens After You Say Yes
 
 ### /ctg/about/team/rezaul-karim-khan/
@@ -644,23 +644,23 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: More of the Team
 
 ### /ctg/partner-with-us/universities/
-- H1: Help Your Students and Graduates Build Job-Ready Digital Skills.
+- H1: Help Your Students and Graduates Build Job-Ready Digital Skills
   - H2: In Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
-  - H2: For Too Many Graduates, a Degree Is Not Turning into a Job.
+  - H2: For Too Many Graduates, a Degree Is Not Turning into a Job
   - H2: Every Cohort Without Placement Evidence Weakens Your Employment Story
   - H2: What Your Students Leave With
-  - H2: We’ve Built This Path Since 2014.
+  - H2: We’ve Built This Path Since 2014
   - H2: JobReady@Campus: Training Alongside the Degree
   - H2: The National University Partnership
   - H2: An Independent Randomized Trial
   - H2: What You Get, and What It Means for Your Students
   - H2: Questions Universities Ask
-  - H2: Compare the Approaches.
-  - H2: Choose Where to Start.
-  - H2: Start with a Pilot. Decide on Evidence.
-  - H2: Let’s Bring JobReady@Campus to Your Students.
+  - H2: Compare the Approaches
+  - H2: Choose Where to Start
+  - H2: Start with a Pilot. Decide on Evidence
+  - H2: Let’s Bring JobReady@Campus to Your Students
   - H2: What Happens After You Say Yes
 
 ### /ctg/impact/case-studies/her-power/
@@ -672,7 +672,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: A Learner Story
   - H2: From the Program
   - H2: Where the Model Runs Next
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/impact/independent-evaluation/
 - H1: A Randomized Trial of CodersTrust’s Predecessor Program for Women in Dhaka
@@ -684,20 +684,20 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: How This Compares with Other Training Trials
   - H2: What It Means for Funders
   - H2: Questions About the Evidence
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/about/team/ferdinand-kjaerulff/
 - H1: Ferdinand Kjærulff
   - H2: More of the Team
 
 ### /ctg/partner-with-us/local-partners/
-- H1: Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.
+- H1: Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community
   - H2: Local Partners in Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
-  - H2: Local Organizations Reach the Young People Central Programs Miss.
-  - H2: Cohorts That Train but Do Not Place Cost Community Trust.
-  - H2: Imagine a Cohort in Your Community.
+  - H2: Local Organizations Reach the Young People Central Programs Miss
+  - H2: Cohorts That Train but Do Not Place Cost Community Trust
+  - H2: Imagine a Cohort in Your Community
   - H2: Delivered with a Bangladesh Team Beside You
   - H2: How a Local Partnership Works
   - H2: An Independent Randomized Trial
@@ -707,8 +707,8 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Questions Local Partners Ask
   - H2: Approaches to Getting into Digital Work, and Their Trade-Offs
   - H2: Three Ways to Partner with Us
-  - H2: Start with a Pilot Cohort. Decide on Evidence.
-  - H2: Let’s Plan Your First Local Cohort.
+  - H2: Start with a Pilot Cohort. Decide on Evidence
+  - H2: Let’s Plan Your First Local Cohort
   - H2: What Happens After You Say Yes
 
 ### /ctg/impact/in-the-field/news-photos/
@@ -718,14 +718,14 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: Partners, Programs and Events, 2024
   - H2: Partners, Programs and Events, 2023
   - H2: Partners, Programs and Events, 2021–2022
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/programs/nu-postgraduate-diploma/
-- H1: Build Practical Digital Skills After Your Degree.
+- H1: Build Practical Digital Skills After Your Degree
   - H2: Choose Your Course
   - H2: What Is the NU Postgraduate Diploma?
-  - H2: A Degree Alone Is Not Producing Job Offers.
-  - H2: Employers Are Asking for Different Skills.
+  - H2: A Degree Alone Is Not Producing Job Offers
+  - H2: Employers Are Asking for Different Skills
   - H2: A Clearer Route into Digital Work
   - H2: Before You Apply
   - H2: Delivered with National University
@@ -733,7 +733,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: How It Works in Three Steps
   - H2: Questions Applicants Ask
   - H2: Start Your Application
-  - H2: Talk to Admissions Before You Decide.
+  - H2: Talk to Admissions Before You Decide
   - H2: Ready to Apply?
   - H2: What Happens After You Apply
 
@@ -746,27 +746,27 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: A Learner Story
   - H2: From the Program
   - H2: Where the Model Runs Next
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/partner-with-us/development-partners/
-- H1: Youth Employment Results You Can Report — Not Just Training Numbers.
+- H1: Youth Employment Results You Can Report — Not Just Training Numbers
   - H2: In Short
   - H2: What Is CodersTrust?
   - H2: Is This Right for You?
   - H2: Results at a Glance
-  - H2: Enrollment Targets Are Often Met. Paid Work Lags.
-  - H2: Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result.
+  - H2: Enrollment Targets Are Often Met. Paid Work Lags
+  - H2: Every Cohort That Trains but Does Not Lead to Work Spends the Budget for a Fraction of the Result
   - H2: What Your Monthly Report Could Show
-  - H2: We’ve Built This Path Since 2014.
+  - H2: We’ve Built This Path Since 2014
   - H2: An Integrated Path from Training to Earnings
   - H2: An Independent Randomized Trial
   - H2: Program Results, with the Case Studies Behind Them
   - H2: What You Get, and What It Means for Your Outcomes
   - H2: Questions Partners Ask
-  - H2: Compare the Approaches.
-  - H2: Choose Where to Start.
-  - H2: Start with a Pilot. Decide on Evidence.
-  - H2: Let’s Design Your First Cohort.
+  - H2: Compare the Approaches
+  - H2: Choose Where to Start
+  - H2: Start with a Pilot. Decide on Evidence
+  - H2: Let’s Design Your First Cohort
   - H2: What Happens After You Say Yes
 
 ### /ctg/programs/nu-postgraduate-diploma/ict/
@@ -780,7 +780,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: What Happens After You Apply
   - H2: NU Postgraduate Diploma in Digital Marketing
   - H2: Questions About This Course
-  - H2: Apply for the NU Postgraduate Diploma in ICT.
+  - H2: Apply for the NU Postgraduate Diploma in ICT
 
 ### /ctg/news/why-we-call-it-a-digital-factory/
 - H1: Why We Call It a Digital Factory
@@ -801,7 +801,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: What Happened
   - H2: A Learner Story
   - H2: Where the Model Runs Next
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/news/coderstrust-visited-bimstec-headquarter/
 - H1: CodersTrust Visited BIMSTEC Headquarters: Highlights Potential for Science, Technology, and Innovation Cooperation
@@ -816,7 +816,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: What Happened
   - H2: A Learner Story
   - H2: Where the Model Runs Next
-  - H2: Talk to Us About a First Cohort.
+  - H2: Talk to Us About a First Cohort
 
 ### /ctg/programs/nu-postgraduate-diploma/digital-marketing/
 - H1: NU Postgraduate Diploma in Digital Marketing
@@ -829,7 +829,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - H2: What Happens After You Apply
   - H2: NU Postgraduate Diploma in ICT
   - H2: Questions About This Course
-  - H2: Apply for the NU Postgraduate Diploma in Digital Marketing.
+  - H2: Apply for the NU Postgraduate Diploma in Digital Marketing
 
 ### /ctg/news/1000-trainees-sheikh-kamal-ict-incubator-training/
 - H1: 1000 People to Be Trained on High Demand IT Skills | Sheikh Kamal ICT Incubator Training
@@ -1048,8 +1048,8 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
 ## Internal Links From Each Page's Main Content
 
 ### /ctg/
-- Internal (33): /ctg/partner-with-us/development-partners/, /ctg/partner-with-us/governments/, /ctg/partner-with-us/foundations/, /ctg/investors/, /ctg/impact/, /ctg/impact/independent-evaluation/, /ctg/impact/outcomes-2026/, /ctg/impact/case-studies/, /ctg/impact/global-reach/, /ctg/programs/youthwide/, /ctg/programs/jobready-campus/, /ctg/programs/jobready-work/, /ctg/programs/nu-postgraduate-diploma/, /ctg/programs/superkids/, /ctg/programs/, /ctg/partner-with-us/local-partners/, /ctg/partner-with-us/universities/, /ctg/partner-with-us/employers/, /ctg/about/governance/, /ctg/our-model/talentleap/, /ctg/about/team/, /ctg/our-model/, /ctg/impact/#evidence-ladder, /ctg/impact/case-studies/wsdfm-women-freelancers/, /ctg/impact/case-studies/kosovo-women-in-online-work/, /ctg/impact/case-studies/her-power/, /ctg/impact/stories/, /ctg/about/recognition/, /ctg/partner-with-us/#faqs, /ctg/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/, /ctg/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/, /ctg/news/the-man-behind-coderstrust-who-never-forgot-his-roots/, /ctg/news/
-- External/other (2): mailto:contact@coderstrust.global?subject=Discovery%20session%20request%20%E2%80%94%20%5Byour%20organization%5D&body=Hello%20CodersTrust%20team%2C%0D%0A%0D%0AOrganization%3A%20%0D%0ACountry%2Fregion%3A%20%0D%0APriority%20groups%3A%20%0D%0AApprox.%20number%20of%20trainees%3A%20%0D%0APreferred%20timeline%3A%20%0D%0ATwo%20suitable%20times%20for%20a%20discovery%20conversation%3A%20%0D%0A%0D%0AThank%20you., https://jobready.global/
+- Internal (33): /ctg/partner-with-us/development-partners/, /ctg/partner-with-us/governments/, /ctg/partner-with-us/foundations/, /ctg/investors/, /ctg/impact/, /ctg/impact/independent-evaluation/, /ctg/impact/outcomes-2026/, /ctg/impact/case-studies/, /ctg/impact/global-reach/, /ctg/programs/youthwide/, /ctg/programs/jobready-campus/, /ctg/programs/jobready-work/, /ctg/programs/nu-postgraduate-diploma/, /ctg/programs/superkids/, /ctg/programs/, /ctg/our-model/talentleap/, /ctg/about/team/, /ctg/our-model/, /ctg/impact/#evidence-ladder, /ctg/impact/case-studies/wsdfm-women-freelancers/, /ctg/impact/case-studies/kosovo-women-in-online-work/, /ctg/impact/case-studies/her-power/, /ctg/impact/stories/, /ctg/about/recognition/, /ctg/partner-with-us/#faqs, /ctg/partner-with-us/local-partners/, /ctg/partner-with-us/universities/, /ctg/partner-with-us/employers/, /ctg/about/governance/, /ctg/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/, /ctg/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/, /ctg/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/, /ctg/news/
+- External/other (4): mailto:contact@coderstrust.global?subject=Discovery%20session%20request%20%E2%80%94%20%5Byour%20organization%5D&body=Hello%20CodersTrust%20team%2C%0D%0A%0D%0AOrganization%3A%20%0D%0ACountry%2Fregion%3A%20%0D%0APriority%20groups%3A%20%0D%0AApprox.%20number%20of%20trainees%3A%20%0D%0APreferred%20timeline%3A%20%0D%0ATwo%20suitable%20times%20for%20a%20discovery%20conversation%3A%20%0D%0A%0D%0AThank%20you., https://jobready.global/, mailto:contact@coderstrust.global?subject=Briefing%20request%20%E2%80%94%20%5Bministry%2Fagency%5D&body=Hello%20CodersTrust%20team%2C%0D%0A%0D%0AAgency%3A%20%0D%0AProgram%2Ftarget%3A%20%0D%0AContact%20person%3A%20%0D%0APreferred%20dates%3A%20%0D%0A%0D%0AThank%20you., mailto:contact@coderstrust.global?subject=Introduction%20call%20request%20%E2%80%94%20%5Bfirm%5D&body=Hello%20CodersTrust%20team%2C%0D%0A%0D%0AFirm%3A%20%0D%0AName%20%26%20role%3A%20%0D%0AImpact%20focus%3A%20%0D%0APreferred%20time%20for%20an%20introduction%20call%3A%20%0D%0A%0D%0AThank%20you.
 
 ### /ctg/news/
 - Internal (43): /ctg/, /ctg/news/coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership/, /ctg/news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/, /ctg/news/celebrating-america-week-with-the-u-s-embassy-dhaka/, /ctg/news/aziz-ahmad-co-founder-and-global-chairman-of-coderstrust-appointed-as-global-upeace-ambassador/, /ctg/news/the-man-behind-coderstrust-who-never-forgot-his-roots/, /ctg/news/a-proud-milestone-for-coderstrust/, /ctg/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/, /ctg/news/why-we-call-it-a-digital-factory/, /ctg/news/the-future-building-a-digital-factory-for-bangladesh/, /ctg/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/, /ctg/news/coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation/, /ctg/news/coderstrust-and-basis-asset-collaborate-to-build-bangladeshs-it-future/, /ctg/news/coderstrust-chairman-and-co-founder-aziz-ahmad-participates-in-u-s-energy-security-panel/, /ctg/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/, /ctg/news/mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust/, /ctg/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/, /ctg/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/, /ctg/news/coderstrust-chairman-mr-aziz-ahmad-leads-delegation-to-u-s-embassy-to-discuss-youth-empowerment/, /ctg/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/, /ctg/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/, /ctg/news/mou-signing-ceremony-between-north-south-university-coderstrust/, /ctg/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/, /ctg/news/coderstrust-attends-wsis20-forum-high-level-event/, /ctg/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/, /ctg/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/, /ctg/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/, /ctg/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/, /ctg/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/, /ctg/news/coderstrust-bangladesh-and-ostitto-join-forces-to-bridge-the-digital-divide/, /ctg/news/coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad/, /ctg/news/coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia/, /ctg/news/coderstrust-brings-discovery-education-the-global-leader-of-stem-education-to-bangladeshi-schools-and-learners/, /ctg/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/, /ctg/news/aziz-ahmad-advocates-technology-skills-for-peace-at-un-world-press-freedom-day/, /ctg/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/, /ctg/news/coderstrust-visited-bimstec-headquarter/, /ctg/news/1000-trainees-enhancing-digital-government-economy-edge/, /ctg/news/1000-trainees-sheikh-kamal-ict-incubator-training/, /ctg/news/gardinar-emphasizes-skill-development-and-access-for-bangladeshis-to-us-digital-platform/, /ctg/news/aziz-ahmad-wins-the-nynjmsdc-partnership-award-in-the-united-states/, /ctg/news/coderstrust-leedo-join-to-expands-ict-education-to-street-children/, /ctg/news/coderstrust-teaching-you-freelancing-the-right-way/

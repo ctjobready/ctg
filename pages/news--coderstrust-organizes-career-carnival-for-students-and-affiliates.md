@@ -66,7 +66,7 @@ Programs & Events
 
 ### CodersTrust Students Were Invited to Join UPEACE’s “Young Leaders for Peace” Summer Programme 2026
 
-CodersTrust learners were invited to apply for UPEACE's Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica.
+CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica.
 
 [image: Women learners and guests posing for a group photograph in front of the ceremony banner]
 

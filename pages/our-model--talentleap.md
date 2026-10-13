@@ -148,7 +148,7 @@ No — salaried jobs remain the largest pathway; freelancing and business owners
 
 Mostly university graduates from across Bangladesh, some of them already working before training. Among surveyed completers, 84.6% hold a bachelor’s degree or higher, 68.7% were aged 15–35 and 62.9% live outside Dhaka, across 58 of the country’s 64 districts; 47.4% were working before training.
 
-## See How TalentLEAP Would Run in Your Program.
+## See How TalentLEAP Would Run in Your Program
 
 A discovery session sets priority groups, tracks and the pilot scorecard.
 

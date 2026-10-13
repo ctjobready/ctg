@@ -8,7 +8,7 @@ META DESCRIPTION: SuperKids brings STEAM, coding, robotics and digital art to yo
 
 SuperKids · For Schools and Education Partners
 
-# Help Young Learners Explore Coding, Creativity and Robotics.
+# Help Young Learners Explore Coding, Creativity and Robotics
 
 We help schools and partners bring STEAM, coding, robotics and digital art to young learners, so children build digital skills early.
 
@@ -63,7 +63,7 @@ Your location, age groups and approximate number of learners, your goals and you
 
 The Challenge
 
-## Digital Skills Start Early.
+## Digital Skills Start Early
 
 SuperKids brings the first steps of STEAM, coding, robotics and digital art into the classroom.
 
@@ -115,7 +115,7 @@ Courses
 
 ## How SuperKids Runs
 
-Where We Stand
+Our Approach
 
 For schools and education partners who want children to build digital skills early, CodersTrust offers SuperKids, a K-12 STEAM program of block coding, robotics and digital art, offered through schools and education partners under agreements with DoICT and NCTB (agreements and targets, not delivered reach).
 
@@ -195,7 +195,7 @@ Safeguarding and data protection are specified for each program and agreed befor
 
 Start
 
-## Options Are Shaped with You in a Discovery Session.
+## Options Are Shaped with You in a Discovery Session
 
 We do not publish prices. Bring these three things to the conversation.
 
@@ -263,7 +263,7 @@ Nihal, SuperKids learner
 
 Zaeem, SuperKids learner
 
-## Bring SuperKids to Your School or Program.
+## Bring SuperKids to Your School or Program
 
 [button: Request a Discovery Session (opens your email app)]
 

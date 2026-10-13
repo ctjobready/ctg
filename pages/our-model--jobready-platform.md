@@ -94,7 +94,7 @@ Roadmap
 
 Partly — modules are rolling out in stages. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace, so placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.
 
-## Talk to Us About JobReady.
+## Talk to Us About JobReady
 
 A discovery session covers how JobReady fits your program. A platform grant helps CodersTrust roll out the remaining modules; details are shared in the introductory call.
 

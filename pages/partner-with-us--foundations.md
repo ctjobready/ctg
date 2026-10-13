@@ -8,7 +8,7 @@ META DESCRIPTION: Fund a supported path from learning to earning. A BIGD trial o
 
 For Foundations and CSR Leaders
 
-# Fund a Supported Path from Learning to Earning.
+# Fund a Supported Path from Learning to Earning
 
 We help funders back mentored, certification-focused training that prepares youth for paid digital work.
 
@@ -78,7 +78,7 @@ of the 350 trained in UNDP YES, Korail, found their first job within 3 months
 
 The Challenge
 
-## Grants Buy Hours. You Want Earnings.
+## Grants Buy Hours. You Want Earnings
 
 You want to know what your grant changed, not only how many hours it paid for.
 
@@ -100,9 +100,9 @@ Scalable, accountable implementers are hard to find.
 
 The Cost of Waiting
 
-## Every Year of Delay Leaves a Cohort Without a Route to Work.
+## Every Year of Delay Leaves a Cohort Without a Route to Work
 
-### AI Is Reshaping Entry Work.
+### AI Is Reshaping Entry Work
 
 Globally, AI and information processing are expected to create 11M jobs and displace 9M by 2030; across all trends 170M created vs. 92M displaced.
 
@@ -110,7 +110,7 @@ What It Means
 
 Programs have to track where entry-level work is going.
 
-### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release.
+### On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release
 
 Within eight months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% within about a year of image-generating AI.
 
@@ -118,7 +118,7 @@ What It Means
 
 Tracks chosen from current employer demand keep pace.
 
-### Educated Young People Are Waiting.
+### Educated Young People Are Waiting
 
 An estimated 62 million young people aged 15–24 with higher-secondary education or more (range 61–78 million) are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.
 
@@ -126,7 +126,7 @@ What It Means
 
 Every year of delay is a cohort without a path.
 
-### A Review of Nine Trials Found Only Three with Significant Employment Impacts.
+### A Review of Nine Trials Found Only Three with Significant Employment Impacts
 
 A review of nine randomized trials of vocational training by World Bank economist David McKenzie (2017) found only three with significant employment impacts.
 
@@ -164,7 +164,7 @@ Photographs are from past CodersTrust programs, shown for context.
 
 Our Track Record
 
-## We’ve Built This Path Since 2014.
+## We’ve Built This Path Since 2014
 
 You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.
 
@@ -192,7 +192,7 @@ How It Works
 
 ## Two Ways to Fund the Path
 
-Where We Stand
+Our Approach
 
 For foundations and CSR funders who need a grant to change a young person’s income, and evidence that it did, CodersTrust offers an integrated training-to-earnings model with a pilot scorecard agreed in co-design. Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.
 - Funding Vehicle 1
@@ -231,7 +231,7 @@ The Evidence
 
 ## An Independent Randomized Trial
 
-A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher (about +$27 a month). For women who attended, income was 54% higher.
+A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month). For women who attended, income was 54% higher than the control group’s.
 
 +10.3 pp
 
@@ -427,7 +427,7 @@ Safeguarding, Governance and Due Diligence
 
 Compare Approaches
 
-## Compare the Approaches.
+## Compare the Approaches
 
 A supported cohort pairs independent evidence on our own training with preparation for a recognized credential built into each track. Provision varies by provider and program.
 | Approach | CodersTrust Supported Cohort | Conventional Skills Programs | Self-Paced Course Platforms | Freelance Marketplaces Alone | Doing Nothing |
@@ -501,7 +501,7 @@ For cohort grants, every pilot is judged on cost per completer and per verified 
 
 Reporting and Review
 
-## Start with a Pilot. Decide on Evidence.
+## Start with a Pilot. Decide on Evidence
 
 Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end.
 
@@ -530,7 +530,7 @@ For example, earnings in at least three of six months above an agreed minimum.
 - Decide on Expansion. Expansion is the funder’s decision, taken on the scorecard results.
 - Commission an Independent Evaluation. Independent evaluation is welcome, and we support it.
 
-## Let’s Explore a Funding Partnership.
+## Let’s Explore a Funding Partnership
 
 [button: Explore a Funding Partnership (opens your email app)]
 
