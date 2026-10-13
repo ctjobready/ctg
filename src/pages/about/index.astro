@@ -95,7 +95,7 @@ const jsonLd = [
   ]} />
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
-    <SectionHeader id="mission-h" eyebrow="Mission and Vision" title="Why We Exist, and Where We Are Heading" />
+    <SectionHeader id="mission-h" eyebrow="Why We Exist" title="Mission and Vision" />
     <div class="grid-cards grid-cards--2">
       <article class="card" data-reveal>
         <div class="card__body">
@@ -124,7 +124,10 @@ const jsonLd = [
   <Section id="proof" tone="airy" aria-labelledby="proof-h">
     <SectionHeader id="proof-h" eyebrow="The Evidence" title={TRIAL_BAND_HEADING} />
     <p class="lead" data-fact="RC-01">{trial}</p>
-    <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
+    <p class="cluster">
+      <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>See What Our 2026 Completers Reported<Icon name="arrow-right" size={16} /></a>
+    </p>
   </Section>
 
   <Section id="story" tone="ice" aria-labelledby="timeline-h">
@@ -133,9 +136,7 @@ const jsonLd = [
   </Section>
 
   <Section id="founders" aria-labelledby="founders-h">
-    <SectionHeader id="founders-h" eyebrow="Founders" title="The People Who Started It">
-      <p class="lead"><Fact id="ID-03" /></p>
-    </SectionHeader>
+    <SectionHeader id="founders-h" eyebrow="Founders" title="The People Who Started It" />
     <div class="grid-cards grid-cards--2 about-founders">
       {founders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>

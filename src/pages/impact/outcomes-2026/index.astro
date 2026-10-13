@@ -96,6 +96,11 @@ const emp = fact('OC-01').stat!;
 const before = parseFloat(emp.from!);
 const after = emp.numeric!;
 const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: t.before, after: t.after }));
+// WP22: the direct answer under the H1 (40 to 60 words), read from OC-01 and OC-03: employment, income, and what the survey does not show.
+const oc03 = fact('OC-03').stat!;
+const directAnswer = `Among surveyed completers, employment rose from ${emp.from} before training to ${emp.value} at the October 2026 survey, and median monthly income rose from ${oc03.from} to ${oc03.value}. These are what respondents report: the survey describes outcomes among alumni who answered, and it does not show that training caused the change.`;
+const answerWords = directAnswer.split(/\s+/).length;
+if (answerWords < 40 || answerWords > 60) throw new Error(`Outcomes 2026 direct answer is ${answerWords} words (40 to 60)`);
 const d = discoveryCta();
 ---
 
@@ -103,7 +108,7 @@ const d = discoveryCta();
   title={title('Impact Survey 2026 Outcomes')}
   heading="Impact Survey 2026: What Happened After Training"
   eyebrow="Outcomes 2026 · Surveyed Completers"
-  lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience."
+  lead={directAnswer}
   description={description}
   path={path}
   updated={D.PAGE_LAST_REVIEWED}
@@ -113,7 +118,6 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="summary" title="Summary">
-    <Callout tone="bluf"><CopyText block={SURVEY_EMPLOYMENT} /></Callout>
     <h3 class="t-heading-l ro__group">Earnings and Work</h3>
     <div class="ro__stats">
       <FactStat id="OC-03" />

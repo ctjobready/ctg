@@ -103,18 +103,21 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     variant="strip"
     id="glance"
     title="Results at a Glance"
+    cols={4}
     items={[
       { id: 'RC-13', href: '/impact/independent-evaluation/' },
       { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+      { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="Enrollment Targets Are Often Met. Employment Results Lag."
+    title="Enrollment Targets Are Often Met. Paid Work Lags."
     bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part."
     factIds={['PX-01']}
   >
@@ -144,7 +147,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-development')}
-    title="What Your Next Reporting Cycle Could Show"
+    title="What Your Monthly Report Could Show"
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'Earnings in Your Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
@@ -268,7 +271,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <ReviewCycle />
+  <ReviewCycle scorecard />
 
   <!-- C13 · Call to action -->
   <CTABand

@@ -65,19 +65,37 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
-  <!-- C1: one primary CTA (Apply Now); admissions is a text link; the key facts sit in the hero, the full table follows the value band -->
+  <!-- C1: one primary CTA (Apply Now); admissions is a text link; duration and fee sit in the hero, the full table (eligibility and delivery included, stated once) follows the value band -->
   <Hero eyebrow={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} artSeed="nu-pgd">
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
     </Fragment>
     <dl slot="stats" class="keyfacts">
-      <div><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
       <div><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
-      <div><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
     </dl>
   </Hero>
+
+  <!-- WP22: the two course-choice cards sit directly under the hero (they were the C6 band) -->
+  <MechanismSection id="courses" title="Choose Your Course" lead="Two courses, delivered by CodersTrust under National University’s official training partnership." eyebrow="The Courses" factIds={['SC-04']} tone="airy">
+    <div class="courses" data-fact="SC-04">
+      {
+        courses.map((c) => (
+          <CourseCard
+            title={c.title}
+            image={nuBanner(c.slug)?.src}
+            imageAlt={nuBanner(c.slug)?.alt}
+            assetId={nuBanner(c.slug)?.assetId}
+            ratio="808 / 555"
+            meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
+            href={`${path}${c.slug}/`}
+            actionLabel="View Course"
+          />
+        ))
+      }
+    </div>
+  </MechanismSection>
 
   <DefinitionBlock heading="What Is the NU Postgraduate Diploma?">
     <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.</p>
@@ -143,26 +161,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   >
     <p data-fact="SC-04">CodersTrust has been the official training partner of National University since 2023.</p>
   </GuideSection>
-
-  <!-- C6 -->
-  <MechanismSection title="The National University Postgraduate Diploma" lead="Courses delivered by CodersTrust under National University’s official training partnership." eyebrow="The Courses" factIds={['SC-04']}>
-    <div class="courses" data-fact="SC-04">
-      {
-        courses.map((c) => (
-          <CourseCard
-            title={c.title}
-            image={nuBanner(c.slug)?.src}
-            imageAlt={nuBanner(c.slug)?.alt}
-            assetId={nuBanner(c.slug)?.assetId}
-            ratio="808 / 555"
-            meta={NU_COURSE_COPY[c.slug].topics.map((t) => ({ icon: 'book-open', label: t }))}
-            href={`${path}${c.slug}/`}
-            actionLabel="View Course"
-          />
-        ))
-      }
-    </div>
-  </MechanismSection>
 
   <!-- C7 -->
   <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
@@ -269,7 +267,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   }
   @media (min-width: 768px) {
     .keyfacts {
-      grid-template-columns: repeat(4, minmax(0, auto));
+      grid-template-columns: repeat(2, minmax(0, auto));
     }
   }
   .ba {

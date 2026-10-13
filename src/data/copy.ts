@@ -29,7 +29,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
-  investors: 'We help investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
+  investors: 'We help impact investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
 };
@@ -40,7 +40,7 @@ export const HEADLINE: Record<Audience, string> = {
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
   governments: 'Build a National Digital Workforce from Graduates and Digital Labs.',
   foundations: 'Fund a Supported Path from Learning to Earning.',
-  universities: 'Help Your Graduates Build Job-Ready Digital Skills.',
+  universities: 'Help Your Students and Graduates Build Job-Ready Digital Skills.',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
   investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work.',
   localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.',
@@ -55,7 +55,7 @@ export const EMPATHY: Record<Audience, string> = {
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
-  investors: 'Investors weighing a market with real demand for skills need to distinguish a model that is working from one that is only promised.',
+  investors: 'Impact investors need to tell a model that is working from one that is only promised.',
   localPartners: 'You reach young people that central programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
@@ -135,7 +135,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-10', 'IN-04'],
   },
   investors: {
-    text: `For impact and growth investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. Its results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
+    text: `For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. Its results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {
@@ -260,7 +260,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas); CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
@@ -303,7 +303,7 @@ export const IMPACT_ANSWER: CopyBlock = impactAnswer();
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
-  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, in work (47%).',
+  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,500 trained directly by CodersTrust.',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 

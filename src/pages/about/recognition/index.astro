@@ -36,8 +36,8 @@ const HONOR_POSTS: [RegExp, string | null][] = [
 // The NYNJMSDC Partnership Award went to UTC Associates, the technology consulting company Aziz Ahmad leads (see the dated
 // news post), so the card says so and spells out the council's name.
 const HONOR_NOTES: [RegExp, string][] = [
-  [/NYNJMSDC/, 'Presented by the New York & New Jersey Minority Supplier Development Council to UTC Associates, the technology consulting company Aziz Ahmad leads'],
-  [/NOVA/, 'He received the NOVA Award in 2022 for his contribution to the green technology industry'],
+  [/NYNJMSDC/, 'Presented by the New York & New Jersey Minority Supplier Development Council to UTC Associates, the technology consulting company Aziz Ahmad leads.'],
+  [/NOVA/, 'He received the NOVA Award in 2022 for his contribution to the green technology industry.'],
 ];
 const honors = fact('PA-11')
   .text.split(': ')
@@ -95,7 +95,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman has received international honors, and its work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received international honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
     </Fragment>
@@ -104,7 +104,8 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   <PageNav links={[
     { label: 'Industry Recognition', href: '#listing' },
     { label: 'Founder Honors', href: '#honors' },
-    { label: 'Media Coverage', href: '#coverage' },
+    { label: 'Forums and Events', href: '#forums' },
+    { label: 'Early Press Coverage', href: '#coverage' },
     { label: 'Press Kit', href: '#press-kit' },
   ]} />
 
@@ -173,7 +174,44 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     )
   }
 
-  <Section id="coverage" aria-labelledby="coverage-h">
+  {
+    FORUMS.length > 0 && (
+      <Section id="forums" aria-labelledby="forums-h">
+        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" lead="Selected appearances, each documented in a dated news post." />
+        <ul class="rec-forums" role="list">
+          {FORUMS.map((f) => (
+            <li>
+              <a class="rec-forum" href={url(newsHref(f))}>
+                <span class="rec-forum__date"><time datetime={isoDate(f.data.date)}>{formatDate(f.data.date)}</time></span>
+                <span class="rec-forum__title">{f.data.title}</span>
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  {
+    quotes.length > 0 && (
+      <Section id="endorsements" tone="airy" aria-labelledby="end-h">
+        <SectionHeader id="end-h" eyebrow="Endorsements" title="What University for Peace Says" />
+        <div class="rec-quotes">
+          {quotes.map((e) => (
+            <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
+              <Img src={e.photo} alt={e.photoAlt} width={96} height={96} assetId={`endorsement-${e.id}`} class="rec-quote__photo" />
+              <Quote cite={e.name} role={e.title}>{tidy(e.quote)}</Quote>
+            </figure>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
+
+  <Section id="coverage" tone="airy" aria-labelledby="coverage-h">
     <SectionHeader id="coverage-h" eyebrow="In the Press" title="Early Coverage of CodersTrust’s First Years, 2014–2016" lead="Shown as published. Original articles are linked where available." />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
@@ -197,43 +235,6 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
       <p>Some 2014 coverage described Morten Lund as a co-founder; CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
     </aside>
   </Section>
-
-  {
-    quotes.length > 0 && (
-      <Section id="endorsements" tone="airy" aria-labelledby="end-h">
-        <SectionHeader id="end-h" eyebrow="Endorsements" title="What University for Peace Says" />
-        <div class="rec-quotes">
-          {quotes.map((e) => (
-            <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>
-              <Img src={e.photo} alt={e.photoAlt} width={96} height={96} assetId={`endorsement-${e.id}`} class="rec-quote__photo" />
-              <Quote cite={e.name} role={e.title}>{tidy(e.quote)}</Quote>
-            </figure>
-          ))}
-        </div>
-      </Section>
-    )
-  }
-
-  {
-    FORUMS.length > 0 && (
-      <Section id="forums" aria-labelledby="forums-h">
-        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" lead="Selected appearances, each documented in a dated news post." />
-        <ul class="rec-forums" role="list">
-          {FORUMS.map((f) => (
-            <li>
-              <a class="rec-forum" href={url(newsHref(f))}>
-                <span class="rec-forum__date"><time datetime={isoDate(f.data.date)}>{formatDate(f.data.date)}</time></span>
-                <span class="rec-forum__title">{f.data.title}</span>
-                <Icon name="arrow-right" size={16} />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </Section>
-    )
-  }
-
-  <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
     <SectionHeader id="kit-h" eyebrow="For Journalists" title="Press Kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />

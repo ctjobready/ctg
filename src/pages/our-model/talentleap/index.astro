@@ -5,6 +5,7 @@ import Icon from '../../../components/system/Icon.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import { fact } from '../../../data/facts';
 import CertNote from '../../../components/ui/CertNote.astro';
+import Stat from '../../../components/system/Stat.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
@@ -18,7 +19,7 @@ import { linkAttrs } from '../../../lib/url';
 
 const path = '/our-model/talentleap/';
 const descriptor = 'CodersTrust’s Competency-Based Talent Development Model';
-const bluf = 'TalentLEAP is CodersTrust’s competency-based talent development model. It breaks each career path into individual skill units aligned with industry expectations, and teaches and assesses them in graduated competency levels. Every learner moves through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.';
+const bluf = 'TalentLEAP is CodersTrust’s competency-based talent development model. It breaks each career path into individual skill units aligned with industry expectations, and teaches and assesses them in graduated competency levels. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.';
 const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 const context = `For context, ${lowerFirst(fact('RC-06').text)}.`;
 const description = desc('TalentLEAP is CodersTrust’s competency-based model: skill units, graduated levels, and Learn, Earn, Prosper with three months of milestone-based mentoring.');
@@ -32,6 +33,17 @@ const steps = [
 ];
 const levels = [
   { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership of a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills. Proficient and Expert levels are planned.' },
+];
+// At a Glance tiles (WP22): each leads with its number; label and note are the register's own glance wording (OC-01, OC-05) or stat label and detail (RC-02).
+const stat = (id: string) => {
+  const s = fact(id).stat;
+  if (!s) throw new Error(`TalentLEAP: fact ${id} has no stat`);
+  return s;
+};
+const glance = [
+  { id: 'OC-01', value: stat('OC-01').value, label: stat('OC-01').glance?.label ?? stat('OC-01').label, note: stat('OC-01').glance?.note },
+  { id: 'OC-05', value: stat('OC-05').value, label: stat('OC-05').glance?.label ?? stat('OC-05').label, note: 'This is a timing measure only.' },
+  { id: 'RC-02', value: stat('RC-02').value, label: stat('RC-02').label, note: stat('RC-02').detail },
 ];
 const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
 const jsonLd = [
@@ -65,33 +77,21 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="glance" title="At a Glance">
-    <ul class="tl__list">
-      <li data-fact="OC-01"><Fact id="OC-01" /></li>
-      <li data-fact="OC-05"><Fact id="OC-05" /> This is a timing measure only.</li>
-      <li data-fact="RC-01"><Fact id="RC-01" field="headline" /></li>
+    <ul class="tl__tiles" role="list">
+      {glance.map((g) => <li class="tl__tile" data-fact={g.id}><Stat value={g.value} label={g.label} note={g.note} count={false} /></li>)}
     </ul>
     <p class="tl__scope">These results describe CodersTrust programs, not TalentLEAP’s features on their own: neither the survey nor the trial isolates one part of the model.</p>
   </ReportSection>
 
   <ReportSection id="how" title="How TalentLEAP Works">
     <StagePipeline title="The Stage Pipeline" id="stage-pipeline" />
-    <ol class="tl__steps" role="list">
-      {steps.map((s, i) => (
-        <li class="tl__step" data-reveal>
-          <span class="tl__num" aria-hidden="true">{i + 1}</span>
-          <div>
-            <h3 class="tl__steptitle"><span class="sr-only">Step {i + 1}: </span>{s.name}</h3>
-            <p>{s.text}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <p data-fact="PD-01 PD-14 PD-15 PD-16">Applicants first take an accessible readiness assessment (tests and an interview); a small number may not be selected, and the reasons are reported. Each track then teaches individual skill units, assessed against common rubrics, in 100 training hours per certification, half of them hands-on labs, with certification exam preparation (exam fee included). Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client), then career paths, continuing professional development and the alumni network.</p>
     <p data-fact="PD-01 PD-03 PD-14 PD-15 ID-06">Certifications run by track, for example Meta Blueprint and Google Ads for digital marketing, Adobe Certified Professional for design and video, QuickBooks Online ProAdvisor for digital accounting, PCEP for Python and CWP for web.</p>
     <CertNote />
   </ReportSection>
 
   <ReportSection id="example" title="Example: The Digital Marketing Career Path">
-    <p>TalentLEAP organizes skills into career paths with progressive levels, after the Dreyfus model of skill acquisition. The Digital Marketing path is the example here: its levels are Competent, Proficient and Expert.</p>
+    <p>TalentLEAP organizes skills into career paths with progressive levels. The Digital Marketing path is the example here: its levels are Competent, Proficient and Expert.</p>
     <CompetencyLevels />
   </ReportSection>
 
@@ -141,51 +141,25 @@ const d = discoveryCta();
     font-size: var(--fs-body-xs);
     color: var(--outline);
   }
-  .tl__steps {
+  .tl__tiles {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-lg);
-    max-width: var(--measure);
-  }
-  .tl__step {
-    position: relative;
-    display: flex;
     gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
   }
-  .tl__step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: 21px;
-    top: 48px;
-    bottom: calc(var(--space-lg) * -1 + 4px);
-    width: 2px;
-    background: var(--primary-fixed);
+  .tl__tile {
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-default);
   }
-  .tl__num {
-    flex: none;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-full);
-    background: var(--primary);
-    color: var(--on-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-heading-m);
-    position: relative;
-    z-index: 1;
-  }
-  .tl__steptitle {
-    margin: 0 0 4px;
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    color: var(--secondary);
-  }
-  .tl__step p {
-    margin: 0;
+  @media (min-width: 720px) {
+    .tl__tiles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
   :global(.tl__sources) {
     margin-top: var(--space-lg);

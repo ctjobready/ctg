@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import Badge from '../../system/Badge.astro';
+import PilotScorecard from '../../ui/PilotScorecard.astro';
 import CopyBlock from './CopyBlock.astro';
 import { optionDuration } from '../../../lib/format';
 import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE, type CopyBlock as CopyBlockData } from '../../../data/copy';
@@ -44,6 +45,8 @@ const { title = 'Choose Where to Start.', lead, pricing = PRICING, id = 'offer' 
     <Icon name="target" size={28} strokeWidth={1.5} />
     <span>{ACCOUNTABILITY.text}</span>
   </p>
+
+  <PilotScorecard />
 
   <div class="offer__two">
     <div class="offer__panel" data-reveal>

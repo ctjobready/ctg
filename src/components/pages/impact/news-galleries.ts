@@ -25,9 +25,9 @@ export async function newsGalleries(): Promise<NewsYear[]> {
   for (const post of posts) {
     if (LEFT_OUT_POSTS.has(post.id)) continue;
     const year = post.data.date.getUTCFullYear();
-    // An event with three or more photographs keeps its first two in registry order, so near-duplicate shots do not crowd the archive.
+    // One photograph per event (WP22): the first in registry order, so near-duplicate shots do not crowd the archive.
     const entries = FIELD_NEWS_PHOTOS.filter((x) => x.slug === post.id);
-    for (const e of entries.length >= 3 ? entries.slice(0, 2) : entries) {
+    for (const e of entries.slice(0, 1)) {
       const img = files[`../../../assets/images/news/${post.id}/${e.file}`]?.default;
       if (!img) throw new Error(`news-galleries: missing image ${post.id}/${e.file}`);
       const list = years.get(year) ?? [];

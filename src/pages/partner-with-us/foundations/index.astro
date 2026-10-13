@@ -106,12 +106,15 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     variant="strip"
     id="glance"
     title="Results at a Glance"
+    cols={4}
     items={[
       { id: 'RC-13', href: '/impact/independent-evaluation/' },
       { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+      { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
 
@@ -135,7 +138,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <!-- C3 · Agitation -->
   <div class="pp-two">
     <CostSection
-      title="Every Year of Delay Is a Cohort Without a Path."
+      title="Every Year of Delay Leaves a Cohort Without a Route to Work."
       transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'AI Is Reshaping Entry Work.', factId: 'PX-07', scope: 'Globally', implication: 'Programs have to track where entry-level work is going.' },
@@ -173,7 +176,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     <MechanismBand
       title="Two Ways to Fund the Path"
       positioning={POSITIONING.foundations}
-      lead="Fund the platform, the cohorts, or both."
       blocks={[
         { label: 'Funding Vehicle 1', title: 'JobReady Platform Grant', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
         { label: 'Funding Vehicle 2', title: 'YouthWIDE Cohorts', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
@@ -279,7 +281,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <ReviewCycle />
+  <ReviewCycle scorecard />
 
   <!-- C13 · Call to action -->
   <CTABand

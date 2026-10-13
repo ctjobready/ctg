@@ -6,7 +6,7 @@ group: executive
 order: 7
 photo: ../../assets/images/team/shafqat-ullah.jpg
 photoAlt: "Portrait of Shafqat Ullah, Chief Technology Officer"
-expertise: ["AI and Cloud-Native Architecture", "SaaS & Mobile Apps Design", "Large-Scale Tech Skills Training", "EdTech Emerging Innovations", "Product Management"]
+expertise: ["AI and Cloud-Native Architecture", "SaaS and Mobile Apps Design", "Large-Scale Tech Skills Training", "EdTech Emerging Innovations", "Product Management"]
 legacyUrl: "https://coderstrust.global/team-member/shafqat-ullah/"
 ---
 

@@ -12,6 +12,11 @@ import { pilotDurationText } from '../../../lib/format';
  * The 6–8 week start (PD-04) is not restated here: the page states it twice already, in the C13 urgency line and in the C14 timing
  * line (doc 04 §4, one statement per fact).
  */
+interface Props {
+  /** Heading level of the phase cards (4 when the roadmap sits under its own H3 inside a shared band). */
+  level?: 3 | 4;
+}
+const { level = 3 } = Astro.props;
 const pd06 = fact('PD-06').text.match(/Up to (\d+) certification cohorts in parallel from about month (\d+)/);
 if (!pd06) throw new Error('PD-06 wording changed: update the roadmap');
 const [, parallel, fromMonth] = pd06;
@@ -36,7 +41,7 @@ const quarters = [3, 6, 9, 12];
 ---
 
 <div class="road" data-reveal>
-  <PhaseList items={phases} cols={5} label="Execution roadmap phases" />
+  <PhaseList items={phases} cols={5} level={level} label="Execution roadmap phases" />
   <figure class="ribbon" data-fact="PD-06 PD-08 PD-05">
     <p class="ribbon__tag">Illustrative Template</p>
     <section class="ribbon__scroll" aria-label="Illustrative month ribbon" tabindex="0">

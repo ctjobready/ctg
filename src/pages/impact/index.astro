@@ -84,7 +84,7 @@ const d = discoveryCta();
     groups={[
       { title: 'Reach', cols: 2, items: [
         { id: 'SC-16', href: '/impact/global-reach/' },
-        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'GV-10'] },
       ] },
       { title: 'Speed to Earning', cols: 2, items: [
         { id: 'OC-05', href: '/impact/outcomes-2026/' },
@@ -94,6 +94,8 @@ const d = discoveryCta();
         { id: 'OC-01', href: '/impact/outcomes-2026/' },
         { id: 'OC-03', href: '/impact/outcomes-2026/' },
         { id: 'OC-04', href: '/impact/outcomes-2026/', also: ['OC-07'] },
+      ] },
+      { title: 'Trial and Program Results', cols: 3, items: [
         { id: 'RC-13', href: '/impact/independent-evaluation/' },
         { id: 'RC-06a', href: '/impact/independent-evaluation/' },
         { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02'] },
@@ -129,7 +131,7 @@ const d = discoveryCta();
     {
       explore.map((g) => (
         <div class="ih__group">
-          <h3 class="ih__group-title">{g.group}</h3>
+          <p class="eyebrow ih__group-title">{g.group}</p>
           <div class="grid-cards grid-cards--2">
             {g.items.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
           </div>
@@ -158,8 +160,6 @@ const d = discoveryCta();
   }
   .ih__group-title {
     margin: 0 0 var(--space-sm);
-    font-size: var(--fs-heading-l, 1.25rem);
-    color: var(--secondary);
   }
   .ih__sdgtext {
     margin: var(--space-sm) 0 var(--space-md);

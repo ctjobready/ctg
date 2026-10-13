@@ -72,7 +72,7 @@ const expect = [
     </div>
   </Section>
 
-  <PhotoGallery id="life" tone="white" eyebrow="Life at CodersTrust" title="Where We Work" lead="Our Dhaka office and training labs." photos={galleryPhotos('careers')} />
+  <PhotoGallery id="life" tone="white" eyebrow="Life at CodersTrust" title="Where We Work" lead="Our Dhaka office and training labs. CodersTrust also has an office in New York." photos={galleryPhotos('careers')} />
 
   <Section id="roles" aria-labelledby="roles-h">
     <SectionHeader id="roles-h" eyebrow="Roles" title="Send a Speculative Application" />
@@ -86,10 +86,10 @@ const expect = [
   </Section>
 
   <Section id="apply" tone="ice" aria-labelledby="apply-h">
-    <SectionHeader id="apply-h" eyebrow="How to Apply" title="When a Role Opens" lead="Applications go to the CodersTrust Bangladesh HR team." />
+    <SectionHeader id="apply-h" eyebrow="How to Apply" title="How Applications Work" lead="Applications go to the CodersTrust Bangladesh HR team." />
     <StepFlow steps={[
       { title: 'Your Application', text: 'Send your CV. We keep it on file for when a role opens.' },
-      { title: 'Application Review', text: 'We review applications and invite shortlisted candidates to interview.' },
+      { title: 'Application Review', text: 'When a role opens, we review the applications on file and invite shortlisted candidates to interview.' },
       { title: 'Employment Offer', text: 'The selected candidate receives an offer letter and package details.' },
     ]} />
     <p class="cr-mail">Send your CV to <a href={apply.href}>{CAREERS_EMAIL}</a>.</p>

@@ -68,7 +68,7 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
   },
   ict: {
     short: 'Practical ICT: programming, databases, networks, mobile and web development.',
-    lead: 'Practical ICT skills, from programming and databases to networks, mobile apps and web design, in a National University postgraduate diploma delivered by CodersTrust.',
+    lead: 'Practical information and communication technology (ICT) skills, from programming and databases to networks, mobile apps and web design, in a National University postgraduate diploma delivered by CodersTrust.',
     description: 'A National University postgraduate diploma in ICT, delivered by CodersTrust: programming, databases, networks, mobile and web development.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
     titleTag: 'NU Postgraduate Diploma in ICT',

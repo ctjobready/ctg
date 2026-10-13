@@ -27,9 +27,10 @@ const UPDATED = '2026-10-10';
 const FAQ_IDS = ['Q3', 'Q9', 'Q10'];
 const diligence = diligenceCta();
 const [usa, bd] = OFFICES;
-// RC-01's headline restated for a due-diligence reader: the intent-to-treat result leads, then the attender result (same figures, same trial).
-const trialLine = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income (about +$27 a month).');
-if (trialLine === RCT_HEADLINE.text) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
+// RC-01's headline restated for a due-diligence reader: the intent-to-treat employment result only.
+// WP22: the governance reader gets the employment result in one sentence and a link; the income detail is on the trial page (and on About).
+const trialLine = RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0];
+if (!/10\.3 percentage points more likely to be employed\.$/.test(trialLine)) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
 const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
 
 // PD-13 list, restated as items confirmed with the funder during co-design (no document is promised as ready).
@@ -81,7 +82,7 @@ const jsonLd = [
   </Section>
 
   <Section id="leadership" tone="airy" aria-labelledby="lead-h">
-    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="The Chairman, Aziz Ahmad, and the CEO of CodersTrust Bangladesh, Md. Shamsul Haque. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="Aziz Ahmad is Chairman, and Md. Shamsul Haque is CEO of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
     <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
       {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>

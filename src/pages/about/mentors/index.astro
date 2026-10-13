@@ -27,6 +27,19 @@ const tidyExpertise = (e: string) => e.replace(/^dashboard design\s*&\s*visualiz
 const mentors = (await getCollection('mentors'))
   .map((m) => ({ ...m.data, expertise: m.data.expertise.map(tidyExpertise) }))
   .sort((a, b) => a.name.localeCompare(b.name));
+// WP22: the cards are grouped by discipline. A mentor's discipline is the part of the role after the last comma ("Mentor, Digital Marketing" is
+// Digital Marketing); disciplines are gathered into five headings, in this order. A mentor whose discipline is not listed fails the build.
+const DISCIPLINE_GROUPS = [
+  { title: 'Digital Marketing and Content', disciplines: ['Digital Marketing', 'Content Writing'] },
+  { title: 'Design and Video', disciplines: ['Graphic Design', 'Video Editing'] },
+  { title: 'Web Development and AI', disciplines: ['Web Development', 'Artificial Intelligence'] },
+  { title: 'Accounting and Spreadsheets', disciplines: ['Digital Accounting', 'Advanced Excel'] },
+  { title: 'Education and Language', disciplines: ['Education', 'IELTS'] },
+];
+const disciplineOf = (role: string) => role.slice(role.lastIndexOf(',') + 1).trim();
+const groups = DISCIPLINE_GROUPS.map((g) => ({ ...g, mentors: mentors.filter((m) => g.disciplines.includes(disciplineOf(m.role))) })).filter((g) => g.mentors.length > 0);
+const ungrouped = mentors.filter((m) => !groups.some((g) => g.mentors.includes(m)));
+if (ungrouped.length > 0) throw new Error(`Mentors: no discipline group for ${ungrouped.map((m) => `${m.name} (${m.role})`).join(', ')}`);
 // SC-09 states two 150+ figures; they are shown as two sentences so neither reads as a total for the other.
 const [coursesPart, mentorsPart] = fact('SC-09').text.split('; ');
 if (!coursesPart || !mentorsPart || !/^150\+ skill courses and certification courses delivered$/.test(coursesPart) || !/^150\+ instructors and mentors$/.test(mentorsPart)) throw new Error('Mentors page: SC-09 wording changed; update the split');
@@ -59,9 +72,16 @@ const jsonLd = [
     <SectionHeader id="mentors-h" eyebrow="Our Practitioners" title="Meet Some of Our Mentors">
       <p class="lead" data-fact="SC-09">{scLine}</p>
     </SectionHeader>
-    <div class="grid-cards grid-cards--4">
-      {mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} />)}
-    </div>
+    {
+      groups.map((g) => (
+        <div class="mn-group">
+          <h3 class="mn-group__title t-heading-xl">{g.title}</h3>
+          <div class="grid-cards grid-cards--4">
+            {g.mentors.map((m) => <TeamCard name={m.name} role={m.role} photo={photoFor(m.photo)} alt={m.photoAlt} assetId={`mentor-${m.id}`} expertise={m.expertise} chips={3} />)}
+          </div>
+        </div>
+      ))
+    }
   </Section>
 
   <CTABand
@@ -72,3 +92,16 @@ const jsonLd = [
     secondary={{ label: 'See how mentoring works', href: '/our-model/talentleap/' }}
   />
 </BaseLayout>
+
+<style>
+  .mn-group {
+    margin-top: var(--space-lg);
+  }
+  .mn-group + .mn-group {
+    margin-top: var(--space-xl, 56px);
+  }
+  .mn-group__title {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
+</style>

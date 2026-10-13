@@ -34,7 +34,6 @@ import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
 
 const local = localCta();
-const survey = fact('OC-01').stat!;
 const FAQ_IDS = ['Q1-local', 'Q9', 'Q10'];
 const path = '/partner-with-us/local-partners/';
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
@@ -105,16 +104,15 @@ const ways = [
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
-  <ForNotFor
-    forText="You are a Bangladeshi NGO, college, chamber or association that reaches young people central programs miss."
-    notText="Your organization works outside Bangladesh; see the Development Partners and Governments pages for other countries."
-  />
-
-  <!-- GEO definition + page BLUF -->
+  <!-- GEO definition + page BLUF (WP22: before the fit check, as on every other audience page) -->
   <DefinitionPlus id="definition">
     <p data-fact="PD-06 GV-09">Larger programs run hub-and-spoke through certified local facilitators and existing labs and colleges, and CodersTrust Bangladesh supports local partners with curriculum, certification, mentoring, reporting and safeguarding.</p>
     <p data-fact="GV-09">Where government lab access is confirmed, cohorts can run in public digital labs; your organization can also host cohorts in its own labs, classrooms or centers.</p>
   </DefinitionPlus>
+  <ForNotFor
+    forText="You are a Bangladeshi NGO, college, chamber or association that reaches young people central programs miss."
+    notText="Your organization works outside Bangladesh; see the Development Partners and Governments pages for other countries."
+  />
 
   <!-- C2 -->
   <ProblemBand id="problem" title="Local Organizations Reach the Young People Central Programs Miss." bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']}>
@@ -178,9 +176,7 @@ const ways = [
   </div>
 
   <!-- C7 -->
-  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
-    <p class="lp-detail" data-fact="OC-01">Survey detail: {survey.detail}</p>
-  </ProofBand>
+  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
   <CaseStudyCarousel
     id="cases"
     title="Women-Focused Programs in Practice"
@@ -282,10 +278,6 @@ const ways = [
 </LandingLayout>
 
 <style>
-  .lp-detail {
-    margin: var(--space-md) 0 0;
-    color: var(--ctx-text);
-  }
   .lp-after {
     margin-top: var(--space-lg);
     padding-top: var(--space-md);

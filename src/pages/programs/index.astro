@@ -30,11 +30,11 @@ const discovery = ctaFor('discovery');
 const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', outcome: 'Train youth and track paid work.', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders get monthly reports designed to track paid-work outcomes, not only enrollment.' },
-  { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', outcome: 'Add digital skills and certification preparation beside the degree.', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.' },
-  { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', outcome: 'Train teams for current roles and access job-ready talent.', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.' },
-  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', outcome: 'Add practical digital skills after your degree.', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
-  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', outcome: 'Bring STEAM, coding, robotics and digital art into the classroom.', audience: 'Schools and Education Partners', text: 'STEAM, coding, robotics and digital art for young learners.', means: 'a school can bring STEAM, coding, robotics and digital art into the classroom.' },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it is a national initiative that aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, a national ambition that depends on government and donor commitments. In other countries it runs as co-funded country cohorts; current outcome evidence comes from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery to young people in work, and funders get monthly reports designed to track paid-work outcomes, not only enrollment.' },
+  { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.' },
+  { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.' },
+  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
+  { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and Education Partners', text: 'STEAM, coding, robotics and digital art for young learners.', means: 'a school can bring STEAM, coding, robotics and digital art into the classroom.' },
 ];
 
 const jsonLd = [
@@ -70,7 +70,6 @@ const jsonLd = [
         programs.map((p) => (
           <li>
             <FeatureCard icon={p.icon} title={p.title} text={p.text} means={p.means} href={p.href}>
-              <p class="hub__out">{p.outcome}</p>
               <p class="hub__aud"><strong>Best For:</strong> {p.audience}</p>
             </FeatureCard>
           </li>
@@ -137,11 +136,6 @@ const jsonLd = [
   }
   .hub > li > :global(.card) {
     width: 100%;
-  }
-  .hub__out {
-    margin: 0 0 var(--space-xs);
-    font-weight: var(--fw-medium);
-    color: var(--on-surface);
   }
   .hub__aud {
     margin: 0;

@@ -134,7 +134,7 @@ const courses = linkAttrs(COURSES_URL);
     showPartners={false}
   >
     <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These are agreement targets, not delivered reach.</p>
-    <p data-fact="PA-03">Private-sector partners include Robi.</p>
+    <p data-fact="PA-03">Robi is a private-sector partner.</p>
   </GuideSection>
 
   <!-- C6 -->
@@ -163,7 +163,9 @@ const courses = linkAttrs(COURSES_URL);
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
     <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="What Has Been Delivered, and What Is Only Agreed" />
     <div class="agree">
+      <h3 class="agree__h t-heading-xl" data-reveal>Delivered</h3>
       <div class="agree__delivered" data-reveal data-fact="SK-05"><StatusTag status="Delivered" /><p class="agree__num"><Fact id="SK-05" /></p></div>
+      <h3 class="agree__h agree__h--apart t-heading-xl" data-reveal>Agreed, Not Delivered</h3>
       <div class="agree__fact" data-reveal data-fact="GV-08">
         <p>The DoICT agreement covers {doictScope}, with a target reach of {doictReach}.</p>
         <p>The NCTB agreement covers {nctbScope}.</p>
@@ -266,6 +268,15 @@ const courses = linkAttrs(COURSES_URL);
     color: var(--on-surface);
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
+  }
+  .agree__h {
+    margin: 0;
+    color: var(--secondary);
+  }
+  .agree__h--apart {
+    margin-top: var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--outline-variant);
   }
   .agree__delivered {
     max-width: 52rem;

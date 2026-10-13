@@ -29,7 +29,7 @@ const path = '/partner-with-us/';
 const title = 'Partner with Us';
 // Tracking is scope-conditional, as on the audience pages: it is part of each program's agreed scope (PD-02), not a blanket promise.
 const BLUF = `We co-design youth-employment programs with governments, development partners, foundations, universities, employers and local implementing partners, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope.`;
-const description = 'Co-design a youth-employment program with CodersTrust. Choose your route: governments, funders, universities, employers, local partners or investors.';
+const description = 'Co-design a youth-employment program with CodersTrust. Pick your route: governments, funders, universities, employers, local partners or impact investors.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
 
@@ -95,7 +95,7 @@ const jsonLd = [
         <p class="hub__helper-text"><strong>Not sure where you fit?</strong> Tell us your goals and we will point you to the right route.</p>
         <p class="cluster hub__helper-links">
           <a class="link" href={linkAttrs('/contact/').href}>Talk to Us<Icon name="arrow-right" size={16} /></a>
-          <a class="link" href={linkAttrs(investors.href).href}>Investing in the Platform? See Investors<Icon name="arrow-right" size={16} /></a>
+          <a class="link" href={linkAttrs(investors.href).href}>Impact Investor? See Investors<Icon name="arrow-right" size={16} /></a>
         </p>
       </div>
     </Section>
@@ -113,7 +113,7 @@ const jsonLd = [
   </Tone>
 
   <Tone cmf="REPORTS">
-    <ReviewCycle title="Monthly Reports and Quarterly Reviews" sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
+    <ReviewCycle title="Monthly Reports and Quarterly Reviews" scorecard sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
   </Tone>
 
   <Tone cmf="DILIGENCE" tone="ice">

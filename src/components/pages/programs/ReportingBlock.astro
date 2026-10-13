@@ -8,6 +8,11 @@ import { fact } from '../../../data/facts';
  * baseline at enrollment, monthly reports, quarterly steering review, tracer surveys 3/6/12 months after
  * each course, backed by documentary evidence. No results are shown.
  */
+interface Props {
+  /** Show the block's own title and lead (default). A shared band that already carries them hides both. */
+  intro?: boolean;
+}
+const { intro = true } = Astro.props;
 const fields = [
   { label: 'Enrollment and attendance' },
   { label: 'Completion and certification' },
@@ -38,8 +43,8 @@ const timeline = [
 <div class="rep">
 
   <div class="time" data-reveal data-fact="PD-08 PD-09">
-    <h3 class="time__title">A Fixed Reporting Rhythm</h3>
-    <p class="time__lead">A schedule of evidence, from the first day to a year after each course. It shows what is measured, not a set of results.</p>
+    {intro && <h3 class="time__title">A Fixed Reporting Rhythm</h3>}
+    {intro && <p class="time__lead">A schedule of evidence, from the first day to a year after each course. It shows what is measured, not a set of results.</p>}
     <ol class="time__list" role="list">
       {
         timeline.map((t) => (

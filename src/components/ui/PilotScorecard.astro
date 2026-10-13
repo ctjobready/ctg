@@ -1,0 +1,129 @@
+---
+import Icon from '../system/Icon.astro';
+
+/**
+ * Pilot Scorecard (WP22, review cycle 4): the five measures of the pilot scorecard agreed in co-design, as one visual.
+ * Source: PD-11 only. These are measures, not prices, and no figure or target is shown: the sustained-work example
+ * ("earnings in at least three of six months above an agreed minimum") is PD-11's own wording; thresholds are set in co-design.
+ */
+interface Props {
+  /** Optional lead line under the caption (plain sentence). */
+  lead?: string;
+  class?: string;
+}
+const { lead, class: className } = Astro.props;
+const measures = [
+  { icon: 'circle-check', label: 'Completion' },
+  { icon: 'award', label: 'Certification' },
+  { icon: 'briefcase', label: 'First Paid Work' },
+  { icon: 'calendar-check', label: 'Sustained Work', note: 'For example, earnings in at least three of six months above an agreed minimum.' },
+  { icon: 'scale', label: 'Cost per Completer and per Verified Outcome' },
+];
+---
+
+<figure class:list={['psc', className]} data-fact="PD-11" data-reveal>
+  <figcaption class="psc__cap">
+    <span class="psc__tag">Pilot Scorecard</span>
+    <span class="psc__sub">Five measures, agreed in co-design</span>
+  </figcaption>
+  {lead && <p class="psc__lead">{lead}</p>}
+  <ol class="psc__list" role="list">
+    {
+      measures.map((m, i) => (
+        <li class="psc__item">
+          <span class="psc__num" aria-hidden="true">{i + 1}</span>
+          <Icon name={m.icon} size={28} strokeWidth={1.5} class="psc__icon" />
+          <span class="psc__label">{m.label}</span>
+          {m.note && <span class="psc__note">{m.note}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .psc {
+    margin: var(--space-lg) 0 0;
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-default);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .psc__cap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .psc__tag {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+  }
+  .psc__sub {
+    font-size: var(--fs-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .psc__lead {
+    margin: 0;
+    color: var(--on-surface-variant);
+  }
+  .psc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .psc__item {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-default);
+  }
+  .psc__num {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    color: var(--on-surface-variant);
+  }
+  .psc__item :global(.psc__icon) {
+    color: var(--primary);
+  }
+  .psc__label {
+    font-weight: var(--fw-bold);
+    color: var(--on-surface);
+    line-height: 1.25;
+  }
+  .psc__note {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+    line-height: 1.4;
+  }
+  @media (min-width: 560px) {
+    .psc__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .psc__list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+</style>

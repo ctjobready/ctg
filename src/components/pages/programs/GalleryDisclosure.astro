@@ -17,8 +17,11 @@ interface Props {
   eyebrow?: string;
   lead?: string;
   id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+  /** The disclosure's summary text (default "View More Photos"). */
+  moreLabel?: string;
 }
-const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field' } = Astro.props;
+const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', moreLabel = 'View More Photos' } = Astro.props;
 const shown = photos.filter((p) => mayRender(p.assetId));
 const first = shown.slice(0, visible);
 const rest = shown.slice(visible);
@@ -27,7 +30,7 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
 
 {
   first.length > 1 && (
-    <Section id={id} tone="airy" defer aria-labelledby={`${id}-h`}>
+    <Section id={id} tone={tone} defer aria-labelledby={`${id}-h`}>
       <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
       <ul class="gd" aria-label={title}>
         {first.map((p) => (
@@ -41,7 +44,7 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
       </ul>
       {rest.length > 0 && (
         <details class="gd__more">
-          <summary class="link">View More Photos</summary>
+          <summary class="link">{moreLabel}</summary>
           <ul class="gd" aria-label={`${title}, more photographs`}>
             {rest.map((p) => (
               <li>

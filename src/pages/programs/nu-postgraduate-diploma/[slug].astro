@@ -12,7 +12,6 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import CopyP from '../../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
-import PhaseList from '../../../components/pages/programs/PhaseList.astro';
 import StepFlow from '../../../components/ui/StepFlow.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
@@ -104,7 +103,14 @@ const jsonLd = [
     <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead="Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions." />
     <details class="mods">
       <summary>View All {c.modules.length} Modules</summary>
-      <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} unit="Module" />
+      <ol class="modgrid" role="list" aria-label={`${c.title} modules`}>
+        {c.modules.map((m, i) => (
+          <li class="modgrid__item">
+            <span class="modgrid__num" aria-hidden="true">{i + 1}</span>
+            <span class="modgrid__name"><span class="sr-only">Module {i + 1}: </span>{m}</span>
+          </li>
+        ))}
+      </ol>
     </details>
     <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors &amp; Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
@@ -164,6 +170,52 @@ const jsonLd = [
   }
   .mods[open] > summary {
     margin-bottom: var(--space-md);
+  }
+  .modgrid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 640px) {
+    .modgrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .modgrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .modgrid__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    min-width: 0;
+  }
+  .modgrid__num {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body-xs);
+  }
+  .modgrid__name {
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+    overflow-wrap: anywhere;
   }
   .roles h3 {
     margin: 0 0 var(--space-sm);

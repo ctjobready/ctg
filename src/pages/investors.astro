@@ -1,6 +1,6 @@
 ---
-// P8 Investors (doc 06 P8; matrix 4.4; D2): thesis + traction only. C1 → C14 in order with the declared C2–C3
-// compression. No market-size figures, valuation, raise, revenue, growth or pipeline; no partner references
+// P8 Investors (doc 06 P8; matrix 4.4; D2): thesis + results only. C1 → C14 in order with the declared C2–C3
+// compression. For impact investors only (owner, 2026-10-14). No market-size figures, valuation, raise, revenue, growth or pipeline; no partner references
 // or reply-time promises (confirm list #13, #17).
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroBand from '../components/sections/HeroBand.astro';
@@ -33,7 +33,7 @@ const path = '/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
 // description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
-const description = 'Back the platform moving emerging-market youth into paid work through certification-focused training. The investment case here; the deck on request.';
+const description = 'For impact investors: back the platform moving emerging-market youth into paid work. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
@@ -43,7 +43,7 @@ const featureRows = [
   { feature: 'Employer and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'The platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
   { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every program', means: 'Learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
   { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'Courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
-  { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'Learners need different support as they progress' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'Institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
 ];
 // The four rows an investor weighs (WP20c): the tracking row is scope-aware, "as agreed in the program scope", like the FAQ answer and the TalentLEAP page.
@@ -74,7 +74,7 @@ const mechanismBlocks = [
   <Tone cmf="C1">
     <HeroBand
       variant="inner"
-      audience="For Impact and Growth Investors"
+      audience="For Impact Investors"
       title={HEADLINE.investors}
       lead={VALUE_PROPOSITION.investors}
       cta={{ label: investor.label, href: investor.href }}
@@ -99,13 +99,14 @@ const mechanismBlocks = [
   <Tone cmf="C7">
     <EvidenceBand
       id="proof-band"
-      title="Traction and Evidence"
-      bandHeading="Traction and Evidence"
+      title="Reach and Evidence"
+      bandHeading="Reach and Evidence"
       trialHeading="An Independent Randomized Trial"
       headlineFact="RC-01"
       chart="trial"
       chip={false}
       plainLine
+      incomeHeadline
       lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, at the October 2026 survey."
       statIds={['RC-02']}
       links={[
@@ -133,7 +134,7 @@ const mechanismBlocks = [
       id="risk"
       title="Start with a Conversation, Not a Commitment."
       points={[
-        { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'It is a conversation about your investment focus.' },
+        { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'It is a conversation about your funding priorities.' },
         { icon: 'handshake', title: 'You Decide What Happens Next', text: 'You choose whether to continue after the call.' },
         { icon: 'file-lock', title: 'An NDA Comes First', text: 'An NDA is in place before the deck and data room are shared.' },
       ]}
@@ -156,7 +157,7 @@ const mechanismBlocks = [
       title="What Happens After You Ask"
       lead="Four steps, at your pace."
       steps={[
-        { title: 'Introduction Call', text: 'A conversation about your investment focus and the thesis.' },
+        { title: 'Introduction Call', text: 'A conversation about your funding priorities and the thesis.' },
         { title: 'NDA', text: 'An NDA is in place before the deck and data room are shared.' },
         { title: 'Deck and Data Room', text: 'You receive the deck and access to the data room.' },
         { title: 'Your Questions', text: 'We answer your questions and agree what comes next.' },

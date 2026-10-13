@@ -3,6 +3,7 @@ import Icon from '../../system/Icon.astro';
 import CopyBlock from '../home/CopyBlock.astro';
 import Fact from '../../facts/Fact.astro';
 import FactStat from '../../facts/FactStat.astro';
+import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import { fact } from '../../../data/facts';
 import { PROGRAM_OPTIONS, SURVEY_EMPLOYMENT } from '../../../data/copy';
@@ -19,6 +20,12 @@ const reach = [
   { id: 'SC-03', status: 'Delivered' },
   { id: 'SC-06', status: 'Agreement' },
 ] as const;
+// One note row under the reach tiles (WP22): the register's detail lines for SC-02 and SC-03, read from it, so the four tiles stay level.
+const reachNotes = (['SC-02', 'SC-03'] as const).map((id) => {
+  const detail = fact(id).stat?.detail;
+  if (!detail) throw new Error(`InvestorProofExtras: ${id} needs a stat detail`);
+  return detail;
+});
 // Program results, each on its own registered basis (program records, PR-01, PR-02, PR-05).
 const programs = ['PR-01', 'PR-02', 'PR-05'];
 
@@ -29,17 +36,18 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 ---
 
 <div class="ipx">
-  <h3 class="ipx__h t-heading-l">Traction to Date</h3>
+  <h3 class="ipx__h t-heading-l">Reach to Date</h3>
   <div class="ipx__tiles ipx__tiles--4">
-    {reach.map((r, i) => <div class="ipx__tile"><StatusTag status={r.status} /><FactStat id={r.id} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" /></div>)}
+    {reach.map((r, i) => <div class="ipx__tile" data-fact={r.id}><StatusTag status={r.status} /><Stat value={fact(r.id).stat!.value} label={fact(r.id).stat!.label} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={fact(r.id).stat!.numeric !== undefined} /></div>)}
   </div>
+  <p class="ipx__notes" data-fact="SC-02 SC-03">{reachNotes.join(' ')}</p>
   <h3 class="ipx__h t-heading-l">Results from Partner-Funded Programs</h3>
   <div class="ipx__tiles ipx__tiles--3">
     {programs.map((id, i) => <div class="ipx__tile"><StatusTag status="Delivered" /><FactStat id={id} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" /></div>)}
   </div>
   <CopyBlock block={SURVEY_EMPLOYMENT} class="ipx__survey" />
   <p class="ipx__onboard" data-fact="GV-10 PD-05"><strong>Path to scale.</strong> Delivery grows in phases from government contract training scopes ranging from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
-  <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the traction above: <Fact id="SC-04" /></p>
+  <p class="ipx__onboard" data-fact="SC-04">Separately, and not counted in the reach above: <Fact id="SC-04" /></p>
   <div class="ipx__row">
     <ul class="ipx__badges" role="list">
       {
@@ -87,6 +95,12 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
     justify-items: start;
     align-content: start;
     min-width: 0;
+  }
+  .ipx__notes {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--ctx-text);
+    max-width: 52rem;
   }
   .ipx__survey {
     font-size: var(--fs-body-l);

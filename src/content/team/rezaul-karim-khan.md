@@ -6,7 +6,7 @@ group: executive
 order: 9
 photo: ../../assets/images/team/rezaul-karim-khan.jpg
 photoAlt: "Portrait of Rezaul Karim Khan, Chief Business Officer"
-expertise: ["AI Applications and Tools", "Cloud Computing & Solution Architecture", "Business Analysis", "Project Management", "Strategic Marketing", "Digital Marketing"]
+expertise: ["AI Applications and Tools", "Cloud Computing and Solution Architecture", "Business Analysis", "Project Management", "Strategic Marketing", "Digital Marketing"]
 legacyUrl: "https://coderstrust.global/team-member/rezaul-karim-khan/"
 ---
 

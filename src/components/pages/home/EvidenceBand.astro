@@ -39,6 +39,11 @@ interface Props {
   headlineFact?: string;
   /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
   plainLine?: boolean;
+  /**
+   * WP22 (Investors): the plain line and the +10.3 pp tile already state the employment result, so the headline keeps only the income sentences
+   * (RC-01's second and third sentences), tied to the trial by name.
+   */
+  incomeHeadline?: boolean;
   links?: { label: string; href: string }[];
   /**
    * Home (WP19, item 25): the band's H2 is `bandHeading` ("Trial and Survey Evidence") and the trial gets its own sub-heading `trialHeading`
@@ -49,13 +54,18 @@ interface Props {
   trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, chip = true, links = [], bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, incomeHeadline = false, chip = true, links = [], bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
 const split = !!trialHeading;
 const trial = chart === 'trial';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
 // where the page asks for it) ahead of the RC-01 headline, which is body text.
 const heading = bandHeading ?? (headlineFact ? TRIAL_BAND_HEADING : titleCase(title));
-const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+let headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
+if (incomeHeadline && headlineText) {
+  const [, ...rest] = headlineText.split(/(?<=\.)\s+(?=[A-Z])/);
+  if (rest.length < 2 || !/^Their monthly income/.test(rest[0])) throw new Error('EvidenceBand: RC-01 headline no longer has the income sentences incomeHeadline expects');
+  headlineText = `In the BIGD trial, ${rest.join(' ').replace(/^Their/, 'their')}`;
+}
 const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
 
 const tile = (sid: string) => {

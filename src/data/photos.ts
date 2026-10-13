@@ -242,7 +242,7 @@ export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
   // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MoU photographs follow.
-  superkids: ['superkids/robotics-desk', 'superkids/student-explains', 'superkids/stem-group', 'superkids/classroom-uniform', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
+  superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
   youthwide: ['general/her-power-laptops-1', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],

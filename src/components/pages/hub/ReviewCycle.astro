@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import ReviewPanels from './ReviewPanels.astro';
+import PilotScorecard from '../../ui/PilotScorecard.astro';
 
 /**
  * "Start with a Pilot. Decide on Evidence." (WP17, item 9): the funder review cycle as one section, for the pages that explain funder
@@ -13,6 +14,8 @@ interface Props {
   eyebrow?: string;
   lead?: string;
   sample?: { label: string; href: string };
+  /** Show the Pilot Scorecard (the five PD-11 measures) above the panels (WP22). */
+  scorecard?: boolean;
   id?: string;
 }
 const {
@@ -20,11 +23,19 @@ const {
   eyebrow = 'Reporting and Review',
   lead = 'Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end.',
   sample,
+  scorecard = false,
   id = 'review-cycle',
 } = Astro.props;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  {scorecard && <div class="rcy__sc"><PilotScorecard /></div>}
   <ReviewPanels sample={sample} />
 </Section>
+
+<style>
+  .rcy__sc {
+    margin-bottom: var(--space-lg);
+  }
+</style>

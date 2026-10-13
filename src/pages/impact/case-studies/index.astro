@@ -50,7 +50,7 @@ const sideBySide = [
 
   <Section tone="airy" aria-labelledby="women-h" pad="sm">
     <p class="eyebrow">Women-Focused Programs</p>
-    <h2 class="t-heading-2xl" id="women-h">Side by Side</h2>
+    <h2 class="t-heading-2xl" id="women-h">Three Women-Focused Programs, Side by Side</h2>
     <p class="ch__text">Each program reports its own result against its own base. Read them side by side, not as one total.</p>
     <section class="ch__table" aria-label="Women-focused programs, side by side" tabindex="0" data-scroll data-stack data-fact="PR-01 PR-02 PR-05">
       <table>
@@ -67,6 +67,7 @@ const sideBySide = [
         </tbody>
       </table>
     </section>
+    <p class="ch__note" data-fact="PR-03">UNDP YES, Korail is not in this table because it reports a different measure: 67% of the 350 trained found their first job within 3 months, not the share in work at a follow-up.</p>
     <p class="ch__link"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>How the Evidence Fits Together<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
@@ -107,6 +108,12 @@ const sideBySide = [
   .ch__table tbody tr:last-child th,
   .ch__table tbody tr:last-child td {
     border-bottom: 0;
+  }
+  .ch__note {
+    margin: var(--space-sm) 0 0;
+    max-width: var(--measure);
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
   }
   .ch__link {
     margin: var(--space-md) 0 0;

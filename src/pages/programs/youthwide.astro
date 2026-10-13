@@ -351,14 +351,17 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     ]}
   />
 
-  <Section id="roadmap" tone="airy" aria-labelledby="roadmap-h">
-    <SectionHeader id="roadmap-h" eyebrow="Execution Roadmap" title="Five Phases from Agreement to Parallel Cohorts" lead="Timings come from the program design and are confirmed with you in co-design." />
-    <ExecutionRoadmap />
-  </Section>
-
-  <Section id="reports" aria-labelledby="reports-h">
-    <SectionHeader id="reports-h" eyebrow="Reporting" title="What Your Reports Show over Time" lead="Each cohort is reported monthly and tracked for 12 months after each course. This is a schedule of what is measured, not a set of results." />
-    <ReportingBlock />
+  <!-- WP22: the roadmap and the reporting rhythm are one band (Delivery and Reporting); #roadmap and #reports stay as anchors inside it -->
+  <Section id="delivery-reporting" tone="airy" aria-labelledby="delivery-reporting-h">
+    <SectionHeader id="delivery-reporting-h" eyebrow="Delivery and Reporting" title="From Agreement to Monthly Reports" lead="Timings come from the program design and are confirmed with you in co-design. Each cohort is reported monthly and tracked for 12 months after each course; the reporting schedule shows what is measured, not a set of results." />
+    <div id="roadmap" class="dr__block">
+      <h3 class="t-heading-xl dr__title" data-reveal>Five Phases from Agreement to Parallel Cohorts</h3>
+      <ExecutionRoadmap level={4} />
+    </div>
+    <div id="reports" class="dr__block">
+      <h3 class="t-heading-xl dr__title" data-reveal>What Your Reports Show over Time</h3>
+      <ReportingBlock intro={false} />
+    </div>
   </Section>
 
   <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Program Photographs from Bangladesh, Kosovo and Albania" lead="Laptop handovers, training rooms and a government agreement, in photographs." photos={galleryPhotos('youthwide')} />
@@ -482,6 +485,14 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 </LandingLayout>
 
 <style>
+  .dr__block {
+    margin-top: var(--space-xl, 56px);
+    scroll-margin-top: var(--space-xl, 56px);
+  }
+  .dr__title {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
+  }
   .risk__pilot {
     margin: 0 0 var(--space-md);
     max-width: 52rem;

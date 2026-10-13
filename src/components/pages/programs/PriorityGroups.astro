@@ -1,43 +1,49 @@
 ---
 import Badge from '../../system/Badge.astro';
 import StatusTag from '../../system/StatusTag.astro';
-import Fact from '../../facts/Fact.astro';
+import Stat from '../../system/Stat.astro';
 import { fact } from '../../../data/facts';
-import { graduateRates } from '../../sections/copyText';
 
 /**
- * YouthWIDE priority groups (Bangladesh national initiative) (IN-03), one card per group, each labeled with exactly one tag:
+ * YouthWIDE priority groups (Bangladesh national initiative) (IN-03), one card per group, each with ONE headline number (WP22) and exactly one tag:
  *  - "Priority Group": unemployed graduates (WP20c: the card describes who the surveyed completers are, not a delivered YouthWIDE result, so it
  *    does not carry a "Delivered" tag)
  *  - "Planned" (StatusTag): third-gender people (GV-07, a program to train a stated number; enrollment is not stated)
  *  - "Target" (StatusTag): madrasah, coastal and indigenous youth (YouthWIDE aims to reach them; no delivered program is claimed)
- * Group sizes overlap and are never added together (IN-03 footnote). Women are a priority in every group.
+ * Each card's number, label and note restate its register fact (OC-09, PX-12, PX-11, PX-13, GV-07 with PX-14), word for word where a clause is kept;
+ * nothing is added. Group sizes overlap and are never added together (IN-03 footnote). Women are a priority in every group.
  */
 interface Group {
   title: string;
   /** A status tag for a group with a stated target or plan; the others get a plain "Priority Group" badge. */
   status?: 'Target' | 'Planned';
-  /** Plain sentence (with data-fact IDs), or fact IDs rendered with their canonical wording. */
-  note?: { text: string; factIds: string[]; source?: string[]; delivered?: { text: string; markerId: string } };
-  factIds?: string[];
+  /** The one headline number and what it counts. */
+  value: string;
+  label: string;
+  /** Other registered detail, in one line. */
+  note?: string;
+  factIds: string[];
 }
-const rates = graduateRates();
-// PX-12 without its "75% of 5M+ madrasah students unemployed or under-employed (study estimate)" clause: the register names no study
-// for that figure, so it is not used on the page until it is sourced. WP21: nor without its "94–97% of those surveyed want training"
-// clause: the register does not say who was surveyed, so the clause has no referent here (owner content: who was surveyed).
-// The rest of the sentence is the register's wording; the source is shown on the card (a footnote would print the whole fact, 75% included).
-const px12 = fact('PX-12');
-const madrasah = px12.text
-  .split('; ')
-  .filter((part) => !/^75%/.test(part) && !/^94[–-]97%/.test(part))
-  .join('; ');
+// Each clause below is checked against its register fact at build time, so the card cannot drift from the register.
+const must = (id: string, clause: string) => {
+  if (!fact(id).text.includes(clause)) throw new Error(`PriorityGroups: ${id} no longer contains "${clause}"`);
+};
+must('OC-09', '84.6% hold a bachelor’s degree or higher');
+must('PX-12', '50,000+ madrasahs (one-third of the education system) with 5M+ students');
+must('PX-12', 'only 14% of madrasahs have a computer lab');
+must('PX-11', '19 coastal districts hold 44.8M people (28% of the population)');
+must('PX-11', 'net out-migration of 20–24-year-olds reached 64.9% in Jhalokathi (census 2001–2011); Cyclone Amphan (2020) displaced 2.5M people');
+must('PX-13', '54+ indigenous ethnic groups');
+must('PX-13', '<30% of indigenous children complete secondary school; only 3% hold salaried jobs or businesses in the Chittagong Hill Tracts');
+must('GV-07', 'to provide digital-skills training to 5,000 third-gender people');
+must('PX-14', 'Population estimates vary: the official estimate is 10,000; other published estimates cited in CodersTrust’s Impact Report range from 200,000 to 1.5 million');
+// The graduate-unemployment rate is stated once, in the challenge band above, and is not repeated in this card.
 const groups: Group[] = [
-  // The graduate-unemployment rate is stated once, in the challenge band above, and is not repeated in this card.
-  { title: 'Unemployed Graduates', note: { text: '', factIds: ['OC-09'], delivered: { text: 'Most surveyed completers across CodersTrust programs hold a bachelor’s degree or higher (84.6%).', markerId: 'OC-09' } } },
-  { title: 'Madrasah Youth', status: 'Target', note: { text: `${madrasah}.`, factIds: ['PX-12'], source: px12.sourceIds } },
-  { title: 'Climate-Vulnerable Coastal Youth', status: 'Target', factIds: ['PX-11'] },
-  { title: 'Indigenous Communities', status: 'Target', factIds: ['PX-13'] },
-  { title: 'Third-Gender People', status: 'Planned', factIds: ['GV-07', 'PX-14'] },
+  { title: 'Unemployed Graduates', value: '84.6%', label: 'of surveyed completers across CodersTrust programs hold a bachelor’s degree or higher', factIds: ['OC-09'] },
+  { title: 'Madrasah Youth', status: 'Target', value: '5M+', label: 'students in 50,000+ madrasahs, one-third of the education system', note: 'Only 14% of madrasahs have a computer lab.', factIds: ['PX-12'] },
+  { title: 'Climate-Vulnerable Coastal Youth', status: 'Target', value: '44.8M', label: 'people live in Bangladesh’s 19 coastal districts, 28% of the population', note: 'Net out-migration of 20–24-year-olds reached 64.9% in Jhalokathi (census 2001–2011); Cyclone Amphan (2020) displaced 2.5M people.', factIds: ['PX-11'] },
+  { title: 'Indigenous Communities', status: 'Target', value: '54+', label: 'indigenous ethnic groups', note: '<30% of indigenous children complete secondary school; only 3% hold salaried jobs or businesses in the Chittagong Hill Tracts.', factIds: ['PX-13'] },
+  { title: 'Third-Gender People', status: 'Planned', value: '5,000', label: 'third-gender people to be trained, in a planned program with the Bangladesh Computer Council and Bandhu Welfare Society', note: 'Population estimates vary: the official estimate is 10,000; other published estimates cited in CodersTrust’s Impact Report range from 200,000 to 1.5 million.', factIds: ['GV-07', 'PX-14'] },
 ];
 ---
 
@@ -47,13 +53,11 @@ const groups: Group[] = [
   <ul class="pg__grid" role="list">
     {
       groups.map((g) => (
-        <li class="card pg__card" data-reveal data-fact={[...(g.factIds ?? []), ...(g.note?.factIds ?? [])].join(' ')}>
+        <li class="card pg__card" data-reveal data-fact={g.factIds.join(' ')}>
           <div class="card__body">
             <p>{g.status ? <StatusTag status={g.status} /> : <Badge tone="brand">Priority Group</Badge>}</p>
             <h3 class="card__title">{g.title}</h3>
-            {g.note?.text && <p class="card__text">{g.note.text}</p>}
-            {g.note?.delivered && <p class="card__text">{g.note.delivered.text}</p>}
-            {g.factIds?.map((id) => <p class="card__text"><Fact id={id} /></p>)}
+            <Stat value={g.value} label={g.label} note={g.note} count={false} />
           </div>
         </li>
       ))

@@ -3,7 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
+import GalleryDisclosure from '../../../components/pages/programs/GalleryDisclosure.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Icon from '../../../components/system/Icon.astro';
 import { photo, type Photo } from '../../../data/photos';
@@ -106,13 +106,13 @@ const d = discoveryCta();
     </nav>
   </Section>
 
-  {programGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
+  {programGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel="View Full Collection" tone={i % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
     <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partnerships, Recognition and News" lead="Partnership signings, awards, forums and meetings. Photographs from the news posts, by year, are in the News Photo Archive." />
   </Section>
 
-  {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel="View Full Collection" tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__note">Photographs are used with the consent of those pictured. The dated news photographs are in the <a class="link" href={newsHref}>News Photo Archive</a>; the stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
