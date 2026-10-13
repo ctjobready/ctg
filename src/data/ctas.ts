@@ -53,7 +53,7 @@ export const NU_PGD_APPLY_URL =
 export const CTAS: Record<CtaKey, CtaDef> = {
   discovery: {
     key: 'discovery',
-    label: 'Book a discovery session',
+    label: 'Book a Discovery Session',
     subject: 'Discovery session request — [your organization]',
     body: [
       'Organization',
@@ -66,44 +66,44 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   briefing: {
     key: 'briefing',
-    label: 'Request a briefing for your ministry',
+    label: 'Request a Briefing for Your Ministry',
     subject: 'Briefing request — [ministry/agency]',
     body: ['Agency', 'Program/target', 'Contact person', 'Preferred dates'],
   },
   funding: {
     key: 'funding',
-    label: 'Explore a funding partnership',
+    label: 'Explore a Funding Partnership',
     subject: 'Funding partnership — [foundation/company]',
     body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline'],
   },
   /** YouthWIDE in Bangladesh (/programs/youthwide/): the secondary CTA for national funders, in place of `funding` (review round 15, F4): districts and priority groups, not a platform grant. */
   nationalFunding: {
     key: 'nationalFunding',
-    label: 'Explore co-funding YouthWIDE in Bangladesh',
+    label: 'Explore Co-Funding YouthWIDE in Bangladesh',
     subject: 'YouthWIDE co-funding in Bangladesh — [organization]',
     body: ['Organization', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline'],
   },
   investor: {
     key: 'investor',
-    label: 'Request the investor deck',
+    label: 'Request the Investor Deck',
     subject: 'Investor deck request — [firm]',
     body: ['Firm', 'Name & role', 'Investment focus', 'Preferred time for an introduction call'],
   },
   campus: {
     key: 'campus',
-    label: 'Bring JobReady@Campus to your institution',
+    label: 'Bring JobReady@Campus to Your Institution',
     subject: 'JobReady@Campus inquiry — [institution]',
     body: ['Institution', 'Number of students', 'Programs of interest'],
   },
   work: {
     key: 'work',
-    label: 'Plan a training program',
+    label: 'Plan a Training Program',
     subject: 'JobReady@Work inquiry — [company]',
     body: ['Company', 'Team size', 'Skills needed', 'Timeline'],
   },
   talent: {
     key: 'talent',
-    label: 'Hire JobReady talent',
+    label: 'Hire JobReady Talent',
     subject: 'Talent request — [company]',
     body: ['Company', 'Roles', 'Number of hires', 'Location/remote'],
   },
@@ -116,13 +116,13 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   },
   media: {
     key: 'media',
-    label: 'Media inquiries',
+    label: 'Media Inquiries',
     subject: 'Media inquiry — [outlet]',
     body: ['Outlet', 'Deadline', 'Topic'],
   },
   local: {
     key: 'local',
-    label: 'Talk to our Bangladesh team',
+    label: 'Talk to Our Bangladesh Team',
     to: 'hello@coderstrustbd.com', // BANGLADESH_HQ.email (checked below)
     subject: 'Local partnership inquiry — [organization]',
     body: [
@@ -137,14 +137,14 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** Opens a conversation; no ready document set is promised (PD-13b is unverified, `U`). */
   diligence: {
     key: 'diligence',
-    label: 'Ask about due diligence',
+    label: 'Ask About Due Diligence',
     subject: 'Due-diligence inquiry — [organization]',
     body: ['Organization', 'Program or grant under consideration', 'Questions or documents you need', 'Deadline'],
   },
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
   careers: {
     key: 'careers',
-    label: 'Send your CV',
+    label: 'Send Your CV',
     to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
     subject: 'Application — [role or "speculative application"]',
     body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],
@@ -152,20 +152,20 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** Mentor applications (About / Mentors): same pattern as `media`, general address. */
   mentor: {
     key: 'mentor',
-    label: 'Mentor application',
+    label: 'Mentor Application',
     subject: 'Mentor application — [your name]',
     body: ['Name', 'Area of expertise', 'Years of experience', 'LinkedIn or portfolio link', 'Availability'],
   },
   /** SuperKids schools and education partners: the `discovery` conversation with school-specific fields. */
   superkids: {
     key: 'superkids',
-    label: 'Book a discovery session',
+    label: 'Book a Discovery Session',
     subject: 'SuperKids discovery session request — [school or organization]',
     body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery conversation'],
   },
   'nu-pgd': {
     key: 'nu-pgd',
-    label: 'Apply now',
+    label: 'Apply Now',
     href: NU_PGD_APPLY_URL,
     // Non-breaking spaces: html-validate (tel-non-breaking) treats every space in a tel: link as a phone-number break.
     // The label shows the number (the same one as the tel: href and the Bangladesh office in src/lib/site.ts), in its non-breaking form.

@@ -30,14 +30,14 @@ const principles = [
     title: 'Outcomes over Outputs',
     text: 'We judge a program by whether young people end up working and earning, not by how many attended.',
     factId: 'PD-09',
-    link: { label: 'See the outcomes', href: '/impact/' },
+    link: { label: 'See the Outcomes', href: '/impact/' },
   },
   {
     icon: 'users',
     title: 'Inclusion by Design',
     text: 'Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
     factId: 'PD-14',
-    link: { label: 'How our model works', href: '/our-model/' },
+    link: { label: 'How Our Model Works', href: '/our-model/' },
   },
   {
     icon: 'scale',
@@ -45,18 +45,18 @@ const principles = [
     text: 'We say what a randomized trial shows and what a survey only describes, and we keep the two apart.',
     factId: 'RC-01',
     field: 'headline' as const,
-    link: { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+    link: { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
   },
   {
     icon: 'handshake',
     title: 'Partnership and Accountability',
     text: 'Partners agree the scorecard before the first cohort and see progress in reports every month.',
     factId: 'PD-08',
-    link: { label: 'Governance and accountability', href: '/about/governance/' },
+    link: { label: 'Governance and Accountability', href: '/about/governance/' },
   },
 ];
 
-const sdgs = ['SDG 4 · Quality education', 'SDG 5 · Gender equality', 'SDG 8 · Decent work and economic growth', 'SDG 1 · No poverty', 'SDG 2 · Zero hunger', 'SDG 9 · Industry and innovation', 'SDG 10 · Reduced inequalities'];
+const sdgs = ['SDG 4 · Quality Education', 'SDG 5 · Gender Equality', 'SDG 8 · Decent Work and Economic Growth', 'SDG 1 · No Poverty', 'SDG 2 · Zero Hunger', 'SDG 9 · Industry and Innovation', 'SDG 10 · Reduced Inequalities'];
 
 const jsonLd = [
   webPage({
@@ -70,22 +70,22 @@ const jsonLd = [
 ---
 
 <BaseLayout title="About CodersTrust" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
+  <Hero eyebrow="About Us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
     <Fragment slot="actions">
-      <Button href="/impact/" iconEnd="arrow-right">See our impact</Button>
-      <Button variant="outline" href="/about/team/">Meet the team</Button>
+      <Button href="/impact/" iconEnd="arrow-right">See Our Impact</Button>
+      <Button variant="outline" href="/about/team/">Meet the Team</Button>
     </Fragment>
   </Hero>
 
   <Section id="story" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="Our story" title="Built Since 2014" />
+    <SectionHeader id="story-h" eyebrow="Our Story" title="Built Since 2014" />
     <div class="about-story">
       <CopyBlock class="lead" block={ORIGIN} />
     </div>
   </Section>
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
-    <SectionHeader id="mission-h" eyebrow="Mission and vision" title="Why We Exist, and Where We Are Heading" />
+    <SectionHeader id="mission-h" eyebrow="Mission and Vision" title="Why We Exist, and Where We Are Heading" />
     <div class="grid-cards grid-cards--2">
       <article class="card" data-reveal>
         <div class="card__body">
@@ -110,7 +110,7 @@ const jsonLd = [
   </Section>
 
   <Section id="timeline" tone="ice" aria-labelledby="timeline-h">
-    <SectionHeader id="timeline-h" eyebrow="Our story" title="From a Copenhagen Launch to National Programs" lead="Milestones that rest on registered facts." />
+    <SectionHeader id="timeline-h" eyebrow="Our Story" title="From a Copenhagen Launch to National Programs" lead="Milestones that rest on registered facts." />
     <StoryTimeline items={timeline} />
   </Section>
 
@@ -121,11 +121,11 @@ const jsonLd = [
     <div class="grid-cards grid-cards--2 about-founders">
       {founders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
-    <p class="about-more"><a class="link" href={linkAttrs('/about/team/').href}>Meet the full team<Icon name="arrow-right" size={16} /></a></p>
+    <p class="about-more"><a class="link" href={linkAttrs('/about/team/').href}>Meet the Full Team<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="how-we-work" tone="airy" aria-labelledby="how-h">
-    <SectionHeader id="how-h" eyebrow="How we work" title="Four Principles Behind Every Program" />
+    <SectionHeader id="how-h" eyebrow="How We Work" title="Four Principles Behind Every Program" />
     <div class="grid-cards grid-cards--2 grid-cards--stretch">
       {
         principles.map((p) => (
@@ -144,7 +144,7 @@ const jsonLd = [
   </Section>
 
   <Section id="sdgs" aria-labelledby="sdg-h">
-    <SectionHeader id="sdg-h" eyebrow="Global goals" title="Seven Sustainable Development Goals" />
+    <SectionHeader id="sdg-h" eyebrow="Global Goals" title="Seven Sustainable Development Goals" />
     <div data-fact="ID-09">
       <ul class="cluster about-sdgs" role="list">
         {sdgs.map((s, i) => <li><Badge tone={i < 3 ? 'brand' : 'eyebrow'}>{s}</Badge></li>)}
@@ -157,7 +157,7 @@ const jsonLd = [
     <SectionHeader id="rec-h" eyebrow="Recognition" title="Recognized by Peers, Covered by the Press" />
     <div class="about-rec">
       <p class="lead"><Fact id="PA-08" /></p>
-      <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and media<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and Media<Icon name="arrow-right" size={16} /></a>
     </div>
   </Section>
 
@@ -165,7 +165,7 @@ const jsonLd = [
     id="about-cta"
     heading="Talk to the Team"
     text="Tell us your goals and priority groups, and we will outline a first cohort with you."
-    cta={{ label: 'Book a discovery session', href: ctaHref('discovery') }}
+    cta={{ label: 'Book a Discovery Session', href: ctaHref('discovery') }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     micro={MICRO_COMMITMENT}
   />

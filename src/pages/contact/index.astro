@@ -25,13 +25,13 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
   <Hero eyebrow="Contact" title="Let’s Talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
     <Fragment slot="actions">
-      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a discovery session</Button>
-      <Button variant="outline" href="#offices">Offices and phone</Button>
+      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Book a Discovery Session</Button>
+      <Button variant="outline" href="#offices">Offices and Phone</Button>
     </Fragment>
   </Hero>
 
   <Section id="routes" aria-labelledby="routes-h">
-    <SectionHeader id="routes-h" eyebrow="Inquiry routes" title="Who Are You Writing As?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
+    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Who Are You Writing As?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
     <p class="ct-copy"><CopyEmail /></p>
     <ul class="ct-routes" role="list">
       {
@@ -80,7 +80,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
   </Section>
 
   <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After you write" title="What Happens Next" />
+    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens Next" />
     <div class="ct-next">
       <StepFlow steps={[
         { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
@@ -136,7 +136,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
     gap: var(--space-sm) var(--space-md);
     padding-top: var(--space-sm);
   }
-  /* Every route button is as wide as its card, so the long label ("Bring JobReady@Campus to your institution") is not the one button
+  /* Every route button is as wide as its card, so the long label ("Bring JobReady@Campus to Your Institution") is not the one button
      that stretches and wraps while its neighbors sit at their own width; a secondary link goes on the line below. A label that has to
      wrap does so in even lines. */
   .ct-route__actions :global(.btn) {

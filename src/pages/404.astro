@@ -12,11 +12,11 @@ import { COURSES_URL } from '../lib/site';
 
 const popular = [
   { label: 'Impact: outcomes and evidence', href: '/impact/', icon: 'chart-bar' },
-  { label: 'How our model works', href: '/our-model/', icon: 'target' },
+  { label: 'How Our Model Works', href: '/our-model/', icon: 'target' },
   { label: 'Programs', href: '/programs/', icon: 'rocket' },
   { label: 'News', href: '/news/', icon: 'file-text' },
   { label: 'About CodersTrust', href: '/about/', icon: 'users' },
-  { label: 'Contact us', href: '/contact/', icon: 'mail' },
+  { label: 'Contact Us', href: '/contact/', icon: 'mail' },
 ];
 ---
 
@@ -27,14 +27,14 @@ const popular = [
       <h1 class="t-display-4xl">We Can’t Find That Page</h1>
       <p class="lead">The link may be out of date or mistyped. Tell us who you are and we will point you to the right place.</p>
       <div class="cluster">
-        <Button href="/" iconEnd="arrow-right">Go to the home page</Button>
-        <Button variant="outline" href="/contact/">Contact us</Button>
+        <Button href="/" iconEnd="arrow-right">Go to the Home Page</Button>
+        <Button variant="outline" href="/contact/">Contact Us</Button>
       </div>
     </div>
   </section>
 
   <Section tone="airy" aria-labelledby="router-h">
-    <SectionHeader id="router-h" eyebrow="Start here" title="Who Are You?" lead="Each path leads to the evidence and the next step for your role." />
+    <SectionHeader id="router-h" eyebrow="Start Here" title="Who Are You?" lead="Each path leads to the evidence and the next step for your role." />
     <div class="grid-cards">
       {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       <CategoryCard title="Learners" icon="book-open" text="Browse courses on JobReady.global" href={COURSES_URL} />

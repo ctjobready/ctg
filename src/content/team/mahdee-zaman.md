@@ -6,7 +6,7 @@ group: executive
 order: 6
 photo: ../../assets/images/team/mahdee-zaman.jpg
 photoAlt: "Portrait of Mahdee Zaman, Chief Strategy Officer"
-expertise: ["AI", "Cloud", "Strategic Planning", "Emerging Markets", "Youth Outreach", "Large-scale Upskilling"]
+expertise: ["AI", "Cloud", "Strategic Planning", "Emerging Markets", "Youth Outreach", "Large-Scale Upskilling"]
 legacyUrl: "https://coderstrust.global/team-member/mohammad-mahdee-uz-zaman/"
 ---
 

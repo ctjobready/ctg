@@ -34,12 +34,12 @@ const discovery = cta('discovery');
 // Audience cards in the order of the nav menu (nav.ts): funders first, then investors, local partners, universities, employers. Descriptions reuse nav.ts where the menu already says it.
 const navText = (href: string) => navGroups.find((g) => g.id === 'partner')?.items.find((i) => i.href === href)?.description;
 const audiences = [
-  { title: 'Development partners & NGOs', icon: 'globe', href: '/partner-with-us/development-partners/' },
+  { title: 'Development Partners & NGOs', icon: 'globe', href: '/partner-with-us/development-partners/' },
   { title: 'Governments', icon: 'landmark', href: '/partner-with-us/governments/' },
   { title: 'Foundations & CSR', icon: 'heart-handshake', href: '/partner-with-us/foundations/' },
   { title: 'Investors', icon: 'trending-up', href: '/investors/' },
-  { title: 'Local partners (Bangladesh)', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'NGOs, colleges and chambers delivering locally.' },
-  { title: 'Universities & colleges', icon: 'graduation-cap', href: '/partner-with-us/universities/' },
+  { title: 'Local Partners (Bangladesh)', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'NGOs, colleges and chambers delivering locally.' },
+  { title: 'Universities & Colleges', icon: 'graduation-cap', href: '/partner-with-us/universities/' },
   { title: 'Employers', icon: 'briefcase', href: '/partner-with-us/employers/' },
 ].map((a) => ({ ...a, text: a.text ?? navText(a.href) }));
 
@@ -76,7 +76,7 @@ const jsonLd = [
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
-      <SectionHeader id="audiences-h" eyebrow="Choose your route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
+      <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
       <div class="grid-cards grid-cards--4">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
         <CategoryCard title="Not sure where you fit?" icon="message-circle" text="Tell us your goals and we will point you to the right route." href="/contact/" />
@@ -86,7 +86,7 @@ const jsonLd = [
 
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="How partnering works" title="From First Conversation to First Cohort" lead="Four steps, then monthly reports. Who does what is clear from the start." />
+      <SectionHeader id="how-h" eyebrow="How Partnering Works" title="From First Conversation to First Cohort" lead="Four steps, then monthly reports. Who does what is clear from the start." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
@@ -97,17 +97,17 @@ const jsonLd = [
   </Tone>
 
   <Tone cmf="REPORTS">
-    <MonthlyReports sample={{ label: 'See the sample monthly report on the YouthWIDE page', href: '/programs/youthwide/' }} />
+    <MonthlyReports sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
   </Tone>
 
   <Tone cmf="DILIGENCE" tone="ice">
     <Section id="due-diligence" aria-labelledby="dd-h">
       <div class="dd">
         <div class="dd__copy">
-          <SectionHeader id="dd-h" eyebrow="Due diligence" title="Know Who You Are Contracting With" />
+          <SectionHeader id="dd-h" eyebrow="Due Diligence" title="Know Who You Are Contracting With" />
           <CopyBlock block={GOVERNANCE} class="dd__text" />
           <div class="cluster dd__actions">
-            <a class="link" href={governance.href}>Read about governance and accountability<Icon name="arrow-right" size={16} /></a>
+            <a class="link" href={governance.href}>Read About Governance and Accountability<Icon name="arrow-right" size={16} /></a>
             <Button variant="outline" size="sm" href={diligence.href}>{diligence.label}</Button>
           </div>
         </div>

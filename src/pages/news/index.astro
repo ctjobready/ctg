@@ -39,7 +39,7 @@ const jsonLd = [
   <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MoUs, recognition, program events and leadership: what CodersTrust has announced, in the words of the time." art={false} />
 
   <Section id="archive" aria-labelledby="archive-h">
-    <SectionHeader id="archive-h" eyebrow="All news" title="Browse by Topic" lead="Every post is shown as published: older items keep their original wording, and each carries the dates its titles, offices and figures reflect." />
+    <SectionHeader id="archive-h" eyebrow="All News" title="Browse by Topic" lead="Every post is shown as published: older items keep their original wording, and each carries the dates its titles, offices and figures reflect." />
     <!-- The most recent post is the first, full-width item of the same list, so the topic counts cover every post and the filter applies to it too. -->
     <NewsGrid posts={posts}>
       <article slot="featured" class="feat card card--link" data-reveal>
@@ -54,7 +54,7 @@ const jsonLd = [
           </p>
           <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
           <p class="card__text">{latest.data.excerpt}</p>
-          <span class="card__more" aria-hidden="true">Read more<span class="sr-only">: {latest.data.title}</span><Icon name="arrow-right" size={16} /></span>
+          <span class="card__more" aria-hidden="true">Read More<span class="sr-only">: {latest.data.title}</span><Icon name="arrow-right" size={16} /></span>
         </div>
       </article>
     </NewsGrid>

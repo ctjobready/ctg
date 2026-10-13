@@ -25,7 +25,7 @@ const cards = learners ? [...items, { title: 'Learners', icon: 'book-open', text
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Start here" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Start Here" title={title} lead={lead} />
   <div class="grid-cards grid-cards--4">
     {cards.map((c) => <CategoryCard title={c.title} icon={c.icon} text={c.text} href={c.href} />)}
   </div>

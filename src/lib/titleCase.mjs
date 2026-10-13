@@ -3,7 +3,10 @@
  *
  * - First and last word, and every major word, are capitalized (nouns, verbs incl. Is/Are/Be, adjectives, adverbs, pronouns,
  *   subordinating conjunctions such as If/Because/That).
- * - MINOR words stay lower case unless first/last or right after a colon or a sentence-ending ? or !. A dash does not force a capital.
+ * - MINOR words stay lower case unless first/last or right after a colon, a sentence-ending ? or !, or a separator "·", "•" or "|"
+ *   ("SDG 4 · Quality Education", "JobReady@Campus · For Universities"). A dash does not force a capital.
+ * - A title cut short by an ellipsis ("…the…") has no last word yet: its final visible word follows the minor-word rule.
+ * - Lower-case domains and file names (jobready.global, youtube-nocookie.com) are kept as written.
  * - Hyphenated and slashed compounds: every part is capitalized except minor words ("Job-Ready", "Two-Year", "Built-in").
  * - Tokens that already contain a capital after their first letter (CodersTrust, YouthWIDE, JobReady@Campus, AI, BIGD, NGOs,
  *   MoU, U.S., iDE, eBay ...) are brand/acronym/mixed-case tokens and are never altered. Tokens that start with a digit are left alone.
@@ -25,14 +28,27 @@ function capitalizeWord(core) {
   return core.replace(/^(\p{L})/u, (m) => m.toUpperCase());
 }
 
+/**
+ * Domains and file names written in lower case (jobready.global, youtube-nocookie.com, press-kit.svg) are identifiers. They are masked
+ * before the split, so their hyphens and dots do not split them, and restored unchanged at the end.
+ */
+const DOMAIN = /(?<![\p{L}\p{N}-])[a-z0-9][a-z0-9-]*(?:\.[a-z0-9][a-z0-9-]*)+/gu;
+
 /** Expected Title Case for a heading/title string. Pure; whitespace is preserved as given. */
-export function titleCase(input) {
-  const parts = String(input).split(SEP); // [word, sep, word, sep, ...] (words may be '')
+export function titleCase(raw) {
+  const kept = [];
+  const input = String(raw).replace(DOMAIN, (m) => {
+    kept.push(m);
+    return `${String.fromCharCode(0xe100 + kept.length - 1)}`; // a private-use placeholder: neither a letter nor a digit
+  });
+  const parts = input.split(SEP); // [word, sep, word, sep, ...] (words may be '')
   const wordIdx = [];
   parts.forEach((p, i) => {
-    if (i % 2 === 0 && /[\p{L}\p{N}]/u.test(p)) wordIdx.push(i);
+    if (i % 2 === 0 && /[\p{L}\p{N}]/u.test(p)) wordIdx.push(i);
   });
-  const lastWord = wordIdx[wordIdx.length - 1];
+  // a title cut short by an ellipsis ("…the…") has no last word yet, so its final visible word is not forced to a capital
+  const truncated = /(…|\.\.\.)\s*$/.test(input);
+  const lastWord = truncated ? -1 : wordIdx[wordIdx.length - 1];
   const firstWord = wordIdx[0];
   let inQuote = false;
   let force = true; // start of title
@@ -59,14 +75,17 @@ export function titleCase(input) {
     const trail = m[3];
     const hasLetter = /\p{L}/u.test(core);
     const wasForced = force;
-    // clause-starting punctuation on this token affects the NEXT word
-    force = /[:?!]$/.test(trail) || /[:?!]$/.test(core);
+    // clause-starting punctuation on this token affects the NEXT word: a colon, ?, !, or a separator such as "·", "•" or "|"
+    force = /[:?!]$/.test(trail) || /[:?!]$/.test(core) || /[·•|]/.test(lead + trail);
     if (!hasLetter) continue;
     if (startedQuoted || quoteStartsHere || inQuote) continue; // quoted text is kept as written
     if (/^\d/.test(core)) continue;
+    // a domain or file-like token (jobready.global, press-kit.svg) is an identifier, kept as written
+    if (/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(core)) continue;
     // sentence-internal capital after the first letter => brand/acronym/mixed case, never altered
     if (/^.\p{Lu}/su.test(core) || /\p{Lu}/u.test(core.slice(1))) continue;
-    if (/[@→]|\w\(\)/.test(core) || /^(https?:|www\.)/i.test(core)) continue;
+    // a token with an @ (an e-mail, a handle such as JobReady@Campus) or an arrow is an identifier: the whole token is checked, not only its core
+    if (/[@→]/.test(p) || /\w\(\)/.test(core) || /^(https?:|www\.)/i.test(core)) continue;
     const lower = core.toLowerCase();
     let want;
     if (ALWAYS_LOWER.has(lower)) want = lower;
@@ -78,5 +97,5 @@ export function titleCase(input) {
     }
     out[i] = lead + want + trail;
   }
-  return out.join('');
+  return out.join('').replace(/(.)/gu, (_, c) => kept[c.charCodeAt(0) - 0xe100]);
 }

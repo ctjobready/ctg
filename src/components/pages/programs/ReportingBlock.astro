@@ -12,8 +12,8 @@ const fields = [
   { label: 'Enrollment and attendance' },
   { label: 'Completion and certification' },
   { label: 'Placements and first earnings' },
-  { label: 'Women and priority-group shares' },
-  { label: 'Trainee satisfaction' },
+  { label: 'Women and Priority-Group Shares' },
+  { label: 'Trainee Satisfaction' },
 ];
 const tr = fact('PD-09').text.match(/tracers at (\d+)\/(\d+)\/(\d+) months/);
 if (!tr) throw new Error('PD-09 wording changed: update the reporting timeline');
@@ -38,7 +38,7 @@ const timeline = [
 <div class="rep">
   <figure class="tmpl" data-reveal data-fact="PD-08" role="img" aria-label={layoutLabel}>
     <figcaption class="tmpl__cap">
-      <span class="tmpl__tag">Illustrative template · sample layout, no data</span>
+      <span class="tmpl__tag">Illustrative Template · Sample Layout, No Data</span>
       <strong>Monthly report</strong>
       <span class="tmpl__sub">Layout only. Every field is empty; results appear here once a cohort is running.</span>
     </figcaption>
@@ -66,7 +66,7 @@ const timeline = [
         </dd>
       </div>
       <div class="tmpl__row">
-        <dt>Quarterly steering review</dt>
+        <dt>Quarterly Steering Review</dt>
         <dd><span class="tmpl__blank tmpl__blank--tall" aria-hidden="true"></span></dd>
       </div>
     </dl>

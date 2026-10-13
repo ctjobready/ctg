@@ -41,8 +41,8 @@ const d = discoveryCta();
 >
   <ReportSection id="map" title="Where Programs Have Run">
     <p data-fact="SC-03">The map is a supplement. Every detail a pin shows is in the table beneath it, one row per location, so the table is the complete record.</p>
-    <WorldMap caption="Where CodersTrust programs have run" />
-    <Callout label="Locations are not programs">
+    <WorldMap caption="Where CodersTrust Programs Have Run" />
+    <Callout label="Locations Are Not Programs">
       <p>A location is a country or territory where CodersTrust has run a program. It does not say how many programs ran there, or how large they were. The New York office is not a program location; offices are listed under the map.</p>
     </Callout>
   </ReportSection>
@@ -51,7 +51,7 @@ const d = discoveryCta();
     <p>Programs with a published case study.</p>
     <section class="gr__table" aria-label="Table of selected programs" tabindex="0" data-scroll data-stack>
       <table>
-        <caption class="sr-only">Selected CodersTrust programs in Bangladesh</caption>
+        <caption class="sr-only">Selected CodersTrust Programs in Bangladesh</caption>
         <thead><tr><th scope="col">Program</th><th scope="col">Partner</th><th scope="col">Years</th><th scope="col">Focus</th><th scope="col">Reach</th></tr></thead>
         <tbody>
           {programs.map((p) => (
@@ -66,7 +66,7 @@ const d = discoveryCta();
         </tbody>
       </table>
     </section>
-    <p><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={linkAttrs('/impact/case-studies/').href}>All Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <NextStep heading="Talk to Us About a First Cohort." text="Tell us the country and priority groups; we outline a first cohort in a discovery session." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />

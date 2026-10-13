@@ -29,7 +29,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Independently evaluated by BIGD',
     factId: 'PR-01',
     summary: 'ICT skills for freelancing marketplaces and local jobs, plus women’s empowerment, in Bangladesh.',
-    related: { label: 'See how YouthWIDE deploys the model', href: '/programs/youthwide/' },
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
     slug: 'kosovo-women-in-online-work',
@@ -40,7 +40,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Women in Online Work pilot',
     factId: 'PR-02',
     summary: 'A pilot that tested whether online work suits young women in Kosovo.',
-    related: { label: 'See how YouthWIDE deploys the model', href: '/programs/youthwide/' },
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
     slug: 'undp-yes-korail',
@@ -51,7 +51,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: '2017',
     factId: 'PR-03',
     summary: 'Skills training for disadvantaged youth in Dhaka’s largest slum, linked to freelance marketplaces.',
-    related: { label: 'See how YouthWIDE deploys the model', href: '/programs/youthwide/' },
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
     slug: 'her-power',
@@ -62,7 +62,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Training cohort',
     factId: 'PR-05',
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',
-    related: { label: 'See YouthWIDE in Bangladesh, the national initiative', href: '/programs/youthwide/#governments' },
+    related: { label: 'See YouthWIDE in Bangladesh, the National Initiative', href: '/programs/youthwide/#governments' },
   },
 ];
 

@@ -31,7 +31,7 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The cost of waiting" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="The Cost of Waiting" title={title} lead={lead} />
   <div class={grid}>
     {
       blocks.map((b) => (
@@ -45,7 +45,7 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
                 <p class="cost__data"><Fact id={b.factId} /></p>
               )
             }
-            <p class="cost__impl"><span class="cost__tag">What it means</span>{' '}{b.implication}</p>
+            <p class="cost__impl"><span class="cost__tag">What It Means</span>{' '}{b.implication}</p>
           </div>
         </article>
       ))

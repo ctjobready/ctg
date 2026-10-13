@@ -138,17 +138,17 @@ const jsonLd = [faqJsonLd('home', '/styleguide/', ['Q1', 'Q2', 'Q3', 'Q5', 'Q7',
 const sectionLinks = [
   ['tokens', 'Tokens'],
   ['type', 'Typography'],
-  ['buttons', 'Buttons & badges'],
+  ['buttons', 'Buttons & Badges'],
   ['hero', 'Hero'],
   ['cards', 'Cards'],
   ['proof', 'Proof'],
-  ['data', 'Data & charts'],
+  ['data', 'Data & Charts'],
   ['structure', 'Structure'],
   ['bands', 'Bands'],
   ['motion', 'Motion'],
   ['facts', 'Facts UI'],
-  ['cmf', 'CMF bands'],
-  ['partners', 'Partners & map'],
+  ['cmf', 'CMF Bands'],
+  ['partners', 'Partners & Map'],
 ];
 ---
 
@@ -162,7 +162,7 @@ const sectionLinks = [
 >
   <Section tone="airy" pad="sm">
     <div class="sg-intro">
-      <p class="eyebrow">QA gallery · noindex</p>
+      <p class="eyebrow">QA Gallery · Noindex</p>
       <h1>Styleguide</h1>
       <p class="lead">Every token, component, state and band variant of the CodersTrust Global design system (Accessible AA theme). Generated from <code>design-system/tokens.json</code>.</p>
       <nav aria-label="Styleguide sections">
@@ -256,8 +256,8 @@ const sectionLinks = [
         <Button variant="enroll">Enroll</Button>
         <Button variant="promo">Promo</Button>
         <Button variant="primary" size="sm">Small</Button>
-        <Button variant="primary" icon="mail">With icon</Button>
-        <Button variant="primary" href="https://jobready.global/" iconEnd="arrow-up-right">External link</Button>
+        <Button variant="primary" icon="mail">With Icon</Button>
+        <Button variant="primary" href="https://jobready.global/" iconEnd="arrow-up-right">External Link</Button>
         <Button variant="primary" disabled>Disabled</Button>
       </div>
       <p class="text-muted t-body-xs">Hover, focus (Tab) and press states are live. One <code>primary</code> per viewport region.</p>
@@ -265,7 +265,7 @@ const sectionLinks = [
     <div class="sg-block">
       <h3>Buttons on Dark Bands</h3>
       <div class="sg-dark">
-        <Section tone="klein" pad="sm"><div class="cluster"><Button variant="inverse" iconEnd="arrow-right">Inverse (white) on Klein</Button><a class="link" href="#buttons">Text link on Klein</a></div></Section>
+        <Section tone="klein" pad="sm"><div class="cluster"><Button variant="inverse" iconEnd="arrow-right">Inverse (White) on Klein</Button><a class="link" href="#buttons">Text link on Klein</a></div></Section>
         <Section tone="deep-ink" pad="sm"><div class="cluster"><Button variant="inverse">Inverse on Deep Ink</Button><a class="link" href="#buttons">Text link on Deep Ink</a></div></Section>
       </div>
     </div>
@@ -302,16 +302,16 @@ const sectionLinks = [
     </div>
     <div class="sg-block">
       <h3>Breadcrumbs</h3>
-      <Breadcrumbs label="Breadcrumb (example)" items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies', href: '/impact/case-studies/' }, { label: 'Example case study' }]} />
+      <Breadcrumbs label="Breadcrumb (example)" items={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies', href: '/impact/case-studies/' }, { label: 'Example Case Study' }]} />
     </div>
   </Section>
 
   <!-- ===================================== HERO ===================================== -->
   <div id="hero">
-    <Hero headingLevel={2} variant="home" eyebrow="For governments, development partners and funders" title="Turn Youth Unemployment into Digital Employment — at Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." artSeed="styleguide-home">
+    <Hero headingLevel={2} variant="home" eyebrow="For Governments, Development Partners and Funders" title="Turn Youth Unemployment into Digital Employment — at Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." artSeed="styleguide-home">
       <Fragment slot="actions">
-        <Button iconEnd="arrow-right" href="/contact/">Primary action</Button>
-        <Button variant="outline" href="/impact/">Secondary action</Button>
+        <Button iconEnd="arrow-right" href="/contact/">Primary Action</Button>
+        <Button variant="outline" href="/impact/">Secondary Action</Button>
       </Fragment>
       <Fragment slot="stats">
         <Stat value="61.5%" label="Sample stat — employed at the survey" />
@@ -319,8 +319,8 @@ const sectionLinks = [
         <Stat value="15" label="Sample stat — countries" />
       </Fragment>
     </Hero>
-    <Hero headingLevel={2} variant="inner" eyebrow="Inner page hero" title="Inner-Page H1 with the Display-4xl Scale" lead="Text-only variant: no media column." art={false}>
-      <Fragment slot="actions"><Button href="/contact/">Talk to us</Button></Fragment>
+    <Hero headingLevel={2} variant="inner" eyebrow="Inner Page Hero" title="Inner-Page H1 with the Display-4xl Scale" lead="Text-only variant: no media column." art={false}>
+      <Fragment slot="actions"><Button href="/contact/">Talk to Us</Button></Fragment>
     </Hero>
   </div>
 
@@ -348,7 +348,7 @@ const sectionLinks = [
 
     <h3 class="sg-h3">CourseCard</h3>
     <div class="grid-cards">
-      <CourseCard title="Postgraduate Diploma in Digital Marketing" badge="Sample badge" meta={[{ icon: 'clock', label: '12 months' }, { icon: 'video', label: 'Online + lab' }, { icon: 'book-open', label: 'Internship' }]} href="/nu-postgraduate-diploma/" actionLabel="View course" />
+      <CourseCard title="Postgraduate Diploma in Digital Marketing" badge="Sample Badge" meta={[{ icon: 'clock', label: '12 months' }, { icon: 'video', label: 'Online + lab' }, { icon: 'book-open', label: 'Internship' }]} href="/nu-postgraduate-diploma/" actionLabel="View Course" />
       <CourseCard title="Course with Fee Hierarchy" price="Fee shown" oldPrice="Old fee" meta={[{ icon: 'clock', label: '6 months' }]} href="/nu-postgraduate-diploma/" />
     </div>
   </Section>
@@ -396,26 +396,26 @@ const sectionLinks = [
     <CarouselControls count={5} index={2} label="demo" />
 
     <h3 class="sg-h3">PartnerStrip — Grid and Marquee (M13)</h3>
-    <PartnerStrip caption="Organizations we have worked with, 2014–2026 (sample names)" items={partners} />
-    <PartnerStrip variant="marquee" caption="Marquee variant — pauses on hover/focus and via the button" items={partners} />
+    <PartnerStrip caption="Organizations We Have Worked with, 2014–2026 (Sample Names)" items={partners} />
+    <PartnerStrip variant="marquee" caption="Marquee Variant — Pauses on Hover/Focus and via the Button" items={partners} />
   </Section>
 
   <!-- ===================================== DATA ===================================== -->
   <Section id="data" aria-labelledby="data-h">
     <SectionHeader id="data-h" eyebrow="Components" title="Data and Charts" lead="Each chart has an accessible table fallback (open ‘View chart data’)." />
     <div class="sg-two">
-      <BeforeAfter title="Employment among surveyed completers (sample)" before={{ label: 'Before', value: 33.3, caption: 'before training' }} after={{ label: 'October 2026 survey', value: 61.5, caption: 'surveyed completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
-      <BarChart title="Horizontal bar chart (sample)" items={[{ label: 'First measure', value: 40.1 }, { label: 'Second measure', value: 30.2 }, { label: 'Third measure', value: 20.3 }, { label: 'Fourth measure', value: 9.4 }]} note="Sample data for the styleguide." />
+      <BeforeAfter title="Employment Among Surveyed Completers (Sample)" before={{ label: 'Before', value: 33.3, caption: 'Before Training' }} after={{ label: 'October 2026 Survey', value: 61.5, caption: 'Surveyed Completers' }} delta="+28.2 pp" note="Sample data for the styleguide." />
+      <BarChart title="Horizontal Bar Chart (Sample)" items={[{ label: 'First Measure', value: 40.1 }, { label: 'Second Measure', value: 30.2 }, { label: 'Third Measure', value: 20.3 }, { label: 'Fourth Measure', value: 9.4 }]} note="Sample data for the styleguide." />
     </div>
 
     <h3 class="sg-h3">ComparisonTable (Approaches and Trade-Offs; Sticky First Column on Mobile; Icon Only for Our Own Inclusions)</h3>
     <ComparisonTable
-      caption="Sample comparison of approaches"
-      columns={['Aspect', 'Our model', 'Conventional programs', 'Self-paced platforms', 'Doing nothing']}
+      caption="Sample Comparison of Approaches"
+      columns={['Aspect', 'Our Model', 'Conventional Programs', 'Self-Paced Platforms', 'Doing Nothing']}
       highlight={0}
       rows={[
-        { label: 'Track choice', cells: [{ text: 'Set from current employer demand', included: true }, 'Varies by program design', 'Learner chooses', '—'] },
-        { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', '—'] },
+        { label: 'Track Choice', cells: [{ text: 'Set from current employer demand', included: true }, 'Varies by program design', 'Learner chooses', '—'] },
+        { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', '—'] },
         { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less; actual prices vary', 'No fee — but forgone earnings'] },
       ]}
     />
@@ -449,18 +449,18 @@ const sectionLinks = [
   <Section id="bands-top" pad="none" aria-label="Band variants">
     <h2 class="sg-bands-title" id="bands">Band Variants</h2>
   </Section>
-  <Section tone="white" pad="sm" aria-label="White band"><SectionHeader eyebrow="white" title="White Band" lead="Default canvas. Cards use the system shadow." /><Quote cite="Person Name" role="Organization">A pull quote on a white band.</Quote></Section>
-  <Section tone="airy" pad="sm" aria-label="Airy band"><SectionHeader eyebrow="airy" title="Airy Blue Band" lead="Soft section band (surface-container-low)." /><div class="cluster"><Badge>Badge</Badge><Button variant="outline">Outline</Button></div></Section>
-  <Section tone="ice" pad="sm" aria-label="Ice band"><SectionHeader eyebrow="ice" title="Ice Cyan Band" lead="Info callouts and highlights (surface-container)." /><div class="cluster"><Badge tone="info">Info</Badge></div></Section>
-  <Section tone="klein" pad="sm" aria-label="Klein band"><SectionHeader eyebrow="klein" title="Klein Impact Band" lead="Deliberate high-contrast moment. White headings, Powder body, orange numerals allowed." /><Quote cite="Person Name" role="Organization" size="lg">A pull quote on Klein.</Quote></Section>
-  <Section tone="white" pad="sm" aria-label="Spacer band"><SectionHeader eyebrow="white" title="Never Two Dark Bands in a Row" lead="A white band separates Klein from Deep Ink." /></Section>
-  <Section tone="deep-ink" pad="sm" aria-label="Deep Ink band"><SectionHeader eyebrow="deep-ink" title="Deep Ink Band" lead="Footer and rare dark moments." /><div class="cluster"><Button variant="inverse">Inverse button</Button><a class="link" href="#bands">Link on Deep Ink</a></div></Section>
+  <Section tone="white" pad="sm" aria-label="White band"><SectionHeader eyebrow="White" title="White Band" lead="Default canvas. Cards use the system shadow." /><Quote cite="Person Name" role="Organization">A pull quote on a white band.</Quote></Section>
+  <Section tone="airy" pad="sm" aria-label="Airy band"><SectionHeader eyebrow="Airy" title="Airy Blue Band" lead="Soft section band (surface-container-low)." /><div class="cluster"><Badge>Badge</Badge><Button variant="outline">Outline</Button></div></Section>
+  <Section tone="ice" pad="sm" aria-label="Ice band"><SectionHeader eyebrow="Ice" title="Ice Cyan Band" lead="Info callouts and highlights (surface-container)." /><div class="cluster"><Badge tone="info">Info</Badge></div></Section>
+  <Section tone="klein" pad="sm" aria-label="Klein band"><SectionHeader eyebrow="Klein" title="Klein Impact Band" lead="Deliberate high-contrast moment. White headings, Powder body, orange numerals allowed." /><Quote cite="Person Name" role="Organization" size="lg">A pull quote on Klein.</Quote></Section>
+  <Section tone="white" pad="sm" aria-label="Spacer band"><SectionHeader eyebrow="White" title="Never Two Dark Bands in a Row" lead="A white band separates Klein from Deep Ink." /></Section>
+  <Section tone="deep-ink" pad="sm" aria-label="Deep Ink band"><SectionHeader eyebrow="Deep-Ink" title="Deep Ink Band" lead="Footer and rare dark moments." /><div class="cluster"><Button variant="inverse">Inverse Button</Button><a class="link" href="#bands">Link on Deep Ink</a></div></Section>
 
   <CTABand
     id="cta-airy"
     heading="CTA Band: One Primary Action"
     text="Outcome-framed promise in one sentence."
-    cta={{ label: 'Book a discovery session', href: cta('discovery').href }}
+    cta={{ label: 'Book a Discovery Session', href: cta('discovery').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     urgency="Authentic urgency line goes here."
     micro="A discovery session is a conversation, not a commitment."
@@ -469,7 +469,7 @@ const sectionLinks = [
     id="cta-klein"
     tone="klein"
     heading="CTA Band on Klein"
-    cta={{ label: 'Request a briefing', href: cta('briefing').href }}
+    cta={{ label: 'Request a Briefing', href: cta('briefing').href }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
     micro="A discovery session is a conversation, not a commitment."
   />
@@ -506,29 +506,29 @@ const sectionLinks = [
     <h3 class="sg-h3">Interaction Index</h3>
     <section class="sg-table-wrap" aria-label="Micro-interactions table" tabindex="0" data-scroll data-stack="inline">
       <table class="sg-table">
-        <caption class="sr-only">Micro-interactions implemented</caption>
-        <thead><tr><th scope="col">#</th><th scope="col">Interaction</th><th scope="col">Where to see it</th></tr></thead>
+        <caption class="sr-only">Micro-Interactions Implemented</caption>
+        <thead><tr><th scope="col">#</th><th scope="col">Interaction</th><th scope="col">Where to See It</th></tr></thead>
         <tbody>
-          <tr><th scope="row">M1</th><td data-label="Interaction">Section reveal + stagger</td><td data-label="Where to see it">Reveal demo above; every card grid</td></tr>
-          <tr><th scope="row">M2</th><td data-label="Interaction">Stat count-up</td><td data-label="Where to see it">Proof section</td></tr>
-          <tr><th scope="row">M3</th><td data-label="Interaction">Progress fill</td><td data-label="Where to see it">ProgressBar, BarChart</td></tr>
-          <tr><th scope="row">M4</th><td data-label="Interaction">Before → after chart</td><td data-label="Where to see it">Data section</td></tr>
-          <tr><th scope="row">M5</th><td data-label="Interaction">Card lift</td><td data-label="Where to see it">Any linked card</td></tr>
-          <tr><th scope="row">M6</th><td data-label="Interaction">Router fill + icon bounce</td><td data-label="Where to see it">CategoryCard grid</td></tr>
-          <tr><th scope="row">M7</th><td data-label="Interaction">Button hover/press, arrow slide</td><td data-label="Where to see it">Buttons</td></tr>
-          <tr><th scope="row">M8</th><td data-label="Interaction">Link underline grows</td><td data-label="Where to see it">Typography links</td></tr>
-          <tr><th scope="row">M9</th><td data-label="Interaction">Sticky header: shadow, hide/reveal</td><td data-label="Where to see it">Scroll up and down</td></tr>
-          <tr><th scope="row">M10</th><td data-label="Interaction">Mega-menu slide + fade</td><td data-label="Where to see it">Header (desktop)</td></tr>
-          <tr><th scope="row">M11</th><td data-label="Interaction">Hero gradient settles once (3 s, no loop)</td><td data-label="Where to see it">Hero</td></tr>
-          <tr><th scope="row">M12</th><td data-label="Interaction">HeroArt progress pills</td><td data-label="Where to see it">Motion section</td></tr>
-          <tr><th scope="row">M13</th><td data-label="Interaction">Logo marquee</td><td data-label="Where to see it">PartnerStrip</td></tr>
-          <tr><th scope="row">M14</th><td data-label="Interaction">Carousel, dots widen</td><td data-label="Where to see it">Proof section</td></tr>
-          <tr><th scope="row">M15</th><td data-label="Interaction">Accordion height</td><td data-label="Where to see it">Structure section</td></tr>
-          <tr><th scope="row">M16</th><td data-label="Interaction">Timeline progress</td><td data-label="Where to see it">Structure section</td></tr>
-          <tr><th scope="row">M18</th><td data-label="Interaction">Copy email toast</td><td data-label="Where to see it">Above</td></tr>
-          <tr><th scope="row">M19</th><td data-label="Interaction">Back-to-top ring</td><td data-label="Where to see it">Scroll down one viewport</td></tr>
-          <tr><th scope="row">M20</th><td data-label="Interaction">Page transitions</td><td data-label="Where to see it">Navigate between pages (Chromium)</td></tr>
-          <tr><th scope="row">M22</th><td data-label="Interaction">Story photo gray → color</td><td data-label="Where to see it">SuccessStoryCard (with a photo)</td></tr>
+          <tr><th scope="row">M1</th><td data-label="Interaction">Section reveal + stagger</td><td data-label="Where to See It">Reveal demo above; every card grid</td></tr>
+          <tr><th scope="row">M2</th><td data-label="Interaction">Stat count-up</td><td data-label="Where to See It">Proof section</td></tr>
+          <tr><th scope="row">M3</th><td data-label="Interaction">Progress fill</td><td data-label="Where to See It">ProgressBar, BarChart</td></tr>
+          <tr><th scope="row">M4</th><td data-label="Interaction">Before → after chart</td><td data-label="Where to See It">Data section</td></tr>
+          <tr><th scope="row">M5</th><td data-label="Interaction">Card lift</td><td data-label="Where to See It">Any linked card</td></tr>
+          <tr><th scope="row">M6</th><td data-label="Interaction">Router fill + icon bounce</td><td data-label="Where to See It">CategoryCard grid</td></tr>
+          <tr><th scope="row">M7</th><td data-label="Interaction">Button hover/press, arrow slide</td><td data-label="Where to See It">Buttons</td></tr>
+          <tr><th scope="row">M8</th><td data-label="Interaction">Link underline grows</td><td data-label="Where to See It">Typography links</td></tr>
+          <tr><th scope="row">M9</th><td data-label="Interaction">Sticky header: shadow, hide/reveal</td><td data-label="Where to See It">Scroll up and down</td></tr>
+          <tr><th scope="row">M10</th><td data-label="Interaction">Mega-menu slide + fade</td><td data-label="Where to See It">Header (desktop)</td></tr>
+          <tr><th scope="row">M11</th><td data-label="Interaction">Hero gradient settles once (3 s, no loop)</td><td data-label="Where to See It">Hero</td></tr>
+          <tr><th scope="row">M12</th><td data-label="Interaction">HeroArt progress pills</td><td data-label="Where to See It">Motion section</td></tr>
+          <tr><th scope="row">M13</th><td data-label="Interaction">Logo marquee</td><td data-label="Where to See It">PartnerStrip</td></tr>
+          <tr><th scope="row">M14</th><td data-label="Interaction">Carousel, dots widen</td><td data-label="Where to See It">Proof section</td></tr>
+          <tr><th scope="row">M15</th><td data-label="Interaction">Accordion height</td><td data-label="Where to See It">Structure section</td></tr>
+          <tr><th scope="row">M16</th><td data-label="Interaction">Timeline progress</td><td data-label="Where to See It">Structure section</td></tr>
+          <tr><th scope="row">M18</th><td data-label="Interaction">Copy email toast</td><td data-label="Where to See It">Above</td></tr>
+          <tr><th scope="row">M19</th><td data-label="Interaction">Back-to-top ring</td><td data-label="Where to See It">Scroll down one viewport</td></tr>
+          <tr><th scope="row">M20</th><td data-label="Interaction">Page transitions</td><td data-label="Where to See It">Navigate between pages (Chromium)</td></tr>
+          <tr><th scope="row">M22</th><td data-label="Interaction">Story photo gray → color</td><td data-label="Where to See It">SuccessStoryCard (with a photo)</td></tr>
         </tbody>
       </table>
     </section>
@@ -556,7 +556,7 @@ const sectionLinks = [
   <!-- ===================================== CMF BANDS ===================================== -->
   <div id="cmf">
     <Section pad="sm" aria-label="CMF bands intro"><SectionHeader eyebrow="Sections" title="CMF Section Bands" lead="The Home page sequence, data-driven by props with real fact IDs. Klein bands never sit back to back." /></Section>
-    <HeroBand headingLevel={2} variant="home" audience="For governments, development partners and funders" title="Turn Youth Unemployment into Digital Employment — at Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
+    <HeroBand headingLevel={2} variant="home" audience="For Governments, Development Partners and Funders" title="Turn Youth Unemployment into Digital Employment — at Scale." lead="We help partners move educated, unemployed youth into paid digital work through mentored, certification-focused training." cta={{ label: cta('discovery').label, href: cta('discovery').href }} secondary={{ label: 'See the Evidence', href: '/impact/' }} stats={['SC-01', 'OC-01', 'RC-01']} artSeed="home" id="band-hero" />
     <DefinitionBand id="band-definition" />
     <RouterBand id="band-router" title="What Brings You Here?" />
     <ProblemBand id="band-problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job." bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
@@ -570,22 +570,22 @@ const sectionLinks = [
       { kind: 'Emotional', title: 'First Paychecks, Not Just Certificates', text: 'Monthly reports show who is earning, not only who completed.' },
       { kind: 'Social', title: 'AI-Ready Talent', text: 'An employer hires AI-ready completers, including those prepared for an industry certification exam, without a long search.' },
     ]} />
-    <GuideBand id="band-guide" title="We’ve Built This Path Since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP works', href: '/our-model/talentleap/' } }} />
-    <MechanismBand id="band-mechanism" title="One Path from Learning to Earning" link={{ label: 'How our model works', href: '/our-model/' }} />
+    <GuideBand id="band-guide" title="We’ve Built This Path Since 2014." empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }} />
+    <MechanismBand id="band-mechanism" title="One Path from Learning to Earning" link={{ label: 'How Our Model Works', href: '/our-model/' }} />
     <FeaturesTable id="band-features" title="Built Around Outcomes, Not Attendance" rows={[
-      { feature: 'Tracks chosen from employer demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },
-      { feature: 'Certification exam preparation', means: 'each track prepares learners for a credential employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
-      { feature: 'Three months of milestone-based mentoring', means: 'learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
-      { feature: 'Outcome tracking after each course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
+      { feature: 'Tracks Chosen from Employer Demand', means: 'training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },
+      { feature: 'Certification Exam Preparation', means: 'each track prepares learners for a credential employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
+      { feature: 'Three Months of Milestone-Based Mentoring', means: 'learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
+      { feature: 'Outcome Tracking After Each Course', means: 'you get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
     ]} />
-    <ProofBand id="band-proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The randomized trial', href: '/impact/independent-evaluation/' }]} />
+    <ProofBand id="band-proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
     <CaseStudyCarousel id="band-cases" title="Proof in Practice" items={[
       { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'UNDP YES, Korail', program: 'UNDP, Government of Bangladesh', factId: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]} />
-    <FAQBand id="band-faq" audience="home" ids={['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8']} allLink={{ label: 'All partner FAQs', href: '/partner-with-us/' }} />
+    <FAQBand id="band-faq" audience="home" ids={['Q1', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8']} allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/' }} />
     <ComparisonBand id="band-compare" />
     <OfferBand id="band-offer" />
     <RiskReversalBand id="band-risk" />
@@ -606,7 +606,7 @@ const sectionLinks = [
     <h3 class="sg-h3">PartnerStrip — Development Partners, Static Grid, Linked</h3>
     <PartnerStrip group="development" variant="grid" link />
     <h3 class="sg-h3">Government and Academic Groups</h3>
-    <PartnerStrip group={['government', 'academic']} variant="grid" caption="Government and academic partners" />
+    <PartnerStrip group={['government', 'academic']} variant="grid" caption="Government and Academic Partners" />
     <h3 class="sg-h3">Press Variant ("Press Coverage")</h3>
     <PartnerStrip kind="press" variant="grid" link />
     <h3 class="sg-h3">WorldMap (M17) with Table Fallback</h3>

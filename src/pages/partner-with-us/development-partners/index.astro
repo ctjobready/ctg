@@ -59,13 +59,13 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   title={title}
   description={description}
   path={PATH}
-  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development partners & NGOs' }]}
+  breadcrumbs={[{ label: 'Partner with Us', href: LINKS.hub }, { label: 'Development Partners & NGOs' }]}
   jsonLd={[webPage({ path: PATH, name: title, description }), faqJsonLd('development-partners', PATH, FAQ_IDS)]}
   stickyCta={{ label: primary.label, href: primary.href }}
 >
   <!-- C1 · Identity hook -->
   <HeroBand
-    audience="For development partners & INGOs"
+    audience="For Development Partners & INGOs"
     title={HEADLINE.developmentPartners}
     lead={VALUE_PROPOSITION.developmentPartners}
     cta={{ label: primary.label, href: primary.href }}
@@ -120,7 +120,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
     statements={[{ facts: TRAINED_REACH.facts, text: TRAINED_REACH.text }]}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />
 
@@ -130,17 +130,17 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     positioning={POSITIONING.developmentPartners}
     lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country. It is designed for deployment in other countries; current outcome evidence comes from Bangladesh and Kosovo."
     blocks={[
-      { label: 'Who we reach', title: 'Priority Groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
-      { label: 'How we reach them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
-      { label: 'What we deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where they work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Who We Reach', title: 'Priority Groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
+      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
+      { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
+      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
     ]}
-    link={{ label: 'How our model works', href: LINKS.model }}
+    link={{ label: 'How Our Model Works', href: LINKS.model }}
   />
   <SubBand>
-    <Callout eyebrow="The result line">
+    <Callout eyebrow="The Result Line">
       <CopyText block={SURVEY_EMPLOYMENT} />
-      <a class="link" href={url(LINKS.methodology)}>See the survey methodology<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={url(LINKS.methodology)}>See the Survey Methodology<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>
 
@@ -152,9 +152,9 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     statIds={['RC-02', 'RC-04']}
     chartId="OC-01"
     links={[
-      { label: 'The randomized trial', href: LINKS.trial },
+      { label: 'The Randomized Trial', href: LINKS.trial },
       { label: 'Outcomes 2026', href: LINKS.outcomes },
-      { label: 'Conducting due diligence? See our governance and evidence', href: LINKS.governance },
+      { label: 'Conducting Due Diligence? See Our Governance and Evidence', href: LINKS.governance },
     ]}
   >
     <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
@@ -176,10 +176,10 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <!-- C8 · Features to benefits -->
   <FeaturesTable
     title="What You Get, and What It Means for Your Outcomes"
-    concernLabel="Funder concern addressed"
+    concernLabel="Funder Concern Addressed"
     rows={[
       {
-        feature: `${HOURS} training hours per certification, three months of milestone-based mentoring, placement support`,
+        feature: `${HOURS} Training Hours per Certification, Three Months of Milestone-Based Mentoring, Placement Support`,
         means: 'success is measured against agreed outcomes, including paid work, not attendance alone. A work-entry plan per track is approved before enrollment.',
         outcome: 'Results measured in paid work',
         relieves: 'Enrollment targets are met, but employment lags',
@@ -191,18 +191,18 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
         relieves: 'Hardest-to-reach groups drop out',
       },
       {
-        feature: 'Baseline at enrollment, tracers, documentary evidence of earnings and monthly reports',
+        feature: 'Baseline at Enrollment, Tracers, Documentary Evidence of Earnings and Monthly Reports',
         means: 'your evaluators can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
         outcome: 'Auditable results',
         relieves: 'Outcomes are hard to audit',
       },
       {
-        feature: 'Certification exam preparation (exam fee included)',
+        feature: 'Certification Exam Preparation (Exam Fee Included)',
         means: 'each track prepares learners for an industry certification.',
         outcome: 'A supported route to a recognized credential',
       },
       {
-        feature: 'Placement support',
+        feature: 'Placement Support',
         means: 'completers reach local, remote and global work.',
         outcome: 'Local, remote or global work',
       },
@@ -216,7 +216,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     ids={FAQ_IDS}
     title="Questions Partners Ask"
     lead="Right for you if you fund youth employment and want results you can report. Not right if you want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
-    allLink={{ label: 'Safeguarding, governance and due diligence', href: LINKS.governance }}
+    allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation -->

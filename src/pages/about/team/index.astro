@@ -30,7 +30,7 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About us" title="Leadership and Team" lead="Founders, advisors and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
+  <Hero eyebrow="About Us" title="Leadership and Team" lead="Founders, advisors and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
   {
     groups.map((g, i) => {
       const people = team.filter((p) => p.data.group === g.key);

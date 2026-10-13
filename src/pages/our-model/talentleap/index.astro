@@ -33,14 +33,14 @@ const levels = [
 const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
 const jsonLd = [
   articleNode({ path, headline: 'What Is TalentLEAP? CodersTrust’s Competency-Based Talent Development Model', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
-  describedList('How TalentLEAP works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
+  describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),
   describedList('TalentLEAP example: Digital Marketing career path levels', levels, `${path}#levels`),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
 const toc = [
   { id: 'glance', label: 'At a glance' },
-  { id: 'how', label: 'How TalentLEAP works' },
+  { id: 'how', label: 'How TalentLEAP Works' },
   { id: 'example', label: 'Example: Digital Marketing' },
   { id: 'different', label: 'What makes it different' },
   { id: 'results', label: 'Results from CodersTrust programs' },
@@ -97,7 +97,7 @@ const d = discoveryCta();
       <li><strong>Milestone-based mentoring.</strong> Mentoring follows milestones (profile live, first bids, first client, exam), and attendance is tracked.</li>
       <li><strong>Demand-led tracks.</strong> Tracks are set from current employer demand in each country, and each track’s work-entry plan is approved before enrollment.</li>
     </ul>
-    <Callout label="Design rationale, not a proof of mentoring">
+    <Callout label="Design Rationale, Not a Proof of Mentoring">
       <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
       <p>The randomized trial’s program included three months of mentoring, but the trial did not isolate the effect of mentoring, so this page makes no claim that mentoring itself is proven.</p>
     </Callout>
@@ -111,7 +111,7 @@ const d = discoveryCta();
       <li data-fact="OC-05"><Fact id="OC-05" /> Timing only: it does not show why people started earning.</li>
       <li data-fact="RC-01"><Fact id="RC-01" field="headline" /></li>
     </ul>
-    <p class="tl__links"><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The randomized trial<Icon name="arrow-right" size={16} /></a></p>
+    <p class="tl__links"><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <ReportSection id="faq" title="Questions About TalentLEAP">

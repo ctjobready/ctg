@@ -5,30 +5,30 @@
  * PD-09, PD-11). Right: the agreed value, left blank.
  */
 const rows = [
-  { field: 'Outcome definitions', fixed: 'Completion, certification, first paid work, sustained work, and cost per completer and per verified outcome.', ids: 'PD-11' },
-  { field: 'Evidence required', fixed: 'Baseline at enrollment and tracer surveys, supported by documentary evidence where available (payslips, offer letters, platform logs or bank receipts); requirements are agreed in co-design.', ids: 'PD-09' },
-  { field: 'Review dates', fixed: 'Monthly reports and a quarterly steering review; the calendar is set in co-design.', ids: 'PD-08' },
-  { field: 'Corrective-action process', fixed: 'A missed threshold triggers a corrective plan.', ids: 'PD-11' },
-  { field: 'Who decides expansion', fixed: 'The funder.', ids: 'PD-11' },
-  { field: 'Scoped separately', fixed: 'Devices, stipends, connectivity and independent evaluation, where a program needs them.', ids: 'PD-02' },
+  { field: 'Outcome Definitions', fixed: 'Completion, certification, first paid work, sustained work, and cost per completer and per verified outcome.', ids: 'PD-11' },
+  { field: 'Evidence Required', fixed: 'Baseline at enrollment and tracer surveys, supported by documentary evidence where available (payslips, offer letters, platform logs or bank receipts); requirements are agreed in co-design.', ids: 'PD-09' },
+  { field: 'Review Dates', fixed: 'Monthly reports and a quarterly steering review; the calendar is set in co-design.', ids: 'PD-08' },
+  { field: 'Corrective-Action Process', fixed: 'A missed threshold triggers a corrective plan.', ids: 'PD-11' },
+  { field: 'Who Decides Expansion', fixed: 'The funder.', ids: 'PD-11' },
+  { field: 'Scoped Separately', fixed: 'Devices, stipends, connectivity and independent evaluation, where a program needs them.', ids: 'PD-02' },
 ];
 ---
 
 <figure class="ds" data-reveal data-fact="PD-11 PD-09 PD-08 PD-02">
-  <figcaption class="ds__cap"><span class="ds__tag">Illustrative · empty template</span> <strong>Decision sheet</strong></figcaption>
+  <figcaption class="ds__cap"><span class="ds__tag">Illustrative · Empty Template</span> <strong>Decision sheet</strong></figcaption>
   <section class="ds__wrap" aria-label="Illustrative decision sheet" tabindex="0" data-scroll data-stack>
     <table>
-      <caption class="sr-only">Illustrative decision sheet: an empty template completed with the funder in co-design</caption>
+      <caption class="sr-only">Illustrative Decision Sheet: An Empty Template Completed with the Funder in Co-Design</caption>
       <thead>
-        <tr><th scope="col">Field</th><th scope="col">What is fixed</th><th scope="col">Agreed with you</th></tr>
+        <tr><th scope="col">Field</th><th scope="col">What Is Fixed</th><th scope="col">Agreed with You</th></tr>
       </thead>
       <tbody>
         {
           rows.map((r) => (
             <tr>
               <th scope="row">{r.field}</th>
-              <td data-label="What is fixed">{r.fixed}</td>
-              <td class="ds__blank" data-label="Agreed with you"><span aria-hidden="true"></span><span class="sr-only">Left blank</span></td>
+              <td data-label="What Is Fixed">{r.fixed}</td>
+              <td class="ds__blank" data-label="Agreed with You"><span aria-hidden="true"></span><span class="sr-only">Left blank</span></td>
             </tr>
           ))
         }

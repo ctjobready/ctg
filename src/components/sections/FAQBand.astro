@@ -28,7 +28,7 @@ const items = faqItems(audience, ids);
 ---
 
 <Section id={id} tone="ice" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Objections, answered" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="Objections, Answered" title={title} lead={lead} />
   <Accordion items={items} name={name} />
   {allLink && <p class="faqband__all"><a class="link" href={linkAttrs(allLink.href).href}>{allLink.label}<Icon name="arrow-right" size={16} /></a></p>}
 </Section>

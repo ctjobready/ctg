@@ -67,7 +67,7 @@ const d = discoveryCta();
   jsonLd={jsonLd}
   ogType="article"
 >
-  <Hero variant="inner" eyebrow={`Case study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
+  <Hero variant="inner" eyebrow={`Case Study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
     {showPhoto && hero && <Img slot="media" src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} widths={[480, hero.width]} sizes="(min-width:1024px) 520px, 90vw" loading="eager" fetchpriority="high" assetId={hero.assetId} />}
     {plainLine && <PlainLine />}
     <Fragment slot="stats">
@@ -81,7 +81,7 @@ const d = discoveryCta();
       }
     </Fragment>
     <Fragment slot="actions">
-      <Button variant="outline" href="#results">Jump to the results</Button>
+      <Button variant="outline" href="#results">Jump to the Results</Button>
     </Fragment>
   </Hero>
 
@@ -113,7 +113,7 @@ const d = discoveryCta();
   <slot name="after-results" />
 
   <Section tone="airy" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="In a learner’s words" title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
+    <SectionHeader id="story-h" eyebrow="In a Learner’s Words" title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
     <slot name="story" />
   </Section>
 
@@ -121,7 +121,7 @@ const d = discoveryCta();
 
   <Section aria-labelledby="related-h" pad="sm">
     <h2 class="t-heading-2xl" id="related-h">Where the Model Runs Next</h2>
-    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All case studies<Icon name="arrow-right" size={16} /></a></p>
+    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />

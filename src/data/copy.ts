@@ -323,7 +323,7 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
  * data-fact marker exactly as [PRICING]'s does, so the agenda, [PRICING] and Q8 stand or fall together.
  */
 export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
-/** The lead on the pages whose primary CTA is "Request a briefing" (governments, YouthWIDE in Bangladesh). */
+/** The lead on the pages whose primary CTA is "Request a Briefing" (governments, YouthWIDE in Bangladesh). */
 export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 /** The first item differs by kind (round 12, Mi1: "districts" does not fit the international pages). */
 export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and locations';

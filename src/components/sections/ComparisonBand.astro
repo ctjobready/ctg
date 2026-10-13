@@ -5,7 +5,7 @@ import ComparisonTable from '../ui/ComparisonTable.astro';
 
 /**
  * C10 Comparison = approaches and trade-offs, not verdicts (planning v1.2 §B). Categories, never named
- * competitors (D8). Always includes a "Doing nothing" column. Cells are text; a check icon marks only
+ * competitors (D8). Always includes a "Doing Nothing" column. Cells are text; a check icon marks only
  * CodersTrust's own inclusions (`included`), never a verdict on another approach.
  */
 type Cell = string | { text: string; included?: boolean; factId?: string };
@@ -21,15 +21,15 @@ interface Props {
 const {
   title = 'Approaches to Getting into Digital Work, and Their Trade-Offs',
   lead = 'Different routes suit different people. This is what each one typically includes.',
-  columns = ['Approach', 'CodersTrust supported cohort', 'Conventional skills programs', 'Self-paced course platforms', 'Freelance marketplaces alone', 'Doing nothing'],
+  columns = ['Approach', 'CodersTrust Supported Cohort', 'Conventional Skills Programs', 'Self-Paced Course Platforms', 'Freelance Marketplaces Alone', 'Doing Nothing'],
   rows = [
-    { label: 'Track choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
-    { label: 'Certification', cells: [{ text: 'Certification exam preparation (exam fee included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
-    { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
-    { label: 'Work entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-    { label: 'Outcome tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
+    { label: 'Track Choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
+    { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
+    { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
+    { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
+    { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
     {
-      label: 'Independent evidence',
+      label: 'Independent Evidence',
       cells: [
         { text: 'Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome and budgeted separately', factId: 'RC-01' },
         { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
@@ -43,10 +43,10 @@ const {
   facts = ['PD-10', 'PD-19', 'PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
   id = 'compare',
 } = Astro.props;
-if (!columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing nothing" column');
+if (!columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing Nothing" column');
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Compare approaches" title={title} lead={lead} />
-  <ComparisonTable caption="Approaches to getting into digital work: what each typically includes" columns={columns} rows={rows} highlight={0} facts={facts} />
+  <SectionHeader id={`${id}-h`} eyebrow="Compare Approaches" title={title} lead={lead} />
+  <ComparisonTable caption="Approaches to Getting into Digital Work: What Each Typically Includes" columns={columns} rows={rows} highlight={0} facts={facts} />
 </Section>

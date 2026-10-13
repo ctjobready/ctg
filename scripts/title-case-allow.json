@@ -41,6 +41,12 @@
       "tag": "h3",
       "text": "Cook to coder: How low-income youth are writing a better future",
       "reason": "Verbatim headline of a third-party press article, cited as published."
+    },
+    {
+      "page": "*",
+      "tag": "feature-title",
+      "text": "of surveyed completers employed",
+      "reason": "Stat label: the caption under the figure of the Impact stat panel (mega-menu feature kind 'stat'). Stat labels stay sentence case by the WP12 rule, so it is not a title."
     }
   ]
 }

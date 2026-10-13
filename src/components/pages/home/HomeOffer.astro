@@ -21,7 +21,7 @@ const { title = 'Choose Where to Start.', lead, id = 'offer' } = Astro.props;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The offer" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title={title} lead={lead} />
   <ol class="grid-cards offer" role="list" data-fact={PROGRAM_OPTIONS_FACTS.join(' ')}>
     {
       PROGRAM_OPTIONS.map((o, i) => (

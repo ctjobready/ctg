@@ -57,8 +57,8 @@ export function terminalStop(text: string): { body: string; close: string } | nu
 }
 /**
  * A card prints its heading above a register sentence that often opens with the same words and a colon ("Quality assurance" over
- * "Quality assurance: common practical-assessment rubrics, …"; "Placement support" over "Placement support components: …";
- * "Connectivity-light delivery" over "Connectivity-light: runs on …"). When the words before the first colon are the heading or
+ * "Quality assurance: common practical-assessment rubrics, …"; "Placement Support" over "Placement support components: …";
+ * "Connectivity-Light Delivery" over "Connectivity-light: runs on …"). When the words before the first colon are the heading or
  * a close prefix of it (or the heading is a prefix of them), the echo is not printed: the sentence starts after the colon, with
  * a capital. Any other text, including one whose colon introduces something else, comes back unchanged.
  */

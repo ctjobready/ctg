@@ -13,13 +13,13 @@ interface Props {
   cards: StoryCardData[];
 }
 const cards = Astro.props.cards.filter((c) => !c.assetId || mayRender(c.assetId));
-const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other pathways' };
+const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other Pathways' };
 const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) => cards.some((c) => c.pathway === p));
 ---
 
 <div data-story-filter>
   <div class="sgf" role="group" aria-label="Filter stories by pathway">
-    <button type="button" class="sgf__btn" data-filter="all" aria-pressed="true">All stories</button>
+    <button type="button" class="sgf__btn" data-filter="all" aria-pressed="true">All Stories</button>
     {present.map((p) => <button type="button" class="sgf__btn" data-filter={p} aria-pressed="false">{labels[p]}</button>)}
   </div>
   <p class="sgf__status sr-only" role="status" aria-live="polite" data-filter-status></p>

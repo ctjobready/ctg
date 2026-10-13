@@ -5,16 +5,16 @@
  * quarterly steering review (PD-08), a missed threshold triggers a corrective plan (PD-11), expansion is
  * the funder's decision (PD-11) and independent evaluation is welcome and budgeted separately (PD-02, PD-08).
  */
-const roles = ['Funder', 'CodersTrust', 'Independent evaluator (optional)'];
+const roles = ['Funder', 'CodersTrust', 'Independent Evaluator (Optional)'];
 const rows: { what: string; cells: [string, string, string] }[] = [
-  { what: 'Priority groups, tracks, indicative budget and scorecard thresholds (co-design)', cells: ['A', 'R', '—'] },
-  { what: 'Outreach, selection and training delivery', cells: ['I', 'A, R', '—'] },
-  { what: 'Mentoring, certification and placement support', cells: ['I', 'A, R', '—'] },
-  { what: 'Monthly reports and tracer results', cells: ['I', 'A, R', 'I'] },
-  { what: 'Quarterly steering review', cells: ['A', 'R', 'I'] },
-  { what: 'Corrective plan when a threshold is missed', cells: ['C', 'A, R', '—'] },
-  { what: 'Decision on expansion', cells: ['A, R', 'C', 'C'] },
-  { what: 'Independent evaluation, budgeted separately where wanted', cells: ['A', 'C', 'R'] },
+  { what: 'Priority Groups, Tracks, Indicative Budget and Scorecard Thresholds (Co-Design)', cells: ['A', 'R', '—'] },
+  { what: 'Outreach, Selection and Training Delivery', cells: ['I', 'A, R', '—'] },
+  { what: 'Mentoring, Certification and Placement Support', cells: ['I', 'A, R', '—'] },
+  { what: 'Monthly Reports and Tracer Results', cells: ['I', 'A, R', 'I'] },
+  { what: 'Quarterly Steering Review', cells: ['A', 'R', 'I'] },
+  { what: 'Corrective Plan When a Threshold Is Missed', cells: ['C', 'A, R', '—'] },
+  { what: 'Decision on Expansion', cells: ['A, R', 'C', 'C'] },
+  { what: 'Independent Evaluation, Budgeted Separately Where Wanted', cells: ['A', 'C', 'R'] },
 ];
 const name: Record<string, string> = { R: 'Responsible', A: 'Accountable', C: 'Consulted', I: 'Informed' };
 const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => name[x]).join(' and '));
@@ -23,7 +23,7 @@ const say = (v: string) => (v === '—' ? 'No role' : v.split(', ').map((x) => n
 <figure class="raci" data-reveal data-fact="PD-08 PD-11 PD-02">
   <section class="raci__wrap" aria-label="Illustrative responsibilities for governance and reporting" tabindex="0" data-scroll data-stack="inline">
     <table>
-      <caption class="sr-only">Illustrative responsibilities (RACI) for governance and reporting</caption>
+      <caption class="sr-only">Illustrative Responsibilities (RACI) for Governance and Reporting</caption>
       <thead>
         <tr>
           <th scope="col">Activity</th>

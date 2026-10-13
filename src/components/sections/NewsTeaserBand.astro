@@ -42,7 +42,7 @@ let items: Item[] = entries
   .map((e) => ({
     title: e.data.title as string,
     date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
-    // Human label ("Leadership & advocacy"), never the collection slug.
+    // Human label ("Leadership & Advocacy"), never the collection slug.
     topic: e.data.topic ? topicLabel(e.data.topic as string) : undefined,
     excerpt: e.data.excerpt as string | undefined,
     href: `/news/${e.data.slug ?? e.id}/`,
@@ -61,7 +61,7 @@ if (items.length === 0) items = fallback.slice(0, count);
       <div class="grid-cards">
         {items.map((n: any) => <NewsCard title={n.title} date={n.date} topic={n.topic} excerpt={n.excerpt} image={n.image} imageAlt={n.imageAlt} href={n.href} />)}
       </div>
-      <p class="news__all"><a class="link" href={linkAttrs('/news/').href}>All news<Icon name="arrow-right" size={16} /></a></p>
+      <p class="news__all"><a class="link" href={linkAttrs('/news/').href}>All News<Icon name="arrow-right" size={16} /></a></p>
     </Section>
   )
 }

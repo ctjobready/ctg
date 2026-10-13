@@ -85,8 +85,8 @@ const recItems = D.RECOMMEND.cells.map((c) => ({ label: c.label, value: c.pct, e
 const incomeItems = D.INCOME_DIRECTION.map(cell);
 // OC-02 states its count (34 of 47), so the one derived share on the page is computed from that stated count.
 const priorItems = [
-  { label: `Earning at the October 2026 survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
-  { label: 'Not earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
+  { label: `Earning at the October 2026 Survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
+  { label: 'Not Earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
 ].map((c) => ({ label: c.label, value: pc(c.n, D.NO_PRIOR.base), display: `${pc(c.n, D.NO_PRIOR.base).toFixed(1)}%` }));
 const emp = fact('OC-01').stat!;
 const before = parseFloat(emp.from!);
@@ -98,7 +98,7 @@ const reportLink = reportCta();
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
   heading="Impact Survey 2026: What Happened After Training"
-  eyebrow="Outcomes 2026 · surveyed completers"
+  eyebrow="Outcomes 2026 · Surveyed Completers"
   lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience, "
   description={description}
   path={path}
@@ -128,16 +128,16 @@ const reportLink = reportCta();
   <ReportSection id="respondents" title="Who Responded">
     <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" /> were already working). <Fact id="OC-09" /></p>
     <ColumnChart
-      title="Respondents by age group"
+      title="Respondents by Age Group"
       items={ageItems}
     />
     <BarChart
-      title="Respondents by highest education"
+      title="Respondents by Highest Education"
       items={education}
       max={100}
     />
     <BarChart
-      title="Respondents by district of residence"
+      title="Respondents by District of Residence"
       items={districts}
       max={100}
     />
@@ -146,15 +146,15 @@ const reportLink = reportCta();
   <ReportSection id="employment" title="Employment">
     <p data-fact="OC-01">Among surveyed completers, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
     <BeforeAfter
-      title="Employment among surveyed completers"
-      before={{ label: 'Before', value: before, caption: 'before training' }}
-      after={{ label: 'October 2026 survey', value: after, caption: 'surveyed completers' }}
+      title="Employment Among Surveyed Completers"
+      before={{ label: 'Before', value: before, caption: 'Before Training' }}
+      after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
       delta={`+${(after - before).toFixed(1)} pp`}
     />
     <PairedBars
-      title="Employment by type, before training and at the October 2026 survey"
-      beforeLabel="Before training"
-      afterLabel="October 2026 survey"
+      title="Employment by Type, Before Training and at the October 2026 Survey"
+      beforeLabel="Before Training"
+      afterLabel="October 2026 Survey"
       rows={typeRows}
     />
     <p data-fact="OC-04" class="ro__src">Chart data: <Fact id="OC-04" field="label" /></p>
@@ -163,9 +163,9 @@ const reportLink = reportCta();
   <ReportSection id="speed" title="Speed to Earnings">
     <p data-fact="OC-05"><Fact id="OC-05" /></p>
     <ColumnChart
-      title="Cumulative share of surveyed completers who first earned during or after training, by when they started earning"
+      title="Cumulative Share of Surveyed Completers Who First Earned During or After Training, by When They Started Earning"
       items={speedItems}
-      valueHeader="Cumulative share"
+      valueHeader="Cumulative Share"
     />
   </ReportSection>
 
@@ -177,7 +177,7 @@ const reportLink = reportCta();
     </div>
     <div class="ro__measure" data-fact="OC-03b">
       <h3 class="t-heading-l">Direction of Income Change</h3>
-      <BarChart title="Monthly income change" items={incomeItems} />
+      <BarChart title="Monthly Income Change" items={incomeItems} />
       <p class="ro__src"><Fact id="OC-03b" /></p>
     </div>
     <div class="ro__measure" data-fact="OC-03c">
@@ -188,7 +188,7 @@ const reportLink = reportCta();
 
   <ReportSection id="careers" title="Career Outcomes">
     <p data-fact="OC-08"><Fact id="OC-08" /></p>
-    <BarChart title="Career and education outcomes reported" items={career} max={100} />
+    <BarChart title="Career and Education Outcomes Reported" items={career} max={100} />
   </ReportSection>
 
   <ReportSection id="income-source" title="Main Income Source">
@@ -199,15 +199,15 @@ const reportLink = reportCta();
   <ReportSection id="experience" title="Learner Experience">
     <p data-fact="OC-06"><Fact id="OC-06" /></p>
     <ColumnChart
-      title="Recommendation score, 0 to 10, among surveyed completers"
+      title="Recommendation Score, 0 to 10, Among Surveyed Completers"
       items={recItems}
-      emphasisNote="7 or higher"
+      emphasisNote="7 or Higher"
     />
   </ReportSection>
 
   <ReportSection id="no-prior-income" title="Completers with No Prior Income">
     <p data-fact="OC-02"><Fact id="OC-02" /></p>
-    <BarChart title="Completers (2014–2023) with no income before training" items={priorItems} max={100} />
+    <BarChart title="Completers (2014–2023) with No Income Before Training" items={priorItems} max={100} />
   </ReportSection>
 
   <ReportSection id="methodology" title={'Methodology & Limitations'} anchorOnHeading>

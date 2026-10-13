@@ -8,25 +8,25 @@
 type Role = 'R' | 'A' | 'C' | 'I';
 const LABEL: Record<Role, string> = { R: 'Responsible', A: 'Accountable', C: 'Consulted', I: 'Informed' };
 const rows: { activity: string; ct: Role[]; partner: Role[]; local: Role[] }[] = [
-  { activity: 'Agree priority groups, tracks, the indicative budget and the pilot scorecard (discovery and co-design)', ct: ['R'], partner: ['A'], local: ['C'] },
-  { activity: 'Outreach, accessible selection and the readiness assessment', ct: ['A'], partner: ['I'], local: ['R'] },
-  { activity: 'Training, certification exam preparation and three months of mentoring', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
-  { activity: 'Placement support and outcome tracking', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
-  { activity: 'Monthly reports and tracer surveys', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
-  { activity: 'Safeguarding and data protection, agreed before enrollment', ct: ['R'], partner: ['A'], local: ['C'] },
-  { activity: 'The decision to expand after the pilot', ct: ['C'], partner: ['A', 'R'], local: ['I'] },
-  { activity: 'Independent evaluation, where the funder wants one', ct: ['C'], partner: ['A'], local: ['I'] },
+  { activity: 'Agree Priority Groups, Tracks, the Indicative Budget and the Pilot Scorecard (Discovery and Co-Design)', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'Outreach, Accessible Selection and the Readiness Assessment', ct: ['A'], partner: ['I'], local: ['R'] },
+  { activity: 'Training, Certification Exam Preparation and Three Months of Mentoring', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Placement Support and Outcome Tracking', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Monthly Reports and Tracer Surveys', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Safeguarding and Data Protection, Agreed Before Enrollment', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'The Decision to Expand After the Pilot', ct: ['C'], partner: ['A', 'R'], local: ['I'] },
+  { activity: 'Independent Evaluation, Where the Funder Wants One', ct: ['C'], partner: ['A'], local: ['I'] },
 ];
 const cols = [
   ['CodersTrust', 'ct'],
-  ['Funder or government partner', 'partner'],
-  ['Local implementing partner', 'local'],
+  ['Funder or Government Partner', 'partner'],
+  ['Local Implementing Partner', 'local'],
 ] as const;
 ---
 
 <section class="raci" aria-label="Who does what in a partnership" tabindex="0" data-scroll data-stack="inline" data-reveal>
   <table>
-    <caption class="sr-only">Who does what in a partnership: responsible, accountable, consulted and informed by role</caption>
+    <caption class="sr-only">Who Does What in a Partnership: Responsible, Accountable, Consulted and Informed by Role</caption>
     <thead>
       <tr>
         <th scope="col">Activity</th>

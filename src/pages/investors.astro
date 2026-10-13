@@ -42,11 +42,11 @@ const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
 const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 const featureRows = [
-  { feature: 'Employer and gig-work (Earn) marketplace — pre-launch', means: 'the platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
+  { feature: 'Employer and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'the platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
   { feature: 'TalentLEAP competency units, with levels Competent → Proficient → Expert; mentoring, certification and placement in every program', means: 'learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths with progressive levels', relieves: 'Online learning sells content, not earnings' },
-  { feature: 'AI-ready curriculum, with each track’s AI content and work-entry plan agreed before enrollment, and tracks chosen from employer demand', means: 'courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
-  { feature: 'AI-driven adaptive learning — on the roadmap', means: 'the platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
-  { feature: 'Partner portals, marketing automation, CRM and AI chat — live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
+  { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'the platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
 ];
 const learnEarnProsper = [
   { title: 'Learn', text: 'Competency development through certification-focused courses.' },
@@ -65,7 +65,7 @@ const mechanismBlocks = [
   <Tone cmf="C1">
     <HeroBand
       variant="inner"
-      audience="For impact and growth investors"
+      audience="For Impact and Growth Investors"
       title={HEADLINE.investors}
       lead={VALUE_PROPOSITION.investors}
       cta={{ label: investor.label, href: investor.href }}
@@ -82,7 +82,7 @@ const mechanismBlocks = [
   <Tone cmf="C5"><InvestorGuide id="guide" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How our model works', href: '/our-model/' }}>
+    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }}>
       <InvestorMarket />
     </HomeMechanism>
   </Tone>
@@ -96,7 +96,7 @@ const mechanismBlocks = [
       statIds={['SC-01', 'SC-02', 'SC-03', 'SC-06']}
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
-        { label: 'The randomized trial', href: '/impact/independent-evaluation/' },
+        { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
       ]}
     >
       <InvestorProofExtras />
@@ -111,7 +111,7 @@ const mechanismBlocks = [
     </FeatureSteps>
   </Tone>
 
-  <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and objections"><InvestorFit /></FaqBlock></Tone>
+  <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
   <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches." /></Tone>
 
@@ -135,7 +135,7 @@ const mechanismBlocks = [
       tone="klein"
       heading="Let’s Talk About Backing the Platform."
       cta={{ label: investor.label, href: investor.href }}
-      secondary={{ label: 'Meet the leadership team', href: '/about/team/' }}
+      secondary={{ label: 'Meet the Leadership Team', href: '/about/team/' }}
       micro="An introduction call comes first; the deck follows under NDA."
     />
   </Tone>
