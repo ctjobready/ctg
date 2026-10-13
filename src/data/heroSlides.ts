@@ -1,4 +1,4 @@
-import type { Fact } from './facts';
+import { fact, type Fact } from './facts';
 import { HEADLINE, VALUE_PROPOSITION } from './copy';
 import { navGroups, type NavLink } from './nav';
 import { cta } from '../lib/mailto';
@@ -8,8 +8,8 @@ import { cta } from '../lib/mailto';
  * driven by src/scripts/heroSlider.ts). Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register
  * sentence); no number is typed here.
  * HOME_HERO is the stable hero: the page's only h1, one value proposition, one primary action, one text link, the audience links and the three
- * strongest proof cards, always visible. HOME_SLIDES are the carousel slides: the trial first, then scale, income and employment, speed to
- * earning, placement (named programs), government and National University trust, and the programs (employment programs first, SuperKids last).
+ * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then survey income and employment,
+ * placement (named programs), speed to earning, reach, government and National University trust, and the programs (employment programs first, SuperKids last).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs). Every carousel slide title is an h2.
  */
@@ -33,8 +33,12 @@ export interface HeroSlide {
   /** The heading: the page's h1 on the first slide, an h2 on the others. */
   title: string;
   lead?: string;
+  /** Fact IDs the lead states (data-fact on the lead paragraph). */
+  leadFacts?: string[];
   /** A register sentence, rendered with <Fact>, in place of the lead. */
   fact?: { id: string; field: 'text' | 'headline' };
+  /** One line per item under the lead (a short list of named results); each line names the register facts it states. */
+  lines?: { text: string; factIds: string[] }[];
   /** Figures in white tiles under the lead. */
   stats?: HeroSlideStat[];
   /** One figure on a Klein-blue band (the evidence proof): a card over the photograph on desktop, under it on phones. */
@@ -66,6 +70,20 @@ function before(f: Fact): string {
 
 const discovery = cta('discovery');
 
+/** The trial's employment effect and the nine-trial average, read from the register so no figure is typed here. */
+const offeredPoints = fact('RC-02').stat?.numeric;
+const nineTrialAverage = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
+const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
+const incomeAttended = fact('RC-13').stat?.numeric;
+if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeAttended === undefined) throw new Error('heroSlides: RC-02, RC-06a, RC-07 or RC-13 no longer carries the figure a slide reads');
+/** Women per 100 offered a place who were in work beyond the control group, as RC-02 rounds it (the [PLAIN-LINE] wording). */
+const perHundred = Math.round(offeredPoints);
+const PR_TEXT = {
+  wsdfm: `${fact('PR-01').stat?.label}.`,
+  wow: `${fact('PR-02').stat?.label}.`,
+  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} in work within three months.`,
+};
+
 /** The stable home hero. */
 export const HOME_HERO = {
   title: HEADLINE.home,
@@ -79,38 +97,39 @@ export const HOME_HERO = {
   primary: { label: discovery.label, href: discovery.href },
   secondary: { label: 'See the Evidence', href: '/impact/' },
   photo: 'general/women-learners-classroom',
-  /** The three proof cards: the trial, the survey, the scale. */
+  /** The three proof cards: the trial, the survey, the scale. A card's own `value` and `caption` replace the register's stat value and label. */
   proof: [
-    { eyebrow: 'Randomized Trial', factId: 'RC-02' },
+    {
+      eyebrow: 'Randomized Trial',
+      factId: 'RC-02',
+      value: `+${offeredPoints}`,
+      unit: 'percentage points',
+      caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, about ${perHundred} more were in work than in the control group.`,
+    },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01' },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16' },
-  ] as { eyebrow: string; factId: string }[],
+  ] as { eyebrow: string; factId: string; value?: string; unit?: string; caption?: string }[],
 };
 
 export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'evidence',
     eyebrow: 'Independent Evaluation',
-    title: 'Evidence from a Randomized Trial',
-    fact: { id: 'RC-13', field: 'text' },
-    proof: { factId: 'RC-06a', caption: (f) => f.stat?.glance?.label ?? '' },
+    title: `About ${perHundred} More Women in Work for Every 100 Offered a Place`,
+    lead: `A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were ${offeredPoints} percentage points more likely to be employed. For women who attended, income was ${incomeAttended}% higher.`,
+    leadFacts: ['RC-01', 'RC-02', 'RC-13'],
+    proof: {
+      factId: 'RC-06a',
+      caption: () => `Employment effect for women offered a place: +${offeredPoints} percentage points, against ${nineTrialAverage} on average across nine vocational-training trials.`,
+    },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
     photo: 'general/classroom-girls',
-  },
-  {
-    id: 'scale',
-    eyebrow: 'Impact at Scale',
-    title: 'Reach That Spans Continents',
-    lead: 'Learners trained in programs across Asia, Africa, Europe and the Americas.',
-    stats: [{ factId: 'SC-16' }],
-    links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
-    photo: 'general/madrasa-students-hall',
   },
   {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
     title: 'Income and Employment Among Surveyed Completers',
-    lead: 'Median monthly income and employment, before training and at the October 2026 survey.',
+    lead: 'Median monthly income, and share employed, before training and at the October 2026 survey.',
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
       { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
@@ -119,38 +138,51 @@ export const HOME_SLIDES: HeroSlide[] = [
     photo: 'general/woman-learner-laptop',
   },
   {
-    id: 'fast-to-earning',
-    eyebrow: 'Impact Survey 2026',
-    title: 'Fast to Earning',
-    lead: 'Among surveyed completers, most new earners started within six months of training.',
-    stats: [{ factId: 'OC-02' }, { factId: 'OC-05' }],
-    links: [{ label: 'See How Fast Completers Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
-    photo: 'general/lab-women-screen',
-  },
-  {
     id: 'placement',
     eyebrow: 'Placement',
-    title: 'Strong Placement in Partner-Funded Programs',
-    lead: 'Three partner-funded programs report their own placement results.',
-    stats: [{ factId: 'PR-06' }],
+    title: 'Placement Results, Program by Program',
+    lead: 'Three partner-funded programs report their own in-work results.',
+    lines: [
+      { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
+      { text: PR_TEXT.wow, factIds: ['PR-02'] },
+      { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
+    ],
     links: [{ label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' }],
     photo: 'general/yes-trainees-group',
   },
   {
+    id: 'fast-to-earning',
+    eyebrow: 'Impact Survey 2026',
+    title: 'Most New Earners Started Within Six Months',
+    lead: 'Among surveyed completers, most new earners started within six months of training.',
+    stats: [{ factId: 'OC-05' }],
+    links: [{ label: 'See How Fast Completers Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
+    photo: 'general/lab-women-screen',
+  },
+  {
+    id: 'scale',
+    eyebrow: 'Impact at Scale',
+    title: 'Programs in 15 Countries and Territories',
+    lead: fact('SC-03').stat?.detail,
+    leadFacts: ['SC-03'],
+    links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
+    photo: 'general/madrasa-students-hall',
+  },
+  {
     id: 'government-trust',
     eyebrow: 'Trust',
-    title: 'Trusted by Governments and National University',
-    lead: 'Governments and national institutions trust CodersTrust to train their people.',
-    stats: [{ factId: 'GV-12' }, { factId: 'SC-04' }],
+    title: 'Government Contracts and National University Partnership',
+    fact: { id: 'GV-12', field: 'text' },
     links: [{ label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' }],
     photo: 'general/nu-affiliation-group',
   },
   {
     id: 'programs',
     eyebrow: 'Our Programs',
-    title: 'Key Programs',
-    lead: 'Programs for youth, universities, employers and schools.',
+    title: 'Find the Program for Your Partnership',
+    // No lead: the title and the five program links say it, and a lead would make this the tallest slide by more than the layout test allows (WP19).
     programs: PROGRAM_HREFS.map(navLink),
+    links: [{ label: 'Explore Programs', href: '/programs/', variant: 'primary' }],
     photo: 'general/computer-lab-rows',
   },
 ];

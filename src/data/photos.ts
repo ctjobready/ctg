@@ -225,7 +225,8 @@ export const heroPhoto = (seed?: string): Photo | undefined => (seed && HERO[see
 /** Three pictures for a page's "what success looks like" band (FutureBand), in vignette order. */
 const FUTURE: Record<string, [string, string, string]> = {
   'nu-pgd': ['nu-pgd/students-laptops', 'general/students-campus-smiling', 'general/graduates-caps'],
-  home: ['general/woman-learner-laptop', 'general/office-support-headset', 'general/lab-women-screen'],
+  // Home (WP19, item 12): none of these three is used by the hero or the carousel above it.
+  home: ['general/her-power-laptops-2', 'general/office-meeting', 'general/office-support-headset'],
   youthwide: ['general/woman-learner-laptop', 'general/yes-collage', 'general/classroom-girls'],
   'jobready-campus': ['general/graduates-caps', 'general/woman-learner-laptop', 'general/lab-women-screen'],
   'jobready-work': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/lab-women-screen'],

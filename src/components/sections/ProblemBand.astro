@@ -17,7 +17,7 @@ const { eyebrow = 'The Challenge', title, bluf, factIds, id = 'problem' } = Astr
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={bluf}><slot name="lead" /></SectionHeader>
-  <div class="grid-cards grid-cards--4">
+  <div class:list={['grid-cards', factIds.length === 4 && 'grid-cards--4']}>
     {factIds.map((f) => <FactCard id={f} />)}
   </div>
 </Section>

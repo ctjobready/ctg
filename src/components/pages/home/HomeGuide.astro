@@ -2,9 +2,10 @@
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
+import { fact } from '../../../data/facts';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import CopyBlock from './CopyBlock.astro';
-import { EMPATHY, ORIGIN, TRAINED_REACH } from '../../../data/copy';
+import { EMPATHY, ORIGIN, type CopyBlock as CopyBlockData } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION } from '../../../lib/logos';
 
@@ -17,6 +18,15 @@ interface Props {
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
+// WP19, item 14: ONE geography line, in "young people" (SC-16's wording): the SC-01 and SC-03 tiles that said the same are gone. The count of other
+// locations is SC-03's 15 less Bangladesh, so it is derived, not typed.
+const reachFigure = fact('SC-16').stat?.value;
+const locations = fact('SC-03').stat?.numeric;
+if (!reachFigure || locations === undefined) throw new Error('HomeGuide: SC-16 or SC-03 no longer has the stat the geography line reads');
+const reach: CopyBlockData = {
+  text: `${reachFigure} young people trained since ${fact('ID-02').stat?.value}, most in Bangladesh; programs have also run in ${locations - 1} other countries and territories.`,
+  facts: ['SC-16', 'SC-03'],
+};
 // Review round 15, enhancement 3: named accountable people matter to government and multilateral buyers; /investors/ already links the team the same way.
 const team = linkAttrs('/about/team/');
 ---
@@ -37,9 +47,7 @@ const team = linkAttrs('/about/team/');
       </p>
     </div>
     <div class="guide__panel" data-reveal>
-      <FactStat id="SC-01" />
-      <FactStat id="SC-03" />
-      <CopyBlock block={TRAINED_REACH} class="guide__reach" />
+      <CopyBlock block={reach} class="guide__reach" />
       <FactStat id="SC-06" />
       <FactStat id="SC-04" />
     </div>

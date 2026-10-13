@@ -28,7 +28,7 @@ const rows: Row[] = [
     contract: 'Her Power (Department of ICT (DoICT), ICT Division)',
     facts: ['GV-01', 'GV-11'],
     // GV-01's own order: curriculum, manuals and guidelines for the national program (its goal), Training of Trainers, then the manuals published.
-    scope: `Curriculum, training manuals and mentorship guidelines for a national program that trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ upazilas)/)}; Training of Trainers; ${factPart('GV-11', /[\d,]+ manuals and guidelines distributed/)}`,
+    scope: `Curriculum, training manuals and mentorship guidelines for a national program that trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}; Training of Trainers; ${factPart('GV-11', /[\d,]+ manuals and guidelines distributed/)}`,
     direct: factPart('GV-11', /[\d,]+ women trained directly/),
   },
   {

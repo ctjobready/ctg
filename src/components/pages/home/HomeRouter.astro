@@ -8,23 +8,26 @@ import { COURSES_URL } from '../../../lib/site';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * Audience router: eight cards in the priority order of doc 01 §3 (doc 06 P1 row 3), then a quiet text
- * link for learners. Descriptions reuse nav.ts so the router and the menus never drift.
+ * Audience router: four large cards for the funder routes (doc 01 §3, doc 06 P1 row 3), one line of links for the other four
+ * audiences, then a quiet text link for learners. Descriptions reuse nav.ts so the router and the menus never drift.
  */
 interface Props {
   id?: string;
 }
 const { id = 'router' } = Astro.props;
 const text = (aid: string) => audiences.find((a) => a.id === aid)?.text;
+// WP19, item 9: the four funder routes are the cards; the other four audiences are one "Also for" line of links.
 const cards = [
   { title: 'Development Partners & NGOs', icon: 'globe', text: text('development-partners'), href: '/partner-with-us/development-partners/' },
   { title: 'Governments', icon: 'landmark', text: text('governments'), href: '/partner-with-us/governments/' },
   { title: 'Foundations & CSR', icon: 'heart-handshake', text: text('foundations'), href: '/partner-with-us/foundations/' },
   { title: 'Investors', icon: 'trending-up', text: text('investors'), href: '/investors/' },
-  { title: 'Local Partners (Bangladesh)', icon: 'map-pin', text: 'NGOs, colleges and chambers delivering locally', href: '/partner-with-us/local-partners/' },
-  { title: 'Universities & Colleges', icon: 'graduation-cap', text: text('universities'), href: '/partner-with-us/universities/' },
-  { title: 'Employers', icon: 'briefcase', text: text('employers'), href: '/partner-with-us/employers/' },
-  { title: 'NU Postgraduate Diploma Applicants', icon: 'award', text: 'Digital Marketing and ICT diplomas', href: '/nu-postgraduate-diploma/' },
+];
+const also = [
+  { label: 'Local Partners', href: '/partner-with-us/local-partners/' },
+  { label: 'Universities & Colleges', href: '/partner-with-us/universities/' },
+  { label: 'Employers', href: '/partner-with-us/employers/' },
+  { label: 'NU Postgraduate Diploma Applicants', href: '/nu-postgraduate-diploma/' },
 ];
 const learners = linkAttrs(COURSES_URL);
 // Review round 15, enhancement 1: diligence teams reach /about/governance/ from the top of the funnel, not only from the footer or the About menu.
@@ -36,6 +39,10 @@ const governance = linkAttrs('/about/governance/');
   <div class="grid-cards grid-cards--4 router">
     {cards.map((c) => <CategoryCard title={c.title} icon={c.icon} text={c.text} href={c.href} />)}
   </div>
+  <p class="router__also" data-reveal>
+    Also for:{' '}
+    {also.map((a, i) => <><a class="link" href={linkAttrs(a.href).href}>{a.label}</a>{i < also.length - 1 ? ', ' : ''}</>)}
+  </p>
   <p class="router__diligence" data-reveal>
     <a class="link" href={governance.href}>Conducting Due Diligence? See Our Governance and Evidence<Icon name="arrow-right" size={16} /></a>
   </p>
@@ -48,8 +55,12 @@ const governance = linkAttrs('/about/governance/');
 </Section>
 
 <style>
-  .router__diligence {
+  .router__also {
     margin: var(--space-lg) 0 0;
+    max-width: 60rem;
+  }
+  .router__diligence {
+    margin: var(--space-md) 0 0;
   }
   .router__learners {
     margin: var(--space-sm) 0 0;

@@ -20,6 +20,8 @@ interface Props {
   withoutDoingNothing?: boolean;
   /** Show only these rows, in the order given (Investors, WP18b: only the capabilities a platform investor weighs). */
   onlyRows?: string[];
+  /** Drop these columns (Home, WP19: a column whose cells are mostly "Varies" says nothing). Matched on the heading. */
+  dropColumns?: string[];
   /** A line under the table. */
   note?: string;
   id?: string;
@@ -49,13 +51,17 @@ const {
   facts = ['PD-10', 'PD-19', 'PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06'],
   withoutDoingNothing = false,
   onlyRows,
+  dropColumns = [],
   note,
   id = 'compare',
 } = Astro.props;
 if (!withoutDoingNothing && !columns.some((c) => /doing nothing/i.test(c))) throw new Error('ComparisonBand needs a "Doing Nothing" column');
 const nothing = columns.findIndex((c) => /doing nothing/i.test(c));
-const shownColumns = withoutDoingNothing && nothing > 0 ? columns.filter((_, i) => i !== nothing) : columns;
-const droppedNothing = withoutDoingNothing && nothing > 0 ? rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => i !== nothing - 1) })) : rows;
+const dropped = new Set<number>(dropColumns.map((c) => columns.indexOf(c)));
+if (dropped.has(-1) || dropped.has(0)) throw new Error(`ComparisonBand: dropColumns names an unknown column or the criteria column: ${dropColumns.join(', ')}`);
+if (withoutDoingNothing && nothing > 0) dropped.add(nothing);
+const shownColumns = columns.filter((_, i) => !dropped.has(i));
+const droppedNothing = rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => !dropped.has(i + 1)) }));
 const shownRows = onlyRows ? onlyRows.map((l) => droppedNothing.find((r) => r.label === l)).filter((r): r is NonNullable<typeof r> => !!r) : droppedNothing;
 ---
 

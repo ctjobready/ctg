@@ -18,6 +18,7 @@ import { pageByRoute } from './support/pages';
  *   - the region does not change height when the script runs (no layout shift on load);
  *   - every slide has its own cleared photograph, all loaded lazily (the hero's own photograph is the eager one);
  *   - no slide leaves more than 48 px of unused space between its content and the controls (1280 and 390).
+ * Slide order (WP19): trial, survey income and employment, placement, speed to earning, reach, government and National University, programs.
  * The autoplay checks use the real 7 s step, so they take a few seconds each.
  */
 
@@ -62,7 +63,7 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into Digital Employment — with Evidence.');
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Evidence from a Randomized Trial');
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -152,7 +153,7 @@ test.describe('home hero slider', () => {
     for (const el of await hidden.all()) {
       await expect(el).toHaveAttribute('inert', '');
     }
-    await page.locator('[data-hs-dot]').nth(2).click();
+    await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Income and Employment Among Surveyed Completers');

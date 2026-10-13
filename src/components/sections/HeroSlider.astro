@@ -89,7 +89,14 @@ const views = slides.map((s, i) => {
               {s.fact ? (
                 <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
               ) : (
-                s.lead && <p class="hs__lead" data-hero-in={first ? '' : undefined}>{s.lead}</p>
+                s.lead && <p class="hs__lead" data-hero-in={first ? '' : undefined} data-fact={s.leadFacts?.join(' ')}>{s.lead}</p>
+              )}
+              {s.lines && (
+                <ul class="hs__lines">
+                  {s.lines.map((l) => (
+                    <li data-fact={l.factIds.join(' ')}>{l.text}</li>
+                  ))}
+                </ul>
               )}
               {stats.length > 0 && (
                 <div class="hs__stats">
@@ -110,9 +117,18 @@ const views = slides.map((s, i) => {
                       </a>
                     </li>
                   ))}
+                  {s.links?.map((l) => (
+                    // A slide with a program grid carries its link as the grid's last cell, so the link does not add a row (the slide stays within the carousel's height).
+                    <li class="hs__programs-link">
+                      <a class="link hs__link" href={linkAttrs(l.href).href}>
+                        {l.label}
+                        <Icon name="arrow-right" size={16} />
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               )}
-              {s.links && (
+              {s.links && !s.programs && (
                 <div class="hs__actions" data-hero-in={first ? '' : undefined}>
                   {s.links.map((l) => (
                     <a class="link hs__link" href={linkAttrs(l.href).href}>
@@ -373,6 +389,26 @@ const views = slides.map((s, i) => {
     max-width: none;
   }
 
+  /* Named results, one per line (the placement slide). */
+  .hs__lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+  .hs__lines li {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--secondary);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    font-size: var(--fs-body-l);
+    font-weight: var(--fw-bold);
+  }
+
   /* Programs: a grid of links (two columns at phone width, three on the desktop copy column). */
   .hs__programs {
     list-style: none;
@@ -390,6 +426,10 @@ const views = slides.map((s, i) => {
   }
   .hs__programs li {
     display: flex;
+  }
+  .hs__programs .hs__programs-link {
+    align-items: center;
+    padding-inline: var(--space-sm);
   }
   .hs__program {
     flex: 1;

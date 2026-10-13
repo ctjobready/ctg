@@ -4,6 +4,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
+import { endSentence } from '../../sections/copyText';
 
 /**
  * C3 Cost of waiting (Home): three CLAIM / DATA / IMPLICATION blocks, then the transition line followed by
@@ -39,7 +40,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
             <Icon name={b.icon} size={36} strokeWidth={1.5} class="cost__icon" />
             <h3 class="card__title">{titleCase(b.claim)}</h3>
             <p class="cost__data" data-fact={b.factId}>
-              {clean(fact(b.factId).text)}
+              {endSentence(clean(fact(b.factId).text))}
             </p>
             <p class="cost__impl"><span class="cost__tag">What It Means</span>{' '}{b.implication}</p>
           </div>
