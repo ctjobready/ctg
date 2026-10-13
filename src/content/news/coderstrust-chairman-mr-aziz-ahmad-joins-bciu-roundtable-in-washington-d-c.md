@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Chairman Mr. Aziz Ahmad Joins BCIU Roundtable in Washington, DC"
 date: 2025-10-14
-updated: 2025-11-16
+updated: 2026-10-13
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad takes part in a Business Council for International Understanding roundtable in Washington, D.C."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-joins-bciu-roundtable-in-washington-d-c/bciu-roundtable.jpg
@@ -17,4 +17,4 @@ Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust participated in the Busin
 
 The roundtable discussion centered on strategies to better align Bangladesh’s development financing with digital skills advancement, youth empowerment, and innovation—identified as essential pillars for strengthening a resilient, knowledge-based economy.
 
-During the event, Mr. Aziz Ahmad highlighted CodersTrust’s contributions since 2014, noting that the organization has trained 130,000+ learners across 15 countries and territories, helping build a smarter and more inclusive future.
+During the event, Mr. Aziz Ahmad highlighted CodersTrust’s contributions since 2014, noting that the organization has trained learners across 15 countries and territories, helping build a smarter and more inclusive future.

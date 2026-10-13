@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Partners Up with University for Peace (UPEACE) to Offer Next Generation Skills Training for Global Development and Peace in the Digital Era"
-date: 2023-06-01
-updated: 2024-11-05
+date: 2023-06-03
+updated: 2026-10-13
 topic: partnerships
 excerpt: "CodersTrust and the UN-mandated University for Peace sign a partnership in San Jose, Costa Rica, to offer Next Generation Skills training."
 cover: ../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg
@@ -27,7 +27,7 @@ The signing ceremony was followed by a roundtable discussion on Human Rights and
 
 ## About CodersTrust
 
-CodersTrust is a global digital workforce development company. With the power of EdTech, CodersTrust mission is to transform underprivileged, disadvantaged, and marginalized communities – especially youth and women – with skills for the Digital Era and connect them with work opportunities to enable financial independence and economic growth at a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, resulting in employment, upward social mobility and durable social impact.
+CodersTrust is a global digital workforce development company. With the power of EdTech, CodersTrust mission is to transform underprivileged, disadvantaged, and marginalized communities – especially youth and women – with skills for the Digital Era and connect them with work opportunities to enable financial independence and economic growth at a global scale. CodersTrust has developed a sustainable and scalable market-based model for providing skill-focused training to youth worldwide, designed to support employment, upward social mobility and durable social impact.
 
 ## About University for Peace
 

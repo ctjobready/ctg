@@ -1,9 +1,9 @@
 ---
 title: "CodersTrust Students Invited to Join UPEACE’s “Young Leaders for Peace” Summer Programme 2026"
 date: 2026-04-17
-updated: 2026-08-01
+updated: 2026-10-13
 topic: programs-events
-excerpt: "CodersTrust learners are invited to apply for UPEACE's Young Leaders for Peace Summer Programme 2026 in San Jose, Costa Rica."
+excerpt: "CodersTrust learners were invited to apply for UPEACE's Young Leaders for Peace Summer Programme 2026 in San Jose, Costa Rica."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
 coverAlt: "A man in a white shirt standing beside young students who hold their certificates, in front of a University for Peace banner"
 legacyUrl: "https://coderstrust.global/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/"
@@ -26,7 +26,7 @@ seoTitle: "Young Leaders for Peace Summer Programme 2026"
 
 CodersTrust is excited to announce a remarkable global opportunity for its learner community through its official partner, University for Peace (UPEACE), located in San José, Costa Rica.
 
-UPEACE is now accepting applications for its prestigious “Young Leaders for Peace (YLP)” Summer Programme 2026, designed specifically for high school students who aspire to become impactful leaders and changemakers.
+UPEACE was accepting applications for its prestigious “Young Leaders for Peace (YLP)” Summer Programme 2026, designed specifically for high school students who aspire to become impactful leaders and changemakers.
 
 ## About the Program
 

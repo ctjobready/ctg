@@ -1,7 +1,7 @@
 ---
-title: "CodersTrust Chairman Mr. Aziz Ahmad Speaks on Cybersecurity & Artificial Intelligence at UNGA 2025"
+title: "CodersTrust Chairman Mr. Aziz Ahmad Joins a High-Level Discussion on Cybersecurity & Artificial Intelligence During UNGA Week"
 date: 2025-09-23
-updated: 2025-11-15
+updated: 2026-10-13
 topic: leadership-advocacy
 excerpt: "Aziz Ahmad joins a high-level discussion on cybersecurity, digital governance, and AI during UN General Assembly week in New York."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-4-2.jpg
@@ -9,7 +9,7 @@ coverAlt: "Two men standing in front of a Digital Ambassadors Forum banner"
 coverInBody: true
 legacyUrl: "https://coderstrust.global/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/"
 tags: ["Aziz Ahmad"]
-seoTitle: "Aziz Ahmad on Cybersecurity, AI at UNGA 2025"
+seoTitle: "Aziz Ahmad on Cybersecurity, AI at UNGA Week"
 ---
 
 ![Two men standing in front of a Digital Ambassadors Forum banner](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-speaks-on-cybersecurity-artificial-intelligence-at-united-nations-general-assembly-unga-2025/cybersecurity-ai-at-unga-2025-4.jpg)

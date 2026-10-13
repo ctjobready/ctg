@@ -1,7 +1,7 @@
 ---
 title: "CodersTrust Chairman Mr. Aziz Ahmad Receives SDG Lifetime Achievement Award from the UNGSII Foundation"
 date: 2025-01-22
-updated: 2025-01-27
+updated: 2026-10-13
 topic: recognition
 excerpt: "Aziz Ahmad accepts the SDG Lifetime Achievement Award from the UNGSII Foundation during Davos WEF Week 2025."
 cover: ../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award-2.jpg
@@ -11,7 +11,7 @@ tags: []
 seoTitle: "Aziz Ahmad: SDG Lifetime Achievement Award"
 ---
 
-Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust had the honor to accept the SDG Lifetime Achievement Award from the UNGSII Foundation during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development in driving progress across all 17 Sustainable Development Goals.
+Mr. Aziz Ahmad, Chairman and Co-Founder of CodersTrust had the honor to accept the SDG Lifetime Achievement Award from the UNGSII Foundation during this momentous Davos WEF Week 2025. This recognition is a testament not only to the mission of CodersTrust but also to the collective power of education and skills development.
 
 ![Two photographs of award recipients and guests in front of an SDG Achievers banner](../../assets/images/news/coderstrust-chairman-mr-aziz-ahmad-receives-sdg-life-achievement-award-from-the-unsgii/sdg-life-achievement-award.png)
 

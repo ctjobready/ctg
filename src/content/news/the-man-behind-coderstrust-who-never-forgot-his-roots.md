@@ -1,6 +1,7 @@
 ---
 title: "The Man Behind CodersTrust Who Never Forgot His Roots"
 date: 2026-08-04
+updated: 2026-10-13
 topic: insights
 excerpt: "A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives."
 cover: ../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming.jpg
@@ -20,11 +21,11 @@ A recently released video by content creator Jana Alam Jhony offers a glimpse in
 
 https://www.youtube.com/watch?v=rQC8BaL71QI
 
-As the Co-Founder and Chairman of CodersTrust, Mr. Aziz has dedicated his career to making quality digital education affordable and accessible for everyone. Since its founding in 2014, CodersTrust has trained 130,000+ learners across 15 countries and territories with future-ready digital skills, enabling thousands of young people to build sustainable careers in the global digital economy.
+As the Co-Founder and Chairman of CodersTrust, Mr. Aziz has dedicated his career to making quality digital education affordable and accessible for everyone. Since its founding in 2014, CodersTrust has trained 130,000+ learners across 15 countries and territories with future-ready digital skills, supporting young people as they pursue careers in the global digital economy.
 
-Beyond technology, Mr. Aziz remains deeply connected to Bangladesh’s roots through his passion for farming. More than a personal interest, agriculture represents his belief in self-reliance, sustainability, and the importance of staying connected to the land. A significant portion of the income generated from his farming activities is dedicated to supporting education and youth empowerment initiatives, reflecting his conviction that education is the most effective path to breaking the cycle of poverty.
+Beyond technology, Mr. Aziz remains deeply connected to Bangladesh’s roots through his passion for farming. More than a personal interest, agriculture represents his belief in self-reliance, sustainability, and the importance of staying connected to the land. He also holds the conviction that education is the most effective path to breaking the cycle of poverty.
 
-This vision is further reflected in the Bir Muktijoddha Ayub Ahmed Master Memorial Institute, an educational initiative being developed with support from his farming income. The institute aims to provide quality education to underprivileged children, helping them build brighter futures while contributing to a more educated and prosperous Bangladesh.
+This vision is further reflected in the Bir Muktijoddha Ayub Ahmed Master Memorial Institute, an educational initiative being developed. The institute aims to provide quality education to underprivileged children, helping them build brighter futures while contributing to a more educated and prosperous Bangladesh.
 
 ![Schoolchildren in uniform posing in front of a school building](../../assets/images/news/the-man-behind-coderstrust-who-never-forgot-his-roots/aziz-ahmad-farming-8.jpg)
 
