@@ -1,0 +1,110 @@
+---
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+import { titleCase } from '../../../lib/titleCase.mjs';
+
+/**
+ * The two panels of the funder review cycle (WP17, item 9): "What Your Monthly Report Covers" (parsed from PD-08, so it cannot drift from
+ * the register) and "What You Decide at Each Review" (PD-08 and PD-11). <ReviewCycle> puts them in a section; YouthWIDE places them inside its
+ * own risk band.
+ */
+interface Props {
+  /** Link to the sample report layout. */
+  sample?: { label: string; href: string };
+}
+const { sample } = Astro.props;
+const text = fact('PD-08').text;
+const [head] = text.split('; ');
+const reports = head.split(': ')[1].split(', ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
+if (reports.length < 3) throw new Error('ReviewPanels: PD-08 wording changed; update the parser');
+const icons = ['users-round', 'award', 'briefcase', 'search-check', 'heart-handshake', 'message-circle'];
+// Each throws at build time if the register stops saying it.
+if (!/quarterly steering review/.test(text) || !/independent evaluation welcome/.test(text)) throw new Error('ReviewPanels: PD-08 no longer names the steering review and independent evaluation');
+const pd11 = fact('PD-11').text;
+if (!/missed thresholds trigger a corrective plan/.test(pd11) || !/expansion is the funder’s decision/.test(pd11)) throw new Error('ReviewPanels: PD-11 wording changed');
+const decisions = [
+  { icon: 'calendar-check', title: 'Review the Reports Together', text: 'You and CodersTrust hold a quarterly steering review of the monthly reports.', ids: 'PD-08' },
+  { icon: 'target', title: 'Agree a Corrective Plan', text: 'A missed scorecard threshold triggers a corrective plan, agreed with you.', ids: 'PD-11' },
+  { icon: 'handshake', title: 'Decide on Expansion', text: 'Expansion is the funder’s decision, taken on the scorecard results.', ids: 'PD-11' },
+  { icon: 'shield', title: 'Commission an Independent Evaluation', text: 'Independent evaluation is welcome, and we support it.', ids: 'PD-08' },
+];
+---
+
+<div class="rc">
+    <div class="rc__panel" data-fact="PD-08" data-reveal>
+      <h3 class="rc__h t-heading-l">What Your Monthly Report Covers</h3>
+      <ul class="rc__reports" role="list">
+        {
+          reports.map((r, i) => (
+            <li>
+              <Icon name={icons[i % icons.length]} size={22} strokeWidth={1.5} />
+              <span>{titleCase(r)}</span>
+            </li>
+          ))
+        }
+      </ul>
+      {sample && <p class="rc__sample"><a class="link" href={linkAttrs(sample.href).href}>{sample.label}<Icon name="arrow-right" size={16} /></a></p>}
+    </div>
+    <div class="rc__panel" data-fact="PD-08 PD-11" data-reveal>
+      <h3 class="rc__h t-heading-l">What You Decide at Each Review</h3>
+      <ol class="rc__decisions" role="list">
+        {
+          decisions.map((d) => (
+            <li data-fact={d.ids}>
+              <Icon name={d.icon} size={22} strokeWidth={1.5} />
+              <span><strong>{d.title}.</strong> {d.text}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+
+<style>
+  .rc {
+    display: grid;
+    gap: var(--space-gutter);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .rc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .rc__panel {
+    padding: var(--space-gutter);
+    background: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+  }
+  .rc__panel > * {
+    margin: 0;
+  }
+  .rc__panel > * + * {
+    margin-top: var(--space-sm);
+  }
+  .rc__h {
+    color: var(--secondary);
+  }
+  .rc__reports,
+  .rc__decisions {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .rc__reports li,
+  .rc__decisions li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    color: var(--on-surface);
+  }
+  .rc__reports :global(.icon),
+  .rc__decisions :global(.icon) {
+    color: var(--primary);
+    flex: none;
+    margin-top: 2px;
+  }
+</style>

@@ -8,6 +8,7 @@ import ReportSection from '../../../components/pages/impact/ReportSection.astro'
 import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import CompetencyLevels from '../../../components/pages/model/CompetencyLevels.astro';
+import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -71,6 +72,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="how" title="How TalentLEAP Works">
+    <StagePipeline title="The Stage Pipeline" id="stage-pipeline" />
     <ol class="tl__steps" role="list">
       {steps.map((s, i) => (
         <li class="tl__step" data-reveal>

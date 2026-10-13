@@ -3,6 +3,7 @@
  * P7 Employers: /partner-with-us/employers/ (T3, implements doc 04 matrix 4.6).
  * C1 to C14 in order, as the numbered table in doc 06 P7.
  */
+import InShort from '../../../components/pages/partners/InShort.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -16,6 +17,7 @@ import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -70,6 +72,21 @@ const steps = [
     lead={VALUE_PROPOSITION.employers}
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-employers"
+  />
+  <InShort
+    bullets={[
+      'Training custom-developed for your roles, from a needs assessment to interactive workshops.',
+      'Job-ready talent through CodersTrust’s placement team, scoped against the experience and credentials available.',
+      'An AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
+      'Start with a pilot team; success measures are agreed before you start.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
@@ -188,9 +205,20 @@ const steps = [
   />
 
   <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. -->
-  <SubBand tone="airy">
-    <EvidenceList heading="Delivery Record for Employers" items={[{ facts: ['SC-15'] }, { facts: ['PA-06'] }]} />
-  </SubBand>
+  <PairedEvidence
+    title="The Delivery Record for Employers"
+    items={[
+      { id: 'PA-06', label: 'Cloud Training' },
+      { id: 'PA-07', label: 'AI Leadership' },
+      { id: 'SC-15', label: 'Corporate Delivery', stat: true },
+    ]}
+    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
+    broader={[
+      { label: 'Evidence Below', href: '#proof-band' },
+      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+      { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
+    ]}
+  />
   <ProofBand
     title="Independent Evidence and Survey Results"
     eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)"

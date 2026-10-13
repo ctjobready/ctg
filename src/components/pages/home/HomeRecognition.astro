@@ -1,0 +1,52 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import PartnerStrip from '../../system/PartnerStrip.astro';
+import { fact } from '../../../data/facts';
+
+/**
+ * Compact third-party recognition (WP17, item 4): the HolonIQ listing and the 2014–2016 press coverage, as one quiet band after the program
+ * case cards. It was part of the Klein evidence band's extras; there it competed with the trial and the survey. The press logos are dark
+ * artwork, so they sit on the band's white panel.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'recognition' } = Astro.props;
+---
+
+<Section id={id} tone="white" pad="sm" aria-labelledby={`${id}-h`}>
+  <h2 class="rec__title t-heading-l" id={`${id}-h`}>Recognized by Third Parties</h2>
+  <p class="rec__badge" data-fact="PA-08">
+    <Icon name="award" size={20} />
+    <span>{fact('PA-08').text}</span>
+  </p>
+  <div class="rec__press" data-fact="PA-09">
+    <PartnerStrip kind="press" variant="grid" caption="Press Coverage, 2014–2016" />
+  </div>
+</Section>
+
+<style>
+  .rec__title {
+    margin: 0 0 var(--space-sm);
+    color: var(--secondary);
+  }
+  .rec__badge {
+    margin: 0 0 var(--space-md);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px var(--space-md);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-pill);
+    color: var(--on-surface);
+    font-size: var(--fs-body-xs);
+  }
+  .rec__badge :global(.icon) {
+    color: var(--primary);
+    flex: none;
+  }
+  .rec__press {
+    background: var(--surface);
+  }
+</style>

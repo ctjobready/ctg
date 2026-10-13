@@ -3,6 +3,7 @@
  * P6 Universities: /partner-with-us/universities/ (T3, implements doc 04 matrix 4.5).
  * C1 to C14 in order, as the numbered table in doc 06 P6.
  */
+import InShort from '../../../components/pages/partners/InShort.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -18,6 +19,7 @@ import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Section from '../../../components/ui/Section.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -74,6 +76,21 @@ const steps = [
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-universities"
   />
+  <InShort
+    bullets={[
+      'Industry certification preparation runs beside the degree, in your own campus labs.',
+      'Tracks are set from employer demand, and certified local facilitators keep the capacity on campus.',
+      'Tracer surveys give your institution placement evidence from its own students.',
+      'Start with a pilot; timing follows your academic calendar.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
+  />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
 
@@ -128,10 +145,6 @@ const steps = [
     partnerGroup="academic"
   />
 
-  <SubBand>
-    <Callout eyebrow="NU Partnership"><Fact id="SC-05" as="p" /></Callout>
-  </SubBand>
-
   <!-- C6 · Mechanism (JobReady@Campus) -->
   <MechanismBand
     title="JobReady@Campus: Training Alongside the Degree"
@@ -150,7 +163,16 @@ const steps = [
     </Callout>
   </SubBand>
 
-  <!-- C7 · Proof -->
+  <!-- C7 · Proof: the National University partnership first, then the broader evidence from the youth programs -->
+  <PairedEvidence
+    title="The National University Partnership"
+    lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
+    items={[
+      { id: 'SC-04', label: 'Official Training Partner' },
+      { id: 'SC-05', label: 'National University' },
+      { id: 'PA-05', label: 'University Partners' },
+    ]}
+  />
   <ProofBand
     title="Independent Evidence and Survey Results"
     headlineFact="RC-01"

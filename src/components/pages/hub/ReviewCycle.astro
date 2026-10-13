@@ -1,0 +1,30 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import ReviewPanels from './ReviewPanels.astro';
+
+/**
+ * "Start with a Pilot. Decide on Evidence." (WP17, item 9): the funder review cycle as one section, for the pages that explain funder
+ * reporting (/partner-with-us/, Foundations, Development Partners). It replaces the scattered repeats of the report list and of the scorecard
+ * decisions. The panels are <ReviewPanels>.
+ */
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  lead?: string;
+  sample?: { label: string; href: string };
+  id?: string;
+}
+const {
+  title = 'Start with a Pilot. Decide on Evidence.',
+  eyebrow = 'Reporting and Review',
+  lead = 'Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end.',
+  sample,
+  id = 'review-cycle',
+} = Astro.props;
+---
+
+<Section id={id} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <ReviewPanels sample={sample} />
+</Section>

@@ -4,6 +4,9 @@
  * C1 to C14 in order, as the numbered table in doc 06 P5.
  */
 import GlanceBand from '../../../components/sections/GlanceBand.astro';
+import InShort from '../../../components/pages/partners/InShort.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
+import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -18,7 +21,6 @@ import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import OfferBand from '../../../components/sections/OfferBand.astro';
-import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
@@ -37,7 +39,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, POSITIONING, SCORECARD, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, POSITIONING, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, endSentence } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -74,6 +76,21 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
     lead={VALUE_PROPOSITION.foundations}
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-foundations"
+  />
+  <InShort
+    bullets={[
+      'Fund a supported path from learning to earning: training with certification preparation, mentoring and placement support.',
+      'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
+      'Reporting that fits your framework: monthly reports, a quarterly steering review and SDG-mapped reporting.',
+      'Two ways to fund, YouthWIDE cohorts or the JobReady platform; expansion is always your decision.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
@@ -198,6 +215,8 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
     ]}
   />
 
+  <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
+
   <!-- C8 · Features to benefits -->
   <FeaturesTable
     title="What You Get, and What It Means for Your Grant"
@@ -253,16 +272,7 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <RiskReversalBand
-    title="Start with a Pilot. Decide on Evidence."
-    lead={SCORECARD.text}
-    points={[
-      { icon: 'rocket', title: 'Pilot First', text: 'Start with one cohort and see its results before you commit further.' },
-      { icon: 'chart-bar', title: 'Milestone Reporting', text: 'Monthly reports and a quarterly steering review show progress against the scorecard.' },
-      { icon: 'handshake', title: 'Expansion Is the Funder’s Decision', text: 'You choose whether and how far to scale.' },
-      { icon: 'shield', title: 'Independent Evaluation', text: 'An independent evaluation can be budgeted separately where you want one.' },
-    ]}
-  />
+  <ReviewCycle />
 
   <!-- C13 · Call to action -->
   <CTABand

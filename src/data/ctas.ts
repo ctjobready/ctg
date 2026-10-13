@@ -53,7 +53,7 @@ export const NU_PGD_APPLY_URL =
 export const CTAS: Record<CtaKey, CtaDef> = {
   discovery: {
     key: 'discovery',
-    label: 'Book a Discovery Session',
+    label: 'Request a Discovery Session',
     subject: 'Discovery session request — [your organization]',
     body: [
       'Organization',
@@ -159,7 +159,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** SuperKids schools and education partners: the `discovery` conversation with school-specific fields. */
   superkids: {
     key: 'superkids',
-    label: 'Book a Discovery Session',
+    label: 'Request a Discovery Session',
     subject: 'SuperKids discovery session request — [school or organization]',
     body: ['School or organization', 'Location', 'Age groups', 'Approx. number of learners', 'Preferred timeline', 'Two suitable times for a discovery conversation'],
   },

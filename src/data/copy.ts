@@ -102,7 +102,7 @@ const UNLIKE_APPROVED =
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
-    text: `For governments, development partners and funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly. ${UNLIKE_APPROVED}`,
+    text: `For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model that reports results monthly. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   developmentPartners: {
@@ -276,7 +276,7 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
-  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 47% of its training cohort.',
+  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power training cohort 47% in work.',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
@@ -309,6 +309,12 @@ export const STEPS = [
   { title: 'Place and Report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
+
+/** Home C13 backward-planning line (WP17): the same registered timing as SPEED (PD-04), stated as a plan to work back from. */
+export const BACKWARD_PLAN: CopyBlock = {
+  text: 'For grant-funded pilots, allow about three weeks from first conversation to agreement, then 6–8 weeks from signing to training.',
+  facts: ['PD-04'],
+};
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
 

@@ -1,0 +1,55 @@
+---
+import { getEntry } from 'astro:content';
+import Section from '../../ui/Section.astro';
+import LearnerStory from './LearnerStory.astro';
+import { linkAttrs } from '../../../lib/url';
+import Icon from '../../system/Icon.astro';
+
+/**
+ * A named learner's voice beside the main evidence (WP17, item 6): "Individual Learner Story". It reuses the approved stories in
+ * src/content/stories (nothing is invented): the quotation is a verbatim passage of the story file (checked at build time), and the name and
+ * photograph follow the permissions rule of <LearnerStory> (a story that may not render is shown without name, quote or photograph).
+ * Every story carries the individual-story caveat.
+ */
+interface Props {
+  /** Story id (src/content/stories/<id>.md). */
+  story: 'adrian-afraham' | 'maria-dewan';
+  /** Passage of the story file, verbatim (in quotation marks when it is the learner's own quotation). */
+  excerpt: string;
+  /** What the learner took, in one line (the story's own outcome line is used when omitted). */
+  outcome?: string;
+  program: string;
+  tone?: 'white' | 'airy' | 'ice';
+  id?: string;
+  /** Link to more stories. */
+  more?: boolean;
+}
+const { story, excerpt, outcome, program, tone = 'white', id = 'learner-voice', more = true } = Astro.props;
+const entry = await getEntry('stories', story);
+if (!entry) throw new Error(`LearnerVoice: story ${story} is missing`);
+const source = `${entry.data.quote ?? ''}\n${entry.body ?? ''}`;
+if (!source.includes(excerpt)) throw new Error(`LearnerVoice: the excerpt is not a verbatim part of ${story}`);
+// A passage of the learner's own quotation is shown in quotation marks; a passage of the program's account of the learner is not.
+const isQuote = Boolean(entry.data.quote?.includes(excerpt));
+const stories = linkAttrs('/impact/stories/');
+---
+
+<Section id={id} tone={tone} pad="sm" aria-label="Individual Learner Story">
+  <LearnerStory
+    name={entry.data.name}
+    program={program}
+    outcome={outcome ?? entry.data.outcome}
+    excerpt={isQuote ? `“${excerpt}”` : excerpt}
+    image={entry.data.photo}
+    imageAlt={entry.data.photoAlt ?? `Portrait of ${entry.data.name}`}
+    assetId={`story-${story}`}
+    eyebrow="Individual Learner Story"
+  />
+  {more && <p class="lv__more"><a class="link" href={stories.href}>More Learner Stories<Icon name="arrow-right" size={16} /></a></p>}
+</Section>
+
+<style>
+  .lv__more {
+    margin: var(--space-sm) 0 0;
+  }
+</style>

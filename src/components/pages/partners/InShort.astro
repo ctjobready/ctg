@@ -1,0 +1,100 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * "In Short" (WP17, item 11): a 3 to 4 bullet summary directly under the hero of a long conversion page, then compact jump links to its
+ * main sections (How It Works · Evidence · What You Receive · Options · Next Steps) and a link to the contracting and accountability
+ * panel. The bullets are written from the page's own content; they add no figure that the page does not already state.
+ */
+interface Props {
+  bullets: string[];
+  links: { label: string; href: string }[];
+  /** Link to the contracting and accountability panel (default on). */
+  contracting?: boolean;
+  id?: string;
+}
+const { bullets, links, contracting = true, id = 'in-short' } = Astro.props;
+if (bullets.length < 3 || bullets.length > 4) throw new Error('InShort: needs 3 or 4 bullets');
+const governance = linkAttrs('/about/governance/#contracting').href;
+---
+
+<Section id={id} tone="airy" pad="sm" aria-labelledby={`${id}-h`}>
+  <div class="is">
+    <div class="is__box" data-reveal>
+      <h2 class="is__title t-heading-l" id={`${id}-h`}>In Short</h2>
+      <ul class="is__list" role="list">
+        {bullets.map((b) => <li>{b}</li>)}
+      </ul>
+    </div>
+    <nav class="is__nav" aria-label="On this page">
+      <ul class="is__links" role="list">
+        {links.map((l) => <li><a class="link" href={l.href}>{l.label}</a></li>)}
+      </ul>
+      {contracting && <a class="link is__gov" href={governance}>Contracting and Accountability<Icon name="arrow-right" size={16} /></a>}
+    </nav>
+  </div>
+</Section>
+
+<style>
+  .is {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .is__box {
+    padding: var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-left: 4px solid var(--tertiary);
+    border-radius: var(--radius-default);
+    max-width: 62rem;
+  }
+  .is__title {
+    margin: 0 0 var(--space-sm);
+    color: var(--secondary);
+  }
+  .is__list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: var(--space-xs);
+    color: var(--on-surface);
+  }
+  .is__list li::marker {
+    color: var(--primary);
+  }
+  .is__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-lg);
+  }
+  .is__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-md);
+  }
+  .is__links li {
+    display: inline-flex;
+    align-items: center;
+  }
+  .is__links li:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-md);
+    color: var(--outline);
+  }
+  .is__links a,
+  .is__gov {
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding-block: 3px;
+    font-weight: var(--fw-medium);
+  }
+</style>

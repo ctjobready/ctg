@@ -1,6 +1,7 @@
 ---
 /**
- * Home hero slider (WP13; layout and photographs reworked in WP13b). Six slides, one heading level 1 (the first slide) and level 2 on the rest.
+ * Home "Results and Programs" carousel (WP13; layout and photographs reworked in WP13b; WP17: it sits directly below the stable hero, so every
+ * slide heading is a level 2, the photographs load lazily and the slide links are text links; the hero owns the page's h1 and the primary button).
  * Each slide has a copy column (eyebrow, heading, lead or register sentence, figures or programs, links) and a visual column (one cleared
  * photograph; the evidence slide adds a Klein-blue proof band: a card over the photograph on the desktop visual column, under it on phones). Every slide is in the markup. Without JavaScript the slides
  * stack, with no controls (print prints them in order). With JavaScript, html.js is set before first paint (BaseLayout), so the carousel
@@ -10,7 +11,6 @@
  * Pattern: WAI-ARIA Authoring Practices carousel (region, slides with roledescription "slide", a labelled previous and next, a slide picker,
  * a pause control). Figures come from the facts register (src/data/facts.ts) and carry data-fact for the facts gate.
  */
-import Button from '../system/Button.astro';
 import Icon from '../system/Icon.astro';
 import Stat from '../system/Stat.astro';
 import Fact from '../facts/Fact.astro';
@@ -28,10 +28,13 @@ interface Props {
   /** Accessible name of the carousel region. */
   label: string;
   slides: HeroSlide[];
+  /** Visible section heading (an h2 above the carousel region); the region is named after it. */
+  heading?: string;
 }
-const { id = 'hero', label, slides } = Astro.props;
+const { id = 'hero', label, slides, heading } = Astro.props;
 if (slides.length < 2) throw new Error('HeroSlider: needs at least two slides');
 const total = slides.length;
+const headingId = `${id}-h`;
 const trackId = `${id}-slides`;
 
 /** The figure a tile shows, read from the register (throws when the fact has no stat, so a bad id fails the build). */
@@ -47,7 +50,7 @@ const views = slides.map((s, i) => {
     s,
     i,
     first: i === 0,
-    Heading: i === 0 ? 'h1' : 'h2',
+
     picture: mayRender(p.assetId) ? p : undefined,
     stats: (s.stats ?? []).map(figure),
     proof: s.proof ? figure(s.proof) : undefined,
@@ -55,10 +58,18 @@ const views = slides.map((s, i) => {
 });
 ---
 
-<section class="hs" id={id} aria-roledescription="carousel" aria-label={label} data-hero-slider>
+<div class="hs-shell">
+{
+  heading && (
+    <div class="hs__head container">
+      <h2 class="hs__heading" id={headingId}>{heading}</h2>
+    </div>
+  )
+}
+<section class="hs" id={id} aria-roledescription="carousel" aria-label={heading ? undefined : label} aria-labelledby={heading ? headingId : undefined} data-hero-slider>
   <div class="hs__track" id={trackId} data-hs-track aria-live="polite">
     {
-      views.map(({ s, i, first, Heading, picture, stats, proof }) => (
+      views.map(({ s, i, first, picture, stats, proof }) => (
         <div class:list={['hs__slide', first && 'is-active']} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${total}: ${s.title}`} data-hs-slide>
           <div class="hs__inner container">
             <div class="hs__copy">
@@ -74,7 +85,7 @@ const views = slides.map((s, i) => {
                 </nav>
               )}
               {s.eyebrow && <p class="hs__eyebrow" data-hero-in={first ? '' : undefined}>{s.eyebrow}</p>}
-              <Heading class:list={['hs__title', first ? 't-display-5xl' : 't-display-4xl']} data-hero-in={first ? '' : undefined}>{s.title}</Heading>
+              <h2 class="hs__title t-display-4xl">{s.title}</h2>
               {s.fact ? (
                 <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
               ) : (
@@ -102,11 +113,12 @@ const views = slides.map((s, i) => {
                 </ul>
               )}
               {s.links && (
-                <div class="hero__actions hs__actions" data-hero-in={first ? '' : undefined}>
+                <div class="hs__actions" data-hero-in={first ? '' : undefined}>
                   {s.links.map((l) => (
-                    <Button href={l.href} variant={l.variant ?? 'primary'} iconEnd={(l.variant ?? 'primary') === 'primary' ? 'arrow-right' : undefined}>
+                    <a class="link hs__link" href={linkAttrs(l.href).href}>
                       {l.label}
-                    </Button>
+                      <Icon name="arrow-right" size={16} />
+                    </a>
                   ))}
                 </div>
               )}
@@ -114,7 +126,7 @@ const views = slides.map((s, i) => {
             <div class="hs__visual">
               {picture ? (
                 <div class="hs__media" data-hero-in={first ? '' : undefined}>
-                  <Img src={picture.src} alt={picture.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading={first ? 'eager' : 'lazy'} fetchpriority={first ? 'high' : undefined} assetId={picture.assetId} />
+                  <Img src={picture.src} alt={picture.alt} width={1120} widths={[480, 800, 1120]} sizes="(min-width:1024px) 560px, 100vw" loading="lazy" assetId={picture.assetId} />
                 </div>
               ) : (
                 <div class="hs__media">
@@ -163,6 +175,7 @@ const views = slides.map((s, i) => {
     </button>
   </div>
 </section>
+</div>
 
 <style is:global>
   /* Hidden attributes win over the display rules below (the pause and play glyphs swap through [hidden]). */
@@ -170,17 +183,30 @@ const views = slides.map((s, i) => {
     display: none !important;
   }
 
+  .hs-shell {
+    background: var(--hero-gradient-edge);
+  }
+  .hs__head {
+    padding-block: var(--space-lg) var(--space-xs);
+  }
+  .hs__heading {
+    margin: 0;
+    color: var(--secondary);
+  }
+  @media (min-width: 768px) {
+    .hs__head {
+      padding-block: var(--space-xl, 56px) var(--space-xs);
+    }
+  }
+  .hs__link {
+    font-weight: var(--fw-bold);
+  }
   .hs {
     position: relative;
     isolation: isolate;
     overflow: clip;
-    padding-block-start: var(--space-section-mobile);
+    padding-block-start: var(--space-md);
     background: var(--hero-gradient-edge);
-  }
-  @media (min-width: 768px) {
-    .hs {
-      padding-block-start: var(--space-section-desktop);
-    }
   }
   /* The hero's settle entrance (Hero.astro): a transform-only gradient that plays once and never repeats. */
   .hs::before {

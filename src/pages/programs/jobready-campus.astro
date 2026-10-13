@@ -13,6 +13,8 @@ import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Fact from '../../components/facts/Fact.astro';
+import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import FactList from '../../components/facts/FactList.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
@@ -72,6 +74,18 @@ const options = [
     <p data-fact="IN-09"><Fact id="IN-09" />.</p>
   </DefinitionBlock>
 
+  <ProgramGlance
+    rows={[
+      { label: 'Who It Is For', text: 'Universities and colleges whose students need a practical route into digital work beside the degree.', facts: ['IN-09'] },
+      { label: 'Delivery', text: 'Training runs in parallel with academic studies, in on-campus labs used as blended-learning centers, with faculty members as coordinators.', facts: ['IN-09', 'PD-06'] },
+      { label: 'Training and Mentoring', text: `${hours} training hours per certification, then three months of milestone-based mentoring.`, facts: ['PD-01'] },
+      { label: 'Certification Preparation', text: 'Preparation for industry-recognized certifications, with the exam fee included; eligibility, attempts and retakes are agreed in the program scope.', facts: ['IN-09', 'PD-03'] },
+      { label: 'Placement Support', text: 'Mentoring and placement support lead into freelance, local, remote and overseas work, with professional internships where employer placements are available.', facts: ['IN-09', 'PD-15'] },
+      { label: 'Reporting', text: 'Baseline data, tracer surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Agreed Before Enrollment', text: 'The tracks and campus labs, set in a discovery session, and the program scope.', facts: ['PD-02'] },
+    ]}
+  />
+
   <!-- C2 -->
   <ProblemSection
     title="For Too Many Graduates, a Degree Is Not Turning into a Job."
@@ -113,14 +127,6 @@ const options = [
     <p data-fact="PA-05"><Fact id="PA-05" />.</p>
   </GuideSection>
 
-  <!-- Partnership context (review round 3): National University's size and onboarding pipeline are shown apart from the track record and the outcome evidence. -->
-  <Section id="partnership-context" pad="sm" aria-labelledby="partnership-context-h">
-    <SectionHeader id="partnership-context-h" eyebrow="National University" title="Partnership Context" lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust." />
-    <div class="ctx-stats">
-      <FactStat id="SC-05" />
-      <FactStat id="SC-04" />
-    </div>
-  </Section>
 
   <!-- C6 -->
   <MechanismSection
@@ -139,6 +145,16 @@ const options = [
       <FactList ids={['PD-01', 'PD-03', 'PD-06']} />
     </div>
   </MechanismSection>
+
+  <!-- C7: the National University partnership first (its size and onboarding pipeline are shown apart from the track record and the outcome evidence), then the broader evidence -->
+  <PairedEvidence
+    title="The National University Partnership"
+    lead="These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust."
+    items={[
+      { id: 'SC-04', label: 'Official Training Partner', stat: true },
+      { id: 'SC-05', label: 'National University', stat: true },
+    ]}
+  />
 
   <!-- C7 -->
   <ProofBand title="The Evidence" headlineFact="RC-01" statIds={['RC-02', 'RC-01', 'OC-09', 'OC-03']} links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>

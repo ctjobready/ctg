@@ -4,7 +4,9 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 import { pageByRoute } from './support/pages';
 
 /**
- * Home hero slider (WP13; src/components/sections/HeroSlider.astro, src/scripts/heroSlider.ts). WCAG 2.2 AA, APG carousel pattern.
+ * Home "Results and Programs" carousel (WP13, moved below the stable hero in WP17; src/components/sections/HeroSlider.astro,
+ * src/scripts/heroSlider.ts). WCAG 2.2 AA, APG carousel pattern. The hero above it (#hero, HomeHero) holds the page's only h1, the primary
+ * action and the three proof cards; the carousel's slides are all h2.
  *   - keyboard: the next, previous and dot controls (Enter, Space, Tab, arrow keys on the controls) change the slide;
  *   - the Pause control toggles its label, and a stopped carousel does not rotate on its own;
  *   - autoplay steps every 7 s, pauses on hover, and a visitor's own choice stops it for good;
@@ -14,7 +16,7 @@ import { pageByRoute } from './support/pages';
  *   - switching slides does not move the layout, and the controls keep a 24 px target at phone width;
  *   - the pill of the active dot follows the slide (the visual state, not only aria-current);
  *   - the region does not change height when the script runs (no layout shift on load);
- *   - every slide has its own cleared photograph; the first loads eagerly, the others lazily;
+ *   - every slide has its own cleared photograph, all loaded lazily (the hero's own photograph is the eager one);
  *   - no slide leaves more than 48 px of unused space between its content and the controls (1280 and 390).
  * The autoplay checks use the real 7 s step, so they take a few seconds each.
  */
@@ -44,11 +46,12 @@ async function unusedBelow(page: Page): Promise<number> {
 test.describe('home hero slider', () => {
   test.use({ viewport: DESKTOP });
 
-  test('is a labelled carousel of seven slides, with the only h1 on the first slide', async ({ page }) => {
+  test('is a labelled carousel of seven slides; the only h1 is in the stable hero above it', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const region = page.locator('#hero');
+    const region = page.locator('#results');
     await expect(region).toHaveAttribute('aria-roledescription', 'carousel');
-    await expect(region).toHaveAttribute('aria-label', /.+/);
+    await expect(region).toHaveAttribute('aria-labelledby', 'results-h');
+    await expect(page.locator('#results-h')).toHaveText('Results and Programs');
     const slides = page.locator('[data-hs-slide]');
     await expect(slides).toHaveCount(7);
     await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 7: /);
@@ -57,7 +60,9 @@ test.describe('home hero slider', () => {
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into Digital Employment — with Evidence.');
-    await expect(page.locator('#hero h2')).toHaveCount(6);
+    await expect(page.locator('#results h1')).toHaveCount(0);
+    await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Evidence from a Randomized Trial');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -100,13 +105,13 @@ test.describe('home hero slider', () => {
     const toggle = page.locator('[data-hs-toggle]');
     await expect(toggle).toBeVisible();
     await expect(toggle).toHaveText(/Pause/);
-    await expect(page.locator('#hero [data-hs-track]')).toHaveAttribute('aria-live', 'off');
+    await expect(page.locator('#results [data-hs-track]')).toHaveAttribute('aria-live', 'off');
 
     await expect.poll(() => activeIndex(page), { timeout: STEP_WAIT_MS + 2000 }).toBe(1);
 
     await toggle.click();
     await expect(toggle).toHaveText(/Play/);
-    await expect(page.locator('#hero [data-hs-track]')).toHaveAttribute('aria-live', 'polite');
+    await expect(page.locator('#results [data-hs-track]')).toHaveAttribute('aria-live', 'polite');
     await page.mouse.move(0, 0);
     const held = await activeIndex(page);
     await page.waitForTimeout(STEP_WAIT_MS);
@@ -116,7 +121,9 @@ test.describe('home hero slider', () => {
   test('autoplay pauses while the pointer is over the region and resumes after it leaves', async ({ page }) => {
     await open(page, pageByRoute('/'));
     await page.mouse.move(0, 0);
-    const hero = page.locator('#hero');
+    const hero = page.locator('#results');
+    // The carousel sits below the hero: bring it into the viewport so that the pointer can be over it.
+    await hero.scrollIntoViewIfNeeded();
     const box = await hero.boundingBox();
     expect(box).not.toBeNull();
     await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
@@ -138,7 +145,7 @@ test.describe('home hero slider', () => {
 
   test('only the showing slide is exposed to assistive technology', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const hero = page.locator('#hero');
+    const hero = page.locator('#results');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     const hidden = page.locator('[data-hs-slide]:not(.is-active)');
     await expect(hidden).toHaveCount(6);
@@ -146,7 +153,9 @@ test.describe('home hero slider', () => {
       await expect(el).toHaveAttribute('inert', '');
     }
     await page.locator('[data-hs-dot]').nth(2).click();
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Evidence from a Randomized Trial');
+    // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
+    await expect(hero.getByRole('heading')).toHaveCount(1);
+    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Income and Employment Among Surveyed Completers');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();
@@ -154,7 +163,7 @@ test.describe('home hero slider', () => {
 
   test('switching slides does not move the layout', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const hero = page.locator('#hero');
+    const hero = page.locator('#results');
     const first = await hero.boundingBox();
     expect(first).not.toBeNull();
     for (let i = 1; i < 7; i++) {
@@ -195,7 +204,7 @@ test.describe('home hero slider with reduced motion', () => {
     await page.waitForTimeout(STEP_WAIT_MS);
     expect(await activeIndex(page), 'no slide change under reduced motion').toBe(0);
     await expect(page.locator('[data-hs-toggle]')).toBeHidden();
-    await expect(page.locator('#hero [data-hs-track]')).toHaveAttribute('aria-live', 'polite');
+    await expect(page.locator('#results [data-hs-track]')).toHaveAttribute('aria-live', 'polite');
     await page.locator('[data-hs-next]').click();
     await expect.poll(() => activeIndex(page)).toBe(1);
   });
@@ -207,7 +216,7 @@ test.describe('home hero slider in print', () => {
   test('every slide prints in order, and no control prints', async ({ page }) => {
     await open(page, pageByRoute('/'));
     await page.emulateMedia({ media: 'print' });
-    const headings = page.locator('#hero h1, #hero h2');
+    const headings = page.locator('#results [data-hs-slide] h2');
     await expect(headings).toHaveCount(7);
     for (const h of await headings.all()) {
       await expect(h).toBeVisible();
@@ -223,7 +232,7 @@ test.describe('home hero slider without JavaScript', () => {
 
   test('every slide is present and stacked, with its links, and no controls show', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const hero = page.locator('#hero');
+    const hero = page.locator('#results');
     await expect(hero.getByRole('heading')).toHaveCount(7);
     const slides = page.locator('[data-hs-slide]');
     await expect(slides).toHaveCount(7);
@@ -276,7 +285,7 @@ test.describe('home hero slider layout', () => {
     expect(shift, 'cumulative layout shift on the home page after load').toBeLessThan(0.01);
   });
 
-  test('each slide has its own cleared photograph; the first loads eagerly, the others lazily', async ({ page }) => {
+  test('each slide has its own cleared photograph, all loaded lazily', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const permissions = JSON.parse(readFileSync(new URL('../src/data/permissions.json', import.meta.url), 'utf8')) as {
       assetId: string;
@@ -288,7 +297,7 @@ test.describe('home hero slider layout', () => {
     for (let i = 0; i < 7; i++) {
       const img = slides.nth(i).locator('img');
       await expect(img, `photograph on slide ${i + 1}`).toHaveCount(1);
-      await expect(img).toHaveAttribute('loading', i === 0 ? 'eager' : 'lazy');
+      await expect(img).toHaveAttribute('loading', 'lazy');
       await expect(img).toHaveAttribute('alt', /.+/);
       const asset = (await img.getAttribute('data-asset')) ?? '';
       assets.push(asset);

@@ -4,6 +4,9 @@
  * C1 to C14 in order, as the numbered table in doc 06 P4.
  */
 import GlanceBand from '../../../components/sections/GlanceBand.astro';
+import InShort from '../../../components/pages/partners/InShort.astro';
+import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
+import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -18,7 +21,6 @@ import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import OfferBand from '../../../components/sections/OfferBand.astro';
-import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
@@ -36,7 +38,7 @@ import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SCORECARD, SPEED, STEPS, SURVEY_EMPLOYMENT, TRAINED_REACH, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SPEED, STEPS, SURVEY_EMPLOYMENT, TRAINED_REACH, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -71,6 +73,21 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     lead={VALUE_PROPOSITION.developmentPartners}
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-development"
+  />
+  <InShort
+    bullets={[
+      'A supported path for educated, unemployed youth: certification-focused training, mentoring and placement support.',
+      'Results you can report: monthly reports, tracer surveys after each course and documentary evidence of earnings where available.',
+      'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
+      'Start with a pilot, agree the scorecard in co-design, and decide on expansion yourself.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'What You Receive', href: '#features' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
@@ -181,6 +198,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
+  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
   <SubBand tone="airy" pull>
     <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role={`Quoted on the 2015 Korail pilot (${undpPilot}; typing speed and computer-application targets), not on later employment results`}>
       {undpQuote}    </Quote>
@@ -245,7 +263,7 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   </SubBand>
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <RiskReversalBand title="Start with a Pilot. Decide on Evidence." lead={SCORECARD.text} />
+  <ReviewCycle />
 
   <!-- C13 · Call to action -->
   <CTABand
