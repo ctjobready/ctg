@@ -13,13 +13,13 @@ import FactStat from '../../../components/facts/FactStat.astro';
 import EvidenceLadder from '../../../components/pages/impact/EvidenceLadder.astro';
 import ColumnChart from '../../../components/pages/impact/ColumnChart.astro';
 import PairedBars from '../../../components/pages/impact/PairedBars.astro';
-import NextStep from '../../../components/pages/impact/NextStep.astro';
-import { desc, title, val, reportCta, articleNode } from '../../../components/pages/impact/page-utils';
+import CTABand from '../../../components/ui/CTABand.astro';
+import { desc, title, val, discoveryCta, articleNode } from '../../../components/pages/impact/page-utils';
 import * as D from '../../../components/pages/impact/outcomes-data';
 import { fact } from '../../../data/facts';
-import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
 import { dataset, webPage } from '../../../lib/schema';
-import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
+import { canonicalUrl, url } from '../../../lib/url';
 
 D.assertConsistent();
 D.assertPublication();
@@ -58,8 +58,8 @@ const jsonLd = [
 ];
 
 const toc = [
-  { id: 'ladder', label: 'Evidence ladder and how to read this report' },
   { id: 'summary', label: 'Summary' },
+  { id: 'ladder', label: 'Evidence ladder and how to read this report' },
   { id: 'respondents', label: 'Who responded' },
   { id: 'employment', label: 'Employment' },
   { id: 'speed', label: 'Speed to earnings' },
@@ -92,14 +92,14 @@ const emp = fact('OC-01').stat!;
 const before = parseFloat(emp.from!);
 const after = emp.numeric!;
 const typeRows = D.EMPLOYMENT_TYPES.map((t) => ({ label: t.label, before: t.before, after: t.after }));
-const reportLink = reportCta();
+const d = discoveryCta();
 ---
 
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
   heading="Impact Survey 2026: What Happened After Training"
   eyebrow="Outcomes 2026 · Surveyed Completers"
-  lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience, "
+  lead="Results from alumni who responded to the CodersTrust Impact Survey in October 2026: employment, income, speed to earnings, career outcomes and learner experience."
   description={description}
   path={path}
   updated={D.PAGE_LAST_REVIEWED}
@@ -108,11 +108,6 @@ const reportLink = reportCta();
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Outcomes 2026' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="ladder" title="Evidence Ladder and How to Read This Report">
-    <p>This survey is the second rung of four kinds of evidence. It reports what surveyed completers say; it does not show that training caused any change.</p>
-    <EvidenceLadder links={false} headingLevel={3} />
-  </ReportSection>
-
   <ReportSection id="summary" title="Summary">
     <Callout tone="bluf"><CopyText block={SURVEY_EMPLOYMENT} /></Callout>
     <div class="ro__stats">
@@ -123,6 +118,11 @@ const reportLink = reportCta();
       <FactStat id="OC-06" />
       <FactStat id="OC-02" />
     </div>
+  </ReportSection>
+
+  <ReportSection id="ladder" title="Evidence Ladder and How to Read This Report">
+    <p>This survey is the second rung of four kinds of evidence. It reports what surveyed completers say; it does not show that training caused any change.</p>
+    <EvidenceLadder links={false} headingLevel={3} />
   </ReportSection>
 
   <ReportSection id="respondents" title="Who Responded">
@@ -218,12 +218,13 @@ const reportLink = reportCta();
   </ReportSection>
 
   <ReportSection id="download" title="Download the Data">
-    <p>The published aggregates are available as a CSV: one row per published percentage or median, </p>
+    <p>The published aggregates are available as a CSV, with one row per published percentage or median.</p>
     <p><a class="ro__dl" href={csvHref} download>
       <Icon name="download" size={18} />Download outcomes-2026-aggregates.csv
     </a></p>
-    <NextStep heading="Want the full report?" text="The Impact Report 2026 (partner edition) covers the programs behind these results." cta={reportLink} />
   </ReportSection>
+
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
 
 </LongformLayout>
 

@@ -42,13 +42,15 @@ interface Props {
    * under the summary; the program result (the first stat tile, with its program-data label) comes second.
    */
   plainLine?: boolean;
+  /** Eyebrow of the learner-story section: "In a Learner’s Words" only where a direct quote follows the story; "Learner Experience" otherwise. */
+  storyEyebrow?: string;
   /**
    * A real program photograph for the hero, in place of the generated art (D13: it renders on staging only when its permissions row allows it,
    * otherwise the art stands in). The photo is shown once, here; the page does not repeat it lower down.
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroPhoto } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, plainLine = false, heroPhoto, storyEyebrow = 'Learner Experience' } = Astro.props;
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
@@ -113,7 +115,7 @@ const d = discoveryCta();
   <slot name="after-results" />
 
   <Section tone="airy" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow="In a Learner’s Words" title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
+    <SectionHeader id="story-h" eyebrow={storyEyebrow} title="A Learner Story" lead="Individual stories, not typical or promised outcomes." />
     <slot name="story" />
   </Section>
 

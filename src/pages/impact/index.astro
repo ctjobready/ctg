@@ -12,12 +12,12 @@ import Fact from '../../components/facts/Fact.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
-import { articleNode, desc, title, reportCta } from '../../components/pages/impact/page-utils';
+import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
-import { SURVEY_EMPLOYMENT, RCT_HEADLINE } from '../../data/copy';
+import { SURVEY_EMPLOYMENT, RCT_HEADLINE, MICRO_COMMITMENT } from '../../data/copy';
 
 const path = '/impact/';
-const description = desc('A randomized trial found women offered a CodersTrust place were 10.3 percentage points more likely to be employed.');
+const description = desc('A randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed.');
 const jsonLd = [articleNode({ path, headline: 'Impact and Evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const sdgs = [
   { n: 4, label: 'Quality Education', core: true },
@@ -32,11 +32,11 @@ const explore = [
   { icon: 'bar-chart-3', title: 'Outcomes 2026', text: 'The Impact Survey 2026: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
   { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
   { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
-  { icon: 'message-square-quote', title: 'Success Stories', text: 'Learners in their own words. Individual stories, not typical outcomes.', href: '/impact/stories/' },
+  { icon: 'message-square-quote', title: 'Success Stories', text: 'Individual learner stories, not typical or promised outcomes.', href: '/impact/stories/' },
   { icon: 'globe', title: 'Global Reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
   { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partner meetings and events, grouped by program and year.', href: '/impact/in-the-field/' },
 ];
-const rc = reportCta();
+const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Impact and Evidence')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
@@ -73,14 +73,14 @@ const rc = reportCta();
   </Section>
 
   <Section tone="ice" aria-labelledby="sdg-h" pad="sm">
-    <h2 class="t-heading-2xl" id="sdg-h">Contribution to the Sustainable Development Goals</h2>
+    <h2 class="t-heading-2xl" id="sdg-h">Alignment with the Sustainable Development Goals</h2>
     <p class="ih__sdgtext" data-fact="ID-09"><Fact id="ID-09" /></p>
     <ul class="ih__sdgs" role="list">
       {sdgs.map((s) => <li><Badge tone={s.core ? 'brand' : 'eyebrow'}>SDG {s.n} · {s.label}{s.core && ' (Core)'}</Badge></li>)}
     </ul>
   </Section>
 
-  <CTABand id="cta" heading="Read the full Impact Report 2026." text="The partner edition covers the programs behind these results." cta={rc} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} />
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

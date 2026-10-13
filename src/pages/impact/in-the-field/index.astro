@@ -41,7 +41,7 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   {
     id: 'nationwide',
     eyebrow: 'Programs',
-    title: 'Classes and Campuses: Madrasah Learners, Examinations and Graduates',
+    title: 'Classes and Campuses: Madrasah Learners, Examinations and Program Completers',
     lead: 'Classes, an examination hall and a graduation day. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
@@ -56,7 +56,7 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     id: 'youth',
     eyebrow: 'Programs',
     title: 'UNDP YES and Learner Communities',
-    lead: 'Trainees from the UNDP YES (Youth Employment through Skills) program, and learners and graduates across programs.',
+    lead: 'Trainees from the UNDP YES (Youth Employment through Skills) program, and learners and program completers across programs.',
     photos: reg(['general/yes-trainees-group', 'general/yes-collage', 'general/woman-learner-laptop', 'general/learner-mosaic']),
   },
   {
@@ -82,8 +82,13 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   },
 ];
 
-// Program and training photographs lead; partnership, recognition and event groups sit after the "Leadership, Recognition and Events" heading.
-const programGroups = groups.filter((g) => g.eyebrow === 'Programs');
+// Program photographs lead, in this order: Women's Programs, UNDP YES, JobReady, SuperKids, then the national and campus group. Partnership, recognition and event groups sit after the "Leadership, Recognition and Events" heading.
+const PROGRAM_ORDER = ['women', 'youth', 'campus-work', 'superkids', 'nationwide'];
+const programGroups = PROGRAM_ORDER.map((id) => {
+  const g = groups.find((x) => x.id === id);
+  if (!g) throw new Error(`in-the-field: no photograph group "${id}"`);
+  return g;
+});
 const laterGroups = groups.filter((g) => g.eyebrow !== 'Programs');
 
 // The news photographs, by year of the post: alt text from src/data/fieldNews.ts, caption = event + month and year, asset id of the post (D13).
@@ -91,9 +96,14 @@ const files = import.meta.glob<{ default: ImageMetadata }>('../../../assets/imag
 const posts = (await allNews()).filter((p) => !p.data.political);
 const month = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 const years = new Map<number, { date: number; photo: Photo }[]>();
+// The profile of Aziz Ahmad on his farm is a personal profile, not a program or event record, so its photographs are left out of the archive.
+const LEFT_OUT_POSTS = new Set(['the-man-behind-coderstrust-who-never-forgot-his-roots']);
 for (const post of posts) {
+  if (LEFT_OUT_POSTS.has(post.id)) continue;
   const year = post.data.date.getUTCFullYear();
-  for (const e of FIELD_NEWS_PHOTOS.filter((x) => x.slug === post.id)) {
+  // An event with three or more photographs keeps its first two in registry order, so near-duplicate shots do not crowd the archive.
+  const entries = FIELD_NEWS_PHOTOS.filter((x) => x.slug === post.id);
+  for (const e of entries.length >= 3 ? entries.slice(0, 2) : entries) {
     const img = files[`../../../assets/images/news/${post.id}/${e.file}`]?.default;
     if (!img) throw new Error(`in-the-field: missing image ${post.id}/${e.file}`);
     const list = years.get(year) ?? [];
@@ -120,7 +130,7 @@ for (const [year, list] of [...years.entries()].sort((a, b) => a[0] - b[0])) {
 byYear.reverse();
 
 const jump = [
-  ...groups.map((g) => ({ id: g.id, label: g.title.split(':')[0] })),
+  ...[...programGroups, ...laterGroups].map((g) => ({ id: g.id, label: g.title.split(':')[0] })),
   ...byYear.map((y) => ({ id: y.id, label: `News ${y.label}` })),
 ];
 const d = discoveryCta();
@@ -145,7 +155,7 @@ const d = discoveryCta();
 
   {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
-  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and Events" title={`Partners, Programs and Events,${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {byYear.map((y, i) => <PhotoGallery id={y.id} eyebrow="News and Events" title={`Partners, Programs and Events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>

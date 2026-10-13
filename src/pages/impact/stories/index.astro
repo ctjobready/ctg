@@ -81,7 +81,7 @@ const anon: StoryCardData[] = [
 ];
 const cards = [...caseCards, ...anon, ...legacyCards];
 
-const description = desc('Learner stories from CodersTrust programs, in learners’ own words. Individual stories, not typical or promised outcomes.');
+const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
   articleNode({ path, headline: 'Success Stories', description, datePublished: '2026-10-08', dateModified: '2026-10-08', author: 'CodersTrust' }),
@@ -90,7 +90,7 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learners in Their Own Words" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learner Outcomes and Experiences" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
 
   <Section aria-labelledby="stories-h">
     <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Individual stories; not typical or promised outcomes." />
