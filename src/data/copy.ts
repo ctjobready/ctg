@@ -347,7 +347,7 @@ export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments'
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
   validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
-  reminder: { text: 'For grant-funded pilots, your first cohort is in training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
+  reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',

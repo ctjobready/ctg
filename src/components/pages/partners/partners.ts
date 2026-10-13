@@ -3,6 +3,7 @@
  * Everything here reads the facts register, so a number in a page string can never drift from it.
  */
 import { fact } from '../../../data/facts';
+import { parseProgramOptions } from '../../sections/copyText';
 import type { CopyBlock } from '../../../data/copy';
 
 /**
@@ -68,12 +69,7 @@ export function pricingParts(): { lead: string; inclusions: string[]; separate: 
 
 /** Program option rows from PD-05 (Pilot, Scale, National), parsed the way OfferBand parses them. */
 export function programOptions(): { name: string; volume: string; duration: string }[] {
-  const pd05 = fact('PD-05').text.split(': ').slice(1).join(': ');
-  return pd05.split('; ').map((chunk) => {
-    const [name, ...rest] = chunk.split(' ');
-    const [volume, ...tail] = rest.join(' ').split(', ');
-    return { name, volume, duration: tail.join(', ') };
-  });
+  return parseProgramOptions(fact('PD-05').text);
 }
 
 /** Evidence links shared by the pages (internal routes, resolved by the base-aware helpers). */

@@ -137,7 +137,7 @@ const DISCIPLINE = [
   [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners started earning within six months.", with the 58.8%, its base and the survey qualifier below it)'],
 ];
 // The investor CTA label and its mailto subject are allowed.
-const ALLOWED = [/Request the investor deck/gi, /Investor(%20| )deck(%20| )request/gi];
+const ALLOWED = [/Investor(%20| )deck(%20| )request/gi];
 
 const decode = (t) => t.replace(/<[^>]+>/g, ' ').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
 

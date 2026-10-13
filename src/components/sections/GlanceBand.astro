@@ -1,0 +1,151 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../system/Icon.astro';
+import { fact } from '../../data/facts';
+import { linkAttrs } from '../../lib/url';
+
+/**
+ * At a Glance: the strongest results as scannable tiles, each linking to its detail page. Every figure, label and note is read from the
+ * facts register (stat.value, stat.glance ?? stat.label); no number is typed here. `variant="strip"` is the compact form for partner pages:
+ * a small heading and tighter section padding.
+ *   - band (default): a full section with a header, for Home and /impact/;
+ *   - strip: a labelled row of tiles inside another page's flow.
+ */
+interface Tile {
+  id: string;
+  href: string;
+  /** Other facts the tile's note rests on (OC-05 behind OC-02's note), added to data-fact. */
+  also?: string[];
+}
+interface Props {
+  items: Tile[];
+  title?: string;
+  lead?: string;
+  eyebrow?: string;
+  id?: string;
+  variant?: 'band' | 'strip';
+  /** Columns on the widest screens (default: items.length up to 6). */
+  cols?: number;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { items, title = 'At a Glance', lead, eyebrow = 'The Results', id = 'glance', variant = 'band', cols, tone = 'airy' } = Astro.props;
+const tiles = items.map((t) => {
+  const f = fact(t.id);
+  if (!f.stat) throw new Error(`<GlanceBand>: fact ${t.id} has no stat`);
+  return {
+    ...t,
+    value: f.stat.value,
+    label: f.stat.glance?.label ?? f.stat.label,
+    note: f.stat.glance?.note,
+    facts: [t.id, ...(t.also ?? [])].join(' '),
+  };
+});
+const columns = cols ?? Math.min(6, tiles.length);
+---
+
+{
+  variant === 'strip' ? (
+    <Section class="glance glance--strip" id={id} tone={tone === 'airy' ? 'white' : tone} pad="sm" aria-labelledby={`${id}-h`}>
+      <h2 class="glance__strip-title" id={`${id}-h`}>{title}</h2>
+      <ul class="glance__grid" style={`--glance-cols:${columns}`} role="list">
+        {tiles.map((t) => (
+          <li>
+            <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
+              <span class="glance__value">{t.value}</span>
+              <span class="glance__desc">{t.label}</span>
+              {t.note && <span class="glance__note">{t.note}</span>}
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  ) : (
+    <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+      <ul class="glance__grid" style={`--glance-cols:${columns}`} role="list">
+        {tiles.map((t) => (
+          <li>
+            <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
+              <span class="glance__value">{t.value}</span>
+              <span class="glance__desc">{t.label}</span>
+              {t.note && <span class="glance__note">{t.note}</span>}
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+<style>
+  .glance__strip-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-heading-l, 1.25rem);
+    color: var(--secondary);
+  }
+  .glance__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+  .glance__tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--on-surface);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .glance__tile:hover {
+    border-color: var(--primary);
+  }
+  .glance__tile :global(svg) {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    color: var(--primary);
+  }
+  .glance__value {
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.15;
+    font-weight: var(--fw-bold);
+    letter-spacing: -1px;
+    color: var(--secondary);
+    white-space: nowrap;
+  }
+  .glance__desc {
+    font-size: var(--fs-body-sm, 0.9375rem);
+    font-weight: var(--fw-semibold, 600);
+    text-wrap: balance;
+  }
+  .glance__note {
+    font-size: var(--fs-body-xs, 0.8125rem);
+    color: var(--on-surface-variant);
+    text-wrap: balance;
+  }
+  @media (min-width: 720px) {
+    .glance__grid {
+      grid-template-columns: repeat(min(var(--glance-cols), 3), minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .glance__grid {
+      grid-template-columns: repeat(var(--glance-cols), minmax(0, 1fr));
+    }
+    .glance--strip .glance__value {
+      font-size: var(--fs-heading-xl);
+    }
+  }
+</style>

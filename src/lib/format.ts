@@ -81,16 +81,16 @@ export function spokenSteps(text: string): string {
 }
 /**
  * The pilot option's duration from the register ("8–14 months (tracking to month 23)") reads as if the pilot itself runs to month 23.
- * Printed as a sentence: "A pilot runs 8–14 months; the first cohort’s 12-month tracer survey may fall around month 23." Any other
+ * Printed as: "Pilot delivery runs 8–14 months. Outcome tracking continues for 12 months after each course." Any other
  * duration, or wording that no longer matches, comes back unchanged.
  */
 export function pilotDurationText(duration: string): string {
   const m = /^(\d+–\d+ months) \(tracking to month (\d+)\)$/.exec(duration.trim());
-  return m ? `A pilot runs ${m[1]}; the first cohort’s 12-month tracer survey may fall around month ${m[2]}.` : duration;
+  return m ? `Pilot delivery runs ${m[1]}. Outcome tracking continues for 12 months after each course.` : duration;
 }
 /** Option-card duration line: the Pilot option gets the sentence above; Scale and National print as registered. */
 export function optionDuration(name: string, duration: string): string {
-  return name === 'Pilot' ? pilotDurationText(duration) : duration;
+  return /Pilot/.test(name) ? pilotDurationText(duration) : duration;
 }
 /** Strip tags for plain-text use (FAQ schema, meta descriptions). */
 export function stripHtml(html: string): string {

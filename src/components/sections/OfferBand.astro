@@ -3,7 +3,7 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
-import { offerDurationText } from './copyText';
+import { offerDurationText, parseProgramOptions } from './copyText';
 
 /**
  * C11 Offer: three option cards (volume + duration from PD-05) + "Every package includes" (PD-02).
@@ -27,13 +27,7 @@ const {
 } = Astro.props;
 
 // PD-05: "Program options: Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"
-const pd05 = fact('PD-05').text.split(': ').slice(1).join(': ');
-const options = pd05.split('; ').map((chunk) => {
-  const [name, ...rest] = chunk.split(' ');
-  const detail = rest.join(' ');
-  const [volume, ...tail] = detail.split(', ');
-  return { name, volume, duration: tail.join(', ') };
-});
+const options = parseProgramOptions(fact('PD-05').text);
 // PD-02: "Pricing is set per program. Standard inclusions: a · b · c. Items such as … are budgeted separately where needed"
 const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. Items such as')[0].split(' · ').map((s) => s.charAt(0).toUpperCase() + s.slice(1));
 ---

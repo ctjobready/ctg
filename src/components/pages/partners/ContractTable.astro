@@ -6,7 +6,7 @@ import { fact } from '../../../data/facts';
 import { factPart } from './partners';
 
 /**
- * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06.
+ * P3 per-contract table (R2-M5; C7), built only from GV-01 to GV-06 and GV-11.
  * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
  * No Status column (visual polish, WP1p; confirmed 2026-10-12, item #29): the register states a status for no single contract (GV-10 says only that "some
  * contracts are still in progress"), so a column would read "Status to confirm" in every row. The note under the table says once that delivery
@@ -26,10 +26,10 @@ const SCOPE = 'Contract scope:';
 const rows: Row[] = [
   {
     contract: 'Her Power (Department of ICT (DoICT), ICT Division)',
-    facts: ['GV-01'],
+    facts: ['GV-01', 'GV-11'],
     // GV-01's own order: curriculum, manuals and guidelines for the national program (its goal), Training of Trainers, then the manuals published.
-    scope: `Curriculum, training manuals and mentorship guidelines for a national program that trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ upazilas)/)}; Training of Trainers; ${factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/)}`,
-    direct: factPart('GV-01', /[\d,]+ women trained directly/),
+    scope: `Curriculum, training manuals and mentorship guidelines for a national program that trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ upazilas)/)}; Training of Trainers; ${factPart('GV-11', /[\d,]+ manuals and guidelines distributed/)}`,
+    direct: factPart('GV-11', /[\d,]+ women trained directly/),
   },
   {
     // PMIS is the Center for Project Management and Information Systems at the University of Dhaka (named in full in the EDGE news item).

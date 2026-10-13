@@ -41,7 +41,7 @@ export const contactRoutes = (): ContactRoute[] => [
   { id: 'discovery', who: 'Development Partners and NGOs', text: 'Design a first cohort with us: priority groups, tracks and the pilot scorecard.', icon: 'globe', cta: fromLibrary('discovery') },
   { id: 'briefing', who: 'Governments and Ministries', text: 'A briefing on national programs, contract scopes and delivery through existing labs.', icon: 'landmark', cta: fromLibrary('briefing') },
   { id: 'funding', who: 'Foundations and CSR Teams', text: 'Explore a funding partnership for a supported path from learning to earning.', icon: 'heart-handshake', cta: fromLibrary('funding') },
-  { id: 'investor', who: 'Investors', text: 'The investor deck and an introduction call.', icon: 'trending-up', cta: fromLibrary('investor') },
+  { id: 'investor', who: 'Investors', text: 'An introduction call; the deck and data room follow under NDA.', icon: 'trending-up', cta: fromLibrary('investor') },
   { id: 'campus', who: 'Universities and Colleges', text: 'Bring industry-certification preparation and placement support to your students.', icon: 'graduation-cap', cta: fromLibrary('campus') },
   { id: 'work', who: 'Employers: Train Your Team', text: 'A training program scoped to your team and the skills your roles need.', icon: 'briefcase', cta: fromLibrary('work') },
   { id: 'talent', who: 'Employers: Hire Talent', text: 'Job-ready digital talent through the placement team.', icon: 'users', cta: fromLibrary('talent') },

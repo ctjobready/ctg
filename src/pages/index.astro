@@ -28,6 +28,7 @@ import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { futurePhotos } from '../data/photos';
+import GlanceBand from '../components/sections/GlanceBand.astro';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
 import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, SPEED, SCORECARD, VALUE_PROPOSITION, painForList, painForRow } from '../data/copy';
@@ -121,6 +122,26 @@ const featureRows = [
   <Tone cmf="C5"><HomeGuide id="guide" /></Tone>
 
   <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
+
+  <Tone cmf="GLANCE">
+    <GlanceBand
+      id="glance"
+      tone="airy"
+      title="At a Glance"
+      lead="The strongest results in one place. Trial figures are for a predecessor program; survey figures are among surveyed completers."
+      items={[
+        { id: 'SC-16', href: '/impact/global-reach/' },
+        { id: 'RC-13', href: '/impact/independent-evaluation/' },
+        { id: 'RC-06a', href: '/impact/independent-evaluation/' },
+        { id: 'OC-03', href: '/impact/outcomes-2026/' },
+        { id: 'OC-01', href: '/impact/outcomes-2026/' },
+        { id: 'OC-02', href: '/impact/outcomes-2026/', also: ['OC-05'] },
+        { id: 'PR-04', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+        { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+      ]}
+      cols={4}
+    />
+  </Tone>
 
   <Tone cmf="C7">
     <EvidenceBand
