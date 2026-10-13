@@ -32,7 +32,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="The Cost of Waiting" title={title} />
-  <div class="grid-cards">
+  <div class:list={['grid-cards', blocks.length === 2 && 'grid-cards--2']}>
     {
       blocks.map((b) => (
         <article class="card cost" data-reveal>

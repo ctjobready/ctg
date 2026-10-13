@@ -21,11 +21,15 @@ interface Item {
 interface Props {
   title?: string;
   count?: number;
+  /** Only entries with one of these topics (src/content.config.ts), newest first. Home shows program and partner posts so the partners and the young people are the subject (WP23). */
+  topics?: string[];
+  /** Entry ids (file names without .md) left out of the band: a post whose excerpt carries a figure that is not in the facts register cannot appear on an evergreen page. */
+  exclude?: string[];
   /** Used when the collection is missing/empty (e.g. styleguide demo). */
   fallback?: Item[];
   id?: string;
 }
-const { title = 'Latest News', count = 3, fallback = [], id = 'news-teaser' } = Astro.props;
+const { title = 'Latest News', count = 3, topics, exclude = [], fallback = [], id = 'news-teaser' } = Astro.props;
 
 let entries: any[] = [];
 try {
@@ -38,7 +42,7 @@ try {
 // This band sits on evergreen pages, so drafts and political posts (a minister, official, politician or slogan
 // in the teaser; `political` in the front matter) are never teased here. They stay under /news/.
 let items: Item[] = entries
-  .filter((e) => !e.data.draft && !e.data.political)
+  .filter((e) => !e.data.draft && !e.data.political && (!topics || topics.includes(e.data.topic)) && !exclude.includes(e.id))
   .map((e) => ({
     title: e.data.title as string,
     date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),

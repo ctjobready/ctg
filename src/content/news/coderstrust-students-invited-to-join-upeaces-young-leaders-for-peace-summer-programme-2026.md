@@ -3,7 +3,7 @@ title: "CodersTrust Students Were Invited to Join UPEACE’s “Young Leaders fo
 date: 2026-04-17
 updated: 2026-10-13
 topic: programs-events
-excerpt: "CodersTrust learners were invited to apply for UPEACE's Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica."
+excerpt: "CodersTrust learners were invited to apply for UPEACE’s Young Leaders for Peace Summer Programme 2026, which ran June 14 to 28 in San José, Costa Rica."
 cover: ../../assets/images/news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/upace-students.jpg
 coverAlt: "A man in a white shirt standing beside young students who hold their certificates, in front of a University for Peace banner"
 legacyUrl: "https://coderstrust.global/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/"

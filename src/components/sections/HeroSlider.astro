@@ -30,8 +30,10 @@ interface Props {
   slides: HeroSlide[];
   /** Visible section heading (an h2 above the carousel region); the region is named after it. */
   heading?: string;
+  /** One framing sentence under the heading (WP23): what the slides are, said once for the whole carousel. */
+  intro?: string;
 }
-const { id = 'hero', label, slides, heading } = Astro.props;
+const { id = 'hero', label, slides, heading, intro } = Astro.props;
 if (slides.length < 2) throw new Error('HeroSlider: needs at least two slides');
 const total = slides.length;
 const headingId = `${id}-h`;
@@ -63,6 +65,7 @@ const views = slides.map((s, i) => {
   heading && (
     <div class="hs__head container">
       <h2 class="hs__heading" id={headingId}>{heading}</h2>
+      {intro && <p class="hs__intro">{intro}</p>}
     </div>
   )
 }
@@ -85,7 +88,7 @@ const views = slides.map((s, i) => {
                 </nav>
               )}
               {s.eyebrow && <p class="hs__eyebrow" data-hero-in={first ? '' : undefined}>{s.eyebrow}</p>}
-              <h2 class="hs__title t-display-4xl">{s.title}</h2>
+              <h2 class="hs__title t-display-4xl" data-fact={s.titleFacts?.join(' ')}>{s.title}</h2>
               {s.fact ? (
                 <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
               ) : (
@@ -209,6 +212,11 @@ const views = slides.map((s, i) => {
     margin: 0;
     color: var(--secondary);
   }
+  .hs__intro {
+    margin: var(--space-xs) 0 0;
+    max-width: 48rem;
+    color: var(--on-surface-variant);
+  }
   @media (min-width: 768px) {
     .hs__head {
       padding-block: var(--space-xl, 56px) var(--space-xs);
@@ -329,7 +337,7 @@ const views = slides.map((s, i) => {
   }
   .hs__title {
     color: var(--on-surface);
-    max-width: 24ch;
+    max-width: 38ch; /* WP23: the survey and reach headlines state a figure and are longer; two lines, not three */
   }
   .hs__lead {
     font-size: var(--fs-body-m);

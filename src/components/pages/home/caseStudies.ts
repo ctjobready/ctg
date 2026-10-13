@@ -4,6 +4,7 @@ import type { ImageMetadata } from 'astro';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
+import { fact } from '../../../data/facts';
 
 interface CardPhoto {
   src: ImageMetadata;
@@ -18,8 +19,16 @@ export function casePhoto(slug: string): CardPhoto | undefined {
   return caseCardPhoto(slug);
 }
 
+/**
+ * WP23: the Her Power card's label read as one clause with another inside it ("tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%").
+ * It states the result first and the base after it, from PR-05's own label (the figures are not retyped).
+ */
+const herPowerParts = /^tracked women, (from the [\d,]+ trained directly by CodersTrust), in work: (\d+%)$/.exec(fact('PR-05').stat?.label ?? '');
+if (!herPowerParts) throw new Error('caseStudies: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
+const herPowerLabel = `tracked women in work (${herPowerParts[2]}), ${herPowerParts[1]}`;
+
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
+  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', statLabel: herPowerLabel, href: '/impact/case-studies/her-power/' },
 ];

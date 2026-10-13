@@ -21,6 +21,8 @@
  *       ui-title    any non-heading element with a …__title class (card and partner-strip titles)
  *     The visible text is taken: without sr-only text, aria-hidden or hidden subtrees, SVG icons, and the "(opens …)" suffix.
  *     Full sentences are body text and are not checked: text ending in "." "?" or "!", or containing "; ".
+ * Trailing period (owner rule 2026-10-14, WP23): no heading (h1-h6) ends with a period; a question mark stays. The only exceptions are the
+ * abbreviation periods of registered company names ("Inc.", "Ltd."), listed in the allowlist with "rule": "trailing-period".
  * Justified exceptions live in scripts/title-case-allow.json ({page, tag, text, reason}); an entry that no longer matches anything fails
  * the gate, so the list cannot rot. Not checked: body text, link text inside running prose, alt text, photo captions (sentences), table cells
  * that are not headings, quoted text, stat labels, mega-menu descriptions.
@@ -165,6 +167,11 @@ export function collectLabels(root, out = [], chrome = false) {
   return out;
 }
 
+/** [{tag, text}] for the headings (h1-h6) whose text ends with a period (a heading carries no trailing period; "?" is fine). */
+export function trailingPeriods(doc) {
+  return collectItems(doc).filter((i) => /^h[1-6]$/.test(i.tag) && /\.$/.test(i.text));
+}
+
 /** [{tag, text, expected}] for the items that are not in Title Case */
 export function violations(doc) {
   return collectItems(doc)
@@ -196,6 +203,9 @@ function selfTest() {
   ];
   const problems = [];
   if (bad.length !== 2) problems.push(`sentence-case fixture should give 2 violations (title + h1), got ${bad.length}`);
+  // headings end without a period; a question mark is fine
+  const dotted = trailingPeriods(parseHtml('<!doctype html><html><head><title>Fixture | CodersTrust</title></head><body><h1>How We Train.</h1><h2>Why Wait?</h2><h3>Start Now</h3><h3>Two. Sentences.</h3><p>A sentence.</p></body></html>'));
+  if (dotted.length !== 2 || dotted[0].text !== 'How We Train.' || dotted[1].text !== 'Two. Sentences.') problems.push(`trailing-period fixture should flag exactly "How We Train." and "Two. Sentences.", got ${JSON.stringify(dotted.map((d) => d.text))}`);
   if (good.length !== 0) problems.push(`Title Case fixture should give 0 violations, got ${good.length}`);
   for (const [input, want] of cases) if (titleCase(input) !== want) problems.push(`titleCase(${JSON.stringify(input)}) = ${JSON.stringify(titleCase(input))}, wanted ${JSON.stringify(want)}`);
 
@@ -290,6 +300,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const route = page.route;
     for (const item of collectItems(page.doc)) {
       checked++;
+      if (/^h[1-6]$/.test(item.tag) && /\.$/.test(item.text)) {
+        const dot = allow.findIndex((a) => a.rule === 'trailing-period' && (a.page === '*' || a.page === route) && a.tag === item.tag && a.text === item.text);
+        if (dot !== -1) used.add(dot);
+        else findings.error('heading-trailing-period', route, `${item.tag}: ${JSON.stringify(item.text)}  a heading carries no trailing period`);
+      }
       if (!/^(h[1-6]|summary|title|og:title|twitter:title|jsonld\.)/.test(item.tag)) labelCounts[item.tag] = (labelCounts[item.tag] ?? 0) + 1;
       const expected = titleCase(item.text);
       if (expected === item.text) continue;

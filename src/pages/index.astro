@@ -32,7 +32,7 @@ import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PRICING, SCORECARD, painForList, painForRow } from '../data/copy';
+import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PRICING, SCALE, SCORECARD, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { endSentence, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -45,10 +45,15 @@ const FAQ_IDS = ['Q1', 'Q15', 'Q3', 'Q5'];
 // The pricing explainer without its AI-ready curriculum sentence, which FAQ Q5 states once on this page.
 const pricing = { ...PRICING, text: PRICING.text.replace(/ AI-ready curriculum: each track.*$/, '') };
 if (pricing.text === PRICING.text) throw new Error('index: PRICING no longer ends with the AI-ready curriculum sentence');
-// WP19, item 20: the why-now line of the closing band is PX-06's first clause, in the register's own words.
-const px06 = fact('PX-06').text;
-const whyNow = endSentence(px06.slice(0, px06.indexOf(', and image-creation')));
-if (!whyNow.startsWith('Within eight months of ChatGPT')) throw new Error('index: PX-06 no longer opens with the ChatGPT clause the closing band quotes');
+// WP23, item 2: the closing band no longer repeats the ChatGPT statistic (it is stated once, in the Cost of Waiting band); its urgency is the planning line.
+// The other two funder routes sit beside the single discovery button as text links (PRD: one primary button per view).
+const briefing = cta('briefing');
+const introduction = cta('investor');
+// WP23, item 7: on Home, "How We Scale" leaves out the COVID-19 teacher training (no register entry names who trained the teachers), and the capacity
+// is stated as capacity ("can run up to 10 cohorts in parallel", in SCALE itself).
+const scaleText = SCALE.text.replace(' Separately, 10,000 teachers were trained to teach online during COVID-19.', '');
+if (scaleText === SCALE.text) throw new Error('index: SCALE no longer carries the teacher-training sentence Home leaves out');
+const scale = { text: scaleText, facts: SCALE.facts.filter((id) => id !== 'SC-08') };
 const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 
 // C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
@@ -62,8 +67,9 @@ const hours = fact('PD-01').stat?.value;
 const featureRows = [
   {
     ...painForRow(FUNDER_PAINS, 'P1'),
-    feature: 'Placement Support, Three Months of Milestone-Based Mentoring and a Work-Entry Plan per Track Approved Before Enrollment',
-    means: 'Learners get structured support from first profile to first client, and are matched to local, remote and global work.',
+    // WP23, item 5: a shorter label (the work-entry plan moves into the sentence), and placement support, not matching, toward local, remote and global work.
+    feature: 'Placement Support and Three Months of Milestone-Based Mentoring',
+    means: 'Learners get structured support from first profile to first client, with placement support toward local, remote and global work. Each track’s work-entry plan is approved before enrollment.',
     outcome: 'A Path to First Paid Work',
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
@@ -92,13 +98,11 @@ const featureRows = [
   <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results and Programs carousel. -->
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="RESULTS">
-    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" slides={HOME_SLIDES} />
+    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="Results from the trial, the survey and program records, then our programs." slides={HOME_SLIDES} />
   </Tone>
 
-  <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
-
   <Tone cmf="C2">
-    <ProblemBand id="problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job." bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03']}>
+    <ProblemBand id="problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job" bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03']}>
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemBand>
   </Tone>
@@ -106,10 +110,9 @@ const featureRows = [
   <Tone cmf="C3">
     <HomeCost
       id="cost"
-      title="Every Year of Waiting Costs a Cohort."
+      title="Tracks and Evidence Fall Behind While You Wait"
       blocks={[
         { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-        { icon: 'users', claim: 'Most Employers Report Difficulty Finding Talent', factId: 'PX-05', implication: 'Delaying updates to tracks and work-entry support risks preparing learners for yesterday’s demand.' },
         { icon: 'trending-down', claim: 'Only Three of Nine Training Trials Showed an Employment Impact', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after="A first cohort can show who is earning, and you decide on the evidence."
@@ -123,12 +126,12 @@ const featureRows = [
     <FutureBand
       photos={futurePhotos('home')}
       id="future"
-      title="Imagine the Next 12 Months."
+      title="Imagine the Next 12 Months"
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
         { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman outside Dhaka who invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
-        { kind: 'Social', title: 'AI-Ready Talent', text: 'Employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam, without a long search.' },
+        { kind: 'Social', title: 'AI-Ready Talent', text: 'Employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.' },
       ]}
     />
   </Tone>
@@ -159,7 +162,7 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} />
+    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner." items={caseStudyItems} />
     <p class="proof__discuss"><a class="link" href={discovery.href}>Discuss the Evidence for Your Program<Icon name="arrow-right" size={16} /></a></p>
     <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." outcome="She won a company logo design on Freelancer.com, then took on more clients." program="Her Power" tone="airy" />
   </Tone>
@@ -175,21 +178,27 @@ const featureRows = [
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} note="Compare these approaches with your current program on track choice, mentoring, work-entry support and outcome tracking." /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches" withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} note="Compare these approaches with your current program on track choice, mentoring, work-entry support and outcome tracking." /></Tone>
 
-  <Tone cmf="C11"><HomeOffer id="offer" pricing={pricing} lead="Use the discovery session to choose a starting scope for your goals, country and delivery capacity. The options below are program sizes, not a commitment required to begin the conversation." /></Tone>
+  <Tone cmf="C11"><HomeOffer id="offer" pricing={pricing} scale={scale} lead="Use the discovery session to choose a starting scope for your goals, country and delivery capacity. The options below are program sizes, not a commitment required to begin the conversation." /></Tone>
 
-  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot. Decide on Evidence." lead={SCORECARD.text} /></Tone>
+  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot. Decide on Evidence" lead={SCORECARD.text} /></Tone>
+
+  <!-- WP23, item 3: the role router sits just before the closing call to action (the hero's audience links and the menu route earlier). -->
+  <Tone cmf="ROUTER" tone="white"><HomeRouter id="router" /></Tone>
 
   <Tone cmf="C13">
     <CTABand
       id="cta"
       tone="klein"
-      heading="Let’s Design Your First Cohort."
-      text={whyNow}
+      heading="Let’s Design Your First Cohort"
       plan={{ heading: 'Planning a Grant-Funded Cohort?', text: BACKWARD_PLAN.text }}
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
+      routes={[
+        { audience: 'Governments', label: briefing.label, href: briefing.href },
+        { audience: 'Impact investors', label: introduction.label, href: introduction.href },
+      ]}
       micro={MICRO_COMMITMENT}
     />
   </Tone>
@@ -199,7 +208,8 @@ const featureRows = [
     <ConversionNextSteps id="next-steps" title="What Happens After You Contact Us" lead="Here is what follows your inquiry, from the first conversation to the first cohort." timing={false} firstAction={C14.firstAction} />
   </Tone>
 
-  <Tone cmf="NEWS"><NewsTeaserBand id="news" /></Tone>
+  <!-- WP23, item 9: the latest program and partner posts (partnerships; programs and events), so partners and young people are the subject; the treasure-hunt post is left out because its excerpt states a registration count the facts register does not carry. -->
+  <Tone cmf="NEWS"><NewsTeaserBand id="news" topics={['partnerships', 'programs-events']} exclude={['a-proud-milestone-for-coderstrust']} /></Tone>
 
 </LandingLayout>
 

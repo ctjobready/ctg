@@ -13,14 +13,23 @@ interface Props {
   id?: string;
 }
 const { id = 'recognition' } = Astro.props;
+// PA-08 reads "CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024": the sentence keeps the register's dates and category,
+// and the list's name moves into the heading above it.
+const pa08 = /^CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 (in 2023 \(STEAM Category\) and 2024)$/.exec(fact('PA-08').text);
+if (!pa08) throw new Error('HomeRecognition: PA-08 no longer reads "CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024"');
+const listing = `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STEAM category')}.`;
 ---
 
 <Section id={id} tone="white" pad="sm" aria-labelledby={`${id}-h`}>
   <h2 class="rec__title t-heading-l" id={`${id}-h`}>Recognition and Historical Coverage</h2>
-  <p class="rec__badge" data-fact="PA-08">
+  <!-- WP23, item 11: a short heading, then the register's fact as a sentence (PA-08: HolonIQ South Asia EdTech 100, 2023 and 2024). -->
+  <div class="rec__badge" data-fact="PA-08">
     <Icon name="award" size={20} />
-    <span>{fact('PA-08').text}</span>
-  </p>
+    <div>
+      <h3 class="rec__badge-title">HolonIQ South Asia EdTech 100</h3>
+      <p class="rec__badge-text">{listing}</p>
+    </div>
+  </div>
   <p class="rec__press" data-fact="PA-09">
     Press coverage, 2014–2016, including Forbes, The Wall Street Journal and TechCrunch.{' '}
     <a class="link" href={linkAttrs('/about/recognition/').href}>See All Recognition and Media<Icon name="arrow-right" size={16} /></a>
@@ -34,13 +43,22 @@ const { id = 'recognition' } = Astro.props;
   }
   .rec__badge {
     margin: 0 0 var(--space-md);
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    padding: 6px var(--space-md);
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-lg);
     color: var(--on-surface);
+    max-width: max-content;
+  }
+  .rec__badge-title {
+    margin: 0;
+    font: var(--fw-bold) var(--fs-body-base) / var(--lh-body-base) var(--font-sans);
+    color: var(--secondary);
+  }
+  .rec__badge-text {
+    margin: 0;
     font-size: var(--fs-body-xs);
   }
   .rec__badge :global(.icon) {

@@ -28,7 +28,7 @@ const description = `CodersTrust trains and mentors educated, unemployed youth i
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
 const sc02 = fact('SC-02');
 const sc02Stat = sc02.stat!;
-const trial = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income (about +$27 a month).');
+const trial = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income than the control group (about +$27 a month).');
 if (trial === RCT_HEADLINE.text) throw new Error('About: RC-01 headline wording changed; update the trial line');
 
 const sdgLine = fact('ID-09').text.replace('aligns with seven SDGs', 'contributes to seven SDGs');

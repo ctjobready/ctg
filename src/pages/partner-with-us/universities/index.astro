@@ -102,7 +102,7 @@ const steps = [
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="For Too Many Graduates, a Degree Is Not Turning into a Job."
+    title="For Too Many Graduates, a Degree Is Not Turning into a Job"
     bluf="Capable students finish their degrees, and employers still say they cannot find the skills they need."
     factIds={['PX-03', 'PX-05']}
   >
@@ -123,7 +123,7 @@ const steps = [
       title="Every Cohort Without Placement Evidence Weakens Your Employment Story"
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More.', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
+        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
       ]}
     />
@@ -232,13 +232,13 @@ const steps = [
 
   <!-- C10 · Differentiation -->
   <ComparisonBand
-    title="Compare the Approaches."
+    title="Compare the Approaches"
     lead="Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists: campus labs, certified local facilitators and Training of Trainers. Provision varies by provider and program."
   />
 
   <!-- C11 · Offer -->
   <OfferCards
-    title="Choose Where to Start."
+    title="Choose Where to Start"
     cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
     inclusions
     recommended={0}
@@ -246,7 +246,7 @@ const steps = [
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
-    title="Start with a Pilot. Decide on Evidence."
+    title="Start with a Pilot. Decide on Evidence"
     lead={SCORECARD.text.replace('expansion is the funder’s decision', 'expansion is your institution’s decision')}
     points={[
       { icon: 'rocket', title: 'A Pilot Comes First', text: 'Start with a first campus program and see its results.' },
@@ -259,7 +259,7 @@ const steps = [
   <!-- C13 · Call to action -->
   <CTABand
     id="cta"
-    heading="Let’s Bring JobReady@Campus to Your Students."
+    heading="Let’s Bring JobReady@Campus to Your Students"
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
     urgency={SPEED_UNIVERSITIES.text}

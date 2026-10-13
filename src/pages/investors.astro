@@ -117,7 +117,7 @@ const mechanismBlocks = [
       <InvestorProofExtras />
     </EvidenceBand>
   </Tone>
-  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three programs, with their partners." items={caseStudyItems} /></Tone>
+  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
     <FeaturesTable id="features" title="What JobReady Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
@@ -125,14 +125,14 @@ const mechanismBlocks = [
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches." withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches: certification, work entry, outcome tracking and independent evidence." rows={compareRows} /></Tone>
+  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches" withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches: certification, work entry, outcome tracking and independent evidence." rows={compareRows} /></Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
   <Tone cmf="C12">
     <RiskReversalBand
       id="risk"
-      title="Start with a Conversation, Not a Commitment."
+      title="Start with a Conversation, Not a Commitment"
       points={[
         { icon: 'phone', title: 'The Call Does Not Commit Either Side', text: 'It is a conversation about your funding priorities.' },
         { icon: 'handshake', title: 'You Decide What Happens Next', text: 'You choose whether to continue after the call.' },
@@ -145,7 +145,7 @@ const mechanismBlocks = [
     <CTABand
       id="cta"
       tone="klein"
-      heading="Let’s Talk About Backing the Platform."
+      heading="Let’s Talk About Backing the Platform"
       cta={{ label: investor.label, href: investor.href }}
       secondary={{ label: 'Meet the Leadership Team', href: '/about/team/' }}
     />

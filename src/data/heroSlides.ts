@@ -11,7 +11,9 @@ import { cta } from '../lib/mailto';
  * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then survey income and employment,
  * placement (named programs), speed to earning, reach, government and National University trust, and the programs (employment programs first, SuperKids last).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
- * Titles and eyebrows are Title Case (src/lib/titleCase.mjs). Every carousel slide title is an h2.
+ * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
+ * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
+ * the offered-place employment and income results before the attenders' income; the placement slide lists all four case-study programs.
  */
 
 export interface HeroSlideStat {
@@ -32,6 +34,8 @@ export interface HeroSlide {
   eyebrow?: string;
   /** The heading: the page's h1 on the first slide, an h2 on the others. */
   title: string;
+  /** Fact IDs whose figures the heading states (data-fact on the heading). */
+  titleFacts?: string[];
   lead?: string;
   /** Fact IDs the lead states (data-fact on the lead paragraph). */
   leadFacts?: string[];
@@ -75,13 +79,26 @@ const offeredPoints = fact('RC-02').stat?.numeric;
 const nineTrialAverage = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
 const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 const incomeAttended = fact('RC-13').stat?.numeric;
-if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeAttended === undefined) throw new Error('heroSlides: RC-02, RC-06a, RC-07 or RC-13 no longer carries the figure a slide reads');
+/** The trial's estimated income difference for all women offered a place (RC-01's tile), stated before the attenders' figure. */
+const incomeOffered = fact('RC-01').stat?.numeric;
+if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeAttended === undefined || incomeOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-06a, RC-07 or RC-13 no longer carries the figure a slide reads');
 /** Women per 100 offered a place who were in work beyond the control group, as RC-02 rounds it (the [PLAIN-LINE] wording). */
 const perHundred = Math.round(offeredPoints);
+/** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
+const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
+if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
+/** The new earners' share and the survey's income figures, for the survey slide headlines. */
+const startedSixMonths = fact('OC-05').stat?.value;
+const incomeNow = fact('OC-03').stat?.value;
+const incomeBefore = fact('OC-03').stat?.from;
+const reachFigure = fact('SC-16').stat?.value;
+const countries = fact('SC-03').stat?.numeric;
+if (!startedSixMonths || !incomeNow || !incomeBefore || !reachFigure || countries === undefined) throw new Error('heroSlides: OC-03, OC-05, SC-03 or SC-16 no longer carries the figure a slide headline reads');
 const PR_TEXT = {
   wsdfm: `${fact('PR-01').stat?.label}.`,
   wow: `${fact('PR-02').stat?.label}.`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} in work within three months.`,
+  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
 
 /** The stable home hero. */
@@ -116,7 +133,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'evidence',
     eyebrow: 'Independent Evaluation',
     title: `About ${perHundred} More Women in Work for Every 100 Offered a Place`,
-    lead: `A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were ${offeredPoints} percentage points more likely to be employed. For women who attended, income was ${incomeAttended}% higher.`,
+    lead: `A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were ${offeredPoints} percentage points more likely to be employed, and their monthly income was an estimated ${incomeOffered}% higher than the control group’s. For women who attended, income was ${incomeAttended}% higher.`,
     leadFacts: ['RC-01', 'RC-02', 'RC-13'],
     proof: {
       factId: 'RC-06a',
@@ -128,7 +145,8 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
-    title: 'Income and Employment Among Surveyed Completers',
+    title: `Median Income Rose from ${incomeBefore} to ${incomeNow} Among Surveyed Completers`,
+    titleFacts: ['OC-03'],
     lead: 'Median monthly income, and share employed, before training and at the October 2026 survey.',
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
@@ -140,12 +158,13 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'placement',
     eyebrow: 'Placement',
-    title: 'Placement Results, Program by Program',
-    lead: 'Three partner-funded programs report their own in-work results.',
+    title: 'Placement Results by Program',
+    lead: 'Four programs, each with its partner, report their own in-work results.',
     lines: [
       { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
+      { text: PR_TEXT.herPower, factIds: ['PR-05'] },
     ],
     links: [{ label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' }],
     photo: 'general/yes-trainees-group',
@@ -153,8 +172,10 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    title: 'Most New Earners Started Within Six Months',
-    lead: 'Among surveyed completers, most new earners started within six months of training.',
+    title: `${startedSixMonths} of Surveyed New Earners Started Within Six Months`,
+    titleFacts: ['OC-05'],
+    lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
+    leadFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See How Fast Completers Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/lab-women-screen',
@@ -162,7 +183,8 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'scale',
     eyebrow: 'Impact at Scale',
-    title: 'Programs in 15 Countries and Territories',
+    title: `${reachFigure} Young People Trained in ${countries} Countries and Territories`,
+    titleFacts: ['SC-16', 'SC-03'],
     lead: fact('SC-03').stat?.detail,
     leadFacts: ['SC-03'],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],

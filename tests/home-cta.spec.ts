@@ -83,3 +83,26 @@ test('mobile sticky CTA bar is hidden at the top of every landing page (extra) 3
   }
   expect(shown, `pages where the sticky CTA bar is already visible at scrollY=0 (of ${withBar.length})`).toEqual([]);
 });
+
+/**
+ * WP23: the role router ("What Brings You Here?") sits just before the closing call to action, the closing band keeps ONE primary button
+ * with the government and investor routes beside it as text links, and the Cost of Waiting band holds only cards that match its heading.
+ */
+test('home: the router is the band before the closing call to action, which has one primary button and two text routes (WP23)', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await open(page, pageByRoute('/'));
+  const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
+  const cta = order.indexOf('C13');
+  expect(cta, 'the closing call-to-action band is on the page').toBeGreaterThan(0);
+  expect(order[cta - 1], `the band before the closing call to action (order: ${order.join(' > ')})`).toBe('ROUTER');
+  expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
+
+  const band = page.locator('#cta');
+  await expect(band.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
+  await expect(band.getByRole('link', { name: 'Request a Briefing for Your Ministry' })).toHaveAttribute('href', /^mailto:/);
+  await expect(band.getByRole('link', { name: 'Request an Introduction Call' })).toHaveAttribute('href', /^mailto:/);
+  await expect(band, 'the ChatGPT statistic is stated once, in the Cost of Waiting band').not.toContainText('ChatGPT');
+
+  await expect(page.locator('#cost .card')).toHaveCount(2);
+  await expect(page.locator('#cost')).not.toContainText('72%');
+});

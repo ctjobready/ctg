@@ -36,15 +36,15 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
 export const HEADLINE: Record<Audience, string> = {
-  home: 'Turn Youth Unemployment into a Digital Workforce — with Evidence.',
-  developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
-  governments: 'Build a National Digital Workforce from Graduates and Digital Labs.',
-  foundations: 'Fund a Supported Path from Learning to Earning.',
-  universities: 'Help Your Students and Graduates Build Job-Ready Digital Skills.',
-  employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
-  investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work.',
-  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.',
-  nuPgd: 'Build Practical Digital Skills After Your Degree.',
+  home: 'Turn Youth Unemployment into a Digital Workforce — with Evidence',
+  developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
+  governments: 'Build a National Digital Workforce from Graduates and Digital Labs',
+  foundations: 'Fund a Supported Path from Learning to Earning',
+  universities: 'Help Your Students and Graduates Build Job-Ready Digital Skills',
+  employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
+  investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work',
+  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community',
+  nuPgd: 'Build Practical Digital Skills After Your Degree',
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
@@ -260,7 +260,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, with up to 10 cohorts running in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
@@ -401,7 +401,8 @@ export const DEFINITION_HEADING = 'What Is CodersTrust?';
 export const HOME_META = {
   // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
   title: 'CodersTrust: From Learning to Earning for Youth',
-  description: 'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. We prepare youth for work.',
+  // WP23: at most 155 characters; the ending names what the program does (it was "We prepare youth for work.").
+  description: 'Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Training, mentoring and placement.',
 };
 
 /** Investors page market section (no market-size figures on public pages, D2). */

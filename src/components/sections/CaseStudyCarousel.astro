@@ -14,6 +14,8 @@ interface Item {
   partner?: string;
   /** Fact ID whose stat is the outcome (PR-01 … PR-05). */
   factId: string;
+  /** The stat's caption when the register's own label should be restated for the card (the same figures, in a simpler order). */
+  statLabel?: string;
   href: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
@@ -34,7 +36,7 @@ const cards = items.map((it) => {
   if (!s) throw new Error(`CaseStudyCarousel: fact ${it.factId} has no stat`);
   // No picture given: the card takes the case study's own photograph (matched on the slug in its link).
   const own = it.image ? undefined : casePhoto(/case-studies\/([^/]+)/.exec(it.href)?.[1] ?? '');
-  return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: { value: s.value, label: s.label } };
+  return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: { value: s.value, label: it.statLabel ?? s.label } };
 });
 ---
 

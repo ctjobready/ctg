@@ -60,10 +60,28 @@ test.describe('home hero slider', () => {
     await expect(slides.nth(0)).toHaveAttribute('role', 'group');
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence.');
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
     await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');
+    // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
+    await expect(page.locator('.hs__intro')).toHaveText('Results from the trial, the survey and program records, then our programs.');
+    const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
+    expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
+      'Median Income Rose from $82 to $245 Among Surveyed Completers',
+      'Placement Results by Program',
+      '58.8% of Surveyed New Earners Started Within Six Months',
+      '130,000+ Young People Trained in 15 Countries and Territories',
+    ]);
+    for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
+    // the offered-place results come before the attenders' income, which is labelled as theirs
+    const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
+    expect(lead.indexOf('10.3 percentage points'), 'employment result first').toBeGreaterThan(-1);
+    expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('10.3 percentage points'));
+    expect(lead.indexOf('For women who attended, income was 54% higher')).toBeGreaterThan(lead.indexOf('41% higher'));
+    // the placement slide lists all four case-study programs
+    await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(4);
+    await expect(slides.nth(2).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -156,7 +174,7 @@ test.describe('home hero slider', () => {
     await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Income and Employment Among Surveyed Completers');
+    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Median Income Rose from $82 to $245 Among Surveyed Completers');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();

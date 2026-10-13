@@ -1,6 +1,34 @@
 {
   "entries": [
     {
+      "page": "/about/governance/",
+      "tag": "h3",
+      "text": "CT USA, Inc.",
+      "rule": "trailing-period",
+      "reason": "The registered company name; the period belongs to the abbreviation \"Inc.\", not to the heading."
+    },
+    {
+      "page": "/contact/",
+      "tag": "h3",
+      "text": "CT USA, Inc.",
+      "rule": "trailing-period",
+      "reason": "The registered company name; the period belongs to the abbreviation \"Inc.\", not to the heading."
+    },
+    {
+      "page": "/about/governance/",
+      "tag": "h3",
+      "text": "CodersTrust Bangladesh Ltd.",
+      "rule": "trailing-period",
+      "reason": "The registered company name (owner-confirmed wording); the period belongs to the abbreviation \"Ltd.\", not to the heading."
+    },
+    {
+      "page": "/contact/",
+      "tag": "h3",
+      "text": "CodersTrust Bangladesh Ltd.",
+      "rule": "trailing-period",
+      "reason": "The registered company name (owner-confirmed wording); the period belongs to the abbreviation \"Ltd.\", not to the heading."
+    },
+    {
       "page": "/styleguide/",
       "tag": "h3",
       "text": "Scroll-Driven Reveal (CSS animation-timeline: view(), Where Supported)",

@@ -98,7 +98,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <div id="hero">
     <Hero
       eyebrow="YouthWIDE · Youth Digital Employment Program"
-      title="Prepare Educated Youth for Paid Digital Work."
+      title="Prepare Educated Youth for Paid Digital Work"
       lead="We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training."
       artSeed="youthwide"
     >
@@ -158,7 +158,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C2 -->
   <ProblemSection
     eyebrow="The Challenge"
-    title="Educated Young People Are Not in Work in Bangladesh and Across Three Regions."
+    title="Educated Young People Are Not in Work in Bangladesh and Across Three Regions"
     bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
     factIds={['PX-01', 'PX-02']}
   >
@@ -177,12 +177,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C3 -->
   <CostSection
-    title="Training Without Work Entry Spends the Budget Without the Result."
+    title="Training Without Work Entry Spends the Budget Without the Result"
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
-      { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
+      { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
-      { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need.`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
+      { claim: `${statValue('PX-05')} of employers worldwide report difficulty finding the talent they need`, factId: 'PX-05', scope: 'Globally', implication: 'Hiring alone does not close the skills gap, so tracks need to build the skills employers ask for.' },
     ]}
   />
 
@@ -217,7 +217,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C5 -->
   <GuideSection
-    title={`We Have Built This Path Since ${statValue('ID-02')}.`}
+    title={`We Have Built This Path Since ${statValue('ID-02')}`}
     empathy={EMPATHY.developmentPartners}
     origin={ORIGIN}
     statIds={['SC-01', 'SC-03', 'SC-06', 'SC-04']}
@@ -320,7 +320,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C8 (review round 14, M4): one row per ranked pain of C2 (pain → how we relieve it → the registered feature), then the gain creators -->
   <FeaturesTable
-    title="Each Feature Maps to What Funders and Agencies Ask For."
+    title="Each Feature Maps to What Funders and Agencies Ask For"
     concernLabel="Funder Concern Addressed"
     rows={[
       {
@@ -387,7 +387,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   </Section>
 
   <!-- C10 -->
-  <ComparisonBand title="Compare the Approaches." />
+  <ComparisonBand title="Compare the Approaches" />
 
   <!-- C11 -->
   <OfferSection title="Three Ways to Start, Sized to Your Goals" lead="Each phase is planned with the agency or funder on the results of the one before. Program options are shown without prices; the indicative budget is shared in the discovery session." options={PROGRAM_OPTIONS}>
@@ -412,7 +412,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C12 -->
   <RiskSection
-    title="Start with a Pilot. Decide on Evidence."
+    title="Start with a Pilot. Decide on Evidence"
   >
     <Fragment slot="lead">
       <CopyP block={SCORECARD} />
@@ -428,7 +428,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C13: one primary button (the funders' discovery session); the Bangladesh briefing for governments is a text link in its own band, so two primary buttons never stand in one view -->
   <CTABand
     id="cta"
-    heading="Funders: Talk to Us About a First Cohort."
+    heading="Funders: Talk to Us About a First Cohort"
     cta={discovery}
     secondary={{ label: 'Read the Evidence', href: '/impact/' }}
     micro={MICRO_COMMITMENT}
@@ -440,7 +440,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     briefing.href && (
       <Section id="cta-governments" tone="airy" pad="md" aria-labelledby="cta-governments-h">
         <div class="gov-cta">
-          <h2 id="cta-governments-h" class="t-heading-xl" data-reveal>Governments: Start with a Briefing That Fits Your Timeline.</h2>
+          <h2 id="cta-governments-h" class="t-heading-xl" data-reveal>Governments: Start with a Briefing That Fits Your Timeline</h2>
           <p class="gov-cta__text" data-reveal>Public procurement follows the agency’s own timeline — we start with a briefing that fits it.</p>
           <p data-reveal>
             <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
