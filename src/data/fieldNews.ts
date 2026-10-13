@@ -44,7 +44,7 @@ export const FIELD_NEWS_LABEL: Record<string, string> = {
   "coderstrust-organizes-career-carnival-for-students-and-affiliates": "CodersTrust Career Carnival",
   "coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia": "Akij Group corporate training",
   "coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities": "MoU signing with NCTB",
-  "coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026": "UPEACE Young Leaders for Peace programme, Costa Rica",
+  "coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026": "UPEACE Young Leaders for Peace program, Costa Rica",
   "coderstrust-teaching-you-freelancing-the-right-way": "Freelancing training",
   "coderstrust-visited-bimstec-headquarter": "Visit to the BIMSTEC Secretariat, Dhaka",
   "empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation": "Certificate ceremony with Joyeeta Foundation",
