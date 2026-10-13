@@ -107,7 +107,7 @@ const PAGES = {
   // NationWIDE was renamed YouthWIDE and its page merged into /programs/youthwide/ (WP4c); the short-lived program URL redirects too.
   '/programs/nationwide/': ['MOVE', '/programs/youthwide/'],
   '/superkids/': ['MOVE', '/programs/superkids/'],
-  '/nu-postgraduate-diploma/': ['KEEP', '/nu-postgraduate-diploma/'],
+  '/nu-postgraduate-diploma/': ['MOVE', '/programs/nu-postgraduate-diploma/'],
   '/case-studies/': ['MOVE', '/impact/case-studies/'],
   '/case-studies/undp-yes-project/': ['MOVE', '/impact/case-studies/undp-yes-korail/'],
   '/case-studies/womens-skill-development-for-freelancing-marketplace-wsdfm-project/': ['MOVE', '/impact/case-studies/wsdfm-women-freelancers/'],
@@ -217,8 +217,8 @@ for (const rec of inventory) {
       break;
     }
     case 'course':
-      if (p === '/course/digital-marketing-pgd/') r = { class: 'course', disposition: 'MOVE', destination: '/nu-postgraduate-diploma/digital-marketing/' };
-      else if (p === '/course/information-communication-technology/') r = { class: 'course', disposition: 'MOVE', destination: '/nu-postgraduate-diploma/ict/' };
+      if (p === '/course/digital-marketing-pgd/') r = { class: 'course', disposition: 'MOVE', destination: '/programs/nu-postgraduate-diploma/digital-marketing/' };
+      else if (p === '/course/information-communication-technology/') r = { class: 'course', disposition: 'MOVE', destination: '/programs/nu-postgraduate-diploma/ict/' };
       else if (jrDest(p)) r = { class: 'course', disposition: 'JR', destination: jrDest(p) };
       else fail(`course without a map row: ${p}`);
       break;
@@ -231,7 +231,7 @@ for (const rec of inventory) {
       r = { class: 'course', disposition: 'JR', destination: jrDest(p) };
       break;
     case 'course-category':
-      if (p === '/course-category/nu-pgd-courses/') r = { class: 'archive', disposition: 'MOVE', destination: '/nu-postgraduate-diploma/' };
+      if (p === '/course-category/nu-pgd-courses/') r = { class: 'archive', disposition: 'MOVE', destination: '/programs/nu-postgraduate-diploma/' };
       else if (jrDest(p)) r = { class: 'archive', disposition: 'JR', destination: jrDest(p) };
       else fail(`course category without a map row: ${p}`);
       break;
@@ -382,6 +382,12 @@ for (const p of ['/wp-login.php', '/wp-admin/', '/wp-json/', '/xmlrpc.php', '/wp
   add({ legacy_url: p, class: 'system', disposition: 'SYSTEM', destination: GONE, test_status: 'edge' });
 }
 
+// ---- 3b. Site routes that moved after launch planning (WP20a): the NU Postgraduate Diploma pages now live under /programs/. The hub (/nu-postgraduate-diploma/)
+// is a legacy WordPress page and is classified in PAGES above; its two course pages existed only on this site, so their old paths are stubbed here.
+for (const slug of ['digital-marketing', 'ict']) {
+  add({ legacy_url: `/nu-postgraduate-diploma/${slug}/`, class: 'page', disposition: 'MOVE', destination: `/programs/nu-postgraduate-diploma/${slug}/` });
+}
+
 // ---- 4. Query-string URLs (edge Worker; static hosting cannot read query strings) -----------------
 for (const [id, { row, type }] of [...byContentId].sort((a, b) => a[0] - b[0])) {
   if (idTypes.skip.has(type)) continue; // templates and test items: an unknown ID already goes home
@@ -453,7 +459,7 @@ for (const [legacy_url, disposition, destination, query_handling] of PATTERNS) {
     if (/^image\//.test(a.mime_type)) continue;
     const parent = byContentId.get(a.post_parent_id);
     // No parent in the export: choose the landing page by file name (the NU PGD circular belongs to the NU PGD page), else home.
-    const landing = [[/nu-?pgd/i, '/nu-postgraduate-diploma/']].find(([re]) => re.test(a.source_url))?.[1] ?? '/';
+    const landing = [[/nu-?pgd/i, '/programs/nu-postgraduate-diploma/']].find(([re]) => re.test(a.source_url))?.[1] ?? '/';
     const dest = parent ? destOf(parent.row) : landing;
     const r = add({ legacy_url: mediaPath(a.source_url), content_id: String(a.id), class: 'media', disposition: 'DROP', destination: isExternalDest(dest) ? '/' : dest });
     mediaRowsById.set(a.id, r);

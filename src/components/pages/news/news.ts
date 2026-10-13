@@ -86,3 +86,54 @@ export function coverRepeat(post: NewsEntry): { repeats: boolean; caption?: stri
 export function coverDuplicatesBody(post: NewsEntry): boolean {
   return post.data.cover ? coverAppearsInBody(resolve(process.cwd(), post.filePath ?? `src/content/news/${post.id}.md`)) : false;
 }
+
+/**
+ * Which closing call to action an archived post gets (WP20a). The posts carry no audience field, so the choice is listed by post slug; a post that is
+ * not listed (a new one, or one that is about CodersTrust generally) gets the discovery session. The archived text itself is never touched.
+ */
+export type NewsAudience = 'corporate' | 'university' | 'government' | 'general';
+
+const AUDIENCE_BY_POST: Record<string, NewsAudience> = {
+  'coderstrust-provides-corporate-training-to-akij-group-one-of-the-largest-conglomerates-of-south-asia': 'corporate',
+  'mou-signing-ceremony-between-north-south-university-coderstrust': 'university',
+  'coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership': 'university',
+  'coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration': 'university',
+  'coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation': 'university',
+  'mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust': 'university',
+  'coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad': 'university',
+  '1000-trainees-enhancing-digital-government-economy-edge': 'government',
+  '1000-trainees-sheikh-kamal-ict-incubator-training': 'government',
+  '25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative': 'government',
+  'coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment': 'government',
+  'coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities': 'government',
+};
+
+export const newsAudience = (post: NewsEntry): NewsAudience => AUDIENCE_BY_POST[post.id] ?? 'general';
+
+/** The closing module per audience: the heading and line, the CTA from the CTA library, and one text link to the current offer. */
+export const NEWS_CTA: Record<NewsAudience, { heading: string; text: string; cta: 'discovery' | 'work' | 'campus' | 'briefing'; offer: { label: string; href: string } }> = {
+  general: {
+    heading: 'Working on Youth Employment?',
+    text: 'Tell us your goals and priority groups. A discovery session is a conversation, not a commitment.',
+    cta: 'discovery',
+    offer: { label: 'See Our Programs', href: '/programs/' },
+  },
+  corporate: {
+    heading: 'Building Your Team’s Digital Skills?',
+    text: 'Tell us your company, team size, skills needed and timeline.',
+    cta: 'work',
+    offer: { label: 'Explore JobReady@Work', href: '/programs/jobready-work/' },
+  },
+  university: {
+    heading: 'Preparing Students for Work?',
+    text: 'Tell us your institution, number of students and programs of interest.',
+    cta: 'campus',
+    offer: { label: 'Explore JobReady@Campus', href: '/programs/jobready-campus/' },
+  },
+  government: {
+    heading: 'Planning a Government Program?',
+    text: 'Tell us your agency, program target and preferred dates.',
+    cta: 'briefing',
+    offer: { label: 'Explore Government Partnerships', href: '/partner-with-us/governments/' },
+  },
+};

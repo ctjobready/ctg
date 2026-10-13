@@ -15,8 +15,10 @@ interface Props {
   cols?: 3 | 4 | 5;
   label?: string;
   class?: string;
+  /** What each card is called in the spoken "Step 1: …" prefix (a course's list is of modules). */
+  unit?: 'Step' | 'Module';
 }
-const { items, cols = 4, label, class: className } = Astro.props;
+const { items, cols = 4, label, class: className, unit = 'Step' } = Astro.props;
 ---
 
 <ol class:list={['phases', `phases--${cols}`, className]} role="list" aria-label={label}>
@@ -24,7 +26,7 @@ const { items, cols = 4, label, class: className } = Astro.props;
     items.map((it, i) => (
       <li class="phases__item" data-reveal data-fact={it.factIds?.join(' ')}>
         <span class="phases__num" aria-hidden="true">{i + 1}</span>
-        <h3 class="phases__title"><span class="sr-only">Step {i + 1}: </span>{titleCase(it.title)}</h3>
+        <h3 class="phases__title"><span class="sr-only">{unit} {i + 1}: </span>{titleCase(it.title)}</h3>
         {it.text && <p class="phases__text">{it.text}</p>}
       </li>
     ))

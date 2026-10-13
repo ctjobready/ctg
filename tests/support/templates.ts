@@ -22,7 +22,7 @@ export function templatePages(): TemplatePage[] {
     { id: 'case-study', label: 'Case study', page: pageByRoute('/impact/case-studies/her-power/') },
     { id: 'article', label: 'Article', page: firstArticle() },
     { id: 'team', label: 'Team', page: pageByRoute('/about/team/') },
-    { id: 'nu-pgd', label: 'NU PGD', page: pageByRoute('/nu-postgraduate-diploma/') },
+    { id: 'nu-pgd', label: 'NU PGD', page: pageByRoute('/programs/nu-postgraduate-diploma/') },
     { id: 'contact', label: 'Contact', page: pageByRoute('/contact/') },
   ];
 }
@@ -48,7 +48,7 @@ export function screenshotPages(): { slug: string; page: SitePage }[] {
     route('team', '/about/team/'),
     route('news', '/news/'),
     { slug: 'article', page: firstArticle() },
-    route('nu-pgd', '/nu-postgraduate-diploma/'),
+    route('nu-pgd', '/programs/nu-postgraduate-diploma/'),
     route('contact', '/contact/'),
     route('404', '/404.html'),
   ];

@@ -6,13 +6,13 @@
  *   npm run build && npm run preview &        # serves http://localhost:4321/ctg/
  *   node scripts/a11y-smoke.mjs [baseUrl] [path ...]
  *
- * Defaults: http://localhost:4321/ctg  /styleguide/ /404.html /
+ * Defaults: http://localhost:4321/ctg  /styleguide/ (not with SITE_ENV=production) /404.html /
  */
 import { chromium } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const base = (process.argv[2] ?? 'http://localhost:4321/ctg').replace(/\/$/, '');
-const paths = process.argv.slice(3).length ? process.argv.slice(3) : ['/styleguide/', '/404.html', '/'];
+const paths = process.argv.slice(3).length ? process.argv.slice(3) : [...(process.env.SITE_ENV === 'production' ? [] : ['/styleguide/']), '/404.html', '/'];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const sizes = [
   { name: '390x844', width: 390, height: 844 },

@@ -48,7 +48,7 @@ else if (siteEnv === 'production') {
 
 // ---- llms.txt ------------------------------------------------------------------------------------
 const llms = read('llms.txt');
-const PRIORITY = ['/', '/about/', '/our-model/talentleap/', '/impact/outcomes-2026/', '/impact/independent-evaluation/', '/programs/youthwide/', '/partner-with-us/', '/investors/', '/nu-postgraduate-diploma/'];
+const PRIORITY = ['/', '/about/', '/our-model/talentleap/', '/impact/outcomes-2026/', '/impact/independent-evaluation/', '/programs/youthwide/', '/partner-with-us/', '/investors/', '/programs/nu-postgraduate-diploma/'];
 let llmsLinks = 0;
 if (llms === null) err('llms.txt missing');
 else {
@@ -69,7 +69,9 @@ else {
   const reference = section('Canonical reference pages');
   const depri = section('Deprioritised');
   for (const p of PRIORITY) if (!priority.some((l) => l.includes(`(${origin}${p})`))) err(`llms.txt priority resources lack ${p}`);
-  if (!depri.some((l) => /redirect stub/i.test(l)) || !depri.some((l) => /styleguide/i.test(l))) err('llms.txt "Deprioritised" must mention redirect stubs and the styleguide');
+  // the component gallery is left out of a production build (WP20a), so only the other builds name it
+  if (!depri.some((l) => /redirect stub/i.test(l)) || (siteEnv !== 'production' && !depri.some((l) => /styleguide/i.test(l)))) err('llms.txt "Deprioritised" must mention redirect stubs and, outside a production build, the styleguide');
+  if (siteEnv === 'production' && depri.some((l) => /styleguide/i.test(l))) err('llms.txt names the styleguide, which a production build does not contain');
   for (const l of [...priority, ...reference]) {
     const m = l.match(/^- \[([^\]]+)\]\((https?:\/\/[^)\s]+)\)(?:: (.+))?$/);
     if (!m) {

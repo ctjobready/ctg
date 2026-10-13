@@ -1,38 +1,39 @@
 ---
-// P15 — NU Postgraduate Diploma /nu-postgraduate-diploma/ (T3 conversion page; doc 04 matrix 4.7).
-// Gate: duration, schedule, eligibility, delivery mode, internship terms and award are NOT published until
-// NU and CodersTrust approve the admissions fact set. "Apply Now" is a plain link to the standalone Google Form.
-import LandingLayout from '../../layouts/LandingLayout.astro';
-import Section from '../../components/ui/Section.astro';
-import SectionHeader from '../../components/ui/SectionHeader.astro';
-import StepFlow from '../../components/ui/StepFlow.astro';
-import CTABand from '../../components/ui/CTABand.astro';
-import CourseCard from '../../components/system/CourseCard.astro';
-import { futurePhotos, nuBanner } from '../../data/photos';
-import Icon from '../../components/system/Icon.astro';
-import Fact from '../../components/facts/Fact.astro';
-import { linkAttrs } from '../../lib/url';
-import HeroBand from '../../components/sections/HeroBand.astro';
-import FutureBand from '../../components/sections/FutureBand.astro';
-import ProofBand from '../../components/sections/ProofBand.astro';
-import CopyP from '../../components/pages/programs/CopyP.astro';
-import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
-import CostSection from '../../components/pages/programs/CostSection.astro';
-import GuideSection from '../../components/pages/programs/GuideSection.astro';
-import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
-import FaqSection from '../../components/pages/programs/FaqSection.astro';
-import OfferSection from '../../components/pages/programs/OfferSection.astro';
-import RiskSection from '../../components/pages/programs/RiskSection.astro';
-import NextSteps from '../../components/pages/programs/NextSteps.astro';
-import { anchor, faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { PAGE_UPDATED } from '../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
-import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
-import { CLAIM_PX06 } from '../../components/sections/copyText';
-import { COURSES_URL } from '../../lib/site';
-import { formatDate, isoDate } from '../../lib/format';
-import { pageUrl, webPage } from '../../lib/schema';
+// P15 — NU Postgraduate Diploma /programs/nu-postgraduate-diploma/ (applicant admissions page; moved under /programs/ in WP20a, the old /nu-postgraduate-diploma/ paths are redirect stubs).
+// Applicant template: key facts in the hero, the full "Before You Apply" table after the value band, one primary CTA (Apply Now) with admissions as a text link.
+// "Apply Now" is a plain link to the standalone Google Form.
+import LandingLayout from '../../../layouts/LandingLayout.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import CourseCard from '../../../components/system/CourseCard.astro';
+import { futurePhotos, nuBanner } from '../../../data/photos';
+import Icon from '../../../components/system/Icon.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import { linkAttrs } from '../../../lib/url';
+import Hero from '../../../components/system/Hero.astro';
+import Button from '../../../components/system/Button.astro';
+import FutureBand from '../../../components/sections/FutureBand.astro';
+import ProofBand from '../../../components/sections/ProofBand.astro';
+import CopyP from '../../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
+import ProblemSection from '../../../components/pages/programs/ProblemSection.astro';
+import CostSection from '../../../components/pages/programs/CostSection.astro';
+import GuideSection from '../../../components/pages/programs/GuideSection.astro';
+import MechanismSection from '../../../components/pages/programs/MechanismSection.astro';
+import FaqSection from '../../../components/pages/programs/FaqSection.astro';
+import OfferSection from '../../../components/pages/programs/OfferSection.astro';
+import RiskSection from '../../../components/pages/programs/RiskSection.astro';
+import NextSteps from '../../../components/pages/programs/NextSteps.astro';
+import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
+import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
+import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { EMPATHY, HEADLINE, ORIGIN, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { CLAIM_PX06 } from '../../../components/sections/copyText';
+import { COURSES_URL } from '../../../lib/site';
+import { formatDate, isoDate } from '../../../lib/format';
+import { pageUrl, webPage } from '../../../lib/schema';
 
 const path = NU_PATH;
 const title = 'NU Postgraduate Diploma';
@@ -45,12 +46,12 @@ const courses = await nuCourses();
 const faqSources: FaqSource[] = [
   { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
   { q: 'Who Delivers the Diploma?', html: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. Intake dates and the teaching location are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
 const jsonLd = [
-  webPage({ path, name: NU_NAME, description, dateModified: PAGE_UPDATED.nu, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path }] }),
+  webPage({ path, name: NU_NAME, description, dateModified: PAGE_UPDATED.nu, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Postgraduate Diploma', path }] }),
   {
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#courses`,
@@ -63,28 +64,24 @@ const jsonLd = [
 const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] };
 ---
 
-<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
-  <!-- C1 -->
-  <HeroBand audience={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} cta={apply} artSeed="nu-pgd" />
-
-  <Section id="before-you-apply" aria-labelledby="before-h">
-    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Postgraduate Diploma." />
-    <dl class="ba">
-      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
-      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
-      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-06" /></dd></div>
-      <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
-      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
-      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
-      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+<LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
+  <!-- C1: one primary CTA (Apply Now); admissions is a text link; the key facts sit in the hero, the full table follows the value band -->
+  <Hero eyebrow={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} artSeed="nu-pgd">
+    <Fragment slot="actions">
+      <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
+      <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
+    </Fragment>
+    <dl slot="stats" class="keyfacts">
+      <div><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
+      <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+      <div><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
     </dl>
-  </Section>
+  </Hero>
 
   <DefinitionBlock heading="What Is the NU Postgraduate Diploma?">
     <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.</p>
-    <p data-fact="NU-04">CodersTrust delivers the courses as an affiliated college under the National University of Bangladesh.</p>
+    <Fact id="NU-04" as="p" />
   </DefinitionBlock>
 
   <!-- C2 -->
@@ -109,7 +106,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   <!-- C4 -->
   <FutureBand
     photos={futurePhotos('nu-pgd')}
-    title="What You Can Take from the Diploma"
+    title="A Clearer Route into Digital Work"
     lead="Illustrative: you finish with practical digital skills and a clearer route into work."
     vignettes={[
       { kind: 'Functional', title: 'Practical Digital Skills', text: 'You build skills employers ask for, in digital marketing or ICT.' },
@@ -118,8 +115,24 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     ]}
   />
 
+  <Section id="before-you-apply" aria-labelledby="before-h">
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Postgraduate Diploma." />
+    <dl class="ba">
+      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
+      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE}</dd></div>
+      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
+      <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
+      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
+      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
+      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+    </dl>
+  </Section>
+
   <!-- C5 -->
   <GuideSection
+    eyebrow="Context"
     title="Delivered with National University"
     empathy={EMPATHY.nuPgd}
     origin={originShort}
@@ -151,7 +164,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </MechanismSection>
 
   <!-- C7 -->
-  <ProofBand title="Evidence from CodersTrust’s Wider Programs" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
+  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
       <CopyP block={SURVEY_EMPLOYMENT} />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
@@ -173,18 +186,9 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Applicants Ask" />
 
-  <!-- C11 -->
-  <OfferSection
-    title="Intake and Schedule Are Confirmed with Admissions."
-    lead="Details are shared by the admissions team before you apply."
-    cards={[
-      { icon: 'clipboard-check', title: 'Eligibility', text: 'Honors / Diploma holders with a minimum CGPA of 2.25.' },
-      { icon: 'calendar-check', title: 'Intake and Schedule', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Program fee: BDT 50,000. Pay instantly online, transfer via mobile merchant accounts, visit CTBD branches for cash or POS payments, or make a bank deposit.' },
-      { icon: 'award', title: 'Recognition', text: 'CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh.' },
-    ]}
-  >
-    <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask about fees, payment, schedule, eligibility and recognition.</p>
+  <!-- C11: Start band; the facts live in Before You Apply above and are not repeated here -->
+  <OfferSection title="Start Your Application" lead="Eligibility, schedule, fee, payment and recognition are in Before You Apply above.">
+    <p class="note note--key"><a class="link" href="#before-you-apply">Read Before You Apply<Icon name="arrow-right" size={16} /></a> or <a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask admissions.</p>
   </OfferSection>
 
   <!-- C12 -->
@@ -234,6 +238,38 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   .proof-notes :global(p) {
     margin: 0;
     color: var(--ctx-text);
+  }
+  .keyfacts {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm) var(--space-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .keyfacts div {
+    display: grid;
+    gap: 2px;
+  }
+  .keyfacts dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .keyfacts dd {
+    margin: 0;
+    color: var(--on-surface);
+    font-weight: var(--fw-medium);
+  }
+  /* a figure in the key-facts row is a label, not a sentence: no full stop */
+  .keyfacts :global(.fact__stop) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .keyfacts {
+      grid-template-columns: repeat(4, minmax(0, auto));
+    }
   }
   .ba {
     margin: 0;

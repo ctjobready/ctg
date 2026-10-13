@@ -5,7 +5,7 @@ import ArticleShell from '../../components/pages/news/ArticleShell.astro';
 import NewsCard from '../../components/ui/NewsCard.astro';
 import Img from '../../components/ui/Img.astro';
 import PhotoGallery from '../../components/ui/PhotoGallery.astro';
-import { allNews, newsHref, ogImageAlt, relatedNews, TOPICS, coverAlt, coverDuplicatesBody, coverRepeat } from '../../components/pages/news/news';
+import { allNews, newsHref, ogImageAlt, relatedNews, newsAudience, TOPICS, coverAlt, coverDuplicatesBody, coverRepeat } from '../../components/pages/news/news';
 import { mayRender } from '../../lib/permissions';
 import { stripBase } from '../../lib/url';
 
@@ -41,6 +41,7 @@ const related = relatedNews(all, post);
   imageAlt={og ? ogImageAlt(d.coverAlt, d.title) : undefined}
   imageAsset={og ? asset : undefined}
   heroCaption={showHero && repeat.repeats ? repeat.caption : undefined}
+  audience={newsAudience(post)}
 >
   {showHero && cover && <Img slot="hero" src={cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} />}
   <Content />

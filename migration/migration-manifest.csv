@@ -19,7 +19,9 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /programs/nationwide/,none,page,MOVE,/programs/youthwide/,none,none,stub+edge
 /news/,5287,page,KEEP,/news/,none,none,route
 /ngs-category-page-new-layout/,19316,page,DROP,https://jobready.global/,none,none,stub+edge
-/nu-postgraduate-diploma/,21235,page,KEEP,/nu-postgraduate-diploma/,none,none,route
+/nu-postgraduate-diploma/,21235,page,MOVE,/programs/nu-postgraduate-diploma/,none,none,stub+edge
+/nu-postgraduate-diploma/digital-marketing/,none,page,MOVE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
+/nu-postgraduate-diploma/ict/,none,page,MOVE,/programs/nu-postgraduate-diploma/ict/,none,none,stub+edge
 /payment-methods/,25026,page,JR,https://jobready.global/,none,none,stub+edge
 /privacy-policy/,19820,page,KEEP,/privacy-policy/,none,none,route
 /registration-form/,32647,page,JR,https://jobready.global/,none,none,stub+edge
@@ -223,7 +225,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/cyber-security-career-accelerator-fundamental/,32891,course,JR,https://jobready.global/course/cybersecurity-career-accelerator-live-online-course/,none,none,stub+edge
 /course/cyber-security/,21519,course,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/digital-accounting-professional/,none,course,JR,https://jobready.global/courses/,none,none,stub+edge
-/course/digital-marketing-pgd/,21293,course,MOVE,/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
+/course/digital-marketing-pgd/,21293,course,MOVE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
 /course/digital-marketing/,25398,course,JR,https://jobready.global/course/digital-marketing-with-ai-on-campus-classroom-course/,none,none,stub+edge
 /course/diploma-in-digital-business/,25367,course,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/diploma-in-tech-entrepreneurship-course/,29912,course,JR,https://jobready.global/courses/,none,none,stub+edge
@@ -231,7 +233,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/fundamentals-of-block-coding/,29985,course,JR,https://jobready.global/course/fundamentals-of-block-coding-live-online-course/,none,none,stub+edge
 /course/graphic-design-with-ai/,25408,course,JR,https://jobready.global/course/graphic-design-with-ai-live-online-course/,none,none,stub+edge
 /course/graphics-design-for-kids/,28414,course,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,none,none,stub+edge
-/course/information-communication-technology/,21358,course,MOVE,/nu-postgraduate-diploma/ict/,none,none,stub+edge
+/course/information-communication-technology/,21358,course,MOVE,/programs/nu-postgraduate-diploma/ict/,none,none,stub+edge
 /course/introduction-to-robotics/,28352,course,JR,https://jobready.global/course/introduction-to-robotics-on-campus-course/,none,none,stub+edge
 /course/jlpt-n5-japanese-language/,32396,course,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/mastering-ai-with-prompt-engineering/,32114,course,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
@@ -412,7 +414,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course-category/cloud-devops/,none,archive,JR,https://jobready.global/course-category/professional-certification/cloud-and-devops/,none,none,stub+edge
 /course-category/digital-business/,none,archive,JR,https://jobready.global/course-category/professional-skills/digital-marketing/,none,none,stub+edge
 /course-category/digital-operations/,none,archive,JR,https://jobready.global/course-category/professional-certification/digital-enterprise/,none,none,stub+edge
-/course-category/nu-pgd-courses/,none,archive,MOVE,/nu-postgraduate-diploma/,none,none,stub+edge
+/course-category/nu-pgd-courses/,none,archive,MOVE,/programs/nu-postgraduate-diploma/,none,none,stub+edge
 /course-category/software-development/,none,archive,JR,https://jobready.global/course-category/professional-certification/software-development/,none,none,stub+edge
 /course-category/superkids-courses/,none,archive,JR,https://jobready.global/course-category/superkids/,none,none,stub+edge
 /course/advance-excel-and-power-bi/feed/,none,archive,JR,https://jobready.global/course/advanced-excel-live-online-course/,none,none,stub+edge
@@ -429,7 +431,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/content-writing/feed/,none,archive,JR,https://jobready.global/course/content-writing-with-ai-live-online-course/,none,none,stub+edge
 /course/cyber-security-career-accelerator-fundamental/feed/,none,archive,JR,https://jobready.global/course/cybersecurity-career-accelerator-live-online-course/,none,none,stub+edge
 /course/cyber-security/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
-/course/digital-marketing-pgd/feed/,none,archive,DROP,/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
+/course/digital-marketing-pgd/feed/,none,archive,DROP,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,stub+edge
 /course/digital-marketing/feed/,none,archive,JR,https://jobready.global/course/digital-marketing-with-ai-on-campus-classroom-course/,none,none,stub+edge
 /course/diploma-in-digital-business/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/diploma-in-tech-entrepreneurship-course/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
@@ -437,7 +439,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/fundamentals-of-block-coding/feed/,none,archive,JR,https://jobready.global/course/fundamentals-of-block-coding-live-online-course/,none,none,stub+edge
 /course/graphic-design-with-ai/feed/,none,archive,JR,https://jobready.global/course/graphic-design-with-ai-live-online-course/,none,none,stub+edge
 /course/graphics-design-for-kids/feed/,none,archive,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,none,none,stub+edge
-/course/information-communication-technology/feed/,none,archive,DROP,/nu-postgraduate-diploma/ict/,none,none,stub+edge
+/course/information-communication-technology/feed/,none,archive,DROP,/programs/nu-postgraduate-diploma/ict/,none,none,stub+edge
 /course/introduction-to-robotics/feed/,none,archive,JR,https://jobready.global/course/introduction-to-robotics-on-campus-course/,none,none,stub+edge
 /course/jlpt-n5-japanese-language/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/mastering-ai-with-prompt-engineering/feed/,none,archive,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
@@ -599,7 +601,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /?attachment_id=20610,20610,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
 /?attachment_id=20611,20611,attachment,MERGE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
 /?attachment_id=21038,21038,attachment,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
-/?attachment_id=22367,22367,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=22367,22367,attachment,MERGE,/programs/nu-postgraduate-diploma/,ID map,none,edge
 /?attachment_id=22505,22505,attachment,MERGE,/our-model/talentleap/,ID map,none,edge
 /?attachment_id=24229,24229,attachment,MERGE,/about/mentors/,ID map,none,edge
 /?attachment_id=24230,24230,attachment,MERGE,/about/mentors/,ID map,none,edge
@@ -610,10 +612,10 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /?attachment_id=25489,25489,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=25534,25534,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=25763,25763,attachment,JR,https://jobready.global/courses/,ID map,none,edge
-/?attachment_id=26347,26347,attachment,MERGE,/nu-postgraduate-diploma/ict/,ID map,none,edge
-/?attachment_id=26356,26356,attachment,MERGE,/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
-/?attachment_id=26380,26380,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
-/?attachment_id=27041,27041,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=26347,26347,attachment,MERGE,/programs/nu-postgraduate-diploma/ict/,ID map,none,edge
+/?attachment_id=26356,26356,attachment,MERGE,/programs/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
+/?attachment_id=26380,26380,attachment,MERGE,/programs/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=27041,27041,attachment,MERGE,/programs/nu-postgraduate-diploma/,ID map,none,edge
 /?attachment_id=27240,27240,attachment,MERGE,/impact/stories/,ID map,none,edge
 /?attachment_id=27241,27241,attachment,MERGE,/impact/stories/,ID map,none,edge
 /?attachment_id=27242,27242,attachment,MERGE,/impact/stories/,ID map,none,edge
@@ -640,7 +642,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /?attachment_id=28115,28115,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=28119,28119,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=28127,28127,attachment,JR,https://jobready.global/course/graphics-design-for-kids-live-online-course/,ID map,none,edge
-/?attachment_id=28239,28239,attachment,MERGE,/nu-postgraduate-diploma/,ID map,none,edge
+/?attachment_id=28239,28239,attachment,MERGE,/programs/nu-postgraduate-diploma/,ID map,none,edge
 /?attachment_id=28447,28447,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=28449,28449,attachment,MERGE,/programs/superkids/,ID map,none,edge
 /?attachment_id=28972,28972,attachment,MERGE,/about/mentors/,ID map,none,edge
@@ -834,8 +836,8 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /?p=20592,20592,query-string,MOVE,/news/coderstrust-and-doict-shaping-a-smart-future-through-trainer-empowerment/,ID map,none,edge
 /?p=21030,21030,query-string,MOVE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,ID map,none,edge
 /?p=21152,21152,query-string,MOVE,/news/coderstrust-earns-recognition-among-top-100-edtech-companies-in-south-asia/,ID map,none,edge
-/?p=21293,21293,query-string,MOVE,/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
-/?p=21358,21358,query-string,MOVE,/nu-postgraduate-diploma/ict/,ID map,none,edge
+/?p=21293,21293,query-string,MOVE,/programs/nu-postgraduate-diploma/digital-marketing/,ID map,none,edge
+/?p=21358,21358,query-string,MOVE,/programs/nu-postgraduate-diploma/ict/,ID map,none,edge
 /?p=21519,21519,query-string,JR,https://jobready.global/courses/,ID map,none,edge
 /?p=23158,23158,query-string,MERGE,/about/mentors/,ID map,none,edge
 /?p=23449,23449,query-string,MERGE,/about/mentors/,ID map,none,edge
@@ -963,7 +965,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /?page_id=19316,19316,query-string,DROP,https://jobready.global/,ID map,none,edge
 /?page_id=19820,19820,query-string,MOVE,/privacy-policy/,ID map,none,edge
 /?page_id=2091,2091,query-string,MERGE,/about/#story,ID map,none,edge
-/?page_id=21235,21235,query-string,MOVE,/nu-postgraduate-diploma/,ID map,none,edge
+/?page_id=21235,21235,query-string,MOVE,/programs/nu-postgraduate-diploma/,ID map,none,edge
 /?page_id=23736,23736,query-string,MOVE,/about/mentors/,ID map,none,edge
 /?page_id=24639,24639,query-string,JR,https://jobready.global/courses/,ID map,none,edge
 /?page_id=25026,25026,query-string,JR,https://jobready.global/,ID map,none,edge
@@ -1010,13 +1012,13 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2021/05/coders_trust_7_1-1-561x456.jpg,14656,media,MERGE,/,none,none,edge
 /wp-content/uploads/2021/05/coders_trust_7_1-1-scaled.jpg,14656,media,MERGE,/news/coderstrust-teaching-you-freelancing-the-right-way/,none,none,edge
 /wp-content/uploads/2021/05/coders_trust_7_1-1.jpg,none,media,MERGE,/,none,none,edge
-/wp-content/uploads/2022/02/CodersTrust-Logo-1024x140.png,12553,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo-1024x140.png,12553,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2022/02/CodersTrust-Logo-1536x210.png,12553,media,DROP,/,none,none,edge
 /wp-content/uploads/2022/02/CodersTrust-Logo-2048x280.png,12553,media,DROP,/,none,none,edge
 /wp-content/uploads/2022/02/CodersTrust-Logo-300x41.png,12553,media,DROP,/,none,none,edge
 /wp-content/uploads/2022/02/CodersTrust-Logo-600x82.png,12553,media,DROP,/,none,none,edge
 /wp-content/uploads/2022/02/CodersTrust-Logo-768x105.png,12553,media,DROP,/,none,none,edge
-/wp-content/uploads/2022/02/CodersTrust-Logo.png,12553,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2022/02/CodersTrust-Logo.png,12553,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2022/02/bw-generic-01.jpg,none,media,MERGE,/about/,none,none,edge
 /wp-content/uploads/2022/02/bw-team-01.jpg,none,media,MERGE,/about/,none,none,edge
 /wp-content/uploads/2022/02/bw-testi-01.jpg,none,media,MERGE,/about/,none,none,edge
@@ -1086,10 +1088,10 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2023/06/A-B-M-Mahir-Absar.png,27240,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/AIUB-Logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/AUST-logo-final.png,none,media,MERGE,/,none,none,edge
-/wp-content/uploads/2023/06/Adrian-Testimonials.png,13342,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/06/Arfias-Islam-Rudro.png,13347,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/06/Asraful-Alam-Sany-Testimonials.png,13350,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/06/Aysha-Akter-Testimonials-1-1.png,16757,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Adrian-Testimonials.png,13342,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Arfias-Islam-Rudro.png,13347,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Asraful-Alam-Sany-Testimonials.png,13350,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Aysha-Akter-Testimonials-1-1.png,16757,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/06/Aziz-Ahmad.webp,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/BRAC-Logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/BRAC-STRONG-IT-1.png,none,media,MERGE,/impact/case-studies/,none,none,edge
@@ -1101,8 +1103,8 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2023/06/Green-University-logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/Jahangirnagar-University-Logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/James-Gardiner-Endorsement.webp,13252,media,MERGE,/about/recognition/#endorsements,none,none,edge
-/wp-content/uploads/2023/06/Mehedi-Hasan-Sakil-Testimonial.png,13348,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/06/Mustafa-Zabed-Testimonials.png,13349,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Mehedi-Hasan-Sakil-Testimonial.png,13348,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Mustafa-Zabed-Testimonials.png,13349,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/06/NU-Graduates-Graphs.png,14568,media,MERGE,/programs/youthwide/,none,none,edge
 /wp-content/uploads/2023/06/UIU-logo-final.jpg.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/UPEACE-Logo-Transparent-1024x255.png,none,media,MERGE,/,none,none,edge
@@ -1115,7 +1117,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2023/06/University_of_Liberal_Arts_Bangladesh_logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/WhatsApp-Image-2023-06-04-at-00.15.44-561x456.jpeg,11748,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/WhatsApp-Image-2023-06-04-at-00.15.44.jpeg,11748,media,MERGE,/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/,none,none,edge
-/wp-content/uploads/2023/06/Zarin-Tusnim-Shifa-Testimonials.png,13341,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/Zarin-Tusnim-Shifa-Testimonials.png,13341,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/06/image_2023_06_15T16_10_59_630Z-561x456.png,14271,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2023/06/image_2023_06_15T16_10_59_630Z.png,14271,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2023/06/light-bg.jpg,none,media,MERGE,/,none,none,edge
@@ -1124,7 +1126,7 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2023/06/northern-university-logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/partner-with-us.png,none,media,MERGE,/about/#story,none,none,edge
 /wp-content/uploads/2023/06/primeasia-logo-final.png,none,media,MERGE,/,none,none,edge
-/wp-content/uploads/2023/06/testbg.jpg,none,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/06/testbg.jpg,none,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/06/tushar.png,27242,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/06/wub-logo-final.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2023/07/Artificial-Intelligence-Category-1.png,none,media,MERGE,/,none,none,edge
@@ -1209,21 +1211,21 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2023/12/Build-Peace-2023-Conference-2024-2.jpg,29775,media,MERGE,/news/harnessing-socio-technology-for-positive-impact-and-unity-globally/,none,none,edge
 /wp-content/uploads/2023/12/CT-in-top-100-561x456.jpeg,none,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2023/12/CT-in-top-100.jpeg,none,media,MERGE,/programs/superkids/,none,none,edge
-/wp-content/uploads/2023/12/DGM-thumbnail.jpg,26356,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/12/ICT-thumbnail.jpg,26347,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/DGM-thumbnail.jpg,26356,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/ICT-thumbnail.jpg,26347,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB-2-300x200.jpeg,29794,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB-2.jpeg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB-300x244.jpeg,29792,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB-4-e1721022580902-561x456.jpg,29785,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB-4-e1721022580902.jpg,29785,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2023/12/MoU-with-NCTB.jpeg,none,media,MERGE,/news/coderstrust-seals-groundbreaking-mou-with-nctb-paving-the-way-for-competency-based-learning-opportunities/,none,none,edge
-/wp-content/uploads/2023/12/NU-logo-colorful.png,23192,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
-/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193-1024x615.jpeg,22367,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
-/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193.jpeg,22367,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
-/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559-1024x783.jpeg,22381,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559.jpeg,22381,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/NU-logo-colorful.png,23192,media,MERGE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193-1024x615.jpeg,22367,media,MERGE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-1-scaled-e1703390769193.jpeg,22367,media,MERGE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559-1024x783.jpeg,22381,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2023/12/nu-pgd-2-e1703392138559.jpeg,22381,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2023/12/right-arrow.png,22505,media,MERGE,/our-model/talentleap/,none,none,edge
-/wp-content/uploads/2024/01/NU-logo-6.png,none,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/01/NU-logo-6.png,none,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2024/01/NU-logo-bold-300x103.png,none,media,DROP,/,none,none,edge
 /wp-content/uploads/2024/01/NU-logo-bold.png,none,media,MERGE,/,none,none,edge
 /wp-content/uploads/2024/01/Rashid.png,33350,media,MERGE,/about/mentors/,none,none,edge
@@ -1234,29 +1236,29 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /wp-content/uploads/2024/01/salma-suma.webp,33333,media,MERGE,/about/mentors/,none,none,edge
 /wp-content/uploads/2024/01/shila.png,33349,media,MERGE,/about/mentors/,none,none,edge
 /wp-content/uploads/2024/01/tawfiqur.jpg,none,media,MERGE,/about/mentors/,none,none,edge
-/wp-content/uploads/2024/03/bank-asia.png,25082,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2024/03/bkash.svg,25055,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2024/03/nogod.svg,25056,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2024/03/rocket.svg,25060,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/bank-asia.png,25082,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/bkash.svg,25055,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/nogod.svg,25056,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/03/rocket.svg,25060,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2024/04/CodersTrust-Logo.jpg,27270,media,DROP,/,none,none,edge
 /wp-content/uploads/2024/04/NU-PGD-CT-Thumbnail.jpg,27041,media,DROP,/,none,none,edge
-/wp-content/uploads/2024/04/NUPGD-Circular-2024.pdf,26984,media,DROP,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/NUPGD-Circular-2024.pdf,26984,media,DROP,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2024/04/certificate_1.svg,27329,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/contact_2.svg,27327,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/dynamic-education.svg,27314,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/gvt-partnership.svg,27310,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/holon-iq.png,25489,media,MERGE,/programs/superkids/,none,none,edge
-/wp-content/uploads/2024/04/image-1024x614.png,26380,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2024/04/image.png,26380,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/image-1024x614.png,26380,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/image.png,26380,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2024/04/impact.svg,27309,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/neurodiverse-988x1024.png,25534,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/neurodiverse.png,25534,media,MERGE,/programs/superkids/,none,none,edge
-/wp-content/uploads/2024/04/next-generation-skill-courses-scaled-1.jpg,25569,media,MERGE,/nu-postgraduate-diploma/digital-marketing/,none,none,edge
+/wp-content/uploads/2024/04/next-generation-skill-courses-scaled-1.jpg,25569,media,MERGE,/programs/nu-postgraduate-diploma/digital-marketing/,none,none,edge
 /wp-content/uploads/2024/04/select_1.svg,27325,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/sk-img-2.png,27384,media,MERGE,/programs/superkids/,none,none,edge
 /wp-content/uploads/2024/04/start-learning_1.svg,27326,media,MERGE,/programs/superkids/,none,none,edge
-/wp-content/uploads/2024/04/wave-bg-light-images.png,25763,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
-/wp-content/uploads/2024/05/Aziz-Ahmad.jpg,28239,media,MERGE,/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/04/wave-bg-light-images.png,25763,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
+/wp-content/uploads/2024/05/Aziz-Ahmad.jpg,28239,media,MERGE,/programs/nu-postgraduate-diploma/,none,none,edge
 /wp-content/uploads/2024/05/Certificate-Ceremony-4-300x148.jpeg,29093,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
 /wp-content/uploads/2024/05/Certificate-Ceremony-4.jpeg,none,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge
 /wp-content/uploads/2024/05/Certificate-Giving-Ceremony-by-CodersTrust-with-Joyeeta-Foundation-3-scaled-e1721019042728-300x156.jpg,29780,media,MERGE,/news/empowering-women-in-digital-economy-certificate-giving-ceremony-by-coderstrust-with-joyeeta-foundation/,none,none,edge

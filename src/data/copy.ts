@@ -75,7 +75,7 @@ export const RCT_HEADLINE: CopyBlock = {
 
 /**
  * Relevance line (review round 14, m2), set directly under the randomized-trial headline on the pages whose offering the trial did not
- * evaluate: /partner-with-us/employers/ and /programs/jobready-work/ (JobReady@Work) and /nu-postgraduate-diploma/ (the NU Postgraduate
+ * evaluate: /partner-with-us/employers/ and /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU Postgraduate
  * Diploma). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational evidence, not
  * evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these three pages.
  */

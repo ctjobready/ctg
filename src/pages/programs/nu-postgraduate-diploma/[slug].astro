@@ -1,27 +1,28 @@
 ---
-// P16–P17 — NU PGD course pages /nu-postgraduate-diploma/digital-marketing/ and /ict/ (T10), generated from the
-// `nu-pgd` collection (kind: course). One H1 (the course name). Duration, fee, mode, eligibility, award and
-// internship terms are withheld until NU and CodersTrust approve the admissions fact set; no `Offer` in JSON-LD.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/system/Hero.astro';
-import Button from '../../components/system/Button.astro';
-import Icon from '../../components/system/Icon.astro';
-import Fact from '../../components/facts/Fact.astro';
-import Section from '../../components/ui/Section.astro';
-import SectionHeader from '../../components/ui/SectionHeader.astro';
-import CTABand from '../../components/ui/CTABand.astro';
-import CopyP from '../../components/pages/programs/CopyP.astro';
-import PhaseList from '../../components/pages/programs/PhaseList.astro';
-import StepFlow from '../../components/ui/StepFlow.astro';
-import FaqSection from '../../components/pages/programs/FaqSection.astro';
-import { anchor, faqNode, para, type FaqSource } from '../../components/pages/programs/faq';
-import { PAGE_UPDATED } from '../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_NAME, NU_PATH, nuCourses, nuOverview } from '../../components/pages/programs/nuPgd';
-import { SURVEY_EMPLOYMENT } from '../../data/copy';
-import { COURSES_URL } from '../../lib/site';
-import { formatDate, isoDate } from '../../lib/format';
-import { ORG_ID, course as courseNode, pageUrl, ref, webPage } from '../../lib/schema';
-import { linkAttrs, url } from '../../lib/url';
+// P16–P17 — NU PGD course pages /programs/nu-postgraduate-diploma/digital-marketing/ and /ict/ (T10), generated from the
+// `nu-pgd` collection (kind: course). One H1 (the course name). Moved under /programs/ in WP20a. Every course-specific line (Why This Course, the FAQ answers,
+// the related fields) is derived from the course's module list; nothing promises an outcome.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/system/Hero.astro';
+import Button from '../../../components/system/Button.astro';
+import Icon from '../../../components/system/Icon.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import CopyP from '../../../components/pages/programs/CopyP.astro';
+import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
+import PhaseList from '../../../components/pages/programs/PhaseList.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
+import FaqSection from '../../../components/pages/programs/FaqSection.astro';
+import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
+import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
+import { NU_APPLY, NU_CALL, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { COURSES_URL } from '../../../lib/site';
+import { formatDate, isoDate } from '../../../lib/format';
+import { ORG_ID, course as courseNode, pageUrl, ref, webPage } from '../../../lib/schema';
+import { linkAttrs, url } from '../../../lib/url';
 
 export async function getStaticPaths() {
   const courses = await nuCourses();
@@ -38,14 +39,17 @@ const LAST_UPDATED = PAGE_UPDATED.nuCourse;
 // One eligibility rule on every NU page: the overview rule (NU-01), so the three pages never differ.
 const eligibilityId = 'NU-01';
 
+const other = Object.keys(NU_COURSE_COPY).find((k) => k !== slug)!;
+const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
+
 const faqSources: FaqSource[] = [
-  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. Intake dates and the teaching location are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
-  ...c.faqs.map((f) => ({ q: f.q, html: para(f.a) })),
+  ...nuModuleFaqs(c),
+  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   { q: 'Is This the Right Course for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
 ];
 
 const jsonLd = [
-  webPage({ path, name: c.title, description: copy.description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'NU Postgraduate Diploma', path: NU_PATH }, { name: c.title, path }] }),
+  webPage({ path, name: c.title, description: copy.description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'NU Postgraduate Diploma', path: NU_PATH }, { name: c.title, path }] }),
   {
     ...courseNode({ path, name: c.title, description: copy.description }),
     offers: { '@type': 'Offer', category: 'Paid', price: '50000', priceCurrency: 'BDT', url: pageUrl(path) },
@@ -55,7 +59,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={copy.titleTag} description={copy.description} path={path} breadcrumbs={[{ label: 'NU Postgraduate Diploma', href: NU_PATH }, { label: c.title }]} jsonLd={jsonLd}>
+<BaseLayout title={copy.titleTag} description={copy.description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma', href: NU_PATH }, { label: c.title }]} jsonLd={jsonLd}>
   <Hero eyebrow={NU_NAME} title={c.title} lead={copy.lead} artSeed={`nu-${slug}`}>
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
@@ -63,17 +67,19 @@ const jsonLd = [
     </Fragment>
   </Hero>
 
+  <DefinitionBlock />
+
   <Section id="before-you-apply" aria-labelledby="before-h">
     <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Postgraduate Diploma." />
     <dl class="ba">
       <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
       <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-09" /></dd></div>
-      <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>{NU_SCHEDULE_NOTE}</dd></div>
       <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
-      <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Teaching Location</dt><dd>{NU_LOCATION_NOTE}</dd></div>
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
-      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-12" /></dd></div>
+      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
       <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
@@ -83,10 +89,11 @@ const jsonLd = [
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
-          <h3 class="t-heading-l">Related Career Areas</h3>
+          <h3 class="t-heading-l">Fields This Diploma Can Support</h3>
           <ul role="list">
             {c.roles.map((r) => <li>{r}</li>)}
           </ul>
+          <p class="roles__note">These are related fields; role readiness depends on your experience, portfolio and local market.</p>
         </div>
       )
     }
@@ -96,23 +103,44 @@ const jsonLd = [
     <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead="Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions." />
     <details class="mods">
       <summary>View All {c.modules.length} Modules</summary>
-      <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} />
+      <PhaseList items={c.modules.map((m) => ({ title: m }))} cols={5} label={`${c.title} modules`} unit="Module" />
     </details>
-    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and Mentors<Icon name="arrow-right" size={16} /></a></p>
+    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors &amp; Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <Section id="outcomes" aria-labelledby="outcomes-h">
-    <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Employment Among Surveyed Completers" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
+  <Section id="why" aria-labelledby="why-h">
+    <SectionHeader id="why-h" eyebrow="Why This Course" title="What You Will Work On" lead="Each point below comes from the course’s module list." />
+    <div class={copy.why.length === 4 ? 'grid-cards grid-cards--4' : 'grid-cards'}>
+      {
+        copy.why.map((w) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <h3 class="card__title">{w.title}</h3>
+              <p class="card__text">{w.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section id="outcomes" tone="airy" aria-labelledby="outcomes-h">
+    <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Outcomes from CodersTrust’s Wider Programs" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
     <CopyP block={SURVEY_EMPLOYMENT} class="outcome-note" />
     <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <Section id="after-apply" tone="airy" aria-labelledby="after-h">
+  <Section id="after-apply" aria-labelledby="after-h">
     <SectionHeader id="after-h" eyebrow="Next Steps" title="What Happens After You Apply" />
     <StepFlow steps={[
       { title: 'Submit the Application Form', text: 'It takes you to the standalone application form.' },
       { title: 'Admissions Contacts You', text: 'Our admissions team shares the next steps.' },
     ]} />
+  </Section>
+
+  <Section id="also-consider" tone="airy" aria-labelledby="also-h">
+    <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={NU_COURSE_COPY[other].alsoConsider} />
+    <p><a class="link" href={url(`${NU_PATH}${other}/`)}>View the Course<Icon name="arrow-right" size={16} /></a> or <a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <FaqSection sources={faqSources} title="Questions About This Course" />
@@ -147,6 +175,11 @@ const jsonLd = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+  }
+  .roles__note {
+    margin: var(--space-sm) 0 0;
+    color: var(--on-surface-variant);
+    max-width: 52rem;
   }
   .roles li {
     padding: 6px 14px;

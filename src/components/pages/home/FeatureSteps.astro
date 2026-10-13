@@ -19,7 +19,7 @@ interface Props {
   id?: string;
 }
 const { steps = STEPS, heading = 'How It Works in Three Steps', facts = STEPS_FACTS, programs = true, id = 'how-it-works' } = Astro.props;
-const programLinks = navGroups.find((g) => g.id === 'programs')?.items ?? [];
+const programLinks = (navGroups.find((g) => g.id === 'programs')?.items ?? []).filter((i) => !i.menuOnly);
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>

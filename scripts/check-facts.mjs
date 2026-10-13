@@ -35,7 +35,7 @@
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 table (#features) exactly one row for
 //     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
-//   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /nu-postgraduate-diploma/ (the NU
+//   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
 //     the C7 proof band; negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
@@ -385,7 +385,7 @@ function painMapProblems(markup) {
 const TRIAL_SCOPE_BY_PAGE = {
   '/partner-with-us/employers/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
   '/programs/jobready-work/': 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.',
-  '/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.',
+  '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.',
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
 function trialScopeProblems(markup, wanted) {
@@ -832,7 +832,7 @@ function numberGuardPage(path, html, allow = []) {
   painBad('pain ids that sit only outside C2 (the attributes in a later band do not count)', painPage({ pains: [] }).replace('<ol><li data-pain="P4">x</li></ol>', `<ol>${painLi('P1')}${painLi('P2')}${painLi('P3')}</ol>`));
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
-  const scopeNu = TRIAL_SCOPE_BY_PAGE['/nu-postgraduate-diploma/'];
+  const scopeNu = TRIAL_SCOPE_BY_PAGE['/programs/nu-postgraduate-diploma/'];
   if (scopeWork !== 'This trial evaluated WSDFM training for women in Dhaka, not JobReady@Work.' || scopeNu !== 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.') problems.push('self-test: the trial relevance lines are no longer the plan wording');
   const proofPage = (headInner, after = '') => `<main><section class="band band--klein band--pad-md" id="proof-band" aria-labelledby="proof-band-h"><div class="container"><header class="proofband__head" data-reveal data-fact="RC-01"><p class="eyebrow">The evidence</p>${headInner}</header><div class="proofband"><div class="proofband__stats"></div></div>${after}</div></section></main>`;
   const trialH2 = '<h2 class="proofband__title" id="proof-band-h">A randomized trial found…</h2>';

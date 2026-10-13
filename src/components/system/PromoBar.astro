@@ -7,6 +7,8 @@ interface Props {
   lead?: string;
   /** Message text; the default slot may be used instead. */
   message?: string;
+  /** A shorter message for a phone (up to 575 px); the full message is not rendered there (display: none, so a screen reader reads only what is shown). */
+  shortMessage?: string;
   actionLabel?: string;
   href?: string;
   dismissible?: boolean;
@@ -17,13 +19,13 @@ interface Props {
   /** Accessible name of the region; only a page that shows a second bar needs another one. */
   label?: string;
 }
-const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId, label = 'Announcement' } = Astro.props;
+const { lead, message, shortMessage, actionLabel, href, dismissible = true, storageKey = 'ct-promo-v2', factId, label = 'Announcement' } = Astro.props;
 ---
 
 <section class="promo-bar" data-promo data-promo-key={storageKey} data-fact={factId} aria-label={label}>
   <div class="promo-bar__inner">
     <p class="promo-bar__text">
-      {lead && <strong>{lead}</strong>}{lead && message ? ' ' : ''}{message}<slot />
+      {lead && <strong>{lead}</strong>}{lead && message ? ' ' : ''}{shortMessage ? <><span class="promo-bar__long">{message}</span><span class="promo-bar__short">{shortMessage}</span></> : message}<slot />
     </p>
     {actionLabel && href && <Button variant="promo" href={href}>{actionLabel}</Button>}
   </div>
@@ -83,7 +85,16 @@ const { lead, message, actionLabel, href, dismissible = true, storageKey = 'ct-p
       max-width: 62rem;
     }
   }
+  .promo-bar__short {
+    display: none;
+  }
   @media (max-width: 575px) {
+    .promo-bar__long {
+      display: none;
+    }
+    .promo-bar__short {
+      display: inline;
+    }
     .promo-bar__inner {
       justify-content: flex-start;
       padding-right: 56px;
