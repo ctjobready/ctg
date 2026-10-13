@@ -44,20 +44,20 @@ async function unusedBelow(page: Page): Promise<number> {
 test.describe('home hero slider', () => {
   test.use({ viewport: DESKTOP });
 
-  test('is a labelled carousel of six slides, with the only h1 on the first slide', async ({ page }) => {
+  test('is a labelled carousel of seven slides, with the only h1 on the first slide', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const region = page.locator('#hero');
     await expect(region).toHaveAttribute('aria-roledescription', 'carousel');
     await expect(region).toHaveAttribute('aria-label', /.+/);
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(6);
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 6: /);
-    await expect(slides.nth(5)).toHaveAttribute('aria-label', /^6 of 6: /);
+    await expect(slides).toHaveCount(7);
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 7: /);
+    await expect(slides.nth(6)).toHaveAttribute('aria-label', /^7 of 7: /);
     await expect(slides.nth(0)).toHaveAttribute('role', 'group');
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into Digital Employment — with Evidence.');
-    await expect(page.locator('#hero h2')).toHaveCount(5);
+    await expect(page.locator('#hero h2')).toHaveCount(6);
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -141,7 +141,7 @@ test.describe('home hero slider', () => {
     const hero = page.locator('#hero');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     const hidden = page.locator('[data-hs-slide]:not(.is-active)');
-    await expect(hidden).toHaveCount(5);
+    await expect(hidden).toHaveCount(6);
     for (const el of await hidden.all()) {
       await expect(el).toHaveAttribute('inert', '');
     }
@@ -157,7 +157,7 @@ test.describe('home hero slider', () => {
     const hero = page.locator('#hero');
     const first = await hero.boundingBox();
     expect(first).not.toBeNull();
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 7; i++) {
       await page.locator('[data-hs-dot]').nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       const box = await hero.boundingBox();
@@ -171,7 +171,7 @@ test.describe('home hero slider at phone width', () => {
 
   test('no horizontal scroll on any slide, and every control has a 24 px target', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       await page.locator('[data-hs-dot]').nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -208,7 +208,7 @@ test.describe('home hero slider in print', () => {
     await open(page, pageByRoute('/'));
     await page.emulateMedia({ media: 'print' });
     const headings = page.locator('#hero h1, #hero h2');
-    await expect(headings).toHaveCount(6);
+    await expect(headings).toHaveCount(7);
     for (const h of await headings.all()) {
       await expect(h).toBeVisible();
     }
@@ -224,9 +224,9 @@ test.describe('home hero slider without JavaScript', () => {
   test('every slide is present and stacked, with its links, and no controls show', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const hero = page.locator('#hero');
-    await expect(hero.getByRole('heading')).toHaveCount(6);
+    await expect(hero.getByRole('heading')).toHaveCount(7);
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(6);
+    await expect(slides).toHaveCount(7);
     for (const s of await slides.all()) {
       await expect(s).toBeVisible();
     }
@@ -283,9 +283,9 @@ test.describe('home hero slider layout', () => {
       status: string;
     }[];
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(6);
+    await expect(slides).toHaveCount(7);
     const assets: string[] = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       const img = slides.nth(i).locator('img');
       await expect(img, `photograph on slide ${i + 1}`).toHaveCount(1);
       await expect(img).toHaveAttribute('loading', i === 0 ? 'eager' : 'lazy');
@@ -294,13 +294,13 @@ test.describe('home hero slider layout', () => {
       assets.push(asset);
       expect(permissions.find((p) => p.assetId === asset)?.status, `slide ${i + 1} photograph ${asset} is cleared`).toBe('cleared');
     }
-    expect(new Set(assets).size, 'each slide shows a different photograph').toBe(6);
+    expect(new Set(assets).size, 'each slide shows a different photograph').toBe(7);
   });
 
   test('no slide leaves more than 48 px of unused space below its content (1280)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const dots = page.locator('[data-hs-dot]');
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       await dots.nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       await page.waitForTimeout(450);
@@ -315,7 +315,7 @@ test.describe('home hero slider layout at phone width', () => {
   test('no slide leaves more than 48 px of unused space below its content (390)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const dots = page.locator('[data-hs-dot]');
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 7; i++) {
       await dots.nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       await page.waitForTimeout(450);

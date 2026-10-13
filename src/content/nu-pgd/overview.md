@@ -37,8 +37,7 @@ There are three application routes: online, offline, and by courier.
 
 ## Eligibility and documents
 
-- Graduate from any reputed university
-- Cumulative GPA of 7 or above from SSC through Honors
+- Honors or diploma holders with a minimum CGPA of 2.25
 - Completed online or offline application
 - Two recent passport-size photographs
 - Academic certificates: SSC, HSC, and graduate degree

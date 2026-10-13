@@ -3,6 +3,7 @@
  * P5 Foundations & CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
  * C1 to C14 in order, as the numbered table in doc 06 P5.
  */
+import GlanceBand from '../../../components/sections/GlanceBand.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -76,6 +77,18 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <GlanceBand
+    variant="strip"
+    id="glance"
+    title="Results at a Glance"
+    items={[
+      { id: 'RC-13', href: '/impact/independent-evaluation/' },
+      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
+      { id: 'OC-03', href: '/impact/outcomes-2026/' },
+      { id: 'OC-01', href: '/impact/outcomes-2026/' },
+      { id: 'PR-04', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+    ]}
+  />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -180,7 +193,7 @@ const sixMonth = factPart('PD-09', /tracers at \d+\/(\d+)\/\d+ months/);
   <CaseStudyCarousel
     title="Program Results, with the Case Studies Behind Them"
     items={[
-      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />

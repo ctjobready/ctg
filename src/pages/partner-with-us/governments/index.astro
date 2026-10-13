@@ -3,6 +3,7 @@
  * P3 Governments: /partner-with-us/governments/ (T3, implements doc 04 matrix 4.2).
  * C1 to C14 in order, as the numbered table in doc 06 P3.
  */
+import GlanceBand from '../../../components/sections/GlanceBand.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -52,7 +53,7 @@ const { title, description } = meta(
 const FAQ_IDS = ['Q7', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
 const rates = graduateRates();
 const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
-const manuals = factPart('GV-01', /[\d,]+ manuals and guidelines published and distributed/);
+const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
 const thirdGender = factPart('GV-07', /[\d,]+ third-gender people/);
 const nationalSize = factPart('PD-05', /National ([\d,]+\+) trainees/);
 const steps = [
@@ -80,6 +81,19 @@ const steps = [
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <GlanceBand
+    variant="strip"
+    id="glance"
+    title="Results at a Glance"
+    items={[
+      { id: 'RC-13', href: '/impact/independent-evaluation/' },
+      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
+      { id: 'OC-03', href: '/impact/outcomes-2026/' },
+      { id: 'OC-01', href: '/impact/outcomes-2026/' },
+      { id: 'PR-04', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
+      { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+    ]}
+  />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -172,7 +186,7 @@ const steps = [
     lead={WOMEN_INCLUSION.text}
     items={[
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
-      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
+      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
     ]}
   />
@@ -229,7 +243,7 @@ const steps = [
     <EvidenceList
       heading="Services We Can Scope for an Agency"
       items={[
-        { facts: ['GV-01'], text: 'Curriculum development, manuals and Training of Trainers.' },
+        { facts: ['GV-11'], text: 'Curriculum development, manuals and Training of Trainers.' },
         { facts: ['GV-05'], text: 'LMS and operation training for staff.' },
       ]}
     />

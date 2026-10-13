@@ -65,8 +65,21 @@ export function contractScope(id: string): string {
  */
 export function offerDurationText(name: string, duration: string): string {
   const m = /^(\d+–\d+ months) \(tracking to month \d+\)$/.exec(duration.trim());
-  if (name !== 'Pilot' || !m) return duration;
+  if (!/Pilot/.test(name) || !m) return duration;
   const months = fact('PD-02').text.match(/outcome tracking for (\d+) months/)?.[1];
   if (!months) throw new Error('offerDurationText: PD-02 no longer names the outcome tracking period');
   return `Pilot delivery runs ${m[1]}. Outcome tracking continues for ${months} months after each course.`;
+}
+
+/**
+ * PD-05 option rows ("Program options: Multi-Cohort Pilot Program, 1,000–2,500 trainees, 8–14 months (…); Scale 10,000–25,000 trainees, …"):
+ * the name runs up to the trainee volume, which may follow a comma or a space.
+ */
+export function parseProgramOptions(text: string): { name: string; volume: string; duration: string }[] {
+  const body = text.split(': ').slice(1).join(': ');
+  return body.split('; ').map((chunk) => {
+    const m = /^(.+?),?\s(\d[\d,–]*\+?\s*trainees),\s*(.*)$/.exec(chunk);
+    if (!m) throw new Error(`parseProgramOptions: cannot read option "${chunk}"`);
+    return { name: m[1], volume: m[2], duration: m[3] };
+  });
 }
