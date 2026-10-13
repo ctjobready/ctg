@@ -36,41 +36,6 @@ const timeline = [
 ---
 
 <div class="rep">
-  <figure class="tmpl" data-reveal data-fact="PD-08" role="img" aria-label={layoutLabel}>
-    <figcaption class="tmpl__cap">
-      <span class="tmpl__tag">Illustrative Template · Sample Layout, No Data</span>
-      <strong>Monthly report</strong>
-      <span class="tmpl__sub">Layout only. Every field is empty; results appear here once a cohort is running.</span>
-    </figcaption>
-    <dl class="tmpl__fields">
-      <div class="tmpl__row tmpl__row--head">
-        <dt>Program</dt>
-        <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
-        <dt>Month</dt>
-        <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
-      </div>
-      {
-        fields.map((f) => (
-          <div class="tmpl__row">
-            <dt>{f.label}</dt>
-            <dd><span class="tmpl__blank" aria-hidden="true"></span></dd>
-          </div>
-        ))
-      }
-      <div class="tmpl__row tmpl__row--tracers">
-        <dt>Tracer results</dt>
-        <dd>
-          <ul role="list">
-            {tracers.map((m) => <li><span>{m}-month</span><span class="tmpl__blank" aria-hidden="true"></span></li>)}
-          </ul>
-        </dd>
-      </div>
-      <div class="tmpl__row">
-        <dt>Quarterly Steering Review</dt>
-        <dd><span class="tmpl__blank tmpl__blank--tall" aria-hidden="true"></span></dd>
-      </div>
-    </dl>
-  </figure>
 
   <div class="time" data-reveal data-fact="PD-08 PD-09">
     <h3 class="time__title">What Your Reports Show over Time</h3>
@@ -100,7 +65,7 @@ const timeline = [
   }
   @media (min-width: 1024px) {
     .rep {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 56px;
     }
   }

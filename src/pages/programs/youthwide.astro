@@ -123,10 +123,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <!-- C3 -->
     <CostSection
       id="national-cost"
-      title="Every Training Cycle Without Placement Tracking Repeats the Result."
+      title="Without Placement Tracking, Agencies Cannot See What Training Delivers."
       transition=""
       blocks={[
-        { claim: CLAIM_PX11, factId: 'PX-11', implication: 'Training has to connect young people to work wherever it is: locally, remotely or abroad.' },
+        { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot tell whether training led to work.' },
       ]}
     />
 
@@ -188,7 +188,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       eyebrow="For Funders and Development Partners"
       title="Educated Young People Are Not in Work, Across Three Regions."
       bluf="Tens of millions of educated young people aged 15–24 are not in employment, education or training across South Asia, MENA and Sub-Saharan Africa."
-      factIds={['PX-01', 'PX-02', 'PX-09', 'PX-15']}
+      factIds={['PX-01', 'PX-02']}
     >
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemSection>
@@ -268,7 +268,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <CaseStudyCarousel
     title="Proof in Practice"
     items={[
-      { title: 'Women’s Skills for Freelancing (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
+      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
@@ -313,7 +313,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   </Section>
 
   <Section id="reports" aria-labelledby="reports-h">
-    <SectionHeader id="reports-h" eyebrow="Reporting" title="A Sample Monthly Report, and What Your Reports Show over Time" lead="The layout below is empty on purpose: it shows the fields you will receive, not results." />
+    <SectionHeader id="reports-h" eyebrow="Reporting" title="What Your Reports Show over Time" lead="Each cohort is reported monthly and tracked for 12 months after each course. This is a schedule of what is measured, not a set of results." />
     <ReportingBlock />
   </Section>
 

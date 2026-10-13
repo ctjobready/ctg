@@ -5,7 +5,7 @@ kind: course
 duration: "12 Months"
 fee: "BDT 50,000"
 mode: "On-Campus"
-applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdN0J_VMgh0FYMTTx9DNRVYn840X0XGTVwhVzmjC6YsmJf1rg/viewform"
+applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
 modules: ["Introduction to ICT", "Office Automation", "Java Programming", "Database Management Systems", "Multimedia Design and Developments", "System Maintenance and Troubleshooting", "Computer Networks Maintenance", "Mobile Application Development", "Web Application & Web Site Design", "Internship/ Project Work & Seminar"]
 internship: "The students are required to undergo an internship in Information & Communication Technology Firm for gaining practical experience in the field."
 faqs:

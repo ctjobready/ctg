@@ -27,7 +27,7 @@ type Status = 'Live' | 'Operating' | 'Pre-Launch' | 'Roadmap';
 const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-Launch': 'info', Roadmap: 'sale' };
 const rows: { job: string; capability: string; status: Status; note: string }[] = [
   { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
-  { job: 'Connect to Work and Supply Talent', capability: 'Employer and gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch; until it opens, placement also runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
+  { job: 'Connect to Work and Supply Talent', capability: 'Employer and gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until it launches, placement support is provided by CodersTrust’s placement team, and marketplaces such as Upwork and Fiverr are also used.' },
   { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Give institutions a digital delivery platform.' },
   // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
   { job: 'Across the Platform', capability: 'Marketing automation, CRM and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
@@ -51,7 +51,7 @@ const f = fundingCta();
   title={title('JobReady Platform')}
   heading="JobReady: CodersTrust’s Digital Education and Employment Platform"
   eyebrow="Our Model"
-  lead={/[.!?]$/.test(fact('IN-04').text) ? fact('IN-04').text : `${fact('IN-04').text}.`}
+  lead="JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Modules are rolling out in stages."
   description={description}
   path={path}
   updated="2026-10-08"
@@ -63,8 +63,8 @@ const f = fundingCta();
     <p data-fact="IN-04">JobReady is built around four jobs. The table below says which capabilities are live today.</p>
     <div class="jr__cards">
       <FeatureCard icon="graduation-cap" title="Train" text="Trains youth through courses that prepare for industry certification; the course storefront operates at jobready.global." />
-      <FeatureCard icon="briefcase" title="Connect to Work" text="Connects learners to local, remote and global work." />
-      <FeatureCard icon="users" title="Supply Talent" text="Supplies employers with job-ready talent." />
+      <FeatureCard icon="briefcase" title="Connect to Work" text="Designed to connect learners to local, remote and global work." />
+      <FeatureCard icon="users" title="Supply Talent" text="Designed to supply employers with job-ready talent." />
       <FeatureCard icon="landmark" title="Equip Institutions" text="Gives institutions a digital delivery platform." />
     </div>
   </ReportSection>
@@ -114,6 +114,7 @@ const f = fundingCta();
     <div class="jr__actions">
       <Button href={f.href} iconEnd="arrow-right">{f.label}</Button>
       <a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a>
+      <a class="link" href={linkAttrs('/investors/').href}>For Investors<Icon name="arrow-right" size={16} /></a>
     </div>
     <p class="jr__micro">{MICRO_COMMITMENT} <a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP Works</a></p>
   </aside>

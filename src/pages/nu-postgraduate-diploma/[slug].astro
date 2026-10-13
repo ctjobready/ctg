@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
 import Icon from '../../components/system/Icon.astro';
+import Fact from '../../components/facts/Fact.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
@@ -19,7 +20,7 @@ import { SURVEY_EMPLOYMENT } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { ORG_ID, course as courseNode, ref, webPage } from '../../lib/schema';
-import { url } from '../../lib/url';
+import { linkAttrs, url } from '../../lib/url';
 
 export async function getStaticPaths() {
   const courses = await nuCourses();
@@ -31,10 +32,13 @@ const copy = NU_COURSE_COPY[slug];
 const path = `${NU_PATH}${slug}/`;
 const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
+const applyLink = linkAttrs(apply.href);
 const LAST_UPDATED = PAGE_UPDATED.nuCourse;
+// The course's own eligibility statement on the current site (Digital Marketing: open to various educational backgrounds; ICT: honors degree or equivalent).
+const eligibilityId = slug === 'digital-marketing' ? 'NU-07' : 'NU-08';
 
 const faqSources: FaqSource[] = [
-  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `Fees, schedule, eligibility and recognition are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
+  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. Intake dates and the teaching location are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   ...c.faqs.map((f) => ({ q: f.q, html: para(f.a) })),
   { q: 'Is This the Right Course for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
 ];
@@ -53,16 +57,31 @@ const jsonLd = [
   <Hero eyebrow={NU_NAME} title={c.title} lead={copy.lead} artSeed={`nu-${slug}`}>
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
-      <Button variant="outline" href={NU_CALL.href} icon="phone">{NU_CALL.label}</Button>
+      <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
     </Fragment>
   </Hero>
+
+  <Section id="before-you-apply" aria-labelledby="before-h">
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Postgraduate Diploma." />
+    <dl class="ba">
+      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id={eligibilityId} /></dd></div>
+      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-09" /></dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-10" /></dd></div>
+      <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
+      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-12" /></dd></div>
+      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+    </dl>
+  </Section>
 
   <Section id="who" aria-labelledby="who-h">
     <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Degree Holders Who Want a Digital Career" lead="Right for you if you hold a degree and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global." />
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
-          <h3 class="t-heading-l">Roles This Diploma Relates To</h3>
+          <h3 class="t-heading-l">Related Career Areas</h3>
           <ul role="list">
             {c.roles.map((r) => <li>{r}</li>)}
           </ul>
@@ -78,8 +97,8 @@ const jsonLd = [
   </Section>
 
   <Section id="outcomes" aria-labelledby="outcomes-h">
-    <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="What CodersTrust Training Has Achieved" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
-    <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s wider programs, not from this diploma:" class="outcome-note" />
+    <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Employment Among Surveyed Completers" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
+    <CopyP block={SURVEY_EMPLOYMENT} class="outcome-note" />
     <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
@@ -126,6 +145,33 @@ const jsonLd = [
   }
   .outcome-link {
     margin: var(--space-md) 0 0;
+  }
+  .ba {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 56rem;
+  }
+  .ba__row {
+    display: grid;
+    gap: 4px;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  @media (min-width: 768px) {
+    .ba__row {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: baseline;
+    }
+  }
+  .ba dt {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .ba dd {
+    margin: 0;
+    color: var(--on-surface);
   }
   .updated {
     margin: 0 0 var(--space-md);

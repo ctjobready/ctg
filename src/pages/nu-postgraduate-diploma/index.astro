@@ -10,6 +10,8 @@ import CTABand from '../../components/ui/CTABand.astro';
 import CourseCard from '../../components/system/CourseCard.astro';
 import { futurePhotos, nuBanner } from '../../data/photos';
 import Icon from '../../components/system/Icon.astro';
+import Fact from '../../components/facts/Fact.astro';
+import { linkAttrs } from '../../lib/url';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
@@ -37,12 +39,13 @@ const title = 'NU Postgraduate Diploma';
 const description = 'Build practical digital skills after your degree with the National University postgraduate diploma, delivered by CodersTrust.';
 const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
+const applyLink = linkAttrs(apply.href);
 const courses = await nuCourses();
 
 const faqSources: FaqSource[] = [
   { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
   { q: 'Who Delivers the Diploma?', html: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
-  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `Eligibility, schedule, fees and payment, and recognition are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
+  { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. Intake dates and the teaching location are confirmed with admissions before you apply. To ask, ${anchor(NU_CALL.href, NU_CALL_TEXT)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
 
@@ -63,6 +66,21 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
   <!-- C1 -->
   <HeroBand audience={NU_NAME} title={HEADLINE.nuPgd} lead={VALUE_PROPOSITION.nuPgd} cta={apply} artSeed="nu-pgd" />
+
+  <Section id="before-you-apply" aria-labelledby="before-h">
+    <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for the National University Postgraduate Diploma." />
+    <dl class="ba">
+      <div class="ba__row"><dt>Eligibility</dt><dd><Fact id="NU-01" /></dd></div>
+      <div class="ba__row"><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
+      <div class="ba__row"><dt>Schedule and Intake</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Delivery</dt><dd><Fact id="NU-06" /></dd></div>
+      <div class="ba__row"><dt>Teaching Location</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Program Fee</dt><dd>Confirmed with admissions before you apply.</dd></div>
+      <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
+      <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
+      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+    </dl>
+  </Section>
 
   <DefinitionBlock heading="What Is the NU Postgraduate Diploma?">
     <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.</p>
@@ -134,7 +152,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   <!-- C7 -->
   <ProofBand title="The Evidence" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02', 'RC-01']} chartTitle="Employment Among Surveyed Completers of CodersTrust’s Wider Programs, Not of This Diploma" links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }]}>
     <div class="proof-notes">
-      <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s wider programs, not from this diploma:" />
+      <CopyP block={SURVEY_EMPLOYMENT} />
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
     </div>
   </ProofBand>
@@ -156,13 +174,13 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
 
   <!-- C11 -->
   <OfferSection
-    title="Fees, Schedule and Eligibility Are Confirmed with Admissions."
+    title="Intake and Schedule Are Confirmed with Admissions."
     lead="Details are shared by the admissions team before you apply."
     cards={[
-      { icon: 'clipboard-check', title: 'Eligibility', text: 'Confirmed with admissions before you apply.' },
+      { icon: 'clipboard-check', title: 'Eligibility', text: 'Honors / Diploma holders with a minimum CGPA of 2.25.' },
       { icon: 'calendar-check', title: 'Intake and Schedule', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Confirmed with admissions before you apply.' },
-      { icon: 'award', title: 'Recognition', text: 'Ask admissions about recognition before you decide.' },
+      { icon: 'hand-coins', title: 'Fees and Payment', text: 'Pay instantly online, transfer via mobile merchant accounts, visit CTBD branches for cash or POS payments, or make a bank deposit. The fee is confirmed with admissions before you apply.' },
+      { icon: 'award', title: 'Recognition', text: 'CodersTrust is an affiliated college (College Code: 6634) under the National University of Bangladesh.' },
     ]}
   >
     <p class="note note--key"><a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_TEXT}</a> to ask about fees, schedule, eligibility and recognition.</p>
@@ -214,6 +232,33 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   .proof-notes :global(p) {
     margin: 0;
     color: var(--ctx-text);
+  }
+  .ba {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 56rem;
+  }
+  .ba__row {
+    display: grid;
+    gap: 4px;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  @media (min-width: 768px) {
+    .ba__row {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: baseline;
+    }
+  }
+  .ba dt {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .ba dd {
+    margin: 0;
+    color: var(--on-surface);
   }
   .updated {
     margin: 0 0 var(--space-md);
