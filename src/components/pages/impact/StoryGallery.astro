@@ -1,5 +1,5 @@
 ---
-import SuccessStoryCard from '../../system/SuccessStoryCard.astro';
+import Img from '../../ui/Img.astro';
 import { mayRender } from '../../../lib/permissions';
 import type { StoryCardData } from './story-types';
 
@@ -11,23 +11,50 @@ import type { StoryCardData } from './story-types';
  */
 interface Props {
   cards: StoryCardData[];
+  /** Show the pathway filter (default). A short featured set passes false. */
+  filter?: boolean;
 }
+const { filter = true } = Astro.props;
 const cards = Astro.props.cards.filter((c) => !c.assetId || mayRender(c.assetId));
 const labels: Record<string, string> = { freelance: 'Freelance', job: 'Job', business: 'Business', other: 'Other Pathways' };
+/** Learners without a published photograph get a monogram of their initials, in the same place a portrait would be. */
+const initials = (name: string) => {
+  const w = name.replace(/\./g, '').split(/\s+/).filter(Boolean);
+  return ((w[0]?.[0] ?? '') + (w.length > 1 ? (w[w.length - 1]?.[0] ?? '') : '')).toUpperCase();
+};
 const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) => cards.some((c) => c.pathway === p));
 ---
 
 <div data-story-filter>
-  <div class="sgf" role="group" aria-label="Filter stories by pathway">
-    <button type="button" class="sgf__btn" data-filter="all" aria-pressed="true">All Stories</button>
-    {present.map((p) => <button type="button" class="sgf__btn" data-filter={p} aria-pressed="false">{labels[p]}</button>)}
-  </div>
-  <p class="sgf__status sr-only" role="status" aria-live="polite" data-filter-status></p>
+  {filter && (
+    <div class="sgf" role="group" aria-label="Filter stories by pathway">
+      <button type="button" class="sgf__btn" data-filter="all" aria-pressed="true">All Stories</button>
+      {present.map((p) => <button type="button" class="sgf__btn" data-filter={p} aria-pressed="false">{labels[p]}</button>)}
+    </div>
+  )}
+  {filter && <p class="sgf__status sr-only" role="status" aria-live="polite" data-filter-status></p>}
   <ul class="grid-cards sgrid" role="list">
     {
       cards.map((c) => (
         <li data-pathway={c.pathway}>
-          <SuccessStoryCard image={c.image} imageAlt={c.imageAlt} outcome={c.outcome} name={c.name} role={c.role} assetId={c.assetId} />
+          <article class="sc" data-asset={c.assetId}>
+            <div class="sc__media">
+              {c.image ? <Img src={c.image} alt={c.imageAlt ?? ''} width={600} height={450} widths={[300, 600]} sizes="(min-width:1024px) 360px, 90vw" assetId={c.assetId} /> : <span class="sc__monogram" aria-hidden="true">{initials(c.name)}</span>}
+            </div>
+            <div class="sc__body">
+              <p class="sc__outcome">{c.outcome}</p>
+              {c.steps && (
+                <dl class="sc__steps">
+                  <div><dt>Starting Point</dt><dd>{c.steps.start}</dd></div>
+                  <div><dt>What They Did</dt><dd>{c.steps.did}</dd></div>
+                  <div><dt>Where They Are Now</dt><dd>{c.steps.now}</dd></div>
+                </dl>
+              )}
+              <p class="sc__name">{c.name}</p>
+              {c.role && <p class="sc__role">{c.role}</p>}
+              {c.caveat && <p class="sc__caveat">{c.caveat}</p>}
+            </div>
+          </article>
         </li>
       ))
     }
@@ -63,6 +90,102 @@ const present = (['freelance', 'job', 'business', 'other'] as const).filter((p) 
     outline: 2px solid var(--primary);
     outline-offset: 2px;
     box-shadow: 0 0 0 5px var(--powder-blue);
+  }
+  .sc {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .sc__media {
+    aspect-ratio: 4 / 3;
+    background: var(--surface-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .sc__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    transition: filter 300ms ease;
+  }
+  .sc:hover .sc__media :global(img),
+  .sc:focus-within .sc__media :global(img) {
+    filter: grayscale(0);
+  }
+  .sc__monogram {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed);
+    font-size: var(--fs-heading-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.04em;
+  }
+  .sc__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-gutter) var(--space-gutter);
+    flex: 1;
+  }
+  .sc__body > p,
+  .sc__steps {
+    margin: 0;
+  }
+  .sc__outcome {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .sc__steps {
+    display: grid;
+    gap: var(--space-xs);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .sc__steps dt {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .sc__steps dd {
+    margin: 0;
+  }
+  .sc__name {
+    margin-top: auto !important;
+    padding-top: var(--space-sm);
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-medium);
+    color: var(--on-surface);
+  }
+  .sc__role {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .sc__caveat {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sc__media :global(img) {
+      transition: none;
+    }
   }
   .sgrid {
     list-style: none;

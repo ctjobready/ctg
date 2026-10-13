@@ -1,29 +1,27 @@
 ---
-import type { ImageMetadata } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
-import { allNews } from '../../../components/pages/news/news';
+import Icon from '../../../components/system/Icon.astro';
 import { photo, type Photo } from '../../../data/photos';
-import { FIELD_NEWS_LABEL, FIELD_NEWS_PHOTOS } from '../../../data/fieldNews';
 import { linkAttrs } from '../../../lib/url';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { webPage } from '../../../lib/schema';
 
 /**
- * In the field: a photo archive from the previous coderstrust.global site, grouped by program, partner and event, and by year for the
- * news photographs. Plain, lazy-loaded, responsive images (astro:assets) in lists: no script. Every picture has alt text that says what is
+ * In the field: a photo archive from the previous coderstrust.global site, grouped into program, partner and recognition collections. The dated
+ * news galleries live on their own page, /impact/in-the-field/news-photos/ (the News Photo Archive, WP20d). Plain, lazy-loaded, responsive images (astro:assets) in lists: no script. Every picture has alt text that says what is
  * visible and a short caption (program, event or place; a year only where the source states it). People are named only where the old
  * site named them. A photograph the D13 rule does not let render on a build is left out (PhotoGallery).
  */
 const path = '/impact/in-the-field/';
-const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program collections and dated news galleries.');
+const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program, partner and recognition collections.');
 const jsonLd = [
-  webPage({ path, name: 'In the field: CodersTrust photo archive', description, type: 'CollectionPage' }),
+  webPage({ path, name: 'In the field: CodersTrust photo collections', description, type: 'CollectionPage' }),
   articleNode({ path, headline: 'In the Field', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
 ];
 
@@ -33,16 +31,16 @@ const reg = (keys: string[]): Photo[] => keys.map(photo);
 const groups: { id: string; eyebrow: string; title: string; lead: string; photos: Photo[] }[] = [
   {
     id: 'superkids',
-    eyebrow: 'Programs',
+    eyebrow: 'SuperKids',
     title: 'SuperKids: STEAM Learning for School Students',
     lead: 'SuperKids is CodersTrust’s school STEAM and digital-skills program for children. These photographs show workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
     photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
   },
   {
     id: 'nationwide',
-    eyebrow: 'Programs',
+    eyebrow: 'Classes and Campuses',
     title: 'Classes and Campuses: Madrasah Learners, Examinations and Program Completers',
-    lead: 'Classes, an examination hall and a graduation day. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
+    lead: 'Classes, an examination hall and a convocation. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
   {
@@ -54,21 +52,21 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   },
   {
     id: 'youth',
-    eyebrow: 'Programs',
+    eyebrow: 'People and Places',
     title: 'UNDP YES and Learner Communities',
     lead: 'Trainees from the UNDP YES (Youth Employment through Skills) program, and learners and program completers across programs.',
     photos: reg(['general/yes-trainees-group', 'general/yes-collage', 'general/woman-learner-laptop', 'general/learner-mosaic']),
   },
   {
     id: 'campus-work',
-    eyebrow: 'Programs',
+    eyebrow: 'Labs and Offices',
     title: 'Training Spaces and the CodersTrust Team',
     lead: 'Where learners train, and the offices and team behind the programs.',
     photos: reg(['general/students-campus-smiling', 'nu-pgd/students-laptops', 'general/computer-lab-rows', 'general/office-support-headset', 'general/office-meeting', 'general/office-exterior', 'general/team-tshirts', 'about/careers-team-falgun-celebration', 'about/careers-team-picnic']),
   },
   {
     id: 'partners',
-    eyebrow: 'Partners',
+    eyebrow: 'Partnerships',
     title: 'Partnerships and MoU Signings',
     lead: 'Agreements and affiliations with government bodies and universities.',
     photos: reg(['general/dict-hitech-mou', 'general/nctb-meeting', 'general/nu-affiliation-group', 'general/nu-affiliation-meeting', 'field/ccny-mou-signing']),
@@ -82,67 +80,28 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   },
 ];
 
-// Program photographs lead, in this order: Women's Programs, UNDP YES, JobReady, SuperKids, then the national and campus group. Partnership, recognition and event groups sit after the "Leadership, Recognition and Events" heading.
+// Program photographs lead, in this order: Women's Programs, UNDP YES, JobReady, SuperKids, then the national and campus group. Partnership and recognition collections sit after the "Partnerships, Recognition and News" heading.
 const PROGRAM_ORDER = ['women', 'youth', 'campus-work', 'superkids', 'nationwide'];
 const programGroups = PROGRAM_ORDER.map((id) => {
   const g = groups.find((x) => x.id === id);
   if (!g) throw new Error(`in-the-field: no photograph group "${id}"`);
   return g;
 });
-const laterGroups = groups.filter((g) => g.eyebrow !== 'Programs');
+const laterGroups = groups.filter((g) => g.id === 'partners' || g.id === 'recognition');
 
-// The news photographs, by year of the post: alt text from src/data/fieldNews.ts, caption = event + month and year, asset id of the post (D13).
-const files = import.meta.glob<{ default: ImageMetadata }>('../../../assets/images/news/**/*.{jpg,png}', { eager: true });
-const posts = (await allNews()).filter((p) => !p.data.political);
-const month = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-const years = new Map<number, { date: number; photo: Photo }[]>();
-// The profile of Aziz Ahmad on his farm is a personal profile, not a program or event record, so its photographs are left out of the archive.
-const LEFT_OUT_POSTS = new Set(['the-man-behind-coderstrust-who-never-forgot-his-roots']);
-for (const post of posts) {
-  if (LEFT_OUT_POSTS.has(post.id)) continue;
-  const year = post.data.date.getUTCFullYear();
-  // An event with three or more photographs keeps its first two in registry order, so near-duplicate shots do not crowd the archive.
-  const entries = FIELD_NEWS_PHOTOS.filter((x) => x.slug === post.id);
-  for (const e of entries.length >= 3 ? entries.slice(0, 2) : entries) {
-    const img = files[`../../../assets/images/news/${post.id}/${e.file}`]?.default;
-    if (!img) throw new Error(`in-the-field: missing image ${post.id}/${e.file}`);
-    const list = years.get(year) ?? [];
-    const caption = e.caption ?? `${FIELD_NEWS_LABEL[post.id] ?? post.data.title}, ${month.format(post.data.date)}`;
-    list.push({ date: post.data.date.getTime(), photo: { src: img, alt: e.alt, assetId: `news-${post.id}`, caption } });
-    years.set(year, list);
-  }
-}
-// A year with a single photograph is joined to the next year, so every gallery holds at least two pictures.
-const byYear: { label: string; id: string; photos: Photo[] }[] = [];
-let carry: { from: number; items: { date: number; photo: Photo }[] } | undefined;
-for (const [year, list] of [...years.entries()].sort((a, b) => a[0] - b[0])) {
-  const items = [...(carry?.items ?? []), ...list];
-  const from = carry?.from ?? year;
-  if (items.length < 2) {
-    carry = { from, items };
-    continue;
-  }
-  const label = from === year ? String(year) : `${from}–${year}`;
-  // Newest post first within a gallery, like the years themselves; photographs of one post keep their order (stable sort).
-  byYear.push({ label, id: `news-${label.replace('–', '-')}`, photos: [...items].sort((x, y) => y.date - x.date).map((x) => x.photo) });
-  carry = undefined;
-}
-byYear.reverse();
-
-const jump = [
-  ...[...programGroups, ...laterGroups].map((g) => ({ id: g.id, label: g.title.split(':')[0] })),
-  ...byYear.map((y) => ({ id: y.id, label: `News ${y.label}` })),
-];
+const jump = [...programGroups, ...laterGroups].map((g) => ({ id: g.id, label: g.title.split(':')[0] }));
+const newsHref = linkAttrs('/impact/in-the-field/news-photos/').href;
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, organized into program collections and dated news galleries." artSeed="field-hub" />
+<BaseLayout title={title('In the Field: Photo Collections')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The dated news photographs are in the News Photo Archive." artSeed="field-hub" />
 
-  <Section pad="sm" aria-label="Jump to a group">
-    <nav class="itf__jump" aria-label="Groups of photographs">
+  <Section pad="sm" aria-label="Jump to a collection">
+    <nav class="itf__jump" aria-label="Collections of photographs">
       <ul>
         {jump.map((j) => <li><a class="link" href={`#${j.id}`}>{j.label}</a></li>)}
+        <li><a class="link" href={newsHref}>News Photo Archive<Icon name="arrow-right" size={16} /></a></li>
       </ul>
     </nav>
   </Section>
@@ -150,91 +109,19 @@ const d = discoveryCta();
   {programGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
-    <SectionHeader id="itf-later-h" eyebrow="Later in the Archive" title="Leadership, Recognition and Events" lead="Partnership signings, awards, forums and meetings, then photographs from the news posts by year." />
+    <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partnerships, Recognition and News" lead="Partnership signings, awards, forums and meetings. Photographs from the news posts, by year, are in the News Photo Archive." />
   </Section>
 
   {laterGroups.map((g, i) => <PhotoGallery id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
-  <!-- Dated news galleries (WP18b): one native <details> disclosure per year, closed except the latest year. The disclosure carries the jump-link id
-       and the script below opens it when a link, the address bar or the back button points at it or at a photograph inside it. -->
-  {
-    byYear.map((y, i) => (
-      <details class="itf__year" id={y.id} open={i === 0}>
-        <summary class="itf__sum"><span class="container itf__sum-in">News Photographs, {y.label}</span></summary>
-        <PhotoGallery id={`${y.id}-gallery`} eyebrow="News and Events" title={`Partners, Programs and Events, ${y.label}`} lead="Photographs from the news posts of that year; each caption names the event and the month." photos={y.photos} tone={(groups.length + i) % 2 === 0 ? 'white' : 'airy'} />
-      </details>
-    ))
-  }
-
   <Section pad="sm" aria-label="About these photographs">
-    <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
+    <p class="itf__note">Photographs are used with the consent of those pictured. The dated news photographs are in the <a class="link" href={newsHref}>News Photo Archive</a>; the stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
-<script>
-  // Open the year disclosure a link, the address bar or the back button points at (itself or anything inside it), then scroll to the target.
-  function revealHash() {
-    const id = decodeURIComponent(location.hash.slice(1));
-    if (!id) return;
-    const target = document.getElementById(id);
-    const box = target?.closest('details.itf__year');
-    if (target && box && !(box as HTMLDetailsElement).open) {
-      (box as HTMLDetailsElement).open = true;
-      requestAnimationFrame(() => target.scrollIntoView());
-    }
-  }
-  revealHash();
-  addEventListener('hashchange', revealHash);
-</script>
-
 <style>
-  .itf__sum {
-    cursor: pointer;
-    list-style: none;
-    border-top: 1px solid var(--outline-variant);
-    background: var(--surface);
-    color: var(--secondary);
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-body-m);
-    min-height: 44px;
-  }
-  .itf__sum::-webkit-details-marker {
-    display: none;
-  }
-  .itf__sum:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: -2px;
-  }
-  .itf__sum-in {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-md);
-    padding-block: var(--space-md);
-  }
-  .itf__sum-in::after {
-    content: '';
-    flex: none;
-    width: 0.6em;
-    height: 0.6em;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    transform: rotate(45deg);
-    transition: transform 0.2s ease;
-  }
-  .itf__year[open] > .itf__sum .itf__sum-in::after {
-    transform: rotate(-135deg);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .itf__sum-in::after {
-      transition: none;
-    }
-  }
-  .itf__year > :global(.band) {
-    border-top: 1px solid var(--outline-variant);
-  }
   .itf__jump ul {
     list-style: none;
     margin: 0;

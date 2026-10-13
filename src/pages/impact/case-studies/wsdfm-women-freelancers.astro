@@ -22,7 +22,9 @@ for (const v of [...control, ...offered]) if (!rc09.includes(`${v.toFixed(1)}%`)
 const samina = await getEntry('stories', 'samina-tasneem-chowdhury');
 if (!samina) throw new Error('story samina-tasneem-chowdhury missing');
 const paras = (samina.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-const excerpt = paras[2];
+// Trimmed to the sentence the register backs (ST-03: 90+ projects on Fiverr); the story's generic sentence before it is left out.
+const excerpt = paras[2].split(/(?<=\.)\s+/).find((x) => x.includes('90+ projects on Fiverr'));
+if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sentence');
 ---
 
 <CaseStudyPage
@@ -30,17 +32,19 @@ const excerpt = paras[2];
   pageTitle="WSDFM Case Study"
   description="WSDFM, commissioned by Porticus: a randomized trial of the predecessor program found income rose for women offered a place; 711 of 1,000 women in work."
   plainLine
+  heroNote="The first figure below is from program records; the trial figures are from the randomized trial of the predecessor program."
+  trialLink
   stats={[
     { id: 'PR-01' },
     { id: 'RC-02', evidence: 'BIGD randomized trial, May 2022' },
     { id: 'RC-01', evidence: 'BIGD randomized trial, May 2022' },
   ]}
   context={[
-    'Women in Bangladesh have limited access to the skills and training needed to succeed in the workforce, which restricts their employment opportunities.',
     'Porticus commissioned CodersTrust to run a skills project for women, focused on ICT skills for freelancing marketplaces and local jobs, and on women’s empowerment.',
+    'Women in Bangladesh have limited access to the skills and training needed to succeed in the workforce, which restricts their employment opportunities.',
   ]}
   challenges={[
-    'Low awareness of freelancing made students uninterested.',
+    'Low awareness of freelancing reduced initial interest.',
     'Families did not always support their studies.',
     'Many trainees lacked basic computer literacy, a computer or an internet connection.',
     'Social obstacles drove dropout up.',
@@ -87,7 +91,7 @@ const excerpt = paras[2];
       <p><Fact id="RC-03" as="span" /></p>
     </div>
 
-    <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>Read the Full Trial Results<Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>Read the Randomized Trial Results<Icon name="arrow-right" size={16} /></a></p>
   </Fragment>
 
   <Fragment slot="story">

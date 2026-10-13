@@ -14,6 +14,10 @@ export interface CaseStudy {
   /** Register fact whose stat is the outcome-first figure. */
   factId: string;
   summary: string;
+  /** Card fields, the same four on every card (WP20d): Partner & Place, Who, Scope & Delivery, then the Result (the register stat). Wording follows each case-study page. */
+  place: string;
+  who: string;
+  scope: string;
   related: { label: string; href: string };
 }
 
@@ -29,6 +33,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Independently evaluated by BIGD',
     factId: 'PR-01',
     summary: 'ICT skills for freelancing marketplaces and local jobs, plus women’s empowerment, in Bangladesh.',
+    place: 'Commissioned by Porticus; Bangladesh',
+    who: 'Women in Bangladesh',
+    scope: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -40,6 +47,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Women in Online Work pilot',
     factId: 'PR-02',
     summary: 'A pilot that prepared young women in Kosovo for online work.',
+    place: 'World Bank Group; Kosovo, 2017',
+    who: 'Young women',
+    scope: 'Two-phase delivery that built digital literacy first, then real online work',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -51,6 +61,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: '2017',
     factId: 'PR-03',
     summary: 'Skills training for young people from the Korail settlement in Dhaka, linked to freelance marketplaces.',
+    place: 'UNDP, the Government of Bangladesh and Swanirvar Bangladesh; Korail settlement, Dhaka, 2017',
+    who: 'Young people from the Korail settlement',
+    scope: 'Skills training linked to freelance marketplaces, in a fully equipped lab with one-to-one mentoring',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
@@ -62,7 +75,10 @@ export const CASE_STUDIES: CaseStudy[] = [
     partner: 'Training cohort',
     factId: 'PR-05',
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',
-    related: { label: 'See YouthWIDE in Bangladesh, the National Initiative', href: '/programs/youthwide/#governments' },
+    place: 'ICT Division / DoICT, Government of Bangladesh; Bangladesh',
+    who: 'Women',
+    scope: 'Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly',
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/#governments' },
   },
 ];
 

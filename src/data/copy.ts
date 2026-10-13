@@ -283,6 +283,22 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
   facts: ['OC-01'],
 };
 
+/**
+ * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed
+ * completers), each labeled as what it is. The figures are read from RC-02 and OC-01, never typed.
+ */
+function impactAnswer(): CopyBlock {
+  const rc = fact('RC-02').stat;
+  const oc = fact('OC-01').stat;
+  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error('IMPACT_ANSWER: RC-02 or OC-01 no longer has the expected stat');
+  const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  return {
+    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place were ${points} more likely to be employed. Among surveyed completers, employment rose from ${oc.from} before training to ${oc.value} at the October 2026 survey. The trial shows cause for one program; the survey describes what respondents report.`,
+    facts: ['RC-02', 'OC-01'],
+  };
+}
+export const IMPACT_ANSWER: CopyBlock = impactAnswer();
+
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
   text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, in work (47%).',

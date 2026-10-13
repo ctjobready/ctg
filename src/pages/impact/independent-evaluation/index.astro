@@ -4,7 +4,6 @@ import Accordion from '../../../components/ui/Accordion.astro';
 import BarChart from '../../../components/ui/BarChart.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import FactStat from '../../../components/facts/FactStat.astro';
 import PlainLine from '../../../components/facts/PlainLine.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
@@ -55,15 +54,18 @@ const jsonLd = [
 ];
 const faq = faqItems('foundations', faqIds);
 const toc = [
-  { id: 'summary', label: 'The short answer' },
-  { id: 'fit', label: 'Evidence-and-fit brief' },
-  { id: 'design', label: 'How the trial worked' },
-  { id: 'results', label: 'What it found' },
-  { id: 'classes', label: 'Freelancing by classes attended' },
-  { id: 'funders', label: 'What it means for funders' },
-  { id: 'context', label: 'Context' },
-  { id: 'faq', label: 'Questions' },
+  { id: 'summary', label: 'The Short Answer' },
+  { id: 'fit', label: 'Evidence-and-Fit Brief' },
+  { id: 'design', label: 'How the Trial Worked' },
+  { id: 'results', label: 'What the Trial Found' },
+  { id: 'classes', label: 'Freelancing by Classes Attended' },
+  { id: 'context', label: 'How This Compares with Other Training Trials' },
+  { id: 'funders', label: 'What It Means for Funders' },
+  { id: 'faq', label: 'Questions About the Evidence' },
 ];
+// RC-13's own summary line (employment and freelancing for women who attended); its income figure is already in the headline, so only this detail is repeated here.
+const attendedDetail = fact('RC-13').stat?.glance?.note;
+if (!attendedDetail) throw new Error('RC-13 no longer has a glance note');
 const d = discoveryCta();
 ---
 
@@ -85,15 +87,10 @@ const d = discoveryCta();
       </p>
       <PlainLine />
     </Callout>
-    <!-- Two primary figures (WP18b): employment and estimated monthly income for women offered a place. The income in dollars, the results for
-         women who attended and the household effects are supporting detail in "What the Trial Found", not repeated here. -->
-    <div class="ie__stats ie__stats--primary">
-      <FactStat id="RC-02" />
-      <FactStat id="RC-01" />
-    </div>
+    <!-- Headline results are stated once, in the callout above (WP20d). The results for women who attended, the household effects and the comparison with other
+         trials are supporting detail below and add new information only. -->
     <p class="ie__more">Supporting detail, including results for women who attended and household effects: <a class="link" href="#results">What the Trial Found<Icon name="arrow-right" size={16} /></a></p>
-    <h3 class="t-heading-l" id="comparison">Employment Effect over Four Times the Average Across Nine Training Trials</h3>
-    <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
+    <p class="ie__more"><a class="link" href="#context">How This Compares with Other Training Trials<Icon name="arrow-right" size={16} /></a></p>
     <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
   </ReportSection>
 
@@ -106,18 +103,17 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="results" title="What the Trial Found">
+    <p class="ie__intro">The headline results are above. This section adds what the trial found beyond them.</p>
     <h3 class="t-heading-l">Women Offered a Place</h3>
     <ul class="ie__list">
-      <li data-fact="RC-02"><Fact id="RC-02" /></li>
-      <li data-fact="RC-01"><Fact id="RC-01" /></li>
       <li data-fact="RC-04"><Fact id="RC-04" /></li>
+      <li data-fact="RC-09"><Fact id="RC-09" /></li>
     </ul>
     <h3 class="t-heading-l">Women Who Attended</h3>
     <ul class="ie__list">
+      <li data-fact="RC-13">{attendedDetail}</li>
       <li data-fact="RC-03"><Fact id="RC-03" /></li>
-      <li data-fact="RC-13"><Fact id="RC-13" /></li>
       <li data-fact="RC-05"><Fact id="RC-05" /></li>
-      <li data-fact="RC-14"><Fact id="RC-14" /></li>
     </ul>
   </ReportSection>
 
@@ -130,6 +126,12 @@ const d = discoveryCta();
     <p data-fact="RC-10"><Fact id="RC-10" />.</p>
   </ReportSection>
 
+  <ReportSection id="context" title="How This Compares with Other Training Trials">
+    <p>For context, here is how the employment effect for women offered a place compares with other randomized trials of vocational training.</p>
+    <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
+    <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
+  </ReportSection>
+
   <ReportSection id="funders" title="What It Means for Funders">
     <p>
       The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The study also reports results for women who attended.
@@ -138,11 +140,6 @@ const d = discoveryCta();
       One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.{' '}
       <a class="link" href={linkAttrs('/partner-with-us/').href}>How Partnerships Work<Icon name="arrow-right" size={16} /></a>
     </p>
-  </ReportSection>
-
-  <ReportSection id="context" title="Context: How This Compares">
-    <p data-fact="RC-06"><strong>Context (external):</strong> <Fact id="RC-06" /></p>
-    <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
   </ReportSection>
 
   <ReportSection id="faq" title="Questions About the Evidence">
@@ -160,19 +157,14 @@ const d = discoveryCta();
 </LongformLayout>
 
 <style>
-  .ie__stats {
-    display: grid;
-    gap: var(--space-lg) var(--space-gutter);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-  }
-  .ie__stats--primary {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-    max-width: 44rem;
-    margin-top: var(--space-md);
-  }
   .ie__more {
-    margin: var(--space-md) 0 var(--space-lg);
+    margin: var(--space-md) 0 0;
     color: var(--on-surface-variant);
+  }
+  .ie__intro {
+    margin: 0 0 var(--space-sm);
+    color: var(--on-surface-variant);
+    max-width: var(--measure);
   }
   .ie__list {
     margin: 0;

@@ -57,19 +57,20 @@ const jsonLd = [
   },
 ];
 
+// Each label is the section's heading, word for word.
 const toc = [
   { id: 'summary', label: 'Summary' },
-  { id: 'ladder', label: 'Evidence ladder and how to read this report' },
-  { id: 'respondents', label: 'Who responded' },
+  { id: 'ladder', label: 'Evidence Ladder and How to Read This Report' },
+  { id: 'respondents', label: 'Who Responded' },
   { id: 'employment', label: 'Employment' },
-  { id: 'speed', label: 'Speed to earnings' },
-  { id: 'income', label: 'Income' },
-  { id: 'careers', label: 'Career outcomes' },
-  { id: 'income-source', label: 'Main income source' },
-  { id: 'experience', label: 'Learner experience' },
-  { id: 'no-prior-income', label: 'No prior income' },
-  { id: 'methodology', label: 'Methodology and limitations' },
-  { id: 'download', label: 'Download the data' },
+  { id: 'speed', label: 'Speed to Earnings' },
+  { id: 'income', label: 'Income: Three Separate Measures' },
+  { id: 'careers', label: 'Career Outcomes' },
+  { id: 'income-source', label: 'Main Income Source' },
+  { id: 'experience', label: 'Learner Experience' },
+  { id: 'no-prior-income', label: 'Completers with No Prior Income' },
+  { id: 'methodology', label: 'Methodology and Limitations' },
+  { id: 'download', label: 'Download the Data' },
 ];
 
 // Every chart shows the published shares (percentages only; no count is held or derived). Districts under 3% are already combined.
@@ -88,6 +89,9 @@ const priorItems = [
   { label: `Earning at the October 2026 Survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
   { label: 'Not Earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
 ].map((c) => ({ label: c.label, value: pc(c.n, D.NO_PRIOR.base), display: `${pc(c.n, D.NO_PRIOR.base).toFixed(1)}%` }));
+// One line for the recommendation chart: the register's share of scores of 7 or higher (OC-06), read from its text.
+const sevenUp = /(\d+\.\d)% give a recommendation score of 7\+/.exec(fact('OC-06').text)?.[1];
+if (!sevenUp) throw new Error('OC-06 no longer states the share of scores of 7 or higher');
 const emp = fact('OC-01').stat!;
 const before = parseFloat(emp.from!);
 const after = emp.numeric!;
@@ -110,14 +114,21 @@ const d = discoveryCta();
 >
   <ReportSection id="summary" title="Summary">
     <Callout tone="bluf"><CopyText block={SURVEY_EMPLOYMENT} /></Callout>
+    <h3 class="t-heading-l ro__group">Earnings and Work</h3>
     <div class="ro__stats">
       <FactStat id="OC-03" />
       <FactStat id="OC-01" />
       <FactStat id="OC-02" />
-      <FactStat id="OC-05" />
       <FactStat id="OC-04" />
       <FactStat id="OC-07" />
       <FactStat id="OC-03b" />
+    </div>
+    <h3 class="t-heading-l ro__group">Speed to Earning</h3>
+    <div class="ro__stats ro__stats--one">
+      <FactStat id="OC-05" />
+    </div>
+    <h3 class="t-heading-l ro__group">Learner Experience</h3>
+    <div class="ro__stats ro__stats--one">
       <FactStat id="OC-06" />
     </div>
   </ReportSection>
@@ -128,7 +139,8 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="respondents" title="Who Responded">
-    <p data-fact="OC-09">Respondents were predominantly degree holders; some were employed before training (<Fact id="OC-01" field="from" /> were already working). <Fact id="OC-09" /></p>
+    <p data-fact="OC-01 OC-09">Nearly half of respondents were employed before training ({val('OC-01', 'from')}). <Fact id="OC-09" /></p>
+    <p>Employment results rest on n = {D.EMPLOYMENT_BASE} paired answers and income results on n = {D.INCOME_BASE}.</p>
     <ColumnChart
       title="Respondents by Age Group"
       items={ageItems}
@@ -148,7 +160,7 @@ const d = discoveryCta();
   <ReportSection id="employment" title="Employment">
     <p data-fact="OC-01">Among surveyed completers, employment rose from {val('OC-01', 'from')} before training to {val('OC-01')} at the October 2026 survey. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
     <BeforeAfter
-      title="Employment Among Surveyed Completers"
+      title="Employment Before and After Training"
       before={{ label: 'Before', value: before, caption: 'Before Training' }}
       after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
       delta={`+${(after - before).toFixed(1)} pp`}
@@ -179,7 +191,7 @@ const d = discoveryCta();
     </div>
     <div class="ro__measure" data-fact="OC-03b">
       <h3 class="t-heading-l">Direction of Income Change</h3>
-      <BarChart title="Monthly Income Change" items={incomeItems} />
+      <BarChart title="Share of Completers by Direction of Income Change" items={incomeItems} />
       <p class="ro__src"><Fact id="OC-03b" /></p>
     </div>
     <div class="ro__measure" data-fact="OC-03c">
@@ -195,7 +207,7 @@ const d = discoveryCta();
 
   <ReportSection id="income-source" title="Main Income Source">
     <p data-fact="OC-07"><Fact id="OC-07" /></p>
-    <BarChart title="Main Income Source" items={source} max={100} />
+    <BarChart title="Share of Surveyed Completers by Main Income Source" items={source} max={100} />
   </ReportSection>
 
   <ReportSection id="experience" title="Learner Experience">
@@ -203,7 +215,7 @@ const d = discoveryCta();
     <ColumnChart
       title="Recommendation Score, 0 to 10, Among Surveyed Completers"
       items={recItems}
-      emphasisNote="7 or Higher"
+      emphasisNote={`Scores of 7 or higher: ${sevenUp}%`}
     />
   </ReportSection>
 
@@ -212,10 +224,11 @@ const d = discoveryCta();
     <BarChart title="Completers (2014–2023) with No Income Before Training" items={priorItems} max={100} />
   </ReportSection>
 
-  <ReportSection id="methodology" title={'Methodology & Limitations'} anchorOnHeading>
+  <ReportSection id="methodology" title="Methodology and Limitations" anchorOnHeading>
     <ul class="ro__list">
       <li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
       <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
+      <li><strong>What it does not show.</strong> Respondents are not a random sample and may over-represent successful learners, so the survey does not show that training caused any change.</li>
     </ul>
   </ReportSection>
 
@@ -226,7 +239,7 @@ const d = discoveryCta();
     </a></p>
   </ReportSection>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program." text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
 
 </LongformLayout>
 
@@ -235,6 +248,10 @@ const d = discoveryCta();
     display: grid;
     gap: var(--space-lg) var(--space-gutter);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  }
+  .ro__group {
+    margin: var(--space-lg) 0 var(--space-sm);
+    color: var(--secondary);
   }
   .ro__stats--one {
     grid-template-columns: minmax(0, 260px);

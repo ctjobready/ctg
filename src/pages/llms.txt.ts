@@ -34,7 +34,8 @@ const REFERENCE: Item[] = [
   { name: 'Case Studies', path: '/impact/case-studies/' },
   { name: 'Success Stories', path: '/impact/stories/' },
   { name: 'Global reach', path: '/impact/global-reach/' },
-  { name: 'In the field (photo archive)', path: '/impact/in-the-field/' },
+  { name: 'In the field (photo collections)', path: '/impact/in-the-field/' },
+  { name: 'News photo archive', path: '/impact/in-the-field/news-photos/' },
   {
     name: 'Outcomes 2026 published aggregates (CSV)',
     path: '/data/outcomes-2026-aggregates.csv',
