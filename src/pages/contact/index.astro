@@ -18,48 +18,64 @@ import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
 
 const routes = contactRoutes();
+// Twelve-plus routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
+const GROUPS = [
+  { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local'] },
+  { id: 'hire', title: 'Hire or Train', ids: ['campus', 'work', 'talent'] },
+  { id: 'study', title: 'Study, Apply or Ask', ids: ['nu-pgd', 'learners', 'diligence', 'report', 'media'] },
+].map((g) => ({ ...g, routes: g.ids.map((id) => routes.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r) }));
+const grouped = new Set(GROUPS.flatMap((g) => g.ids));
+const ungrouped = routes.filter((r) => !grouped.has(r.id));
+if (ungrouped.length > 0) throw new Error(`Contact: routes without a group: ${ungrouped.map((r) => r.id).join(', ')}`);
 const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Offices in New York and Dhaka.';
-const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
+const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
 ---
 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let’s Talk." lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
+  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. Each button opens a prefilled email to the CodersTrust team; fill in the details and send." artSeed="contact">
     <Fragment slot="actions">
-      <Button href={ctaHref('discovery')} iconEnd="arrow-right">Request a Discovery Session</Button>
-      <Button variant="outline" href="#offices">Offices and Phone</Button>
+      <Button href="#routes" iconEnd="arrow-down">Choose Your Inquiry Route</Button>
+      <a class="link" href="#offices">Offices and Phone<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
   <Section id="routes" aria-labelledby="routes-h">
-    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Who Are You Writing As?" lead="Your email app opens with a short template. If it does not open, copy the address below." />
+    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Choose Your Inquiry Route" lead="Your email app opens with a short template. If it does not open, copy the address below." />
     <p class="ct-copy"><CopyEmail /></p>
-    <ul class="ct-routes" role="list">
-      {
-        routes.map((r) => {
-          const a = linkAttrs(r.cta.href);
-          const s = r.secondary ? linkAttrs(r.secondary.href) : undefined;
-          return (
-            <li class="card ct-route" data-reveal>
-              <div class="card__body">
-                <span class="ct-route__icon" aria-hidden="true"><Icon name={r.icon} size={22} /></span>
-                <h3 class="card__title">{r.who}</h3>
-                <p class="card__text">{r.text}</p>
-                <div class="ct-route__actions">
-                  <Button variant="outline" size="sm" href={r.cta.href} iconEnd={a.external ? 'arrow-up-right' : undefined} icon={a.external ? undefined : 'mail'}>{r.cta.label}</Button>
-                  {s && <a class="link" href={s.href} rel={s.rel}>{r.secondary!.label}{s.srText && <span class="sr-only"> {s.srText}</span>}</a>}
-                </div>
-              </div>
-            </li>
-          );
-        })
-      }
-    </ul>
+    {
+      GROUPS.map((g) => (
+        <section class="ct-group" aria-labelledby={`ct-${g.id}-h`}>
+          <h3 id={`ct-${g.id}-h`} class="ct-group__title t-heading-xl">{g.title}</h3>
+          <ul class="ct-routes" role="list">
+            {
+              g.routes.map((r) => {
+                const a = linkAttrs(r.cta.href);
+                const s = r.secondary ? linkAttrs(r.secondary.href) : undefined;
+                return (
+                  <li class="card ct-route" data-reveal>
+                    <div class="card__body">
+                      <span class="ct-route__icon" aria-hidden="true"><Icon name={r.icon} size={22} /></span>
+                      <h4 class="card__title">{r.who}</h4>
+                      <p class="card__text">{r.text}</p>
+                      <div class="ct-route__actions">
+                        <Button variant="outline" size="sm" href={r.cta.href} iconEnd={a.external ? 'arrow-up-right' : undefined} icon={a.external ? undefined : 'mail'}>{r.cta.label}</Button>
+                        {s && <a class="link" href={s.href} rel={s.rel}>{r.secondary!.label}{s.srText && <span class="sr-only"> {s.srText}</span>}</a>}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </section>
+      ))
+    }
   </Section>
 
   <Section id="offices" tone="airy" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="Write to the address of the office that is closest to your work." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="Use the contact route above; the right team will respond." />
     <div class="grid-cards grid-cards--2">
-      {OFFICES.map((o) => <OfficeCard {...o} role={o.id === 'usa' ? 'Office in New York' : 'Headquarters in Dhaka'} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
+      {OFFICES.map((o) => <OfficeCard {...o} name={o.id === 'bangladesh' ? 'CodersTrust Bangladesh Ltd.' : o.name} city={o.id === 'usa' ? 'New York · Office' : 'Dhaka · Headquarters'} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
     </div>
     <div class="ct-social">
       <h3 class="t-heading-m">Follow CodersTrust</h3>
@@ -99,6 +115,13 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s talk", description, 
 <style>
   .ct-copy {
     margin: calc(-1 * var(--space-sm)) 0 var(--space-lg);
+  }
+  .ct-group + .ct-group {
+    margin-top: var(--space-xl, 56px);
+  }
+  .ct-group__title {
+    margin: 0 0 var(--space-md);
+    color: var(--secondary);
   }
   .ct-routes {
     list-style: none;

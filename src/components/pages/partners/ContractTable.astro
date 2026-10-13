@@ -48,7 +48,7 @@ const rows: Row[] = [
     contract: 'NHRDF (National Human Resource Development Fund, Implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
-    direct: `${SCOPE} initial ${factPart('GV-04', /initial (\d+ trainees)/)}; scope ${factPart('GV-04', /scope ([\d,]+\+)/)}`,
+    direct: `${SCOPE} ${factPart('GV-04', /initial (\d+ trainees)/)} initially; ${factPart('GV-04', /scope ([\d,]+\+)/)} trainees in scope`,
   },
   {
     contract: 'Digital Lab Establishment Project, Phase II',

@@ -10,10 +10,10 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
-import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
 import TeamCard from '../../components/pages/about/TeamCard.astro';
 import PageNav from '../../components/pages/about/PageNav.astro';
+import Stat from '../../components/system/Stat.astro';
 import { fact } from '../../data/facts';
 import { MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING } from '../../data/copy';
 import { timeline } from '../../data/timeline';
@@ -24,6 +24,15 @@ import { webPage } from '../../lib/schema';
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
 const since = fact('ID-02').stat?.value;
 const description = `CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work. Founded in ${since}, with offices in New York and Dhaka.`;
+
+// SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
+const sc02 = fact('SC-02');
+const sc02Stat = sc02.stat!;
+const trial = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income (about +$27 a month).');
+if (trial === RCT_HEADLINE.text) throw new Error('About: RC-01 headline wording changed; update the trial line');
+
+const sdgLine = fact('ID-09').text.replace('aligns with seven SDGs', 'contributes to seven SDGs');
+if (sdgLine === fact('ID-09').text || !/Quality Education, Gender Equality, and Decent Work and Economic Growth/.test(sdgLine)) throw new Error('About: ID-09 wording changed; update the SDG line');
 
 const principles = [
   {
@@ -72,7 +81,6 @@ const jsonLd = [
   <Hero eyebrow="About Us" title="About CodersTrust" lead={fact('ID-01').text} artSeed="about-codertrust">
     <Fragment slot="actions">
       <Button href="/impact/" iconEnd="arrow-right">See Our Impact</Button>
-      <a class="link" href={linkAttrs('/about/team/').href}>Meet the Team<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
@@ -107,13 +115,15 @@ const jsonLd = [
   <Section id="glance" aria-labelledby="glance-h">
     <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
     <div class="about-stats">
-      {['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
+      <FactStat id="SC-01" />
+      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Stat.detail} count={sc02Stat.numeric !== undefined} /></div>
+      {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
     </div>
   </Section>
 
   <Section id="proof" tone="airy" aria-labelledby="proof-h">
     <SectionHeader id="proof-h" eyebrow="The Evidence" title={TRIAL_BAND_HEADING} />
-    <CopyBlock class="lead" block={RCT_HEADLINE} />
+    <p class="lead" data-fact="RC-01">{trial}</p>
     <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
@@ -157,14 +167,14 @@ const jsonLd = [
       <ul class="cluster about-sdgs" role="list">
         {sdgs.map((s, i) => <li><Badge tone={i < 3 ? 'brand' : 'eyebrow'}>{s}</Badge></li>)}
       </ul>
-      <p class="about-sdgs__note"><Fact id="ID-09" /></p>
+      <p class="about-sdgs__note" data-fact="ID-09">{sdgLine}</p>
     </div>
   </Section>
 
   <Section id="recognition" tone="ice" aria-labelledby="rec-h">
-    <SectionHeader id="rec-h" eyebrow="Recognition" title="Recognized by Peers, Covered by the Press" />
+    <SectionHeader id="rec-h" eyebrow="Recognition" title="Industry Recognition" />
     <div class="about-rec">
-      <p class="lead"><Fact id="PA-08" /></p>
+      <p class="lead" data-fact="PA-08">CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.</p>
       <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and Media<Icon name="arrow-right" size={16} /></a>
     </div>
   </Section>
@@ -197,6 +207,9 @@ const jsonLd = [
     gap: var(--space-lg) var(--gap-x);
   }
   /* FactStat's wrapper is display:contents, so the flex items are the .stat tiles themselves. */
+  .about-stats__tile {
+    display: contents;
+  }
   .about-stats :global(.stat) {
     flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap-x)) / var(--cols));
     min-width: 0;

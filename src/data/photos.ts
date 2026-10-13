@@ -157,7 +157,7 @@ export const CAPTION: Record<string, string> = {
   'recognition/european-parliament': 'European Parliament committee room',
   'recognition/pope-francis': 'Meeting Pope Francis',
   'recognition/nasdaq-sba': 'Nasdaq closing bell ceremony, US Small Business Administration',
-  'recognition/supply-chain-award': 'Supply Chain Diversity and Sustainability Excellence Awards, 2019 (year on the event screen)',
+  'recognition/supply-chain-award': 'Supply Chain Diversity and Sustainability Excellence Awards, 2019',
 };
 
 

@@ -1,12 +1,12 @@
 ---
 name: "Aziz Ahmad"
 slug: aziz-ahmad
-role: "Co-founder & Chairman"
+role: "Co-Founder & Chairman"
 group: founders
 order: 1
 photo: ../../assets/images/team/aziz-ahmad.jpg
-photoAlt: "Portrait of Aziz Ahmad, Co-founder & Chairman"
-expertise: ["Future of Work"]
+photoAlt: "Portrait of Aziz Ahmad, Co-Founder & Chairman"
+expertise: []
 legacyUrl: "https://coderstrust.global/aziz-ahmad/"
 ---
 

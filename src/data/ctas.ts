@@ -144,7 +144,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
   /** Careers page: applications go to the CodersTrust Bangladesh HR team (address from the legacy careers page). */
   careers: {
     key: 'careers',
-    label: 'Send Your CV',
+    label: 'Send a Speculative Application',
     to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
     subject: 'Application — [role or "speculative application"]',
     body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],

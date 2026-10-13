@@ -8,10 +8,13 @@
 type Role = 'R' | 'A' | 'C' | 'I';
 const LABEL: Record<Role, string> = { R: 'Responsible', A: 'Accountable', C: 'Consulted', I: 'Informed' };
 const rows: { activity: string; ct: Role[]; partner: Role[]; local: Role[] }[] = [
-  { activity: 'Agree Priority Groups, Tracks, the Indicative Budget and the Pilot Scorecard (Discovery and Co-Design)', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'Agree Priority Groups and Tracks (Discovery and Co-Design)', ct: ['R'], partner: ['A'], local: ['C'] },
+  { activity: 'Agree the Indicative Budget and the Pilot Scorecard (Co-Design)', ct: ['R'], partner: ['A'], local: ['C'] },
   { activity: 'Outreach, Accessible Selection and the Readiness Assessment', ct: ['A'], partner: ['I'], local: ['R'] },
-  { activity: 'Training, Certification Exam Preparation and Three Months of Mentoring', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
-  { activity: 'Placement Support and Outcome Tracking', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Training and Certification Exam Preparation', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Three Months of Mentoring', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Placement Support', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
+  { activity: 'Outcome Tracking', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
   { activity: 'Monthly Reports and Tracer Surveys', ct: ['A', 'R'], partner: ['I'], local: ['C'] },
   { activity: 'Safeguarding and Data Protection, Agreed Before Enrollment', ct: ['R'], partner: ['A'], local: ['C'] },
   { activity: 'The Decision to Expand After the Pilot', ct: ['C'], partner: ['A', 'R'], local: ['I'] },
@@ -24,7 +27,7 @@ const cols = [
 ] as const;
 ---
 
-<section class="raci" aria-label="Who does what in a partnership" tabindex="0" data-scroll data-stack="inline" data-reveal>
+<section class="raci" aria-label="Who does what in a partnership" tabindex="0" data-scroll data-reveal>
   <table>
     <caption class="sr-only">Who Does What in a Partnership: Responsible, Accountable, Consulted and Informed by Role</caption>
     <thead>
@@ -39,7 +42,7 @@ const cols = [
           <tr>
             <th scope="row">{r.activity}</th>
             {cols.map(([label, key]) => (
-              <td data-label={label}>
+              <td>
                 {r[key].map((role, i) => (
                   <>
                     {i > 0 && ' '}
@@ -54,16 +57,38 @@ const cols = [
     </tbody>
   </table>
 </section>
+<!-- Phone layout (≤ 640 px): one card per activity, with each party's role spelled out. The table is hidden at that width, so assistive technology reads one version. -->
+<ul class="raci-cards" role="list" aria-label="Who does what in a partnership">
+  {
+    rows.map((r) => (
+      <li class="raci-card">
+        <p class="raci-card__title">{r.activity}</p>
+        <dl class="raci-card__list">
+          {cols.map(([label, key]) => (
+            <div class="raci-card__row">
+              <dt>{label}</dt>
+              <dd>
+                {r[key].map((role, i) => (
+                  <>
+                    {i > 0 && ' '}
+                    <span class={`raci__pill raci__pill--${role}`} aria-hidden="true">{role}</span>
+                  </>
+                ))}
+                <span class="raci-card__words">{r[key].map((role) => LABEL[role]).join(' and ')}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </li>
+    ))
+  }
+</ul>
 <ul class="raci__legend t-body-xs" role="list" aria-label="Legend">
   <li><b class="raci__pill raci__pill--R">R</b><span>Responsible: does the work</span></li>
   <li><b class="raci__pill raci__pill--A">A</b><span>Accountable: decides and answers for it</span></li>
   <li><b class="raci__pill raci__pill--C">C</b><span>Consulted</span></li>
   <li><b class="raci__pill raci__pill--I">I</b><span>Informed</span></li>
 </ul>
-
-<script>
-  import '../../../scripts/tablestack';
-</script>
 
 <style>
   .raci {
@@ -163,6 +188,66 @@ const cols = [
   }
   .raci__legend li > span {
     padding-top: 2px;
+  }
+  .raci-cards {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+  }
+  .raci-card {
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .raci-card__title {
+    margin: 0;
+    padding: 12px var(--space-md);
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--primary-fixed);
+  }
+  .raci-card__list {
+    margin: 0;
+  }
+  .raci-card__row {
+    padding: 10px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .raci-card__row:last-child {
+    border-bottom: 0;
+  }
+  .raci-card__row dt {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+    margin-bottom: 4px;
+  }
+  .raci-card__row dd {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    color: var(--on-surface);
+  }
+  .raci-card__words {
+    margin-left: 4px;
+  }
+  @media (max-width: 640px) {
+    .raci {
+      display: none;
+    }
+    .raci-cards {
+      display: grid;
+    }
   }
   @media (min-width: 900px) {
     .raci__legend {

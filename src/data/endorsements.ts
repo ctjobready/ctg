@@ -1,5 +1,5 @@
 // Endorsements migrated from the legacy CodersTrust WordPress site (post type `endorsements`).
-// Quotes are verbatim from the rendered legacy homepage; do not edit wording (repairs made: a missing space between two sentences, and the
+// Quotes are verbatim from the rendered legacy homepage; do not edit wording. The two University for Peace quotes are shown as trimmed excerpts (an ellipsis marks each omission; the words kept are unchanged, apart from capitalizing "Peace" in the Mannis excerpt.) (Repairs made: a missing space between two sentences, and the
 // closing quotation mark the legacy page left off the Sainz-Borgo quote).
 // Public officials in office (the Danish ambassador, H.E. Winnie Estrup Petersen; James Gardiner of the US Embassy) are not shown as endorsements on evergreen pages;
 // the ambassador's entry is removed from this dataset, and the recognition page filters out Gardiner (PA-10: his remarks stay in their dated news item). `date` is null because the
@@ -35,7 +35,7 @@ export const endorsements: Endorsement[] = [
     id: "dr-juan-carlos-sainz-borgo",
     name: "Dr. Juan Carlos Sainz-Borgo",
     title: "Vice Rector University for Peace, Costa Rica",
-    quote: "“Bangladesh it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh with such distinguished guests and of course ambitious and brilliant young people paving the way for tomorrow. Thank you for your invitation to this extraordinary day and for your admirable and unerring commitment to peace and education.”",
+    quote: "“…it is with great enthusiasm that we the University for Peace celebrate this CodersTrust launch ceremony in Bangladesh… Thank you for your invitation to this extraordinary day and for your admirable and unerring commitment to peace and education.”",
     photo: drJuanCarlosSainzBorgo,
     photoAlt: "Portrait of Dr. Juan Carlos Sainz-Borgo, Vice Rector University for Peace, Costa Rica",
     date: null,
@@ -45,7 +45,7 @@ export const endorsements: Endorsement[] = [
     id: "melissa-mannis",
     name: "Melissa Mannis",
     title: "Special Advisor University for Peace",
-    quote: "“On June 3rd here in Costa Rica University for peace and CodersTrust firmed their commitment to working together for peace and education by entering into a memorandum of understanding represents the understanding that skills in peace and in digital technology combined is what is most needed to build the world better for tomorrow and sustainably into the future.”",
+    quote: "“…University for Peace and CodersTrust firmed their commitment to working together for peace and education by entering into a memorandum of understanding… skills in peace and in digital technology combined is what is most needed to build the world better for tomorrow…”",
     photo: melissaMannis,
     photoAlt: "Portrait of Melissa Mannis, Special Advisor University for Peace",
     date: null,

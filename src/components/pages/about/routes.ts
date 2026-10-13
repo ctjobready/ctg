@@ -52,7 +52,7 @@ export const contactRoutes = (): ContactRoute[] => [
   {
     id: 'nu-pgd',
     who: 'National University Diploma Applicants',
-    text: 'Apply through the existing application form, or call the admissions team.',
+    text: 'Apply through the application form, or call the admissions team.',
     icon: 'graduation-cap',
     cta: { key: 'nu-pgd', label: CTAS['nu-pgd'].label, href: NU_PGD_APPLY_URL },
     secondary: CTAS['nu-pgd'].secondary,

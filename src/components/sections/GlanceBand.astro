@@ -15,6 +15,8 @@ import { linkAttrs } from '../../lib/url';
 interface Tile {
   id: string;
   href: string;
+  /** Page-specific wording for the tile's label (the register's glance label is the default). */
+  label?: string;
   /** Other facts the tile's note rests on (OC-05 behind OC-02's note), added to data-fact. */
   also?: string[];
 }
@@ -38,7 +40,7 @@ const toTile = (t: Tile) => {
   return {
     ...t,
     value: f.stat.value,
-    label: f.stat.glance?.label ?? f.stat.label,
+    label: t.label ?? f.stat.glance?.label ?? f.stat.label,
     note: f.stat.glance?.note,
     facts: [t.id, ...(t.also ?? [])].join(' '),
   };

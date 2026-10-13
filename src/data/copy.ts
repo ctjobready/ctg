@@ -28,7 +28,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
-  employers: 'We help employers upskill their teams and find job-ready digital talent through mentored, certification-focused training.',
+  employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
   investors: 'We help investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
@@ -38,7 +38,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 export const HEADLINE: Record<Audience, string> = {
   home: 'Turn Youth Unemployment into Digital Employment — with Evidence.',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
-  governments: 'Turn Graduates and Digital Labs into a National Digital Workforce.',
+  governments: 'Build a National Digital Workforce from Graduates and Digital Labs.',
   foundations: 'Fund a Supported Path from Learning to Earning.',
   universities: 'Help Your Graduates Build Job-Ready Digital Skills.',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
@@ -130,8 +130,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['RC-01'],
   },
   employers: {
-    text: `For employers who need teams with AI skills and job-ready digital talent, CodersTrust offers training custom-developed for each organization and talent through its placement team. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01', 'IN-10'],
+    // WP20b: employer-specific (the [UNLIKE] sentence describes the youth-cohort model); scripts/check-facts.mjs may pin it for this page only.
+    text: 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles; talent requests are scoped against the experience and credentials available in the candidate pool.',
+    facts: ['IN-10', 'IN-04'],
   },
   investors: {
     text: `For impact and growth investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs, with results that are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
@@ -155,7 +156,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   work: {
     // WP18b: an employer-specific closing sentence in place of [UNLIKE] (which is about youth programs); scripts/check-facts.mjs pins it for this page only.
-    text: `For employers who need teams with the digital capabilities for AI workflows, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${WORK_POSITIONING}`,
+    text: `For employers who need teams ready to use AI in their daily work, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${WORK_POSITIONING}`,
     facts: ['IN-10'],
   },
   // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file

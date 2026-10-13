@@ -23,6 +23,8 @@ import RiskReversalBand from '../../../components/sections/RiskReversalBand.astr
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
+import Icon from '../../../components/system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
 import Section from '../../../components/ui/Section.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -32,6 +34,8 @@ import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import ContractTable from '../../../components/pages/partners/ContractTable.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import RouteLink from '../../../components/pages/partners/RouteLink.astro';
+import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
@@ -51,7 +55,7 @@ const { title, description } = meta(
   VALUE_PROPOSITION.governments,
 );
 
-const FAQ_IDS = ['Q7', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
+const FAQ_IDS = ['Q7-government', 'Q2', 'Q1', 'Q9', 'Q10', 'Q8'];
 const rates = graduateRates();
 const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
 const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
@@ -90,13 +94,24 @@ const steps = [
     links={[
       { label: 'How It Works', href: '#mechanism' },
       { label: 'Evidence', href: '#proof-band' },
+      { label: 'Government Contracts', href: '#contracts' },
       { label: 'What You Receive', href: '#features' },
       { label: 'Options', href: '#offer' },
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
+  <RouteLink kicker="See the Program" label="YouthWIDE in Bangladesh" href={LINKS.nationwide} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <ForNotFor
+    forText="Your agency wants employment outcomes measured in the existing lab network."
+    notText={`You need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`}
+  />
+  <SubBand id="outside-bangladesh">
+    <Callout eyebrow="Outside Bangladesh?">
+      <p>YouthWIDE is designed for deployment in other countries, with tracks set per country from local employer demand. See <a class="link" href="#scale">How We Scale</a>, or write to us for a briefing.</p>
+    </Callout>
+  </SubBand>
   <GlanceBand
     variant="strip"
     id="glance"
@@ -107,9 +122,19 @@ const steps = [
       { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'OC-01', href: '/impact/outcomes-2026/' },
       { id: 'PR-06', href: '/impact/case-studies/', also: ['PR-01', 'PR-02', 'PR-03'] },
-      { id: 'GV-12', href: '/partner-with-us/governments/', also: ['SC-06', 'SC-04'] },
+      { id: 'GV-12', href: '/partner-with-us/governments/', label: 'people in the contracted training and curriculum scopes of six government contracts', also: ['SC-06', 'SC-04'] },
     ]}
   />
+
+  <SubBand>
+    <Callout eyebrow="Evidence for Government Programs">
+      <p class="cluster">
+        <a class="link" href={linkAttrs(LINKS.trial).href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href={linkAttrs(LINKS.caseHerPower).href}>Her Power Case Study<Icon name="arrow-right" size={16} /></a>
+      </p>
+    </Callout>
+  </SubBand>
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -179,7 +204,7 @@ const steps = [
     ]}
     link={{ label: 'See YouthWIDE in Bangladesh', href: LINKS.nationwide }}
   />
-  <SubBand>
+  <SubBand id="scale">
     <Callout eyebrow="How We Scale"><CopyText block={SCALE} /></Callout>
     <!-- Delivery context (WP18b): the coastal mobility fact sits with the delivery model it shapes, not in the C3 cost-of-waiting band. -->
     <Callout eyebrow="Delivery Context: Coastal Districts">
@@ -203,7 +228,7 @@ const steps = [
   </ProofBand>
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
   <CaseStudyCarousel
-    title="The Her Power Cohort, Beside Two Other Women-Focused Programs"
+    title="Her Power, Beside Two Other Women-Focused Programs"
     lead={WOMEN_INCLUSION.text}
     items={[
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
@@ -248,7 +273,6 @@ const steps = [
     audience="governments"
     ids={FAQ_IDS}
     title="Questions Ministries Ask"
-    lead={`Right for you if your agency wants employment outcomes measured in the existing lab network. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`}
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 

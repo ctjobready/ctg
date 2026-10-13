@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
+import Badge from '../../system/Badge.astro';
 import { pricingParts } from './partners';
 
 /**
@@ -26,9 +27,11 @@ interface Props {
   cards: Card[];
   /** Show the standard inclusions list (PD-02) under the cards. */
   inclusions?: boolean;
+  /** Index of the card to mark "Recommended First Step" (the pilot option). */
+  recommended?: number;
   id?: string;
 }
-const { title, lead, cards, inclusions = false, id = 'offer' } = Astro.props;
+const { title, lead, cards, inclusions = false, recommended, id = 'offer' } = Astro.props;
 const pricing = pricingParts();
 ---
 
@@ -36,10 +39,11 @@ const pricing = pricingParts();
   <SectionHeader id={`${id}-h`} eyebrow="Start" title={title} lead={lead ?? pricing.lead} />
   <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
     {
-      cards.map((c) => (
+      cards.map((c, i) => (
         <article id={c.id} class="card oc" data-reveal data-fact={c.facts?.join(' ')}>
           <div class="card__body">
             <p class="eyebrow">{c.eyebrow}</p>
+            {recommended === i && <p class="oc__rec"><Badge tone="sale">Recommended First Step</Badge></p>}
             <h3 class="card__title">{c.title}</h3>
             {c.headline && <p class="oc__headline">{c.headline}</p>}
             {c.meta && <p class="card__meta oc__meta">{c.meta}</p>}
@@ -64,6 +68,9 @@ const pricing = pricingParts();
 </Section>
 
 <style>
+  .oc__rec {
+    margin: 0 0 var(--space-xs);
+  }
   .oc__headline {
     font-size: var(--fs-heading-l);
     font-weight: var(--fw-bold);

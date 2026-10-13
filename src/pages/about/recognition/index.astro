@@ -109,11 +109,11 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   ]} />
 
   <Section id="listing" aria-labelledby="listing-h">
-    <SectionHeader id="listing-h" eyebrow="Industry Recognition" title="HolonIQ South Asia EdTech 100" />
+    <SectionHeader id="listing-h" eyebrow="Industry Recognition" title="HolonIQ South Asia EdTech 100, 2023 and 2024" />
     <div class="rec-listing">
       <span class="rec-listing__badge" aria-hidden="true"><Icon name="award" size={32} /></span>
       <div>
-        <p class="lead"><Fact id="PA-08" /></p>
+        <p class="lead" data-fact="PA-08">CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.</p>
         <p><a class="link" href={`${url('/news/')}#nf-recognition`}>More Recognition News<Icon name="arrow-right" size={16} /></a></p>
       </div>
     </div>
@@ -149,7 +149,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   {
     relatedRecognition.length > 0 && (
       <Section id="related" tone="ice" aria-labelledby="related-h">
-        <SectionHeader id="related-h" eyebrow="Related Recognition" title="Recognition of Aziz Ahmad’s Other Work" />
+        <SectionHeader id="related-h" eyebrow="Related Recognition" title="Recognition Connected to Our Chairman’s Work" />
         <ul class="rec-honors" role="list" data-fact="PA-11">
           {relatedRecognition.map((h) => (
             <li class="card rec-honor" data-reveal>
@@ -174,7 +174,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   }
 
   <Section id="coverage" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Media Coverage, 2014 to 2016" lead="Coverage of CodersTrust’s first years, shown as published. Original articles are linked where available." />
+    <SectionHeader id="coverage-h" eyebrow="In the Press" title="Early Coverage of CodersTrust’s First Years, 2014–2016" lead="Shown as published. Original articles are linked where available." />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -201,7 +201,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   {
     quotes.length > 0 && (
       <Section id="endorsements" tone="airy" aria-labelledby="end-h">
-        <SectionHeader id="end-h" eyebrow="Endorsements" title="In Their Words" />
+        <SectionHeader id="end-h" eyebrow="Endorsements" title="What University for Peace Says" />
         <div class="rec-quotes">
           {quotes.map((e) => (
             <figure class="rec-quote" data-asset={`endorsement-${e.id}`} data-reveal>

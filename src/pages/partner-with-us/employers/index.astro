@@ -17,6 +17,7 @@ import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
@@ -24,7 +25,8 @@ import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBan
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
-import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
+import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
@@ -76,7 +78,7 @@ const steps = [
   <InShort
     bullets={[
       'Training custom-developed for your roles, from a needs assessment to interactive workshops.',
-      'Job-ready talent through CodersTrust’s placement team, scoped against the experience and credentials available.',
+      'Job-ready talent introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
       'An AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
       'Start with a pilot team; success measures are agreed before you start.',
     ]}
@@ -88,18 +90,27 @@ const steps = [
       { label: 'Next Steps', href: '#next-steps' },
     ]}
   />
+  <RouteLink kicker="See the Program" label="See the Training Delivery Details" href={LINKS.work} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
+  <ForNotFor
+    forText="You want tracks built around the skills your roles need."
+    notText="You need talent beyond the experience and credentials available in the candidate pool."
+  />
 
-  <!-- Routes: the two offers further down, one per audience -->
+  <!-- Routes: the two offers, one per audience. Hiring sits near the top (the employer's own decision); training is detailed further down. -->
   <SubBand>
-    <Callout eyebrow="Choose Your Route">
+    <Callout eyebrow="Train the Team You Have. Hire the Talent You Need.">
       <p class="cluster">
         <a class="link" href="#train-your-team">Train Your Team<Icon name="arrow-right" size={16} /></a>
         <a class="link" href="#hire-talent">Hire Talent<Icon name="arrow-right" size={16} /></a>
       </p>
     </Callout>
   </SubBand>
+  <Section id="hire-talent" tone="airy" pad="sm" aria-labelledby="hire-h">
+    <SectionHeader id="hire-h" eyebrow="Hire Talent" title="Job-Ready Talent Through the Placement Team" lead="Job-ready candidates are introduced through CodersTrust’s placement team. Talent requests are scoped against the experience and credentials available in the candidate pool." />
+    <p data-fact="IN-04"><a class="link" href={talent.href}>{talent.label}<Icon name="arrow-right" size={16} /></a></p>
+  </Section>
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -138,7 +149,7 @@ const steps = [
     vignettes={[
       { kind: 'Functional', title: 'A Team Fluent in AI Workflows', text: 'Your team applies AI tools in daily work.' },
       { kind: 'Emotional', title: 'Candidates Scoped to Your Roles', text: 'Candidates are scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
-      { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent comes through CodersTrust’s placement team.' },
+      { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent is introduced through CodersTrust’s placement team.' },
     ]}
   />
 
@@ -166,7 +177,7 @@ const steps = [
   />
   <SubBand>
     <Callout eyebrow="Talent">
-      <p data-fact="IN-04">Job-ready candidates are supplied through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and will add a self-serve hiring channel.</p>
+      <p data-fact="IN-04">Job-ready candidates are introduced through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and will add a self-serve hiring channel.</p>
     </Callout>
   </SubBand>
 
@@ -176,7 +187,7 @@ const steps = [
     rows={[
       {
         feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
-        means: 'a short route to job-ready candidates.',
+        means: 'access to candidates from CodersTrust’s placement team, matched to each role’s requirements.',
         outcome: 'Job-ready candidates for your roles',
         relieves: 'You cannot find the digital talent you need',
       },
@@ -194,14 +205,12 @@ const steps = [
       },
     ]}
   />
-  <HowItWorks steps={steps} />
 
   <!-- C9 · Objections -->
   <FAQBand
     audience="employers"
     ids={FAQ_IDS}
     title="Questions Employers Ask"
-    lead="Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool."
   />
 
   <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. -->
@@ -224,8 +233,9 @@ const steps = [
     eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)"
     headlineFact="RC-01"
     trialScope={TRIAL_SCOPE.work.text}
-    statIds={['RC-02', 'RC-04']}
+    statIds={['RC-02']}
     chartId="OC-01"
+    compact
     links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
       { label: 'Outcomes 2026', href: LINKS.outcomes },
@@ -246,7 +256,7 @@ const steps = [
     title="Choose How to Work with Us."
     cards={[
       { id: 'train-your-team', eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
-      { id: 'hire-talent', eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
+      { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates introduced through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
     ]}
   />
 

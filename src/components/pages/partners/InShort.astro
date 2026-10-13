@@ -13,9 +13,11 @@ interface Props {
   links: { label: string; href: string }[];
   /** Link to the contracting and accountability panel (default on). */
   contracting?: boolean;
+  /** Heading (default "In Short"). */
+  title?: string;
   id?: string;
 }
-const { bullets, links, contracting = true, id = 'in-short' } = Astro.props;
+const { bullets, links, contracting = true, title = 'In Short', id = 'in-short' } = Astro.props;
 if (bullets.length < 3 || bullets.length > 4) throw new Error('InShort: needs 3 or 4 bullets');
 const governance = linkAttrs('/about/governance/#contracting').href;
 ---
@@ -23,7 +25,7 @@ const governance = linkAttrs('/about/governance/#contracting').href;
 <Section id={id} tone="airy" pad="sm" aria-labelledby={`${id}-h`}>
   <div class="is">
     <div class="is__box" data-reveal>
-      <h2 class="is__title t-heading-l" id={`${id}-h`}>In Short</h2>
+      <h2 class="is__title t-heading-l" id={`${id}-h`}>{title}</h2>
       <ul class="is__list" role="list">
         {bullets.map((b) => <li>{b}</li>)}
       </ul>

@@ -1,0 +1,121 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+import { TRACKING_MONTHS } from '../partners/partners';
+
+/**
+ * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Three tiles, each read from the
+ * facts register (never retyped): the randomized trial of a predecessor program (RC-02), the survey among surveyed completers (OC-01), and
+ * the 12-month outcome tracking (PD-02). The trial and the survey stay apart and each carries its own label.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'why-partner' } = Astro.props;
+const rc02 = fact('RC-02');
+const oc01 = fact('OC-01');
+if (!rc02.stat || !oc01.stat) throw new Error('WhyPartner: RC-02 and OC-01 need a stat');
+const tiles = [
+  {
+    kicker: 'Randomized Trial of a Predecessor Program',
+    value: rc02.stat.value,
+    label: 'more employment for women offered a place, in percentage points',
+    href: '/impact/independent-evaluation/',
+    link: 'The Randomized Trial',
+    ids: 'RC-02',
+  },
+  {
+    kicker: 'Survey Among Surveyed Completers',
+    value: oc01.stat.value,
+    label: oc01.stat.glance?.label ?? oc01.stat.label,
+    note: oc01.stat.glance?.note,
+    href: '/impact/outcomes-2026/',
+    link: 'Outcomes 2026',
+    ids: 'OC-01',
+  },
+  {
+    kicker: 'Outcome Tracking',
+    value: `${TRACKING_MONTHS} months`,
+    label: 'of outcome tracking after each course, as agreed in each program’s scope',
+    href: '/about/governance/',
+    link: 'Governance and Accountability',
+    ids: 'PD-02',
+  },
+];
+---
+
+<Section id={id} tone="ice" pad="sm" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="The Evidence in Brief" title="Why Partner with CodersTrust" />
+  <ul class="wp" role="list">
+    {
+      tiles.map((t) => (
+        <li class="wp__tile" data-fact={t.ids} data-reveal>
+          <p class="wp__kicker">{t.kicker}</p>
+          <p class="wp__value">{t.value}</p>
+          <p class="wp__desc">{t.label}</p>
+          {t.note && <p class="wp__note">{t.note}</p>}
+          <a class="link wp__link" href={linkAttrs(t.href).href}>{t.link}<Icon name="arrow-right" size={16} /></a>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .wp {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .wp {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .wp__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-card);
+  }
+  .wp__tile > p {
+    margin: 0;
+  }
+  .wp__kicker {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .wp__value {
+    font-size: var(--fs-heading-xl);
+    line-height: 1.15;
+    font-weight: var(--fw-bold);
+    color: var(--primary);
+  }
+  .wp__desc {
+    color: var(--on-surface);
+  }
+  .wp__note {
+    font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .wp__link {
+    margin-top: auto;
+    padding-top: var(--space-xs);
+    align-self: flex-start;
+    min-height: 24px;
+  }
+</style>
