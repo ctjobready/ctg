@@ -165,7 +165,7 @@ const approach = [
     ]}
   />
   <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" />
+    <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" lead="Success measures are agreed during the needs assessment, before the program starts." />
     <div data-fact="IN-10 PD-03">
       <StepFlow
         steps={[
@@ -237,9 +237,7 @@ const approach = [
   />
 
   <!-- C13: one solid primary; the talent action is outline -->
-  <CTABand id="cta" heading="Tell Us About Your Team and Your Roles." cta={work} micro={MICRO_COMMITMENT}>
-    <Button variant="outline" href={talent.href}>{talent.label}</Button>
-  </CTABand>
+  <CTABand id="cta" heading="Tell Us About Your Team and Your Roles." cta={work} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
 
   <!-- C14 -->
   <NextSteps

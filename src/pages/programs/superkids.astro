@@ -105,6 +105,7 @@ const courses = linkAttrs(COURSES_URL);
     title="Public-Sector Agreements and a Private-Sector Partner"
     empathy="You want children to build digital skills early."
     origin={ORIGIN}
+    statIds={['SK-05']}
     showPartners={false}
     method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
@@ -149,8 +150,6 @@ const courses = linkAttrs(COURSES_URL);
     </div>
   </Section>
 
-  <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
-
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Schools and Partners Ask" />
 
@@ -166,6 +165,8 @@ const courses = linkAttrs(COURSES_URL);
   >
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
+
+  <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Inside SuperKids Classrooms and Events" lead="Workshops, certificate ceremonies and school agreements, in photographs." photos={galleryPhotos('superkids')} />
 
   <!-- C12 (risk reversal) is the micro-commitment line under the C13 button. Safeguarding is stated once on this page, in the FAQ answer
        above (Q9); the former "Safeguarding Is Agreed Before Enrollment" card repeated it word for word. -->

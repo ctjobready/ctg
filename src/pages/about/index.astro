@@ -13,6 +13,7 @@ import FactStat from '../../components/facts/FactStat.astro';
 import CopyBlock from '../../components/pages/about/CopyBlock.astro';
 import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
 import TeamCard from '../../components/pages/about/TeamCard.astro';
+import PageNav from '../../components/pages/about/PageNav.astro';
 import { fact } from '../../data/facts';
 import { MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING } from '../../data/copy';
 import { timeline } from '../../data/timeline';
@@ -43,8 +44,6 @@ const principles = [
     icon: 'scale',
     title: 'Evidence Before Claims',
     text: 'We say what a randomized trial shows and what a survey only describes, and we keep the two apart.',
-    factId: 'RC-01',
-    field: 'headline' as const,
     link: { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
   },
   {
@@ -76,6 +75,16 @@ const jsonLd = [
       <a class="link" href={linkAttrs('/about/team/').href}>Meet the Team<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
+
+  <PageNav links={[
+    { label: 'Mission', href: '#mission' },
+    { label: 'Where We Are Today', href: '#glance' },
+    { label: 'The Evidence', href: '#proof' },
+    { label: 'Our Story', href: '#story' },
+    { label: 'Founders', href: '#founders' },
+    { label: 'How We Work', href: '#how-we-work' },
+    { label: 'Recognition', href: '#recognition' },
+  ]} />
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
     <SectionHeader id="mission-h" eyebrow="Mission and Vision" title="Why We Exist, and Where We Are Heading" />
@@ -109,7 +118,7 @@ const jsonLd = [
   </Section>
 
   <Section id="story" tone="ice" aria-labelledby="timeline-h">
-    <SectionHeader id="timeline-h" eyebrow="Our Story" title="From a Copenhagen Launch to National Programs" lead="Milestones that rest on registered facts." />
+    <SectionHeader id="timeline-h" eyebrow="Our Story" title="From a Copenhagen Launch to National Programs" />
     <StoryTimeline items={timeline} />
   </Section>
 
@@ -133,7 +142,7 @@ const jsonLd = [
               <span class="principle__icon" aria-hidden="true"><Icon name={p.icon} size={24} /></span>
               <h3 class="card__title">{p.title}</h3>
               <p class="card__text">{p.text}</p>
-              <p class="principle__fact"><Fact id={p.factId} field={p.field} /></p>
+              {p.factId && <p class="principle__fact"><Fact id={p.factId} /></p>}
               <a class="link principle__link" href={linkAttrs(p.link.href).href}>{p.link.label}<Icon name="arrow-right" size={16} /></a>
             </div>
           </article>

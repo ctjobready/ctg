@@ -29,7 +29,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams and find job-ready digital talent through mentored, certification-focused training.',
-  investors: 'We help investors back a platform that prepares emerging-market youth for paid work through certification-focused training.',
+  investors: 'We help investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
 };
@@ -44,7 +44,7 @@ export const HEADLINE: Record<Audience, string> = {
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent.',
   investors: 'Invest in the Infrastructure of Emerging-Market Work.',
   localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community.',
-  nuPgd: 'Build the Digital Skills Employers Are Hiring for — After Your Degree.',
+  nuPgd: 'Build Practical Digital Skills After Your Degree.',
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
@@ -126,7 +126,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['RC-01', 'IN-10'],
   },
   investors: {
-    text: `For impact and growth investors who need a platform that moves emerging-market youth into paid digital work, CodersTrust offers an integrated training-to-earnings model, with results that are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
+    text: `For impact and growth investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs, with results that are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
     facts: ['RC-01'],
   },
   localPartners: {
@@ -276,12 +276,12 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
-  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power training cohort 47% in work.',
+  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, in work (47%).',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
 export const GOVERNANCE: CopyBlock = {
-  text: 'CodersTrust contracts through CT USA, Inc. in the United States and CodersTrust Bangladesh in Bangladesh; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.',
+  text: 'CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.',
   facts: ['ID-07', 'PD-13'],
 };
 

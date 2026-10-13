@@ -14,6 +14,7 @@ import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../../components/pages/about/OfficeCard.astro';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import ContractingPanel from '../../../components/pages/about/ContractingPanel.astro';
+import PageNav from '../../../components/pages/about/PageNav.astro';
 import { diligenceCta } from '../../../components/pages/about/routes';
 import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
@@ -58,6 +59,15 @@ const jsonLd = [
     </Hero>
   </div>
 
+  <PageNav links={[
+    { label: 'Contracting and Accountability', href: '#contracting' },
+    { label: 'Offices', href: '#offices' },
+    { label: 'Leadership', href: '#leadership' },
+    { label: 'Safeguarding', href: '#safeguarding' },
+    { label: 'Evidence', href: '#evidence' },
+    { label: 'Due Diligence', href: '#checklist' },
+  ]} />
+
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
 
   <Section id="offices" aria-labelledby="offices-h">
@@ -96,7 +106,7 @@ const jsonLd = [
       <article class="card" data-reveal>
         <div class="card__body">
           <h3 class="card__title">Consent and Records</h3>
-          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policy documents are not published on this site.</p>
+          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected, with harassment and fraud response and referral pathways agreed for each program. Policies are shared with partners during due diligence.</p>
         </div>
       </article>
     </div>

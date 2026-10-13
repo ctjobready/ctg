@@ -14,4 +14,4 @@ Md. Hazrat Ali Nahid is Team Lead of the Education Department at CodersTrust Ban
 
 He holds a Master’s in Accounting and is a registered tax preparer in the USA with a Preparer Tax Identification Number (PTIN). With over 15 years of experience in bookkeeping, payroll, VAT, GST, and tax filing, he is proficient in accounting software including QuickBooks, Xero, Wave, Zoho Books, Sage 50, FreshBooks, QuickBooks Payroll, and Gusto Payroll.
 
-He has trained over 30,000 students globally, and his expertise spans the US, UK, Australia, and Canada.
+He has trained students worldwide, and his expertise spans the US, UK, Australia, and Canada.

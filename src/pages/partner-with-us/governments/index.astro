@@ -37,7 +37,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, NATIONWIDE_TARGET, factPart, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
-import { CLAIM_PX06, graduateRates } from '../../../components/sections/copyText';
+import { CLAIM_PX06, CLAIM_RC06, graduateRates } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -133,7 +133,7 @@ const steps = [
     title="Without Placement Tracking, Agencies Cannot See What Training Delivers."
     transition="It doesn’t have to be this way."
     blocks={[
-      { claim: 'Coastal Mobility and Displacement Shape Delivery Needs.', factId: 'PX-11', implication: 'Where young people leave, training has to connect them to work locally, remotely or abroad.' },
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the national program from the start, not added afterward.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
       { claim: 'Jobs Now Ask for AI-Ready Skills.', factId: 'PX-08', scope: 'Globally', implication: 'Training has to include the AI skills these jobs require.' },
     ]}

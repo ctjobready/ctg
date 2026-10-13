@@ -36,7 +36,7 @@ export function meta(title: string, description: string): { title: string; descr
 // Program-design phrases used in page strings, sourced from the register.
 export const HOURS = factPart('PD-01', /(\d+) training hours per certification/);
 export const TRACKING_MONTHS = factPart('PD-02', /outcome tracking for (\d+) months/);
-const tracerNums = factPart('PD-09', /tracers at ([\d/]+) months/).split('/');
+const tracerNums = factPart('PD-09', /surveys at (\d+, \d+ and \d+) months/).split(/, | and /);
 /** "3, 6 and 12 months" */
 export const TRACER_MONTHS = `${tracerNums.slice(0, -1).join(', ')} and ${tracerNums[tracerNums.length - 1]} months`;
 /** "6–8 weeks" */

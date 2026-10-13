@@ -156,7 +156,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       title="Without Placement Tracking, Agencies Cannot See What Training Delivers."
       transition=""
       blocks={[
-        { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot tell whether training led to work.' },
+        { claim: 'Each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.', factId: 'PD-09', implication: 'Without that record, an agency cannot see who entered work or began earning after training.' },
       ]}
     />
 
@@ -196,7 +196,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         { label: 'What Trainees Receive', title: 'Certification Preparation by Track', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then mentoring and placement support.', icon: 'award' },
         { label: 'What You Receive', title: 'Monthly Reports', text: 'Reports to the agency are designed to show enrollment, completion, certification, placement and first earnings as each cohort progresses.', icon: 'chart-bar' },
       ]}
-      factIds={['GV-09', 'GV-01', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
+      factIds={['GV-09', 'GV-01', 'GV-13', 'PD-06', 'PD-03', 'PD-15', 'PD-08']}
     >
       <div class="mech-target" data-reveal>
         <Badge tone="sale">Target</Badge>
@@ -205,9 +205,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       </div>
       <div class="mech-stats">
         <FactStat id="GV-09" />
-        <FactStat id="GV-01" />
+        <FactStat id="GV-13" />
         <FactStat id="PD-01" />
       </div>
+      <p class="mech-target__note" data-fact="GV-01">Her Power, the national program, <Fact id="GV-01" as="span" />.</p>
     </MechanismSection>
   </div>
 

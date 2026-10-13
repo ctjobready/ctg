@@ -4,6 +4,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import PageNav from '../../../components/pages/about/PageNav.astro';
+import CTABand from '../../../components/ui/CTABand.astro';
+import { ctaHref } from '../../../lib/mailto';
 import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import { webPage, pageUrl } from '../../../lib/schema';
 import { url } from '../../../lib/url';
@@ -30,7 +33,8 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Leadership and Team" lead="Founders, advisors, executive management and the people who lead CodersTrust in New York, Dhaka and Chattogram." art={false} />
+  <Hero eyebrow="About Us" title="Leadership and Team" lead="Founders, advisors, executive management and the people who lead CodersTrust in New York, Dhaka and Chattogram, including the CEO of CodersTrust Bangladesh." art={false} />
+  <PageNav links={groups.map((g) => ({ label: g.title, href: `#${g.key}` }))} />
   {
     groups.map((g, i) => {
       const people = team.filter((p) => p.data.group === g.key);
@@ -53,6 +57,12 @@ const jsonLd = [
   <Section pad="sm" aria-label="Governance link">
     <p class="team-gov">See <a class="link" href={url('/about/governance/')}>Governance and Accountability</a> for how CodersTrust is organized and reports to partners.</p>
   </Section>
+  <CTABand
+    id="team-cta"
+    heading="Talk to the Team"
+    text="Tell us your goals and priority groups, and we will outline a first cohort with you."
+    cta={{ label: 'Request a Discovery Session', href: ctaHref('discovery') }}
+  />
 </BaseLayout>
 
 <style>

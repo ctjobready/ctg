@@ -15,7 +15,7 @@ const fields = [
   { label: 'Women and Priority-Group Shares' },
   { label: 'Trainee Satisfaction' },
 ];
-const tr = fact('PD-09').text.match(/tracers at (\d+)\/(\d+)\/(\d+) months/);
+const tr = fact('PD-09').text.match(/surveys at (\d+), (\d+) and (\d+) months/);
 if (!tr) throw new Error('PD-09 wording changed: update the reporting timeline');
 const tracers = [tr[1], tr[2], tr[3]];
 

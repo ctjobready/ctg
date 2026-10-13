@@ -24,6 +24,8 @@ import { faqJsonLd } from '../../lib/faq';
 import { pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
+// Compact cross-audience FAQ: the six questions every partner type asks.
+const HUB_FAQ = ['Q1', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
 const BLUF =
@@ -66,7 +68,7 @@ const jsonLd = [
     itemListElement: audiences.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
     isPartOf: ref(ORG_ID),
   },
-  faqJsonLd('all', path),
+  faqJsonLd('all', path, HUB_FAQ),
 ];
 ---
 
@@ -120,7 +122,7 @@ const jsonLd = [
   </Tone>
 
   <Tone cmf="FAQ">
-    <FaqBlock id="faqs" audience="all" tone="white" title="Partner FAQs" lead="The 14 questions partners ask before they start, answered in full." />
+    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Six questions partners ask before they start. Each audience page answers the rest." />
   </Tone>
 
   <Tone cmf="CTA">

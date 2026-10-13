@@ -39,7 +39,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     program: 'World Bank Group, 2017',
     partner: 'Women in Online Work pilot',
     factId: 'PR-02',
-    summary: 'A pilot that tested whether online work suits young women in Kosovo.',
+    summary: 'A pilot that prepared young women in Kosovo for online work.',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {
