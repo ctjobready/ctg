@@ -20,13 +20,9 @@ Duration
 
 1 Year (2 Semesters)
 
-.
-
 Program Fee
 
 BDT 50,000
-
-.
 
 [image: CodersTrust and National University officials gathered around a table in a meeting room]
 
@@ -306,5 +302,3 @@ Our admissions team shares the next steps.
 First action. Submit the application form. Our admissions team will contact you with the next steps.
 
 Last updated October 14, 2026
-
-[button: Apply Now (opens docs.google.com)]

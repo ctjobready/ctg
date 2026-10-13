@@ -286,5 +286,3 @@ Classes begin with your learners.
 First action. In your inquiry, include two suitable times for a discovery conversation.
 
 Last updated October 14, 2026
-
-[button: Request a Discovery Session (opens your email app)]

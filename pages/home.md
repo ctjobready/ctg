@@ -585,57 +585,6 @@ Different routes suit different people. This is what each one typically includes
 | Work Entry | Placement support into local, remote and global work | Work-entry support depends on the provider and package. | Marketplace matching is the core service; additional support varies. |
 | Outcome Tracking | Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports | Reporting emphasis varies; check whether employment outcomes are included. | Platform activity |
 | Independent Evidence | Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions | Varies | Varies |
-- CodersTrust Supported Cohort
-
-Mentoring
-
-Three Months of Milestone-Based Mentoring
-
-Work Entry
-
-Placement support into local, remote and global work
-
-Outcome Tracking
-
-Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports
-
-Independent Evidence
-
-Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions
-- Self-Paced Course Platforms
-
-Mentoring
-
-Varies; often self-directed
-
-Work Entry
-
-Work-entry support depends on the provider and package.
-
-Outcome Tracking
-
-Reporting emphasis varies; check whether employment outcomes are included.
-
-Independent Evidence
-
-Varies
-- Freelance Marketplaces Alone
-
-Mentoring
-
-Marketplace matching is the core service; additional support varies.
-
-Work Entry
-
-Marketplace matching is the core service; additional support varies.
-
-Outcome Tracking
-
-Platform activity
-
-Independent Evidence
-
-Varies
 
 Compare these approaches with your current program on track choice, mentoring, work-entry support and outcome tracking.
 
@@ -783,5 +732,3 @@ Insights
 A profile of Co-Founder and Chairman Aziz Ahmad and his belief that success means changing lives.
 
 All News
-
-[button: Request a Discovery Session (opens your email app)]

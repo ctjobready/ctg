@@ -389,74 +389,6 @@ Four capabilities of CodersTrust’s supported cohorts, against other approaches
 | Work Entry | Placement support into local, remote and global work | Varies | Work-entry support depends on the provider and package. | Marketplace matching is the core service; additional support varies. |
 | Outcome Tracking | Planned for every cohort, as agreed in the program scope: tracers at 3, 6 and 12 months; monthly reports. | Varies | Reporting emphasis varies; check whether employment outcomes are included. | Platform activity |
 | Independent Evidence | Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions | Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts | Varies | Varies |
-- CodersTrust Supported Cohort
-
-Certification
-
-Certification Exam Preparation (Exam Fee Included)
-
-Work Entry
-
-Placement support into local, remote and global work
-
-Outcome Tracking
-
-Planned for every cohort, as agreed in the program scope: tracers at 3, 6 and 12 months; monthly reports.
-
-Independent Evidence
-
-Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions
-- Conventional Skills Programs
-
-Certification
-
-Varies
-
-Work Entry
-
-Varies
-
-Outcome Tracking
-
-Varies
-
-Independent Evidence
-
-Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts
-- Self-Paced Course Platforms
-
-Certification
-
-Often sold separately
-
-Work Entry
-
-Work-entry support depends on the provider and package.
-
-Outcome Tracking
-
-Reporting emphasis varies; check whether employment outcomes are included.
-
-Independent Evidence
-
-Varies
-- Freelance Marketplaces Alone
-
-Certification
-
-Varies by platform
-
-Work Entry
-
-Marketplace matching is the core service; additional support varies.
-
-Outcome Tracking
-
-Platform activity
-
-Independent Evidence
-
-Varies
 
 The Offer
 
@@ -516,5 +448,3 @@ We answer your questions and agree what comes next.
 Your First Step
 
 Your first step: an introduction call. In your inquiry, include two suitable times for it.
-
-[button: Request an Introduction Call (opens your email app)]

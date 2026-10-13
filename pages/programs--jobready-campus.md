@@ -329,5 +329,3 @@ Your institution sees results as they arrive.
 First action. In your inquiry, include two suitable times for a discovery conversation.
 
 Last updated October 14, 2026
-
-[button: Bring JobReady@Campus to Your Institution (opens your email app)]

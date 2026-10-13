@@ -4,25 +4,25 @@
 
 | Path | File (in dist) | Title | Characters |
 |---|---|---|---|
-| /ctg/ | index.html | CodersTrust: From Learning to Earning for Youth | 25942 |
+| /ctg/ | index.html | CodersTrust: From Learning to Earning for Youth | 24872 |
 | /ctg/news/ | news/index.html | News / CodersTrust | 15333 |
 | /ctg/about/ | about/index.html | About CodersTrust | 5522 |
 | /ctg/impact/ | impact/index.html | Impact and Evidence / CodersTrust | 8407 |
 | /ctg/careers/ | careers/index.html | Careers / CodersTrust | 3161 |
 | /ctg/contact/ | contact/index.html | Contact / CodersTrust | 4396 |
 | /ctg/programs/ | programs/index.html | Programs / CodersTrust | 6259 |
-| /ctg/investors/ | investors/index.html | Investors / CodersTrust | 17948 |
+| /ctg/investors/ | investors/index.html | Investors / CodersTrust | 16636 |
 | /ctg/our-model/ | our-model/index.html | Our Model / CodersTrust | 5796 |
 | /ctg/about/team/ | about/team/index.html | Leadership and Team / CodersTrust | 2893 |
 | /ctg/about/mentors/ | about/mentors/index.html | Instructors and Mentors / CodersTrust | 3844 |
 | /ctg/accessibility/ | accessibility/index.html | Accessibility Statement / CodersTrust | 3679 |
 | /ctg/impact/stories/ | impact/stories/index.html | Success Stories / CodersTrust | 5584 |
 | /ctg/privacy-policy/ | privacy-policy/index.html | Privacy Policy / CodersTrust | 5762 |
-| /ctg/partner-with-us/ | partner-with-us/index.html | Partner with Us / CodersTrust | 11379 |
+| /ctg/partner-with-us/ | partner-with-us/index.html | Partner with Us / CodersTrust | 9623 |
 | /ctg/about/governance/ | about/governance/index.html | Governance and Accountability / CodersTrust | 6773 |
 | /ctg/about/recognition/ | about/recognition/index.html | Recognition and Media / CodersTrust | 6141 |
-| /ctg/programs/superkids/ | programs/superkids/index.html | SuperKids: STEAM, Coding and Robotics / CodersTrust | 9245 |
-| /ctg/programs/youthwide/ | programs/youthwide/index.html | YouthWIDE: Youth Digital Employment Program / CodersTrust | 41881 |
+| /ctg/programs/superkids/ | programs/superkids/index.html | SuperKids: STEAM, Coding and Robotics / CodersTrust | 9183 |
+| /ctg/programs/youthwide/ | programs/youthwide/index.html | YouthWIDE: Youth Digital Employment Program / CodersTrust | 39829 |
 | /ctg/impact/case-studies/ | impact/case-studies/index.html | Case Studies / CodersTrust | 3377 |
 | /ctg/impact/global-reach/ | impact/global-reach/index.html | Global Reach / CodersTrust | 4302 |
 | /ctg/impact/in-the-field/ | impact/in-the-field/index.html | In the Field: Photo Archive / CodersTrust | 11496 |
@@ -31,30 +31,30 @@
 | /ctg/about/team/asad-zaman/ | about/team/asad-zaman/index.html | Asad Zaman, Chief Growth Officer / CodersTrust | 1696 |
 | /ctg/about/team/aziz-ahmad/ | about/team/aziz-ahmad/index.html | Aziz Ahmad, Co-Founder & Chairman / CodersTrust | 3554 |
 | /ctg/about/team/abdul-karim/ | about/team/abdul-karim/index.html | Abdul Karim / CodersTrust | 860 |
-| /ctg/programs/jobready-work/ | programs/jobready-work/index.html | JobReady@Work: Upskill Teams, Hire Talent / CodersTrust | 9158 |
+| /ctg/programs/jobready-work/ | programs/jobready-work/index.html | JobReady@Work: Upskill Teams, Hire Talent / CodersTrust | 9100 |
 | /ctg/about/team/fahim-sheikh/ | about/team/fahim-sheikh/index.html | Md. Fahim Sheikh / CodersTrust | 875 |
 | /ctg/about/team/mahdee-zaman/ | about/team/mahdee-zaman/index.html | Mahdee Zaman, Chief Strategy Officer / CodersTrust | 1546 |
 | /ctg/about/team/shafqat-ullah/ | about/team/shafqat-ullah/index.html | Shafqat Ullah, Chief Technology Officer / CodersTrust | 1759 |
 | /ctg/about/team/shamsul-haque/ | about/team/shamsul-haque/index.html | Md. Shamsul Haque, CEO, CodersTrust Bangladesh | 1657 |
 | /ctg/about/team/zahurul-islam/ | about/team/zahurul-islam/index.html | Md. Zahurul Islam, Finance & Accounts / CodersTrust | 972 |
-| /ctg/programs/jobready-campus/ | programs/jobready-campus/index.html | JobReady@Campus: Skills Alongside the Degree / CodersTrust | 12393 |
+| /ctg/programs/jobready-campus/ | programs/jobready-campus/index.html | JobReady@Campus: Skills Alongside the Degree / CodersTrust | 12317 |
 | /ctg/about/team/mahzabin-akter/ | about/team/mahzabin-akter/index.html | Mahzabin Akter, Service Delivery / CodersTrust | 833 |
-| /ctg/partner-with-us/employers/ | partner-with-us/employers/index.html | Corporate AI Training & Digital Talent / CodersTrust | 12851 |
+| /ctg/partner-with-us/employers/ | partner-with-us/employers/index.html | Corporate AI Training & Digital Talent / CodersTrust | 12793 |
 | /ctg/about/team/faruque-hossain/ | about/team/faruque-hossain/index.html | Faruque Hossain / CodersTrust | 930 |
 | /ctg/about/team/hazrat-ali-nahid/ | about/team/hazrat-ali-nahid/index.html | Md. Hazrat Ali Nahid, Team Lead, Education / CodersTrust | 1584 |
 | /ctg/our-model/jobready-platform/ | our-model/jobready-platform/index.html | JobReady Platform / CodersTrust | 3634 |
-| /ctg/partner-with-us/foundations/ | partner-with-us/foundations/index.html | Fund Youth Employment: Foundations & CSR / CodersTrust | 24834 |
-| /ctg/partner-with-us/governments/ | partner-with-us/governments/index.html | Digital Skills Training for Governments / CodersTrust | 25783 |
+| /ctg/partner-with-us/foundations/ | partner-with-us/foundations/index.html | Fund Youth Employment: Foundations & CSR / CodersTrust | 22780 |
+| /ctg/partner-with-us/governments/ | partner-with-us/governments/index.html | Digital Skills Training for Governments / CodersTrust | 23722 |
 | /ctg/about/team/rezaul-karim-khan/ | about/team/rezaul-karim-khan/index.html | Rezaul Karim Khan, Chief Business Officer / CodersTrust | 1781 |
-| /ctg/partner-with-us/universities/ | partner-with-us/universities/index.html | JobReady@Campus for Universities and Colleges / CodersTrust | 18019 |
+| /ctg/partner-with-us/universities/ | partner-with-us/universities/index.html | JobReady@Campus for Universities and Colleges / CodersTrust | 15953 |
 | /ctg/impact/case-studies/her-power/ | impact/case-studies/her-power/index.html | Her Power Case Study / CodersTrust | 4179 |
 | /ctg/impact/independent-evaluation/ | impact/independent-evaluation/index.html | Randomized Trial Results / CodersTrust | 6362 |
 | /ctg/about/team/ferdinand-kjaerulff/ | about/team/ferdinand-kjaerulff/index.html | Ferdinand Kjærulff / CodersTrust | 1693 |
-| /ctg/partner-with-us/local-partners/ | partner-with-us/local-partners/index.html | Local Implementing Partners / CodersTrust | 18345 |
+| /ctg/partner-with-us/local-partners/ | partner-with-us/local-partners/index.html | Local Implementing Partners / CodersTrust | 16530 |
 | /ctg/impact/in-the-field/news-photos/ | impact/in-the-field/news-photos/index.html | News Photo Archive / CodersTrust | 7178 |
-| /ctg/programs/nu-postgraduate-diploma/ | programs/nu-postgraduate-diploma/index.html | NU Postgraduate Diploma / CodersTrust | 9214 |
+| /ctg/programs/nu-postgraduate-diploma/ | programs/nu-postgraduate-diploma/index.html | NU Postgraduate Diploma / CodersTrust | 9163 |
 | /ctg/impact/case-studies/undp-yes-korail/ | impact/case-studies/undp-yes-korail/index.html | UNDP YES Korail Case Study / CodersTrust | 3128 |
-| /ctg/partner-with-us/development-partners/ | partner-with-us/development-partners/index.html | Youth Employment for Development Partners / CodersTrust | 26434 |
+| /ctg/partner-with-us/development-partners/ | partner-with-us/development-partners/index.html | Youth Employment for Development Partners / CodersTrust | 24382 |
 | /ctg/programs/nu-postgraduate-diploma/ict/ | programs/nu-postgraduate-diploma/ict/index.html | NU Postgraduate Diploma in ICT / CodersTrust | 5740 |
 | /ctg/news/why-we-call-it-a-digital-factory/ | news/why-we-call-it-a-digital-factory/index.html | Why We Call It a Digital Factory / CodersTrust | 5458 |
 | /ctg/news/a-proud-milestone-for-coderstrust/ | news/a-proud-milestone-for-coderstrust/index.html | A Proud Milestone for CodersTrust! | 3448 |

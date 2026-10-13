@@ -377,5 +377,3 @@ Training starts with your pilot team.
 Results are checked against the measures you set.
 - Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.
 - Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.
-
-[button: Plan a Training Program (opens your email app)]
