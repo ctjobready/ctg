@@ -4,7 +4,7 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
 
 ## Announcement Bar
 
-- Text: Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Surveyed completers: 47.4% employed before training, 77.9% at the October 2026 survey.women offered a place: +10.3 percentage points employed. Surveyed completers: 47.4% to 77.9% employed.
+- Text: Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Surveyed completers: 47.4% employed before training, 77.9% at the October 2026 survey.
 - Button: [button: See the Findings] -> /ctg/impact/outcomes-2026/
 - Dismissible: true
 
@@ -188,8 +188,8 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
   - Employers -> /ctg/partner-with-us/employers/
 
 ### Offices
-- CT USA, Inc. · New York40 Wall Street, Suite 2004, New York, NY 10005, USAcontact@coderstrust.global+1 212 344 4111
-- CodersTrust Bangladesh · DhakaBSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand), Dhaka 1216, Bangladeshhello@coderstrustbd.com+880 1958‑220802
+- CT USA, Inc. · New York 40 Wall Street, Suite 2004, New York, NY 10005, USA contact@coderstrust.global +1 212 344 4111
+- CodersTrust Bangladesh · Dhaka BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand), Dhaka 1216, Bangladesh hello@coderstrustbd.com +880 1958‑220802
 
 ### Bottom bar
 - © 2026 CodersTrust
