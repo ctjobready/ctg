@@ -166,7 +166,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     lead: fact('SC-03').stat?.detail,
     leadFacts: ['SC-03'],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
-    photo: 'general/madrasa-students-hall',
+    photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide
   },
   {
     id: 'government-trust',

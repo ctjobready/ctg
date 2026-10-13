@@ -23,12 +23,13 @@ interface Group {
 }
 const rates = graduateRates();
 // PX-12 without its "75% of 5M+ madrasah students unemployed or under-employed (study estimate)" clause: the register names no study
-// for that figure, so it is not used on the page until it is sourced. The rest of the sentence is the register's wording; the source
-// is shown on the card (a footnote would print the whole fact, 75% included).
+// for that figure, so it is not used on the page until it is sourced. WP21: nor without its "94–97% of those surveyed want training"
+// clause: the register does not say who was surveyed, so the clause has no referent here (owner content: who was surveyed).
+// The rest of the sentence is the register's wording; the source is shown on the card (a footnote would print the whole fact, 75% included).
 const px12 = fact('PX-12');
 const madrasah = px12.text
   .split('; ')
-  .filter((part) => !/^75%/.test(part))
+  .filter((part) => !/^75%/.test(part) && !/^94[–-]97%/.test(part))
   .join('; ');
 const groups: Group[] = [
   // The graduate-unemployment rate is stated once, in the challenge band above, and is not repeated in this card.
@@ -104,9 +105,16 @@ const groups: Group[] = [
       grid-column: 1 / -1;
     }
   }
+  /* Five cards: three across, then two wider cards, so the last row has no empty cell (WP21). */
   @media (min-width: 1024px) {
     .pg__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .pg__grid > li {
+      grid-column: span 2;
+    }
+    .pg__grid > li:nth-child(n + 4) {
+      grid-column: span 3;
     }
   }
 </style>

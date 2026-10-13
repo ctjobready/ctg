@@ -20,6 +20,11 @@ export const NU_PATH = '/programs/nu-postgraduate-diploma/';
 export const NU_SCHEDULE_NOTE = 'Admissions confirms intake dates and schedule with each applicant.';
 export const NU_LOCATION_NOTE = 'Admissions confirms the teaching location with each applicant.';
 export const NU_NAME = 'National University Postgraduate Diploma';
+/** WP21: one name for each NU track on every surface (menu, footer, <title>, H1, cards, breadcrumbs). Official module titles are untouched. */
+export const NU_COURSE_NAME: Record<string, string> = {
+  'digital-marketing': 'NU Postgraduate Diploma in Digital Marketing',
+  ict: 'NU Postgraduate Diploma in ICT',
+};
 /** Standalone Google Form (never embedded) and the secondary phone route, both from the CTA library. */
 export const NU_APPLY = { label: CTAS['nu-pgd'].label, href: CTAS['nu-pgd'].href as string };
 export const NU_CALL = CTAS['nu-pgd'].secondary as { label: string; href: string };
@@ -53,27 +58,27 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
     lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University postgraduate diploma delivered by CodersTrust.',
     description: 'A National University postgraduate diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
     topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'],
-    titleTag: 'NU PGD in Digital Marketing',
+    titleTag: 'NU Postgraduate Diploma in Digital Marketing',
     why: [
       { title: 'A Practical Core', text: 'Five modules are marked practical: WordPress Design, Content Marketing, Affiliate & E-mail Marketing, Search Engine Optimization (SEO) and Web & Google Analytics.' },
       { title: 'Channels and Commerce', text: 'Separate modules cover AdWords & PPC, Social Media Marketing and E-Commerce.' },
       { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
     ],
-    alsoConsider: 'Prefer programming, databases and networks? The ICT diploma covers those modules.',
+    alsoConsider: 'Prefer programming, databases and networks? This is the course for those modules.',
   },
   ict: {
     short: 'Practical ICT: programming, databases, networks, mobile and web development.',
     lead: 'Practical ICT skills, from programming and databases to networks, mobile apps and web design, in a National University postgraduate diploma delivered by CodersTrust.',
     description: 'A National University postgraduate diploma in ICT, delivered by CodersTrust: programming, databases, networks, mobile and web development.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
-    titleTag: 'NU PGD in ICT',
+    titleTag: 'NU Postgraduate Diploma in ICT',
     why: [
       { title: 'Programming and Data', text: 'Modules on Java Programming and Database Management Systems.' },
       { title: 'Systems and Networks', text: 'Modules on Office Automation, System Maintenance and Troubleshooting, and Computer Networks Maintenance.' },
       { title: 'Apps, Web and Media', text: 'Modules on Mobile Application Development, Web Application & Web Site Design, and Multimedia Design and Developments.' },
       { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
     ],
-    alsoConsider: 'Prefer SEO, social media and advertising? The Digital Marketing diploma covers those modules.',
+    alsoConsider: 'Prefer SEO, social media and advertising? This is the course for those modules.',
   },
 };
 
@@ -132,7 +137,7 @@ export async function nuCourses(): Promise<NuCourse[]> {
       const keep = SAFE_FAQS[e.data.slug] ?? [];
       return {
         slug: e.data.slug,
-        title: e.data.title,
+        title: NU_COURSE_NAME[e.data.slug] ?? e.data.title,
         modules: (e.data.modules ?? []).map((m) => (/^Internship/i.test(m) ? 'Internship, project work and seminar' : m)),
         roles: relatedCareerAreas(list(e.body ?? '', 'Career opportunities'), e.data.slug),
         faqs: (e.data.faqs ?? []).filter((_, i) => keep.includes(i)),

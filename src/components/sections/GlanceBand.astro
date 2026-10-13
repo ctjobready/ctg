@@ -59,7 +59,7 @@ const grouped = (groups ?? []).map((g) => {
       <h2 class="glance__strip-title" id={`${id}-h`}>{title}</h2>
       <ul class="glance__grid" style={`--glance-cols:${columns}`} role="list">
         {tiles.map((t) => (
-          <li>
+          <li class:list={[t.value.includes('·') && 'glance__li--wide']}>
             <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
               <span class="glance__value">{t.value}</span>
               <span class="glance__desc">{t.label}</span>
@@ -78,7 +78,7 @@ const grouped = (groups ?? []).map((g) => {
           <h3 class="glance__group-title">{g.title}</h3>
           <ul class="glance__grid" style={`--glance-cols:${g.columns}`} role="list">
             {g.tiles.map((t) => (
-              <li>
+              <li class:list={[t.value.includes('·') && 'glance__li--wide']}>
                 <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
                   <span class="glance__value">{t.value}</span>
                   <span class="glance__desc">{t.label}</span>
@@ -93,7 +93,7 @@ const grouped = (groups ?? []).map((g) => {
       {tiles.length > 0 && (
       <ul class="glance__grid" style={`--glance-cols:${columns}`} role="list">
         {tiles.map((t) => (
-          <li>
+          <li class:list={[t.value.includes('·') && 'glance__li--wide']}>
             <a class="glance__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
               <span class="glance__value">{t.value}</span>
               <span class="glance__desc">{t.label}</span>
@@ -170,6 +170,12 @@ const grouped = (groups ?? []).map((g) => {
     font-size: var(--fs-body-xs, 0.8125rem);
     color: var(--on-surface-variant);
     text-wrap: balance;
+  }
+  /* WP21: a compound value ("71% · 68% · 67%") is too wide for a 170 px phone tile, where it ran under the arrow: it takes the full row instead. */
+  @media (max-width: 719px) {
+    .glance__li--wide {
+      grid-column: 1 / -1;
+    }
   }
   @media (min-width: 720px) {
     .glance__grid {

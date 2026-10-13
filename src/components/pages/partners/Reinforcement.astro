@@ -2,7 +2,7 @@
 import SubBand from './SubBand.astro';
 import CopyText from './CopyText.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
-import { C14 } from '../../../data/copy';
+import { C14, type CopyBlock } from '../../../data/copy';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
 
 /**
@@ -16,16 +16,18 @@ interface Props {
   /** Grant-funded pilots only: the 6–8 week reminder. */
   reminder?: boolean;
   logos?: PartnerGroup | PartnerGroup[] | false;
+  /** The validation sentence for a page with no logo row (default: the development-partner line; WP21: each audience page passes its own). */
+  validate?: CopyBlock;
   id?: string;
 }
-const { firstAction = C14.firstAction, reminder = true, logos = 'development', id = 'reinforce' } = Astro.props;
+const { firstAction = C14.firstAction, reminder = true, logos = 'development', validate = C14.validate, id = 'reinforce' } = Astro.props;
 ---
 
 <SubBand tone="airy" pull id={id}>
   <ul class="rf" role="list">
     <li class="rf__first"><strong>{firstAction}</strong></li>
     {/* The validation line names a few of the organizations the logo row below shows; it is only printed when there is no row. */}
-    {logos === false && <li><CopyText block={C14.validate} as="span" /></li>}
+    {logos === false && <li><CopyText block={validate} as="span" /></li>}
     {reminder && <li><CopyText block={C14.reminder} as="span" /></li>}
   </ul>
   {logos !== false && <PartnerStrip variant="grid" group={logos} caption={PARTNER_CAPTION} />}

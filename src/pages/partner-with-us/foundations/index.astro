@@ -40,7 +40,7 @@ import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, POSITIONING, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, C14, EMPATHY, HEADLINE, POSITIONING, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, endSentence } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -59,8 +59,8 @@ const { title, description } = meta(
 );
 
 const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
-// PD-18 names co-branded certificates and events; they are part of a funder's program only where the scope agrees them.
-const pd18 = endSentence(fact('PD-18').text).replace('co-branded certificates and events', 'co-branded certificates and events where agreed in the program scope');
+// PD-18 names SDG-mapped reporting and co-branded certificates and events; neither is in the standard inclusions (PD-02), so they are part of a funder's program only where the scope agrees them (WP21).
+const pd18 = endSentence(fact('PD-18').text).replace('SDG-mapped reporting tailored to their CSR framework, co-branded certificates and events', 'SDG-mapped reporting tailored to their CSR framework and co-branded certificates and events (both where agreed in the program scope)');
 if (!pd18.includes('where agreed in the program scope')) throw new Error('Foundations: PD-18 wording changed; update the scope qualifier');
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
@@ -85,7 +85,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     bullets={[
       'Fund a supported path from learning to earning: training with certification preparation, mentoring and placement support.',
       'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
-      'Reporting that fits your framework: monthly reports, a quarterly steering review and SDG-mapped reporting.',
+      'Reporting that fits your framework: monthly reports, a quarterly steering review and, where agreed in the program scope, SDG-mapped reporting.',
       'Two ways to fund: YouthWIDE cohorts or the JobReady platform. Expansion is always your decision.',
     ]}
     links={[
@@ -175,7 +175,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       positioning={POSITIONING.foundations}
       lead="Fund the platform, the cohorts, or both."
       blocks={[
-        { label: 'Funding Vehicle 1', title: 'JobReady Platform Grant', text: 'A grant toward platform infrastructure. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
+        { label: 'Funding Vehicle 1', title: 'JobReady Platform Grant', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
         { label: 'Funding Vehicle 2', title: 'YouthWIDE Cohorts', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
       ]}
       link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
@@ -249,7 +249,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
         relieves: 'Accountable implementers are hard to find',
       },
       {
-        feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework, with Co-Branded Certificates and Events Where Agreed in the Program Scope',
+        feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework and Co-Branded Certificates and Events, Where Agreed in the Program Scope',
         means: 'reporting that fits your framework.',
         outcome: 'Reports mapped to the SDGs',
       },
@@ -295,7 +295,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <!-- C14 · Next steps -->
   <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step (doc 04 §4). -->
   <NextStepsBand title="What Happens After You Say Yes" lead="Cohort grants follow these steps. A platform grant starts with the introduction call." timing={false} />
-  <Reinforcement logos={false} reminder={false} />
+  <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />
 </LandingLayout>

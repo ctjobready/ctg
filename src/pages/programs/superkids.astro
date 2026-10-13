@@ -19,7 +19,6 @@ import { futurePhotos, galleryPhotos } from '../../data/photos';
 import GalleryDisclosure from '../../components/pages/programs/GalleryDisclosure.astro';
 import StatusTag from '../../components/system/StatusTag.astro';
 import Fact from '../../components/facts/Fact.astro';
-import FactStat from '../../components/facts/FactStat.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
@@ -28,6 +27,7 @@ import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
+import InShort from '../../components/pages/partners/InShort.astro';
 import { fact } from '../../data/facts';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
@@ -74,6 +74,24 @@ const courses = linkAttrs(COURSES_URL);
     artSeed="superkids"
   />
 
+  <!-- WP21: In Short, built only from content this page already states. The delivered number is not repeated here (it is in the glance table and in the agreements band). -->
+  <InShort
+    bullets={[
+      'SuperKids is CodersTrust’s K-12 STEAM program: coding, robotics and digital art for young learners, offered through schools and education partners.',
+      'Courses are block coding, robotics, and graphic design for kids, taught through schools and education partners and shaped with you in a discovery session.',
+      'The DoICT and NCTB agreements set targets for reach; they are not delivered reach.',
+      'Prices are not published. Bring your location, age groups, goals and timeline to the conversation.',
+    ]}
+    links={[
+      { label: 'Courses', href: '#mechanism' },
+      { label: 'What You Receive', href: '#school-receives' },
+      { label: 'What Is in Place', href: '#agreements' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
+    contracting={false}
+  />
+
   <DefinitionBlock heading="What Is SuperKids?">
     <p>SuperKids is CodersTrust’s K-12 STEAM program: coding, robotics and digital art for young learners, offered through schools and education partners.</p>
   </DefinitionBlock>
@@ -113,9 +131,7 @@ const courses = linkAttrs(COURSES_URL);
     title="Public-Sector Agreements and a Private-Sector Partner"
     empathy="You want children to build digital skills early."
     origin={ORIGIN}
-    statIds={['SK-05']}
     showPartners={false}
-    method={{ text: 'TalentLEAP organizes skills into career paths with progressive levels.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
     <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB). These are agreement targets, not delivered reach.</p>
     <p data-fact="PA-03">Private-sector partners include Robi.</p>
@@ -147,7 +163,7 @@ const courses = linkAttrs(COURSES_URL);
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
     <SectionHeader id="agreements-h" eyebrow="What Is in Place" title="What Has Been Delivered, and What Is Only Agreed" />
     <div class="agree">
-      <div class="agree__delivered" data-reveal><StatusTag status="Delivered" /><FactStat id="SK-05" /></div>
+      <div class="agree__delivered" data-reveal data-fact="SK-05"><StatusTag status="Delivered" /><p class="agree__num"><Fact id="SK-05" /></p></div>
       <div class="agree__fact" data-reveal data-fact="GV-08">
         <p>The DoICT agreement covers {doictScope}, with a target reach of {doictReach}.</p>
         <p>The NCTB agreement covers {nctbScope}.</p>
@@ -256,6 +272,12 @@ const courses = linkAttrs(COURSES_URL);
     display: grid;
     gap: var(--space-xs);
     justify-items: start;
+  }
+  .agree__num {
+    margin: 0;
+    color: var(--on-surface);
+    font-size: var(--fs-body-l, var(--fs-body-m));
+    font-weight: var(--fw-medium);
   }
   .agree__fact > :global(p) {
     margin: 0 0 var(--space-xs);

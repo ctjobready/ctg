@@ -21,8 +21,8 @@ import { webPage } from '../../../lib/schema';
 const path = '/impact/in-the-field/';
 const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program, partner and recognition collections.');
 const jsonLd = [
-  webPage({ path, name: 'In the field: CodersTrust photo collections', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'In the Field', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
+  webPage({ path, name: 'In the field: CodersTrust photo archive', description, type: 'CollectionPage' }),
+  articleNode({ path, headline: 'In the Field: Photo Archive', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
 ];
 
 const reg = (keys: string[]): Photo[] => keys.map(photo);
@@ -39,8 +39,8 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
   {
     id: 'nationwide',
     eyebrow: 'Classes and Campuses',
-    title: 'Classes and Campuses: Madrasah Learners, Examinations and Program Completers',
-    lead: 'Classes, an examination hall and a convocation. The previous site did not tie every photograph to a named program, so none is labeled with one here.',
+    title: 'Classes and Campuses: Classrooms, Examinations and Graduations',
+    lead: 'Classes, an examination hall and a convocation. Photographs in this collection are grouped by setting rather than by named program.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
   {
@@ -94,8 +94,8 @@ const newsHref = linkAttrs('/impact/in-the-field/news-photos/').href;
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('In the Field: Photo Collections')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the Field" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The dated news photographs are in the News Photo Archive." artSeed="field-hub" />
+<BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="In the Field: Photo Archive" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The dated news photographs are in the News Photo Archive." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a collection">
     <nav class="itf__jump" aria-label="Collections of photographs">

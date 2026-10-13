@@ -79,6 +79,24 @@ const approach = [
 
   <RouteLink kicker="The Partnership Route" label="For Employers: Start Here" href="/partner-with-us/employers/" />
 
+  <!-- WP21: In Short, built only from content this page already states (no figure added) -->
+  <InShort
+    bullets={[
+      'JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Pick one or both.',
+      'Each program is custom-developed: a needs assessment, a customized curriculum and interactive workshops built around the tasks in your own roles.',
+      'Candidates are introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
+      'Start with a pilot team. Success measures are agreed before you start, scaling up is your decision, and pricing is shared after the needs assessment.',
+    ]}
+    links={[
+      { label: 'How It Works', href: '#mechanism' },
+      { label: 'Delivery Record', href: '#offer-evidence' },
+      { label: 'Options', href: '#offer' },
+      { label: 'Evidence', href: '#proof-band' },
+      { label: 'Next Steps', href: '#next-steps' },
+    ]}
+    contracting={false}
+  />
+
   <DefinitionBlock heading="What Is JobReady@Work?">
     <p data-fact="IN-10"><Fact id="IN-10" />.</p>
   </DefinitionBlock>
@@ -155,7 +173,6 @@ const approach = [
   <!-- C7, moved below the employer offer (review round 3): the employer journey leads with the employer facts; this is the youth-program evidence. -->
   <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
     <div class="proof-notes">
-      <p data-fact="OC-07"><strong>From CodersTrust’s youth programs:</strong> <Fact id="OC-07" /></p>
       <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
       <p data-fact="PD-03 PD-10">Certification tracks are chosen from employer demand.</p>
     </div>
