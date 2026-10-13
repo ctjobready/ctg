@@ -45,10 +45,12 @@ Built from the local build (base /ctg); hrefs shown as in the HTML.
 
 ### Programs (mega-menu)
 - Programs Overview -> /ctg/programs/: Every program, by audience and delivery route.
+- Group: For Partners and Institutions
 - YouthWIDE -> /ctg/programs/youthwide/: National Youth Employment Program.
 - JobReady@Campus -> /ctg/programs/jobready-campus/: For universities and colleges.
 - JobReady@Work -> /ctg/programs/jobready-work/: For employers and corporate teams.
 - SuperKids -> /ctg/programs/superkids/: For schools and young learners.
+- Group: For Learners
 - NU Postgraduate Diploma -> /ctg/programs/nu-postgraduate-diploma/: For degree holders.
 - NU Postgraduate Diploma in Digital Marketing -> /ctg/programs/nu-postgraduate-diploma/digital-marketing/: SEO, social media, advertising and analytics.
 - NU Postgraduate Diploma in ICT -> /ctg/programs/nu-postgraduate-diploma/ict/: Programming, databases, networks, mobile and web development.
