@@ -36,7 +36,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */
 export const HEADLINE: Record<Audience, string> = {
-  home: 'Turn Youth Unemployment into Digital Employment — with Evidence.',
+  home: 'Turn Youth Unemployment into a Digital Workforce — with Evidence.',
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers.',
   governments: 'Build a National Digital Workforce from Graduates and Digital Labs.',
   foundations: 'Fund a Supported Path from Learning to Earning.',

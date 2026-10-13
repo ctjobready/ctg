@@ -60,7 +60,7 @@ test.describe('home hero slider', () => {
     await expect(slides.nth(0)).toHaveAttribute('role', 'group');
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into Digital Employment — with Evidence.');
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence.');
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
     await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');

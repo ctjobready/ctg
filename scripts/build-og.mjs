@@ -34,7 +34,7 @@ const MAX_BYTES = 200 * 1024;
 const CARDS = [
   { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn youth unemployment into digital employment — with evidence.' },
   { file: 'partner-with-us', prefix: '/partner-with-us/', label: 'Partner with us', line: 'Co-design a youth-employment program with CodersTrust.' },
-  { file: 'investors', prefix: '/investors/', label: 'Investors', line: 'Invest in the infrastructure of emerging-market work.' },
+  { file: 'investors', prefix: '/investors/', label: 'Investors', line: 'Invest in the platform connecting emerging-market youth to work.' },
   { file: 'programs', prefix: '/programs/', label: 'Programs', line: 'Choose the program that fits you.' },
   { file: 'nu-postgraduate-diploma', prefix: '/programs/nu-postgraduate-diploma/', label: 'NU Postgraduate Diploma', line: 'Build the digital skills employers are hiring for — after your degree.' },
   { file: 'our-model', prefix: '/our-model/', label: 'Our model', line: 'How the CodersTrust model works' },

@@ -12,9 +12,9 @@ interface Props {
   id?: string;
 }
 const { id = 'vision' } = Astro.props;
-// IN-05 leads (3M+ learners and professionals on JobReady by June 30, 2032); ID-05 follows in one sentence (the top-three vision, cut before its "— offering …" clause).
+// IN-05 leads (3M+ learners and professionals on JobReady by June 30, 2032); ID-05 follows in one sentence (the vision for a world with far less youth unemployment; owner, 2026-10-14).
 const lead = fact('IN-05').text.replace(/^Ambition: /, 'The ambition is ');
-const detail = `The longer-term vision: ${fact('ID-05').text.split(' — ')[0].replace(/^By 2032, to be/, 'by 2032, to be')}`;
+const detail = `Our vision: ${fact('ID-05').text.replace(/^A /, 'a ')}`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>

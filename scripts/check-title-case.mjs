@@ -301,7 +301,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       findings.error('not-title-case', route, `${item.tag}: ${JSON.stringify(item.text)}  expected: ${JSON.stringify(expected)}`);
     }
   }
+  // An entry for a page this build does not contain (the styleguide is absent from production builds, WP20a) is not stale.
+  const builtRoutes = new Set(site.pages.filter((p) => !p.isStub).map((p) => p.route));
   allow.forEach((a, i) => {
+    if (a.page !== '*' && !builtRoutes.has(a.page)) return;
     if (!used.has(i)) findings.error('stale-allow-entry', 'scripts/title-case-allow.json', `allowlist entry matches nothing: ${a.tag} ${JSON.stringify(a.text)} on ${a.page}`);
   });
   console.log(`check-title-case: ${pages} pages, ${checked} titles/headings checked, ${used.size} allowlisted (${allow.length} entries)`);

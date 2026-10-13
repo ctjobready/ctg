@@ -62,7 +62,7 @@ const ALT: Record<string, string> = {
   'recognition/pope-francis': 'A man greeting Pope Francis, with a cardinal standing beside them',
   'recognition/nasdaq-sba': 'People standing at the podium of the Nasdaq closing bell ceremony for the US Small Business Administration',
   'recognition/speaking-students': 'Aziz Ahmad, Chairman and Co-Founder of CodersTrust, addressing a large audience from a stage',
-  'recognition/supply-chain-award': 'Four people standing with a framed certificate on a stage, in front of a screen reading 2019 Supply Chain Diversity and Sustainability Excellence Awards',
+  'recognition/supply-chain-award': 'Four people on stage with a framed certificate at the 2019 Supply Chain Diversity and Sustainability Excellence Awards',
   'nu-pgd/cybersecurity': 'PGD in Cybersecurity course banner from National University and CodersTrust',
   'nu-pgd/data-analytics': 'PGD in Data Analytics course banner from National University and CodersTrust',
   'nu-pgd/digital-marketing': 'PGD in Digital Marketing course banner from National University and CodersTrust',
