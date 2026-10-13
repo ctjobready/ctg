@@ -58,3 +58,15 @@ export function contractScope(id: string): string {
   const scope = text.slice(at + 2).replace(/\.$/, '');
   return `Contract scope: ${scope}, for the ${name}.`;
 }
+
+/**
+ * Duration line of an offer card. The register's PD-05 wording for the pilot ("8–14 months (tracking to month 23)") reads as if the pilot
+ * itself runs to month 23, so the card says what the pilot runs and what tracking covers. Other options print as registered.
+ */
+export function offerDurationText(name: string, duration: string): string {
+  const m = /^(\d+–\d+ months) \(tracking to month \d+\)$/.exec(duration.trim());
+  if (name !== 'Pilot' || !m) return duration;
+  const months = fact('PD-02').text.match(/outcome tracking for (\d+) months/)?.[1];
+  if (!months) throw new Error('offerDurationText: PD-02 no longer names the outcome tracking period');
+  return `Pilot delivery runs ${m[1]}. Outcome tracking continues for ${months} months after each course.`;
+}

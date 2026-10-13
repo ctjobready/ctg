@@ -3,7 +3,7 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../system/Icon.astro';
 import { fact } from '../../data/facts';
-import { optionDuration } from '../../lib/format';
+import { offerDurationText } from './copyText';
 
 /**
  * C11 Offer: three option cards (volume + duration from PD-05) + "Every package includes" (PD-02).
@@ -14,6 +14,8 @@ interface Props {
   lead?: string;
   /** Short description per option, in the same order as PD-05 (Pilot, Scale, National). */
   blurbs?: string[];
+  /** Small label above the title (default "Start"). */
+  eyebrow?: string;
   id?: string;
 }
 const {
@@ -21,6 +23,7 @@ const {
   lead = 'Pricing is set per program, and we share an indicative budget in the discovery session.',
   blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
   id = 'offer',
+  eyebrow = 'Start',
 } = Astro.props;
 
 // PD-05: "Program options: Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"
@@ -36,7 +39,7 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Start" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <div class="grid-cards">
     {
       options.map((o, i) => (
@@ -45,7 +48,7 @@ const includes = fact('PD-02').text.split('Standard inclusions: ')[1].split('. I
             <p class="eyebrow">Option {i + 1}</p>
             <h3 class="card__title">{o.name}</h3>
             <p class="offer__volume">{o.volume}</p>
-            <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
+            <p class="card__meta offer__duration">{offerDurationText(o.name, o.duration)}</p>
             <p class="card__text">{blurbs[i]}</p>
           </div>
         </article>

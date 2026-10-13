@@ -5,7 +5,6 @@
  */
 import { fact } from './facts';
 import { COURSES_URL } from '../lib/site';
-import { ctaHref } from '../lib/mailto';
 
 const stat = (id: string) => {
   const s = fact(id).stat;
@@ -20,6 +19,8 @@ export interface NavLink {
   href: string;
   /** One-line description shown in mega-menu panels. */
   description?: string;
+  /** Listed in the footer column (default true). Hub overview links are not: the column heading already links to the hub. */
+  footer?: boolean;
 }
 
 export interface NavFeature {
@@ -51,6 +52,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Our Story', href: '/about/', description: 'How CodersTrust began and where it is heading.' },
       { label: 'Leadership & Team', href: '/about/team/', description: 'Founders, advisors and the executive team.' },
+      { label: 'Governance and Accountability', href: '/about/governance/', description: 'How CodersTrust is organized and reports to partners.' },
       { label: 'Instructors & Mentors', href: '/about/mentors/', description: 'The practitioners who teach and mentor learners.' },
       { label: 'Recognition & Media', href: '/about/recognition/', description: 'Awards, endorsements and press coverage.' },
       { label: 'Careers', href: '/careers/', description: 'Working at CodersTrust and how to apply.' },
@@ -87,6 +89,7 @@ export const navGroups: NavGroup[] = [
     label: 'Programs',
     href: '/programs/',
     items: [
+      { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.', footer: false },
       { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Youth digital employment: a Bangladesh national initiative and country cohorts.' },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'Universities and colleges.' },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'Corporate training and talent.' },
@@ -98,7 +101,7 @@ export const navGroups: NavGroup[] = [
       eyebrow: 'Start Small',
       title: 'Start with a Pilot',
       text: 'Launch a first cohort, measure results, then scale.',
-      cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
+      cta: { label: 'Find the Right Program', href: '/programs/' },
     },
   },
   {
@@ -129,6 +132,7 @@ export const navGroups: NavGroup[] = [
     label: 'Partner with Us',
     href: '/partner-with-us/',
     items: [
+      { label: 'Partnership Overview', href: '/partner-with-us/', description: 'Choose the route that fits your organization.', footer: false },
       { label: 'Development Partners & NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
       { label: 'Foundations & CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
@@ -139,10 +143,10 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'discovery',
-      eyebrow: 'A Conversation, Not a Commitment',
-      title: 'Book a Discovery Session',
-      text: 'Tell us your goals; we will outline a first cohort.',
-      cta: { label: 'Book a Discovery Session', href: ctaHref('discovery') },
+      eyebrow: 'Choose Your Route',
+      title: 'Find Your Partnership Route',
+      text: 'Each route has its own evidence, offer and next step.',
+      cta: { label: 'Explore Partnership Routes', href: '/partner-with-us/' },
     },
   },
 ];
@@ -170,7 +174,7 @@ export const promo = {
 /** Footer columns mirror the mega-menus (planning/03 §3.3). */
 export const footerColumns = navGroups
   .filter((g) => ['about', 'programs', 'impact', 'partner'].includes(g.id))
-  .map((g) => ({ id: g.id, title: g.label, href: g.href, links: g.items.map(({ label, href }) => ({ label, href })) }));
+  .map((g) => ({ id: g.id, title: g.label, href: g.href, links: g.items.filter((i) => i.footer !== false).map(({ label, href }) => ({ label, href })) }));
 
 export const footerBottomLinks: NavLink[] = [
   { label: 'Privacy', href: '/privacy-policy/' },

@@ -1,9 +1,11 @@
 ---
 import Section from '../../ui/Section.astro';
 import Button from '../../system/Button.astro';
+import EmailFallback from '../../ui/EmailFallback.astro';
+import { linkAttrs } from '../../../lib/url';
 
 /**
- * C13 for the employers page: one solid primary and one outline button side by side (doc 04 §4.6:
+ * C13 for the employers page: one solid primary button, the secondary action as a text link (doc 04 §4.6:
  * "one solid primary per band"). Same layout and tone as the shared CTABand, which only offers a
  * text link as its secondary action.
  */
@@ -24,8 +26,9 @@ const { heading, text, primary, secondary, micro, id = 'cta' } = Astro.props;
     {text && <p class="lead dcta__text" data-reveal>{text}</p>}
     <div class="dcta__actions" data-reveal>
       <Button variant="primary" href={primary.href} iconEnd="arrow-right">{primary.label}</Button>
-      <Button variant="outline" href={secondary.href}>{secondary.label}</Button>
+      <a class="link" href={linkAttrs(secondary.href).href} rel={linkAttrs(secondary.href).rel}>{secondary.label}</a>
     </div>
+    {primary.href.startsWith('mailto:') && <EmailFallback href={primary.href} />}
     {micro && <p class="dcta__micro" data-reveal>{micro}</p>}
   </div>
 </Section>

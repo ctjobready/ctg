@@ -14,9 +14,9 @@ import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
+import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
@@ -50,7 +50,7 @@ const FAQ_IDS = ['Q5', 'Q1', 'Q12', 'Q8-employer', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
 const steps = [
   { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-  { title: 'Train and Certify', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
+  { title: 'Prepare for Certification', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
   { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
 ];
 ---
@@ -74,6 +74,16 @@ const steps = [
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
 
+  <!-- Routes: the two offers further down, one per audience -->
+  <SubBand>
+    <Callout eyebrow="Choose Your Route">
+      <p class="cluster">
+        <a class="link" href="#train-your-team">Train Your Team<Icon name="arrow-right" size={16} /></a>
+        <a class="link" href="#hire-talent">Hire Talent<Icon name="arrow-right" size={16} /></a>
+      </p>
+    </Callout>
+  </SubBand>
+
   <!-- C2 · Problem -->
   <ProblemBand
     title="The Talent You Need Is Hard to Find."
@@ -84,8 +94,8 @@ const steps = [
       slot="lead"
       gains={['Teams fluent in AI workflows', 'A reliable pipeline of digital talent']}
       pains={[
-        { q: 'Why can’t you find the digital talent you need?', text: 'Employers report difficulty finding the talent they need.' },
-        { q: 'Why does hiring alone not close the gap?', text: `${fact('PX-05').stat?.value} of employers worldwide report difficulty finding the talent they need, so hiring alone does not close the gap.` },
+        { q: 'Why can’t you find the digital talent you need?', text: `${fact('PX-05').stat?.value} of employers worldwide report difficulty finding talent, and AI skills are the hardest to find.` },
+        { q: 'Why does hiring alone not close the gap?', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
         { q: 'How do you upskill your teams for AI workflows?', text: 'Your teams need upskilling on tasks from their own roles.' },
       ]}
     />
@@ -177,22 +187,10 @@ const steps = [
     lead="Right for you if you want tracks built around the skills your roles need. Talent requests are scoped against the experience and credentials available in the candidate pool."
   />
 
-  <!-- C10 · Differentiation -->
-  <ComparisonBand
-    title="Compare the Approaches."
-    lead="Preparation for a recognized credential is built into each track, and delivery uses infrastructure that already exists. Provision varies by provider and program."
-  />
-
-  <!-- C11 · Offer -->
-  <OfferCards
-    title="Choose How to Work with Us."
-    cards={[
-      { eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
-      { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
-    ]}
-  />
-
-  <!-- C7 · Proof, moved below the employer offer (as on JobReady@Work); the youth-program evidence keeps its own label. -->
+  <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. -->
+  <SubBand tone="airy">
+    <EvidenceList heading="Delivery Record for Employers" items={[{ facts: ['SC-15'] }, { facts: ['PA-06'] }]} />
+  </SubBand>
   <ProofBand
     title="Independent Evidence and Survey Results"
     eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)"
@@ -214,6 +212,15 @@ const steps = [
       ]}
     />
   </ProofBand>
+
+  <!-- C11 · Offer: the two in-page routes (Train Your Team, Hire Talent) -->
+  <OfferCards
+    title="Choose How to Work with Us."
+    cards={[
+      { id: 'train-your-team', eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
+      { id: 'hire-talent', eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
+    ]}
+  />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
   <RiskReversalBand
@@ -247,7 +254,7 @@ const steps = [
       { title: 'Progress Evaluation', text: 'Results are checked against the measures you set.' },
     ]}
   />
-  <Reinforcement reminder={false} />
+  <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />
 </LandingLayout>

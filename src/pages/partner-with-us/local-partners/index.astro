@@ -22,7 +22,7 @@ import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import { localCta } from '../../../components/pages/about/routes';
-import { HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
+import { FIRST_COHORT_REMINDER, HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, LOCAL_PARTNER_PAINS, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
@@ -144,7 +144,7 @@ const ways = [
       positioning={POSITIONING.localPartners}
       blocks={[
         { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
-        { label: 'With CodersTrust', title: 'Trains and Certifies', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
+        { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and Placement', text: 'Three months of milestone-based mentoring, then placement support into local, remote and global work.', icon: 'handshake' },
         { label: 'Throughout', title: 'Monthly Reporting', text: 'The funder sees enrollment, completion, certification, placements and first earnings every month.', icon: 'chart-bar' },
       ]}
@@ -189,7 +189,7 @@ const ways = [
         outcome: 'Progress you and the funder can both see',
         facts: ['PD-08'],
       },
-      { feature: 'Blended Delivery in Existing Labs and Colleges', means: 'a low capital cost for you and for the funder.', outcome: 'A cohort in a lab or classroom you already have' },
+      { feature: 'Blended Delivery in Existing Labs and Colleges', means: 'it uses labs or classrooms you already have.', outcome: 'A cohort in a lab or classroom you already have' },
       { feature: 'Connectivity-Light Delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
       { feature: 'Consent-Based Data Practice and Safeguarding Agreed per Program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
     ]}
@@ -216,7 +216,16 @@ const ways = [
   </Section>
 
   <!-- C12 -->
-  <RiskReversalBand id="risk" title="Start with a Pilot Cohort. Decide on Evidence." />
+  <RiskReversalBand
+    id="risk"
+    title="Start with a Pilot Cohort. Decide on Evidence."
+    points={[
+      { icon: 'chart-bar', title: 'Expansion Review on Real Results', text: 'Review early results at three months; any expansion decision uses the scorecard measures available then.' },
+      { icon: 'target', title: 'Scorecard Thresholds', text: 'If a threshold is missed, a corrective plan is triggered.' },
+      { icon: 'handshake', title: 'Your Participation Is Your Decision', text: 'You choose whether and how far to take part.' },
+      { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
+    ]}
+  />
 
   <!-- C13 -->
   <CTABand
@@ -238,7 +247,7 @@ const ways = [
     ]} />
     <div class="lp-after">
       <p>In your inquiry, include two suitable times for a discovery session.</p>
-      <CopyBlock block={C14.reminder} />
+      <CopyBlock block={FIRST_COHORT_REMINDER} />
     </div>
   </Section>
 

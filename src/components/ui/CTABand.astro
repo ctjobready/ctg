@@ -2,6 +2,7 @@
 import Section from './Section.astro';
 import Button from '../system/Button.astro';
 import { linkAttrs } from '../../lib/url';
+import EmailFallback from './EmailFallback.astro';
 
 /**
  * CTA band: ONE primary CTA + authentic urgency line + micro-commitment + secondary text link
@@ -40,6 +41,7 @@ const withheld = !cta.href;
         )
       }
     </div>
+    {cta.href.startsWith('mailto:') && <EmailFallback href={cta.href} />}
     {(urgency || micro) && (
       <ul class="cta-band__notes" role="list" data-reveal>
         {urgency && <li>{urgency}</li>}
