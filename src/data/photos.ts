@@ -219,8 +219,8 @@ const HERO: Record<string, string> = {
   governance: 'general/un-panel',
   careers: 'general/team-tshirts',
   contact: 'general/office-support-headset',
-  'impact-hub': 'general/her-power-group',
-  'case-studies-hub': 'general/classroom-girls',
+  'impact-hub': 'general/kosovo-women-screens',
+  'case-studies-hub': 'general/albania-trainees-group',
   'stories-hub': 'general/learner-mosaic',
   'field-hub': 'general/classroom-girls',
 };
