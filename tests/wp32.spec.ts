@@ -83,7 +83,8 @@ test.describe('Foundations', () => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#cohort-grants h2')).toHaveText('Choose Where to Start Your Cohort Grant');
     const platform = compact(await page.locator('#platform-grants').textContent());
-    expect(platform).toContain('Details of what a platform grant delivers are discussed in the introductory call.');
+    expect(platform).not.toContain('discussed in the introductory call'); // said once, in the Next Steps card
+    expect(compact(await page.locator('main').textContent())).toContain('Details of what the grant delivers are discussed in the introductory call.');
     expect(await mainText(page)).not.toContain('introduction call');
   });
 
