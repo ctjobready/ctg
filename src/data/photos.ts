@@ -188,32 +188,37 @@ export function photo(key: string): Photo {
 /**
  * Hero photograph per page, keyed by the page's `artSeed` (the key the generated hero art took). Hero.astro shows it in the
  * landscape media frame; the heading, lead and buttons stay on the hero's own surface, so text contrast is unchanged.
+ * WP30b (owner direction 2026-10-14: the site is not Bangladesh-focused): CodersTrust is a global organization, so a page that is not about a
+ * Bangladesh program takes the photograph from abroad that fits its subject (Kosovo, Albania, the forums and roundtables, the City College of
+ * New York agreement); a page about a Bangladesh program keeps its Bangladesh photograph. A hero is never repeated in the same page's "what
+ * success looks like" band (assertion below); the case studies take theirs from CASE_CARD.
  */
 const HERO: Record<string, string> = {
-  home: 'general/women-learners-classroom',
-  'programs-hub': 'general/kosovo-woman-training',
+  // Home: a training room in Kosovo (the home hero reads HOME_HERO.photo in src/data/heroSlides.ts, kept equal to this entry).
+  home: 'general/kosovo-woman-training',
+  'programs-hub': 'general/computer-lab-rows',
   youthwide: 'general/yes-trainees-group',
   'jobready-campus': 'general/students-campus-smiling',
   'jobready-work': 'general/office-meeting',
   superkids: 'superkids/steam-workshop',
-  investors: 'general/lab-women-screen',
-  'partner-hub': 'general/woman-learner-laptop',
-  'partners-development': 'general/kosovo-women-screens',
+  investors: 'recognition/davos-sdg-lab',
+  'partner-hub': 'recognition/us-chamber',
+  'partners-development': 'general/albania-trainees-group',
   'partners-foundations': 'general/her-power-laptops-1',
   'partners-governments': 'general/dict-hitech-mou',
   'local-partners': 'general/empowering-women-event',
-  'partners-employers': 'general/lab-women-screen',
-  'partners-universities': 'general/nu-affiliation-group',
+  'partners-employers': 'general/woman-learner-laptop',
+  'partners-universities': 'field/ccny-mou-signing',
   'nu-pgd': 'general/nu-affiliation-meeting',
   'nu-cybersecurity': 'nu-pgd/cybersecurity',
   'nu-data-analytics': 'nu-pgd/data-analytics',
   'nu-digital-marketing': 'nu-pgd/digital-marketing',
   'nu-ict': 'nu-pgd/ict',
   'our-model-hub': 'general/lab-women-screen',
-  'about-codertrust': 'general/office-meeting',
+  'about-codertrust': 'recognition/european-parliament',
   governance: 'general/un-panel',
   careers: 'general/team-tshirts',
-  contact: 'general/office-exterior',
+  contact: 'general/office-support-headset',
   'impact-hub': 'general/her-power-group',
   'case-studies-hub': 'general/classroom-girls',
   'stories-hub': 'general/learner-mosaic',
@@ -230,7 +235,8 @@ const FUTURE: Record<string, [string, string, string]> = {
   'jobready-campus': ['general/graduates-caps', 'general/office-support-headset', 'general/computer-lab-rows'],
   'jobready-work': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/lab-women-screen'],
   superkids: ['superkids/classroom-uniform', 'superkids/circuit-building', 'superkids/mat-activity'],
-  'partners-development': ['general/computer-lab-rows', 'general/yes-collage', 'general/albania-trainees-group'],
+  // WP30b: the hero is now the Albania photograph, and the Kosovo case card (the wider Kosovo photograph) is on the page, so the band takes a third Bangladesh photograph.
+  'partners-development': ['general/computer-lab-rows', 'general/yes-collage', 'general/women-learners-classroom'],
   'partners-employers': ['general/office-support-headset', 'general/computer-lab-rows', 'general/classroom-girls'],
   'partners-foundations': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/yes-collage'],
   'partners-governments': ['general/woman-learner-laptop', 'general/office-support-headset', 'general/lab-women-screen'],
@@ -239,12 +245,18 @@ const FUTURE: Record<string, [string, string, string]> = {
 };
 export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(photo);
 
+// A page's hero is not repeated in its own "what success looks like" band (WP30b).
+for (const [page, keys] of Object.entries(FUTURE)) {
+  if (HERO[page] && keys.includes(HERO[page])) throw new Error(`photos: the hero of "${page}" (${HERO[page]}) is also in its FUTURE band`);
+}
+
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
   // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MoU photographs follow.
   superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
-  youthwide: ['general/her-power-laptops-1', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'general/dict-hitech-mou'],
+  // WP30b: the programs abroad lead, then the Bangladesh program and agreement.
+  youthwide: ['general/kosovo-woman-training', 'general/albania-trainees-group', 'general/her-power-laptops-1', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],
   'undp-yes-korail': ['general/yes-trainees-group', 'general/woman-learner-laptop', 'general/yes-collage'],
@@ -261,8 +273,9 @@ export const galleryPhotos = (page: string): Photo[] => {
 
 /** Photographs for the case-study cards, keyed by slug (Her Power and WSDFM keep their own, in CaseGrid). */
 const CASE_CARD: Record<string, string> = {
+  // WP30b: the Home hero is the Kosovo training photograph, so the Kosovo case study and its card take the wider Kosovo photograph (no page then shows one photograph twice).
   'wsdfm-women-freelancers': 'general/women-learners-classroom',
-  'kosovo-women-in-online-work': 'general/kosovo-woman-training',
+  'kosovo-women-in-online-work': 'general/kosovo-women-screens',
   'undp-yes-korail': 'general/yes-trainees-group',
 };
 export const caseCardPhoto = (slug: string): Photo | undefined => (CASE_CARD[slug] ? photo(CASE_CARD[slug]) : undefined);

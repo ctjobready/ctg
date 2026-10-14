@@ -21,7 +21,7 @@ export interface ProgramLocation {
   noteFactId?: string;
 }
 
-export const OFFICES_LINE = 'Offices: New York (CT USA, Inc.) and Dhaka (CodersTrust Bangladesh Ltd.)';
+export const OFFICES_LINE = 'Headquarters: New York (CT USA, Inc.). Country office: Dhaka (CodersTrust Bangladesh Ltd.).';
 
 export const locations: ProgramLocation[] = [
   { id: 'bangladesh', name: 'Bangladesh', region: 'South Asia', lat: 23.8103, lon: 90.4125, years: '2014–present', targetGroup: 'Unemployed graduates, women, and priority groups', skills: 'Digital marketing, graphic design, web development, freelancing and more', note: 'Direct training across 45 programs', noteFactId: 'SC-02' },

@@ -132,7 +132,7 @@ export const HOME_HERO = {
   ],
   primary: { label: discovery.label, href: discovery.href },
   secondary: { label: 'See the Evidence', href: '/impact/' },
-  photo: 'general/women-learners-classroom',
+  photo: 'general/kosovo-woman-training', // WP30b: a training room in Kosovo (owner direction 2026-10-14); the carousel below it keeps its own photographs
   /** The three proof cards: the trial, the survey, the scale. A card's own `value` and `caption` replace the register's stat value and label. */
   proof: [
     {

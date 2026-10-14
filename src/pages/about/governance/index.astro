@@ -82,10 +82,10 @@ const jsonLd = [
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
 
   <Section id="offices" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust has offices in New York and Dhaka." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where to Find Us" lead="CodersTrust is headquartered in New York, with a country office in Dhaka." />
     <div class="grid-cards grid-cards--2">
-      <OfficeCard {...usa} city="New York · Office" />
-      <OfficeCard {...bd} name="CodersTrust Bangladesh Ltd." city="Dhaka · Headquarters" note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
+      <OfficeCard {...usa} city={`${usa.city} · ${usa.kind}`} />
+      <OfficeCard {...bd} city={`${bd.city} · ${bd.kind}`} note="Campuses in Mirpur (Dhaka) and Agrabad (Chattogram)." />
     </div>
   </Section>
 

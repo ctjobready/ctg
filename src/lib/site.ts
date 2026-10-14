@@ -26,10 +26,15 @@ export const CONTACT = {
   phoneHref: 'tel:+12123444111',
 } as const;
 
+/**
+ * The offices, headquarters first (ID-07, ID-11; owner statement 2026-10-14): CodersTrust is headquartered in New York, its parent organization
+ * is CT USA, Inc., and CodersTrust Bangladesh Ltd. is a country office. `kind` is the label every page shows beside the city.
+ */
 export const OFFICES = [
   {
     id: 'usa',
     name: 'CT USA, Inc.',
+    kind: 'Headquarters',
     city: 'New York',
     address: ['40 Wall Street, Suite 2004', 'New York, NY 10005, USA'],
     email: 'contact@coderstrust.global',
@@ -38,7 +43,8 @@ export const OFFICES = [
   },
   {
     id: 'bangladesh',
-    name: 'CodersTrust Bangladesh',
+    name: 'CodersTrust Bangladesh Ltd.',
+    kind: 'Country Office',
     city: 'Dhaka',
     address: ['BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand)', 'Dhaka 1216, Bangladesh'],
     email: 'hello@coderstrustbd.com',
@@ -94,8 +100,9 @@ export const CSP = [
   'upgrade-insecure-requests',
 ].join('; ');
 
+/** CodersTrust Bangladesh Ltd., the Dhaka country office (ID-11). The export keeps its earlier name so existing imports keep working; it is not the headquarters. */
 export const BANGLADESH_HQ = {
-  name: 'CodersTrust Bangladesh',
+  name: 'CodersTrust Bangladesh Ltd.',
   street: 'BSCIC Electronics Complex, Level 4, Mirpur (11 No Bus Stand)',
   city: 'Dhaka',
   postalCode: '1216',

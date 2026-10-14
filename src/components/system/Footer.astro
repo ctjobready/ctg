@@ -66,7 +66,7 @@ import { linkAttrs } from '../../lib/url';
           <div class="footer__office">
             <h3>
               {o.name}
-              <span> · {o.city}</span>
+              <span> · {o.city} · {o.kind}</span>
             </h3>
             {o.address.length > 0 && <address>{o.address.join(', ')}</address>}
             <p>

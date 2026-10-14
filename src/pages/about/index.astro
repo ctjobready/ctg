@@ -23,7 +23,9 @@ import { endSentence } from '../../components/sections/copyText';
 
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
 const since = fact('ID-02').stat?.value;
-const description = `CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work. Founded in ${since}, with offices in New York and Dhaka.`;
+// WP30b: a global organization (headquartered in New York, ID-11; programs in 15 countries and territories, SC-03), not a Bangladesh one.
+const countries = fact('SC-03').stat?.value;
+const description = `Headquartered in New York, CodersTrust trains and mentors educated, unemployed youth for digital work in ${countries} countries and territories since ${since}.`;
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
 const sc02 = fact('SC-02');
@@ -118,10 +120,14 @@ const jsonLd = [
 
   <Section id="glance" aria-labelledby="glance-h">
     <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
-    <div class="about-stats">
-      <FactStat id="SC-01" />
-      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note="111,268 direct; 40,043 through courseware" count={sc02Stat.numeric !== undefined} /></div>
-      {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
+    <!-- WP30b: where CodersTrust is based and how its entities relate (owner statement, ID-11), as the design system's lead paragraph (body-l, left-aligned) under the figures, spaced by the stack utility -->
+    <div class="stack stack--lg">
+      <div class="about-stats">
+        <FactStat id="SC-01" />
+        <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note="111,268 direct; 40,043 through courseware" count={sc02Stat.numeric !== undefined} /></div>
+        {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
+      </div>
+      <Fact id="ID-11" as="p" class="lead" />
     </div>
   </Section>
 

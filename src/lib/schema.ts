@@ -32,18 +32,22 @@ const canonicalAsset = (u: string): string => {
   return p.origin === PRODUCTION_ORIGIN ? u : PRODUCTION_ORIGIN + stripBase(p.pathname) + p.search;
 };
 
+/** The postal address of a CodersTrust office. */
+const officeAddress = (o: { street: string; city: string; region?: string; postalCode: string; countryCode: string }): JsonLdNode => ({
+  '@type': 'PostalAddress',
+  streetAddress: o.street,
+  addressLocality: o.city,
+  ...(o.region && { addressRegion: o.region }),
+  postalCode: o.postalCode,
+  addressCountry: o.countryCode,
+});
+
 /** A CodersTrust office as a schema.org Place (telephone in plain form). */
-const officePlace = (o: { name: string; city: string; street: string; region?: string; postalCode: string; countryCode: string; phone: string; email: string }): JsonLdNode => ({
+const officePlace = (o: { name: string; description: string; city: string; street: string; region?: string; postalCode: string; countryCode: string; phone: string; email: string }): JsonLdNode => ({
   '@type': 'Place',
   name: `${o.name}, ${o.city}`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: o.street,
-    addressLocality: o.city,
-    ...(o.region && { addressRegion: o.region }),
-    postalCode: o.postalCode,
-    addressCountry: o.countryCode,
-  },
+  description: o.description,
+  address: officeAddress(o),
   telephone: plainPhone(o.phone),
   email: o.email,
 });
@@ -51,6 +55,8 @@ const officePlace = (o: { name: string; city: string; street: string; region?: s
 export function organization(): JsonLdNode {
   const usa = OFFICES[0];
   const phone = plainPhone(CONTACT.phone);
+  // ID-07 and ID-11 (owner statement, 14 October 2026): headquartered in New York; the parent organization is CT USA, Inc.; CodersTrust Bangladesh Ltd. is a country office.
+  const usaAddress = officeAddress({ street: usa.address[0], city: usa.city, region: 'NY', postalCode: '10005', countryCode: 'US' });
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -68,35 +74,28 @@ export function organization(): JsonLdNode {
     ],
     email: CONTACT.email,
     telephone: phone,
-    // Where the site says CodersTrust works (IN-02, ID-07): Bangladesh, the base, and the three regions YouthWIDE names.
-    areaServed: [
-      { '@type': 'Country', name: 'Bangladesh' },
-      ...['South Asia', 'Middle East and North Africa', 'Sub-Saharan Africa'].map((name) => ({ '@type': 'Place', name })),
-    ],
+    // A global organization (SC-03: programs in 15 countries and territories across Asia, Africa, Europe and the Americas, Bangladesh among them).
+    areaServed: ['Asia', 'Africa', 'Europe', 'the Americas'].map((name) => ({ '@type': 'Place', name })),
     knowsAbout: ['workforce development', 'digital skills training', 'youth employment', 'freelancing', 'competency-based education', 'AI-ready curriculum'],
-    address: [
+    // The headquarters is in New York (ID-11).
+    address: usaAddress,
+    // The parent organization is CT USA, Inc. (ID-11), at the New York address.
+    parentOrganization: { '@type': 'Organization', name: usa.name, address: usaAddress },
+    // CodersTrust Bangladesh Ltd. is a country office (ID-11): a sub-organization with its own Dhaka address.
+    subOrganization: [
       {
-        '@type': 'PostalAddress',
-        name: usa.name,
-        streetAddress: '40 Wall Street, Suite 2004',
-        addressLocality: 'New York',
-        addressRegion: 'NY',
-        postalCode: '10005',
-        addressCountry: 'US',
-      },
-      {
-        '@type': 'PostalAddress',
+        '@type': 'Organization',
         name: BANGLADESH_HQ.name,
-        streetAddress: BANGLADESH_HQ.street,
-        addressLocality: BANGLADESH_HQ.city,
-        postalCode: BANGLADESH_HQ.postalCode,
-        addressCountry: BANGLADESH_HQ.countryCode,
+        description: 'The CodersTrust country office in Bangladesh',
+        address: officeAddress({ street: BANGLADESH_HQ.street, city: BANGLADESH_HQ.city, postalCode: BANGLADESH_HQ.postalCode, countryCode: BANGLADESH_HQ.countryCode }),
+        telephone: plainPhone(BANGLADESH_HQ.phone),
+        email: BANGLADESH_HQ.email,
       },
     ],
-    // Offices only: no parent/subsidiary relation is asserted until the legal status is confirmed with funders (ID-07).
+    // Offices (ID-07), headquarters first.
     location: [
-      officePlace({ name: usa.name, city: usa.city, street: usa.address[0], region: 'NY', postalCode: '10005', countryCode: 'US', phone: usa.phone, email: usa.email }),
-      officePlace({ name: BANGLADESH_HQ.name, city: BANGLADESH_HQ.city, street: BANGLADESH_HQ.street, postalCode: BANGLADESH_HQ.postalCode, countryCode: BANGLADESH_HQ.countryCode, phone: BANGLADESH_HQ.phone, email: BANGLADESH_HQ.email }),
+      officePlace({ name: usa.name, description: 'CodersTrust headquarters', city: usa.city, street: usa.address[0], region: 'NY', postalCode: '10005', countryCode: 'US', phone: usa.phone, email: usa.email }),
+      officePlace({ name: BANGLADESH_HQ.name, description: 'CodersTrust country office', city: BANGLADESH_HQ.city, street: BANGLADESH_HQ.street, postalCode: BANGLADESH_HQ.postalCode, countryCode: BANGLADESH_HQ.countryCode, phone: BANGLADESH_HQ.phone, email: BANGLADESH_HQ.email }),
     ],
     contactPoint: [
       { '@type': 'ContactPoint', contactType: 'customer support', email: CONTACT.email, telephone: phone, availableLanguage: ['en'] },

@@ -1,11 +1,13 @@
 import type { APIRoute } from 'astro';
 import { ENTITY_DEFINITION, PRODUCTION_ORIGIN, SITE_NAME } from '../lib/site';
+import { fact } from '../data/facts';
 
 /**
  * llms.txt (planning/09 §1 and §6).
  *
  * Line 1 is the title and line 2 is the entity definition, character for character ENTITY_DEFINITION (ID-01), so the
- * wording cannot drift from the Home, About and JSON-LD copies. Then the priority resources, the canonical reference
+ * wording cannot drift from the Home, About and JSON-LD copies. Lines 3 and 4 (WP30b) say where CodersTrust is based and how far it reaches
+ * (ID-11 and SC-03, read from the register). Then the priority resources, the canonical reference
  * pages, and what to deprioritise. Every URL is a production URL.
  *
  * Page descriptions are NOT typed here: they are the pages' own meta descriptions, appended to each link line by
@@ -60,12 +62,17 @@ const REFERENCE: Item[] = [
   { name: 'Contact', path: '/contact/' },
 ];
 
+/** A register sentence with its closing period. */
+const sentence = (s: string) => (/[.!?]$/.test(s) ? s : `${s}.`);
+
 const line = ({ name, path, note }: Item) => `- [${name}](${PRODUCTION_ORIGIN}${path})${note ? `: ${note}` : ''}`;
 
 function llmsTxt(): string {
   return [
     `# ${SITE_NAME}`,
     ENTITY_DEFINITION,
+    sentence(fact('ID-11').text),
+    sentence(fact('SC-03').text),
     '',
     '## Priority resources',
     ...PRIORITY.map(line),

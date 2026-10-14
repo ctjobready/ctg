@@ -27,7 +27,7 @@ const GROUPS = [
 const grouped = new Set(GROUPS.flatMap((g) => g.ids));
 const ungrouped = routes.filter((r) => !grouped.has(r.id));
 if (ungrouped.length > 0) throw new Error(`Contact: routes without a group: ${ungrouped.map((r) => r.id).join(', ')}`);
-const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Offices in New York and Dhaka.';
+const description = 'Reach CodersTrust: pick the route for governments, funders, universities, employers, local partners, media or learners. Headquartered in New York.';
 const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, type: 'ContactPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }] })];
 ---
 
@@ -72,9 +72,9 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
   </Section>
 
   <Section id="offices" tone="airy" aria-labelledby="offices-h">
-    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="Use the contact route above; the right team will respond." />
+    <SectionHeader id="offices-h" eyebrow="Offices" title="Where We Work From" lead="CodersTrust is headquartered in New York, with a country office in Dhaka. Use the contact route above; the right team will respond." />
     <div class="grid-cards grid-cards--2">
-      {OFFICES.map((o) => <OfficeCard {...o} name={o.id === 'bangladesh' ? 'CodersTrust Bangladesh Ltd.' : o.name} city={o.id === 'usa' ? 'New York · Office' : 'Dhaka · Headquarters'} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
+      {OFFICES.map((o) => <OfficeCard {...o} city={`${o.city} · ${o.kind}`} note={o.id === 'bangladesh' ? 'Campuses in Mirpur (Dhaka) and Agrabad (Chattogram).' : undefined} />)}
     </div>
     <div class="ct-social">
       <h3 class="t-heading-m">Follow CodersTrust</h3>
