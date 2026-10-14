@@ -192,7 +192,7 @@ test.describe('mega-menu featured panels point to a different decisive page than
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
       ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.'],
-      ['programs', '/programs/youthwide/', 'A national initiative in Bangladesh and co-funded country cohorts elsewhere.'],
+      ['programs', '/programs/youthwide/', 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.'],
       ['partner', '/partner-with-us/governments/', 'National programs for youth employment.'],
     ];
     for (const [id, href, text] of cases) {

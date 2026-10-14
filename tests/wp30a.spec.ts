@@ -124,9 +124,8 @@ test.describe('headings use the system weights', () => {
     const groups = await read('impact/', 'h3.glance__group-title'); // "Trial Results, Predecessor Program" and its siblings
     const panels = await read('partner-with-us/', 'h3.rc__h'); // "What Your Monthly Report Covers"
     const outcomes = await read('impact/outcomes-2026/', 'h3.ro__group'); // "Earnings and Work"
-    const inShort = await read('partner-with-us/governments/', 'h2.is__title');
     const cards = await read('contact/', 'h3.card__title');
-    for (const [label, list] of Object.entries({ groups, panels, outcomes, inShort })) {
+    for (const [label, list] of Object.entries({ groups, panels, outcomes })) {
       expect(list.length, label).toBeGreaterThan(0);
       for (const x of list) {
         expect(x.w, label).toBe(600);

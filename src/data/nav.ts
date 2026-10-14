@@ -120,7 +120,7 @@ export const navGroups: NavGroup[] = [
       kind: 'pilot',
       eyebrow: 'Partner Programs',
       title: 'YouthWIDE',
-      text: 'A national initiative in Bangladesh and co-funded country cohorts elsewhere.',
+      text: 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.',
       factIds: ['IN-01', 'IN-02'],
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },

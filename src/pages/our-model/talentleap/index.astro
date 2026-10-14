@@ -47,7 +47,7 @@ const glance = [
 // The shared answers for the three questions, with the page's own scope: the trial's evaluator is spelled out once (WP25s), and the nine-trials context sentence stays on the evidence pages.
 const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   if (f.q !== 'Is There Independent Evidence?') return f;
-  const spelled = f.a.replace('by BIGD (BRAC University)', 'by the BRAC Institute of Governance and Development (BIGD) at BRAC University').replace(/ The trial surveyed 599 women at follow-up[\s\S]*?(<\/p>)$/, '$1');
+  const spelled = f.a.replace('by BIGD (BRAC University)', 'by the BRAC Institute of Governance and Development (BIGD) at BRAC University').replace(/; the trial surveyed 599 women at follow-up[^<]*?(\.<\/p>)$/, '$1');
   if (!spelled.includes('BRAC Institute of Governance and Development (BIGD)') || spelled.includes('599') || spelled.includes('For context')) throw new Error('TalentLEAP: the Independent Evidence FAQ changed; update the expansion and the cut');
   return { ...f, a: spelled };
 });
