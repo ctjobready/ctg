@@ -6,7 +6,7 @@ import { pageByRoute } from './support/pages';
 /**
  * WP25h: Home cycle-5 fixes. Each test states one behavior, read from the built DOM (text, order, structure), not from pixels.
  *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 3);
- *   - the evidence band leads with the 72.3% result (34 of 47), then the ladder, then the trial in one sentence and its chart;
+ *   - the evidence band: the trial in one sentence and its chart, then the ladder, then the 72.3% result (34 of 47) (the order is WP28's, see tests/wp28.spec.ts);
  *   - the carousel, vision, proof, FAQ and offer wording accepted in the cycle-5 triage;
  *   - the "Learner Journeys" strip of three registered stories;
  *   - no " & " in Home labels.
@@ -53,13 +53,13 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
 });
 
 test.describe('evidence band (#proof-band)', () => {
-  test('leads with the 72.3% result and its base, then the ladder, then the trial', async ({ page }) => {
+  test('shows the 72.3% result with its base, after the trial and the ladder (WP28 order)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     const stat = band.locator('[data-fact="OC-02"]');
     await expect(stat).toContainText('72.3%');
     await expect(stat).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-    // document order: the 72.3% tile, the ladder, then the trial heading, its sentence and its chart
+    // document order: the trial heading, its sentence and its chart, then the ladder, then the 72.3% tile
     const order = await band.evaluate((el) => {
       const at = (sel: string) => {
         const n = el.querySelector(sel);
@@ -67,18 +67,18 @@ test.describe('evidence band (#proof-band)', () => {
       };
       return { stat: at('[data-fact="OC-02"]'), ladder: at('.lc'), trial: at('.he__trial'), sentence: at('[data-plain-line]'), chart: at('.he__chart svg') };
     });
-    expect(order.stat).toBeGreaterThan(-1);
-    expect(order.ladder).toBeGreaterThan(order.stat);
-    expect(order.trial).toBeGreaterThan(order.ladder);
+    expect(order.trial).toBeGreaterThan(-1);
     expect(order.sentence).toBeGreaterThan(order.trial);
     expect(order.chart).toBeGreaterThan(order.sentence);
+    expect(order.ladder).toBeGreaterThan(order.chart);
+    expect(order.stat).toBeGreaterThan(order.ladder);
   });
 
   test('does not retell the trial or the survey: one trial sentence, one chart, no second survey block', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     await expect(band.locator('h2')).toHaveText('Trial and Survey Evidence');
-    await expect(band.locator('h3')).toHaveText(['Four Kinds of Evidence, Strongest First', 'An Independent Randomized Trial']);
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First']);
     await expect(band.locator('[data-plain-line]')).toHaveCount(1);
     await expect(band.locator('[data-plain-line]')).toHaveText('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
     await expect(band.locator('svg[role="img"], figure svg').first()).toBeVisible();

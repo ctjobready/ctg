@@ -10,11 +10,12 @@ import { RCT_COMPARISON } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * Home C7 evidence band (Klein; WP25h). It no longer retells the trial and the survey, which the "Results and Programs" carousel above already
- * states (the trial slide, the survey slides): it leads with the one survey result the carousel does not carry, the 72.3% of surveyed completers
- * with no prior income who were earning (OC-02), with its registered base in the "N of M" pattern ("34 of 47"), then the evidence ladder
- * (what each kind of evidence shows), then the trial in one sentence (the [PLAIN-LINE], RC-02) beside its chart, then the links. There is no
- * second survey block and no restatement of the trial's income results (RC-01; the carousel's first slide states them).
+ * Home C7 evidence band (Klein; WP25h, reordered in WP28). It no longer retells the trial and the survey, which the "Results and Programs"
+ * carousel above already states (the trial slide, the survey slides). WP28 puts the strongest evidence first, as the band's own ladder says:
+ * the trial in one sentence (the [PLAIN-LINE], RC-02) beside its chart, then the evidence ladder (what each kind of evidence shows), then
+ * the one survey result the carousel does not carry, the 72.3% of surveyed completers with no prior income who were earning (OC-02), with
+ * its registered base in the "N of M" pattern ("34 of 47"), then the links. There is no second survey block and no restatement of the
+ * trial's income results (RC-01; the carousel's first slide states them).
  * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
  * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
  * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
@@ -52,13 +53,6 @@ const delta = RCT_COMPARISON.delta;
     {lead && <p class="lead">{lead}</p>}
   </header>
 
-  <div class="he__top">
-    <div class="he__stat" data-fact="OC-02" data-reveal>
-      <Stat value={survey.value} label={survey.label} tone="dark" size="lg" count={survey.numeric} />
-    </div>
-    <EvidenceLadderCompact />
-  </div>
-
   <div class="he__trial" data-fact="RC-02">
     <div class="he__copy" data-reveal>
       <h3 class="he__sub t-heading-l">{trialHeading}</h3>
@@ -75,6 +69,13 @@ const delta = RCT_COMPARISON.delta;
         tone="dark"
       />
       <p class="he__fn">Chart data: employment at trial follow-up, women offered a place and the control group.</p>
+    </div>
+  </div>
+
+  <div class="he__top">
+    <EvidenceLadderCompact />
+    <div class="he__stat" data-fact="OC-02" data-reveal>
+      <Stat value={survey.value} label={survey.label} tone="dark" size="lg" count={survey.numeric} />
     </div>
   </div>
 
@@ -106,6 +107,9 @@ const delta = RCT_COMPARISON.delta;
     display: grid;
     gap: var(--space-lg);
     align-items: stretch;
+    margin-top: var(--space-xl, 56px);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
   }
   /* the ladder carries its own top margin for the places that stack it under a figure; here the grid gap spaces it */
   .he__top > :global(.lc) {
@@ -130,9 +134,6 @@ const delta = RCT_COMPARISON.delta;
   .he__trial {
     display: grid;
     gap: var(--space-md) var(--space-lg);
-    margin-top: var(--space-xl, 56px);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--ctx-border);
   }
   .he__copy {
     display: grid;
@@ -160,13 +161,14 @@ const delta = RCT_COMPARISON.delta;
   }
   @media (min-width: 1024px) {
     .he__top {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
       gap: 56px;
     }
     .he__trial {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--space-md) 56px;
-      align-items: start;
+      /* the trial now opens the band: the sentence sits level with the middle of its chart, not above an empty column */
+      align-items: center;
     }
   }
 </style>

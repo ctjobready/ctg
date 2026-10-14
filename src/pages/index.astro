@@ -81,7 +81,8 @@ const featureRows = [
   },
   {
     ...painForRow(FUNDER_PAINS, 'P2'),
-    feature: 'Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence of Earnings',
+    // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
+    feature: 'As Agreed in the Program Scope: Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available',
     means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
     outcome: 'Results You Can Check',
     facts: ['PD-08', 'PD-09'],
@@ -94,7 +95,7 @@ const featureRows = [
     facts: ['PD-02', 'PD-10'],
   },
   { feature: 'Accessible Readiness Assessment', means: 'Applicants are routed to a career or foundation track that fits them.', outcome: 'The Right Career or Foundation Track' },
-  { feature: `${hours} Training Hours per Certification, with Hands-on Labs`, means: 'Learners practice on real tasks, not only lectures.', outcome: 'An Employer-Ready Portfolio' },
+  { feature: `${hours} Training Hours per Certification, with Hands-on Labs`, means: 'Learners practice on real tasks, not only lectures.', outcome: 'Portfolio Work on Real Tasks' },
   { feature: 'Certification Exam Preparation (Exam Fee Included)', means: 'Each track prepares learners for an industry certification.', outcome: 'A Supported Route to a Recognized Credential' },
 ];
 ---
@@ -145,7 +146,7 @@ const featureRows = [
   <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} ribbonLine="TalentLEAP carries each learner through these stages: we train, mentor, provide placement support and track." link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
   <!-- WP19, item 8: the "At a Glance" band is gone. Every tile in it restated the hero strip or the carousel above, so no headline number appears more than twice. -->
-  <!-- WP25h: the band no longer retells the trial and the survey (the carousel above states them): it leads with the 72.3% no-prior-income result (34 of 47), then the evidence ladder, then the trial in one sentence beside its chart. -->
+  <!-- WP25h: the band no longer retells the trial and the survey (the carousel above states them). WP28: strongest evidence first, as its own ladder says: the trial in one sentence beside its chart, then the evidence ladder, then the 72.3% no-prior-income result (34 of 47). -->
   <Tone cmf="C7">
     <HomeEvidence
       id="proof-band"
@@ -207,7 +208,23 @@ const featureRows = [
 
   <Tone cmf="C14">
     <!-- The 6–8 week start is stated in the C13 plan line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
-    <ConversionNextSteps id="next-steps" title="What Happens After You Contact Us" lead="Here is what follows your inquiry, from the first conversation to the first cohort." timing={false} firstAction={C14.firstAction} />
+    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Cohorts" (as on the hub), and one line names the audiences that get a route-specific next step. -->
+    <ConversionNextSteps
+      id="next-steps"
+      eyebrow="For Grant-Funded Cohorts"
+      title="What Happens After You Contact Us"
+      lead="Here is what follows your inquiry, from the first conversation to the first cohort."
+      timing={false}
+      firstAction={C14.firstAction}
+      otherRoutes={{
+        audiences: [
+          { label: 'Ministries', href: '/partner-with-us/governments/' },
+          { label: 'employers', href: '/partner-with-us/employers/' },
+          { label: 'impact investors', href: '/partner-with-us/investors/' },
+        ],
+        text: 'get a route-specific next step.',
+      }}
+    />
   </Tone>
 
   <!-- WP23, item 9: the latest program and partner posts (partnerships; programs and events), so partners and young people are the subject; the treasure-hunt post is left out because its excerpt states a registration count the facts register does not carry. -->

@@ -7,12 +7,15 @@ import Icon from '../../system/Icon.astro';
 import CopyBlock from './CopyBlock.astro';
 import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
+import { linkAttrs } from '../../../lib/url';
 import type { CopyBlock as CopyBlockData } from '../../../data/copy';
 
 /**
  * C14 Next steps with the post-decision reinforcement (messaging framework §8): the step flow, then
  * validate / transformation reminder / first action, then the partner logo row (PA-04).
  * Default steps are the grant-funded pilot timeline, parsed from PD-04 so the weeks are never retyped.
+ * WP28: the week-by-week steps are labelled by `eyebrow` ("For Grant-Funded Cohorts", as on the Partner with Us hub), and `otherRoutes`
+ * adds the one line that names the audiences with their own next step (each a link to its route page).
  */
 interface Props {
   title: string;
@@ -26,8 +29,12 @@ interface Props {
   logos?: boolean;
   tone?: 'white' | 'airy';
   id?: string;
+  /** The small label over the heading; it says whom the steps are for. */
+  eyebrow?: string;
+  /** One line under the steps: who else gets a route-specific next step, with the sentence's opening words linked to their route pages. */
+  otherRoutes?: { audiences: { label: string; href: string }[]; text: string };
 }
-const { title, lead, steps, timing = !steps, validate, reminder, firstAction, logos = false, tone = 'airy', id = 'next-steps' } = Astro.props;
+const { title, lead, steps, timing = !steps, validate, reminder, firstAction, logos = false, tone = 'airy', id = 'next-steps', eyebrow = 'Next Steps', otherRoutes } = Astro.props;
 
 const pd04 = fact('PD-04');
 const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => m[2]);
@@ -46,7 +53,7 @@ const notes = [
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <StepFlow steps={flow} />
   {timing && <p class="ns__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
 
@@ -66,6 +73,19 @@ const notes = [
       <p>{firstAction}</p>
     </div>
   </div>
+  {
+    otherRoutes && (
+      <p class="ns__routes" data-reveal>
+        {otherRoutes.audiences.map((a, i) => (
+          <>
+            <a class="link" href={linkAttrs(a.href).href}>{a.label}</a>
+            {i < otherRoutes.audiences.length - 2 ? ', ' : i === otherRoutes.audiences.length - 2 ? ' and ' : ''}
+          </>
+        ))}{' '}
+        {otherRoutes.text}
+      </p>
+    )
+  }
   {logos && <PartnerStrip group="development" variant="grid" />}
 </Section>
 
@@ -78,6 +98,11 @@ const notes = [
     display: grid;
     gap: var(--space-gutter);
     grid-template-columns: minmax(0, 1fr);
+  }
+  .ns__routes {
+    margin: var(--space-md) 0 0;
+    max-width: 60rem;
+    color: var(--on-surface-variant);
   }
   .ns__note {
     display: grid;

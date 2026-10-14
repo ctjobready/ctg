@@ -1,0 +1,120 @@
+import { expect, test, type Page } from '@playwright/test';
+import { DESKTOP, MOBILE, open } from './support/browser';
+
+/**
+ * WP28 behaviors (review round 5, cycle 7, the verified Home review): scoped inclusions, an evidence-first band, a headline that matches its body,
+ * a labelled post-inquiry band. Each test states one observable behavior of the built site (run `npm run build` first, then
+ * `PORT=<port> npx playwright test tests/wp28.spec.ts --project=chromium`).
+ */
+
+const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
+const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/';
+
+test.describe('What Your Partnership Includes (#features)', () => {
+  test('the reporting inclusion is scoped: "as agreed in the program scope", documentary evidence "where available"', async ({ page }) => {
+    await open(page, '');
+    const card = page.locator('#features li[data-fact~="PD-08"]');
+    await expect(card).toHaveCount(1);
+    await expect(card.locator('.fc__included')).toHaveText('As Agreed in the Program Scope: Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available');
+    const t = compact(await card.textContent());
+    expect(t).not.toContain('Documentary Evidence of Earnings');
+    expect(t).toContain('documentary evidence where available');
+  });
+
+  test('the hands-on-labs benefit says "Portfolio Work on Real Tasks", not an "Employer-Ready Portfolio"', async ({ page }) => {
+    await open(page, '');
+    const benefits = (await page.locator('#features .fc__benefit').allTextContents()).map(compact);
+    expect(benefits).toContain('Portfolio Work on Real Tasks');
+    expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
+  });
+});
+
+test.describe('evidence band (#proof-band): strongest evidence first', () => {
+  test('the trial (heading, one sentence, chart) comes first, then the ladder, then the 72.3% tile', async ({ page }) => {
+    await open(page, '');
+    const band = page.locator('#proof-band');
+    const order = await band.evaluate((el) => {
+      const all = Array.from(el.querySelectorAll('*'));
+      const at = (sel: string) => {
+        const n = el.querySelector(sel);
+        return n ? all.indexOf(n) : -1;
+      };
+      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), chart: at('.he__chart svg'), ladder: at('.lc'), tile: at('[data-fact="OC-02"]') };
+    });
+    expect(order.heading).toBeGreaterThan(-1);
+    expect(order.sentence).toBeGreaterThan(order.heading);
+    expect(order.chart).toBeGreaterThan(order.sentence);
+    expect(order.ladder).toBeGreaterThan(order.chart);
+    expect(order.tile).toBeGreaterThan(order.ladder);
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First']);
+    await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
+  });
+
+  for (const vp of [DESKTOP, MOBILE]) {
+    test(`at ${vp.width}px the trial block sits above the ladder, and the ladder above the tile`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      await open(page, '');
+      const tops = await page.locator('#proof-band').evaluate((el) => {
+        const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
+        return { trial: top('.he__trial'), ladder: top('.lc'), tile: top('.he__stat') };
+      });
+      if (vp.width >= 1024) {
+        // side by side: the ladder and the tile share a row, below the trial
+        expect(tops.ladder).toBeGreaterThan(tops.trial);
+        expect(Math.abs(tops.tile - tops.ladder)).toBeLessThan(4);
+      } else {
+        expect(tops.ladder).toBeGreaterThan(tops.trial);
+        expect(tops.tile).toBeGreaterThan(tops.ladder);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), 'no horizontal overflow').toBe(true);
+    });
+  }
+});
+
+test.describe('the UPEACE news headline matches its body', () => {
+  test('the article says students "were invited to apply", as its body does ("accepting applications")', async ({ page }) => {
+    await open(page, UPEACE);
+    const h1 = compact(await page.locator('h1').first().textContent());
+    expect(h1).toBe('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
+    const body = compact(await page.locator('main').textContent());
+    expect(body).toContain('UPEACE was accepting applications');
+    expect(body).not.toMatch(/Invited to Join/i);
+  });
+
+  test('the Home news card carries the same headline', async ({ page }) => {
+    await open(page, '');
+    const card = page.locator(`#news a[href$="/${UPEACE}"]`);
+    await expect(card, 'the UPEACE post is one of the Home news cards').toHaveCount(1);
+    expect(compact(await card.textContent())).toContain('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
+    expect(compact(await page.locator('#news').textContent())).not.toMatch(/Invited to Join/i);
+  });
+});
+
+test.describe('post-inquiry band (#next-steps)', () => {
+  const band = (page: Page) => page.locator('#next-steps');
+
+  test('the week-by-week steps are labelled "For Grant-Funded Cohorts", ahead of the heading', async ({ page }) => {
+    await open(page, '');
+    await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Cohorts');
+    await expect(band(page).locator('h2')).toHaveText('What Happens After You Contact Us');
+    await expect(band(page).locator('ol h3')).toHaveText([/Discovery · Week 1/, /Co-Design · Week 2/, /Agreement · Week 3/, /First Cohort · 6–8 Weeks/]);
+  });
+
+  test('one line says ministries, employers and impact investors get a route-specific next step, each linked to its route page', async ({ page }) => {
+    await open(page, '');
+    const line = band(page).locator('.ns__routes');
+    await expect(line).toHaveCount(1);
+    expect(compact(await line.textContent())).toBe('Ministries, employers and impact investors get a route-specific next step.');
+    const links = await line.locator('a').evaluateAll((as) => as.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })));
+    expect(links.map((l) => l.text)).toEqual(['Ministries', 'employers', 'impact investors']);
+    expect(links[0].href).toMatch(/\/partner-with-us\/governments\/$/);
+    expect(links[1].href).toMatch(/\/partner-with-us\/employers\/$/);
+    expect(links[2].href).toMatch(/\/partner-with-us\/investors\/$/);
+    // the line follows the steps and the first-step card
+    const after = await band(page).evaluate((el) => {
+      const pos = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top;
+      return pos('.ns__routes') > pos('.ns__reinforce');
+    });
+    expect(after).toBe(true);
+  });
+});
