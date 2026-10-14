@@ -47,7 +47,12 @@ const cards = items.map((it) => {
       {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} href={c.href} />)}
     </Carousel>
   </div>
+  {Astro.slots.has('more') && <p class="csc__more"><slot name="more" /></p>}
 </Section>
 
 <style>
+  /* the band's own "see all" link sits inside the band, like Learner Journeys' (WP30 merge review) */
+  .csc__more {
+    margin: var(--space-md) 0 0;
+  }
 </style>
