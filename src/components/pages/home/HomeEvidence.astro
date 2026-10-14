@@ -4,7 +4,6 @@ import Stat from '../../system/Stat.astro';
 import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
-import EvidenceLadderCompact from '../impact/EvidenceLadderCompact.astro';
 import PaidWorkPathways from '../impact/PaidWorkPathways.astro';
 import { fact } from '../../../data/facts';
 import { RCT_COMPARISON } from '../../../data/copy';
@@ -21,6 +20,9 @@ import { linkAttrs } from '../../../lib/url';
  * business ownership, before training and at the October 2026 survey; Surveyed Completers), below the ladder and the 72.3% tile.
  * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
  * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
+ * WP30c: the scope line under the heading is one short sentence (it keeps "predecessor program" and "surveyed completers"); no note under the pathways table; the
+ * evidence ladder ("Four Kinds of Evidence, Strongest First") is gone from this band: the carousel, the case cards and the Impact page label each kind of evidence,
+ * and the "Read the evidence" link leads to the full ladder. The pathways table sits beside the 72.3% tile, in the ladder's former place.
  * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
  */
 interface Props {
@@ -76,13 +78,11 @@ const delta = RCT_COMPARISON.delta;
   </div>
 
   <div class="he__top">
-    <EvidenceLadderCompact />
+    <PaidWorkPathways />
     <div class="he__stat" data-fact="OC-02" data-reveal>
       <Stat value={survey.value} label={survey.label} tone="dark" size="lg" count={survey.numeric} />
     </div>
   </div>
-
-  <PaidWorkPathways wide note="Salaried jobs remain the largest pathway; freelancing and business ownership grew the most in relative terms." />
 
   {
     links.length > 0 && (
@@ -116,11 +116,11 @@ const delta = RCT_COMPARISON.delta;
     padding-top: var(--space-lg);
     border-top: 1px solid var(--ctx-border);
   }
-  /* the ladder carries its own top margin for the places that stack it under a figure; here the grid gap spaces it */
-  .he__top > :global(.lc) {
+  /* the pathways block carries its own top margin for the places that stack it under a figure; here the grid gap spaces it */
+  .he__top > :global(.pwp) {
     margin-top: 0;
   }
-  /* the lead figure sits in a panel of the ladder's own style, so the two carry equal weight side by side */
+  /* the lead figure sits in a panel of the pathways block's own style, so the two carry equal weight side by side */
   .he__stat {
     min-width: 0;
     display: flex;

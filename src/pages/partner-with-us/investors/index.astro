@@ -2,6 +2,8 @@
 // P8 Investors (doc 06 P8; matrix 4.4; D2): thesis + results only. C1 → C14 in order with the declared C2–C3
 // compression. For impact investors only (owner, 2026-10-14). No market-size figures, valuation, raise, revenue, growth or pipeline; no partner references
 // or reply-time promises (confirm list #13, #17).
+// WP30c (owner direction 2026-10-14, "less is more"): the In Short summary is gone (the hero lead and the bands say it), the thesis is three cards without a lead line,
+// the path-to-scale paragraph is gone (the scale FAQ answers it), three FAQs, not four. The H1 is the owner's wording.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import EvidenceBand from '../../../components/pages/home/EvidenceBand.astro';
@@ -9,11 +11,9 @@ import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.as
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import Section from '../../../components/ui/Section.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import { caseStudyItems } from '../../../components/pages/home/caseStudies';
-import InShort from '../../../components/pages/partners/InShort.astro';
 import InvestorDefinition from '../../../components/pages/investors/InvestorDefinition.astro';
 import InvestorThesis from '../../../components/pages/investors/InvestorThesis.astro';
 import InvestorVision from '../../../components/pages/investors/InvestorVision.astro';
@@ -36,13 +36,13 @@ const title = 'Investors';
 const description = 'For impact investors: back the platform moving emerging-market youth into paid work. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
-const FAQ_IDS = ['Q11', 'Q5', 'Q2-investor', 'Q4'];
+const FAQ_IDS = ['Q11', 'Q5', 'Q2-investor'];
 const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 const featureRows = [
   { feature: 'Employer Marketplace and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'The platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
-  { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every supported cohort', means: 'Learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
-  { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned', means: 'Mentoring, certification exam preparation and placement support in every supported cohort guide learners from skills to income.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
+  { feature: 'AI-Ready Curriculum, with Tracks Chosen from Employer Demand and Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment', means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'Learners need different support as they progress' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'Institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
 ];
@@ -82,25 +82,6 @@ const mechanismBlocks = [
     />
   </Tone>
 
-  <!-- WP25s: In Short, built only from sentences this page already states. BIGD is spelled out here, where the page first names it. -->
-  <Tone cmf="IN-SHORT">
-    <InShort
-      bullets={[
-        'JobReady is an AI-native digital education and employment platform, rolling out in stages on top of CodersTrust’s training and mentoring programs.',
-        'The outcome evidence is a randomized trial of a predecessor program by the BRAC Institute of Governance and Development (BIGD), kept apart from survey results among surveyed completers.',
-        'Status is stated exactly: what is live, what is pre-launch and what is on the roadmap. Request an introduction call; the deck follows under NDA.',
-      ]}
-      links={[
-        { label: 'The Thesis', href: '#thesis' },
-        { label: 'The Model', href: '#mechanism' },
-        { label: 'Evidence', href: '#proof-band' },
-        { label: 'What JobReady Does', href: '#features' },
-        { label: 'Offer', href: '#offer' },
-      ]}
-      contracting={false}
-    />
-  </Tone>
-
   <Tone cmf="GEO"><InvestorDefinition id="definition" /></Tone>
 
   <Tone cmf="C2-C3 (compressed)"><InvestorThesis id="thesis" /></Tone>
@@ -127,7 +108,7 @@ const mechanismBlocks = [
       chip={false}
       plainLine
       incomeHeadline
-      lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, at the October 2026 survey."
+      lead="Trial figures are for a predecessor program evaluated by BIGD, the BRAC Institute of Governance and Development; survey figures are among surveyed completers."
       statIds={['RC-02']}
       links={[
         { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
@@ -140,12 +121,12 @@ const mechanismBlocks = [
   <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three featured case studies, each with its partner." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
-    <FeaturesTable id="features" title="What JobReady Does — and What It Means" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
+    <FeaturesTable id="features" title="What JobReady Does" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
   </Tone>
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <Tone cmf="C10"><ComparisonBand id="compare" title="Compare the Approaches" withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches: certification, work entry, outcome tracking and independent evidence." rows={compareRows} /></Tone>
+  <Tone cmf="C10"><ComparisonBand id="compare" title="How the Approaches Compare" withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches." rows={compareRows} /></Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 

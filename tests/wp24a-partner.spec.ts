@@ -28,12 +28,12 @@ test.describe('Partner with Us hub', () => {
     expect(await page.locator('#audiences a[href$="/programs/"]').count()).toBeGreaterThanOrEqual(1);
   });
 
-  test('"Protected by Design" band lists the safeguarding commitments', async ({ page }) => {
+  test('WP30c: the hub states safeguarding once, in Due Diligence in One View (no separate "Protected by Design" band)', async ({ page }) => {
     await page.goto(URL);
-    const band = page.locator('#protected-by-design');
-    await expect(band).toHaveCount(1);
-    await expect(band.locator('h2')).toHaveText('Protected by Design');
-    expect(await band.locator('li').count()).toBeGreaterThanOrEqual(4);
+    await expect(page.locator('#protected-by-design')).toHaveCount(0);
+    const dd = page.locator('#due-diligence');
+    await expect(dd.locator('h2')).toHaveText('Due Diligence in One View');
+    await expect(dd).toContainText('Consent, protected records and grievance handling are specified for each program.');
   });
 
   test('the trial tile does not repeat "percentage points" beside "pp"', async ({ page }) => {
@@ -43,17 +43,12 @@ test.describe('Partner with Us hub', () => {
     expect(tile).not.toMatch(/in percentage points/);
   });
 
-  test('the RACI table separates combined roles with a visible "·"', async ({ page }) => {
+  test('WP30c: the hub has no RACI roles table (an internal-report view); the route cards, the first 90 days and four FAQs remain', async ({ page }) => {
     await page.goto(URL);
-    const cell = (await texts(page, '.raci tbody tr:nth-child(4) td'))[0];
-    expect(cell).toContain('A · R');
-  });
-
-  test('on a phone the RACI table becomes cards (table hidden)', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 800 });
-    await page.goto(URL);
-    await expect(page.locator('.raci')).toBeHidden();
-    await expect(page.locator('.raci-card').first()).toBeVisible();
+    await expect(page.locator('.raci')).toHaveCount(0);
+    await expect(page.locator('#who-does-what')).toHaveCount(0);
+    await expect(page.locator('#how-partnering-works ol > li')).toHaveCount(4);
+    await expect(page.locator('#faqs details')).toHaveCount(4);
   });
 });
 
@@ -127,10 +122,13 @@ test.describe('audience pages', () => {
     await expect(page.locator('#cta a.btn--primary')).toContainText('Plan Your First Team Program');
   });
 
-  test('local partners: comparison has a Track Choice row; the summary heading is "In Short"', async ({ page }) => {
-    await page.goto('partner-with-us/local-partners/');
-    expect(await texts(page, '#compare tbody th')).toContain('Track Choice');
-    await expect(page.locator('#in-short h2')).toHaveText('In Short');
+  test('WP30c: the audience pages carry no In Short summary and no comparison table (the table is on Home and Investors)', async ({ page }) => {
+    for (const slug of AUDIENCE_PAGES) {
+      await page.goto(`partner-with-us/${slug}/`);
+      await expect(page.locator('#in-short'), `${slug}: In Short`).toHaveCount(0);
+      await expect(page.locator('#compare'), `${slug}: comparison`).toHaveCount(0);
+      await expect(page.locator('#for-not-for'), `${slug}: fit check`).toHaveCount(0);
+    }
   });
 
   test('foundations: one funding name, "YouthWIDE Cohort Grants"', async ({ page }) => {

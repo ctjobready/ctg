@@ -201,7 +201,7 @@ export const HOME_SLIDES: HeroSlide[] = [
   },
   {
     id: 'scale',
-    eyebrow: 'Impact at Scale',
+    eyebrow: 'Reach at Scale', // WP30c (cycle-7 review, GLM): the slide states reach (people trained), which is an output, not impact
     title: `${reachFigure} Young People Trained in ${countries} Countries and Territories`,
     titleFacts: ['SC-16', 'SC-03'],
     lead: fact('SC-03').stat?.detail,

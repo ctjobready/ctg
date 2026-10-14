@@ -21,16 +21,16 @@ test.describe('What Your Partnership Includes (#features)', () => {
     expect(t).toContain('documentary evidence where available');
   });
 
-  test('the hands-on-labs benefit says "Portfolio Work on Real Tasks", not an "Employer-Ready Portfolio"', async ({ page }) => {
+  test('no benefit on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three rows answer the three ranked pains)', async ({ page }) => {
     await open(page, '');
     const benefits = (await page.locator('#features .fc__benefit').allTextContents()).map(compact);
-    expect(benefits).toContain('Portfolio Work on Real Tasks');
+    expect(benefits).toEqual(['A Path to First Paid Work', 'Results You Can Check', 'Tracks That Follow What Employers Ask For']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
   });
 });
 
 test.describe('evidence band (#proof-band): strongest evidence first', () => {
-  test('the trial (heading, one sentence, chart) comes first, then the ladder, then the 72.3% tile', async ({ page }) => {
+  test('the trial (heading, one sentence, chart) comes first, then the paid-work pathways and the 72.3% tile (WP30c: no ladder)', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#proof-band');
     const order = await band.evaluate((el) => {
@@ -39,33 +39,34 @@ test.describe('evidence band (#proof-band): strongest evidence first', () => {
         const n = el.querySelector(sel);
         return n ? all.indexOf(n) : -1;
       };
-      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), chart: at('.he__chart svg'), ladder: at('.lc'), tile: at('[data-fact="OC-02"]') };
+      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), chart: at('.he__chart svg'), ladder: at('.lc'), pathways: at('.pwp'), tile: at('[data-fact="OC-02"]') };
     });
     expect(order.heading).toBeGreaterThan(-1);
     expect(order.sentence).toBeGreaterThan(order.heading);
     expect(order.chart).toBeGreaterThan(order.sentence);
-    expect(order.ladder).toBeGreaterThan(order.chart);
-    expect(order.tile).toBeGreaterThan(order.ladder);
-    // WP29 adds the paid-work pathways comparison after the ladder and the tile (its own h3); the order above is unchanged
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First', 'Paid-Work Pathways Among Surveyed Completers']);
+    expect(order.ladder, 'the evidence ladder is not in the band').toBe(-1);
+    expect(order.pathways).toBeGreaterThan(order.chart);
+    expect(order.tile).toBeGreaterThan(order.chart);
+    // WP29's paid-work pathways comparison keeps its own h3, beside the 72.3% tile
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the trial block sits above the ladder, and the ladder above the tile`, async ({ page }) => {
+    test(`at ${vp.width}px the trial block sits above the pathways comparison and the tile`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, '');
       const tops = await page.locator('#proof-band').evaluate((el) => {
         const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-        return { trial: top('.he__trial'), ladder: top('.lc'), tile: top('.he__stat') };
+        return { trial: top('.he__trial'), pathways: top('.pwp'), tile: top('.he__stat') };
       });
       if (vp.width >= 1024) {
-        // side by side: the ladder and the tile share a row, below the trial
-        expect(tops.ladder).toBeGreaterThan(tops.trial);
-        expect(Math.abs(tops.tile - tops.ladder)).toBeLessThan(4);
+        // side by side: the pathways comparison and the tile share a row, below the trial
+        expect(tops.pathways).toBeGreaterThan(tops.trial);
+        expect(Math.abs(tops.tile - tops.pathways)).toBeLessThan(4);
       } else {
-        expect(tops.ladder).toBeGreaterThan(tops.trial);
-        expect(tops.tile).toBeGreaterThan(tops.ladder);
+        expect(tops.pathways).toBeGreaterThan(tops.trial);
+        expect(tops.tile).toBeGreaterThan(tops.pathways);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), 'no horizontal overflow').toBe(true);
     });

@@ -1,8 +1,6 @@
 ---
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
-import Fact from '../../facts/Fact.astro';
-import { fact } from '../../../data/facts';
 import { factPart } from './partners';
 
 /**
@@ -14,6 +12,8 @@ import { factPart } from './partners';
  * No Curriculum-reach column: only Her Power has one, so its figures (the national program's training total and the manuals published) sit in
  * that row's scope text. A column returns when two or more contracts carry a value.
  * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
+ * WP30c: one note under the table (delivery status; scopes are not delivered scale). The 31,200+ total is the Results at a Glance tile's, and the COVID-19
+ * teacher-training line (SC-08, which does not say who trained the teachers) is gone from the page.
  */
 interface Row {
   contract: string;
@@ -64,10 +64,6 @@ const rows: Row[] = [
   },
 ];
 
-// SC-08 reads "10,000 teachers trained to teach online during COVID-19": the sentence takes the number and the rest, so "trained" is not repeated.
-const teachersNumber = factPart('SC-08', /([\d,]+) teachers trained to teach online during COVID-19/);
-const teachersTask = factPart('SC-08', /teachers trained (to teach online during COVID-19)/);
-
 interface Props {
   title: string;
   lead?: string;
@@ -103,8 +99,6 @@ const { title, lead, id = 'contracts' } = Astro.props;
   </section>
   <div class="ct__notes" data-reveal>
     <p data-fact="GV-10">Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.</p>
-    <p data-fact="SC-06"><Fact id="SC-06" /></p>
-    <p data-fact="SC-08">Separately, CodersTrust trained {teachersNumber} teachers {teachersTask}.</p>
   </div>
 </Section>
 

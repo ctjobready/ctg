@@ -10,7 +10,6 @@ import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
@@ -19,59 +18,28 @@ import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import StepFlow from '../../../components/ui/StepFlow.astro';
 import DefinitionPlus from '../../../components/pages/about/DefinitionPlus.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
-import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
-import InShort from '../../../components/pages/partners/InShort.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
-import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import { localCta } from '../../../components/pages/about/routes';
-import { FIRST_COHORT_REMINDER, HOURS, TRACER_MONTHS } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, LOCAL_PARTNER_PAINS, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
-import { fact } from '../../../data/facts';
+import { LOCAL_PARTNER_PAINS, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
-import { linkAttrs } from '../../../lib/url';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
 
+/**
+ * Local Partners in Bangladesh (T3). WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit
+ * check, the lab-access paragraph, the planned third-gender program sentence, the page-local copy of the comparison table (the shared one now has the corrected
+ * rows), the restated three-step list and the second timing reminder. The H1 names the outcome; the page stays Bangladesh-specific because its audience is.
+ */
 const local = localCta();
 const FAQ_IDS = ['Q1-local', 'Q9', 'Q10'];
 const path = '/partner-with-us/local-partners/';
 const description = 'Bangladeshi NGOs, colleges and chambers can deliver CodersTrust’s mentored digital-skills programs in their communities.';
-// GV-07 in the third-gender program wording the register uses ("program ... to provide digital-skills training to 5,000 third-gender people").
-const thirdGender = fact('GV-07').text.match(/[\d,]+ third-gender people/)?.[0];
-if (!thirdGender) throw new Error('GV-07 no longer names the number of third-gender people');
 const jsonLd = [
   webPage({ path, name: 'Local Implementing Partners', description, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Partner with Us', path: '/partner-with-us/' }, { name: 'Local Partners', path }] }),
   faqJsonLd('variants', path, FAQ_IDS),
-];
-
-// C10: the [CMP] table with the rows that apply to an organization choosing how to deliver; cells verbatim, no verdict icons for other approaches.
-const cmpRows = [
-  { label: 'Track Choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
-  { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
-  { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Marketplace matching is the core service; additional support varies.', 'No mentoring'] },
-  { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-  { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
-  {
-    label: 'Independent Evidence',
-    cells: [
-      { text: 'Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions', factId: 'RC-01' },
-      { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
-      'Varies',
-      'Varies',
-      'None',
-    ],
-  },
-  { label: 'Cost', cells: ['Pricing set per program', 'Varies', 'Content-only access can cost less than a supported cohort; actual prices vary', 'Varies', 'No fee — but forgone earnings'] },
-];
-
-// C8d "How it works in three steps", written for a local partner (built from the page's own CTA, ways to partner and next steps).
-const localSteps = [
-  { title: 'Tell the Bangladesh Team', text: 'Describe your organization, your district and the groups you work with, and we shape the cohort, tracks, safeguarding and reporting together.' },
-  { title: 'Host, Train and Mentor', text: `Certified local facilitators deliver the localized curriculum in your labs, classrooms or centers: ${HOURS} training hours per certification, then three months of milestone-based mentoring.` },
-  { title: 'Place and Report', text: `Placement support into local, remote and global work, then tracer surveys at ${TRACER_MONTHS}.` },
 ];
 
 const ways = [
@@ -91,35 +59,15 @@ const ways = [
   <!-- C1 -->
   <HeroBand audience="For Bangladeshi NGOs, Colleges, Chambers and Associations" title={HEADLINE.localPartners} lead={VALUE_PROPOSITION.localPartners} cta={{ label: local.label, href: local.href }} artSeed="local-partners" />
 
-  <InShort
-    bullets={[
-      'Delivery through certified local facilitators, in your own labs, classrooms or centers.',
-      'Training, preparation for industry certification and three months of milestone-based mentoring, with placement support alongside.',
-      'Where a funder is involved, monthly reports go to the funder; tracer surveys follow at 3, 6 and 12 months.',
-      'Start with a pilot cohort; how far you take part is your decision.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Evidence', href: '#proof' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Ways to Partner', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-  />
   <!-- GEO definition + page BLUF (WP22: before the fit check, as on every other audience page) -->
   <DefinitionPlus id="definition">
     <p data-fact="PD-06 GV-09">Larger programs run hub-and-spoke through certified local facilitators and existing labs and colleges, and CodersTrust Bangladesh supports local partners with curriculum, certification, mentoring, reporting and safeguarding.</p>
-    <p data-fact="GV-09">Where government lab access is confirmed, cohorts can run in public digital labs; your organization can also host cohorts in its own labs, classrooms or centers.</p>
   </DefinitionPlus>
-  <ForNotFor
-    forText="You are a Bangladeshi NGO, college, chamber or association that reaches young people national programs miss."
-    notText="Your organization works outside Bangladesh; see the Development Partners and Governments pages for other countries."
-  />
 
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="Today, she is an inspiration to the young people in her community." program="WSDFM" tone="white" />
 
   <!-- C2 -->
-  <ProblemBand id="problem" title="Local Organizations Reach the Young People National Programs Miss" bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03', 'PX-05', 'IN-03']}>
+  <ProblemBand id="problem" title="Local Organizations Reach the Young People National Programs Miss" bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03']}>
     <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
   </ProblemBand>
 
@@ -147,7 +95,7 @@ const ways = [
   />
 
   <!-- C5 -->
-  <div data-fact="ID-07 PA-01 PA-02 IN-06 GV-07">
+  <div data-fact="ID-07 PA-01 PA-02 IN-06">
     <GuideBand
       id="guide"
       title="Delivered with a Bangladesh Team Beside You"
@@ -156,7 +104,7 @@ const ways = [
       partnerGroup={['government', 'development']}
       variant="grid"
       method={{
-        text: `CodersTrust Bangladesh works from its country office in ${BANGLADESH_HQ.city} and campuses in Mirpur and Agrabad, Chattogram. ${C14.validate.text} A planned program with the Bangladesh Computer Council and Bandhu Welfare Society aims to train ${thirdGender}. Our TalentLEAP method organizes skills into career paths with progressive levels.`,
+        text: `CodersTrust Bangladesh, our country office in ${BANGLADESH_HQ.city}, runs campuses in Mirpur and Agrabad, Chattogram. Our TalentLEAP method organizes skills into career paths with progressive levels.`,
         link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' },
       }}
     />
@@ -180,7 +128,7 @@ const ways = [
   </div>
 
   <!-- C7 -->
-  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-03']} links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
+  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-02', 'OC-03']} links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
   <CaseStudyCarousel
     id="cases"
     title="Women-Focused Programs in Practice"
@@ -190,10 +138,10 @@ const ways = [
     ]}
   />
 
-  <!-- C8 (review round 14, M4): one row per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting"; then the gain creators -->
+  <!-- C8 (review round 14, M4): one row per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting" -->
   <FeaturesTable
     id="features"
-    title="What You Get, and What It Means for Your Community"
+    title="What Your Community Gets"
     rows={[
       {
         ...painForRow(LOCAL_PARTNER_PAINS, 'P1'),
@@ -216,27 +164,17 @@ const ways = [
         outcome: 'Progress you and the funder can both see',
         facts: ['PD-08'],
       },
-      { feature: 'Blended Delivery in Existing Labs and Colleges', means: 'it uses labs or classrooms you already have.', outcome: 'A cohort in a lab or classroom you already have' },
-      { feature: 'Connectivity-Light Delivery', means: 'young people outside big cities can take part.', outcome: 'Lessons that run on a basic connection' },
-      { feature: 'Consent-Based Data Practice and Safeguarding Agreed per Program', means: 'a program your community can trust.', outcome: 'Safeguarding agreed before enrollment' },
     ]}
   />
-  <Section id="steps" tone="airy" pad="sm" aria-labelledby="steps-h">
-    <div data-fact="ID-07 PD-06 PD-01 PD-15 PD-08 PD-09">
-      <SectionHeader id="steps-h" level={2} title="How It Works in Three Steps" />
-      <StepFlow steps={localSteps} />
-    </div>
-  </Section>
 
   <!-- C9 -->
   <FAQBand id="faq" audience="variants" ids={FAQ_IDS} title="Questions Local Partners Ask" allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: '/about/governance/' }} />
 
-  <!-- C10 -->
-  <ComparisonBand id="compare" rows={cmpRows} facts={['PD-02', 'PD-02a', 'PD-01', 'PD-15', 'PD-08', 'PD-09', 'RC-01', 'RC-06']} />
+  <!-- C10: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 -->
   <Section id="offer" tone="airy" aria-labelledby="offer-h">
-    <SectionHeader id="offer-h" eyebrow="Ways to Partner" title="Three Ways to Partner with Us" lead="Choose one or combine them. How a partnership is structured and funded is agreed in the first conversations." />
+    <SectionHeader id="offer-h" eyebrow="Ways to Partner" title="Three Ways to Partner with Us" lead="Choose one or combine them; how a partnership is funded is agreed in the first conversations." />
     <div class="grid-cards grid-cards--stretch" data-fact="PD-06 PD-05">
       {ways.map((w) => <FeatureCard icon={w.icon} title={w.title} text={w.text} />)}
     </div>
@@ -274,24 +212,16 @@ const ways = [
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
       { title: 'First Cohort', text: 'Training begins at your site.' },
     ]} />
-    <div class="lp-after">
-      <p>In your inquiry, include two suitable times for a discovery session.</p>
-      <CopyBlock block={FIRST_COHORT_REMINDER} />
-    </div>
+    <p class="lp-after">In your inquiry, include two suitable times for a discovery session.</p>
   </Section>
 
 </LandingLayout>
 
 <style>
   .lp-after {
-    margin-top: var(--space-lg);
+    margin: var(--space-lg) 0 0;
     padding-top: var(--space-md);
     border-top: 1px solid var(--outline-variant);
-    display: grid;
-    gap: var(--space-sm);
     max-width: var(--measure);
-  }
-  .lp-after :global(p) {
-    margin: 0;
   }
 </style>

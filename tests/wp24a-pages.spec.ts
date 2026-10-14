@@ -56,7 +56,8 @@ test.describe('Investors page structure', () => {
   test('thesis, scope and case-study wording', async ({ page }) => {
     await page.goto(URL);
     const text = await page.locator('main').innerText();
-    expect(text).toContain('Content-only courses often do not close the gap');
+    // WP30c: the thesis band has no lead line; its three cards carry the argument (the online-learning card says what content-only courses lack)
+    expect(text).toContain('Many online courses provide content without the work-entry support that turns skills into income');
     expect(text).toContain('is an opportunity employers and communities are not yet capturing');
     expect(text).not.toContain('leaves that gap open');
     expect(text).not.toContain('in every program');
@@ -64,7 +65,8 @@ test.describe('Investors page structure', () => {
     expect(text).toContain('Three featured case studies, each with its partner.');
     // Cycle 5 (triage-c5, Partner): the guide line reads "need to distinguish a model that is working from one that is only promised" (copy.ts EMPATHY.investors).
     expect(text).toContain('need to distinguish a model that is working from one that is only promised');
-    expect(text).toContain('Delivery grows in phases, building on government contract training scopes that range from');
+    // WP30c: the path-to-scale paragraph is gone from the reach band (the scale FAQ answers it)
+    expect(text).not.toContain('Path to scale');
     expect(text).toContain('all in emerging markets: skill training; freelance marketplaces and job sites; HR tech; and higher-ed EdTech.');
     expect(text).toContain('CodersTrust’s program results are measured, reported and open to independent evaluation.');
   });
@@ -73,7 +75,8 @@ test.describe('Investors page structure', () => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto(URL);
     await expect(page.locator('#compare .cmp')).toBeHidden();
-    await expect(page.locator('#compare .cmp-card')).toHaveCount(4);
+    // WP30c: the "Conventional Skills Programs" column is dropped, so three approaches remain (CodersTrust, self-paced platforms, freelance marketplaces)
+    await expect(page.locator('#compare .cmp-card')).toHaveCount(3);
     await expect(page.locator('#compare .cmp-card').first()).toBeVisible();
   });
 });

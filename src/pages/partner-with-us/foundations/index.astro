@@ -2,12 +2,13 @@
 /**
  * P5 Foundations and CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
  * C1 to C14 in order, as the numbered table in doc 06 P5.
+ * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the evidence-and-fit brief,
+ * the reporting-and-recognition paragraph (the features row carries it), the full review cycle (it lives on the partnership overview, as on the Development Partners page)
+ * and the restated three-step mechanism. The two inquiry links now sit directly under the two-route comparison they belong to (cycle-7 IA review).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
-import InShort from '../../../components/pages/partners/InShort.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
-import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -20,37 +21,31 @@ import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
-import OfferBand from '../../../components/sections/OfferBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import Icon from '../../../components/system/Icon.astro';
-import Badge from '../../../components/system/Badge.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
-import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
-import FitBrief from '../../../components/pages/partners/FitBrief.astro';
-import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astro';
-import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, C14, EMPATHY, HEADLINE, POSITIONING, SPEED, STEPS, VALUE_PROPOSITION } from '../../../data/copy';
-import { fact } from '../../../data/facts';
-import { CLAIM_PX06, CLAIM_RC06, endSentence } from '../../../components/sections/copyText';
+import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, HEADLINE, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
+import { url } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
 const primary = cta('funding');
-// WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button.
+// WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button; WP30c: they sit under the two-route comparison.
 const routeYouthwide = cta('fundingYouthwide');
 const routePlatform = cta('fundingPlatform');
 // The partner-edition report request (doc 04 §7), straight from the shared CTA library.
@@ -62,15 +57,7 @@ const { title, description } = meta(
   `Fund a supported path from learning to earning. A BIGD trial of a predecessor program: women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income`,
 );
 
-const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
-// PD-18 names SDG-mapped reporting and co-branded certificates and events; neither is in the standard inclusions (PD-02), so they are part of a funder's program only where the scope agrees them (WP21).
-// WP24a: scope-aware and without the "pipeline" wording: the SDG-mapped reporting and the co-branded items are part of a funder's program only where the scope agrees them,
-// and what a funder gains is reporting on how the funded cohort progressed into work.
-const pd18 = endSentence(fact('PD-18').text)
-  .replace(/^What funders gain: /, 'Funders receive ')
-  .replace('documented job and income outcomes,', 'job and income outcomes documented where documentary evidence is available,')
-  .replace('SDG-mapped reporting tailored to their CSR framework, co-branded certificates and events, and a pipeline of job-ready talent', 'SDG-mapped reporting tailored to their CSR framework and co-branded certificates and events, where agreed in the program scope, and reporting that shows how the funded cohort progressed into work');
-if (!pd18.includes('where agreed in the program scope') || !pd18.includes('how the funded cohort progressed into work') || !pd18.includes('documented where documentary evidence is available')) throw new Error('Foundations: PD-18 wording changed; update the scope-aware rewrite');
+const FAQ_IDS = ['Q3', 'Q8', 'Q9', 'Q10'];
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
@@ -88,42 +75,15 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     title={HEADLINE.foundations}
     lead={VALUE_PROPOSITION.foundations}
     cta={{ label: primary.label, href: primary.href }}
-    routeLinks={[
-      { label: routeYouthwide.label, href: routeYouthwide.href },
-      { label: routePlatform.label, href: routePlatform.href },
-    ]}
     artSeed="partners-foundations"
-  />
-  <InShort
-    bullets={[
-      'Fund a supported path from learning to earning: training with certification preparation, mentoring and placement support.',
-      'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
-      'Reporting that fits your framework: monthly reports, a quarterly steering review and, where agreed in the program scope, SDG-mapped reporting.',
-      'Two ways to fund: YouthWIDE Cohort Grants or JobReady Platform Grants. Expansion is always your decision.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Evidence', href: '#proof-band' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#cohort-grants' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
-  <ForNotFor
-    forText="You want to fund outcomes you can see."
-    notText="You want a one-off donation with no reporting."
-  />
   <PartnerGlance
     lead={[{ id: 'RC-04', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' }]}
     more={[
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
-      { id: 'RC-13', href: '/impact/independent-evaluation/' },
-      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      { id: 'OC-01', href: '/impact/outcomes-2026/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="She has completed 90+ projects on Fiverr so far." program="WSDFM" tone="white" />
@@ -136,7 +96,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   >
     <GainsPains
       slot="lead"
-      gains={['Documented outcomes for your grant', 'Confidence in the implementer', 'Reporting that fits your framework']}
       pains={[
         { q: 'Why do grants buy training hours, but rarely earnings?', text: 'Attendance is easy to count; a change in income is harder to show.' },
         { q: 'Where is the independent evidence?', text: 'Independent evidence on youth-employment programs is thin.' },
@@ -151,8 +110,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       title="Every Year of Delay Leaves a Cohort Without a Route to Work"
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: 'AI Is Reshaping Entry Work', factId: 'PX-07', scope: 'Globally', implication: 'Programs have to track where entry-level work is going.' },
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks chosen from current employer demand keep pace.' },
         { claim: 'Educated Young People Are Waiting', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
         { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
       ]}
@@ -194,19 +151,10 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
     >
       <!-- WP29 (benchmark review): the two routes as a two-row comparison (What It Supports, Evidence Relationship), in place of the two route cards. Their sentences moved into it; nothing was added. -->
-      <FundingRoutes />
+      <!-- WP30c (cycle-7 IA review): the two inquiry links sit directly under the comparison they belong to, not in the hero before the routes are explained. -->
+      <FundingRoutes inquiries={[routeYouthwide, routePlatform]} />
     </MechanismBand>
   </div>
-  <SubBand>
-    <Callout eyebrow="Reporting and Recognition">
-      <p data-fact="PD-18">{pd18}</p>
-      <ul class="cluster" role="list" data-fact="ID-09">
-        <li><Badge tone="eyebrow">SDG 4: Quality Education</Badge></li>
-        <li><Badge tone="eyebrow">SDG 5: Gender Equality</Badge></li>
-        <li><Badge tone="eyebrow">SDG 8: Decent Work and Economic Growth</Badge></li>
-      </ul>
-    </Callout>
-  </SubBand>
 
   <!-- C7 · Proof -->
   <ProofBand
@@ -217,14 +165,12 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
       { label: 'Impact Survey 2026', href: LINKS.outcomes },
-      { label: 'Conducting Due Diligence? See Our Governance and Evidence', href: LINKS.governance },
     ]}
   >
-    <EvidenceList heading="More from the Trial, and from Surveyed Completers" items={[{ facts: ['RC-05'] }, { facts: ['OC-03'] }]} />
-    <FitBrief />
+    <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
   </ProofBand>
   <CaseStudyCarousel
-    title="Program Results, with the Case Studies Behind Them"
+    title="Proof in Practice"
     items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
@@ -233,7 +179,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What You Get, and What It Means for Your Grant"
+    title="What Your Grant Gets"
     concernLabel="Funder Concern Addressed"
     rows={[
       {
@@ -261,7 +207,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       },
     ]}
   />
-  <HowItWorks steps={STEPS} />
 
   <!-- C9 · Objections -->
   <FAQBand
@@ -271,22 +216,30 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
-  <!-- C10 · Differentiation -->
-  <ComparisonBand
-    title="Compare the Approaches"
-    lead="A supported cohort pairs independent evidence on our own training with preparation for a recognized credential built into each track. Provision varies by provider and program."
-  />
+  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferBand id="cohort-grants" eyebrow="Funding Route 1 · YouthWIDE Cohort Grants" title="Choose a YouthWIDE Cohort Grants Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below." />
+  <OfferCards
+    id="cohort-grants"
+    eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
+    title="Choose a YouthWIDE Cohort Grants Starting Point"
+    lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below."
+    cards={funderOptionCards()}
+    recommended={0}
+  />
   <SubBand tone="airy" pull id="platform-grants">
     <Callout eyebrow="Funding Route 2 · JobReady Platform Grants"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
-    <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. Platform-grant details are discussed in the introduction call.</p></Callout>
+    <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13) -->
-  <ReviewCycle scorecard />
+  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the partnership overview -->
   <DueDiligenceView compact id="due-diligence" />
+  <SubBand>
+    <Callout eyebrow="Reporting and Review">
+      <p>Monthly reports, quarterly steering reviews and the pilot scorecard are set out once, on the partnership overview.</p>
+      <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
+    </Callout>
+  </SubBand>
 
   <!-- C13 · Call to action -->
   <CTABand

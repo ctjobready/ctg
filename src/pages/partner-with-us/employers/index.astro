@@ -2,8 +2,9 @@
 /**
  * P7 Employers: /partner-with-us/employers/ (T3, implements doc 04 matrix 4.6).
  * C1 to C14 in order, as the numbered table in doc 06 P7.
+ * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the second statement of the
+ * placement-team sentence (the hiring band says it), the restated "measures you set" card and the fifth next step. Three FAQs, not five (the paid-work pathways table answers the freelancing question).
  */
-import InShort from '../../../components/pages/partners/InShort.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
@@ -28,7 +29,6 @@ import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBan
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
-import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
@@ -37,7 +37,6 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
-import { fact } from '../../../data/facts';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -53,13 +52,8 @@ const { title, description } = meta(
 );
 
 // Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
-const FAQ_IDS = ['Q5', 'Q1-employer', 'Q12', 'Q8-employer', 'Q11'];
+const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
 const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
-const steps = [
-  { title: 'Assess', text: 'A needs assessment scopes the skills and team size.' },
-  { title: 'Prepare for Certification', text: 'Custom curriculum and workshops, including preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.' },
-  { title: 'Support and Measure', text: 'Post-training support and a progress evaluation against the measures you set.' },
-];
 ---
 
 <LandingLayout
@@ -87,28 +81,9 @@ const steps = [
       </p>
     </Callout>
   </SubBand>
-  <InShort
-    bullets={[
-      'Training is custom-developed for your roles, from a needs assessment to interactive workshops.',
-      'Job-ready talent is introduced through CodersTrust’s placement team.',
-      'CodersTrust is an AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
-      'Start with a pilot team; success measures are agreed before you start.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Evidence', href: '#proof-band' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-  />
   <RouteLink kicker="See the Program" label="See the Training Delivery Details" href={LINKS.work} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
-  <ForNotFor
-    forText="You want tracks built around the skills your roles need."
-    notText="You need talent beyond the experience and credentials available in the candidate pool."
-  />
 
   <Section id="hire-talent" tone="airy" pad="sm" aria-labelledby="hire-h">
     <SectionHeader id="hire-h" eyebrow="Hire Talent" title="Job-Ready Talent Through the Placement Team" lead="Job-ready candidates are introduced through CodersTrust’s placement team. Talent requests are scoped against the experience and credentials available in the candidate pool." />
@@ -125,9 +100,8 @@ const steps = [
   >
     <GainsPains
       slot="lead"
-      gains={['Teams fluent in AI workflows', 'A reliable pipeline of digital talent']}
       pains={[
-        { q: 'Why can’t you find the digital talent you need?', text: `${fact('PX-05').stat?.value} of employers worldwide report difficulty finding talent, and AI skills are the hardest to find.` },
+        { q: 'Why can’t you find the digital talent you need?', text: 'Employers worldwide report difficulty finding talent, and AI skills are the hardest to find.' },
         { q: 'Why does hiring alone not close the gap?', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
         { q: 'How do you upskill your teams for AI workflows?', text: 'Your teams need upskilling on tasks from their own roles.' },
       ]}
@@ -163,7 +137,7 @@ const steps = [
     empathy={EMPATHY.employers}
     stats={['SC-15']}
     statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-06'] }]}
-    method={{ text: 'JobReady@Work is CodersTrust’s employer training offer: a needs assessment, a customized curriculum, interactive workshops and progress evaluation for a defined team. TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="private"
   />
 
@@ -171,7 +145,6 @@ const steps = [
   <MechanismBand
     title="JobReady@Work: Built Around Your Roles"
     positioning={POSITIONING.employers}
-    lead="JobReady@Work begins with the roles, tasks and outcomes your organization needs to improve."
     blocks={[
       { label: 'Assess', title: 'Needs Assessment', text: 'Scopes the skills and the team size before anything is built.', icon: 'search' },
       { label: 'Design', title: 'Customized Solution and Curriculum', text: 'A curriculum built from your roles, tasks and required tools.', icon: 'pen' },
@@ -180,11 +153,6 @@ const steps = [
     ]}
     link={{ label: 'About JobReady@Work', href: LINKS.work }}
   />
-  <SubBand>
-    <Callout eyebrow="Talent">
-      <p data-fact="IN-04">Job-ready candidates are introduced through CodersTrust’s placement team. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch and will add a self-serve hiring channel.</p>
-    </Callout>
-  </SubBand>
 
   <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. WP25s: proof comes before the features table (C8), as on every other audience page. -->
   <PairedEvidence
@@ -216,10 +184,7 @@ const steps = [
   >
     <EvidenceList
       heading="What Surveyed Completers Report"
-      items={[
-        { facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` },
-        { facts: ['PD-10'], text: 'Certification tracks are set from employer demand, per country.' },
-      ]}
+      items={[{ facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` }]}
     />
     <!-- WP29 (benchmark review): the paid-work pathways of the youth programs' surveyed completers, as one compact comparison (OC-04). Labelled as the youth programs', like its neighbours. -->
     <PaidWorkPathways note="From CodersTrust’s youth programs, not corporate training." />
@@ -227,7 +192,7 @@ const steps = [
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What You Get, and What It Means for Your Business"
+    title="What Your Business Gets"
     rows={[
       {
         feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
@@ -274,7 +239,6 @@ const steps = [
     lead="Success measures are agreed before you start (completion, certification and the role-specific skills you prioritize) and checked in the progress evaluation."
     points={[
       { icon: 'rocket', title: 'Pilot Team First', text: 'Start with one team and see what changes.' },
-      { icon: 'target', title: 'Measures You Set', text: 'Completion, certification and the role-specific skills you prioritize are agreed before you start.' },
       { icon: 'handshake', title: 'Scaling Up Is Your Decision', text: 'You choose whether and how far to scale.' },
       { icon: 'shield', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes.' },
     ]}
@@ -296,8 +260,7 @@ const steps = [
       { title: 'Discovery Session', text: 'A conversation about your roles, team size and timeline.' },
       { title: 'Needs Assessment', text: 'We scope the skills your roles need.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
-      { title: 'First Workshop or Cohort', text: 'Training starts with your pilot team.' },
-      { title: 'Progress Evaluation', text: 'Results are checked against the measures you set.' },
+      { title: 'First Workshop or Cohort', text: 'Training starts with your pilot team, and results are checked against the measures you set.' },
     ]}
   />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.employers} />

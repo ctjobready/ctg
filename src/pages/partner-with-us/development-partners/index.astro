@@ -2,10 +2,11 @@
 /**
  * P4 Development partners & NGOs: /partner-with-us/development-partners/ (T3, implements doc 04 matrix 4.1).
  * C1 to C14 in order, as the numbered table in doc 06 P4.
+ * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the evidence-and-fit
+ * brief, the 2015 pilot quote with its caveat, the second survey of the standard inclusions and the restated three-step mechanism. Five FAQs, not nine.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
-import InShort from '../../../components/pages/partners/InShort.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
@@ -19,13 +20,9 @@ import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
-import OfferBand from '../../../components/sections/OfferBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
-import Quote from '../../../components/ui/Quote.astro';
-import Section from '../../../components/ui/Section.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -33,14 +30,12 @@ import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
 import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
-import FitBrief from '../../../components/pages/partners/FitBrief.astro';
+import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
-import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
-import { fact } from '../../../data/facts';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -55,10 +50,7 @@ const { title, description } = meta(
   'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
 );
 
-const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q9', 'Q3', 'Q4', 'Q8', 'Q5', 'Q10', 'Q2'];
-const oc01 = fact('OC-01').stat!;
-const undpQuote = factPart('PR-03a', /“([^”]+)”/);
-const undpPilot = factPart('PR-03a', /\((\d+ students)/);
+const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
 ---
 
 <LandingLayout
@@ -77,36 +69,14 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-development"
   />
-  <InShort
-    bullets={[
-      'A supported path for educated, unemployed youth: certification-focused training, mentoring and placement support.',
-      'Results you can report: monthly reports, tracer surveys after each course and documentary evidence of earnings where available.',
-      'Independent evidence: a randomized trial of a predecessor program, shown apart from survey results among completers.',
-      'Start with a pilot, agree the scorecard in co-design, and decide on expansion yourself.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Evidence', href: '#proof-band' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-  />
   <RouteLink kicker="See the Program" label="How YouthWIDE Works" href={LINKS.youthwide} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
-  <ForNotFor
-    forText="You fund youth employment and want results you can report."
-    notText="You want a self-paced course catalog (see jobready.global) or a fixed per-seat price."
-  />
   <PartnerGlance
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' }]}
     more={[
-      { id: 'RC-13', href: '/impact/independent-evaluation/' },
-      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      { id: 'OC-03', href: '/impact/outcomes-2026/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
+      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
     ]}
   />
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
@@ -119,7 +89,6 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   >
     <GainsPains
       slot="lead"
-      gains={['A portfolio with employment results you can report', 'Confidence that the budget produced earnings', 'A reputation as a funder whose programs place people']}
       pains={[
         { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are often met, while employment results lag behind.' },
         { q: 'Why do the hardest-to-reach groups drop out?', text: 'They drop out, or are never reached in the first place.' },
@@ -164,10 +133,10 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
   <MechanismBand
     title="An Integrated Path from Training to Earnings"
     positioning={POSITIONING.developmentPartners}
-    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country. It is designed for deployment in other countries; current outcome evidence comes from Bangladesh and Kosovo."
+    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country; current outcome evidence comes from Bangladesh and Kosovo."
     blocks={[
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
-      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges, hub-and-spoke for larger programs.', icon: 'graduation-cap' },
+      { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
       { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
     ]}
@@ -179,38 +148,32 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
     plainLine
-    statIds={['RC-02', 'RC-04']}
+    statIds={['RC-02']}
     chartId="OC-01"
     links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
       { label: 'Impact Survey 2026', href: LINKS.outcomes },
-      { label: 'Conducting Due Diligence? See Our Governance and Evidence', href: LINKS.governance },
     ]}
   >
     <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
-    <FitBrief />
   </ProofBand>
   <CaseStudyCarousel
-    title="Program Results, with the Case Studies Behind Them"
+    title="Proof in Practice"
     items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
       { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
     ]}
   />
-  <SubBand tone="airy" pull>
-    <Quote cite="UNDP Innovation Facility, 2015 Year in Review" role={`Quoted on the 2015 Korail pilot (${undpPilot}; typing speed and computer-application targets), not on later employment results`}>
-      {undpQuote}    </Quote>
-  </SubBand>
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What You Get, and What It Means for Your Outcomes"
+    title="What Your Portfolio Gets"
     concernLabel="Funder Concern Addressed"
     rows={[
       {
         feature: `${HOURS} Training Hours per Certification, Three Months of Milestone-Based Mentoring, Placement Support`,
-        means: 'success is measured against agreed outcomes, including paid work, not attendance alone. A work-entry plan per track is approved before enrollment.',
+        means: 'success is measured against agreed outcomes, including paid work, not attendance alone.',
         outcome: 'Results measured in paid work',
         relieves: 'Enrollment targets are often met, while employment results lag behind',
       },
@@ -222,19 +185,9 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
       },
       {
         feature: 'As Agreed in the Program Scope: Baseline at Enrollment, Tracers, Monthly Reports and Documentary Evidence Where Available',
-        means: 'your evaluators can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
+        means: 'your evaluators can check results against documentary evidence where available.',
         outcome: 'Auditable results',
         relieves: 'Outcomes are hard to audit',
-      },
-      {
-        feature: 'Certification Exam Preparation (Exam Fee Included)',
-        means: 'each track prepares learners for an industry certification.',
-        outcome: 'A supported route to a recognized credential',
-      },
-      {
-        feature: 'Placement Support',
-        means: 'placement support points completers toward local, remote and global work.',
-        outcome: 'Local, remote or global work',
       },
     ]}
   />
@@ -247,14 +200,10 @@ const undpPilot = factPart('PR-03a', /\((\d+ students)/);
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
-  <!-- C10 · Differentiation -->
-  <ComparisonBand
-    title="Compare the Approaches"
-    lead="Provision varies by provider and program. This describes what a CodersTrust supported cohort includes where the agreed program scope specifies it, and how the other routes typically differ."
-  />
+  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferBand title="Choose Where to Start" />
+  <OfferCards title="Choose Where to Start" cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>

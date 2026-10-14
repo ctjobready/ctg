@@ -3,7 +3,7 @@
  * Everything here reads the facts register, so a number in a page string can never drift from it.
  */
 import { fact } from '../../../data/facts';
-import { parseProgramOptions } from '../../sections/copyText';
+import { offerDurationText, parseProgramOptions } from '../../sections/copyText';
 import type { CopyBlock } from '../../../data/copy';
 
 /**
@@ -81,6 +81,16 @@ export function pricingParts(): { lead: string; inclusions: string[]; separate: 
 /** Program option rows from PD-05 (Pilot, Scale, National), parsed the way OfferBand parses them. */
 export function programOptions(): { name: string; volume: string; duration: string }[] {
   return parseProgramOptions(fact('PD-05').text);
+}
+
+/**
+ * The three program options (Pilot, Scale, National) as <OfferCards> cards, from PD-05 (WP30c: the funder pages show the options without the standard-inclusions
+ * list, which the features band and the FAQ state once). `blurbs` is one line per option; the duration line is PD-05's own, with the National "design option" note.
+ */
+export function funderOptionCards(
+  blurbs: readonly [string, string, string] = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
+): { eyebrow: string; title: string; headline: string; meta: string; text: string; facts: string[] }[] {
+  return programOptions().map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: blurbs[i], facts: ['PD-05'] }));
 }
 
 /** Evidence links shared by the pages (internal routes, resolved by the base-aware helpers). */

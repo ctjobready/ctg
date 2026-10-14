@@ -29,14 +29,16 @@ interface Props {
   inclusions?: boolean;
   /** Index of the card to mark "Recommended First Step" (the pilot option). */
   recommended?: number;
+  /** The small label over the heading (default "Start"; Foundations names its funding route). */
+  eyebrow?: string;
   id?: string;
 }
-const { title, lead, cards, inclusions = false, recommended, id = 'offer' } = Astro.props;
+const { title, lead, cards, inclusions = false, recommended, eyebrow = 'Start', id = 'offer' } = Astro.props;
 const pricing = pricingParts();
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Start" title={title} lead={lead ?? pricing.lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead ?? pricing.lead} />
   <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
     {
       cards.map((c, i) => (

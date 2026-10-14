@@ -66,7 +66,8 @@ test.describe('home hero slider', () => {
     await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');
     // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
     // WP25h: the framing sentence names the order of the evidence; the program-results slide is "Results by Program".
-    await expect(page.locator('.hs__intro')).toHaveText('The evidence first: a randomized trial, a survey of completers and program records, then our programs.');
+    // WP30c: the framing sentence is five words long (the slides label their own evidence types)
+    await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
       'Median Income: $82 Before Training, $245 at the October 2026 Survey',

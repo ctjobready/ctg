@@ -66,10 +66,14 @@ test.describe('one NU eligibility sentence', () => {
     expect(desc).toBe('A national initiative in Bangladesh and co-funded country cohorts elsewhere.');
   });
 
-  test('the Programs featured panel names where individual learners go', async ({ page }) => {
+  test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('#mega-programs .mega__feature-text').textContent());
-    expect(text).toBe('Organizations explore partner programs. Individual learners choose the NU diploma or short courses on JobReady.global.');
+    expect(text).toBe('A national initiative in Bangladesh and co-funded country cohorts elsewhere.');
+    expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
+    const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
+    expect(learners).toContain('NU Postgraduate Diploma');
+    expect(learners).toContain('Courses');
   });
 });
 
@@ -131,18 +135,21 @@ test.describe('Partner with Us', () => {
     expect(compact(await page.locator('#how-h').locator('xpath=preceding-sibling::*[1]').textContent())).toBe('For Grant-Funded Supported Cohorts');
   });
 
-  test('Foundations has two route-specific text links under the primary button, each with its own subject', async ({ page }) => {
+  test('Foundations keeps one primary button in the hero; the two route-specific text links sit directly under the two-route comparison, each with its own subject (WP30c)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const hero = page.locator('#hero');
     await expect(hero.locator('.btn')).toHaveCount(1);
-    const links = hero.locator('.routelinks a.link');
+    await expect(hero.locator('.routelinks')).toHaveCount(0);
+    const links = page.locator('#mechanism .fr__inquire a.link');
     expect((await links.allTextContents()).map(compact)).toEqual(['Discuss a YouthWIDE Cohort Grant (opens your email app)', 'Discuss a JobReady Platform Grant (opens your email app)']);
-    const hrefs = await hrefOf(page, '#hero .routelinks a.link');
+    const hrefs = await hrefOf(page, '#mechanism .fr__inquire a.link');
     expect(hrefs.map(subjectOf)).toEqual(['YouthWIDE cohort grant — [foundation/company]', 'JobReady platform grant — [foundation/company]']);
-    // each sits below the button, not beside it
-    const btn = await hero.locator('.btn').boundingBox();
+    // the links follow the comparison table directly (they are its next sibling), and sit below it
+    const table = await page.locator('#mechanism #funding-routes').boundingBox();
     const first = await links.first().boundingBox();
-    expect(first!.y).toBeGreaterThan(btn!.y + btn!.height - 1);
+    expect(first!.y).toBeGreaterThan(table!.y + table!.height - 1);
+    const next = await page.evaluate(() => document.querySelector('#funding-routes')?.nextElementSibling?.classList.contains('fr__inquire') ?? false);
+    expect(next, 'the inquiry links are the table’s next sibling').toBe(true);
   });
 
   test('the mobile drawer keeps the Programs group headings', async ({ page }) => {

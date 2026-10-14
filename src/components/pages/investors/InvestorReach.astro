@@ -6,13 +6,13 @@ import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
-import { PROGRAM_OPTIONS } from '../../../data/copy';
 
 /**
  * Reach to Date (Investors, WP24a): its own band, apart from the outcome evidence (the trial and the survey) that follows it, so reach and results
  * are never read as one group. Two groups: what has been delivered since 2014 (SC-01, SC-02, SC-03) and the people in government contract scopes
  * (SC-06, an agreement, never delivered reach). The program results (WSDFM, Kosovo, Her Power) are not tiles here: they appear once, in Proof in Practice.
- * Also the path to scale (built from GV-10 and PD-05), the NU pipeline (SC-04, not counted in the reach) and the AWS (PA-06) and HolonIQ (PA-08) badges.
+ * Also the NU pipeline (SC-04, not counted in the reach) and the AWS (PA-06) and HolonIQ (PA-08) badges.
+ * WP30c: the path-to-scale paragraph is gone (the scale FAQ answers it) and so are the heading's lead line and the pointer to Proof in Practice.
  */
 interface Props {
   id?: string;
@@ -32,14 +32,10 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   return detail;
 });
 const badges = ['PA-06', 'PA-08'];
-// Path to scale: built from figures the page already shows (GV-10 contract scopes; PD-05's National option), none typed here.
-const scopes = fact('GV-10').text.match(/ranging from ([\d,]+\+ professionals to [\d,]+\+ digital-lab staff)/)?.[1];
-if (!scopes) throw new Error('GV-10 wording changed: update the Path to Scale paragraph on Investors');
-const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Our Reach" title="Reach to Date" lead="What has been delivered, and the people in government contract scopes, kept apart." />
+  <SectionHeader id={`${id}-h`} eyebrow="Our Reach" title="Reach to Date" />
   <div class="ir">
     <div class="ir__group ir__group--delivered" data-reveal>
       <h3 class="ir__h t-heading-l">Delivered Since 2014</h3>
@@ -65,9 +61,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
       </div>
     </div>
   </div>
-  <p class="ir__p" data-fact="GV-10 PD-05" data-reveal><strong>Path to scale.</strong> Delivery grows in phases, building on government contract training scopes that range from {scopes}, through existing labs and certified local facilitators. A {nationalSize} program would require confirmed lab capacity, facilitator supply, funding and independent outcome measurement, agreed phase by phase.</p>
   <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the reach above: <Fact id="SC-04" /></p>
-  <p class="ir__p" data-reveal>Program results appear once, in <a class="link" href="#cases">Proof in Practice</a>.</p>
   <ul class="ir__badges" role="list" data-reveal>
     {
       badges.map((bid) => (

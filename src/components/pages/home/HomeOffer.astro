@@ -6,23 +6,25 @@ import Badge from '../../system/Badge.astro';
 import PilotScorecard from '../../ui/PilotScorecard.astro';
 import CopyBlock from './CopyBlock.astro';
 import { optionDuration } from '../../../lib/format';
-import { ACCOUNTABILITY, PRICING, PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, SCALE, type CopyBlock as CopyBlockData } from '../../../data/copy';
+import { PROGRAM_OPTIONS, PROGRAM_OPTIONS_FACTS, type CopyBlock as CopyBlockData } from '../../../data/copy';
 
 /**
- * C11 Offer (funder-facing pages): three program options (PD-05, no prices), then the PRICING and SCALE
- * blocks verbatim and the ACCOUNTABILITY line directly after the options (round-3 enhancement 2).
+ * C11 Offer (funder-facing pages): three program options (PD-05, no prices), the ACCOUNTABILITY line directly after the options (round-3 enhancement 2),
+ * the pilot scorecard, and one short block: how pricing works (two sentences). The standard inclusions are listed once, in "What Your Partnership Includes";
+ * the scale evidence (Her Power, the government contracts) is on the Governments page and in the carousel, and the National option card says it is a design option.
  * Page-local because the shared OfferBand has no slot for those blocks.
  */
 interface Props {
   title?: string;
   lead?: string;
-  /** The pricing explainer (default: the shared PRICING block). Home passes it without the AI-ready curriculum sentence, which its FAQ states once. */
-  pricing?: CopyBlockData;
-  /** The "How We Scale" block (default: the shared SCALE block). Home passes it without the COVID-19 teacher-training sentence (WP23). */
-  scale?: CopyBlockData;
   id?: string;
 }
-const { title = 'Choose Where to Start', lead, pricing = PRICING, scale = SCALE, id = 'offer' } = Astro.props;
+const { title = 'Choose Where to Start', lead, id = 'offer' } = Astro.props;
+const pricing: CopyBlockData = {
+  text: 'Pricing is set per program, and we share an indicative budget in the discovery session. Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
+  facts: ['PD-02', 'PD-02a'],
+};
+
 // WP25h: on Home the first option is the funder's first multi-cohort pilot, and its size is scoped with us in the discovery session (the shared
 // PROGRAM_OPTIONS entry keeps its own wording for the other pages).
 const options = PROGRAM_OPTIONS.map((o, i) =>
@@ -48,21 +50,12 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
     }
   </ol>
 
-  <p class="offer__acc" data-reveal data-fact={ACCOUNTABILITY.facts.join(' ')}>
-    <Icon name="target" size={28} strokeWidth={1.5} />
-    <span>{ACCOUNTABILITY.text}</span>
-  </p>
-
   <PilotScorecard />
 
   <div class="offer__two">
     <div class="offer__panel" data-reveal>
       <h3 class="t-heading-l"><Icon name="clipboard-list" size={24} strokeWidth={1.5} />How Pricing Works</h3>
       <CopyBlock block={pricing} />
-    </div>
-    <div class="offer__panel" data-reveal>
-      <h3 class="t-heading-l"><Icon name="layers" size={24} strokeWidth={1.5} />How We Scale</h3>
-      <CopyBlock block={scale} />
     </div>
   </div>
 </Section>
@@ -132,10 +125,5 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
   .offer__panel h3 :global(.icon) {
     color: var(--primary);
     flex: none;
-  }
-  @media (min-width: 900px) {
-    .offer__two {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 </style>

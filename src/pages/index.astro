@@ -1,6 +1,8 @@
 ---
 // P1 Home (doc 06 P1, CMF C1 → C14). Section order is fixed by the spec; rhythm between light, Airy Blue,
 // Ice Cyan, Klein and Deep Ink bands is set with the page-local <Tone> wrapper (never two dark bands in a row).
+// WP30c (owner direction 2026-10-14, "less is more"): the page is the hook for an intro call. Every band keeps its CMF place but states its point once:
+// no methodology asides, no repeated explanations, no stat shown twice, FAQ answers of one to three sentences.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -17,23 +19,21 @@ import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
 import CTABand from '../components/ui/CTABand.astro';
-import Section from '../components/ui/Section.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeRouter from '../components/pages/home/HomeRouter.astro';
 import HomeCost from '../components/pages/home/HomeCost.astro';
 import HomeGuide from '../components/pages/home/HomeGuide.astro';
 import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
 import Icon from '../components/system/Icon.astro';
-import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
+import { grantStartTitles } from '../components/pages/partners/partners';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PRICING, SCALE, SCORECARD, painForList, painForRow } from '../data/copy';
+import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
-import { endSentence, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
 import { linkAttrs } from '../lib/url';
 import { faqJsonLd } from '../lib/faq';
@@ -42,40 +42,25 @@ import { webPage } from '../lib/schema';
 const discovery = cta('discovery');
 const caseStudies = linkAttrs('/impact/case-studies/');
 // Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
-const FAQ_IDS = ['Q1', 'Q15', 'Q3', 'Q5'];
-// The pricing explainer without its AI-ready curriculum sentence, which FAQ Q5 states once on this page.
-const pricing = { ...PRICING, text: PRICING.text.replace(/ AI-ready curriculum: each track.*$/, '') };
-if (pricing.text === PRICING.text) throw new Error('index: PRICING no longer ends with the AI-ready curriculum sentence');
-// WP23, item 2: the closing band no longer repeats the ChatGPT statistic (it is stated once, in the Cost of Waiting band); its urgency is the planning line.
+// WP30c: three questions, the ones a funder decides on (the country, the trial's scope, the proof); the AI question is answered by the cost-of-waiting band and the curriculum row.
+const FAQ_IDS = ['Q1', 'Q15', 'Q3'];
+const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 // The other two funder routes sit beside the single discovery button as text links (PRD: one primary button per view).
 const briefing = cta('briefing');
 const introduction = cta('investor');
-// WP23, item 7: on Home, "How We Scale" leaves out the COVID-19 teacher training (no register entry names who trained the teachers), and the capacity
-// is stated as capacity ("can run up to 10 cohorts in parallel", in SCALE itself).
-const scaleText = SCALE.text.replace(' Separately, 10,000 teachers were trained to teach online during COVID-19.', '');
-if (scaleText === SCALE.text) throw new Error('index: SCALE no longer carries the teacher-training sentence Home leaves out');
-// WP25h: the Her Power sentence names who ran the national program ("DoICT and the ICT Division", not an appositive that reads as one body) and
-// states CodersTrust's own role after a semicolon, so the 25,125 women are not read as CodersTrust's own count. The role wording is GV-11's.
-const HER_POWER = 'Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided';
-const herPowerScale = scaleText.replace(HER_POWER, 'Her Power, a national program of DoICT and the ICT Division, trained 25,125 women across 130 sub-districts (upazilas); CodersTrust provided');
-if (herPowerScale === scaleText) throw new Error('index: SCALE no longer carries the Her Power sentences Home rewords');
-const scale = { text: herPowerScale, facts: SCALE.facts.filter((id) => id !== 'SC-08') };
-const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 
-// C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
-// WP19, item 10: two plain sentences (it was one of about 55 words), and the 62 million population is labelled the same way here and on its tile (PX-01).
-const problemBluf = `${endSentence(fact('PX-01').text)} ${endSentence(expandSsc(fact('PX-03').text))}`;
+// C2 BLUF (WP30c): one plain sentence. The 62 million and 19M+ figures are the two cards under it, so the sentence does not state them a second time.
+const problemBluf = 'Millions of educated young people are out of work and out of training, and training budgets rarely show who starts earning.';
 
-// C2b / C8 (review round 14, M4): the three ranked pains (FUNDER_PAINS) and one C8 row for each, pain → how we relieve it → the registered
-// feature behind it. The regional FactCards stay in C2 as context; they are not the pains. Rows without a pain are gain creators.
-// Numbers inside feature rows come from the register.
+// C8: the three ranked pains (FUNDER_PAINS) and one C8 row for each, pain → how we relieve it → the registered feature behind it. Numbers inside feature rows come from the register.
+// WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
 const hours = fact('PD-01').stat?.value;
 const featureRows = [
   {
     ...painForRow(FUNDER_PAINS, 'P1'),
-    // WP23, item 5: a shorter label (the work-entry plan moves into the sentence), and placement support, not matching, toward local, remote and global work.
+    // WP23, item 5: placement support, not matching, toward local, remote and global work.
     feature: 'Placement Support and Three Months of Milestone-Based Mentoring',
-    means: 'Learners get structured support from first profile to first client, with placement support toward local, remote and global work. Each track’s work-entry plan is approved before enrollment.',
+    means: `${hours} training hours per certification; each track’s work-entry plan is approved before enrollment.`,
     outcome: 'A Path to First Paid Work',
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
@@ -83,7 +68,7 @@ const featureRows = [
     ...painForRow(FUNDER_PAINS, 'P2'),
     // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
     feature: 'As Agreed in the Program Scope: Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available',
-    means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available, such as payslips, offer letters, platform logs or bank receipts.',
+    means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available.',
     outcome: 'Results You Can Check',
     facts: ['PD-08', 'PD-09'],
   },
@@ -94,9 +79,6 @@ const featureRows = [
     outcome: 'Tracks That Follow What Employers Ask For',
     facts: ['PD-02', 'PD-10'],
   },
-  { feature: 'Accessible Readiness Assessment', means: 'Applicants are routed to a career or foundation track that fits them.', outcome: 'The Right Career or Foundation Track' },
-  { feature: `${hours} Training Hours per Certification, with Hands-on Labs`, means: 'Learners practice on real tasks, not only lectures.', outcome: 'Portfolio Work on Real Tasks' },
-  { feature: 'Certification Exam Preparation (Exam Fee Included)', means: 'Each track prepares learners for an industry certification.', outcome: 'A Supported Route to a Recognized Credential' },
 ];
 ---
 
@@ -105,11 +87,11 @@ const featureRows = [
   <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results and Programs carousel. -->
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="RESULTS">
-    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="The evidence first: a randomized trial, a survey of completers and program records, then our programs." slides={HOME_SLIDES} />
+    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="Evidence first, then our programs." slides={HOME_SLIDES} />
   </Tone>
 
   <Tone cmf="C2">
-    <ProblemBand id="problem" title="For Too Many Educated Young People, Education Is Not Turning into a Job" bluf={problemBluf} factIds={['PX-01', 'PX-02', 'PX-03']}>
+    <ProblemBand id="problem" title="Education Is Not Turning into Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemBand>
   </Tone>
@@ -143,16 +125,15 @@ const featureRows = [
     />
   </Tone>
 
-  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} ribbonLine="TalentLEAP carries each learner through these stages: we train, mentor, provide placement support and track." link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
+  <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
-  <!-- WP19, item 8: the "At a Glance" band is gone. Every tile in it restated the hero strip or the carousel above, so no headline number appears more than twice. -->
-  <!-- WP25h: the band no longer retells the trial and the survey (the carousel above states them). WP28: strongest evidence first, as its own ladder says: the trial in one sentence beside its chart, then the evidence ladder, then the 72.3% no-prior-income result (34 of 47). -->
+  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP28: strongest evidence first, as its own ladder says: the trial in one sentence beside its chart, then the evidence ladder, then the 72.3% no-prior-income result (34 of 47). -->
   <Tone cmf="C7">
     <HomeEvidence
       id="proof-band"
-      title="Trial and Survey Evidence"
+      title="Evidence You Can Check"
       trialHeading="An Independent Randomized Trial"
-      lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
+      lead="Trial figures are for a predecessor program; survey figures are among surveyed completers."
       links={[
         { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
@@ -161,10 +142,9 @@ const featureRows = [
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner — see all four in Case Studies." items={caseStudyItems} />
+    <CaseStudyCarousel id="cases" title="Proof in Practice" items={caseStudyItems} />
     <p class="proof__discuss">
       <a class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>
-      <a class="link" href={discovery.href}>Discuss the Evidence for Your Program<Icon name="arrow-right" size={16} /></a>
     </p>
     <!-- WP25h (benchmark review): three registered learner stories, one from each program above, replace the single Her Power learner voice (Maria Dewan is one of the three). -->
     <LearnerJourneys id="journeys" tone="airy" />
@@ -174,18 +154,17 @@ const featureRows = [
 
   <Tone cmf="C8" tone="airy" join>
     <FeaturesTable id="features" title="What Your Partnership Includes" rows={featureRows} concernLabel="Funder Concern Addressed" />
-    <FeatureSteps />
   </Tone>
 
   <Tone cmf="C9" tone="white">
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="Compare the Approaches" withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} note="Compare these approaches with your current program on track choice, mentoring, work-entry support and outcome tracking." /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How the Approaches Compare" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} /></Tone>
 
-  <Tone cmf="C11"><HomeOffer id="offer" pricing={pricing} scale={scale} lead="Use the discovery session to choose a starting scope for your goals, country and delivery capacity. The options below are program sizes, not a commitment required to begin the conversation." /></Tone>
+  <Tone cmf="C11"><HomeOffer id="offer" lead="Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity." /></Tone>
 
-  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot. Decide on Evidence" lead={SCORECARD.text} /></Tone>
+  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot. Decide on Evidence" /></Tone>
 
   <!-- WP23, item 3: the role router sits just before the closing call to action (the hero's audience links and the menu route earlier). -->
   <Tone cmf="ROUTER" tone="white"><HomeRouter id="router" /></Tone>
@@ -208,12 +187,12 @@ const featureRows = [
 
   <Tone cmf="C14">
     <!-- The 6–8 week start is stated in the C13 plan line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
-    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Cohorts" (as on the hub), and one line names the audiences that get a route-specific next step. -->
+    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Cohorts" (as on the hub), and one line names the audiences that get a route-specific next step. WP30c: the four steps are their headings alone (each names its week; the sentences under them restated the headings). -->
     <ConversionNextSteps
       id="next-steps"
       eyebrow="For Grant-Funded Cohorts"
       title="What Happens After You Contact Us"
-      lead="Here is what follows your inquiry, from the first conversation to the first cohort."
+      steps={grantStartTitles().map((title) => ({ title }))}
       timing={false}
       firstAction={C14.firstAction}
       otherRoutes={{

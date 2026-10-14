@@ -87,15 +87,15 @@ test.describe('paid-work pathways comparison (OC-04)', () => {
     });
   }
 
-  test('Home: the comparison sits in the survey area, below the ladder and the 72.3% tile, and says the largest pathway is still salaried work', async ({ page }) => {
+  test('Home: the comparison sits in the survey area, below the trial and beside the 72.3% tile, and the table itself shows salaried work as the largest pathway', async ({ page }) => {
     await open(page, '');
     const tops = await page.locator('#proof-band').evaluate((el) => {
       const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-      return { ladder: top('.lc'), tile: top('.he__stat'), pathways: top('.pwp') };
+      return { trial: top('.he__trial'), tile: top('.he__stat'), pathways: top('.pwp') };
     });
-    expect(tops.pathways).toBeGreaterThan(tops.ladder);
-    expect(tops.pathways).toBeGreaterThan(tops.tile);
-    expect(compact(await page.locator('#proof-band .pwp__note').textContent())).toBe('Salaried jobs remain the largest pathway; freelancing and business ownership grew the most in relative terms.');
+    expect(tops.pathways).toBeGreaterThan(tops.trial);
+    // WP30c: no note under the table on Home (the figures say it: salaried employment 53.3% against freelancing 14.0% and business ownership 10.6%)
+    await expect(page.locator('#proof-band .pwp__note')).toHaveCount(0);
   });
 
   test('Employers: the block says it is from the youth programs, not corporate training, like its neighbours in the band', async ({ page }) => {

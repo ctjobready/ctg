@@ -2,6 +2,8 @@
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
  * Every statistic below is read from the Facts Register (facts.ts): ID-02, OC-01. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
  * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
+ * WP30c (cycle-7 IA review): a featured panel points to a different decisive page than the first item of its own menu, with that page's own menu description
+ * as its text (About: Governance and Accountability; Our Model: the JobReady Platform status; Programs: YouthWIDE; Partner with Us: Governments).
  */
 import { fact } from './facts';
 import { NU_ELIGIBILITY } from './copy';
@@ -12,7 +14,6 @@ const stat = (id: string) => {
   if (!s) throw new Error(`Fact ${id} has no stat`);
   return s;
 };
-const since = stat('ID-02').value;
 const emp = stat('OC-01');
 const trial = stat('RC-02');
 const trialPoints = `+${trial.numeric} Percentage Points`;
@@ -75,11 +76,10 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'about',
-      eyebrow: `Since ${since}`,
-      title: 'From Learning to Earning, for Youth',
-      factIds: ['ID-02'],
-      text: 'A workforce-development organization for the next generation of digital professionals.',
-      cta: { label: 'Read Our Story', href: '/about/' },
+      eyebrow: 'Accountability',
+      title: 'Governance and Accountability',
+      text: 'How CodersTrust is organized and reports to partners.',
+      cta: { label: 'See How We Report to Partners', href: '/about/governance/' },
     },
   },
   {
@@ -92,11 +92,11 @@ export const navGroups: NavGroup[] = [
       { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.' },
     ],
     feature: {
-      kind: 'model',
-      eyebrow: 'The Cycle',
-      title: 'One Path from Learning to Earning',
-      text: 'Competency development, then employment, then career advancement.',
-      cta: { label: 'See How It Works', href: '/our-model/' },
+      kind: 'pilot',
+      eyebrow: 'Platform Status',
+      title: 'JobReady Platform',
+      text: 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.',
+      cta: { label: 'See the Rollout Status', href: '/our-model/jobready-platform/' },
     },
   },
   {
@@ -118,10 +118,11 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'pilot',
-      eyebrow: 'Choose Your Path',
-      title: 'Partner Programs or a Postgraduate Diploma?',
-      text: 'Organizations explore partner programs. Individual learners choose the NU diploma or short courses on JobReady.global.',
-      cta: { label: 'Find the Right Program', href: '/programs/' },
+      eyebrow: 'Partner Programs',
+      title: 'YouthWIDE',
+      text: 'A national initiative in Bangladesh and co-funded country cohorts elsewhere.',
+      factIds: ['IN-01', 'IN-02'],
+      cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },
   },
   {
@@ -163,10 +164,10 @@ export const navGroups: NavGroup[] = [
     ],
     feature: {
       kind: 'discovery',
-      eyebrow: 'Choose Your Route',
-      title: 'Find Your Partnership Route',
-      text: 'Each route has its own evidence, offer and next step.',
-      cta: { label: 'Explore Partnership Routes', href: '/partner-with-us/' },
+      eyebrow: 'For Ministries and Public Agencies',
+      title: 'Governments',
+      text: 'National programs for youth employment.',
+      cta: { label: 'Explore the Government Route', href: '/partner-with-us/governments/' },
     },
   },
 ];

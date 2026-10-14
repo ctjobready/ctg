@@ -47,10 +47,10 @@ export const HEADLINE: Record<Audience, string> = {
   developmentPartners: 'Youth Employment Results You Can Report — Not Just Training Numbers',
   governments: 'Build a National Digital Workforce Through Graduates and Digital Labs',
   foundations: 'Fund a Supported Path from Learning to Earning',
-  universities: 'Help Your Students and Graduates Build Job-Ready Digital Skills',
+  universities: 'Give Your Graduates a Route into Paid Digital Work',
   employers: 'Upskill Your Teams for AI — and Hire Job-Ready Digital Talent',
   investors: 'Invest in the Platform Connecting Emerging-Market Youth to Work',
-  localPartners: 'Deliver Digital-Skills Programs That Lead to Paid Work — in Your Community',
+  localPartners: 'Bring Paid Digital Work Within Reach of Your Community',
   nuPgd: 'Build Practical Digital Skills After Your Degree',
 };
 

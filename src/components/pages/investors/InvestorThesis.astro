@@ -3,7 +3,6 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
-import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
 
 /**
@@ -14,6 +13,8 @@ import { fact } from '../../../data/facts';
  * short form; PX-02, never a youth figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
  * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
  * PX-08, which is global). Stakes: every trained young person who remains out of work is an opportunity employers and communities are not yet capturing (positive framing; no claim that the gap is widening).
+ * WP30c (owner direction 2026-10-14, "less is more"): no lead line under the heading (the three cards are the thesis), and the 19M+ floor figure and the ChatGPT posting
+ * decline are gone from this band (the 62 million and 72% tiles and the AI-skills growth figure carry the thesis; the posting decline is on Home and in the FAQ).
  */
 interface Props {
   id?: string;
@@ -29,7 +30,6 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
     id={`${id}-h`}
     eyebrow="The Thesis"
     title="Skills and Work Are Not Connecting"
-    lead="Educated young people are not in work or training, and employers cannot find skills. Content-only courses often do not close the gap, and AI is raising the bar for entry work."
   />
   <div class="grid-cards th">
     <article class="card th__card" data-reveal>
@@ -40,7 +40,6 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
           <FactStat id="PX-01" />
           <FactStat id="PX-05" />
         </div>
-        <p class="th__more" data-fact="PX-02">Separately, <Fact id="PX-02" field="value" /> university-educated people of all working ages (15 and over) are unemployed across South Asia, the Middle East and North Africa (MENA) and Sub-Saharan Africa, a floor figure rather than a youth figure.</p>
       </div>
     </article>
     <article class="card th__card" data-reveal>
@@ -55,7 +54,6 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
         <Icon name="cpu" size={36} strokeWidth={1.5} class="th__icon" />
         <h3 class="card__title">AI Is Raising the Bar for Entry Work</h3>
         <p class="th__more" data-fact="PX-08">{px08}.</p>
-        <p class="th__more" data-fact="PX-06"><Fact id="PX-06" /></p>
       </div>
     </article>
   </div>

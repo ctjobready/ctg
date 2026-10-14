@@ -1,6 +1,8 @@
 ---
-// P2 Partner with us hub (doc 06 P2, T2): audience cards → how partnering works (StepFlow + RACI) → what funders
-// receive monthly → due diligence (governance) → full FAQ Q1–Q14 → CTA band.
+// P2 Partner with us hub (doc 06 P2, T2): audience cards → why partner → how partnering works (StepFlow) → what funders
+// receive monthly → due diligence (governance) → FAQ → CTA band.
+// WP30c (owner direction 2026-10-14, "less is more"): the hub chooses a route and does not repeat the route pages. The RACI table (an internal-report view of
+// roles) and the "Protected by Design" band (the Due Diligence band already states safeguarding and links to Governance) are gone; four FAQs, not six.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -11,26 +13,24 @@ import CTABand from '../../components/ui/CTABand.astro';
 import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
-import RaciTable from '../../components/pages/hub/RaciTable.astro';
 import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
-import { TRACER_MONTHS, TRACKING_MONTHS, grantStartTitles } from '../../components/pages/partners/partners';
+import { TRACKING_MONTHS, grantStartTitles } from '../../components/pages/partners/partners';
 import ReviewCycle from '../../components/pages/hub/ReviewCycle.astro';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
-import { MICRO_COMMITMENT, SPEED } from '../../data/copy';
+import { MICRO_COMMITMENT } from '../../data/copy';
 import { cta } from '../../lib/mailto';
 import DueDiligenceView from '../../components/pages/hub/DueDiligenceView.astro';
-import ProtectedByDesign from '../../components/pages/hub/ProtectedByDesign.astro';
 import { faqJsonLd } from '../../lib/faq';
 import { pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
-// Compact cross-audience FAQ: the six questions every partner type asks.
-const HUB_FAQ = ['Q1', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
+// Compact cross-audience FAQ: the four questions every partner type asks before it starts (the country, the proof, the cost, safeguarding).
+const HUB_FAQ = ['Q1', 'Q3', 'Q8', 'Q9'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
 // Tracking is scope-conditional, as on the audience pages: it is part of each program's agreed scope (PD-02), not a blanket promise.
 // WP27: the hero names the seven routes as the route cards do (the Investors route is its own card now), so a reader sees at once which route is theirs.
-const BLUF = `We co-design youth-employment programs with development partners and NGOs, governments, foundations and CSR teams, universities, employers and local partners in Bangladesh, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope. Impact investors have their own route, to back JobReady’s staged rollout.`;
+const BLUF = `We co-design youth-employment programs with development partners and NGOs, governments, foundations and CSR teams, universities, employers and local partners in Bangladesh, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope. Impact investors have their own route.`;
 const description = 'Co-design a youth-employment program with CodersTrust. Pick your route: governments, funders, universities, employers, local partners or impact investors.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
@@ -51,9 +51,9 @@ const audiences = [
 const [startDiscovery, startCoDesign, startAgreement, startTraining] = grantStartTitles();
 const steps = [
   { title: startDiscovery, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: startCoDesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
+  { title: startCoDesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
   { title: startAgreement, text: 'Scope, schedule and the pilot scorecard are agreed.' },
-  { title: startTraining, text: 'Grant-funded pilots: the first cohort begins training in this window. Monthly reports follow.' },
+  { title: startTraining, text: 'The first cohort begins training; monthly reports follow.' },
 ];
 
 const jsonLd = [
@@ -71,14 +71,14 @@ const jsonLd = [
 
 <BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
-    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Move Youth into Paid Digital Work" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} routeLinks={[{ label: 'Choose Your Route', href: '#audiences' }]} artSeed="partner-hub" />
+    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} routeLinks={[{ label: 'Choose Your Route', href: '#audiences' }]} artSeed="partner-hub" />
   </Tone>
 
   <DefinitionBand />
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
-      <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
+      <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Which Route Is Yours?" lead="Each route has its own evidence, offer and next step." />
       <div class="grid-cards hub__routes">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       </div>
@@ -99,7 +99,7 @@ const jsonLd = [
 
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="For Grant-Funded Supported Cohorts" title="Your First 90 Days" lead="From first conversation to first cohort in four steps, then monthly reports. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
+      <SectionHeader id="how-h" eyebrow="For Grant-Funded Supported Cohorts" title="Your First 90 Days" lead="Four steps from first conversation to first cohort. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
@@ -107,22 +107,13 @@ const jsonLd = [
   </Tone>
 
   <Tone cmf="REPORTS">
-    <ReviewCycle title="Monthly Reports and Quarterly Reviews" scorecard sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
+    <ReviewCycle title="Monthly Reports and Quarterly Reviews" sample={{ label: 'See the Sample Monthly Report on the YouthWIDE Page', href: '/programs/youthwide/' }} />
   </Tone>
 
   <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView /></Tone>
 
-  <Tone cmf="SAFEGUARDING" tone="airy"><ProtectedByDesign /></Tone>
-
   <Tone cmf="FAQ">
-    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Six questions partners ask before they start. Each audience page answers the rest." />
-  </Tone>
-
-  <Tone cmf="ROLES" tone="airy">
-    <Section id="who-does-what" aria-labelledby="raci-h">
-      <SectionHeader id="raci-h" eyebrow="Roles" title="Who Does What" lead="Who is responsible, accountable, consulted and informed at each step of a partnership." />
-      <RaciTable />
-    </Section>
+    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Four questions every partner asks. Each route page answers the rest." />
   </Tone>
 
   <Tone cmf="CTA">
@@ -133,7 +124,6 @@ const jsonLd = [
       text="Tell us your goals and your priority groups, and we will outline a first cohort with you."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
-      urgency={SPEED.text}
       micro={MICRO_COMMITMENT}
     />
   </Tone>

@@ -281,7 +281,9 @@ test.describe('Partner with Us', () => {
     expect(text).toContain('Funding Route 2');
     expect(text).toContain('A grant measured against first paid work');
     expect(text).not.toContain('followed through to first paid work');
-    expect(text).toContain('documented where documentary evidence is available');
+    // WP30c: the "Reporting and Recognition" paragraph is gone (the features rows state reporting once); the monitoring row stays scope-aware
+    expect(text).not.toContain('Funders receive job and income outcomes');
+    expect(text).toContain('contracting entity and due-diligence documents confirmed in co-design');
     await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 1' })).toHaveAttribute('href', '#cohort-grants');
     await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 2' })).toHaveAttribute('href', '#platform-grants');
   });
@@ -300,16 +302,18 @@ test.describe('Our Model and Investors', () => {
     await expect(tile('Delivered Since 2014')).not.toContainText('1.5M+');
   });
 
-  test('Our Model and Investors open with an In Short box that spells out BIGD once', async ({ page }) => {
-    for (const route of ['our-model/', 'partner-with-us/investors/']) {
-      await open(page, route);
-      const box = page.locator('#in-short');
-      await expect(box.getByRole('heading', { level: 2, name: 'In Short' })).toBeVisible();
-      const items = await box.locator('li').count();
-      expect(items, route).toBeGreaterThanOrEqual(3);
-      expect(compact(await box.innerText()), route).toContain('the BRAC Institute of Governance and Development (BIGD)');
-      expect((compact(await main(page)).match(/BRAC Institute of Governance and Development/g) ?? []).length, route).toBe(1);
-    }
+  test('Our Model opens with an In Short box that spells out BIGD once; Investors (no In Short since WP30c) spells it out once, in the evidence band', async ({ page }) => {
+    await open(page, 'our-model/');
+    const box = page.locator('#in-short');
+    await expect(box.getByRole('heading', { level: 2, name: 'In Short' })).toBeVisible();
+    const items = await box.locator('li').count();
+    expect(items).toBeGreaterThanOrEqual(3);
+    expect(compact(await box.innerText())).toContain('the BRAC Institute of Governance and Development (BIGD)');
+    expect((compact(await main(page)).match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
+    await open(page, 'partner-with-us/investors/');
+    await expect(page.locator('#in-short')).toHaveCount(0);
+    expect(compact(await page.locator('#proof-band').innerText())).toContain('BIGD, the BRAC Institute of Governance and Development');
+    expect((compact(await main(page)).match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
   });
 
   test('TalentLEAP: supported cohorts, further levels, typical timing, BIGD spelled out once', async ({ page }) => {
@@ -330,7 +334,7 @@ test.describe('Our Model and Investors', () => {
   test('Investors: program results appear once, the national-scale answer leads with CodersTrust’s role', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const text = compact(await main(page));
-    expect(text).toContain('Program results appear once, in Proof in Practice.');
+    // WP30c: the reach band no longer carries the pointer sentence; the program tiles still appear only in Proof in Practice (see tests/wp24a-pages.spec.ts)
     expect(text).not.toContain('The outcomes behind these figures appear once');
     const item = page.locator('#faq details', { hasText: 'Can You Deliver at National Scale?' });
     await expect(item).toHaveCount(1);

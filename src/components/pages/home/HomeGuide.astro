@@ -2,30 +2,22 @@
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
-import { fact } from '../../../data/facts';
 import PartnerRelationships from './PartnerRelationships.astro';
 import CopyBlock from './CopyBlock.astro';
-import { EMPATHY, ORIGIN, type CopyBlock as CopyBlockData } from '../../../data/copy';
+import { EMPATHY, ORIGIN } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
  * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the method signal
- * (TalentLEAP) and four authority figures, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
+ * (TalentLEAP) and two authority figures, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
+ * WP30c: the geography line (130,000+ trained, 15 countries and territories) is gone from this band: the hero card and the reach slide state it, so it
+ * appears twice on the page and not three times.
  */
 interface Props {
   id?: string;
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
-// WP19, item 14: ONE geography line, in "young people" (SC-16's wording): the SC-01 and SC-03 tiles that said the same are gone. The count of other
-// locations is SC-03's 15 less Bangladesh, so it is derived, not typed.
-const reachFigure = fact('SC-16').stat?.value;
-const locations = fact('SC-03').stat?.numeric;
-if (!reachFigure || locations === undefined) throw new Error('HomeGuide: SC-16 or SC-03 no longer has the stat the geography line reads');
-const reach: CopyBlockData = {
-  text: `${reachFigure} young people trained since ${fact('ID-02').stat?.value}, most in Bangladesh; programs have also run in ${locations - 1} other countries and territories.`,
-  facts: ['SC-16', 'SC-03'],
-};
 // Review round 15, enhancement 3: named accountable people matter to government and multilateral buyers; /investors/ already links the team the same way.
 const team = linkAttrs('/about/team/');
 ---
@@ -46,7 +38,6 @@ const team = linkAttrs('/about/team/');
       </p>
     </div>
     <div class="guide__panel" data-reveal>
-      <CopyBlock block={reach} class="guide__reach" />
       <FactStat id="SC-06" />
       <FactStat id="SC-04" />
     </div>

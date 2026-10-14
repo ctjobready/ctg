@@ -2,14 +2,14 @@
 /**
  * P3 Governments: /partner-with-us/governments/ (T3, implements doc 04 matrix 4.2).
  * C1 to C14 in order, as the numbered table in doc 06 P3.
+ * WP30c (owner direction 2026-10-14, "less is more"): the page keeps every CMF band and states each point once. Gone: the In Short summary and its jump links,
+ * the fit check, the "Outside Bangladesh?", national-target, scale and coastal-context callouts, the survey callout, the second Her Power card set, the three-step
+ * restatement of the mechanism, the standard-inclusions list and the four-point restatement of the scorecard. The H1 is the owner's wording.
  */
-import InShort from '../../../components/pages/partners/InShort.astro';
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
-import { caseStudyItems } from '../../../components/pages/home/caseStudies';
 import MinistrySees from '../../../components/pages/partners/MinistrySees.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
-import StatusTag from '../../../components/system/StatusTag.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
@@ -19,35 +19,26 @@ import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
-import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
-import OfferBand from '../../../components/sections/OfferBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
-import Fact from '../../../components/facts/Fact.astro';
-import Icon from '../../../components/system/Icon.astro';
-import { linkAttrs } from '../../../lib/url';
-import Section from '../../../components/ui/Section.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
-import Callout from '../../../components/pages/partners/Callout.astro';
-import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import ContractTable from '../../../components/pages/partners/ContractTable.astro';
 import ModelPartnership from '../../../components/pages/partners/ModelPartnership.astro';
-import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
-import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
+import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, NATIONWIDE_TARGET, factPart, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, SCALE, SCORECARD, STEPS, VALUE_PROPOSITION, WOMEN_INCLUSION } from '../../../data/copy';
+import { LINKS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06, graduateRates } from '../../../components/sections/copyText';
+import { caseStudyItems } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -63,17 +54,10 @@ const { title, description } = meta(
 
 // The Her Power tile reads as the Home and Investors cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts).
 const herPowerLabel = caseStudyItems.find((i) => i.factId === 'PR-05')?.statLabel;
-const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q9', 'Q10', 'Q8'];
+const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8'];
 const rates = graduateRates();
 const labs = factPart('GV-09', /[\d,]+\+ government digital labs/);
 const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
-const thirdGender = factPart('GV-07', /[\d,]+ third-gender people/);
-const nationalSize = factPart('PD-05', /National ([\d,]+\+) trainees/);
-const steps = [
-  { title: 'Briefing and Co-Design with the Agency', text: STEPS[0].text.replace('A discovery session sets', 'The briefing and co-design sessions set') },
-  STEPS[1],
-  STEPS[2],
-];
 ---
 
 <LandingLayout
@@ -92,34 +76,9 @@ const steps = [
     cta={{ label: primary.label, href: primary.href }}
     artSeed="partners-governments"
   />
-  <InShort
-    bullets={[
-      'Train graduates through the digital labs and colleges you already have, in phases you approve.',
-      'A record of government contracts and national programs, including Her Power for the ICT Division.',
-      'Evidence you can show: a randomized trial of a predecessor program, shown apart from survey results among completers.',
-      'The first step is a briefing for your ministry; procurement follows your agency’s own timeline.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Evidence', href: '#proof-band' },
-      { label: 'Government Contracts', href: '#contracts' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-  />
   <RouteLink kicker="See the Program" label="YouthWIDE in Bangladesh" href={LINKS.nationwide} />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
-  <ForNotFor
-    forText="Your agency wants employment outcomes measured in the existing lab network."
-    notText={`You need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`}
-  />
-  <SubBand id="outside-bangladesh">
-    <Callout eyebrow="Outside Bangladesh?">
-      <p>YouthWIDE is designed for deployment in other countries, with tracks set per country from local employer demand. See <a class="link" href="#scale">How We Scale</a>, or write to us for a briefing.</p>
-    </Callout>
-  </SubBand>
   <PartnerGlance
     lead={[
       { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in Six Government Contract Scopes', caveat: 'These are contracted scopes, not a delivered-training total.', also: ['SC-06', 'GV-10'] },
@@ -127,36 +86,20 @@ const steps = [
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
     ]}
     more={[
-      { id: 'OC-01', href: '/impact/outcomes-2026/' },
-      { id: 'OC-03', href: '/impact/outcomes-2026/' },
-      { id: 'RC-13', href: '/impact/independent-evaluation/' },
-      { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-      { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/' },
     ]}
   />
   <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
 
-  <SubBand>
-    <Callout eyebrow="Evidence for Government Programs">
-      <p class="cluster">
-        <a class="link" href={linkAttrs(LINKS.trial).href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href={linkAttrs(LINKS.outcomes).href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
-        <a class="link" href={linkAttrs(LINKS.caseHerPower).href}>Her Power Case Study<Icon name="arrow-right" size={16} /></a>
-      </p>
-    </Callout>
-  </SubBand>
-
   <!-- C2 · Problem -->
   <ProblemBand
     title={`In Bangladesh, Graduate Unemployment Is ${rates.graduate}`}
-    bluf={`That compares with ${rates.ssc} for holders of the Secondary School Certificate (SSC). Budgets that count enrollment cannot show who is earning.`}
+    bluf="Budgets that count enrollment cannot show who is earning."
     factIds={['PX-03']}
   >
     <GainsPains
       slot="lead"
-      gains={['A workforce that meets youth-employment targets', 'Budgets that buy earnings', 'Capacity that stays in your system']}
       pains={[
         { q: 'Why do graduates struggle to find work?', text: 'A degree alone is not producing job offers.' },
         { q: 'Why do training budgets not show up as earnings?', text: 'Budgets are measured by enrollment, not by who is earning afterward.' },
@@ -167,12 +110,11 @@ const steps = [
 
   <!-- C3 · Agitation -->
   <CostSection
-    title="Without Placement Tracking, Agencies Cannot See What Training Delivers"
+    title="Without Tracking, Agencies Cannot See What Training Delivers"
     transition="It doesn’t have to be this way."
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the national program from the start, not added afterward.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand.' },
-      { claim: 'Jobs Increasingly Require AI Skills', factId: 'PX-08', scope: 'Globally', implication: 'Training has to include the AI skills these jobs require.' },
     ]}
   />
 
@@ -182,23 +124,17 @@ const steps = [
     title="What Your Next Budget Cycle Could Show"
     lead="Illustrative, not case studies."
     vignettes={[
-      { kind: 'Functional', title: 'Young People in Work', text: 'Monthly reports will show young people moving into work locally, remotely and abroad, with certification results reported separately.' },
+      { kind: 'Functional', title: 'Young People in Work', text: 'Monthly reports will show young people moving into work, with certification results reported separately.' },
       { kind: 'Emotional', title: 'Employers Find Job-Ready Talent', text: 'Employers find job-ready talent, including young people prepared for industry certification exams.' },
       { kind: 'Social', title: 'Capacity That Stays', text: 'Trained facilitators and localized curricula stay in your system after the program.' },
     ]}
   />
-  <SubBand pull>
-    <Callout eyebrow="From the October 2026 Survey"><Fact id="OC-07" as="p" /></Callout>
-  </SubBand>
 
   <!-- C5 · Guide (empathy first) -->
   <PartnerGuideBand
     empathy={EMPATHY.governments}
     stats={['SC-06']}
-    statements={[
-      { facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' },
-      { facts: ['GV-07'], text: `A planned program with the Bangladesh Computer Council and Bandhu Welfare Society to train ${thirdGender}.` },
-    ]}
+    statements={[{ facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
   />
@@ -207,7 +143,7 @@ const steps = [
   <MechanismBand
     title="A National Delivery Model, Built on Labs That Already Exist"
     positioning={POSITIONING.governments}
-        blocks={[
+    blocks={[
       { label: 'Who We Reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Government Digital Labs', text: `${labs} in Bangladesh that could host blended learning; lab access and seats are confirmed per program.`, icon: 'landmark', factId: 'GV-09' },
       { label: 'What We Deliver', title: 'Capacity That Stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then preparation for industry certification.`, icon: 'award' },
@@ -215,20 +151,12 @@ const steps = [
     ]}
     link={{ label: 'See YouthWIDE in Bangladesh', href: LINKS.nationwide }}
   />
-  <SubBand id="national-target">
-    <Callout eyebrow="A National Target">
-      <p data-fact="IN-01"><StatusTag status="Target" /> YouthWIDE-style delivery aims to train {NATIONWIDE_TARGET} vulnerable youth by 2030. That is a national ambition that depends on government and donor commitments, not a result.</p>
-    </Callout>
-  </SubBand>
-  <SubBand id="scale">
-    <Callout eyebrow="How We Scale"><CopyText block={SCALE} /></Callout>
-  </SubBand>
 
   <!-- C7 · Proof -->
   <ProofBand
     title="Independent Evidence and Survey Results"
     headlineFact="RC-01"
-    statIds={['RC-02', 'RC-04']}
+    statIds={['RC-02']}
     chartId="OC-01"
     links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
@@ -240,26 +168,10 @@ const steps = [
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
   <!-- WP29 (benchmark review): one government partnership as a card of separate fields (partner, role, direct training, tracked outcome, national reach), all from registered facts. -->
   <ModelPartnership />
-  <!-- Delivery context (WP18b, moved after the contracts in WP22): the coastal mobility fact follows the contracts it shapes, not the C3 cost-of-waiting band. -->
-  <SubBand>
-    <Callout eyebrow="Delivery Context: Coastal Districts">
-      <Fact id="PX-11" as="p" />
-      <p>Where young people leave, training can help connect them to work locally, remotely or abroad.</p>
-    </Callout>
-  </SubBand>
-  <CaseStudyCarousel
-    title="Her Power, Beside Two Other Women-Focused Programs"
-    lead={WOMEN_INCLUSION.text}
-    items={[
-      { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: LINKS.caseHerPower },
-      { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: LINKS.caseWsdfm },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: LINKS.caseWow },
-    ]}
-  />
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What You Get, and What It Means for Your Agency"
+    title="What Your Agency Gets"
     rows={[
       {
         feature: 'Certification Tracks Chosen from Employer Demand, Then Mentoring and Placement Support',
@@ -279,14 +191,8 @@ const steps = [
         outcome: 'Trainers and curricula that stay in your system',
         relieves: 'Trainer and curriculum capacity is thin',
       },
-      {
-        feature: 'Local, Remote and Global Work',
-        means: 'your workforce gains access to work beyond the local market.',
-        outcome: 'Local, remote or global work',
-      },
     ]}
   />
-  <HowItWorks steps={steps} />
   <MinistrySees />
 
   <!-- C9 · Objections -->
@@ -294,18 +200,13 @@ const steps = [
     audience="governments"
     ids={FAQ_IDS}
     title="Questions Ministries Ask"
-    lead="The scale answer points to the contracts table, which sets out each contract and its scope."
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
-  <!-- C10 · Differentiation -->
-  <ComparisonBand
-    title="Compare the Approaches"
-    lead="Our approach rests on independent evidence of our own training and on infrastructure that already exists: labs, colleges and Training of Trainers. Provision varies by provider and program."
-  />
+  <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferBand title="Choose Where to Start" />
+  <OfferCards title="Choose Where to Start" lead="Pricing is set per program, and we share an indicative budget in the discovery session." cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <EvidenceList
       heading="Services We Can Scope for an Agency"
@@ -320,7 +221,6 @@ const steps = [
   <DueDiligenceView compact id="due-diligence" />
   <RiskReversalBand
     title="Phased Rollout, with Review Gates"
-    lead={SCORECARD.text}
     points={[
       { icon: 'rocket', title: 'Pilot First', text: 'We start with a pilot, not a national rollout.' },
       { icon: 'target', title: 'Review Gates', text: 'Thresholds are agreed with the agency before the first cohort; a missed threshold triggers a corrective plan.' },
@@ -343,13 +243,11 @@ const steps = [
   <!-- C14 · Next steps -->
   <StepsBand
     title="What Happens After You Say Yes"
-    lead="Your agency’s procurement timeline sets the pace."
     steps={[
       { title: 'Briefing', text: 'A briefing for your ministry or agency, shaped to its procurement timeline.' },
       { title: 'Co-design with the agency', text: 'Priority groups, tracks, labs and the pilot scorecard are agreed together.' },
       { title: 'Agreement', text: 'Scope and schedule follow the agency’s own procurement timeline.' },
       { title: 'Launch in Existing Labs', text: 'Seats are confirmed per program.' },
-      { title: 'Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings.' },
     ]}
   />
   <Reinforcement firstAction={C14.variants.governments} logos={false} reminder={false} validate={C14.validateFor.governments} />

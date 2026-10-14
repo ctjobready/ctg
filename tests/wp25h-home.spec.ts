@@ -6,7 +6,7 @@ import { pageByRoute } from './support/pages';
 /**
  * WP25h: Home cycle-5 fixes. Each test states one behavior, read from the built DOM (text, order, structure), not from pixels.
  *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 3);
- *   - the evidence band: the trial in one sentence and its chart, then the ladder, then the 72.3% result (34 of 47) (the order is WP28's, see tests/wp28.spec.ts);
+ *   - the evidence band: the trial in one sentence and its chart, then the paid-work pathways beside the 72.3% result (34 of 47) (WP30c removed the evidence ladder from the band; see tests/wp28.spec.ts);
  *   - the carousel, vision, proof, FAQ and offer wording accepted in the cycle-5 triage;
  *   - the "Learner Journeys" strip of three registered stories;
  *   - no " & " in Home labels.
@@ -53,13 +53,13 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
 });
 
 test.describe('evidence band (#proof-band)', () => {
-  test('shows the 72.3% result with its base, after the trial and the ladder (WP28 order)', async ({ page }) => {
+  test('shows the 72.3% result with its base, after the trial (WP30c: the ladder is gone from the band)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     const stat = band.locator('[data-fact="OC-02"]');
     await expect(stat).toContainText('72.3%');
     await expect(stat).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-    // document order: the trial heading, its sentence and its chart, then the ladder, then the 72.3% tile
+    // document order: the trial heading, its sentence and its chart, then the 72.3% tile
     const order = await band.evaluate((el) => {
       const at = (sel: string) => {
         const n = el.querySelector(sel);
@@ -70,16 +70,16 @@ test.describe('evidence band (#proof-band)', () => {
     expect(order.trial).toBeGreaterThan(-1);
     expect(order.sentence).toBeGreaterThan(order.trial);
     expect(order.chart).toBeGreaterThan(order.sentence);
-    expect(order.ladder).toBeGreaterThan(order.chart);
-    expect(order.stat).toBeGreaterThan(order.ladder);
+    expect(order.ladder, 'no evidence ladder in the band').toBe(-1);
+    expect(order.stat).toBeGreaterThan(order.chart);
   });
 
   test('does not retell the trial or the survey: one trial sentence, one chart, and (WP29) one survey comparison the carousel does not carry', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
-    await expect(band.locator('h2')).toHaveText('Trial and Survey Evidence');
+    await expect(band.locator('h2')).toHaveText('Evidence You Can Check');
     // WP29 (benchmark review): the paid-work pathways comparison (OC-04) is the band's one extra survey block; the carousel states no pathway figure
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First', 'Paid-Work Pathways Among Surveyed Completers']);
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-04"]')).toHaveCount(1);
     await expect(band.locator('[data-plain-line]')).toHaveCount(1);
     await expect(band.locator('[data-plain-line]')).toHaveText('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
@@ -120,7 +120,9 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
 
   test('Proof in Practice points to all four case studies, with a link', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    expect(await text(page, '#cases')).toContain('Three of our four case studies, each with its partner — see all four in Case Studies.');
+    // WP30c: the lead sentence is gone; the heading, three cards and one link to all four case studies remain
+    await expect(page.locator('#cases-h')).toHaveText('Proof in Practice');
+    await expect(page.locator('#cases article')).toHaveCount(3);
     const link = page.getByRole('link', { name: 'See All Four Case Studies' });
     await expect(link).toHaveCount(1);
     expect(await link.getAttribute('href')).toMatch(/\/impact\/case-studies\/$/);
@@ -131,13 +133,15 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     expect(await text(page, '#faq')).toContain('Results for later programs come from the October 2026 survey of completers and from program records, which are descriptive');
   });
 
-  test('offer: option 1 is the First Multi-Cohort Pilot, scoped in the discovery session; the Her Power sentence names who ran it', async ({ page }) => {
+  test('offer: option 1 is the First Multi-Cohort Pilot, scoped in the discovery session; pricing is one short block', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const first = page.locator('#offer ol > li').first();
     await expect(first.locator('h3')).toHaveText('First Multi-Cohort Pilot');
     await expect(first).toContainText('Scope the number of cohorts and trainees with us in the discovery session.');
     const offer = await text(page, '#offer');
-    expect(offer).toContain('Her Power, a national program of DoICT and the ICT Division, trained 25,125 women across 130 sub-districts (upazilas); CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.');
+    // WP30c: the offer states pricing in one short block; the scale evidence (Her Power, the contracts) is on the Governments page and in the carousel
+    expect(offer).toContain('Pricing is set per program, and we share an indicative budget in the discovery session.');
+    expect(offer).not.toContain('Her Power');
     expect(offer).not.toContain('DoICT, the ICT Division');
   });
 });

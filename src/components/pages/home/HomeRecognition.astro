@@ -5,33 +5,43 @@ import { linkAttrs } from '../../../lib/url';
 import { fact } from '../../../data/facts';
 
 /**
- * Compact third-party recognition (WP17, item 4): the HolonIQ listing and the 2014–2016 press coverage, as one quiet band after the program
- * case cards. It was part of the Klein evidence band's extras; there it competed with the trial and the survey. The press logos are dark
- * artwork, so they sit on the band's white panel.
+ * Third-party recognition, one quiet band after the program case cards (WP17, item 4). WP30c (cycle-7 review, GLM): it leads with the strongest current
+ * third-party proof the site holds (the university and UN-mandated partners, PA-05, and the AWS Authorized Training Partner status, PA-06) and keeps the
+ * HolonIQ listing (PA-08) third. The 2014–2016 press list (PA-09) no longer opens the band: it lives on the Recognition and Media page, one link away.
  */
 interface Props {
   id?: string;
 }
 const { id = 'recognition' } = Astro.props;
+// PA-05 reads "University partners: National University (...); University for Peace (UPEACE), the UN-mandated university; The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024".
+// The band's heading names the group, so the sentence keeps the register's list without its "University partners: " lead-in.
+const pa05 = /^University partners: (.+)$/.exec(fact('PA-05').text);
+if (!pa05) throw new Error('HomeRecognition: PA-05 no longer reads "University partners: ..."');
 // PA-08 reads "CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024": the sentence keeps the register's dates and category,
 // and the list's name moves into the heading above it.
 const pa08 = /^CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 (in 2023 \(STEAM Category\) and 2024)$/.exec(fact('PA-08').text);
 if (!pa08) throw new Error('HomeRecognition: PA-08 no longer reads "CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024"');
-const listing = `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STEAM category')}.`;
+const items = [
+  { id: 'PA-05', icon: 'landmark', title: 'University and UN-Mandated Partners', text: `${pa05[1]}.` },
+  { id: 'PA-06', icon: 'cloud', title: 'AWS Authorized Training Partner' },
+  { id: 'PA-08', icon: 'award', title: 'HolonIQ South Asia EdTech 100', text: `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STEAM category')}.` },
+];
 ---
 
 <Section id={id} tone="white" pad="sm" aria-labelledby={`${id}-h`}>
-  <h2 class="rec__title t-heading-l" id={`${id}-h`}>Recognition and Historical Coverage</h2>
-  <!-- WP23, item 11: a short heading, then the register's fact as a sentence (PA-08: HolonIQ South Asia EdTech 100, 2023 and 2024). -->
-  <div class="rec__badge" data-fact="PA-08">
-    <Icon name="award" size={20} />
-    <div>
-      <h3 class="rec__badge-title">HolonIQ South Asia EdTech 100</h3>
-      <p class="rec__badge-text">{listing}</p>
-    </div>
-  </div>
-  <p class="rec__press" data-fact="PA-09">
-    Press coverage, 2014–2016, including Forbes, The Wall Street Journal and TechCrunch.{' '}
+  <h2 class="rec__title t-heading-l" id={`${id}-h`}>Partners and Recognition</h2>
+  {
+    items.map((i) => (
+      <div class="rec__badge" data-fact={i.id}>
+        <Icon name={i.icon} size={20} />
+        <div>
+          <h3 class="rec__badge-title">{i.title}</h3>
+          {i.text && <p class="rec__badge-text">{i.text}</p>}
+        </div>
+      </div>
+    ))
+  }
+  <p class="rec__press">
     <a class="link" href={linkAttrs('/about/recognition/').href}>See All Recognition and Media<Icon name="arrow-right" size={16} /></a>
   </p>
 </Section>
