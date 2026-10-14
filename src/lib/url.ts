@@ -80,11 +80,19 @@ export function hostOf(href: string): string {
   }
 }
 
+/** Brand casing for hosts CodersTrust owns, as announced to screen readers: "(opens JobReady.global)". Other hosts read as their lower-case hostname. */
+const HOST_LABELS: Record<string, string> = { 'jobready.global': 'JobReady.global' };
+/** Hostname as announced in "(opens …)" ("https://jobready.global/" -> "JobReady.global"). */
+export function hostLabel(href: string): string {
+  const h = hostOf(href);
+  return HOST_LABELS[h] ?? h;
+}
+
 export interface LinkAttrs {
   href: string;
   rel?: string;
   external: boolean;
-  /** Visually-hidden suffix announced by screen readers, e.g. "(opens jobready.global)". */
+  /** Visually-hidden suffix announced by screen readers, e.g. "(opens JobReady.global)". */
   srText?: string;
 }
 
@@ -95,7 +103,7 @@ export interface LinkAttrs {
  */
 export function linkAttrs(href: string): LinkAttrs {
   if (isOffsite(href)) {
-    return { href, rel: externalRel(href), external: true, srText: `(opens ${hostOf(href)})` };
+    return { href, rel: externalRel(href), external: true, srText: `(opens ${hostLabel(href)})` };
   }
   if (/^mailto:/i.test(href)) return { href, external: false, srText: '(opens your email app)' };
   return { href: url(href), external: false };

@@ -39,7 +39,7 @@ import { linkAttrs } from '../../lib/url';
                   <a href={a.href} rel={a.rel}>
                     {l.label}
                     {a.external && <Icon name="arrow-up-right" size={14} />}
-                    {a.external && <span class="sr-only">{a.srText}</span>}
+                    {a.external && <span class="sr-only"> {a.srText}</span>}
                   </a>
                   {l.children && (
                     <ul class="footer__sub" role="list" aria-label={`${l.label} tracks`}>

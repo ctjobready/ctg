@@ -27,7 +27,7 @@ import RiskSection from '../../../components/pages/programs/RiskSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { EMPATHY, HEADLINE, ORIGIN, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { EMPATHY, HEADLINE, NU_ELIGIBILITY, ORIGIN, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06 } from '../../../components/sections/copyText';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
@@ -42,7 +42,8 @@ const applyLink = linkAttrs(apply.href);
 const courses = await nuCourses();
 
 const faqSources: FaqSource[] = [
-  { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
+  // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
+  { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
   { q: 'Who Delivers the Diploma?', html: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
   { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
@@ -68,6 +69,8 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
+      <!-- WP27: intake, schedule and location are not published; the link goes to the admissions contact block, where they are confirmed with each applicant -->
+      <a class="link" href="#admissions-contact">Confirm Intake, Schedule and Location</a>
     </Fragment>
     <dl slot="stats" class="keyfacts">
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -143,7 +146,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
 
@@ -161,7 +164,7 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   </GuideSection>
 
   <!-- C7 -->
-  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'Read the Full Findings', href: '/impact/' }]}>
+  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02']} compact links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'Read the Full Findings', href: '/impact/' }]}>
     <div class="proof-notes">
       <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
     </div>

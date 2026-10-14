@@ -15,7 +15,7 @@ import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import ProgramFinder from '../../components/pages/programs/ProgramFinder.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import { PAGE_UPDATED, ctaFor, statValue } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, PROGRAM_OPTIONS, SAFEGUARDING, STEPS, STEPS_FACTS } from '../../data/copy';
+import { MICRO_COMMITMENT, NU_ELIGIBILITY, PROGRAM_OPTIONS, SAFEGUARDING, STEPS, STEPS_FACTS } from '../../data/copy';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import { linkAttrs } from '../../lib/url';
 import { formatDate, isoDate } from '../../lib/format';
@@ -34,7 +34,7 @@ const programs = [
   { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, depending on government and donor commitments; elsewhere it runs as co-funded country cohorts, with outcome evidence so far from Bangladesh and Kosovo.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on paid-work outcomes, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }] },
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.', partner: [{ label: 'For Universities', href: '/partner-with-us/universities/' }] },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.', partner: [{ label: 'For Employers', href: '/partner-with-us/employers/' }] },
-  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audience: 'Degree Holders in Bangladesh', text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the degree you hold.' },
+  { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audienceLabel: 'Eligibility', audienceFacts: 'NU-01', audience: NU_ELIGIBILITY, text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the qualification you hold.' },
   { icon: 'blocks', href: '/programs/superkids/', title: 'SuperKids', audience: 'Schools and Education Partners', text: 'STEAM, coding, robotics and digital art for young learners.', means: 'a school can bring STEAM, coding, robotics and digital art into the classroom.' },
 ];
 
@@ -53,7 +53,7 @@ const jsonLd = [
   <Hero
     eyebrow="Programs"
     title="CodersTrust Programs"
-    lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Postgraduate Diploma for degree holders."
+    lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Postgraduate Diploma for individual learners."
     artSeed="programs-hub"
   >
     <Fragment slot="actions">
@@ -73,7 +73,7 @@ const jsonLd = [
         programs.map((p) => (
           <li>
             <FeatureCard icon={p.icon} title={p.title} text={p.text} means={p.means} href={p.href}>
-              <p class="hub__aud"><strong>Best For:</strong> {p.audience}</p>
+              <p class="hub__aud" data-fact={p.audienceFacts}><strong>{p.audienceLabel ?? 'Best For'}:</strong> {p.audience}</p>
               {p.partner && (
                 <p class="hub__aud hub__partner">
                   {p.partner.map((l) => (

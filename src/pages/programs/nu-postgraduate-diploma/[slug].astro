@@ -16,7 +16,7 @@ import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { NU_ELIGIBILITY, SURVEY_EMPLOYMENT } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
 import { ORG_ID, course as courseNode, pageUrl, ref, webPage } from '../../../lib/schema';
@@ -43,7 +43,8 @@ const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
 const faqSources: FaqSource[] = [
   ...nuModuleFaqs(c),
   { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
-  { q: 'Is This the Right Course for Me?', html: `Right for you if you hold a degree and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.` },
+  // WP27: admissions' own eligibility sentence (NU-01), the one every NU page states.
+  { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
 ];
 
 const jsonLd = [
@@ -62,6 +63,8 @@ const jsonLd = [
     <Fragment slot="actions">
       <Button href={apply.href} iconEnd="arrow-right">{apply.label}</Button>
       <a class="link" href={NU_CALL.href}>{NU_CALL_TEXT}</a>
+      <!-- WP27: intake, schedule and location are not published; the link goes to the admissions contact block, where they are confirmed with each applicant -->
+      <a class="link" href="#admissions-contact">Confirm Intake, Schedule and Location</a>
     </Fragment>
     <dl slot="stats" class="keyfacts">
       <div><dt>Duration</dt><dd><Fact id="NU-02" /></dd></div>
@@ -83,12 +86,12 @@ const jsonLd = [
       <div class="ba__row"><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
       <div class="ba__row"><dt>Payment</dt><dd><Fact id="NU-05" /></dd></div>
       <div class="ba__row"><dt>Recognition</dt><dd><Fact id="NU-04" /></dd></div>
-      <div class="ba__row"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
+      <div class="ba__row" id="admissions-contact"><dt>How to Apply</dt><dd>Complete the <a class="link" href={applyLink.href} rel={applyLink.rel}>application form</a>. For help, call <a class="link" href={NU_CALL.href}>{NU_CALL_NUMBER}</a> or email <a class="link" href="mailto:hello@coderstrustbd.com">hello@coderstrustbd.com</a>.</dd></div>
     </dl>
   </Section>
 
   <Section id="who" aria-labelledby="who-h">
-    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Degree Holders Who Want a Digital Career" lead="Right for you if you hold a degree and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global." />
+    <SectionHeader id="who-h" eyebrow="Who It Is For" title="For Learners Who Want a Digital Career" lead={`Eligibility: ${NU_ELIGIBILITY}. Right for you if you meet that and want to add practical digital skills. If you want a short self-paced course instead, see JobReady.global.`} />
     {
       c.roles.length > 0 && (
         <div class="roles" data-reveal>
@@ -137,7 +140,7 @@ const jsonLd = [
   <Section id="outcomes" tone="airy" aria-labelledby="outcomes-h">
     <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Outcomes from CodersTrust’s Wider Programs" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
     <CopyP block={SURVEY_EMPLOYMENT} class="outcome-note" />
-    <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Full Findings<Icon name="arrow-right" size={16} /></a></p>
+    <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="also-consider" tone="airy" aria-labelledby="also-h">

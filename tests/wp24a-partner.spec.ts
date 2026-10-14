@@ -15,10 +15,10 @@ const AUDIENCE_PAGES = ['development-partners', 'governments', 'foundations', 'u
 test.describe('Partner with Us hub', () => {
   const URL = 'partner-with-us/';
 
-  test('route cards follow the menu order; the university card says "Prepare Students and Graduates for Work"', async ({ page }) => {
+  test('route cards follow the menu order (WP27: Investors is the seventh peer route); the university card says "Prepare Students and Graduates for Work"', async ({ page }) => {
     await page.goto(URL);
     const hrefs = await page.locator('#audiences .grid-cards a').evaluateAll((els) => els.map((a) => (a as HTMLAnchorElement).getAttribute('href') ?? ''));
-    expect(hrefs.map((h) => h.replace(/^.*partner-with-us\//, ''))).toEqual(['development-partners/', 'governments/', 'foundations/', 'universities/', 'employers/', 'local-partners/']);
+    expect(hrefs.map((h) => h.replace(/^.*partner-with-us\//, ''))).toEqual(['development-partners/', 'governments/', 'foundations/', 'universities/', 'employers/', 'local-partners/', 'investors/']);
     await expect(page.locator('#audiences .grid-cards')).toContainText('Prepare Students and Graduates for Work');
   });
 

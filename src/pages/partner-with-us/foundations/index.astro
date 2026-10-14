@@ -49,6 +49,9 @@ import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
 const primary = cta('funding');
+// WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button.
+const routeYouthwide = cta('fundingYouthwide');
+const routePlatform = cta('fundingPlatform');
 // The partner-edition report request (doc 04 §7), straight from the shared CTA library.
 const reportCta = cta('report');
 const report = { label: reportCta.label, href: reportCta.href };
@@ -84,6 +87,10 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     title={HEADLINE.foundations}
     lead={VALUE_PROPOSITION.foundations}
     cta={{ label: primary.label, href: primary.href }}
+    routeLinks={[
+      { label: routeYouthwide.label, href: routeYouthwide.href },
+      { label: routePlatform.label, href: routePlatform.href },
+    ]}
     artSeed="partners-foundations"
   />
   <InShort
@@ -208,7 +215,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     chartId="OC-01"
     links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
-      { label: 'Outcomes 2026', href: LINKS.outcomes },
+      { label: 'Impact Survey 2026', href: LINKS.outcomes },
       { label: 'Conducting Due Diligence? See Our Governance and Evidence', href: LINKS.governance },
     ]}
   >

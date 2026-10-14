@@ -91,7 +91,7 @@ const itemStyle = (it: (typeof list)[number]) => (it.fit?.scale ? `--k:${it.fit.
               {a ? (
                 <a href={a.href} rel={a.rel} class:list={itemClass(it)} style={itemStyle(it)}>
                   {body}
-                  <span class="sr-only">{a.srText}</span>
+                  <span class="sr-only"> {a.srText}</span>
                 </a>
               ) : (
                 <span class:list={itemClass(it)} style={itemStyle(it)}>{body}</span>

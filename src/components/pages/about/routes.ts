@@ -47,7 +47,7 @@ export const contactRoutes = (): ContactRoute[] => [
   { id: 'talent', who: 'Employers: Hire Talent', text: 'Connect with job-ready digital talent through the placement team.', icon: 'users', cta: fromLibrary('talent') },
   { id: 'local', who: 'Local Partners in Bangladesh', text: 'NGOs, colleges, chambers and associations delivering in their communities. This goes to the Bangladesh team.', icon: 'map-pin', cta: localCta() },
   { id: 'diligence', who: 'Due-Diligence Teams', text: 'Questions about the contracting entity, safeguarding and the documents a funder needs.', icon: 'shield', cta: diligenceCta(), secondary: { label: 'Read about governance', href: '/about/governance/' } },
-  { id: 'report', who: 'Partners reading the evidence', text: 'The partner edition of the Impact Report 2026.', icon: 'file-text', cta: reportCta(), secondary: { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' } },
+  { id: 'report', who: 'Partners reading the evidence', text: 'The partner edition of the Impact Report 2026.', icon: 'file-text', cta: reportCta(), secondary: { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' } },
   { id: 'media', who: 'Journalists and Media', text: 'Interviews, background and the press kit.', icon: 'mail', cta: fromLibrary('media'), secondary: { label: 'Press Kit', href: '/about/recognition/#press-kit' } },
   {
     id: 'nu-pgd',

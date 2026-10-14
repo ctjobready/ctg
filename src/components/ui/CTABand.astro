@@ -17,6 +17,8 @@ interface Props {
   urgency?: string;
   micro?: string;
   secondary?: { label: string; href: string };
+  /** WP27: further text links on a line of their own under the action row (a way to the partnership routes from an evidence page). */
+  more?: { label: string; href: string }[];
   /** One text line of other routes beside the single primary button, each a text link: "Governments: Request a Briefing for Your Ministry" (WP23). */
   routes?: { audience: string; label: string; href: string }[];
   /** C14 post-decision reinforcement lines (validate / transformation / first action). */
@@ -26,7 +28,7 @@ interface Props {
   /** Who the fallback address belongs to when it is a specific team ("the Bangladesh team at"). */
   fallbackLabel?: string;
 }
-const { heading, text, plan, cta, urgency, micro, secondary, routes = [], reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
+const { heading, text, plan, cta, urgency, micro, secondary, more = [], routes = [], reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
 // A withheld route (empty href) is not drawn.
 const shownRoutes = routes.filter((r) => r.href);
 const dark = tone === 'klein';
@@ -57,6 +59,15 @@ const withheld = !cta.href;
         )
       }
     </div>
+    {
+      more.length > 0 && (
+        <p class="cta-band__more" data-reveal>
+          {more.map((l) => (
+            <a class="link" href={linkAttrs(l.href).href} rel={linkAttrs(l.href).rel}>{l.label}</a>
+          ))}
+        </p>
+      )
+    }
     {
       shownRoutes.length > 0 && (
         <p class="cta-band__routes" data-reveal>
@@ -107,6 +118,13 @@ const withheld = !cta.href;
     align-items: center;
     justify-content: center;
     gap: var(--space-md) var(--space-lg);
+  }
+  .cta-band__more {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-xs) var(--space-lg);
+    font-size: var(--fs-body-base);
   }
   .cta-band__routes {
     display: flex;

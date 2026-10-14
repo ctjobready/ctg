@@ -108,14 +108,14 @@ const d = discoveryCta();
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
   heading="Impact Survey 2026: What Happened After Training"
-  eyebrow="Outcomes 2026 · Surveyed Completers"
+  eyebrow="Surveyed Completers"
   lead={directAnswer}
   description={description}
   path={path}
   updated={D.PAGE_LAST_REVIEWED}
   snapshot={D.SOURCE_SNAPSHOT}
   toc={toc}
-  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Outcomes 2026' }]}
+  breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Impact Survey 2026' }]}
   jsonLd={jsonLd}
 >
   <ReportSection id="summary" title="Summary">
@@ -245,7 +245,7 @@ const d = discoveryCta();
     </a></p>
   </ReportSection>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />
 
 </LongformLayout>
 

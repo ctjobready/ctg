@@ -18,6 +18,8 @@ interface Props {
   lead: string;
   cta: { label: string; href: string };
   secondary?: { label: string; href: string };
+  /** Text links on a line of their own under the primary button (WP27): route-specific next steps beside the one primary action. Plain links, never buttons. */
+  routeLinks?: { label: string; href: string }[];
   /** Fact IDs (max 3) — rendered as count-up stats with footnote markers. */
   stats?: string[];
   variant?: 'home' | 'inner';
@@ -26,7 +28,7 @@ interface Props {
   headingLevel?: 1 | 2;
   id?: string;
 }
-const { audience, audienceLinks = [], title, lead, cta, secondary, stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
+const { audience, audienceLinks = [], title, lead, cta, secondary, routeLinks = [], stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
 if (stats.length > 3) throw new Error('HeroBand: at most 3 stats');
 const eyebrow = audienceLinks.length > 0 ? undefined : audience;
 ---
@@ -47,12 +49,40 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
     <Fragment slot="actions">
       <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
       {secondary && <Button variant="outline" href={secondary.href}>{titleCase(secondary.label)}</Button>}
+      {
+        routeLinks.length > 0 && (
+          <p class="routelinks">
+            {routeLinks.map((l) => {
+              const a = linkAttrs(l.href);
+              return (
+                <a class="link" href={a.href} rel={a.rel}>
+                  {l.label}
+                  {a.srText && <span class="sr-only"> {a.srText}</span>}
+                </a>
+              );
+            })}
+          </p>
+        )
+      }
     </Fragment>
     {stats.length > 0 && <Fragment slot="stats">{stats.map((s) => <FactStat id={s} />)}</Fragment>}
   </Hero>
 </div>
 
 <style>
+  /* WP27: route-specific text links under the primary button, on their own line (the actions row wraps). */
+  .routelinks {
+    flex-basis: 100%;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+  }
+  .routelinks :global(.link) {
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+  }
   /* In the eyebrow position: Hero lays its copy out as a flex column, so `order: -1` lifts the links above the H1 (DOM order
      keeps them ahead of the actions, so keyboard focus order still matches the visual order). Styled like Hero's eyebrow pill. */
   .herolinks {

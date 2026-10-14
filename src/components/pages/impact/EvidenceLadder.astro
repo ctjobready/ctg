@@ -29,7 +29,7 @@ const TEXT = {
 };
 const matrix = [
   { n: 1, name: 'Independent Evaluation (BIGD)', tag: 'Randomized Trial' as const, figure: { value: fact('RC-02').stat?.value ?? '', label: trialEmploymentLabel(), id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
-  { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Outcomes 2026' },
+  { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Impact Survey 2026' },
   { n: 3, name: 'Program Results', tag: 'Program Record' as const, figure: { value: fact('PR-01').stat?.value ?? '', label: wsdfmFigureLabel(), id: 'PR-01' }, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
   { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, figure: undefined, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
 ];
@@ -90,7 +90,7 @@ const storyExample = fact('ST-03').text;
       <dt>What it does not show</dt>
       <dd>{TEXT.survey.not}</dd>
     </dl>
-    {links && <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Outcomes 2026<Icon name="arrow-right" size={16} /></a>}
+    {links && <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>}
   </li>
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">3</span>

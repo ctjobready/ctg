@@ -17,9 +17,9 @@ const a = linkAttrs(href);
 
 <a class:list={['cat', active && 'is-active', className]} href={a.href} rel={a.rel} data-reveal>
   <Icon name={icon} size={40} strokeWidth={1.5} class="cat__icon" />
-  <span class="cat__title">{title}</span>
+  <span class="cat__title">{title}{a.external && <Icon name="arrow-up-right" size={16} class="cat__ext" />}</span>
   {text && <span class="cat__text">{text}</span>}
-  {a.srText && <span class="sr-only">{a.srText}</span>}
+  {a.srText && <span class="sr-only"> {a.srText}</span>}
 </a>
 
 <style>
@@ -59,6 +59,12 @@ const a = linkAttrs(href);
     font-size: var(--fs-heading-m);
     line-height: var(--lh-heading-m);
     font-weight: var(--fw-medium);
+  }
+  /* an external card (JobReady.global) carries the same visible arrow as the external links in the header and footer */
+  .cat__title :global(.cat__ext) {
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: -1px;
   }
   .cat__text {
     grid-area: text;

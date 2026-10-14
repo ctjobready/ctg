@@ -4,6 +4,7 @@
  * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
  */
 import { fact } from './facts';
+import { NU_ELIGIBILITY } from './copy';
 import { COURSES_URL } from '../lib/site';
 
 const stat = (id: string) => {
@@ -27,6 +28,8 @@ export interface NavLink {
   group?: string;
   /** Only in the header menus (the NU course pages and the Courses link): teaser lists elsewhere show the program links alone. */
   menuOnly?: boolean;
+  /** Register facts the description states (rendered as data-fact on the description in the header menus). */
+  factIds?: string[];
   /** Link path of the item this one is nested under (mega menu, drawer and footer render it as a child list of that item). */
   parent?: string;
 }
@@ -102,11 +105,13 @@ export const navGroups: NavGroup[] = [
     href: '/programs/',
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'National Youth Employment Program.', group: PARTNER_PROGRAMS },
+      // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country; IN-01: the Bangladesh initiative).
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'A national initiative in Bangladesh and co-funded country cohorts elsewhere.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
-      { label: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: 'For degree holders.', group: LEARNER_PROGRAMS },
+      // WP27: admissions' eligibility sentence (NU-01), the same words on the NU pages, the Programs hub, the FAQs and Home slide 7.
+      { label: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', description: `Eligibility: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'], group: LEARNER_PROGRAMS },
       { label: 'Digital Marketing', href: '/programs/nu-postgraduate-diploma/digital-marketing/', description: 'SEO, social media, advertising and analytics.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT },
       { label: 'ICT', href: '/programs/nu-postgraduate-diploma/ict/', description: 'Programming, databases, networks, mobile and web development.', group: LEARNER_PROGRAMS, menuOnly: true, parent: NU_PARENT },
       { label: 'Courses', href: COURSES_URL, description: 'Short, self-paced courses on JobReady.global.', group: LEARNER_PROGRAMS, menuOnly: true },
@@ -115,7 +120,7 @@ export const navGroups: NavGroup[] = [
       kind: 'pilot',
       eyebrow: 'Choose Your Path',
       title: 'Partner Programs or a Postgraduate Diploma?',
-      text: 'Institutions and employers start with a partner program. Degree holders apply to the NU diploma.',
+      text: 'Organizations explore partner programs. Individual learners choose the NU diploma or short courses on JobReady.global.',
       cta: { label: 'Find the Right Program', href: '/programs/' },
     },
   },
@@ -186,7 +191,7 @@ export const promo = {
   factId: 'RC-02 OC-01',
   links: [
     { label: 'Trial Results', href: '/impact/independent-evaluation/' },
-    { label: 'Survey Findings', href: '/impact/outcomes-2026/' },
+    { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
   ],
   hideOnPath: '/impact/outcomes-2026/',
 };

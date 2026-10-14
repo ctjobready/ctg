@@ -4,6 +4,13 @@
 
 import { fact } from './facts';
 
+/**
+ * WP27: the one eligibility statement for the NU Postgraduate Diploma, NU-01 verbatim ("Honors / Diploma holders with a minimum CGPA of 2.25"). The menu
+ * description, the Home program card, the Programs hub card and finder, the FAQs and the course pages state it in these words, so no surface says "degree
+ * holders" (a different, wider group) where admissions says honors or diploma holders with a minimum CGPA.
+ */
+export const NU_ELIGIBILITY: string = fact('NU-01').text;
+
 export interface CopyBlock {
   text: string;
   /** Fact IDs whose footnote markers accompany the block. */
@@ -31,7 +38,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
   investors: 'We help impact investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
-  nuPgd: 'We help degree holders prepare for digital work through a National University postgraduate diploma.',
+  nuPgd: 'We help learners prepare for digital work through a National University postgraduate diploma.',
 };
 
 /** C1 identity-hook headlines — 6 to 12 words, about the reader (CMF). */

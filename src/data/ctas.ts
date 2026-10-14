@@ -14,6 +14,8 @@ export type CtaKey =
   | 'discovery'
   | 'briefing'
   | 'funding'
+  | 'fundingYouthwide'
+  | 'fundingPlatform'
   | 'nationalFunding'
   | 'investor'
   | 'campus'
@@ -75,6 +77,19 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     label: 'Explore a Funding Partnership',
     subject: 'Funding partnership — [foundation/company]',
     body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline'],
+  },
+  /** WP27: the two funding routes on /partner-with-us/foundations/ (hero text links), each with its own prefilled subject so the team sees which route the sender means. */
+  fundingYouthwide: {
+    key: 'fundingYouthwide',
+    label: 'Discuss a YouthWIDE Cohort Grant',
+    subject: 'YouthWIDE cohort grant — [foundation/company]',
+    body: ['Organization', 'Focus regions', 'Priority groups', 'Timeline'],
+  },
+  fundingPlatform: {
+    key: 'fundingPlatform',
+    label: 'Discuss a JobReady Platform Grant',
+    subject: 'JobReady platform grant — [foundation/company]',
+    body: ['Organization', 'Questions about the platform grant', 'Timeline'],
   },
   /** YouthWIDE in Bangladesh (/programs/youthwide/): the secondary CTA for national funders, in place of `funding` (review round 15, F4): districts and priority groups, not a platform grant. */
   nationalFunding: {

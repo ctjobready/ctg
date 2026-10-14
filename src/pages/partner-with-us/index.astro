@@ -30,13 +30,14 @@ const HUB_FAQ = ['Q1', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
 // Tracking is scope-conditional, as on the audience pages: it is part of each program's agreed scope (PD-02), not a blanket promise.
-const BLUF = `We co-design youth-employment programs with governments, development partners, foundations, universities, employers and local implementing partners, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope.`;
+// WP27: the hero names the seven routes as the route cards do (the Investors route is its own card now), so a reader sees at once which route is theirs.
+const BLUF = `We co-design youth-employment programs with development partners and NGOs, governments, foundations and CSR teams, universities, employers and local partners in Bangladesh, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope. Impact investors have their own route, to back JobReady’s staged rollout.`;
 const description = 'Co-design a youth-employment program with CodersTrust. Pick your route: governments, funders, universities, employers, local partners or impact investors.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
 
-// Six decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). Investors
-// sit with the "Not sure where you fit?" helper below the grid, so the grid is 3 × 2 with no orphan card.
+// Seven decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). WP27: Investors is
+// a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
 const audiences = [
   { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
   { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: national programs for youth employment.' },
@@ -44,8 +45,8 @@ const audiences = [
   { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
   { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges, chambers and associations delivering locally.' },
+  { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, the platform connecting emerging-market youth to work.' },
 ];
-const investors = { title: 'Investors', href: '/partner-with-us/investors/' };
 
 // Partnering steps: the weeks and the cohort window are parsed from PD-04 (never retyped).
 const pd04 = fact('PD-04');
@@ -63,7 +64,7 @@ const jsonLd = [
     '@type': 'ItemList',
     '@id': `${pageUrl(path)}#audiences`,
     name: 'Partnership routes',
-    itemListElement: [...audiences, investors].map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
+    itemListElement: audiences.map((a, i) => ({ '@type': 'ListItem', position: i + 1, name: a.title, url: pageUrl(a.href) })),
     isPartOf: ref(ORG_ID),
   },
   faqJsonLd('all', path, HUB_FAQ),
@@ -72,7 +73,7 @@ const jsonLd = [
 
 <BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
-    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Move Youth into Paid Digital Work" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} artSeed="partner-hub" />
+    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Move Youth into Paid Digital Work" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} routeLinks={[{ label: 'Choose Your Route', href: '#audiences' }]} artSeed="partner-hub" />
   </Tone>
 
   <DefinitionBand />
@@ -80,7 +81,7 @@ const jsonLd = [
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
       <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Who Are You Partnering As?" lead="Each route has its own evidence, offer and next step." />
-      <div class="grid-cards">
+      <div class="grid-cards hub__routes">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       </div>
       <div class="hub__helper" data-reveal>
@@ -88,7 +89,6 @@ const jsonLd = [
         <p class="hub__helper-text"><strong>Not sure where you fit?</strong> Tell us your goals and we will point you to the right route.</p>
         <p class="cluster hub__helper-links">
           <a class="link" href={linkAttrs('/contact/').href}>Talk to Us<Icon name="arrow-right" size={16} /></a>
-          <a class="link" href={linkAttrs(investors.href).href}>Impact Investor? See Investors<Icon name="arrow-right" size={16} /></a>
         </p>
         <p class="hub__helper-programs">
           <span>Already know the program you need? </span><a class="link" href={linkAttrs('/programs/').href}>See Programs<Icon name="arrow-right" size={16} /></a>
@@ -101,7 +101,7 @@ const jsonLd = [
 
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="How Partnering Works" title="Your First 90 Days" lead="From first conversation to first cohort in four steps, then monthly reports. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
+      <SectionHeader id="how-h" eyebrow="For Grant-Funded Supported Cohorts" title="Your First 90 Days" lead="From first conversation to first cohort in four steps, then monthly reports. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>
@@ -143,6 +143,31 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  /* Seven route cards: three columns (two from 768 px) would leave the seventh alone in its row beside empty cells, so it takes that row across as a
+     wide card: icon beside the title and its line, the layout the card has on a phone. */
+  @media (min-width: 768px) {
+    .hub__routes > :global(.cat:last-child) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        'icon title'
+        'icon text';
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: var(--space-lg);
+      row-gap: 2px;
+      min-height: 0;
+      padding: 24px 30px;
+    }
+    .hub__routes > :global(.cat:last-child .cat__icon) {
+      align-self: center;
+      margin-bottom: 0;
+    }
+    .hub__routes > :global(.cat:last-child .cat__title) {
+      align-self: end;
+    }
+  }
   .hub__helper {
     margin-top: var(--space-md);
     padding: var(--space-md) var(--space-gutter);

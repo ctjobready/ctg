@@ -4,6 +4,7 @@ import Accordion from '../../../components/ui/Accordion.astro';
 import Badge from '../../../components/system/Badge.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
+import EmailFallback from '../../../components/ui/EmailFallback.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
 import StatusTag from '../../../components/system/StatusTag.astro';
@@ -88,7 +89,7 @@ const d = discoveryCta();
     <Callout label="What Is Live Today">
       <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch, and the adaptive learning below is planned. AI chat is live today. Adaptive learning remains on the roadmap.</p>
     </Callout>
-    <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
+    <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>
 
   <ReportSection id="why" title="Why Institutions Choose JobReady">
@@ -127,7 +128,10 @@ const d = discoveryCta();
     <div class="jr__actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={f.href}>Discuss a Platform Grant for JobReady’s Next Stage</a>
+      <!-- WP27: the one route for impact investors, beside the other next steps -->
+      <a class="link" href={linkAttrs('/partner-with-us/investors/').href}>Backing the platform? See Investors</a>
     </div>
+    <EmailFallback href={d.href} />
     <p class="jr__micro">{MICRO_COMMITMENT}</p>
   </aside>
 

@@ -264,7 +264,7 @@ test.describe('home hero slider without JavaScript', () => {
     await expect(page.locator('[data-hs-next]')).toBeHidden();
     await expect(hero.getByRole('link', { name: 'Explore Global Reach' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'See the Trial' })).toBeVisible();
-    await expect(hero.getByRole('link', { name: 'Read the 2026 Survey Results' })).toBeVisible();
+    await expect(hero.getByRole('link', { name: 'Read the Impact Survey 2026' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'YouthWIDE' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'For Governments' })).toBeVisible();
   });

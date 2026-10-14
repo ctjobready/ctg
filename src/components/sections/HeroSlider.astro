@@ -114,7 +114,7 @@ const views = slides.map((s, i) => {
                 <ul class="hs__programs">
                   {s.programs.map((p) => (
                     <li>
-                      <a class="hs__program" href={linkAttrs(p.href).href}>
+                      <a class="hs__program" href={linkAttrs(p.href).href} data-fact={p.factIds?.join(' ')}>
                         <strong>{p.label}</strong>
                         {p.description && <span>{p.description}</span>}
                       </a>

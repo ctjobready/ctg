@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import { linkAttrs } from '../../../lib/url';
+import { NU_ELIGIBILITY } from '../../../data/copy';
 
 /**
  * "Find Your Program" (Programs hub): a selection table in the order If You Are… · Choose… · Outcome to Track · Start With.
@@ -11,9 +12,11 @@ import { linkAttrs } from '../../../lib/url';
 const rows = [
   { who: 'A Government, Development Partner or Funder', choose: 'YouthWIDE', href: '/programs/youthwide/', outcome: 'Share of trainees in paid digital work, from monthly reports', start: 'Request a Discovery Session or, for a ministry, a briefing' },
   { who: 'A University or College', choose: 'JobReady@Campus', href: '/programs/jobready-campus/', outcome: 'Certification attempts, completions and placement evidence from student tracer surveys', start: 'Bring JobReady@Campus to Your Institution' },
-  { who: 'An Employer', choose: 'JobReady@Work', href: '/programs/jobready-work/', outcome: 'Your team learning on tasks from your own roles', start: 'Plan a Training Program' },
+  // WP27: the employer row covers both halves of the page (train a team, hire talent through the placement team), as the program page and its two actions do.
+  { who: 'An Employer', choose: 'JobReady@Work', href: '/programs/jobready-work/', outcome: 'Your team learning on tasks from your own roles, or candidates introduced through the placement team', start: 'Plan Your First Team Program or Hire JobReady Talent' },
   { who: 'A School or Education Partner', choose: 'SuperKids', href: '/programs/superkids/', outcome: 'Young learners building STEAM, coding, robotics and digital art skills', start: 'Request a Discovery Session' },
-  { who: 'A Degree Holder in Bangladesh', choose: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', outcome: 'Digital skills added to the degree you hold', start: 'Apply Now' },
+  // WP27: admissions' eligibility sentence (NU-01) in place of "a degree holder".
+  { who: 'An Individual Learner', choose: 'NU Postgraduate Diploma', href: '/programs/nu-postgraduate-diploma/', outcome: 'Digital skills added to the qualification you hold', start: `Apply Now. Eligibility: ${NU_ELIGIBILITY}.`, facts: 'NU-01' },
 ];
 ---
 
@@ -32,7 +35,7 @@ const rows = [
               <th scope="row">{r.who}</th>
               <td data-label="Choose…"><a class="link" href={linkAttrs(r.href).href}>{r.choose}</a></td>
               <td data-label="Outcome to Track">{r.outcome}</td>
-              <td data-label="Start With">{r.start}</td>
+              <td data-label="Start With" data-fact={r.facts}>{r.start}</td>
             </tr>
           ))
         }

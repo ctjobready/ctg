@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { HEADLINE, VALUE_PROPOSITION } from './copy';
+import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from './copy';
 import { navGroups, type NavLink } from './nav';
 import { cta } from '../lib/mailto';
 
@@ -68,11 +68,11 @@ function navLink(href: string): NavLink {
   return item;
 }
 
-/** Slide 7 names the NU Postgraduate Diploma for individual learners; the navigation keeps its own descriptor for the mega menu. */
+/** Slide 7 names the NU Postgraduate Diploma for individual learners and states admissions' eligibility sentence (NU-01) as the menu does (WP27); the menu's lead-in is "Eligibility:", the slide's is its audience. */
 const NU_SLIDE_HREF = '/programs/nu-postgraduate-diploma/';
 function slideLink(href: string): NavLink {
   const item = navLink(href);
-  return href === NU_SLIDE_HREF ? { ...item, description: 'For individual learners with a degree' } : item;
+  return href === NU_SLIDE_HREF ? { ...item, description: `For individual learners: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'] } : item;
 }
 
 /** The before-training figure of a survey fact (stat.from), for a caption such as "up from 47.4% before training". */
@@ -171,7 +171,7 @@ export const HOME_SLIDES: HeroSlide[] = [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
       { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
     ],
-    links: [{ label: 'Read the 2026 Survey Results', href: '/impact/outcomes-2026/', variant: 'primary' }],
+    links: [{ label: 'Read the Impact Survey 2026', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/woman-learner-laptop',
   },
   {
