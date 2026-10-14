@@ -23,13 +23,18 @@ interface Props {
   id?: string;
 }
 const { title = 'Choose Where to Start', lead, pricing = PRICING, scale = SCALE, id = 'offer' } = Astro.props;
+// WP25h: on Home the first option is the funder's first multi-cohort pilot, and its size is scoped with us in the discovery session (the shared
+// PROGRAM_OPTIONS entry keeps its own wording for the other pages).
+const options = PROGRAM_OPTIONS.map((o, i) =>
+  i === 0 ? { ...o, name: 'First Multi-Cohort Pilot', note: `${o.note} Scope the number of cohorts and trainees with us in the discovery session.` } : o,
+);
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="The Offer" title={title} lead={lead} />
   <ol class="grid-cards offer" role="list" data-fact={PROGRAM_OPTIONS_FACTS.join(' ')}>
     {
-      PROGRAM_OPTIONS.map((o, i) => (
+      options.map((o, i) => (
         <li class="card offer__card" data-reveal>
           <div class="card__body">
             <p class="eyebrow">Option {i + 1}</p>

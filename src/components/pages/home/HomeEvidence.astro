@@ -1,0 +1,172 @@
+---
+import Section from '../../ui/Section.astro';
+import Stat from '../../system/Stat.astro';
+import PlainLine from '../../facts/PlainLine.astro';
+import BeforeAfter from '../../ui/BeforeAfter.astro';
+import Icon from '../../system/Icon.astro';
+import EvidenceLadderCompact from '../impact/EvidenceLadderCompact.astro';
+import { fact } from '../../../data/facts';
+import { RCT_COMPARISON } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Home C7 evidence band (Klein; WP25h). It no longer retells the trial and the survey, which the "Results and Programs" carousel above already
+ * states (the trial slide, the survey slides): it leads with the one survey result the carousel does not carry, the 72.3% of surveyed completers
+ * with no prior income who were earning (OC-02), with its registered base in the "N of M" pattern ("34 of 47"), then the evidence ladder
+ * (what each kind of evidence shows), then the trial in one sentence (the [PLAIN-LINE], RC-02) beside its chart, then the links. There is no
+ * second survey block and no restatement of the trial's income results (RC-01; the carousel's first slide states them).
+ * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
+ * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
+ * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
+ */
+interface Props {
+  id?: string;
+  /** The band's h2. */
+  title: string;
+  /** The trial's own sub-heading (h3) over its sentence and chart. */
+  trialHeading: string;
+  /** Scope of the two kinds of figure, stated once under the h2. */
+  lead?: string;
+  links?: { label: string; href: string }[];
+}
+const { id = 'proof-band', title, trialHeading, lead, links = [] } = Astro.props;
+
+// OC-02: "72.3% (34 of 47) of 2014–2023 completers who had no income before training were earning at the October 2026 survey". The tile's
+// label states the base in front ("34 of 47 surveyed 2014–2023 completers with no prior income were earning ..."), read from the register's own text.
+const oc = fact('OC-02');
+const base = /\((\d+) of (\d+)\)/.exec(oc.text);
+const LABEL_OPENING = 'of surveyed 2014–2023 completers';
+if (!oc.stat || !base || !oc.stat.label.startsWith(LABEL_OPENING)) throw new Error('HomeEvidence: OC-02 no longer reads "N% (X of Y) ..." with a label starting "of surveyed 2014–2023 completers"');
+const survey = { value: oc.stat.value, numeric: oc.stat.numeric !== undefined, label: `${base[1]} of ${base[2]} surveyed${oc.stat.label.slice('of surveyed'.length)}` };
+
+// The trial's follow-up employment, from RC-02 (control group, women offered a place and the difference).
+const before = RCT_COMPARISON.control;
+const after = RCT_COMPARISON.offered;
+const delta = RCT_COMPARISON.delta;
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <header class="he__head" data-reveal>
+    <p class="eyebrow">The Evidence</p>
+    <h2 class="he__title" id={`${id}-h`}>{title}</h2>
+    {lead && <p class="lead">{lead}</p>}
+  </header>
+
+  <div class="he__top">
+    <div class="he__stat" data-fact="OC-02" data-reveal>
+      <Stat value={survey.value} label={survey.label} tone="dark" size="lg" count={survey.numeric} />
+    </div>
+    <EvidenceLadderCompact />
+  </div>
+
+  <div class="he__trial" data-fact="RC-02">
+    <div class="he__copy" data-reveal>
+      <h3 class="he__sub t-heading-l">{trialHeading}</h3>
+      <PlainLine />
+    </div>
+    <div class="he__chart">
+      <BeforeAfter
+        mode="comparison"
+        title="Employment at Trial Follow-Up (Nov–Dec 2021): Women Offered a Place and Control Group"
+        before={{ label: 'Control Group', value: before }}
+        after={{ label: 'Offered a Place', value: after }}
+        delta={delta}
+        chip={false}
+        tone="dark"
+      />
+      <p class="he__fn">Chart data: employment at trial follow-up, women offered a place and the control group.</p>
+    </div>
+  </div>
+
+  {
+    links.length > 0 && (
+      <ul class="he__links" role="list">
+        {links.map((l) => <li><a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a></li>)}
+      </ul>
+    )
+  }
+</Section>
+
+<style>
+  .he__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 52rem;
+  }
+  .he__head > * {
+    margin: 0;
+  }
+  .he__title {
+    color: var(--ctx-section-heading);
+  }
+  .he__top {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: stretch;
+  }
+  /* the ladder carries its own top margin for the places that stack it under a figure; here the grid gap spaces it */
+  .he__top > :global(.lc) {
+    margin-top: 0;
+  }
+  /* the lead figure sits in a panel of the ladder's own style, so the two carry equal weight side by side */
+  .he__stat {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-gutter);
+    background: var(--ctx-card, var(--surface-container-low));
+    border: 1px solid var(--ctx-border, var(--primary-fixed));
+    border-radius: var(--radius-default);
+  }
+  .he__stat :global(.stat__label) {
+    max-width: 34ch;
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+  }
+  .he__trial {
+    display: grid;
+    gap: var(--space-md) var(--space-lg);
+    margin-top: var(--space-xl, 56px);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--ctx-border);
+  }
+  .he__copy {
+    display: grid;
+    gap: var(--space-md);
+    align-content: center;
+  }
+  .he__copy > :global(*) {
+    margin: 0;
+  }
+  .he__sub {
+    color: var(--ctx-section-heading);
+  }
+  .he__fn {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--fs-body-xs);
+    color: var(--ctx-muted);
+  }
+  .he__links {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+  }
+  @media (min-width: 1024px) {
+    .he__top {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 56px;
+    }
+    .he__trial {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-md) 56px;
+      align-items: start;
+    }
+  }
+</style>

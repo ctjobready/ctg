@@ -5,11 +5,11 @@ import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
 import HomeRecognition from '../components/pages/home/HomeRecognition.astro';
-import LearnerVoice from '../components/pages/impact/LearnerVoice.astro';
+import LearnerJourneys from '../components/pages/home/LearnerJourneys.astro';
 import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
-import EvidenceBand from '../components/pages/home/EvidenceBand.astro';
+import HomeEvidence from '../components/pages/home/HomeEvidence.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
 import NewsTeaserBand from '../components/sections/NewsTeaserBand.astro';
 import FeaturesTable from '../components/sections/FeaturesTable.astro';
@@ -24,7 +24,6 @@ import HomeCost from '../components/pages/home/HomeCost.astro';
 import HomeGuide from '../components/pages/home/HomeGuide.astro';
 import HomeMechanism from '../components/pages/home/HomeMechanism.astro';
 import Icon from '../components/system/Icon.astro';
-import EvidenceLadderCompact from '../components/pages/impact/EvidenceLadderCompact.astro';
 import FeatureSteps from '../components/pages/home/FeatureSteps.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
@@ -36,10 +35,12 @@ import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITION
 import { fact } from '../data/facts';
 import { endSentence, expandSsc } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
+import { linkAttrs } from '../lib/url';
 import { faqJsonLd } from '../lib/faq';
 import { webPage } from '../lib/schema';
 
 const discovery = cta('discovery');
+const caseStudies = linkAttrs('/impact/case-studies/');
 // Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
 const FAQ_IDS = ['Q1', 'Q15', 'Q3', 'Q5'];
 // The pricing explainer without its AI-ready curriculum sentence, which FAQ Q5 states once on this page.
@@ -53,7 +54,12 @@ const introduction = cta('investor');
 // is stated as capacity ("can run up to 10 cohorts in parallel", in SCALE itself).
 const scaleText = SCALE.text.replace(' Separately, 10,000 teachers were trained to teach online during COVID-19.', '');
 if (scaleText === SCALE.text) throw new Error('index: SCALE no longer carries the teacher-training sentence Home leaves out');
-const scale = { text: scaleText, facts: SCALE.facts.filter((id) => id !== 'SC-08') };
+// WP25h: the Her Power sentence names who ran the national program ("DoICT and the ICT Division", not an appositive that reads as one body) and
+// states CodersTrust's own role after a semicolon, so the 25,125 women are not read as CodersTrust's own count. The role wording is GV-11's.
+const HER_POWER = 'Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided';
+const herPowerScale = scaleText.replace(HER_POWER, 'Her Power, a national program of DoICT and the ICT Division, trained 25,125 women across 130 sub-districts (upazilas); CodersTrust provided');
+if (herPowerScale === scaleText) throw new Error('index: SCALE no longer carries the Her Power sentences Home rewords');
+const scale = { text: herPowerScale, facts: SCALE.facts.filter((id) => id !== 'SC-08') };
 const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 
 // C2 BLUF: PX-01 + PX-03 in one sentence, built from the register's wording (never retyped).
@@ -98,7 +104,7 @@ const featureRows = [
   <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results and Programs carousel. -->
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="RESULTS">
-    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="Results from the trial, the survey and program records, then our programs." slides={HOME_SLIDES} />
+    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="The evidence first: a randomized trial, a survey of completers and program records, then our programs." slides={HOME_SLIDES} />
   </Tone>
 
   <Tone cmf="C2">
@@ -131,7 +137,7 @@ const featureRows = [
       vignettes={[
         { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman outside Dhaka who invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
-        { kind: 'Social', title: 'AI-Ready Talent', text: 'Employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.' },
+        { kind: 'Social', title: 'AI-Ready Talent', text: 'You see employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.' },
       ]}
     />
   </Tone>
@@ -139,32 +145,28 @@ const featureRows = [
   <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} ribbonLine="TalentLEAP carries each learner through these stages: we train, mentor, place and track." link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
   <!-- WP19, item 8: the "At a Glance" band is gone. Every tile in it restated the hero strip or the carousel above, so no headline number appears more than twice. -->
+  <!-- WP25h: the band no longer retells the trial and the survey (the carousel above states them): it leads with the 72.3% no-prior-income result (34 of 47), then the evidence ladder, then the trial in one sentence beside its chart. -->
   <Tone cmf="C7">
-    <EvidenceBand
+    <HomeEvidence
       id="proof-band"
       title="Trial and Survey Evidence"
-      bandHeading="Trial and Survey Evidence"
       trialHeading="An Independent Randomized Trial"
-      headlineFact="RC-01"
-      chart="trial"
-      chip={false}
-      plainLine
       lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
-      statIds={[]}
-      surveyStatIds={['OC-02']}
       links={[
         { label: 'Outcomes 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
       ]}
-    >
-      <EvidenceLadderCompact slot="ladder" />
-    </EvidenceBand>
+    />
   </Tone>
 
   <Tone cmf="C7" join>
-    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner." items={caseStudyItems} />
-    <p class="proof__discuss"><a class="link" href={discovery.href}>Discuss the Evidence for Your Program<Icon name="arrow-right" size={16} /></a></p>
-    <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." outcome="She won a company logo design on Freelancer.com, then took on more clients." program="Her Power" tone="airy" />
+    <CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three of our four case studies, each with its partner — see all four in Case Studies." items={caseStudyItems} />
+    <p class="proof__discuss">
+      <a class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>
+      <a class="link" href={discovery.href}>Discuss the Evidence for Your Program<Icon name="arrow-right" size={16} /></a>
+    </p>
+    <!-- WP25h (benchmark review): three registered learner stories, one from each program above, replace the single Her Power learner voice (Maria Dewan is one of the three). -->
+    <LearnerJourneys id="journeys" tone="airy" />
   </Tone>
 
   <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
@@ -215,6 +217,10 @@ const featureRows = [
 
 <style>
   .proof__discuss {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm) var(--space-lg);
     margin: var(--space-lg) auto 0;
     padding-inline: var(--space-gutter);
     max-width: var(--container-max, 1200px);

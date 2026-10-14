@@ -1,0 +1,88 @@
+---
+import { getEntry } from 'astro:content';
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import Icon from '../../system/Icon.astro';
+import StoryGallery from '../impact/StoryGallery.astro';
+import type { StoryCardData } from '../impact/story-types';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Home "Learner Journeys" strip (WP25h, benchmark review): one learner from each program in "Proof in Practice" (WSDFM, Women in Online Work in
+ * Kosovo, Her Power), as three compact cards (name, program, what they did) from the registered learner stories ST-03, ST-05 and ST-06. Nothing is
+ * written here: the name and program are read from the register entry, the outcome is the story file's own outcome line (src/content/stories) or,
+ * for the Kosovo participant, the register's own sentence, exactly as the Success Stories page states them (src/pages/impact/stories/index.astro).
+ * The cards are <StoryGallery> cards, so the permissions rule applies as it does on the Success Stories page (a story that may not render is dropped).
+ * The individual-story caveat (the Success Stories page's own sentence) is stated once, in the lead; the cards carry the "Individual Story" tag.
+ */
+interface Props {
+  id?: string;
+  tone?: 'white' | 'airy' | 'ice';
+}
+const { id = 'journeys', tone = 'airy' } = Astro.props;
+
+/** A register story line, "<Name> (<Program>) <what they did>" (ST-03, ST-06): the learner's name and program. */
+function named(factId: string): { name: string; program: string } {
+  const m = /^(.+?) \((.+?)\):? /.exec(fact(factId).text);
+  if (!m) throw new Error(`LearnerJourneys: ${factId} no longer reads "<Name> (<Program>) ..."`);
+  return { name: m[1], program: m[2] };
+}
+
+/** A card from a learner story file (src/content/stories), checked against the register line of the same learner. */
+async function fromStoryFile(storyId: string, factId: string): Promise<StoryCardData> {
+  const entry = await getEntry('stories', storyId);
+  if (!entry) throw new Error(`LearnerJourneys: story ${storyId} is missing`);
+  const { name, program } = named(factId);
+  if (entry.data.name !== name) throw new Error(`LearnerJourneys: ${storyId} is "${entry.data.name}" but ${factId} names "${name}"`);
+  return {
+    key: storyId,
+    name,
+    role: program,
+    pathway: 'freelance',
+    outcome: entry.data.outcome,
+    image: entry.data.photo,
+    imageAlt: entry.data.photoAlt ?? `Portrait of ${name}`,
+    assetId: `story-${storyId}`,
+  };
+}
+
+// ST-05: "Erlisa Zherka, a Women in Online Work participant in Kosovo, landed a full-time online contract with a US-based startup and was earning ...".
+// The Success Stories page states it as "She landed ..." under the program line, with no photograph.
+const st05 = /^(.+?), a Women in Online Work participant in Kosovo, (landed .+)$/.exec(fact('ST-05').text);
+if (!st05) throw new Error('LearnerJourneys: ST-05 no longer reads "<Name>, a Women in Online Work participant in Kosovo, landed ..."');
+const kosovo: StoryCardData = {
+  key: 'wow-erlisa-zherka',
+  name: st05[1],
+  role: 'Women in Online Work, Kosovo',
+  pathway: 'job',
+  outcome: `She ${st05[2]}.`,
+  assetId: 'story-erlisa-zherka',
+};
+
+// The order of the "Proof in Practice" cards above: WSDFM, Women in Online Work in Kosovo, Her Power.
+const cards = [await fromStoryFile('samina-tasneem-chowdhury', 'ST-03'), kosovo, await fromStoryFile('maria-dewan', 'ST-06')];
+const stories = linkAttrs('/impact/stories/');
+---
+
+<Section id={id} tone={tone} pad="md" aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow="Individual Stories" title="Learner Journeys" lead="One learner from each program above. They show what the path can look like for one person; they are not typical or promised outcomes." />
+  <div class="lj__cards" data-fact="ST-03 ST-05 ST-06">
+    <StoryGallery cards={cards} filter={false} />
+  </div>
+  <p class="lj__more"><a class="link" href={stories.href}>See All Success Stories<Icon name="arrow-right" size={16} /></a></p>
+</Section>
+
+<style>
+  /* compact cards: a wider, shorter photograph than the Success Stories page's 4:3, so the strip stays a strip on phones too */
+  .lj__cards :global(.sc__media) {
+    aspect-ratio: 16 / 9;
+  }
+  .lj__cards :global(.sc__monogram) {
+    width: 72px;
+    height: 72px;
+  }
+  .lj__more {
+    margin: var(--space-md) 0 0;
+  }
+</style>

@@ -9,11 +9,14 @@ import { cta } from '../lib/mailto';
  * sentence); no number is typed here.
  * HOME_HERO is the stable hero: the page's only h1, one value proposition, one primary action, one text link, the audience links and the three
  * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then survey income and employment,
- * placement (named programs), speed to earning, reach, government and National University trust, and the programs (employment programs first, SuperKids last).
+ * program results (named programs), speed to earning, reach, government and National University partners, and the programs (employment programs first, SuperKids last).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
  * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
  * the offered-place employment and income results before the attenders' income; the placement slide lists all four case-study programs.
+ * WP25h: the program-results slide is headed "In-Work Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
+ * with its own measure (67% found a first job within three months, never "in work"; PR-03), and the WSDFM line says "program records" so it is
+ * not read as the trial's follow-up employment (63.1% against 52.8%, a different measure on the evidence band).
  */
 
 export interface HeroSlideStat {
@@ -93,11 +96,20 @@ const incomeNow = fact('OC-03').stat?.value;
 const incomeBefore = fact('OC-03').stat?.from;
 const reachFigure = fact('SC-16').stat?.value;
 const countries = fact('SC-03').stat?.numeric;
+/** GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official skills partner of Bangladesh’s National University, onboarding 1.5M+ learners". */
+const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official skills partner of Bangladesh’s National University, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
+if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official skills partner of ... onboarding N+ learners"');
 if (!startedSixMonths || !incomeNow || !incomeBefore || !reachFigure || countries === undefined) throw new Error('heroSlides: OC-03, OC-05, SC-03 or SC-16 no longer carries the figure a slide headline reads');
+/** PR-01's label reads "WSDFM: 71% in work"; on this slide it is labelled as program records, apart from the trial's follow-up employment. */
+const wsdfmLabel = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
+if (!wsdfmLabel) throw new Error('heroSlides: PR-01 label no longer reads "WSDFM: <share> in work"');
+/** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
+const firstJob = /^of the \d+ trained found their first job within 3 months$/.test(fact('PR-03').stat?.label ?? '');
+if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
 const PR_TEXT = {
-  wsdfm: `${fact('PR-01').stat?.label}.`,
+  wsdfm: `WSDFM program records: ${wsdfmLabel[1]}.`,
   wow: `${fact('PR-02').stat?.label}.`,
-  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} in work within three months.`,
+  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} found a first job within three months.`,
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
 
@@ -145,9 +157,9 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
-    title: `Median Income Rose from ${incomeBefore} to ${incomeNow} Among Surveyed Completers`,
+    title: `Median Income: ${incomeBefore} Before Training, ${incomeNow} at the October 2026 Survey`,
     titleFacts: ['OC-03'],
-    lead: 'Median monthly income, and share employed, before training and at the October 2026 survey.',
+    lead: 'Among surveyed completers: median monthly income, and share employed, before training and at the October 2026 survey.',
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
       { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
@@ -157,9 +169,9 @@ export const HOME_SLIDES: HeroSlide[] = [
   },
   {
     id: 'placement',
-    eyebrow: 'Placement',
-    title: 'Placement Results by Program',
-    lead: 'Four programs, each with its partner, report their own in-work results.',
+    eyebrow: 'Program Records',
+    title: 'In-Work Results by Program',
+    lead: 'Four programs, each with its partner, with results from their own program records.',
     lines: [
       { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
@@ -172,12 +184,12 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    title: `${startedSixMonths} of Surveyed New Earners Started Within Six Months`,
+    title: `${startedSixMonths} Started Earning Within Six Months`,
     titleFacts: ['OC-05'],
     lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
     leadFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
-    links: [{ label: 'See How Fast Completers Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
+    links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/lab-women-screen',
   },
   {
@@ -192,9 +204,11 @@ export const HOME_SLIDES: HeroSlide[] = [
   },
   {
     id: 'government-trust',
-    eyebrow: 'Trust',
+    eyebrow: 'Government and University Partners',
     title: 'Government Contracts and National University Partnership',
-    fact: { id: 'GV-12', field: 'text' },
+    // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
+    lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
+    leadFacts: ['GV-12'],
     links: [{ label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' }],
     photo: 'general/nu-affiliation-group',
   },

@@ -65,12 +65,13 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
     await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');
     // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
-    await expect(page.locator('.hs__intro')).toHaveText('Results from the trial, the survey and program records, then our programs.');
+    // WP25h: the framing sentence names the order of the evidence; the program-results slide is "In-Work Results by Program".
+    await expect(page.locator('.hs__intro')).toHaveText('The evidence first: a randomized trial, a survey of completers and program records, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
-      'Median Income Rose from $82 to $245 Among Surveyed Completers',
-      'Placement Results by Program',
-      '58.8% of Surveyed New Earners Started Within Six Months',
+      'Median Income: $82 Before Training, $245 at the October 2026 Survey',
+      'In-Work Results by Program',
+      '58.8% Started Earning Within Six Months',
       '130,000+ Young People Trained in 15 Countries and Territories',
     ]);
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
@@ -174,7 +175,7 @@ test.describe('home hero slider', () => {
     await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Median Income Rose from $82 to $245 Among Surveyed Completers');
+    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Median Income: $82 Before Training, $245 at the October 2026 Survey');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();
