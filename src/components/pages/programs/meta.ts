@@ -6,15 +6,6 @@ import { cta } from '../../../lib/mailto';
 /** C14 first action (N1): the shared C14 line without its "Your first step: a discovery session." lead (two suitable times for a discovery conversation). */
 export const C14_FIRST = C14.firstAction.replace(/^Your first step: a discovery session\. /, '');
 
-/** YouthWIDE execution roadmap phases, in order (visible roadmap and the ItemList JSON-LD share these names). */
-export const ROADMAP_PHASES = [
-  'Set up and mobilize',
-  'Outreach and selection',
-  'Training',
-  'Mentor, certify and place',
-  'Parallel cohorts, track and review',
-] as const;
-
 /**
  * "Last updated" date of a program page (doc 09 §3): the day its content last changed, shown on the page and used as JSON-LD dateModified.
  * LAST_UPDATED is the date of the first publication of the program pages.

@@ -2,33 +2,27 @@
 // P15 — NU Postgraduate Diploma /programs/nu-postgraduate-diploma/ (applicant admissions page; moved under /programs/ in WP20a, the old /nu-postgraduate-diploma/ paths are redirect stubs).
 // Applicant template: key facts in the hero, the full "Before You Apply" table after the value band, one primary CTA (Apply Now) with admissions as a text link.
 // "Apply Now" is a plain link to the standalone Google Form.
+// WP30d (owner direction 2026-10-14: less is more): the definition, "employers are asking" (cost), "a clearer route" (vignettes), three-step, "start your application" and
+// "talk to admissions" bands are cut; admissions' details stay in Before You Apply and the call and application actions stay in the hero and the closing band.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
-import StepFlow from '../../../components/ui/StepFlow.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import CourseCard from '../../../components/system/CourseCard.astro';
-import { futurePhotos, nuBanner } from '../../../data/photos';
-import Icon from '../../../components/system/Icon.astro';
+import { nuBanner } from '../../../data/photos';
 import Fact from '../../../components/facts/Fact.astro';
 import { linkAttrs } from '../../../lib/url';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
-import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../../components/pages/programs/ProblemSection.astro';
-import CostSection from '../../../components/pages/programs/CostSection.astro';
 import GuideSection from '../../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
-import OfferSection from '../../../components/pages/programs/OfferSection.astro';
-import RiskSection from '../../../components/pages/programs/RiskSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { EMPATHY, HEADLINE, NU_ELIGIBILITY, ORIGIN, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_PX06 } from '../../../components/sections/copyText';
+import { HEADLINE, NU_ELIGIBILITY, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
@@ -44,7 +38,6 @@ const courses = await nuCourses();
 const faqSources: FaqSource[] = [
   // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
   { q: 'Is the NU Postgraduate Diploma Right for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: ['NU-01'] },
-  { q: 'Who Delivers the Diploma?', html: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.', evidence: ['SC-04'] },
   { q: 'Where Do I Find Eligibility, Schedule and Fees?', html: `The eligibility, duration, fee, payment and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
   { q: 'How Do I Apply?', html: `Complete the ${anchor(apply.href, 'application form')}. Our admissions team contacts you with the next steps.` },
 ];
@@ -59,8 +52,6 @@ const jsonLd = [
   },
   faqNode(faqSources, path),
 ];
-
-const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] };
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'NU Postgraduate Diploma' }]} jsonLd={jsonLd} stickyCta={apply}>
@@ -98,11 +89,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     </div>
   </MechanismSection>
 
-  <DefinitionBlock heading="What Is the NU Postgraduate Diploma?">
-    <p data-fact="SC-04">CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023, and delivers NU postgraduate diploma courses.</p>
-    <Fact id="NU-04" as="p" />
-  </DefinitionBlock>
-
   <!-- C2 -->
   <ProblemSection
     title="A Degree Alone May Not Be Enough for Today’s Digital Jobs"
@@ -110,28 +96,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     factIds={['PX-03', 'PX-05']}
     scope={{ 'PX-05': { label: 'of employers worldwide report difficulty finding the talent they need' } }}
     extra={[{ title: 'It Is Hard to Know Which Skills to Pick', text: 'Which skills and certifications to add next is not obvious, and the wrong choice costs time.' }]}
-  />
-
-  <!-- C3 -->
-  <CostSection
-    title="Employers Are Asking for Different Skills"
-    lead="AI is shifting which entry-level skills employers ask for, and a degree alone does not show them."
-    blocks={[
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what you can do, so practical skills matter.' },
-      { claim: 'AI Skills Are Growing in Demand', factId: 'PX-08', scope: 'Globally', implication: 'Employers look for AI skills alongside the degree.' },
-    ]}
-  />
-
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('nu-pgd')}
-    title="A Clearer Route into Digital Work"
-    lead="Illustrative: you finish with practical digital skills and a clearer route into work."
-    vignettes={[
-      { kind: 'Functional', title: 'Practical Digital Skills', text: 'You build skills employers ask for, in digital marketing or ICT.' },
-      { kind: 'Emotional', title: 'A Clearer Idea of What to Add Next', text: 'A structured course replaces guesswork about which skills to pick.' },
-      { kind: 'Social', title: 'A Route into Work You Can Explain', text: 'You can tell employers what you can do.' },
-    ]}
   />
 
   <Section id="before-you-apply" aria-labelledby="before-h">
@@ -154,8 +118,6 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
   <GuideSection
     eyebrow="Context"
     title="Delivered with National University"
-    empathy={EMPATHY.nuPgd}
-    origin={originShort}
     statIds={['SC-05']}
     partnerGroup="academic"
     method={{ text: 'Practical digital-skills courses, delivered by CodersTrust under National University’s training partnership.', factId: 'SC-04' }}
@@ -170,34 +132,8 @@ const originShort = { text: ORIGIN.text.split('. ')[0] + '.', facts: ['ID-02'] }
     </div>
   </ProofBand>
 
-  <!-- C8 -->
-  <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="How It Works" title="How It Works in Three Steps" />
-    <StepFlow
-      steps={[
-        { title: 'Apply', text: 'Complete the application form.' },
-        { title: 'Learn', text: 'Attend the diploma courses.' },
-        { title: 'Prepare for Work', text: 'Take your new skills into interviews, freelance work or your next role.' },
-      ]}
-    />
-  </Section>
-
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Applicants Ask" />
-
-  <!-- C11: Start band; the facts live in Before You Apply above and are not repeated here -->
-  <OfferSection title="Start Your Application" lead="Eligibility, schedule, fee, payment and recognition are in Before You Apply above.">
-    <p class="note note--key"><a class="link" href="#before-you-apply">Read Before You Apply<Icon name="arrow-right" size={16} /></a> or call <a class="link" href={NU_CALL.href}><Icon name="phone" size={16} />{NU_CALL_NUMBER}</a> to ask admissions.</p>
-  </OfferSection>
-
-  <!-- C12 -->
-  <RiskSection
-    title="Talk to Admissions Before You Decide"
-    points={[
-      { icon: 'phone', title: 'Ask First', text: 'Call with your eligibility and recognition questions before you apply.' },
-      { icon: 'handshake', title: 'Applying Starts a Conversation', text: 'After you apply, our admissions team contacts you with the next steps.' },
-    ]}
-  />
 
   <!-- C13 + C14 (WP24c): "Ready to Apply?" and "What Happens After You Apply" are one band -->
   <CTABand id="cta" heading="Ready to Apply?" text="Submit the application form. Our admissions team will contact you with the next steps." cta={apply} secondary={NU_CALL}>

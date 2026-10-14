@@ -106,7 +106,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
       // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country; IN-01: the Bangladesh initiative).
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'A national initiative in Bangladesh and co-funded country cohorts elsewhere.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },

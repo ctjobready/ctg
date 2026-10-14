@@ -26,12 +26,10 @@ test.describe('one NU eligibility sentence', () => {
     expect(compact(await slide.textContent())).toContain(`For individual learners: ${ELIGIBILITY}.`);
   });
 
-  test('the Programs hub card and finder row state it; "degree holders" is gone from the NU entries', async ({ page }) => {
+  test('the Programs hub card states it; "degree holders" is gone from the NU entries', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator(`#programs-grid li:has(a[href$="${NU}"])`);
     expect(compact(await card.textContent())).toContain(`Eligibility: ${ELIGIBILITY}`);
-    const row = page.locator(`#find tbody tr:has(a[href$="${NU}"])`);
-    expect(compact(await row.textContent())).toContain(`Eligibility: ${ELIGIBILITY}.`);
     expect(await everything(page)).not.toMatch(/degree holders?/i);
     expect(compact(await page.locator('.hero__lead').first().textContent())).toContain('the NU Postgraduate Diploma for individual learners');
   });
@@ -60,10 +58,10 @@ test.describe('one NU eligibility sentence', () => {
     }
   });
 
-  test('the YouthWIDE menu description is not "National Youth Employment Program" alone', async ({ page }) => {
+  test('the YouthWIDE menu description leads with the co-funded country cohorts, not with Bangladesh alone', async ({ page }) => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    expect(desc).toBe('A national initiative in Bangladesh and co-funded country cohorts elsewhere.');
+    expect(desc).toBe('Co-funded country cohorts across three regions, with a national initiative in Bangladesh.');
   });
 
   test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
@@ -98,10 +96,10 @@ test.describe('JobReady@Campus and JobReady@Work', () => {
     });
   }
 
-  test('the Find Your Program employer row covers hiring', async ({ page }) => {
+  test('the hub employer card covers both halves of JobReady@Work: training a team and hiring talent', async ({ page }) => {
     await open(page, 'programs/');
-    const row = compact(await page.locator('#find tbody tr:has(a[href$="programs/jobready-work/"])').textContent());
-    expect(row).toContain('Plan Your First Team Program or Hire JobReady Talent');
+    const card = compact(await page.locator('#programs-grid li:has(a[href$="programs/jobready-work/"])').textContent());
+    expect(card).toContain('Corporate training custom-developed for each organization, plus access to job-ready talent.');
   });
 });
 

@@ -2,16 +2,14 @@
 // P14 — SuperKids /programs/superkids/ (T3 conversion page; derived from matrix 4.5 for schools and partners).
 // Only registered facts are used (GV-08 agreements and targets, never delivered reach). Content the spec marks
 // "to confirm with CodersTrust" is written as non-claim copy or omitted (see the page report): C3, C8 and C10.
-// Declared compression (doc 06 P14, round 9 Mi3): no separate C3 band; C2 (the PX-08 sentence) carries the transition line "It doesn’t have to be this way."
-// and leads straight into C4, because no registered fact supports a cost-of-late-exposure statement (comment only, nothing rendered).
+// Declared compression (doc 06 P14, round 9 Mi3): no separate C3 band, and (WP30d, owner direction 2026-10-14: less is more) no In Short, definition, problem, "what your school
+// receives" or separate partner band either: the hero lead, the glance table and the three course vignettes already say it. Robi (PA-03, per doc 06 P14) is no longer named on the page (a one-line partner sentence is not decision information);
+// the general government logo strip stays out, because its logos are CodersTrust-wide relationships, not SuperKids partners.
 // The C6 positioning statement (POSITIONING.superkids) has no "unlike … we …" clause: it states only what GV-08 registers.
-// C5 names only the SuperKids agreements (DoICT, NCTB; GV-08) and Robi (PA-03, per doc 06 P14): the general government logo strip is not shown,
-// because its logos are CodersTrust-wide relationships, not SuperKids partners.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import FeatureCard from '../../components/ui/FeatureCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
@@ -19,19 +17,15 @@ import { futurePhotos, galleryPhotos } from '../../data/photos';
 import GalleryDisclosure from '../../components/pages/programs/GalleryDisclosure.astro';
 import StatusTag from '../../components/system/StatusTag.astro';
 import Fact from '../../components/facts/Fact.astro';
-import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
-import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
-import InShort from '../../components/pages/partners/InShort.astro';
 import { fact } from '../../data/facts';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING } from '../../data/copy';
+import { C14_FIRST, ctaFor, serviceNode } from '../../components/pages/programs/meta';
+import { MICRO_COMMITMENT, POSITIONING, PRICING } from '../../data/copy';
 import { COURSES_URL } from '../../lib/site';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -68,53 +62,22 @@ const courses = linkAttrs(COURSES_URL);
   <!-- C1 -->
   <HeroBand
     audience="SuperKids · For Schools and Education Partners"
-    title="Help Young Learners Explore Coding, Robotics and Digital Art"
+    title="Bring Coding, Robotics and Digital Art into Your Classroom"
     lead="SuperKids brings block coding, robotics and graphic design for kids into schools, with courses shaped with you in a discovery session, so children build digital skills early."
     cta={inquiry}
     artSeed="superkids"
   />
 
-  <!-- WP21: In Short, built only from content this page already states. The delivered number is not repeated here (it is in the glance table and in the agreements band). -->
-  <InShort
-    bullets={[
-      'SuperKids is CodersTrust’s K-12 STEAM program: coding, robotics and digital art for young learners, offered through schools and education partners.',
-      'Courses are block coding, robotics, and graphic design for kids, taught through schools and education partners and shaped with you in a discovery session.',
-      'The DoICT and NCTB agreements set targets for reach; they are not delivered reach.',
-      'Prices are not published. Bring your location, age groups, goals and timeline to the conversation.',
-    ]}
-    links={[
-      { label: 'Courses', href: '#mechanism' },
-      { label: 'What You Receive', href: '#school-receives' },
-      { label: 'What Is in Place', href: '#agreements' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-    contracting={false}
-  />
-
-  <DefinitionBlock heading="What Is SuperKids?">
-    <p>SuperKids is CodersTrust’s K-12 STEAM program: coding, robotics and digital art for young learners, offered through schools and education partners.</p>
-  </DefinitionBlock>
-
   <ProgramGlance
+    title="SuperKids at a Glance"
     rows={[
-      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early.' },
-      { label: 'Delivery', text: 'Courses taught through schools and education partners, shaped with you in a discovery session.' },
-      { label: 'Courses', text: 'Block coding, robotics, and graphic design for kids.' },
+      { label: 'Who It Is For', text: 'Schools and education partners that want young learners to build digital skills early, through block coding, robotics, and graphic design for kids, shaped with you in a discovery session.' },
       { label: 'Delivered So Far', text: `${fact('SK-05').text}.`, facts: ['SK-05'] },
-      { label: 'Agreements', text: 'Agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB); see What Is in Place below.', facts: ['GV-08'] },
-      { label: 'Agreed Before You Start', text: 'Your location, age groups and approximate number of learners, your goals and your timeline. Prices are not published.', facts: ['PD-02'] },
+      { label: 'Agreements', text: 'Agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB); details below.', facts: ['GV-08'] },
     ]}
   />
 
-  <!-- C2 -->
-  <ProblemSection
-    title="Digital Skills Start Early"
-    bluf="SuperKids brings the first steps of STEAM, coding, robotics and digital art into the classroom."
-    factIds={[]}
-  />
-
-  <!-- C4 (C3 omitted: no register fact supports a cost-of-late-exposure statement) -->
+  <!-- C4 (C2 and C3 omitted: the hero already says why digital skills start early, and no register fact supports a cost-of-late-exposure statement) -->
   <FutureBand
     photos={futurePhotos('superkids')}
     title="A Classroom with Coding, Robotics and Digital Art"
@@ -126,38 +89,12 @@ const courses = linkAttrs(COURSES_URL);
     ]}
   />
 
-  <!-- C5 -->
-  <GuideSection
-    title="Public-Sector Agreements and a Private-Sector Partner"
-    empathy="You want children to build digital skills early."
-    origin={ORIGIN}
-    showPartners={false}
-  >
-    <p data-fact="GV-08">SuperKids has agreements with the Department of ICT (DoICT) and the National Curriculum and Textbook Board (NCTB).</p>
-    <p data-fact="PA-03">Robi is a private-sector partner.</p>
-  </GuideSection>
-
-  <!-- C6 -->
-  <MechanismSection title="How SuperKids Runs" positioning={POSITIONING.superkids} lead="Courses for young learners, taught through schools and education partners." eyebrow="Courses">
-    <div class="courses">
-      <FeatureCard icon="blocks" title="Block Coding" text="Visual coding with blocks." />
-      <FeatureCard icon="bot" title="Robotics" text="Building and programming simple robots." />
-      <FeatureCard icon="palette" title="Graphic Design for Kids" text="Digital art and design." />
-    </div>
+  <!-- C6 (the positioning statement opens the band) -->
+  <MechanismSection title="A K-12 STEAM Program Offered Through Schools" positioning={POSITIONING.superkids} eyebrow="The Program">
     <p class="courses__more" data-reveal>
       Looking for courses for older learners? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a>
     </p>
   </MechanismSection>
-
-  <!-- What a school receives (WP18b): built only from content already on this page (the courses, the delivery model, the safeguarding FAQ). -->
-  <Section id="school-receives" tone="ice" aria-labelledby="school-receives-h">
-    <SectionHeader id="school-receives-h" eyebrow="What You Get" title="What Your School Receives" lead="Courses for young learners, delivered with you, with safeguarding explained up front." />
-    <div class="receives">
-      <FeatureCard icon="blocks" title="Courses in STEAM, Coding, Robotics and Digital Art" text="Block coding, robotics, and graphic design for kids, within a K-12 STEAM program." />
-      <FeatureCard icon="school" title="Delivery Through Schools and Education Partners" text="Courses are taught through schools and education partners, shaped with you in a discovery session." />
-      <FeatureCard icon="shield-check" title="Safeguarding, Answered Up Front" text="How safeguarding works is explained in the questions below, before you ask." href="#faq" />
-    </div>
-  </Section>
 
   <!-- C7: agreements and targets only -->
   <Section id="agreements" tone="airy" aria-labelledby="agreements-h">
@@ -230,26 +167,6 @@ const courses = linkAttrs(COURSES_URL);
 </LandingLayout>
 
 <style>
-  .courses {
-    display: grid;
-    gap: var(--space-gutter);
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 900px) {
-    .courses {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .receives {
-    display: grid;
-    gap: var(--space-gutter);
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 900px) {
-    .receives {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
   .courses__more {
     margin: var(--space-lg) 0 0;
     color: var(--on-surface-variant);

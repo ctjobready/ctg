@@ -11,17 +11,17 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { fact } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
+// WP30d (owner direction 2026-10-14: less is more): shorter table notes, one live-today summary, a single roadmap sentence and a shorter "why" line.
 const path = '/our-model/jobready-platform/';
 const JOBREADY = 'https://jobready.global/';
 const description = desc('JobReady is CodersTrust’s education and employment platform. Partner portals, marketing automation, CRM and AI chat are live; more modules follow.');
 const faqIds = ['Q11'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: CodersTrust’s Digital Education and Employment Platform', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -30,8 +30,8 @@ type Status = 'Live' | 'Operating' | 'Pre-Launch' | 'Roadmap';
 const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-Launch': 'info', Roadmap: 'sale' };
 const rows: { job: string; capability: string; status: Status; note: string }[] = [
   { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
-  { job: 'Connect to Work', capability: 'Gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until it launches, placement support is provided by CodersTrust’s placement team, and marketplaces such as Upwork and Fiverr are also used.' },
-  { job: 'Supply Talent', capability: 'Employer marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until it launches, employers are introduced to candidates through CodersTrust’s placement team.' },
+  { job: 'Connect to Work', capability: 'Gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, placement support comes from CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
+  { job: 'Supply Talent', capability: 'Employer marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, employers are introduced to candidates through CodersTrust’s placement team.' },
   { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Available to partner institutions for digital delivery.' },
   // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
   { job: 'Across the Platform', capability: 'Marketing automation, CRM and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
@@ -39,7 +39,7 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
 // Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
 const roadmap = [
-  { icon: 'route', title: 'Planned Personalized and Adaptive Learning', text: 'The platform is designed to personalize each learner’s path and to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
+  { icon: 'route', title: 'Planned Personalized and Adaptive Learning', text: 'Designed to personalize each learner’s path and to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
 ];
 const toc = [
   { id: 'jobs', label: 'Four Jobs, One Platform' },
@@ -54,7 +54,7 @@ const d = discoveryCta();
 
 <LongformLayout
   title={title('JobReady Platform')}
-  heading="JobReady: CodersTrust’s Digital Education and Employment Platform"
+  heading="JobReady: A Platform Built to Connect Learning to Work"
   eyebrow="Our Model"
   lead="JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Modules are rolling out in stages."
   description={description}
@@ -65,7 +65,7 @@ const d = discoveryCta();
   jsonLd={jsonLd}
 >
   <ReportSection id="jobs" title="Four Jobs, One Platform">
-    <p data-fact="IN-04">JobReady is built around four jobs. It is designed to train youth through courses that prepare for industry certification, connect learners to local, remote and global work, supply employers with job-ready talent, and give institutions a digital delivery platform. The table below says which capabilities are live today.</p>
+    <p data-fact="IN-04">JobReady is designed to do four jobs: train youth through courses that prepare for industry certification, connect learners to local, remote and global work, supply employers with job-ready talent, and give institutions a digital delivery platform. The table below says which capabilities are live today.</p>
   </ReportSection>
 
   <ReportSection id="status" title="Rollout Status">
@@ -87,13 +87,13 @@ const d = discoveryCta();
       </table>
     </section>
     <Callout label="What Is Live Today">
-      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch, and the adaptive learning below is planned. AI chat is live today. Adaptive learning remains on the roadmap.</p>
+      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Adaptive learning remains on the roadmap.</p>
     </Callout>
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>
 
   <ReportSection id="why" title="Why Institutions Choose JobReady">
-    <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach. Live today for institutions: partner portals, marketing automation, CRM and AI chat, plus a course storefront that operates at jobready.global.</p>
+    <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
     <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
@@ -108,7 +108,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="roadmap" title="Planned Adaptive Learning">
-    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. This is roadmap, described as what the platform is designed to do, and it is not live.</p>
+    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. This is roadmap, not live.</p>
     <div class="jr__cards jr__cards--roadmap" data-fact="IN-06">
       {roadmap.map((r) => (
         <FeatureCard icon={r.icon} title={r.title} text={r.text}>

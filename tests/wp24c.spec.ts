@@ -41,43 +41,44 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(routes).toHaveCount(3);
   });
 
-  test('the 84.6% survey figure is labeled as the October 2026 survey and sits in no Target-tagged tile', async ({ page }) => {
+  test('WP30d: the Bangladesh national initiative is one band (#governments) and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    const tile = page.locator('.pg__card', { hasText: '84.6%' });
-    await expect(tile).toHaveCount(1);
-    await expect(tile).toContainText('October 2026 survey');
-    await expect(tile).not.toContainText(/Target/);
+    const band = page.locator('section#governments');
+    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Bangladesh: The National Initiative and Reference Country');
+    await expect(band.locator('.status-tag', { hasText: 'Target' })).toHaveCount(1);
+    await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
+    await expect(band).toContainText('not a delivered figure');
   });
 
-  test('the Cost of Waiting band drops the 72% employer card', async ({ page }) => {
+  test('the Cost of Waiting band drops the 72% employer card and keeps the two evidence cards', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#cost')).not.toContainText('72%');
-    await expect(page.locator('#cost article.card')).toHaveCount(3);
+    await expect(page.locator('#cost article.card')).toHaveCount(2);
   });
 
   test('the track record comes before what success looks like', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const titles = await headingsOf(page);
     const record = titles.findIndex((t) => /We Have Built This Path/i.test(t));
-    const vision = titles.findIndex((t) => /What Your Reports Will Show/i.test(t));
+    const vision = titles.findIndex((t) => /Reports That Show Who Started Earning/i.test(t));
     expect(record).toBeGreaterThan(-1);
     expect(vision).toBeGreaterThan(record);
   });
 
-  test('the FAQ is trimmed to six decision questions, the national-scale answer leading with Her Power', async ({ page }) => {
+  test('the FAQ is trimmed to five decision questions, the national-scale answer leading with Her Power in two short paragraphs', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const items = page.locator('#faq details');
-    await expect(items).toHaveCount(6);
+    await expect(items).toHaveCount(5);
     const scale = items.filter({ hasText: 'Can You Deliver at National Scale?' });
     await expect(scale.locator('p').first()).toContainText(/^Her Power/);
-    await expect(scale.locator('p')).toHaveCount(3);
+    await expect(scale.locator('p')).toHaveCount(2);
   });
 });
 
 test.describe('Programs hub (/programs/)', () => {
   test('a routing line sends institutions to Partner with Us', async ({ page }) => {
     await open(page, 'programs/');
-    const line = page.locator('#find .pf__route');
+    const line = page.locator('#programs-grid .hub__more');
     await expect(line).toContainText('Deciding as an institution?');
     await expect(line.getByRole('link', { name: 'Start with Partner with Us.' })).toHaveAttribute('href', /\/partner-with-us\/$/);
   });
@@ -91,10 +92,11 @@ test.describe('Programs hub (/programs/)', () => {
     await expect(card('JobReady@Work').getByRole('link', { name: 'For Employers' })).toHaveAttribute('href', /partner-with-us\/employers\/$/);
   });
 
-  test('the reach band reads "Reach Since 2014" and a "Protected by Design" band follows the evidence', async ({ page }) => {
+  test('the reach band reads "Reach Since 2014" and follows the evidence', async ({ page }) => {
     await open(page, 'programs/');
     await expect(page.getByRole('heading', { level: 2, name: 'Reach Since 2014' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Protected by Design' })).toBeVisible();
+    const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
+    expect(order.indexOf('reach')).toBeGreaterThan(order.indexOf('proof-band'));
   });
 });
 
@@ -102,8 +104,8 @@ test.describe('Other program pages', () => {
   test('JobReady@Work: the final CTA reads "Plan Your First Team Program" and the broader evidence is one link', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     await expect(page.locator('#cta .btn--primary')).toHaveText(/Plan Your First Team Program/);
-    // WP25s: step 7 (Measurable Outcomes) names what is measured; "checked against the measures you set" stays with step 5 (Progress Evaluation).
-    await expect(page.locator('main')).toContainText('Team capability in the digital and AI tasks defined in the needs assessment.');
+    // WP25s: the measurable outcome names what is measured; "checked against the measures you set" stays with the progress evaluation (WP30d: four blocks, not seven steps).
+    await expect(page.locator('#mechanism')).toContainText('toward team capability in the digital and AI tasks defined in the needs assessment.');
   });
 
   test('SuperKids: the agreement disclaimer is not repeated in the glance table or the partners band, and the gallery shows four photos first', async ({ page }) => {
@@ -260,9 +262,10 @@ test.describe('Our Model', () => {
     await expect(page.locator('#status')).toContainText('Adaptive learning remains on the roadmap.');
   });
 
-  test('TalentLEAP: How It Works is three labeled rows and every On This Page label equals its heading', async ({ page }) => {
+  test('TalentLEAP: How It Works is the five-step stage pipeline (no repeated rows) and every On This Page label equals its heading', async ({ page }) => {
     await open(page, 'our-model/talentleap/');
-    await expect(page.locator('#how .tl__row')).toHaveCount(3);
+    await expect(page.locator('#how .sp__step')).toHaveCount(5);
+    await expect(page.locator('#how .tl__row')).toHaveCount(0);
     const links = page.locator('.lf-toc a[href^="#"]');
     const n = await links.count();
     expect(n).toBeGreaterThanOrEqual(6);

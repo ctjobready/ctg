@@ -1,36 +1,25 @@
 ---
 // P13 — JobReady@Work /programs/jobready-work/ (T3 conversion page; doc 04 matrix 4.6 — employers; C1 → C14).
+// WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the seven-step process cards and the three track cards are cut; the approach is four
+// short blocks (Scope, Deliver, Measure, Support) that keep the "measures you set" and "team capability" wording. #mechanism and #next-steps stay (linked from the employer due-diligence view).
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
-import SectionHeader from '../../components/ui/SectionHeader.astro';
-import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import FeatureCard from '../../components/ui/FeatureCard.astro';
-import Button from '../../components/system/Button.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
-import FutureBand from '../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../data/photos';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
 import ProofBand from '../../components/sections/ProofBand.astro';
-import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../../components/sections/FeaturesTable.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
-import InShort from '../../components/pages/partners/InShort.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
-import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
-import CostSection from '../../components/pages/programs/CostSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
-import PhaseList from '../../components/pages/programs/PhaseList.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, TRIAL_SCOPE } from '../../data/copy';
+import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING, TRIAL_SCOPE } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -42,7 +31,6 @@ const title = 'JobReady@Work: Upskill Teams, Hire Talent';
 const description = `JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Globally, ${statValue('PX-05')} of employers report difficulty finding talent.`;
 const work = ctaFor('work');
 const talent = ctaFor('talent');
-const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 const faqSources: FaqSource[] = [
   { audience: 'variants', id: 'Q8-employer' },
@@ -55,21 +43,13 @@ const jsonLd = [
   faqNode(faqSources, path),
 ];
 
-// WP22: the seven steps in three groups (Scope, Deliver, Measure and Support); the running numbers 1 to 7 are kept.
+// IN-10: needs assessment → customized solution → comprehensive curriculum → interactive workshops → progress evaluation → post-training support → measurable outcomes.
+// WP25s: "checked against the measures you set" belongs to the progress evaluation; the measurable outcome is the team capability named in the needs assessment.
 const approach = [
-  { title: 'Needs Assessment', text: 'Scopes the skills and team size.' },
-  { title: 'Customized Solution', text: 'A program shaped around your roles.' },
-  { title: 'Comprehensive Curriculum', text: 'Custom-developed for your organization.' },
-  { title: 'Interactive Workshops', text: 'Your team learns on tasks from your own roles.' },
-  { title: 'Progress Evaluation', text: 'Checked against the measures you set.' },
-  { title: 'Post-Training Support', text: 'Support continues after the workshops.' },
-  // WP25s: step 5 is the check against the measures you set; step 7 names what is measured (the register's "measurable outcomes"), from the glance table's own wording.
-  { title: 'Measurable Outcomes', text: 'Team capability in the digital and AI tasks defined in the needs assessment.' },
-].map((s) => ({ ...s, factIds: ['IN-10'] }));
-const approachGroups = [
-  { title: 'Scope', items: approach.slice(0, 2), start: 1, cols: 2 as const },
-  { title: 'Deliver', items: approach.slice(2, 4), start: 3, cols: 2 as const },
-  { title: 'Measure and Support', items: approach.slice(4), start: 5, cols: 3 as const },
+  { label: 'Scope', title: 'Needs Assessment, Then a Customized Solution', text: 'Scopes the skills and team size, then shapes a program around your roles.', icon: 'clipboard-check' },
+  { label: 'Deliver', title: 'Custom Curriculum and Interactive Workshops', text: 'Your team learns on tasks from your own roles.', icon: 'presentation' },
+  { label: 'Measure', title: 'Progress Evaluation', text: 'Checked against the measures you set.', icon: 'target' },
+  { label: 'Support', title: 'Post-Training Support and Measurable Outcomes', text: 'Support continues after the workshops, toward team capability in the digital and AI tasks defined in the needs assessment.', icon: 'handshake' },
 ];
 ---
 
@@ -77,7 +57,7 @@ const approachGroups = [
   <!-- C1 -->
   <HeroBand
     audience="JobReady@Work · For Employers"
-    title="Build the Digital Capabilities Your Teams Need Now"
+    title="Build AI-Ready Teams Around Your Own Roles"
     lead="JobReady@Work builds custom AI-ready training for your team, from a needs assessment to interactive workshops, and sources job-ready talent through CodersTrust’s placement team. Pick one or both."
     cta={work}
     artSeed="jobready-work"
@@ -85,37 +65,12 @@ const approachGroups = [
 
   <RouteLink kicker="The Partnership Route" label="Employer Partnership Overview" href="/partner-with-us/employers/" note="Ready to discuss this program? Use the inquiry action on this page." />
 
-  <!-- WP21: In Short, built only from content this page already states (no figure added) -->
-  <InShort
-    bullets={[
-      'JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Pick one or both.',
-      'Each program is custom-developed: a needs assessment, a customized curriculum and interactive workshops built around the tasks in your own roles.',
-      'Candidates are introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
-      'Start with a pilot team. Success measures are agreed before you start, scaling up is your decision, and pricing is confirmed after the needs assessment.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'Delivery Record', href: '#offer-evidence' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Evidence', href: '#proof-band' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-    contracting={false}
-  />
-
-  <DefinitionBlock heading="What Is JobReady@Work?">
-    <p data-fact="IN-10"><Fact id="IN-10" />.</p>
-  </DefinitionBlock>
-
   <ProgramGlance
+    title="JobReady@Work at a Glance"
     rows={[
-      { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles.', facts: ['IN-10'] },
-      { label: 'Delivery', text: 'A program custom-developed for each organization: a needs assessment, a customized curriculum and interactive workshops.', facts: ['IN-10'] },
-      { label: 'Training', text: 'Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership programs with AIvolve.', facts: ['IN-10', 'PA-07'] },
-      { label: 'Certification Preparation', text: 'Preparation for an industry certification where a track offers one; exam eligibility and attempts are agreed in the program scope.', facts: ['PD-03'] },
-      { label: 'Talent', text: 'Job-ready candidates through CodersTrust’s placement team, scoped against the experience and credentials available.', facts: ['IN-04'] },
+      { label: 'Who It Is For', text: 'Employers who want their teams upskilled for AI workflows, and job-ready digital talent for open roles, introduced through CodersTrust’s placement team and scoped against the experience and credentials available.', facts: ['IN-10', 'IN-04'] },
+      { label: 'Training', text: 'Soft-skills and hard-skills tracks, built around the tasks in your own roles; AI leadership programs with AIvolve. Certification preparation where a track offers one, with exam eligibility and attempts agreed in the program scope.', facts: ['IN-10', 'PA-07', 'PD-03'] },
       { label: 'Measuring Progress', text: 'Post-training support and a progress evaluation against the measures you set, for team capability in the digital and AI tasks defined in the needs assessment.', facts: ['IN-10'] },
-      { label: 'Agreed Before You Start', text: 'The skills and team size from the needs assessment, the success measures, and the scope and price of the program.', facts: ['IN-10', 'PD-02'] },
     ]}
   />
 
@@ -123,7 +78,6 @@ const approachGroups = [
   <GuideSection
     title="Employers and Partners We Work With"
     empathy={EMPATHY.employers}
-    origin={ORIGIN}
     statIds={['SC-15']}
     partnerGroup="private"
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
@@ -136,21 +90,7 @@ const approachGroups = [
   </GuideSection>
 
   <!-- C6 -->
-  <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} lead="JobReady@Work is custom-developed for each organization, in seven steps." eyebrow="How It Works">
-    {
-      approachGroups.map((g) => (
-        <div class="grp">
-          <h3 class="grp__title t-heading-xl">{g.title}</h3>
-          <PhaseList items={g.items} cols={g.cols} start={g.start} level={4} label={`JobReady@Work approach: ${g.title}`} />
-        </div>
-      ))
-    }
-    <div class="tracks" data-fact="IN-10 PA-07 IN-04 PD-03 PD-10">
-      <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for. Certification tracks are chosen from employer demand." />
-      <FeatureCard icon="sparkles" title="AI Leadership Programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
-      <FeatureCard icon="briefcase" title="Candidate Sourcing Through CodersTrust’s Placement Team" text="Job-ready candidates are introduced through CodersTrust’s placement team. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch and are designed to add a self-serve hiring channel." />
-    </div>
-  </MechanismSection>
+  <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} />
 
   <!-- Proof band directly after the mechanism (WP18b): the employer delivery record leads; the youth-program evidence follows the offer below. -->
   <PairedEvidence
@@ -220,24 +160,6 @@ const approachGroups = [
     padding: 0;
     display: grid;
     gap: var(--space-sm);
-  }
-  .grp + .grp {
-    margin-top: var(--space-lg);
-  }
-  .grp__title {
-    margin: 0 0 var(--space-sm);
-    color: var(--secondary);
-  }
-  .tracks {
-    margin-top: var(--space-lg);
-    display: grid;
-    gap: var(--space-gutter);
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 900px) {
-    .tracks {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
   .updated {
     margin: 0 0 var(--space-md);

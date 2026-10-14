@@ -1,4 +1,6 @@
 ---
+// Our Model hub /our-model/. WP30d (owner direction 2026-10-14: less is more): In Short, the quality-assurance band, the two delivery sub-headings, the trial proof line under the definition,
+// the safeguarding FAQ and the long card texts are cut; the delivery design choices are six one-sentence cards, and the FAQ keeps three decision questions with short answers.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
@@ -9,13 +11,13 @@ import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import InShort from '../../components/pages/partners/InShort.astro';
 import { fact } from '../../data/facts';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
 import { SAFEGUARDING, MICRO_COMMITMENT, RCT_HEADLINE, SURVEY_EMPLOYMENT } from '../../data/copy';
+import type { FaqSource } from '../../components/pages/programs/faq';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/our-model/';
@@ -23,55 +25,44 @@ const lead = 'One integrated path: assessment, certification-focused training, t
 const description = desc(lead);
 // WP25s: the answer under the H1 is the lead above, scoped (as the path section below says) to every supported cohort.
 const answer = `${lead.replace(/\.$/, '')}, agreed for each supported cohort.`;
-// "What Is CodersTrust?" is followed by the problem in one line and the strongest proof, both restated from register facts (PX-01, RC-02).
-const proof = `In a randomized trial of CodersTrust’s predecessor program, women offered a place were ${fact('RC-02').stat!.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points')} more likely to be employed.`;
-// Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
+// The trial's evaluator is spelled out once on this page, where the evidence first names it (the register's headline says "BIGD").
+const BIGD = 'the BRAC Institute of Governance and Development (BIGD)';
+if (!RCT_HEADLINE.text.includes('by BIGD')) throw new Error('Our Model: the RC-01 headline no longer says "by BIGD"; update the expansion');
+const trial = { ...RCT_HEADLINE, text: RCT_HEADLINE.text.replace('by BIGD', `by ${BIGD}`) };
+// Each card states its register fact (PD-xx) in one or two plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
-const startingPoints = [
-  { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. Selection uses a customized psychometric analysis, a written test and an interview; a small number may not be selected, and the reasons are reported.' },
+const cards = [
+  { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. A small number may not be selected, and the reasons are reported.' },
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
   { icon: 'wifi', title: 'Connectivity-Light Delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
+  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal.` },
+  { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'From about month 5, programs can run up to 10 certification cohorts in parallel. Larger programs use hub-and-spoke delivery with certified local facilitators.' },
+  { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
-const atScale = [
-  { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification takes ${val('PD-01')} training hours (50 hours of lectures and 50 hours of hands-on labs) over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client). Learners then join the alumni network.` },
-  { icon: 'network', title: 'Hub-and-Spoke Delivery at Scale', id: 'PD-06', text: 'From about month 5, programs can run up to 10 certification cohorts in parallel, in classes of 20 (labs) and 40 (lectures). Larger programs use hub-and-spoke delivery with certified local facilitators.' },
-  { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Placement support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
-];
-const qa = 'Programs use common practical-assessment rubrics, sampled moderation of portfolios and assessments, and trainer observation, with remediation before the next cohort. Completion, competency and external-exam results are reported separately.';
 const d = discoveryCta();
+
+// Three decision questions with short answers; the timeline answer is the shared bank answer.
+const faqSources: FaqSource[] = [
+  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
+  { audience: 'foundations', id: 'Q7' },
+  { q: 'What Does It Cost?', html: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions run from outreach and selection to placement support and 12 months of outcome tracking, with the exam fee included; devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.', evidence: ['PD-02', 'PD-02a', 'PD-05'] },
+];
 ---
 
 <BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
-  <Hero variant="inner" eyebrow="Our Model" title="How the CodersTrust Model Works" lead={answer} artSeed="our-model-hub">
+  <Hero variant="inner" eyebrow="Our Model" title="One Path from Assessment to Career, with Outcomes Tracked" lead={answer} artSeed="our-model-hub">
     <Fragment slot="actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={linkAttrs('/impact/').href}>See the Evidence</a>
     </Fragment>
   </Hero>
 
-  <!-- WP25s: In Short, built only from sentences this page already states. BIGD is spelled out here, where the page first names it. -->
-  <InShort
-    bullets={[
-      'For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. JobReady@Work, the NU Postgraduate Diploma and SuperKids have their own delivery structures.',
-      'Every supported cohort agrees an outcome-tracking plan before delivery begins, and completion, competency and external-exam results are reported separately.',
-      'The evidence is a randomized trial of a predecessor program by the BRAC Institute of Governance and Development (BIGD), kept apart from the survey of completers.',
-    ]}
-    links={[
-      { label: 'The Path', href: '#path' },
-      { label: 'Delivery', href: '#delivery' },
-      { label: 'Evidence', href: '#evidence' },
-      { label: 'Questions', href: '#faq' },
-    ]}
-    contracting={false}
-  />
-
   <DefinitionBlock>
     <p data-fact="PX-01">An estimated {fact('PX-01').stat!.value} educated young people aged 15–24 are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.</p>
-    <p data-fact="RC-02">{proof}</p>
   </DefinitionBlock>
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
-    <SectionHeader id="path-h" eyebrow="How It Works" title="One Integrated Path, from Assessment to Career" lead="Learn. Earn. Prosper. Each stage prepares learners for the next, and every supported cohort agrees an outcome-tracking plan before delivery begins." />
+    <SectionHeader id="path-h" eyebrow="How It Works" title="Three Stages: Learn, Earn, Prosper" lead="Each stage prepares learners for the next, and every supported cohort agrees an outcome-tracking plan before delivery begins." />
     <p class="om__scope">
       For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. <a class="link" href={linkAttrs('/programs/jobready-work/').href}>JobReady@Work</a>, the <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>NU Postgraduate Diploma</a> and <a class="link" href={linkAttrs('/programs/superkids/').href}>SuperKids</a> have their own delivery structures.
     </p>
@@ -80,18 +71,9 @@ const d = discoveryCta();
   </Section>
 
   <Section id="delivery" aria-labelledby="delivery-h">
-    <SectionHeader id="delivery-h" eyebrow="Delivery Model" title="How a Program Is Delivered" lead="The design choices that make the path work for learners who start from different places." />
-    <h3 class="om__group t-heading-xl">Supporting Different Starting Points</h3>
+    <SectionHeader id="delivery-h" eyebrow="Delivery Model" title="Designed for Learners Who Start from Different Places" />
     <div class="grid-cards">
-      {startingPoints.map((x) => (
-        <FeatureCard icon={x.icon} title={x.title}>
-          <p class="card__text" data-fact={x.id}>{x.text}</p>
-        </FeatureCard>
-      ))}
-    </div>
-    <h3 class="om__group t-heading-xl">Delivering at Scale</h3>
-    <div class="grid-cards">
-      {atScale.map((x) => (
+      {cards.map((x) => (
         <FeatureCard icon={x.icon} title={x.title}>
           <p class="card__text" data-fact={x.id}>{x.text}</p>
         </FeatureCard>
@@ -99,12 +81,7 @@ const d = discoveryCta();
     </div>
   </Section>
 
-  <Section tone="airy" aria-labelledby="qa-h">
-    <SectionHeader id="qa-h" eyebrow="Quality" title="Quality Assurance" />
-    <p class="om__text" data-fact="PD-16">{qa}</p>
-  </Section>
-
-  <Section aria-labelledby="safe-h">
+  <Section tone="airy" aria-labelledby="safe-h">
     <SectionHeader id="safe-h" eyebrow="Safeguarding and Data" title="Safeguarding and Data Protection Are Agreed per Program" />
     <div class="om__text"><CopyText block={SAFEGUARDING} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
@@ -118,18 +95,14 @@ const d = discoveryCta();
     </div>
   </Section>
 
-  <Section id="evidence" tone="airy" aria-labelledby="evid-h">
+  <Section id="evidence" aria-labelledby="evid-h">
     <SectionHeader id="evid-h" eyebrow="Evidence" title="Evidence Behind the Approach" />
-    <div class="om__text"><CopyText block={RCT_HEADLINE} /><CopyText block={SURVEY_EMPLOYMENT} /></div>
+    <div class="om__text"><CopyText block={trial} /><CopyText block={SURVEY_EMPLOYMENT} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <!-- WP24c: a compact partner Q&A band, built only from the shared FAQ answers -->
-  <FaqSection
-    sources={['Q3', 'Q7', 'Q8', 'Q9'].map((id) => ({ audience: 'foundations' as const, id }))}
-    title="Questions Partners Ask"
-    eyebrow="Partner Questions"
-  />
+  <!-- WP24c: a compact partner Q&A band -->
+  <FaqSection sources={faqSources} title="Questions Partners Ask" eyebrow="Partner Questions" />
 
   <CTABand id="cta" heading="Start with a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Evidence', href: '/impact/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
@@ -150,12 +123,5 @@ const d = discoveryCta();
     max-width: var(--measure);
     margin: 0 0 var(--space-lg);
     color: var(--on-surface-variant);
-  }
-  .om__group {
-    margin: var(--space-xl) 0 var(--space-md);
-    color: var(--secondary);
-  }
-  .om__group:first-of-type {
-    margin-top: var(--space-lg);
   }
 </style>

@@ -103,29 +103,17 @@ test.describe('Programs', () => {
     await expect(nu.getByRole('link', { name: 'See the diploma.' })).toHaveAttribute('href', /programs\/nu-postgraduate-diploma\/$/);
   });
 
-  test('the YouthWIDE hub card and table read "from training to paid work" and "share of trainees"', async ({ page }) => {
+  test('the YouthWIDE hub card reads "from training to paid work"', async ({ page }) => {
     await open(page, 'programs/');
     const text = compact(await main(page));
     expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on paid-work outcomes, not only enrollment.');
-    expect(text).toContain('Share of trainees in paid digital work, from monthly reports');
   });
 
-  test('step two of the path is two sentences', async ({ page }) => {
-    await open(page, 'programs/');
-    const text = compact(await page.locator('#path').innerText());
-    expect(text).toContain('with placement support alongside. Mentoring works toward each track’s agreed work-entry goal');
-  });
-
-  test('YouthWIDE population cards carry "Priority Group", not "Target"; third-gender stays "Planned"', async ({ page }) => {
+  test('YouthWIDE: the 2030 aim keeps its own "Target" tag and its not-delivered note in the Bangladesh band, beside two delivered-scale figures', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    const card = (title: string) => page.locator('.pg__card', { has: page.getByRole('heading', { level: 3, name: title }) });
-    for (const t of ['Unemployed Graduates', 'Madrasah Youth', 'Climate-Vulnerable Coastal Youth', 'Indigenous Communities']) {
-      await expect(card(t)).toContainText('Priority Group');
-      await expect(card(t).locator('.status-tag')).toHaveCount(0);
-    }
-    await expect(card('Third-Gender People').locator('.status-tag')).toHaveText('Planned');
-    // the 2030 aim keeps its own "Target" tag in the delivery band
-    await expect(page.locator('.mech-target .status-tag')).toHaveText('Target');
+    await expect(page.locator('#governments .mech-target .status-tag')).toHaveText('Target');
+    await expect(page.locator('#governments .mech-target')).toContainText('not a delivered figure');
+    await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
   });
 
   test('Campus says the empathy line once, and puts the Track Record before the vision', async ({ page }) => {
@@ -140,13 +128,6 @@ test.describe('Programs', () => {
     expect(text).not.toContain('training matches what employers say');
   });
 
-  test('the Find Your Program eyebrow no longer repeats its heading', async ({ page }) => {
-    await open(page, 'programs/');
-    const head = page.locator('#find');
-    await expect(head.locator('.eyebrow').first()).toHaveText('Decision Guide');
-    await expect(head.getByRole('heading', { level: 2 })).toHaveText('Find Your Program');
-  });
-
   test('the YouthWIDE fit answer names who it does not suit in one plain sentence', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const text = compact(await everything(page));
@@ -154,11 +135,11 @@ test.describe('Programs', () => {
     expect(text).not.toContain('single-vendor');
   });
 
-  test('Work: steps five and seven do not say the same thing', async ({ page }) => {
+  test('Work: the measure block and the support block do not say the same thing', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
-    const group = compact(await page.locator('#mechanism .grp', { has: page.getByRole('heading', { name: 'Measure and Support' }) }).innerText());
-    expect((group.match(/checked against/gi) ?? []).length, 'steps five to seven').toBe(1);
-    expect(group).toContain('Team capability in the digital and AI tasks defined in the needs assessment.');
+    const blocks = compact((await page.locator('#mechanism .model__block').allInnerTexts()).join(' '));
+    expect((blocks.match(/checked against/gi) ?? []).length, 'measure and support blocks').toBe(1);
+    expect(blocks).toContain('toward team capability in the digital and AI tasks defined in the needs assessment.');
   });
 
   test('Work states the survey result once', async ({ page }) => {
@@ -302,14 +283,11 @@ test.describe('Our Model and Investors', () => {
     await expect(tile('Delivered Since 2014')).not.toContainText('1.5M+');
   });
 
-  test('Our Model opens with an In Short box that spells out BIGD once; Investors (no In Short since WP30c) spells it out once, in the evidence band', async ({ page }) => {
+  test('Our Model spells out BIGD once, where its evidence band first names it; Investors (no In Short since WP30c) spells it out once, in the evidence band', async ({ page }) => {
     await open(page, 'our-model/');
-    const box = page.locator('#in-short');
-    await expect(box.getByRole('heading', { level: 2, name: 'In Short' })).toBeVisible();
-    const items = await box.locator('li').count();
-    expect(items).toBeGreaterThanOrEqual(3);
-    expect(compact(await box.innerText())).toContain('the BRAC Institute of Governance and Development (BIGD)');
-    expect((compact(await main(page)).match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
+    const text = compact(await main(page));
+    expect((text.match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
+    expect(text).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found');
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#in-short')).toHaveCount(0);
     expect(compact(await page.locator('#proof-band').innerText())).toContain('BIGD, the BRAC Institute of Governance and Development');

@@ -2,6 +2,8 @@
 // P16–P17 — NU PGD course pages /programs/nu-postgraduate-diploma/digital-marketing/ and /ict/ (T10), generated from the
 // `nu-pgd` collection (kind: course). One H1 (the course name). Moved under /programs/ in WP20a. Every course-specific line (Why This Course, the FAQ answers,
 // the related fields) is derived from the course's module list; nothing promises an outcome.
+// WP30d (owner direction 2026-10-14: less is more): the generic "What Is CodersTrust?" band, the instructors line, the wider-programs outcome band and the two FAQ answers that repeated the
+// module list and the Before You Apply table are cut.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
@@ -10,13 +12,11 @@ import Fact from '../../../components/facts/Fact.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import CopyP from '../../../components/pages/programs/CopyP.astro';
-import DefinitionBlock from '../../../components/pages/programs/DefinitionBlock.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { NU_ELIGIBILITY, SURVEY_EMPLOYMENT } from '../../../data/copy';
+import { NU_ELIGIBILITY } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
 import { ORG_ID, course as courseNode, pageUrl, ref, webPage } from '../../../lib/schema';
@@ -41,8 +41,8 @@ const other = Object.keys(NU_COURSE_COPY).find((k) => k !== slug)!;
 const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
 
 const faqSources: FaqSource[] = [
-  ...nuModuleFaqs(c),
-  { q: 'Where Do I Find Fees, Schedule and Eligibility?', html: `The fee, duration, eligibility and recognition details are in Before You Apply above. ${NU_SCHEDULE_NOTE} ${NU_LOCATION_NOTE} To ask, call ${anchor(NU_CALL.href, NU_CALL_NUMBER)}.` },
+  // "What Will I Study?" repeats the module list above; the second answer names concrete modules.
+  ...nuModuleFaqs(c).slice(1),
   // WP27: admissions' own eligibility sentence (NU-01), the one every NU page states.
   { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
 ];
@@ -71,8 +71,6 @@ const jsonLd = [
       <div><dt>Program Fee</dt><dd><Fact id="NU-03" /></dd></div>
     </dl>
   </Hero>
-
-  <DefinitionBlock />
 
   <Section id="before-you-apply" aria-labelledby="before-h">
     <SectionHeader id="before-h" eyebrow="Admissions" title="Before You Apply" lead="Program details as stated for this course in the National University Postgraduate Diploma." />
@@ -118,7 +116,6 @@ const jsonLd = [
         ))}
       </ol>
     </details>
-    <p class="mentors" data-reveal>Meet the people who teach and mentor at CodersTrust: <a class="link" href={url('/about/mentors/')}>Instructors and Mentors<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="why" aria-labelledby="why-h">
@@ -135,12 +132,6 @@ const jsonLd = [
         ))
       }
     </div>
-  </Section>
-
-  <Section id="outcomes" tone="airy" aria-labelledby="outcomes-h">
-    <SectionHeader id="outcomes-h" eyebrow="Outcomes" title="Outcomes from CodersTrust’s Wider Programs" lead="These results come from CodersTrust’s wider training programs, not from this diploma." />
-    <CopyP block={SURVEY_EMPLOYMENT} class="outcome-note" />
-    <p class="outcome-link"><a class="link" href={url('/impact/outcomes-2026/')}>Read the Impact Survey 2026<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <Section id="also-consider" tone="airy" aria-labelledby="also-h">
@@ -292,20 +283,6 @@ const jsonLd = [
     color: var(--on-primary-fixed);
     font-weight: var(--fw-medium);
     font-size: var(--fs-body-base);
-  }
-  .mentors {
-    margin: var(--space-lg) 0 0;
-    color: var(--on-surface-variant);
-  }
-  .outcome-note {
-    margin: 0;
-    max-width: 52rem;
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--on-surface);
-  }
-  .outcome-link {
-    margin: var(--space-md) 0 0;
   }
   .ba {
     margin: 0;

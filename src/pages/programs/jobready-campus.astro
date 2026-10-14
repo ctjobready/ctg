@@ -1,37 +1,29 @@
 ---
 // P12 — JobReady@Campus /programs/jobready-campus/ (T3 conversion page; doc 04 matrix 4.5 — universities; C1 → C14).
+// WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the "Includes" fact list, the three-step band, the pricing paragraph and the scorecard
+// paragraph are cut (each repeated what the glance table, the model band, the options or the pilot points already say).
 import LandingLayout from '../../layouts/LandingLayout.astro';
-import Section from '../../components/ui/Section.astro';
-import SectionHeader from '../../components/ui/SectionHeader.astro';
-import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
-import ProofBand from '../../components/sections/ProofBand.astro';
-import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../components/sections/FeaturesTable.astro';
-import ComparisonBand from '../../components/sections/ComparisonBand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
-import InShort from '../../components/pages/partners/InShort.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
-import FactStat from '../../components/facts/FactStat.astro';
-import FactList from '../../components/facts/FactList.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
-import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
-import CostSection from '../../components/pages/programs/CostSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import Section from '../../components/ui/Section.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED_UNIVERSITIES } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, SPEED_UNIVERSITIES } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -39,16 +31,16 @@ import { webPage } from '../../lib/schema';
 const path = '/programs/jobready-campus/';
 const LAST_UPDATED = PAGE_UPDATED.campus;
 const title = 'JobReady@Campus: Skills Alongside the Degree';
-const degree = statValue('OC-09');
 const description = 'JobReady@Campus helps universities and colleges prepare students for digital work through mentored, certification-focused training in campus labs.';
 const campus = ctaFor('campus');
 const hours = statValue('PD-01');
+const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 const faqSources: FaqSource[] = [
   { audience: 'variants' as const, id: 'Q3-institution' },
   {
     q: 'Who Are Your Typical Learners?',
-    html: 'Mostly university graduates from across Bangladesh, some of them already working before training. Across CodersTrust’s wider programs, among surveyed completers, 84.6% hold a bachelor’s degree or higher, 68.7% were aged 15–35 and 62.9% live outside Dhaka, across 58 of the country’s 64 districts; 47.4% were working before training.',
+    html: 'Mostly university graduates from across Bangladesh, some of them already working before training. Across CodersTrust’s wider programs, among surveyed completers, 84.6% hold a bachelor’s degree or higher.',
     evidence: ['OC-09', 'OC-01'],
   },
 ];
@@ -69,7 +61,7 @@ const options = [
   <!-- C1 -->
   <HeroBand
     audience="JobReady@Campus · For Universities and Colleges"
-    title="Give Your Students a Practical Route into Digital Work"
+    title="Give Your Students a Degree and a Route into Digital Work"
     lead="JobReady@Campus runs mentored, certification-focused training in on-campus labs, in parallel with academic studies, so universities and colleges can prepare students for paid work and build placement evidence from their own students."
     cta={campus}
     artSeed="jobready-campus"
@@ -77,36 +69,12 @@ const options = [
 
   <RouteLink kicker="The Partnership Route" label="University Partnership Overview" href="/partner-with-us/universities/" note="Ready to discuss this program? Use the inquiry action on this page." />
 
-  <!-- WP21: In Short, built only from content this page already states (no figure added) -->
-  <InShort
-    bullets={[
-      'JobReady@Campus runs mentored, certification-focused training in on-campus labs, in parallel with academic studies.',
-      'Campus labs work as blended-learning centers, with faculty members as coordinators and certified local facilitators.',
-      'Your institution builds placement evidence from its own students: baseline data, tracer surveys and monthly reports.',
-      'Start with a pilot on your campus; the scorecard and the decision to expand stay with you.',
-    ]}
-    links={[
-      { label: 'How It Works', href: '#mechanism' },
-      { label: 'What You Receive', href: '#features' },
-      { label: 'Options', href: '#offer' },
-      { label: 'Next Steps', href: '#next-steps' },
-    ]}
-    contracting={false}
-  />
-
-  <DefinitionBlock heading="What Is JobReady@Campus?">
-    <p data-fact="IN-09"><Fact id="IN-09" />.</p>
-  </DefinitionBlock>
-
   <ProgramGlance
+    title="JobReady@Campus at a Glance"
     rows={[
       { label: 'Who It Is For', text: 'Universities and colleges that need a practical route into digital work for their students, beside the degree.', facts: ['IN-09'] },
-      { label: 'Delivery', text: 'Training runs in parallel with academic studies, in on-campus labs used as blended-learning centers, with faculty members as coordinators.', facts: ['IN-09', 'PD-06'] },
-      { label: 'Training and Mentoring', text: `${hours} training hours per certification, then three months of milestone-based mentoring.`, facts: ['PD-01'] },
-      { label: 'Certification Preparation', text: 'Preparation for industry-recognized certifications, with the exam fee included; eligibility, attempts and retakes are agreed in the program scope.', facts: ['IN-09', 'PD-03'] },
-      { label: 'Placement Support', text: 'Mentoring and placement support lead into freelance, local, remote and overseas work, with professional internships where employer placements are available.', facts: ['IN-09', 'PD-15'] },
+      { label: 'Training and Certification', text: `${hours} training hours per certification, with the exam fee included, then three months of milestone-based mentoring; eligibility, attempts and retakes are agreed in the program scope.`, facts: ['IN-09', 'PD-01', 'PD-03', 'PD-02a'] },
       { label: 'Reporting', text: 'Baseline data, tracer surveys and monthly reports, so your institution builds placement evidence from its own students.', facts: ['PD-08', 'PD-09'] },
-      { label: 'Agreed Before Enrollment', text: 'The tracks and campus labs, set in a discovery session, and the program scope.', facts: ['PD-02'] },
     ]}
   />
 
@@ -124,7 +92,6 @@ const options = [
   <!-- C5 (WP25s: credibility before the vision, as on Home and YouthWIDE) -->
   <GuideSection
     title="Universities Partner with CodersTrust"
-    origin={ORIGIN}
     partnerGroup="academic"
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
@@ -135,18 +102,17 @@ const options = [
   <FutureBand
     photos={futurePhotos('jobready-campus')}
     title="What a Campus Cohort Can Produce"
-    lead="Illustrative: an industry certification beside the degree for students who pass the exam, and baseline data and tracer surveys from your own students."
+    lead="Illustrative: a certification beside the degree, and placement evidence from your own students."
     vignettes={[
-      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree, with a first-client or first-job path. Certification is not guaranteed. The exam fee is included; eligibility, attempts and retakes are agreed in the program scope.' },
-      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'Every campus cohort includes baseline data and tracer surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
+      { kind: 'Functional', title: 'An Industry Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, attempts and retakes are agreed in the program scope.' },
+      { kind: 'Emotional', title: 'A Stronger Employment Story', text: 'As agreed in the program scope, every campus cohort includes baseline data and tracer surveys at 3, 6 and 12 months, so your institution can build placement evidence from its own students.' },
       { kind: 'Social', title: 'Capacity That Stays on Campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
   />
 
-
   <!-- C6 -->
   <MechanismSection
-    title="How the Campus Model Works"
+    title="Training Beside the Degree, in Your Own Labs"
     positioning={POSITIONING.campus}
     blocks={[
       { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
@@ -155,14 +121,9 @@ const options = [
       { label: 'After', title: 'Freelance, Local, Remote and Overseas Work', text: 'Mentoring and placement support lead into work.', icon: 'globe' },
     ]}
     factIds={['IN-09', 'PD-06']}
-  >
-    <div class="incl">
-      <h3 class="t-heading-xl" data-reveal>What a Campus Program Includes</h3>
-      <FactList ids={['PD-03', 'PD-06']} />
-    </div>
-  </MechanismSection>
+  />
 
-  <!-- C7: the National University partnership first (its size and onboarding pipeline are shown apart from the track record and the outcome evidence), then the broader evidence -->
+  <!-- C7: the National University partnership (its size and onboarding pipeline are shown apart from the track record and the outcome evidence) -->
   <PairedEvidence
     eyebrow="Delivery Context: National University"
     title="The National University Partnership"
@@ -175,33 +136,20 @@ const options = [
 
   <!-- C8 -->
   <FeaturesTable
-    title="Each Feature Maps to What Institutions Ask For"
+    title="Built Around What Institutions Ask For"
     rows={[
       { feature: 'Industry Certification Exam Preparation by Track and Three Months of Milestone-Based Mentoring', means: 'each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
       { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training is built around the skills employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
       { feature: 'As Agreed in the Program Scope: Tracer Surveys, Monthly Reports and Documentary Evidence Where Available', means: 'your institution has outcome data it can report.', outcome: 'Placement evidence you can report', relieves: 'No placement results to publish' },
-      { feature: 'Certified Local Facilitators and Campus Labs as Blended-Learning Centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },
     ]}
   />
-  <Section id="steps" tone="airy" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="From Set-Up to Placement" title="Three Steps from Set-Up to Placement" />
-    <div data-fact="PD-01 PD-02 PD-08 PD-09">
-      <StepFlow
-        steps={[
-          { title: 'Set Up', text: 'Agree tracks and campus labs in a discovery session.' },
-          { title: 'Prepare for Certification', text: 'Training toward an industry certification, as set out under Program at a Glance.' },
-          { title: 'Mentor and Place', text: 'Three months of milestone-based mentoring, with placement support alongside, and tracer surveys.' },
-        ]}
-      />
-    </div>
-  </Section>
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Institutions Ask" />
 
   <!-- C11 -->
   <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices." options={options} recommended={0}>
-    <div class="note"><span class="note__label">Pricing</span><CopyP block={PRICING} /></div>
+    <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 
   <!-- C12 -->
@@ -213,9 +161,7 @@ const options = [
       { icon: 'handshake', title: 'Expansion Is Your Decision', text: 'You choose whether and how far to scale.', factIds: ['PD-11'] },
       { icon: 'shield', title: 'Independent Evaluation Is Welcome', text: 'We support a third-party evaluation of outcomes.', factIds: ['PD-08'] },
     ]}
-  >
-    <Fragment slot="lead"><CopyP block={SCORECARD} /></Fragment>
-  </RiskSection>
+  />
 
   <!-- C13 -->
   <CTABand
@@ -245,33 +191,6 @@ const options = [
 </LandingLayout>
 
 <style>
-  .incl {
-    margin-top: var(--space-xl);
-    max-width: 52rem;
-  }
-  .incl > h3 {
-    margin: 0 0 var(--space-md);
-    color: var(--secondary);
-  }
-  .ctx-stats {
-    display: grid;
-    gap: var(--space-lg);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 40rem;
-  }
-  .proof-notes {
-    margin-top: var(--space-lg);
-    display: grid;
-    gap: var(--space-md);
-    max-width: 56rem;
-  }
-  .proof-notes :global(p) {
-    margin: 0;
-    color: var(--ctx-text);
-  }
-  .proof-notes b {
-    color: var(--on-secondary);
-  }
   .cta-speed {
     margin: 0;
     max-width: 40rem;
