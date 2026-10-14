@@ -165,7 +165,7 @@ test.describe('Independent Evaluation', () => {
 
   test('the result leads, the method is a closed disclosure and the FAQ asks how outcomes are tracked', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Randomized Trial: Women Offered Training Were More Likely to Work');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Randomized Trial: Women Offered a Place Were More Likely to Work');
     await expect(page.getByRole('link', { name: /Read the BIGD Study/ })).toHaveCount(1);
     // "How to Read This Trial" holds what was evaluated, who took part and the design; it starts closed.
     const method = page.locator('#summary details', { hasText: 'How to Read This Trial' });
