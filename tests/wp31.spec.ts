@@ -136,12 +136,13 @@ test.describe('figures say what they measure', () => {
 });
 
 test.describe('Governments speaks to any ministry', () => {
-  test('the Challenge heading no longer names a country; the 13.5% stays as the Bangladesh example inside the band', async ({ page }) => {
+  test('the Challenge heading no longer names a country, and (WP34, cycle-11 review) neither does its tile: the global 62 million (PX-01) stands where the Bangladesh 13.5% (PX-03) was', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#problem h2')).toHaveText('Training Budgets Need Employment Results');
-    const tile = page.locator('#problem [data-fact="PX-03"]');
-    await expect(tile).toContainText('13.5%');
-    await expect(tile).toContainText('graduate unemployment in Bangladesh');
+    const tile = page.locator('#problem [data-fact="PX-01"]');
+    await expect(tile).toContainText('62 million');
+    await expect(page.locator('#problem [data-fact="PX-03"]')).toHaveCount(0);
+    expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|Bangladesh/);
     await expect(page.locator('main h1')).toHaveText('Build a National Digital Workforce Through Graduates and Digital Labs');
   });
 
@@ -230,11 +231,12 @@ test.describe('Foundations keeps the two grant routes apart', () => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#features h2')).toHaveText('What Your Cohort Grant Gets');
     await expect(page.locator('#faq h2')).toHaveText('Questions About Cohort Grants');
-    // WP32 (cycle-9 review): the closing band states what is discussed for each route; the four cohort-only steps are gone (tests/wp32.spec.ts pins the band)
-    expect(await texts(page, '#next-steps .next__routes li')).toEqual([
-      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard.',
-      'For a platform grant, we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.',
-    ]);
+    // WP32 (cycle-9 review): the four cohort-only steps are gone; WP34 (cycle-11 review): what is discussed for each route is said once, in the call-to-action band, and the Next Steps band keeps only
+    // the introductory-call line (tests/wp32.spec.ts and tests/wp34.spec.ts pin the two)
+    expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toBe(
+      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.',
+    );
+    expect(compact(await page.locator('#next-steps').textContent())).toContain('Details of what the grant delivers are discussed in the introductory call.');
   });
 });
 

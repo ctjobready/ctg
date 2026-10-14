@@ -20,7 +20,7 @@ export const PAGE_UPDATED = {
   campus: '2026-10-15',
   work: '2026-10-15',
   superkids: '2026-10-10',
-  nu: '2026-10-14',
+  nu: '2026-10-15',
   nuCourse: '2026-10-14',
 } as const;
 

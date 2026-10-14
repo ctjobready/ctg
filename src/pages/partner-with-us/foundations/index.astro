@@ -232,8 +232,8 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the partnership overview -->
-  <DueDiligenceView compact id="due-diligence" />
+  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the partnership overview; WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
+  <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
       <p>Monthly reports, quarterly steering reviews and the pilot scorecard are set out once, on the partnership overview.</p>
@@ -249,19 +249,14 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     secondary={report}
     urgency={SPEED.text}
   >
-    <SessionAgenda />
+    <!-- WP34 (cycle-11 review): the funders here choose a cohort grant or a platform grant, so the line says what is discussed for each (the cohort-only discovery-session agenda is on the pages that sell cohorts). It is said once; the band below does not repeat it. -->
+    <SessionAgenda lead="foundations" />
   </CTABand>
 
   <!-- C14 · Next steps -->
-  <!-- WP32 (cycle-9 review): the two funding routes do not share one process, so the band says what is discussed for each route and shows no week-by-week steps. A cohort grant's timing
-       (6–8 weeks after signing) stays in the C13 urgency line above, where it is labeled as grant-funded pilot timing. -->
-  <NextStepsBand
-    title="What Happens After You Say Yes"
-    routes={[
-      { lead: 'For a cohort grant,', text: 'we discuss your country, priority groups, tracks, budget and scorecard.' },
-      { lead: 'For a platform grant,', text: 'we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.' },
-    ]}
-  />
+  <!-- WP32 (cycle-9 review): the two funding routes do not share one process, so the band shows no week-by-week steps. A cohort grant's timing (6–8 weeks after signing) stays in the C13 urgency line above, where it
+       is labeled as grant-funded pilot timing. WP34 (cycle-11 review): what is discussed for each route is said once, in the C13 band above, so this band keeps only the introductory-call line. -->
+  <NextStepsBand title="What Happens After You Say Yes" lead="Details of what the grant delivers are discussed in the introductory call." stepless />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />

@@ -1,0 +1,31 @@
+---
+/**
+ * RouteBlock — one labeled route inside a closing band (WP34, cycle-11 review). Where a page offers two needs and one band follows both (Employers and
+ * JobReady@Work: team training and hiring), each route is a bold sub-heading over its own steps or its own statement, so a reader finds the route
+ * that is theirs. The label is the system's sub-section heading (heading-xl, 600; DESIGN.md §3), an H3 under the band's H2. A second block in a row
+ * starts a new sub-section of the band: the sub-section gap (40px) above a hairline, then 40px below it.
+ */
+interface Props {
+  /** The route, in Title Case ("For Team Training", "For Hiring"). */
+  label: string;
+  class?: string;
+}
+const { label, class: className } = Astro.props;
+---
+
+<div class:list={['route', className]}>
+  <h3 class="route__label t-heading-xl" data-reveal>{label}</h3>
+  <slot />
+</div>
+
+<style>
+  .route__label {
+    margin: 0 0 var(--space-md);
+    color: var(--ctx-section-heading);
+  }
+  .route + .route {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--ctx-border);
+  }
+</style>

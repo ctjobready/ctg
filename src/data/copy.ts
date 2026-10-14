@@ -89,6 +89,8 @@ export const RCT_HEADLINE: CopyBlock = {
  * evidence, not evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these pages.
  * WP31 (cycle-8 review): the two JobReady@Work pages no longer carry a trial band (they link to the evidence pages), so `work` is not rendered today;
  * the gate still requires the sentence on any proof band either page grows.
+ * WP34 (cycle-11 review): the NU Postgraduate Diploma overview no longer carries a trial band either (a one-link strip stands in), so `nuPgd` is not rendered today
+ * and the gate treats that page the same way.
  */
 export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Dhaka, not ${offering}.`, facts: ['RC-01'] });
 export const TRIAL_SCOPE = {
@@ -305,6 +307,9 @@ export const PRICING: CopyBlock = {
 /** One pricing sentence for the two employer pages and their FAQ answer (WP25s): the budget comes in the discovery session and is confirmed after the needs assessment. */
 export const EMPLOYER_PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
 
+/** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
+export const EMPLOYER_HIRING_ROUTE = 'We scope your talent request against the experience and credentials available in the candidate pool.';
+
 export const SPEED: CopyBlock = {
   text: 'For grant-funded pilots: about three weeks from first conversation to agreement, and the first cohort in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline.',
   facts: ['PD-04'],
@@ -387,9 +392,10 @@ export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a co
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
  * covers, as ONE sentence beside the C13 primary CTA: the lead, three items separated by semicolons and a single final period. It is shown
- * on the development-partners and foundations pages and on YouthWIDE, where the CTA books a discovery session (first item: your country,
+ * on the development-partners page and on YouthWIDE, where the CTA books a discovery session (first item: your country,
  * priority groups and locations), and on the governments page and YouthWIDE in Bangladesh, where the primary CTA is a briefing (first item: your priority
- * groups and districts); see <SessionAgenda>. The micro-commitment line stays where it is.
+ * groups and districts); see <SessionAgenda>. The foundations page, which offers two funding routes, says what is discussed for each instead (SESSION_AGENDA_ROUTES below).
+ * The micro-commitment line stays where it is.
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02: `facts` becomes its
  * data-fact marker exactly as [PRICING]'s does, so the agenda, [PRICING] and Q8 stand or fall together.
@@ -406,11 +412,21 @@ export const SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS = 'your priority groups and l
 export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the follow-up survey schedule'] as const;
 export const SESSION_AGENDA_FACTS = ['PD-02'];
 /**
+ * Foundations (WP34, cycle-11 review): funders there choose between a cohort grant and a platform grant, and the discovery-session agenda above is a cohort agenda, so the
+ * line says what is discussed for each route. It is still one paragraph with the same PD-02 marker ("budget"); scripts/check-facts.mjs pins the sentence for /partner-with-us/foundations/.
+ */
+export const SESSION_AGENDA_ROUTES = [
+  { lead: 'For a cohort grant,', text: 'we discuss your country, priority groups, tracks, budget and scorecard.' },
+  { lead: 'For a platform grant,', text: 'we discuss JobReady’s staged rollout.' },
+] as const;
+/**
  * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule."
  * or, for the YouthWIDE Bangladesh briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
- * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …".
+ * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …",
+ * or, for Foundations: "For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout."
  */
-export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments' = 'discovery'): string => {
+export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments' | 'foundations' = 'discovery'): string => {
+  if (kind === 'foundations') return SESSION_AGENDA_ROUTES.map((r) => `${r.lead} ${r.text}`).join(' ');
   const lead = kind === 'discovery' ? SESSION_AGENDA_LEAD : SESSION_AGENDA_LEAD_BRIEFING;
   const first = kind === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS : kind === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
   return `${lead} ${[first, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
@@ -431,6 +447,8 @@ export const C14 = {
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
     investors: 'Your first step: an introduction call.',
+    // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring); the discovery session is the training route's first step, so the line says so.
+    employers: 'For team training, your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   },
 };
 

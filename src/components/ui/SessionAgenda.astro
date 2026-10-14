@@ -1,5 +1,5 @@
 ---
-import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING } from '../../data/copy';
+import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST_ITEM, SESSION_AGENDA_FIRST_ITEM_BRIEFING, SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS, SESSION_AGENDA_LEAD, SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_ROUTES } from '../../data/copy';
 
 /**
  * [SESSION-AGENDA] (plan v1.12, v1.13 wording): what the first conversation covers, as ONE sentence beside the C13 primary CTA: a bold lead,
@@ -7,18 +7,20 @@ import { SESSION_AGENDA_COMMON_ITEMS, SESSION_AGENDA_FACTS, SESSION_AGENDA_FIRST
  * color so it stays subordinate to the CTA, and it wraps freely at 390 px. The wording lives in src/data/copy.ts and is never typed on a page.
  *
  *   lead="discovery" (default)  "What the discovery session covers: your country, priority groups and locations; …"
- *                               where the primary CTA books a discovery session (development partners, foundations, YouthWIDE)
+ *                               where the primary CTA books a discovery session (development partners, YouthWIDE)
  *   lead="briefing"             "What the briefing covers: your priority groups and districts; …"
  *                               where the primary CTA is "Request a Briefing" for Bangladesh's national program (YouthWIDE in Bangladesh)
  *   lead="governments"          "What the briefing covers: your priority groups and locations; …"
  *                               the governments page (ministries in any country: "districts" does not fit)
+ *   lead="foundations"          "For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout."
+ *                               the foundations page (WP34): two funding routes, so the line says what is discussed for each, with the route as the bold lead-in
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the paragraph carries the same fact marker (PD-02: data-fact and
  * the fact's own footnote marker if it ever gets one), and a production hold on PD-02 treats it like them. Put it in the CTABand slot, after the
  * micro-commitment line, which stays where it is. scripts/check-facts.mjs fails the build if one of the five pages that carry it lacks it.
  */
 interface Props {
-  lead?: 'discovery' | 'briefing' | 'governments';
+  lead?: 'discovery' | 'briefing' | 'governments' | 'foundations';
   class?: string;
 }
 const { lead = 'discovery', class: className } = Astro.props;
@@ -27,7 +29,20 @@ const firstItem = lead === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS
 const items = `${[firstItem, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 ---
 
-<p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}</p>
+{
+  lead === 'foundations' ? (
+    <p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}>
+      {SESSION_AGENDA_ROUTES.map((r, i) => (
+        <>
+          {i > 0 && ' '}
+          <span class="agenda__lead">{r.lead}</span>{' '}{r.text}
+        </>
+      ))}
+    </p>
+  ) : (
+    <p class:list={['agenda', className]} data-session-agenda data-fact={SESSION_AGENDA_FACTS.join(' ')}><span class="agenda__lead">{leadText}</span>{' '}{items}</p>
+  )
+}
 
 <style>
   .agenda {

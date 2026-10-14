@@ -9,22 +9,27 @@ import { TRACER_MONTHS } from '../partners/partners';
 /**
  * "Due Diligence in One View" (WP24a, Benchmark): what a funder, ministry or procurement team asks first, each with the page that answers it.
  * Every item restates an arrangement the register already states (ID-07, PD-13, PD-08, PD-09, PD-12, RC-01); nothing new is promised. The hub shows
- * the full band; every audience page shows the compact one (four short rows, no icons) so a diligence reader finds the same four answers on the page they landed on.
+ * the full band; the Employers page shows the compact one (four short rows, no icons).
  *
- * WP25s: the wording follows the page's audience. `funders` (the hub and the funder, development-partner and government pages) uses the cohort-reporting
- * set above. `partners` (universities, local partners) says "the contracting party" where the register says "the funder", because the reader is the
- * contracting party. `employers` swaps the two youth-cohort rows (follow-up surveys and cohort safeguarding) for what the JobReady@Work offer itself states:
- * the needs assessment with success measures agreed before the start, and the progress evaluation against them. No employer-team data-protection
- * terms are registered, so none are stated here.
+ * WP25s: the wording follows the page's audience. `funders` (the hub) uses the cohort-reporting set above. `employers` swaps the two youth-cohort rows (follow-up
+ * surveys and cohort safeguarding) for what the JobReady@Work offer itself states: the needs assessment with success measures agreed before the start, and the
+ * progress evaluation against them, and says "the contracting party" where the register says "the funder". No employer-team data-protection terms are registered,
+ * so none are stated here.
+ *
+ * WP34 (cycle-11 review): `brief` is one short item for the development-partner, government, foundation, university and local-partner pages, whose own bands already
+ * state reporting, safeguarding and independent evaluation (the four cards repeated them): a heading, one sentence and one link to Governance and Accountability.
+ * The hub keeps the full view above.
  */
 interface Props {
-  /** Compact form for the audience pages: a four-row list with a one-line lead. */
+  /** Compact form (Employers): a four-row list with no lead. */
   compact?: boolean;
+  /** One heading, one sentence and one link instead of the four rows (WP34). */
+  brief?: boolean;
   tone?: 'white' | 'airy' | 'ice';
   id?: string;
-  audience?: 'funders' | 'partners' | 'employers';
+  audience?: 'funders' | 'employers';
 }
-const { compact = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
+const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
 const diligence = cta('diligence');
 const entities = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and';
 const contracting = { icon: 'building-2', title: 'Contracting Entities', text: `${entities} the ${audience === 'funders' ? 'funder' : 'contracting party'}’s requirements.`, href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' };
@@ -44,6 +49,17 @@ const employerItems = [
 const items = audience === 'employers' ? employerItems : funderItems;
 ---
 
+{brief ? (
+  <Section id={id} tone={tone} pad="sm" aria-labelledby={`${id}-h`}>
+    <div class="ddb" data-reveal>
+      <p class="eyebrow">Due Diligence</p>
+      <h2 class="ddb__title" id={`${id}-h`}>Confirm Contracting, Safeguarding and Reporting</h2>
+      {/* the sentence rests on the contracting entity (ID-07, PD-13), the safeguarding specification (PD-12) and the reporting plan (PD-08) */}
+      <p class="lead" data-fact="ID-07 PD-13 PD-12 PD-08">The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.</p>
+      <p class="cluster ddb__more"><a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
+    </div>
+  </Section>
+) : (
 <Section id={id} tone={tone} pad={compact ? 'sm' : undefined} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Due Diligence" title="Due Diligence in One View" lead={compact ? undefined : 'What a funder or procurement team asks first, with the page that answers it.'} />
   <ul class:list={['ddv', compact && 'ddv--compact']} role="list">
@@ -68,8 +84,27 @@ const items = audience === 'employers' ? employerItems : funderItems;
     </p>
   )}
 </Section>
+)}
 
 <style>
+  /* Brief (WP34): the section header's rhythm (eyebrow 8, heading 12) with the link row one step (16px) under the sentence. */
+  .ddb {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--stack-eyebrow);
+    max-width: 52rem;
+  }
+  .ddb > * {
+    margin: 0;
+  }
+  .ddb__title {
+    margin-top: calc(var(--stack-heading) - var(--stack-eyebrow));
+    color: var(--ctx-section-heading);
+  }
+  .ddb__more {
+    margin-top: calc(var(--stack-link) - var(--stack-eyebrow));
+  }
   .ddv {
     list-style: none;
     margin: 0;

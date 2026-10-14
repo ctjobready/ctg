@@ -10,12 +10,14 @@ interface Props {
   class?: string;
   /** Print the lead after the slot content instead of before it (a C6 band's positioning statement is the slot and must come first). */
   leadLast?: boolean;
+  /** The header is the whole band (WP34: a heading and one statement, nothing after it), so the gap to content below it is dropped. */
+  flush?: boolean;
 }
-const { eyebrow, title, lead, align = 'start', level = 2, id, class: className, leadLast = false } = Astro.props;
+const { eyebrow, title, lead, align = 'start', level = 2, id, class: className, leadLast = false, flush = false } = Astro.props;
 const Tag = (`h${level}`) as 'h2' | 'h3';
 ---
 
-<header class:list={['sh', `sh--${align}`, className]} data-reveal>
+<header class:list={['sh', `sh--${align}`, flush && 'sh--flush', className]} data-reveal>
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <Tag class="sh__title" id={id}>{title}</Tag>
   {lead && !leadLast && <p class="sh__lead lead">{lead}</p>}
@@ -36,6 +38,9 @@ const Tag = (`h${level}`) as 'h2' | 'h3';
     align-items: center;
     text-align: center;
     margin-inline: auto;
+  }
+  .sh--flush {
+    margin-bottom: 0;
   }
   .sh > * {
     margin: 0;

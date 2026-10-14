@@ -33,10 +33,11 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
+import RouteBlock from '../../../components/ui/RouteBlock.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -229,17 +230,22 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     micro={MICRO_COMMITMENT}
   />
 
-  <!-- C14 · Next steps -->
+  <!-- C14 · Next steps. WP34 (cycle-11 review): the offer is training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above. -->
   <StepsBand
     title="What Happens After You Say Yes"
+    route="For Team Training"
     steps={[
       { title: 'Discovery Session', text: 'A conversation about your roles, team size and timeline.' },
       { title: 'Needs Assessment', text: 'We scope the skills your roles need.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed.' },
       { title: 'First Workshop or Cohort', text: 'Training starts with your pilot team, and results are checked against the measures you set.' },
     ]}
-  />
-  <Reinforcement logos={false} reminder={false} validate={C14.validateFor.employers} />
+  >
+    <RouteBlock label="For Hiring">
+      <p class="lead" data-fact="IN-04" data-reveal>{EMPLOYER_HIRING_ROUTE}</p>
+    </RouteBlock>
+  </StepsBand>
+  <Reinforcement firstAction={C14.variants.employers} logos={false} reminder={false} validate={C14.validateFor.employers} />
 
   <PageEnhancements />
 </LandingLayout>

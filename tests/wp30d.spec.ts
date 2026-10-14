@@ -116,12 +116,14 @@ test.describe('less is more: the report-like bands are gone', () => {
     }
   });
 
-  test('the diploma overview drops five bands and keeps Before You Apply, the trial scope line and one closing call to action', async ({ page }) => {
+  test('the diploma overview drops five bands and keeps Before You Apply, the wider-programs evidence link and one closing call to action', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
     const ids = await sectionIds(page);
     for (const gone of ['definition', 'cost', 'future', 'steps', 'offer', 'risk']) expect(ids, gone).not.toContain(gone);
-    for (const kept of ['courses', 'problem', 'before-you-apply', 'proof-band', 'faq', 'cta']) expect(ids, kept).toContain(kept);
-    await expect(page.locator('#proof-band [data-trial-scope]')).toHaveText('This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.');
+    // WP34 (cycle-11 review): the trial and survey band (and its scope line) became a one-link strip, #offer-evidence (tests/wp34.spec.ts)
+    for (const kept of ['courses', 'problem', 'before-you-apply', 'offer-evidence', 'faq', 'cta']) expect(ids, kept).toContain(kept);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
+    await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
     await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
     await expect(page.locator('#cta .btn--primary')).toHaveCount(1);
   });

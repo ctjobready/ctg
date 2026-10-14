@@ -2,16 +2,21 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import StepFlow from '../../ui/StepFlow.astro';
+import RouteBlock from '../../ui/RouteBlock.astro';
 
 /**
  * C14 Next steps: StepFlow plus the first-action line (C14-FIRST or an audience variant) and an
  * optional note slot (for example the PD-04 timing footnote).
+ * WP34 (cycle-11 review): `route` labels the steps and their first action as one route of the band ("For Team Training" on JobReady@Work, whose offer is training and
+ * hiring); the slot then holds the other route(s) as <RouteBlock>s.
  */
 interface Props {
   eyebrow?: string;
   title?: string;
   lead?: string;
   steps: { title: string; text?: string }[];
+  /** The route the steps belong to, as a sub-heading above them (the steps then sit one heading level lower). */
+  route?: string;
   /** One first-action line (the default), or ... */
   firstAction?: string;
   /** ... two or more short role-specific first actions under one shared sequence (YouthWIDE: governments and funders, WP24c). */
@@ -19,13 +24,24 @@ interface Props {
   tone?: 'white' | 'airy';
   id?: string;
 }
-const { eyebrow = 'Next Steps', title = 'What Happens Next', lead, steps, firstAction, roleActions = [], tone = 'white', id = 'next-steps' } = Astro.props;
+const { eyebrow = 'Next Steps', title = 'What Happens Next', lead, steps, route, firstAction, roleActions = [], tone = 'white', id = 'next-steps' } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
-  <StepFlow steps={steps} />
-  {firstAction && <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>}
+  {
+    route ? (
+      <RouteBlock label={route}>
+        <StepFlow level={4} steps={steps} />
+        {firstAction && <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>}
+      </RouteBlock>
+    ) : (
+      <>
+        <StepFlow steps={steps} />
+        {firstAction && <p class="next__first" data-reveal><strong>First action.</strong> {firstAction}</p>}
+      </>
+    )
+  }
   {
     roleActions.length > 0 && (
       <ul class="next__roles" role="list">

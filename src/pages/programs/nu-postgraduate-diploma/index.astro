@@ -4,6 +4,7 @@
 // "Apply Now" is a plain link to the standalone Google Form.
 // WP30d (owner direction 2026-10-14: less is more): the definition, "employers are asking" (cost), "a clearer route" (vignettes), three-step, "start your application" and
 // "talk to admissions" bands are cut; admissions' details stay in Before You Apply and the call and application actions stay in the hero and the closing band.
+// WP34 (cycle-11 review): the trial and survey band (which said, under its own figures, that it was not about this diploma) is a one-link strip to the Impact page.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
@@ -14,7 +15,7 @@ import Fact from '../../../components/facts/Fact.astro';
 import { linkAttrs } from '../../../lib/url';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
-import ProofBand from '../../../components/sections/ProofBand.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import ProblemSection from '../../../components/pages/programs/ProblemSection.astro';
 import GuideSection from '../../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../../components/pages/programs/MechanismSection.astro';
@@ -22,7 +23,7 @@ import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { HEADLINE, NU_ELIGIBILITY, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
@@ -125,12 +126,15 @@ const jsonLd = [
     <p data-fact="SC-04">CodersTrust has been the official training partner of National University since 2023.</p>
   </GuideSection>
 
-  <!-- C7 -->
-  <ProofBand title="Outcomes from CodersTrust’s Wider Programs" eyebrow="From CodersTrust’s Wider Programs (Not This Diploma)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.nuPgd.text} statIds={['RC-02']} compact links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'Read the Full Findings', href: '/impact/' }]}>
-    <div class="proof-notes">
-      <p>These results come from CodersTrust’s wider training programs, not from the National University Postgraduate Diploma.</p>
-    </div>
-  </ProofBand>
+  <!-- C7. WP34 (cycle-11 review): no trial or survey figure is shown on the admissions page (they are not this diploma's results); a one-link strip points to the wider programs' evidence. The trial relevance line has no band to sit in (scripts/check-facts.mjs allows that, as on the two employer pages). -->
+  <PairedEvidence
+    title="Evidence from CodersTrust’s Wider Programs"
+    eyebrow=""
+    items={[]}
+    broaderLabel="Evidence from CodersTrust’s Wider Programs"
+    broader={[{ label: 'See CodersTrust’s Impact', href: '/impact/' }]}
+    tone="white"
+  />
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Applicants Ask" />
@@ -158,16 +162,6 @@ const jsonLd = [
     .courses {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
-  .proof-notes {
-    margin-top: var(--space-lg);
-    display: grid;
-    gap: var(--space-md);
-    max-width: 56rem;
-  }
-  .proof-notes :global(p) {
-    margin: 0;
-    color: var(--ctx-text);
   }
   .after {
     list-style: none;

@@ -4,13 +4,16 @@
 // or reply-time promises (confirm list #13, #17).
 // WP30c (owner direction 2026-10-14, "less is more"): the In Short summary is gone (the hero lead and the bands say it), the thesis is three cards without a lead line,
 // the path-to-scale paragraph is gone (the scale FAQ answers it), three FAQs, not four. The H1 is the owner's wording.
+// WP34 (cycle-11 review): the approaches comparison is gone from this page (it compared supported youth cohorts, on a page about backing the platform; Home keeps it); a short band says how
+// JobReady builds on that delivery and that youth-program outcomes are not platform outcomes.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import EvidenceBand from '../../../components/pages/home/EvidenceBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
-import ComparisonBand from '../../../components/sections/ComparisonBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import Section from '../../../components/ui/Section.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import { caseStudyItems } from '../../../components/pages/home/caseStudies';
@@ -33,7 +36,7 @@ const path = '/partner-with-us/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
 // description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
-const description = 'For impact investors: back the platform moving emerging-market youth into paid work. Request an introduction call; the deck follows under NDA.';
+const description = 'For impact investors: back JobReady’s staged rollout. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
 const FAQ_IDS = ['Q11', 'Q5', 'Q2-investor'];
@@ -45,22 +48,6 @@ const featureRows = [
   { feature: 'AI-Ready Curriculum, with Tracks Chosen from Employer Demand and Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment', means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'Learners need different support as they progress' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'Institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
-];
-// The four rows an investor weighs (WP20c): the tracking row is scope-aware, "as agreed in the program scope", like the FAQ answer and the TalentLEAP page.
-const compareRows = [
-  { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
-  { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-  { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort, as agreed in the program scope: follow-up surveys at 3, 6 and 12 months; monthly reports.' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
-  {
-    label: 'Independent Evidence',
-    cells: [
-      { text: 'Available: one randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort is welcome; where a program needs one, it is budgeted separately from the standard inclusions', factId: 'RC-01' },
-      { text: 'Varies — a review of nine randomized trials of vocational training found only three with significant employment impacts', factId: 'RC-06' },
-      'Varies',
-      'Varies',
-      'None',
-    ],
-  },
 ];
 const mechanismBlocks = [
   { label: 'Learn', title: 'Courses, Bootcamps and University Programs', text: 'AI-ready digital skills, with preparation for industry certification.', icon: 'graduation-cap' },
@@ -127,7 +114,14 @@ const mechanismBlocks = [
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <Tone cmf="C10"><ComparisonBand id="compare" title="How the Approaches Compare" withoutDoingNothing onlyRows={['Certification', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} lead="Four capabilities of CodersTrust’s supported cohorts, against other approaches." rows={compareRows} /></Tone>
+  <!-- C10 · Differentiation: WP34 (cycle-11 review) swapped the approaches comparison for one statement. It rests on IN-04 (what is live and what is in pre-launch) and keeps the wording of the hero lead. -->
+  <Tone cmf="C10">
+    <Section id="platform" pad="sm" aria-labelledby="platform-h">
+      <SectionHeader id="platform-h" eyebrow="The Platform" title="How JobReady Builds on Delivery" flush>
+        <p class="lead" data-fact="IN-04">JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs. Youth-program outcomes are not platform outcomes.</p>
+      </SectionHeader>
+    </Section>
+  </Tone>
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 

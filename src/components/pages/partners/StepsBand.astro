@@ -2,21 +2,35 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import StepFlow from '../../ui/StepFlow.astro';
+import RouteBlock from '../../ui/RouteBlock.astro';
 
 /**
  * C14 next steps with the audience's own sequence (governments, universities, employers). Same
  * structure and tone as the shared NextStepsBand, which is fixed to the grant-funded pilot timeline.
+ * WP34 (cycle-11 review): `route` labels the steps as one route of the band ("For Team Training" on Employers, whose offer is training and hiring); the band's
+ * slot then holds the other route(s) as <RouteBlock>s, after the steps.
  */
 interface Props {
   title: string;
   lead?: string;
   steps: { title: string; text?: string }[];
+  /** The route these steps belong to, as a sub-heading above them (the steps then sit one heading level lower). */
+  route?: string;
   id?: string;
 }
-const { title, lead, steps, id = 'next-steps' } = Astro.props;
+const { title, lead, steps, route, id = 'next-steps' } = Astro.props;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} />
-  <StepFlow steps={steps} />
+  {
+    route ? (
+      <RouteBlock label={route}>
+        <StepFlow level={4} steps={steps} />
+      </RouteBlock>
+    ) : (
+      <StepFlow steps={steps} />
+    )
+  }
+  <slot />
 </Section>

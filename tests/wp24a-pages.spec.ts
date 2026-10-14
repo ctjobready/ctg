@@ -71,12 +71,21 @@ test.describe('Investors page structure', () => {
     expect(text).toContain('CodersTrust’s program results are measured, reported and open to independent evaluation.');
   });
 
-  test('comparison table turns into stacked cards on a phone (table hidden, one card per approach)', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 800 });
+  test('WP34: the approaches comparison is gone from Investors (it compared supported youth cohorts, on a page about backing the platform); a short band stands in its place', async ({ page }) => {
     await page.goto(URL);
+    await expect(page.locator('#compare')).toHaveCount(0);
+    await expect(page.locator('#platform h2')).toHaveText('How JobReady Builds on Delivery');
+  });
+});
+
+test.describe('the comparison table (Home)', () => {
+  test('turns into stacked cards on a phone (table hidden, one card per approach)', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto('');
     await expect(page.locator('#compare .cmp')).toBeHidden();
-    // WP30c: the "Conventional Skills Programs" column is dropped, so three approaches remain (CodersTrust, self-paced platforms, freelance marketplaces)
-    await expect(page.locator('#compare .cmp-card')).toHaveCount(3);
+    // WP31 dropped the "Conventional Skills Programs" and "Freelance Marketplaces Alone" columns on Home, so two approaches remain (CodersTrust and self-paced platforms);
+    // WP34 took the table off Investors, which had been its other home
+    await expect(page.locator('#compare .cmp-card')).toHaveCount(2);
     await expect(page.locator('#compare .cmp-card').first()).toBeVisible();
   });
 });

@@ -38,10 +38,11 @@ const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 const faqSources: FaqSource[] = [
   { audience: 'variants' as const, id: 'Q3-institution' },
+  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 84.6% is the wider-programs survey profile, said as such.
   {
-    q: 'Who Are Your Typical Learners?',
-    html: 'Mostly university graduates from across Bangladesh, some of them already working before training. Across CodersTrust’s wider programs, among surveyed completers, 84.6% hold a bachelor’s degree or higher.',
-    evidence: ['OC-09', 'OC-01'],
+    q: 'Who Is JobReady@Campus For?',
+    html: 'Students and degree holders at universities and colleges. Across CodersTrust’s wider programs, 84.6% of surveyed completers hold a bachelor’s degree or higher.',
+    evidence: ['OC-09'],
   },
 ];
 
@@ -78,11 +79,10 @@ const options = [
     ]}
   />
 
-  <!-- C2 (WP24c): a short problem band, built only from content this page already states -->
+  <!-- C2 (WP24c): a short problem band, built only from content this page already states. WP34 (cycle-11 review): the Bangladesh graduate-unemployment tile (PX-03) is gone from this global page. -->
   <ProblemSection
     title="Capable Students Still Struggle to Find Work"
     bluf={EMPATHY.universities}
-    factIds={['PX-03']}
     extra={[
       { title: 'Employers Cannot See the Skills', text: 'Employers cannot see the skills your students have.' },
       { title: 'No Placement Results to Publish', text: 'Institutions are asked for placement results they cannot yet show.' },

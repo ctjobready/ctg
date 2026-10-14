@@ -64,17 +64,14 @@ test.describe('Partner with Us hub', () => {
 });
 
 test.describe('Foundations', () => {
-  test('"What Happens After You Say Yes" states what is discussed for a cohort grant and for a platform grant, with no week-by-week steps', async ({ page }) => {
+  test('"What Happens After You Say Yes" shows no week-by-week steps; WP34 (cycle-11 review): what is discussed for each route is said once, in the call-to-action band, so this band keeps only the introductory-call line', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
-    expect(await texts(page, '#next-steps .next__routes li')).toEqual([
-      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard.',
-      'For a platform grant, we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.',
-    ]);
-    await expect(band.locator('ol')).toHaveCount(0);
+    expect(compact(await band.locator('.lead').textContent())).toBe('Details of what the grant delivers are discussed in the introductory call.');
+    await expect(band.locator('ol, ul')).toHaveCount(0);
     await expect(band.locator('[data-fact]')).toHaveCount(0);
-    expect(compact(await band.textContent())).not.toMatch(/Week \d|Training Starts|Co-Design|Agreement/);
+    expect(compact(await band.textContent())).not.toMatch(/Week \d|Training Starts|Co-Design|Agreement|we discuss your country|we discuss JobReady/);
     // a cohort grant's timing stays where it is labeled as grant-funded pilot timing: the call to action's urgency line
     expect(compact(await page.locator('#cta').textContent())).toContain('For grant-funded pilots: about three weeks from first conversation to agreement');
   });
@@ -83,7 +80,7 @@ test.describe('Foundations', () => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#cohort-grants h2')).toHaveText('Choose Where to Start Your Cohort Grant');
     const platform = compact(await page.locator('#platform-grants').textContent());
-    expect(platform).not.toContain('discussed in the introductory call'); // said once, in the Next Steps card
+    expect(platform).not.toContain('discussed in the introductory call'); // said once, in the Next Steps band
     expect(compact(await page.locator('main').textContent())).toContain('Details of what the grant delivers are discussed in the introductory call.');
     expect(await mainText(page)).not.toContain('introduction call');
   });
@@ -176,7 +173,7 @@ test.describe('the follow-up survey schedule', () => {
   const PAGES: [string, number][] = [
     ['partner-with-us/development-partners/', 1],
     ['partner-with-us/governments/', 1],
-    ['partner-with-us/foundations/', 1],
+    // WP34 (cycle-11 review): Foundations offers a cohort grant and a platform grant, so its line says what is discussed for each route instead (tests/wp34.spec.ts)
     ['programs/youthwide/', 2],
   ];
   for (const [route, agendas] of PAGES) {

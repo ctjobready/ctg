@@ -16,9 +16,10 @@ import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
+import RouteBlock from '../../components/ui/RouteBlock.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
+import { EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -132,8 +133,9 @@ const approach = [
   <!-- C13: one solid primary; the talent action is outline -->
   <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
 
-  <!-- C14 -->
+  <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above. -->
   <NextSteps
+    route="For Team Training"
     steps={[
       { title: 'Discovery Session', text: 'A conversation about your roles and goals.' },
       { title: 'Needs Assessment', text: 'We scope the skills and team size.' },
@@ -142,7 +144,11 @@ const approach = [
       { title: 'Progress Evaluation', text: 'Results are checked against your measures.' },
     ]}
     firstAction={C14_FIRST}
-  />
+  >
+    <RouteBlock label="For Hiring">
+      <p class="lead" data-fact="IN-04" data-reveal>{EMPLOYER_HIRING_ROUTE}</p>
+    </RouteBlock>
+  </NextSteps>
 
   <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>

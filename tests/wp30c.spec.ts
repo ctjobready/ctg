@@ -169,12 +169,13 @@ test.describe('Partner with Us: sections that moved or went', () => {
     expect(order.inquire).toBeLessThan(order.cohorts);
   });
 
-  test('every audience page keeps its positioning statement, call to action and due-diligence block', async ({ page }) => {
+  test('every audience page keeps its positioning statement, call to action and due-diligence block (WP34: one short item, four rows on Employers)', async ({ page }) => {
     for (const slug of ['development-partners', 'governments', 'foundations', 'universities', 'employers', 'local-partners']) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#mechanism .pos__text'), slug).toHaveCount(1);
       await expect(page.locator('#cta'), slug).toHaveCount(1);
-      await expect(page.locator('#due-diligence li'), slug).toHaveCount(4);
+      await expect(page.locator('#due-diligence'), slug).toHaveCount(1);
+      await expect(page.locator('#due-diligence li'), slug).toHaveCount(slug === 'employers' ? 4 : 0);
     }
   });
 });

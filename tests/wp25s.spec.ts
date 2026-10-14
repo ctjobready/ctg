@@ -223,12 +223,12 @@ test.describe('Partner with Us', () => {
     await expect(dd.locator('.ddv__item')).toHaveCount(4);
   });
 
-  test('Universities and Local Partners name the contracting party, not the funder', async ({ page }) => {
+  test('Universities and Local Partners do not speak of a funder in their due-diligence item (WP34: one sentence for every audience page, no funder or contracting-party wording)', async ({ page }) => {
     for (const route of ['partner-with-us/universities/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const text = compact(await page.locator('#due-diligence').innerText());
-      expect(text, route).toContain('the contracting party’s requirements');
-      expect(text, route).not.toContain('the funder’s requirements');
+      expect(text, route).toContain('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
+      expect(text, route).not.toMatch(/funder/i);
     }
   });
 

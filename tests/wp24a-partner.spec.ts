@@ -54,12 +54,20 @@ test.describe('Partner with Us hub', () => {
 
 test.describe('audience pages', () => {
   for (const slug of AUDIENCE_PAGES) {
-    test(`${slug}: "Due Diligence in One View" compact block from registered commitments`, async ({ page }) => {
+    // WP34 (cycle-11 review): the four cards repeated what the page's own bands state, so the five pages other than Employers show one short item (tests/wp34.spec.ts pins its wording);
+    // Employers keeps the compact four-row view of its own offer (tests/wp25s.spec.ts)
+    test(`${slug}: the due-diligence block is ${slug === 'employers' ? 'the compact four-row "Due Diligence in One View"' : 'one short item'}`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
       const block = page.locator('#due-diligence');
       await expect(block).toHaveCount(1);
-      await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
-      expect(await block.locator('li').count()).toBe(4);
+      if (slug === 'employers') {
+        await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
+        expect(await block.locator('li').count()).toBe(4);
+      } else {
+        await expect(block.locator('h2')).toHaveText('Confirm Contracting, Safeguarding and Reporting');
+        expect(await block.locator('li').count()).toBe(0);
+        await expect(block.locator('a')).toHaveCount(1);
+      }
     });
 
     test(`${slug}: one learner story card near the top (before the problem band)`, async ({ page }) => {
@@ -122,7 +130,7 @@ test.describe('audience pages', () => {
     await expect(page.locator('#cta a.btn--primary')).toContainText('Plan Your First Team Program');
   });
 
-  test('WP30c: the audience pages carry no In Short summary and no comparison table (the table is on Home and Investors)', async ({ page }) => {
+  test('WP30c: the audience pages carry no In Short summary and no comparison table (WP34: the table is on Home only)', async ({ page }) => {
     for (const slug of AUDIENCE_PAGES) {
       await page.goto(`partner-with-us/${slug}/`);
       await expect(page.locator('#in-short'), `${slug}: In Short`).toHaveCount(0);

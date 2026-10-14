@@ -24,10 +24,11 @@
 //     sentence appears; negative self-tests below
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
 //     /programs/youthwide/ must show, inside the C13 CTA band (#cta, and for the Bangladesh briefing #cta-governments), ONE paragraph in the plan's exact words for THAT page: the lead "What
-//     the discovery session covers:" (development partners, foundations, YouthWIDE; first item "your country, priority groups and
+//     the discovery session covers:" (development partners, YouthWIDE; first item "your country, priority groups and
 //     locations") or "What the briefing covers:" (YouthWIDE in Bangladesh: first item "your priority groups and districts"; governments: "your priority groups and locations"), then the three
 //     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
-//     claim, so the three stand on the same fact); negative self-tests below
+//     claim, so the three stand on the same fact); WP34: Foundations has two funding routes, so its paragraph says what is discussed for each ("For a cohort grant, we discuss …
+//     For a platform grant, we discuss …"), still one paragraph with the PD-02 marker; negative self-tests below
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
@@ -37,7 +38,8 @@
 //     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
-//     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line); negative self-tests below
+//     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
+//     shows a one-link strip to the Impact page instead); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
 //     registers (facts, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
@@ -256,10 +258,13 @@ const sessionAgendaWanted = (lead, first) => `${lead} ${[first, ...SESSION_AGEND
 const SESSION_AGENDA_DISCOVERY = sessionAgendaWanted(SESSION_AGENDA_LEAD_DISCOVERY, SESSION_AGENDA_FIRST_DISCOVERY);
 const SESSION_AGENDA_BRIEFING = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_BRIEFING);
 const SESSION_AGENDA_GOVERNMENTS = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_GOVERNMENTS);
+// WP34 (cycle-11 review): Foundations offers a cohort grant and a platform grant, and the discovery-session agenda is a cohort agenda, so its paragraph says what is discussed for each route (declared here on its
+// own, like the others; src/data/copy.ts SESSION_AGENDA_ROUTES builds it, so a wording change has to be made in both places on purpose).
+const SESSION_AGENDA_FOUNDATIONS = 'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.';
 /** page path -> the exact agenda sentence that page must carry */
 const SESSION_AGENDA_BY_PAGE = {
   '/partner-with-us/development-partners/': SESSION_AGENDA_DISCOVERY,
-  '/partner-with-us/foundations/': SESSION_AGENDA_DISCOVERY,
+  '/partner-with-us/foundations/': SESSION_AGENDA_FOUNDATIONS,
   '/programs/youthwide/': SESSION_AGENDA_DISCOVERY,
   '/partner-with-us/governments/': SESSION_AGENDA_GOVERNMENTS,
 };
@@ -392,7 +397,8 @@ const TRIAL_SCOPE_BY_PAGE = {
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
 // WP31: the two employer pages show no trial band (they link to the evidence pages), so a missing #proof-band is fine there; the sentence stays required on any band they grow.
-const TRIAL_SCOPE_OPTIONAL = new Set(['/partner-with-us/employers/', '/programs/jobready-work/']);
+// WP34 (cycle-11 review): the NU Postgraduate Diploma overview is treated the same way (a one-link strip to the Impact page replaced its trial and survey band).
+const TRIAL_SCOPE_OPTIONAL = new Set(['/partner-with-us/employers/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/']);
 function trialScopeProblems(markup, wanted, { optional = false } = {}) {
   const band = bandMarkup(markup, 'proof-band');
   if (band === null) return optional ? [] : ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
@@ -735,16 +741,22 @@ function numberGuardPage(path, html, allow = []) {
   const agendaWant = SESSION_AGENDA_DISCOVERY;
   const agendaWantB = SESSION_AGENDA_BRIEFING;
   const agendaWantG = SESSION_AGENDA_GOVERNMENTS;
+  const agendaWantF = SESSION_AGENDA_FOUNDATIONS;
   if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the discovery agenda is no longer the plan wording');
   if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the briefing agenda is no longer the plan wording');
   if (agendaWantG !== 'What the briefing covers: your priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the governments briefing agenda is no longer the plan wording');
+  if (agendaWantF !== 'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.') problems.push('self-test: the Foundations two-route agenda is no longer the WP34 wording');
+  // WP34: Foundations says what is discussed for each funding route, with the route as the bold lead-in of each sentence; still one paragraph with the PD-02 marker
+  const agendaRoutesP = `<p class="agenda" data-session-agenda data-fact="PD-02" data-astro-cid-x><span class="agenda__lead">For a cohort grant,</span> we discuss your country, priority groups, tracks, budget and scorecard. <span class="agenda__lead">For a platform grant,</span> we discuss JobReady’s staged rollout.</p>`;
+  if (sessionAgendaProblems(ctaBand(agendaRoutesP), agendaWantF).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct Foundations agenda: ${sessionAgendaProblems(ctaBand(agendaRoutesP), agendaWantF).join('; ')}`);
   for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB], ['governments briefing lead', agendaWantG]]) {
     const ok = ctaBand(agendaP(text));
     if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);
   }
   // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
   const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
-  for (const p of ['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
+  for (const p of ['/partner-with-us/development-partners/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
+  if (byPage('/partner-with-us/foundations/') !== agendaWantF) problems.push('self-test: /partner-with-us/foundations/ must carry the two-route agenda ("For a cohort grant, … For a platform grant, …")');
   if (SESSION_AGENDA_EXTRA_BANDS["/programs/youthwide/"]?.wanted !== agendaWantB) problems.push("self-test: the #cta-governments band on /programs/youthwide/ must carry the briefing agenda (\"your priority groups and districts\")");
   if (byPage('/partner-with-us/governments/') !== agendaWantG) problems.push('self-test: /partner-with-us/governments/ must carry the governments briefing agenda ("your priority groups and locations")');
   const agendaBad = (why, markup, wanted = agendaWant) => {
@@ -757,6 +769,9 @@ function numberGuardPage(path, html, allow = []) {
   agendaBad('an agenda set as a list', ctaBand(`<ul class="agenda" data-session-agenda data-fact="PD-02"><li>${SESSION_AGENDA_LEAD_DISCOVERY}</li><li>${[SESSION_AGENDA_FIRST_DISCOVERY, ...SESSION_AGENDA_COMMON].join('</li><li>')}</li></ul>`));
   agendaBad('a paragraph that wraps a list', ctaBand(`<p class="agenda" data-session-agenda data-fact="PD-02">${SESSION_AGENDA_LEAD_DISCOVERY} <ul><li>${[SESSION_AGENDA_FIRST_DISCOVERY, ...SESSION_AGENDA_COMMON].join('</li><li>')}</li></ul></p>`));
   agendaBad('a changed lead', ctaBand(agendaP(agendaWant.replace('discovery session', 'session'))));
+  agendaBad('the cohort-only discovery agenda on Foundations (two funding routes)', ctaBand(agendaP(agendaWant)), agendaWantF);
+  agendaBad('a Foundations agenda that names only the cohort grant', ctaBand(agendaRoutesP.replace(/ <span[\s\S]*<\/span> we discuss JobReady’s staged rollout\./, '')), agendaWantF);
+  agendaBad('a Foundations agenda without the PD-02 marker', ctaBand(agendaRoutesP.replace(' data-fact="PD-02"', '')), agendaWantF);
   agendaBad('a changed item', ctaBand(agendaP(agendaWant.replace('employer demand and certification tracks', 'employer demand'))));
   agendaBad('items joined with middle dots instead of semicolons', ctaBand(agendaP(agendaWant.replaceAll('; ', ' · '))));
   agendaBad('items joined with commas instead of semicolons', ctaBand(agendaP(agendaWant.replaceAll('; ', ', '))));
