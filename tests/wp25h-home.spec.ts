@@ -35,7 +35,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     await open(page, pageByRoute('/'));
     const s = slide(page, 3);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
-    await expect(s.locator('h2')).toHaveText('In-Work Results by Program');
+    await expect(s.locator('h2')).toHaveText('Results by Program');
     await expect(s.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
     await expect(s.locator('.hs__lines li')).toHaveText([
       'WSDFM program records: 71% in work.',
@@ -186,8 +186,6 @@ test.describe('labels use "and", not "&"', () => {
       const hits: string[] = [];
       for (const el of Array.from(document.querySelectorAll('body *'))) {
         if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) continue;
-        // The news teaser's topic badges come from src/data/newsTopics.ts, shared with the News section (outside this package).
-        if (el.closest('#news')) continue;
         for (const n of Array.from(el.childNodes)) {
           if (n.nodeType === 3 && / & /.test(n.textContent ?? '')) hits.push(`${el.tagName.toLowerCase()}: ${(n.textContent ?? '').trim().slice(0, 80)}`);
         }

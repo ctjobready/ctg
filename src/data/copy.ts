@@ -55,7 +55,7 @@ export const EMPATHY: Record<Audience, string> = {
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
-  investors: 'Impact investors need to tell a model that is working from one that is only promised.',
+  investors: 'Impact investors need to distinguish a model that is working from one that is only promised.',
   localPartners: 'You reach young people that national programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };

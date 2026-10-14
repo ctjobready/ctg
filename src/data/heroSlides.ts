@@ -14,7 +14,7 @@ import { cta } from '../lib/mailto';
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
  * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
  * the offered-place employment and income results before the attenders' income; the placement slide lists all four case-study programs.
- * WP25h: the program-results slide is headed "In-Work Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
+ * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
  * with its own measure (67% found a first job within three months, never "in work"; PR-03), and the WSDFM line says "program records" so it is
  * not read as the trial's follow-up employment (63.1% against 52.8%, a different measure on the evidence band).
  */
@@ -170,7 +170,7 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'placement',
     eyebrow: 'Program Records',
-    title: 'In-Work Results by Program',
+    title: 'Results by Program',
     lead: 'Four programs, each with its partner, with results from their own program records.',
     lines: [
       { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },

@@ -46,7 +46,7 @@ let items: Item[] = entries
   .map((e) => ({
     title: e.data.title as string,
     date: String(e.data.date instanceof Date ? e.data.date.toISOString() : e.data.date),
-    // Human label ("Leadership & Advocacy"), never the collection slug.
+    // Human label ("Leadership and Advocacy"), never the collection slug.
     topic: e.data.topic ? topicLabel(e.data.topic as string) : undefined,
     excerpt: e.data.excerpt as string | undefined,
     href: `/news/${e.data.slug ?? e.id}/`,

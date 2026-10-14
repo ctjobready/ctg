@@ -24,11 +24,11 @@ const { links = true, headingLevel = 3, class: className, variant = 'cards' } = 
 const TEXT = {
   trial: { shows: 'The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.', not: 'Results for other countries, groups or today’s standard track.' },
   survey: { shows: 'What alumni who responded report about work and income after training.', not: 'Cause: respondents are not a random sample and may over-represent successful learners.' },
-  records: { shows: 'How many completers of a program were in work, from CodersTrust program records.', not: 'What would have happened without training.' },
+  records: { shows: 'What each named program recorded (in work, or a first job within three months), from CodersTrust program records.', not: 'What would have happened without training.' },
   stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
 };
 const matrix = [
-  { n: 1, name: 'Randomized Trial', tag: 'Randomized Trial' as const, figure: { value: fact('RC-02').stat?.value ?? '', label: trialEmploymentLabel(), id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
+  { n: 1, name: 'Independent Evaluation (BIGD)', tag: 'Randomized Trial' as const, figure: { value: fact('RC-02').stat?.value ?? '', label: trialEmploymentLabel(), id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
   { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Outcomes 2026' },
   { n: 3, name: 'Program Results', tag: 'Program Record' as const, figure: { value: fact('PR-01').stat?.value ?? '', label: wsdfmFigureLabel(), id: 'PR-01' }, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
   { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, figure: undefined, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
