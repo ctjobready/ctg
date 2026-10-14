@@ -288,15 +288,15 @@ test.describe('Our Model and Investors', () => {
     await expect(tile('Delivered Since 2014')).not.toContainText('1.5M+');
   });
 
-  test('Our Model spells out BIGD once, where its evidence band first names it; Investors (no In Short since WP30c) spells it out once, in the evidence band', async ({ page }) => {
+  test('Our Model spells out BIGD once, where its evidence band first names it; Investors (no In Short since WP30c; WP36: its evidence band is three sentences and names no evaluator) does not name it', async ({ page }) => {
     await open(page, 'our-model/');
     const text = compact(await main(page));
     expect((text.match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
     expect(text).toContain('A randomized trial by the BRAC Institute of Governance and Development (BIGD) found');
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#in-short')).toHaveCount(0);
-    expect(compact(await page.locator('#proof-band').innerText())).toContain('BIGD, the BRAC Institute of Governance and Development');
-    expect((compact(await main(page)).match(/BRAC Institute of Governance and Development/g) ?? []).length).toBe(1);
+    expect(compact(await page.locator('#proof-band').innerText())).toContain('A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.');
+    expect(compact(await main(page))).not.toMatch(/BIGD|BRAC Institute of Governance and Development/);
   });
 
   test('TalentLEAP: supported cohorts, further levels, typical timing, BIGD spelled out once', async ({ page }) => {

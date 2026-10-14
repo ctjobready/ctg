@@ -175,17 +175,18 @@ test.describe('the WSDFM 71% leaves the carousel and the glance tiles (the case 
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Results by Program');
     await expect(slide.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
-    await expect(slide.locator('.hs__lines li')).toHaveText(['Women in Online Work, Kosovo: 68% in work.', 'UNDP YES, Korail: 67% found a first job within three months.', 'Her Power: 47% of 800 tracked women in work.']);
+    // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
+    await expect(slide.locator('.hs__lines li')).toHaveText(['Women in Online Work, Kosovo: 68% in work (102 of 150).', 'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.', 'Her Power: 47% of 800 tracked women in work.']);
   });
 
-  test('Results at a Glance on Development Partners, Governments and Foundations carries no WSDFM tile; Kosovo takes its place where it led', async ({ page }) => {
+  test('Results at a Glance on Development Partners, Governments and Foundations carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it)', async ({ page }) => {
     for (const slug of THREE) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#glance [data-fact~="PR-01"]'), slug).toHaveCount(0);
       expect(compact(await page.locator('#glance').textContent()), slug).not.toMatch(/711 of 1,000|WSDFM/);
     }
     await open(page, 'partner-with-us/development-partners/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-02']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     await open(page, 'partner-with-us/foundations/');
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-04', 'OC-03', 'PR-02']);
     await open(page, 'partner-with-us/governments/');
@@ -366,7 +367,8 @@ test.describe('plain words and plain claims', () => {
       for (const q of qs) expect(q, `${route || 'home'}: "${q}"`).toBe(titleCase(q));
     }
     await open(page, 'partner-with-us/governments/');
-    expect(await texts(page, '.gp__q')).toContain('Why Do Graduates Struggle to Find Work?');
+    // WP36 (cycle-13 review): the audience pages state their pains as outcomes, as Home and YouthWIDE do ("Graduates Struggle to Find Work", not "Why Do Graduates Struggle to Find Work?")
+    expect(await texts(page, '.gp__q')).toContain('Graduates Struggle to Find Work');
   });
 
   test('About: National University sits with the 2022–2024 partnerships (official training partner since 2023), not with 2025–2026', async ({ page }) => {

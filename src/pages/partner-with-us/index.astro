@@ -5,6 +5,7 @@
 // roles) and the "Protected by Design" band (the Due Diligence band already states safeguarding and links to Governance) are gone; four FAQs, not six.
 // WP35 (cycle-12 review): the hero's one button jumps to the route cards ("Choose Your Route"), instead of opening an email that skips the chooser; the second email button ("Not Sure? Email Us Your Goals") and its
 // helper line are gone, so the closing call to action holds the page's one email button; the reporting band is two sentences and a link (the route pages state their own reporting).
+// WP36 (cycle-13 review): "Choose Your Route" is the hero button only; the route cards' section label is "Partnership Routes" (the H2 keeps "Which Route Is Yours?").
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -80,7 +81,7 @@ const jsonLd = [
 
   <Tone cmf="AUDIENCES">
     <Section id="audiences" aria-labelledby="audiences-h">
-      <SectionHeader id="audiences-h" eyebrow="Choose Your Route" title="Which Route Is Yours?" lead="Each route has its own evidence, offer and next step." />
+      <SectionHeader id="audiences-h" eyebrow="Partnership Routes" title="Which Route Is Yours?" lead="Each route has its own evidence, offer and next step." />
       <div class="grid-cards hub__routes">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       </div>

@@ -32,7 +32,7 @@ import { webPage } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
 const path = '/programs/superkids/';
-const LAST_UPDATED = '2026-10-14'; // WP20c: the day the review round 5 cycle 3 wording changes landed (PAGE_UPDATED.superkids is 2026-10-10)
+const LAST_UPDATED = '2026-10-15'; // WP36: the cycle-13 wording changes (the two agreement targets, the safeguarding answer); WP20c had 2026-10-14 (PAGE_UPDATED.superkids is 2026-10-10)
 const title = 'SuperKids: STEAM, Coding and Robotics';
 const description = 'SuperKids brings STEAM, coding, robotics and digital art to young learners through schools. 400+ learners since 2021, plus DoICT and NCTB agreements.';
 const inquiry = ctaFor('superkids');
@@ -40,15 +40,19 @@ const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
 // GV-08 in three sentences, built from the register's own wording so no figure is typed here: the DoICT agreement, the NCTB agreement,
 // and the plain statement that these are agreement targets, not delivered reach.
-const gv08 = fact('GV-08').text.match(/agreements with DoICT \(([^;]+); target reach ([^)]+)\) and NCTB \(([^)]+)\)/);
+// WP36 (cycle-13 review): the register gives two separate targets, each "20M+ students" (the DoICT agreement's "target reach 20M+ students through 9,000+ digital labs" and the NCTB agreement's
+// "competency-based experiential learning for 20M+ students"); it does not say they are the same students, so each is labeled with its own agreement and neither reads as a total.
+const gv08 = fact('GV-08').text.match(/agreements with DoICT \(([^;]+); target reach ([^)]+)\) and NCTB \(([^)]+?) for ([^)]+)\)/);
 if (!gv08) throw new Error('GV-08 wording changed: update the SuperKids agreement sentences');
 const doictScope = gv08[1];
 const doictReach = gv08[2];
 const nctbScope = gv08[3];
+const nctbReach = gv08[4];
 
 // Only the safeguarding question (Q9) applies to SuperKids: Q1 ("Will this work in our country?") answers with the adult course menu
 // and Q8 ("What does it cost?") with the adult program inclusions, and neither describes a K-12 program. Pricing is covered in C11.
-const faqSources: FaqSource[] = ['Q9'].map((id) => ({ audience: 'foundations' as const, id }));
+// WP36 (cycle-13 review): the one-line safeguarding answer with a link to the governance page, which keeps the full account (the hub FAQ has the full Q9).
+const faqSources: FaqSource[] = [{ audience: 'variants' as const, id: 'Q9-route' }];
 
 const jsonLd = [
   webPage({ path, name: 'SuperKids', description, dateModified: LAST_UPDATED, breadcrumb: [{ name: 'Home', path: '/' }, { name: 'Programs', path: '/programs/' }, { name: 'SuperKids', path }] }),
@@ -104,8 +108,8 @@ const courses = linkAttrs(COURSES_URL);
       <div class="agree__delivered" data-reveal data-fact="SK-05"><StatusTag status="Delivered" /><p class="agree__num"><Fact id="SK-05" /></p></div>
       <h3 class="agree__h agree__h--apart t-heading-xl" data-reveal>Agreed, Not Delivered</h3>
       <div class="agree__fact" data-reveal data-fact="GV-08">
-        <p>The DoICT agreement covers {doictScope}, with a target reach of {doictReach}.</p>
-        <p>The NCTB agreement covers {nctbScope}.</p>
+        <p><strong>DoICT agreement target:</strong> {doictReach}, for {doictScope}.</p>
+        <p><strong>NCTB agreement target:</strong> {nctbReach}, for {nctbScope}.</p>
         <p>These are agreement targets, not delivered reach.</p>
       </div>
       <div class="agree__cards">

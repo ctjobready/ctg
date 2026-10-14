@@ -6,6 +6,9 @@
 // delivery grid, the work-entry plans, the roadmap and reporting timelines, the RACI and decision sheet, the comparison table, the offer notes and the four gain rows of the C8 map.
 // Kept because a gate or a registered claim needs them: the three ranked pains (C2) and one C8 row each, the positioning statement opening C6, both session agendas, the trial relevance
 // qualifiers and every scope word.
+// WP36 (cycle-13 reviews): "Our Approach" states what the program does (training, mentoring and placement support in existing labs and colleges, monthly reports) and no longer restates the audience and the regions the hero
+// and the glance already give; scripts/check-facts.mjs declares that statement for this page (POSITION_WHOLE_STATEMENT). The Bangladesh band says "Designed for delivery through existing government digital labs
+// and colleges", and the glance's Delivery row says "a central team coordinating local labs for larger programs" in place of "hub-and-spoke" (as Our Model does).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -100,7 +103,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     rows={[
       { label: 'Where It Runs', text: 'Co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. Bangladesh is the reference implementation and has a national initiative of its own.', facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
-      { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; hub-and-spoke delivery for larger programs.', facts: ['PD-06'] },
+      { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
       { label: 'Reporting', text: 'Monthly reports, follow-up surveys and documentary evidence of earnings where available.', facts: ['PD-08', 'PD-09'] },
@@ -161,7 +164,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     tone="airy"
     eyebrow="For Governments and Ministries"
     title="Bangladesh: The National Initiative and Reference Country"
-    lead="Delivered through the government digital labs and colleges the country already has; lab access and seats are confirmed per program."
+    lead="Designed for delivery through existing government digital labs and colleges; lab access and seats are confirmed per program."
     link={{ label: cofunding.label, href: cofunding.href }}
   >
     <div class="mech-stats">

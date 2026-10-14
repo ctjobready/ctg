@@ -45,6 +45,8 @@ export const contactRoutes = (): ContactRoute[] => [
   { id: 'campus', who: 'Universities and Colleges', text: 'Bring industry-certification preparation and placement support to your students.', icon: 'graduation-cap', cta: fromLibrary('campus') },
   { id: 'work', who: 'Employers: Train Your Team', text: 'A training program scoped to your team and the skills your roles need.', icon: 'briefcase', cta: fromLibrary('work') },
   { id: 'talent', who: 'Employers: Hire Talent', text: 'Connect with job-ready digital talent through the placement team.', icon: 'users', cta: fromLibrary('talent') },
+  // WP36 (cycle-13 review): schools and education partners had no route of their own; this reuses SuperKids' inquiry (same address and prefilled subject), so no new address or form.
+  { id: 'schools', who: 'Schools and Education Partners', text: 'Explore coding, robotics and digital art for your learners.', icon: 'school', cta: fromLibrary('superkids') },
   { id: 'local', who: 'Local Partners in Bangladesh', text: 'NGOs, colleges, chambers and associations delivering in their communities. This goes to the Bangladesh team.', icon: 'map-pin', cta: localCta() },
   { id: 'diligence', who: 'Due-Diligence Teams', text: 'Questions about the contracting entity, safeguarding and the documents a funder needs.', icon: 'shield', cta: diligenceCta(), secondary: { label: 'Read about governance', href: '/about/governance/' } },
   { id: 'report', who: 'Partners reading the evidence', text: 'The partner edition of the Impact Report 2026.', icon: 'file-text', cta: reportCta(), secondary: { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' } },

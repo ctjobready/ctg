@@ -23,7 +23,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import Section from '../../components/ui/Section.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, SPEED_UNIVERSITIES } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, POSITIONING, PRICING, PROGRAM_OPTIONS, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -148,7 +148,8 @@ const options = [
   <FaqSection sources={faqSources} title="Questions Institutions Ask" />
 
   <!-- C11 -->
-  <OfferSection title="Two Ways to Start a Campus Program" lead="Program options are shown without prices." options={options} recommended={0}>
+  <!-- WP36 (cycle-13 review): Home's line that program sizes are not a commitment, ahead of the sizes. -->
+  <OfferSection title="Two Ways to Start a Campus Program" lead={`${PROGRAM_SIZES_NOTE} Program options are shown without prices.`} options={options} recommended={0}>
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 

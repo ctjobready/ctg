@@ -25,7 +25,8 @@ test.describe('What Your Partnership Includes (#features)', () => {
   test('no benefit on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three rows answer the three ranked pains)', async ({ page }) => {
     await open(page, '');
     const benefits = (await page.locator('#features .fc__benefit').allTextContents()).map(compact);
-    expect(benefits).toEqual(['A Path to First Paid Work', 'Results You Can Check', 'Tracks That Follow What Employers Ask For']);
+    // WP36 (cycle-13 review): the Practical Benefit cells are sentence case on Home, as on the other pages
+    expect(benefits).toEqual(['A path to first paid work', 'Results you can check', 'Tracks that follow what employers ask for']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
   });
 });

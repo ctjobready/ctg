@@ -1,0 +1,58 @@
+---
+import Section from '../../ui/Section.astro';
+import Icon from '../../system/Icon.astro';
+import { INVESTOR_EVIDENCE } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Independent Evidence on Investors (C7, Klein): the trial and the survey in three sentences and a row of links (WP36, cycle-13 review).
+ * The band used to restate the trial's plain-language reading, an income headline, the +10.3 pp tile, the trial chart and its data table, the survey sentence and three case-study cards, which is what the
+ * Impact pages are for; an investor reads the two results, the line that they are youth-program outcomes and not platform outcomes, and goes on to the evidence pages. Figures are read from the register
+ * (INVESTOR_EVIDENCE in src/data/copy.ts), never typed here. The band keeps its id (#proof-band) and its tone: the page's one evidence moment, between the light reach band and the light features band.
+ */
+interface Props {
+  id?: string;
+  /** Text links to the evidence pages (the trial, the survey, the case studies). */
+  links?: { label: string; href: string }[];
+}
+const { id = 'proof-band', links = [] } = Astro.props;
+---
+
+<Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
+  <header class="ie__head" data-reveal>
+    <p class="eyebrow">The Evidence</p>
+    <h2 class="ie__title" id={`${id}-h`}>Independent Evidence</h2>
+    <p class="lead" data-fact={INVESTOR_EVIDENCE.facts.join(' ')}>{INVESTOR_EVIDENCE.text}</p>
+  </header>
+  {
+    links.length > 0 && (
+      <ul class="ie__links" role="list">
+        {links.map((l) => <li><a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a></li>)}
+      </ul>
+    )
+  }
+</Section>
+
+<style>
+  .ie__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    max-width: 52rem;
+  }
+  .ie__head > * {
+    margin: 0;
+  }
+  .ie__title {
+    color: var(--ctx-section-heading);
+  }
+  .ie__links {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+  }
+</style>

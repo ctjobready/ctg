@@ -18,10 +18,11 @@ import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
 
 const routes = contactRoutes();
-// Twelve-plus routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
+// Thirteen routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
+// WP36 (cycle-13 review): "Hire or Train" gains the Schools and Education Partners route (SuperKids' inquiry).
 const GROUPS = [
   { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local', 'diligence', 'report'] },
-  { id: 'hire', title: 'Hire or Train', ids: ['campus', 'work', 'talent'] },
+  { id: 'hire', title: 'Hire or Train', ids: ['campus', 'work', 'talent', 'schools'] },
   { id: 'study', title: 'Study or Contact the Media', ids: ['nu-pgd', 'learners', 'media'] },
 ].map((g) => ({ ...g, routes: g.ids.map((id) => routes.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r) }));
 const grouped = new Set(GROUPS.flatMap((g) => g.ids));
@@ -101,7 +102,8 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
         { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
         { title: 'A Conversation', text: 'We talk through your goals, priority groups and timeline.' },
         // WP27: the third step follows the route chosen above; each line restates what that route's own page and contact card already say.
-        { title: 'The Next Step Depends on Your Route', text: 'Development partners, governments, foundations, universities and local partners: a first cohort, designed with you. Employers training a team: a needs assessment of your roles. Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool. Impact investors: the deck and data room follow under NDA.' },
+        // WP36 (cycle-13 review): foundations choose between a cohort grant and a platform grant, so they are not in the "first cohort" sentence.
+        { title: 'The Next Step Depends on Your Route', text: 'Development partners, governments, universities and local partners: a first cohort, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles. Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool. Impact investors: the deck and data room follow under NDA.' },
       ]} />
       <ul class="ct-c14" role="list">
         <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>

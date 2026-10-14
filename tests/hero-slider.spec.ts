@@ -69,11 +69,12 @@ test.describe('home hero slider', () => {
     // WP30c: the framing sentence is five words long (the slides label their own evidence types)
     await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
+    // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ and the 15 (the hero's reach card does)
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
       'Surveyed Completers Report a Median Income of $245, Up from $82 Before Training',
       'Results by Program',
-      '58.8% of Surveyed Earners Started Within Six Months',
-      '130,000+ Young People Trained in 15 Countries and Territories',
+      'Surveyed Completers Who Started Earning: 58.8% Within Six Months',
+      'Explore Where Our Programs Have Run',
     ]);
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
     // WP31: the first slide states the offered-place results only (employment, then income); the attenders' income is on the trial page it links

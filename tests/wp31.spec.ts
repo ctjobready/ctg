@@ -214,12 +214,21 @@ test.describe('the positioning statements share one plain closing', () => {
     'programs/youthwide/',
     'programs/jobready-campus/',
   ];
+  // WP36 (cycle-13 review): YouthWIDE's hero and glance already say who the program is for and where it runs, so its statement is the two shared sentences alone, with the program as the subject
+  // (scripts/check-facts.mjs declares it whole for that page); every other page keeps its audience sentence and the shared closing
+  const WHOLE: Record<string, string> = {
+    'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+  };
   for (const route of PAGES) {
-    test(`${route}: the audience sentence stays, the comparison sentence is gone`, async ({ page }) => {
+    test(`${route}: ${WHOLE[route] ? 'the statement is the two shared sentences with the program as the subject' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {
       await open(page, route);
       const statement = compact(await page.locator('#mechanism .pos__text').textContent());
-      expect(statement.endsWith(` ${CLOSING}`), 'ends with the shared closing').toBe(true);
-      expect(statement.startsWith('For '), 'opens with its own audience sentence').toBe(true);
+      if (WHOLE[route]) {
+        expect(statement).toBe(WHOLE[route]);
+      } else {
+        expect(statement.endsWith(` ${CLOSING}`), 'ends with the shared closing').toBe(true);
+        expect(statement.startsWith('For '), 'opens with its own audience sentence').toBe(true);
+      }
       expect(statement).not.toMatch(/Unlike approaches|randomized trial by BIGD|provision varies/);
     });
   }

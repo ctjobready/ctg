@@ -32,7 +32,8 @@
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
-//     second part); negative self-tests below
+//     second part); WP36: /programs/youthwide/ declares its statement whole (POSITION_WHOLE_STATEMENT: the two shared sentences with the program as the subject), and carries exactly
+//     that text; no other page is affected; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 table (#features) exactly one row for
 //     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
@@ -359,8 +360,17 @@ const POSITION_EMPLOYER_CLOSING = {
   '/partner-with-us/employers/': 'Training is customized to your roles, and hiring starts from your talent request.',
   '/programs/jobready-work/': 'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.',
 };
-/** Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence). */
-function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE } = {}) {
+// WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so its "Our Approach" statement is the two shared sentences alone, with the program named as the
+// subject. It is declared WHOLE, for this one page: a page listed here must carry exactly this text as its statement (nothing may precede it in the band, as on every page), and the audience-sentence-plus-[UNLIKE] shape stays
+// the rule for every page that is not listed. Declared here independently of src/data/copy.ts (POSITIONING.youthwide), so a change to it has to be made twice on purpose; negative self-tests below.
+const POSITION_WHOLE_STATEMENT = {
+  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+};
+/**
+ * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence).
+ * A page in POSITION_WHOLE_STATEMENT (`whole`) must instead carry exactly that declared statement.
+ */
+function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, whole } = {}) {
   const band = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*)/.exec(markup);
   if (!band) return ['the C6 band (#mechanism) is missing, so the positioning statement has nowhere to open'];
   const pos = /<div\b[^>]*\bclass="[^"]*\bpos\b[^"]*"[^>]*>([\s\S]*?)<\/div>/.exec(band[1]);
@@ -376,7 +386,9 @@ function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE } =
   const text = /<p\b[^>]*\bpos__text\b[^>]*>([\s\S]*?)<\/p>/.exec(pos[1]);
   const statement = text ? decode(text[1]) : '';
   if (!statement) out.push('the positioning statement has no text');
-  else if (unlike) {
+  else if (whole !== undefined) {
+    if (statement !== whole) out.push(`the positioning statement reads "${statement}", expected the statement declared for this page: "${whole}"`);
+  } else if (unlike) {
     const which = closing === UNLIKE_SENTENCE ? '[UNLIKE]' : 'employer';
     if (!statement.endsWith(` ${closing}`)) out.push(`the positioning statement does not end with the verbatim ${which} sentence as its own sentence`);
     else if (!/[.!?]$/.test(statement.slice(0, -closing.length - 1))) out.push(`the positioning statement runs the audience sentence into the ${which} sentence (they are two sentences)`);
@@ -872,6 +884,18 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a statement without the [UNLIKE] sentence', mech(`${headerHtml}${posBlock(posFor)}</header>`));
   posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
+  // WP36: a page-specific whole statement (YouthWIDE) passes only with exactly its declared text, and the declaration never loosens the rule for any other page
+  const wholeYw = POSITION_WHOLE_STATEMENT['/programs/youthwide/'];
+  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP36 wording');
+  posOk('the declared whole statement on the page that declares it (YouthWIDE)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeYw });
+  posOk('the declared whole statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeYw)}${headerHtml}</header>`), { whole: wholeYw });
+  posBad('the shared audience-plus-[UNLIKE] statement on the page that declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeYw });
+  posBad('a reworded whole statement', mech(`${headerHtml}${posBlock(wholeYw.replace('combines', 'blends'))}</header>`), { whole: wholeYw });
+  posBad('a whole statement with a sentence added in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeYw}`)}</header>`), { whole: wholeYw });
+  posBad('a lead line before the whole statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeYw)}</header>`), { whole: wholeYw });
+  posBad('the whole statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeYw)}</header>`));
+  posBad('the whole statement on a page that declares an employer closing', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { closing: empClosing });
+  for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
 
   // ranked pains and the C8 map (M4): exactly P1, P2, P3 in C2, exactly one C8 row for each, in order; only the two bands are read
   const painLi = (id) => `<li data-pain="${id}" data-astro-cid-x><span class="gp__n">1</span><div><p class="gp__q">A pain</p><p class="gp__a">Its words.</p></div></li>`;
@@ -1100,7 +1124,7 @@ for (const file of htmlFiles(dist)) {
   // [POSITION] opens C6 on the 13 pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval)
   if (POSITION_PAGES.includes(path)) {
     positionPages++;
-    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path), closing: POSITION_EMPLOYER_CLOSING[path] ?? UNLIKE_SENTENCE })) problems.push(`${path}: ${p}`);
+    for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path), closing: POSITION_EMPLOYER_CLOSING[path] ?? UNLIKE_SENTENCE, whole: POSITION_WHOLE_STATEMENT[path] })) problems.push(`${path}: ${p}`);
   }
   // three ranked pains in C2 and one C8 row for each, on the three bespoke pages (round 14, M4)
   if (PAIN_PAGES.includes(path)) {

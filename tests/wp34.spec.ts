@@ -108,9 +108,9 @@ test.describe('Investors: how JobReady builds on delivery, no cohort comparison'
     await expect(band.locator('h2')).toHaveText('How JobReady Builds on Delivery');
     const line = band.locator('p.lead');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(
-      'JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs. Youth-program outcomes are not platform outcomes.',
-    );
+    // WP36 (cycle-13 review): "Youth-program outcomes are not platform outcomes." now closes the Independent Evidence band, beside the figures it qualifies, and is said once on the page
+    expect(compact(await line.textContent())).toBe('JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs.');
+    expect(compact(await page.locator('main').textContent()).split('Youth-program outcomes are not platform outcomes.').length - 1, 'said once').toBe(1);
     expect(await line.getAttribute('data-fact')).toBe('IN-04');
     await expect(band.locator('table, ul, ol')).toHaveCount(0);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
@@ -180,9 +180,9 @@ test.describe('the due-diligence item on the five audience pages', () => {
 });
 
 test.describe('Development Partners: the hardest-to-reach answer names the barriers', () => {
-  test('"Why do the hardest-to-reach groups drop out?" is answered with the barriers, not by repeating the question', async ({ page }) => {
+  test('"The hardest-to-reach groups drop out" (WP36: a statement, no longer a question) is explained with the barriers, not by repeating the title', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const pain = page.locator('#problem .gp__pains li', { hasText: 'Why Do the Hardest-to-Reach Groups Drop Out?' });
+    const pain = page.locator('#problem .gp__pains li', { hasText: 'The Hardest-to-Reach Groups Drop Out' });
     await expect(pain).toHaveCount(1);
     expect(compact(await pain.locator('.gp__a').textContent())).toBe('Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.');
     expect(await mainText(page)).not.toContain('They drop out, or are never reached in the first place.');
@@ -207,8 +207,8 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     await expect(page.locator('#problem [data-fact="PX-03"]')).toHaveCount(0);
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
-    // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Why Do Degree Holders Struggle to Find Work?', 'Why Can’t Employers Find the Skills They Need?', 'Where Are Your Placement Results?']);
+    // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case; WP36 (cycle-13 review): they are statements, not questions
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Employers Struggle to Find the Skills They Need', 'Institutions Lack Placement Results They Can Publish']);
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');

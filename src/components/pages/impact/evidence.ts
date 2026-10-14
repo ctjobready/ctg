@@ -6,17 +6,20 @@ import { fact } from '../../../data/facts';
  *  - OC-*  the CodersTrust Impact Survey, October 2026                  → Surveyed Completers
  *  - PR-*  a program's own records (WSDFM, Kosovo, UNDP YES, Her Power) → Program Record
  *  - ST-*  one learner's own account                                    → Individual Story
- * Reach and scale facts (SC-*, GV-*) are not proof of outcomes and carry no evidence type; they take a StatusTag (Delivered, Agreement) instead.
+ * Reach and scale facts (SC-*, GV-*) are not proof of outcomes and carry no evidence type; they take a StatusTag (Delivered, Target) instead. The one exception is the contract-scope figure
+ * (GV-12 and SC-06, 31,200+ people in the training and curriculum scopes of six government contracts): WP36 (cycle-13 review, "one figure, one label") gives it the "Contract Scope" evidence tag
+ * on every page, as Home and Governments already did, in place of the "Agreement" status tag Impact and Investors showed.
  * Trial and program-record figures are never put in one undifferentiated group (cycle-4 owner decision).
  */
-/** The four kinds of evidence an Impact page badges (see <EvidenceTag>). */
-export type Evidence = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Individual Story';
+/** The kinds of evidence an Impact page badges (see <EvidenceTag>). */
+export type Evidence = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 
 export function evidenceOf(id: string): Evidence | undefined {
   if (id.startsWith('RC-')) return 'Randomized Trial';
   if (id.startsWith('OC-')) return 'Surveyed Completers';
   if (id.startsWith('PR-')) return 'Program Record';
   if (id.startsWith('ST-')) return 'Individual Story';
+  if (id === 'GV-12' || id === 'SC-06') return 'Contract Scope';
   return undefined;
 }
 

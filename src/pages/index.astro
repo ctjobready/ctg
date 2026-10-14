@@ -31,7 +31,7 @@ import { grantStartTitles } from '../components/pages/partners/partners';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, painForList, painForRow } from '../data/copy';
+import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { cta } from '../lib/mailto';
 import { linkAttrs } from '../lib/url';
@@ -64,7 +64,7 @@ const featureRows = [
     // WP23, item 5: placement support, not matching, toward local, remote and global work.
     feature: 'Placement Support and Three Months of Milestone-Based Mentoring',
     means: `${hours} training hours per certification; each track’s work-entry plan is approved before enrollment.`,
-    outcome: 'A Path to First Paid Work',
+    outcome: 'A path to first paid work',
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
   {
@@ -72,14 +72,14 @@ const featureRows = [
     // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
     feature: 'Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope',
     means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available.',
-    outcome: 'Results You Can Check',
+    outcome: 'Results you can check',
     facts: ['PD-08', 'PD-09'],
   },
   {
     ...painForRow(FUNDER_PAINS, 'P3'),
     feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Chosen from Employer Demand',
     means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.',
-    outcome: 'Tracks That Follow What Employers Ask For',
+    outcome: 'Tracks that follow what employers ask for',
     facts: ['PD-02', 'PD-10'],
   },
 ];
@@ -162,7 +162,7 @@ const featureRows = [
 
   <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How the Approaches Compare" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs', 'Freelance Marketplaces Alone']} ownCells={{ 'Independent Evidence': independentEvidence }} /></Tone>
 
-  <Tone cmf="C11"><HomeOffer id="offer" lead="Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity." /></Tone>
+  <Tone cmf="C11"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} /></Tone>
 
   <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot, Then Decide on Evidence" /></Tone>
 

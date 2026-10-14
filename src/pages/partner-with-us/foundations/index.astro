@@ -8,6 +8,8 @@
  * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
  * from the glance (its 71% is program records, read beside the trial's 63.1%; the Kosovo program result takes its place), the evaluator is spelled out where the page first names it, the independent-evidence
  * row says the evidence is on the predecessor program, and the meta description is a complete sentence.
+ * WP36 (cycle-13 reviews): the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66" (RC-04's stat label); the three pains are
+ * statements; the cost and safeguarding questions have the one-line route answers, each with a link to the full answer.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -59,7 +61,8 @@ const { title, description } = meta(
   `Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income.`,
 );
 
-const FAQ_IDS = ['Q3', 'Q8', 'Q9', 'Q10'];
+// Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
+const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
@@ -96,9 +99,9 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Why do grants buy training hours, but rarely earnings?', text: 'Attendance is easy to count; a change in income is harder to show.' },
-        { q: 'Where is the independent evidence?', text: 'Independent evidence on youth-employment programs is thin.' },
-        { q: 'Who can you trust to implement and report?', text: 'Scalable, accountable implementers are hard to find.' },
+        { q: 'Grants buy training hours, but rarely earnings', text: 'Attendance is easy to count; a change in income is harder to show.' },
+        { q: 'Independent evidence is hard to find', text: 'Independent evidence on youth-employment programs is thin.' },
+        { q: 'Scalable, accountable implementers are hard to find' },
       ]}
     />
   </ProblemBand>

@@ -106,6 +106,7 @@ export const TRIAL_SCOPE = {
  * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
  * The NU postgraduate diploma page has no statement: its copy waits for National University sign-off.
+ * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
@@ -159,8 +160,10 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['PD-01', 'PD-06', 'PD-08'],
   },
   youthwide: {
-    text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, which funders use to deploy its training-to-earnings model in a country. ${UNLIKE_APPROVED}`,
-    facts: ['IN-02', 'PD-01', 'PD-08'],
+    // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so "Our Approach" states only what the program does, in the two shared sentences
+    // with the program named as the subject. This is the one page-specific statement of its kind: scripts/check-facts.mjs declares it whole for /programs/youthwide/ (POSITION_WHOLE_STATEMENT).
+    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+    facts: ['PD-01', 'PD-08'],
   },
   nationwide: {
     text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh, a national initiative. ${UNLIKE_APPROVED}`,
@@ -408,6 +411,14 @@ export const BACKWARD_PLAN: CopyBlock = {
 };
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
+/** The same reassurance on the Employers page, whose first step may be a hiring request rather than a discovery session (WP36, cycle-13 review). */
+export const MICRO_COMMITMENT_EMPLOYERS = 'Your first step is a conversation, not a commitment.';
+
+/**
+ * The line over the program options on Home (WP25h), and now on the Universities and JobReady@Campus option bands (WP36, cycle-13 review): the sizes (1,000–2,500 trainees and so on) are
+ * options to scope in the discovery session, not a commitment, so a campus reads them as a range to choose from rather than a quantity asked of it.
+ */
+export const PROGRAM_SIZES_NOTE = 'Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity.';
 
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
@@ -482,11 +493,23 @@ export const HOME_META = {
   description: 'Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Training, mentoring and placement.',
 };
 
-/** Investors page market section (no market-size figures on public pages, D2). */
-export const INVESTOR_MARKET: CopyBlock = {
-  text: 'Market opportunity: four sectors in emerging markets — skill training, freelance marketplaces and job sites, HR tech and higher-ed EdTech.',
-  facts: ['PX-08', 'PX-05'],
-};
+/**
+ * The Independent Evidence body on Investors (WP36, cycle-13 review): the trial and the survey in three sentences, the last saying that youth-program outcomes are not platform outcomes. It replaces the
+ * band that restated the trial's plain-language reading, the income headline, the +10.3 pp tile, the trial chart and the survey sentence. The figures are read from RC-02 and OC-01, so the sentences
+ * cannot drift from the register, and the builder throws if either stat changes shape. The survey sentence reads "was 77.9% at the October 2026 survey, up from 47.4% before training", as Home's survey card and
+ * the Impact tile word it: a report by surveyed completers, with the base named and no multiplier.
+ */
+function investorEvidence(): CopyBlock {
+  const rc = fact('RC-02').stat;
+  const oc = fact('OC-01').stat;
+  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error('INVESTOR_EVIDENCE: RC-02 or OC-01 no longer has the expected stat');
+  const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  return {
+    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${oc.value} at the October 2026 survey, up from ${oc.from} before training. Youth-program outcomes are not platform outcomes.`,
+    facts: ['RC-02', 'OC-01'],
+  };
+}
+export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
 export const ACCOUNTABILITY: CopyBlock = {

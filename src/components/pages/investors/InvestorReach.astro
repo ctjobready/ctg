@@ -4,13 +4,15 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
 
 /**
  * Reach to Date (Investors, WP24a): its own band, apart from the outcome evidence (the trial and the survey) that follows it, so reach and results
  * are never read as one group. Two groups: what has been delivered since 2014 (SC-01, SC-02, SC-03) and the people in government contract scopes
- * (SC-06, an agreement, never delivered reach). The program results (WSDFM, Kosovo, Her Power) are not tiles here: they appear once, in Proof in Practice.
+ * (SC-06, tagged "Contract Scope" as on every page since WP36: contract scope, never delivered reach). The program results (WSDFM, Kosovo, Her Power) are not tiles here: they are on the case studies, which the
+ * Independent Evidence band links (WP36 took the case-study cards off this page).
  * Also the NU pipeline (SC-04, not counted in the reach) and the AWS (PA-06) and HolonIQ (PA-08) badges.
  * WP30c: the path-to-scale paragraph is gone (the scale FAQ answers it) and so are the heading's lead line and the pointer to Proof in Practice.
  */
@@ -55,7 +57,7 @@ const badges = ['PA-06', 'PA-08'];
       <h3 class="ir__h t-heading-l">Contracted Scope</h3>
       <div class="ir__tiles ir__tiles--one">
         <div class="ir__tile" data-fact={contracted}>
-          <StatusTag status="Agreement" />
+          <EvidenceTag type="Contract Scope" />
           <Stat value={stat(contracted).value} label={stat(contracted).label} size="lg" count={stat(contracted).numeric !== undefined} />
         </div>
       </div>

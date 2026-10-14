@@ -6,23 +6,22 @@
 // the path-to-scale paragraph is gone (the scale FAQ answers it), three FAQs, not four. The H1 is the owner's wording.
 // WP34 (cycle-11 review): the approaches comparison is gone from this page (it compared supported youth cohorts, on a page about backing the platform; Home keeps it); a short band says how
 // JobReady builds on that delivery and that youth-program outcomes are not platform outcomes.
+// WP36 (cycle-13 reviews): "Independent Evidence" is three sentences (the trial, the survey, the line that these are youth-program outcomes, not platform outcomes) and three links (the survey, the trial, the case
+// studies); the trial explanation, the +10.3 pp chart and table and the three case-study cards are on the Impact pages. The sector taxonomy ("The Sectors Involved") is gone from the mechanism band. The platform band
+// keeps its first sentence: the youth-program line now sits beside the figures it qualifies, and is said once.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
-import EvidenceBand from '../../../components/pages/home/EvidenceBand.astro';
-import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
-import { caseStudyItems } from '../../../components/pages/home/caseStudies';
 import InvestorDefinition from '../../../components/pages/investors/InvestorDefinition.astro';
 import InvestorThesis from '../../../components/pages/investors/InvestorThesis.astro';
 import InvestorVision from '../../../components/pages/investors/InvestorVision.astro';
 import InvestorGuide from '../../../components/pages/investors/InvestorGuide.astro';
-import InvestorMarket from '../../../components/pages/investors/InvestorMarket.astro';
-import InvestorProofExtras from '../../../components/pages/investors/InvestorProofExtras.astro';
+import InvestorEvidence from '../../../components/pages/investors/InvestorEvidence.astro';
 import InvestorReach from '../../../components/pages/investors/InvestorReach.astro';
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
@@ -79,34 +78,21 @@ const mechanismBlocks = [
   <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }}>
-      <InvestorMarket />
-    </HomeMechanism>
+    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
   </Tone>
 
   <Tone cmf="C7"><InvestorReach id="reach" /></Tone>
+  <!-- WP36 (cycle-13 review): the evidence is three sentences and the links; the case studies are one link, "Case Studies", in the same row. -->
   <Tone cmf="C7">
-    <EvidenceBand
+    <InvestorEvidence
       id="proof-band"
-      title="Independent Evidence"
-      bandHeading="Independent Evidence"
-      trialHeading="An Independent Randomized Trial"
-      headlineFact="RC-01"
-      chart="trial"
-      chip={false}
-      plainLine
-      incomeHeadline
-      lead="Trial figures are for a predecessor program evaluated by BIGD, the BRAC Institute of Governance and Development; survey figures are among surveyed completers."
-      statIds={['RC-02']}
       links={[
         { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+        { label: 'Case Studies', href: '/impact/case-studies/' },
       ]}
-    >
-      <InvestorProofExtras />
-    </EvidenceBand>
+    />
   </Tone>
-  <Tone cmf="C7"><CaseStudyCarousel id="cases" title="Proof in Practice" lead="Three featured case studies, each with its partner." items={caseStudyItems} /></Tone>
 
   <Tone cmf="C8" join>
     <FeaturesTable id="features" title="What JobReady Does" lead="Status is stated exactly: what is live, what is pre-launch and what is on the roadmap." rows={featureRows} />
@@ -118,7 +104,7 @@ const mechanismBlocks = [
   <Tone cmf="C10">
     <Section id="platform" pad="sm" aria-labelledby="platform-h">
       <SectionHeader id="platform-h" eyebrow="The Platform" title="How JobReady Builds on Delivery" flush>
-        <p class="lead" data-fact="IN-04">JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs. Youth-program outcomes are not platform outcomes.</p>
+        <p class="lead" data-fact="IN-04">JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs.</p>
       </SectionHeader>
     </Section>
   </Tone>

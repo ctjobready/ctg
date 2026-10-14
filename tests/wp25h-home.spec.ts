@@ -37,9 +37,10 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
     await expect(s.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
+    // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
-      'Women in Online Work, Kosovo: 68% in work.',
-      'UNDP YES, Korail: 67% found a first job within three months.',
+      'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 47% of 800 tracked women in work.',
     ]);
     await expect(s).not.toContainText('WSDFM');
@@ -104,7 +105,8 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP31: said as what surveyed completers report, not as a before-and-after effect; the heading says whose figures these are, so the slide has no lead
     await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
     await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
-    await expect(slide(page, 4).locator('h2')).toHaveText('58.8% of Surveyed Earners Started Within Six Months');
+    // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
+    await expect(slide(page, 4).locator('h2')).toHaveText('Surveyed Completers Who Started Earning: 58.8% Within Six Months');
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
     await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');

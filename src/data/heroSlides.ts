@@ -12,7 +12,7 @@ import { cta } from '../lib/mailto';
  * program results (named programs), speed to earning, reach, government and National University partners, and the programs (employment programs first, SuperKids last).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
- * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
+ * WP23: the survey slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
  * the offered-place employment and income results; the placement slide lists all four case-study programs.
  * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
  * with its own measure (67% found a first job within three months, never "in work"; PR-03).
@@ -21,6 +21,9 @@ import { cta } from '../lib/mailto';
  * WP35 (cycle-12 review): the program-results slide no longer lists WSDFM (its 71% in work is program records, and read beside the trial's 63.1% it looked like a second result for the same
  * program; the case card and the case study keep it), so it lists three programs; the survey proof card on the hero says in its caption that the survey is of surveyed completers in Bangladesh
  * (OC-09: 58 of 64 districts). The caption, not the eyebrow, carries it: "Impact Survey 2026 in Bangladesh" wraps to two lines in the three-column range (768 to about 950 px) and pushes that card's figure out of line.
+ * WP36 (cycle-13 reviews): the Home page states each figure once. The income slide has one tile (the 77.9% employment result is the hero's survey card), and the reach slide ("Explore Where Our Programs Have Run")
+ * carries SC-03's detail line only (the 130,000+ and the 15 countries and territories are the hero's reach card). The program-results slide names the base of every result (Kosovo "(102 of 150)", UNDP YES
+ * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
  */
 
 export interface HeroSlideStat {
@@ -104,21 +107,25 @@ if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N trac
 const startedSixMonths = fact('OC-05').stat?.value;
 const incomeNow = fact('OC-03').stat?.value;
 const incomeBefore = fact('OC-03').stat?.from;
-const reachFigure = fact('SC-16').stat?.value;
-const countries = fact('SC-03').stat?.numeric;
+/** The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ and the 15 are the hero's reach card, so the slide does not state them again. */
+const reachDetail = fact('SC-03').stat?.detail;
+if (!reachDetail || !/^Bangladesh plus \d+ other countries and territories; most delivery has been in Bangladesh\.$/.test(reachDetail)) throw new Error('heroSlides: SC-03 detail no longer reads "Bangladesh plus N other countries and territories; most delivery has been in Bangladesh."');
 /**
  * GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for
  * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
  */
 const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
-if (!startedSixMonths || !incomeNow || !incomeBefore || !reachFigure || countries === undefined) throw new Error('heroSlides: OC-03, OC-05, SC-03 or SC-16 no longer carries the figure a slide headline reads');
+if (!startedSixMonths || !incomeNow || !incomeBefore) throw new Error('heroSlides: OC-03 or OC-05 no longer carries the figure a slide headline reads');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
-const firstJob = /^of the \d+ trained found their first job within 3 months$/.test(fact('PR-03').stat?.label ?? '');
+const firstJob = /^of the (\d+) trained found their first job within 3 months$/.exec(fact('PR-03').stat?.label ?? '');
 if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
+/** Kosovo's base (PR-02's stat value, "102 of 150") closes its line, as Her Power's "of 800 tracked women" and UNDP YES's "of the 350 trained" do (WP36, cycle-13 review: each result names its base). */
+const kosovoBase = fact('PR-02').stat?.value;
+if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
 const PR_TEXT = {
-  wow: `${fact('PR-02').stat?.label}.`,
-  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} found a first job within three months.`,
+  wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
+  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
 
@@ -175,10 +182,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP31: said as what surveyed completers report, not as a before-and-after effect.
     title: `Surveyed Completers Report a Median Income of ${incomeNow}, Up from ${incomeBefore} Before Training`,
     titleFacts: ['OC-03'],
-    // No lead (WP31): the heading says whose figures these are, and each tile's caption says it again; the longer heading would otherwise make this the tallest slide and leave the others too much empty space.
+    // No lead (WP31): the heading says whose figures these are, and the tile's caption says it again; the longer heading would otherwise make this the tallest slide and leave the others too much empty space.
+    // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
-      { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
     ],
     links: [{ label: 'Read the Impact Survey 2026', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/woman-learner-laptop',
@@ -199,7 +206,9 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    title: `${startedSixMonths} of Surveyed Earners Started Within Six Months`,
+    // WP36 (cycle-13 review): "completers", the term the Outcomes 2026 page and the register use, not "earners". The clause "who started earning" is the base (the 170 who first earned during or after training), so
+    // the figure follows a colon and the heading stays two lines at 1280 px: the longer sentence ("... Did so Within Six Months") wraps to three, which makes this the tallest slide and leaves the others more than 48 px of empty space.
+    title: `Surveyed Completers Who Started Earning: ${startedSixMonths} Within Six Months`,
     titleFacts: ['OC-05'],
     lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
     leadFacts: ['OC-05'],
@@ -210,9 +219,9 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'scale',
     eyebrow: 'Reach at Scale', // WP30c (cycle-7 review, GLM): the slide states reach (people trained), which is an output, not impact
-    title: `${reachFigure} Young People Trained in ${countries} Countries and Territories`,
-    titleFacts: ['SC-16', 'SC-03'],
-    lead: fact('SC-03').stat?.detail,
+    // WP36 (cycle-13 review): the hero's "Reach Since 2014" card states the 130,000+ and the 15 countries and territories, so this slide points to where the programs ran and carries SC-03's detail line only.
+    title: 'Explore Where Our Programs Have Run',
+    lead: reachDetail,
     leadFacts: ['SC-03'],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
     photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide

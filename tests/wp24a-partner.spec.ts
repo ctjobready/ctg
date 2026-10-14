@@ -91,10 +91,10 @@ test.describe('audience pages', () => {
     });
   }
 
-  test('governments: the 31,200+ tile says "Six Government Contract Scopes", that the total is contract scope and not a count of completers, and that Her Power’s 25,125 women were trained (WP35)', async ({ page }) => {
+  test('governments: the 31,200+ tile says "People in the Scopes of Six Government Contracts" (WP36), that the total is contract scope and not a count of completers, and that Her Power’s 25,125 women were trained (WP35)', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
     const tile = page.locator('#glance li', { hasText: '31,200+' });
-    await expect(tile).toContainText('Six Government Contract Scopes');
+    await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
     await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
   });
 

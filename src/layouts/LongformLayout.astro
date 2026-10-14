@@ -14,8 +14,9 @@ interface Props extends BaseLayoutProps {
   /** ISO date of last substantive update. */
   updated?: string;
   /**
-   * Set where the page reports a dated source (the Outcomes 2026 survey): the header then reads "Source snapshot: <snapshot> · Page last
-   * reviewed: <updated>" instead of "Last updated <updated>", so the age of the data is not confused with the age of the page.
+   * Set where the page reports a dated source (the Outcomes 2026 survey): the header then reads "Source snapshot: <snapshot> · Last
+   * updated <updated>" instead of "Last updated <updated>", so the age of the data is not confused with the age of the page.
+   * WP36 (cycle-13 review): "Last updated <Month D, YYYY>" is the one dating phrase on every page that carries one; the survey page keeps its source snapshot before it.
    */
   snapshot?: string;
 }
@@ -32,7 +33,7 @@ const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.p
       {
         updated && (
           <p class="lf-updated">
-            {snapshot ? <>Source snapshot: {snapshot} · Page last reviewed: </> : <>Last updated </>}
+            {snapshot ? <>Source snapshot: {snapshot} · Last updated </> : <>Last updated </>}
             <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
           </p>
         )

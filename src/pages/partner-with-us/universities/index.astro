@@ -4,6 +4,8 @@
  * C1 to C14 in order, as the numbered table in doc 06 P6.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the
  * standard-inclusions list, the restated scorecard paragraph and the fifth next step.
+ * WP36 (cycle-13 reviews): the three pains are statements; the cost question has the one-line route answer and a link to the hub FAQ; the options band carries Home's line that program sizes are not a commitment
+ * (a first campus program is read beside "1,000–2,500 trainees" otherwise).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -29,8 +31,8 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, SPEED_UNIVERSITIES, SURVEY_INCOME, VALUE_PROPOSITION } from '../../../data/copy';
+import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, pricingParts, programOptions } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, SURVEY_INCOME, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -45,7 +47,8 @@ const { title, description } = meta(
   `JobReady@Campus helps degree holders prepare for digital work with mentoring. Among surveyed completers, ${degreeShare}.`,
 );
 
-const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8'];
+// Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
+const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
 const options = programOptions().filter((o) => o.name === 'Multi-Cohort Pilot Program' || o.name === 'Scale');
 const optionText: Record<string, string> = {
   'Multi-Cohort Pilot Program': 'Prove the model with a first campus program.',
@@ -94,9 +97,9 @@ const optionText: Record<string, string> = {
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Why do degree holders struggle to find work?', text: 'A degree alone is not producing job offers.' },
-        { q: 'Why can’t employers find the skills they need?', text: 'Employers report difficulty finding the talent they need.' },
-        { q: 'Where are your placement results?', text: 'Institutions lack placement results they can publish.' },
+        { q: 'Degree holders struggle to find work', text: 'A degree alone is not producing job offers.' },
+        { q: 'Employers struggle to find the skills they need', text: 'Employers report difficulty finding the talent they need.' },
+        { q: 'Institutions lack placement results they can publish' },
       ]}
     />
   </ProblemBand>
@@ -205,6 +208,7 @@ const optionText: Record<string, string> = {
   <!-- C11 · Offer -->
   <OfferCards
     title="Choose Where to Start"
+    lead={`${PROGRAM_SIZES_NOTE} ${pricingParts().lead}`}
     cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
     recommended={0}
   />

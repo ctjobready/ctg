@@ -7,6 +7,7 @@
  * WP31 (cycle-8 review): the youth programs' trial, survey and paid-work pathway blocks are gone from this corporate offer page; "Broader Evidence from Our Youth Programs" is a two-link
  * group to the evidence pages (no figure from the youth programs is shown here).
  * WP32 (cycle-9 review): the employer credentials (Grameenphone Academy enrollments, AWS Authorized Training Partner, AIvolve) are stated once, in "Our Track Record"; the delivery-record cards that repeated them are gone.
+ * WP36 (cycle-13 review): the three pains are statements; the closing reassurance reads "Your first step is a conversation, not a commitment." (the first step here may be a hiring request).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -37,7 +38,7 @@ import RouteBlock from '../../../components/ui/RouteBlock.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -101,9 +102,9 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Why can’t you find the digital talent you need?', text: 'Employers worldwide report difficulty finding talent, and AI skills are the hardest to find.' },
-        { q: 'Why does hiring alone not close the gap?', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
-        { q: 'How do you upskill your teams for AI workflows?', text: 'Your teams need upskilling on tasks from their own roles.' },
+        { q: 'You struggle to find the digital talent you need', text: 'Employers worldwide report difficulty finding talent, and AI skills are the hardest to find.' },
+        { q: 'Hiring alone does not close the gap', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
+        { q: 'Your teams need upskilling for AI workflows', text: 'The upskilling has to cover tasks from their own roles.' },
       ]}
     />
   </ProblemBand>
@@ -227,7 +228,7 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     heading="Let’s Plan Your First Team Program"
     primary={{ label: primary.label, href: primary.href }}
     secondary={{ label: talent.label, href: talent.href }}
-    micro={MICRO_COMMITMENT}
+    micro={MICRO_COMMITMENT_EMPLOYERS}
   />
 
   <!-- C14 · Next steps. WP34 (cycle-11 review): the offer is training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above. -->

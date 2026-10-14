@@ -8,7 +8,8 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  *  - the Outcomes 2026 income-source chart shows 7.1% and 4.7% as separate bars with an "about 12%" summary;
  *  - long lists (stories, photographs) show a first set and keep the rest behind a disclosure.
  */
-const TYPES = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Individual Story'];
+// WP36 (cycle-13 review, "one figure, one label"): the 31,200+ carries the "Contract Scope" evidence tag on /impact/ too (it had the "Agreement" status tag)
+const TYPES = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Contract Scope', 'Individual Story'];
 
 test.describe('evidence-type badge', () => {
   test.use({ viewport: DESKTOP });
@@ -92,7 +93,10 @@ test.describe('/impact/ At a Glance', () => {
     await expect(reach).toContainText(/contracted scopes of six government programs/i);
     await expect(reach).toContainText('25,125');
     await expect(reach).not.toContainText('800');
-    await expect(reach.locator('.status-tag[data-status="Agreement"]')).toHaveCount(1);
+    // WP36: the contract-scope figure carries the "Contract Scope" evidence tag (as on Home, Governments and Investors), not an "Agreement" status tag; the reach figure keeps "Delivered"
+    await expect(reach.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
+    await expect(reach.locator('.status-tag[data-status="Agreement"]')).toHaveCount(0);
+    await expect(reach.locator('.status-tag[data-status="Delivered"]')).toHaveCount(1);
   });
 
   test('the trial tile (WP35: the one trial group tile) names the predecessor program and the +10.3 label does not repeat itself', async ({ page }) => {

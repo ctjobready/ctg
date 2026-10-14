@@ -1,11 +1,14 @@
 import { faqsFor, type FaqAudience } from '../data/faqs';
 import { faqPage } from './schema';
+import { linkAttrs } from './url';
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /**
  * FAQs for an audience as Accordion items (answers wrapped in <p data-fact="…evidence ids…">);
- * optional id filter / order. An FAQ answer is plain text: no markers, no source list.
+ * optional id filter / order. An FAQ answer is plain text: no markers, no source list. A `link` (WP36) closes the answer as its last sentence, the whole sentence being the link ("See what a partnership includes.");
+ * faqPage() strips the markup for the JSON-LD, so the structured answer reads the same words as the page ("… in the discovery session. See what a partnership includes."), which scripts/validate-jsonld.mjs
+ * requires. The full stop is inside the link on purpose: stripHtml turns every tag into a space, so a stop outside it would read "includes ." in the JSON-LD.
  */
 export function faqItems(audience: FaqAudience, ids?: string[]): { q: string; a: string }[] {
   let list = faqsFor(audience);
@@ -18,7 +21,10 @@ export function faqItems(audience: FaqAudience, ids?: string[]): { q: string; a:
       return f;
     });
   }
-  return list.map((f) => ({ q: f.q, a: `<p data-fact="${f.evidence.join(' ')}">${esc(f.a)}</p>` }));
+  return list.map((f) => ({
+    q: f.q,
+    a: `<p data-fact="${f.evidence.join(' ')}">${esc(f.a)}${f.link ? ` <a href="${esc(linkAttrs(f.link.href).href)}">${esc(f.link.label)}.</a>` : ''}</p>`,
+  }));
 }
 
 /** FAQPage JSON-LD node for the same FAQs — pass it to the layout's `jsonLd` prop (one @graph per page). */

@@ -6,6 +6,8 @@
  * brief, the 2015 pilot quote with its caveat, the second survey of the standard inclusions and the restated three-step mechanism. Five FAQs, not nine.
  * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
  * from the glance (its 71% is program records, read beside the trial's 63.1%; the Kosovo program result takes its place).
+ * WP36 (cycle-13 reviews): each figure is stated once. The Kosovo result (102 of 150) is on its Proof in Practice card, so the glance's program-record tile is UNDP YES, Korail (PR-03: a program with UNDP, one of the development partners in PA-01)
+ * and the Kosovo tile is gone; the mechanism card says "Placement support into ..."; the three pains are statements ("What Gets in the Way"); the cost question has the one-line route answer and a link to the hub FAQ.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -51,7 +53,8 @@ const { title, description } = meta(
   'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
 );
 
-const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
+// Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
+const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8-route'];
 ---
 
 <LandingLayout
@@ -74,7 +77,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
   <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' }]}
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp }]}
     more={[{ id: 'RC-06a', href: '/impact/independent-evaluation/' }]}
   />
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
@@ -88,9 +91,9 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Why do skills programs miss their employment targets?', text: 'Enrollment targets are often met, while employment results lag behind.' },
-        { q: 'Why do the hardest-to-reach groups drop out?', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
-        { q: 'How can your evaluators audit the outcomes?', text: 'Outcomes are hard to audit without a baseline and documentary evidence.' },
+        { q: 'Skills programs miss their employment targets', text: 'Enrollment targets are often met, while employment results lag behind.' },
+        { q: 'The hardest-to-reach groups drop out', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
+        { q: 'Outcomes are hard to audit', text: 'Without a baseline and documentary evidence, evaluators have little to check.' },
       ]}
     />
   </ProblemBand>
@@ -136,7 +139,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
     ]}
     link={{ label: 'How Our Model Works', href: LINKS.model }}
   />

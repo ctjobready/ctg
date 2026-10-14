@@ -8,6 +8,7 @@ import EmailFallback from '../../../components/ui/EmailFallback.astro';
 import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
 import StatusTag from '../../../components/system/StatusTag.astro';
+import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
@@ -98,7 +99,7 @@ const d = discoveryCta();
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><StatusTag status="Agreement" /><FactStat id="SC-06" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /></div>
     </div>
     <p class="jr__links">
       <a class="link" href={linkAttrs('/our-model/').href}>How the Model Works<Icon name="arrow-right" size={16} /></a>

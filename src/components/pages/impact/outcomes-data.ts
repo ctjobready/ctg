@@ -21,7 +21,7 @@
 /**
  * The page's dates, in one place (review round 14, n3). The source snapshot (the survey results) and the page's last content change are
  * different things: the first stays "October 2026"; the second is the date of the page's last editorial change and moves with it. The
- * page header ("Source snapshot: October 2026 · Page last reviewed: …") and the JSON-LD `dateModified` both read PAGE_LAST_REVIEWED,
+ * page header ("Source snapshot: October 2026 · Last updated …"; WP36 made "Last updated" the site's one dating phrase) and the JSON-LD `dateModified` both read PAGE_LAST_REVIEWED,
  * so they cannot disagree. `datePublished` is the date the survey results were first published (the 7 October snapshot).
  */
 export const SOURCE_SNAPSHOT = 'October 2026';
