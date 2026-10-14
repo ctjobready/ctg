@@ -3,9 +3,10 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import StepFlow from '../ui/StepFlow.astro';
 import { fact } from '../../data/facts';
+import { grantStartTitles } from '../pages/partners/partners';
 import { endSentence } from './copyText';
 
-/** C14 Next steps: Discovery → Co-design → Agreement → First cohort; timing comes from PD-04. */
+/** C14 Next steps: Discovery → Co-design → Agreement → Training starts; the weeks and the window come from PD-04 (WP29: each names its starting point). */
 interface Props {
   title?: string;
   lead?: string;
@@ -15,14 +16,13 @@ interface Props {
 }
 const { title = 'What Happens Next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
-// Week labels are parsed from PD-04 ("Discovery wk 1 → Co-design wk 2 → Agreement wk 3") so timings are never retyped.
-const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => ({ name: m[1], wk: m[2] }));
-const cohort = pd04.stat?.value ?? '';
+// Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
+const [discovery, codesign, agreement, training] = grantStartTitles();
 const steps = [
-  { title: `Discovery · week ${wk[0]?.wk}`, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: `Co-Design · week ${wk[1]?.wk}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
-  { title: `Agreement · week ${wk[2]?.wk}`, text: 'Scope, schedule and success measures are agreed.' },
-  { title: `First Cohort · ${cohort}`, text: 'Training starts within this window after signing (grant-funded pilots).' },
+  { title: discovery, text: 'A conversation about your goals, priority groups and timeline.' },
+  { title: codesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
+  { title: agreement, text: 'Scope, schedule and success measures are agreed.' },
+  { title: training, text: 'The first cohort begins training (grant-funded pilots).' },
 ];
 ---
 

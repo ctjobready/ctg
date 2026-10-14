@@ -6,13 +6,15 @@ import Icon from '../system/Icon.astro';
 import PositioningStatement from './PositioningStatement.astro';
 import { linkAttrs } from '../../lib/url';
 
-/** C6 Mechanism (Klein band): positioning statement + four-block model diagram + Learn → Earn → Prosper ribbon + link. */
+/** C6 Mechanism (Klein band): positioning statement + four-block model diagram (+ an optional slot under it, e.g. Foundations' funding-route comparison) + Learn → Earn → Prosper ribbon + link. */
 interface Props {
   title: string;
   lead?: string;
   /** C6a positioning statement (data/copy.ts POSITIONING), shown in the band header. */
   positioning?: { text: string; facts: string[] };
   blocks?: { label: string; title: string; text?: string; icon?: string; factId?: string }[];
+  /** Show the block diagram (default). A band whose own content is a comparison in the slot (Foundations' two funding routes, WP29) turns it off rather than repeat it. */
+  diagram?: boolean;
   link?: { label: string; href: string };
   /** More links on the same line as `link` (Foundations: one jump link per funding route). */
   moreLinks?: { label: string; href: string }[];
@@ -29,6 +31,7 @@ const {
     { label: 'What We Deliver', title: 'Skills, Certification, Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
     { label: 'Where They Work', title: 'Local, Remote and Global Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
   ],
+  diagram = true,
   link,
   moreLinks = [],
   ribbon = ['Learn', 'Earn', 'Prosper'],
@@ -40,7 +43,8 @@ const {
   <SectionHeader id={`${id}-h`} eyebrow="How It Works" title={title} lead={lead} leadLast={!!positioning}>
     {positioning && <PositioningStatement text={positioning.text} facts={positioning.facts} />}
   </SectionHeader>
-  <ModelDiagram blocks={blocks} />
+  {diagram && <ModelDiagram blocks={blocks} />}
+  <slot />
   <p class="mech__ribbon" data-reveal>
     {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}
   </p>

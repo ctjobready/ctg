@@ -10,6 +10,8 @@ const { steps, class: className, level = 3 } = Astro.props;
 const Tag = level === 4 ? 'h4' : 'h3';
 // step titles are often shared with body text (timelines, tables), so Title Case is applied here, for the heading only
 import { titleCase } from '../../lib/titleCase.mjs';
+// A numeric range in a heading ("6–8 Weeks") stays on one line: it never wraps after the en dash (the odd entries of the split are the ranges).
+const headingParts = (title: string) => titleCase(title).split(/(\d+–\d+)/);
 ---
 
 <ol class:list={['steps', className]} role="list" style={`--n:${steps.length}`}>
@@ -18,7 +20,7 @@ import { titleCase } from '../../lib/titleCase.mjs';
       <li class="steps__item" data-reveal>
         <span class="steps__num" aria-hidden="true">{i + 1}</span>
         <div>
-          <Tag class="steps__title"><span class="sr-only">Step {i + 1}: </span>{titleCase(s.title)}</Tag>
+          <Tag class="steps__title"><span class="sr-only">Step {i + 1}: </span>{headingParts(s.title).map((part, k) => (k % 2 ? <span class="steps__range">{part}</span> : part))}</Tag>
           {s.text && <p class="steps__text">{s.text}</p>}
         </div>
       </li>
@@ -59,6 +61,9 @@ import { titleCase } from '../../lib/titleCase.mjs';
     font-size: var(--fs-heading-l);
     line-height: var(--lh-heading-l);
     color: var(--ctx-heading);
+  }
+  .steps__range {
+    white-space: nowrap;
   }
   .steps__text {
     margin: 4px 0 0;

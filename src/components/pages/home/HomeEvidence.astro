@@ -5,6 +5,7 @@ import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import EvidenceLadderCompact from '../impact/EvidenceLadderCompact.astro';
+import PaidWorkPathways from '../impact/PaidWorkPathways.astro';
 import { fact } from '../../../data/facts';
 import { RCT_COMPARISON } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
@@ -16,6 +17,8 @@ import { linkAttrs } from '../../../lib/url';
  * the one survey result the carousel does not carry, the 72.3% of surveyed completers with no prior income who were earning (OC-02), with
  * its registered base in the "N of M" pattern ("34 of 47"), then the links. There is no second survey block and no restatement of the
  * trial's income results (RC-01; the carousel's first slide states them).
+ * WP29 (benchmark review): the survey area also carries the paid-work pathways as one compact comparison (OC-04: salaried employment, freelancing and
+ * business ownership, before training and at the October 2026 survey; Surveyed Completers), below the ladder and the 72.3% tile.
  * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
  * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
  * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
@@ -78,6 +81,8 @@ const delta = RCT_COMPARISON.delta;
       <Stat value={survey.value} label={survey.label} tone="dark" size="lg" count={survey.numeric} />
     </div>
   </div>
+
+  <PaidWorkPathways wide note="Salaried jobs remain the largest pathway; freelancing and business ownership grew the most in relative terms." />
 
   {
     links.length > 0 && (

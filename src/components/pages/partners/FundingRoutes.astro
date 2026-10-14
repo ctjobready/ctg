@@ -1,0 +1,106 @@
+---
+/**
+ * The two Foundations funding routes as a two-row comparison (WP29, Benchmark): one row per route, two columns, What It Supports and Evidence Relationship.
+ * Existing copy only: the sentences were the two route cards' own text in the C6 mechanism band, which now holds the route names and this table.
+ * Route 2's evidence cell states the line the benchmark asked for ("Youth-program outcomes are not platform outcomes.") beside the page's own sentence that
+ * the outcome evidence comes from the youth programs. The platform's status sentence ("Live today: ... In pre-launch: ...") is IN-04's, so that cell carries IN-04.
+ * Plain table; at 640 px and below it stacks to one card per route (the shared data-stack pattern, src/styles/utilities.css).
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'funding-routes' } = Astro.props;
+const rows = [
+  {
+    n: 'Funding Route 1',
+    name: 'YouthWIDE Cohort Grants',
+    supports: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa.',
+    evidence: 'Current outcome evidence comes from Bangladesh and Kosovo.',
+    facts: undefined,
+  },
+  {
+    n: 'Funding Route 2',
+    name: 'JobReady Platform Grants',
+    supports: 'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',
+    evidence: 'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
+    facts: 'IN-04',
+  },
+];
+---
+
+<section id={id} class="fr" aria-label="The two funding routes compared" tabindex="0" data-scroll data-stack data-reveal>
+  <table>
+    <caption class="sr-only">The two funding routes, YouthWIDE Cohort Grants and JobReady Platform Grants: what each supports and how each relates to the outcome evidence.</caption>
+    <thead>
+      <tr>
+        <th scope="col">Funding Route</th>
+        <th scope="col">What It Supports</th>
+        <th scope="col">Evidence Relationship</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr data-fact={r.facts}>
+            <th scope="row"><span class="fr__n">{r.n}</span>{' '}{r.name}</th>
+            <td data-label="What It Supports">{r.supports}</td>
+            <td data-label="Evidence Relationship">{r.evidence}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</section>
+
+<script>
+  import '../../../scripts/tablestack';
+</script>
+
+<style>
+  .fr {
+    position: relative;
+    max-width: 100%;
+    margin-top: var(--space-lg);
+    overflow-x: auto;
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+  table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+  }
+  thead th {
+    background: var(--surface-container-low);
+    color: var(--secondary);
+  }
+  tbody th {
+    color: var(--on-surface);
+    font-weight: var(--fw-bold);
+    min-width: 11rem;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .fr__n {
+    display: block;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+</style>

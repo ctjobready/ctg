@@ -74,11 +74,13 @@ test.describe('evidence band (#proof-band)', () => {
     expect(order.stat).toBeGreaterThan(order.ladder);
   });
 
-  test('does not retell the trial or the survey: one trial sentence, one chart, no second survey block', async ({ page }) => {
+  test('does not retell the trial or the survey: one trial sentence, one chart, and (WP29) one survey comparison the carousel does not carry', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     await expect(band.locator('h2')).toHaveText('Trial and Survey Evidence');
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First']);
+    // WP29 (benchmark review): the paid-work pathways comparison (OC-04) is the band's one extra survey block; the carousel states no pathway figure
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First', 'Paid-Work Pathways Among Surveyed Completers']);
+    await expect(band.locator('[data-fact="OC-04"]')).toHaveCount(1);
     await expect(band.locator('[data-plain-line]')).toHaveCount(1);
     await expect(band.locator('[data-plain-line]')).toHaveText('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
     await expect(band.locator('svg[role="img"], figure svg').first()).toBeVisible();

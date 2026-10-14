@@ -44,6 +44,17 @@ export const FIRST_COHORT = statValue('PD-04');
 export const NATIONWIDE_TARGET = statValue('IN-01');
 
 /**
+ * The grant-funded start sequence as step headings (WP29: every timeline names its starting point), read from PD-04 so no week is retyped:
+ * "Discovery (Week 1)", "Co-Design (Week 2)", "Agreement (Week 3)", then "Training Starts 6–8 Weeks After Signing". Week 1 to 3 count from the first
+ * conversation; the last window counts from signing. Public procurement timing is a separate line (it is not part of this sequence).
+ */
+export function grantStartTitles(): [string, string, string, string] {
+  const weeks = [...fact('PD-04').text.matchAll(/(Discovery|Co-Design|Agreement) \(Week (\d)\)/g)].map((m) => `${m[1]} (Week ${m[2]})`);
+  if (weeks.length !== 3) throw new Error(`grantStartTitles: PD-04 no longer reads "Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)": "${fact('PD-04').text}"`);
+  return [weeks[0], weeks[1], weeks[2], `Training Starts ${FIRST_COHORT} After Signing`];
+}
+
+/**
  * First-cohort timing line for the contact and local-partner pages (grant-funded pilots): a plan, not a promise. It replaces
  * C14.reminder on those pages; the PD-04 and PD-08 facts it rests on are unchanged.
  */

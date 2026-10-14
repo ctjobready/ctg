@@ -94,11 +94,11 @@ test.describe('audience pages', () => {
     await expect(tile).toContainText('contracted scopes, not a delivered-training total');
   });
 
-  test('governments: "What a Ministry Sees" shows Month 1, Month 6 and Month 12', async ({ page }) => {
+  test('governments: "What a Ministry Sees" names each step\'s starting point (WP29): the first cohort, then 6 and 12 months after each course', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
     const strip = page.locator('#ministry-sees');
     await expect(strip.locator('h2')).toHaveText('What a Ministry Sees');
-    expect(await texts(page, '#ministry-sees ol > li .ms__when')).toEqual(['Month 1', 'Month 6', 'Month 12']);
+    expect(await texts(page, '#ministry-sees ol > li .ms__when')).toEqual(['Month 1 of the First Cohort', '6 Months After Each Course', '12 Months After Each Course']);
     await expect(strip).toContainText('as agreed in the program scope');
   });
 

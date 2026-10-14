@@ -36,6 +36,7 @@ import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import FitBrief from '../../../components/pages/partners/FitBrief.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
+import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astro';
 import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
@@ -185,16 +186,16 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     <MechanismBand
       title="Two Ways to Fund the Path"
       positioning={POSITIONING.foundations}
-      blocks={[
-        { label: 'Funding Route 1', title: 'YouthWIDE Cohort Grants', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
-        { label: 'Funding Route 2', title: 'JobReady Platform Grants', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.', icon: 'layers' },
-      ]}
+      diagram={false}
       moreLinks={[
         { label: 'See Funding Route 1', href: '#cohort-grants' },
         { label: 'See Funding Route 2', href: '#platform-grants' },
       ]}
       link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
-    />
+    >
+      <!-- WP29 (benchmark review): the two routes as a two-row comparison (What It Supports, Evidence Relationship), in place of the two route cards. Their sentences moved into it; nothing was added. -->
+      <FundingRoutes />
+    </MechanismBand>
   </div>
   <SubBand>
     <Callout eyebrow="Reporting and Recognition">

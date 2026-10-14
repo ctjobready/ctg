@@ -1,0 +1,161 @@
+---
+import Section from '../../ui/Section.astro';
+import SectionHeader from '../../ui/SectionHeader.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
+import Icon from '../../system/Icon.astro';
+import { fact } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+import { LINKS } from './partners';
+
+/**
+ * Model partnership card (WP29, Benchmark; Governments): Her Power with the ICT Division, as separate fields read only from registered facts, so a
+ * ministry sees what a government partnership looks like and which measure is which (the benchmark's "tangible partnerships" gap):
+ *   Partner (GV-01) · CodersTrust's role (GV-11, without its direct-training clause, which is the next field) ·
+ *   Direct training (GV-13) · Reported work outcome (PR-05) · National program reach (GV-01).
+ * Direct delivery, the tracked outcome and the national program's reach are three different measures: the figure tiles sit apart, each under its own
+ * label, and the 372 of 800 is stated with its base (tracked from the 2,500 trained directly), never beside the 25,125 as one total.
+ * No figure is typed here: each is read from the fact it states (build fails loudly if a fact's wording changes). The card carries the Program Record tag.
+ */
+interface Props {
+  id?: string;
+}
+const { id = 'model-partnership' } = Astro.props;
+
+const need = (m: RegExpExecArray | null, what: string): RegExpExecArray => {
+  if (!m) throw new Error(`ModelPartnership: ${what} no longer reads as the card expects`);
+  return m;
+};
+
+const gv01 = fact('GV-01');
+const gv11 = fact('GV-11');
+const gv13 = fact('GV-13');
+const pr05 = fact('PR-05');
+if (!gv01.stat || !gv13.stat || !pr05.stat) throw new Error('ModelPartnership: GV-01, GV-13 and PR-05 each need a stat');
+
+// Partner: the case-study card's own wording for the program's owner (GV-01 names "DoICT, ICT Division").
+need(/DoICT, ICT Division/.exec(gv01.text), 'GV-01 (DoICT, ICT Division)');
+const partner = 'ICT Division / Department of ICT (DoICT)';
+
+// CodersTrust's role: GV-11's list, minus the direct-training clause (its own field below).
+const rolePrefix = 'CodersTrust’s role in Her Power: ';
+if (!gv11.text.startsWith(rolePrefix)) throw new Error('ModelPartnership: GV-11 no longer opens with "CodersTrust’s role in Her Power: "');
+const roleParts = gv11.text.slice(rolePrefix.length).split('; ').filter((p) => !/women trained directly$/.test(p));
+if (roleParts.length !== 3) throw new Error(`ModelPartnership: GV-11 role list is no longer three items besides the direct training: ${roleParts.join(' | ')}`);
+const role = roleParts.join('; ').replace(/^./, (c) => c.toUpperCase());
+
+// The tracked outcome and its base, from PR-05's label ("tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%").
+const parts = need(/^tracked women, (from the [\d,]+ trained directly by CodersTrust), in work: (\d+%)$/.exec(pr05.stat.label), 'PR-05 label');
+const outcomeLabel = `tracked women in work (${parts[2]}), ${parts[1]}`;
+
+const figures = [
+  { label: 'Direct Training', value: gv13.stat.value, detail: gv13.stat.label, facts: 'GV-13' },
+  { label: 'Reported Work Outcome', value: pr05.stat.value, detail: outcomeLabel, facts: 'PR-05' },
+  { label: 'National Program Reach', value: gv01.stat.value, detail: gv01.stat.label, facts: 'GV-01' },
+];
+const caseHref = linkAttrs(LINKS.caseHerPower).href;
+---
+
+<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
+  <SectionHeader
+    id={`${id}-h`}
+    eyebrow="A Model Partnership"
+    title="Her Power, with the ICT Division"
+    lead="What CodersTrust delivered, the work outcome that was tracked and the national program’s reach are three different measures, so each is shown on its own."
+  />
+  <div class="mp" data-reveal>
+    <p class="mp__tag"><EvidenceTag type="Program Record" /></p>
+    <dl class="mp__grid">
+      <div class="mp__field mp__field--text" data-fact="GV-01">
+        <dt>Partner</dt>
+        <dd>{partner}</dd>
+      </div>
+      <div class="mp__field mp__field--text" data-fact="GV-11">
+        <dt>CodersTrust’s Role</dt>
+        <dd>{role}</dd>
+      </div>
+      {
+        figures.map((f) => (
+          <div class="mp__field mp__field--figure" data-fact={f.facts}>
+            <dt>{f.label}</dt>
+            <dd>
+              <span class="mp__value">{f.value}</span>{' '}
+              <span class="mp__detail">{f.detail}</span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="mp__more"><a class="link" href={caseHref}>Read the Her Power Case Study<Icon name="arrow-right" size={16} /></a></p>
+  </div>
+</Section>
+
+<style>
+  .mp {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .mp > * {
+    margin: 0;
+  }
+  .mp__grid {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mp__field {
+    min-width: 0;
+    padding: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .mp__field > * {
+    margin: 0;
+  }
+  .mp__field dt {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-primary-container);
+  }
+  .mp__field dd {
+    color: var(--on-surface);
+  }
+  /* the three measures: a figure over its own label, each under its own colored rule so they read as three separate things */
+  .mp__field--figure {
+    border-top: 3px solid var(--primary);
+  }
+  .mp__field--figure dd {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .mp__value {
+    font-size: var(--fs-heading-2xl);
+    line-height: 1.1;
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+  .mp__detail {
+    font-size: var(--fs-body-base);
+    line-height: var(--lh-body-base);
+    color: var(--on-surface-variant);
+  }
+  @media (min-width: 900px) {
+    .mp__grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .mp__field--text {
+      grid-column: span 3;
+    }
+    .mp__field--figure {
+      grid-column: span 2;
+    }
+  }
+</style>

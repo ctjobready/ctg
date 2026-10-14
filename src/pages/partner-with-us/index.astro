@@ -13,11 +13,10 @@ import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
 import RaciTable from '../../components/pages/hub/RaciTable.astro';
 import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
-import { TRACER_MONTHS, TRACKING_MONTHS } from '../../components/pages/partners/partners';
+import { TRACER_MONTHS, TRACKING_MONTHS, grantStartTitles } from '../../components/pages/partners/partners';
 import ReviewCycle from '../../components/pages/hub/ReviewCycle.astro';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
 import { MICRO_COMMITMENT, SPEED } from '../../data/copy';
-import { fact } from '../../data/facts';
 import { cta } from '../../lib/mailto';
 import DueDiligenceView from '../../components/pages/hub/DueDiligenceView.astro';
 import ProtectedByDesign from '../../components/pages/hub/ProtectedByDesign.astro';
@@ -48,14 +47,13 @@ const audiences = [
   { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, the platform connecting emerging-market youth to work.' },
 ];
 
-// Partnering steps: the weeks and the cohort window are parsed from PD-04 (never retyped).
-const pd04 = fact('PD-04');
-const wk = [...pd04.text.matchAll(/(Discovery|Co-design|Agreement) wk (\d)/g)].map((m) => m[2]);
+// Partnering steps: the weeks and the cohort window are read from PD-04 (never retyped); WP29: each step heading names its starting point.
+const [startDiscovery, startCoDesign, startAgreement, startTraining] = grantStartTitles();
 const steps = [
-  { title: `Discovery · week ${wk[0]}`, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: `Co-Design · week ${wk[1]}`, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
-  { title: `Agreement · week ${wk[2]}`, text: 'Scope, schedule and the pilot scorecard are agreed.' },
-  { title: `First Cohort Starting Training · ${pd04.stat?.value}`, text: 'Grant-funded pilots: training starts in this window after signing. Monthly reports follow.' },
+  { title: startDiscovery, text: 'A conversation about your goals, priority groups and timeline.' },
+  { title: startCoDesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you; each track’s work-entry plan is approved before enrollment.' },
+  { title: startAgreement, text: 'Scope, schedule and the pilot scorecard are agreed.' },
+  { title: startTraining, text: 'Grant-funded pilots: the first cohort begins training in this window. Monthly reports follow.' },
 ];
 
 const jsonLd = [

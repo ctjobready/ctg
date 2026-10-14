@@ -38,6 +38,7 @@ import Callout from '../../../components/pages/partners/Callout.astro';
 import CopyText from '../../../components/pages/partners/CopyText.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import ContractTable from '../../../components/pages/partners/ContractTable.astro';
+import ModelPartnership from '../../../components/pages/partners/ModelPartnership.astro';
 import HowItWorks from '../../../components/pages/partners/HowItWorks.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import ForNotFor from '../../../components/pages/partners/ForNotFor.astro';
@@ -237,6 +238,8 @@ const steps = [
     <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
   </ProofBand>
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
+  <!-- WP29 (benchmark review): one government partnership as a card of separate fields (partner, role, direct training, tracked outcome, national reach), all from registered facts. -->
+  <ModelPartnership />
   <!-- Delivery context (WP18b, moved after the contracts in WP22): the coastal mobility fact follows the contracts it shapes, not the C3 cost-of-waiting band. -->
   <SubBand>
     <Callout eyebrow="Delivery Context: Coastal Districts">

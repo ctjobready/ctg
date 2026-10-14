@@ -46,7 +46,8 @@ test.describe('evidence band (#proof-band): strongest evidence first', () => {
     expect(order.chart).toBeGreaterThan(order.sentence);
     expect(order.ladder).toBeGreaterThan(order.chart);
     expect(order.tile).toBeGreaterThan(order.ladder);
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First']);
+    // WP29 adds the paid-work pathways comparison after the ladder and the tile (its own h3); the order above is unchanged
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Four Kinds of Evidence, Strongest First', 'Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
   });
 
@@ -97,7 +98,8 @@ test.describe('post-inquiry band (#next-steps)', () => {
     await open(page, '');
     await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Cohorts');
     await expect(band(page).locator('h2')).toHaveText('What Happens After You Contact Us');
-    await expect(band(page).locator('ol h3')).toHaveText([/Discovery · Week 1/, /Co-Design · Week 2/, /Agreement · Week 3/, /First Cohort · 6–8 Weeks/]);
+    // WP29: each step names its starting point
+    await expect(band(page).locator('ol h3')).toHaveText([/Discovery \(Week 1\)/, /Co-Design \(Week 2\)/, /Agreement \(Week 3\)/, /Training Starts 6–8 Weeks After Signing/]);
   });
 
   test('one line says ministries, employers and impact investors get a route-specific next step, each linked to its route page', async ({ page }) => {
