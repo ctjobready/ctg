@@ -147,7 +147,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   employers: {
     // WP20b: employer-specific (the [UNLIKE] sentence describes the youth-cohort model); scripts/check-facts.mjs may pin it for this page only.
-    text: 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles; talent requests are scoped against the experience and credentials available in the candidate pool.',
+    text: 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles, and hiring starts from your talent request.',
     facts: ['IN-10', 'IN-04'],
   },
   investors: {
