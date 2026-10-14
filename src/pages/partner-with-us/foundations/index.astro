@@ -40,7 +40,7 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -224,7 +224,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     id="cohort-grants"
     eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
     title="Choose Where to Start Your Cohort Grant"
-    lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below."
+    lead={`${PROGRAM_SIZES_NOTE} Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below.`}
     cards={funderOptionCards()}
     recommended={0}
   />

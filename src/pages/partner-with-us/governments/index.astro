@@ -41,7 +41,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { caseStudyItems } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
@@ -205,7 +205,7 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferCards title="Choose Where to Start" lead="Pricing is set per program, and we share an indicative budget in the discovery session." cards={funderOptionCards()} recommended={0} />
+  <OfferCards title="Choose Where to Start" lead={`${PROGRAM_SIZES_NOTE} Pricing is set per program, and we share an indicative budget in the discovery session.`} cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <EvidenceList
       heading="Services We Can Scope for an Agency"

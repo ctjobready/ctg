@@ -38,7 +38,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -202,7 +202,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8-route'];
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferCards title="Choose Where to Start" cards={funderOptionCards()} recommended={0} />
+  <OfferCards title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>
