@@ -59,9 +59,9 @@ test.describe('Impact', () => {
     await expect(band.locator('[data-fact]')).toHaveCount(0);
   });
 
-  test('the survey card links the Impact Survey 2026, which shows who responded', async ({ page }) => {
+  test('the evidence ladder’s survey row links the Impact Survey 2026, which shows who responded (WP35: the "Go Deeper" cards are gone)', async ({ page }) => {
     await open(page, 'impact/');
-    const link = page.locator('#explore').getByRole('link', { name: 'Impact Survey 2026' });
+    const link = page.locator('#evidence-ladder').getByRole('link', { name: 'Impact Survey 2026' });
     await expect(link).toHaveCount(1);
     await link.click();
     await expect(page).toHaveURL(/impact\/outcomes-2026\/$/);
@@ -232,12 +232,12 @@ test.describe('Partner with Us', () => {
     }
   });
 
-  test('the hub keeps the funder set, with a shorter safeguarding card and a partner decision', async ({ page }) => {
+  test('the hub keeps the funder set, with a shorter safeguarding card and the independent-evaluation item (WP35: the reporting band is two sentences and a link, so the decision panel is gone)', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const dd = compact(await page.locator('#due-diligence').innerText());
     expect(dd).toContain('Monthly Reports and Follow-Up Surveys');
     expect(dd).toContain('Consent, protected records and grievance handling are specified for each program.');
-    expect(compact(await main(page))).toContain('The decision is yours: independent evaluation is welcome, and we support it.');
+    expect(dd).toContain('We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.');
   });
 
   test('Employers: one pricing sentence, and the scoped-candidate sentence is not repeated', async ({ page }) => {

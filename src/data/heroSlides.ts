@@ -15,10 +15,12 @@ import { cta } from '../lib/mailto';
  * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
  * the offered-place employment and income results; the placement slide lists all four case-study programs.
  * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
- * with its own measure (67% found a first job within three months, never "in work"; PR-03), and the WSDFM line says "program records" so it is
- * not read as the trial's follow-up employment (63.1% against 52.8%, a different measure on the evidence band).
+ * with its own measure (67% found a first job within three months, never "in work"; PR-03).
  * WP31 (cycle-8 reviews): the trial slide states the offered-place results only (two sentences); the survey-income slide is headed as what surveyed completers
- * report and has no lead; the WSDFM line says it is "separate from the trial"; the last slide is "Find Your Program".
+ * report and has no lead; the last slide is "Find Your Program".
+ * WP35 (cycle-12 review): the program-results slide no longer lists WSDFM (its 71% in work is program records, and read beside the trial's 63.1% it looked like a second result for the same
+ * program; the case card and the case study keep it), so it lists three programs; the survey proof card on the hero says in its caption that the survey is of surveyed completers in Bangladesh
+ * (OC-09: 58 of 64 districts). The caption, not the eyebrow, carries it: "Impact Survey 2026 in Bangladesh" wraps to two lines in the three-column range (768 to about 950 px) and pushes that card's figure out of line.
  */
 
 export interface HeroSlideStat {
@@ -111,18 +113,19 @@ const countries = fact('SC-03').stat?.numeric;
 const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
 if (!startedSixMonths || !incomeNow || !incomeBefore || !reachFigure || countries === undefined) throw new Error('heroSlides: OC-03, OC-05, SC-03 or SC-16 no longer carries the figure a slide headline reads');
-/** PR-01's label reads "WSDFM: 71% in work"; on this slide it is labelled as program records, apart from the trial's follow-up employment. */
-const wsdfmLabel = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
-if (!wsdfmLabel) throw new Error('heroSlides: PR-01 label no longer reads "WSDFM: <share> in work"');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
 const firstJob = /^of the \d+ trained found their first job within 3 months$/.test(fact('PR-03').stat?.label ?? '');
 if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
 const PR_TEXT = {
-  wsdfm: `WSDFM program records, separate from the trial: ${wsdfmLabel[1]}.`,
   wow: `${fact('PR-02').stat?.label}.`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} found a first job within three months.`,
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
+
+/** The survey card's caption: OC-01's tile label with the survey's scope, surveyed completers in Bangladesh (OC-09: respondents live in 58 of the country's 64 districts), said once, here (WP35). */
+const surveyLabel = fact('OC-01').stat?.label ?? '';
+if (!surveyLabel.includes('among surveyed completers')) throw new Error('heroSlides: OC-01 label no longer says "among surveyed completers"; update the hero survey caption');
+const surveyCaption = surveyLabel.replace('among surveyed completers', 'among surveyed completers in Bangladesh');
 
 /** The stable home hero. */
 export const HOME_HERO = {
@@ -146,7 +149,7 @@ export const HOME_HERO = {
       unit: 'percentage points',
       caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, about ${perHundred} more were in work than in the control group.`,
     },
-    { eyebrow: 'Impact Survey 2026', factId: 'OC-01' },
+    { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16' },
   ] as { eyebrow: string; factId: string; value?: string; unit?: string; caption?: string }[],
 };
@@ -184,9 +187,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'placement',
     eyebrow: 'Program Records',
     title: 'Results by Program',
-    lead: 'Four programs, each with its partner, with results from their own program records.',
+    lead: 'Three programs, each with its partner, with results from their own program records.',
     lines: [
-      { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
       { text: PR_TEXT.herPower, factIds: ['PR-05'] },

@@ -5,8 +5,12 @@
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the evidence-and-fit brief,
  * the reporting-and-recognition paragraph (the features row carries it), the full review cycle (it lives on the partnership overview, as on the Development Partners page)
  * and the restated three-step mechanism. The two inquiry links now sit directly under the two-route comparison they belong to (cycle-7 IA review).
+ * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
+ * from the glance (its 71% is program records, read beside the trial's 63.1%; the Kosovo program result takes its place), the evaluator is spelled out where the page first names it, the independent-evidence
+ * row says the evidence is on the predecessor program, and the meta description is a complete sentence.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
@@ -17,7 +21,6 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
@@ -30,13 +33,12 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
-import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -54,7 +56,7 @@ const report = { label: reportCta.label, href: reportCta.href };
 
 const { title, description } = meta(
   'Fund Youth Employment: Foundations and CSR',
-  `Fund a supported path from learning to earning. A BIGD trial of a predecessor program: women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income`,
+  `Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place had an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} higher monthly income.`,
 );
 
 const FAQ_IDS = ['Q3', 'Q8', 'Q9', 'Q10'];
@@ -80,11 +82,8 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
   <PartnerGlance
-    lead={[{ id: 'RC-04', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' }]}
-    more={[
-      { id: 'RC-02', href: '/impact/independent-evaluation/' },
-      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-    ]}
+    lead={[{ id: 'RC-04', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' }]}
+    more={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }]}
   />
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="She has completed 90+ projects on Fiverr so far." program="WSDFM" tone="white" />
 
@@ -120,7 +119,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
-      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: 'BIGD separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.' },
+      { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.` },
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
@@ -156,19 +155,18 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     </MechanismBand>
   </div>
 
-  <!-- C7 · Proof -->
-  <ProofBand
-    title="Independent Evidence and Survey Results"
-    headlineFact="RC-01"
-    statIds={['RC-02', 'RC-03']}
-    chartId="OC-01"
-    links={[
-      { label: 'The Randomized Trial', href: LINKS.trial },
+  <!-- C7 · Proof: the trial and survey results are the tiles above; this strip links the full evidence (WP35, cycle-12 review) -->
+  <PairedEvidence
+    id="proof-band"
+    eyebrow="The Evidence"
+    title="See the Evidence Behind the Results"
+    items={[]}
+    broader={[
+      { label: 'Read the Trial Results', href: LINKS.trial },
       { label: 'Impact Survey 2026', href: LINKS.outcomes },
     ]}
-  >
-    <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
-  </ProofBand>
+    broaderLabel="The evidence behind the results"
+  />
   <CaseStudyCarousel
     title="Proof in Practice"
     items={[
@@ -189,9 +187,9 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
         relieves: 'Grants buy hours, rarely earnings',
       },
       {
-        feature: 'A randomized trial by BIGD on WSDFM; independent evaluation welcome on new programs',
-        means: 'You can fund a model with independent evidence and add your own evaluation.',
-        outcome: 'Independent evidence on a CodersTrust program',
+        feature: 'A randomized trial by BIGD on the predecessor WSDFM program',
+        means: 'Independent evaluation of your cohort is welcome.',
+        outcome: 'Independent evidence on the predecessor program',
         relieves: 'Independent evidence is thin',
       },
       {
@@ -236,7 +234,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
-      <p>Monthly reports, quarterly steering reviews and the pilot scorecard are set out once, on the partnership overview.</p>
+      <p>Monthly reports and quarterly reviews are set out once, on the partnership overview.</p>
       <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>

@@ -131,8 +131,10 @@ test.describe('Partner with Us', () => {
     expect(lead).toBe('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
     expect(lead).not.toMatch(/Bangladesh|investors|cohort|co-design/i);
     await expect(page.locator('#audiences .grid-cards a[href$="partner-with-us/investors/"]')).toHaveCount(1);
-    const link = page.locator('.hero a.link', { hasText: 'Choose Your Route' });
-    expect(await link.getAttribute('href')).toBe('#audiences');
+    // WP35 (cycle-12 review): the hero's one button jumps to the route cards (it was an email button, with "Choose Your Route" a text link under it)
+    const button = page.locator('#hero .btn');
+    await expect(button).toHaveText('Choose Your Route');
+    expect(await button.getAttribute('href')).toBe('#audiences');
     expect(compact(await page.locator('#how-h').locator('xpath=preceding-sibling::*[1]').textContent())).toBe('For Grant-Funded Supported Cohorts');
   });
 

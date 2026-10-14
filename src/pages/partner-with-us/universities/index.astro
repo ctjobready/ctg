@@ -30,7 +30,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, SPEED_UNIVERSITIES, SURVEY_INCOME, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -162,7 +162,7 @@ const optionText: Record<string, string> = {
       heading="What Surveyed Completers Report"
       items={[
         { facts: ['OC-09'], text: `Among surveyed completers, ${degreeShare}; university graduates are a central audience for CodersTrust programs.` },
-        { facts: ['OC-03'] },
+        { facts: ['OC-03'], text: SURVEY_INCOME.text },
       ]}
     />
   </ProofBand>

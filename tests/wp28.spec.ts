@@ -30,8 +30,8 @@ test.describe('What Your Partnership Includes (#features)', () => {
   });
 });
 
-test.describe('evidence band (#proof-band): strongest evidence first', () => {
-  test('the trial (heading, one sentence, one link) comes first, then the paid-work pathways and the 72.3% tile (WP30c: no ladder; WP33: no chart)', async ({ page }) => {
+test.describe('evidence band (#proof-band): the survey evidence', () => {
+  test('the paid-work pathways come first, then the 72.3% tile, then the links (WP35: the trial sub-block, with its heading, sentence and link, is gone; WP30c: no ladder; WP33: no chart)', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#proof-band');
     const order = await band.evaluate((el) => {
@@ -40,34 +40,33 @@ test.describe('evidence band (#proof-band): strongest evidence first', () => {
         const n = el.querySelector(sel);
         return n ? all.indexOf(n) : -1;
       };
-      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), link: at('.he__trial a.link'), chart: at('.ba, .he__chart'), ladder: at('.lc'), pathways: at('.pwp'), tile: at('[data-fact="OC-02"]') };
+      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), link: at('.he__links a'), chart: at('.ba, .he__chart'), ladder: at('.lc'), pathways: at('.pwp'), tile: at('[data-fact="OC-02"]') };
     });
-    expect(order.heading).toBeGreaterThan(-1);
-    expect(order.sentence).toBeGreaterThan(order.heading);
-    expect(order.link).toBeGreaterThan(order.sentence);
+    expect(order.heading, 'no trial sub-heading').toBe(-1);
+    expect(order.sentence, 'no plain-language trial sentence').toBe(-1);
     expect(order.chart, 'the trial chart is not in the band').toBe(-1);
     expect(order.ladder, 'the evidence ladder is not in the band').toBe(-1);
-    expect(order.pathways).toBeGreaterThan(order.link);
-    expect(order.tile).toBeGreaterThan(order.link);
-    // WP29's paid-work pathways comparison keeps its own h3, beside the 72.3% tile; WP33: the trial's h3 names the predecessor program
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial of a Predecessor Program', 'Paid-Work Pathways Among Surveyed Completers']);
+    expect(order.pathways).toBeGreaterThan(-1);
+    expect(order.tile).toBeGreaterThan(order.pathways);
+    expect(order.link, 'the links follow the survey area').toBeGreaterThan(order.tile);
+    // WP29's paid-work pathways comparison keeps its own h3, beside the 72.3% tile
+    await expect(band.locator('h3')).toHaveText(['Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the trial block sits above the pathways comparison and the tile`, async ({ page }) => {
+    test(`at ${vp.width}px the pathways comparison and the tile sit below the heading (side by side from 1024px, stacked below it)`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, '');
       const tops = await page.locator('#proof-band').evaluate((el) => {
         const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-        return { trial: top('.he__trial'), pathways: top('.pwp'), tile: top('.he__stat') };
+        return { head: top('.he__head'), pathways: top('.pwp'), tile: top('.he__stat') };
       });
+      expect(tops.pathways).toBeGreaterThan(tops.head);
       if (vp.width >= 1024) {
-        // side by side: the pathways comparison and the tile share a row, below the trial
-        expect(tops.pathways).toBeGreaterThan(tops.trial);
+        // side by side: the pathways comparison and the tile share a row
         expect(Math.abs(tops.tile - tops.pathways)).toBeLessThan(4);
       } else {
-        expect(tops.pathways).toBeGreaterThan(tops.trial);
         expect(tops.tile).toBeGreaterThan(tops.pathways);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), 'no horizontal overflow').toBe(true);

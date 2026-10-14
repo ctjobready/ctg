@@ -17,11 +17,11 @@
 //     a period, none left in front of punctuation the page typed)
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
 //     outside the archived /news/ posts and the styleguide; negative self-tests below
-//   - [PLAIN-LINE] (plan v1.10, v1.13): Home, /partner-with-us/development-partners/, /impact/independent-evaluation/ and the WSDFM case study
-//     (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it) must carry "For every 100
-//     women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
+//   - [PLAIN-LINE] (plan v1.10, v1.13): /impact/independent-evaluation/ and the WSDFM case study (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it)
+//     must carry "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
 //     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
-//     sentence appears; negative self-tests below
+//     sentence appears; negative self-tests below. WP35 (cycle-12 review): Home and /partner-with-us/development-partners/ no longer restate the trial in an evidence band, so they are not required
+//     to carry the sentence; Home's plain-language reading lives on its hero "Strongest Proof" card and is held to RC-02 and RC-07 there ([PROOF-CARD], below)
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
 //     /programs/youthwide/ must show, inside the C13 CTA band (#cta, and for the Bangladesh briefing #cta-governments), ONE paragraph in the plan's exact words for THAT page: the lead "What
 //     the discovery session covers:" (development partners, YouthWIDE; first item "your country, priority groups and
@@ -212,11 +212,12 @@ const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i
 
 /* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
 // "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)."
-// is built in src/data/copy.ts from RC-02's stat; it is required on Home, the development-partners page, the independent-evaluation page and the
+// is built in src/data/copy.ts from RC-02's stat; it is required on the independent-evaluation page and the
 // WSDFM case study (its header leads with the randomized trial's plain-language line, the program result second),
+// WP35 (cycle-12 review: the trial was restated on every audience page): Home's evidence band and the Development Partners proof band that carried it are gone, and Home's reading moved to the hero card ([PROOF-CARD] below),
 // and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
 // The expected sentence is derived here from the register on its own (not read from copy.ts), so a drift in either place fails the build.
-const PLAIN_LINE_PAGES = ['/', '/partner-with-us/development-partners/', '/impact/independent-evaluation/', '/impact/case-studies/wsdfm-women-freelancers/'];
+const PLAIN_LINE_PAGES = ['/impact/independent-evaluation/', '/impact/case-studies/wsdfm-women-freelancers/'];
 const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than among 100 comparable women in the control group \(([^)]*)\)\./;
 const plainLineWanted = (stat) => {
   const points = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)} percentage points`;
@@ -237,6 +238,40 @@ function plainLineProblems(markup, text, stat, required) {
     if (!block) out.push('[PLAIN-LINE] is not rendered by <PlainLine> (no <p data-plain-line>)');
     else if (!/\bdata-fact="RC-02"/.test(block[0])) out.push('[PLAIN-LINE] is not tagged data-fact="RC-02"');
   }
+  return out;
+}
+
+/* ---- [PROOF-CARD]: the plain-language trial reading on Home's hero "Strongest Proof" card (WP35, cycle-12 review) ---- */
+// Home states the trial in the hero's Randomized Trial card and in the first carousel slide; its evidence band no longer restates it, so the [PLAIN-LINE] anchor for Home moved to the card (the gate keeps its
+// strength: the card's numbers are held to the register, as the [PLAIN-LINE]'s are). The card (<li class="hh__card" data-fact="RC-02">) carries the eyebrow "Randomized Trial", RC-02's value ("+10.3") with the unit
+// "percentage points", and the plain-language caption "For every 100 women offered a place in a 200-hour predecessor program, about 10 more were in work than in the control group." The caption's numbers
+// are re-derived here from RC-02 (rounded) and RC-07 ("... was 200 hours"), independently of src/data/heroSlides.ts, so a drift in either place fails the build.
+const PROOF_CARD_PAGES = ['/'];
+const proofCardWanted = (stat, rc07Text) => {
+  const hours = /was (\d+) hours/.exec(rc07Text)?.[1];
+  const value = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)}`;
+  return {
+    eyebrow: 'Randomized Trial',
+    value,
+    unit: 'percentage points',
+    caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, about ${Math.round(stat.numeric)} more were in work than in the control group.`,
+  };
+};
+/** Problems with the hero's trial card on one page: the card exists and its figure, unit and plain-language caption are RC-02's and RC-07's. */
+function proofCardProblems(markup, stat, rc07Text) {
+  const card = /<li\b[^>]*\bclass="hh__card"[^>]*\bdata-fact="RC-02"[^>]*>([\s\S]*?)<\/li>/.exec(markup);
+  if (!card) return ['the hero\'s Randomized Trial card (<li class="hh__card" data-fact="RC-02">) is missing, so the plain-language trial reading has nowhere to sit'];
+  const want = proofCardWanted(stat, rc07Text);
+  const part = (cls, tag) => {
+    const m = new RegExp(`<${tag}\\b[^>]*\\bclass="${cls}"[^>]*>([\\s\\S]*?)<\\/${tag}>`).exec(card[1]);
+    return m ? decode(m[1]) : '';
+  };
+  const got = { eyebrow: part('hh__eyebrow', 'p'), value: part('hh__num', 'span'), unit: part('hh__unit', 'span'), caption: part('hh__figlabel', 'p') };
+  const out = [];
+  if (got.eyebrow !== want.eyebrow) out.push(`[PROOF-CARD] the eyebrow reads "${got.eyebrow}", expected "${want.eyebrow}"`);
+  if (got.value !== want.value) out.push(`[PROOF-CARD] the figure reads "${got.value}" but RC-02 is "${want.value}"`);
+  if (got.unit !== want.unit) out.push(`[PROOF-CARD] the unit reads "${got.unit}", expected "${want.unit}"`);
+  if (got.caption !== want.caption) out.push(`[PROOF-CARD] the plain-language caption reads "${got.caption}", expected the register-derived "${want.caption}"`);
   return out;
 }
 
@@ -728,6 +763,25 @@ function numberGuardPage(path, html, allow = []) {
   const stray = plainPage(want.text.replace('+10.3', '+10.4'));
   if (!plainLineProblems(stray.markup, stray.text, rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] but carries it with a wrong number was accepted');
   if (plainLineProblems('<main><p>No plain line here.</p></main>', 'No plain line here.', rc02, false).length) problems.push('self-test: a page that does not need the [PLAIN-LINE] was flagged for lacking it');
+  // [PROOF-CARD]: Home's hero trial card carries RC-02's figure and the plain-language caption derived from RC-02 and RC-07 (WP35)
+  const rc07 = facts['RC-07'].text;
+  const cardWant = proofCardWanted(rc02, rc07);
+  if (cardWant.caption !== 'For every 100 women offered a place in a 200-hour predecessor program, about 10 more were in work than in the control group.') problems.push(`self-test: RC-02 and RC-07 no longer yield the hero card caption (derived: "${cardWant.caption}"); the card wording needs a decision`);
+  const heroCard = ({ eyebrow = cardWant.eyebrow, value = cardWant.value, unit = cardWant.unit, caption = cardWant.caption, fact = 'RC-02' } = {}) =>
+    `<main><ul class="hh__cards" role="list"><li class="hh__card" data-fact="${fact}" data-astro-cid-x><p class="hh__eyebrow" data-astro-cid-x>${eyebrow}</p><div class="hh__fig"><p class="hh__figvalue"><span class="hh__num">${value}</span> <span class="hh__unit">${unit}</span></p><p class="hh__figlabel">${caption}</p></div></li><li class="hh__card" data-fact="OC-01"><p class="hh__eyebrow">Impact Survey 2026</p></li></ul></main>`;
+  if (proofCardProblems(heroCard(), rc02, rc07).length) problems.push(`self-test: the [PROOF-CARD] check rejected the register-derived card: ${proofCardProblems(heroCard(), rc02, rc07).join('; ')}`);
+  const cardBad = (why, markup, stat = rc02) => {
+    if (!proofCardProblems(markup, stat, rc07).length) problems.push(`self-test: the [PROOF-CARD] check accepted ${why}`);
+  };
+  cardBad('a page with no hero trial card', '<main><p>For every 100 women offered a place, about 10 more were in work.</p></main>');
+  cardBad('a card for another fact (the survey card is not the trial card)', heroCard({ fact: 'OC-01' }));
+  cardBad('"+10.4" (a figure that differs from RC-02)', heroCard({ value: '+10.4' }));
+  cardBad('"pp" instead of "percentage points"', heroCard({ unit: 'pp' }));
+  cardBad('"about 11 more" (RC-02 rounds to 10)', heroCard({ caption: cardWant.caption.replace('about 10', 'about 11') }));
+  cardBad('"100-hour" (RC-07 says 200 hours)', heroCard({ caption: cardWant.caption.replace('200-hour', '100-hour') }));
+  cardBad('a caption without the predecessor-program scope', heroCard({ caption: 'For every 100 women offered a place, about 10 more were in work than in the control group.' }));
+  cardBad('a changed eyebrow', heroCard({ eyebrow: 'Independent Evaluation' }));
+  if (proofCardProblems(heroCard(), { ...rc02, numeric: 10.6, value: '+10.6 pp' }, rc07).length !== 2) problems.push('self-test: the [PROOF-CARD] check did not notice that RC-02 changed (10.6 would give "+10.6" and "about 11")');
   // copy conventions: curly apostrophes, "pp" spelled out before it is used
   if (conventionProblems('CodersTrust’s WSDFM training; +10.3 pp percentage points more employment; In percentage points, employment rose +10.3 pp.').length) problems.push('self-test: the copy-convention check rejected correct copy');
   if (!conventionProblems('CodersTrust\'s WSDFM training raised women’s income.').length) problems.push('self-test: the copy-convention check accepted a straight apostrophe');
@@ -972,6 +1026,7 @@ let pages = 0;
 let refs = 0;
 let vendorPages = 0;
 let plainLinePages = 0;
+let proofCardPages = 0;
 let agendaPages = 0;
 let positionPages = 0;
 let painPages = 0;
@@ -1024,6 +1079,11 @@ for (const file of htmlFiles(dist)) {
   const plainRequired = PLAIN_LINE_PAGES.includes(path);
   if (plainRequired) plainLinePages++;
   if (rc02Stat) for (const p of plainLineProblems(markup, text, rc02Stat, plainRequired)) problems.push(`${path}: ${p}`);
+  // [PROOF-CARD]: Home's hero trial card carries the plain-language reading of RC-02 (WP35)
+  if (PROOF_CARD_PAGES.includes(path) && rc02Stat) {
+    proofCardPages++;
+    for (const p of proofCardProblems(markup, rc02Stat, facts['RC-07']?.text ?? '')) problems.push(`${path}: ${p}`);
+  }
   // curly apostrophes and "pp" spelled out (the archived posts and the styleguide samples are exempt)
   if (!exemptFromConventions(path) && !exemptFromArchiveRule(path, html)) for (const p of conventionProblems(text)) problems.push(`${path}: ${p}`);
   // number guard: every claim-marked figure in the copy is a registered fact value or whitelisted (archive posts, stubs, styleguide, 404 exempt)
@@ -1071,7 +1131,7 @@ if (pages === 0) {
   process.exit(1);
 }
 // A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all.
-for (const p of new Set([...PLAIN_LINE_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
+for (const p of new Set([...PLAIN_LINE_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -1087,6 +1147,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

@@ -182,7 +182,7 @@ test.describe('the due-diligence item on the five audience pages', () => {
 test.describe('Development Partners: the hardest-to-reach answer names the barriers', () => {
   test('"Why do the hardest-to-reach groups drop out?" is answered with the barriers, not by repeating the question', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const pain = page.locator('#problem .gp__pains li', { hasText: 'Why do the hardest-to-reach groups drop out?' });
+    const pain = page.locator('#problem .gp__pains li', { hasText: 'Why Do the Hardest-to-Reach Groups Drop Out?' });
     await expect(pain).toHaveCount(1);
     expect(compact(await pain.locator('.gp__a').textContent())).toBe('Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.');
     expect(await mainText(page)).not.toContain('They drop out, or are never reached in the first place.');
@@ -207,7 +207,8 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     await expect(page.locator('#problem [data-fact="PX-03"]')).toHaveCount(0);
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Why do degree holders struggle to find work?', 'Why can’t employers find the skills they need?', 'Where are your placement results?']);
+    // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Why Do Degree Holders Struggle to Find Work?', 'Why Can’t Employers Find the Skills They Need?', 'Where Are Your Placement Results?']);
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');

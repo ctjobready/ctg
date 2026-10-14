@@ -3,6 +3,7 @@ import Fact from '../../facts/Fact.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
 import { fact } from '../../../data/facts';
+import { BIGD_FULL } from '../../../data/copy';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { trialEmploymentLabel, wsdfmFigureLabel } from './evidence';
 
@@ -28,7 +29,8 @@ const TEXT = {
   stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
 };
 const matrix = [
-  { n: 1, name: 'Independent Evaluation (BIGD)', tag: 'Randomized Trial' as const, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
+  // WP35 (cycle-12 review): the matrix is where the Impact page first names the evaluator, so it is spelled out here
+  { n: 1, name: `Independent Evaluation by ${BIGD_FULL}`, tag: 'Randomized Trial' as const, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
   { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Impact Survey 2026' },
   { n: 3, name: 'Program Results', tag: 'Program Record' as const, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
   { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },

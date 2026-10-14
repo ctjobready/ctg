@@ -82,9 +82,9 @@ test.describe('home hero slider', () => {
     expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('10.3 percentage points'));
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
-    // the placement slide lists all four case-study programs
-    await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(4);
-    await expect(slides.nth(2).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work.');
+    // the placement slide lists three programs (WP35: the WSDFM 71% is program records, read beside the trial's 63.1%, so it left the slide; the case card and the case study keep it)
+    await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(3);
+    await expect(slides.nth(2).locator('.hs__lines li').nth(2)).toHaveText('Her Power: 47% of 800 tracked women in work.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {

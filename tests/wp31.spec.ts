@@ -16,11 +16,11 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const AUDIENCE = ['development-partners', 'governments', 'foundations', 'universities', 'employers', 'local-partners'];
 
 test.describe('figures say what they measure', () => {
-  test('the 2.8× tile on Foundations names FREELANCING employment, not employment', async ({ page }) => {
+  test('the 2.8× figure never reads as employment: Foundations no longer shows its tile (WP35), and the Independent Evaluation page words it as freelancing', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    const band = compact(await page.locator('#proof-band').textContent());
-    expect(band).toContain('+21.9 percentage points on a control rate of 11.9% (freelancing employment, women who attended)');
-    expect(band).not.toContain('(employment, women who attended)');
+    expect(await mainText(page)).not.toMatch(/2\.8×|\(employment, women who attended\)/);
+    await open(page, 'impact/independent-evaluation/');
+    expect(await mainText(page)).toContain('freelancing 2.8× the control group');
   });
 
   test('the Impact survey tiles state shares, not growth multiples: 14.0% freelance (up from 6.2%), no "about 3×" beside the median', async ({ page }) => {
@@ -42,11 +42,11 @@ test.describe('figures say what they measure', () => {
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
   });
 
-  test('Home slide 1 states the offered-place results only; slide 3 and the case card say the WSDFM 71% is program records, separate from the trial', async ({ page }) => {
+  test('Home slide 1 states the offered-place results only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: slide 3 no longer lists WSDFM)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s.');
-    await expect(page.locator('[data-hs-slide]').nth(2).locator('.hs__lines li').first()).toHaveText('WSDFM program records, separate from the trial: 71% in work.');
+    await expect(page.locator('[data-hs-slide]').nth(2)).not.toContainText('WSDFM');
     expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records, separate from the trial: 71% in work');
   });
 
@@ -83,13 +83,12 @@ test.describe('figures say what they measure', () => {
     expect(await mainText(page)).not.toContain('200 trainees initially');
   });
 
-  test('the Impact hub leads its trial group with the offered-place income result, the attenders’ figure after it', async ({ page }) => {
+  test('the Impact hub’s trial group is the one employment tile for women offered a place (WP35: the +41% and +54% income results and the >4× comparison are on the Independent Evaluation page)', async ({ page }) => {
     await open(page, 'impact/');
     const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, Predecessor Program' }) });
     const facts = await group.locator('li a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]));
-    expect(facts).toEqual(['RC-01', 'RC-13', 'RC-06a']);
-    await expect(group.locator('li').first()).toContainText('+41%');
-    await expect(group.locator('li').nth(1)).toContainText('+54%');
+    expect(facts).toEqual(['RC-02']);
+    await expect(group.locator('li').first()).toContainText('+10.3 pp');
   });
 
   test('the Impact "On This Page" labels are the headings they jump to (a short form only where the heading is long), and every heading has one', async ({ page }) => {
@@ -316,24 +315,20 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('[data-hs-slide]').nth(6).locator('h2')).toHaveText('Find Your Program');
   });
 
-  test('Home: the evidence band has no scope line (the trial heading and the survey tag carry the scope); the comparison drops the freelance-marketplace column', async ({ page }) => {
+  test('Home: the evidence band has no scope line (the survey tag carries the scope) and no trial sub-heading (WP35); the comparison drops the freelance-marketplace column', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#proof-band');
     expect(compact(await band.locator('.he__head').textContent())).toBe('The EvidenceEvidence You Can Check');
-    // WP33: the chart note that named the predecessor program is gone with the chart; the trial's sub-heading names it
-    expect(compact(await band.locator('.he__trial h3').textContent())).toBe('An Independent Randomized Trial of a Predecessor Program');
+    // WP33: the chart note that named the predecessor program is gone with the chart; WP35: so is the trial's sub-heading (the hero card and the first slide carry the trial)
+    await expect(band.locator('.he__trial')).toHaveCount(0);
     expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
   });
 
-  test('Partner with Us hub: the hero asks for the choice of partnership (WP32), "Not sure where you fit?" opens a prefilled email, three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
+  test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "Choose Your Route" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
     await open(page, 'partner-with-us/');
     await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
-    const email = page.locator('.hub__helper a.btn');
-    await expect(email).toContainText('Not Sure? Email Us Your Goals');
-    const href = (await email.getAttribute('href')) ?? '';
-    expect(href).toMatch(/^mailto:contact@coderstrust\.global\?subject=/);
-    expect(decodeURIComponent(href)).toContain('Your goals: ');
-    await expect(page.locator('.hub__helper a[href$="contact/"]')).toHaveCount(0);
+    await expect(page.locator('#hero .btn')).toHaveText('Choose Your Route');
+    await expect(page.locator('#hero a[href^="mailto:"], #audiences a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');
     await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, the platform we are building to connect emerging-market youth to work.');
@@ -347,12 +342,13 @@ test.describe('smaller wording fixes', () => {
     expect(await mainText(page)).toContain('Talent requests are scoped against the experience and credentials available in the candidate pool.');
   });
 
-  test('Development Partners and Governments show the trial and survey once as tiles and once as one full evidence band', async ({ page }) => {
+  test('Development Partners and Governments show the trial and survey once, as tiles, with a strip of links in the proof band (WP35: no second full evidence band)', async ({ page }) => {
     for (const slug of ['development-partners', 'governments']) {
       await open(page, `partner-with-us/${slug}/`);
       const text = await mainText(page);
-      expect((text.match(/randomized trial by BIGD/gi) ?? []).length, `${slug}: the BIGD trial sentence`).toBe(1);
+      expect((text.match(/randomized trial by/gi) ?? []).length, `${slug}: no BIGD trial sentence`).toBe(0);
       await expect(page.locator('#proof-band')).toHaveCount(1);
+      await expect(page.locator('#proof-band .proofband')).toHaveCount(0);
       await expect(page.locator('#mechanism .pos__text')).not.toContainText('randomized trial');
     }
   });

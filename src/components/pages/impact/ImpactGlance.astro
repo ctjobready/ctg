@@ -40,7 +40,8 @@ const toTile = (t: Tile) => {
   return {
     ...t,
     value: f.stat.value,
-    label: t.label ?? f.stat.glance?.label ?? f.stat.label,
+    // "+10.3 pp ... in percentage points" says the unit twice: the value carries it (as in <PartnerGlance>)
+    label: (t.label ?? f.stat.glance?.label ?? f.stat.label).replace(', in percentage points,', ''),
     note: t.note ?? f.stat.glance?.note,
     facts: [t.id, ...(t.also ?? [])].join(' '),
     evidence: evidenceOf(t.id),

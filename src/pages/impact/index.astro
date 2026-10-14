@@ -5,7 +5,6 @@ import Badge from '../../components/system/Badge.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import FeatureCard from '../../components/ui/FeatureCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Fact from '../../components/facts/Fact.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
@@ -32,14 +31,6 @@ const sdgs = [
   { n: 9, label: 'Industry and Innovation', core: false },
   { n: 10, label: 'Reduced Inequalities', core: false },
 ];
-// Go Deeper (WP30e): one short card per destination, no group labels.
-const explore = [
-  { icon: 'bar-chart-3', title: 'Impact Survey 2026', text: 'What surveyed completers report about work and income.', href: '/impact/outcomes-2026/' },
-  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD.', href: '/impact/independent-evaluation/' },
-  { icon: 'globe', title: 'Global Reach', text: 'Every location where programs have run.', href: '/impact/global-reach/' },
-  { icon: 'message-square-quote', title: 'Success Stories', text: 'Learners in their own words.', href: '/impact/stories/' },
-  { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partners and events.', href: '/impact/in-the-field/' },
-];
 // WP31: the jump labels are the headings they jump to (a short form only where the heading is long: the part before the comma), and every heading has one.
 const onThisPage = [
   { label: 'In Short', href: '#summary' },
@@ -47,7 +38,6 @@ const onThisPage = [
   { label: 'Four Programs', href: '#cases' },
   { label: 'Four Kinds of Evidence', href: '#evidence-ladder' },
   { label: 'Where We Are Heading', href: '#heading' },
-  { label: 'Go Deeper', href: '#explore' },
   { label: 'Seven Global Goals', href: '#sdg' },
 ];
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
@@ -68,18 +58,14 @@ const d = discoveryCta();
 
   <PageNav links={onThisPage} />
 
-  <!-- WP31: in the trial group the result for women offered a place (+41% income) leads, as on every other page; the attenders' figure (+54%) follows it. -->
+  <!-- WP35 (cycle-12 review: the overview was overloaded): the trial group is one tile, the employment result for women offered a place (RC-02); the income results (+41%, +54%) and the comparison with nine trials (>4×) are on the Independent Evaluation page the tile links. The survey group says once that the survey is of surveyed completers in Bangladesh (OC-09: respondents live in 58 of the country's 64 districts). The contract-scope tile reads the register's own note for GV-12 (the total is contract scope, not a count of completers; it includes Her Power's national program, 25,125 women trained). -->
   <ImpactGlance
     id="glance"
     title="Results at a Glance"
     eyebrow="Headline Results"
     groups={[
-      { title: 'Trial Results, Predecessor Program', cols: 3, items: [
-        { id: 'RC-01', href: '/impact/independent-evaluation/' },
-        { id: 'RC-13', href: '/impact/independent-evaluation/', label: 'higher monthly income for women who attended the predecessor WSDFM program', note: '' },
-        { id: 'RC-06a', href: '/impact/independent-evaluation/' },
-      ] },
-      { title: 'Survey Results, Among Surveyed Completers', cols: 4, items: [
+      { title: 'Trial Results, Predecessor Program', cols: 4, items: [{ id: 'RC-02', href: '/impact/independent-evaluation/' }] },
+      { title: 'Survey Results, Among Surveyed Completers in Bangladesh', cols: 4, items: [
         { id: 'OC-03', href: '/impact/outcomes-2026/' },
         { id: 'OC-01', href: '/impact/outcomes-2026/' },
         { id: 'OC-05', href: '/impact/outcomes-2026/' },
@@ -93,7 +79,6 @@ const d = discoveryCta();
           also: ['SC-06', 'GV-10', 'GV-01'],
           status: 'Agreement',
           label: 'people in the contracted scopes of six government programs',
-          note: 'Includes Her Power’s 25,125 women. Contract scope, not a count of completers.',
         },
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [
@@ -146,13 +131,6 @@ const d = discoveryCta();
       ] },
     ]}
   />
-
-  <Section id="explore" aria-labelledby="explore-h">
-    <SectionHeader id="explore-h" eyebrow="More Impact Pages" title="Go Deeper" />
-    <div class="grid-cards">
-      {explore.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
-    </div>
-  </Section>
 
   <Section id="sdg" tone="ice" aria-labelledby="sdg-h" pad="sm">
     <h2 class="t-heading-2xl" id="sdg-h">Seven Global Goals, Three at the Core</h2>

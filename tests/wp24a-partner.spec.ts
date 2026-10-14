@@ -84,17 +84,18 @@ test.describe('audience pages', () => {
       await page.goto(`partner-with-us/${slug}/`);
       await expect(page.locator('#glance .pg__lead > li')).toHaveCount(3);
       const tags = await texts(page, '#glance .evidence-tag');
-      expect(tags.length).toBeGreaterThanOrEqual(5);
+      // WP35: the WSDFM tile left the glance (its 71% is program records, read beside the trial's 63.1%), so three lead tiles and at least one secondary tile carry a tag
+      expect(tags.length).toBeGreaterThanOrEqual(4);
       for (const t of tags) expect(['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Contract Scope']).toContain(t);
       await expect(page.locator('#glance .pg__more')).toHaveCount(1);
     });
   }
 
-  test('governments: the 31,200+ tile says "Six Government Contract Scopes" and is not a delivered-training total', async ({ page }) => {
+  test('governments: the 31,200+ tile says "Six Government Contract Scopes", that the total is contract scope and not a count of completers, and that Her Power’s 25,125 women were trained (WP35)', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
     const tile = page.locator('#glance li', { hasText: '31,200+' });
     await expect(tile).toContainText('Six Government Contract Scopes');
-    await expect(tile).toContainText('contracted scopes, not a delivered-training total');
+    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
   });
 
   test('governments: "What a Ministry Sees" names each step\'s starting point (WP29): the first cohort, then 6 and 12 months after each course', async ({ page }) => {

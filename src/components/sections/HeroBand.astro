@@ -18,7 +18,8 @@ interface Props {
   lead: string;
   /** Fact IDs the lead states (data-fact on the lead paragraph). */
   leadFacts?: string[];
-  cta: { label: string; href: string };
+  /** The one primary button. `icon` replaces its arrow (WP35: a jump to a band further down the page, such as "Choose Your Route", points down). */
+  cta: { label: string; href: string; icon?: string };
   secondary?: { label: string; href: string };
   /** Text links on a line of their own under the primary button (WP27): route-specific next steps beside the one primary action. Plain links, never buttons. */
   routeLinks?: { label: string; href: string }[];
@@ -49,7 +50,7 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
       )
     }
     <Fragment slot="actions">
-      <Button href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
+      <Button href={cta.href} iconEnd={cta.icon ?? 'arrow-right'}>{cta.label}</Button>
       {secondary && <Button variant="outline" href={secondary.href}>{titleCase(secondary.label)}</Button>}
       {
         routeLinks.length > 0 && (

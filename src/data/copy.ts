@@ -328,6 +328,26 @@ export const SURVEY_EMPLOYMENT: CopyBlock = {
 };
 
 /**
+ * The median-income survey result as two readings (WP35, cycle-12 review). OC-03's register sentence ("median monthly income rose from $82 before training to $245 at the October 2026
+ * survey (about 3×)") reads as an effect and a multiple, so a page that states the result prints this display sentence instead; the register sentence itself is unchanged (it backs
+ * the published aggregates). Both medians are read from OC-03's stat, so no figure is typed here.
+ */
+function surveyIncome(): CopyBlock {
+  const s = fact('OC-03').stat;
+  if (!s?.from) throw new Error('SURVEY_INCOME: OC-03 no longer has a stat with a before-training median');
+  return { text: `Among surveyed completers, median monthly income was ${s.value} at the October 2026 survey, against ${s.from} before training.`, facts: ['OC-03'] };
+}
+export const SURVEY_INCOME: CopyBlock = surveyIncome();
+
+/**
+ * The trial's evaluator spelled out (WP35, cycle-12 review: BIGD was not expanded on first mention). The register's RC-01 headline says "by BIGD"; a band that is the first place a page
+ * names the evaluator runs the sentence through spellOutBigd(), the way /our-model/ and /our-model/talentleap/ expand it.
+ */
+export const BIGD_NAME = 'BRAC Institute of Governance and Development (BIGD)';
+export const BIGD_FULL = `the ${BIGD_NAME}`;
+export const spellOutBigd = (sentence: string): string => sentence.replace('by BIGD', `by ${BIGD_FULL}`);
+
+/**
  * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed
  * completers), each labeled as what it is. The figures are read from RC-02 and OC-01, never typed. WP25s: the survey is stated as two
  * readings ("was … before training and … at the survey"), not as a rise, which reads as cause; the sentence on what the trial shows and the

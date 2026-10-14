@@ -122,10 +122,10 @@ test.describe('headings use the system weights', () => {
       return page.evaluate((q) => Array.from(document.querySelectorAll(q)).filter((e) => (e as HTMLElement).offsetParent !== null).map((e) => ({ w: Number(getComputedStyle(e).fontWeight), s: parseFloat(getComputedStyle(e).fontSize) })), sel);
     };
     const groups = await read('impact/', 'h3.glance__group-title'); // "Trial Results, Predecessor Program" and its siblings
-    const panels = await read('partner-with-us/', 'h3.rc__h'); // "What Your Monthly Report Covers"
+    const glance = await read('partner-with-us/governments/', 'h2.pg__title'); // "Results at a Glance" (WP35: the hub's "What Your Monthly Report Covers" panels are gone)
     const outcomes = await read('impact/outcomes-2026/', 'h3.ro__group'); // "Earnings and Work"
     const cards = await read('contact/', 'h3.card__title');
-    for (const [label, list] of Object.entries({ groups, panels, outcomes })) {
+    for (const [label, list] of Object.entries({ groups, glance, outcomes })) {
       expect(list.length, label).toBeGreaterThan(0);
       for (const x of list) {
         expect(x.w, label).toBe(600);

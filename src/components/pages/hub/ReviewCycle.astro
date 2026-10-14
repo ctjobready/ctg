@@ -1,41 +1,40 @@
 ---
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
-import ReviewPanels from './ReviewPanels.astro';
-import PilotScorecard from '../../ui/PilotScorecard.astro';
+import Icon from '../../system/Icon.astro';
+import { linkAttrs } from '../../../lib/url';
 
 /**
- * "Start with a Pilot. Decide on Evidence" (WP17, item 9): the funder review cycle as one section, for the pages that explain funder
- * reporting (/partner-with-us/, Foundations, Development Partners). It replaces the scattered repeats of the report list and of the scorecard
- * decisions. The panels are <ReviewPanels>.
+ * "Monthly Reports and Quarterly Reviews" (WP17, item 9; /partner-with-us/): the funder review cycle.
+ * WP35 (cycle-12 review: the band repeated what the route pages say about reporting): two sentences and the link to what YouthWIDE reports, in place of the two panels (what a monthly report
+ * covers, what you decide at each review). The sentences rest on PD-08 (monthly reports, the quarterly steering review) and PD-11 (a missed threshold triggers a corrective plan; expansion is the
+ * funder's decision), so the band carries both facts. The panels are ./ReviewPanels.astro.
  */
 interface Props {
   title?: string;
   eyebrow?: string;
   lead?: string;
   sample?: { label: string; href: string };
-  /** Show the Pilot Scorecard (the five PD-11 measures) above the panels (WP22). */
-  scorecard?: boolean;
   id?: string;
 }
 const {
   title = 'Start with a Pilot, Then Decide on Evidence',
   eyebrow = 'Reporting and Review',
-  lead = 'Monthly reports follow from the first cohort, so progress is visible while a program runs, not only at the end.',
+  lead = 'Monthly reports from the first cohort. A quarterly review with you decides corrective action and expansion.',
   sample,
-  scorecard = false,
   id = 'review-cycle',
 } = Astro.props;
 ---
 
-<Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
-  {scorecard && <div class="rcy__sc"><PilotScorecard /></div>}
-  <ReviewPanels sample={sample} />
+<Section id={id} aria-labelledby={`${id}-h`} data-fact="PD-08 PD-11">
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} flush>
+    {sample && <p class="rcy__sample"><a class="link" href={linkAttrs(sample.href).href}>{sample.label}<Icon name="arrow-right" size={16} /></a></p>}
+  </SectionHeader>
 </Section>
 
 <style>
-  .rcy__sc {
-    margin-bottom: var(--space-lg);
+  /* the link row sits one step (16px) under the sentences: the header's 8px gap plus this margin */
+  .rcy__sample {
+    margin: calc(var(--stack-link) - var(--stack-eyebrow)) 0 0;
   }
 </style>

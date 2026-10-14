@@ -6,7 +6,7 @@ import { pageByRoute } from './support/pages';
 /**
  * WP25h: Home cycle-5 fixes. Each test states one behavior, read from the built DOM (text, order, structure), not from pixels.
  *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 3);
- *   - the evidence band: the trial in one sentence and one link (WP33 removed the chart), then the paid-work pathways beside the 72.3% result (34 of 47) (WP30c removed the evidence ladder from the band; see tests/wp28.spec.ts and tests/wp33.spec.ts);
+ *   - the evidence band: the paid-work pathways beside the 72.3% result (34 of 47); WP33 removed the trial chart and WP35 (cycle-12 review) the trial block (WP30c removed the evidence ladder from the band; see tests/wp28.spec.ts, tests/wp33.spec.ts and tests/wp35.spec.ts);
  *   - the carousel, vision, proof, FAQ and offer wording accepted in the cycle-5 triage;
  *   - the "Learner Journeys" strip of three registered stories;
  *   - no " & " in Home labels.
@@ -31,18 +31,18 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     expect(fact('PR-03').stat?.label).toBe('of the 350 trained found their first job within 3 months');
   });
 
-  test('slide 3 states Korail with its own measure and labels the WSDFM line as program records', async ({ page }) => {
+  test('slide 3 states Korail with its own measure; WP35: the WSDFM line is gone (its 71% is program records, read beside the trial’s 63.1%), so it lists three programs', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const s = slide(page, 3);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
-    await expect(s.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
+    await expect(s.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
     await expect(s.locator('.hs__lines li')).toHaveText([
-      'WSDFM program records, separate from the trial: 71% in work.',
       'Women in Online Work, Kosovo: 68% in work.',
       'UNDP YES, Korail: 67% found a first job within three months.',
       'Her Power: 47% of 800 tracked women in work.',
     ]);
+    await expect(s).not.toContainText('WSDFM');
   });
 
   test('no sentence on Home calls the Korail result "in work"', async ({ page }) => {
@@ -53,50 +53,48 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
 });
 
 test.describe('evidence band (#proof-band)', () => {
-  test('shows the 72.3% result with its base, after the trial (WP30c: the ladder is gone from the band)', async ({ page }) => {
+  test('shows the paid-work pathways beside the 72.3% result with its base (WP35: no trial block; WP30c: no ladder)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     const stat = band.locator('[data-fact="OC-02"]');
     await expect(stat).toContainText('72.3%');
     await expect(stat).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-    // document order: the trial heading, its sentence and its link (WP33: no chart), then the 72.3% tile
+    // document order: the pathways comparison, then the 72.3% tile (WP35: the trial sub-block, its sentence and its link are gone; WP33: no chart)
     const order = await band.evaluate((el) => {
       const at = (sel: string) => {
         const n = el.querySelector(sel);
         return n ? Array.from(el.querySelectorAll('*')).indexOf(n) : -1;
       };
-      return { stat: at('[data-fact="OC-02"]'), ladder: at('.lc'), trial: at('.he__trial'), sentence: at('[data-plain-line]'), link: at('.he__trial a.link'), chart: at('.ba, .he__chart') };
+      return { stat: at('[data-fact="OC-02"]'), pathways: at('.pwp'), ladder: at('.lc'), trial: at('.he__trial'), sentence: at('[data-plain-line]'), chart: at('.ba, .he__chart') };
     });
-    expect(order.trial).toBeGreaterThan(-1);
-    expect(order.sentence).toBeGreaterThan(order.trial);
-    expect(order.link).toBeGreaterThan(order.sentence);
+    expect(order.pathways).toBeGreaterThan(-1);
+    expect(order.stat).toBeGreaterThan(order.pathways);
+    expect(order.trial, 'no trial sub-block in the band (WP35)').toBe(-1);
+    expect(order.sentence, 'no plain-language trial sentence in the band (WP35)').toBe(-1);
     expect(order.chart, 'no trial chart in the band (WP33)').toBe(-1);
     expect(order.ladder, 'no evidence ladder in the band').toBe(-1);
-    expect(order.stat).toBeGreaterThan(order.link);
   });
 
-  test('does not retell the trial or the survey: one trial sentence, no chart, and (WP29) one survey comparison the carousel does not carry', async ({ page }) => {
+  test('does not retell the trial or the survey: no trial at all, no chart, and (WP29) one survey comparison the carousel does not carry', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const band = page.locator('#proof-band');
     await expect(band.locator('h2')).toHaveText('Evidence You Can Check');
     // WP29 (benchmark review): the paid-work pathways comparison (OC-04) is the band's one extra survey block; the carousel states no pathway figure.
-    // WP33: the trial's sub-heading names the predecessor program (the chart note that carried that scope is gone with the chart).
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial of a Predecessor Program', 'Paid-Work Pathways Among Surveyed Completers']);
+    // WP35: the trial's sub-heading is gone with its sentence (the hero card and the first slide state the trial)
+    await expect(band.locator('h3')).toHaveText(['Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-04"]')).toHaveCount(1);
-    await expect(band.locator('[data-plain-line]')).toHaveCount(1);
-    await expect(band.locator('[data-plain-line]')).toHaveText('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
+    await expect(band.locator('[data-plain-line]')).toHaveCount(0);
     await expect(band.locator('.ba, .ba__data, figure'), 'no chart, chart table or figure in the band').toHaveCount(0);
     const t = collapse(await band.textContent());
-    for (const retold of ['41% higher', '54% higher', 'BIGD found', 'From the October 2026 Survey']) expect(t, `no "${retold}" in the band`).not.toContain(retold);
+    for (const retold of ['41% higher', '54% higher', 'BIGD found', 'From the October 2026 Survey', '10.3', 'predecessor']) expect(t, `no "${retold}" in the band`).not.toContain(retold);
     expect(t.match(/72\.3%/g)?.length, 'the 72.3% appears once').toBe(1);
     expect(t, 'program records stay out of the evidence band').not.toMatch(/71%|711 of 1,000/);
   });
 
-  test('carries no chart, chart table or chart note, and says the trial evaluated a predecessor program (WP33)', async ({ page }) => {
+  test('carries no chart, chart table or chart note, and no trial figure or sub-heading (WP33, WP35)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const t = collapse(await page.locator('#proof-band').textContent());
-    for (const gone of ['Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table', '52.8%', '63.1%', 'Control Group', 'Offered a Place']) expect(t, `no "${gone}" in the band`).not.toContain(gone);
-    expect(t).toContain('An Independent Randomized Trial of a Predecessor Program');
+    for (const gone of ['Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table', '52.8%', '63.1%', 'Control Group', 'Offered a Place', 'An Independent Randomized Trial of a Predecessor Program']) expect(t, `no "${gone}" in the band`).not.toContain(gone);
   });
 });
 

@@ -3,6 +3,8 @@
 // receive monthly → due diligence (governance) → FAQ → CTA band.
 // WP30c (owner direction 2026-10-14, "less is more"): the hub chooses a route and does not repeat the route pages. The RACI table (an internal-report view of
 // roles) and the "Protected by Design" band (the Due Diligence band already states safeguarding and links to Governance) are gone; four FAQs, not six.
+// WP35 (cycle-12 review): the hero's one button jumps to the route cards ("Choose Your Route"), instead of opening an email that skips the chooser; the second email button ("Not Sure? Email Us Your Goals") and its
+// helper line are gone, so the closing call to action holds the page's one email button; the reporting band is two sentences and a link (the route pages state their own reporting).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -10,7 +12,6 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
-import Button from '../../components/system/Button.astro';
 import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
@@ -35,15 +36,13 @@ const BLUF = 'Choose a partnership for youth employment, campus skills, team tra
 const description = 'Partner with CodersTrust on youth employment, campus skills, team training, hiring or JobReady’s staged rollout. Pick your route and talk to us.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
-// "Not sure where you fit?": a prefilled email to the general address (WP31), not a link to another route chooser.
-const general = cta('general');
 
 // Seven decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). WP27: Investors is
 // a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
 const audiences = [
   { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
   { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: national programs for youth employment.' },
-  { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can verify.' },
+  { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can track.' },
   { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
   { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges, chambers and associations delivering locally.' },
@@ -74,7 +73,7 @@ const jsonLd = [
 
 <BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
-    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: discovery.label, href: discovery.href }} routeLinks={[{ label: 'Choose Your Route', href: '#audiences' }]} artSeed="partner-hub" />
+    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: 'Choose Your Route', href: '#audiences', icon: 'arrow-down' }} artSeed="partner-hub" />
   </Tone>
 
   <DefinitionBand />
@@ -85,16 +84,9 @@ const jsonLd = [
       <div class="grid-cards hub__routes">
         {audiences.map((a) => <CategoryCard title={a.title} icon={a.icon} text={a.text} href={a.href} />)}
       </div>
-      <div class="hub__helper" data-reveal>
-        <Icon name="message-circle" size={28} strokeWidth={1.5} class="hub__helper-icon" />
-        <p class="hub__helper-text">Tell us your goals and we will point you to the right route.</p>
-        <p class="cluster hub__helper-links">
-          <Button variant="outline" size="sm" href={general.href} icon="mail">{general.label}</Button>
-        </p>
-        <p class="hub__helper-programs">
-          <span>Already know the program you need? </span><a class="link" href={linkAttrs('/programs/').href}>See Programs<Icon name="arrow-right" size={16} /></a>
-        </p>
-      </div>
+      <p class="hub__programs" data-reveal>
+        <span>Already know the program you need? </span><a class="link" href={linkAttrs('/programs/').href}>See Programs<Icon name="arrow-right" size={16} /></a>
+      </p>
     </Section>
   </Tone>
 
@@ -159,43 +151,8 @@ const jsonLd = [
       align-self: end;
     }
   }
-  .hub__helper {
-    margin-top: var(--space-md);
-    padding: var(--space-md) var(--space-gutter);
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-xs) var(--space-md);
-    align-items: center;
-    background: var(--surface-container-low);
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-default);
-  }
-  .hub__helper > p {
-    margin: 0;
-  }
-  .hub__helper :global(.hub__helper-icon) {
-    color: var(--primary);
-  }
-  .hub__helper-text {
-    color: var(--on-surface);
-  }
-  .hub__helper-programs {
-    grid-column: 2;
+  .hub__programs {
+    margin: var(--space-md) 0 0;
     color: var(--on-surface-variant);
-  }
-  .hub__helper-links {
-    grid-column: 2;
-    gap: var(--space-xs) var(--space-lg);
-  }
-  @media (min-width: 900px) {
-    .hub__helper {
-      grid-template-columns: auto minmax(0, 1fr) auto;
-    }
-    .hub__helper-links {
-      grid-column: auto;
-    }
-    .hub__helper-programs {
-      grid-column: 2 / -1;
-    }
   }
 </style>

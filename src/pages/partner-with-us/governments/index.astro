@@ -5,8 +5,11 @@
  * WP30c (owner direction 2026-10-14, "less is more"): the page keeps every CMF band and states each point once. Gone: the In Short summary and its jump links,
  * the fit check, the "Outside Bangladesh?", national-target, scale and coastal-context callouts, the survey callout, the second Her Power card set, the three-step
  * restatement of the mechanism, the standard-inclusions list and the four-point restatement of the scorecard. The H1 is the owner's wording.
+ * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
+ * from the glance (its 71% is program records, read beside the trial's 63.1%), and the plain-words fixes are in the contracts table and the services line.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import MinistrySees from '../../../components/pages/partners/MinistrySees.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -18,7 +21,6 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import ProofBand from '../../../components/sections/ProofBand.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
@@ -79,14 +81,11 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
   <DefinitionBand />
   <PartnerGlance
     lead={[
-      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in Six Government Contract Scopes', caveat: 'These are contracted scopes, not a delivered-training total.', also: ['SC-06', 'GV-10'] },
+      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in Six Government Contract Scopes', also: ['SC-06', 'GV-10'] },
       { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
     ]}
-    more={[
-      { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-    ]}
+    more={[{ id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' }]}
   />
   <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
 
@@ -150,19 +149,18 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
     link={{ label: 'See How YouthWIDE Works', href: LINKS.youthwide }}
   />
 
-  <!-- C7 · Proof -->
-  <ProofBand
-    title="Independent Evidence and Survey Results"
-    headlineFact="RC-01"
-    statIds={['RC-02']}
-    chartId="OC-01"
-    links={[
-      { label: 'The Randomized Trial', href: LINKS.trial },
+  <!-- C7 · Proof: the trial and survey results are the tiles above; this strip links the full evidence (WP35, cycle-12 review) -->
+  <PairedEvidence
+    id="proof-band"
+    eyebrow="The Evidence"
+    title="See the Evidence Behind the Results"
+    items={[]}
+    broader={[
+      { label: 'Read the Trial Results', href: LINKS.trial },
       { label: 'Impact Survey 2026', href: LINKS.outcomes },
     ]}
-  >
-    <EvidenceList heading="What Surveyed Completers Report" items={[{ facts: ['OC-03'] }]} />
-  </ProofBand>
+    broaderLabel="The evidence behind the results"
+  />
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
   <!-- WP29 (benchmark review): one government partnership as a card of separate fields (partner, role, direct training, tracked outcome, national reach), all from registered facts. -->
   <ModelPartnership />
@@ -186,7 +184,7 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
       {
         feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; blended learning in existing labs; connectivity-light delivery',
         means: 'Capacity stays in your system and rural labs can take part.',
-        outcome: 'Trainers and curricula that stay in your system',
+        outcome: 'Trainers and curricula designed to stay in your system',
         relieves: 'Trainer and curriculum capacity is thin',
       },
     ]}
@@ -210,7 +208,7 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
       heading="Services We Can Scope for an Agency"
       items={[
         { facts: ['GV-11'], text: 'Curriculum development, manuals and Training of Trainers.' },
-        { facts: ['GV-05'], text: 'LMS and operation training for staff.' },
+        { facts: ['GV-05'], text: 'Training for staff on the learning platform and lab operations.' },
       ]}
     />
   </SubBand>

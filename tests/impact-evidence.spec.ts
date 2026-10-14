@@ -16,8 +16,8 @@ test.describe('evidence-type badge', () => {
   test('/impact/ glance tiles carry the right evidence type', async ({ page }) => {
     await open(page, 'impact/');
     const tile = (fact: string) => page.locator(`#glance a[data-fact~="${fact}"]`).first();
-    await expect(tile('RC-13').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Randomized Trial');
-    await expect(tile('RC-06a').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Randomized Trial');
+    // WP35: the trial group is one tile, the employment result for women offered a place (the income results and the nine-trial comparison are on the Independent Evaluation page)
+    await expect(tile('RC-02').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Randomized Trial');
     await expect(tile('OC-01').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Surveyed Completers');
     await expect(tile('OC-03').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Surveyed Completers');
     await expect(tile('PR-01').locator('[data-evidence]')).toHaveAttribute('data-evidence', 'Program Record');
@@ -95,9 +95,9 @@ test.describe('/impact/ At a Glance', () => {
     await expect(reach.locator('.status-tag[data-status="Agreement"]')).toHaveCount(1);
   });
 
-  test('the +54% tile names the predecessor WSDFM program and the +10.3 label does not repeat itself', async ({ page }) => {
+  test('the trial tile (WP35: the one trial group tile) names the predecessor program and the +10.3 label does not repeat itself', async ({ page }) => {
     await open(page, 'impact/');
-    await expect(page.locator('#glance')).toContainText(/higher monthly income for women who attended the predecessor WSDFM program/);
+    await expect(page.locator('#glance')).toContainText(/more employment for women offered a place \(randomized trial of a predecessor program\)/);
     const text = await page.locator('main').innerText();
     expect(text).not.toMatch(/\+10\.3 pp[^\n]*in percentage points/);
   });

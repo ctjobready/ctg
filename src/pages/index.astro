@@ -130,14 +130,15 @@ const featureRows = [
 
   <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
-  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP28: strongest evidence first. WP33 (cycle-10 review): the trial is one line and one link, with no chart (the hero card and the first slide state it too), then the paid-work pathways beside the 72.3% no-prior-income result (34 of 47). -->
+  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP35 (cycle-12 review): nor the trial at all (the hero card and the first slide state it); the band keeps the paid-work pathways beside the 72.3% no-prior-income result (34 of 47), and a text link to the trial's results sits with the survey link. -->
   <Tone cmf="C7">
     <HomeEvidence
       id="proof-band"
       title="Evidence You Can Check"
-      trialHeading="An Independent Randomized Trial of a Predecessor Program"
-      trialLink={{ label: 'Read the Trial Results', href: '/impact/independent-evaluation/' }}
-      links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }]}
+      links={[
+        { label: 'Read the Trial Results', href: '/impact/independent-evaluation/' },
+        { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
+      ]}
     />
   </Tone>
 

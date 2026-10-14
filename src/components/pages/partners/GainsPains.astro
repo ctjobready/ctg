@@ -1,5 +1,6 @@
 ---
 import Icon from '../../system/Icon.astro';
+import { titleCase } from '../../../lib/titleCase.mjs';
 
 /**
  * C2 gains and ranked pains (doc 04 matrices, 2a and 2b). Rendered inside ProblemBand's lead slot, so
@@ -9,6 +10,8 @@ import Icon from '../../system/Icon.astro';
  * columns (review round 14, M4: Home, YouthWIDE and the local-partners page). A pain may carry an `id` ("P1" to "P3"), written to the
  * list item as `data-pain`; the C8 row that relieves it carries the same id as `data-relieves` (FeaturesTable `painId`), and
  * scripts/check-facts.mjs checks the one-to-one map. `facts` ties a pain to the registered facts it rests on (`data-fact`).
+ * WP35 (cycle-12 review): a pain's title is a card title, so it is set in Title Case here, wherever the band renders it ("Why Do Graduates Struggle to Find Work?"); the pain's wording is written once,
+ * in sentence case, and the C8 row that relieves it keeps that wording as its concern label.
  */
 interface Pain {
   q: string;
@@ -45,7 +48,7 @@ const solo = gains.length === 0;
           <li data-pain={p.id} data-fact={p.facts?.join(' ')}>
             <span class="gp__n" aria-hidden="true">{i + 1}</span>
             <div>
-              <p class="gp__q">{p.q}</p>
+              <p class="gp__q">{titleCase(p.q)}</p>
               <p class="gp__a">{p.text}</p>
             </div>
           </li>

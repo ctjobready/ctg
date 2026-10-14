@@ -12,6 +12,7 @@ import { factPart } from './partners';
  * No Curriculum-reach column: only Her Power has one, so its figures (the national program's training total and the manuals published) sit in
  * that row's scope text. A column returns when two or more contracts carry a value.
  * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
+ * WP35 (cycle-12 review): the scope column uses plain words ("Training in digital technologies"; "Training for staff on the learning platform and lab operations"); GV-02 and GV-05 in the register keep their wording.
  * WP30c: one note under the table (delivery status; scopes are not delivered scale). The 31,200+ total is the Results at a Glance tile's, and the COVID-19
  * teacher-training line (SC-08, which does not say who trained the teachers) is gone from the page.
  */
@@ -35,7 +36,7 @@ const rows: Row[] = [
     // PMIS is the Center for Project Management and Information Systems at the University of Dhaka (named in full in the EDGE news item).
     contract: 'EDGE: Center for Project Management and Information Systems (PMIS), University of Dhaka, with the Bangladesh Computer Council (BCC)',
     facts: ['GV-02'],
-    scope: 'Training in digital and 4IR technologies',
+    scope: 'Training in digital technologies',
     direct: `${SCOPE} ${factPart('GV-02', /[\d,]+ youth/)}`,
   },
   {
@@ -54,7 +55,7 @@ const rows: Row[] = [
   {
     contract: 'Digital Lab Establishment Project, Phase II',
     facts: ['GV-05'],
-    scope: 'LMS and operation training for staff',
+    scope: 'Training for staff on the learning platform and lab operations',
     direct: `${SCOPE} ${factPart('GV-05', /[\d,]+\+ staff/)}`,
   },
   {

@@ -130,7 +130,7 @@ export const navGroups: NavGroup[] = [
     href: '/impact/',
     items: [
       { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
-      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The BIGD randomized trial.' },
+      { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The randomized trial of a predecessor program.' },
       { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
       { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
@@ -155,7 +155,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Partnership Overview', href: '/partner-with-us/', description: 'Choose the route that fits your organization.' },
       { label: 'Development Partners and NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
       { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
-      { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can verify.' },
+      { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can track.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
       { label: 'Local Partners in Bangladesh', href: '/partner-with-us/local-partners/', description: 'NGOs, colleges, chambers and associations delivering locally.' },
@@ -239,7 +239,7 @@ export const footerBottomLinks: NavLink[] = [
 export const audiences = [
   { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
   { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
-  { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can verify', href: '/partner-with-us/foundations/' },
+  { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can track', href: '/partner-with-us/foundations/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
