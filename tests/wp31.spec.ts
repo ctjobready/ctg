@@ -314,11 +314,12 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('[data-hs-slide]').nth(6).locator('h2')).toHaveText('Find Your Program');
   });
 
-  test('Home: the evidence band has no scope line (its tags and chart note carry the scope); the comparison drops the freelance-marketplace column', async ({ page }) => {
+  test('Home: the evidence band has no scope line (the trial heading and the survey tag carry the scope); the comparison drops the freelance-marketplace column', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#proof-band');
     expect(compact(await band.locator('.he__head').textContent())).toBe('The EvidenceEvidence You Can Check');
-    expect(compact(await band.textContent())).toContain('the trial of the predecessor program');
+    // WP33: the chart note that named the predecessor program is gone with the chart; the trial's sub-heading names it
+    expect(compact(await band.locator('.he__trial h3').textContent())).toBe('An Independent Randomized Trial of a Predecessor Program');
     expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
   });
 

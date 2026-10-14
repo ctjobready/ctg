@@ -31,7 +31,7 @@ test.describe('What Your Partnership Includes (#features)', () => {
 });
 
 test.describe('evidence band (#proof-band): strongest evidence first', () => {
-  test('the trial (heading, one sentence, chart) comes first, then the paid-work pathways and the 72.3% tile (WP30c: no ladder)', async ({ page }) => {
+  test('the trial (heading, one sentence, one link) comes first, then the paid-work pathways and the 72.3% tile (WP30c: no ladder; WP33: no chart)', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#proof-band');
     const order = await band.evaluate((el) => {
@@ -40,16 +40,17 @@ test.describe('evidence band (#proof-band): strongest evidence first', () => {
         const n = el.querySelector(sel);
         return n ? all.indexOf(n) : -1;
       };
-      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), chart: at('.he__chart svg'), ladder: at('.lc'), pathways: at('.pwp'), tile: at('[data-fact="OC-02"]') };
+      return { heading: at('.he__sub'), sentence: at('[data-plain-line]'), link: at('.he__trial a.link'), chart: at('.ba, .he__chart'), ladder: at('.lc'), pathways: at('.pwp'), tile: at('[data-fact="OC-02"]') };
     });
     expect(order.heading).toBeGreaterThan(-1);
     expect(order.sentence).toBeGreaterThan(order.heading);
-    expect(order.chart).toBeGreaterThan(order.sentence);
+    expect(order.link).toBeGreaterThan(order.sentence);
+    expect(order.chart, 'the trial chart is not in the band').toBe(-1);
     expect(order.ladder, 'the evidence ladder is not in the band').toBe(-1);
-    expect(order.pathways).toBeGreaterThan(order.chart);
-    expect(order.tile).toBeGreaterThan(order.chart);
-    // WP29's paid-work pathways comparison keeps its own h3, beside the 72.3% tile
-    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial', 'Paid-Work Pathways Among Surveyed Completers']);
+    expect(order.pathways).toBeGreaterThan(order.link);
+    expect(order.tile).toBeGreaterThan(order.link);
+    // WP29's paid-work pathways comparison keeps its own h3, beside the 72.3% tile; WP33: the trial's h3 names the predecessor program
+    await expect(band.locator('h3')).toHaveText(['An Independent Randomized Trial of a Predecessor Program', 'Paid-Work Pathways Among Surveyed Completers']);
     await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
   });
 

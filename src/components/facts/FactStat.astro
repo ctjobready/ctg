@@ -7,6 +7,7 @@ import { fact } from '../../data/facts';
  * PR-05) ends with the register's program-data label; it is set on its own ruled line under the label, once.
  * <FactStat> has no label element of its own: the label and the evidence line are Stat's .stat__label and .stat__evidence, which set
  * `text-wrap: balance` (src/components/system/Stat.astro), so every fact tile wraps its label in even lines.
+ * The register's detail line (stat.detail) is the tile's note; `detail={false}` leaves it off a tile whose page states it in context elsewhere (WP33: Outcomes 2026, "Results in Brief").
  */
 interface Props {
   id: string;
@@ -14,9 +15,10 @@ interface Props {
   size?: 'md' | 'lg';
   align?: 'start' | 'center';
   count?: boolean;
+  detail?: boolean;
   class?: string;
 }
-const { id, tone = 'default', size = 'md', align = 'start', count, class: className } = Astro.props;
+const { id, tone = 'default', size = 'md', align = 'start', count, detail = true, class: className } = Astro.props;
 const f = fact(id);
 if (!f.stat) throw new Error(`<FactStat id="${id}">: fact has no stat`);
 // Only count up values with a clean numeric target (not "6–8 weeks").
@@ -25,7 +27,7 @@ const doCount = count ?? f.stat.numeric !== undefined;
 
 <!-- display:contents keeps the wrapper out of the parent's flex/grid layout while carrying data-fact for the status gate. -->
 <div class="factstat" data-fact={id}>
-  <Stat value={f.stat.value} label={f.stat.label} note={f.stat.detail} tone={tone} size={size} align={align} count={doCount} class={className}>
+  <Stat value={f.stat.value} label={f.stat.label} note={detail ? f.stat.detail : undefined} tone={tone} size={size} align={align} count={doCount} class={className}>
   </Stat>
 </div>
 

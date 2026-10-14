@@ -119,7 +119,8 @@ const howToRead = `<ul>
     <h3 class="t-heading-l ro__group">Earnings and Work</h3>
     <div class="ro__stats">
       <FactStat id="OC-03" />
-      <FactStat id="OC-01" />
+      {/* WP33: the 5.9% who reported they were no longer employed is stated with its context under "Employment Before and After Training", not bare here */}
+      <FactStat id="OC-01" detail={false} />
       <FactStat id="OC-02" />
       <FactStat id="OC-04" />
       <FactStat id="OC-07" />

@@ -2,41 +2,37 @@
 import Section from '../../ui/Section.astro';
 import Stat from '../../system/Stat.astro';
 import PlainLine from '../../facts/PlainLine.astro';
-import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import PaidWorkPathways from '../impact/PaidWorkPathways.astro';
 import { fact } from '../../../data/facts';
-import { RCT_COMPARISON } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * Home C7 evidence band (Klein; WP25h, reordered in WP28). It no longer retells the trial and the survey, which the "Results and Programs"
- * carousel above already states (the trial slide, the survey slides). WP28 puts the strongest evidence first, as the band's own ladder says:
- * the trial in one sentence (the [PLAIN-LINE], RC-02) beside its chart, then the evidence ladder (what each kind of evidence shows), then
- * the one survey result the carousel does not carry, the 72.3% of surveyed completers with no prior income who were earning (OC-02), with
- * its registered base in the "N of M" pattern ("34 of 47"), then the links. There is no second survey block and no restatement of the
- * trial's income results (RC-01; the carousel's first slide states them).
- * WP29 (benchmark review): the survey area also carries the paid-work pathways as one compact comparison (OC-04: salaried employment, freelancing and
- * business ownership, before training and at the October 2026 survey; Surveyed Completers), below the ladder and the 72.3% tile.
- * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
- * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
- * WP30c: the scope line under the heading was one short sentence (WP31 removed it: the survey block carries its "Surveyed Completers" tag and the chart note names the
- * predecessor program); no note under the pathways table; the
- * evidence ladder ("Four Kinds of Evidence, Strongest First") is gone from this band: the carousel, the case cards and the Impact page label each kind of evidence,
- * and the "Read the evidence" link leads to the full ladder. The pathways table sits beside the 72.3% tile, in the ladder's former place.
+ * Home C7 evidence band (Klein; WP25h, reordered in WP28, trimmed in WP30c, WP31 and WP33). It does not retell the trial or the survey: the hero's proof cards and the
+ * "Results and Programs" carousel above already state them. The band holds two things, the strongest evidence first:
+ *  1. The trial in one line (WP33, cycle-10 review: the trial's figure was stated three times on Home). The sub-heading, the registered plain-language sentence (the
+ *     [PLAIN-LINE], RC-02) and one link to the trial's results. The chart, its data table and its note are gone (the trial page carries the full results). The sub-heading says the
+ *     trial evaluated a predecessor program (the chart note carried that scope before). The sentence is the trial's measure, not the program records on the
+ *     "Results by Program" slide (WSDFM program records: 71% in work).
+ *  2. The survey area: the paid-work pathways as one compact comparison (OC-04: salaried employment, freelancing and business ownership, before training and at the
+ *     October 2026 survey; Surveyed Completers) beside the one survey result the carousel does not carry, the 72.3% of surveyed completers with no prior income who were
+ *     earning (OC-02), with its registered base in the "N of M" pattern ("34 of 47"), then the survey link. No note sits under the pathways table; there is no evidence
+ *     ladder (the carousel, the case cards and the Impact page label each kind of evidence) and no scope line under the heading (the survey block carries its tag).
  * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
  */
 interface Props {
   id?: string;
   /** The band's h2. */
   title: string;
-  /** The trial's own sub-heading (h3) over its sentence and chart. */
+  /** The trial's own sub-heading (h3) over its sentence; it names the predecessor program the trial evaluated. */
   trialHeading: string;
+  /** The one link under the trial's sentence, to the trial's results. */
+  trialLink?: { label: string; href: string };
   /** Scope of the two kinds of figure, stated once under the h2. */
   lead?: string;
   links?: { label: string; href: string }[];
 }
-const { id = 'proof-band', title, trialHeading, lead, links = [] } = Astro.props;
+const { id = 'proof-band', title, trialHeading, trialLink, lead, links = [] } = Astro.props;
 
 // OC-02: "72.3% (34 of 47) of 2014–2023 completers who had no income before training were earning at the October 2026 survey". The tile's
 // label states the base in front ("34 of 47 surveyed 2014–2023 completers with no prior income were earning ..."), read from the register's own text.
@@ -45,11 +41,6 @@ const base = /\((\d+) of (\d+)\)/.exec(oc.text);
 const LABEL_OPENING = 'of surveyed 2014–2023 completers';
 if (!oc.stat || !base || !oc.stat.label.startsWith(LABEL_OPENING)) throw new Error('HomeEvidence: OC-02 no longer reads "N% (X of Y) ..." with a label starting "of surveyed 2014–2023 completers"');
 const survey = { value: oc.stat.value, numeric: oc.stat.numeric !== undefined, label: `${base[1]} of ${base[2]} surveyed${oc.stat.label.slice('of surveyed'.length)}` };
-
-// The trial's follow-up employment, from RC-02 (control group, women offered a place and the difference).
-const before = RCT_COMPARISON.control;
-const after = RCT_COMPARISON.offered;
-const delta = RCT_COMPARISON.delta;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
@@ -59,24 +50,11 @@ const delta = RCT_COMPARISON.delta;
     {lead && <p class="lead">{lead}</p>}
   </header>
 
-  <div class="he__trial" data-fact="RC-02">
-    <div class="he__copy" data-reveal>
-      <h3 class="he__sub t-heading-l">{trialHeading}</h3>
-      <PlainLine />
-    </div>
-    <div class="he__chart">
-      <BeforeAfter
-        mode="comparison"
-        title="Employment at Trial Follow-Up (Nov–Dec 2021): Women Offered a Place and Control Group"
-        before={{ label: 'Control Group', value: before }}
-        after={{ label: 'Offered a Place', value: after }}
-        delta={delta}
-        chip={false}
-        tone="dark"
-      />
-      <!-- WP31: the band's scope line is gone (the survey block carries its evidence tag); the trial's scope, the predecessor program, stays with the chart note. -->
-      <p class="he__fn">Chart data: employment at follow-up in the trial of the predecessor program, women offered a place and the control group.</p>
-    </div>
+  {/* WP33: the trial in one line. Its figure was stated three times on Home (cycle-10 review), so the chart, its data table and its note are gone; the sub-heading names the predecessor program, as the chart note did. */}
+  <div class="he__trial" data-fact="RC-02" data-reveal>
+    <h3 class="he__sub t-heading-l">{trialHeading}</h3>
+    <PlainLine />
+    {trialLink && <a class="link" href={linkAttrs(trialLink.href).href}>{trialLink.label}<Icon name="arrow-right" size={16} /></a>}
   </div>
 
   <div class="he__top">
@@ -138,16 +116,13 @@ const delta = RCT_COMPARISON.delta;
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
   }
+  /* the trial in one line: heading, sentence (its own measure) and link in one column, each sized to its content */
   .he__trial {
     display: grid;
-    gap: var(--space-md) var(--space-lg);
-  }
-  .he__copy {
-    display: grid;
+    justify-items: start;
     gap: var(--space-md);
-    align-content: center;
   }
-  .he__copy > :global(*) {
+  .he__trial > :global(*) {
     margin: 0;
   }
   /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
@@ -162,11 +137,6 @@ const delta = RCT_COMPARISON.delta;
       letter-spacing: -0.5px;
     }
   }
-  .he__fn {
-    margin: var(--space-xs) 0 0;
-    font-size: var(--fs-body-xs);
-    color: var(--ctx-muted);
-  }
   .he__links {
     list-style: none;
     margin: var(--space-lg) 0 0;
@@ -179,12 +149,6 @@ const delta = RCT_COMPARISON.delta;
     .he__top {
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
       gap: var(--space-xl);
-    }
-    .he__trial {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--space-md) var(--space-xl);
-      /* the trial now opens the band: the sentence sits level with the middle of its chart, not above an empty column */
-      align-items: center;
     }
   }
 </style>

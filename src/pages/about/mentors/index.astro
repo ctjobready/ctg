@@ -48,8 +48,8 @@ const ungrouped = mentors.filter((m) => !groups.some((g) => g.mentors.includes(m
 if (ungrouped.length > 0) throw new Error(`Mentors: no discipline group for ${ungrouped.map((m) => `${m.name} (${m.role})`).join(', ')}`);
 // SC-09 states two 150+ figures; they are shown as two sentences so neither reads as a total for the other.
 const [coursesPart, mentorsPart] = fact('SC-09').text.split('; ');
-if (!coursesPart || !mentorsPart || !/^150\+ skill courses and certification courses delivered$/.test(coursesPart) || !/^150\+ instructors and mentors$/.test(mentorsPart)) throw new Error('Mentors page: SC-09 wording changed; update the split');
-const scLine = `${coursesPart.replace('skill courses and certification courses', 'skill and certification courses')}. ${mentorsPart}.`;
+if (!coursesPart || !mentorsPart || !/^150\+ skill and certification courses delivered$/.test(coursesPart) || !/^150\+ instructors and mentors$/.test(mentorsPart)) throw new Error('Mentors page: SC-09 wording changed; update the split');
+const scLine = `${coursesPart}. ${mentorsPart}.`;
 const apply = cta('mentor');
 const discovery = cta('discovery');
 const description = 'Meet CodersTrust mentors: practitioners in digital marketing, design, video, development and accounting who guide learners toward jobs and freelance work.';

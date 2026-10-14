@@ -51,10 +51,11 @@ test.describe('timelines name their starting point', () => {
     expect(text).not.toMatch(/\bwk \d/);
   });
 
-  test('the "How Fast Can We Start?" answers say the weeks count from the first conversation', async ({ page }) => {
+  test('the "How Fast Can We Start?" answers say the weeks count from the first conversation (WP33: Governments, whose steps band shows the sequence, does not count them out again)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await page.locator('#faq').textContent());
-    expect(gov).toContain('Counting from the first conversation, Week 1 is a briefing, Week 2 co-design and Week 3 the agreement.');
+    expect(gov).toContain('agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
+    expect(gov).not.toContain('Counting from the first conversation');
     await open(page, 'programs/youthwide/');
     const main = compact(await page.locator('main').textContent());
     expect(main).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');

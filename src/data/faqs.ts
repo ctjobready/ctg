@@ -34,7 +34,8 @@ export const faqs: Faq[] = [
   // Page-specific variants (not in the Q1–Q14 bank, so never listed in `all`).
   { id: 'Q8-employer', q: `What Does It Cost?`, a: `Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment. Standard inclusions are a needs assessment, a customized curriculum, interactive workshops, progress evaluation and post-training support; certification exam preparation and talent sourcing are scoped separately where needed.`, evidence: ['PD-02', 'IN-10'], audiences: ['variants'] },
   { id: 'Q1-local', q: `Will This Work in Our District?`, a: `Each cohort is designed around the young people your organization reaches, your facilities and local demand. Tracks, facilitator training, safeguarding and reporting are agreed before enrollment.`, evidence: ['PD-06', 'PD-09'], audiences: ['variants'] },
-  { id: 'Q7-government', q: `How Fast Can We Start?`, a: `Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry. For grant-funded pilots, agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing. Counting from the first conversation, Week 1 is a briefing, Week 2 co-design and Week 3 the agreement.`, evidence: ['PD-04'], audiences: ['variants'] },
+  // WP33 (cycle-10 review): the Governments page has a steps band after its FAQ that shows the sequence, so this answer does not count the weeks out again; Q7 keeps the count for the pages without one.
+  { id: 'Q7-government', q: `How Fast Can We Start?`, a: `Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry. For grant-funded pilots, agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.`, evidence: ['PD-04'], audiences: ['variants'] },
   { id: 'Q3-institution', q: `How Do You Prove Outcomes?`, a: `Baseline at enrollment, follow-up surveys at 3, 6 and 12 months, and documentary evidence of earnings where available; independent evaluation is welcome. Offer letters document job offers; payslips document employment earnings; platform logs or bank receipts document freelance earnings where available. Your institution receives monthly reports on enrollment, completion, certification, placements and first earnings.`, evidence: ['PD-09', 'PD-08', 'RC-01'], audiences: ['variants'] },
 ];
 
@@ -66,14 +67,19 @@ faqs.push(
   // Governments: the national-scale answer points to the contracts table, where each contract's scope is set out.
   { ...bankAnswer('Q2'), id: 'Q2-government', a: `Six government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff; the contracts table on this page sets out each one. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), and CodersTrust trained 2,500 women directly. We scale in phases, and a 100,000+ national program is a design option we have not yet delivered.`, evidence: ['GV-10', 'GV-01', 'GV-13', 'PD-05'], audiences: ['variants'] },
   // Investors (WP25s): the national-scale answer leads with CodersTrust's own role in Her Power (GV-11) before the national total (GV-01), which is the program's, not CodersTrust's.
+  // WP33 (cycle-10 review): the bank answer's closing 41-word sentence is two sentences here (the same two claims, no "phase by phase" repeat of "in phases"). FAQ answers are at most three
+  // sentences (tests/wp30c.spec.ts), so the two Her Power statements, each already a short clause, are one sentence joined by a semicolon.
   (() => {
     const q2 = bankAnswer('Q2');
     const national = 'Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.';
-    if (!q2.a.includes(national)) throw new Error('faqs: Q2 no longer has the Her Power sentences; update the investors variant');
+    const scale = 'We scale in phases: larger programs run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges, and a 100,000+ national program is a design option we plan phase by phase and have not yet delivered.';
+    if (!q2.a.includes(national) || !q2.a.includes(scale)) throw new Error('faqs: Q2 no longer has the Her Power and scale sentences; update the investors variant');
     return {
       ...q2,
       id: 'Q2-investor',
-      a: q2.a.replace(national, 'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas).'),
+      a: q2.a
+        .replace(national, 'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas).')
+        .replace(scale, 'We scale in phases: larger programs run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges. A 100,000+ national program is a design option we have not yet delivered.'),
       audiences: ['variants'] as Faq['audiences'],
     };
   })(),
