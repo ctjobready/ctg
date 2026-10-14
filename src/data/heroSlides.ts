@@ -68,6 +68,13 @@ function navLink(href: string): NavLink {
   return item;
 }
 
+/** Slide 7 names the NU Postgraduate Diploma for individual learners; the navigation keeps its own descriptor for the mega menu. */
+const NU_SLIDE_HREF = '/programs/nu-postgraduate-diploma/';
+function slideLink(href: string): NavLink {
+  const item = navLink(href);
+  return href === NU_SLIDE_HREF ? { ...item, description: 'For individual learners with a degree' } : item;
+}
+
 /** The before-training figure of a survey fact (stat.from), for a caption such as "up from 47.4% before training". */
 function before(f: Fact): string {
   const from = f.stat?.from;
@@ -184,7 +191,7 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    title: `${startedSixMonths} Started Earning Within Six Months`,
+    title: `${startedSixMonths} of Surveyed Earners Started Within Six Months`,
     titleFacts: ['OC-05'],
     lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
     leadFacts: ['OC-05'],
@@ -217,7 +224,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     eyebrow: 'Our Programs',
     title: 'Find the Program for Your Partnership',
     // No lead: the title and the five program links say it, and a lead would make this the tallest slide by more than the layout test allows (WP19).
-    programs: PROGRAM_HREFS.map(navLink),
+    programs: PROGRAM_HREFS.map(slideLink),
     links: [{ label: 'Explore Programs', href: '/programs/', variant: 'primary' }],
     photo: 'general/computer-lab-rows',
   },

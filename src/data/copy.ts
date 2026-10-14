@@ -106,7 +106,7 @@ const WORK_POSITIONING =
 
 /** Home's closing sentences (WP19, item 13): two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins them for Home only. */
 const HOME_POSITIONING =
-  'Most programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
+  'Many programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {

@@ -71,7 +71,7 @@ test.describe('home hero slider', () => {
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
       'Median Income: $82 Before Training, $245 at the October 2026 Survey',
       'Results by Program',
-      '58.8% Started Earning Within Six Months',
+      '58.8% of Surveyed Earners Started Within Six Months',
       '130,000+ Young People Trained in 15 Countries and Territories',
     ]);
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);

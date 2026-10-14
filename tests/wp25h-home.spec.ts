@@ -103,7 +103,7 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await open(page, pageByRoute('/'));
     await expect(slide(page, 2).locator('h2')).toHaveText('Median Income: $82 Before Training, $245 at the October 2026 Survey');
     await expect(slide(page, 2).locator('.hs__lead')).toContainText('Among surveyed completers');
-    await expect(slide(page, 4).locator('h2')).toHaveText('58.8% Started Earning Within Six Months');
+    await expect(slide(page, 4).locator('h2')).toHaveText('58.8% of Surveyed Earners Started Within Six Months');
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
     await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
