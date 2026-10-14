@@ -13,8 +13,6 @@ import Callout from '../../components/pages/impact/Callout.astro';
 import EvidenceLadder from '../../components/pages/impact/EvidenceLadder.astro';
 import LearnerVoice from '../../components/pages/impact/LearnerVoice.astro';
 import ImpactGlance from '../../components/pages/impact/ImpactGlance.astro';
-import ProgramResultsTable from '../../components/pages/impact/ProgramResultsTable.astro';
-import EvidenceRoutes from '../../components/pages/impact/EvidenceRoutes.astro';
 import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
@@ -24,7 +22,7 @@ import { linkAttrs } from '../../lib/url';
 
 const path = '/impact/';
 const description = desc('A randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed.');
-const jsonLd = [articleNode({ path, headline: 'Impact and Evidence', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
+const jsonLd = [articleNode({ path, headline: 'Impact You Can Verify', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
 const sdgs = [
   { n: 4, label: 'Quality Education', core: true },
   { n: 5, label: 'Gender Equality', core: true },
@@ -34,38 +32,29 @@ const sdgs = [
   { n: 9, label: 'Industry and Innovation', core: false },
   { n: 10, label: 'Reduced Inequalities', core: false },
 ];
-// Go Deeper, grouped by what kind of record each page is (WP20d).
+// Go Deeper (WP30e): one short card per destination, no group labels.
 const explore = [
-  { group: 'Evidence', items: [
-    { icon: 'bar-chart-3', title: 'Impact Survey 2026', text: 'What surveyed completers report: employment, income and speed to earnings, each with its base.', href: '/impact/outcomes-2026/' },
-    { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
-  ] },
-  { group: 'Program Evidence', items: [
-    { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
-    { icon: 'globe', title: 'Global Reach', text: 'Every location where CodersTrust programs have run.', href: '/impact/global-reach/' },
-  ] },
-  { group: 'Human Stories and Field Record', items: [
-    { icon: 'message-square-quote', title: 'Success Stories', text: 'Individual learner stories, not typical or promised outcomes.', href: '/impact/stories/' },
-    { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partner meetings and events, grouped by program collection.', href: '/impact/in-the-field/' },
-  ] },
+  { icon: 'bar-chart-3', title: 'Impact Survey 2026', text: 'What surveyed completers report about work and income.', href: '/impact/outcomes-2026/' },
+  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD.', href: '/impact/independent-evaluation/' },
+  { icon: 'globe', title: 'Global Reach', text: 'Every location where programs have run.', href: '/impact/global-reach/' },
+  { icon: 'message-square-quote', title: 'Success Stories', text: 'Learners in their own words.', href: '/impact/stories/' },
+  { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partners and events.', href: '/impact/in-the-field/' },
 ];
 const onThisPage = [
   { label: 'In Short', href: '#summary' },
-  { label: 'Evidence Ladder', href: '#evidence-ladder' },
-  { label: 'At a Glance', href: '#glance' },
-  { label: 'Program Results Table', href: '#program-results' },
-  { label: 'Independent Evidence', href: '#proof' },
+  { label: 'Results at a Glance', href: '#glance' },
   { label: 'Four Programs', href: '#cases' },
+  { label: 'How to Read the Evidence', href: '#evidence-ladder' },
   { label: 'Go Deeper', href: '#explore' },
-  { label: 'Sustainable Development Goals', href: '#sdg' },
+  { label: 'Global Goals', href: '#sdg' },
 ];
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('Impact and Evidence')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Impact and Evidence" lead="The randomized trial shows cause for one predecessor program; the 2026 survey describes what surveyed completers report; program records show results for named programs." artSeed="impact-hub" />
+<BaseLayout title={title('Impact and Evidence You Can Verify')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Impact You Can Verify" lead="Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence." artSeed="impact-hub" />
 
   <Section id="summary" pad="sm" aria-label="Summary">
     <div class="ih__bluf">
@@ -77,19 +66,13 @@ const d = discoveryCta();
 
   <PageNav links={onThisPage} />
 
-  <Section id="evidence-ladder" pad="sm" aria-labelledby="ladder-h">
-    <SectionHeader id="ladder-h" eyebrow="How to Read the Evidence" title="The Evidence Ladder: Four Kinds of Evidence" lead="Strongest for cause first. Each rung says what it shows and what it does not show." />
-    <EvidenceLadder variant="matrix" />
-  </Section>
-
   <ImpactGlance
     id="glance"
-    title="At a Glance"
+    title="Results at a Glance"
     eyebrow="Headline Results"
-    lead="Each group is one kind of evidence, named on every figure. Trial figures are for a predecessor program, survey figures are among surveyed completers, and program results are each program’s own records."
     groups={[
       { title: 'Trial Results, Predecessor Program', cols: 2, items: [
-        { id: 'RC-13', href: '/impact/independent-evaluation/', label: 'higher monthly income for women who attended the predecessor WSDFM program' },
+        { id: 'RC-13', href: '/impact/independent-evaluation/', label: 'higher monthly income for women who attended the predecessor WSDFM program', note: '' },
         { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       ] },
       { title: 'Survey Results, Among Surveyed Completers', cols: 4, items: [
@@ -110,36 +93,17 @@ const d = discoveryCta();
         },
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [
-        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: 'Program records, separate from the randomized trial of the predecessor program.', also: ['PR-06'] },
         { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: 'A 2017 pilot with the World Bank Group.', also: ['PR-06'] },
+        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: 'Program records, separate from the randomized trial of the predecessor program.', also: ['PR-06'] },
         { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
         { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,500 CodersTrust trained directly', note: 'Within the national program scope; the national program’s reach is counted separately.' },
       ] },
     ]}
   />
 
-  <ProgramResultsTable />
-
-  <ImpactGlance
-    id="heading"
-    tone="white"
-    eyebrow="Aims"
-    title="Where We Are Heading"
-    groups={[
-      { title: '', cols: 2, items: [
-        { id: 'IN-01', href: '/programs/youthwide/', status: 'Target' },
-        { id: 'IN-05', href: '/partner-with-us/investors/', status: 'Target' },
-      ] },
-    ]}
-  />
-
-  <EvidenceRoutes />
-
-  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" tag />
-
-  <!-- WP25s: link cards, one per case study (program, partner and place, scope). The results are in At a Glance and the table above, so no figure is repeated here. -->
+  <!-- WP30e: link cards, one per case study (program, partner and place), Kosovo first. The results are in Results at a Glance, so no figure is repeated here. -->
   <Section id="cases" tone="airy" aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, in Depth" lead="Each case study names its partner and scope, then says what its result does and does not show." />
+    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, from Kosovo to Bangladesh" />
     <ul class="grid-cards grid-cards--2 ih__cases" role="list">
       {
         CASE_STUDIES.map((c) => (
@@ -159,22 +123,35 @@ const d = discoveryCta();
     <p class="ih__all"><a class="link" href={linkAttrs('/impact/case-studies/').href}>See All Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
+  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" tag />
+
+  <Section id="evidence-ladder" tone="ice" pad="sm" aria-labelledby="ladder-h">
+    <SectionHeader id="ladder-h" eyebrow="How to Read the Evidence" title="Four Kinds of Evidence, Strongest First" lead="Each rung says what it shows and what it does not show." />
+    <EvidenceLadder variant="matrix" />
+  </Section>
+
+  <ImpactGlance
+    id="heading"
+    tone="white"
+    eyebrow="Aims"
+    title="Where We Are Heading"
+    groups={[
+      { title: '', cols: 2, items: [
+        { id: 'IN-01', href: '/programs/youthwide/', status: 'Target' },
+        { id: 'IN-05', href: '/partner-with-us/investors/', status: 'Target' },
+      ] },
+    ]}
+  />
+
   <Section id="explore" aria-labelledby="explore-h">
     <SectionHeader id="explore-h" eyebrow="More Impact Pages" title="Go Deeper" />
-    {
-      explore.map((g) => (
-        <div class="ih__group">
-          <p class="eyebrow ih__group-title">{g.group}</p>
-          <div class="grid-cards grid-cards--2">
-            {g.items.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
-          </div>
-        </div>
-      ))
-    }
+    <div class="grid-cards">
+      {explore.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
+    </div>
   </Section>
 
   <Section id="sdg" tone="ice" aria-labelledby="sdg-h" pad="sm">
-    <h2 class="t-heading-2xl" id="sdg-h">Alignment with the Sustainable Development Goals</h2>
+    <h2 class="t-heading-2xl" id="sdg-h">Seven Global Goals, Three at the Core</h2>
     <p class="ih__sdgtext" data-fact="ID-09"><Fact id="ID-09" />.</p>
     <ul class="ih__sdgs" role="list">
       {sdgs.map((s) => <li><Badge tone={s.core ? 'brand' : 'eyebrow'}>SDG {s.n} · {s.label}{s.core && ' (Core)'}</Badge></li>)}
@@ -187,12 +164,6 @@ const d = discoveryCta();
 <style>
   .ih__bluf {
     max-width: 60rem;
-  }
-  .ih__group + .ih__group {
-    margin-top: var(--space-xl);
-  }
-  .ih__group-title {
-    margin: 0 0 var(--space-sm);
   }
   .ih__cases {
     list-style: none;

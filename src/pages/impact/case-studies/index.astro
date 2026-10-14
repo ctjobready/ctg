@@ -9,13 +9,12 @@ import CaseGrid from '../../../components/pages/impact/CaseGrid.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../../components/pages/impact/case-studies';
 import { MICRO_COMMITMENT } from '../../../data/copy';
-import { fact } from '../../../data/facts';
 import { itemList } from '../../../components/pages/impact/jsonld';
 import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const path = '/impact/case-studies/';
-const description = desc('Four CodersTrust case studies, each with its result, its base and what it does not show: WSDFM, Women in Online Work in Kosovo, UNDP YES and Her Power.');
+const description = desc('Four CodersTrust case studies, each with its result, its base and what it does not show: Women in Online Work in Kosovo, WSDFM, UNDP YES and Her Power.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
@@ -23,102 +22,21 @@ const jsonLd = [
 ];
 const d = discoveryCta();
 
-// Side by Side: the three women-focused programs, one row each. The result and the base are read from the register (PR-01, PR-02, PR-05);
-// no figure is typed here. Each stat label carries the in-work share; each stat value is the count in its base.
-const share = (label: string): string => {
-  const m = /(\d+(?:\.\d+)?%)/.exec(label);
-  if (!m) throw new Error(`side by side: no share in "${label}"`);
-  return `${m[1]} in work`;
-};
-const sideBySide = [
-  { id: 'PR-01', program: 'WSDFM', slug: 'wsdfm-women-freelancers', base: (v: string, _l: string) => `${v} women` },
-  { id: 'PR-02', program: 'Women in Online Work, Kosovo', slug: 'kosovo-women-in-online-work', base: (v: string, _l: string) => `${v} women` },
-  { id: 'PR-05', program: 'Her Power', slug: 'her-power', base: (v: string, l: string) => `${v} ${l.replace(/, in work: .*$/, '')}` },
-].map((r) => {
-  const st = fact(r.id).stat!;
-  return { id: r.id, program: r.program, href: linkAttrs(`/impact/case-studies/${r.slug}/`).href, result: share(st.label), base: r.base(st.value, st.label) };
-});
 ---
 
-<BaseLayout title={title('Case Studies')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Four Programs Connecting Learners to Paid Work" lead="Each case study leads with the outcome, then the context, the challenges, what CodersTrust did and what the figures do and do not show." artSeed="case-studies-hub" />
+<BaseLayout title={title('Case Studies: Kosovo to Bangladesh')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="Learners Reaching Paid Work, from Kosovo to Bangladesh" lead="Four programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, Results First" lead="A case study reports a program’s result and its base. A success story is one learner’s own account." />
+    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, Results First" />
     <CaseGrid />
-  </Section>
-
-  <Section tone="airy" aria-labelledby="women-h" pad="sm">
-    <p class="eyebrow">Women-Focused Programs</p>
-    <h2 class="t-heading-2xl" id="women-h">WSDFM, Women in Online Work and Her Power, Side by Side</h2>
-    <p class="ch__text">These three programs serve women. Each reports its own result against its own base, so read them side by side, not as one total.</p>
-    <section class="ch__table" aria-label="WSDFM, Women in Online Work and Her Power, side by side" tabindex="0" data-scroll data-stack data-fact="PR-01 PR-02 PR-05">
-      <table>
-        <caption class="sr-only">WSDFM, Women in Online Work and Her Power, Side by Side</caption>
-        <thead><tr><th scope="col">Program</th><th scope="col">Result</th><th scope="col">Base</th></tr></thead>
-        <tbody>
-          {sideBySide.map((r) => (
-            <tr data-fact={r.id}>
-              <th scope="row"><a class="link" href={r.href}>{r.program}</a></th>
-              <td data-label="Result">{r.result}</td>
-              <td data-label="Base">{r.base}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
-    <p class="ch__note" data-fact="PR-03">UNDP YES, Korail is not in this table because it reports a different measure: 67% of the 350 trained found their first job within 3 months, not the share in work at a follow-up.</p>
     <p class="ch__link"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>See Where These Results Sit on the Evidence Ladder<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Each case study says what its figures do and do not show. A discovery session sets the scorecard for your own program." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort" text="A discovery session sets the scorecard for your own program." cta={{ label: d.label, href: d.href }} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
-<script>
-  import '../../../scripts/tablestack';
-</script>
-
 <style>
-  /* the eyebrow sits 8px (space-sm) above its heading */
-  #women-h {
-    margin-top: var(--stack-eyebrow);
-  }
-  .ch__text {
-    max-width: var(--measure);
-    margin: var(--space-sm) 0 var(--space-md);
-    font-size: var(--fs-body-m);
-  }
-  .ch__table {
-    overflow-x: auto;
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-default);
-    background: var(--surface);
-  }
-  .ch__table table {
-    width: 100%;
-    min-width: 520px;
-  }
-  .ch__table th,
-  .ch__table td {
-    text-align: left;
-    vertical-align: top;
-    padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--outline-variant);
-  }
-  .ch__table thead th {
-    background: var(--surface-container-low);
-    color: var(--secondary);
-  }
-  .ch__table tbody tr:last-child th,
-  .ch__table tbody tr:last-child td {
-    border-bottom: 0;
-  }
-  .ch__note {
-    margin: var(--space-sm) 0 0;
-    max-width: var(--measure);
-    font-size: var(--fs-body-sm);
-    color: var(--on-surface-variant);
-  }
   .ch__link {
     margin: var(--space-md) 0 0;
   }

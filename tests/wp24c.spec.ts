@@ -165,9 +165,10 @@ test.describe('Instructors and Mentors (/about/mentors/)', () => {
     }
   });
 
-  test('Become a Mentor names education and language teaching among the fields', async ({ page }) => {
+  test('Become a Mentor asks for experience and availability from anyone in a digital field (WP30e shortened the field list)', async ({ page }) => {
     await open(page, 'about/mentors/');
-    await expect(page.locator('#mentor-cta')).toContainText(/education and language teaching/i);
+    await expect(page.locator('#mentor-cta')).toContainText(/digital field/i);
+    await expect(page.locator('#mentor-cta')).toContainText(/experience and availability/i);
   });
 });
 
@@ -179,20 +180,22 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await expect(page.locator('#how-we-work')).toContainText('As agreed in the program scope');
     await expect(page.locator('#how-we-work')).not.toContainText('see progress in reports every month');
     await expect(page.locator('#glance')).toContainText('111,268 direct; 40,043 through courseware');
-    await expect(page.locator('#on-this-page a[href="#sdgs"]')).toHaveCount(1);
   });
 
   test('Governance: leadership is two sentences, reporting is scope-aware, the FAQ is renamed and On This Page labels equal the H2s', async ({ page }) => {
     await open(page, 'about/governance/');
-    await expect(page.locator('#leadership')).toContainText('Aziz Ahmad is Chairman. Md. Shamsul Haque is CEO of CodersTrust Bangladesh.');
+    // WP30e: the two leaders are shown once, as cards (name and role), not repeated in a lead sentence; the anti-fraud cards repeated the contracting panel and the safeguarding section.
+    await expect(page.locator('#leadership')).toContainText('Aziz Ahmad');
+    await expect(page.locator('#leadership')).toContainText('CEO, CodersTrust Bangladesh');
     await expect(page.locator('#evidence')).toContainText('As agreed in the program scope, funders receive monthly reports');
-    await expect(page.locator('#anti-fraud')).toContainText('As agreed in the program scope, each cohort is documented from a baseline');
-    await expect(page.locator('#anti-fraud')).toContainText('records are protected. Harassment and fraud response');
+    await expect(page.locator('#anti-fraud')).toHaveCount(0);
+    await expect(page.locator('#safeguarding')).toContainText('consent, protected records, grievance handling, harassment and fraud response');
+    await expect(page.locator('#faq')).toContainText('as agreed in the program scope, we plan a baseline');
     await expect(page.getByRole('heading', { level: 2, name: 'Common Due-Diligence Questions' })).toBeVisible();
     await expect(page.locator('#faq summary', { hasText: 'How Do You Track and Verify Outcomes?' })).toHaveCount(1);
     const links = page.locator('#on-this-page a[href^="#"]');
     const n = await links.count();
-    expect(n).toBeGreaterThanOrEqual(8);
+    expect(n).toBeGreaterThanOrEqual(7);
     for (let i = 0; i < n; i++) {
       const href = (await links.nth(i).getAttribute('href'))!;
       const label = (await links.nth(i).innerText()).trim();

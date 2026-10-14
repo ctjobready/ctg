@@ -32,14 +32,14 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
 ---
 
 <BaseLayout title="Contact" description={description} breadcrumbs={[{ label: 'Contact' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. Each inquiry button opens a prefilled email to the CodersTrust team; fill in the details and send. NU Postgraduate Diploma applicants use the application form or the admissions phone line." artSeed="contact">
+  <Hero eyebrow="Contact" title="Let’s Talk" lead="Choose the route that fits you. Each inquiry button opens a prefilled email to the CodersTrust team." artSeed="contact">
     <Fragment slot="actions">
       <a class="link" href="#offices">Offices and Phone<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
 
   <Section id="routes" aria-labelledby="routes-h">
-    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Choose Your Inquiry Route" lead="Your email app opens with a short template. If it does not open, copy the address below." />
+    <SectionHeader id="routes-h" eyebrow="Inquiry Routes" title="Choose Your Inquiry Route" lead="If your email app does not open, copy the address below." />
     <p class="ct-copy"><CopyEmail /></p>
     {
       GROUPS.map((g) => (

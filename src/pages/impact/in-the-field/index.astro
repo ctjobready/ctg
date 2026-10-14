@@ -23,8 +23,8 @@ import { webPage } from '../../../lib/schema';
 const path = '/impact/in-the-field/';
 const description = desc('Photographs from CodersTrust programs, partner meetings and events, organized into program, partner and recognition collections.');
 const jsonLd = [
-  webPage({ path, name: 'In the field: CodersTrust photo archive', description, type: 'CollectionPage' }),
-  articleNode({ path, headline: 'In the Field: Photo Archive', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
+  webPage({ path, name: 'In the field: CodersTrust programs in photographs', description, type: 'CollectionPage' }),
+  articleNode({ path, headline: 'In the Field: Programs in Action', description, datePublished: '2026-10-11', dateModified: '2026-10-11', author: 'CodersTrust' }),
 ];
 
 const reg = (keys: string[]): Photo[] => keys.map(photo);
@@ -35,20 +35,20 @@ const groups: { id: string; eyebrow: string; title: string; lead: string; photos
     id: 'superkids',
     eyebrow: 'SuperKids',
     title: 'SuperKids: STEAM Learning for School Students',
-    lead: 'SuperKids is CodersTrust’s school STEAM and digital-skills program for children. These photographs show workshops, classes, certificate ceremonies and events run by SuperKids by CodersTrust.',
+    lead: 'SuperKids is CodersTrust’s school STEAM and digital-skills program for children.',
     photos: reg(['superkids/steam-workshop', 'superkids/robotics-session', 'superkids/robotics-desk', 'superkids/circuit-building', 'superkids/student-explains', 'superkids/classroom-uniform', 'superkids/students-seated', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/stem-group', 'superkids/mat-activity', 'superkids/event-audience', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem']),
   },
   {
     id: 'nationwide',
     eyebrow: 'Classes and Campuses',
     title: 'Classes and Campuses: Classrooms, Examinations and Graduations',
-    lead: 'Classes, an examination hall and a convocation. Photographs in this collection are grouped by setting rather than by named program.',
+    lead: 'Classes, an examination hall and a convocation.',
     photos: reg(['general/madrasa-students-lesson', 'general/madrasa-students-class', 'general/madrasa-students-hall', 'general/exam-hall', 'general/graduates-caps']),
   },
   {
     id: 'women',
     eyebrow: 'Programs',
-    title: 'Women’s Programs: Her Power, Kosovo, Albania and WSDFM',
+    title: 'Women’s Programs: Kosovo, Albania and Bangladesh',
     lead: 'Training rooms and ceremonies from programs for women learners.',
     photos: reg(['general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/albania-trainees-group', 'general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group', 'impact/her-power-training-lab', 'impact/wsdfm-training-group', 'general/women-learners-classroom', 'general/lab-women-screen', 'general/empowering-women-event']),
   },
@@ -101,8 +101,8 @@ const fullLabel = (g: { photos: Photo[] }) => `View Full Collection (${g.photos.
 const d = discoveryCta();
 ---
 
-<BaseLayout title={title('In the Field: Photo Archive')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="In the Field: Photo Archive" lead="Photographs from CodersTrust programs, partner meetings and events, organized into collections. The news photographs have their own page." artSeed="field-hub" />
+<BaseLayout title={title('In the Field: Programs in Action')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field' }]} jsonLd={jsonLd}>
+  <Hero variant="inner" eyebrow="Impact" title="In the Field: Programs in Action" lead="Photographs from CodersTrust programs, partner meetings and events, from Kosovo and Albania to Bangladesh." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a collection">
     <nav class="itf__jump" aria-label="Collections of photographs">
@@ -116,14 +116,14 @@ const d = discoveryCta();
   {programGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={i % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-labelledby="itf-later-h">
-    <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partnerships, Recognition and News" lead="Partnership signings, awards, forums and meetings. The photographs from news posts have their own page, News Photographs." />
+    <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partners, Forums and Recognition" lead="Signings, awards, forums and meetings." />
   </Section>
 
   {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__news"><a class="link" href={newsHref}>News Photographs<Icon name="arrow-right" size={16} /></a> Photographs from news posts, {newsSpan}.</p>
-    <p class="itf__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a> and on the <a class="link" href={linkAttrs('/impact/case-studies/').href}>case study</a> pages.</p>
+    <p class="itf__note">Photographs are used with the consent of those pictured.</p>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Seen a program like the one you need? A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />

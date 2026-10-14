@@ -4,8 +4,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
-import FeatureCard from '../../../components/ui/FeatureCard.astro';
-import PageNav from '../../../components/pages/about/PageNav.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import StoryGallery from '../../../components/pages/impact/StoryGallery.astro';
 import type { StoryCardData } from '../../../components/pages/impact/story-types';
@@ -109,12 +107,6 @@ const anon: StoryCardData[] = [
   { key: 'yes-shamim-ahmed', name: 'Shamim Ahmed', role: 'UNDP YES, Korail, 2017', caveat: 'Individual story; an outlier, not typical', pathway: 'freelance', outcome: `“${quoted('ST-02')}” (${/\((about \$[\d,]+)/.exec(fact('ST-02').text)?.[1]})`, assetId: 'story-shamim-ahmed' },
 ];
 const cards = [...anon, ...legacyCards];
-const goDeeper = [
-  { icon: 'file-text', title: 'Case Studies', text: 'Four programs, results first, with what each result does and does not show.', href: '/impact/case-studies/' },
-  { icon: 'bar-chart-3', title: 'Impact Survey 2026', text: 'What surveyed completers report about work and income, each result with its base.', href: '/impact/outcomes-2026/' },
-  { icon: 'flask-conical', title: 'Independent Evaluation', text: 'The randomized trial by BIGD, with its design, limits and context.', href: '/impact/independent-evaluation/' },
-];
-
 const description = desc('Learner stories and experiences from CodersTrust programs. Individual stories, not typical or promised outcomes.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust success stories', description, type: 'CollectionPage' }),
@@ -124,29 +116,17 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Success Stories')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Success Stories' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Success Stories: Learner Experiences" lead="Individual stories from CodersTrust learners. They show what the path can look like for one person; they are not typical or promised outcomes." artSeed="stories-hub" />
-
-  <PageNav links={[{ label: 'Two Learner Journeys', href: '#steps' }, { label: 'What Learners Report', href: '#stories' }, { label: 'Go Deeper', href: '#go-deeper' }]} />
+  <Hero variant="inner" eyebrow="Impact" title="Learners Turning Training into Paid Work" lead="Individual stories from CodersTrust learners, not typical or promised outcomes." artSeed="stories-hub" />
 
   <Section id="steps" aria-labelledby="steps-h">
-    <SectionHeader id="steps-h" eyebrow="In Three Steps" title="Two Learner Journeys" lead="Where the learner’s own story text covers where they started, what they did and where they are now." />
+    <SectionHeader id="steps-h" eyebrow="In Three Steps" title="Two Learner Journeys" />
     <StoryGallery cards={caseCards} filter={false} />
   </Section>
 
   <Section id="stories" tone="airy" aria-labelledby="stories-h">
-    <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" lead="Filter by pathway to see how each learner reached paid work." />
+    <SectionHeader id="stories-h" eyebrow="Learners" title="What Learners Report" />
     <StoryGallery cards={cards} visible={9} />
-    <div class="st__notes">
-      <p>Some results are outliers and are labeled as such. For results across a group of completers, see the survey and the randomized trial under <a class="link" href={linkAttrs('/impact/').href}>Impact and Evidence</a>.</p>
-      <p>Some learners, including participants in programs for refugees and residents of urban informal settlements, are listed without photographs.</p>
-    </div>
-  </Section>
-
-  <Section id="go-deeper" aria-labelledby="go-deeper-h">
-    <SectionHeader id="go-deeper-h" eyebrow="Beyond Individual Stories" title="Go Deeper" />
-    <div class="grid-cards">
-      {goDeeper.map((e) => <FeatureCard icon={e.icon} title={e.title} text={e.text} href={e.href} />)}
-    </div>
+    <p class="st__notes">For results across a group of completers, see the <a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026</a> and the <a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>randomized trial</a>.</p>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
@@ -154,14 +134,9 @@ const d = discoveryCta();
 
 <style>
   .st__notes {
-    display: grid;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
+    margin: var(--space-lg) 0 0;
     max-width: var(--measure);
     font-size: var(--fs-body-xs);
     color: var(--outline);
-  }
-  .st__notes > :global(*) {
-    margin: 0;
   }
 </style>

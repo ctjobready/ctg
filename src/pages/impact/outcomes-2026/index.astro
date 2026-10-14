@@ -8,19 +8,17 @@ import BarChart from '../../../components/ui/BarChart.astro';
 import BeforeAfter from '../../../components/ui/BeforeAfter.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
-import Callout from '../../../components/pages/impact/Callout.astro';
-import CopyText from '../../../components/pages/impact/CopyText.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
-import EvidenceLadder from '../../../components/pages/impact/EvidenceLadder.astro';
 import ColumnChart from '../../../components/pages/impact/ColumnChart.astro';
 import PairedBars from '../../../components/pages/impact/PairedBars.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import Accordion from '../../../components/ui/Accordion.astro';
 import { desc, title, val, discoveryCta, articleNode } from '../../../components/pages/impact/page-utils';
 import * as D from '../../../components/pages/impact/outcomes-data';
 import { fact } from '../../../data/facts';
 import { SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
 import { dataset, webPage } from '../../../lib/schema';
-import { canonicalUrl, url } from '../../../lib/url';
+import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
 
 D.assertConsistent();
 D.assertPublication();
@@ -34,13 +32,14 @@ const csvPath = join(process.cwd(), 'public/data/outcomes-2026-aggregates.csv');
 if (readFileSync(csvPath, 'utf8') !== D.csvText()) throw new Error('public/data/outcomes-2026-aggregates.csv is out of date; regenerate it from outcomes-data.ts');
 
 const path = '/impact/outcomes-2026/';
+// H1 (WP30e): the result, scoped to who answered.
+const H1 = 'Impact Survey 2026: Surveyed Completers Report More Work and Higher Income';
 const csvHref = url('/data/outcomes-2026-aggregates.csv');
 const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey.`);
-const pc = D.percent;
 
 const jsonLd = [
-  webPage({ path, name: 'Impact Survey 2026: What Happened After Training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED }),
-  articleNode({ path, headline: 'Impact Survey 2026: What Happened After Training', description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED, author: 'CodersTrust' }),
+  webPage({ path, name: H1, description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED }),
+  articleNode({ path, headline: H1, description, datePublished: D.DATE_PUBLISHED, dateModified: D.PAGE_LAST_REVIEWED, author: 'CodersTrust' }),
   {
     ...dataset({
       path,
@@ -60,36 +59,27 @@ const jsonLd = [
 
 // Each label is the section's heading, word for word.
 const toc = [
-  { id: 'summary', label: 'Summary' },
-  { id: 'ladder', label: 'Evidence Ladder and How to Read This Report' },
+  { id: 'summary', label: 'Results in Brief' },
   { id: 'respondents', label: 'Who Responded' },
-  { id: 'employment', label: 'Employment' },
-  { id: 'speed', label: 'Speed to Earnings' },
-  { id: 'income', label: 'Income: Three Separate Measures' },
-  { id: 'careers', label: 'Career Outcomes' },
-  { id: 'income-source', label: 'Main Income Source' },
-  { id: 'experience', label: 'Learner Experience' },
-  { id: 'no-prior-income', label: 'Completers with No Prior Income' },
-  { id: 'methodology', label: 'Methodology and Limitations' },
+  { id: 'employment', label: 'Employment Before and After Training' },
+  { id: 'speed', label: 'How Fast Earnings Started' },
+  { id: 'income', label: 'Income Higher for Most Surveyed Completers' },
+  { id: 'careers', label: 'Careers and New Income Sources' },
+  { id: 'income-source', label: 'Where Income Comes From' },
+  { id: 'experience', label: 'How Learners Rate the Experience' },
+  { id: 'methodology', label: 'How to Read This Survey' },
   { id: 'download', label: 'Download the Data' },
 ];
 
 // Every chart shows the published shares (percentages only; no count is held or derived). Districts under 3% are already combined.
 const cell = (c: D.ShareCell) => ({ label: c.label, value: c.pct, display: `${c.pct.toFixed(1)}%` });
-const districts = D.DISTRICTS.cells.map(cell);
 const education = D.EDUCATION.cells.map(cell);
 const career = [...D.CAREER.cells.slice(0, 7)].sort((a, b) => b.pct - a.pct).concat(D.CAREER.cells[7]).map(cell);
 const source = D.SOURCE.cells.map(cell);
-const ageItems = D.AGE.cells.map((c) => ({ label: c.label, value: c.pct }));
 const speedItems = D.SPEED.map((c) => ({ label: c.label, value: c.pct }));
 // Recommendation score: all eleven scores as published shares (percentages only, no fold); scores of 7 or higher are emphasized.
 const recItems = D.RECOMMEND.cells.map((c) => ({ label: c.label, value: c.pct, emphasis: Number(c.label) >= 7 }));
 const incomeItems = D.INCOME_DIRECTION.map(cell);
-// OC-02 states its count (34 of 47), so the one derived share on the page is computed from that stated count.
-const priorItems = [
-  { label: `Earning at the October 2026 Survey (${D.NO_PRIOR.earning} of ${D.NO_PRIOR.base})`, n: D.NO_PRIOR.earning },
-  { label: 'Not Earning', n: D.NO_PRIOR.base - D.NO_PRIOR.earning },
-].map((c) => ({ label: c.label, value: pc(c.n, D.NO_PRIOR.base), display: `${pc(c.n, D.NO_PRIOR.base).toFixed(1)}%` }));
 // One line for the recommendation chart: the register's share of scores of 7 or higher (OC-06), read from its text.
 const sevenUp = /(\d+\.\d)% give a recommendation score of 7\+/.exec(fact('OC-06').text)?.[1];
 if (!sevenUp) throw new Error('OC-06 no longer states the share of scores of 7 or higher');
@@ -103,11 +93,17 @@ const directAnswer = `Among surveyed completers, employment rose from ${emp.from
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Outcomes 2026 direct answer is ${answerWords} words (40 to 60)`);
 const d = discoveryCta();
+// How to read this survey (closed disclosure): the former evidence-ladder rung and the methodology list.
+const howToRead = `<ul>
+<li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
+<li><strong>Who the respondents are.</strong> ${val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
+<li><strong>What it does not show.</strong> Respondents are not a random sample and may over-represent successful learners, so the survey does not show that training caused any change.</li>
+</ul>`;
 ---
 
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
-  heading="Impact Survey 2026: What Happened After Training"
+  heading={H1}
   eyebrow="Surveyed Completers"
   lead={directAnswer}
   description={description}
@@ -118,8 +114,8 @@ const d = discoveryCta();
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Impact Survey 2026' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="summary" title="Summary">
-    <p class="ro__type"><EvidenceTag type="Surveyed Completers" /> <span>Every figure on this page is from the Impact Survey 2026.</span></p>
+  <ReportSection id="summary" title="Results in Brief">
+    <p class="ro__type"><EvidenceTag type="Surveyed Completers" /></p>
     <h3 class="t-heading-l ro__group">Earnings and Work</h3>
     <div class="ro__stats">
       <FactStat id="OC-03" />
@@ -139,31 +135,17 @@ const d = discoveryCta();
     </div>
   </ReportSection>
 
-  <ReportSection id="ladder" title="Evidence Ladder and How to Read This Report">
-    <p>This survey is the second rung of four kinds of evidence. It reports what surveyed completers say; it does not show that training caused any change.</p>
-    <EvidenceLadder links={false} headingLevel={3} />
-  </ReportSection>
-
-  <ReportSection id="respondents" title="Who Responded" eyebrow="Chapter 1 of 4: The Respondents">
+  <ReportSection id="respondents" title="Who Responded">
     <p data-fact="OC-01 OC-09">Nearly half of respondents were employed before training ({val('OC-01', 'from')}). <Fact id="OC-09" /></p>
     <p>Employment results rest on n = {D.EMPLOYMENT_BASE} paired answers and income results on n = {D.INCOME_BASE}.</p>
-    <ColumnChart
-      title="Respondents by Age Group"
-      items={ageItems}
-    />
     <BarChart
       title="Respondents by Highest Education"
       items={education}
       max={100}
     />
-    <BarChart
-      title="Respondents by District of Residence"
-      items={districts}
-      max={100}
-    />
   </ReportSection>
 
-  <ReportSection id="employment" title="Employment" eyebrow="Chapter 2 of 4: Work and Earnings">
+  <ReportSection id="employment" title="Employment Before and After Training">
     <p data-fact="OC-01">{val('OC-01')} of surveyed completers reported being employed at the October 2026 survey, compared with {val('OC-01', 'from')} before training. Separately, {D.EXIT.share}% of those employed before training reported that they were no longer employed.</p>
     <BeforeAfter
       title="Employment Before and After Training"
@@ -177,10 +159,9 @@ const d = discoveryCta();
       afterLabel="October 2026 Survey"
       rows={typeRows}
     />
-    <p data-fact="OC-04" class="ro__src">Chart data: <Fact id="OC-04" field="label" /></p>
   </ReportSection>
 
-  <ReportSection id="speed" title="Speed to Earnings">
+  <ReportSection id="speed" title="How Fast Earnings Started">
     <p data-fact="OC-05"><Fact id="OC-05" /></p>
     <ColumnChart
       title="Cumulative Share of Surveyed Completers Who First Earned During or After Training, by When They Started Earning"
@@ -189,34 +170,29 @@ const d = discoveryCta();
     />
   </ReportSection>
 
-  <ReportSection id="income" title="Income: Three Separate Measures">
-    <p>Income is reported three ways.</p>
-    <div class="ro__measure" data-fact="OC-03">
-      <h3 class="t-heading-l">Median Monthly Income</h3>
-      <p><Fact id="OC-03" /></p>
-    </div>
+  <ReportSection id="income" title="Income Higher for Most Surveyed Completers">
     <div class="ro__measure" data-fact="OC-03b">
       <h3 class="t-heading-l">Direction of Income Change</h3>
       <BarChart title="Share of Completers by Direction of Income Change" items={incomeItems} />
-      <p class="ro__src"><Fact id="OC-03b" /></p>
     </div>
     <div class="ro__measure" data-fact="OC-03c">
       <h3 class="t-heading-l">Median Individual Change</h3>
       <div class="ro__stats ro__stats--one"><FactStat id="OC-03c" /></div>
     </div>
+    <p data-fact="OC-02"><Fact id="OC-02" /></p>
   </ReportSection>
 
-  <ReportSection id="careers" title="Career Outcomes" eyebrow="Chapter 3 of 4: Careers and Income Sources">
+  <ReportSection id="careers" title="Careers and New Income Sources">
     <p data-fact="OC-08"><Fact id="OC-08" /></p>
     <BarChart title="Career and Education Outcomes Reported" items={career} max={100} />
   </ReportSection>
 
-  <ReportSection id="income-source" title="Main Income Source">
+  <ReportSection id="income-source" title="Where Income Comes From">
     <p data-fact="OC-07"><Fact id="OC-07" /></p>
     <BarChart title="Share of Surveyed Completers by Main Income Source" items={source} max={100} />
   </ReportSection>
 
-  <ReportSection id="experience" title="Learner Experience" eyebrow="Chapter 4 of 4: Experience and Method">
+  <ReportSection id="experience" title="How Learners Rate the Experience">
     <p data-fact="OC-06"><Fact id="OC-06" /></p>
     <ColumnChart
       title="Recommendation Score, 0 to 10, Among Surveyed Completers"
@@ -225,21 +201,12 @@ const d = discoveryCta();
     />
   </ReportSection>
 
-  <ReportSection id="no-prior-income" title="Completers with No Prior Income">
-    <p data-fact="OC-02"><Fact id="OC-02" /></p>
-    <BarChart title="Completers (2014–2023) with No Income Before Training" items={priorItems} max={100} />
-  </ReportSection>
-
-  <ReportSection id="methodology" title="Methodology and Limitations" anchorOnHeading>
-    <ul class="ro__list">
-      <li><strong>Survey.</strong> CodersTrust Impact Survey, October 2026: an online alumni survey (LimeSurvey survey 112268), fielded in October 2026.</li>
-      <li><strong>Who the respondents are.</strong> {val('OC-09')} of respondents hold a bachelor’s degree or higher, so results describe a mostly graduate group.</li>
-      <li><strong>What it does not show.</strong> Respondents are not a random sample and may over-represent successful learners, so the survey does not show that training caused any change.</li>
-    </ul>
+  <ReportSection id="methodology" title="How to Read This Survey">
+    <Accordion items={[{ q: 'Methodology and Limitations', a: howToRead }]} name="os-method" />
+    <p><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>See How the Four Kinds of Evidence Fit Together<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
   <ReportSection id="download" title="Download the Data">
-    <p>The published aggregates are available as a CSV, with one row per published percentage or median.</p>
     <p><a class="ro__dl" href={csvHref} download>
       <Icon name="download" size={18} />Download outcomes-2026-aggregates.csv
     </a></p>

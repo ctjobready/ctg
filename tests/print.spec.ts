@@ -16,8 +16,8 @@ import { pageByRoute } from './support/pages';
  */
 const CANONICAL_ORIGIN = 'https://coderstrust.global';
 const EVIDENCE = [
-  { route: '/impact/independent-evaluation/', h1: 'A Randomized Trial of CodersTrust’s Predecessor Program for Women in Dhaka' },
-  { route: '/impact/outcomes-2026/', h1: 'Impact Survey 2026: What Happened After Training' },
+  { route: '/impact/independent-evaluation/', h1: 'Randomized Trial: Women Offered Training Were More Likely to Work' },
+  { route: '/impact/outcomes-2026/', h1: 'Impact Survey 2026: Surveyed Completers Report More Work and Higher Income' },
 ];
 
 /** The chrome and the calls to action that never print. */

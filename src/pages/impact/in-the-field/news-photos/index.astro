@@ -30,14 +30,14 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('News Photographs')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'In the Field', href: '/impact/in-the-field/' }, { label: 'News Photographs' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="In the Field" title="News Photographs" lead="Photographs from CodersTrust news posts, by year of the post. The program, partner and recognition collections are on In the Field." artSeed="field-hub" />
+  <Hero variant="inner" eyebrow="In the Field" title="News Photographs" lead="Photographs from CodersTrust news posts, by year of the post." artSeed="field-hub" />
 
   <Section pad="sm" aria-label="Jump to a year">
     <nav class="npa__jump" aria-label="Years of news photographs">
       <p class="eyebrow npa__label">Jump to a Year</p>
       <ul>
         {jump.map((j) => <li><a class="link" href={`#${j.id}`}>News {j.label}</a></li>)}
-        <li><a class="link" href={linkAttrs('/impact/in-the-field/').href}>In the Field: Photo Archive<Icon name="arrow-right" size={16} /></a></li>
+        <li><a class="link" href={linkAttrs('/impact/in-the-field/').href}>In the Field<Icon name="arrow-right" size={16} /></a></li>
       </ul>
     </nav>
   </Section>
@@ -54,7 +54,7 @@ const d = discoveryCta();
   }
 
   <Section pad="sm" aria-label="About these photographs">
-    <p class="npa__note">Photographs are used with the consent of those pictured. The stories behind them are in <a class="link" href={linkAttrs('/news/').href}>the news</a>.</p>
+    <p class="npa__note">Photographs are used with the consent of those pictured.</p>
   </Section>
 
   <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Seen a program like the one you need? A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />

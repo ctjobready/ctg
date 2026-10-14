@@ -7,9 +7,8 @@ import Icon from '../../../components/system/Icon.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import StepFlow from '../../../components/ui/StepFlow.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
-import { faqNode, type FaqSource } from '../../../components/pages/programs/faq';
+import { faqNode, para, type FaqSource } from '../../../components/pages/programs/faq';
 import Fact from '../../../components/facts/Fact.astro';
 import CopyBlock from '../../../components/pages/about/CopyBlock.astro';
 import OfficeCard from '../../../components/pages/about/OfficeCard.astro';
@@ -25,9 +24,13 @@ import { linkAttrs } from '../../../lib/url';
 
 const UPDATED = '2026-10-10';
 // WP24c: Q3 reads "How Do You Track and Verify Outcomes?" here (the shared answer is kept)
+// WP30e: two decision questions. Tracking gets the short answer (the shared Q3 reduced to its two claims); safeguarding is answered in its own section above.
 const faqSources: FaqSource[] = [
-  { audience: 'governments', id: 'Q3', q: 'How Do You Track and Verify Outcomes?' },
-  { audience: 'governments', id: 'Q9' },
+  {
+    q: 'How Do You Track and Verify Outcomes?',
+    html: para('For every cohort, as agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.'),
+    evidence: ['PD-09', 'PD-08', 'RC-01'],
+  },
   { audience: 'governments', id: 'Q10' },
 ];
 const diligence = diligenceCta();
@@ -58,7 +61,7 @@ const jsonLd = [
 
 <BaseLayout title="Governance and Accountability" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Governance' }]} jsonLd={jsonLd}>
   <div data-fact="ID-07 PD-13" id="hero">
-    <Hero eyebrow="For Funders, Procurement Teams and Partners" title="Governance and Accountability" lead={GOVERNANCE.text} artSeed="governance">
+    <Hero eyebrow="For Funders, Procurement Teams and Partners" title="Accountable by Design" lead={GOVERNANCE.text} artSeed="governance">
       <p class="gov-updated">Last updated <time datetime={isoDate(UPDATED)}>{formatDate(UPDATED)}</time></p>
       <Fragment slot="actions">
         <Button href={diligence.href} iconEnd="arrow-right">{diligence.label}</Button>
@@ -72,11 +75,9 @@ const jsonLd = [
     { label: 'Where to Find Us', href: '#offices' },
     { label: 'Who Leads CodersTrust', href: '#leadership' },
     { label: 'How People Are Protected', href: '#safeguarding' },
-    { label: 'How Results Are Evidenced and Records Are Kept', href: '#anti-fraud' },
     { label: 'Independent Evaluation and Funder Reporting', href: '#evidence' },
     { label: 'Common Due-Diligence Questions', href: '#faq' },
     { label: 'What We Confirm with You in Co-Design', href: '#checklist' },
-    { label: 'From Your Question to a Clarification Call', href: '#next' },
   ]} />
 
   <ContractingPanel requestHref={diligence.href} requestLabel={diligence.label} />
@@ -90,7 +91,7 @@ const jsonLd = [
   </Section>
 
   <Section id="leadership" tone="airy" aria-labelledby="lead-h">
-    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" lead="Aziz Ahmad is Chairman. Md. Shamsul Haque is CEO of CodersTrust Bangladesh. Founders, advisors, the executive team and Bangladesh leadership are on the team page." />
+    <SectionHeader id="lead-h" eyebrow="Leadership" title="Who Leads CodersTrust" />
     <div class="grid-cards grid-cards--2 gov-leaders" data-fact="ID-03">
       {leaders.map((p) => <TeamCard name={p.data.name} role={p.data.role} photo={p.data.photo} alt={p.data.photoAlt} assetId={`team-${p.id}`} href={`/about/team/${p.id}/`} />)}
     </div>
@@ -101,25 +102,6 @@ const jsonLd = [
     <SectionHeader id="safe-h" eyebrow="Safeguarding" title="How People Are Protected" />
     <div class="gov-text">
       <CopyBlock class="lead" block={SAFEGUARDING} />
-      <p data-fact="PD-12">Funders receive privacy-appropriate data.</p>
-    </div>
-  </Section>
-
-  <Section id="anti-fraud" tone="ice" aria-labelledby="fraud-h">
-    <SectionHeader id="fraud-h" eyebrow="Anti-Fraud and Data Protection" title="How Results Are Evidenced and Records Are Kept" />
-    <div class="grid-cards grid-cards--2">
-      <article class="card" data-reveal>
-        <div class="card__body">
-          <h3 class="card__title">Evidence of Results</h3>
-          <p class="card__text" data-fact="PD-09">As agreed in the program scope, each cohort is documented from a baseline at enrollment, with tracer results at 3, 6 and 12 months.</p>
-        </div>
-      </article>
-      <article class="card" data-reveal>
-        <div class="card__body">
-          <h3 class="card__title">Consent and Records</h3>
-          <p class="card__text" data-fact="PD-12">Data collection is consent-based and records are protected. Harassment and fraud response and referral pathways are agreed for each program. Policies are shared with partners during due diligence.</p>
-        </div>
-      </article>
     </div>
   </Section>
 
@@ -137,22 +119,12 @@ const jsonLd = [
   <Section id="checklist" tone="airy" aria-labelledby="check-h">
     <SectionHeader id="check-h" eyebrow="Due Diligence" title="What We Confirm with You in Co-Design" />
     <div class="gov-check" data-fact="PD-13">
-      <p>This list is a checklist for the conversation: tell us which documents you need and by when, and we confirm what is available for your program.</p>
+      <p>Tell us which documents you need and by when, and we confirm what is available for your program.</p>
       <ul class="gov-check__list" role="list">
         {checklist.map((c) => <li>{c}</li>)}
       </ul>
-      <p><a class="link" href={diligence.href}>{diligence.label}<Icon name="arrow-right" size={16} /></a></p>
       <div class="gov-print"><button type="button" class="link gov-print__btn" data-print><Icon name="printer" size={16} />Print This Checklist</button></div>
     </div>
-  </Section>
-
-  <Section id="next" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="What Happens Next" title="From Your Question to a Clarification Call" />
-    <StepFlow steps={[
-      { title: 'Your Question', text: 'Tell us the organization, the program or grant under consideration and what you need.' },
-      { title: 'Our Reply', text: 'We reply with what can be shared.' },
-      { title: 'Clarification Call', text: 'We talk through anything that needs clarifying.' },
-    ]} />
   </Section>
 
   <CTABand

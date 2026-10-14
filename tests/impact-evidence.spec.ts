@@ -4,7 +4,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 /**
  * WP24b: the Impact section tells apart the kinds of evidence (cycle-4 review round 9).
  *  - every proof figure on an Impact page carries an evidence-type badge (Randomized Trial · Surveyed Completers · Program Record · Individual Story);
- *  - /impact/ keeps program records in their own group, never beside the trial, and holds one table of every reported program result;
+ *  - /impact/ keeps program records in their own group, never beside the trial, and states each program result once (WP30e: the separate results table is gone);
  *  - the Outcomes 2026 income-source chart shows 7.1% and 4.7% as separate bars with an "about 12%" summary;
  *  - long lists (stories, photographs) show a first set and keep the rest behind a disclosure.
  */
@@ -103,43 +103,37 @@ test.describe('/impact/ At a Glance', () => {
   });
 });
 
-test.describe('/impact/ program-results table', () => {
+test.describe('/impact/ program results', () => {
   test.use({ viewport: DESKTOP });
 
-  test('one table holds every reported program result, with a dash where nothing is reported', async ({ page }) => {
+  test('each reported program result appears once, in Results at a Glance, Kosovo first', async ({ page }) => {
     await open(page, 'impact/');
-    const sec = page.locator('section', { has: page.getByRole('heading', { level: 2, name: 'Every Reported Program Result in One Table' }) });
-    await expect(sec).toHaveCount(1);
-    const heads = await sec.locator('thead th').allInnerTexts();
-    expect(heads.map((h) => h.trim())).toEqual(['Program', 'Partner', 'Geography', 'Trained', 'Completed', 'Certified', 'In Work', 'Evidence Type']);
-    const rows = sec.locator('tbody tr');
-    await expect(rows).toHaveCount(4);
-    const row = (name: RegExp) => rows.filter({ has: page.getByRole('rowheader', { name }) });
-    await expect(row(/WSDFM/)).toContainText('711 of 1,000');
-    await expect(row(/Kosovo/)).toContainText('102 of 150');
-    await expect(row(/UNDP YES/)).toContainText('350');
-    await expect(row(/UNDP YES/)).toContainText('97.5%');
-    await expect(row(/UNDP YES/)).toContainText('67%');
-    await expect(row(/Her Power/)).toContainText('372 of 800');
-    // A cell with no registered figure is a dash, never a made-up number.
-    await expect(row(/WSDFM/).locator('td[data-label="Certified"]')).toContainText('—');
-    await expect(row(/Kosovo/).locator('td[data-label="Trained"]')).toContainText('—');
-    for (const r of await rows.all()) await expect(r.locator('td[data-label="Evidence Type"] [data-evidence="Program Record"]')).toHaveCount(1);
+    // WP30e: the former "Every Reported Program Result in One Table" repeated the four tiles, so it is gone.
+    await expect(page.getByRole('heading', { level: 2, name: 'Every Reported Program Result in One Table' })).toHaveCount(0);
+    await expect(page.locator('#program-results')).toHaveCount(0);
+    const tiles = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Program Results, by Named Program' }) }).locator('li a');
+    await expect(tiles).toHaveCount(4);
+    const facts = await tiles.evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]));
+    expect(facts).toEqual(['PR-02', 'PR-01', 'PR-03', 'PR-05']);
+    for (const t of await tiles.all()) await expect(t.locator('[data-evidence="Program Record"]')).toHaveCount(1);
   });
 
-  test('on a phone the table stacks and the page does not scroll sideways', async ({ page }) => {
+  test('on a phone the page does not scroll sideways', async ({ page }) => {
     await page.setViewportSize(MOBILE);
     await open(page, 'impact/');
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
 
-  test('On This Page lists the table and the goals section', async ({ page }) => {
+  test('On This Page lists the results, the case studies, the evidence ladder and the goals section', async ({ page }) => {
     await open(page, 'impact/');
     const links = await page.locator('nav[aria-label="On this page"] a, .page-nav a').allInnerTexts();
     const flat = links.join('|');
-    expect(flat).toContain('Program Results Table');
-    expect(flat).toContain('Sustainable Development Goals');
+    expect(flat).toContain('Results at a Glance');
+    expect(flat).toContain('Four Programs');
+    expect(flat).toContain('How to Read the Evidence');
+    expect(flat).toContain('Global Goals');
+    expect(flat).not.toContain('Program Results Table');
   });
 });
 
@@ -169,23 +163,32 @@ test.describe('Outcomes 2026', () => {
 test.describe('Independent Evaluation', () => {
   test.use({ viewport: DESKTOP });
 
-  test('the short-answer links are a list, and the FAQ question asks how outcomes are tracked', async ({ page }) => {
+  test('the result leads, the method is a closed disclosure and the FAQ asks how outcomes are tracked', async ({ page }) => {
     await open(page, 'impact/independent-evaluation/');
-    await expect(page.locator('#summary ul li a')).toHaveCount(3);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Randomized Trial: Women Offered Training Were More Likely to Work');
+    await expect(page.getByRole('link', { name: /Read the BIGD Study/ })).toHaveCount(1);
+    // "How to Read This Trial" holds what was evaluated, who took part and the design; it starts closed.
+    const method = page.locator('#summary details', { hasText: 'How to Read This Trial' });
+    await expect(method).toHaveCount(1);
+    expect(await method.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(false);
+    await expect(method).toContainText('833 women at baseline');
     await expect(page.locator('#funders')).toContainText(/five-year follow-up/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
     await expect(page.locator('#faq')).toContainText('How Do You Track Outcomes?');
-    await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
+    await expect(page.locator('#classes h2')).toHaveText('More Classes, More Freelancing');
+    await expect(page.locator('#classes')).toContainText('Freelancing Share by Classes Attended');
   });
 });
 
 test.describe('case studies', () => {
   test.use({ viewport: DESKTOP });
 
-  test('four cards, and the side-by-side heading names the three programs it compares', async ({ page }) => {
+  test('four cards, Kosovo first, and no side-by-side table that repeats their results', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     await expect(page.locator('article.case')).toHaveCount(4);
-    await expect(page.getByRole('heading', { level: 2, name: 'WSDFM, Women in Online Work and Her Power, Side by Side' })).toBeVisible();
+    const names = await page.locator('article.case .card__title').allInnerTexts();
+    expect(names.map((n) => n.trim())[0]).toBe('Women in Online Work, Kosovo');
+    await expect(page.getByRole('heading', { level: 2, name: 'WSDFM, Women in Online Work and Her Power, Side by Side' })).toHaveCount(0);
     await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(4);
   });
 
@@ -256,11 +259,14 @@ test.describe('year headers, filters and the evidence ladder', () => {
     await expect(page.locator('#stories details.sg-more[open]')).toHaveCount(1);
   });
 
-  test('the evidence ladder names each kind of evidence with the same badges, without repeating a unit', async ({ page }) => {
+  test('the evidence ladder names each kind of evidence with the same badges and says what each does not show', async ({ page }) => {
     await open(page, 'impact/');
     const types = await page.locator('#evidence-ladder [data-evidence]').evaluateAll((els) => els.map((e) => e.getAttribute('data-evidence')));
     expect(types).toEqual(['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Individual Story']);
     await expect(page.locator('#evidence-ladder')).not.toContainText('in percentage points');
-    await expect(page.locator('#evidence-ladder')).toContainText('WSDFM program records: women in work (71%)');
+    // WP30e: the figures live in Results at a Glance; the ladder keeps what each kind shows and does not show.
+    const heads = (await page.locator('#evidence-ladder thead th').allInnerTexts()).map((h) => h.trim());
+    expect(heads).toEqual(['Kind of Evidence', 'What It Shows', 'What It Does Not Show']);
+    await expect(page.locator('#evidence-ladder')).toContainText('Cause: respondents are not a random sample');
   });
 });

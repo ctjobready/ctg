@@ -14,11 +14,12 @@ const heroLead = (page: Page) => page.locator('main .hero .hero__lead').first().
 const compact = (t: string) => t.replace(/\s+/g, ' ').trim();
 
 test.describe('direct answers under the H1', () => {
-  test('/impact/ says what each kind of evidence shows, in the lead under the H1', async ({ page }) => {
+  test('/impact/ names its three kinds of proof in the lead under the H1, and the box below says what each shows', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await heroLead(page))).toBe(
-      'The randomized trial shows cause for one predecessor program; the 2026 survey describes what surveyed completers report; program records show results for named programs.',
-    );
+    expect(compact(await heroLead(page))).toBe('Program records from Kosovo and Bangladesh, an independent trial in Dhaka and a 2026 survey of completers. Each figure names its kind of evidence.');
+    const box = compact(await page.locator('#summary').innerText());
+    expect(box).toContain('A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place');
+    expect(box).toContain('Among surveyed completers, employment was');
   });
 
   for (const [route, needle] of [
@@ -46,26 +47,26 @@ test.describe('Impact', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: A Predecessor Program Evaluated by a Randomized Trial');
   });
 
-  test('"Four Programs, in Depth" is four link cards and repeats no figure', async ({ page }) => {
+  test('"Four Programs, from Kosovo to Bangladesh" is four link cards, Kosovo first, and repeats no figure', async ({ page }) => {
     await open(page, 'impact/');
     const band = page.locator('#cases');
-    await expect(band.getByRole('heading', { level: 2, name: 'Four Programs, in Depth' })).toBeVisible();
+    await expect(band.getByRole('heading', { level: 2, name: 'Four Programs, from Kosovo to Bangladesh' })).toBeVisible();
     await expect(band.locator('article.card')).toHaveCount(4);
-    for (const slug of ['wsdfm-women-freelancers', 'kosovo-women-in-online-work', 'undp-yes-korail', 'her-power']) {
-      await expect(band.locator(`a.card__link[href$="/impact/case-studies/${slug}/"]`)).toHaveCount(1);
-    }
-    // At a Glance and the results table carry the figures; the band restates none of them.
+    const hrefs = await band.locator('a.card__link').evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
+    expect(hrefs.map((h) => h.split('/').filter(Boolean).pop())).toEqual(['kosovo-women-in-online-work', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
+    // Results at a Glance carries the figures; the band restates none of them.
     expect(await band.innerText()).not.toMatch(/\d+%|\d[\d,]* of [\d,]+|\d+ pp/);
     await expect(band.locator('[data-fact]')).toHaveCount(0);
   });
 
-  test('the survey card links the respondent profile that Outcomes 2026 already shows', async ({ page }) => {
+  test('the survey card links the Impact Survey 2026, which shows who responded', async ({ page }) => {
     await open(page, 'impact/');
-    const link = page.locator('#proof').getByRole('link', { name: 'Who Responded' });
+    const link = page.locator('#explore').getByRole('link', { name: 'Impact Survey 2026' });
     await expect(link).toHaveCount(1);
     await link.click();
-    await expect(page).toHaveURL(/impact\/outcomes-2026\/#respondents$/);
+    await expect(page).toHaveURL(/impact\/outcomes-2026\/$/);
     await expect(page.locator('#respondents')).toBeVisible();
+    await expect(page.locator('#respondents h2')).toHaveText('Who Responded');
   });
 
   test('the case studies page labels its link to the evidence ladder in words', async ({ page }) => {
@@ -179,10 +180,11 @@ test.describe('About', () => {
     await expect(page.locator('.mn-group', { has: page.getByRole('heading', { level: 2, name: 'Digital Marketing, Content and Language' }) }).getByRole('heading', { level: 3, name: 'Papiya Nabi' })).toHaveCount(1);
   });
 
-  test('Careers: the two application routes are explained in one line, and "Why Join" says what the work is', async ({ page }) => {
+  test('Careers: the two application routes are explained in one line, and the H1 says what the work is', async ({ page }) => {
     await open(page, 'careers/');
-    await expect(page.locator('#apply .cr-mail')).toContainText('Two ways to apply, one inbox');
-    await expect(page.locator('#why')).toContainText('preparing educated, unemployed young people for paid digital work');
+    await expect(page.locator('#apply .cr-mail')).toContainText('opens a prefilled email to');
+    await expect(page.locator('#apply .cr-mail')).toContainText('you can also send your CV to that address yourself');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Help Put Young People into Paid Digital Work');
   });
 
   test('Recognition: the World Bank item says which CodersTrust program it covers', async ({ page }) => {
@@ -192,17 +194,19 @@ test.describe('About', () => {
     await expect(item.getByRole('link', { name: /Read the Case Study/ })).toHaveAttribute('href', /case-studies\/kosovo-women-in-online-work\/$/);
   });
 
-  test('About: the SDG line keeps the registered "aligns with" wording', async ({ page }) => {
-    await open(page, 'about/');
-    const text = compact(await page.locator('#sdgs').innerText());
+  test('Impact: the SDG line keeps the registered "aligns with" wording (WP30e: it lives on Impact only, not on About)', async ({ page }) => {
+    await open(page, 'impact/');
+    const text = compact(await page.locator('#sdg').innerText());
     expect(text).toContain('aligns with seven SDGs');
     expect(text).not.toContain('contributes to seven SDGs');
+    await open(page, 'about/');
+    await expect(page.locator('#sdgs')).toHaveCount(0);
   });
 
-  test('About: "Inclusion by Design" states selection with a verb', async ({ page }) => {
+  test('About: "Inclusion by Design" says who can join, in one plain sentence', async ({ page }) => {
     await open(page, 'about/');
     const text = compact(await page.locator('#how-we-work').innerText());
-    expect(text).toContain('Selection and placement into a career or foundation track use a readiness assessment, a written test and an interview guide.');
+    expect(text).toContain('Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.');
     expect(text).not.toContain('interview guide selection and placement');
   });
 });

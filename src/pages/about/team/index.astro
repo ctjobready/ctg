@@ -15,10 +15,10 @@ const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.
 // No lead line for the advisors: what they do and how they are kept apart from procurement stays unpublished until
 // confirm-list item #24 closes (register R8-M1). The cards keep their names and titles.
 const groups = [
-  { key: 'founders', title: 'Founders and Chair', lead: 'The people who started CodersTrust in 2014.' },
+  { key: 'founders', title: 'Founders and Chair', lead: undefined },
   { key: 'advisors', title: 'Advisors', lead: undefined },
-  { key: 'executive', title: 'Executive Team', lead: 'The leaders of strategy, growth, business and technology.' },
-  { key: 'management', title: 'Bangladesh Leadership', lead: 'The managers who run training, projects and operations at CodersTrust Bangladesh.' },
+  { key: 'executive', title: 'Executive Team', lead: undefined },
+  { key: 'management', title: 'Bangladesh Leadership', lead: undefined },
 ] as const;
 const description = 'Meet the founders, advisors, executive team and Bangladesh leadership of CodersTrust, the workforce-development organization behind the JobReady platform.';
 const jsonLd = [
@@ -33,7 +33,7 @@ const jsonLd = [
 ---
 
 <BaseLayout title="Leadership and Team" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Team' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Leadership and Team" lead="The founders, advisors, executive team and Bangladesh leadership of CodersTrust." art={false} />
+  <Hero eyebrow="About Us" title="The Team Behind CodersTrust" lead="The founders, advisors, executive team and Bangladesh leadership of CodersTrust." art={false} />
   <PageNav links={groups.map((g) => ({ label: g.title, href: `#${g.key}` }))} />
   {
     groups.map((g, i) => {
@@ -55,7 +55,7 @@ const jsonLd = [
     })
   }
   <Section pad="sm" aria-label="Governance link">
-    <p class="team-gov">See <a class="link" href={url('/about/governance/')}>Governance and Accountability</a> for how CodersTrust is organized and reports to partners. Interested in joining the team? <a class="link" href={url('/careers/')}>Explore Careers</a>.</p>
+    <p class="team-gov">Interested in joining the team? <a class="link" href={url('/careers/')}>Explore Careers</a>.</p>
   </Section>
   <CTABand
     id="team-cta"

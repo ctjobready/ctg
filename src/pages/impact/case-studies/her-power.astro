@@ -3,10 +3,8 @@ import { getEntry } from 'astro:content';
 import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
-import CopyText from '../../../components/pages/impact/CopyText.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
-import { WOMEN_INCLUSION } from '../../../data/copy';
 import photo from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
 const maria = await getEntry('stories', 'maria-dewan');
@@ -29,19 +27,16 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     'Keeping students engaged and motivated.',
     'Giving feedback without face-to-face contact.',
     'Instructors and learners who were new to online tools.',
-    'Few training materials designed for online learning.',
   ]}
   solution={[
     'Extra support to help learners adopt digital tools.',
     'Interactive, collaborative sessions.',
     'Regular check-ins and Q&A to keep learners on track.',
-    'Accessible, interactive digital learning materials.',
   ]}
 >
   <!-- WP18b: the delivery band leads with CodersTrust's own role (GV-11), then the generic practices of the list below it. -->
   <Fragment slot="solution-lead">
     <p class="hp__role" data-fact="GV-11"><strong>CodersTrust’s role:</strong> <Fact id="GV-11" as="span" under="CodersTrust’s role" /></p>
-    <p class="hp__practices">Practices used in delivery:</p>
   </Fragment>
 
   <Fragment slot="results">
@@ -50,12 +45,8 @@ const excerpt = `${paras[1]} ${paras[2]}`;
       <Fact id="PR-05" as="p" />
     </Callout>
     <div class="hp__scale" data-fact="GV-01">
-      <h3 class="t-heading-m">Program Scale: A Different Measure</h3>
+      <h3 class="t-heading-m">National Scale: A Different Measure</h3>
       <p>The in-work figure above covers 800 tracked women from the 2,500 that CodersTrust trained directly. The national program’s reach is counted separately: <Fact id="GV-01" as="span" /></p>
-    </div>
-    <div class="hp__compare">
-      <h3 class="t-heading-m">Alongside Other Women-Focused Programs</h3>
-      <CopyText block={WOMEN_INCLUSION} />
     </div>
   </Fragment>
 
@@ -75,8 +66,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
 </CaseStudyPage>
 
 <style>
-  .hp__scale,
-  .hp__compare {
+  .hp__scale {
     display: grid;
     gap: var(--space-xs);
     max-width: var(--measure);
@@ -88,13 +78,7 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     background: var(--surface);
     color: var(--on-surface);
   }
-  .hp__practices {
-    margin: 0 0 var(--space-xs);
-    font-weight: var(--fw-bold);
-    color: var(--secondary);
-  }
-  .hp__scale > :global(*),
-  .hp__compare > :global(*) {
+  .hp__scale > :global(*) {
     margin: 0;
   }
 </style>

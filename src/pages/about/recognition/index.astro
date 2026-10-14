@@ -99,7 +99,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Recognition and Media" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
+  <Hero eyebrow="About Us" title="Recognized, Honored and Covered Worldwide" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
@@ -128,7 +128,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   </Section>
 
   <Section id="honors" tone="airy" aria-labelledby="honors-h">
-    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" lead="Co-founder and Chairman. Each honor links to the news post that reported it, as published." />
+    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" lead="Co-founder and Chairman." />
     <ul class="rec-honors" role="list" data-fact="PA-11">
       {
         personalHonors.map((h) => (
@@ -184,7 +184,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   {
     FORUMS.length > 0 && (
       <Section id="forums" aria-labelledby="forums-h">
-        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" lead="Selected appearances, each documented in a dated news post." />
+        <SectionHeader id="forums-h" eyebrow="Forums and Events" title="Where CodersTrust Has Taken Part" />
         <ul class="rec-forums" role="list">
           {FORUMS.map((f) => (
             <li>
@@ -219,7 +219,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   <PhotoGallery id="photos" tone="white" eyebrow="In the Field" title="Awards and Forums in Photographs" photos={galleryPhotos('recognition')} />
 
   <Section id="coverage" tone="airy" aria-labelledby="coverage-h">
-    <SectionHeader id="coverage-h" eyebrow="For Journalists" title="Early Coverage of CodersTrust’s First Years, 2014–2016" lead="Shown as published. Original articles are linked where available." />
+    <SectionHeader id="coverage-h" eyebrow="For Journalists" title="Early Coverage of CodersTrust’s First Years, 2014–2016" />
     <ul class="rec-press" role="list" data-fact="PA-09">
       {
         coverage.map((c) => (
@@ -249,7 +249,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   </Section>
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
-    <SectionHeader id="kit-h" eyebrow="For Journalists" title="Press Kit" lead="Logos, boilerplate and a media contact. Please use the logos as supplied." />
+    <SectionHeader id="kit-h" eyebrow="For Journalists" title="Press Kit" lead="Logos, boilerplate and a media contact." />
     <div class="kit">
       <div class="kit__block">
         <h3 class="t-heading-m">Boilerplate</h3>
@@ -286,7 +286,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
       </div>
       <div class="kit__block">
         <h3 class="t-heading-m">Media Contact</h3>
-        <p>For interviews, background and quotes, write to the team. Include your outlet, your deadline and the topic.</p>
+        <p>Write to the team with your outlet, your deadline and the topic.</p>
         <p><a class="link" href={media.href}>{media.label}<Icon name="arrow-right" size={16} /></a></p>
       </div>
     </div>

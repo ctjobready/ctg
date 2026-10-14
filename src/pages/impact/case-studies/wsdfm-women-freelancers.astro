@@ -47,16 +47,13 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
   ]}
   challenges={[
     'Low awareness of freelancing reduced initial interest.',
-    'Families did not always support their studies.',
     'Many trainees lacked basic computer literacy, a computer or an internet connection.',
     'Social obstacles drove dropout up.',
-    'COVID-19 closed physical classrooms.',
   ]}
   solution={[
     'Campus activation, roadshows, seminars, parent counseling sessions and online campaigns.',
     'Basic computer literacy added to the curriculum.',
     'Family counseling and a stipend for active students.',
-    'Online training sessions during COVID-19.',
     'One-to-one mentoring support for students.',
   ]}
 >
@@ -77,21 +74,16 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
       <CopyText block={RCT_HEADLINE} class="wf__lead" />
     </div>
 
-    <StackedBars
-      title="Employment Status at Follow-Up: Women Offered a Place vs. the Control Group"
-      segments={['Unemployed', 'Other Employment', 'Freelancing']}
-      rows={[
-        { label: 'Control Group', values: control },
-        { label: 'Women Offered a Place', values: offered },
-      ]}
-      note="BIGD randomized trial; women offered a place vs. control group (intent to treat). Follow-up November–December 2021."
-    />
-    <p data-fact="RC-09">Chart data: <Fact id="RC-09" as="span" /></p>
-
-    <div class="wf__attend" data-fact="RC-03">
-      <h3 class="t-heading-m">Women Who Attended</h3>
-      <p class="wf__evid"><EvidenceTag type="Randomized Trial" /> BIGD randomized trial, May 2022</p>
-      <p><Fact id="RC-03" as="span" /></p>
+    <div data-fact="RC-09">
+      <StackedBars
+        title="Employment Status at Follow-Up: Women Offered a Place vs. the Control Group"
+        segments={['Unemployed', 'Other Employment', 'Freelancing']}
+        rows={[
+          { label: 'Control Group', values: control },
+          { label: 'Women Offered a Place', values: offered },
+        ]}
+        note="BIGD randomized trial; women offered a place vs. control group (intent to treat). Follow-up November–December 2021."
+      />
     </div>
 
     <p><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>Read the Randomized Trial Results<Icon name="arrow-right" size={16} /></a></p>
@@ -152,12 +144,5 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
     font-size: var(--fs-body-l);
     line-height: var(--lh-body-l);
     color: var(--on-surface);
-  }
-  .wf__attend {
-    display: grid;
-    gap: var(--stack-title);
-  }
-  .wf__attend > :global(*) {
-    margin: 0;
   }
 </style>

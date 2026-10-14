@@ -28,10 +28,10 @@ const TEXT = {
   stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
 };
 const matrix = [
-  { n: 1, name: 'Independent Evaluation (BIGD)', tag: 'Randomized Trial' as const, figure: { value: fact('RC-02').stat?.value ?? '', label: trialEmploymentLabel(), id: 'RC-02' }, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
-  { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, figure: { value: fact('OC-01').stat?.value ?? '', label: fact('OC-01').stat?.label ?? '', id: 'OC-01' }, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Impact Survey 2026' },
-  { n: 3, name: 'Program Results', tag: 'Program Record' as const, figure: { value: fact('PR-01').stat?.value ?? '', label: wsdfmFigureLabel(), id: 'PR-01' }, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
-  { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, figure: undefined, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
+  { n: 1, name: 'Independent Evaluation (BIGD)', tag: 'Randomized Trial' as const, text: TEXT.trial, href: '/impact/independent-evaluation/', link: 'The Randomized Trial' },
+  { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, text: TEXT.survey, href: '/impact/outcomes-2026/', link: 'Impact Survey 2026' },
+  { n: 3, name: 'Program Results', tag: 'Program Record' as const, text: TEXT.records, href: '/impact/case-studies/', link: 'Case Studies' },
+  { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, text: TEXT.stories, href: '/impact/stories/', link: 'Success Stories' },
 ];
 const H = `h${headingLevel}` as 'h3' | 'h4';
 const pr01Label = wsdfmFigureLabel();
@@ -46,16 +46,14 @@ const storyExample = fact('ST-03').text;
       <thead>
         <tr>
           <th scope="col">Kind of Evidence</th>
-          <th scope="col">Key Figure</th>
           <th scope="col">What It Shows</th>
           <th scope="col">What It Does Not Show</th>
         </tr>
       </thead>
       <tbody>
         {matrix.map((r) => (
-          <tr data-fact={r.figure?.id ?? 'ST-03'}>
-            <th scope="row"><span class="lm__n" aria-hidden="true">{r.n}</span> {r.name}<span class="lm__tag"><EvidenceTag type={r.tag} /></span></th>
-            <td data-label="Key Figure">{r.figure ? <><strong class="lm__fig">{r.figure.value}</strong> <span>{r.figure.label}</span></> : <><strong class="lm__eg">Example:</strong> <span>{storyExample}</span></>}{links && <a class="link lm__link" href={linkAttrs(r.href).href}>{r.link}<Icon name="arrow-right" size={16} /></a>}</td>
+          <tr>
+            <th scope="row"><span class="lm__n" aria-hidden="true">{r.n}</span> {r.name}<span class="lm__tag"><EvidenceTag type={r.tag} /></span>{links && <a class="link lm__link" href={linkAttrs(r.href).href}>{r.link}<Icon name="arrow-right" size={16} /></a>}</th>
             <td data-label="What It Shows">{r.text.shows}</td>
             <td data-label="What It Does Not Show">{r.text.not}</td>
           </tr>

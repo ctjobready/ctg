@@ -1,5 +1,5 @@
 /**
- * The four published case studies (planning v1.3 P24). A fifth study is intentionally withheld and has no
+ * The four published case studies (planning v1.3 P24), Kosovo first (WP30e: the international footprint leads). A fifth study is intentionally withheld and has no
  * entry, route, card or link anywhere; completeness is measured against the release manifest.
  */
 export interface CaseStudy {
@@ -25,6 +25,20 @@ const base = '/impact/case-studies/';
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    slug: 'kosovo-women-in-online-work',
+    path: `${base}kosovo-women-in-online-work/`,
+    name: 'Women in Online Work, Kosovo',
+    heading: 'Women in Online Work, Kosovo: Young Women Earning Online',
+    program: 'World Bank Group, 2017',
+    partner: 'Women in Online Work pilot',
+    factId: 'PR-02',
+    summary: 'A pilot that prepared young women in Kosovo for online work.',
+    place: 'World Bank Group; Kosovo, 2017',
+    who: 'Young women',
+    scope: 'Two-phase delivery that built digital literacy first, then real online work',
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
+  },
+  {
     slug: 'wsdfm-women-freelancers',
     path: `${base}wsdfm-women-freelancers/`,
     name: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)',
@@ -36,20 +50,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     place: 'Commissioned by Porticus; Bangladesh',
     who: 'Women in Bangladesh',
     scope: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring',
-    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
-  },
-  {
-    slug: 'kosovo-women-in-online-work',
-    path: `${base}kosovo-women-in-online-work/`,
-    name: 'Women in Online Work, Kosovo',
-    heading: 'Women in Online Work, Kosovo: A 2017 Pilot with the World Bank Group',
-    program: 'World Bank Group, 2017',
-    partner: 'Women in Online Work pilot',
-    factId: 'PR-02',
-    summary: 'A pilot that prepared young women in Kosovo for online work.',
-    place: 'World Bank Group; Kosovo, 2017',
-    who: 'Young women',
-    scope: 'Two-phase delivery that built digital literacy first, then real online work',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

@@ -8,20 +8,18 @@ import Fact from '../../../components/facts/Fact.astro';
 import PlainLine from '../../../components/facts/PlainLine.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
-import FitBrief from '../../../components/pages/impact/FitBrief.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
 import { MICRO_COMMITMENT } from '../../../data/copy';
-import { faqItems } from '../../../lib/faq';
+import { buildFaq, para } from '../../../components/pages/programs/faq';
 import { faqPage } from '../../../lib/schema';
 import { hostOf, linkAttrs } from '../../../lib/url';
 
 const path = '/impact/independent-evaluation/';
-// H1 (review round 15, F3): a short page name (the <title> stays "Randomized Trial Results"); the effect headline, RC-01, is the first sentence of the BLUF under it.
-const h1 = 'A Randomized Trial of CodersTrust’s Predecessor Program for Women in Dhaka';
+// H1 (WP30e): the result, in words; the <title> stays "Randomized Trial Results". The scope (predecessor WSDFM program, women in Dhaka) is the first sentence under it.
+const h1 = 'Randomized Trial: Women Offered Training Were More Likely to Work';
 const description = desc('A BIGD trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed.');
-const faqIds = ['Q4', 'Q3'];
 
 // RC-08 chart values must match the register text.
 const classes = [
@@ -33,8 +31,14 @@ const classes = [
 const rc08 = fact('RC-08').text;
 for (const c of classes) if (!rc08.includes(`${c.value}%`)) throw new Error(`RC-08 chart value ${c.value}% is not in the register text`);
 
-// The shared bank words Q3 "How Do You Prove Outcomes?"; this page asks how outcomes are tracked, which is what its answer covers (WP24b). The JSON-LD uses the same words.
-const faq = faqItems('foundations', faqIds).map((f) => (f.q === 'How Do You Prove Outcomes?' ? { ...f, q: 'How Do You Track Outcomes?' } : f));
+// WP30e: one decision question with a short answer (the page itself answers "Is there independent evidence?"). The answer is the shared Q3 shortened to its two claims.
+const faq = buildFaq([
+  {
+    q: 'How Do You Track Outcomes?',
+    html: para('For every cohort, as agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports. Where available, offer letters, payslips, platform logs or bank receipts document work and earnings.'),
+    evidence: ['PD-09', 'PD-08', 'RC-01'],
+  },
+]);
 const bigdStudy = sources.BIGDSTUDY;
 const jsonLd = [
   articleNode({
@@ -57,15 +61,19 @@ const jsonLd = [
   faqPage(faq, path),
 ];
 const toc = [
-  { id: 'summary', label: 'The Short Answer' },
-  { id: 'fit', label: 'Evidence-and-Fit Brief' },
-  { id: 'design', label: 'How the Trial Worked' },
-  { id: 'results', label: 'What the Trial Found' },
-  { id: 'classes', label: 'Freelancing Share by Classes Attended' },
-  { id: 'context', label: 'How This Compares with Other Training Trials' },
+  { id: 'summary', label: 'The Result' },
+  { id: 'results', label: 'Income, Freelancing and Household Effects' },
+  { id: 'classes', label: 'More Classes, More Freelancing' },
+  { id: 'context', label: 'Over Four Times the Average of Nine Training Trials' },
   { id: 'funders', label: 'What It Means for Funders' },
-  { id: 'faq', label: 'Questions About the Evidence' },
+  { id: 'faq', label: 'Questions Funders Ask' },
 ];
+// How to read this trial (closed disclosure): what was evaluated, who took part and the design. The wording is the former Evidence-and-Fit Brief and RC-07.
+const howToRead = `<ul>
+<li data-fact="RC-07 PD-01"><strong>What was evaluated.</strong> The WSDFM program, a 200-hour predecessor of today’s 100-hour track.</li>
+<li data-fact="RC-01"><strong>Who took part.</strong> Women aged 18–35 with a Secondary School Certificate (SSC) or above, in Dhaka.</li>
+<li data-fact="RC-07"><strong>Design.</strong> ${fact('RC-07').text.replace(/^Trial design: /, '')}.</li>
+</ul>`;
 // RC-13's own summary line (employment and freelancing for women who attended); its income figure is already in the headline, so only this detail is repeated here.
 const attendedDetail = fact('RC-13').stat?.glance?.note;
 if (!attendedDetail) throw new Error('RC-13 no longer has a glance note');
@@ -92,72 +100,52 @@ const d = discoveryCta();
   breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Independent Evaluation' }]}
   jsonLd={jsonLd}
 >
-  <ReportSection id="summary" title="The Short Answer">
+  <ReportSection id="summary" title="The Result">
     <p class="ie__type"><EvidenceTag type="Randomized Trial" /> <span>Predecessor WSDFM program, women in Dhaka</span></p>
     <Callout tone="bluf">
       <PlainLine />
       <p data-fact="RC-01">{incomeLine}</p>
     </Callout>
-    <!-- Headline results are stated once, in the callout above (WP20d). The results for women who attended, the household effects and the comparison with other
-         trials are supporting detail below and add new information only. -->
-    <ul class="ie__links" role="list" aria-label="More on the trial">
-      <li><a class="link" href="#results">What the Trial Found, Including Women Who Attended<Icon name="arrow-right" size={16} /></a></li>
-      <li><a class="link" href="#context">How This Compares with Other Training Trials<Icon name="arrow-right" size={16} /></a></li>
-      <li><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></li>
-    </ul>
+    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
+    <Accordion items={[{ q: 'How to Read This Trial', a: howToRead }]} name="ie-method" />
   </ReportSection>
 
-  <div id="fit" class="ie__fit">
-    <FitBrief />
-  </div>
-
-  <ReportSection id="design" title="How the Trial Worked">
-    <p data-fact="RC-07"><Fact id="RC-07" /></p>
-  </ReportSection>
-
-  <ReportSection id="results" title="What the Trial Found">
-    <p class="ie__intro">The headline results are above. This section adds what the trial found beyond them.</p>
+  <ReportSection id="results" title="Income, Freelancing and Household Effects">
     <h3 class="t-heading-l">Women Offered a Place</h3>
     <ul class="ie__list">
       <li data-fact="RC-04"><Fact id="RC-04" /></li>
-      <li data-fact="RC-09"><Fact id="RC-09" /></li>
     </ul>
     <h3 class="t-heading-l">Women Who Attended</h3>
     <ul class="ie__list">
       <li data-fact="RC-13">{attendedDetail}</li>
-      <li data-fact="RC-03"><Fact id="RC-03" /></li>
       <li data-fact="RC-05"><Fact id="RC-05" /></li>
     </ul>
   </ReportSection>
 
-  <ReportSection id="classes" title="Freelancing Share by Classes Attended">
+  <ReportSection id="classes" title="More Classes, More Freelancing">
     <p>Women who attended more classes were more likely to be freelancing at follow-up.</p>
-    <BarChart
-      title="Freelancing Share by Classes Attended"
-      items={classes.map((c) => ({ label: c.label, value: c.value }))}
-    />
-    <p data-fact="RC-08">Chart data: <Fact id="RC-08" as="span" /></p>
+    <div data-fact="RC-08">
+      <BarChart
+        title="Freelancing Share by Classes Attended"
+        items={classes.map((c) => ({ label: c.label, value: c.value }))}
+      />
+    </div>
   </ReportSection>
 
-  <ReportSection id="context" title="How This Compares with Other Training Trials">
-    <p>For context, here is how the employment effect for women offered a place compares with other randomized trials of vocational training.</p>
+  <ReportSection id="context" title="Over Four Times the Average of Nine Training Trials">
     <p data-fact="RC-06a"><Fact id="RC-06a" field="headline" /></p>
-    <p data-fact="RC-11"><strong>What the trial taught us about advising:</strong> <Fact id="RC-11" /></p>
   </ReportSection>
 
   <ReportSection id="funders" title="What It Means for Funders">
     <p>
-      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. The study also reports results for women who attended.
-    </p>
-    <p>
-      One trial in one population does not forecast a new country or a new track. That is why a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
+      The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. One trial in one population does not forecast a new country or a new track, so a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
     </p>
     <p data-fact="RC-10"><Fact id="RC-10" />.{' '}
       <a class="link" href={linkAttrs('/partner-with-us/').href}>See How Partnerships Work<Icon name="arrow-right" size={16} /></a>
     </p>
   </ReportSection>
 
-  <ReportSection id="faq" title="Questions About the Evidence">
+  <ReportSection id="faq" title="Questions Funders Ask">
     <Accordion items={faq} name="ie-faq" openFirst />
   </ReportSection>
 
@@ -173,13 +161,6 @@ const d = discoveryCta();
 </LongformLayout>
 
 <style>
-  .ie__links {
-    list-style: none;
-    margin: var(--space-md) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-xs);
-  }
   .ie__type {
     display: flex;
     flex-wrap: wrap;
@@ -188,11 +169,6 @@ const d = discoveryCta();
     margin: 0 0 var(--space-sm);
     color: var(--on-surface-variant);
     font-size: var(--fs-body-sm);
-  }
-  .ie__intro {
-    margin: 0 0 var(--space-sm);
-    color: var(--on-surface-variant);
-    max-width: var(--measure);
   }
   .ie__list {
     margin: 0;
@@ -203,9 +179,5 @@ const d = discoveryCta();
   }
   .ie__list li::marker {
     color: var(--primary);
-  }
-  .ie__fit {
-    padding-block: var(--space-lg);
-    border-top: 1px solid var(--outline-variant);
   }
 </style>
