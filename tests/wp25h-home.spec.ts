@@ -124,9 +124,9 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     expect(await link.getAttribute('href')).toMatch(/\/impact\/case-studies\/$/);
   });
 
-  test('the FAQ "Does the Trial Apply to Your Program?" scopes later programs to the 2014–2023 survey and program records', async ({ page }) => {
+  test('the FAQ "Does the Trial Apply to Your Program?" scopes later programs to the October 2026 survey and program records', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    expect(await text(page, '#faq')).toContain('Results for later programs come from the October 2026 survey of 2014–2023 completers and program records, which are descriptive');
+    expect(await text(page, '#faq')).toContain('Results for later programs come from the October 2026 survey of completers and from program records, which are descriptive');
   });
 
   test('offer: option 1 is the First Multi-Cohort Pilot, scoped in the discovery session; the Her Power sentence names who ran it', async ({ page }) => {
