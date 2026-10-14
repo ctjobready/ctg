@@ -1,6 +1,6 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * Every statistic below is read from the Facts Register (facts.ts): ID-02, OC-01. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
+ * Every statistic below is read from the Facts Register (facts.ts): ID-02, RC-02. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
  * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
  * WP30c (cycle-7 IA review): a featured panel points to a different decisive page than the first item of its own menu, with that page's own menu description
  * as its text (About: Governance and Accountability; Our Model: the JobReady Platform status; Programs: YouthWIDE; Partner with Us: Governments).
@@ -14,7 +14,6 @@ const stat = (id: string) => {
   if (!s) throw new Error(`Fact ${id} has no stat`);
   return s;
 };
-const emp = stat('OC-01');
 const trial = stat('RC-02');
 const trialPoints = `+${trial.numeric} Percentage Points`;
 
@@ -106,7 +105,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
       // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country; IN-01: the Bangladesh initiative).
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
@@ -120,7 +119,7 @@ export const navGroups: NavGroup[] = [
       kind: 'pilot',
       eyebrow: 'Partner Programs',
       title: 'YouthWIDE',
-      text: 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.',
+      text: 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.',
       factIds: ['IN-01', 'IN-02'],
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },
@@ -181,15 +180,15 @@ export const utilityLink: NavLink = { label: 'Courses', href: COURSES_URL };
 /** Primary header CTA. */
 export const headerCta: NavLink = { label: 'Talk to Us', href: '/contact/' };
 
-/** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. Two text links, one per evidence type: the trial and the survey. */
+/** PromoBar (planning/03 §3.1) — hidden on the outcomes page itself. One statement, the trial's employment result (WP31: the survey sentence is gone, the survey stays one text link away). */
 export const promo = {
   lead: 'Randomized trial of a predecessor program:',
-  rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed. Surveyed completers: ${emp.from} employed before training, ${emp.value} at the October 2026 survey.`,
-  /** The same two statements for a phone (up to 575 px): both labels kept, three lines at 375 px. */
-  short: `women offered a place: +${trial.numeric} percentage points employed. Surveyed completers: ${emp.from} to ${emp.value} employed.`,
+  rest: `women offered a place were ${trial.numeric} percentage points more likely to be employed.`,
+  /** The same statement for a phone (up to 575 px). */
+  short: `women offered a place: +${trial.numeric} percentage points employed.`,
   /** Bump to show a changed announcement to people who dismissed the previous one. */
   storageKey: 'ct-promo-v4',
-  factId: 'RC-02 OC-01',
+  factId: 'RC-02',
   links: [
     { label: 'Trial Results', href: '/impact/independent-evaluation/' },
     { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },

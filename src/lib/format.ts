@@ -88,9 +88,13 @@ export function pilotDurationText(duration: string): string {
   const m = /^(\d+–\d+ months) \(tracking to month (\d+)\)$/.exec(duration.trim());
   return m ? `Pilot delivery runs ${m[1]}. Outcome tracking continues for 12 months after each course.` : duration;
 }
-/** Option-card duration line: the Pilot option gets the sentence above; Scale and National print as registered. */
-export function optionDuration(name: string, duration: string): string {
-  return /Pilot/.test(name) ? pilotDurationText(duration) : duration;
+/**
+ * Option-card duration line: the pilot's duration gets the sentence above; Scale and National print as registered. The pilot is recognized by its
+ * registered duration wording, not by the card's name, because pages rename it ("First Multi-Cohort Pilot" on Home, "First Multi-Cohort Program" on
+ * JobReady@Campus) and no card may print the raw "(tracking to month 23)" line (WP31).
+ */
+export function optionDuration(duration: string): string {
+  return pilotDurationText(duration);
 }
 /** Strip tags for plain-text use (FAQ schema, meta descriptions). */
 export function stripHtml(html: string): string {

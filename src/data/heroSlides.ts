@@ -13,10 +13,12 @@ import { cta } from '../lib/mailto';
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
  * WP23: the survey and reach slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
- * the offered-place employment and income results before the attenders' income; the placement slide lists all four case-study programs.
+ * the offered-place employment and income results; the placement slide lists all four case-study programs.
  * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
  * with its own measure (67% found a first job within three months, never "in work"; PR-03), and the WSDFM line says "program records" so it is
  * not read as the trial's follow-up employment (63.1% against 52.8%, a different measure on the evidence band).
+ * WP31 (cycle-8 reviews): the trial slide states the offered-place results only (two sentences); the survey-income slide is headed as what surveyed completers
+ * report and has no lead; the WSDFM line says it is "separate from the trial"; the last slide is "Find Your Program".
  */
 
 export interface HeroSlideStat {
@@ -88,10 +90,9 @@ const discovery = cta('discovery');
 const offeredPoints = fact('RC-02').stat?.numeric;
 const nineTrialAverage = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
 const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
-const incomeAttended = fact('RC-13').stat?.numeric;
 /** The trial's estimated income difference for all women offered a place (RC-01's tile), stated before the attenders' figure. */
 const incomeOffered = fact('RC-01').stat?.numeric;
-if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeAttended === undefined || incomeOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-06a, RC-07 or RC-13 no longer carries the figure a slide reads');
+if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-06a or RC-07 no longer carries the figure a slide reads');
 /** Women per 100 offered a place who were in work beyond the control group, as RC-02 rounds it (the [PLAIN-LINE] wording). */
 const perHundred = Math.round(offeredPoints);
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
@@ -103,9 +104,12 @@ const incomeNow = fact('OC-03').stat?.value;
 const incomeBefore = fact('OC-03').stat?.from;
 const reachFigure = fact('SC-16').stat?.value;
 const countries = fact('SC-03').stat?.numeric;
-/** GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official skills partner of Bangladesh’s National University, onboarding 1.5M+ learners". */
-const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official skills partner of Bangladesh’s National University, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
-if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official skills partner of ... onboarding N+ learners"');
+/**
+ * GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for
+ * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
+ */
+const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
+if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
 if (!startedSixMonths || !incomeNow || !incomeBefore || !reachFigure || countries === undefined) throw new Error('heroSlides: OC-03, OC-05, SC-03 or SC-16 no longer carries the figure a slide headline reads');
 /** PR-01's label reads "WSDFM: 71% in work"; on this slide it is labelled as program records, apart from the trial's follow-up employment. */
 const wsdfmLabel = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
@@ -114,7 +118,7 @@ if (!wsdfmLabel) throw new Error('heroSlides: PR-01 label no longer reads "WSDFM
 const firstJob = /^of the \d+ trained found their first job within 3 months$/.test(fact('PR-03').stat?.label ?? '');
 if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
 const PR_TEXT = {
-  wsdfm: `WSDFM program records: ${wsdfmLabel[1]}.`,
+  wsdfm: `WSDFM program records, separate from the trial: ${wsdfmLabel[1]}.`,
   wow: `${fact('PR-02').stat?.label}.`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} found a first job within three months.`,
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
@@ -152,8 +156,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'evidence',
     eyebrow: 'Independent Evaluation',
     title: `About ${perHundred} More Women in Work for Every 100 Offered a Place`,
-    lead: `A randomized trial by BIGD (BRAC University) of CodersTrust’s predecessor WSDFM program found women offered a place were ${offeredPoints} percentage points more likely to be employed, and their monthly income was an estimated ${incomeOffered}% higher than the control group’s. For women who attended, income was ${incomeAttended}% higher.`,
-    leadFacts: ['RC-01', 'RC-02', 'RC-13'],
+    // WP31: two sentences, the offered-place results; the attenders' income (RC-13) is on the trial page the slide links.
+    lead: `Women offered a place in the predecessor WSDFM program were ${offeredPoints} percentage points more likely to be employed. Their monthly income was an estimated ${incomeOffered}% higher than the control group’s.`,
+    leadFacts: ['RC-01', 'RC-02'],
     proof: {
       factId: 'RC-06a',
       caption: () => `Employment effect for women offered a place: +${offeredPoints} percentage points, against ${nineTrialAverage} on average across nine vocational-training trials.`,
@@ -164,9 +169,10 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
-    title: `Median Income: ${incomeBefore} Before Training, ${incomeNow} at the October 2026 Survey`,
+    // WP31: said as what surveyed completers report, not as a before-and-after effect.
+    title: `Surveyed Completers Report a Median Income of ${incomeNow}, Up from ${incomeBefore} Before Training`,
     titleFacts: ['OC-03'],
-    lead: 'Among surveyed completers: median monthly income, and share employed, before training and at the October 2026 survey.',
+    // No lead (WP31): the heading says whose figures these are, and each tile's caption says it again; the longer heading would otherwise make this the tallest slide and leave the others too much empty space.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
       { factId: 'OC-01', caption: (f) => `employed among surveyed completers at the October 2026 survey, up from ${before(f)} before training` },
@@ -222,7 +228,7 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'programs',
     eyebrow: 'Our Programs',
-    title: 'Find the Program for Your Partnership',
+    title: 'Find Your Program',
     // No lead: the title and the five program links say it, and a lead would make this the tallest slide by more than the layout test allows (WP19).
     programs: PROGRAM_HREFS.map(slideLink),
     links: [{ label: 'Explore Programs', href: '/programs/', variant: 'primary' }],

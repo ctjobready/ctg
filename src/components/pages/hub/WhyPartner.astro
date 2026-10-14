@@ -4,12 +4,11 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
-import { TRACKING_MONTHS } from '../partners/partners';
 
 /**
- * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Three tiles, each read from the
- * facts register (never retyped): the randomized trial of a predecessor program (RC-02), the survey among surveyed completers (OC-01), and
- * the 12-month outcome tracking (PD-02). The trial and the survey stay apart and each carries its own label.
+ * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Two tiles, each read from the
+ * facts register (never retyped): the randomized trial of a predecessor program (RC-02) and the survey among surveyed completers (OC-01). The trial and
+ * the survey stay apart and each carries its own label. WP31: the 12-month outcome tracking (PD-02) is a commitment, not a result, so it left these tiles; the hero line states it.
  */
 interface Props {
   id?: string;
@@ -35,14 +34,6 @@ const tiles = [
     href: '/impact/outcomes-2026/',
     link: 'Impact Survey 2026',
     ids: 'OC-01',
-  },
-  {
-    kicker: 'Outcome Tracking',
-    value: `${TRACKING_MONTHS} months`,
-    label: 'of outcome tracking after each course, as agreed in each program’s scope',
-    href: '/about/governance/',
-    link: 'Governance and Accountability',
-    ids: 'PD-02',
   },
 ];
 ---
@@ -75,7 +66,7 @@ const tiles = [
   }
   @media (min-width: 768px) {
     .wp {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .wp__tile {

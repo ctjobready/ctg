@@ -113,19 +113,7 @@ const optionText: Record<string, string> = {
     />
   </div>
 
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-universities')}
-    title="What Your Students Leave With"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'A Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, exam fees, attempts and retakes are agreed in the program scope.' },
-      { kind: 'Emotional', title: 'Placement Results You Can Discuss', text: `Tracer results at ${TRACER_MONTHS} show where students work.` },
-      { kind: 'Social', title: 'Capacity That Stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
-    ]}
-  />
-
-  <!-- C5 · Guide (empathy first) -->
+  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
   <PartnerGuideBand
     empathy={EMPATHY.universities}
     statements={[
@@ -133,6 +121,18 @@ const optionText: Record<string, string> = {
     ]}
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
+  />
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    photos={futurePhotos('partners-universities')}
+    title="What Your Students Leave With"
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'A Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, exam fees, attempts and retakes are agreed in the program scope.' },
+      { kind: 'Emotional', title: 'Placement Results You Can Discuss', text: `Follow-up results at ${TRACER_MONTHS} show where students work.` },
+      { kind: 'Social', title: 'Capacity That Stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
+    ]}
   />
 
   <!-- C6 · Mechanism (JobReady@Campus) -->
@@ -184,7 +184,7 @@ const optionText: Record<string, string> = {
         relieves: 'Employers cannot find the skills they need',
       },
       {
-        feature: 'As Agreed in the Program Scope: Tracers, Monthly Reports and Documentary Evidence Where Available',
+        feature: 'As Agreed in the Program Scope: Follow-Up Surveys, Monthly Reports and Documentary Evidence Where Available',
         means: 'your institution has outcome data it can report.',
         outcome: 'Placement results you can discuss',
         relieves: 'No placement results to publish',

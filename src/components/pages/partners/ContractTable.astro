@@ -48,7 +48,8 @@ const rows: Row[] = [
     contract: 'NHRDF (National Human Resource Development Fund, Implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
-    direct: `${SCOPE} ${factPart('GV-04', /initial (\d+ trainees)/)} initially; ${factPart('GV-04', /scope ([\d,]+\+)/)} trainees in scope`,
+    // WP31: the scope first, then the first batch inside it (GV-04: "initial 200 trainees, scope 1,000+"); the 31,200+ total counts the scope.
+    direct: `${SCOPE} ${factPart('GV-04', /scope ([\d,]+\+)/)} trainees, ${factPart('GV-04', /initial (\d+) trainees/)} in the first batch`,
   },
   {
     contract: 'Digital Lab Establishment Project, Phase II',

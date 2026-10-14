@@ -115,15 +115,18 @@ test.describe('Home', () => {
     expect(compact(await page.locator('#results').textContent())).not.toContain('Impact at Scale');
   });
 
-  test('the comparison answers each row with its own cell: the freelance-marketplace Mentoring cell is not the Work Entry cell', async ({ page }) => {
+  test('the comparison answers each row with its own cell: the self-paced Mentoring cell is not its Work Entry cell; WP31 dropped the freelance-marketplace column on Home', async ({ page }) => {
     await open(page, '');
+    expect((await page.locator('#compare thead th').allTextContents()).map(compact)).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
     const rows = await page.locator('#compare tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
     const byLabel = new Map(rows.map((r) => [r[0], r]));
     const mentoring = byLabel.get('Mentoring')!;
     const work = byLabel.get('Work Entry')!;
-    expect(mentoring[mentoring.length - 1]).toBe('Mentoring is not the core service; support varies by marketplace.');
-    expect(work[work.length - 1]).toBe('Marketplace matching is the core service; additional support varies.');
+    expect(mentoring[mentoring.length - 1]).toBe('Varies; often self-directed');
+    expect(work[work.length - 1]).toBe('Work-entry support depends on the provider and package.');
     expect(mentoring[mentoring.length - 1]).not.toBe(work[work.length - 1]);
+    // WP31: the independent-evidence cell is one clause on Home (the shared cell keeps its longer wording elsewhere)
+    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome.');
   });
 
   test('the recognition band leads with the university and UN-mandated partners, then AWS, then the EdTech listing; the 2014–2016 press list is a link away', async ({ page }) => {
@@ -192,7 +195,7 @@ test.describe('mega-menu featured panels point to a different decisive page than
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
       ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.'],
-      ['programs', '/programs/youthwide/', 'Co-funded country cohorts across three regions, with a national initiative in Bangladesh.'],
+      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.'],
       ['partner', '/partner-with-us/governments/', 'National programs for youth employment.'],
     ];
     for (const [id, href, text] of cases) {

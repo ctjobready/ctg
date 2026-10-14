@@ -40,13 +40,15 @@ const explore = [
   { icon: 'message-square-quote', title: 'Success Stories', text: 'Learners in their own words.', href: '/impact/stories/' },
   { icon: 'image', title: 'In the Field', text: 'Photographs from programs, partners and events.', href: '/impact/in-the-field/' },
 ];
+// WP31: the jump labels are the headings they jump to (a short form only where the heading is long: the part before the comma), and every heading has one.
 const onThisPage = [
   { label: 'In Short', href: '#summary' },
   { label: 'Results at a Glance', href: '#glance' },
   { label: 'Four Programs', href: '#cases' },
-  { label: 'How to Read the Evidence', href: '#evidence-ladder' },
+  { label: 'Four Kinds of Evidence', href: '#evidence-ladder' },
+  { label: 'Where We Are Heading', href: '#heading' },
   { label: 'Go Deeper', href: '#explore' },
-  { label: 'Global Goals', href: '#sdg' },
+  { label: 'Seven Global Goals', href: '#sdg' },
 ];
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
@@ -66,12 +68,14 @@ const d = discoveryCta();
 
   <PageNav links={onThisPage} />
 
+  <!-- WP31: in the trial group the result for women offered a place (+41% income) leads, as on every other page; the attenders' figure (+54%) follows it. -->
   <ImpactGlance
     id="glance"
     title="Results at a Glance"
     eyebrow="Headline Results"
     groups={[
-      { title: 'Trial Results, Predecessor Program', cols: 2, items: [
+      { title: 'Trial Results, Predecessor Program', cols: 3, items: [
+        { id: 'RC-01', href: '/impact/independent-evaluation/' },
         { id: 'RC-13', href: '/impact/independent-evaluation/', label: 'higher monthly income for women who attended the predecessor WSDFM program', note: '' },
         { id: 'RC-06a', href: '/impact/independent-evaluation/' },
       ] },

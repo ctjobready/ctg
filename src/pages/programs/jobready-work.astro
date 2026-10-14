@@ -7,7 +7,6 @@ import Section from '../../components/ui/Section.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
-import ProofBand from '../../components/sections/ProofBand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
@@ -19,7 +18,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING, TRIAL_SCOPE } from '../../data/copy';
+import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -92,7 +91,7 @@ const approach = [
   <!-- C6 -->
   <MechanismSection title="A Program Built Around Your Roles" positioning={POSITIONING.work} eyebrow="How It Works" blocks={approach} factIds={['IN-10']} />
 
-  <!-- Proof band directly after the mechanism (WP18b): the employer delivery record leads; the youth-program evidence follows the offer below. -->
+  <!-- Proof band directly after the mechanism (WP18b): the employer delivery record, then (WP31) two links to the youth programs' evidence; no trial or survey figure is shown on this corporate offer page. -->
   <PairedEvidence
     title="The Delivery Record for Employers"
     items={[
@@ -100,8 +99,10 @@ const approach = [
       { id: 'PA-07', label: 'AI Leadership' },
       { id: 'SC-15', label: 'Corporate Delivery', stat: true },
     ]}
-    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
-    broader={[{ label: 'See the Evidence Below', href: '#proof-band' }]}
+    broader={[
+      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
+      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
+    ]}
   />
 
   <!-- C9: only the questions about the program itself; the audience page answers the rest -->
@@ -119,9 +120,6 @@ const approach = [
     <p class="note note--key" data-fact="PD-02">{EMPLOYER_PRICING}</p>
   </OfferSection>
 
-  <!-- C7, moved below the employer offer (review round 3): the employer journey leads with the employer facts; this is the youth-program evidence. -->
-  <!-- WP25s: the survey result is stated once, in the band's own one-line chart lead (a second copy of the sentence is removed) -->
-  <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
   <!-- C12 -->
   <RiskSection
     title="Start with a Pilot Team. Decide on Evidence"

@@ -12,12 +12,12 @@ const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ')
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 
 test.describe('timelines name their starting point', () => {
-  test('Governments, "What a Ministry Sees": reports count from the first cohort, tracer surveys from the end of each course', async ({ page }) => {
+  test('Governments, "What a Ministry Sees": reports count from the first cohort, follow-up surveys from the end of each course', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const when = await page.locator('#ministry-sees ol > li .ms__when').allTextContents();
     expect(when.map(compact)).toEqual(['Month 1 of the First Cohort', '6 Months After Each Course', '12 Months After Each Course']);
     expect(compact(await page.locator('#ministry-sees').textContent())).not.toMatch(/\bMonth (6|12)\b/);
-    await expect(page.locator('#ministry-sees ol > li .ms__title')).toHaveText(['Monthly Reports Begin', 'The 6-Month Tracer Survey', 'The 12-Month Tracer Survey']);
+    await expect(page.locator('#ministry-sees ol > li .ms__title')).toHaveText(['Monthly Reports Begin', 'The 6-Month Follow-Up Survey', 'The 12-Month Follow-Up Survey']);
   });
 
   // every grant-funded week sequence on the site reads Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing
@@ -73,7 +73,8 @@ test.describe('paid-work pathways comparison (OC-04)', () => {
     ];
   })();
 
-  for (const route of ['', 'partner-with-us/employers/']) {
+  // WP31: the Employers page no longer carries the youth programs' pathway block (it links to the evidence pages); Home keeps it
+  for (const route of ['']) {
     test(`${route || 'Home'}: salaried, freelancing and business ownership, before training and at the October 2026 survey, tagged Surveyed Completers`, async ({ page }) => {
       await open(page, route);
       const block = page.locator('#proof-band .pwp');
@@ -98,13 +99,14 @@ test.describe('paid-work pathways comparison (OC-04)', () => {
     await expect(page.locator('#proof-band .pwp__note')).toHaveCount(0);
   });
 
-  test('Employers: the block says it is from the youth programs, not corporate training, like its neighbours in the band', async ({ page }) => {
+  test('Employers carries no pathways block (WP31): a corporate offer page shows no youth-program survey figure, only links to the evidence pages', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    expect(compact(await page.locator('#proof-band .pwp__note').textContent())).toBe('From CodersTrust’s youth programs, not corporate training.');
+    await expect(page.locator('.pwp')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    for (const route of ['', 'partner-with-us/employers/']) {
+    for (const route of ['']) {
       test(`${route || 'Home'} at ${vp.width}px: the comparison fits its band with no horizontal overflow`, async ({ page }) => {
         await page.setViewportSize(vp);
         await open(page, route);
@@ -176,7 +178,7 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     expect((await table(page).locator('thead th').allTextContents()).map(compact)).toEqual(['Funding Route', 'What It Supports', 'Evidence Relationship']);
     const rows = await table(page).locator('tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
     expect(rows).toEqual([
-      ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa.', 'Current outcome evidence comes from Bangladesh and Kosovo.'],
+      ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
       [
         'Funding Route 2 JobReady Platform Grants',
         'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',

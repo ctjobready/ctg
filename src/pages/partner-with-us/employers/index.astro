@@ -3,7 +3,9 @@
  * P7 Employers: /partner-with-us/employers/ (T3, implements doc 04 matrix 4.6).
  * C1 to C14 in order, as the numbered table in doc 06 P7.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the second statement of the
- * placement-team sentence (the hiring band says it), the restated "measures you set" card and the fifth next step. Three FAQs, not five (the paid-work pathways table answers the freelancing question).
+ * placement-team sentence (the hiring band says it), the restated "measures you set" card and the fifth next step. Three FAQs, not five.
+ * WP31 (cycle-8 review): the youth programs' trial, survey and paid-work pathway blocks are gone from this corporate offer page; the delivery record for employers stands alone
+ * and "Broader Evidence from Our Youth Programs" is a two-link group to the evidence pages (no figure from the youth programs is shown here).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -15,28 +17,25 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import ProofBand from '../../../components/sections/ProofBand.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
-import PaidWorkPathways from '../../../components/pages/impact/PaidWorkPathways.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import Callout from '../../../components/pages/partners/Callout.astro';
-import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { LINKS, meta } from '../../../components/pages/partners/partners';
+import { C14, EMPATHY, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -53,7 +52,6 @@ const { title, description } = meta(
 
 // Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
 const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
-const mainIncome = factPart('OC-07', /78\.0% named work as their main income source/);
 ---
 
 <LandingLayout
@@ -120,6 +118,15 @@ const mainIncome = factPart('OC-07', /78\.0% named work as their main income sou
     />
   </div>
 
+  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <PartnerGuideBand
+    empathy={EMPATHY.employers}
+    stats={['SC-15']}
+    statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-06'] }]}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    partnerGroup="private"
+  />
+
   <!-- C4 · Future state -->
   <FutureBand
     photos={futurePhotos('partners-employers')}
@@ -130,15 +137,6 @@ const mainIncome = factPart('OC-07', /78\.0% named work as their main income sou
       { kind: 'Emotional', title: 'Certification for Candidates Who Pass the Exam', text: 'Candidates who pass the exam hold the industry certification for their track.' },
       { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent is introduced through CodersTrust’s placement team.' },
     ]}
-  />
-
-  <!-- C5 · Guide (empathy first) -->
-  <PartnerGuideBand
-    empathy={EMPATHY.employers}
-    stats={['SC-15']}
-    statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-06'] }]}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
-    partnerGroup="private"
   />
 
   <!-- C6 · Mechanism (JobReady@Work) -->
@@ -154,7 +152,8 @@ const mainIncome = factPart('OC-07', /78\.0% named work as their main income sou
     link={{ label: 'About JobReady@Work', href: LINKS.work }}
   />
 
-  <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. WP25s: proof comes before the features table (C8), as on every other audience page. -->
+  <!-- C7 · Proof: the employer delivery record, then two links to the youth programs' evidence (WP31: no trial, survey or pathway figure is shown on this corporate page).
+       WP25s: proof comes before the features table (C8), as on every other audience page. -->
   <PairedEvidence
     title="The Delivery Record for Employers"
     items={[
@@ -162,33 +161,11 @@ const mainIncome = factPart('OC-07', /78\.0% named work as their main income sou
       { id: 'PA-07', label: 'AI Leadership' },
       { id: 'SC-15', label: 'Corporate Delivery', stat: true },
     ]}
-    broaderLabel="Broader Evidence from Our Youth Programs (Not Corporate Training)"
     broader={[
-      { label: 'Evidence Below', href: '#proof-band' },
-      { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
-      { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
-    ]}
-  />
-  <ProofBand
-    title="Independent Evidence and Survey Results"
-    eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)"
-    headlineFact="RC-01"
-    trialScope={TRIAL_SCOPE.work.text}
-    statIds={['RC-02']}
-    chartId="OC-01"
-    compact
-    links={[
       { label: 'The Randomized Trial', href: LINKS.trial },
       { label: 'Impact Survey 2026', href: LINKS.outcomes },
     ]}
-  >
-    <EvidenceList
-      heading="What Surveyed Completers Report"
-      items={[{ facts: ['OC-07'], lead: 'From CodersTrust’s youth programs:', text: `Among valid respondents, ${mainIncome}.` }]}
-    />
-    <!-- WP29 (benchmark review): the paid-work pathways of the youth programs' surveyed completers, as one compact comparison (OC-04). Labelled as the youth programs', like its neighbours. -->
-    <PaidWorkPathways note="From CodersTrust’s youth programs, not corporate training." />
-  </ProofBand>
+  />
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable

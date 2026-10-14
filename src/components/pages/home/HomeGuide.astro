@@ -2,6 +2,7 @@
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import FactStat from '../../facts/FactStat.astro';
+import EvidenceTag from '../../system/EvidenceTag.astro';
 import PartnerRelationships from './PartnerRelationships.astro';
 import CopyBlock from './CopyBlock.astro';
 import { EMPATHY, ORIGIN } from '../../../data/copy';
@@ -38,8 +39,9 @@ const team = linkAttrs('/about/team/');
       </p>
     </div>
     <div class="guide__panel" data-reveal>
-      <FactStat id="SC-06" />
-      <FactStat id="SC-04" />
+      <!-- WP31: the contract-scope figure says what kind of figure it is (agreements, not delivered training), as the audience pages' Results at a Glance do. -->
+      <div class="guide__tile"><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /></div>
+      <div class="guide__tile"><FactStat id="SC-04" /></div>
     </div>
   </div>
   <PartnerRelationships />
@@ -90,6 +92,26 @@ const team = linkAttrs('/about/team/');
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
+  }
+  /* A tile is its figure, with the evidence tag (WP31) above it where the figure has one. Where the grid can share rows (subgrid), both tiles use the same two rows,
+     so the two figures start level whether or not one of them has a tag; without subgrid the tile is a plain stack. */
+  .guide__tile {
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
+    justify-items: start;
+    min-width: 0;
+  }
+  @supports (grid-template-rows: subgrid) {
+    .guide__tile {
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-xs);
+    }
+    /* <FactStat> wraps its tile in a display:contents element, so the tile is found as a descendant, not a child */
+    .guide__tile :global(.stat) {
+      grid-row: 2;
+    }
   }
   /* the SC-01 / SC-03 qualifier sits directly under the two tiles it qualifies and spans the panel */
   .guide__panel :global(.guide__reach) {

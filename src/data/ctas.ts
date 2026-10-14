@@ -12,6 +12,7 @@ import { BANGLADESH_HQ, CAREERS_EMAIL, CONTACT } from '../lib/site';
 
 export type CtaKey =
   | 'discovery'
+  | 'general'
   | 'briefing'
   | 'funding'
   | 'fundingYouthwide'
@@ -65,6 +66,13 @@ export const CTAS: Record<CtaKey, CtaDef> = {
       'Preferred timeline',
       'Two suitable times for a discovery conversation',
     ],
+  },
+  /** WP31: "Not sure where you fit?" on /partner-with-us/ writes to the general address, so a visitor who cannot pick a route is not sent to another route chooser. */
+  general: {
+    key: 'general',
+    label: 'Not Sure? Email Us Your Goals',
+    subject: 'Partnership inquiry — [your organization]',
+    body: ['Organization', 'Your goals', 'Country/region', 'Priority groups', 'Timeline'],
   },
   briefing: {
     key: 'briefing',

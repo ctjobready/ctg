@@ -43,9 +43,9 @@ import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
 
 const path = '/programs/youthwide/';
-const LAST_UPDATED = '2026-10-14';
+const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
-const description = 'YouthWIDE prepares educated, unemployed youth for paid digital work: co-funded country cohorts in three regions and a national initiative in Bangladesh.';
+const description = 'YouthWIDE prepares educated, unemployed youth for paid digital work: co-funded cohorts designed for three regions and a national initiative in Bangladesh.';
 const discovery = ctaFor('discovery');
 const briefing = ctaFor('briefing');
 const cofunding = ctaFor('nationalFunding');
@@ -61,7 +61,7 @@ const faqSources: FaqSource[] = [
     html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="PD-06 PD-05">We scale in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
     evidence: ['GV-01', 'GV-11'],
   },
-  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
+  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
   { audience: 'foundations' as const, id: 'Q7' },
 ];
 
@@ -103,7 +103,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; hub-and-spoke delivery for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
-      { label: 'Reporting', text: 'Monthly reports, tracer surveys and documentary evidence of earnings where available.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Reporting', text: 'Monthly reports, follow-up surveys and documentary evidence of earnings where available.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 
@@ -117,7 +117,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     title="Training Without Work Entry Spends the Budget Without the Result"
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
     ]}
   />
 
@@ -136,8 +136,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     lead="Illustrative: monthly reports follow each cohort from enrollment to first earnings."
     vignettes={[
       { kind: 'Functional', title: 'Monthly Reports Your Board or Agency Can Read', text: 'Enrollment, completion, certification, placements and first earnings, with women’s and priority-group shares reported.' },
-      { kind: 'Emotional', title: 'Know Whether the Budget Produced Earnings', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
-      { kind: 'Social', title: 'Evidence Your Evaluators Can Check', text: 'Tracer results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+      { kind: 'Emotional', title: 'See Who Started Earning', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
+      { kind: 'Social', title: 'Evidence Your Evaluators Can Check', text: 'Follow-up results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
     ]}
   />
 
@@ -215,7 +215,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       },
       {
         ...painForRow(FUNDER_PAINS, 'P2'),
-        feature: 'As Agreed in the Program Scope: Baseline at Enrollment, Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available',
+        feature: 'Baseline, Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope',
         means: 'your evaluators can check results against payslips, offer letters, platform logs or bank receipts where available.',
         outcome: 'Auditable results',
         facts: ['PD-08', 'PD-09'],

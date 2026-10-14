@@ -38,7 +38,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     await expect(s.locator('h2')).toHaveText('Results by Program');
     await expect(s.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
     await expect(s.locator('.hs__lines li')).toHaveText([
-      'WSDFM program records: 71% in work.',
+      'WSDFM program records, separate from the trial: 71% in work.',
       'Women in Online Work, Kosovo: 68% in work.',
       'UNDP YES, Korail: 67% found a first job within three months.',
       'Her Power: 47% of 800 tracked women in work.',
@@ -94,7 +94,8 @@ test.describe('evidence band (#proof-band)', () => {
     await open(page, pageByRoute('/'));
     const t = collapse(await page.locator('#proof-band').textContent());
     expect(t).toContain('Employment at Trial Follow-Up (Nov–Dec 2021): Women Offered a Place and Control Group');
-    expect(t).toContain('Chart data: employment at trial follow-up, women offered a place and the control group.');
+    // WP31: the band's scope line is gone; the chart note names the predecessor program the trial evaluated
+    expect(t).toContain('Chart data: employment at follow-up in the trial of the predecessor program, women offered a place and the control group.');
     expect(t).toContain('63.1%');
     expect(t).toContain('52.8%');
   });
@@ -103,14 +104,15 @@ test.describe('evidence band (#proof-band)', () => {
 test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   test('the carousel slides carry the accepted headings, bases and links', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    await expect(slide(page, 2).locator('h2')).toHaveText('Median Income: $82 Before Training, $245 at the October 2026 Survey');
-    await expect(slide(page, 2).locator('.hs__lead')).toContainText('Among surveyed completers');
+    // WP31: said as what surveyed completers report, not as a before-and-after effect; the heading says whose figures these are, so the slide has no lead
+    await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
     await expect(slide(page, 4).locator('h2')).toHaveText('58.8% of Surveyed Earners Started Within Six Months');
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
     await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     await expect(slide(page, 6).locator('h2')).toHaveText('Government Contracts and National University Partnership');
-    await expect(slide(page, 6).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official skills partner of Bangladesh’s National University, onboarding 1.5M+ learners.');
+    await expect(slide(page, 6).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 
   test('the third vision scenario starts "You see employers hire AI-ready talent from your cohort"', async ({ page }) => {

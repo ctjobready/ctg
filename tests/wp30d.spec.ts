@@ -160,7 +160,8 @@ test.describe('less is more: the report-like bands are gone', () => {
 test.describe('anchors that other pages link to stay', () => {
   const ANCHORS: [string, string[]][] = [
     ['programs/youthwide/', ['governments', 'cta', 'cta-governments', 'mechanism', 'proof-band', 'features', 'next-steps']],
-    ['programs/jobready-work/', ['mechanism', 'next-steps', 'proof-band', 'cta']],
+    // WP31: #proof-band left the Work page with its youth-program trial block; no page linked to that anchor (#mechanism and #next-steps are linked, from the employer due-diligence view)
+    ['programs/jobready-work/', ['mechanism', 'next-steps', 'cta']],
     ['programs/jobready-campus/', ['mechanism', 'features', 'next-steps', 'cta']],
   ];
   for (const [route, ids] of ANCHORS) {

@@ -13,7 +13,6 @@ import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
 import HomeEvidence from '../components/pages/home/HomeEvidence.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import NewsTeaserBand from '../components/sections/NewsTeaserBand.astro';
 import FeaturesTable from '../components/sections/FeaturesTable.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
@@ -55,6 +54,10 @@ const problemBluf = 'Millions of educated young people are out of work and out o
 // C8: the three ranked pains (FUNDER_PAINS) and one C8 row for each, pain → how we relieve it → the registered feature behind it. Numbers inside feature rows come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
 const hours = fact('PD-01').stat?.value;
+// The comparison's "Independent Evidence" cell on Home (WP31): the trial in one clause, the predecessor program's length read from RC-07 (not retyped).
+const trialHours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
+if (!trialHours) throw new Error('Home: RC-07 no longer reads "... was N hours"');
+const independentEvidence = `One randomized trial of a predecessor program (${trialHours} hours, women in Dhaka); independent evaluation of your cohort welcome.`;
 const featureRows = [
   {
     ...painForRow(FUNDER_PAINS, 'P1'),
@@ -67,7 +70,7 @@ const featureRows = [
   {
     ...painForRow(FUNDER_PAINS, 'P2'),
     // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
-    feature: 'As Agreed in the Program Scope: Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available',
+    feature: 'Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope',
     means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available.',
     outcome: 'Results You Can Check',
     facts: ['PD-08', 'PD-09'],
@@ -99,9 +102,9 @@ const featureRows = [
   <Tone cmf="C3">
     <HomeCost
       id="cost"
-      title="Tracks and Evidence Fall Behind While You Wait"
+      title="Training and Evidence Fall Behind While You Wait"
       blocks={[
-        { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+        { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
         { icon: 'trending-down', claim: 'Only Three of Nine Training Trials Showed a Significant Employment Impact', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after="A first cohort can show who is earning, and you decide on the evidence."
@@ -118,7 +121,7 @@ const featureRows = [
       title="Imagine the Next 12 Months"
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
-        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman outside Dhaka who invoices her first foreign client from her own laptop.' },
+        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman who invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
         { kind: 'Social', title: 'AI-Ready Talent', text: 'You see employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.' },
       ]}
@@ -133,7 +136,6 @@ const featureRows = [
       id="proof-band"
       title="Evidence You Can Check"
       trialHeading="An Independent Randomized Trial"
-      lead="Trial figures are for a predecessor program; survey figures are among surveyed completers."
       links={[
         { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
         { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
@@ -159,7 +161,7 @@ const featureRows = [
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'All Partner FAQs', href: '/partner-with-us/#faqs' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How the Approaches Compare" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs']} /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How the Approaches Compare" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs', 'Freelance Marketplaces Alone']} ownCells={{ 'Independent Evidence': independentEvidence }} /></Tone>
 
   <Tone cmf="C11"><HomeOffer id="offer" lead="Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity." /></Tone>
 
@@ -205,8 +207,6 @@ const featureRows = [
     />
   </Tone>
 
-  <!-- WP23, item 9: the latest program and partner posts (partnerships; programs and events), so partners and young people are the subject; the treasure-hunt post is left out because its excerpt states a registration count the facts register does not carry. -->
-  <Tone cmf="NEWS"><NewsTeaserBand id="news" topics={['partnerships', 'programs-events']} exclude={['a-proud-milestone-for-coderstrust']} /></Tone>
-
+  <!-- WP31 (cycle-8 review): the "Latest News" band (Bangladesh posts after the final call to action) is gone, so the page ends on its next steps. The News menu item stays. -->
 </LandingLayout>
 

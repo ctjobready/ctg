@@ -10,6 +10,7 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import CTABand from '../../components/ui/CTABand.astro';
+import Button from '../../components/system/Button.astro';
 import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
@@ -29,11 +30,13 @@ const HUB_FAQ = ['Q1', 'Q3', 'Q8', 'Q9'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
 // Tracking is scope-conditional, as on the audience pages: it is part of each program's agreed scope (PD-02), not a blanket promise.
-// WP27: the hero names the seven routes as the route cards do (the Investors route is its own card now), so a reader sees at once which route is theirs.
-const BLUF = `We co-design youth-employment programs with development partners and NGOs, governments, foundations and CSR teams, universities, employers and local partners in Bangladesh, with outcome tracking for ${TRACKING_MONTHS} months after each course, as agreed in each program’s scope. Impact investors have their own route.`;
+// WP31 (cycle-8 review): the hero says what a partnership delivers, once, for any country; the route cards below it name who each route is for (the investor route stays in its card).
+const BLUF = `Co-design a youth-employment program with training, mentoring, placement support and ${TRACKING_MONTHS} months of outcome tracking after each course, as agreed in the program scope.`;
 const description = 'Co-design a youth-employment program with CodersTrust. Pick your route: governments, funders, universities, employers, local partners or impact investors.';
 if (description.length > 155) throw new Error(`Hub meta description is ${description.length} characters (max 155)`);
 const discovery = cta('discovery');
+// "Not sure where you fit?": a prefilled email to the general address (WP31), not a link to another route chooser.
+const general = cta('general');
 
 // Seven decision-led route cards (a headline that names the decision, then who it is for), in the order of the nav menu (src/data/nav.ts). WP27: Investors is
 // a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
@@ -44,7 +47,7 @@ const audiences = [
   { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },
   { title: 'Deliver Programs in Your Community', icon: 'map-pin', href: '/partner-with-us/local-partners/', text: 'For Bangladeshi NGOs, colleges, chambers and associations delivering locally.' },
-  { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, the platform connecting emerging-market youth to work.' },
+  { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.' },
 ];
 
 // Partnering steps: the weeks and the cohort window are read from PD-04 (never retyped); WP29: each step heading names its starting point.
@@ -86,7 +89,7 @@ const jsonLd = [
         <Icon name="message-circle" size={28} strokeWidth={1.5} class="hub__helper-icon" />
         <p class="hub__helper-text"><strong>Not sure where you fit?</strong> Tell us your goals and we will point you to the right route.</p>
         <p class="cluster hub__helper-links">
-          <a class="link" href={linkAttrs('/contact/').href}>Talk to Us<Icon name="arrow-right" size={16} /></a>
+          <Button variant="outline" size="sm" href={general.href} icon="mail">{general.label}</Button>
         </p>
         <p class="hub__helper-programs">
           <span>Already know the program you need? </span><a class="link" href={linkAttrs('/programs/').href}>See Programs<Icon name="arrow-right" size={16} /></a>

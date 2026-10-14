@@ -16,7 +16,7 @@ import CopyText from '../../components/pages/impact/CopyText.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
 import { desc, title, val, discoveryCta } from '../../components/pages/impact/page-utils';
-import { SAFEGUARDING, MICRO_COMMITMENT, RCT_HEADLINE, SURVEY_EMPLOYMENT } from '../../data/copy';
+import { SAFEGUARDING, MICRO_COMMITMENT, RCT_HEADLINE } from '../../data/copy';
 import type { FaqSource } from '../../components/pages/programs/faq';
 import { linkAttrs } from '../../lib/url';
 
@@ -28,7 +28,9 @@ const answer = `${lead.replace(/\.$/, '')}, agreed for each supported cohort.`;
 // The trial's evaluator is spelled out once on this page, where the evidence first names it (the register's headline says "BIGD").
 const BIGD = 'the BRAC Institute of Governance and Development (BIGD)';
 if (!RCT_HEADLINE.text.includes('by BIGD')) throw new Error('Our Model: the RC-01 headline no longer says "by BIGD"; update the expansion');
-const trial = { ...RCT_HEADLINE, text: RCT_HEADLINE.text.replace('by BIGD', `by ${BIGD}`) };
+// WP31: the evidence paragraph ends with the employment result (RC-01's first sentence); the income sentences and the survey result live on the evidence pages it links.
+const trial = { ...RCT_HEADLINE, text: RCT_HEADLINE.text.replace('by BIGD', `by ${BIGD}`).split(/(?<=\.)\s+(?=[A-Z])/)[0] };
+if (!/more likely to be employed\.$/.test(trial.text)) throw new Error('Our Model: the first sentence of the RC-01 headline no longer ends with the employment result');
 // Each card states its register fact (PD-xx) in one or two plain sentences that do not repeat the card's own title. The wording follows the
 // register entry; the figures come from it (val) or are copied from it unchanged.
 const cards = [
@@ -43,7 +45,7 @@ const d = discoveryCta();
 
 // Three decision questions with short answers; the timeline answer is the shared bank answer.
 const faqSources: FaqSource[] = [
-  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, tracer surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
+  { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
   { audience: 'foundations', id: 'Q7' },
   { q: 'What Does It Cost?', html: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions run from outreach and selection to placement support and 12 months of outcome tracking, with the exam fee included; devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.', evidence: ['PD-02', 'PD-02a', 'PD-05'] },
 ];
@@ -97,7 +99,7 @@ const faqSources: FaqSource[] = [
 
   <Section id="evidence" aria-labelledby="evid-h">
     <SectionHeader id="evid-h" eyebrow="Evidence" title="Evidence Behind the Approach" />
-    <div class="om__text"><CopyText block={trial} /><CopyText block={SURVEY_EMPLOYMENT} /></div>
+    <div class="om__text"><CopyText block={trial} /></div>
     <p class="om__link"><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 

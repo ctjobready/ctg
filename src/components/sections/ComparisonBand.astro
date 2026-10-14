@@ -22,6 +22,11 @@ interface Props {
   onlyRows?: string[];
   /** Drop these columns (Home, WP19: a column whose cells are mostly "Varies" says nothing). Matched on the heading. */
   dropColumns?: string[];
+  /**
+   * Page-specific wording for CodersTrust's own cell in a row, keyed by the row's label (Home shortens "Independent Evidence", WP31). The cell keeps its check mark
+   * and its fact marker; every other cell, and every other page, keeps the shared text.
+   */
+  ownCells?: Record<string, string>;
   /** A line under the table. */
   note?: string;
   id?: string;
@@ -35,7 +40,7 @@ const {
     { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
     { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Mentoring is not the core service; support varies by marketplace.', 'No mentoring'] },
     { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-    { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: tracers at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
+    { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: follow-up surveys at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
     {
       label: 'Independent Evidence',
       cells: [
@@ -52,6 +57,7 @@ const {
   withoutDoingNothing = false,
   onlyRows,
   dropColumns = [],
+  ownCells = {},
   note,
   id = 'compare',
 } = Astro.props;
@@ -61,7 +67,15 @@ const dropped = new Set<number>(dropColumns.map((c) => columns.indexOf(c)));
 if (dropped.has(-1) || dropped.has(0)) throw new Error(`ComparisonBand: dropColumns names an unknown column or the criteria column: ${dropColumns.join(', ')}`);
 if (withoutDoingNothing && nothing > 0) dropped.add(nothing);
 const shownColumns = columns.filter((_, i) => !dropped.has(i));
-const droppedNothing = rows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => !dropped.has(i + 1)) }));
+for (const label of Object.keys(ownCells)) if (!rows.some((r) => r.label === label)) throw new Error(`ComparisonBand: ownCells names an unknown row: ${label}`);
+// CodersTrust's own cell is the first one after the criteria label; a page's wording replaces its text and keeps its check mark and fact marker.
+const ownRows = rows.map((r) => {
+  const text = ownCells[r.label];
+  if (text === undefined) return r;
+  const first = r.cells[0];
+  return { ...r, cells: [typeof first === 'string' ? { text } : { ...first, text }, ...r.cells.slice(1)] };
+});
+const droppedNothing = ownRows.map((r) => ({ ...r, cells: r.cells.filter((_, i) => !dropped.has(i + 1)) }));
 const shownRows = onlyRows ? onlyRows.map((l) => droppedNothing.find((r) => r.label === l)).filter((r): r is NonNullable<typeof r> => !!r) : droppedNothing;
 ---
 

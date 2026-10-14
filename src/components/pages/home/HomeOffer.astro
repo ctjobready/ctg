@@ -42,7 +42,7 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
             <p class="eyebrow">Option {i + 1}</p>
             <h3 class="card__title">{o.name}{o.name === 'National' && ' '}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design Option</Badge>}</h3>
             <p class="offer__size">{o.size}</p>
-            <p class="card__meta offer__duration">{optionDuration(o.name, o.duration)}</p>
+            <p class="card__meta offer__duration">{optionDuration(o.duration)}</p>
             <p class="card__text">{o.note}</p>
           </div>
         </li>

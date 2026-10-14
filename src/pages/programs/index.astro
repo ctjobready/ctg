@@ -20,7 +20,7 @@ import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
-const LAST_UPDATED = '2026-10-14'; // WP20c: the day the review round 5 cycle 3 wording changes landed (PAGE_UPDATED.programs is 2026-10-10)
+const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (WP20c had set 2026-10-14; PAGE_UPDATED.programs is 2026-10-10)
 // R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
 // is a diploma), so the H1 speaks of stages ("from classroom to career"), not of one outcome. The meta description is the plan's P9 wording.
 const title = 'Programs';
@@ -28,7 +28,7 @@ const description = 'Explore CodersTrust programs, from school to the workplace:
 const discovery = ctaFor('discovery');
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program, run as co-funded country cohorts, with outcome evidence so far from Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, depending on government and donor commitments.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on paid-work outcomes, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }] },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, MENA and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, depending on government and donor commitments.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on paid-work outcomes, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }] },
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to a recognized credential beside the degree.', partner: [{ label: 'For Universities', href: '/partner-with-us/universities/' }] },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus access to job-ready talent.', means: 'your team learns on tasks from your own roles.', partner: [{ label: 'For Employers', href: '/partner-with-us/employers/' }] },
   { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audienceLabel: 'Eligibility', audienceFacts: 'NU-01', audience: NU_ELIGIBILITY, text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the qualification you hold.' },
@@ -83,14 +83,17 @@ const jsonLd = [
     <p class="hub__more">Deciding as an institution? <a class="link" href={linkAttrs('/partner-with-us/').href}>Start with Partner with Us.</a> <a class="link" href={linkAttrs('/our-model/').href}>See How the Model Works<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
+  <!-- WP31: the hub keeps the plain-language trial sentence, the +10.3 pp tile with its chart, and the 77.9% tile; the income paragraph (RC-01's headline), the chart's data table and the
+       tile's detail line live on the evidence pages the band links. -->
   <EvidenceBand
     id="proof-band"
     title="Trial and Survey Evidence"
     bandHeading="Trial and Survey Evidence"
     trialHeading="An Independent Randomized Trial"
-    headlineFact="RC-01"
     chart="trial"
     chip={false}
+    chartTable={false}
+    surveyNotes={false}
     plainLine
     lead="Trial figures are for a predecessor program. Survey figures are among surveyed completers, from the October 2026 survey."
     statIds={['RC-02']}

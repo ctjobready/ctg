@@ -70,17 +70,18 @@ test.describe('home hero slider', () => {
     await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
-      'Median Income: $82 Before Training, $245 at the October 2026 Survey',
+      'Surveyed Completers Report a Median Income of $245, Up from $82 Before Training',
       'Results by Program',
       '58.8% of Surveyed Earners Started Within Six Months',
       '130,000+ Young People Trained in 15 Countries and Territories',
     ]);
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
-    // the offered-place results come before the attenders' income, which is labelled as theirs
+    // WP31: the first slide states the offered-place results only (employment, then income); the attenders' income is on the trial page it links
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
     expect(lead.indexOf('10.3 percentage points'), 'employment result first').toBeGreaterThan(-1);
     expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('10.3 percentage points'));
-    expect(lead.indexOf('For women who attended, income was 54% higher')).toBeGreaterThan(lead.indexOf('41% higher'));
+    expect(lead).not.toContain('54%');
+    expect(lead).not.toContain('who attended');
     // the placement slide lists all four case-study programs
     await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(4);
     await expect(slides.nth(2).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work.');
@@ -176,7 +177,7 @@ test.describe('home hero slider', () => {
     await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Median Income: $82 Before Training, $245 at the October 2026 Survey');
+    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();

@@ -131,8 +131,10 @@ test.describe('/impact/ program results', () => {
     const flat = links.join('|');
     expect(flat).toContain('Results at a Glance');
     expect(flat).toContain('Four Programs');
-    expect(flat).toContain('How to Read the Evidence');
-    expect(flat).toContain('Global Goals');
+    // WP31: the jump labels are the headings they jump to (a short form only where the heading is long), and every heading has one
+    expect(flat).toContain('Four Kinds of Evidence');
+    expect(flat).toContain('Where We Are Heading');
+    expect(flat).toContain('Seven Global Goals');
     expect(flat).not.toContain('Program Results Table');
   });
 });

@@ -6,10 +6,10 @@ import { TRACER_MONTHS } from './partners';
 
 /**
  * "What a Ministry Sees" (WP24a, Benchmark; Governments): a three-step strip built only from commitments the register already states
- * and the page already makes: monthly reports from the first cohort (PD-08), and tracer surveys at 3, 6 and 12 months (PD-09). Scope-aware: it is what is
- * planned for every cohort "as agreed in the program scope", never an unscoped promise. No figure is typed here; the tracer months are parsed from PD-09.
+ * and the page already makes: monthly reports from the first cohort (PD-08), and follow-up surveys at 3, 6 and 12 months (PD-09). Scope-aware: it is what is
+ * planned for every cohort "as agreed in the program scope", never an unscoped promise. No figure is typed here; the follow-up survey months are parsed from PD-09.
  * WP29: each step names its starting point, so "Month 6" is never read as month 6 of a contract or a fiscal year. Reports start with the first cohort
- * ("Month 1 of the First Cohort"); the tracer surveys count from the end of each course ("6 Months After Each Course", PD-02's "12 months after each course").
+ * ("Month 1 of the First Cohort"); the follow-up surveys count from the end of each course ("6 Months After Each Course", PD-02's "12 months after each course").
  */
 interface Props {
   id?: string;
@@ -18,16 +18,16 @@ const { id = 'ministry-sees' } = Astro.props;
 if (!/monthly reports/i.test(fact('PD-08').text) || !/follow-up surveys at/i.test(fact('PD-09').text)) throw new Error('MinistrySees: PD-08 or PD-09 changed; update the strip');
 const months = TRACER_MONTHS.match(/\d+/g) ?? [];
 const [, six, twelve] = months;
-if (six !== '6' || twelve !== '12') throw new Error(`MinistrySees: PD-09 tracer months are ${TRACER_MONTHS}; the strip names the 6- and 12-month surveys`);
+if (six !== '6' || twelve !== '12') throw new Error(`MinistrySees: PD-09 follow-up survey months are ${TRACER_MONTHS}; the strip names the 6- and 12-month surveys`);
 const steps = [
   { when: 'Month 1', from: 'of the First Cohort', title: 'Monthly Reports Begin', text: 'Enrollment and attendance, completion and certification, placements and first earnings, with women and priority-group shares.', ids: 'PD-08' },
-  { when: `${six} Months`, from: 'After Each Course', title: `The ${six}-Month Tracer Survey`, text: 'Follow-up results against the baseline taken at enrollment, with documentary evidence of work and earnings where available.', ids: 'PD-09' },
-  { when: `${twelve} Months`, from: 'After Each Course', title: `The ${twelve}-Month Tracer Survey`, text: 'The last follow-up survey of the outcome-tracking period, reported alongside the monthly reports and the quarterly steering review.', ids: 'PD-08 PD-09' },
+  { when: `${six} Months`, from: 'After Each Course', title: `The ${six}-Month Follow-Up Survey`, text: 'Follow-up results against the baseline taken at enrollment, with documentary evidence of work and earnings where available.', ids: 'PD-09' },
+  { when: `${twelve} Months`, from: 'After Each Course', title: `The ${twelve}-Month Follow-Up Survey`, text: 'The last follow-up survey of the outcome-tracking period, reported alongside the monthly reports and the quarterly steering review.', ids: 'PD-08 PD-09' },
 ];
 ---
 
 <Section id={id} tone="airy" pad="sm" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Reporting" title="What a Ministry Sees" lead="Planned for every cohort, as agreed in the program scope. Reports run monthly; tracer surveys follow the course." />
+  <SectionHeader id={`${id}-h`} eyebrow="Reporting" title="What a Ministry Sees" lead="Planned for every cohort, as agreed in the program scope. Reports run monthly, with follow-up surveys after the course." />
   <ol class="ms" role="list">
     {
       steps.map((s) => (

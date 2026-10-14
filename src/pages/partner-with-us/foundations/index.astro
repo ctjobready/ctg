@@ -116,19 +116,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     />
   </div>
 
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-foundations')}
-    title="What a Funded Cohort Could Show"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'Monthly Reports from Cohort One', text: 'Enrollment, certification, placements and first earnings arrive in your monthly reports.' },
-      { kind: 'Emotional', title: 'Who Started Earning', text: `The ${sixMonth}-month tracer shows who started earning, from jobs, freelance clients and businesses of their own.` },
-      { kind: 'Social', title: 'Results by Group', text: 'Women’s and priority-group shares are reported alongside the headline results.' },
-    ]}
-  />
-
-  <!-- C5 · Guide (empathy first) -->
+  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
@@ -136,6 +124,18 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
+  />
+
+  <!-- C4 · Future state -->
+  <FutureBand
+    photos={futurePhotos('partners-foundations')}
+    title="What a Funded Cohort Could Show"
+    lead="Illustrative, not case studies."
+    vignettes={[
+      { kind: 'Functional', title: 'Monthly Reports from Cohort One', text: 'Enrollment, certification, placements and first earnings arrive in your monthly reports.' },
+      { kind: 'Emotional', title: 'Who Started Earning', text: `The ${sixMonth}-month follow-up survey shows who started earning, from jobs, freelance clients and businesses of their own.` },
+      { kind: 'Social', title: 'Results by Group', text: 'Women’s and priority-group shares are reported alongside the headline results.' },
+    ]}
   />
 
   <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here, in the jump links and in the two offer bands below. -->
@@ -179,7 +179,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable
-    title="What Your Grant Gets"
+    title="What Your Cohort Grant Gets"
     concernLabel="Funder Concern Addressed"
     rows={[
       {
@@ -212,7 +212,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <FAQBand
     audience="foundations"
     ids={FAQ_IDS}
-    title="Questions Funders Ask"
+    title="Questions About Cohort Grants"
     allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
@@ -254,7 +254,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <!-- C14 · Next steps -->
   <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step (doc 04 §4). -->
-  <NextStepsBand title="What Happens After You Say Yes" lead="Cohort grants follow these steps. A platform grant starts with the introduction call." timing={false} />
+  <NextStepsBand title="What Happens After You Say Yes" lead="For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout." timing={false} />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />

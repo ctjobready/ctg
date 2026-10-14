@@ -103,11 +103,19 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
       title="Training Without Placement Spends Budget Without Earnings"
       transition="It doesn’t have to be this way."
       blocks={[
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Tracks have to follow current employer demand, not last year’s job market.' },
+        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
         { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
       ]}
     />
   </div>
+
+  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <PartnerGuideBand
+    empathy={EMPATHY.developmentPartners}
+    stats={['SC-01', 'SC-03']}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    partnerGroup="development"
+  />
 
   <!-- C4 · Future state -->
   <FutureBand
@@ -116,26 +124,18 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'Earnings in Your Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
-      { kind: 'Emotional', title: 'Evidence Designed for Evaluator Review', text: `Tracer results at ${TRACER_MONTHS}, designed to be backed by payslips, offer letters, platform logs and bank receipts.` },
+      { kind: 'Emotional', title: 'Evidence Designed for Evaluator Review', text: `Follow-up results at ${TRACER_MONTHS}, designed to be backed by payslips, offer letters, platform logs and bank receipts.` },
       { kind: 'Social', title: 'Work on Their Own Terms', text: 'Young people earning from jobs, freelance clients and businesses of their own.' },
     ]}
-  />
-
-  <!-- C5 · Guide (empathy first) -->
-  <PartnerGuideBand
-    empathy={EMPATHY.developmentPartners}
-    stats={['SC-01', 'SC-03']}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
-    partnerGroup="development"
   />
 
   <!-- C6 · Mechanism (YouthWIDE) -->
   <MechanismBand
     title="An Integrated Path from Training to Earnings"
     positioning={POSITIONING.developmentPartners}
-    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country; current outcome evidence comes from Bangladesh and Kosovo."
+    lead="YouthWIDE is the program through which funders deploy the CodersTrust model in a country; it builds on results from earlier programs in Bangladesh and Kosovo."
     blocks={[
-      { label: 'Who We Reach', title: 'Priority Groups', text: 'Unemployed graduates, madrasah youth and third-gender people, with women a priority in every group.', icon: 'users' },
+      { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
       { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
@@ -184,7 +184,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8'];
         relieves: 'Hardest-to-reach groups drop out',
       },
       {
-        feature: 'As Agreed in the Program Scope: Baseline at Enrollment, Tracers, Monthly Reports and Documentary Evidence Where Available',
+        feature: 'As Agreed in the Program Scope: Baseline at Enrollment, Follow-Up Surveys, Monthly Reports and Documentary Evidence Where Available',
         means: 'your evaluators can check results against documentary evidence where available.',
         outcome: 'Auditable results',
         relieves: 'Outcomes are hard to audit',

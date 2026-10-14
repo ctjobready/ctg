@@ -32,9 +32,14 @@ interface Props {
   chip?: boolean;
   /** Label of the difference row in the chart description and data table; defaults to "Change" (or "Difference" in comparison mode). */
   diffLabel?: string;
+  /**
+   * Show the "View Chart Data as a Table" disclosure under the chart (default true). A page that only needs the chart's picture (the Programs hub, WP31) turns it
+   * off; the chart keeps its text alternative, because the figure's accessible name already states both values and the difference.
+   */
+  table?: boolean;
   class?: string;
 }
-const { title, before, after, delta, unit = '%', note, mode = 'change', chip = true, diffLabel, class: className } = Astro.props;
+const { title, before, after, delta, unit = '%', note, mode = 'change', chip = true, diffLabel, table = true, class: className } = Astro.props;
 const comparison = mode === 'comparison';
 const diffWord = diffLabel ?? (comparison ? 'Difference' : 'Change');
 
@@ -99,18 +104,22 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
       {note && <span class="ba__note">{note}</span>}
     </figcaption>
   </figure>
-  <details class="ba__data">
-    <summary>View Chart Data as a Table</summary>
-    <table>
-      <caption class="sr-only">{title}</caption>
-      <thead><tr><th scope="col">{comparison ? 'Group' : 'Measure'}</th><th scope="col">Value</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">{before.label}{before.caption ? ` (${before.caption})` : ''}</th><td>{fmt(before.value)}</td></tr>
-        <tr><th scope="row">{after.label}{after.caption ? ` (${after.caption})` : ''}</th><td>{fmt(after.value)}</td></tr>
-        {deltaFull && <tr><th scope="row">{diffWord}</th><td>{deltaFull}</td></tr>}
-      </tbody>
-    </table>
-  </details>
+  {
+    table && (
+      <details class="ba__data">
+        <summary>View Chart Data as a Table</summary>
+        <table>
+          <caption class="sr-only">{title}</caption>
+          <thead><tr><th scope="col">{comparison ? 'Group' : 'Measure'}</th><th scope="col">Value</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">{before.label}{before.caption ? ` (${before.caption})` : ''}</th><td>{fmt(before.value)}</td></tr>
+            <tr><th scope="row">{after.label}{after.caption ? ` (${after.caption})` : ''}</th><td>{fmt(after.value)}</td></tr>
+            {deltaFull && <tr><th scope="row">{diffWord}</th><td>{deltaFull}</td></tr>}
+          </tbody>
+        </table>
+      </details>
+    )
+  }
 </div>
 
 <style>

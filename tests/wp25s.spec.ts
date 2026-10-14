@@ -143,10 +143,11 @@ test.describe('Programs', () => {
     expect(blocks).toContain('toward team capability in the digital and AI tasks defined in the needs assessment.');
   });
 
-  test('Work states the survey result once', async ({ page }) => {
+  test('Work shows no youth-program survey figure of its own: two links to the evidence pages stand in for it (WP31)', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     const text = compact(await main(page));
-    expect(text.split('77.9%').length - 1).toBe(1);
+    expect(text).not.toContain('77.9%');
+    await expect(page.locator('#offer-evidence .pe__more a')).toHaveText(['The Randomized Trial', 'Impact Survey 2026']);
   });
 
   test('the NU course answer names concrete modules', async ({ page }) => {
@@ -234,7 +235,7 @@ test.describe('Partner with Us', () => {
   test('the hub keeps the funder set, with a shorter safeguarding card and a partner decision', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const dd = compact(await page.locator('#due-diligence').innerText());
-    expect(dd).toContain('Monthly Reports and Tracers');
+    expect(dd).toContain('Monthly Reports and Follow-Up Surveys');
     expect(dd).toContain('Consent, protected records and grievance handling are specified for each program.');
     expect(compact(await main(page))).toContain('The decision is yours: independent evaluation is welcome, and we support it.');
   });
@@ -248,13 +249,13 @@ test.describe('Partner with Us', () => {
     expect(text.split('scoped against the experience and credentials available').length - 1).toBeLessThanOrEqual(3);
   });
 
-  test('Employers: proof comes before the features table, as on every other audience page', async ({ page }) => {
+  test('Employers: proof comes before the features table, as on every other audience page (WP31: the proof is the delivery record for employers)', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(order.indexOf('proof-band'), 'proof band').toBeGreaterThan(-1);
+    expect(order.indexOf('offer-evidence'), 'delivery record band').toBeGreaterThan(-1);
     expect(order.indexOf('features'), 'features').toBeGreaterThan(-1);
-    expect(order.indexOf('proof-band')).toBeLessThan(order.indexOf('features'));
-    expect(order.indexOf('mechanism')).toBeLessThan(order.indexOf('proof-band'));
+    expect(order.indexOf('offer-evidence')).toBeLessThan(order.indexOf('features'));
+    expect(order.indexOf('mechanism')).toBeLessThan(order.indexOf('offer-evidence'));
   });
 
   test('Foundations: one chooser, one naming scheme, measured against first paid work', async ({ page }) => {

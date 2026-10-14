@@ -20,7 +20,8 @@ import { linkAttrs } from '../../../lib/url';
  * business ownership, before training and at the October 2026 survey; Surveyed Completers), below the ladder and the 72.3% tile.
  * The trial chart is labelled as the trial's follow-up for women offered a place, a different measure from the program records on the
  * "In-Work Results by Program" slide (WSDFM program records: 71% in work).
- * WP30c: the scope line under the heading is one short sentence (it keeps "predecessor program" and "surveyed completers"); no note under the pathways table; the
+ * WP30c: the scope line under the heading was one short sentence (WP31 removed it: the survey block carries its "Surveyed Completers" tag and the chart note names the
+ * predecessor program); no note under the pathways table; the
  * evidence ladder ("Four Kinds of Evidence, Strongest First") is gone from this band: the carousel, the case cards and the Impact page label each kind of evidence,
  * and the "Read the evidence" link leads to the full ladder. The pathways table sits beside the 72.3% tile, in the ladder's former place.
  * The other pages that carry a trial-and-survey band (Programs, YouthWIDE, Investors) keep using ./EvidenceBand.astro.
@@ -73,7 +74,8 @@ const delta = RCT_COMPARISON.delta;
         chip={false}
         tone="dark"
       />
-      <p class="he__fn">Chart data: employment at trial follow-up, women offered a place and the control group.</p>
+      <!-- WP31: the band's scope line is gone (the survey block carries its evidence tag); the trial's scope, the predecessor program, stays with the chart note. -->
+      <p class="he__fn">Chart data: employment at follow-up in the trial of the predecessor program, women offered a place and the control group.</p>
     </div>
   </div>
 

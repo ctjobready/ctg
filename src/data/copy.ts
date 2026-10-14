@@ -82,9 +82,11 @@ export const RCT_HEADLINE: CopyBlock = {
 
 /**
  * Relevance line (review round 14, m2), set directly under the randomized-trial headline on the pages whose offering the trial did not
- * evaluate: /partner-with-us/employers/ and /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU Postgraduate
- * Diploma). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational evidence, not
- * evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these three pages.
+ * evaluate: /programs/nu-postgraduate-diploma/ (the NU Postgraduate Diploma) and, should a trial band return to them, /partner-with-us/employers/ and
+ * /programs/jobready-work/ (JobReady@Work). It restates RC-01's scope (the WSDFM program, women in Dhaka) and adds no figure. The trial stays organizational
+ * evidence, not evidence for the offering on the page. scripts/check-facts.mjs pins the sentence on these pages.
+ * WP31 (cycle-8 review): the two JobReady@Work pages no longer carry a trial band (they link to the evidence pages), so `work` is not rendered today;
+ * the gate still requires the sentence on any proof band either page grows.
  */
 export const trialScope = (offering: string): CopyBlock => ({ text: `This trial evaluated WSDFM training for women in Dhaka, not ${offering}.`, facts: ['RC-01'] });
 export const TRIAL_SCOPE = {
@@ -93,19 +95,22 @@ export const TRIAL_SCOPE = {
 };
 
 /**
- * C6a positioning statements (CMF C6; doc 04 §1). Each conversion page's C6 OPENS with its statement (no lead line before it), in the pattern
- * "For [audience] who need [outcome], CodersTrust [category] that [differentiator]. Unlike [alternative], we [proof-backed difference]."
- * The pattern is split at its semicolon into two sentences so that neither runs past about 50 words (review round 11, F26). The closing
- * clause is the approved [UNLIKE] wording of doc 04 §1 on every page, verbatim; no page swaps in a different "we" clause.
- * Built only from the approved positioning table and existing page copy: no figures and no named competitors; other approaches
- * are described by what they typically focus on, with "provision varies by provider". The NU postgraduate diploma page
- * has no statement: its copy waits for National University sign-off.
+ * C6a positioning statements (CMF C6; doc 04 §1). Each conversion page's C6 OPENS with its statement (no lead line before it): an audience sentence in the pattern
+ * "For [audience] who need [outcome], CodersTrust [category] that [differentiator]." and then the shared closing sentences (UNLIKE_APPROVED).
+ * The statement is split into sentences so that none runs past about 50 words (review round 11, F26). The closing
+ * sentences are the shared wording on every page that uses it, verbatim; no page swaps in a different "we" clause.
+ * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
+ * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
+ * The NU postgraduate diploma page has no statement: its copy waits for National University sign-off.
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
-/** The approved [UNLIKE] + [WE] wording (doc 04 §1), word for word. */
+/**
+ * The shared closing of the positioning statements (the slot doc 04 §1 calls [UNLIKE] + [WE]), word for word; scripts/check-facts.mjs declares it independently (UNLIKE_SENTENCE).
+ * WP31: two plain sentences in place of the long comparison sentence. It rests on PD-01 (training, mentoring, placement support) and PD-08 (monthly reports).
+ */
 const UNLIKE_APPROVED =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
 
 /** JobReady@Work's closing sentence: what an employer gets from the program itself (all of it from IN-10 and the page's own steps). */
 const WORK_POSITIONING =
@@ -122,19 +127,19 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   developmentPartners: {
     text: `For development partners and NGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model with outcome tracking after each course, as agreed in the program scope. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01'],
+    facts: ['PD-01', 'PD-08'],
   },
   governments: {
     text: `For governments that need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01'],
+    facts: ['PD-01', 'PD-08'],
   },
   foundations: {
     text: `For foundations and CSR funders who need a grant to change a young person’s income, and evidence that it did, CodersTrust offers an integrated training-to-earnings model with a pilot scorecard agreed in co-design. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01', 'PD-11'],
+    facts: ['PD-01', 'PD-08', 'PD-11'],
   },
   universities: {
     text: `For universities and colleges that need to prepare their degree holders for paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01'],
+    facts: ['PD-01', 'PD-08'],
   },
   employers: {
     // WP20b: employer-specific (the [UNLIKE] sentence describes the youth-cohort model); scripts/check-facts.mjs may pin it for this page only.
@@ -143,23 +148,23 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   investors: {
     text: `For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. CodersTrust’s program results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01'],
+    facts: ['PD-01', 'PD-08'],
   },
   localPartners: {
     text: `For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs. ${UNLIKE_APPROVED}`,
-    facts: ['RC-01', 'PD-06'],
+    facts: ['PD-01', 'PD-06', 'PD-08'],
   },
   youthwide: {
     text: `For development partners and funders who need educated, unemployed youth in paid digital work in South Asia, the Middle East and North Africa, or Sub-Saharan Africa, CodersTrust offers YouthWIDE, which funders use to deploy its training-to-earnings model in a country. ${UNLIKE_APPROVED}`,
-    facts: ['IN-02', 'RC-01'],
+    facts: ['IN-02', 'PD-01', 'PD-08'],
   },
   nationwide: {
     text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh, a national initiative. ${UNLIKE_APPROVED}`,
-    facts: ['IN-01', 'RC-01'],
+    facts: ['IN-01', 'PD-01', 'PD-08'],
   },
   campus: {
     text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, training with industry-certification preparation that runs in parallel with academic studies. ${UNLIKE_APPROVED}`,
-    facts: ['IN-09', 'RC-01'],
+    facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   work: {
     // WP18b: an employer-specific closing sentence in place of [UNLIKE] (which is about youth programs); scripts/check-facts.mjs pins it for this page only.
@@ -346,7 +351,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 export const STEPS = [
   { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
   { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
-  { title: 'Place and Report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
+  { title: 'Place and Report', text: 'Placement support, monthly reports and follow-up surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 

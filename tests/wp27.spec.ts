@@ -61,13 +61,15 @@ test.describe('one NU eligibility sentence', () => {
   test('the YouthWIDE menu description leads with the co-funded country cohorts, not with Bangladesh alone', async ({ page }) => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    expect(desc).toBe('Co-funded country cohorts across three regions, with a national initiative in Bangladesh.');
+    // WP31: designed for the three regions (no wording that implies cohorts already run in all of them)
+    expect(desc).toBe('Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.');
   });
 
   test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('#mega-programs .mega__feature-text').textContent());
-    expect(text).toBe('A national initiative in Bangladesh and co-funded country cohorts elsewhere.');
+    // the panel states the target page's own menu description (WP30c); this line was left on the older wording until WP31
+    expect(text).toBe('Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.');
     expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
     const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
     expect(learners).toContain('NU Postgraduate Diploma');
@@ -122,12 +124,13 @@ test.describe('Partner with Us', () => {
     }
   });
 
-  test('the hero names the routes and has a way to choose one; the timetable is labelled for grant-funded supported cohorts', async ({ page }) => {
+  test('the hero says what a partnership delivers, once and for any country, and has a way to choose a route; the timetable is labelled for grant-funded supported cohorts', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const lead = compact(await page.locator('.hero__lead').first().textContent());
-    for (const route of ['development partners and NGOs', 'governments', 'foundations and CSR teams', 'universities', 'employers', 'local partners in Bangladesh', 'Impact investors']) {
-      expect(lead, route).toContain(route);
-    }
+    // WP31: one sentence about the offer, not a list of the seven audiences (the route cards name them, the investor route included)
+    expect(lead).toBe('Co-design a youth-employment program with training, mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope.');
+    expect(lead).not.toMatch(/Bangladesh|investors/i);
+    await expect(page.locator('#audiences .grid-cards a[href$="partner-with-us/investors/"]')).toHaveCount(1);
     const link = page.locator('.hero a.link', { hasText: 'Choose Your Route' });
     expect(await link.getAttribute('href')).toBe('#audiences');
     expect(compact(await page.locator('#how-h').locator('xpath=preceding-sibling::*[1]').textContent())).toBe('For Grant-Funded Supported Cohorts');
@@ -186,7 +189,7 @@ test.describe('evidence pages end with a next step for every reader', () => {
     const steps = (await section.locator('.steps__title').allTextContents()).map((t) => compact(t.replace(/^Step \d+:/, '')));
     expect(steps).toEqual(['Your Inquiry', 'A Conversation', 'The Next Step Depends on Your Route']);
     const third = compact(await section.locator('.steps__item').nth(2).textContent());
-    for (const route of ['Development partners', 'Employers training a team', 'Impact investors']) expect(third).toContain(route);
+    for (const route of ['Development partners', 'Employers training a team', 'Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool.', 'Impact investors']) expect(third).toContain(route);
   });
 });
 

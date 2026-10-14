@@ -4,7 +4,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import Carousel from '../system/Carousel.astro';
 import CaseStudyCard from '../ui/CaseStudyCard.astro';
 import { fact } from '../../data/facts';
-import { casePhoto } from '../pages/home/caseStudies';
+import { CASE_CARD_LABELS, casePhoto } from '../pages/home/caseStudies';
 import type { ImageMetadata } from 'astro';
 
 /** C7 Proof in practice: scroll-snap carousel of case-study cards, each with an outcome stat from the register. */
@@ -14,7 +14,7 @@ interface Item {
   partner?: string;
   /** Fact ID whose stat is the outcome (PR-01 … PR-05). */
   factId: string;
-  /** The stat's caption when the register's own label should be restated for the card (the same figures, in a simpler order). */
+  /** The stat's caption when the register's own label should be restated for the card (the same figures, in a simpler order). Without one, the shared caption for the fact (CASE_CARD_LABELS) or the register's label. */
   statLabel?: string;
   href: string;
   image?: ImageMetadata | string;
@@ -36,7 +36,7 @@ const cards = items.map((it) => {
   if (!s) throw new Error(`CaseStudyCarousel: fact ${it.factId} has no stat`);
   // No picture given: the card takes the case study's own photograph (matched on the slug in its link).
   const own = it.image ? undefined : casePhoto(/case-studies\/([^/]+)/.exec(it.href)?.[1] ?? '');
-  return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: { value: s.value, label: it.statLabel ?? s.label } };
+  return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: { value: s.value, label: it.statLabel ?? CASE_CARD_LABELS[it.factId] ?? s.label } };
 });
 ---
 

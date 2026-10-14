@@ -17,8 +17,8 @@ export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
   programs: '2026-10-10',
   youthwide: '2026-10-11',
-  campus: '2026-10-14',
-  work: '2026-10-14',
+  campus: '2026-10-15',
+  work: '2026-10-15',
   superkids: '2026-10-10',
   nu: '2026-10-14',
   nuCourse: '2026-10-14',

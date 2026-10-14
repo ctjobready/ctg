@@ -45,6 +45,10 @@ interface Props {
    */
   incomeHeadline?: boolean;
   links?: { label: string; href: string }[];
+  /** Show the "View Chart Data as a Table" disclosure under the chart (default true). The Programs hub turns it off (WP31); the chart keeps its text alternative. */
+  chartTable?: boolean;
+  /** Show each survey tile's detail line under its label (default true). The Programs hub leaves them out (WP31): its tile states the result alone. */
+  surveyNotes?: boolean;
   /**
    * Home (WP19, item 25): the band's H2 is `bandHeading` ("Trial and Survey Evidence") and the trial gets its own sub-heading `trialHeading`
    * ("An Independent Randomized Trial") over its headline, plain line and chart, so the survey tiles under their own sub-heading are never
@@ -54,7 +58,7 @@ interface Props {
   trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, incomeHeadline = false, chip = true, links = [], bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, incomeHeadline = false, chip = true, links = [], chartTable = true, surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
 const split = !!trialHeading;
 const trial = chart === 'trial';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
@@ -134,6 +138,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
               delta={delta}
               chip={chip}
               unit={unit}
+              table={chartTable}
               tone="dark"
             />
             <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group.</p>
@@ -146,6 +151,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
               after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
               delta={delta}
               unit={unit}
+              table={chartTable}
               tone="dark"
             />
             <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
@@ -161,7 +167,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
         <div class="eb__stats eb__stats--survey">
           {surveyStats.map((s, i) => (
             <div class="eb__stat" data-fact={s.id}>
-              <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric} />
+              <Stat value={s.value} label={s.label} note={surveyNotes ? s.detail : undefined} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric} />
             </div>
           ))}
         </div>

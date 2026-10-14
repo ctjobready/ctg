@@ -15,7 +15,8 @@ test.describe('What Your Partnership Includes (#features)', () => {
     await open(page, '');
     const card = page.locator('#features li[data-fact~="PD-08"]');
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.fc__included')).toHaveText('As Agreed in the Program Scope: Monthly Reports, Tracer Surveys at 3, 6 and 12 Months and Documentary Evidence Where Available');
+    // WP31: the row heading is short (monthly reports and follow-up surveys, scoped); the sentence under it carries the documentary-evidence qualifier
+    await expect(card.locator('.fc__included')).toHaveText('Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope');
     const t = compact(await card.textContent());
     expect(t).not.toContain('Documentary Evidence of Earnings');
     expect(t).toContain('documentary evidence where available');
@@ -83,12 +84,15 @@ test.describe('the UPEACE news headline matches its body', () => {
     expect(body).not.toMatch(/Invited to Join/i);
   });
 
-  test('the Home news card carries the same headline', async ({ page }) => {
+  test('the News page card carries the same headline (WP31: Home no longer carries a news band)', async ({ page }) => {
     await open(page, '');
-    const card = page.locator(`#news a[href$="/${UPEACE}"]`);
-    await expect(card, 'the UPEACE post is one of the Home news cards').toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
-    expect(compact(await page.locator('#news').textContent())).not.toMatch(/Invited to Join/i);
+    await expect(page.locator('#news')).toHaveCount(0);
+    await open(page, 'news/');
+    const cards = page.locator(`main a[href$="/${UPEACE}"]`);
+    expect(await cards.count(), 'the UPEACE post is listed on the News page').toBeGreaterThan(0);
+    const text = compact(await page.locator('main').textContent());
+    expect(text).toContain('CodersTrust Students Were Invited to Apply to UPEACE’s “Young Leaders for Peace” Summer Programme 2026');
+    expect(text).not.toMatch(/Invited to Join/i);
   });
 });
 

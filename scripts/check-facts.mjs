@@ -30,14 +30,14 @@
 //     claim, so the three stand on the same fact); negative self-tests below
 //   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
-//     the audience sentence followed by the verbatim [UNLIKE] sentence (SuperKids, whose [UNLIKE] clause is pending, is exempt from that
+//     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
 //     second part); negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 table (#features) exactly one row for
 //     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
-//     the C7 proof band; negative self-tests below
+//     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line); negative self-tests below
 //   - number guard (doc 10 §1 "Facts guard", WP1l): every claim-marked figure (%, pp, a leading + or ~, a trailing +, M/K/B/million, $ or BDT, ×,
 //     "about/at least/up to/over N") in the copy of an evergreen page (visible text, title, meta description) is a value the public dataset
 //     registers (facts, citations, the survey aggregates behind /impact/outcomes-2026/, one derivation list) or is whitelisted in
@@ -286,7 +286,7 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
 }
 
 /* ---- [POSITION] opens C6 (plan v1.13: conversion-page rule 9, review round 12 Mi2) ---- */
-// Every C6 band opens with the positioning statement: "For ... who need ..., CodersTrust ...." then the verbatim [UNLIKE] sentence (doc 04 section 1).
+// Every C6 band opens with the positioning statement: "For ... who need ..., CodersTrust ...." then the verbatim shared closing sentences (doc 04 section 1 calls the slot [UNLIKE]; WP31 made it two plain sentences).
 // "Opens" means nothing precedes the statement in the band except its own eyebrow and H2 (the band's title): no lead line, no model heading as
 // body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
 const POSITION_PAGES = [
@@ -306,7 +306,7 @@ const POSITION_PAGES = [
 // SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
-  'Unlike approaches that typically focus on one part of the path — training-only programs, self-paced course platforms or freelance marketplaces alone (provision varies by provider) — we design, deliver and track the path from training toward paid work, working in phases through existing labs and colleges, with outcome evidence that includes a randomized trial by BIGD.';
+  'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
 // WP18b: JobReady@Work is an employer offer for a single organization's team, not a youth-program comparison, so its statement closes with an
 // employer-specific sentence instead of the [UNLIKE] sentence (which names training-only programs and the BIGD trial of the youth programs).
 // This changes only the closing sentence of THIS page's statement: the rule for every other page, and every claims rule, is unchanged. The
@@ -390,9 +390,11 @@ const TRIAL_SCOPE_BY_PAGE = {
   '/programs/nu-postgraduate-diploma/': 'This trial evaluated WSDFM training for women in Dhaka, not the NU Postgraduate Diploma.',
 };
 const TRIAL_SCOPE_PAGES = Object.keys(TRIAL_SCOPE_BY_PAGE);
-function trialScopeProblems(markup, wanted) {
+// WP31: the two employer pages show no trial band (they link to the evidence pages), so a missing #proof-band is fine there; the sentence stays required on any band they grow.
+const TRIAL_SCOPE_OPTIONAL = new Set(['/partner-with-us/employers/', '/programs/jobready-work/']);
+function trialScopeProblems(markup, wanted, { optional = false } = {}) {
   const band = bandMarkup(markup, 'proof-band');
-  if (band === null) return ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
+  if (band === null) return optional ? [] : ['the C7 proof band (#proof-band) is missing, so the trial relevance line has nowhere to sit'];
   const head = /<header\b[^>]*\bproofband__head\b[^>]*>([\s\S]*?)<\/header>/.exec(band)?.[1];
   if (head === undefined) return ['the proof band has no header, so the trial relevance line cannot sit under the trial headline'];
   const heading = /<h2\b[\s\S]*?<\/h2>/.exec(head);
@@ -796,7 +798,7 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a list before the statement', mech(`<ul><li>01 Who we reach</li></ul>${posBlock()}`));
   posBad('a band with no statement', mech(`${headerHtml}</header><p>Just text.</p>`));
   posBad('a page with no C6 band', '<main><p>nothing</p></main>');
-  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('the path from training toward paid work', 'the path')}`)}</header>`));
+  posBad('an altered [UNLIKE] sentence', mech(`${headerHtml}${posBlock(`${posFor} ${UNLIKE_SENTENCE.replace('in existing labs and colleges', 'in labs')}`)}</header>`));
   posBad('a statement without the [UNLIKE] sentence', mech(`${headerHtml}${posBlock(posFor)}</header>`));
   posBad('an audience sentence run into [UNLIKE] with a semicolon', mech(`${headerHtml}${posBlock(`${posFor.slice(0, -1)}; ${UNLIKE_SENTENCE.charAt(0).toLowerCase()}${UNLIKE_SENTENCE.slice(1)}`)}</header>`));
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
@@ -856,6 +858,13 @@ function numberGuardPage(path, html, allow = []) {
   trialBad('a line above the headline', proofPage(`${trialLine(scopeWork)}${trialH2}`), scopeWork);
   trialBad('a line outside the header (after the stats, away from the proof)', proofPage(trialH2, trialLine(scopeWork)), scopeWork);
   trialBad('a page with no proof band', '<main><p>nothing</p></main>', scopeWork);
+  // WP31: an employer page may show no trial band at all, but a band it shows still needs the line
+  const trialOptionalOk = (why, markup, wanted) => {
+    const r = trialScopeProblems(markup, wanted, { optional: true });
+    if (r.length) problems.push(`self-test: the trial-relevance check rejected ${why}: ${r.join('; ')}`);
+  };
+  trialOptionalOk('an employer page with no proof band (links to the evidence pages only)', '<main><p>nothing</p></main>', scopeWork);
+  if (!trialScopeProblems(proofPage(trialH2), scopeWork, { optional: true }).length) problems.push('self-test: the trial-relevance check accepted an employer page whose proof band has no relevance line');
   // retired wording: the USP heading "Earning starts within months" overgeneralizes OC-05 (round 14, m3)
   const disciplineHits = (text) => DISCIPLINE.filter(([re]) => re.test(text)).length;
   if (!disciplineHits('<h3>Earning starts within months</h3>')) problems.push('self-test: the wording gate accepted the retired USP heading "Earning starts within months"');
@@ -889,7 +898,7 @@ function numberGuardPage(path, html, allow = []) {
   // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
   for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '3.00×', '3×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '3.00×', '3×', '2.80×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
   // D1 (owner decision, 2026-10-13): the online gig-work range (154M–435M, PX-09), the 257M youth figure (PX-10) and the 10M+ labor-market figure (PX-15) are withdrawn from the public dataset and must not render
   for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000', '435M', '257M', '10M+']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
@@ -1024,8 +1033,9 @@ for (const file of htmlFiles(dist)) {
   }
   // the trial relevance line directly under the randomized-trial headline where the offering is not the evaluated program (round 14, m2)
   if (TRIAL_SCOPE_PAGES.includes(path)) {
-    trialScopePages++;
-    for (const p of trialScopeProblems(markup, TRIAL_SCOPE_BY_PAGE[path])) problems.push(`${path}: ${p}`);
+    // a page that may show no proof band and shows none has nothing to check (WP31); the count is of the pages whose band was read
+    if (!TRIAL_SCOPE_OPTIONAL.has(path) || bandMarkup(markup, 'proof-band') !== null) trialScopePages++;
+    for (const p of trialScopeProblems(markup, TRIAL_SCOPE_BY_PAGE[path], { optional: TRIAL_SCOPE_OPTIONAL.has(path) })) problems.push(`${path}: ${p}`);
   }
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
