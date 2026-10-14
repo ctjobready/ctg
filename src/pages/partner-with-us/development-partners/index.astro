@@ -8,6 +8,7 @@
  * from the glance (its 71% is program records, read beside the trial's 63.1%; the Kosovo program result takes its place).
  * WP36 (cycle-13 reviews): each figure is stated once. The Kosovo result (102 of 150) is on its Proof in Practice card, so the glance's program-record tile is UNDP YES, Korail (PR-03: a program with UNDP, one of the development partners in PA-01)
  * and the Kosovo tile is gone; the mechanism card says "Placement support into ..."; the three pains are statements ("What Gets in the Way"); the cost question has the one-line route answer and a link to the hub FAQ.
+ * WP37 (cycle-14 review): the women-and-marginalized-groups answer no longer restates the three program figures (Proof in Practice, directly above, shows them); it says so and keeps the scope of the trial.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -54,7 +55,8 @@ const { title, description } = meta(
 );
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
-const FAQ_IDS = ['Q1-development-partners', 'Q6', 'Q3', 'Q10', 'Q8-route'];
+// Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
+const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10', 'Q8-route'];
 ---
 
 <LandingLayout

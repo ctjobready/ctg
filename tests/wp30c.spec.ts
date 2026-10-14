@@ -148,9 +148,11 @@ test.describe('Home', () => {
 });
 
 test.describe('Partner with Us: sections that moved or went', () => {
-  test('Governments: the Her Power card, the contracts table and the ministry timeline stay; the second Her Power case-card set and the scale callout are gone', async ({ page }) => {
+  // WP37 (cycle-14 review): the Her Power card (WP29) is gone too; its case study is a text link under the contracts table
+  test('Governments: the contracts table and the ministry timeline stay; the Her Power card, the second Her Power case-card set and the scale callout are gone', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#model-partnership')).toHaveCount(1);
+    await expect(page.locator('#model-partnership')).toHaveCount(0);
+    await expect(page.locator('#contracts a', { hasText: 'Read the Her Power Case Study' })).toHaveCount(1);
     await expect(page.locator('#contracts')).toHaveCount(1);
     await expect(page.locator('#ministry-sees')).toHaveCount(1);
     await expect(page.locator('#cases')).toHaveCount(0);

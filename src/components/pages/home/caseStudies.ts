@@ -1,4 +1,4 @@
-// The three case-study cards used by Home and Investors (STRONG-IT / PR-04 is withheld: no card, no link; UNDP YES stays in its own case study and the Impact hub).
+// The three case-study cards of Home's Proof in Practice band (STRONG-IT / PR-04 is withheld: no card, no link; UNDP YES stays in its own case study and the Impact hub).
 // Card photographs are from the previous site (WP2): each is tagged with its D13 asset id, so the permissions gate sees it.
 import type { ImageMetadata } from 'astro';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
@@ -36,13 +36,18 @@ const wsdfmLabel = `WSDFM program records, separate from the trial: ${wsdfmShare
 
 /**
  * The caption a case-study card puts under its figure, by register fact. CaseStudyCarousel uses it wherever a page gives no caption of its own, so the WSDFM and Her Power
- * cards read the same on Home, Investors and every audience page (WP31: Development Partners showed Her Power's register label, "tracked women, from the 2,500 trained
- * directly by CodersTrust, in work: 47%", which no other page did).
+ * cards read the same on every audience page that shows their figures (WP31: Development Partners showed Her Power's register label, "tracked women, from the 2,500 trained
+ * directly by CodersTrust, in work: 47%", which no other page did); the Governments Results at a Glance tile reads it too.
  */
 export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, 'PR-05': herPowerLabel };
 
+/**
+ * Home's three cards. WP37 (cycle-14 review): the results carousel above the band (slide 3, "Results by Program") already states the Kosovo (102 of 150) and Her Power (372 of 800) figures, so those two
+ * cards show a line of delivery context in the figure's place (`context`, from each case study's own scope: Kosovo "Two-phase delivery that built digital literacy first, then real online work";
+ * Her Power "Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly"). The WSDFM card keeps its figure: slide 3 no longer lists WSDFM.
+ */
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', statLabel: wsdfmLabel, href: '/impact/case-studies/wsdfm-women-freelancers/' },
-  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
-  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', statLabel: herPowerLabel, href: '/impact/case-studies/her-power/' },
+  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: 'Digital literacy followed by real online work.', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+  { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
 ];

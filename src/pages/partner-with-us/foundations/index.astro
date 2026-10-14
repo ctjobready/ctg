@@ -10,6 +10,8 @@
  * row says the evidence is on the predecessor program, and the meta description is a complete sentence.
  * WP36 (cycle-13 reviews): the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66" (RC-04's stat label); the three pains are
  * statements; the cost and safeguarding questions have the one-line route answers, each with a link to the full answer.
+ * WP37 (cycle-14 review): the Funding Route 2 passage under the offer cards no longer retells the platform and its live and pre-launch list (the comparison above it has them); it says what a platform grant
+ * supports in one sentence and links the platform-grant inquiry.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -29,7 +31,6 @@ import FAQBand from '../../../components/sections/FAQBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
-import Fact from '../../../components/facts/Fact.astro';
 import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
@@ -44,7 +45,7 @@ import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPE
 import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
-import { url } from '../../../lib/url';
+import { linkAttrs, url } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
@@ -52,6 +53,8 @@ const primary = cta('funding');
 // WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button; WP30c: they sit under the two-route comparison.
 const routeYouthwide = cta('fundingYouthwide');
 const routePlatform = cta('fundingPlatform');
+// WP37: the Funding Route 2 passage under the offer cards links the same inquiry as the comparison above it.
+const platformInquiry = linkAttrs(routePlatform.href);
 // The partner-edition report request (doc 04 §7), straight from the shared CTA library.
 const reportCta = cta('report');
 const report = { label: reportCta.label, href: reportCta.href };
@@ -229,7 +232,16 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     recommended={0}
   />
   <SubBand tone="airy" pull id="platform-grants">
-    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants"><Fact id="IN-04" as="p" /></Callout>
+    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants">
+      <p data-fact="IN-04">A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
+      <p>
+        <a class="link" href={platformInquiry.href}>
+          {routePlatform.label}
+          {platformInquiry.srText && <span class="sr-only"> {platformInquiry.srText}</span>}
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </p>
+    </Callout>
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 

@@ -357,11 +357,12 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     expect(await answerOf(page, 'Will This Work in Our Country?')).toContain('That depends on local demand and on lab access and facilitator supply, which we test first.');
   });
 
+  // WP37 (cycle-14 review): Development Partners no longer restates the three program figures (its Proof in Practice band, directly above, shows them): a page variant of Q6 (tests/wp37.spec.ts)
   test('Development Partners: "Can It Reach Women and Marginalized Groups?" is three plain sentences', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const answer = await answerOf(page, 'Can It Reach Women and Marginalized Groups?');
     expect(answer).toBe(
-      'For women, yes — women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,500 trained directly by CodersTrust. For other priority groups, we have early delivery experience and measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we have early delivery experience and measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can It Reach Women and Marginalized Groups?')?.text).toBe(answer);

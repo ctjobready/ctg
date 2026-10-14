@@ -307,11 +307,15 @@ test.describe('Our Model and Investors', () => {
     expect(text).toContain('by the BRAC Institute of Governance and Development (BIGD) at BRAC University');
   });
 
-  test('Our Model: the timeline answer says "typically"', async ({ page }) => {
+  // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; the shared answer (YouthWIDE) keeps "typically".
+  test('the timeline answers are hedged: the shared answer says "typically" (YouthWIDE), Our Model says "allow about"', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    const shared = compact(await everything(page));
+    expect(shared).toContain('agreement typically takes about three weeks from first conversation');
+    expect(shared).toContain('typically in training 6–8 weeks after signing');
     await open(page, 'our-model/');
     const text = compact(await everything(page));
-    expect(text).toContain('agreement typically takes about three weeks from first conversation');
-    expect(text).toContain('typically in training 6–8 weeks after signing');
+    expect(text).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
   });
 
   test('Investors: program results appear once, the national-scale answer leads with CodersTrust’s role', async ({ page }) => {

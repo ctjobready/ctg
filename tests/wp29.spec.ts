@@ -4,7 +4,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 
 /**
  * WP29 behaviors (review round 5, cycle 7, the verified Benchmark review): timelines that name their starting point, the paid-work pathways
- * comparison (OC-04), the Her Power model partnership card, the two funding routes as a comparison. Each test states one observable behavior of
+ * comparison (OC-04), the Her Power model partnership card (retired by WP37: its figures are the glance tile and the contracts table's first row), the two funding routes as a comparison. Each test states one observable behavior of
  * the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp29.spec.ts --project=chromium`).
  */
 
@@ -124,49 +124,37 @@ test.describe('paid-work pathways comparison (OC-04)', () => {
   }
 });
 
-test.describe('Governments: Her Power model partnership card', () => {
-  const card = (page: Page) => page.locator('#model-partnership');
-
-  test('five separate fields, each from its registered fact: partner, role, direct training, reported work outcome, national program reach', async ({ page }) => {
+// WP37 (cycle-14 review): the "Her Power, with the ICT Division" model-partnership card (the five separate fields, the three figure tiles) is gone. Its figures are Results at a Glance's Her Power tile and the
+// contracts table's first row (the delivered, tracked and national-reach measures stay apart there), and the case study is a text link under the table (tests/wp37.spec.ts covers the replacement in full).
+test.describe('Governments: Her Power is a row of the contracts table and a link to its case study', () => {
+  test('the card is gone; the table’s first row keeps the registered Her Power figures, each read from its fact (GV-01, GV-11), apart from the tracked 372 of 800', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(card(page).locator('h2')).toHaveText('Her Power, with the ICT Division');
-    await expect(card(page).locator('dt')).toHaveText(['Partner', 'CodersTrust’s Role', 'Direct Training', 'Reported Work Outcome', 'National Program Reach']);
-    const field = (label: string) => card(page).locator('.mp__field', { has: page.locator('dt', { hasText: new RegExp(`^${label}$`) }) });
-    expect(compact(await field('Partner').locator('dd').textContent())).toBe('ICT Division / Department of ICT (DoICT)');
-    // the role is GV-11's list; its direct-training clause is the next field's, so it is not said twice
-    const role = compact(await field('CodersTrust’s Role').locator('dd').textContent());
-    expect(role).toBe('Curriculum, training manuals and mentorship guidelines; Training of Trainers; 54,609 manuals and guidelines distributed');
-    expect(fact('GV-11').text).toContain('curriculum, training manuals and mentorship guidelines; Training of Trainers; 2,500 women trained directly; 54,609 manuals and guidelines distributed');
-    expect(compact(await field('Direct Training').locator('dd').textContent())).toBe('2,500 women trained directly by CodersTrust in Her Power');
-    expect(compact(await field('Reported Work Outcome').locator('dd').textContent())).toBe('372 of 800 tracked women in work (47%), from the 2,500 trained directly by CodersTrust');
-    expect(compact(await field('National Program Reach').locator('dd').textContent())).toBe('25,125 women trained across 130 sub-districts (upazilas) in the national program');
+    await expect(page.locator('#model-partnership')).toHaveCount(0);
+    const row = page.locator('#contracts tbody tr').first();
+    expect(await row.getAttribute('data-fact')).toBe('GV-01 GV-11');
+    const text = compact(await row.textContent());
+    expect(text).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
+    expect(text).toContain('25,125 women across 130 sub-districts (upazilas)');
+    expect(fact('GV-01').text).toContain('trained 25,125 women across 130 sub-districts (upazilas)');
+    expect(text).toContain('54,609 manuals and guidelines distributed');
+    expect(text).toContain('2,500 women trained directly');
+    expect(fact('GV-11').text).toContain('2,500 women trained directly; 54,609 manuals and guidelines distributed');
+    // the tracked outcome (372 of 800, from the 2,500 trained directly) is the glance tile's, never beside the 25,125 as one figure
+    expect(text).not.toContain('372 of 800');
   });
 
-  test('direct delivery, the tracked outcome and national reach are visibly separate tiles; the 372 of 800 is never beside the 25,125 as one figure', async ({ page }) => {
+  test('the case study is a text link under the contracts table', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    const ids = await card(page).locator('.mp__field').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')));
-    expect(ids).toEqual(['GV-01', 'GV-11', 'GV-13', 'PR-05', 'GV-01']);
-    const boxes = await card(page).locator('.mp__field--figure').evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return { l: r.left, r: r.right }; }));
-    expect(boxes).toHaveLength(3);
-    for (let i = 1; i < boxes.length; i++) expect(boxes[i].l, 'tiles do not overlap').toBeGreaterThanOrEqual(boxes[i - 1].r - 1);
-    await expect(card(page).locator('.evidence-tag')).toHaveText('Program Record');
-  });
-
-  test('the card follows the contracts table and links to the Her Power case study', async ({ page }) => {
-    await open(page, 'partner-with-us/governments/');
+    expect(await page.locator('#contracts a', { hasText: 'Read the Her Power Case Study' }).getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(ids.indexOf('model-partnership')).toBe(ids.indexOf('contracts') + 1);
-    expect(await card(page).locator('a.link').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('contracts') + 1);
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px: no horizontal overflow, and the figure tiles ${vp.width >= 900 ? 'share a row' : 'stack'}`, async ({ page }) => {
+    test(`at ${vp.width}px: no horizontal overflow`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, 'partner-with-us/governments/');
       expect(await noOverflow(page)).toBe(true);
-      const tops = await card(page).locator('.mp__field--figure').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-      if (vp.width >= 900) expect(new Set(tops).size).toBe(1);
-      else expect(new Set(tops).size).toBe(3);
     });
   }
 });
@@ -182,7 +170,7 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
       ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
       [
         'Funding Route 2 JobReady Platform Grants',
-        'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',
+        'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',
         'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
       ],
     ]);
@@ -200,8 +188,9 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
   test('the platform status sentence in the table is IN-04’s own wording', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const cell = table(page).locator('tr[data-fact="IN-04"] td').first();
-    expect(compact(await cell.textContent())).toContain('Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    // WP37 (cycle-14 review): "CRM" is written out as "customer relationship management" (in IN-04 and wherever the live list is printed)
+    expect(compact(await cell.textContent())).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
   });
 
   test('on a phone the table becomes one card per route (table hidden), with no horizontal overflow', async ({ page }) => {

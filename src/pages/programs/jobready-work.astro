@@ -2,6 +2,7 @@
 // P13 — JobReady@Work /programs/jobready-work/ (T3 conversion page; doc 04 matrix 4.6 — employers; C1 → C14).
 // WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the seven-step process cards and the three track cards are cut; the approach is four
 // short blocks (Scope, Deliver, Measure, Support) that keep the "measures you set" and "team capability" wording. #mechanism and #next-steps stay (linked from the employer due-diligence view).
+// WP37 (cycle-14 review): the hero serves training and hiring ("Pick one or both"), so "Hire JobReady Talent" (the same prefilled inquiry as the call-to-action band) is a text link right under the one primary button.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import CTABand from '../../components/ui/CTABand.astro';
@@ -60,6 +61,7 @@ const approach = [
     title="Build AI-Ready Teams Around Your Own Roles"
     lead="JobReady@Work builds custom AI-ready training for your team, from a needs assessment to interactive workshops, and sources job-ready talent through CodersTrust’s placement team. Pick one or both."
     cta={work}
+    routeLinks={[{ label: talent.label, href: talent.href }]}
     artSeed="jobready-work"
   />
 
@@ -133,7 +135,7 @@ const approach = [
   <!-- C13: one solid primary; the talent action is outline -->
   <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
 
-  <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above. -->
+  <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above (and, WP37, in the hero). -->
   <NextSteps
     route="For Team Training"
     steps={[

@@ -15,10 +15,15 @@ interface Props {
   assetId?: string;
   /** Outcome-first headline stat; `evidence` is its evidence label, set on its own line under the label. */
   stat?: { value: string; label: string; evidence?: string | null };
+  /**
+   * WP37 (cycle-14 review): one line of delivery context in the stat's place, for a card whose figure the same page already shows elsewhere (Home: the Results and Programs carousel
+   * states the Kosovo and Her Power results). The card then shows no figure. Used only when there is no `stat`.
+   */
+  context?: string;
   href: string;
   class?: string;
 }
-const { title, program, partner, image, imageAlt = '', assetId, stat, href, class: className } = Astro.props;
+const { title, program, partner, image, imageAlt = '', assetId, stat, context, href, class: className } = Astro.props;
 const a = linkAttrs(href);
 ---
 
@@ -35,6 +40,7 @@ const a = linkAttrs(href);
         {stat.evidence && <span class="case__evid">{stat.evidence}</span>}
       </p>
     )}
+    {!stat && context && <p class="case__context">{context}</p>}
     <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
     {(program || partner) && <p class="card__meta">{[program, partner].filter(Boolean).join(' · ')}</p>}
     <span class="card__more" aria-hidden="true">Read the Case Study<span class="sr-only">: {title}</span><Icon name="arrow-right" size={16} /></span>
@@ -64,5 +70,13 @@ const a = linkAttrs(href);
     line-height: var(--lh-body-xs);
     font-weight: var(--fw-medium);
     color: var(--secondary);
+  }
+  /* the delivery-context line sits where the stat sits, set as a short statement in the system's body type */
+  .case__context {
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
+    text-wrap: balance;
   }
 </style>

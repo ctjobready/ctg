@@ -10,6 +10,9 @@
  * WP36 (cycle-13 reviews): the 31,200+ is stated once, in Results at a Glance (the Track Record band's tile is gone; the contracts table below keeps each contract's own scope); the glance tile reads "People in the Scopes
  * of Six Government Contracts"; "What Your Agency Gets" speaks of spending "measured against outcomes" and a budget "assessed against the agreed scorecard"; the three pains are statements; the cost question has the
  * one-line route answer and a link to the hub FAQ.
+ * WP37 (cycle-14 review): Her Power is stated once in full, in Results at a Glance (the tile links its case study) and in the contracts table's first row. The "Her Power, with the ICT Division" band is gone, replaced by a
+ * "Read the Her Power Case Study" text link under the table, and the national-scale answer no longer retells Her Power: "We scale in phases. A 100,000+ national program is a design option we have not yet delivered.",
+ * with its closing sentence linking the contracts table.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -34,7 +37,6 @@ import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBan
 import SubBand from '../../../components/pages/partners/SubBand.astro';
 import EvidenceList from '../../../components/pages/partners/EvidenceList.astro';
 import ContractTable from '../../../components/pages/partners/ContractTable.astro';
-import ModelPartnership from '../../../components/pages/partners/ModelPartnership.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
@@ -43,7 +45,7 @@ import PageEnhancements from '../../../components/pages/partners/PageEnhancement
 import { LINKS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
-import { caseStudyItems } from '../../../components/pages/home/caseStudies';
+import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -57,8 +59,8 @@ const { title, description } = meta(
   VALUE_PROPOSITION.governments,
 );
 
-// The Her Power tile reads as the Home and Investors cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts).
-const herPowerLabel = caseStudyItems.find((i) => i.factId === 'PR-05')?.statLabel;
+// The Her Power tile reads as the Development Partners and Foundations cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts).
+const herPowerLabel = CASE_CARD_LABELS['PR-05'];
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-route'];
 const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
@@ -164,9 +166,8 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
     ]}
     broaderLabel="The evidence behind the results"
   />
-  <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." />
-  <!-- WP29 (benchmark review): one government partnership as a card of separate fields (partner, role, direct training, tracked outcome, national reach), all from registered facts. -->
-  <ModelPartnership />
+  <!-- WP37 (cycle-14 review): the Her Power band (WP29) that followed the table is gone: the glance tile and the table's first row state what it showed, and the case study is a text link under the table. -->
+  <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." more={{ label: 'Read the Her Power Case Study', href: LINKS.caseHerPower }} />
 
   <!-- C8 · Features to benefits -->
   <FeaturesTable

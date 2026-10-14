@@ -50,13 +50,19 @@ test.describe('figures say what they measure', () => {
     expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records, separate from the trial: 71% in work');
   });
 
-  test('every WSDFM and Her Power case card reads the same wherever it stands (Development Partners shows the shared Her Power caption)', async ({ page }) => {
+  // WP37 (cycle-14 review): Home's Her Power card says what was delivered instead of stating the figure (slide 3 of the carousel states it; tests/wp37.spec.ts), so only the pages that show it carry the shared caption.
+  test('every WSDFM and Her Power case card reads the same wherever it shows its figure (Development Partners shows the shared Her Power caption; Home’s Her Power card shows delivery context)', async ({ page }) => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
       expect(cards, route || 'home').toContain('WSDFM program records, separate from the trial: 71% in work');
       if (cards.includes('Her Power')) {
-        expect(cards, route || 'home').toContain('372 of 800 tracked women in work (47%), from the 2,500 trained directly by CodersTrust');
+        if (route === '') {
+          expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
+          expect(cards, 'home').not.toContain('372 of 800');
+        } else {
+          expect(cards, route).toContain('372 of 800 tracked women in work (47%), from the 2,500 trained directly by CodersTrust');
+        }
         expect(cards, route || 'home').not.toContain('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
       }
     }

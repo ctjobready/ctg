@@ -6,23 +6,23 @@ import { fact } from '../../../data/facts';
 
 /**
  * C4 Future state (Klein): the company vision (ID-05) and the company ambition (IN-05, an [E] projection,
- * shown with its footnote and never beside SC-04).
+ * shown as the tile, with its "targeted ... by the fiscal year ending June 30, 2032" label, and never beside SC-04).
+ * WP37 (cycle-14 review): the 3M+ target is the tile's alone. The prose sentence that opened the band restated it and is gone, so the vision leads and
+ * "A long-term ambition, not a commitment." qualifies the tile beside it.
  */
 interface Props {
   id?: string;
 }
 const { id = 'vision' } = Astro.props;
-// IN-05 leads (3M+ learners and professionals on JobReady by June 30, 2032); ID-05 follows in one sentence (the vision for a world with far less youth unemployment; owner, 2026-10-14).
-const lead = fact('IN-05').text.replace(/^Ambition: /, 'The ambition is ');
-const detail = `Our vision: ${fact('ID-05').text.replace(/^A /, 'a ')}`;
+// ID-05 in one sentence (the vision for a world with far less youth unemployment; owner, 2026-10-14).
+const vision = `Our vision: ${fact('ID-05').text.replace(/^A /, 'a ')}`;
 ---
 
 <Section id={id} tone="klein" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Where It Is Heading" title="The Ambition and the Vision" />
   <div class="vis">
-    <div class="vis__copy" data-fact="IN-05 ID-05" data-reveal>
-      <p class="vis__lead">{lead}.</p>
-      <p class="vis__detail">{detail}.</p>
+    <div class="vis__copy" data-fact="ID-05" data-reveal>
+      <p class="vis__lead">{vision}.</p>
       <p class="vis__note">A long-term ambition, not a commitment.</p>
     </div>
     <div class="vis__stat" data-reveal>
@@ -56,12 +56,6 @@ const detail = `Our vision: ${fact('ID-05').text.replace(/^A /, 'a ')}`;
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
     font-weight: var(--fw-bold);
-    max-width: 36rem;
-  }
-  .vis__detail {
-    color: var(--ctx-text);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body-m);
     max-width: 36rem;
   }
   .vis__stat {

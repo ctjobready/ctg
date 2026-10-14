@@ -19,7 +19,8 @@ import { linkAttrs } from '../../../lib/url';
 // WP30d (owner direction 2026-10-14: less is more): shorter table notes, one live-today summary, a single roadmap sentence and a shorter "why" line.
 const path = '/our-model/jobready-platform/';
 const JOBREADY = 'https://jobready.global/';
-const description = desc('JobReady is CodersTrust’s education and employment platform. Partner portals, marketing automation, CRM and AI chat are live; more modules follow.');
+// WP37 (cycle-14 review): "CRM" is written out wherever the live list is printed (the table row and the callout below, the Q11 answer); the meta description names the two live modules the menu names, since the full list does not fit its 155 characters.
+const description = desc('JobReady is CodersTrust’s education and employment platform. Partner portals and AI chat are live; more modules follow.');
 const faqIds = ['Q11'];
 const jsonLd = [
   articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
@@ -35,7 +36,7 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
   { job: 'Supply Talent', capability: 'Employer marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, employers are introduced to candidates through CodersTrust’s placement team.' },
   { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Available to partner institutions for digital delivery.' },
   // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
-  { job: 'Across the Platform', capability: 'Marketing automation, CRM and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
+  { job: 'Across the Platform', capability: 'Marketing automation, customer relationship management and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
 ];
 // Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
@@ -88,7 +89,7 @@ const d = discoveryCta();
       </table>
     </section>
     <Callout label="What Is Live Today">
-      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Adaptive learning remains on the roadmap.</p>
+      <p data-fact="IN-04">Partner portals, marketing automation, customer relationship management and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Adaptive learning remains on the roadmap.</p>
     </Callout>
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>

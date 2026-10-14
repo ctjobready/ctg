@@ -1,6 +1,7 @@
 ---
 // Our Model hub /our-model/. WP30d (owner direction 2026-10-14: less is more): In Short, the quality-assurance band, the two delivery sub-headings, the trial proof line under the definition,
 // the safeguarding FAQ and the long card texts are cut; the delivery design choices are six one-sentence cards, and the FAQ keeps three decision questions with short answers.
+// WP37 (cycle-14 review): the connectivity card is headed "Learning with Limited Connectivity" (the body is unchanged), and the timeline answer says the weeks once (a page variant of Q7).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
@@ -37,17 +38,17 @@ if (!/more likely to be employed\.$/.test(trial.text)) throw new Error('Our Mode
 const cards = [
   { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', id: 'PD-14', text: 'Tests and an interview route applicants to a career track or a foundation track. A small number may not be selected, and the reasons are reported.' },
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
-  { icon: 'wifi', title: 'Connectivity-Light Delivery', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
+  { icon: 'wifi', title: 'Learning with Limited Connectivity', id: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
   { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification track includes ${val('PD-01')} training hours over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal.` },
   { icon: 'network', title: 'Local Labs, Coordinated Delivery', id: 'PD-06', text: 'From about month 5, programs can run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Support includes assessment-based career advising, CV writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
 const d = discoveryCta();
 
-// Three decision questions with short answers; the timeline answer is the shared bank answer.
+// Three decision questions with short answers; the timeline answer is this page's variant of Q7 (WP37, cycle-14 review: the shared answer's second sentence counted the weeks out again).
 const faqSources: FaqSource[] = [
   { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
-  { audience: 'foundations', id: 'Q7' },
+  { audience: 'variants', id: 'Q7-model' },
   { q: 'What Does It Cost?', html: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions run from outreach and selection to placement support and 12 months of outcome tracking, with the exam fee included; devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.', evidence: ['PD-02', 'PD-02a', 'PD-05'] },
 ];
 ---
