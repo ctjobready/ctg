@@ -13,7 +13,7 @@ import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
 import HomeEvidence from '../components/pages/home/HomeEvidence.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../components/sections/FeaturesTable.astro';
+import HomeIncludes from '../components/pages/home/HomeIncludes.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
@@ -33,6 +33,7 @@ import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
 import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
+import { freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
 import { linkAttrs } from '../lib/url';
 import { faqJsonLd } from '../lib/faq';
@@ -51,35 +52,39 @@ const introduction = cta('investor');
 // C2 BLUF (WP30c): one plain sentence. The 62 million and 19M+ figures are the two cards under it, so the sentence does not state them a second time.
 const problemBluf = 'Millions of educated young people are out of work and out of training, and training budgets rarely show who starts earning.';
 
-// C8: the three ranked pains (FUNDER_PAINS) and one C8 row for each, pain → how we relieve it → the registered feature behind it. Numbers inside feature rows come from the register.
+// C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
+// WP38 (cycle-15 review): on Home the rows are three short cards (HomeIncludes), not the concern / inclusion / benefit matrix of FeaturesTable, which the audience pages keep. Each card keeps its pain's id (`data-relieves`, held by
+// check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan approved before
+// enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The AI-ready line keeps "designed to" (the register states the
+// track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it.
 const hours = fact('PD-01').stat?.value;
 // The comparison's "Independent Evidence" cell on Home (WP31): the trial in one clause, the predecessor program's length read from RC-07 (not retyped).
 const trialHours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 if (!trialHours) throw new Error('Home: RC-07 no longer reads "... was N hours"');
 const independentEvidence = `One randomized trial of a predecessor program (${trialHours} hours, women in Dhaka); independent evaluation of your cohort welcome.`;
-const featureRows = [
+const includes = [
   {
-    ...painForRow(FUNDER_PAINS, 'P1'),
+    painId: painForRow(FUNDER_PAINS, 'P1').painId,
+    icon: 'route',
     // WP23, item 5: placement support, not matching, toward local, remote and global work.
-    feature: 'Placement Support and Three Months of Milestone-Based Mentoring',
-    means: `${hours} training hours per certification; each track’s work-entry plan is approved before enrollment.`,
-    outcome: 'A path to first paid work',
+    title: 'Training, Mentoring and Placement Support',
+    text: `${hours} training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is approved before enrollment.`,
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
   {
-    ...painForRow(FUNDER_PAINS, 'P2'),
+    painId: painForRow(FUNDER_PAINS, 'P2').painId,
+    icon: 'clipboard-check',
     // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
-    feature: 'Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope',
-    means: 'You see enrollment, completion, placements and first earnings month by month, and can check results against documentary evidence where available.',
-    outcome: 'Results you can check',
+    title: 'Results You Can Check',
+    text: 'Monthly reports and follow-up surveys, as agreed in the program scope, show progress toward paid work. Documentary evidence is checked where available.',
     facts: ['PD-08', 'PD-09'],
   },
   {
-    ...painForRow(FUNDER_PAINS, 'P3'),
-    feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Chosen from Employer Demand',
-    means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.',
-    outcome: 'Tracks that follow what employers ask for',
+    painId: painForRow(FUNDER_PAINS, 'P3').painId,
+    icon: 'briefcase',
+    title: 'Tracks Chosen from Employer Demand',
+    text: 'An AI-ready curriculum is designed to follow the skills employers ask for as entry-level tasks change.',
     facts: ['PD-02', 'PD-10'],
   },
 ];
@@ -104,7 +109,8 @@ const featureRows = [
       id="cost"
       title="Training and Evidence Fall Behind While You Wait"
       blocks={[
-        { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
+        // WP38 (cycle-15 review): the card states the first finding of PX-06 (the 21% on one platform), not both findings of the study in one sentence; PX-06 stays the fact the line rests on.
+        { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', text: freelancePostingsFinding(), implication: 'Training has to follow current employer demand, not last year’s job market.' },
         { icon: 'trending-down', claim: 'Only Three of Nine Training Trials Showed a Significant Employment Impact', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after="A first cohort can show who is earning, and you decide on the evidence."
@@ -153,8 +159,9 @@ const featureRows = [
 
   <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
 
-  <Tone cmf="C8" tone="airy" join>
-    <FeaturesTable id="features" title="What Your Partnership Includes" rows={featureRows} concernLabel="Funder Concern Addressed" />
+  <!-- WP38: three short cards (HomeIncludes) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
+  <Tone cmf="C8" tone="airy">
+    <HomeIncludes id="features" title="What Your Partnership Includes" cards={includes} />
   </Tone>
 
   <Tone cmf="C9" tone="white">

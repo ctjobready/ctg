@@ -9,6 +9,15 @@ import { fact } from '../../data/facts';
  */
 /** PX-06: the freelancing-platform postings result. */
 export const CLAIM_PX06 = 'On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release';
+/**
+ * PX-06 states two headline findings of one study in one sentence ("... fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% ..."). A card that has room for one reads the first finding alone
+ * (WP38, cycle-15 review: Home's cost-of-waiting card), in the register's own words and figures: the platform, the postings, the 21% and the eight-month window. The 17% image-creation finding stays in PX-06 for the pages that print it whole.
+ */
+export function freelancePostingsFinding(): string {
+  const m = /^Within (\w+ months) of ChatGPT’s release, postings for (automation-prone writing and coding) jobs on a major freelancing platform fell (\d+%) relative to manual-intensive jobs/.exec(fact('PX-06').text);
+  if (!m) throw new Error(`freelancePostingsFinding: PX-06 no longer reads "Within N months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell N% relative to manual-intensive jobs ...": "${fact('PX-06').text}"`);
+  return `On one major freelancing platform, ${m[2]} postings fell ${m[3]} relative to manual-intensive jobs within ${m[1]} of ChatGPT’s release.`;
+}
 /** RC-06: the review of vocational-training trials. */
 export const CLAIM_RC06 = 'A Review of Nine Trials Found Only Three with Significant Employment Impacts';
 /** PX-11: coastal-district out-migration (measured for one district, census 2001–2011; the perfect tense keeps the heading from reading as today's rate, and it claims no cause). */

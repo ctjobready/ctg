@@ -7,15 +7,16 @@ import Icon from '../../system/Icon.astro';
 import CopyText from './CopyText.astro';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
-import { ORIGIN } from '../../../data/copy';
+import { ORIGIN_LAUNCH, ORIGIN_SHORT } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
 
 /**
- * C5 Guide, empathy first: the audience's empathy line (EMPATHY[audience]), then ORIGIN, then
+ * C5 Guide, empathy first: the audience's empathy line (EMPATHY[audience]), then the origin line (ORIGIN_SHORT), then
  * authority (stat tiles and register-backed statements), then the method signal and the logo strip.
- * Same visual structure as the shared GuideBand; it adds what that band cannot hold: the ORIGIN
- * paragraph and authority statements that are sentences rather than numbers.
+ * Same visual structure as the shared GuideBand; it adds what that band cannot hold: the origin
+ * line and authority statements that are sentences rather than numbers.
+ * WP38 (cycle-15 review): the origin is one line (ORIGIN_SHORT), not the two-sentence history that Home keeps (ORIGIN); where the band shows SC-03's tile it is the launch alone (ORIGIN_LAUNCH).
  */
 interface Statement {
   /** Fact(s) behind the statement (data-fact and footnote markers). */
@@ -36,6 +37,8 @@ interface Props {
   id?: string;
 }
 const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
+// A band that already shows SC-03's tile (Development Partners) does not state the count of countries and territories a second time in its origin line.
+const origin = stats.includes('SC-03') ? ORIGIN_LAUNCH : ORIGIN_SHORT;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -43,7 +46,7 @@ const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], state
   <div class="pg">
     <div class="pg__copy" data-reveal>
       <p class="lead">{empathy}</p>
-      <CopyText block={ORIGIN} markers={[]} class="pg__origin" />
+      <CopyText block={origin} markers={[]} class="pg__origin" />
       <p class="pg__method">
         {method.text}{' '}
         {method.link && (

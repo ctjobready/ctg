@@ -34,7 +34,7 @@ import { webPage } from '../../../lib/schema';
 const path = '/partner-with-us/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
-// description cannot show, so the headline count stays in the page body (InvestorDefinition) beside its note.
+// description cannot show, so the headline count stays in the page body ("Reach to Date", InvestorReach) beside its note. WP38: the definition band no longer repeats it.
 const description = 'For impact investors: back JobReady’s staged rollout. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');

@@ -47,7 +47,9 @@ const image = imageProp ?? card.src;
 // A blank alt (pages that treat their on-page photo as decorative) must not leave the social image without a description.
 const imageAlt = imageAltProp?.trim() || (imageProp ? `Image for “${title}”` : card.alt);
 
-const fullTitle = suffix && !title.includes(SITE_NAME) ? `${title} | ${SITE_NAME}` : title;
+// WP38 (cycle-15 review): one title pattern, "{Page} | CodersTrust" (doc 09 §3), on every page that takes a suffix. It used to be dropped when the page's own title already named CodersTrust (the About page, one team profile and one archived
+// news post), which left three titles outside the pattern. Home keeps its brand-forward title (titleSuffix={false}), which scripts/check-seo.mjs accepts by name.
+const fullTitle = suffix ? `${title} | ${SITE_NAME}` : title;
 const canonical = canonicalUrl(path);
 // Staging is always noindex (planning/08 §2): prevents duplicate-content indexing while WordPress is live.
 const staging = __SITE_ENV__ !== 'production';

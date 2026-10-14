@@ -37,12 +37,6 @@
     {
       "page": "/about/recognition/",
       "tag": "h3",
-      "text": "CodersTrust to finance brains to educate IT coders",
-      "reason": "Verbatim headline of a third-party press article, cited as published (quoted text stays as quoted). Changing it would misquote the source."
-    },
-    {
-      "page": "/about/recognition/",
-      "tag": "h3",
       "text": "Building Code To Break Poverty In Bangladesh",
       "reason": "Verbatim headline of a third-party press article (TechCrunch), cited as published."
     },
@@ -51,24 +45,6 @@
       "tag": "h3",
       "text": "5 Companies Making A Splash For A Better World",
       "reason": "Verbatim headline of a third-party press article, cited as published; the same string is quoted in the facts register (PA-09), whose wording is locked."
-    },
-    {
-      "page": "/about/recognition/",
-      "tag": "h3",
-      "text": "Bangladesh, New York pursue different paths to train more coders",
-      "reason": "Verbatim headline of a third-party press article, cited as published."
-    },
-    {
-      "page": "/about/recognition/",
-      "tag": "h3",
-      "text": "A novel idea in microfinance is turning Bangladeshis into freelance coders",
-      "reason": "Verbatim headline of a third-party press article, cited as published."
-    },
-    {
-      "page": "/about/recognition/",
-      "tag": "h3",
-      "text": "Cook to coder: How low-income youth are writing a better future",
-      "reason": "Verbatim headline of a third-party press article, cited as published."
     }
   ]
 }

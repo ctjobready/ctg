@@ -15,6 +15,8 @@ interface Block {
   icon: string;
   claim: string;
   factId: string;
+  /** The data line, when the card states part of the fact only (WP38: one finding of PX-06's two); defaults to the register's text. */
+  text?: string;
   implication: string;
 }
 interface Props {
@@ -40,7 +42,7 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
             <Icon name={b.icon} size={36} strokeWidth={1.5} class="cost__icon" />
             <h3 class="card__title">{titleCase(b.claim)}</h3>
             <p class="cost__data" data-fact={b.factId}>
-              {endSentence(clean(fact(b.factId).text))}
+              {endSentence(clean(b.text ?? fact(b.factId).text))}
             </p>
             <p class="cost__impl"><span class="cost__tag">What It Means</span>{' '}{b.implication}</p>
           </div>

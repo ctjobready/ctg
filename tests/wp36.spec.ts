@@ -49,7 +49,8 @@ test.describe('Home: each figure once', () => {
     expect(count(await mainText(page), '77.9%'), 'the 77.9% is stated once on Home').toBe(1);
   });
 
-  test('slide 5 is headed "Explore Where Our Programs Have Run" and keeps only SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
+  // WP38 (cycle-15 review): the slide has SC-03's "15" as its tile again (tests/wp38.spec.ts holds the tile); the 130,000+ stays the hero's reach card alone
+  test('slide 5 is headed "Explore Where Our Programs Have Run" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Reach at Scale');
@@ -59,17 +60,17 @@ test.describe('Home: each figure once', () => {
     expect(await slide.locator('h2').getAttribute('data-fact')).toBeNull();
     const text = compact(await slide.textContent());
     expect(text).not.toContain('130,000');
-    expect(text).not.toMatch(/\b15 countries/);
     await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
     await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('130,000+');
     expect(count(await mainText(page), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
   });
 
-  test('slide 4 says "surveyed completers" (the survey page’s term), not "earners", and keeps its base in the lead', async ({ page }) => {
+  // WP38 (cycle-15 review): the heading leads with its figure and then names the base ("completers who started earning"); the survey qualifier is on the slide itself (eyebrow, lead, tile)
+  test('slide 4 leads with its figure, says "completers who started earning", and keeps "surveyed completers" in the lead', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Who Started Earning: 58.8% Within Six Months');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('Surveyed Completers Who Started Earning: 58.8% Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('58.8% of Completers Who Started Earning Began Within Six Months');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('58.8% of Completers Who Started Earning Began Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
   });
@@ -81,9 +82,12 @@ test.describe('Home: each figure once', () => {
     expect(lines[1]).not.toMatch(/in work/);
   });
 
-  test('the Practical Benefit cells of "What Your Partnership Includes" are sentence case, as on the other pages', async ({ page }) => {
+  // WP38 (cycle-15 review): Home's band is three short cards, so there are no Practical Benefit cells; the card titles are Title Case like every other heading
+  test('the three cards of "What Your Partnership Includes" carry Title Case headings', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '#features .fc__benefit')).toEqual(['A path to first paid work', 'Results you can check', 'Tracks that follow what employers ask for']);
+    const titles = await texts(page, '#features .card__title');
+    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Results You Can Check', 'Tracks Chosen from Employer Demand']);
+    for (const t of titles) expect(t, t).toBe(titleCase(t));
   });
 
   test('the carousel keeps its layout: slides share one height box at 1280 and 390 and no slide leaves more than 48 px unused', async ({ page }) => {
@@ -217,10 +221,11 @@ test.describe('Foundations', () => {
 });
 
 test.describe('Contact', () => {
-  test('step 3 names foundations’ two grants; development partners, governments, universities and local partners share the first-cohort sentence', async ({ page }) => {
+  // WP38 (cycle-15 review): the shared sentence says "a program scope, designed with you" (a "first cohort" was one kind of scope; the sentence is for four routes)
+  test('step 3 names foundations’ two grants; development partners, governments, universities and local partners share the program-scope sentence', async ({ page }) => {
     await open(page, 'contact/');
     expect(compact(await page.locator('#next .steps__item').nth(2).textContent())).toContain(
-      'Development partners, governments, universities and local partners: a first cohort, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles.',
+      'Development partners, governments, universities and local partners: a program scope, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles.',
     );
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
     expect(third).toContain('Impact investors: the deck and data room follow under NDA.');
@@ -402,8 +407,8 @@ test.describe('option bands: program sizes are not a commitment', () => {
 });
 
 test.describe('one figure, one label: the 31,200+ is tagged "Contract Scope" everywhere', () => {
+  // WP38 (cycle-15 review): Home's Track Record band has no tile for it any more; slide 6 states it and says "contract scope, not people trained" (tests/wp31.spec.ts)
   const TILES: [string, string][] = [
-    ['', '#guide .guide__tile'],
     ['partner-with-us/governments/', '#glance li'],
     ['impact/', '#glance li'],
     ['partner-with-us/investors/', '#reach .ir__tile'],

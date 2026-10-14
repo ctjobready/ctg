@@ -16,6 +16,7 @@ import { linkAttrs } from '../../../lib/url';
  * (AWS Authorized Training Partner, AIvolve, Grameenphone Academy enrollments) are stated once, in their Track Record band, and not again here.
  * WP35 (cycle-12 review): Development Partners, Governments and Foundations use it the same way for their #proof-band: their Results at a Glance already show the trial and the survey, so the band that
  * restated them is this strip of two links (`id="proof-band"` keeps the anchor).
+ * WP38 (cycle-15 review): Universities states its wider-evidence band the same way, as a strip with one line each for the trial and the survey (`statements`, read from the register by the page) above the two links, in place of the full evidence band.
  */
 interface Item {
   /** Register fact id. */
@@ -25,12 +26,20 @@ interface Item {
   /** Show the fact's stat tile (value and label) instead of its sentence. */
   stat?: boolean;
 }
+interface Statement {
+  /** One sentence, its figures read from the register (src/data/copy.ts), never typed on the page. */
+  text: string;
+  /** Register fact ids the sentence rests on (`data-fact`). */
+  facts: string[];
+}
 interface Props {
   title: string;
   eyebrow?: string;
   lead?: string;
   /** May be empty (WP32): the band is then its heading and the linked block only. */
   items: Item[];
+  /** One line each under the heading, before the links (WP38). */
+  statements?: Statement[];
   /** Compact links to the broader evidence. */
   broader?: { label: string; href: string }[];
   broaderLabel?: string;
@@ -42,6 +51,7 @@ const {
   eyebrow = 'Evidence for This Offer',
   lead,
   items,
+  statements = [],
   broader = [
     { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' },
     { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
@@ -60,7 +70,15 @@ const linksOnly = views.length === 0;
 ---
 
 <Section id={id} tone={tone} pad={linksOnly ? 'sm' : 'md'} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead}>
+    {
+      statements.length > 0 && (
+        <div class="pe__lines">
+          {statements.map((s) => <p class="lead" data-fact={s.facts.join(' ')}>{s.text}</p>)}
+        </div>
+      )
+    }
+  </SectionHeader>
   {
     !linksOnly && (
       <ul class="pe" role="list">
@@ -82,6 +100,16 @@ const linksOnly = views.length === 0;
 </Section>
 
 <style>
+  /* the trial line and the survey line: two separate statements, one gap apart (WP38) */
+  .pe__lines {
+    display: grid;
+    gap: var(--space-md);
+    /* heading to its text is the stack-heading token, as for a lead (the header's own rule for that cannot see slotted content) */
+    margin-top: calc(var(--stack-heading) - var(--stack-eyebrow));
+  }
+  .pe__lines > p {
+    margin: 0;
+  }
   .pe {
     list-style: none;
     margin: 0;

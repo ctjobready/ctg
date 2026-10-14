@@ -1,8 +1,6 @@
 ---
 import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
-import FactStat from '../../facts/FactStat.astro';
-import EvidenceTag from '../../system/EvidenceTag.astro';
 import PartnerRelationships from './PartnerRelationships.astro';
 import CopyBlock from './CopyBlock.astro';
 import { EMPATHY, ORIGIN } from '../../../data/copy';
@@ -10,9 +8,10 @@ import { linkAttrs } from '../../../lib/url';
 
 /**
  * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the method signal
- * (TalentLEAP) and two authority figures, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
+ * (TalentLEAP) and the leadership link, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
  * WP30c: the geography line (130,000+ trained, 15 countries and territories) is gone from this band: the hero card and the reach slide state it, so it
  * appears twice on the page and not three times.
+ * WP38 (cycle-15 review): the two authority tiles (31,200+ contract scope and 1.5M+ National University learners) are gone too: slide 6 of the results carousel states both. The copy is one column at a reading width.
  */
 interface Props {
   id?: string;
@@ -38,25 +37,20 @@ const team = linkAttrs('/about/team/');
         <a class="link" href={team.href}>Meet the Leadership Team<Icon name="arrow-right" size={16} /></a>
       </p>
     </div>
-    <div class="guide__panel" data-reveal>
-      <!-- WP31: the contract-scope figure says what kind of figure it is (agreements, not delivered training), as the audience pages' Results at a Glance do. -->
-      <div class="guide__tile"><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /></div>
-      <div class="guide__tile"><FactStat id="SC-04" /></div>
-    </div>
   </div>
   <PartnerRelationships />
 </Section>
 
 <style>
   .guide {
-    display: grid;
-    gap: var(--space-lg);
     margin-bottom: var(--space-md);
   }
   .guide__copy {
     display: grid;
     gap: var(--space-md);
     align-content: start;
+    /* the reading width the audience pages' Guide band uses (PartnerGuideBand: 48rem) */
+    max-width: 48rem;
   }
   .guide__copy > * {
     margin: 0;
@@ -81,57 +75,5 @@ const team = linkAttrs('/about/team/');
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-sm);
-  }
-  .guide__panel {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg) var(--space-gutter);
-    align-content: center;
-    padding: var(--space-lg) var(--space-gutter);
-    background: var(--surface);
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-  }
-  /* A tile is its figure, with the evidence tag (WP31) above it where the figure has one. Where the grid can share rows (subgrid), both tiles use the same two rows,
-     so the two figures start level whether or not one of them has a tag; without subgrid the tile is a plain stack. */
-  .guide__tile {
-    display: grid;
-    gap: var(--space-xs);
-    align-content: start;
-    justify-items: start;
-    min-width: 0;
-  }
-  @supports (grid-template-rows: subgrid) {
-    .guide__tile {
-      grid-row: span 2;
-      grid-template-rows: subgrid;
-      row-gap: var(--space-xs);
-    }
-    /* <FactStat> wraps its tile in a display:contents element, so the tile is found as a descendant, not a child */
-    .guide__tile :global(.stat) {
-      grid-row: 2;
-    }
-  }
-  /* the SC-01 / SC-03 qualifier sits directly under the two tiles it qualifies and spans the panel */
-  .guide__panel :global(.guide__reach) {
-    grid-column: 1 / -1;
-    margin: 0;
-    font-size: var(--fs-body-base);
-    color: var(--on-surface-variant);
-  }
-  .guide__panel :global(.stat--lg .stat__value) {
-    font-size: var(--fs-heading-3xl);
-    line-height: 1.15;
-  }
-  @media (min-width: 1024px) {
-    .guide {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--space-xl);
-      align-items: center;
-    }
-    .guide__panel {
-      padding: var(--space-lg);
-    }
   }
 </style>

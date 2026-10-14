@@ -69,11 +69,12 @@ test.describe('home hero slider', () => {
     // WP30c: the framing sentence is five words long (the slides label their own evidence types)
     await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
-    // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ and the 15 (the hero's reach card does)
+    // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ (the hero's reach card does)
+    // WP38 (cycle-15 review): the speed slide's heading leads with its figure and then names the base; the reach slide has SC-03's figure as its tile (tests/wp38.spec.ts)
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
       'Surveyed Completers Report a Median Income of $245, Up from $82 Before Training',
       'Results by Program',
-      'Surveyed Completers Who Started Earning: 58.8% Within Six Months',
+      '58.8% of Completers Who Started Earning Began Within Six Months',
       'Explore Where Our Programs Have Run',
     ]);
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);

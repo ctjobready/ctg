@@ -89,12 +89,15 @@ test.describe('JobReady@Campus and JobReady@Work', () => {
     ['programs/jobready-campus/', 'University Partnership Overview'],
     ['programs/jobready-work/', 'Employer Partnership Overview'],
   ] as const) {
-    test(`${route} links its partnership route by what it opens and says where to inquire`, async ({ page }) => {
+    // WP38 (cycle-15 review): the sentence that followed the link ("Ready to discuss this program? Use the inquiry action on this page.") read as placeholder copy and repeated the hero's button right above it, so the strip is
+    // the kicker and the link alone (the inquiry action is the hero's button)
+    test(`${route} links its partnership route by what it opens, and the hero holds the inquiry action`, async ({ page }) => {
       await open(page, route);
       const band = page.locator('#route-link');
       await expect(band.locator('a.link')).toHaveText(label);
-      expect(compact(await band.textContent())).toContain('Ready to discuss this program? Use the inquiry action on this page.');
+      expect(compact(await band.textContent())).not.toContain('Ready to discuss this program');
       expect(await band.textContent()).not.toContain('Start Here');
+      await expect(page.locator('#hero .btn').first()).toBeVisible();
     });
   }
 

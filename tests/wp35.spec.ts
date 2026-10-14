@@ -100,12 +100,13 @@ test.describe('survey figures say what completers report, not an effect', () => 
     await expect(page.locator('#why-partner li[data-fact="OC-01"] .wp__note')).toHaveText('Up from 47.4% before training.');
   });
 
-  test('Universities states the median income as two readings, with no "rose" and no multiplier', async ({ page }) => {
+  // WP38 (cycle-15 review): Universities' evidence band is two lines; the median income and the chart left it, and the survey line keeps the two-readings form ("was 77.9% ... up from 47.4% before training")
+  test('Universities states the survey as two readings, with no "rose", no multiplier, no chart and no median income', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    const list = compact(await page.locator('#proof-band .ev').textContent());
-    expect(list).toContain('Among surveyed completers, median monthly income was $245 at the October 2026 survey, against $82 before training.');
-    expect(list).not.toMatch(/rose from|3×/);
-    expect(await page.locator('#proof-band .ba__data tbody tr').count(), 'two rows: before and at the survey, no difference row').toBe(2);
+    const band = compact(await page.locator('#proof-band').textContent());
+    expect(band).toContain('employment was 77.9% at the October 2026 survey, up from 47.4% before training.');
+    expect(band).not.toMatch(/rose from|3×|median monthly income/);
+    await expect(page.locator('#proof-band .ba__data, #proof-band .ev')).toHaveCount(0);
   });
 
   test('the Impact Survey 2026 page keeps its own descriptive "Change" chip: it is the survey’s data page and says the survey does not show cause', async ({ page }) => {
@@ -235,13 +236,14 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     expect(count(text, 'BIGD')).toBe(1);
   });
 
-  test('the proof band that Universities and Local Partners keep spells it out in its trial headline', async ({ page }) => {
-    for (const slug of ['universities', 'local-partners']) {
-      await open(page, `partner-with-us/${slug}/`);
-      const head = compact(await page.locator('.proofband__head').textContent());
-      expect(head, slug).toContain(`A randomized trial by the ${SPELLED} found that women offered a place`);
-      expect(count(await mainText(page), 'BIGD'), slug).toBe(1);
-    }
+  // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of the predecessor WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
+  test('the proof band that Local Partners keeps spells it out in its trial headline; Universities names no evaluator', async ({ page }) => {
+    await open(page, 'partner-with-us/local-partners/');
+    const head = compact(await page.locator('.proofband__head').textContent());
+    expect(head).toContain(`A randomized trial by the ${SPELLED} found that women offered a place`);
+    expect(count(await mainText(page), 'BIGD')).toBe(1);
+    await open(page, 'partner-with-us/universities/');
+    expect(await mainText(page)).not.toContain('BIGD');
   });
 });
 

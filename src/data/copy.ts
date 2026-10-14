@@ -74,6 +74,29 @@ export const ORIGIN: CopyBlock = {
   facts: ['ID-02', 'PR-03a'],
 };
 
+/**
+ * ORIGIN in one line, for the audience pages' Guide band (WP38, cycle-15 review: the two-sentence history was word for word on seven pages). Home keeps ORIGIN whole. The year is ID-02's stat value ("2014") and the
+ * count of countries and territories is SC-03's ("15"), so the line cannot drift from the register; the builder throws if either stat changes shape.
+ */
+function originShort(): CopyBlock {
+  const year = fact('ID-02').stat?.value;
+  const countries = fact('SC-03').stat?.value;
+  if (!year || !/^\d{4}$/.test(year) || !countries || !/^\d+$/.test(countries)) throw new Error('ORIGIN_SHORT: ID-02 or SC-03 no longer has the expected stat value');
+  return { text: `Since ${year}, from a Copenhagen launch to programs in ${countries} countries and territories.`, facts: ['ID-02', 'SC-03'] };
+}
+export const ORIGIN_SHORT: CopyBlock = originShort();
+
+/**
+ * ORIGIN_SHORT without the count, for a Guide band that already shows SC-03's tile (Development Partners: "15 countries and territories, including Bangladesh" sits beside it), so the figure is not stated twice in one band.
+ * The year is ID-02's stat value, as in ORIGIN_SHORT.
+ */
+function originLaunch(): CopyBlock {
+  const year = fact('ID-02').stat?.value;
+  if (!year || !/^\d{4}$/.test(year)) throw new Error('ORIGIN_LAUNCH: ID-02 no longer has a four-digit stat value');
+  return { text: `Launched in Copenhagen in ${year}.`, facts: ['ID-02'] };
+}
+export const ORIGIN_LAUNCH: CopyBlock = originLaunch();
+
 /** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */
 export const TRIAL_BAND_HEADING = 'An Independent Randomized Trial';
 
@@ -510,6 +533,24 @@ function investorEvidence(): CopyBlock {
   };
 }
 export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
+
+/**
+ * The two lines of Universities' "Evidence from Our Wider Youth Programs" band (WP38, cycle-15 review): the trial result and the survey's degree share and employment readings, in place of the full evidence band
+ * (offered-place and attender income, survey chart, education profile). Figures are read from RC-02, OC-01 and OC-09, so the sentences cannot drift from the register; the builder throws if a stat or the OC-09 phrase
+ * changes shape. The survey line names its base ("Among surveyed completers") and reads as OC-01's tile does: "was 77.9% at the October 2026 survey, up from 47.4% before training".
+ */
+function universityEvidence(): CopyBlock[] {
+  const rc = fact('RC-02').stat;
+  const oc = fact('OC-01').stat;
+  const degree = /(\d+(?:\.\d+)?% hold a bachelor’s degree or higher)/.exec(fact('OC-09').text)?.[1];
+  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from || !degree) throw new Error('UNIVERSITY_EVIDENCE: RC-02, OC-01 or OC-09 no longer has the expected stat or wording');
+  const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  return [
+    { text: `A randomized trial of the predecessor WSDFM program found women offered a place were ${points} more likely to be employed.`, facts: ['RC-02'] },
+    { text: `Among surveyed completers, ${degree}; employment was ${oc.value} at the October 2026 survey, up from ${oc.from} before training.`, facts: ['OC-09', 'OC-01'] },
+  ];
+}
+export const UNIVERSITY_EVIDENCE: CopyBlock[] = universityEvidence();
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
 export const ACCOUNTABILITY: CopyBlock = {

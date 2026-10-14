@@ -68,11 +68,11 @@ test.describe('figures say what they measure', () => {
     }
   });
 
-  test('the Home Track Record tile for the six government contracts carries the Contract Scope tag', async ({ page }) => {
+  // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (slide 6 of the carousel states both); the slide says what kind of figure the 31,200+ is in words
+  test('the Home Track Record band has no tile for the six government contracts; slide 6 says the 31,200+ is contract scope, not people trained', async ({ page }) => {
     await open(page, '');
-    const tile = page.locator('#guide .guide__tile', { hasText: '31,200+' });
-    await expect(tile).toHaveCount(1);
-    await expect(tile.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
+    await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
+    expect(compact(await page.locator('[data-hs-slide]').nth(5).locator('.hs__lead').textContent())).toContain('31,200+ people (contract scope, not people trained)');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
@@ -315,7 +315,8 @@ test.describe('smaller wording fixes', () => {
     }
     await open(page, '');
     await expect(page.locator('#cost h2')).toHaveText('Training and Evidence Fall Behind While You Wait');
-    expect(compact(await page.locator('#features .fc__included').nth(1).textContent())).toBe('Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope');
+    // WP38: Home's band is three short cards; the reporting card says "follow-up surveys" in its sentence
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('Monthly reports and follow-up surveys, as agreed in the program scope');
     await open(page, 'programs/youthwide/');
     expect(await texts(page, '#features .fc__included')).toContain('Baseline, Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope');
   });
@@ -381,11 +382,14 @@ test.describe('layout', () => {
     });
   }
 
-  test('the Home Track Record tiles start level whether or not one carries a tag', async ({ page }) => {
-    await page.setViewportSize(DESKTOP);
-    await open(page, '');
-    const tops = await page.locator('#guide .guide__tile .stat__value').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-    expect(tops).toHaveLength(2);
-    expect(Math.abs(tops[0] - tops[1]), 'the two figures share a baseline').toBeLessThanOrEqual(2);
+  // WP38 (cycle-15 review): the two Track Record tiles are gone from Home, so there is no pair of figures to start level; the copy column is what the band holds, and it fits at both widths
+  test('the Home Track Record band holds its copy and its logos and no figure tile, with no sideways scroll at 1280 or 390', async ({ page }) => {
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      await open(page, '');
+      await expect(page.locator('#guide .stat')).toHaveCount(0);
+      await expect(page.locator('#guide .guide__copy')).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), `${vp.width}px`).toBe(true);
+    }
   });
 });

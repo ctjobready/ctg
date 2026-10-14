@@ -24,6 +24,7 @@ import { cta } from '../lib/mailto';
  * WP36 (cycle-13 reviews): the Home page states each figure once. The income slide has one tile (the 77.9% employment result is the hero's survey card), and the reach slide ("Explore Where Our Programs Have Run")
  * carries SC-03's detail line only (the 130,000+ and the 15 countries and territories are the hero's reach card). The program-results slide names the base of every result (Kosovo "(102 of 150)", UNDP YES
  * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
+ * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
  */
 
 export interface HeroSlideStat {
@@ -107,9 +108,16 @@ if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N trac
 const startedSixMonths = fact('OC-05').stat?.value;
 const incomeNow = fact('OC-03').stat?.value;
 const incomeBefore = fact('OC-03').stat?.from;
-/** The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ and the 15 are the hero's reach card, so the slide does not state them again. */
+/**
+ * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
+ * WP38 (cycle-15 review): the slide has a figure of its own, SC-03's stat ("15", captioned "countries and territories with CodersTrust programs": the register's label without its ", including Bangladesh" tail, which the line
+ * above the tile says), so it reads like the survey slides, each with its figure.
+ */
 const reachDetail = fact('SC-03').stat?.detail;
 if (!reachDetail || !/^Bangladesh plus \d+ other countries and territories; most delivery has been in Bangladesh\.$/.test(reachDetail)) throw new Error('heroSlides: SC-03 detail no longer reads "Bangladesh plus N other countries and territories; most delivery has been in Bangladesh."');
+const reachLabel = fact('SC-03').stat?.label;
+if (!reachLabel || !/^countries and territories with CodersTrust programs(, including Bangladesh)?$/.test(reachLabel)) throw new Error('heroSlides: SC-03 label no longer reads "countries and territories with CodersTrust programs, including Bangladesh"');
+const reachCaption = reachLabel.replace(/, including Bangladesh$/, '');
 /**
  * GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for
  * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
@@ -206,9 +214,10 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    // WP36 (cycle-13 review): "completers", the term the Outcomes 2026 page and the register use, not "earners". The clause "who started earning" is the base (the 170 who first earned during or after training), so
-    // the figure follows a colon and the heading stays two lines at 1280 px: the longer sentence ("... Did so Within Six Months") wraps to three, which makes this the tallest slide and leaves the others more than 48 px of empty space.
-    title: `Surveyed Completers Who Started Earning: ${startedSixMonths} Within Six Months`,
+    // WP36 (cycle-13 review): "completers", the term the Outcomes 2026 page and the register use, not "earners". The clause "who started earning" is the base (the 170 who first earned during or after training).
+    // WP38 (cycle-15 review, clarity of base): the figure leads and the base follows it ("58.8% of completers who started earning began within six months"). The heading stays two lines at 1280 px: with "Surveyed" before "Completers"
+    // (71 characters) it wraps to three, which makes this the tallest slide and leaves the others more than 48 px of empty space. The survey qualifier is on the slide itself: the eyebrow ("Impact Survey 2026"), the lead and the tile name the surveyed completers.
+    title: `${startedSixMonths} of Completers Who Started Earning Began Within Six Months`,
     titleFacts: ['OC-05'],
     lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
     leadFacts: ['OC-05'],
@@ -223,6 +232,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     title: 'Explore Where Our Programs Have Run',
     lead: reachDetail,
     leadFacts: ['SC-03'],
+    stats: [{ factId: 'SC-03', caption: () => reachCaption }],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
     photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide
   },

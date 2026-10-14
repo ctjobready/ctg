@@ -11,22 +11,22 @@ const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ')
 const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/';
 
 test.describe('What Your Partnership Includes (#features)', () => {
-  test('the reporting inclusion is scoped: "as agreed in the program scope", documentary evidence "where available"', async ({ page }) => {
+  // WP38 (cycle-15 review): on Home the band is three short cards (HomeIncludes), not the concern / inclusion / benefit rows; the scoping stays in the card's sentences (tests/wp38.spec.ts holds the whole band)
+  test('the reporting card is scoped: "as agreed in the program scope", documentary evidence "where available"', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#features li[data-fact~="PD-08"]');
     await expect(card).toHaveCount(1);
-    // WP31: the row heading is short (monthly reports and follow-up surveys, scoped); the sentence under it carries the documentary-evidence qualifier
-    await expect(card.locator('.fc__included')).toHaveText('Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope');
+    await expect(card.locator('.card__title')).toHaveText('Results You Can Check');
     const t = compact(await card.textContent());
     expect(t).not.toContain('Documentary Evidence of Earnings');
-    expect(t).toContain('documentary evidence where available');
+    expect(t).toContain('as agreed in the program scope');
+    expect(t).toContain('Documentary evidence is checked where available');
   });
 
-  test('no benefit on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three rows answer the three ranked pains)', async ({ page }) => {
+  test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three cards answer the three ranked pains)', async ({ page }) => {
     await open(page, '');
-    const benefits = (await page.locator('#features .fc__benefit').allTextContents()).map(compact);
-    // WP36 (cycle-13 review): the Practical Benefit cells are sentence case on Home, as on the other pages
-    expect(benefits).toEqual(['A path to first paid work', 'Results you can check', 'Tracks that follow what employers ask for']);
+    const titles = (await page.locator('#features .card__title').allTextContents()).map(compact);
+    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Results You Can Check', 'Tracks Chosen from Employer Demand']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
   });
 });

@@ -188,8 +188,8 @@ test.describe('the follow-up survey schedule', () => {
 });
 
 test.describe('benefit lines start with a capital letter', () => {
+  // WP38 (cycle-15 review): Home's band is three short cards (HomeIncludes), not concern / inclusion / benefit rows, so it has no .fc__means lines; its card sentences are held to the same rule below
   const ROUTES = [
-    '',
     'partner-with-us/development-partners/',
     'partner-with-us/governments/',
     'partner-with-us/foundations/',
@@ -204,9 +204,16 @@ test.describe('benefit lines start with a capital letter', () => {
     for (const route of ROUTES) {
       await open(page, route);
       const lines = await texts(page, '#features .fc__means');
-      expect(lines.length, `${route || 'home'} has benefit lines`).toBeGreaterThan(0);
-      for (const l of lines) expect(l, `${route || 'home'}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
+      expect(lines.length, `${route} has benefit lines`).toBeGreaterThan(0);
+      for (const l of lines) expect(l, `${route}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
     }
+  });
+
+  test('Home’s three cards open with a capital letter or a figure', async ({ page }) => {
+    await open(page, '');
+    const lines = await texts(page, '#features .card__text');
+    expect(lines.length, 'home has three card sentences').toBe(3);
+    for (const l of lines) expect(l, `home: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
   });
 
   test('Development Partners "What Your Portfolio Gets": three standalone sentences under the bold benefit line', async ({ page }) => {

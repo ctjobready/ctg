@@ -106,7 +106,8 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
     await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
-    await expect(slide(page, 4).locator('h2')).toHaveText('Surveyed Completers Who Started Earning: 58.8% Within Six Months');
+    // WP38 (cycle-15 review): the heading leads with the figure and then names the base; the eyebrow, the lead and the tile keep "surveyed completers"
+    await expect(slide(page, 4).locator('h2')).toHaveText('58.8% of Completers Who Started Earning Began Within Six Months');
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
     await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');

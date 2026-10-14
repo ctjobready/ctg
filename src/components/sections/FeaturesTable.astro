@@ -13,6 +13,8 @@ import Icon from '../system/Icon.astro';
  * with `painId` ("P1" to "P3") carries `data-relieves` and shows the pain's number in the same circle as the C2 list; a row without
  * one is a gain creator and shows "Added benefit". `facts` ties the row to the registered facts it rests on (`data-fact`, so the
  * status gate and the production holds see it). scripts/check-facts.mjs checks that each C2 pain has exactly one card.
+ * WP38 (cycle-15 review): Home no longer uses this component (its labelled concern / inclusion / benefit parts read as a matrix); its band is three short cards (components/pages/home/HomeIncludes.astro), which carry the same
+ * `data-relieves` and `data-fact`, so the one-card-per-pain check holds. The audience and program pages keep this layout.
  */
 interface Row {
   feature: string;
