@@ -122,10 +122,10 @@ const PR_TEXT = {
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
 
-/** The survey card's caption: OC-01's tile label with the survey's scope, surveyed completers in Bangladesh (OC-09: respondents live in 58 of the country's 64 districts), said once, here (WP35). */
+/** The survey card's caption: OC-01's tile label. (WP35 added "in Bangladesh"; reverted until the owner confirms the survey's country scope — OC-09 gives districts, not an all-Bangladesh sample.) */
 const surveyLabel = fact('OC-01').stat?.label ?? '';
 if (!surveyLabel.includes('among surveyed completers')) throw new Error('heroSlides: OC-01 label no longer says "among surveyed completers"; update the hero survey caption');
-const surveyCaption = surveyLabel.replace('among surveyed completers', 'among surveyed completers in Bangladesh');
+const surveyCaption = surveyLabel;
 
 /** The stable home hero. */
 export const HOME_HERO = {

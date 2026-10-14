@@ -55,17 +55,16 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     for (let i = 1; i < dark.length; i++) expect(dark[i] && dark[i - 1], `band ${i}`).toBe(false);
   });
 
-  test('the survey group says once that the survey is of surveyed completers in Bangladesh (OC-09: respondents live in 58 of the country’s 64 districts)', async ({ page }) => {
+  test('the survey group is headed for surveyed completers (country scope pending the owner)', async ({ page }) => {
     await open(page, 'impact/');
-    await expect(page.getByRole('heading', { level: 3, name: 'Survey Results, Among Surveyed Completers in Bangladesh' })).toHaveCount(1);
-    expect(count(compact(await page.locator('#glance').textContent()), 'in Bangladesh')).toBe(1);
+    await expect(page.getByRole('heading', { level: 3, name: 'Survey Results, Among Surveyed Completers' })).toHaveCount(1);
   });
 
-  test('Home’s survey proof card says in its caption that the survey is of surveyed completers in Bangladesh, and the three proof figures start level at tablet widths too', async ({ page }) => {
+  test('Home’s survey proof card caption is OC-01’s label, and the three proof figures start level at tablet widths too', async ({ page }) => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="OC-01"]');
     await expect(card.locator('.hh__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(card.locator('.stat__label')).toHaveText('employed, up from 47.4% before training, among surveyed completers in Bangladesh at the October 2026 survey');
+    await expect(card.locator('.stat__label')).toHaveText('employed, up from 47.4% before training, among surveyed completers at the October 2026 survey');
     for (const width of [390, 768, 820, 900, 1024, 1280]) {
       await page.setViewportSize({ width, height: 900 });
       const tops = await page.locator('.hh__card').evaluateAll((cards) => cards.map((c) => Math.round((c.querySelector('.hh__figvalue, .stat__value') as HTMLElement).getBoundingClientRect().top - c.getBoundingClientRect().top)));
