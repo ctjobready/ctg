@@ -94,10 +94,18 @@ const moreTiles = more.map(toTile);
 </Section>
 
 <style>
-  .pg__title {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h2.pg__title {
     margin: 0 0 var(--space-sm);
-    font-size: var(--fs-heading-l, 1.25rem);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h2.pg__title {
+      letter-spacing: -0.5px;
+    }
   }
   .pg__more-title {
     margin: var(--space-lg) 0 var(--space-sm);
@@ -120,10 +128,10 @@ const moreTiles = more.map(toTile);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: var(--stack-title);
     height: 100%;
     padding: var(--space-md);
-    padding-right: 40px;
+    padding-right: var(--space-xl);
     border-radius: var(--radius-lg);
     background: var(--surface);
     box-shadow: var(--shadow-card);
@@ -144,7 +152,7 @@ const moreTiles = more.map(toTile);
     position: static;
   }
   .pg__value {
-    margin-top: 4px;
+    margin-top: var(--space-xs);
     font-size: var(--fs-heading-2xl);
     line-height: 1.15;
     font-weight: var(--fw-bold);

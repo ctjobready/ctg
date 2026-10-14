@@ -92,9 +92,18 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
     align-content: start;
     min-width: 0;
   }
-  .ir__h {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.ir__h {
     margin: 0;
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.ir__h {
+      letter-spacing: -0.5px;
+    }
   }
   .ir__tiles {
     display: grid;
@@ -106,7 +115,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
   }
   .ir__tile {
     display: grid;
-    gap: var(--space-xs);
+    gap: var(--stack-title);
     justify-items: start;
     align-content: start;
     min-width: 0;
@@ -138,7 +147,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    padding: 6px var(--space-md);
+    padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-pill);
     color: var(--on-surface);
@@ -151,7 +160,7 @@ const nationalSize = PROGRAM_OPTIONS[2].size.split(' ')[0];
   @media (min-width: 900px) {
     .ir {
       grid-template-columns: 3fr 1fr;
-      gap: 56px;
+      gap: var(--space-xl);
     }
     .ir__group--delivered .ir__tiles {
       grid-template-columns: repeat(3, minmax(0, 1fr));

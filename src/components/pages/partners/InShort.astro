@@ -52,9 +52,18 @@ const governance = linkAttrs('/about/governance/#contracting').href;
     border-radius: var(--radius-default);
     max-width: 62rem;
   }
-  .is__title {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h2.is__title {
     margin: 0 0 var(--space-sm);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h2.is__title {
+      letter-spacing: -0.5px;
+    }
   }
   .is__list {
     list-style: disc;
@@ -96,7 +105,7 @@ const governance = linkAttrs('/about/governance/#contracting').href;
     min-height: 24px;
     display: inline-flex;
     align-items: center;
-    padding-block: 3px;
+    padding-block: var(--space-xs);
     font-weight: var(--fw-medium);
   }
 </style>

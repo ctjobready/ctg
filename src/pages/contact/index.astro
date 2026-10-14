@@ -118,7 +118,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
     margin: calc(-1 * var(--space-sm)) 0 var(--space-lg);
   }
   .ct-group + .ct-group {
-    margin-top: var(--space-xl, 56px);
+    margin-top: var(--space-xl);
   }
   .ct-group__title {
     margin: 0 0 var(--space-md);
@@ -165,7 +165,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
      wrap does so in even lines. */
   .ct-route__actions :global(.btn) {
     flex: 1 1 100%;
-    padding-inline: 12px;
+    padding-inline: var(--space-compact);
     font-size: 0.9375rem;
   }
   .ct-route__actions :global(.btn__label) {

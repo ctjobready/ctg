@@ -70,7 +70,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   }
   .case__fields > div {
     display: grid;
-    gap: 2px;
+    gap: var(--space-xs);
   }
   .case__fields dt {
     font-size: var(--fs-body-xs);
@@ -91,13 +91,13 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
   .case__result dd {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--space-xs);
   }
   .case__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 4px;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
   .case__value {
     font-size: var(--fs-heading-2xl);

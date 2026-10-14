@@ -83,12 +83,20 @@ const grouped = groups.map((g) => {
 
 <style>
   .glance__group + .glance__group {
-    margin-top: var(--space-xl, 2.5rem);
+    margin-top: var(--space-xl);
   }
-  .glance__group-title {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.glance__group-title {
     margin: 0 0 var(--space-sm);
-    font-size: var(--fs-heading-l, 1.25rem);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.glance__group-title {
+      letter-spacing: -0.5px;
+    }
   }
   .glance__grid {
     list-style: none;
@@ -106,7 +114,7 @@ const grouped = groups.map((g) => {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: var(--stack-title);
     height: 100%;
     padding: var(--space-md);
     border-radius: var(--radius-lg);
@@ -128,8 +136,8 @@ const grouped = groups.map((g) => {
   .glance__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 4px;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
     padding-right: 24px;
   }
   .glance__value {

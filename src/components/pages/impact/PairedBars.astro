@@ -107,7 +107,7 @@ const hasN = rows.some((r) => r.nBefore !== undefined);
   }
   .pb__row {
     display: grid;
-    gap: 6px;
+    gap: var(--space-sm);
   }
   .pb__row > * {
     margin: 0;
@@ -177,7 +177,7 @@ const hasN = rows.some((r) => r.nBefore !== undefined);
   .pb__data th,
   .pb__data td {
     text-align: left;
-    padding: 6px 12px 6px 0;
+    padding: var(--space-sm) var(--space-compact) var(--space-sm) 0;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
   }
   @media (prefers-reduced-motion: no-preference) {

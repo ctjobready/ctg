@@ -207,16 +207,25 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   .eb__stat {
     min-width: 0;
   }
-  .eb__sub {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.eb__sub {
     margin: 0 0 var(--space-md);
     color: var(--ctx-section-heading);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.eb__sub {
+      letter-spacing: -0.5px;
+    }
   }
   .eb__group > .eb__headline,
   .eb__group > :global(.plainline) {
     margin: 0 0 var(--space-md);
   }
   .eb__survey {
-    margin-top: var(--space-xl, 56px);
+    margin-top: var(--space-xl);
     padding-top: var(--space-lg);
     border-top: 1px solid var(--ctx-border);
   }
@@ -241,7 +250,7 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   @media (min-width: 1024px) {
     .eb {
       grid-template-columns: 1fr 1fr;
-      gap: 56px;
+      gap: var(--space-xl);
       align-items: center;
     }
   }

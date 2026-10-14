@@ -32,8 +32,8 @@ const a = linkAttrs(href);
       'icon text';
     align-items: center;
     column-gap: var(--space-md);
-    row-gap: 2px;
-    padding: 16px 20px;
+    row-gap: var(--space-xs);
+    padding: var(--space-md) var(--space-gutter);
     background: var(--surface);
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-default);
@@ -63,7 +63,7 @@ const a = linkAttrs(href);
   /* an external card (JobReady.global) carries the same visible arrow as the external links in the header and footer */
   .cat__title :global(.cat__ext) {
     display: inline-block;
-    margin-left: 6px;
+    margin-left: var(--space-sm);
     vertical-align: -1px;
   }
   .cat__text {
@@ -88,7 +88,7 @@ const a = linkAttrs(href);
       align-content: start;
       row-gap: var(--space-md);
       min-height: 197px;
-      padding: 30px 30px 25px;
+      padding: 30px 30px 25px; /* DESIGN.md §4: category cards pad about 35px 30px 25px */
     }
     .cat :global(.cat__icon) {
       width: 40px;

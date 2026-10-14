@@ -146,7 +146,7 @@ const d = discoveryCta();
 <style>
   .cs__stat {
     display: grid;
-    gap: 4px;
+    gap: var(--stack-title);
     align-content: start;
     justify-items: start;
     max-width: 15rem;
@@ -159,7 +159,7 @@ const d = discoveryCta();
   }
   .cs__evidence {
     margin: 0;
-    padding-top: 4px;
+    padding-top: var(--space-xs);
     border-top: 1px solid var(--primary-fixed);
     font-size: var(--fs-body-xs);
     line-height: var(--lh-body-xs);
@@ -216,7 +216,7 @@ const d = discoveryCta();
   @media (min-width: 900px) {
     .cs__two {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 56px;
+      gap: var(--space-xl);
     }
   }
 </style>

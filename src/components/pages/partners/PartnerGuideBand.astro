@@ -121,13 +121,13 @@ const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], state
   }
   .pg__list :global(.icon) {
     color: var(--success);
-    margin-top: 3px;
+    margin-top: var(--space-xs);
     flex: none;
   }
   @media (min-width: 1024px) {
     .pg {
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 56px;
+      gap: var(--space-xl);
       align-items: start;
     }
   }

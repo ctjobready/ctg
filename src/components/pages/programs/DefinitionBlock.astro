@@ -13,6 +13,7 @@ interface Props {
 }
 const { heading = 'What Is CodersTrust?', factId = 'ID-01', id = 'definition' } = Astro.props;
 const text = fact(factId).text;
+// The definition band look (two columns on a wide screen, stacked on a phone) is shared: .def in src/styles/utilities.css
 ---
 
 <Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
@@ -22,36 +23,3 @@ const text = fact(factId).text;
     {Astro.slots.has('default') && <div class="def__extra"><slot /></div>}
   </div>
 </Section>
-
-<style>
-  .def {
-    max-width: var(--measure, 44rem);
-    display: grid;
-    gap: var(--space-xs);
-    padding-inline-start: var(--space-md);
-    border-inline-start: 3px solid var(--primary);
-  }
-  .def__title {
-    margin: 0;
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    color: var(--ctx-heading);
-  }
-  .def__text {
-    margin: 0;
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--ctx-text);
-  }
-  .def__extra {
-    margin-top: var(--space-sm);
-    display: grid;
-    gap: var(--space-sm);
-    color: var(--ctx-text);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body-m);
-  }
-  .def__extra :global(p) {
-    margin: 0;
-  }
-</style>

@@ -87,7 +87,7 @@ const solo = gains.length === 0;
   }
   .gp__gains :global(.icon) {
     color: var(--success);
-    margin-top: 3px;
+    margin-top: var(--space-xs);
     flex: none;
   }
   .gp__pains li {
@@ -115,13 +115,20 @@ const solo = gains.length === 0;
     color: var(--on-surface);
   }
   .gp__a {
-    margin: 2px 0 0;
+    margin: var(--space-xs) 0 0;
     color: var(--on-surface-variant);
+  }
+  /* the ranked pains in the header slot run the full width of the band (the heading and lead keep their measure) */
+  :global(.sh:has(> .gp)) {
+    max-width: none;
+  }
+  :global(.sh:has(> .gp) > .sh__title) {
+    max-width: 52rem;
   }
   @media (min-width: 900px) {
     .gp {
       grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      gap: var(--space-lg) 48px;
+      gap: var(--space-lg) var(--space-xl);
     }
     /* pains alone: the three ranked pains side by side, one compact row */
     .gp--solo {

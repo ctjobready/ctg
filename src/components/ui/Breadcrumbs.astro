@@ -44,7 +44,7 @@ const all: Crumb[] = [{ label: 'Home', href: '/' }, ...items];
     align-items: center;
     gap: 0 var(--space-sm);
     margin: 0 auto;
-    padding-block: 8px;
+    padding-block: var(--space-sm);
     list-style: none;
     font-size: var(--fs-body-xs);
     line-height: var(--lh-body-xs);
@@ -59,7 +59,7 @@ const all: Crumb[] = [{ label: 'Home', href: '/' }, ...items];
   .crumbs a {
     color: var(--on-surface-variant);
     text-decoration: none;
-    padding-block: 8px;
+    padding-block: var(--space-sm);
   }
   .crumbs a:hover {
     color: var(--primary);

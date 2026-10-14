@@ -113,6 +113,17 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
 </CaseStudyPage>
 
 <style>
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.t-heading-l {
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.t-heading-l {
+      letter-spacing: -0.5px;
+    }
+  }
   .wf__photo {
     margin: 0;
     max-width: 560px;
@@ -131,7 +142,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
     color: var(--outline);
   }
   .wf__evid {
-    margin: 4px 0 0;
+    margin: var(--space-xs) 0 0;
     font-size: var(--fs-body-xs);
     font-weight: var(--fw-medium);
     color: var(--secondary);
@@ -144,7 +155,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
   }
   .wf__attend {
     display: grid;
-    gap: var(--space-xs);
+    gap: var(--stack-title);
   }
   .wf__attend > :global(*) {
     margin: 0;

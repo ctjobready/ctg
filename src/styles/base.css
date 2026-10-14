@@ -44,7 +44,7 @@ html {
 /* In-page targets (headings with ids, sections) clear the sticky header */
 :where(h1, h2, h3, h4, h5, h6, section, article)[id],
 :target {
-  scroll-margin-top: calc(var(--header-h) + 16px);
+  scroll-margin-top: calc(var(--header-h) + var(--space-md));
 }
 
 html.is-locked {
@@ -68,7 +68,9 @@ body {
   color: var(--on-primary-fixed);
 }
 
-/* ---- Headings: system scale (planning/07 §3) ------------------------------ */
+/* ---- Headings: system scale (planning/07 §3) ------------------------------
+   The weights are the system tokens: display 700, heading-3xl/2xl/xl 600, heading-l/m 500 (DESIGN.md §3). D-DIN has no 500, so heading-l and
+   heading-m draw in Regular (planning/07 §3); a sub-section that should read as a heading uses heading-xl (28/36/600), not a new weight. */
 h1,
 h2,
 h3,

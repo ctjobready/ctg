@@ -21,7 +21,7 @@ interface Props {
 const { kicker, label, href, id = 'route-link', note } = Astro.props;
 ---
 
-<Section id={id} tone="white" pad="sm" aria-label={kicker}>
+<Section id={id} tone="white" pad="none" aria-label={kicker}>
   <p class="rl">
     <span class="rl__kicker">{kicker}</span>
     <a class="link" href={linkAttrs(href).href}>{label}<Icon name="arrow-right" size={16} /></a>
@@ -30,8 +30,10 @@ const { kicker, label, href, id = 'route-link', note } = Astro.props;
 </Section>
 
 <style>
+  /* a one-line strip: its own small padding (20px), not a section's */
   .rl {
     margin: 0;
+    padding-block: var(--space-gutter);
     display: flex;
     flex-wrap: wrap;
     align-items: center;

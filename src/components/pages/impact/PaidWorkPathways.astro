@@ -110,7 +110,7 @@ const max = Math.max(...rows.flatMap((r) => [pct(r.before), pct(r.after)]));
   }
   .pwp__table th,
   .pwp__table td {
-    padding: 10px 0;
+    padding: var(--space-compact) 0;
     text-align: left;
     vertical-align: bottom;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
@@ -151,7 +151,7 @@ const max = Math.max(...rows.flatMap((r) => [pct(r.before), pct(r.after)]));
   .pwp__bar {
     display: block;
     height: 6px;
-    margin-top: 6px;
+    margin-top: var(--space-sm);
     border-radius: var(--radius-full);
     width: calc(var(--w) * 1%);
     min-width: 6px;
@@ -165,7 +165,7 @@ const max = Math.max(...rows.flatMap((r) => [pct(r.before), pct(r.after)]));
   @media (min-width: 900px) {
     .pwp {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: var(--space-lg) 56px;
+      gap: var(--space-lg) var(--space-xl);
     }
   }
   @media (max-width: 480px) {

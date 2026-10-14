@@ -98,7 +98,7 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
     flex-wrap: wrap;
     align-items: center;
     column-gap: var(--space-sm);
-    row-gap: 2px;
+    row-gap: var(--space-xs);
     min-height: 32px;
     border-radius: var(--radius-pill);
     border: 1px solid var(--primary-fixed);
@@ -118,11 +118,11 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
   }
   @media (max-width: 480px) {
     .herolinks ul {
-      padding-inline: 12px;
-      column-gap: 6px;
+      padding-inline: var(--space-compact);
+      column-gap: var(--space-sm);
     }
     .herolinks li:not(:last-child)::after {
-      margin-left: 6px;
+      margin-left: var(--space-sm);
     }
   }
   .herolinks a {
@@ -130,6 +130,6 @@ const eyebrow = audienceLinks.length > 0 ? undefined : audience;
     min-height: 24px;
     display: inline-flex;
     align-items: center;
-    padding-block: 3px;
+    padding-block: var(--space-xs);
   }
 </style>

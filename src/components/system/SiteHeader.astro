@@ -288,9 +288,9 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--space-xs);
     min-height: 44px;
-    padding: 0 12px;
+    padding: 0 var(--space-compact);
     font: var(--fw-regular) 1rem/1.5 var(--font-sans);
     color: var(--on-surface-variant);
     text-decoration: none;
@@ -319,11 +319,11 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   .site-header__util {
     display: none;
     align-items: center;
-    gap: 4px;
+    gap: var(--space-xs);
     min-height: 44px;
     color: var(--on-surface-variant);
     text-decoration: none;
-    padding: 0 8px;
+    padding: 0 var(--space-sm);
   }
   .site-header__util:hover {
     color: var(--primary);
@@ -342,7 +342,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     align-items: center;
     gap: var(--space-sm);
     min-height: 44px;
-    padding: 0 12px;
+    padding: 0 var(--space-compact);
     border-radius: var(--radius-default);
     color: var(--on-surface);
     font-weight: var(--fw-medium);
@@ -395,7 +395,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   .mega__links {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px var(--space-gutter);
+    gap: var(--space-xs) var(--space-gutter);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -404,8 +404,8 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   .mega__link {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 10px 12px;
+    gap: var(--space-xs);
+    padding: var(--space-compact) var(--space-compact);
     border-radius: var(--radius-default);
     text-decoration: none;
     transition: background-color var(--dur-base) ease;
@@ -413,11 +413,11 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   /* Nested tracks (the NU diploma): indented under their parent, as a real child list. */
   .mega__sub {
     list-style: none;
-    margin: 2px 0 0 12px;
+    margin: var(--space-xs) 0 0 var(--space-compact);
     padding: 0 0 0 var(--space-sm);
     border-left: 2px solid var(--primary-fixed);
     display: grid;
-    gap: 2px;
+    gap: var(--space-xs);
   }
   .mega__group {
     grid-column: 1 / -1;
@@ -425,7 +425,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   }
   .mega__group-title {
     margin: 0;
-    padding: 0 12px;
+    padding: 0 var(--space-compact);
     font-size: var(--fs-body-xs);
     font-weight: var(--fw-bold);
     letter-spacing: 0.06em;
@@ -433,7 +433,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     color: var(--on-primary-container);
   }
   .mega__title :global(svg) {
-    margin-left: 4px;
+    margin-left: var(--space-xs);
     vertical-align: -2px;
   }
   .mega__link:hover,
@@ -629,10 +629,10 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     color: var(--on-primary-container);
   }
   .drawer__group .acc__body a :global(svg) {
-    margin-left: 4px;
+    margin-left: var(--space-xs);
   }
   .drawer__nav > :global(.drawer__cta) {
-    margin: var(--space-sm) 0 var(--space-xs, 8px);
+    margin: var(--space-sm) 0 var(--space-xs, var(--space-sm));
   }
   .drawer__foot {
     flex: none;
@@ -647,7 +647,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 4px;
+    gap: var(--space-xs);
   }
   .drawer__contact a {
     display: inline-flex;
@@ -716,7 +716,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     }
     .site-nav__trigger,
     .site-nav__link {
-      padding: 0 8px;
+      padding: 0 var(--space-sm);
       font-size: 0.9375rem;
     }
     .site-header__actions {

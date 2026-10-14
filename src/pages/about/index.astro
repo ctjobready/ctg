@@ -229,8 +229,18 @@ const jsonLd = [
       --cols: 5;
     }
   }
-  .about-founders {
-    max-width: 640px;
+  /* the two founder cards sit side by side across the band, each with the portrait beside its text (no empty right half) */
+  @media (min-width: 640px) {
+    .about-founders :global(.tc) {
+      flex-direction: row;
+    }
+    .about-founders :global(.tc__photo) {
+      flex: 0 0 38%;
+      aspect-ratio: 4 / 5;
+    }
+    .about-founders :global(.tc .card__body) {
+      justify-content: center;
+    }
   }
   .about-more {
     margin: var(--space-lg) 0 0;

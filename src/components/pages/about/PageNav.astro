@@ -25,7 +25,7 @@ const { links } = Astro.props;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-xs) var(--space-lg);
+    gap: var(--space-sm) var(--space-lg);
   }
   .pn__title {
     margin: 0;
@@ -53,7 +53,7 @@ const { links } = Astro.props;
     min-height: 24px;
     display: inline-flex;
     align-items: center;
-    padding-block: 3px;
+    padding-block: var(--space-xs);
     font-weight: var(--fw-medium);
   }
 </style>

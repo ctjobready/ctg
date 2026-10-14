@@ -31,6 +31,10 @@ const headingId = anchorOnHeading ? id : `${id}-h`;
     color: var(--secondary);
     margin: 0 0 var(--space-md);
   }
+  /* the eyebrow sits 8px (space-sm) above its heading */
+  .eyebrow + .rsec__title {
+    margin-top: var(--stack-eyebrow);
+  }
   .rsec__body {
     display: grid;
     gap: var(--space-md);

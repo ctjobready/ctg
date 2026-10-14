@@ -264,9 +264,18 @@ const d = discoveryCta();
     color: var(--on-surface-variant);
     font-size: var(--fs-body-sm);
   }
-  .ro__group {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.ro__group {
     margin: var(--space-lg) 0 var(--space-sm);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.ro__group {
+      letter-spacing: -0.5px;
+    }
   }
   .ro__stats--one {
     grid-template-columns: minmax(0, 260px);
@@ -300,7 +309,7 @@ const d = discoveryCta();
   .ro__dl {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     min-height: 44px;
     padding: 0 var(--space-md);
     border: 1px solid var(--primary);

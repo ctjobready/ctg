@@ -37,9 +37,18 @@ const listing = `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STE
 </Section>
 
 <style>
-  .rec__title {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h2.rec__title {
     margin: 0 0 var(--space-sm);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h2.rec__title {
+      letter-spacing: -0.5px;
+    }
   }
   .rec__badge {
     margin: 0 0 var(--space-md);

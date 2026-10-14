@@ -37,7 +37,7 @@ const { items, heading, class: className } = Astro.props;
 
 <style>
   .dg {
-    margin-top: var(--space-xl, 56px);
+    margin-top: var(--space-xl);
   }
   .dg__heading {
     margin: 0 0 var(--space-md);
@@ -48,7 +48,7 @@ const { items, heading, class: className } = Astro.props;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-md);
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 1fr);
   }
   .dg__item {
@@ -72,7 +72,7 @@ const { items, heading, class: className } = Astro.props;
     justify-content: center;
   }
   .dg__title {
-    margin: 0 0 4px;
+    margin: 0 0 var(--stack-title);
     font-size: var(--fs-heading-m);
     color: var(--on-surface);
   }

@@ -44,6 +44,15 @@ const { tone, cmf, join = false } = Astro.props;
     padding-bottom: 0;
   }
   .tone--join > .band.band:not(:first-child) {
-    padding-top: var(--space-lg);
+    padding-top: var(--band-join);
+  }
+  /* Two wrappers whose bands end up on the same ground (the wrapper's own tone, or the band's when it is not re-mapped) read as one area:
+     the second band's top padding drops to --band-join, the same rule Section.astro applies to bands that are plain siblings. */
+  :is(.tone--white, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--white)) + :is(.tone--white, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--white)) > .band:first-child:not(.band--pad-none),
+  :is(.tone--airy, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--airy)) + :is(.tone--airy, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--airy)) > .band:first-child:not(.band--pad-none),
+  :is(.tone--ice, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--ice)) + :is(.tone--ice, .tone:not(.tone--white, .tone--airy, .tone--ice):has(> .band--ice)) > .band:first-child:not(.band--pad-none),
+  .tone:has(> .band--klein) + .tone:has(> .band--klein) > .band:first-child:not(.band--pad-none),
+  .tone:has(> .band--deep-ink) + .tone:has(> .band--deep-ink) > .band:first-child:not(.band--pad-none) {
+    padding-top: var(--band-join);
   }
 </style>

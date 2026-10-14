@@ -145,7 +145,7 @@ const storyExample = fact('ST-03').text;
   .lm td {
     text-align: left;
     vertical-align: top;
-    padding: 12px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
     color: var(--on-surface-variant);
   }
@@ -168,7 +168,7 @@ const storyExample = fact('ST-03').text;
     justify-content: center;
     width: 22px;
     height: 22px;
-    margin-right: 4px;
+    margin-right: var(--space-xs);
     border-radius: var(--radius-full);
     background: var(--primary-fixed);
     color: var(--on-primary-fixed);
@@ -181,11 +181,11 @@ const storyExample = fact('ST-03').text;
   }
   .lm__tag {
     display: block;
-    margin-top: 6px;
+    margin-top: var(--space-sm);
   }
   .lm__link {
     display: flex;
-    margin-top: 4px;
+    margin-top: var(--space-xs);
     font-weight: var(--fw-medium);
   }
   /* Four rungs sit as 1 × 4, 2 × 2 or 4 × 1, never 3 + 1: the columns follow the width of the space the ladder is in
@@ -218,7 +218,7 @@ const storyExample = fact('ST-03').text;
     flex-direction: column;
     gap: var(--space-sm);
     padding: var(--space-gutter);
-    padding-top: calc(var(--space-gutter) + 8px);
+    padding-top: calc(var(--space-gutter) + var(--space-sm));
     background: var(--ctx-card);
     border: 1px solid var(--ctx-border);
     border-radius: var(--radius-default);
@@ -262,19 +262,19 @@ const storyExample = fact('ST-03').text;
     font-weight: var(--fw-bold);
     color: var(--primary);
     letter-spacing: -1px;
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
   }
   .ladder__evid {
     display: block;
-    margin-top: 4px;
-    padding-top: 4px;
+    margin-top: var(--space-xs);
+    padding-top: var(--space-xs);
     border-top: 1px solid var(--ctx-border);
     font-weight: var(--fw-medium);
     color: var(--secondary);
   }
   .ladder__dl {
     display: grid;
-    gap: 2px;
+    gap: var(--space-xs);
     margin: 0;
     font-size: var(--fs-body-xs);
     line-height: var(--lh-body-xs);

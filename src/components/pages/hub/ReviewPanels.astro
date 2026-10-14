@@ -84,8 +84,17 @@ const decisions = [
   .rc__panel > * + * {
     margin-top: var(--space-sm);
   }
-  .rc__h {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.rc__h {
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.rc__h {
+      letter-spacing: -0.5px;
+    }
   }
   .rc__reports,
   .rc__decisions {
@@ -105,6 +114,6 @@ const decisions = [
   .rc__decisions :global(.icon) {
     color: var(--primary);
     flex: none;
-    margin-top: 2px;
+    margin-top: var(--space-xs);
   }
 </style>

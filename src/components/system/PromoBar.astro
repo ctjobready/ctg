@@ -55,7 +55,7 @@ const { lead, message, shortMessage, actionLabel, href, links = [], dismissible 
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--space-sm) var(--space-md);
-    padding: 6px 52px 6px var(--space-gutter);
+    padding: 6px 52px 6px var(--space-gutter); /* 52px clears the 44px close button */
     min-height: 44px;
   }
   .promo-bar__text {
@@ -66,7 +66,7 @@ const { lead, message, shortMessage, actionLabel, href, links = [], dismissible 
   .promo-bar__link {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--space-xs);
     margin-left: var(--space-sm);
     padding: 2px;
     font: var(--fw-bold) var(--fs-body-xs) / 1.43 var(--font-sans);

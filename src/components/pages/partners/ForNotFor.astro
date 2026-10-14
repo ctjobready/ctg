@@ -32,7 +32,7 @@ const { forText, notText, id = 'for-not-for' } = Astro.props;
 <style>
   .fnf {
     display: grid;
-    gap: var(--space-md);
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 768px) {
@@ -53,7 +53,7 @@ const { forText, notText, id = 'for-not-for' } = Astro.props;
     margin: 0;
   }
   .fnf__card > * + * {
-    margin-top: var(--space-xs);
+    margin-top: var(--stack-title);
   }
   .fnf__h {
     display: flex;

@@ -126,7 +126,7 @@ const channels = [
   .ig__channels li :global(.icon) {
     color: var(--primary);
     flex: none;
-    margin-top: 2px;
+    margin-top: var(--space-xs);
   }
   .ig__channels p {
     margin: 0;
@@ -140,14 +140,23 @@ const channels = [
     line-height: var(--lh-body-xs);
     color: var(--on-surface-variant);
   }
-  .ig__lead-h {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.ig__lead-h {
     margin: var(--space-lg) 0 var(--space-md);
     color: var(--secondary);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.ig__lead-h {
+      letter-spacing: -0.5px;
+    }
   }
   @media (min-width: 1024px) {
     .ig {
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 56px;
+      gap: var(--space-xl);
       align-items: start;
     }
   }

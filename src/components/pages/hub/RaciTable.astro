@@ -110,7 +110,7 @@ const cols = [
   td {
     text-align: left;
     vertical-align: middle;
-    padding: 14px var(--space-md);
+    padding: var(--space-md) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
     color: var(--on-surface-variant);
   }
@@ -137,8 +137,8 @@ const cols = [
     justify-content: center;
     min-width: 28px;
     height: 28px;
-    margin-right: 6px;
-    padding: 0 6px;
+    margin-right: var(--space-sm);
+    padding: 0 var(--space-sm);
     border-radius: var(--radius-full);
     font-weight: var(--fw-bold);
     font-size: var(--fs-body-xs);
@@ -187,7 +187,7 @@ const cols = [
     line-height: 1;
   }
   .raci__legend li > span {
-    padding-top: 2px;
+    padding-top: var(--space-xs);
   }
   .raci-cards {
     display: none;
@@ -205,7 +205,7 @@ const cols = [
   }
   .raci-card__title {
     margin: 0;
-    padding: 12px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     font-weight: var(--fw-bold);
     color: var(--secondary);
     background: var(--surface-container-low);
@@ -215,7 +215,7 @@ const cols = [
     margin: 0;
   }
   .raci-card__row {
-    padding: 10px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
   }
   .raci-card__row:last-child {
@@ -228,18 +228,18 @@ const cols = [
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--on-primary-container);
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
   }
   .raci-card__row dd {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px;
+    gap: var(--space-xs);
     color: var(--on-surface);
   }
   .raci-card__words {
-    margin-left: 4px;
+    margin-left: var(--space-xs);
   }
   @media (max-width: 640px) {
     .raci {

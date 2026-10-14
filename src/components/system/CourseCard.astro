@@ -93,7 +93,7 @@ const { title, image, imageAlt = '', assetId, ratio, badge, meta = [], price, ol
   .course__body {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-compact);
     padding: var(--space-md);
     flex: 1;
   }
@@ -115,7 +115,7 @@ const { title, image, imageAlt = '', assetId, ratio, badge, meta = [], price, ol
   .course__meta li {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-sm);
   }
   .course__meta :global(.icon) {
     color: var(--primary);

@@ -112,7 +112,7 @@ const delta = RCT_COMPARISON.delta;
     display: grid;
     gap: var(--space-lg);
     align-items: stretch;
-    margin-top: var(--space-xl, 56px);
+    margin-top: var(--space-xl);
     padding-top: var(--space-lg);
     border-top: 1px solid var(--ctx-border);
   }
@@ -148,8 +148,17 @@ const delta = RCT_COMPARISON.delta;
   .he__copy > :global(*) {
     margin: 0;
   }
-  .he__sub {
+  /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
+  h3.he__sub {
     color: var(--ctx-section-heading);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-heading-xl);
+    font-weight: var(--fw-semibold);
+  }
+  @media (min-width: 768px) {
+    h3.he__sub {
+      letter-spacing: -0.5px;
+    }
   }
   .he__fn {
     margin: var(--space-xs) 0 0;
@@ -167,11 +176,11 @@ const delta = RCT_COMPARISON.delta;
   @media (min-width: 1024px) {
     .he__top {
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: 56px;
+      gap: var(--space-xl);
     }
     .he__trial {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--space-md) 56px;
+      gap: var(--space-md) var(--space-xl);
       /* the trial now opens the band: the sentence sits level with the middle of its chart, not above an empty column */
       align-items: center;
     }

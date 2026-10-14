@@ -75,7 +75,7 @@ const items = audience === 'employers' ? employerItems : funderItems;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-md);
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 720px) {
@@ -96,7 +96,7 @@ const items = audience === 'employers' ? employerItems : funderItems;
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--stack-title);
   }
   .ddv__item > * {
     margin: 0;
@@ -121,7 +121,7 @@ const items = audience === 'employers' ? employerItems : funderItems;
   }
   /* Compact: tighter cards, the explanatory text in the small body size. */
   .ddv--compact {
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
   .ddv--compact .ddv__item {
     padding: var(--space-md);

@@ -48,7 +48,7 @@ const { quote, name, role, rating, assetId, class: className } = Astro.props;
   }
   .testimonial__rating {
     display: flex;
-    gap: 2px;
+    gap: var(--space-xs);
     color: var(--tertiary);
   }
   .testimonial__rating :global(.star) {

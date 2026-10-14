@@ -188,7 +188,7 @@ const jsonLd = [
   }
   .keyfacts div {
     display: grid;
-    gap: 2px;
+    gap: var(--space-xs);
   }
   .keyfacts dt {
     font-size: var(--fs-body-xs);
@@ -227,7 +227,7 @@ const jsonLd = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 640px) {
@@ -286,7 +286,7 @@ const jsonLd = [
     max-width: 52rem;
   }
   .roles li {
-    padding: 6px 14px;
+    padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-pill);
     background: var(--primary-fixed);
     color: var(--on-primary-fixed);
@@ -315,7 +315,7 @@ const jsonLd = [
   }
   .ba__row {
     display: grid;
-    gap: 4px;
+    gap: var(--space-xs);
     padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--outline-variant);
   }

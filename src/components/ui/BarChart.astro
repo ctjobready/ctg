@@ -63,7 +63,7 @@ const { title, items, max = 100, unit = '%', note, class: className } = Astro.pr
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: 'label value' 'track track';
     /* A wide gap, so a long label ("Higher Secondary Certificate (HSC) or Below") wraps in even lines before it can run into its figure. */
-    gap: 4px var(--space-lg);
+    gap: var(--space-xs) var(--space-lg);
     align-items: baseline;
   }
   .bars__label {
@@ -111,7 +111,7 @@ const { title, items, max = 100, unit = '%', note, class: className } = Astro.pr
   .bars__data th,
   .bars__data td {
     text-align: left;
-    padding: 6px 0;
+    padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
   }
   @media (min-width: 768px) {

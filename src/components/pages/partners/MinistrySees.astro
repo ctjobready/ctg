@@ -47,7 +47,7 @@ const steps = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 720px) {
@@ -63,7 +63,7 @@ const steps = [
     border-radius: var(--radius-default);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--stack-title);
   }
   .ms__step > * {
     margin: 0;
@@ -77,7 +77,7 @@ const steps = [
   /* the starting point sits under the figure, in the step's own weight: the reader meets "6 Months" and "After Each Course" as one label */
   .ms__from {
     display: block;
-    margin-top: 2px;
+    margin-top: var(--space-xs);
     font-size: var(--fs-body-m);
     line-height: var(--lh-body-m);
     font-weight: var(--fw-medium);

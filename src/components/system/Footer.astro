@@ -109,6 +109,8 @@ import { linkAttrs } from '../../lib/url';
     font-size: var(--fs-body-base);
   }
   .footer a {
+    /* a footer link scrolled into view by the keyboard stops one button-height above the viewport's bottom edge, clear of the fixed back-to-top button (WCAG 2.4.11), whatever the footer's height */
+    scroll-margin-bottom: var(--btt-size);
     color: inherit;
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
@@ -180,7 +182,7 @@ import { linkAttrs } from '../../lib/url';
     margin-bottom: var(--space-md);
   }
   .footer__col li + li {
-    margin-top: 2px;
+    margin-top: var(--space-xs);
   }
   .footer__col li a {
     display: inline-flex;
@@ -189,11 +191,11 @@ import { linkAttrs } from '../../lib/url';
     color: var(--inverse-on-surface);
   }
   .footer__col li a :global(svg) {
-    margin-left: 4px;
+    margin-left: var(--space-xs);
   }
   /* Nested tracks (the NU diploma): indented under their parent. */
   .footer__sub {
-    margin: 0 0 0 4px;
+    margin: 0 0 0 var(--space-xs);
     padding: 0 0 0 var(--space-sm);
     border-left: 1px solid var(--on-surface-variant);
   }
@@ -214,12 +216,12 @@ import { linkAttrs } from '../../lib/url';
   }
   .footer__office address {
     font-style: normal;
-    margin-top: 4px;
+    margin-top: var(--space-xs);
     color: var(--ctx-muted);
     font-size: var(--fs-body-xs);
   }
   .footer__office p {
-    margin: 4px 0 0;
+    margin: var(--space-xs) 0 0;
     font-size: var(--fs-body-xs);
   }
   .footer__bottom {
@@ -243,7 +245,7 @@ import { linkAttrs } from '../../lib/url';
     color: var(--inverse-on-surface);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--space-xs);
     min-height: 24px;
   }
 

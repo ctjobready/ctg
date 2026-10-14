@@ -206,20 +206,20 @@ const views = slides.map((s, i) => {
     background: var(--hero-gradient-edge);
   }
   .hs__head {
-    padding-block: var(--space-lg) var(--space-xs);
+    padding-block: var(--space-lg) var(--space-md);
   }
   .hs__heading {
     margin: 0;
     color: var(--secondary);
   }
   .hs__intro {
-    margin: var(--space-xs) 0 0;
+    margin: var(--stack-heading) 0 0;
     max-width: 48rem;
     color: var(--on-surface-variant);
   }
   @media (min-width: 768px) {
     .hs__head {
-      padding-block: var(--space-xl, 56px) var(--space-xs);
+      padding-block: var(--space-xl) var(--space-md);
     }
   }
   .hs__link {
@@ -277,7 +277,7 @@ const views = slides.map((s, i) => {
       grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
       grid-template-rows: none;
       align-items: center;
-      gap: 56px;
+      gap: var(--space-xl);
     }
   }
   .hs__copy {
@@ -298,7 +298,7 @@ const views = slides.map((s, i) => {
     flex-wrap: wrap;
     align-items: center;
     column-gap: var(--space-sm);
-    row-gap: 2px;
+    row-gap: var(--space-xs);
     min-height: 32px;
     border-radius: var(--radius-pill);
     border: 1px solid var(--primary-fixed);
@@ -321,7 +321,7 @@ const views = slides.map((s, i) => {
     min-height: 24px;
     display: inline-flex;
     align-items: center;
-    padding-block: 3px;
+    padding-block: var(--space-xs);
   }
   .hs__eyebrow {
     display: inline-flex;
@@ -355,7 +355,7 @@ const views = slides.map((s, i) => {
   /* Evidence proof: one figure on a Klein-blue band (white numeral, pale label). Below the desktop breakpoint it sits under the photograph;
      on the desktop visual column it is a card over the foot of the photograph. */
   .hs__proof {
-    padding: 14px var(--space-md);
+    padding: var(--space-md) var(--space-md);
     border-radius: var(--radius-lg);
     background: var(--secondary);
     box-shadow: var(--shadow-card);
@@ -443,7 +443,7 @@ const views = slides.map((s, i) => {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--stack-title);
     padding: var(--space-md);
     border-radius: var(--radius-lg);
     border: 1px solid transparent;
@@ -626,28 +626,28 @@ const views = slides.map((s, i) => {
   /* Phone width: the arrows, the slide picker and the Pause control share one row (the arrows keep a 40 px target). */
   @media (max-width: 480px) {
     .hs__audience ul {
-      padding-inline: 12px;
-      column-gap: 6px;
+      padding-inline: var(--space-compact);
+      column-gap: var(--space-sm);
     }
     .hs__audience li:not(:last-child)::after {
-      margin-left: 6px;
+      margin-left: var(--space-sm);
     }
     .hs__stat {
-      padding: 12px;
+      padding: var(--space-compact);
     }
     .hs__program {
-      padding: 12px 14px;
+      padding: var(--space-compact) var(--space-md);
     }
     .hs__nav {
-      gap: 4px;
+      gap: var(--space-xs);
     }
     .hs__arrow {
       width: 40px;
       height: 40px;
     }
     .hs__toggle {
-      padding: 0 12px;
-      gap: 6px;
+      padding: 0 var(--space-compact);
+      gap: var(--space-sm);
     }
   }
   @media (prefers-reduced-motion: reduce) {

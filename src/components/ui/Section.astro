@@ -90,15 +90,18 @@ const container = width === 'full' ? '' : width === 'wide' ? 'container containe
   .band--pad-none {
     padding-block: 0;
   }
+  /* Section padding follows --band-pad (tokens.css): 40px on a phone up to 80px on a wide screen (DESIGN.md §3, 40–80px between major bands); sm is 0.6 of it, lg 1.35 of it but never above 80px. */
   .band--pad-sm {
-    padding-block: calc(var(--band-pad) * 0.6);
+    padding-block: var(--band-pad-sm);
   }
   .band--pad-md {
     padding-block: var(--band-pad);
   }
   .band--pad-lg {
-    padding-block: calc(var(--band-pad) * 1.35);
+    padding-block: var(--band-pad-lg);
   }
+  /* A band that follows a band on the same ground (its top padding drops to --band-join) is handled in src/styles/utilities.css: the
+     neighbours are often wrapped in a plain div or a .tone, and a scoped selector cannot see across the wrapper. */
   /* Opt-in: offscreen bands skip rendering work (INP/LCP) */
   .band--defer {
     content-visibility: auto;

@@ -71,7 +71,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-    gap: clamp(4px, 1.4vw, 14px);
+    gap: clamp(var(--space-xs), 1.4vw, var(--space-md));
     align-items: start;
     --plot-h: 240px;
   }
@@ -92,7 +92,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
     font-size: clamp(0.6875rem, 0.6rem + 0.5vw, 0.875rem);
     font-weight: var(--fw-bold);
     color: var(--ctx-heading);
-    padding-bottom: 4px;
+    padding-bottom: var(--space-xs);
     letter-spacing: -0.2px;
   }
   .colc__bar {
@@ -110,7 +110,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
     font-size: clamp(0.6875rem, 0.62rem + 0.4vw, 0.875rem);
     line-height: 1.25;
     color: var(--ctx-text);
-    padding-top: 6px;
+    padding-top: var(--space-sm);
     overflow-wrap: anywhere;
     hyphens: auto;
   }
@@ -146,7 +146,7 @@ const fmt = (v: number) => `${v.toFixed(1)}${unit}`;
   .colc__data th,
   .colc__data td {
     text-align: left;
-    padding: 6px 12px 6px 0;
+    padding: var(--space-sm) var(--space-compact) var(--space-sm) 0;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
   }
   @media (prefers-reduced-motion: no-preference) {

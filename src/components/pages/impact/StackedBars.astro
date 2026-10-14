@@ -84,7 +84,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
     height: 28px;
     border-radius: var(--radius-sm);
     overflow: hidden;
-    gap: 2px;
+    gap: var(--space-xs);
     background: var(--surface);
   }
   .sb__seg {
@@ -108,7 +108,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px var(--space-md);
+    gap: var(--space-xs) var(--space-md);
     font-size: var(--fs-body-xs);
     color: var(--ctx-text);
   }
@@ -120,7 +120,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
     width: 12px;
     height: 12px;
     border-radius: 3px;
-    margin-right: 6px;
+    margin-right: var(--space-sm);
     vertical-align: -1px;
   }
   .sb__note {
@@ -153,7 +153,7 @@ const fmt = (v: number) => `${v.toFixed(1)}%`;
   .sb__data th,
   .sb__data td {
     text-align: left;
-    padding: 6px 12px 6px 0;
+    padding: var(--space-sm) var(--space-compact) var(--space-sm) 0;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
   }
   @media (prefers-reduced-motion: no-preference) {

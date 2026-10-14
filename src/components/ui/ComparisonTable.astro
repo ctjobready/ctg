@@ -132,7 +132,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
   }
   .cmp-card__title {
     margin: 0;
-    padding: 12px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     font-weight: var(--fw-bold);
     color: var(--secondary);
     background: var(--surface-container-low);
@@ -146,7 +146,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
     margin: 0;
   }
   .cmp-card__row {
-    padding: 10px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
   }
   .cmp-card__row:last-child {
@@ -159,7 +159,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--on-primary-container);
-    margin-bottom: 2px;
+    margin-bottom: var(--space-xs);
   }
   .cmp-card__row dd {
     margin: 0;
@@ -192,7 +192,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
   }
   th,
   td {
-    padding: 14px var(--space-md);
+    padding: var(--space-md) var(--space-md);
     text-align: left;
     vertical-align: top;
     border-bottom: 1px solid var(--outline-variant);
@@ -233,7 +233,7 @@ const dataFacts = [...new Set([...facts, ...rows.flatMap((r) => r.cells.map(norm
   .cmp__mark {
     display: inline-flex;
     vertical-align: -4px;
-    margin-right: 6px;
+    margin-right: var(--space-sm);
     color: var(--success);
   }
   .cmp:focus-visible {

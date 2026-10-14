@@ -181,7 +181,7 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
   .ba__cap {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--space-xs);
     margin-top: var(--space-sm);
   }
   .ba__title {
@@ -210,7 +210,7 @@ const desc = `${before.label}: ${fmt(before.value)}. ${after.label}: ${fmt(after
   .ba__data th,
   .ba__data td {
     text-align: left;
-    padding: 6px 0;
+    padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--ctx-border, var(--outline-variant));
   }
   /* M4 */

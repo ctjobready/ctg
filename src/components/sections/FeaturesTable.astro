@@ -83,7 +83,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-md);
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 720px) {
@@ -91,9 +91,18 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  @media (min-width: 720px) and (max-width: 1099px) {
+    .fc > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
   @media (min-width: 1100px) {
     .fc {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    /* exactly four cards read 2 × 2, never 3 + 1 beside an empty cell */
+    .fc:has(> :nth-child(4):last-child) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .fc__card {
@@ -106,12 +115,12 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     overflow: hidden;
   }
   .fc__concern {
-    padding: 12px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     background: var(--surface-container-low);
     border-bottom: 1px solid var(--primary-fixed);
   }
   .fc__part {
-    padding: 12px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
   }
   .fc__part + .fc__part {
     border-top: 1px solid var(--outline-variant);
@@ -126,21 +135,21 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--on-primary-container);
-    margin-bottom: 4px !important;
+    margin-bottom: var(--space-xs) !important;
   }
   .fc__label--added {
     margin-bottom: 0 !important;
   }
   .fc__pain {
     display: flex;
-    gap: 8px;
+    gap: var(--space-sm);
     align-items: flex-start;
     color: var(--secondary);
     font-weight: var(--fw-medium);
   }
   .fc__pain :global(.icon) {
     color: var(--success);
-    margin-top: 3px;
+    margin-top: var(--space-xs);
     flex: none;
   }
   .fc__pain--added {
@@ -154,7 +163,7 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
     color: var(--secondary);
   }
   .fc__means {
-    margin-top: 4px !important;
+    margin-top: var(--space-xs) !important;
     color: var(--on-surface-variant);
   }
   /* the pain's number: the same circle as the ranked list in the C2 band */

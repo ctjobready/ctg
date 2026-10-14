@@ -12,6 +12,7 @@ interface Props {
   id?: string;
 }
 const { id = 'definition' } = Astro.props;
+// The definition band look (two columns on a wide screen, stacked on a phone) is shared: .def in src/styles/utilities.css
 ---
 
 <Section id={id} pad="sm" aria-labelledby={`${id}-h`}>
@@ -23,26 +24,3 @@ const { id = 'definition' } = Astro.props;
     </p>
   </div>
 </Section>
-
-<style>
-  .def {
-    max-width: var(--measure, 44rem);
-    display: grid;
-    gap: var(--space-sm);
-    padding-inline-start: var(--space-md);
-    border-inline-start: 3px solid var(--primary);
-  }
-  .def > * {
-    margin: 0;
-  }
-  .def__title {
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    color: var(--ctx-heading);
-  }
-  .def__text {
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--ctx-text);
-  }
-</style>

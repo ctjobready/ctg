@@ -223,7 +223,7 @@ const pins = items.map((l) => {
     transition-delay: 0s;
   }
   .wmap__country {
-    margin: 0 0 4px;
+    margin: 0 0 var(--space-xs);
     font-weight: var(--fw-bold);
     font-size: var(--fs-body-base);
     color: var(--on-surface);
@@ -232,7 +232,7 @@ const pins = items.map((l) => {
     font-weight: var(--fw-regular);
     color: var(--on-surface-variant);
     font-size: var(--fs-body-xs);
-    margin-left: 4px;
+    margin-left: var(--space-xs);
   }
   .wmap__card dl {
     margin: 0;
@@ -243,7 +243,7 @@ const pins = items.map((l) => {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-size: 0.75rem;
-    margin-top: 6px;
+    margin-top: var(--space-sm);
   }
   .wmap__card dd {
     margin: 0;
@@ -275,7 +275,7 @@ const pins = items.map((l) => {
   .wmap__table td {
     text-align: left;
     vertical-align: top;
-    padding: 10px var(--space-md);
+    padding: var(--space-compact) var(--space-md);
     border-bottom: 1px solid var(--outline-variant);
     color: var(--on-surface-variant);
   }

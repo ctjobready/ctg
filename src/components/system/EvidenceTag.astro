@@ -35,9 +35,9 @@ const slug = type.toLowerCase().replace(/\s+/g, '-');
   .evidence-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-sm);
     height: 24px;
-    padding: 0 10px 0 8px;
+    padding: 0 var(--space-compact) 0 var(--space-sm);
     border-radius: var(--radius-pill);
     font: var(--fw-medium) var(--fs-body-xs) / 1.43 var(--font-sans);
     border: 1px solid currentColor;

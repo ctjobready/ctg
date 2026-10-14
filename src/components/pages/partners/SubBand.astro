@@ -30,6 +30,9 @@ const { tone = 'white', pull = false, class: className, ...rest } = Astro.props;
   .subband__in > :global(*) {
     margin: 0;
   }
+  :global(.subband:has(+ .subband)) .subband__in {
+    padding-bottom: 0;
+  }
   :global(.subband--pull) {
     margin-top: calc(var(--band-pad) * -1 + var(--space-md));
   }
