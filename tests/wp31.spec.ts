@@ -230,9 +230,11 @@ test.describe('Foundations keeps the two grant routes apart', () => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#features h2')).toHaveText('What Your Cohort Grant Gets');
     await expect(page.locator('#faq h2')).toHaveText('Questions About Cohort Grants');
-    expect(compact(await page.locator('#next-steps .sh__lead, #next-steps .lead').first().textContent())).toBe(
-      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.',
-    );
+    // WP32 (cycle-9 review): the closing band states what is discussed for each route; the four cohort-only steps are gone (tests/wp32.spec.ts pins the band)
+    expect(await texts(page, '#next-steps .next__routes li')).toEqual([
+      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard.',
+      'For a platform grant, we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.',
+    ]);
   });
 });
 
@@ -320,16 +322,16 @@ test.describe('smaller wording fixes', () => {
     expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
   });
 
-  test('Partner with Us hub: the hero states the offer once, "Not sure where you fit?" opens a prefilled email, two evidence tiles, the investor card says "we are building"', async ({ page }) => {
+  test('Partner with Us hub: the hero asks for the choice of partnership (WP32), "Not sure where you fit?" opens a prefilled email, three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    await expect(page.locator('.hero__lead').first()).toHaveText('Co-design a youth-employment program with training, mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope.');
+    await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
     const email = page.locator('.hub__helper a.btn');
     await expect(email).toContainText('Not Sure? Email Us Your Goals');
     const href = (await email.getAttribute('href')) ?? '';
     expect(href).toMatch(/^mailto:contact@coderstrust\.global\?subject=/);
     expect(decodeURIComponent(href)).toContain('Your goals: ');
     await expect(page.locator('.hub__helper a[href$="contact/"]')).toHaveCount(0);
-    await expect(page.locator('#why-partner li')).toHaveCount(2);
+    await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');
     await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, the platform we are building to connect emerging-market youth to work.');
   });

@@ -12,9 +12,14 @@ interface Props {
   lead?: string;
   /** Show the full PD-04 timing line under the steps. A page that already states the window elsewhere turns it off. */
   timing?: boolean;
+  /**
+   * WP32 (cycle-9 review): statements in place of the grant-funded steps, for a page whose routes do not share one process (Foundations: a cohort grant and a platform grant).
+   * Each is a bold lead-in and the rest of its sentence. The band then has no steps, no PD-04 marker, no timing line and no default lead.
+   */
+  routes?: { lead: string; text: string }[];
   id?: string;
 }
-const { title = 'What Happens Next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
+const { title = 'What Happens Next', routes, lead = routes ? undefined : 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
 const [discovery, codesign, agreement, training] = grantStartTitles();
@@ -28,6 +33,48 @@ const steps = [
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} />
-  <div data-fact="PD-04"><StepFlow steps={steps} /></div>
-  {timing && <p class="next__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
+  {
+    routes ? (
+      <ul class="next__routes" role="list">
+        {routes.map((r) => (
+          <li data-reveal><strong>{r.lead}</strong> {r.text}</li>
+        ))}
+      </ul>
+    ) : (
+      <div data-fact="PD-04"><StepFlow steps={steps} /></div>
+    )
+  }
+  {timing && !routes && <p class="next__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
 </Section>
+
+<style>
+  /* Route statements (WP32): one card per route, side by side from the tablet breakpoint; the left rule is the Callout's accent. */
+  .next__routes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .next__routes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .next__routes li {
+    padding: var(--space-md) var(--space-gutter);
+    background: var(--surface);
+    border: 1px solid var(--primary-fixed);
+    border-left: 4px solid var(--tertiary);
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    box-shadow: var(--shadow-card);
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+    color: var(--on-surface);
+  }
+  .next__routes strong {
+    font-weight: var(--fw-bold);
+    color: var(--secondary);
+  }
+</style>

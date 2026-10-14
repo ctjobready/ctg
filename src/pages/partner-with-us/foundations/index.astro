@@ -184,25 +184,25 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     rows={[
       {
         feature: `Mentoring, Placement Support and Outcome Tracking for ${TRACKING_MONTHS} Months, in the Standard Inclusions`,
-        means: 'results are measured against first paid work, not attendance, using the agreed scorecard.',
+        means: 'Results are measured against first paid work, not attendance, using the agreed scorecard.',
         outcome: 'A grant measured against first paid work',
         relieves: 'Grants buy hours, rarely earnings',
       },
       {
         feature: 'A randomized trial by BIGD on WSDFM; independent evaluation welcome on new programs',
-        means: 'you can fund a model with independent evidence and add your own evaluation.',
+        means: 'You can fund a model with independent evidence and add your own evaluation.',
         outcome: 'Independent evidence on a CodersTrust program',
         relieves: 'Independent evidence is thin',
       },
       {
         feature: 'Monthly reports, a quarterly steering review and a pilot scorecard; contracting entity and due-diligence documents confirmed in co-design',
-        means: 'you see progress monthly, know who you are contracting with, and can decide expansion on evidence.',
+        means: 'You see progress monthly, know who you are contracting with, and can decide expansion on evidence.',
         outcome: 'Progress you can see every month',
         relieves: 'Accountable implementers are hard to find',
       },
       {
         feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework and Co-Branded Certificates and Events, Where Agreed in the Program Scope',
-        means: 'reporting that fits your framework.',
+        means: 'Reporting that fits your framework.',
         outcome: 'Reports mapped to the SDGs',
       },
     ]}
@@ -222,13 +222,13 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <OfferCards
     id="cohort-grants"
     eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
-    title="Choose a YouthWIDE Cohort Grants Starting Point"
+    title="Choose Where to Start Your Cohort Grant"
     lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below."
     cards={funderOptionCards()}
     recommended={0}
   />
   <SubBand tone="airy" pull id="platform-grants">
-    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
+    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introductory call.</p></Callout>
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 
@@ -253,8 +253,15 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   </CTABand>
 
   <!-- C14 · Next steps -->
-  <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step (doc 04 §4). -->
-  <NextStepsBand title="What Happens After You Say Yes" lead="For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout." timing={false} />
+  <!-- WP32 (cycle-9 review): the two funding routes do not share one process, so the band says what is discussed for each route and shows no week-by-week steps. A cohort grant's timing
+       (6–8 weeks after signing) stays in the C13 urgency line above, where it is labeled as grant-funded pilot timing. -->
+  <NextStepsBand
+    title="What Happens After You Say Yes"
+    routes={[
+      { lead: 'For a cohort grant,', text: 'we discuss your country, priority groups, tracks, budget and scorecard.' },
+      { lead: 'For a platform grant,', text: 'we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.' },
+    ]}
+  />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />

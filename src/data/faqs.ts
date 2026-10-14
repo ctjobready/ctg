@@ -54,7 +54,15 @@ faqs.push(
   q1Variant('Q1-development-partners', 'That depends on local demand in your portfolio countries, which we test first.'),
   q1Variant('Q1-government', 'That depends on local demand and on lab access and facilitator supply, which we test first.'),
   q1Variant('Q1-campus', 'That depends on local demand for your graduates’ skills and on your campus labs, which we test first.'),
-  q1Variant('Q1-employer', 'That depends on local demand for the roles you hire for, which we test first.'),
+  // Employers (WP32, cycle-9 review): the bank answer is about youth-program evidence and country tracks, which does not answer an employer. This answer repeats the Employers page's own statements
+  // (the needs assessment, IN-10; the candidate-pool scope of talent requests, which its positioning statement rests on IN-10 and IN-04 for), so it claims nothing the page does not already say.
+  {
+    ...bankAnswer('Q1'),
+    id: 'Q1-employer',
+    a: `We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.`,
+    evidence: ['IN-10', 'IN-04'],
+    audiences: ['variants'],
+  },
   // Governments: the national-scale answer points to the contracts table, where each contract's scope is set out.
   { ...bankAnswer('Q2'), id: 'Q2-government', a: `Six government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff; the contracts table on this page sets out each one. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), and CodersTrust trained 2,500 women directly. We scale in phases, and a 100,000+ national program is a design option we have not yet delivered.`, evidence: ['GV-10', 'GV-01', 'GV-13', 'PD-05'], audiences: ['variants'] },
   // Investors (WP25s): the national-scale answer leads with CodersTrust's own role in Her Power (GV-11) before the national total (GV-01), which is the program's, not CodersTrust's.

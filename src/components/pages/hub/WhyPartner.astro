@@ -6,9 +6,11 @@ import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Two tiles, each read from the
- * facts register (never retyped): the randomized trial of a predecessor program (RC-02) and the survey among surveyed completers (OC-01). The trial and
- * the survey stay apart and each carries its own label. WP31: the 12-month outcome tracking (PD-02) is a commitment, not a result, so it left these tiles; the hero line states it.
+ * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Three tiles, each read from the
+ * facts register (never retyped): the randomized trial of a predecessor program (RC-02), the survey among surveyed completers (OC-01) and the reach (SC-16:
+ * young people trained since 2014). The trial and the survey stay apart and each carries its own label; the reach tile is labeled as it is on Home.
+ * WP31: the 12-month outcome tracking (PD-02) is a commitment, not a result, so it left these tiles; the hero line states it.
+ * WP32 (cycle-9 review): the reach tile came back as the third, so the strip reads trial, survey, reach.
  */
 interface Props {
   id?: string;
@@ -16,7 +18,8 @@ interface Props {
 const { id = 'why-partner' } = Astro.props;
 const rc02 = fact('RC-02');
 const oc01 = fact('OC-01');
-if (!rc02.stat || !oc01.stat) throw new Error('WhyPartner: RC-02 and OC-01 need a stat');
+const sc16 = fact('SC-16');
+if (!rc02.stat || !oc01.stat || !sc16.stat) throw new Error('WhyPartner: RC-02, OC-01 and SC-16 need a stat');
 const tiles = [
   {
     kicker: 'Randomized Trial of a Predecessor Program',
@@ -34,6 +37,15 @@ const tiles = [
     href: '/impact/outcomes-2026/',
     link: 'Impact Survey 2026',
     ids: 'OC-01',
+  },
+  {
+    kicker: 'Reach Since 2014',
+    value: sc16.stat.value,
+    label: sc16.stat.glance?.label ?? sc16.stat.label,
+    note: sc16.stat.glance?.note,
+    href: '/impact/global-reach/',
+    link: 'Global Reach',
+    ids: 'SC-16',
   },
 ];
 ---
@@ -64,9 +76,20 @@ const tiles = [
     gap: var(--grid-gap);
     grid-template-columns: minmax(0, 1fr);
   }
+  /* Three tiles: one column on a phone; two columns with the third across the row from the tablet breakpoint (never 2 + 1 beside an empty cell); three from 1024 px. */
   @media (min-width: 768px) {
     .wp {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .wp > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 1024px) {
+    .wp {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .wp__tile {

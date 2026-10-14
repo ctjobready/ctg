@@ -12,6 +12,8 @@ import { linkAttrs } from '../../../lib/url';
  * AWS Authorized Training Partner, the AIvolve partnership, Grameenphone Academy enrollments; Universities and JobReady@Campus: the National
  * University partnership; SuperKids: learners since 2021); the broader evidence (the trial and the survey, which come from the youth programs)
  * follows as a compact linked block. Figures and sentences are read from the facts register.
+ * WP32 (cycle-9 review): with no `items` the band is just the heading and the linked block, a slim "see also" strip. The Employers and JobReady@Work pages use it so the credentials
+ * (AWS Authorized Training Partner, AIvolve, Grameenphone Academy enrollments) are stated once, in their Track Record band, and not again here.
  */
 interface Item {
   /** Register fact id. */
@@ -25,6 +27,7 @@ interface Props {
   title: string;
   eyebrow?: string;
   lead?: string;
+  /** May be empty (WP32): the band is then its heading and the linked block only. */
   items: Item[];
   /** Compact links to the broader evidence. */
   broader?: { label: string; href: string }[];
@@ -51,22 +54,25 @@ const views = items.map((it) => {
   if (it.stat && !f.stat) throw new Error(`PairedEvidence: fact ${it.id} has no stat`);
   return { ...it, stat: it.stat ? f.stat : undefined };
 });
+const linksOnly = views.length === 0;
 ---
 
-<Section id={id} tone={tone} aria-labelledby={`${id}-h`}>
+<Section id={id} tone={tone} pad={linksOnly ? 'sm' : 'md'} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
-  <ul class="pe" role="list">
-    {
-      views.map((v) => (
-        <li class="pe__item" data-fact={v.id} data-reveal>
-          <p class="pe__label">{v.label}</p>
-          {v.stat ? <Stat value={v.stat.value} label={v.stat.label} size="lg" count={false} /> : <p class="pe__text"><Fact id={v.id} /></p>}
-        </li>
-      ))
-    }
-  </ul>
-  <nav class="pe__more" aria-label={broaderLabel}>
-    <p class="pe__more-label">{broaderLabel}</p>
+  {
+    !linksOnly && (
+      <ul class="pe" role="list">
+        {views.map((v) => (
+          <li class="pe__item" data-fact={v.id} data-reveal>
+            <p class="pe__label">{v.label}</p>
+            {v.stat ? <Stat value={v.stat.value} label={v.stat.label} size="lg" count={false} /> : <p class="pe__text"><Fact id={v.id} /></p>}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <nav class:list={['pe__more', linksOnly && 'pe__more--alone']} aria-label={broaderLabel}>
+    {!linksOnly && <p class="pe__more-label">{broaderLabel}</p>}
     <ul role="list">
       {broader.map((b) => <li><a class="link" href={linkAttrs(b.href).href}>{b.label}<Icon name="arrow-right" size={16} /></a></li>)}
     </ul>
@@ -121,6 +127,12 @@ const views = items.map((it) => {
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-xs) var(--space-lg);
+  }
+  /* No cards above it: the linked block is the band's content, so it has no rule or gap of its own. */
+  .pe__more--alone {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
   }
   .pe__more-label {
     margin: 0;

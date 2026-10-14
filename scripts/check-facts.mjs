@@ -250,7 +250,8 @@ const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 const SESSION_AGENDA_FIRST_DISCOVERY = 'your country, priority groups and locations';
 const SESSION_AGENDA_FIRST_BRIEFING = 'your priority groups and districts';
 const SESSION_AGENDA_FIRST_GOVERNMENTS = 'your priority groups and locations';
-const SESSION_AGENDA_COMMON = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'];
+// WP32 (cycle-9 review): the third item says "the follow-up survey schedule", where the plan's v1.13 wording said "the tracer timeline" (jargon to a funder); the planning register needs the same change.
+const SESSION_AGENDA_COMMON = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the follow-up survey schedule'];
 const sessionAgendaWanted = (lead, first) => `${lead} ${[first, ...SESSION_AGENDA_COMMON].join('; ')}.`;
 const SESSION_AGENDA_DISCOVERY = sessionAgendaWanted(SESSION_AGENDA_LEAD_DISCOVERY, SESSION_AGENDA_FIRST_DISCOVERY);
 const SESSION_AGENDA_BRIEFING = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_BRIEFING);
@@ -734,9 +735,9 @@ function numberGuardPage(path, html, allow = []) {
   const agendaWant = SESSION_AGENDA_DISCOVERY;
   const agendaWantB = SESSION_AGENDA_BRIEFING;
   const agendaWantG = SESSION_AGENDA_GOVERNMENTS;
-  if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the discovery agenda is no longer the plan wording');
-  if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the briefing agenda is no longer the plan wording');
-  if (agendaWantG !== 'What the briefing covers: your priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline.') problems.push('self-test: the governments briefing agenda is no longer the plan wording');
+  if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the discovery agenda is no longer the plan wording');
+  if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the briefing agenda is no longer the plan wording');
+  if (agendaWantG !== 'What the briefing covers: your priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the governments briefing agenda is no longer the plan wording');
   for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB], ['governments briefing lead', agendaWantG]]) {
     const ok = ctaBand(agendaP(text));
     if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);

@@ -6,7 +6,7 @@ import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
-import { RCT_COMPARISON, TRIAL_BAND_HEADING } from '../../../data/copy';
+import { RCT_COMPARISON, TRIAL_BAND_HEADING, TRIAL_SENTENCE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { endSentence } from '../../sections/copyText';
 
@@ -44,6 +44,11 @@ interface Props {
    * (RC-01's second and third sentences), tied to the trial by name.
    */
   incomeHeadline?: boolean;
+  /**
+   * WP32 (YouthWIDE): state the trial result once, as the single sentence TRIAL_SENTENCE, in place of the plain line and the RC-01 headline, which said it twice in a row.
+   * The tiles, the chart and the links stay.
+   */
+  trialSentence?: boolean;
   links?: { label: string; href: string }[];
   /** Show the "View Chart Data as a Table" disclosure under the chart (default true). The Programs hub turns it off (WP31); the chart keeps its text alternative. */
   chartTable?: boolean;
@@ -58,7 +63,7 @@ interface Props {
   trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, incomeHeadline = false, chip = true, links = [], chartTable = true, surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, incomeHeadline = false, trialSentence = false, chip = true, links = [], chartTable = true, surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
 const split = !!trialHeading;
 const trial = chart === 'trial';
 // Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
@@ -104,17 +109,19 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   <header class="eb__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">The Evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
-    {!split && plainLine && <PlainLine />}
+    {!split && trialSentence && <p class="lead eb__headline" data-fact={TRIAL_SENTENCE.facts.join(' ')}>{TRIAL_SENTENCE.text}</p>}
+    {!split && !trialSentence && plainLine && <PlainLine />}
     {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}</p>}
-    {!split && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
+    {!split && !trialSentence && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
   <div class="eb">
     <div class="eb__group">
       {split && <h3 class="eb__sub t-heading-l">{trialHeading}</h3>}
       {!split && surveyStats.length > 0 && <h3 class="eb__sub t-heading-l">From the Randomized Trial</h3>}
-      {split && plainLine && <PlainLine />}
-      {split && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
+      {split && trialSentence && <p class="lead eb__headline" data-fact={TRIAL_SENTENCE.facts.join(' ')}>{TRIAL_SENTENCE.text}</p>}
+      {split && !trialSentence && plainLine && <PlainLine />}
+      {split && !trialSentence && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
       <div class="eb__stats">
         {
           stats.map((s, i) => (

@@ -36,7 +36,9 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
-  investors: 'We help impact investors back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs for emerging-market youth.',
+  // WP32 (cycle-9 review): "staged rollout" alone did not say what is live, so the hero adds IN-04's status in one sentence (the Investors page marks the lead data-fact="IN-04"); it is two sentences by design.
+  // The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them: never "the employer and gig-work marketplaces".
+  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help learners prepare for digital work through a National University postgraduate diploma.',
 };
@@ -232,6 +234,25 @@ function plainLine(): CopyBlock {
 export const PLAIN_LINE: CopyBlock = plainLine();
 
 /**
+ * The trial result as ONE sentence (WP32, cycle-9 review: YouthWIDE's evidence band explained the trial twice in a row, in the plain line and again in the RC-01 headline). It names
+ * the evaluator and the predecessor program, then the two results RC-01 headlines for women offered a place: the employment effect (RC-02's stat, in percentage points) and the
+ * estimated income difference (RC-01's stat). Both figures are read from the register, so the sentence cannot drift from it; it throws if either stat changes shape.
+ */
+function trialSentence(): CopyBlock {
+  const employment = fact('RC-02').stat;
+  const income = fact('RC-01').stat;
+  if (!employment || !/^\+[\d.]+ pp$/.test(employment.value) || !income || !/^\+\d+%$/.test(income.value)) {
+    throw new Error(`TRIAL_SENTENCE: RC-02 or RC-01 no longer has the expected stat: ${JSON.stringify([employment?.value, income?.value])}`);
+  }
+  const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  return {
+    text: `In BIGD’s randomized trial of the predecessor WSDFM program, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
+    facts: ['RC-01', 'RC-02'],
+  };
+}
+export const TRIAL_SENTENCE: CopyBlock = trialSentence();
+
+/**
  * Employment at follow-up in the randomized trial, read from RC-02's text ("than the control group (52.8%)"), so the Home C7
  * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10.3 pp). It throws
  * if the text stops reading that way.
@@ -381,11 +402,11 @@ export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and loca
 export const SESSION_AGENDA_FIRST_ITEM_BRIEFING = 'your priority groups and districts';
 /** The governments page serves ministries in any country, so its briefing names "locations"; "districts" stays on YouthWIDE in Bangladesh (Bangladesh's national program). */
 export const SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS = 'your priority groups and locations';
-/** The second and third items are shared. */
-export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the tracer timeline'] as const;
+/** The second and third items are shared. WP32 (cycle-9 review): "the follow-up survey schedule" replaces the plan's "the tracer timeline" (scripts/check-facts.mjs pins the same wording). */
+export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the follow-up survey schedule'] as const;
 export const SESSION_AGENDA_FACTS = ['PD-02'];
 /**
- * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the tracer timeline."
+ * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule."
  * or, for the YouthWIDE Bangladesh briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
  * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …".
  */

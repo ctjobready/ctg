@@ -21,11 +21,11 @@ test.describe('timelines name their starting point', () => {
   });
 
   // every grant-funded week sequence on the site reads Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing
+  // (WP32: Foundations no longer shows the sequence; its closing band states what is discussed for a cohort grant and for a platform grant, tests/wp32.spec.ts)
   const SEQUENCES: { page: string; steps: string }[] = [
     { page: '', steps: '#next-steps ol h3' },
     { page: 'partner-with-us/', steps: '#how-partnering-works ol h3' },
     { page: 'partner-with-us/development-partners/', steps: '#next-steps ol h3' },
-    { page: 'partner-with-us/foundations/', steps: '#next-steps ol h3' },
   ];
   for (const s of SEQUENCES) {
     test(`${s.page || 'Home'}: the grant-funded steps read Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {

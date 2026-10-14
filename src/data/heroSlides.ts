@@ -222,7 +222,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
     lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
     leadFacts: ['GV-12'],
-    links: [{ label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' }],
+    // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
+    links: [
+      { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
+      { label: 'For Universities', href: '/partner-with-us/universities/', variant: 'secondary' },
+    ],
     photo: 'general/nu-affiliation-group',
   },
   {

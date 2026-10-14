@@ -124,12 +124,12 @@ test.describe('Partner with Us', () => {
     }
   });
 
-  test('the hero says what a partnership delivers, once and for any country, and has a way to choose a route; the timetable is labelled for grant-funded supported cohorts', async ({ page }) => {
+  test('the hero asks which partnership you need, for any country, and has a way to choose a route; the timetable is labelled for grant-funded supported cohorts', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const lead = compact(await page.locator('.hero__lead').first().textContent());
-    // WP31: one sentence about the offer, not a list of the seven audiences (the route cards name them, the investor route included)
-    expect(lead).toBe('Co-design a youth-employment program with training, mentoring, placement support and 12 months of outcome tracking after each course, as agreed in the program scope.');
-    expect(lead).not.toMatch(/Bangladesh|investors/i);
+    // WP32 (cycle-9 review): the hub routes more than cohorts (campus skills, team training, hiring, the platform), so one sentence names the choice and describes no cohort (the route cards name the audiences)
+    expect(lead).toBe('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
+    expect(lead).not.toMatch(/Bangladesh|investors|cohort|co-design/i);
     await expect(page.locator('#audiences .grid-cards a[href$="partner-with-us/investors/"]')).toHaveCount(1);
     const link = page.locator('.hero a.link', { hasText: 'Choose Your Route' });
     expect(await link.getAttribute('href')).toBe('#audiences');

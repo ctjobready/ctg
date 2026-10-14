@@ -1,0 +1,280 @@
+import { expect, test, type Page } from '@playwright/test';
+import { DESKTOP, MOBILE, open } from './support/browser';
+
+/**
+ * WP32 behaviors (cycle-9 whole-site reviews): the Partner with Us hub chooses a partnership instead of describing a cohort, Foundations says what is discussed for each
+ * funding route, the Investors hero says what is live, the Employers FAQ answers an employer, YouthWIDE states the trial once, the employer credentials are stated once,
+ * the follow-up survey schedule replaces the "tracer timeline", the benefit lines start with a capital letter, and the smaller Home and hub wording fixes. Retrospective
+ * coverage (the owner exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then
+ * `PORT=<port> npx playwright test tests/wp32.spec.ts --project=chromium`).
+ */
+
+const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
+const mainText = async (page: Page) => compact(await page.locator('main').textContent());
+const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
+const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
+
+test.describe('Partner with Us hub', () => {
+  test('the hero asks for a choice of partnership and describes no cohort; the closing call to action offers help finding the route', async ({ page }) => {
+    await open(page, 'partner-with-us/');
+    await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
+    const cta = compact(await page.locator('#cta').textContent());
+    expect(cta).toContain('Tell us your goals, and we will help you find the right partnership route.');
+    expect(cta).not.toMatch(/first cohort|priority groups/);
+    await expect(page.locator('#audiences .grid-cards > a')).toHaveCount(7);
+  });
+
+  test('the reporting link says what YouthWIDE reports, not that there is a sample report; it still opens the YouthWIDE page', async ({ page }) => {
+    await open(page, 'partner-with-us/');
+    const link = page.locator('#review-cycle a', { hasText: 'See What YouthWIDE Reports' });
+    await expect(link).toHaveCount(1);
+    expect(await link.getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
+    expect(await mainText(page)).not.toContain('Sample Monthly Report');
+  });
+
+  test('"Why Partner with CodersTrust" reads trial, survey, reach: the reach tile is the registered 130,000+ with its glance label, tied to SC-16', async ({ page }) => {
+    await open(page, 'partner-with-us/');
+    const tiles = page.locator('#why-partner li');
+    await expect(tiles).toHaveCount(3);
+    expect(await texts(page, '#why-partner .wp__kicker')).toEqual(['Randomized Trial of a Predecessor Program', 'Impact Survey 2026', 'Reach Since 2014']);
+    expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'OC-01', 'SC-16']);
+    const reach = tiles.nth(2);
+    await expect(reach.locator('.wp__value')).toHaveText('130,000+');
+    await expect(reach.locator('.wp__desc')).toHaveText('young people trained since 2014');
+    await expect(reach.locator('.wp__note')).toHaveText('Through 150,000+ enrollments across 15 countries and territories.');
+    expect(await reach.locator('a.wp__link').getAttribute('href')).toMatch(/\/impact\/global-reach\/$/);
+  });
+
+  for (const vp of [{ width: 800, height: 900 }, DESKTOP]) {
+    test(`the three evidence tiles do not leave one alone beside an empty cell at ${vp.width}px`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      await open(page, 'partner-with-us/');
+      const boxes = await page.locator('#why-partner li').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()));
+      const grid = await page.locator('#why-partner ul.wp').evaluate((e) => e.getBoundingClientRect());
+      if (vp.width >= 1024) {
+        // three across: one row, equal tops
+        expect(new Set(boxes.map((b) => Math.round(b.top))).size, 'one row').toBe(1);
+      } else {
+        // two columns with the third across the row
+        expect(Math.abs(boxes[2].width - grid.width), 'the third tile spans the row').toBeLessThan(2);
+        expect(boxes[2].top).toBeGreaterThan(boxes[0].bottom - 1);
+      }
+    });
+  }
+});
+
+test.describe('Foundations', () => {
+  test('"What Happens After You Say Yes" states what is discussed for a cohort grant and for a platform grant, with no week-by-week steps', async ({ page }) => {
+    await open(page, 'partner-with-us/foundations/');
+    const band = page.locator('#next-steps');
+    await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
+    expect(await texts(page, '#next-steps .next__routes li')).toEqual([
+      'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard.',
+      'For a platform grant, we discuss JobReady’s staged rollout. Details of what the grant delivers are discussed in the introductory call.',
+    ]);
+    await expect(band.locator('ol')).toHaveCount(0);
+    await expect(band.locator('[data-fact]')).toHaveCount(0);
+    expect(compact(await band.textContent())).not.toMatch(/Week \d|Training Starts|Co-Design|Agreement/);
+    // a cohort grant's timing stays where it is labeled as grant-funded pilot timing: the call to action's urgency line
+    expect(compact(await page.locator('#cta').textContent())).toContain('For grant-funded pilots: about three weeks from first conversation to agreement');
+  });
+
+  test('the cohort-grant offer is headed "Choose Where to Start Your Cohort Grant"; the platform route says "introductory call" like the closing band', async ({ page }) => {
+    await open(page, 'partner-with-us/foundations/');
+    await expect(page.locator('#cohort-grants h2')).toHaveText('Choose Where to Start Your Cohort Grant');
+    const platform = compact(await page.locator('#platform-grants').textContent());
+    expect(platform).toContain('Details of what a platform grant delivers are discussed in the introductory call.');
+    expect(await mainText(page)).not.toContain('introduction call');
+  });
+
+  test('Development Partners keeps its four grant-funded steps (they are cohort steps)', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    await expect(page.locator('#next-steps ol h3')).toHaveCount(4);
+    await expect(page.locator('#next-steps .next__routes')).toHaveCount(0);
+  });
+});
+
+test.describe('Investors', () => {
+  test('the hero says what is live and what is in pre-launch, tied to IN-04; the owner H1 and the one primary button are unchanged', async ({ page }) => {
+    await open(page, 'partner-with-us/investors/');
+    const lead = page.locator('main .hero .hero__lead').first();
+    // the two marketplaces are named as two (IN-04's wording; tests/wp25s.spec.ts forbids "employer and gig-work")
+    await expect(lead).toHaveText('Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
+    expect(await lead.getAttribute('data-fact')).toBe('IN-04');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Invest in the Platform Connecting Emerging-Market Youth to Work');
+    await expect(page.locator('main .hero .btn--primary')).toHaveCount(1);
+  });
+});
+
+test.describe('Employers', () => {
+  test('"Will This Work in Our Country?" is answered with the needs assessment and the candidate-pool scope, in the page and in its FAQ markup; the other pages keep the country answer', async ({ page }) => {
+    await open(page, 'partner-with-us/employers/');
+    const item = page.locator('#faq details', { hasText: 'Will This Work in Our Country?' });
+    await expect(item).toHaveCount(1);
+    const answer = compact(await item.textContent());
+    expect(answer).toContain('We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.');
+    expect(answer).not.toMatch(/Bangladesh|Kosovo|local demand/);
+    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
+    expect(ld).toContain('We start with a needs assessment of your roles, tasks and required tools.');
+    expect(ld).not.toContain('That depends on local demand for the roles you hire for');
+    await open(page, 'partner-with-us/governments/');
+    expect(await mainText(page)).toContain('That depends on local demand and on lab access and facilitator supply, which we test first.');
+  });
+});
+
+test.describe('YouthWIDE', () => {
+  test('"Trial and Survey Evidence" states the trial once, in one sentence; the tiles, the chart and the links stay', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    const band = page.locator('#proof-band');
+    await expect(band.locator('.eb__headline')).toHaveCount(1);
+    await expect(band.locator('.eb__headline')).toHaveText(
+      'In BIGD’s randomized trial of the predecessor WSDFM program, women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+    );
+    expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
+    await expect(band.locator('[data-plain-line]')).toHaveCount(0);
+    const text = compact(await band.textContent());
+    expect(text).not.toMatch(/about 10 more were in work|For women who attended|A randomized trial by BIGD found/);
+    // the chart's data table repeats the difference as a table cell; as a paragraph, the sentence is the only statement of the effect
+    expect((await texts(page, '#proof-band p')).filter((p) => p.includes('10.3 percentage points')), 'one paragraph states the effect').toHaveLength(1);
+    await expect(band.locator('.eb__stat')).toHaveCount(2);
+    await expect(band.locator('svg[role="img"]').first()).toBeVisible();
+    expect(await texts(page, '#proof-band .eb__links a')).toEqual(['Impact Survey 2026', 'The Randomized Trial']);
+  });
+});
+
+test.describe('the employer credentials are stated once', () => {
+  const CREDENTIALS = ['AWS Authorized Training Partner', 'Partnership with AIvolve Leadership Dynamics', 'enrollments in Grameenphone Academy courses'];
+
+  for (const route of ['programs/jobready-work/', 'partner-with-us/employers/']) {
+    test(`${route}: each credential appears once, in the Track Record band; the evidence strip is the two links`, async ({ page }) => {
+      await open(page, route);
+      const text = await mainText(page);
+      for (const c of CREDENTIALS) expect(count(text, c), c).toBe(1);
+      expect(count(text, '23,000+'), '23,000+').toBe(1);
+      const strip = page.locator('#offer-evidence');
+      await expect(strip.locator('h2')).toHaveText('Broader Evidence from Our Youth Programs');
+      await expect(strip.locator('.pe__item')).toHaveCount(0);
+      await expect(strip.locator('[data-fact]')).toHaveCount(0);
+      expect(await texts(page, '#offer-evidence .pe__more a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
+      await expect(strip.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]')).toHaveCount(1);
+      expect(text).not.toContain('The Delivery Record for Employers');
+    });
+  }
+
+  test('JobReady@Work keeps the credentials in "Employers and Partners We Work With"; Employers keeps them in "Our Track Record" (the three statements and the 23,000+ tile)', async ({ page }) => {
+    await open(page, 'programs/jobready-work/');
+    const guide = compact(await page.locator('#guide').textContent());
+    for (const c of [...CREDENTIALS, '23,000+']) expect(guide, c).toContain(c);
+    await open(page, 'partner-with-us/employers/');
+    const track = compact(await page.locator('#guide').textContent());
+    for (const c of [...CREDENTIALS, '23,000+']) expect(track, c).toContain(c);
+  });
+});
+
+test.describe('the follow-up survey schedule', () => {
+  const PAGES: [string, number][] = [
+    ['partner-with-us/development-partners/', 1],
+    ['partner-with-us/governments/', 1],
+    ['partner-with-us/foundations/', 1],
+    ['programs/youthwide/', 2],
+  ];
+  for (const [route, agendas] of PAGES) {
+    test(`${route}: the session agenda ends "the pilot scorecard and the follow-up survey schedule" (${agendas} agenda${agendas > 1 ? 's' : ''}); nothing says "tracer timeline"`, async ({ page }) => {
+      await open(page, route);
+      const lines = await texts(page, '[data-session-agenda]');
+      expect(lines).toHaveLength(agendas);
+      for (const l of lines) expect(l.endsWith('an indicative budget, the pilot scorecard and the follow-up survey schedule.'), l).toBe(true);
+      expect(await page.evaluate(() => document.body.innerText.toLowerCase().includes('tracer timeline'))).toBe(false);
+    });
+  }
+});
+
+test.describe('benefit lines start with a capital letter', () => {
+  const ROUTES = [
+    '',
+    'partner-with-us/development-partners/',
+    'partner-with-us/governments/',
+    'partner-with-us/foundations/',
+    'partner-with-us/universities/',
+    'partner-with-us/employers/',
+    'partner-with-us/local-partners/',
+    'partner-with-us/investors/',
+    'programs/youthwide/',
+    'programs/jobready-campus/',
+  ];
+  test('every "Practical Benefit" explanation (.fc__means) on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
+    for (const route of ROUTES) {
+      await open(page, route);
+      const lines = await texts(page, '#features .fc__means');
+      expect(lines.length, `${route || 'home'} has benefit lines`).toBeGreaterThan(0);
+      for (const l of lines) expect(l, `${route || 'home'}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
+    }
+  });
+
+  test('Development Partners "What Your Portfolio Gets": three standalone sentences under the bold benefit line', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    await expect(page.locator('#features h2')).toHaveText('What Your Portfolio Gets');
+    expect(await texts(page, '#features .fc__means')).toEqual([
+      'Success is measured against agreed outcomes, including paid work, not attendance alone.',
+      'Priority groups can join a local lab and train for work that local employers want.',
+      'Your evaluators can check results against documentary evidence where available.',
+    ]);
+    // the explanation is its own paragraph below the bold benefit line, not a continuation of it
+    const sameLine = await page.locator('#features .fc__card').first().evaluate((card) => {
+      const benefit = card.querySelector('.fc__benefit')!.getBoundingClientRect();
+      const means = card.querySelector('.fc__means')!.getBoundingClientRect();
+      return means.top < benefit.bottom - 1;
+    });
+    expect(sameLine).toBe(false);
+  });
+});
+
+test.describe('Home', () => {
+  test('the mechanism card says "Skills, Certification Preparation and Mentoring" and it wraps inside its card at 1280 and 390', async ({ page }) => {
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      await open(page, '');
+      const titles = await texts(page, '#mechanism .model__title');
+      expect(titles).toContain('Skills, Certification Preparation and Mentoring');
+      expect(titles.join(' ')).not.toContain('Skills, Certification, Mentoring');
+      const overflow = await page.locator('#mechanism .model__title').evaluateAll((els) => els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent));
+      expect(overflow, `${vp.width}px: no title overflows its card`).toEqual([]);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), `${vp.width}px: no sideways scroll`).toBeLessThanOrEqual(0);
+    }
+  });
+
+  test('the low-risk band is headed "Start with a Multi-Cohort Pilot, Then Decide on Evidence" (one sentence, no period inside the heading)', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('#risk h2')).toHaveText('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
+    expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot. Decide on Evidence');
+  });
+
+  test('slide 6 (government contracts and the National University partnership) links both audience pages', async ({ page }) => {
+    await open(page, '');
+    const slide = page.locator('[data-hs-slide]').nth(5);
+    expect(await slide.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
+      { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
+      { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
+    ]);
+  });
+
+  test('the "What Brings You Here?" router calls the investor card "Impact Investors"; the main menu keeps "Investors"', async ({ page }) => {
+    await open(page, '');
+    expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Impact Investors']);
+    const menu = page.locator('a.mega__link[href$="partner-with-us/investors/"] .mega__title').first();
+    await expect(menu).toHaveText('Investors');
+  });
+});
+
+test.describe('layout', () => {
+  for (const vp of [DESKTOP, MOBILE]) {
+    test(`the changed pages do not scroll sideways at ${vp.width}px`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      for (const route of ['', 'partner-with-us/', 'partner-with-us/foundations/', 'partner-with-us/investors/', 'partner-with-us/employers/', 'partner-with-us/development-partners/', 'programs/youthwide/', 'programs/jobready-work/']) {
+        await open(page, route);
+        const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(over, route || 'home').toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});

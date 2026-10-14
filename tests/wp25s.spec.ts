@@ -125,7 +125,7 @@ test.describe('Programs', () => {
     expect(order.indexOf('guide'), 'guide band').toBeGreaterThan(-1);
     const titles = await page.locator('main h2').allInnerTexts();
     expect(titles.findIndex((t) => /Universities Partner with CodersTrust/.test(t))).toBeLessThan(titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t)));
-    expect(text).toContain('training is built around the skills employers say they cannot find');
+    expect(text).toContain('Training is built around the skills employers say they cannot find');
     expect(text).not.toContain('training matches what employers say');
   });
 
@@ -161,7 +161,7 @@ test.describe('Programs', () => {
 
   test('YouthWIDE and Investors say courses are designed to keep pace with employer demand', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(compact(await main(page))).toContain('courses are designed to keep pace with employer demand');
+    expect(compact(await main(page))).toContain('Courses are designed to keep pace with employer demand');
     await open(page, 'partner-with-us/investors/');
     expect(compact(await main(page))).toContain('Courses are designed to keep pace with employer demand');
   });

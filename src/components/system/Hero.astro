@@ -8,6 +8,8 @@ interface Props {
   eyebrow?: string;
   title: string;
   lead?: string;
+  /** Fact IDs the lead states (data-fact on the lead paragraph), for a lead that states a registered status or figure. */
+  leadFacts?: string[];
   /** home = display-5xl H1; inner = display-4xl H1 */
   variant?: 'home' | 'inner';
   /** Render generated HeroArt when no `media` slot is given. Set false for a text-only hero. */
@@ -19,7 +21,7 @@ interface Props {
   mediaShape?: 'portrait' | 'landscape';
   class?: string;
 }
-const { eyebrow, title, lead, variant = 'inner', art = true, artSeed, headingLevel = 1, mediaShape = 'portrait', class: className } = Astro.props;
+const { eyebrow, title, lead, leadFacts, variant = 'inner', art = true, artSeed, headingLevel = 1, mediaShape = 'portrait', class: className } = Astro.props;
 const Title = `h${headingLevel}` as 'h1' | 'h2';
 // A real photograph from the page's registry entry (src/data/photos.ts) takes the place of the generated art when the D13 rule lets it render.
 const candidate = art && !Astro.slots.has('media') ? heroPhoto(artSeed) : undefined;
@@ -33,7 +35,7 @@ const landscape = Astro.slots.has('media') ? mediaShape === 'landscape' : Boolea
     <div class="hero__copy">
       {eyebrow && <p class="hero__eyebrow" data-hero-in>{eyebrow}</p>}
       <Title class:list={['hero__title', variant === 'home' ? 't-display-5xl' : 't-display-4xl']} data-hero-in>{title}</Title>
-      {lead && <p class="hero__lead" data-hero-in>{lead}</p>}
+      {lead && <p class="hero__lead" data-hero-in data-fact={leadFacts?.join(' ')}>{lead}</p>}
       <slot />
       {Astro.slots.has('actions') && <div class="hero__actions" data-hero-in><slot name="actions" /></div>}
       {Astro.slots.has('stats') && <div class="hero__stats" data-hero-in><slot name="stats" /></div>}

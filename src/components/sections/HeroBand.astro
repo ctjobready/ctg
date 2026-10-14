@@ -16,6 +16,8 @@ interface Props {
   audienceLinks?: { label: string; href: string }[];
   title: string;
   lead: string;
+  /** Fact IDs the lead states (data-fact on the lead paragraph). */
+  leadFacts?: string[];
   cta: { label: string; href: string };
   secondary?: { label: string; href: string };
   /** Text links on a line of their own under the primary button (WP27): route-specific next steps beside the one primary action. Plain links, never buttons. */
@@ -28,13 +30,13 @@ interface Props {
   headingLevel?: 1 | 2;
   id?: string;
 }
-const { audience, audienceLinks = [], title, lead, cta, secondary, routeLinks = [], stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
+const { audience, audienceLinks = [], title, lead, leadFacts, cta, secondary, routeLinks = [], stats = [], variant = 'inner', artSeed, headingLevel = 1, id = 'hero' } = Astro.props;
 if (stats.length > 3) throw new Error('HeroBand: at most 3 stats');
 const eyebrow = audienceLinks.length > 0 ? undefined : audience;
 ---
 
 <div id={id}>
-  <Hero variant={variant} eyebrow={eyebrow} title={title} lead={lead} artSeed={artSeed} headingLevel={headingLevel}>
+  <Hero variant={variant} eyebrow={eyebrow} title={title} lead={lead} leadFacts={leadFacts} artSeed={artSeed} headingLevel={headingLevel}>
     {
       audienceLinks.length > 0 && (
         <nav class="herolinks" aria-label="Choose your audience" data-hero-in>
