@@ -68,7 +68,7 @@ const rates = graduateRates();
 const hours = statValue('PD-01');
 
 const faqSources: FaqSource[] = [
-  { q: 'Is YouthWIDE Right for Our Agency?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing government labs and colleges. Not right if you need a single-vendor ${nationalSize} rollout in one phase: we plan the National option phase by phase.`, evidence: ['PD-05'] },
+  { q: 'Is YouthWIDE Right for Our Agency?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing government labs and colleges. YouthWIDE is not the right fit if you need a ${nationalSize} rollout delivered by one provider in a single phase; we plan national delivery phase by phase.`, evidence: ['PD-05'] },
   // Q9 (safeguarding) is not repeated here: the Safeguarding block in the governance section is the page's one statement of it.
   // WP24c: the six decision questions (fit, country, national scale, outcomes, speed, cost); the national-scale answer leads with Her Power, in short paragraphs.
   { audience: 'governments' as const, id: 'Q1' },
@@ -103,7 +103,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <Hero
       eyebrow="YouthWIDE · Youth Digital Employment Program"
       title="Prepare Educated Youth for Paid Digital Work"
-      lead="We help governments, development partners and funders prepare educated, unemployed youth for paid digital work through mentored, certification-focused training."
+      lead="YouthWIDE is the program through which governments, development partners and funders prepare educated, unemployed youth for paid digital work: mentored, certification-focused training, placement support and outcome tracking as agreed in the program scope."
       artSeed="youthwide"
     >
       <Fragment slot="actions">
@@ -282,7 +282,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         { icon: 'award', title: 'Certifications by Track', factId: 'PD-03' },
         { icon: 'users', title: 'Cohorts in Parallel', factId: 'PD-06' },
         { icon: 'wifi', title: 'Connectivity-Light Delivery', factId: 'PD-07', text: 'Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
-        { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14' },
+        { icon: 'clipboard-check', title: 'Accessible Readiness Assessment', factId: 'PD-14', text: 'Selection and placement into a career or foundation track use a readiness assessment, a written test and an interview guide. A small number of applicants may not be selected, and the reasons are reported.' },
         { icon: 'layers', title: 'Foundation Tracks', factId: 'PD-17' },
         { icon: 'briefcase', title: 'Placement Support', factId: 'PD-15' },
         { icon: 'shield-check', title: 'Quality Assurance', factId: 'PD-16' },
@@ -343,7 +343,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       {
         ...painForRow(FUNDER_PAINS, 'P3'),
         feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Set per Country from Employer Demand',
-        means: 'courses keep pace with employer demand as AI changes entry-level tasks.',
+        means: 'courses are designed to keep pace with employer demand as AI changes entry-level tasks.',
         outcome: 'Tracks that follow what employers ask for',
         facts: ['PD-02', 'PD-10'],
       },

@@ -5,7 +5,6 @@
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
-import CategoryCard from '../../../components/system/CategoryCard.astro';
 import InShort from '../../../components/pages/partners/InShort.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import ReviewCycle from '../../../components/pages/hub/ReviewCycle.astro';
@@ -27,7 +26,6 @@ import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
 import Fact from '../../../components/facts/Fact.astro';
-import Section from '../../../components/ui/Section.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Badge from '../../../components/system/Badge.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
@@ -66,8 +64,9 @@ const FAQ_IDS = ['Q2', 'Q3', 'Q4', 'Q8', 'Q9', 'Q10'];
 // and what a funder gains is reporting on how the funded cohort progressed into work.
 const pd18 = endSentence(fact('PD-18').text)
   .replace(/^What funders gain: /, 'Funders receive ')
+  .replace('documented job and income outcomes,', 'job and income outcomes documented where documentary evidence is available,')
   .replace('SDG-mapped reporting tailored to their CSR framework, co-branded certificates and events, and a pipeline of job-ready talent', 'SDG-mapped reporting tailored to their CSR framework and co-branded certificates and events, where agreed in the program scope, and reporting that shows how the funded cohort progressed into work');
-if (!pd18.includes('where agreed in the program scope') || !pd18.includes('how the funded cohort progressed into work')) throw new Error('Foundations: PD-18 wording changed; update the scope-aware rewrite');
+if (!pd18.includes('where agreed in the program scope') || !pd18.includes('how the funded cohort progressed into work') || !pd18.includes('documented where documentary evidence is available')) throw new Error('Foundations: PD-18 wording changed; update the scope-aware rewrite');
 const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
@@ -174,25 +173,22 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     partnerGroup="development"
   />
 
-  <!-- C6 · Mechanism (two funding vehicles) -->
+  <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here, in the jump links and in the two offer bands below. -->
   <div class="pp-two">
     <MechanismBand
       title="Two Ways to Fund the Path"
       positioning={POSITIONING.foundations}
       blocks={[
-        { label: 'Funding Vehicle 1', title: 'JobReady Platform Grant', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer and gig-work (Earn) marketplace.', icon: 'layers' },
-        { label: 'Funding Vehicle 2', title: 'YouthWIDE Cohort Grants', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
+        { label: 'Funding Route 1', title: 'YouthWIDE Cohort Grants', text: 'Co-fundable country programs designed for South Asia, MENA and Sub-Saharan Africa; current outcome evidence comes from Bangladesh and Kosovo.', icon: 'globe' },
+        { label: 'Funding Route 2', title: 'JobReady Platform Grants', text: 'A grant toward platform infrastructure, not toward cohorts. The outcome evidence on this page comes from the youth programs, not from the platform. Live today: partner portals, marketing automation, CRM and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.', icon: 'layers' },
+      ]}
+      moreLinks={[
+        { label: 'See Funding Route 1', href: '#cohort-grants' },
+        { label: 'See Funding Route 2', href: '#platform-grants' },
       ]}
       link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
     />
   </div>
-  <Section id="route-chooser" pad="sm" aria-labelledby="route-h">
-    <h2 class="rc__title" id="route-h">Choose Your Route</h2>
-    <div class="grid-cards grid-cards--2">
-      <CategoryCard title="YouthWIDE Cohort Grants" icon="globe" text="Co-fund country programs, cohort by cohort." href="#cohort-grants" />
-      <CategoryCard title="JobReady Platform Grants" icon="layers" text="Fund platform infrastructure, not cohorts." href="#platform-grants" />
-    </div>
-  </Section>
   <SubBand>
     <Callout eyebrow="Reporting and Recognition">
       <p data-fact="PD-18">{pd18}</p>
@@ -235,7 +231,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       {
         feature: `Mentoring, Placement Support and Outcome Tracking for ${TRACKING_MONTHS} Months, in the Standard Inclusions`,
         means: 'results are measured against first paid work, not attendance, using the agreed scorecard.',
-        outcome: 'A grant followed through to first paid work',
+        outcome: 'A grant measured against first paid work',
         relieves: 'Grants buy hours, rarely earnings',
       },
       {
@@ -274,9 +270,9 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   />
 
   <!-- C11 · Offer -->
-  <OfferBand id="cohort-grants" eyebrow="Track 1 · YouthWIDE Cohort Grants" title="Choose a YouthWIDE Cohort Grants Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below." />
+  <OfferBand id="cohort-grants" eyebrow="Funding Route 1 · YouthWIDE Cohort Grants" title="Choose a YouthWIDE Cohort Grants Starting Point" lead="Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below." />
   <SubBand tone="airy" pull id="platform-grants">
-    <Callout eyebrow="Track 2 · JobReady Platform Grants, an Alternative Funding Vehicle"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
+    <Callout eyebrow="Funding Route 2 · JobReady Platform Grants"><Fact id="IN-04" as="p" /><p>Details of what a platform grant delivers are discussed in the introduction call.</p></Callout>
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts. Platform-grant details are discussed in the introduction call.</p></Callout>
   </SubBand>
 
@@ -302,11 +298,3 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 
   <PageEnhancements />
 </LandingLayout>
-
-<style>
-  .rc__title {
-    margin: 0 0 var(--space-md);
-    font-size: var(--fs-heading-l);
-    color: var(--secondary);
-  }
-</style>

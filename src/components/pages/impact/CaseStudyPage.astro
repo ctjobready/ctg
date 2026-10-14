@@ -133,8 +133,10 @@ const d = discoveryCta();
   <PhotoGallery id="in-the-field" tone="white" eyebrow="In the Field" title="From the Program" photos={galleryPhotos(slug).filter((p) => p.assetId !== hero?.assetId)} />
 
   <Section aria-labelledby="related-h" pad="sm">
+    <!-- WP25s: an eyebrow and a descriptive link label, so "All Case Studies" is not read as a heading of its own above the closing call to action -->
+    <p class="eyebrow">Keep Reading</p>
     <h2 class="t-heading-2xl" id="related-h">Where the Model Runs Next</h2>
-    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>All Case Studies<Icon name="arrow-right" size={16} /></a></p>
+    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>Compare the Four Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={trialLink ? { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' } : { label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />

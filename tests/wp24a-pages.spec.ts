@@ -62,7 +62,8 @@ test.describe('Investors page structure', () => {
     expect(text).not.toContain('in every program');
     expect(text).toContain('in every supported cohort');
     expect(text).toContain('Three featured case studies, each with its partner.');
-    expect(text).not.toMatch(/\bdistinguish\b/);
+    // Cycle 5 (triage-c5, Partner): the guide line reads "need to distinguish a model that is working from one that is only promised" (copy.ts EMPATHY.investors).
+    expect(text).toContain('need to distinguish a model that is working from one that is only promised');
     expect(text).toContain('Delivery grows in phases, building on government contract training scopes that range from');
     expect(text).toContain('all in emerging markets: skill training; freelance marketplaces and job sites; HR tech; and higher-ed EdTech.');
     expect(text).toContain('CodersTrust’s program results are measured, reported and open to independent evaluation.');

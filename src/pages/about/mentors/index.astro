@@ -29,12 +29,13 @@ const mentors = (await getCollection('mentors'))
   .sort((a, b) => a.name.localeCompare(b.name));
 // WP22: the cards are grouped by discipline. A mentor's discipline is the part of the role after the last comma ("Mentor, Digital Marketing" is
 // Digital Marketing); disciplines are gathered into five headings, in this order. A mentor whose discipline is not listed fails the build.
+// WP25s: Md. Hazrat Ali Nahid moved to accounting, which left "Education and Language" with one mentor (IELTS). A language mentor sits with content writing, so the
+// two form one group and no category is a band of one card.
 const DISCIPLINE_GROUPS = [
-  { title: 'Digital Marketing and Content', disciplines: ['Digital Marketing', 'Content Writing'] },
+  { title: 'Digital Marketing, Content and Language', disciplines: ['Digital Marketing', 'Content Writing', 'Education', 'IELTS'] },
   { title: 'Design and Video', disciplines: ['Graphic Design', 'Video Editing'] },
   { title: 'Web Development and AI', disciplines: ['Web Development', 'Artificial Intelligence'] },
   { title: 'Accounting and Spreadsheets', disciplines: ['Digital Accounting', 'Advanced Excel'] },
-  { title: 'Education and Language', disciplines: ['Education', 'IELTS'] },
 ];
 const disciplineOf = (role: string) => role.slice(role.lastIndexOf(',') + 1).trim();
 // WP24c: a person's role title and their field can differ. Md. Hazrat Ali Nahid is "Team Lead, Education", but his listed expertise is

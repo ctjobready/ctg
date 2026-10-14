@@ -15,7 +15,8 @@ import type { CopyBlock } from '../../../data/copy';
  */
 interface Props {
   title: string;
-  empathy: string;
+  /** The empathy line that opens the band; a page that already says it in its problem band (JobReady@Campus) leaves it out. */
+  empathy?: string;
   /** Optional history line; a page that already prints it elsewhere omits it. */
   origin?: CopyBlock;
   statIds?: string[];
@@ -33,7 +34,7 @@ const { eyebrow = 'Our Track Record', title, empathy, origin, statIds = [], meth
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} />
   <div class:list={['guide', statIds.length === 0 && 'guide--one']}>
     <div class="guide__copy" data-reveal>
-      <p class="lead">{empathy}</p>
+      {empathy && <p class="lead">{empathy}</p>}
       {origin && <CopyP block={origin} class="guide__origin" />}
       <div class="guide__auth"><slot /></div>
       {

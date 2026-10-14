@@ -31,7 +31,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED_UNIVERSITIES, SURVEY_EMPLOYMENT, VALUE_PROPOSITION } from '../../data/copy';
+import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, PROGRAM_OPTIONS, SCORECARD, SPEED_UNIVERSITIES } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
@@ -70,7 +70,7 @@ const options = [
   <HeroBand
     audience="JobReady@Campus · For Universities and Colleges"
     title="Give Your Students a Practical Route into Digital Work"
-    lead={VALUE_PROPOSITION.universities}
+    lead="JobReady@Campus runs mentored, certification-focused training in on-campus labs, in parallel with academic studies, so universities and colleges can prepare students for paid work and build placement evidence from their own students."
     cta={campus}
     artSeed="jobready-campus"
   />
@@ -121,6 +121,16 @@ const options = [
     ]}
   />
 
+  <!-- C5 (WP25s: credibility before the vision, as on Home and YouthWIDE) -->
+  <GuideSection
+    title="Universities Partner with CodersTrust"
+    origin={ORIGIN}
+    partnerGroup="academic"
+    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
+  >
+    <p data-fact="PA-05"><Fact id="PA-05" />.</p>
+  </GuideSection>
+
   <!-- C4 -->
   <FutureBand
     photos={futurePhotos('jobready-campus')}
@@ -132,17 +142,6 @@ const options = [
       { kind: 'Social', title: 'Capacity That Stays on Campus', text: 'Campus labs work as blended-learning centers, with certified local facilitators.' },
     ]}
   />
-
-  <!-- C5 -->
-  <GuideSection
-    title="Universities Partner with CodersTrust"
-    empathy={EMPATHY.universities}
-    origin={ORIGIN}
-    partnerGroup="academic"
-    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
-  >
-    <p data-fact="PA-05"><Fact id="PA-05" />.</p>
-  </GuideSection>
 
 
   <!-- C6 -->
@@ -179,7 +178,7 @@ const options = [
     title="Each Feature Maps to What Institutions Ask For"
     rows={[
       { feature: 'Industry Certifications by Track and Three Months of Milestone-Based Mentoring', means: 'each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
-      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training matches what employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
+      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'training is built around the skills employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
       { feature: 'Tracer Surveys, Documentary Evidence of Earnings and Monthly Reports', means: 'your institution has outcome data it can report.', outcome: 'Placement evidence you can report', relieves: 'No placement results to publish' },
       { feature: 'Certified Local Facilitators and Campus Labs as Blended-Learning Centers', means: 'capacity stays on campus.', outcome: 'Campus labs that serve as learning centers' },
     ]}

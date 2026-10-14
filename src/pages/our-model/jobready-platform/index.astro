@@ -86,17 +86,18 @@ const d = discoveryCta();
       </table>
     </section>
     <Callout label="What Is Live Today">
-      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer and gig-work marketplace is in pre-launch, and the adaptive learning below is planned. AI chat is live today. Adaptive learning remains on the roadmap.</p>
+      <p data-fact="IN-04">Partner portals, marketing automation, CRM and AI chat are live, and the course storefront operates. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch, and the adaptive learning below is planned. AI chat is live today. Adaptive learning remains on the roadmap.</p>
     </Callout>
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens jobready.global)</span></a></p>
   </ReportSection>
 
   <ReportSection id="why" title="Why Institutions Choose JobReady">
     <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach. Live today for institutions: partner portals, marketing automation, CRM and AI chat, plus a course storefront that operates at jobready.global.</p>
+    <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
     <div class="jr__why">
-      <div class="jr__whystat"><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
-      <div class="jr__whystat"><FactStat id="SC-04" /></div>
-      <div class="jr__whystat"><StatusTag status="Agreement" /><FactStat id="SC-06" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><StatusTag status="Agreement" /><FactStat id="SC-06" /></div>
     </div>
     <p class="jr__links">
       <a class="link" href={linkAttrs('/our-model/').href}>How the Model Works<Icon name="arrow-right" size={16} /></a>
@@ -169,6 +170,12 @@ const d = discoveryCta();
     gap: var(--space-xs);
     justify-items: start;
     align-content: start;
+  }
+  .jr__whyh {
+    margin: 0;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    color: var(--secondary);
   }
   @media (min-width: 768px) {
     .jr__why {

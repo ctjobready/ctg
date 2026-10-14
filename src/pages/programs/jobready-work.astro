@@ -18,7 +18,6 @@ import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import InShort from '../../components/pages/partners/InShort.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
-import CopyP from '../../components/pages/programs/CopyP.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
 import CostSection from '../../components/pages/programs/CostSection.astro';
@@ -31,7 +30,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../data/copy';
+import { EMPATHY, EMPLOYER_PRICING, MICRO_COMMITMENT, ORIGIN, POSITIONING, PRICING, TRIAL_SCOPE } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -64,7 +63,8 @@ const approach = [
   { title: 'Interactive Workshops', text: 'Your team learns on tasks from your own roles.' },
   { title: 'Progress Evaluation', text: 'Checked against the measures you set.' },
   { title: 'Post-Training Support', text: 'Support continues after the workshops.' },
-  { title: 'Measurable Outcomes', text: 'Results are checked against the success measures agreed before the program began.' },
+  // WP25s: step 5 is the check against the measures you set; step 7 names what is measured (the register's "measurable outcomes"), from the glance table's own wording.
+  { title: 'Measurable Outcomes', text: 'Team capability in the digital and AI tasks defined in the needs assessment.' },
 ].map((s) => ({ ...s, factIds: ['IN-10'] }));
 const approachGroups = [
   { title: 'Scope', items: approach.slice(0, 2), start: 1, cols: 2 as const },
@@ -78,7 +78,7 @@ const approachGroups = [
   <HeroBand
     audience="JobReady@Work · For Employers"
     title="Build the Digital Capabilities Your Teams Need Now"
-    lead={VALUE_PROPOSITION.employers}
+    lead="JobReady@Work builds custom AI-ready training for your team, from a needs assessment to interactive workshops, and sources job-ready talent through CodersTrust’s placement team. Pick one or both."
     cta={work}
     artSeed="jobready-work"
   />
@@ -91,7 +91,7 @@ const approachGroups = [
       'JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Pick one or both.',
       'Each program is custom-developed: a needs assessment, a customized curriculum and interactive workshops built around the tasks in your own roles.',
       'Candidates are introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
-      'Start with a pilot team. Success measures are agreed before you start, scaling up is your decision, and pricing is shared after the needs assessment.',
+      'Start with a pilot team. Success measures are agreed before you start, scaling up is your decision, and pricing is confirmed after the needs assessment.',
     ]}
     links={[
       { label: 'How It Works', href: '#mechanism' },
@@ -148,7 +148,7 @@ const approachGroups = [
     <div class="tracks" data-fact="IN-10 PA-07 IN-04 PD-03 PD-10">
       <FeatureCard icon="layers" title="Soft-Skills and Hard-Skills Tracks" text="Programs combine both, depending on the roles you are building for. Certification tracks are chosen from employer demand." />
       <FeatureCard icon="sparkles" title="AI Leadership Programs" text="Offered in partnership with AIvolve Leadership Dynamics GmbH." />
-      <FeatureCard icon="briefcase" title="Candidate Sourcing Through CodersTrust’s Placement Team" text="Job-ready candidates are introduced through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and is designed to add a self-serve hiring channel." />
+      <FeatureCard icon="briefcase" title="Candidate Sourcing Through CodersTrust’s Placement Team" text="Job-ready candidates are introduced through CodersTrust’s placement team. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch and are designed to add a self-serve hiring channel." />
     </div>
   </MechanismSection>
 
@@ -176,15 +176,12 @@ const approachGroups = [
       { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.' },
     ]}
   >
-    <p class="note note--key" data-fact="PD-02">Pricing is set per program and shared after the needs assessment.</p>
+    <p class="note note--key" data-fact="PD-02">{EMPLOYER_PRICING}</p>
   </OfferSection>
 
   <!-- C7, moved below the employer offer (review round 3): the employer journey leads with the employer facts; this is the youth-program evidence. -->
-  <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]}>
-    <div class="proof-notes">
-      <CopyP block={SURVEY_EMPLOYMENT} lead="From CodersTrust’s youth programs:" />
-    </div>
-  </ProofBand>
+  <!-- WP25s: the survey result is stated once, in the band's own one-line chart lead (a second copy of the sentence is removed) -->
+  <ProofBand title="The Evidence" eyebrow="From CodersTrust’s Youth Programs (Not Corporate Training)" headlineFact="RC-01" trialScope={TRIAL_SCOPE.work.text} statIds={['RC-02']} compact links={[{ label: 'Outcomes 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
   <!-- C12 -->
   <RiskSection
     title="Start with a Pilot Team. Decide on Evidence"
@@ -241,16 +238,6 @@ const approachGroups = [
     .tracks {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-  }
-  .proof-notes {
-    margin-top: var(--space-lg);
-    display: grid;
-    gap: var(--space-md);
-    max-width: 56rem;
-  }
-  .proof-notes :global(p) {
-    margin: 0;
-    color: var(--ctx-text);
   }
   .updated {
     margin: 0 0 var(--space-md);

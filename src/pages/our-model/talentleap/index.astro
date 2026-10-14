@@ -48,9 +48,15 @@ const glance = [
 ];
 const faqIds = ['Q14', 'Q10', 'Q3', 'Q4', 'Q12', 'Q13'];
 // WP24c: the outcomes answer names the supported TalentLEAP cohort, so it reads as scoped (a plan agreed in the program scope), not as a promise for every cohort
+// WP25s: the trial's evaluator is spelled out once on this page, where the FAQ first names it (the register's source name for BIGD).
 const faq = faqItems('foundations', faqIds).map((f) =>
-  f.q === 'How Do You Prove Outcomes?' ? { ...f, a: f.a.replace('For every cohort, as agreed in the program scope, we plan', 'For every supported TalentLEAP cohort, as agreed in the program scope, we plan') } : f,
+  f.q === 'How Do You Prove Outcomes?'
+    ? { ...f, a: f.a.replace('For every cohort, as agreed in the program scope, we plan', 'For every supported TalentLEAP cohort, as agreed in the program scope, we plan') }
+    : f.q === 'Is There Independent Evidence?'
+      ? { ...f, a: f.a.replace('by BIGD (BRAC University)', 'by the BRAC Institute of Governance and Development (BIGD) at BRAC University') }
+      : f,
 );
+if (!faq.some((f) => f.a.includes('BRAC Institute of Governance and Development (BIGD)'))) throw new Error('TalentLEAP: the Independent Evidence FAQ no longer names BIGD; update the expansion');
 const jsonLd = [
   articleNode({ path, headline: 'What Is TalentLEAP? CodersTrust’s Competency-Based Talent Development Model', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),
   describedList('How TalentLEAP Works', steps.map((s) => ({ name: s.name, description: s.text })), `${path}#steps`),

@@ -14,6 +14,8 @@ interface Props {
   positioning?: { text: string; facts: string[] };
   blocks?: { label: string; title: string; text?: string; icon?: string; factId?: string }[];
   link?: { label: string; href: string };
+  /** More links on the same line as `link` (Foundations: one jump link per funding route). */
+  moreLinks?: { label: string; href: string }[];
   ribbon?: string[];
   id?: string;
 }
@@ -28,6 +30,7 @@ const {
     { label: 'Where They Work', title: 'Local, Remote and Global Work', text: 'Placement support and outcome tracking after each course.', icon: 'globe' },
   ],
   link,
+  moreLinks = [],
   ribbon = ['Learn', 'Earn', 'Prosper'],
   id = 'mechanism',
 } = Astro.props;
@@ -41,7 +44,12 @@ const {
   <p class="mech__ribbon" data-reveal>
     {ribbon.map((r, i) => (<><span>{r}.</span>{i < ribbon.length - 1 && <Icon name="arrow-right" size={20} />}</>))}
   </p>
-  {link && <p class="mech__link"><a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a></p>}
+  {(link || moreLinks.length > 0) && (
+    <p class="mech__link">
+      {moreLinks.map((l) => <a class="link" href={linkAttrs(l.href).href}>{l.label}<Icon name="arrow-right" size={16} /></a>)}
+      {link && <a class="link" href={linkAttrs(link.href).href}>{link.label}<Icon name="arrow-right" size={16} /></a>}
+    </p>
+  )}
 </Section>
 
 <style>
@@ -64,5 +72,8 @@ const {
   }
   .mech__link {
     margin: var(--space-md) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
   }
 </style>

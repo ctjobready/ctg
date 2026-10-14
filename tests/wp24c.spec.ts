@@ -102,7 +102,8 @@ test.describe('Other program pages', () => {
   test('JobReady@Work: the final CTA reads "Plan Your First Team Program" and the broader evidence is one link', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     await expect(page.locator('#cta .btn--primary')).toHaveText(/Plan Your First Team Program/);
-    await expect(page.locator('main')).toContainText('Results are checked against the success measures agreed before the program began.');
+    // WP25s: step 7 (Measurable Outcomes) names what is measured; "checked against the measures you set" stays with step 5 (Progress Evaluation).
+    await expect(page.locator('main')).toContainText('Team capability in the digital and AI tasks defined in the needs assessment.');
   });
 
   test('SuperKids: the agreement disclaimer is not repeated in the glance table or the partners band, and the gallery shows four photos first', async ({ page }) => {
@@ -137,14 +138,15 @@ test.describe('NU Postgraduate Diploma', () => {
 });
 
 test.describe('Instructors and Mentors (/about/mentors/)', () => {
-  const categories = ['Digital Marketing and Content', 'Design and Video', 'Web Development and AI', 'Accounting and Spreadsheets', 'Education and Language'];
+  // WP25s: the single IELTS mentor joined content writing, so no category is a band of one card.
+  const categories = ['Digital Marketing, Content and Language', 'Design and Video', 'Web Development and AI', 'Accounting and Spreadsheets'];
 
   test('each category is an H2 and each person an H3, with Md. Hazrat Ali Nahid under accounting', async ({ page }) => {
     await open(page, 'about/mentors/');
     for (const c of categories) await expect(page.getByRole('heading', { level: 2, name: c })).toBeVisible();
     const group = (name: string) => page.locator('.mn-group', { has: page.getByRole('heading', { level: 2, name }) });
     await expect(group('Accounting and Spreadsheets').getByRole('heading', { level: 3, name: 'Md. Hazrat Ali Nahid' })).toHaveCount(1);
-    await expect(group('Education and Language').getByRole('heading', { level: 3, name: 'Md. Hazrat Ali Nahid' })).toHaveCount(0);
+    await expect(group('Digital Marketing, Content and Language').getByRole('heading', { level: 3, name: 'Md. Hazrat Ali Nahid' })).toHaveCount(0);
     // people are H3 only; no category is an H3
     const h3s = await page.locator('#mentors h3').allInnerTexts();
     for (const c of categories) expect(h3s).not.toContain(c);

@@ -9,6 +9,7 @@ import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
+import InShort from '../../components/pages/partners/InShort.astro';
 import { fact } from '../../data/facts';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
@@ -20,6 +21,8 @@ import { linkAttrs } from '../../lib/url';
 const path = '/our-model/';
 const lead = 'One integrated path: assessment, certification-focused training, three months of milestone-based mentoring, placement support and tracked outcomes.';
 const description = desc(lead);
+// WP25s: the answer under the H1 is the lead above, scoped (as the path section below says) to every supported cohort.
+const answer = `${lead.replace(/\.$/, '')}, agreed for each supported cohort.`;
 // "What Is CodersTrust?" is followed by the problem in one line and the strongest proof, both restated from register facts (PX-01, RC-02).
 const proof = `In a randomized trial of CodersTrust’s predecessor program, women offered a place were ${fact('RC-02').stat!.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points')} more likely to be employed.`;
 // Each card states its register fact (PD-xx) in plain sentences that do not repeat the card's own title. The wording follows the
@@ -39,12 +42,28 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
-  <Hero variant="inner" eyebrow="Our Model" title="How the CodersTrust Model Works" lead={lead} artSeed="our-model-hub">
+  <Hero variant="inner" eyebrow="Our Model" title="How the CodersTrust Model Works" lead={answer} artSeed="our-model-hub">
     <Fragment slot="actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={linkAttrs('/impact/').href}>See the Evidence</a>
     </Fragment>
   </Hero>
+
+  <!-- WP25s: In Short, built only from sentences this page already states. BIGD is spelled out here, where the page first names it. -->
+  <InShort
+    bullets={[
+      'For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. JobReady@Work, the NU Postgraduate Diploma and SuperKids have their own delivery structures.',
+      'Every supported cohort agrees an outcome-tracking plan before delivery begins, and completion, competency and external-exam results are reported separately.',
+      'The evidence is a randomized trial of a predecessor program by the BRAC Institute of Governance and Development (BIGD), kept apart from the survey of completers.',
+    ]}
+    links={[
+      { label: 'The Path', href: '#path' },
+      { label: 'Delivery', href: '#delivery' },
+      { label: 'Evidence', href: '#evidence' },
+      { label: 'Questions', href: '#faq' },
+    ]}
+    contracting={false}
+  />
 
   <DefinitionBlock>
     <p data-fact="PX-01">An estimated {fact('PX-01').stat!.value} educated young people aged 15–24 are not in employment, education or training across South Asia, the Middle East and North Africa, and Sub-Saharan Africa.</p>
@@ -60,7 +79,7 @@ const d = discoveryCta();
     <p class="om__link"><a class="link" href={linkAttrs('/our-model/talentleap/').href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
-  <Section aria-labelledby="delivery-h">
+  <Section id="delivery" aria-labelledby="delivery-h">
     <SectionHeader id="delivery-h" eyebrow="Delivery Model" title="How a Program Is Delivered" lead="The design choices that make the path work for learners who start from different places." />
     <h3 class="om__group t-heading-xl">Supporting Different Starting Points</h3>
     <div class="grid-cards">

@@ -31,8 +31,9 @@ const sc02Stat = sc02.stat!;
 const trial = RCT_HEADLINE.text.replace('Their monthly income was an estimated 41% higher than the control group’s (about +$27 a month).', 'Women offered a place had an estimated 41% higher monthly income than the control group (about +$27 a month).');
 if (trial === RCT_HEADLINE.text) throw new Error('About: RC-01 headline wording changed; update the trial line');
 
-const sdgLine = endSentence(fact('ID-09').text.replace('aligns with seven SDGs', 'contributes to seven SDGs'));
-if (sdgLine === fact('ID-09').text || !/Quality Education, Gender Equality, and Decent Work and Economic Growth/.test(sdgLine)) throw new Error('About: ID-09 wording changed; update the SDG line');
+// WP25s: the registered wording, "aligns with seven SDGs" (an earlier "contributes to" read as a claim of effect).
+const sdgLine = endSentence(fact('ID-09').text);
+if (!/aligns with seven SDGs/.test(sdgLine) || !/Quality Education, Gender Equality, and Decent Work and Economic Growth/.test(sdgLine)) throw new Error('About: ID-09 wording changed; update the SDG line');
 
 const principles = [
   {
@@ -47,6 +48,8 @@ const principles = [
     title: 'Inclusion by Design',
     text: 'Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
     factId: 'PD-14',
+    // WP25s: the register's PD-14 sentence has no verb ("... interview guide selection and placement ..."); the card states it with one, word for word otherwise.
+    factText: 'Selection and placement into a career or foundation track use a readiness assessment, a written test and an interview guide. A small number of applicants may not be selected, and the reasons are reported.',
     link: { label: 'How Our Model Works', href: '/our-model/' },
   },
   {
@@ -154,7 +157,7 @@ const jsonLd = [
               <span class="principle__icon" aria-hidden="true"><Icon name={p.icon} size={24} /></span>
               <h3 class="card__title">{p.title}</h3>
               <p class="card__text">{p.text}</p>
-              {p.factId && <p class="principle__fact"><Fact id={p.factId} /></p>}
+              {p.factId && <p class="principle__fact" data-fact={p.factText ? p.factId : undefined}>{p.factText ?? <Fact id={p.factId} />}</p>}
               <a class="link principle__link" href={linkAttrs(p.link.href).href}>{p.link.label}<Icon name="arrow-right" size={16} /></a>
             </div>
           </article>

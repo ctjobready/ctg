@@ -28,7 +28,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'wsdfm-women-freelancers',
     path: `${base}wsdfm-women-freelancers/`,
     name: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)',
-    heading: 'WSDFM: Evaluated by a Randomized Trial',
+    heading: 'WSDFM: A Predecessor Program Evaluated by a Randomized Trial',
     program: 'Commissioned by Porticus',
     partner: 'Independently evaluated by BIGD',
     factId: 'PR-01',

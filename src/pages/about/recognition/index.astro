@@ -64,6 +64,10 @@ const coverage = press
   .filter((p) => PA09.includes(p.outlet))
   .sort((a, b) => a.date.localeCompare(b.date))
   .map((p) => ({ ...p, year: p.date.slice(0, 4) }));
+// WP25s: the World Bank item names a program only by its headline; one clause says it is CodersTrust's Women in Online Work program in Kosovo (PR-02: with the World Bank Group), with a link to the case study.
+const CONTEXT: Record<string, { text: string; href: string; label: string; fact: string }> = {
+  'World Bank': { text: 'About CodersTrust’s Women in Online Work program in Kosovo, with the World Bank Group.', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Read the Case Study', fact: 'PR-02' },
+};
 
 // Forums and events: only those documented in a dated news post. Political posts (`political` front matter) stay under /news/.
 const FORUMS = [
@@ -228,6 +232,11 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
               <h3 class="rec-press__headline">
                 {c.url ? <a class="link" href={linkAttrs(c.url).href} rel={linkAttrs(c.url).rel}>{c.headline}<span class="sr-only"> (opens {new URL(c.url).hostname.replace('www.', '')})</span></a> : c.headline}
               </h3>
+              {CONTEXT[c.outlet] && (
+                <p class="card__meta rec-press__context" data-fact={CONTEXT[c.outlet].fact}>
+                  {CONTEXT[c.outlet].text} <a class="link" href={url(CONTEXT[c.outlet].href)}>{CONTEXT[c.outlet].label}<Icon name="arrow-right" size={16} /></a>
+                </p>
+              )}
             </div>
           </li>
         ))

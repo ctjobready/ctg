@@ -269,6 +269,9 @@ export const PRICING: CopyBlock = {
   facts: ['PD-02', 'PD-02a'],
 };
 
+/** One pricing sentence for the two employer pages and their FAQ answer (WP25s): the budget comes in the discovery session and is confirmed after the needs assessment. */
+export const EMPLOYER_PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
+
 export const SPEED: CopyBlock = {
   text: 'For grant-funded pilots: about three weeks from first conversation to agreement, and the first cohort in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline.',
   facts: ['PD-04'],
@@ -281,13 +284,16 @@ export const SPEED_UNIVERSITIES: CopyBlock = {
 };
 
 export const SURVEY_EMPLOYMENT: CopyBlock = {
-  text: 'Among surveyed completers, employment rose from 47.4% before training to 77.9% at the October 2026 survey.',
+  // WP25s: two readings, not a rise (a rise reads as the training's effect, which a survey of completers does not show).
+  text: 'Among surveyed completers, employment was 47.4% before training and 77.9% at the October 2026 survey.',
   facts: ['OC-01'],
 };
 
 /**
  * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed
- * completers), each labeled as what it is. The figures are read from RC-02 and OC-01, never typed.
+ * completers), each labeled as what it is. The figures are read from RC-02 and OC-01, never typed. WP25s: the survey is stated as two
+ * readings ("was … before training and … at the survey"), not as a rise, which reads as cause; the sentence on what the trial shows and the
+ * survey describes is the lead under the H1 (src/pages/impact/index.astro), so it is not repeated here.
  */
 function impactAnswer(): CopyBlock {
   const rc = fact('RC-02').stat;
@@ -295,7 +301,7 @@ function impactAnswer(): CopyBlock {
   if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error('IMPACT_ANSWER: RC-02 or OC-01 no longer has the expected stat');
   const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place were ${points} more likely to be employed. Among surveyed completers, employment rose from ${oc.from} before training to ${oc.value} at the October 2026 survey. The trial shows cause for one program; the survey describes what respondents report.`,
+    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found that women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${oc.from} before training and ${oc.value} at the October 2026 survey.`,
     facts: ['RC-02', 'OC-01'],
   };
 }
@@ -332,7 +338,7 @@ export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 /** "How it works in three steps" (C8d) for funded programs. */
 export const STEPS = [
   { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
-  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside, toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
+  { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
   { title: 'Place and Report', text: 'Placement support, monthly reports and tracer surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];

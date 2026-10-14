@@ -35,7 +35,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, factPart, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT, POSITIONING, SURVEY_EMPLOYMENT, TRIAL_SCOPE, VALUE_PROPOSITION } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -89,7 +89,7 @@ const steps = [
   <InShort
     bullets={[
       'Training is custom-developed for your roles, from a needs assessment to interactive workshops.',
-      'Job-ready talent is introduced through CodersTrust’s placement team, scoped against the experience and credentials available.',
+      'Job-ready talent is introduced through CodersTrust’s placement team.',
       'CodersTrust is an AWS Authorized Training Partner, with AI leadership programs offered in partnership with AIvolve.',
       'Start with a pilot team; success measures are agreed before you start.',
     ]}
@@ -152,7 +152,7 @@ const steps = [
     lead="Illustrative, not case studies."
     vignettes={[
       { kind: 'Functional', title: 'A Team Fluent in AI Workflows', text: 'Your team applies AI tools in daily work.' },
-      { kind: 'Emotional', title: 'Candidates Scoped to the Available Candidate Pool', text: 'Candidates are scoped against the experience and credentials available for each role; those who pass an exam hold the industry certification.' },
+      { kind: 'Emotional', title: 'Certification for Candidates Who Pass the Exam', text: 'Candidates who pass the exam hold the industry certification for their track.' },
       { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent is introduced through CodersTrust’s placement team.' },
     ]}
   />
@@ -181,43 +181,11 @@ const steps = [
   />
   <SubBand>
     <Callout eyebrow="Talent">
-      <p data-fact="IN-04">Job-ready candidates are introduced through CodersTrust’s placement team. The employer and gig-work (Earn) marketplace is in pre-launch and will add a self-serve hiring channel.</p>
+      <p data-fact="IN-04">Job-ready candidates are introduced through CodersTrust’s placement team. The employer marketplace and the gig-work (Earn) marketplace are in pre-launch and will add a self-serve hiring channel.</p>
     </Callout>
   </SubBand>
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
-    title="What You Get, and What It Means for Your Business"
-    rows={[
-      {
-        feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
-        means: 'access to candidates from CodersTrust’s placement team, scoped against the experience and credentials available for each role.',
-        outcome: 'Job-ready candidates for your roles',
-        relieves: 'You cannot find the digital talent you need',
-      },
-      {
-        feature: 'An AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment',
-        means: 'your training includes AI content agreed before enrollment.',
-        outcome: 'People ready to work with AI tools',
-        relieves: 'Hiring alone does not close the gap',
-      },
-      {
-        feature: 'JobReady@Work Customized Curriculum and Interactive Workshops',
-        means: 'your team learns on tasks from your own roles.',
-        outcome: 'A team trained on its own tasks',
-        relieves: 'Your teams need upskilling for AI workflows',
-      },
-    ]}
-  />
-
-  <!-- C9 · Objections -->
-  <FAQBand
-    audience="employers"
-    ids={FAQ_IDS}
-    title="Questions Employers Ask"
-  />
-
-  <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. -->
+  <!-- C7 · Proof: the employer delivery record first, then the youth trial, labelled as such. WP25s: proof comes before the features table (C8), as on every other audience page. -->
   <PairedEvidence
     title="The Delivery Record for Employers"
     items={[
@@ -255,17 +223,50 @@ const steps = [
     />
   </ProofBand>
 
+  <!-- C8 · Features to benefits -->
+  <FeaturesTable
+    title="What You Get, and What It Means for Your Business"
+    rows={[
+      {
+        feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
+        means: 'access to candidates from CodersTrust’s placement team for your roles.',
+        outcome: 'Job-ready candidates for your roles',
+        relieves: 'You cannot find the digital talent you need',
+      },
+      {
+        feature: 'An AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment',
+        means: 'your training includes AI content agreed before enrollment.',
+        outcome: 'People ready to work with AI tools',
+        relieves: 'Hiring alone does not close the gap',
+      },
+      {
+        feature: 'JobReady@Work Customized Curriculum and Interactive Workshops',
+        means: 'your team learns on tasks from your own roles.',
+        outcome: 'A team trained on its own tasks',
+        relieves: 'Your teams need upskilling for AI workflows',
+      },
+    ]}
+  />
+
+  <!-- C9 · Objections -->
+  <FAQBand
+    audience="employers"
+    ids={FAQ_IDS}
+    title="Questions Employers Ask"
+  />
+
   <!-- C11 · Offer: the two in-page routes (Train Your Team, Hire Talent) -->
   <OfferCards
     title="Choose How to Work with Us"
+    lead={EMPLOYER_PRICING}
     cards={[
       { id: 'train-your-team', eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
-      { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Job-ready candidates introduced through CodersTrust’s placement team. Requests are scoped against the experience and credentials available in the candidate pool.', facts: ['IN-04'] },
+      { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.', facts: ['IN-04'] },
     ]}
   />
 
   <!-- C12 · Risk reversal (immediately before C13) -->
-  <DueDiligenceView compact id="due-diligence" />
+  <DueDiligenceView compact audience="employers" id="due-diligence" />
   <RiskReversalBand
     title="Start with a Pilot Team. Decide on Evidence"
     lead="Success measures are agreed before you start (completion, certification and the role-specific skills you prioritize) and checked in the progress evaluation."

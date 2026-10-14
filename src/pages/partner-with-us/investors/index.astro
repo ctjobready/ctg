@@ -13,6 +13,7 @@ import Section from '../../../components/ui/Section.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import { caseStudyItems } from '../../../components/pages/home/caseStudies';
+import InShort from '../../../components/pages/partners/InShort.astro';
 import InvestorDefinition from '../../../components/pages/investors/InvestorDefinition.astro';
 import InvestorThesis from '../../../components/pages/investors/InvestorThesis.astro';
 import InvestorVision from '../../../components/pages/investors/InvestorVision.astro';
@@ -35,13 +36,13 @@ const title = 'Investors';
 const description = 'For impact investors: back the platform moving emerging-market youth into paid work. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
-const FAQ_IDS = ['Q11', 'Q5', 'Q2', 'Q4'];
+const FAQ_IDS = ['Q11', 'Q5', 'Q2-investor', 'Q4'];
 const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 const featureRows = [
-  { feature: 'Employer and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'The platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
+  { feature: 'Employer Marketplace and Gig-Work (Earn) Marketplace — Pre-Launch', means: 'The platform is designed to connect youth to work and supply employers with job-ready talent.', outcome: 'Until it launches, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.', relieves: 'Youth cannot find work; employers cannot find skills' },
   { feature: 'TalentLEAP competency units: Competent is the first level, with Proficient and Expert planned; mentoring, certification exam preparation and placement support in every supported cohort', means: 'Learners are guided from skills to income rather than left with a certificate.', outcome: 'Career paths, with higher levels planned', relieves: 'Online learning sells content, not earnings' },
-  { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'Courses keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
+  { feature: 'AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment, and Tracks Chosen from Employer Demand', means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.', outcome: 'Curriculum that follows demand', relieves: 'AI is raising the bar for entry work' },
   { feature: 'AI-Driven Adaptive Learning — on the Roadmap', means: 'The platform is designed to personalize each learner’s path.', outcome: 'Roadmap; not yet live', relieves: 'Learners need different support as they progress' },
   { feature: 'Partner Portals, Marketing Automation, CRM and AI Chat — Live', means: 'Institutions get a digital delivery platform.', outcome: 'Distribution through institutions' },
 ];
@@ -78,6 +79,25 @@ const mechanismBlocks = [
       lead={VALUE_PROPOSITION.investors}
       cta={{ label: investor.label, href: investor.href }}
       artSeed="investors"
+    />
+  </Tone>
+
+  <!-- WP25s: In Short, built only from sentences this page already states. BIGD is spelled out here, where the page first names it. -->
+  <Tone cmf="IN-SHORT">
+    <InShort
+      bullets={[
+        'JobReady is an AI-native digital education and employment platform, rolling out in stages on top of CodersTrust’s training and mentoring programs.',
+        'The outcome evidence is a randomized trial of a predecessor program by the BRAC Institute of Governance and Development (BIGD), kept apart from survey results among surveyed completers.',
+        'Status is stated exactly: what is live, what is pre-launch and what is on the roadmap. Request an introduction call; the deck follows under NDA.',
+      ]}
+      links={[
+        { label: 'The Thesis', href: '#thesis' },
+        { label: 'The Model', href: '#mechanism' },
+        { label: 'Evidence', href: '#proof-band' },
+        { label: 'What JobReady Does', href: '#features' },
+        { label: 'Offer', href: '#offer' },
+      ]}
+      contracting={false}
     />
   </Tone>
 

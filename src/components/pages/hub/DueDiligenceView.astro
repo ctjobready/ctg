@@ -10,21 +10,38 @@ import { TRACER_MONTHS } from '../partners/partners';
  * "Due Diligence in One View" (WP24a, Benchmark): what a funder, ministry or procurement team asks first, each with the page that answers it.
  * Every item restates an arrangement the register already states (ID-07, PD-13, PD-08, PD-09, PD-12, RC-01); nothing new is promised. The hub shows
  * the full band; every audience page shows the compact one (four short rows, no icons) so a diligence reader finds the same four answers on the page they landed on.
+ *
+ * WP25s: the wording follows the page's audience. `funders` (the hub and the funder, development-partner and government pages) uses the cohort-reporting
+ * set above. `partners` (universities, local partners) says "the contracting party" where the register says "the funder", because the reader is the
+ * contracting party. `employers` swaps the two youth-cohort rows (tracers and cohort safeguarding) for what the JobReady@Work offer itself states:
+ * the needs assessment with success measures agreed before the start, and the progress evaluation against them. No employer-team data-protection
+ * terms are registered, so none are stated here.
  */
 interface Props {
   /** Compact form for the audience pages: a four-row list with a one-line lead. */
   compact?: boolean;
   tone?: 'white' | 'airy' | 'ice';
   id?: string;
+  audience?: 'funders' | 'partners' | 'employers';
 }
-const { compact = false, tone = 'ice', id = 'due-diligence' } = Astro.props;
+const { compact = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
 const diligence = cta('diligence');
-const items = [
-  { icon: 'building-2', title: 'Contracting Entities', text: 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and the funder’s requirements.', href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' },
+const entities = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and';
+const contracting = { icon: 'building-2', title: 'Contracting Entities', text: `${entities} the ${audience === 'funders' ? 'funder' : 'contracting party'}’s requirements.`, href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' };
+const independent = { icon: 'search-check', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.', href: '/impact/independent-evaluation/', link: 'Independent Evaluation', ids: 'PD-08 RC-01' };
+const funderItems = [
+  contracting,
   { icon: 'file-check', title: 'Monthly Reports and Tracers', text: `Planned for every cohort, as agreed in the program scope: tracers at ${TRACER_MONTHS} and monthly reports.`, href: '/partner-with-us/#review-cycle', link: 'What the Reports Cover', ids: 'PD-08 PD-09' },
-  { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records, grievance handling and referral pathways are agreed and documented before enrollment.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
-  { icon: 'search-check', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.', href: '/impact/independent-evaluation/', link: 'Independent Evaluation', ids: 'PD-08 RC-01' },
+  { icon: 'shield', title: 'Safeguarding Agreed per Program', text: 'Consent, protected records and grievance handling are specified for each program.', href: '/about/governance/#safeguarding', link: 'How People Are Protected', ids: 'PD-12' },
+  independent,
 ];
+const employerItems = [
+  contracting,
+  { icon: 'clipboard-check', title: 'Needs Assessment First', text: 'A needs assessment scopes the skills and team size, and success measures are agreed before you start.', href: '/programs/jobready-work/#mechanism', link: 'How a Program Is Built', ids: 'IN-10' },
+  { icon: 'chart-bar', title: 'Progress Evaluation', text: 'A progress evaluation checks results against the measures you set, as agreed in the program scope.', href: '/programs/jobready-work/#next-steps', link: 'What Happens Next', ids: 'IN-10' },
+  independent,
+];
+const items = audience === 'employers' ? employerItems : funderItems;
 ---
 
 <Section id={id} tone={tone} pad={compact ? 'sm' : undefined} aria-labelledby={`${id}-h`}>
