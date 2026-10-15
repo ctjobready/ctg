@@ -57,14 +57,13 @@ test.describe('Home: "What Your Partnership Includes" is three short cards, not 
     }
   });
 
-  // WP39 (cycle-16 review): the audience and program pages state their features as three short cards too (tests/wp39.spec.ts holds them); only Investors keeps the table, as a status table
-  test('Home carries none of the matrix labels; Investors keeps its status table, the only table left', async ({ page }) => {
-    await open(page, '');
-    expect(compact(await page.locator('#features').textContent())).not.toMatch(/Funder Concern Addressed|What Is Included|Practical Benefit|Added Benefit/);
-    await expect(page.locator('#features .fc__card')).toHaveCount(0);
-    await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('#features').textContent())).toContain('What Is Included');
-    expect(await page.locator('#features .fc__card').count()).toBeGreaterThan(0);
+  // WP39 and WP40 (cycle-16 and cycle-17 reviews): the audience and program pages and Investors state their features as three short cards too (tests/wp39.spec.ts and tests/wp40.spec.ts hold them)
+  test('Home and Investors carry none of the matrix labels', async ({ page }) => {
+    for (const route of ['', 'partner-with-us/investors/']) {
+      await open(page, route);
+      expect(compact(await page.locator('#features').textContent()), route || 'home').not.toMatch(/Concern Addressed|What Is Included|Practical Benefit|Added Benefit/);
+      await expect(page.locator('#features .fc__card'), route || 'home').toHaveCount(0);
+    }
   });
 
   test('the band keeps its id and its place (after Recognition, before the questions) and has room under the cards', async ({ page }) => {
@@ -179,7 +178,8 @@ test.describe('Universities: the evidence strip, the National University heading
 
 test.describe('the three funder pains that had a heading and no line now have one', () => {
   const LINES: [string, string, string][] = [
-    ['partner-with-us/foundations/', 'Scalable, Accountable Implementers Are Hard to Find', 'Implementers who can absorb a large grant and still report monthly outcomes are rare.'],
+    // WP40 (cycle-17 review): the third Foundations pain is about accountability keeping pace with scale, not about how rare other implementers are
+    ['partner-with-us/foundations/', 'Accountability Must Keep Pace with Scale', 'You need monthly outcome reports as delivery expands.'],
     ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Is Thin', 'Trainers and localized curricula are rarely ready at national scale.'],
     ['partner-with-us/universities/', 'Institutions Lack Placement Results They Can Publish', 'Placement data that would satisfy a board or ministry is rarely collected.'],
   ];

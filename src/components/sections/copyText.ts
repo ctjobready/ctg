@@ -4,11 +4,11 @@
 import { fact } from '../../data/facts';
 
 /**
- * Claim lines for the C3 "cost of waiting" blocks. Each restates only what its register fact (shown directly under it as the DATA line)
- * supports, with the scope in the sentence, so a card heading never generalizes past the evidence.
+ * Claim lines for the C3 "cost of waiting" blocks. Each is a short heading over its register fact, which the card shows directly under it as the DATA line and which carries the scope, the figure and the study in full
+ * (WP40, cycle-17 review: the two research headings were whole sentences that the data line then said again), so the heading names the topic and the line beneath it is what the card claims.
  */
 /** PX-06: the freelancing-platform postings result. */
-export const CLAIM_PX06 = 'On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT’s Release';
+export const CLAIM_PX06 = 'AI Is Changing Freelance Demand';
 /**
  * PX-06 states two headline findings of one study in one sentence ("... fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% ..."). A card that has room for one reads the first finding alone
  * (WP38, cycle-15 review: Home's cost-of-waiting card), in the register's own words and figures: the platform, the postings, the 21% and the eight-month window. The 17% image-creation finding stays in PX-06 for the pages that print it whole.
@@ -19,7 +19,7 @@ export function freelancePostingsFinding(): string {
   return `On one major freelancing platform, ${m[2]} postings fell ${m[3]} relative to manual-intensive jobs within ${m[1]} of ChatGPT’s release.`;
 }
 /** RC-06: the review of vocational-training trials. */
-export const CLAIM_RC06 = 'A Review of Nine Trials Found Only Three with Significant Employment Impacts';
+export const CLAIM_RC06 = 'Training Does Not Always Lead to Employment';
 /** PX-11: coastal-district out-migration (measured for one district, census 2001–2011; the perfect tense keeps the heading from reading as today's rate, and it claims no cause). */
 export const CLAIM_PX11 = 'Climate-Exposed Coastal Districts Have Been Losing Their Young People';
 

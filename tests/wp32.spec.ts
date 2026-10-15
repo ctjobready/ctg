@@ -188,9 +188,10 @@ test.describe('the follow-up survey schedule', () => {
 });
 
 test.describe('benefit lines start with a capital letter', () => {
-  // WP38 and WP39 (cycle-15 and cycle-16 reviews): Home and every audience and program page state their features as three short cards (IncludesBand), not concern / inclusion / benefit rows, so they have no .fc__means lines;
-  // their card sentences are held to the same rule below. Investors keeps the table (a status table), so its benefit lines are held here.
+  // WP38, WP39 and WP40 (cycle-15, cycle-16 and cycle-17 reviews): Home, every audience and program page and Investors state their features as three short cards (IncludesBand), not concern / inclusion / benefit rows,
+  // so they have no .fc__means lines; their card sentences are held to the rule below.
   const CARD_ROUTES = [
+    'partner-with-us/investors/',
     'partner-with-us/development-partners/',
     'partner-with-us/governments/',
     'partner-with-us/foundations/',
@@ -200,13 +201,6 @@ test.describe('benefit lines start with a capital letter', () => {
     'programs/youthwide/',
     'programs/jobready-campus/',
   ];
-  test('every "Practical Benefit" explanation (.fc__means) on Investors opens with a capital letter or a figure', async ({ page }) => {
-    await open(page, 'partner-with-us/investors/');
-    const lines = await texts(page, '#features .fc__means');
-    expect(lines.length, 'Investors has benefit lines').toBeGreaterThan(0);
-    for (const l of lines) expect(l, `Investors: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
-  });
-
   test('every card sentence on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
     for (const route of CARD_ROUTES) {
       await open(page, route);

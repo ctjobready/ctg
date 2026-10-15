@@ -10,6 +10,7 @@ import { fact } from '../../../data/facts';
  * canonical fact wording in the same sentence, for context facts that are not Bangladesh figures. The global
  * context facts (PX-05, PX-07, PX-08) already open with "Globally" in the register, so the prefix is only added
  * to a sentence that does not name its scope yet.
+ * WP40 (cycle-17 review): the closing transition line ("It doesn’t have to be this way.") is gone; the band ends with its cards.
  */
 interface Block {
   claim: string;
@@ -21,10 +22,9 @@ interface Props {
   title: string;
   lead?: string;
   blocks: Block[];
-  transition?: string;
   id?: string;
 }
-const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
+const { title, lead, blocks, id = 'cost' } = Astro.props;
 const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : blocks.length === 4 ? 'grid-cards grid-cards--4' : 'grid-cards';
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(fact(b.factId).text);
@@ -51,7 +51,6 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
       ))
     }
   </div>
-  {transition && <p class="cost__transition" data-reveal>{transition}</p>}
 </Section>
 
 <style>
@@ -74,13 +73,5 @@ const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--on-primary-container);
-  }
-  .cost__transition {
-    margin: var(--space-lg) 0 0;
-    font-size: var(--fs-heading-xl);
-    line-height: var(--lh-heading-xl);
-    font-weight: var(--fw-bold);
-    color: var(--secondary);
-    letter-spacing: -0.5px;
   }
 </style>

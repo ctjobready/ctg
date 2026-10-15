@@ -221,12 +221,14 @@ test.describe('the positioning statements share one plain closing', () => {
   ];
   // WP39 (cycle-16 review): Investors carries no statement (it restated the hero and returned to cohort language; scripts/check-facts.mjs exempts that one page, tests/wp39.spec.ts holds the absence)
   // WP36 (cycle-13 review): YouthWIDE's hero and glance already say who the program is for and where it runs, so its statement is the two shared sentences alone, with the program as the subject
-  // (scripts/check-facts.mjs declares it whole for that page); every other page keeps its audience sentence and the shared closing
+  // (scripts/check-facts.mjs declares it whole for that page); WP40 (cycle-17 review): Local Partners' statement is the two sentences that divide the work (declared whole as well); every other page keeps its audience
+  // sentence and the shared closing
   const WHOLE: Record<string, string> = {
     'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+    'partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
   };
   for (const route of PAGES) {
-    test(`${route}: ${WHOLE[route] ? 'the statement is the two shared sentences with the program as the subject' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {
+    test(`${route}: ${WHOLE[route] ? 'the statement is the two sentences declared for this page' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {
       await open(page, route);
       const statement = compact(await page.locator('#mechanism .pos__text').textContent());
       if (WHOLE[route]) {

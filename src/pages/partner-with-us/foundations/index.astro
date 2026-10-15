@@ -13,6 +13,9 @@
  * WP37 (cycle-14 review): the Funding Route 2 passage under the offer cards no longer retells the platform and its live and pre-launch list (the comparison above it has them); it says what a platform grant
  * supports in one sentence and links the platform-grant inquiry.
  * WP39 (cycle-16 review): "What Your Cohort Grant Gets" is three short cards (IncludesBand), not the funder concern / what is included / practical benefit matrix.
+ * WP40 (cycle-17 review): the third pain is about accountability keeping pace with scale (it read as a swipe at other implementers); the two links under "Two Ways to Fund the Path" are "Explore YouthWIDE Delivery" and
+ * "Explore JobReady’s Rollout", one for each route, in place of "See Funding Route 1 / 2" and the platform link beside them; "Reporting and Review" says what the reports and reviews do; the closing
+ * "It doesn’t have to be this way." line of the cost band is gone.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -105,8 +108,8 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
       pains={[
         { q: 'Grants buy training hours, but rarely earnings', text: 'Attendance is easy to count; a change in income is harder to show.' },
         { q: 'Independent evidence is hard to find', text: 'Independent evidence on youth-employment programs is thin.' },
-        // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact.
-        { q: 'Scalable, accountable implementers are hard to find', text: 'Implementers who can absorb a large grant and still report monthly outcomes are rare.' },
+        // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
+        { q: 'Accountability must keep pace with scale', text: 'You need monthly outcome reports as delivery expands.' },
       ]}
     />
   </ProblemBand>
@@ -115,7 +118,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <div class="pp-two">
     <CostSection
       title="Every Year of Delay Leaves a Cohort Without a Route to Work"
-      transition="It doesn’t have to be this way."
       blocks={[
         { claim: 'Educated Young People Are Waiting', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
         { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
@@ -145,17 +147,18 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     ]}
   />
 
-  <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here, in the jump links and in the two offer bands below. -->
+  <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here and in the two offer bands below.
+       WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open ("Explore YouthWIDE Delivery": the program page; "Explore JobReady’s Rollout": the platform page and its rollout status),
+       in place of "See Funding Route 1 / 2" (jumps to the offer bands, #cohort-grants and #platform-grants, which keep their ids) and a separate "About the JobReady Platform" link to the same page as the second. -->
   <div class="pp-two">
     <MechanismBand
       title="Two Ways to Fund the Path"
       positioning={POSITIONING.foundations}
       diagram={false}
       moreLinks={[
-        { label: 'See Funding Route 1', href: '#cohort-grants' },
-        { label: 'See Funding Route 2', href: '#platform-grants' },
+        { label: 'Explore YouthWIDE Delivery', href: LINKS.youthwide },
+        { label: 'Explore JobReady’s Rollout', href: LINKS.platform },
       ]}
-      link={{ label: 'About the JobReady Platform', href: LINKS.platform }}
     >
       <!-- WP29 (benchmark review): the two routes as a two-row comparison (What It Supports, Evidence Relationship), in place of the two route cards. Their sentences moved into it; nothing was added. -->
       <!-- WP30c (cycle-7 IA review): the two inquiry links sit directly under the comparison they belong to, not in the hero before the routes are explained. -->
@@ -248,7 +251,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
-      <p>Monthly reports and quarterly reviews are set out once, on the partnership overview.</p>
+      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
       <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>

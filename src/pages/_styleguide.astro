@@ -45,7 +45,6 @@ import GuideBand from '../components/sections/GuideBand.astro';
 import MechanismBand from '../components/sections/MechanismBand.astro';
 import ProofBand from '../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../components/sections/FeaturesTable.astro';
 import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
@@ -58,11 +57,13 @@ import FactStat from '../components/facts/FactStat.astro';
 import FactList from '../components/facts/FactList.astro';
 import FactCard from '../components/facts/FactCard.astro';
 import WorldMap from '../components/ui/WorldMap.astro';
+import { CLAIM_PX06, CLAIM_RC06 } from '../components/sections/copyText';
 import { faqJsonLd } from '../lib/faq';
 import { fact } from '../data/facts';
 import tokens from '../../design-system/tokens.json';
 import { audiences, promo } from '../data/nav';
 import { cta } from '../lib/mailto';
+import { linkAttrs } from '../lib/url';
 
 // ---- Token data (AA theme) with computed contrast -----------------------------------------
 type Tok = { name: string; value: string | { light: string; accessible: string }; usage: string };
@@ -562,9 +563,9 @@ const sectionLinks = [
     <RouterBand id="band-router" title="What Brings You Here?" />
     <ProblemBand id="band-problem" title="For Too Many Graduates, a Degree Is Not Turning into a Job" bluf="Millions of educated young people are out of work, and, globally, most employers still cannot find the talent they need." factIds={['PX-01', 'PX-02', 'PX-03', 'PX-05']} />
     <CostBand id="band-cost" title="Every Year of Waiting Costs a Cohort" blocks={[
-      { claim: 'On One Major Freelancing Platform, Automation-Prone Postings Fell After ChatGPT', factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
+      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Young people who wait risk falling behind as entry-level work changes.' },
       { claim: 'Climate-Exposed Coastal Districts Have Been Losing Their Young People', factId: 'PX-11', implication: 'Many leave before local work exists.' },
-      { claim: 'A Review of Nine Trials Found Only Three with Significant Employment Impacts', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
+      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
     ]} />
     <FutureBand id="band-future" title="Imagine the Next 12 Months" vignettes={[
       { kind: 'Functional', title: 'First Foreign Client, Billed from Home', text: 'A program completer in Barishal invoices her first foreign client from her own laptop.' },
@@ -573,17 +574,13 @@ const sectionLinks = [
     ]} />
     <GuideBand id="band-guide" title="We’ve Built This Path Since 2014" empathy="CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement." authorityIds={['SC-01', 'SC-03', 'SC-06']} method={{ text: 'Our TalentLEAP method turns that experience into a repeatable path.', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }} />
     <MechanismBand id="band-mechanism" title="One Path from Learning to Earning" link={{ label: 'How Our Model Works', href: '/our-model/' }} />
-    <FeaturesTable id="band-features" title="Built Around Outcomes, Not Attendance" rows={[
-      { feature: 'Tracks Chosen from Employer Demand', means: 'Training leads to work that exists.', outcomeFactId: 'OC-01', relieves: 'Graduates whose degrees are not turning into jobs' },
-      { feature: 'Certification Exam Preparation', means: 'Each track prepares learners for a credential employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
-      { feature: 'Three Months of Milestone-Based Mentoring', means: 'Learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
-      { feature: 'Outcome Tracking After Each Course', means: 'You get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
-    ]} />
     <IncludesBand id="band-includes" tone="airy" title="What Your Partnership Includes" cards={[
       { icon: 'route', title: 'Training, Mentoring and Placement Support', text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support.', facts: ['PD-01'] },
       { icon: 'clipboard-check', title: 'Results You Can Check', text: 'Monthly reports and follow-up surveys, as agreed in the program scope, show progress toward paid work. Documentary evidence is checked where available.', facts: ['PD-08', 'PD-09'] },
       { icon: 'briefcase', title: 'Tracks Chosen from Employer Demand', text: 'An AI-ready curriculum is designed to follow the skills employers ask for as entry-level tasks change.', facts: ['PD-02', 'PD-10'] },
-    ]} />
+    ]}>
+      <a slot="more" class="link" href={linkAttrs('/our-model/jobready-platform/').href}>See the Full Rollout Status<Icon name="arrow-right" size={16} /></a>
+    </IncludesBand>
     <ProofBand id="band-proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
     <CaseStudyCarousel id="band-cases" title="Proof in Practice" items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },

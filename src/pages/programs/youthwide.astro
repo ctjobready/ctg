@@ -11,6 +11,8 @@
 // and colleges", and the glance's Delivery row says "a central team coordinating local labs for larger programs" in place of "hub-and-spoke" (as Our Model does).
 // WP39 (cycle-16 review): the hero lead is one sentence (audience, outcome and mechanism; the scope word "as agreed in the program scope" moved to the glance's Reporting row); the three-card C8 band (IncludesBand) replaces the
 // funder concern / what is included / practical benefit matrix; "Choose Your Entry Point" keeps both route actions and the procurement sentence and has ONE agenda line under the two cards in place of two near-identical agendas.
+// WP40 (cycle-17 review): the glance row that says where the program is designed to run is headed "Designed for Three Regions" ("Where It Runs" read as a list of countries where it runs today); the timing question uses the
+// two-sentence variant (Q7-model), because "What Happens Next" below shows the sequence the shared answer counted out week by week.
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -67,7 +69,7 @@ const faqSources: FaqSource[] = [
     evidence: ['GV-01', 'GV-11'],
   },
   { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
-  { audience: 'foundations' as const, id: 'Q7' },
+  { audience: 'variants' as const, id: 'Q7-model' },
 ];
 
 const jsonLd = [
@@ -103,7 +105,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <ProgramGlance
     title="YouthWIDE at a Glance"
     rows={[
-      { label: 'Where It Runs', text: 'Co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. Bangladesh is the reference implementation and has a national initiative of its own.', facts: ['IN-02', 'IN-01'] },
+      { label: 'Designed for Three Regions', text: 'Co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. Bangladesh is the reference implementation and has a national initiative of its own.', facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },

@@ -258,10 +258,10 @@ test.describe('Foundations: the Funding Route 2 passage says what a platform gra
     expect(compact(await page.locator('#funding-routes').textContent())).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
   });
 
-  test('the anchors still work: "See Funding Route 2" and the cohort-grant band’s pointer reach the band', async ({ page }) => {
+  // WP40 (cycle-17 review): the numbered jump links ("See Funding Route 1 / 2") are gone from the mechanism band, which links the program and platform pages instead (tests/wp40.spec.ts); the two bands keep their ids and their order
+  test('the funding-route bands keep their ids and their order: #cohort-grants, then #platform-grants', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#platform-grants')).toHaveCount(1);
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 2' })).toHaveAttribute('href', '#platform-grants');
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(ids.indexOf('platform-grants')).toBe(ids.indexOf('cohort-grants') + 1);
   });
@@ -324,9 +324,12 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
     expect(fact('PD-04').text).toContain('about three weeks from first conversation to agreement; training starts 6–8 weeks after signing');
   });
 
-  test('the shared answer, with the Week 1 to 3 sentence, stays on YouthWIDE and in the objection bank; the Our Model variant is not listed in the bank’s full list', async ({ page }) => {
+  // WP40 (cycle-17 review): YouthWIDE's "What Happens Next" shows the sequence, so YouthWIDE uses the Our Model variant too (tests/wp40.spec.ts); the shared answer stays in the objection bank
+  test('the shared answer, with the Week 1 to 3 sentence, stays in the objection bank; YouthWIDE says the weeks once, like Our Model; the variant is not listed in the bank’s full list', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(await mainText(page)).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');
+    const text = await mainText(page);
+    expect(text).toContain('For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(text).not.toContain('Counting from the first conversation');
     expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');
     expect(faqsFor('all').map((f) => f.id)).not.toContain('Q7-model');
     expect(faqsFor('variants').map((f) => f.id)).toContain('Q7-model');
@@ -355,14 +358,15 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   test('no built page prints the bare acronym, and every page that lists marketing automation names customer relationship management beside it', () => {
     expect(pagesWithMarkup(/\bCRM\b/).map((p) => p.route)).toEqual([]);
     const listing = pagesWithMarkup(/marketing automation/i);
-    // the platform page, the Foundations comparison, the Investors table and FAQ, the Employers and JobReady@Work FAQs
-    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/', '/partner-with-us/foundations/', '/partner-with-us/investors/', '/partner-with-us/employers/', '/programs/jobready-work/']));
+    // the platform page, the Foundations comparison, the Employers and JobReady@Work FAQs (WP40, cycle-17 review: Investors' "What JobReady Does" is three short cards that name the two modules institutions use, "Partner portals and AI chat
+    // are live", beside a link to the full rollout status, as its hero lead does; so Investors no longer lists marketing automation)
+    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/', '/partner-with-us/foundations/', '/partner-with-us/employers/', '/programs/jobready-work/']));
     expect(listing.filter((p) => !/customer relationship management/i.test(readFileSync(p.file, 'utf8'))).map((p) => p.route)).toEqual([]);
   });
 
   for (const [route, expected] of [
     ['our-model/jobready-platform/', ['Marketing automation, customer relationship management and AI chat', 'Partner portals, marketing automation, customer relationship management and AI chat are live, and the course storefront operates.']],
-    ['partner-with-us/investors/', ['Partner Portals, Marketing Automation, Customer Relationship Management and AI Chat — Live']],
+    ['partner-with-us/investors/', ['Partner portals and AI chat are live.']],
     ['partner-with-us/foundations/', ['Live today: partner portals, marketing automation, customer relationship management and AI chat.']],
   ] as [string, string[]][]) {
     test(`${route}: the live list reads in full`, async ({ page }) => {

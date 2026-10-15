@@ -33,8 +33,9 @@
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
 //     second part); WP36: /programs/youthwide/ declares its statement whole (POSITION_WHOLE_STATEMENT: the two shared sentences with the program as the subject), and carries exactly
-//     that text; no other page is affected; WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement (it restated the hero and returned to cohort language on a page about backing the platform;
-//     POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
+//     that text; WP40 (cycle-17 review): /partner-with-us/local-partners/ declares its statement whole as well (the partner mobilizes and hosts, CodersTrust supports delivery, mentoring, placement and
+//     reporting; the audience and outcome are in the hero and the problem band above it), and carries exactly that text; no other page is affected; WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement
+//     (it restated the hero and returned to cohort language on a page about backing the platform; POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
 //     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; negative self-tests below
@@ -373,10 +374,13 @@ const POSITION_EMPLOYER_CLOSING = {
   '/programs/jobready-work/': 'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.',
 };
 // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so its "Our Approach" statement is the two shared sentences alone, with the program named as the
-// subject. It is declared WHOLE, for this one page: a page listed here must carry exactly this text as its statement (nothing may precede it in the band, as on every page), and the audience-sentence-plus-[UNLIKE] shape stays
-// the rule for every page that is not listed. Declared here independently of src/data/copy.ts (POSITIONING.youthwide), so a change to it has to be made twice on purpose; negative self-tests below.
+// subject. WP40 (cycle-17 review): Local Partners' hero and problem band already say who the page is for and what they need, and the four cards under the statement are the responsibilities, so its statement is the two
+// sentences that divide the work. Each is declared WHOLE, for its one page: a page listed here must carry exactly this text as its statement (nothing may precede it in the band, as on every page), and the
+// audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (two pages are listed, and the self-tests below keep it at these two). Declared here independently of src/data/copy.ts
+// (POSITIONING.youthwide, POSITIONING.localPartners), so a change to either has to be made twice on purpose; negative self-tests below.
 const POSITION_WHOLE_STATEMENT = {
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+  '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
 };
 /**
  * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence).
@@ -923,6 +927,17 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a lead line before the whole statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeYw)}</header>`), { whole: wholeYw });
   posBad('the whole statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeYw)}</header>`));
   posBad('the whole statement on a page that declares an employer closing', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { closing: empClosing });
+  // WP40: Local Partners declares its statement whole too, with the same guarantees, and the declarations stay at these two pages
+  const wholeLp = POSITION_WHOLE_STATEMENT['/partner-with-us/local-partners/'];
+  if (wholeLp !== 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.') problems.push('self-test: the Local Partners whole statement is no longer the WP40 wording');
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/local-partners/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/ and /partner-with-us/local-partners/ declare a whole positioning statement (WP36, WP40) and no other page');
+  posOk('the declared whole statement on the page that declares it (Local Partners)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeLp });
+  posBad('the shared audience-plus-[UNLIKE] statement on Local Partners, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeLp });
+  posBad('a reworded Local Partners statement', mech(`${headerHtml}${posBlock(wholeLp.replace('mobilizes', 'recruits'))}</header>`), { whole: wholeLp });
+  posBad('a Local Partners statement with the audience sentence in front of it', mech(`${headerHtml}${posBlock(`${posFor} ${wholeLp}`)}</header>`), { whole: wholeLp });
+  posBad('the YouthWIDE statement on Local Partners (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeLp });
+  posBad('the Local Partners statement on YouthWIDE (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeYw });
+  posBad('the Local Partners statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeLp)}</header>`));
   for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
   // WP39: the exemption is one page and not also a [POSITION] page
   if (POSITION_EXEMPT_PAGES.length !== 1 || POSITION_EXEMPT_PAGES[0] !== '/partner-with-us/investors/') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and no other page');

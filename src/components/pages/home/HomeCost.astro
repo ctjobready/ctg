@@ -7,9 +7,8 @@ import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
 
 /**
- * C3 Cost of waiting (Home): three CLAIM / DATA / IMPLICATION blocks, then the transition line followed by
- * the value proposition. Page-local variant of the shared CostBand, which has no slot for the value
- * proposition under the transition.
+ * C3 Cost of waiting (Home): CLAIM / DATA / IMPLICATION blocks, then the value proposition. Page-local variant of the shared CostBand, which has no
+ * slot for the value proposition under the blocks. WP40 (cycle-17 review): the transition line that used to open it ("It doesn’t have to be this way.") is gone.
  */
 interface Block {
   icon: string;
@@ -22,12 +21,11 @@ interface Block {
 interface Props {
   title: string;
   blocks: Block[];
-  transition?: string;
-  /** Shown directly after the transition (the value proposition). */
+  /** Shown directly under the blocks (the value proposition). */
   after?: string;
   id?: string;
 }
-const { title, blocks, transition = 'It doesn’t have to be this way.', after, id = 'cost' } = Astro.props;
+const { title, blocks, after, id = 'cost' } = Astro.props;
 // The register labels some context facts ("Context (external): …"); the label is for editors, not readers.
 const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s*/i, '').replace(/^./, (c) => c.toUpperCase());
 ---
@@ -50,10 +48,13 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
       ))
     }
   </div>
-  <div class="cost__turn" data-reveal>
-    <p class="cost__transition">{transition}</p>
-    {after && <p class="cost__after">{after}</p>}
-  </div>
+  {
+    after && (
+      <div class="cost__turn" data-reveal>
+        <p class="cost__after">{after}</p>
+      </div>
+    )
+  }
 </Section>
 
 <style>
@@ -80,27 +81,18 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
     letter-spacing: 0.06em;
     color: var(--on-primary-container);
   }
+  /* The value proposition closes the band under a hairline. WP40: with the transition line gone it is the band's one closing statement, so it is set a step larger than body text, in the heading color (heading-l, medium). */
   .cost__turn {
     margin-top: var(--space-lg);
-    display: grid;
-    gap: var(--space-sm);
     padding-top: var(--space-lg);
     border-top: 1px solid var(--primary-fixed);
   }
-  .cost__turn > * {
-    margin: 0;
-  }
-  .cost__transition {
-    font-size: var(--fs-heading-xl);
-    line-height: var(--lh-heading-xl);
-    font-weight: var(--fw-bold);
-    color: var(--secondary);
-    letter-spacing: -0.5px;
-  }
   .cost__after {
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body-l);
-    color: var(--on-surface-variant);
+    margin: 0;
+    font-size: var(--fs-heading-l);
+    line-height: var(--lh-heading-l);
+    font-weight: var(--fw-medium);
+    color: var(--secondary);
     max-width: 44rem;
   }
 </style>

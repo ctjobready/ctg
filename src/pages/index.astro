@@ -33,7 +33,7 @@ import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
 import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
-import { freelancePostingsFinding } from '../components/sections/copyText';
+import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
 import { linkAttrs } from '../lib/url';
 import { faqJsonLd } from '../lib/faq';
@@ -110,8 +110,8 @@ const includes = [
       title="Training and Evidence Fall Behind While You Wait"
       blocks={[
         // WP38 (cycle-15 review): the card states the first finding of PX-06 (the 21% on one platform), not both findings of the study in one sentence; PX-06 stays the fact the line rests on.
-        { icon: 'cpu', claim: 'Automation-Prone Freelance Postings Fell After ChatGPT', factId: 'PX-06', text: freelancePostingsFinding(), implication: 'Training has to follow current employer demand, not last year’s job market.' },
-        { icon: 'trending-down', claim: 'Only Three of Nine Training Trials Showed a Significant Employment Impact', factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
+        { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', text: freelancePostingsFinding(), implication: 'Training has to follow current employer demand, not last year’s job market.' },
+        { icon: 'trending-down', claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
       after="A first cohort can show who is earning, and you decide on the evidence."
     />

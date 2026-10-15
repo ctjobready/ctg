@@ -217,16 +217,17 @@ test.describe('"What You Get" is three short cards on every audience and program
     }
   });
 
-  test('only Investors keeps the table, as a status table: what is live, pre-launch and on the roadmap', async ({ page }) => {
-    // (the component gallery, /styleguide/, is a staging page that shows every shared band, including this table)
+  // WP40 (cycle-17 review): Investors' status table became three cards too, so no page keeps the table and its component is gone (tests/wp40.spec.ts holds Investors' cards)
+  test('no page keeps the concern / inclusion / benefit table any more; Investors states its status in three cards', async ({ page }) => {
     const withTable = listPages()
-      .filter((p) => p.route !== '/styleguide/' && /class="fc__card/.test(readFileSync(p.file, 'utf8')))
+      .filter((p) => /class="fc__card/.test(readFileSync(p.file, 'utf8')))
       .map((p) => p.route);
-    expect(withTable).toEqual(['/partner-with-us/investors/']);
+    expect(withTable).toEqual([]);
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#features h2')).toHaveText('What JobReady Does');
-    await expect(page.locator('#features .fc__card')).toHaveCount(5);
-    expect(compact(await page.locator('#features').textContent())).toContain('Concern Addressed');
+    await expect(page.locator('#features .fc__card')).toHaveCount(0);
+    await expect(page.locator('#features li.card')).toHaveCount(3);
+    expect(compact(await page.locator('#features').textContent())).not.toContain('Concern Addressed');
   });
 
   test('the band keeps its id and its place, and no two dark bands meet', async ({ page }) => {
@@ -344,8 +345,8 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     const text = await page.locator('main').evaluate((el) => el.textContent ?? '');
     expect(text).not.toContain('Live today: partner portals');
     expect(text).not.toContain('Partly — modules');
-    // the status itself is still on the page once, in "What JobReady Does" (the table that the answer links)
-    expect(compact(await page.locator('#features').textContent())).toContain('Partner Portals, Marketing Automation, Customer Relationship Management and AI Chat — Live');
+    // the status itself is still on the page, in "What JobReady Does" (the cards that the answer links; WP40: three short cards in place of the table)
+    expect(compact(await page.locator('#features').textContent())).toContain('Partner portals and AI chat are live.');
   });
 
   test('the mechanism band opens with its eyebrow and heading; "Our Approach" and its statement are gone; "How JobReady Builds on Delivery" stays', async ({ page }) => {

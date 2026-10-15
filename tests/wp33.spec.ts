@@ -106,12 +106,13 @@ test.describe('the Governments "How Fast Can We Start?" answer does not count th
     expect(steps).toEqual(['Briefing', 'Co-Design with the Agency', 'Agreement', 'Launch in Existing Labs']);
   });
 
-  // WP37 (cycle-14 review): Our Model has its own two-sentence variant (it says the weeks once, "allow about three weeks ... then 6–8 weeks ..."), so the shared count stays on YouthWIDE only (tests/wp37.spec.ts)
-  test('the page without a steps band keeps the count (the shared "How Fast Can We Start?" answer on YouthWIDE); Our Model does not count the weeks out', async ({ page }) => {
-    await open(page, 'programs/youthwide/');
-    expect(await mainText(page)).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');
-    await open(page, 'our-model/');
-    expect(await mainText(page)).not.toContain('Counting from the first conversation');
+  // WP37 (cycle-14 review): Our Model has its own two-sentence variant (it says the weeks once, "allow about three weeks ... then 6–8 weeks ..."); WP40 (cycle-17 review): YouthWIDE, whose "What Happens Next" shows the sequence,
+  // uses it too, so no built page counts the weeks out any more (the shared Q7 stays in the objection bank; tests/wp37.spec.ts, tests/wp40.spec.ts)
+  test('neither YouthWIDE nor Our Model counts the weeks out in "How Fast Can We Start?"', async ({ page }) => {
+    for (const route of ['programs/youthwide/', 'our-model/']) {
+      await open(page, route);
+      expect(await mainText(page), route).not.toContain('Counting from the first conversation');
+    }
   });
 });
 

@@ -51,15 +51,16 @@ test.describe('timelines name their starting point', () => {
     expect(text).not.toMatch(/\bwk \d/);
   });
 
-  test('the "How Fast Can We Start?" answers say the weeks count from the first conversation (WP33: Governments, whose steps band shows the sequence, does not count them out again)', async ({ page }) => {
+  test('the "How Fast Can We Start?" answers say the weeks count from the first conversation (WP33: Governments, whose steps band shows the sequence, does not count them out again; WP40: nor does YouthWIDE)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await page.locator('#faq').textContent());
     expect(gov).toContain('agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
     expect(gov).not.toContain('Counting from the first conversation');
     await open(page, 'programs/youthwide/');
     const main = compact(await page.locator('main').textContent());
-    expect(main).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');
-    expect(main).not.toMatch(/week 1 is a discovery session, week 2/);
+    // WP40 (cycle-17 review): YouthWIDE's "What Happens Next" shows the sequence, so its answer is the two-sentence variant (tests/wp40.spec.ts)
+    expect(main).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(main).not.toMatch(/Counting from the first conversation|week 1 is a discovery session, week 2/i);
   });
 });
 
@@ -176,13 +177,14 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     ]);
   });
 
-  test('the route cards no longer repeat the comparison: each route is named once, as a row heading of the table, and the jump links still work', async ({ page }) => {
+  test('the route cards no longer repeat the comparison: each route is named once, as a row heading of the table, and the two route links go to the program and platform pages', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#mechanism .model__block')).toHaveCount(0);
     const headings = (await table(page).locator('tbody th').allTextContents()).map(compact);
     expect(headings).toEqual(['Funding Route 1 YouthWIDE Cohort Grants', 'Funding Route 2 JobReady Platform Grants']);
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 1' })).toHaveAttribute('href', '#cohort-grants');
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 2' })).toHaveAttribute('href', '#platform-grants');
+    // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
   });
 
   test('the platform status sentence in the table is IN-04’s own wording', async ({ page }) => {

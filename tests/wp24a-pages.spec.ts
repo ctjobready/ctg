@@ -63,7 +63,8 @@ test.describe('Investors page structure', () => {
     expect(text).toContain('is an opportunity employers and communities are not yet capturing');
     expect(text).not.toContain('leaves that gap open');
     expect(text).not.toContain('in every program');
-    expect(text).toContain('in every supported cohort');
+    // WP40 (cycle-17 review): "What JobReady Does" is three cards; the first scopes the inclusions to supported cohorts ("Supported cohorts include mentoring, certification exam preparation and placement support."), where the old row said "in every supported cohort"
+    expect(text).toContain('Supported cohorts include mentoring, certification exam preparation and placement support');
     // WP36: the three case-study cards and their lead are gone (one "Case Studies" link stands in)
     expect(text).not.toContain('Three featured case studies, each with its partner.');
     // Cycle 5 (triage-c5, Partner): the guide line reads "need to distinguish a model that is working from one that is only promised" (copy.ts EMPATHY.investors).

@@ -4,7 +4,7 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Fact from '../facts/Fact.astro';
 
-/** C3 Cost of inaction: three CLAIM / DATA / IMPLICATION blocks + transition line. */
+/** C3 Cost of inaction: three CLAIM / DATA / IMPLICATION blocks. (WP40, cycle-17 review: the closing transition line, "It doesn’t have to be this way.", is gone.) */
 interface Block {
   claim: string;
   /** Fact ID shown as the DATA line (canonical wording + footnote). */
@@ -15,10 +15,9 @@ interface Props {
   title: string;
   lead?: string;
   blocks: Block[];
-  transition?: string;
   id?: string;
 }
-const { title, lead, blocks, transition = 'It doesn’t have to be this way.', id = 'cost' } = Astro.props;
+const { title, lead, blocks, id = 'cost' } = Astro.props;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -36,7 +35,6 @@ const { title, lead, blocks, transition = 'It doesn’t have to be this way.', i
       ))
     }
   </div>
-  <p class="cost__transition" data-reveal>{transition}</p>
 </Section>
 
 <style>
@@ -59,13 +57,5 @@ const { title, lead, blocks, transition = 'It doesn’t have to be this way.', i
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--on-primary-container);
-  }
-  .cost__transition {
-    margin: var(--space-lg) 0 0;
-    font-size: var(--fs-heading-xl);
-    line-height: var(--lh-heading-xl);
-    font-weight: var(--fw-bold);
-    color: var(--secondary);
-    letter-spacing: -0.5px;
   }
 </style>

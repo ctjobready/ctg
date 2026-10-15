@@ -287,7 +287,7 @@ test.describe('the ranked pains are statements, not questions', () => {
   const PAGES: [string, string[]][] = [
     ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Is Thin']],
     ['partner-with-us/development-partners/', ['Skills Programs Miss Their Employment Targets', 'The Hardest-to-Reach Groups Drop Out', 'Outcomes Are Hard to Audit']],
-    ['partner-with-us/foundations/', ['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Scalable, Accountable Implementers Are Hard to Find']],
+    ['partner-with-us/foundations/', ['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Employers Struggle to Find the Skills They Need', 'Institutions Lack Placement Results They Can Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],
   ];

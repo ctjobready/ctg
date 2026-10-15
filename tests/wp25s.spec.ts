@@ -161,12 +161,13 @@ test.describe('Programs', () => {
     expect(compact(await everything(page))).toContain('Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module.');
   });
 
-  // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; its third says the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stays)
-  test('YouthWIDE and Investors say courses are designed to keep pace with employer demand', async ({ page }) => {
+  // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; its third says the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stays).
+  // WP40 (cycle-17 review): Investors' three cards no longer carry the AI-ready curriculum row; its AI answer (Q5) says tracks are chosen from current employer demand, with each track's AI content and work-entry plan agreed before enrollment
+  test('YouthWIDE says its curriculum is designed to keep pace with employer demand; Investors’ AI answer says tracks are chosen from current employer demand', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     expect(compact(await main(page))).toContain('designed to keep pace as AI changes entry-level tasks');
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await main(page))).toContain('Courses are designed to keep pace with employer demand');
+    expect(compact(await everything(page))).toContain('we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with you before enrollment');
   });
 });
 
@@ -266,16 +267,19 @@ test.describe('Partner with Us', () => {
     const text = compact(await main(page));
     await expect(page.locator('#route-chooser')).toHaveCount(0);
     expect(text).not.toMatch(/Funding Vehicle|Track 1|Track 2|Choose Your Route/);
-    expect(text).toContain('Funding Route 1');
-    expect(text).toContain('Funding Route 2');
+    // (innerText applies the uppercase styling of the table's and the offer bands' labels, so the names are read from the markup's own text; WP40: the numbered jump links are gone, the table rows and the two offer bands carry them)
+    const named = compact(await everything(page));
+    expect(named).toContain('Funding Route 1');
+    expect(named).toContain('Funding Route 2');
     // WP39 (cycle-16 review): the features band is three short cards; the first says results are "measured against first paid work, not attendance"
     expect(text).toContain('Results are measured against first paid work, not attendance, using the agreed scorecard.');
     expect(text).not.toContain('followed through to first paid work');
     // WP30c: the "Reporting and Recognition" paragraph is gone (the features rows state reporting once); the monitoring row stays scope-aware
     expect(text).not.toContain('Funders receive job and income outcomes');
     expect(text).toContain('contracting entity and due-diligence documents confirmed in co-design');
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 1' })).toHaveAttribute('href', '#cohort-grants');
-    await expect(page.locator('#mechanism').getByRole('link', { name: 'See Funding Route 2' })).toHaveAttribute('href', '#platform-grants');
+    // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
+    await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
   });
 });
 
@@ -311,15 +315,18 @@ test.describe('Our Model and Investors', () => {
     expect(text).toContain('by the BRAC Institute of Governance and Development (BIGD) at BRAC University');
   });
 
-  // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; the shared answer (YouthWIDE) keeps "typically".
-  test('the timeline answers are hedged: the shared answer says "typically" (YouthWIDE), Our Model says "allow about"', async ({ page }) => {
-    await open(page, 'programs/youthwide/');
-    const shared = compact(await everything(page));
-    expect(shared).toContain('agreement typically takes about three weeks from first conversation');
-    expect(shared).toContain('typically in training 6–8 weeks after signing');
-    await open(page, 'our-model/');
-    const text = compact(await everything(page));
-    expect(text).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
+  // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; WP40 (cycle-17 review): YouthWIDE, whose "What Happens Next"
+  // shows the sequence, uses it too; the Governments variant keeps "typically"
+  test('the timeline answers are hedged: YouthWIDE and Our Model say "allow about", Governments says "typically"', async ({ page }) => {
+    for (const route of ['programs/youthwide/', 'our-model/']) {
+      await open(page, route);
+      const text = compact(await everything(page));
+      expect(text, route).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
+    }
+    await open(page, 'partner-with-us/governments/');
+    const gov = compact(await everything(page));
+    expect(gov).toContain('agreement typically takes about three weeks from first conversation');
+    expect(gov).toContain('typically in training 6–8 weeks after signing');
   });
 
   test('Investors: program results appear once, the national-scale answer leads with CodersTrust’s role', async ({ page }) => {

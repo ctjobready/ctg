@@ -10,6 +10,7 @@
  * and the Kosovo tile is gone; the mechanism card says "Placement support into ..."; the three pains are statements ("What Gets in the Way"); the cost question has the one-line route answer and a link to the hub FAQ.
  * WP37 (cycle-14 review): the women-and-marginalized-groups answer no longer restates the three program figures (Proof in Practice, directly above, shows them); it says so and keeps the scope of the trial.
  * WP39 (cycle-16 review): "What Your Portfolio Gets" is three short cards (IncludesBand), not the funder concern / what is included / practical benefit matrix.
+ * WP40 (cycle-17 review): "Reporting and Review" says what the reports and reviews do instead of pointing at the overview; the closing "It doesn’t have to be this way." line of the cost band is gone.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -105,7 +106,6 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <div class="pp-two">
     <CostBand
       title="Training Without Placement Spends Budget Without Earnings"
-      transition="It doesn’t have to be this way."
       blocks={[
         { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
         { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
@@ -200,7 +200,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
-      <p>Monthly reports and quarterly reviews are set out once, on the partnership overview.</p>
+      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
       <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>

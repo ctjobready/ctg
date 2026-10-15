@@ -132,6 +132,8 @@ export const TRIAL_SCOPE = {
  * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" says how the
  * platform relates to delivery once; scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
+ * WP40 (cycle-17 review): Local Partners' statement is two sentences that divide the work (the partner mobilizes and hosts; CodersTrust supports delivery, mentoring, placement and reporting), because its audience and outcome
+ * are in the hero and the problem band above and the four responsibility cards follow it; the gate declares it whole for that page as well (POSITION_WHOLE_STATEMENT).
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
@@ -177,7 +179,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-10', 'IN-04'],
   },
   localPartners: {
-    text: `For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs. ${UNLIKE_APPROVED}`,
+    // WP40 (cycle-17 review): what each side does, in the words of the four cards under it (Mobilizes and Hosts; Trains and Prepares for Certification; Mentoring and Placement; Monthly Reporting). scripts/check-facts.mjs declares it whole
+    // for /partner-with-us/local-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-06 (certified local facilitators in existing labs and colleges), PD-01 (mentoring, with placement support alongside) and PD-08 (monthly reports).
+    text: 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
     facts: ['PD-01', 'PD-06', 'PD-08'],
   },
   youthwide: {
