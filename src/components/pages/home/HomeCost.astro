@@ -7,8 +7,10 @@ import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
 
 /**
- * C3 Cost of waiting (Home): CLAIM / DATA / IMPLICATION blocks, then the value proposition. Page-local variant of the shared CostBand, which has no
- * slot for the value proposition under the blocks. WP40 (cycle-17 review): the transition line that used to open it ("It doesn’t have to be this way.") is gone.
+ * C3 Cost of waiting (Home): CLAIM / DATA / IMPLICATION blocks. Page-local variant of the shared CostBand: each card carries the icon, and the finding can be one of the fact's findings (`text`).
+ * WP40 (cycle-17 review): the transition line that used to open it ("It doesn’t have to be this way.") is gone.
+ * WP47 (owner decision 2026-10-15): the audience pages no longer carry a cost-of-waiting band, so Home is where readers meet it, and it ends with its cards: the value-proposition line under them ("A first cohort can show who is earning, and you decide on
+ * the evidence.") and its `after` prop and styles are gone.
  */
 interface Block {
   icon: string;
@@ -21,11 +23,9 @@ interface Block {
 interface Props {
   title: string;
   blocks: Block[];
-  /** Shown directly under the blocks (the value proposition). */
-  after?: string;
   id?: string;
 }
-const { title, blocks, after, id = 'cost' } = Astro.props;
+const { title, blocks, id = 'cost' } = Astro.props;
 // The register labels some context facts ("Context (external): …"); the label is for editors, not readers.
 const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s*/i, '').replace(/^./, (c) => c.toUpperCase());
 ---
@@ -48,13 +48,6 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
       ))
     }
   </div>
-  {
-    after && (
-      <div class="cost__turn" data-reveal>
-        <p class="cost__after">{after}</p>
-      </div>
-    )
-  }
 </Section>
 
 <style>
@@ -80,19 +73,5 @@ const clean = (t: string) => t.replace(/^[A-Za-z ]+ \((?:external|estimate)\):\s
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--on-primary-container);
-  }
-  /* The value proposition closes the band under a hairline. WP40: with the transition line gone it is the band's one closing statement, so it is set a step larger than body text, in the heading color (heading-l, medium). */
-  .cost__turn {
-    margin-top: var(--space-lg);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--primary-fixed);
-  }
-  .cost__after {
-    margin: 0;
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    font-weight: var(--fw-medium);
-    color: var(--secondary);
-    max-width: 44rem;
   }
 </style>

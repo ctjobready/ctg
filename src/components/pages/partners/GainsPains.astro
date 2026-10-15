@@ -8,7 +8,7 @@ import { titleCase } from '../../../lib/titleCase.mjs';
  * the audience pages had them as questions; a question title is not an impactful heading, and an answer line that repeats it is left out).
  *
  * `gains` is optional: a page that already shows its gains in the future-state band (C4) can render the ranked pains alone, in three
- * columns (review round 14, M4: Home, YouthWIDE and the local-partners page). A pain may carry an `id` ("P1" to "P3"), written to the
+ * columns (review round 14, M4: Home, YouthWIDE and the local-partners page). WP47: the audience pages carry no future-state band (Home has it), and every page renders the pains alone. A pain may carry an `id` ("P1" to "P3"), written to the
  * list item as `data-pain`; the C8 card that relieves it carries the same id as `data-relieves` (IncludesBand `painId`), and
  * scripts/check-facts.mjs checks the one-to-one map. `facts` ties a pain to the registered facts it rests on (`data-fact`).
  * WP35 (cycle-12 review): a pain's title is a card title, so it is set in Title Case here, wherever the band renders it ("Graduates Struggle to Find Work"); the pain's wording is written once,

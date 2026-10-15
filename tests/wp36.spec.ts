@@ -399,7 +399,8 @@ test.describe('SuperKids: two separate 20M+ targets, each labeled', () => {
 });
 
 test.describe('option bands: program sizes are not a commitment', () => {
-  const NOTE = 'Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity.';
+  // WP47 (cycle-22 review): a full sentence with its subject (it was "Program sizes, not a commitment: use the discovery session to choose ...")
+  const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
 
   for (const route of ['', 'partner-with-us/universities/', 'programs/jobready-campus/']) {
     test(`${route || 'Home'}: the option band opens with Home’s line`, async ({ page }) => {

@@ -85,16 +85,18 @@ test('mobile sticky CTA bar is hidden at the top of every landing page (extra) 3
 });
 
 /**
- * WP23: the role router ("What Brings You Here?") sits just before the closing call to action, the closing band keeps ONE primary button
- * with the government and investor routes beside it as text links, and the Cost of Waiting band holds only cards that match its heading.
+ * WP23: the closing band keeps ONE primary button with the government and investor routes beside it as text links, and the Cost of Waiting band holds only cards that match its heading.
+ * WP47 (owner decision 2026-10-15): the role router ("What Brings You Here?") moved from just before the closing call to action to directly after the Results and Programs carousel (tests/wp47.spec.ts),
+ * so the band before the closing call to action is the risk band (C12) again.
  */
-test('home: the router is the band before the closing call to action, which has one primary button and two text routes (WP23)', async ({ page }) => {
+test('home: the router follows the carousel, and the band before the closing call to action (one primary button, two text routes) is the risk band (WP23, WP47)', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await open(page, pageByRoute('/'));
   const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
   const cta = order.indexOf('C13');
   expect(cta, 'the closing call-to-action band is on the page').toBeGreaterThan(0);
-  expect(order[cta - 1], `the band before the closing call to action (order: ${order.join(' > ')})`).toBe('ROUTER');
+  expect(order[cta - 1], `the band before the closing call to action (order: ${order.join(' > ')})`).toBe('C12');
+  expect(order.indexOf('ROUTER'), `the router follows the Results and Programs carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
   expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
 
   const band = page.locator('#cta');

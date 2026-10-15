@@ -215,10 +215,11 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
 
   test('the register’s GV-12 note, the Impact and Governments tiles and Home slide 2 read the same note; no page still says "(25,125 women trained)"', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
-    // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text is unchanged
+    // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('trained 25,125 women');
     expect(fact('GV-13').text).toContain('2,500 women trained directly by CodersTrust');
-    expect(fact('GV-12').text).toBe('Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
+    // WP47 (cycle-22 review): the register’s GV-12 text now says "work scoped for" (it read "scopes covering"); tests/wp47.spec.ts pins the new sentence
+    expect(fact('GV-12').text).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(NOTE);
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
@@ -226,7 +227,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(NOTE);
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    expect(lead).toBe(`Six government contracts with training and curriculum scopes for 31,200+ people. ${NOTE} CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`);
+    expect(lead).toBe(`Six government contracts with training and curriculum work scoped for 31,200+ people. ${NOTE} CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
     expect(builtPages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });

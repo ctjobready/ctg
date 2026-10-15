@@ -272,15 +272,16 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
     expect(printing).toEqual([]);
   });
 
-  test('Home keeps the next sentence, as the closing line of the cost band', async ({ page }) => {
+  // WP47 (owner decision 2026-10-15): the closing line ("A first cohort can show who is earning, and you decide on the evidence.") is gone, so Home's band ends with its cards like the others (tests/wp47.spec.ts)
+  test('Home’s cost band ends with its cards', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#cost .cost__after')).toHaveText('A first cohort can show who is earning, and you decide on the evidence.');
-    await expect(page.locator('#cost .cost__transition')).toHaveCount(0);
-    expect(await page.locator('#cost .container > :last-child').getAttribute('class')).toContain('cost__turn');
+    await expect(page.locator('#cost .cost__after, #cost .cost__transition, #cost .cost__turn')).toHaveCount(0);
+    expect(await page.locator('#cost .container > :last-child').getAttribute('class')).toContain('grid-cards');
   });
 
-  test('every other cost band now ends with its cards; the Investors thesis band ends with its stakes line', async ({ page }) => {
-    for (const route of ['programs/youthwide/', 'partner-with-us/universities/', 'partner-with-us/employers/', 'partner-with-us/foundations/', 'partner-with-us/governments/', 'partner-with-us/local-partners/', 'partner-with-us/development-partners/']) {
+  // WP47 (owner decision 2026-10-15): the six audience pages that had a cost band have none now (tests/wp47.spec.ts); YouthWIDE's is the other one that ends with its cards
+  test('the YouthWIDE cost band ends with its cards; the Investors thesis band ends with its stakes line', async ({ page }) => {
+    for (const route of ['programs/youthwide/']) {
       await open(page, route);
       expect(await page.locator('#cost .container > :last-child').getAttribute('class'), route).toContain('grid-cards');
       await expect(page.locator('#cost .cost__transition'), route).toHaveCount(0);
@@ -292,7 +293,7 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
   for (const vp of [DESKTOP, MOBILE]) {
     test(`at ${vp.width}px the cost bands and the thesis band have no sideways scroll and keep room under their last element`, async ({ page }) => {
       await page.setViewportSize(vp);
-      for (const route of ['', 'programs/youthwide/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'partner-with-us/investors/']) {
+      for (const route of ['', 'programs/youthwide/', 'partner-with-us/investors/']) {
         await open(page, route);
         expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);
         const id = route === 'partner-with-us/investors/' ? '#thesis' : '#cost';
@@ -305,15 +306,10 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
 test.describe('the two research headings are short (item 8)', () => {
   const PX06 = 'AI Is Changing Freelance Demand';
   const RC06 = 'Training Does Not Always Lead to Employment';
-  /** The pages whose cost band shows each research card. */
+  /** The pages whose cost band shows each research card (WP47: Home and YouthWIDE; the audience pages have no cost band). */
   const PAGES: [string, string[]][] = [
     ['', [PX06, RC06]],
     ['programs/youthwide/', [RC06, PX06]],
-    ['partner-with-us/development-partners/', [PX06, RC06]],
-    ['partner-with-us/local-partners/', [PX06, RC06]],
-    ['partner-with-us/governments/', [RC06, PX06]],
-    ['partner-with-us/foundations/', ['Educated Young People Are Waiting', RC06]],
-    ['partner-with-us/universities/', ['Jobs Requiring AI Skills Are Growing and Paying More', PX06]],
   ];
 
   test('both headings are in Title Case and the old sentence-length headings are on no page', async () => {

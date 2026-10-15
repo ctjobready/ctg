@@ -1,7 +1,7 @@
 ---
 /**
  * P4 Development partners & NGOs: /partner-with-us/development-partners/ (T3, implements doc 04 matrix 4.1).
- * C1 to C14 in order, as the numbered table in doc 06 P4.
+ * C1 to C14 in order, as the numbered table in doc 06 P4, without C3 (Cost of Waiting) and C4 (Imagine), which the audience pages leave to Home since WP47.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the evidence-and-fit
  * brief, the 2015 pilot quote with its caveat, the second survey of the standard inclusions and the restated three-step mechanism. Five FAQs, not nine.
  * WP35 (cycle-12 review): the trial and the survey are shown once, as tiles in Results at a Glance; the proof band that restated them is a one-line strip of links (#proof-band). The WSDFM tile is gone
@@ -14,6 +14,9 @@
  * WP42 (cycle-19 reviews): "Our Approach" is the two shared sentences with the tracking said as the cards say it ("Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope."; POSITIONING.developmentPartners,
  * declared whole in scripts/check-facts.mjs), and the YouthWIDE explanation still follows it; the ">4×" tile in "More Results" quotes the multiplier and the nine-trial average only (the +10.3 is the lead tile's: RC-06a's glance note).
  * WP43 (cycle-20 review): the cost-of-waiting heading is "Build Work Entry into the Training Budget" (the old one, "Training Without Placement Spends Budget Without Earnings", was an absolute claim; the two cards under it still carry the claims).
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Build Work Entry into the Training Budget") and the Imagine band ("What Your Monthly Report
+ * Could Show") are gone; Home carries them. Nothing on this page depended on them: the monthly reports, follow-up surveys and documentary evidence (where available) are stated in the "Questions Partners Ask"
+ * answers, "Results Your Evaluators Can Check" and "Reporting and Review".
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -23,9 +26,6 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
@@ -42,9 +42,8 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -103,34 +102,13 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     />
   </ProblemBand>
 
-  <!-- C3 · Agitation: cost of waiting -->
-  <div class="pp-two">
-    <CostBand
-      title="Build Work Entry into the Training Budget"
-      blocks={[
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
-        { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
-      ]}
-    />
-  </div>
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
   <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the launch line. -->
   <PartnerGuideBand
     stats={['SC-01', 'SC-03']}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
-  />
-
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-development')}
-    title="What Your Monthly Report Could Show"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'Earnings in Your Monthly Reports', text: 'Enrollment, completion, certification, placements and first earnings arrive in your monthly reports.' },
-      { kind: 'Emotional', title: 'Evidence Designed for Evaluator Review', text: `Follow-up results at ${TRACER_MONTHS}, designed to be backed by payslips, offer letters, platform logs and bank receipts.` },
-      { kind: 'Social', title: 'Work on Their Own Terms', text: 'Young people earning from jobs, freelance clients and businesses of their own.' },
-    ]}
   />
 
   <!-- C6 · Mechanism (YouthWIDE) -->

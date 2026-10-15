@@ -3,6 +3,9 @@
 // Ice Cyan, Klein and Deep Ink bands is set with the page-local <Tone> wrapper (never two dark bands in a row).
 // WP30c (owner direction 2026-10-14, "less is more"): the page is the hook for an intro call. Every band keeps its CMF place but states its point once:
 // no methodology asides, no repeated explanations, no stat shown twice, FAQ answers of one to three sentences.
+// WP47 (owner decision 2026-10-15): Home carries the persuasion bands (Cost of Waiting, Imagine, Compare); the audience pages no longer repeat them and go straight from their own proof to their offer. So Home routes readers to
+// their audience page sooner (the role router sits directly after the Results and Programs carousel) and spends fewer words on those bands: the Cost of Waiting band ends with its two cards (no closing value-proposition line) and
+// the Track Record band opens with its heading (no empathy line before it). "What a Supported Youth Cohort Includes" stays: the FAQ band below it does not ask the cost question (Q8) that lists a cohort's inclusions.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -49,8 +52,8 @@ const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_ME
 const briefing = cta('briefing');
 const introduction = cta('investor');
 
-// C2 BLUF (WP30c): one plain sentence. The 62 million and 19M+ figures are the two cards under it, so the sentence does not state them a second time.
-const problemBluf = 'Millions of educated young people are out of work and out of training, and training budgets rarely show who starts earning.';
+// C2 BLUF (WP30c): the 62 million and 19M+ figures are the two cards under it, so the sentence does not state them a second time. WP47 (cycle-22 review): two sentences, one claim each (it was one sentence joining the two with "and").
+const problemBluf = 'Millions of educated young people are out of work and out of training. Training budgets rarely show who starts earning.';
 
 // C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
@@ -100,6 +103,10 @@ const includes = [
     <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="Evidence first, then our programs." slides={HOME_SLIDES} />
   </Tone>
 
+  <!-- WP47 (owner decision 2026-10-15): the site is the hook for an introductory call, so the role router sits directly after the Results and Programs carousel, where a reader can reach their audience page sooner (it was the band before the
+       closing call to action; WP23). One router on the page; the hero's own audience links stay. Its own light ground (airy) keeps the rhythm between the carousel above and the white problem band below. -->
+  <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
+
   <Tone cmf="C2">
     <ProblemBand id="problem" title="Education Is Not Turning into Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
@@ -115,7 +122,6 @@ const includes = [
         { icon: 'cpu', claim: CLAIM_PX06, factId: 'PX-06', text: freelancePostingsFinding(), implication: 'Training has to follow current employer demand, not last year’s job market.' },
         { icon: 'trending-down', claim: CLAIM_RC06, factId: 'RC-06', implication: 'Without outcome tracking, funders cannot tell which programs reach earnings.' },
       ]}
-      after="A first cohort can show who is earning, and you decide on the evidence."
     />
   </Tone>
 
@@ -175,9 +181,6 @@ const includes = [
   <Tone cmf="C11"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} /></Tone>
 
   <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot, Then Decide on Evidence" /></Tone>
-
-  <!-- WP23, item 3: the role router sits just before the closing call to action (the hero's audience links and the menu route earlier). -->
-  <Tone cmf="ROUTER" tone="white"><HomeRouter id="router" /></Tone>
 
   <!-- WP45 (cycle-21 review): the band has no "Planning a Grant-Funded Cohort?" block: it assumed grant funding for every audience that reaches the page (ministries, employers, impact investors), and the grant timeline is in the C14 steps below. -->
   <Tone cmf="C13">

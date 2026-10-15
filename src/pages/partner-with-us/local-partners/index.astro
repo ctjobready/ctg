@@ -2,9 +2,6 @@
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostBand from '../../../components/sections/CostBand.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import GuideBand from '../../../components/sections/GuideBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
@@ -24,7 +21,6 @@ import PairedEvidence from '../../../components/pages/partners/PairedEvidence.as
 import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
 import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
-import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -36,6 +32,9 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * WP39 (cycle-16 review): "What Your Community Gets" is three short cards (IncludesBand), one for each ranked pain, not the concern / inclusion / benefit matrix.
  * WP42 (cycle-19 review): the full trial-and-survey band (the +41% and +54% income results, the 52.8% / 63.1% employment chart and its table, the survey chart and the median income) is a light strip, "Evidence from Our Wider
  * Youth Programs", as on Universities (WP38): one line for the trial, one for the survey's employment readings, and the two evidence links; the program-result cards stay. The strip keeps the band's anchor (#proof).
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Cohorts That Train Without Placement Cost Community Trust", #cost) and the Imagine band
+ * ("Imagine a Cohort in Your Community", #future) are gone; Home carries the shared versions. Nothing on this page depended on them (no link or gate pointed at either anchor): the placement, reporting and local-capacity claims
+ * are in the problem band, "How a Local Partnership Works" and "What Your Community Gets".
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -76,17 +75,9 @@ const ways = [
     <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
   </ProblemBand>
 
-  <!-- C3 -->
-  <CostBand
-    id="cost"
-    title="Cohorts That Train Without Placement Cost Community Trust"
-    blocks={[
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Skills that were enough last year may not open doors next year, so training has to follow current demand.' },
-      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the program, not added afterward.' },
-    ]}
-  />
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 (WP31: credibility comes before the vision, as on Home) -->
+  <!-- C5 -->
   <div data-fact="ID-07 PA-01 PA-02 IN-06">
     <GuideBand
       id="guide"
@@ -101,19 +92,6 @@ const ways = [
       }}
     />
   </div>
-
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('local-partners')}
-    id="future"
-    title="Imagine a Cohort in Your Community"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'A Cohort in Your Own Lab', text: 'A college computer lab or an NGO center runs a cohort led by certified local facilitators.' },
-      { kind: 'Emotional', title: 'Reports That Show Earnings', text: 'Reports show who is earning, not only who completed.' },
-      { kind: 'Social', title: 'Completers in Paid Digital Work', text: 'Young people from your district move into paid digital work, and the skills stay in the community.' },
-    ]}
-  />
 
   <!-- C6: the light variant of the mechanism band (as on Home) -->
   <div data-fact="PD-01 PD-06 PD-07 PD-08">

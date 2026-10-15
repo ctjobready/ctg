@@ -3,26 +3,17 @@ import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Fact from '../../facts/Fact.astro';
-import { fact } from '../../../data/facts';
 
 /**
- * C3 Cost of inaction. Same look as CostBand but sized to 2 or 3 blocks. `scope` ("Globally") prefixes the
- * canonical fact wording in the same sentence, for context facts that are not Bangladesh figures. The global
- * context facts (PX-05, PX-07, PX-08) already open with "Globally" in the register, so the prefix is only added
- * to a sentence that does not name its scope yet.
+ * C3 Cost of inaction. Same look as CostBand but sized to 2 or 3 blocks.
  * WP40 (cycle-17 review): the closing transition line ("It doesn’t have to be this way.") is gone; the band ends with its cards.
- * WP41 (cycle-18 review): a card may state only the opening of its register sentence (`excerpt`), as Employers' "AI Is Reshaping the Workforce" does.
+ * WP47 (owner decision 2026-10-15): the audience pages no longer carry a cost-of-waiting band (Home has its own, HomeCost), so the per-block `scope` prefix ("Globally") and the `excerpt` (the opening of a register
+ * sentence) that only Universities and Employers used are gone with them; YouthWIDE is this component's one page.
  */
 interface Block {
   claim: string;
   factId: string;
   implication: string;
-  scope?: string;
-  /**
-   * The card's data line is only the opening of the fact's own wording, without the clause after it (the register sentence is "…create 11M jobs and displace 9M by 2030; across all trends 170M created vs. 92M displaced";
-   * Employers states the first part alone). It must be the verbatim start of the fact's text, checked at build time, so the card cannot say what the register does not; the full stop is added here.
-   */
-  excerpt?: string;
 }
 interface Props {
   title: string;
@@ -32,11 +23,6 @@ interface Props {
 }
 const { title, lead, blocks, id = 'cost' } = Astro.props;
 const grid = blocks.length === 2 ? 'grid-cards grid-cards--2' : blocks.length === 4 ? 'grid-cards grid-cards--4' : 'grid-cards';
-const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
-const needsScope = (b: Block) => !!b.scope && !/\b(globally|worldwide)\b/i.test(fact(b.factId).text);
-for (const b of blocks) {
-  if (b.excerpt && !fact(b.factId).text.startsWith(b.excerpt)) throw new Error(`CostSection: the excerpt for ${b.factId} is not the start of the fact’s own wording: "${b.excerpt}"`);
-}
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
@@ -47,15 +33,7 @@ for (const b of blocks) {
         <article class="card cost" data-reveal>
           <div class="card__body">
             <h3 class="card__title">{titleCase(b.claim)}</h3>
-            {
-              b.excerpt ? (
-                <p class="cost__data" data-fact={b.factId}>{b.excerpt}.</p>
-              ) : needsScope(b) ? (
-                <p class="cost__data" data-fact={b.factId}>{b.scope}, {lowerFirst(fact(b.factId).text)}</p>
-              ) : (
-                <p class="cost__data"><Fact id={b.factId} /></p>
-              )
-            }
+            <p class="cost__data"><Fact id={b.factId} /></p>
             <p class="cost__impl"><span class="cost__tag">What It Means</span>{' '}{b.implication}</p>
           </div>
         </article>

@@ -1,7 +1,7 @@
 ---
 /**
  * P6 Universities: /partner-with-us/universities/ (T3, implements doc 04 matrix 4.5).
- * C1 to C14 in order, as the numbered table in doc 06 P6.
+ * C1 to C14 in order, as the numbered table in doc 06 P6, without C3 (Cost of Waiting) and C4 (Imagine), which the audience pages leave to Home since WP47.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the
  * standard-inclusions list, the restated scorecard paragraph and the fifth next step.
  * WP36 (cycle-13 reviews): the three pains are statements; the cost question has the one-line route answer and a link to the hub FAQ; the options band carries Home's line that program sizes are not a commitment
@@ -12,6 +12,9 @@
  * ("The National University Partnership" states it).
  * WP43 (cycle-20 review): the light evidence strip WP38 made ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two links) is gone, because the first band already ends in the linked strip
  * "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies) and the later strip said it again; the page has no #proof-band now (no page linked it). The survey's degree share stays in the meta description.
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("No Placement Evidence Weakens Your Employment Story") and the Imagine band ("What Your Students
+ * Leave With") are gone; Home carries them. Nothing on this page depended on them: the certification terms (eligibility, attempts and terms agreed in the program scope), the campus labs as
+ * blended-learning centers and the follow-up surveys are stated in the delivery model and in "What Your Students Get". The "Degree Holders Struggle to Find Work" card says "A degree alone does not guarantee a job offer."
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -19,9 +22,6 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostSection from '../../../components/pages/programs/CostSection.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
@@ -35,9 +35,9 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, pricingParts, programOptions } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACKING_MONTHS, factPart, meta, pricingParts, programOptions } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
+import { offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -102,42 +102,21 @@ const optionText: Record<string, string> = {
       slot="lead"
       pains={[
         // WP46 (cycle-22 review): the employers' pain is the 72% tile directly below (PX-05, worldwide), so a card that restated it is gone; the two pains left are the students' and the institution's.
-        { q: 'Degree holders struggle to find work', text: 'A degree alone is not producing job offers.' },
+        { q: 'Degree holders struggle to find work', text: 'A degree alone does not guarantee a job offer.' },
         // WP38 (cycle-15 review): a general institutional pain, stated in one line like its neighbor; it rests on no CodersTrust fact.
         { q: 'Institutions lack placement results they can publish', text: 'Placement data that would satisfy a board or ministry is rarely collected.' },
       ]}
     />
   </ProblemBand>
 
-  <!-- C3 · Agitation -->
-  <div class="pp-two">
-    <CostSection
-      title="No Placement Evidence Weakens Your Employment Story"
-      blocks={[
-        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More', factId: 'PX-08', scope: 'Globally', implication: 'Students who graduate without those skills start behind.' },
-        { claim: CLAIM_PX06, factId: 'PX-06', implication: 'A degree alone does not show employers what a graduate can do.' },
-      ]}
-    />
-  </div>
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- C5 · Guide (empathy first). -->
   <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos. -->
   <PartnerGuideBand
     empathy={EMPATHY.universities}
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
-  />
-
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-universities')}
-    title="What Your Students Leave With"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'A Certification Beside the Degree', text: 'Students who pass the exam add an industry certification beside their degree. Certification is not guaranteed; eligibility, exam fees, attempts and retakes are agreed in the program scope.' },
-      { kind: 'Emotional', title: 'Placement Results You Can Discuss', text: `Follow-up results at ${TRACER_MONTHS} show where students work.` },
-      { kind: 'Social', title: 'Capacity That Stays', text: 'Campus labs become blended-learning centers run by certified local facilitators.' },
-    ]}
   />
 
   <!-- C6 · Mechanism (JobReady@Campus) -->

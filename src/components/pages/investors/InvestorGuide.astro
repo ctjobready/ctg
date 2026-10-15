@@ -19,6 +19,7 @@ import { linkAttrs } from '../../../lib/url';
  * WP43 (cycle-20 review): the band was a directory interrupting the platform story (four relationship lists in a panel, then seven founder and leadership cards). The delivered tiles and the origin line stay; the relationship
  * lists are ONE compact paragraph by type, naming institutions the register names (src/data/copy.ts INVESTOR_PARTNERS), and the people entries are the "Meet the Leadership Team" link that closed the page's call-to-action band
  * (the team page has the biographies, as on Home's Guide band; no new biographies here).
+ * WP47 (cycle-22 review): the heading is "A Record Built Since 2014"; the institutions it used to name in a trailing clause follow directly below it.
  */
 interface Props {
   id?: string;
@@ -45,7 +46,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     <div class="ig__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
       <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
-      <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014, with Institutions That Reach Youth</h2>
+      <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014</h2>
       <CopyBlock block={ORIGIN_LAUNCH} class="ig__origin" />
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths.{' '}

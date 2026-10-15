@@ -256,7 +256,8 @@ test.describe('Foundations: the Funding Route 2 passage says what a platform gra
     expect(compact(await passage.textContent())).not.toMatch(/Live today|In pre-launch|Modules are rolling out|AI-native|jobready\.global/);
     // the list is stated once on the page, in the comparison
     expect(count(await mainText(page), 'Live today:')).toBe(1);
-    expect(compact(await page.locator('#funding-routes').textContent())).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
+    // WP47 (cycle-22 review): the comparison lists the live subset, "partner portals and AI chat" (the register's IN-04 and the platform page keep the full list)
+    expect(compact(await page.locator('#funding-routes').textContent())).toContain('Live today: partner portals and AI chat.');
   });
 
   // WP40 (cycle-17 review): the numbered jump links ("See Funding Route 1 / 2") are gone from the mechanism band, which links the program and platform pages instead (tests/wp40.spec.ts); the two bands keep their ids and their order
@@ -359,16 +360,16 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   test('no built page prints the bare acronym, and every page that lists marketing automation names customer relationship management beside it', () => {
     expect(pagesWithMarkup(/\bCRM\b/).map((p) => p.route)).toEqual([]);
     const listing = pagesWithMarkup(/marketing automation/i);
-    // the platform page, the Foundations comparison, the Employers and JobReady@Work FAQs (WP40, cycle-17 review: Investors' "What JobReady Does" is three short cards that name the two modules institutions use, "Partner portals and AI chat
+    // the platform page, the Employers and JobReady@Work FAQs (WP47, cycle-22 review: the Foundations comparison lists "partner portals and AI chat" only; WP40, cycle-17 review: Investors' "What JobReady Does" is three short cards that name the two modules institutions use, "Partner portals and AI chat
     // are live", beside a link to the full rollout status, as its hero lead does; so Investors no longer lists marketing automation)
-    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/', '/partner-with-us/foundations/', '/partner-with-us/employers/', '/programs/jobready-work/']));
+    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/', '/partner-with-us/employers/', '/programs/jobready-work/']));
+    expect(listing.map((p) => p.route)).not.toContain('/partner-with-us/foundations/');
     expect(listing.filter((p) => !/customer relationship management/i.test(readFileSync(p.file, 'utf8'))).map((p) => p.route)).toEqual([]);
   });
 
   for (const [route, expected] of [
     ['our-model/jobready-platform/', ['Marketing automation, customer relationship management and AI chat', 'Partner portals, marketing automation, customer relationship management and AI chat are live, and the course storefront operates.']],
     ['partner-with-us/investors/', ['Partner portals and AI chat are live.']],
-    ['partner-with-us/foundations/', ['Live today: partner portals, marketing automation, customer relationship management and AI chat.']],
   ] as [string, string[]][]) {
     test(`${route}: the live list reads in full`, async ({ page }) => {
       await open(page, route);

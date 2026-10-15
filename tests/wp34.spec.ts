@@ -19,14 +19,14 @@ const HIRING = 'We scope your talent request against the experience and credenti
 const INTRODUCTIONS = 'Job-ready candidates are introduced through CodersTrust’s placement team.';
 
 test.describe('Employers and JobReady@Work: the closing steps name their routes', () => {
-  // WP46 (cycle-22 review): Employers' hiring route is two steps in the training route's step component ("Discovery": the scoping sentence; "Introductions": the placement-team sentence); JobReady@Work's is still one sentence
+  // WP46 (cycle-22 review): Employers' hiring route is two steps in the training route's step component ("Discovery": the scoping sentence; "Introductions": the placement-team sentence); WP47: JobReady@Work's is the same two steps
   const PAGES = [
     { route: 'partner-with-us/employers/', title: 'What Happens After You Say Yes', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery', 'Introductions'] },
-    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: [] as string[] },
+    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: ['Discovery', 'Introductions'] },
   ];
 
   for (const p of PAGES) {
-    test(`${p.route}: the existing steps are labeled "For Team Training", and "For Hiring" is a parallel route with its own ${p.hiringSteps.length ? 'two steps' : 'sentence'}`, async ({ page }) => {
+    test(`${p.route}: the existing steps are labeled "For Team Training", and "For Hiring" is a parallel route with its own two steps`, async ({ page }) => {
       await open(page, p.route);
       const band = page.locator('#next-steps');
       await expect(band.locator('h2')).toHaveText(p.title);
@@ -38,16 +38,10 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
       await expect(band.locator('ol h3')).toHaveCount(0);
       // the hiring route is tied to IN-04 like the other hiring statements, and sits after the training steps
       const hiring = band.locator('.route', { has: page.locator('h3', { hasText: 'For Hiring' }) });
-      if (p.hiringSteps.length) {
-        expect(await routeSteps(hiring)).toEqual(p.hiringSteps);
-        expect((await hiring.locator('.steps__text').allTextContents()).map(compact)).toEqual([HIRING, INTRODUCTIONS]);
-        expect(await hiring.locator('[data-fact]').first().getAttribute('data-fact')).toBe('IN-04');
-        await expect(hiring.locator('p.lead')).toHaveCount(0);
-      } else {
-        await expect(hiring.locator('p')).toHaveCount(1);
-        expect(compact(await hiring.locator('p').textContent())).toBe(HIRING);
-        expect(await hiring.locator('p').getAttribute('data-fact')).toBe('IN-04');
-      }
+      expect(await routeSteps(hiring)).toEqual(p.hiringSteps);
+      expect((await hiring.locator('.steps__text').allTextContents()).map(compact)).toEqual([HIRING, INTRODUCTIONS]);
+      expect(await hiring.locator('[data-fact]').first().getAttribute('data-fact')).toBe('IN-04');
+      await expect(hiring.locator('p.lead')).toHaveCount(0);
       await expect(routes).toHaveCount(2);
       const order = await band.evaluate((el) => {
         const steps = el.querySelector('ol')!.getBoundingClientRect();
@@ -74,7 +68,7 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
         expect(l.s).toBeGreaterThanOrEqual(27.5);
       }
       const levels = await page.locator('#next-steps h2, #next-steps h3, #next-steps h4').evaluateAll((els) => els.map((e) => e.tagName));
-      // the band's H2, the training label (H3) over its steps (H4), then the hiring label (H3) over its steps (H4) where it has them (WP46: Employers)
+      // the band's H2, the training label (H3) over its steps (H4), then the hiring label (H3) over its steps (H4) (WP46: Employers; WP47: JobReady@Work)
       expect(levels).toEqual(['H2', 'H3', ...p.steps.map(() => 'H4'), 'H3', ...p.hiringSteps.map(() => 'H4')]);
     });
   }

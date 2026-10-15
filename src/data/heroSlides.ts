@@ -121,11 +121,12 @@ if (!reachDetail || !/^Bangladesh plus \d+ other countries and territories; most
 const reachCount = fact('SC-03').stat?.value;
 if (!reachCount || !/^\d+$/.test(reachCount)) throw new Error('heroSlides: SC-03 value no longer reads as a plain count of countries and territories');
 /**
- * GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for
+ * GV-12 reads "Six government contracts with training and curriculum work scoped for 31,200+ people; official training partner of Bangladesh’s National University for
  * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
+ * WP47 (cycle-22 review): "work scoped for" where it read "scopes covering", which could be read as people served.
  */
-const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
-if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
+const governmentScope = /^(Six government contracts with training and curriculum work scoped) for ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
+if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... work scoped for N+ people; official training partner of ... onboarding N+ learners"');
 /**
  * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
  * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.

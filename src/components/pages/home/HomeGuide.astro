@@ -3,12 +3,12 @@ import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import PartnerRelationships from './PartnerRelationships.astro';
 import CopyBlock from './CopyBlock.astro';
-import { EMPATHY, ORIGIN } from '../../../data/copy';
+import { ORIGIN } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * C5 Guide (Home), empathy first: the empathy line opens the band, then the H2, ORIGIN, the method signal
- * (TalentLEAP) and the leadership link, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
+ * C5 Guide (Home): the H2, ORIGIN, the method signal (TalentLEAP) and the leadership link, then the partner logos grouped into relationship cards (WP24a; PartnerRelationships).
+ * WP47 (owner decision 2026-10-15): the empathy line that used to open the band, between the eyebrow and the H2 ("You need more than enrollment numbers: ..."), is gone; the band opens with its heading.
  * WP30c: the geography line (130,000+ trained, 15 countries and territories) is gone from this band: the hero card and the reach slide state it, so it
  * appears twice on the page and not three times.
  * WP38 (cycle-15 review): the two authority tiles (31,200+ contract scope and 1.5M+ National University learners) are gone too: slide 6 of the results carousel states both. The copy is one column at a reading width.
@@ -26,7 +26,6 @@ const team = linkAttrs('/about/team/');
   <div class="guide">
     <div class="guide__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
-      <p class="guide__empathy" data-reveal>{EMPATHY.home}</p>
       <h2 id={`${id}-h`} data-reveal>We’ve Built This Path Since 2014</h2>
       <CopyBlock block={ORIGIN} class="guide__origin" />
       <p class="guide__method" data-fact="IN-06">
@@ -55,14 +54,10 @@ const team = linkAttrs('/about/team/');
   .guide__copy > * {
     margin: 0;
   }
-  .guide__empathy {
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    font-weight: var(--fw-medium);
-    color: var(--secondary);
-    padding-left: var(--space-md);
-    border-left: 4px solid var(--tertiary);
-    max-width: 36rem;
+  /* The heading takes the section-heading color of every other Home band's title (SectionHeader). It was the one Home band title left in the body-heading color; with the empathy line above it gone (WP47) it sits directly under
+     the eyebrow, as in the other bands. */
+  .guide__copy h2 {
+    color: var(--ctx-section-heading);
   }
   .guide__origin {
     font-size: var(--fs-body-m);

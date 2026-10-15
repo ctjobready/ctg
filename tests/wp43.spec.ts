@@ -59,7 +59,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
     expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');
-    await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014, with Institutions That Reach Youth');
+    await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
     expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
   });
 
@@ -328,15 +328,13 @@ test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporti
 });
 
 test.describe('Development Partners and Foundations: headings that are not absolute claims (items 7 and 9)', () => {
-  test('Development Partners: the cost-of-waiting band is headed "Build Work Entry into the Training Budget" and keeps its two cards', async ({ page }) => {
+  // WP47 (owner decision 2026-10-15): the cost-of-waiting band ("Build Work Entry into the Training Budget") is gone from Development Partners (Home carries it), so neither its heading nor the absolute claim it replaced is on the page (tests/wp47.spec.ts)
+  test('Development Partners: no cost-of-waiting band, and nothing says "Training Without Placement Spends Budget Without Earnings"', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    await expect(page.locator('section#cost')).toHaveCount(1);
-    await expect(page.locator('#cost .eyebrow')).toHaveText('The Cost of Waiting');
-    await expect(page.locator('#cost h2')).toHaveText('Build Work Entry into the Training Budget');
-    expect('Build Work Entry into the Training Budget').toBe(titleCase('Build Work Entry into the Training Budget'));
-    expect(await mainText(page)).not.toContain('Training Without Placement Spends Budget Without Earnings');
-    await expect(page.locator('#cost article.cost')).toHaveCount(2);
-    expect(await texts(page, '#cost article h3')).toEqual(['AI Is Changing Freelance Demand', 'Training Does Not Always Lead to Employment']);
+    await expect(page.locator('section#cost')).toHaveCount(0);
+    const text = await mainText(page);
+    expect(text).not.toContain('Training Without Placement Spends Budget Without Earnings');
+    expect(text).not.toContain('Build Work Entry into the Training Budget');
   });
 
   test('Foundations: the problem band is headed "Fund Training That Reaches Paid Work" and keeps its three pains', async ({ page }) => {

@@ -1,7 +1,7 @@
 ---
 /**
  * P5 Foundations and CSR: /partner-with-us/foundations/ (T3, implements doc 04 matrix 4.3).
- * C1 to C14 in order, as the numbered table in doc 06 P5.
+ * C1 to C14 in order, as the numbered table in doc 06 P5, without C3 (Cost of Waiting) and C4 (Imagine), which the audience pages leave to Home since WP47.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the evidence-and-fit brief,
  * the reporting-and-recognition paragraph (the features row carries it), the full review cycle (it lives on the partnership overview, as on the Development Partners page)
  * and the restated three-step mechanism. The two inquiry links now sit directly under the two-route comparison they belong to (cycle-7 IA review).
@@ -19,6 +19,10 @@
  * WP43 (cycle-20 review): the problem band's heading is "Fund Training That Reaches Paid Work" (it was "Grants Buy Hours. You Want Earnings"); the first pain below it still says that grants buy hours, but rarely earnings.
  * WP46 (cycle-22 review): "What Happens After You Say Yes" has the four Development Partners steps, scoped "For cohort grants." (the call-to-action band above keeps what is discussed for a platform grant), and the cohort timing that the
  * call-to-action urgency line carried is now the steps' own; the closing partner line reads "Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus." (it was "Development and NGO partners include ...", which mislabeled the foundations among them).
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Every Year of Delay Leaves a Cohort Without a Route to Work") and the Imagine band ("What a Funded
+ * Cohort Could Show") are gone; Home carries them. No gate or test needed them here: the page's problem band is statements without a tile (as before), so the 62 million (PX-01) that the cost band's first
+ * card carried is now left to Home; the monthly reports and the follow-up surveys they mentioned are in the cards, the FAQ and "Reporting and Review". Funding Route 2's platform status reads "Live today: partner portals and AI chat."
+ * (the subset Investors uses; JobReady Platform keeps the full list).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -28,9 +32,6 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostSection from '../../../components/pages/programs/CostSection.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
@@ -49,7 +50,6 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { linkAttrs } from '../../../lib/url';
@@ -73,7 +73,6 @@ const { title, description } = meta(
 
 // Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
 const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
-const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
 ---
 
 <LandingLayout
@@ -117,18 +116,9 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     />
   </ProblemBand>
 
-  <!-- C3 · Agitation -->
-  <div class="pp-two">
-    <CostSection
-      title="Every Year of Delay Leaves a Cohort Without a Route to Work"
-      blocks={[
-        { claim: 'Educated Young People Are Waiting', factId: 'PX-01', implication: 'Every year of delay is a cohort without a path.' },
-        { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Look for programs that build in placement, tracking and evaluation.' },
-      ]}
-    />
-  </div>
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- C5 · Guide (empathy first). -->
   <PartnerGuideBand
     empathy={EMPATHY.foundations}
     statements={[
@@ -136,18 +126,6 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
-  />
-
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-foundations')}
-    title="What a Funded Cohort Could Show"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'Monthly Reports from Cohort One', text: 'Enrollment, certification, placements and first earnings arrive in your monthly reports.' },
-      { kind: 'Emotional', title: 'Who Started Earning', text: `The ${sixMonth}-month follow-up survey shows who started earning, from jobs, freelance clients and businesses of their own.` },
-      { kind: 'Social', title: 'Results by Group', text: 'Women’s and priority-group shares are reported alongside the headline results.' },
-    ]}
   />
 
   <!-- C6 · Mechanism (two funding routes). WP25s: one chooser, one naming scheme: Funding Route 1 (YouthWIDE Cohort Grants) and Funding Route 2 (JobReady Platform Grants), in the same order here and in the two offer bands below.

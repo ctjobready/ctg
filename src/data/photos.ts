@@ -235,13 +235,7 @@ const FUTURE: Record<string, [string, string, string]> = {
   'jobready-campus': ['general/graduates-caps', 'general/office-support-headset', 'general/computer-lab-rows'],
   'jobready-work': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/lab-women-screen'],
   superkids: ['superkids/classroom-uniform', 'superkids/circuit-building', 'superkids/mat-activity'],
-  // WP30b: the hero is now the Albania photograph, and the Kosovo case card (the wider Kosovo photograph) is on the page, so the band takes a third Bangladesh photograph.
-  'partners-development': ['general/computer-lab-rows', 'general/yes-collage', 'general/women-learners-classroom'],
-  'partners-employers': ['general/office-support-headset', 'general/computer-lab-rows', 'general/classroom-girls'],
-  'partners-foundations': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/yes-collage'],
-  'partners-governments': ['general/woman-learner-laptop', 'general/office-support-headset', 'general/lab-women-screen'],
-  'local-partners': ['general/computer-lab-rows', 'general/lab-women-screen', 'general/kosovo-women-screens'],
-  'partners-universities': ['general/graduates-caps', 'nu-pgd/students-laptops', 'general/students-campus-smiling'],
+  // WP47 (owner decision 2026-10-15): the audience pages (Development Partners, Employers, Foundations, Governments, Local Partners, Universities) have no "what success looks like" band any more, so their entries are gone.
 };
 export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(photo);
 

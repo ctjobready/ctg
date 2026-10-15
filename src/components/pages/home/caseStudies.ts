@@ -22,10 +22,11 @@ export function casePhoto(slug: string): CardPhoto | undefined {
 /**
  * WP23: the Her Power card's label read as one clause with another inside it ("tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%").
  * It states the result first and the base after it, from PR-05's own label (the figures are not retyped).
+ * WP47 (cycle-22 review): the base is "among the 2,500 women CodersTrust trained directly" (the tracked 800 are a subset of those 2,500), where it read "from the 2,500 trained directly by CodersTrust".
  */
-const herPowerParts = /^tracked women, (from the [\d,]+ trained directly by CodersTrust), in work: (\d+%)$/.exec(fact('PR-05').stat?.label ?? '');
+const herPowerParts = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: (\d+%)$/.exec(fact('PR-05').stat?.label ?? '');
 if (!herPowerParts) throw new Error('caseStudies: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
-const herPowerLabel = `tracked women in work (${herPowerParts[2]}), ${herPowerParts[1]}`;
+const herPowerLabel = `tracked women in work (${herPowerParts[2]}), among the ${herPowerParts[1]} women CodersTrust trained directly`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
  * 71% is program records, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.

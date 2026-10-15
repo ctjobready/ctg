@@ -66,7 +66,7 @@ test.describe('figures say what they measure', () => {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
           expect(cards, 'home').not.toContain('372 of 800');
         } else {
-          expect(cards, route).toContain('372 of 800 tracked women in work (47%), from the 2,500 trained directly by CodersTrust');
+          expect(cards, route).toContain('372 of 800 tracked women in work (47%), among the 2,500 women CodersTrust trained directly');
         }
         expect(cards, route || 'home').not.toContain('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
       }
@@ -202,17 +202,17 @@ test.describe('corporate offer pages carry no youth-program trial block', () => 
   });
 });
 
-test.describe('credibility comes before the vision on the audience pages', () => {
+// WP47 (owner decision 2026-10-15): the audience pages have no "What Success Looks Like" band (#future) any more, so credibility ("Our Track Record") comes after the problem band and is followed by the mechanism band (tests/wp47.spec.ts)
+test.describe('credibility comes before the model on the audience pages', () => {
   for (const slug of AUDIENCE) {
-    test(`${slug}: "Our Track Record" (#guide) sits directly before "What Success Looks Like" (#future); both are light bands, so the rhythm around them is unchanged`, async ({ page }) => {
+    test(`${slug}: "Our Track Record" (#guide) sits directly after the problem band and directly before the mechanism band, and is a light band; there is no #future band`, async ({ page }) => {
       await open(page, `partner-with-us/${slug}/`);
       const order = await ids(page);
-      expect(order.indexOf('guide'), 'guide band').toBeGreaterThan(-1);
-      expect(order.indexOf('future'), 'future band').toBe(order.indexOf('guide') + 1);
-      // both bands are on the light ground, as before the swap, so no dark band moved next to another
+      expect(order.indexOf('guide'), 'guide band').toBe(order.indexOf('problem') + 1);
+      expect(order.indexOf('future'), 'future band').toBe(-1);
+      expect(order.indexOf('mechanism'), 'mechanism band').toBe(order.indexOf('guide') + 1);
       const grounds = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => ({ id: s.id, dark: /band--(klein|deep-ink)/.test(s.className) })));
-      const at = grounds.findIndex((g) => g.id === 'guide');
-      expect(grounds[at].dark || grounds[at + 1].dark, 'guide and future are light bands').toBe(false);
+      expect(grounds.find((g) => g.id === 'guide')!.dark, 'the guide is a light band').toBe(false);
     });
   }
 });

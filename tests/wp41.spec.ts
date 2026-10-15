@@ -120,7 +120,7 @@ test.describe('Investors: the track-record band names relationships, not distrib
     expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03');
     await expect(page.locator('#guide .ig__channels')).toHaveCount(0);
     expect(await mainText(page)).not.toMatch(/Distribution Through|Four Kinds of Institutional Relationship/);
-    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014, with Institutions That Reach Youth', 'Delivered Since 2014']);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Delivered Since 2014']);
   });
 });
 
@@ -351,14 +351,12 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     await expect(page.locator('#guide .pg__list')).not.toContainText('AWS');
   });
 
-  test('the AI card states the 11M and 9M jobs and leaves the all-trends clause out; the register sentence is unchanged and the card keeps its fact', async ({ page }) => {
+  // WP47 (owner decision 2026-10-15): Employers has no cost-of-waiting band any more, so its AI card ("AI Is Reshaping the Workforce", the 11M and 9M jobs) is gone with it; the register sentence stays whole
+  test('the register’s PX-07 sentence is unchanged, and Employers prints none of its figures (no all-trends clause anywhere on the page)', async ({ page }) => {
     expect(fact('PX-07').text).toContain('across all trends 170M created vs. 92M displaced');
     await open(page, 'partner-with-us/employers/');
-    const card = page.locator('#cost article', { hasText: 'AI Is Reshaping the Workforce' });
-    expect(compact(await card.locator('.cost__data').textContent())).toBe('Globally, AI and information processing are expected to create 11M jobs and displace 9M by 2030.');
-    expect(await card.locator('.cost__data').getAttribute('data-fact')).toBe('PX-07');
-    const text = await mainText(page);
-    expect(text).not.toMatch(/170M|92M|across all trends/);
+    expect(await mainText(page)).not.toMatch(/170M|92M|across all trends|11M jobs/);
+    await expect(page.locator('[data-fact~="PX-07"]')).toHaveCount(0);
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

@@ -345,7 +345,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },

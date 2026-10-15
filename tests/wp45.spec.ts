@@ -119,7 +119,7 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
     const lead = slide(page, 2).locator('.hs__lead');
     // WP46 (cycle-22 review): the note says who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
     expect(compact(await lead.textContent())).not.toContain('not people trained');

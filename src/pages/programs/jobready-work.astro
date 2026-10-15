@@ -18,9 +18,10 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import RouteBlock from '../../components/ui/RouteBlock.astro';
+import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
+import { EMPATHY, EMPLOYER_HIRING_STEPS, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -135,7 +136,8 @@ const approach = [
   <!-- C13: one solid primary; the talent action is outline -->
   <CTABand id="cta" heading="Tell Us About Your Team and Your Roles" cta={{ label: 'Plan Your First Team Program', href: work.href }} micro={MICRO_COMMITMENT} secondary={{ label: talent.label, href: talent.href }} />
 
-  <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above (and, WP37, in the hero). -->
+  <!-- C14. WP34 (cycle-11 review): the page offers training and hiring, so the steps are labeled "For Team Training" and hiring has its own short route; the "Hire JobReady Talent" link stays in the C13 band above (and, WP37, in the hero).
+       WP47 (cycle-22 review): the hiring route is the Employers page's two steps (EMPLOYER_HIRING_STEPS), in the same step component as the training route (it was one sentence beside five steps). -->
   <NextSteps
     route="For Team Training"
     steps={[
@@ -148,7 +150,7 @@ const approach = [
     firstAction={C14_FIRST}
   >
     <RouteBlock label="For Hiring">
-      <p class="lead" data-fact="IN-04" data-reveal>{EMPLOYER_HIRING_ROUTE}</p>
+      <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
     </RouteBlock>
   </NextSteps>
 

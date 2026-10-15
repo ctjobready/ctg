@@ -1,7 +1,7 @@
 ---
 /**
  * P7 Employers: /partner-with-us/employers/ (T3, implements doc 04 matrix 4.6).
- * C1 to C14 in order, as the numbered table in doc 06 P7.
+ * C1 to C14 in order, as the numbered table in doc 06 P7, without C3 (Cost of Waiting) and C4 (Imagine), which the audience pages leave to Home since WP47.
  * WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit check, the second statement of the
  * placement-team sentence (the hiring band says it), the restated "measures you set" card and the fifth next step. Three FAQs, not five.
  * WP31 (cycle-8 review): the youth programs' trial, survey and paid-work pathway blocks are gone from this corporate offer page; "Broader Evidence from Our Youth Programs" is a two-link
@@ -12,6 +12,9 @@
  * WP41 (cycle-18 review): "Our Track Record" leads with its delivered figure (the 23,000+ Grameenphone Academy enrollments, as the headline stat); the ministry contract keeps its "Contract scope:" wording (the register's
  * presentation rule: a scope of work is never worded as delivered training), the AIvolve partnership is the one other line, and "AWS Authorized Training Partner" is a line under the logo strip, beside the AWS logo.
  * "AI Is Reshaping the Workforce" states the 11M and 9M jobs and leaves the all-trends clause out.
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("AI Is Changing the Skills Your Teams Need": the 11M and 9M jobs, the AI-skills growth) and the Imagine
+ * band ("What Changes for Your Team") are gone; Home carries them. Nothing on this page depended on them: the 72% hiring gap stays in the problem band, and the
+ * AI-workflow and certification claims are in "JobReady@Work: Built Around Your Roles" and "What Your Business Gets". The hiring route's two steps are the shared EMPLOYER_HIRING_STEPS (JobReady@Work uses them too).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -19,9 +22,6 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostSection from '../../../components/pages/programs/CostSection.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
@@ -43,7 +43,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_HIRING_ROUTE, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -60,13 +60,8 @@ const { title, description } = meta(
 
 // Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
 const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
-
-// WP46 (cycle-22 review): the hiring route is two steps in the same step component as the training route (it was one sentence beside four steps), both in wording this page already has:
-// the scoping sentence (EMPLOYER_HIRING_ROUTE, IN-04) and "Job-ready candidates are introduced through CodersTrust’s placement team." (the "Hire Talent" band's lead).
-const hiringSteps = [
-  { title: 'Discovery', text: EMPLOYER_HIRING_ROUTE },
-  { title: 'Introductions', text: 'Job-ready candidates are introduced through CodersTrust’s placement team.' },
-];
+// WP46 (cycle-22 review): the hiring route is two steps in the same step component as the training route (it was one sentence beside four steps), both in wording this page already has (EMPLOYER_HIRING_STEPS in copy.ts;
+// WP47: JobReady@Work uses the same two steps).
 ---
 
 <LandingLayout
@@ -122,18 +117,9 @@ const hiringSteps = [
     />
   </ProblemBand>
 
-  <!-- C3 · Agitation -->
-  <div class="pp-two">
-    <CostSection
-      title="AI Is Changing the Skills Your Teams Need"
-      blocks={[
-        { claim: 'Jobs Requiring AI Skills Are Growing and Paying More', factId: 'PX-08', scope: 'Globally', implication: 'Waiting means competing for the same scarce talent.' },
-        { claim: 'AI Is Reshaping the Workforce', factId: 'PX-07', excerpt: 'Globally, AI and information processing are expected to create 11M jobs and displace 9M by 2030', implication: 'Training plans need to keep pace with how roles are changing.' },
-      ]}
-    />
-  </div>
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- C5 · Guide (empathy first). -->
   <PartnerGuideBand
     empathy={EMPATHY.employers}
     stats={['SC-15']}
@@ -142,18 +128,6 @@ const hiringSteps = [
     logoNote={{ facts: ['PA-06'] }}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="private"
-  />
-
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-employers')}
-    title="What Changes for Your Team"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'A Team Fluent in AI Workflows', text: 'Your team applies AI tools in daily work.' },
-      { kind: 'Emotional', title: 'Certification for Candidates Who Pass the Exam', text: 'Candidates who pass the exam hold the industry certification for their track.' },
-      { kind: 'Social', title: 'A Reliable Pipeline', text: 'Digital talent is introduced through CodersTrust’s placement team.' },
-    ]}
   />
 
   <!-- C6 · Mechanism (JobReady@Work) -->
@@ -244,7 +218,7 @@ const hiringSteps = [
     ]}
   >
     <RouteBlock label="For Hiring">
-      <div data-fact="IN-04"><StepFlow level={4} steps={hiringSteps} /></div>
+      <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
     </RouteBlock>
   </StepsBand>
   <Reinforcement firstAction={C14.variants.employers} logos={false} reminder={false} validate={C14.validateFor.employers} />

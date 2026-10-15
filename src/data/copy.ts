@@ -57,9 +57,8 @@ export const HEADLINE: Record<Audience, string> = {
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
-// WP44 (cycle-21 review): Development Partners' guide band has no empathy line (it opens with the launch line), so its key is gone.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners'>, string> = {
-  home: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
+// WP44 (cycle-21 review): Development Partners' guide band has no empathy line (it opens with the launch line), so its key is gone. WP47 (owner decision 2026-10-15): nor does Home's, so `home` is gone too.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home'>, string> = {
   governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
@@ -376,6 +375,15 @@ export const EMPLOYER_PRICING = 'Pricing is set per program; we share an indicat
 /** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
 export const EMPLOYER_HIRING_ROUTE = 'We scope your talent request against the experience and credentials available in the candidate pool.';
 
+/**
+ * The hiring route's two steps, in the same step component as the training route's (WP46, cycle-22 review: Employers; WP47: JobReady@Work mirrors them, with the same wording and component). Both sentences are wording the pages
+ * already had: "Discovery" is the scoping sentence above (IN-04) and "Introductions" is the placement-team sentence of the "Hire Talent" band's lead and of the "Talent Through the Placement Team" option.
+ */
+export const EMPLOYER_HIRING_STEPS = [
+  { title: 'Discovery', text: EMPLOYER_HIRING_ROUTE },
+  { title: 'Introductions', text: 'Job-ready candidates are introduced through CodersTrust’s placement team.' },
+];
+
 // WP46 (cycle-22 review): SPEED, the grant-pilot urgency line, is gone: the call-to-action bands of Development Partners and Foundations no longer repeat the timing that the Next Steps band directly below them shows as steps (PD-04).
 
 /** C13 urgency line for the universities page: a university's start follows its academic calendar, so it makes no grant-pilot timing claim (PD-04 is for grant-funded pilots). */
@@ -471,8 +479,9 @@ export const MICRO_COMMITMENT_EMPLOYERS = 'Your first step is a conversation, no
 /**
  * The line over the program options on Home (WP25h), and now on the Universities and JobReady@Campus option bands (WP36, cycle-13 review): the sizes (1,000–2,500 trainees and so on) are
  * options to scope in the discovery session, not a commitment, so a campus reads them as a range to choose from rather than a quantity asked of it.
+ * WP47 (cycle-22 review): a full sentence with its subject ("These are program sizes, not commitments: ..."), where it was a fragment that began with a noun phrase.
  */
-export const PROGRAM_SIZES_NOTE = 'Program sizes, not a commitment: use the discovery session to choose a starting scope for your goals, country and delivery capacity.';
+export const PROGRAM_SIZES_NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
 
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation

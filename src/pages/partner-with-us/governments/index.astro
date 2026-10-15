@@ -1,7 +1,7 @@
 ---
 /**
  * P3 Governments: /partner-with-us/governments/ (T3, implements doc 04 matrix 4.2).
- * C1 to C14 in order, as the numbered table in doc 06 P3.
+ * C1 to C14 in order, as the numbered table in doc 06 P3, without C3 (Cost of Waiting) and C4 (Imagine), which the audience pages leave to Home since WP47.
  * WP30c (owner direction 2026-10-14, "less is more"): the page keeps every CMF band and states each point once. Gone: the In Short summary and its jump links,
  * the fit check, the "Outside Bangladesh?", national-target, scale and coastal-context callouts, the survey callout, the second Her Power card set, the three-step
  * restatement of the mechanism, the standard-inclusions list and the four-point restatement of the scorecard. The H1 is the owner's wording.
@@ -19,6 +19,9 @@
  * WP42 (cycle-19 review): "Our Approach" is the two shared sentences with the reader named in the second ("Your agency receives monthly reports on progress toward paid work, as agreed in the program scope."; POSITIONING.governments, declared whole in scripts/check-facts.mjs).
  * WP46 (cycle-22 review): "What a Ministry Sees" is gone (it restated the reporting cadence the "Our Approach" statement, the delivery model and the FAQ already give); its one detail that stood nowhere else, the follow-up surveys at 3, 6 and 12 months
  * after each course (PD-09, read as TRACER_MONTHS), now sits in the delivery model's "Placement and Monthly Reports" card.
+ * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Without Tracking, Agencies Cannot See What Training Delivers") and the Imagine band
+ * ("What Your Next Budget Cycle Could Show") are gone; Home carries them. Nothing on this page depended on them: the reporting and tracking claims stay in "Our Approach", the delivery model and
+ * "Spending Measured Against Outcomes"; the capacity claim stays in "Capacity That Stays" and "Capacity Designed to Stay in Your System". The "Graduates Struggle to Find Work" card says "A degree alone does not guarantee a job offer."
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -28,9 +31,6 @@ import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../../components/sections/DefinitionBand.astro';
 import ProblemBand from '../../../components/sections/ProblemBand.astro';
-import CostSection from '../../../components/pages/programs/CostSection.astro';
-import FutureBand from '../../../components/sections/FutureBand.astro';
-import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
@@ -49,7 +49,6 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
-import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -108,7 +107,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Graduates struggle to find work', text: 'A degree alone is not producing job offers.' },
+        { q: 'Graduates struggle to find work', text: 'A degree alone does not guarantee a job offer.' },
         { q: 'Training budgets do not show up as earnings', text: 'Budgets are measured by enrollment, not by who is earning afterward.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact.
         { q: 'Trainer and curriculum capacity is thin', text: 'Trainers and localized curricula are rarely ready at national scale.' },
@@ -116,33 +115,14 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
     />
   </ProblemBand>
 
-  <!-- C3 · Agitation -->
-  <CostSection
-    title="Without Tracking, Agencies Cannot See What Training Delivers"
-    blocks={[
-      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Placement and tracking have to be built into the national program from the start, not added afterward.' },
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand.' },
-    ]}
-  />
+  <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- C5 · Guide (empathy first). -->
   <PartnerGuideBand
     empathy={EMPATHY.governments}
     statements={[{ facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
-  />
-
-  <!-- C4 · Future state -->
-  <FutureBand
-    photos={futurePhotos('partners-governments')}
-    title="What Your Next Budget Cycle Could Show"
-    lead="Illustrative, not case studies."
-    vignettes={[
-      { kind: 'Functional', title: 'Young People in Work', text: 'Monthly reports will show young people moving into work, with certification results reported separately.' },
-      { kind: 'Emotional', title: 'Employers Find Job-Ready Talent', text: 'Employers find job-ready talent, including young people prepared for industry certification exams.' },
-      { kind: 'Social', title: 'Capacity That Stays', text: 'Trained facilitators and localized curricula stay in your system after the program.' },
-    ]}
   />
 
   <!-- C6 · Mechanism (YouthWIDE-style delivery) -->
