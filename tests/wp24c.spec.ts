@@ -228,7 +228,8 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await expect(group('Partner or Fund').getByRole('heading', { level: 4, name: 'Due-Diligence Teams' })).toHaveCount(1);
     await expect(page.getByRole('heading', { level: 3, name: 'Study or Contact the Media' })).toBeVisible();
     await expect(group('Study or Contact the Media').getByRole('heading', { level: 4, name: 'NU Postgraduate Diploma Applicants' })).toHaveCount(1);
-    await expect(group('Hire or Train')).toContainText('Connect with job-ready digital talent through the placement team.');
+    // WP42 (cycle-19 review): the group is "Educate, Hire or Train" (it also holds the universities and the schools)
+    await expect(group('Educate, Hire or Train')).toContainText('Connect with job-ready digital talent through the placement team.');
     await expect(page.locator('#next')).toContainText('Public procurement follows the agency’s own timeline.');
   });
 
@@ -252,9 +253,10 @@ test.describe('Our Model', () => {
     await expect(page.getByRole('heading', { level: 2, name: 'Safeguarding and Data Protection Are Agreed per Program' })).toBeVisible();
   });
 
-  test('the hub says each supported cohort agrees an outcome-tracking plan before delivery begins', async ({ page }) => {
+  // WP42 (cycle-19 review): "Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins." (it was "... and every supported cohort agrees an outcome-tracking plan ...")
+  test('the hub says partners agree an outcome-tracking plan for every supported cohort before delivery begins', async ({ page }) => {
     await open(page, 'our-model/');
-    await expect(page.locator('#path')).toContainText('agrees an outcome-tracking plan before delivery begins');
+    await expect(page.locator('#path .sh__lead')).toHaveText('Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins.');
   });
 
   test('JobReady Platform: the four jobs are one intro sentence feeding a status table with a Supply Talent row, and the Why band links the evidence', async ({ page }) => {

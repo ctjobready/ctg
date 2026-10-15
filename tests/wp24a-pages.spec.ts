@@ -36,9 +36,17 @@ test.describe('Investors page structure', () => {
     await expect(page.locator('#proof-band').getByRole('link', { name: 'Case Studies' })).toHaveAttribute('href', /\/impact\/case-studies\/$/);
   });
 
-  test('reach is its own band, grouped "Delivered Since 2014" and "Contracted Scope"', async ({ page }) => {
+  // WP42 (cycle-19 review): "Delivered Since 2014" moved into the track-record band (#guide), before the institutional relationships; the contract scope stays in its own labeled block in #reach ("Contracts, Pipeline and Recognition")
+  test('delivered reach leads the track-record band; the contract scope is its own labeled block in the next reach band', async ({ page }) => {
     await page.goto(URL);
-    expect(await texts(page, '#reach h3')).toEqual(['Delivered Since 2014', 'Contracted Scope']);
+    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014', 'Four Kinds of Institutional Relationship', 'Founders', 'Current Leadership']);
+    expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
+    const order = await page.evaluate(() => {
+      const top = (sel: string) => (document.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
+      return { delivered: top('#guide .ig__delivered'), relationships: top('#guide .ig__channels'), leadership: top('#guide .ig__lead-h') };
+    });
+    expect(order.delivered, 'the delivered figures come before the relationships').toBeLessThan(order.relationships);
+    expect(order.relationships, 'the relationships come before the leadership').toBeLessThan(order.leadership);
   });
 
   test('the offer is one four-step sequence: no separate low-risk band, no second next-steps band', async ({ page }) => {

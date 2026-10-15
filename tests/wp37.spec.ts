@@ -86,12 +86,12 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     }
   });
 
-  test('each program figure is stated once on Home: Kosovo and Her Power are in slide 3 only, and the band names only the fact it still states', async ({ page }) => {
+  test('each program figure is stated once on Home: Kosovo and Her Power are in slide 4 only, and the band names only the fact it still states', async ({ page }) => {
     await open(page, '');
     const text = await mainText(page);
-    expect(count(text, '102 of 150'), 'Kosovo, slide 3').toBe(1);
-    expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 3').toBe(1);
-    expect(count(text, 'Her Power: 47% of 800 tracked women in work.'), 'Her Power, slide 3').toBe(1);
+    expect(count(text, '102 of 150'), 'Kosovo, slide 4').toBe(1);
+    expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
+    expect(count(text, 'Her Power: 47% of 800 tracked women in work.'), 'Her Power, slide 4').toBe(1);
     expect(text).not.toContain('372 of 800');
     expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01']);
   });

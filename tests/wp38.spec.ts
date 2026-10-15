@@ -90,7 +90,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
 });
 
 test.describe('Home: the Guide band and the cost-of-waiting card', () => {
-  test('the Guide band drops the 31,200+ and 1.5M+ tiles (slide 6 of the carousel states both) and keeps its copy and logos', async ({ page }) => {
+  test('the Guide band drops the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both) and keeps its copy and logos', async ({ page }) => {
     await open(page, '');
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide).not.toMatch(/31,200|1\.5M/);
@@ -100,9 +100,10 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(page.locator('#guide').getByRole('link', { name: 'Meet the Leadership Team' })).toHaveCount(1);
     await expect(page.locator('#guide .rel__title')).toHaveCount(4);
-    const slide6 = compact(await page.locator('[data-hs-slide]').nth(5).textContent());
-    expect(slide6).toContain('31,200+ people (contract scope, not people trained)');
-    expect(slide6).toContain('1.5M+ learners');
+    // (WP42, cycle-19 review: the government slide is the second slide)
+    const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
+    expect(slide2).toContain('31,200+ people (contract scope, not people trained)');
+    expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);
     expect(count(text, '1.5M+'), 'the 1.5M+ is stated once on Home').toBe(1);
@@ -196,7 +197,8 @@ test.describe('the three funder pains that had a heading and no line now have on
 
 test.describe('Guide band: one origin line on the audience pages, the two-sentence history on Home', () => {
   const ORIGIN_SHORT = 'Since 2014, from a Copenhagen launch to programs in 15 countries and territories.';
-  const AUDIENCE = ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/', 'partner-with-us/investors/'];
+  // WP42 (cycle-19 review): Investors' Guide band shows SC-03's tile since "Delivered Since 2014" moved into it, so its origin line is the launch alone, as on Development Partners (tests/wp42.spec.ts)
+  const AUDIENCE = ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/'];
 
   for (const route of AUDIENCE) {
     test(`${route}: the Guide band says it in one line tied to ID-02 and SC-03`, async ({ page }) => {
@@ -230,7 +232,8 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
 });
 
 test.describe('Investors: the definition band no longer repeats the 130,000+', () => {
-  test('the second paragraph is the platform sentence alone; "Reach to Date" still carries the count', async ({ page }) => {
+  // WP42 (cycle-19 review): the count is the first tile of "Delivered Since 2014", which moved from "Reach to Date" (now "Contracts, Pipeline and Recognition") into the track-record band (#guide)
+  test('the second paragraph is the platform sentence alone; the track-record band carries the count', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(await texts(page, '#definition .def__text')).toEqual([
       'CodersTrust is a workforce-development organization that trains and mentors educated, unemployed and underemployed youth in emerging markets for digital work and connects them to local, remote and global work.',
@@ -238,15 +241,17 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
     ]);
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(compact(await page.locator('#definition').textContent())).not.toContain('130,000');
-    expect(compact(await page.locator('#reach').textContent())).toContain('130,000+');
+    expect(compact(await page.locator('#guide').textContent())).toContain('130,000+');
+    expect(compact(await page.locator('#reach').textContent())).not.toContain('130,000+');
     expect(count(await mainText(page), '130,000+'), 'the 130,000+ is stated once on Investors').toBe(1);
   });
 });
 
 test.describe('Home carousel: the reach slide has its figure, the speed slide leads with its figure', () => {
-  test('slide 5 shows SC-03’s 15 with its caption above the unchanged heading, line and link', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the speed slide is the fifth and the reach slide the sixth
+  test('slide 6 shows SC-03’s 15 with its caption above the unchanged heading, line and link', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(4);
+    const slide = page.locator('[data-hs-slide]').nth(5);
     await expect(slide.locator('h2')).toHaveText('Explore Where Our Programs Have Run');
     await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
@@ -258,9 +263,9 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
   });
 
   // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
-  test('slide 4 reads "First Earnings Within Six Months" (Title Case, tied to OC-05) and keeps its survey base in the lead and the tile', async ({ page }) => {
+  test('slide 5 reads "First Earnings Within Six Months" (Title Case, tied to OC-05) and keeps its survey base in the lead and the tile', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(3);
+    const slide = page.locator('[data-hs-slide]').nth(4);
     const heading = 'First Earnings Within Six Months';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));

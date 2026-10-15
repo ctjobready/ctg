@@ -6,7 +6,6 @@ import CostBand from '../../../components/sections/CostBand.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import GuideBand from '../../../components/sections/GuideBand.astro';
-import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
@@ -21,8 +20,10 @@ import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
+import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
+import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { LOCAL_PARTNER_PAINS, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
@@ -33,6 +34,8 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * check, the lab-access paragraph, the planned third-gender program sentence, the page-local copy of the comparison table (the shared one now has the corrected
  * rows), the restated three-step list and the second timing reminder. The H1 names the outcome; the page stays Bangladesh-specific because its audience is.
  * WP39 (cycle-16 review): "What Your Community Gets" is three short cards (IncludesBand), one for each ranked pain, not the concern / inclusion / benefit matrix.
+ * WP42 (cycle-19 review): the full trial-and-survey band (the +41% and +54% income results, the 52.8% / 63.1% employment chart and its table, the survey chart and the median income) is a light strip, "Evidence from Our Wider
+ * Youth Programs", as on Universities (WP38): one line for the trial, one for the survey's employment readings, and the two evidence links; the program-result cards stay. The strip keeps the band's anchor (#proof).
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -112,7 +115,7 @@ const ways = [
     ]}
   />
 
-  <!-- C6: the light variant of the mechanism band (as on Home), so it never touches the Klein proof band (C7) -->
+  <!-- C6: the light variant of the mechanism band (as on Home) -->
   <div data-fact="PD-01 PD-06 PD-07 PD-08">
     <HomeMechanism
       id="mechanism"
@@ -129,8 +132,21 @@ const ways = [
     />
   </div>
 
-  <!-- C7 -->
-  <ProofBand id="proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-02', 'OC-03']} links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
+  <!-- C7 · Proof: the broader evidence from the youth programs, one line each for the trial and the survey (WP42, cycle-19 review; as Universities, WP38), in place of the full trial-and-survey band. The strip keeps the band's
+       id (#proof) and sits on a white ground between the light mechanism band and the light program-result cards, so the rhythm is unchanged (there is no dark band on this page). -->
+  <PairedEvidence
+    id="proof"
+    tone="white"
+    eyebrow="The Evidence"
+    title="Evidence from Our Wider Youth Programs"
+    items={[]}
+    statements={LOCAL_PARTNER_EVIDENCE}
+    broader={[
+      { label: 'The Randomized Trial', href: LINKS.trial },
+      { label: 'Impact Survey 2026', href: LINKS.outcomes },
+    ]}
+    broaderLabel="Evidence from our wider youth programs"
+  />
   <CaseStudyCarousel
     id="cases"
     title="Women-Focused Programs in Practice"

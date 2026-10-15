@@ -48,7 +48,8 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await open(page, 'impact/');
     await expect(page.locator('#explore')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Go Deeper');
-    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Four Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals']);
+    // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
+    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Four Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core']);
     expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education, Gender Equality, and Decent Work and Economic Growth');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
@@ -171,9 +172,10 @@ test.describe('the trial and the survey are shown once per page', () => {
 });
 
 test.describe('the WSDFM 71% leaves the carousel and the glance tiles (the case cards and the case study keep it)', () => {
-  test('Home slide 3 lists three programs: Women in Online Work, UNDP YES and Her Power', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the program-results slide is the fourth
+  test('Home slide 4 lists three programs: Women in Online Work, UNDP YES and Her Power', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(2);
+    const slide = page.locator('[data-hs-slide]').nth(3);
     await expect(slide.locator('h2')).toHaveText('Results by Program');
     await expect(slide.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
@@ -237,13 +239,15 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
   });
 
   // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of the predecessor WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
-  test('the proof band that Local Partners keeps spells it out in its trial headline; Universities names no evaluator', async ({ page }) => {
-    await open(page, 'partner-with-us/local-partners/');
-    const head = compact(await page.locator('.proofband__head').textContent());
-    expect(head).toContain(`A randomized trial by the ${SPELLED} found that women offered a place`);
-    expect(count(await mainText(page), 'BIGD')).toBe(1);
-    await open(page, 'partner-with-us/universities/');
-    expect(await mainText(page)).not.toContain('BIGD');
+  // WP42 (cycle-19 review): Local Partners' evidence band is the same two-line strip, so it names no evaluator either (the trial page it links spells it out)
+  test('Local Partners and Universities name no evaluator: their evidence is a two-line strip that links the trial page', async ({ page }) => {
+    for (const route of ['partner-with-us/local-partners/', 'partner-with-us/universities/']) {
+      await open(page, route);
+      expect(await mainText(page), route).not.toContain('BIGD');
+      expect(await mainText(page), route).not.toContain(SPELLED);
+      await expect(page.locator('.proofband__head'), route).toHaveCount(0);
+      await expect(page.locator('#proof, #proof-band').getByRole('link', { name: 'The Randomized Trial' }), route).toHaveAttribute('href', /\/impact\/independent-evaluation\/$/);
+    }
   });
 });
 

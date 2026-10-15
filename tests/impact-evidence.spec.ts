@@ -198,9 +198,17 @@ test.describe('case studies', () => {
     await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(4);
   });
 
+  // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone; one line above the tiles names the two kinds of evidence, and each tile carries its own tag
   test('WSDFM states which figure is program records and which is the trial', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    await expect(page.locator('[data-hero-note]')).toContainText('WSDFM program records: 711 of 1,000 women in work (71%)');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of the predecessor program.');
+    const tiles = page.locator('.hero .cs__stat');
+    await expect(tiles).toHaveCount(3);
+    await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);
+    await expect(tiles.nth(0)).toContainText('711 of 1,000');
+    await expect(tiles.nth(1).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
+    await expect(tiles.nth(1)).toContainText('+10.3 pp');
+    await expect(tiles.nth(2).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
   });
 
   test('the UNDP YES page leads with the reported outcome, with no unregistered awareness claim', async ({ page }) => {

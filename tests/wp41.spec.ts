@@ -8,7 +8,7 @@ import { listPages } from './support/pages';
 /**
  * WP41 behaviors (cycle-18 whole-site reviews, GPT-6.1 Sol and GLM 5.3): YouthWIDE's "What Success Looks Like" band is about young people earning, the partner hub's cost answer and Home's "What a Supported Youth Cohort
  * Includes" say the standard inclusions are for supported youth cohorts, Investors' "Four Kinds of Institutional Relationship", the Programs hub states the trial as one line, the JobReady Platform's status question points to
- * "Rollout Status", JobReady@Campus' hero lead and mechanism wording, "resume" for "CV", Home's slide 4 and 6 headings and meta description, the Governments contracts table with short scope phrases, Employers' Track Record
+ * "Rollout Status", JobReady@Campus' hero lead and mechanism wording, "resume" for "CV", Home's speed (now slide 5) and government (now slide 2) slide headings and meta description, the Governments contracts table with short scope phrases, Employers' Track Record
  * band and "AI Is Reshaping the Workforce" card, Our Model's problem figure in its registered wording, and the Outcomes 2026 heading. Retrospective coverage (the owner exempted this project from test-first work); each test states
  * one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp41.spec.ts --project=chromium`).
  */
@@ -238,9 +238,10 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
 });
 
 test.describe('Home: slide headings, tile and meta description (items 8, 13 and 16)', () => {
-  test('slide 4 is "First Earnings Within Six Months": no percentage in the heading, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide moved to second, so the speed slide is the fifth
+  test('slide 5 is "First Earnings Within Six Months": no percentage in the heading, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(3);
+    const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
     expect('First Earnings Within Six Months').toBe(titleCase('First Earnings Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
@@ -251,9 +252,9 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     expect(tile).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');
   });
 
-  test('slide 6 counts the contracts and says "a National University Partnership"', async ({ page }) => {
+  test('slide 2 counts the contracts and says "a National University Partnership"', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(5);
+    const slide = page.locator('[data-hs-slide]').nth(1);
     await expect(slide.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
     expect('Six Government Contracts and a National University Partnership').toBe(titleCase('Six Government Contracts and a National University Partnership'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('GV-12');

@@ -14,6 +14,8 @@
 // WP40 (cycle-17 review): "What JobReady Does" is three short cards (IncludesBand, as on every other audience page) in place of the status table, which still read as a concern / inclusion / benefit matrix. Each card states its
 // status once (IN-04: partner portals and AI chat live, the employer marketplace and the gig-work (Earn) marketplace in pre-launch; IN-06 and IN-08: Competent the published first level, Proficient and Expert planned,
 // personalized and adaptive learning on the roadmap) and one text link goes to the full rollout status. The band keeps its id (#features): the first FAQ answer links it.
+// WP42 (cycle-19 review): the track-record band (#guide) opens with the delivered figures ("Delivered Since 2014": 130,000+ learners, 150,000+ enrollments, 15 countries and territories, with their enrollment and location note), before the
+// institutional relationships and the leadership; the band that held them is "Contracts, Pipeline and Recognition" (#reach: the contract scope in its own labeled block, the National University pipeline and the two badges).
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
@@ -41,7 +43,7 @@ import { webPage } from '../../../lib/schema';
 const path = '/partner-with-us/investors/';
 const title = 'Investors';
 // Meta description (≤ 155): the plan's P8 wording, a BLUF without a count. SC-01 carries a mandatory composition footnote, which a meta
-// description cannot show, so the headline count stays in the page body ("Reach to Date", InvestorReach) beside its note. WP38: the definition band no longer repeats it.
+// description cannot show, so the headline count stays in the page body ("Delivered Since 2014", the first tile of the track-record band, InvestorGuide) beside its note. WP38: the definition band no longer repeats it.
 const description = 'For impact investors: back JobReady’s staged rollout. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');

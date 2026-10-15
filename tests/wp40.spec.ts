@@ -256,8 +256,9 @@ test.describe('Local Partners: the positioning statement divides the work (item 
     expect(text).not.toMatch(/who need to move young people in their communities|integrated training-to-earnings model delivered through certified local facilitators/);
   });
 
-  test('the other statements keep the audience sentence and the shared closing (the declaration is for this page and YouthWIDE only)', async ({ page }) => {
-    for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/governments/', 'partner-with-us/universities/']) {
+  // WP42 (cycle-19 reviews): Development Partners and Governments are declared whole too (tests/wp42.spec.ts), so the pages that still keep the audience sentence are Foundations and Universities
+  test('the other statements keep the audience sentence and the shared closing (the declaration is for the pages the gate lists only)', async ({ page }) => {
+    for (const route of ['partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
       const statement = compact(await page.locator('#mechanism .pos__text').textContent());
       expect(statement.startsWith('For '), route).toBe(true);

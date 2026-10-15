@@ -33,7 +33,8 @@ test.describe('impactful H1s, Title Case, no trailing period', () => {
     ['programs/jobready-work/', 'Build AI-Ready Teams Around Your Own Roles'],
     ['programs/superkids/', 'Bring Coding, Robotics and Digital Art into Your Classroom'],
     ['programs/nu-postgraduate-diploma/', 'Build Practical Digital Skills After Your Degree'],
-    ['our-model/', 'One Path from Assessment to Career, with Outcomes Tracked'],
+    // WP42 (cycle-19 review): Home's phrase for the one path ("One Path from Learning to Earning"), so the two pages do not give the same idea two slogans
+    ['our-model/', 'One Path from Learning to Earning, with Outcomes Tracked'],
     ['our-model/talentleap/', 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning'],
     ['our-model/jobready-platform/', 'JobReady: A Platform Built to Connect Learning to Work'],
   ];

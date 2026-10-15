@@ -35,22 +35,23 @@ test.describe('figures say what they measure', () => {
     expect(survey).not.toMatch(/growth in freelancing|about 3× the median/);
   });
 
-  test('Home slide 2 reads as what surveyed completers report, and has no lead line to repeat it', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third
+  test('Home slide 3 reads as what surveyed completers report, and has no lead line to repeat it', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(1);
+    const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
   });
 
-  test('Home slide 1 states the offered-place results only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: slide 3 no longer lists WSDFM)', async ({ page }) => {
+  test('Home slide 1 states the offered-place results only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: the program-results slide no longer lists WSDFM; WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s.');
-    await expect(page.locator('[data-hs-slide]').nth(2)).not.toContainText('WSDFM');
+    await expect(page.locator('[data-hs-slide]').nth(3)).not.toContainText('WSDFM');
     expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records, separate from the trial: 71% in work');
   });
 
-  // WP37 (cycle-14 review): Home's Her Power card says what was delivered instead of stating the figure (slide 3 of the carousel states it; tests/wp37.spec.ts), so only the pages that show it carry the shared caption.
+  // WP37 (cycle-14 review): Home's Her Power card says what was delivered instead of stating the figure (the program-results slide of the carousel states it; tests/wp37.spec.ts), so only the pages that show it carry the shared caption.
   test('every WSDFM and Her Power case card reads the same wherever it shows its figure (Development Partners shows the shared Her Power caption; Home’s Her Power card shows delivery context)', async ({ page }) => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
@@ -68,16 +69,16 @@ test.describe('figures say what they measure', () => {
     }
   });
 
-  // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (slide 6 of the carousel states both); the slide says what kind of figure the 31,200+ is in words
-  test('the Home Track Record band has no tile for the six government contracts; slide 6 says the 31,200+ is contract scope, not people trained', async ({ page }) => {
+  // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both); the slide says what kind of figure the 31,200+ is in words
+  test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not people trained', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(5).locator('.hs__lead').textContent())).toContain('31,200+ people (contract scope, not people trained)');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people (contract scope, not people trained)');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
     await open(page, '');
-    const lead = compact(await page.locator('[data-hs-slide]').nth(5).locator('.hs__lead').textContent());
+    const lead = compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent());
     expect(lead).toContain('Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await mainText(page)).not.toContain('official skills partner');
   });
@@ -223,11 +224,13 @@ test.describe('the positioning statements share one plain closing', () => {
   ];
   // WP39 (cycle-16 review): Investors carries no statement (it restated the hero and returned to cohort language; scripts/check-facts.mjs exempts that one page, tests/wp39.spec.ts holds the absence)
   // WP36 (cycle-13 review): YouthWIDE's hero and glance already say who the program is for and where it runs, so its statement is the two shared sentences alone, with the program as the subject
-  // (scripts/check-facts.mjs declares it whole for that page); WP40 (cycle-17 review): Local Partners' statement is the two sentences that divide the work (declared whole as well); every other page keeps its audience
-  // sentence and the shared closing
+  // (scripts/check-facts.mjs declares it whole for that page); WP40 (cycle-17 review): Local Partners' statement is the two sentences that divide the work (declared whole as well); WP42 (cycle-19 reviews): Development
+  // Partners and Governments state the two shared sentences with the reader named in the second (declared whole too); every other page keeps its audience sentence and the shared closing
   const WHOLE: Record<string, string> = {
     'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
     'partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
+    'partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
+    'partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
   };
   for (const route of PAGES) {
     test(`${route}: ${WHOLE[route] ? 'the statement is the two sentences declared for this page' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {

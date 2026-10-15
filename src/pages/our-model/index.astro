@@ -4,6 +4,8 @@
 // WP37 (cycle-14 review): the connectivity card is headed "Learning with Limited Connectivity" (the body is unchanged), and the timeline answer says the weeks once (a page variant of Q7).
 // WP41 (cycle-18 review): the problem line under "What Is CodersTrust?" is PX-01 in its registered wording (young people aged 15–24 with higher-secondary education or more, and the 61–78 million range), as the other pages' tiles carry it;
 // "CV writing" in the placement-support card reads "resume writing" (American English; register PD-15).
+// WP42 (cycle-19 reviews): the H1 is "One Path from Learning to Earning, with Outcomes Tracked" (Home's phrase for the one path; the meta title does not derive from the H1), and the path lead says who agrees the tracking plan:
+// "Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins."
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
@@ -56,7 +58,7 @@ const faqSources: FaqSource[] = [
 ---
 
 <BaseLayout title={title('Our Model')} description={description} path={path} breadcrumbs={[{ label: 'Our Model' }]}>
-  <Hero variant="inner" eyebrow="Our Model" title="One Path from Assessment to Career, with Outcomes Tracked" lead={answer} artSeed="our-model-hub">
+  <Hero variant="inner" eyebrow="Our Model" title="One Path from Learning to Earning, with Outcomes Tracked" lead={answer} artSeed="our-model-hub">
     <Fragment slot="actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={linkAttrs('/impact/').href}>See the Evidence</a>
@@ -68,7 +70,7 @@ const faqSources: FaqSource[] = [
   </DefinitionBlock>
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
-    <SectionHeader id="path-h" eyebrow="How It Works" title="Three Stages: Learn, Earn, Prosper" lead="Each stage prepares learners for the next, and every supported cohort agrees an outcome-tracking plan before delivery begins." />
+    <SectionHeader id="path-h" eyebrow="How It Works" title="Three Stages: Learn, Earn, Prosper" lead="Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins." />
     <p class="om__scope">
       For YouthWIDE and JobReady@Campus supported cohorts, this path is the delivery model. <a class="link" href={linkAttrs('/programs/jobready-work/').href}>JobReady@Work</a>, the <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>NU Postgraduate Diploma</a> and <a class="link" href={linkAttrs('/programs/superkids/').href}>SuperKids</a> have their own delivery structures.
     </p>

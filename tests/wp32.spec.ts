@@ -251,9 +251,10 @@ test.describe('Home', () => {
     expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot. Decide on Evidence');
   });
 
-  test('slide 6 (government contracts and the National University partnership) links both audience pages', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second
+  test('slide 2 (government contracts and the National University partnership) links both audience pages', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(5);
+    const slide = page.locator('[data-hs-slide]').nth(1);
     expect(await slide.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },

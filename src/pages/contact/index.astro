@@ -20,9 +20,10 @@ import { webPage } from '../../lib/schema';
 const routes = contactRoutes();
 // Thirteen routes in three groups, partnership first. A route that is withheld (no href) is filtered out of `routes` already.
 // WP36 (cycle-13 review): "Hire or Train" gains the Schools and Education Partners route (SuperKids' inquiry).
+// WP42 (cycle-19 review): the group also holds the universities (JobReady@Campus) and the schools, so it is "Educate, Hire or Train". Its id stays `hire`.
 const GROUPS = [
   { id: 'partner', title: 'Partner or Fund', ids: ['discovery', 'briefing', 'funding', 'investor', 'local', 'diligence', 'report'] },
-  { id: 'hire', title: 'Hire or Train', ids: ['campus', 'work', 'talent', 'schools'] },
+  { id: 'hire', title: 'Educate, Hire or Train', ids: ['campus', 'work', 'talent', 'schools'] },
   { id: 'study', title: 'Study or Contact the Media', ids: ['nu-pgd', 'learners', 'media'] },
 ].map((g) => ({ ...g, routes: g.ids.map((id) => routes.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r) }));
 const grouped = new Set(GROUPS.flatMap((g) => g.ids));

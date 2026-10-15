@@ -475,9 +475,10 @@ test.describe('NU Postgraduate Diploma course pages: "What Will I Be Able to Do 
 });
 
 test.describe('smaller heading changes (item 10)', () => {
-  test('Home slide 2 is "Surveyed Completers Report Higher Income" with the $245 tile and its before-training comparison', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third
+  test('Home slide 3 is "Surveyed Completers Report Higher Income" with the $245 tile and its before-training comparison', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(1);
+    const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     expect(titleCase('Surveyed Completers Report Higher Income')).toBe('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');

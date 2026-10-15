@@ -5,7 +5,6 @@ import Badge from '../../../components/system/Badge.astro';
 import Button from '../../../components/system/Button.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EmailFallback from '../../../components/ui/EmailFallback.astro';
-import FeatureCard from '../../../components/ui/FeatureCard.astro';
 import FactStat from '../../../components/facts/FactStat.astro';
 import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
@@ -17,6 +16,7 @@ import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
 // WP30d (owner direction 2026-10-14: less is more): shorter table notes, one live-today summary, a single roadmap sentence and a shorter "why" line.
+// WP42 (cycle-19 review): "Planned Adaptive Learning" keeps its heading and says the capability once: "Planned: personalized and adaptive learning based on TalentLEAP’s competency levels. This is roadmap, not live." (the card that repeated it is gone).
 const path = '/our-model/jobready-platform/';
 const JOBREADY = 'https://jobready.global/';
 // WP37 (cycle-14 review): "CRM" is written out wherever the live list is printed (the table row and the callout below, the Q11 answer); the meta description names the two live modules the menu names, since the full list does not fit its 155 characters.
@@ -39,11 +39,8 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
   // The register (IN-04) names these three as live without assigning them to one of the four jobs, so they share one row.
   { job: 'Across the Platform', capability: 'Marketing automation, customer relationship management and AI chat', status: 'Live', note: 'Live as part of the staged rollout.' },
 ];
-// Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)").
+// Roadmap: only what the register names (IN-06: TalentLEAP is "the basis for AI-driven personalized and adaptive learning (roadmap)"), in one sentence under its heading (WP42, cycle-19 review: the card repeated the heading and the paragraph).
 // Other AI modules (a tutor, a career coach, adaptive assessment, talent matching) are not registered and are not listed.
-const roadmap = [
-  { icon: 'route', title: 'Planned Personalized and Adaptive Learning', text: 'Designed to personalize each learner’s path and to adapt learning as each learner moves through TalentLEAP’s competency levels.' },
-];
 const toc = [
   { id: 'jobs', label: 'Four Jobs, One Platform' },
   { id: 'status', label: 'Rollout Status' },
@@ -111,14 +108,7 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="roadmap" title="Planned Adaptive Learning">
-    <p data-fact="IN-04 IN-06">JobReady is being built as an AI-native platform, with TalentLEAP as the basis for AI-driven personalized and adaptive learning. This is roadmap, not live.</p>
-    <div class="jr__cards jr__cards--roadmap" data-fact="IN-06">
-      {roadmap.map((r) => (
-        <FeatureCard icon={r.icon} title={r.title} text={r.text}>
-          <Badge tone="sale">Roadmap</Badge>
-        </FeatureCard>
-      ))}
-    </div>
+    <p data-fact="IN-06">Planned: personalized and adaptive learning based on TalentLEAP’s competency levels. This is roadmap, not live.</p>
   </ReportSection>
 
   <ReportSection id="faq" title="Questions About the Platform">
@@ -145,22 +135,6 @@ const d = discoveryCta();
 </script>
 
 <style>
-  /* Four cards: 1 across on a phone, 2 × 2 on a tablet, 4 across from 1024 px (never 3 + 1). */
-  .jr__cards {
-    display: grid;
-    gap: var(--space-gutter);
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 560px) {
-    .jr__cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 1024px) {
-    .jr__cards {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
   .jr__why {
     display: grid;
     gap: var(--space-lg);

@@ -62,7 +62,8 @@ const hours = fact('PD-01').stat?.value;
 // The comparison's "Independent Evidence" cell on Home (WP31): the trial in one clause, the predecessor program's length read from RC-07 (not retyped).
 const trialHours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 if (!trialHours) throw new Error('Home: RC-07 no longer reads "... was N hours"');
-const independentEvidence = `One randomized trial of a predecessor program (${trialHours} hours, women in Dhaka); independent evaluation of your cohort welcome.`;
+// WP42 (cycle-19 review): a fragment with no trailing period, like every other cell of the table (ComparisonBand).
+const independentEvidence = `One randomized trial of a predecessor program (${trialHours} hours, women in Dhaka); independent evaluation of your cohort welcome`;
 const includes = [
   {
     painId: painForRow(FUNDER_PAINS, 'P1').painId,

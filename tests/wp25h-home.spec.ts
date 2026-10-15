@@ -5,7 +5,7 @@ import { pageByRoute } from './support/pages';
 
 /**
  * WP25h: Home cycle-5 fixes. Each test states one behavior, read from the built DOM (text, order, structure), not from pixels.
- *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 3);
+ *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 4 since WP42);
  *   - the evidence band: the paid-work pathways beside the 72.3% result (34 of 47); WP33 removed the trial chart and WP35 (cycle-12 review) the trial block (WP30c removed the evidence ladder from the band; see tests/wp28.spec.ts, tests/wp33.spec.ts and tests/wp35.spec.ts);
  *   - the carousel, vision, proof, FAQ and offer wording accepted in the cycle-5 triage;
  *   - the "Learner Journeys" strip of three registered stories;
@@ -31,9 +31,10 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     expect(fact('PR-03').stat?.label).toBe('of the 350 trained found their first job within 3 months');
   });
 
-  test('slide 3 states Korail with its own measure; WP35: the WSDFM line is gone (its 71% is program records, read beside the trial’s 63.1%), so it lists three programs', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide moved to second, so the program-results slide is the fourth
+  test('slide 4 states Korail with its own measure; WP35: the WSDFM line is gone (its 71% is program records, read beside the trial’s 63.1%), so it lists three programs', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const s = slide(page, 3);
+    const s = slide(page, 4);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
     await expect(s.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
@@ -103,17 +104,18 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   test('the carousel slides carry the accepted headings, bases and links', async ({ page }) => {
     await open(page, pageByRoute('/'));
     // WP31: said as what surveyed completers report, not as a before-and-after effect; the heading says whose figures these are, so the slide has no lead
-    await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
+    // WP42 (cycle-19 review): the order is the trial, the government contracts, the survey income, the program results, the speed to earning, the reach and the programs
+    await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(slide(page, 3).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
     // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow, the lead and the tile keep "surveyed completers"
-    await expect(slide(page, 4).locator('h2')).toHaveText('First Earnings Within Six Months');
-    await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
-    await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
-    await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
+    await expect(slide(page, 5).locator('h2')).toHaveText('First Earnings Within Six Months');
+    await expect(slide(page, 5).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
+    await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
-    await expect(slide(page, 6).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
-    await expect(slide(page, 6).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 
   test('the third vision scenario starts "You see employers hire AI-ready talent from your cohort"', async ({ page }) => {

@@ -7,6 +7,8 @@ import ComparisonTable from '../ui/ComparisonTable.astro';
  * C10 Comparison = approaches and trade-offs, not verdicts (planning v1.2 §B). Categories, never named
  * competitors (D8). Includes a "Doing Nothing" column unless `withoutDoingNothing` is set (Home, WP17). Cells are text; a check icon marks only
  * CodersTrust's own inclusions (`included`), never a verdict on another approach.
+ * WP42 (cycle-19 review): every cell is a fragment in one style, in CodersTrust's column and in the comparison columns alike: sentence case (the heading cells are Title Case, the cells are running text) and no trailing period.
+ * Home's own "Independent Evidence" cell (a page-specific `ownCells` wording) follows the same rule.
  */
 type Cell = string | { text: string; included?: boolean; factId?: string };
 interface Props {
@@ -37,10 +39,10 @@ const {
   columns = ['Approach', 'CodersTrust Supported Cohort', 'Conventional Skills Programs', 'Self-Paced Course Platforms', 'Freelance Marketplaces Alone', 'Doing Nothing'],
   rows = [
     { label: 'Track Choice', cells: [{ text: 'Set from current employer demand; work-entry plan approved before enrollment', included: true }, 'Varies by program design', 'Learner chooses', 'Learner looks for work directly', 'No training'] },
-    { label: 'Certification', cells: [{ text: 'Certification Exam Preparation (Exam Fee Included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
-    { label: 'Mentoring', cells: [{ text: 'Three Months of Milestone-Based Mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Mentoring is not the core service; support varies by marketplace.', 'No mentoring'] },
-    { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package.', 'Marketplace matching is the core service; additional support varies.', 'No new connections'] },
-    { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: follow-up surveys at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included.', 'Platform activity', 'No tracking'] },
+    { label: 'Certification', cells: [{ text: 'Certification exam preparation (exam fee included)', included: true }, 'Varies', 'Often sold separately', 'Varies by platform', 'No credential'] },
+    { label: 'Mentoring', cells: [{ text: 'Three months of milestone-based mentoring', included: true }, 'Varies', 'Varies; often self-directed', 'Mentoring is not the core service; support varies by marketplace', 'No mentoring'] },
+    { label: 'Work Entry', cells: [{ text: 'Placement support into local, remote and global work', included: true }, 'Varies', 'Work-entry support depends on the provider and package', 'Marketplace matching is the core service; additional support varies', 'No new connections'] },
+    { label: 'Outcome Tracking', cells: [{ text: 'Planned for every cohort: follow-up surveys at 3, 6 and 12 months; monthly reports' }, 'Varies', 'Reporting emphasis varies; check whether employment outcomes are included', 'Platform activity', 'No tracking'] },
     {
       label: 'Independent Evidence',
       cells: [

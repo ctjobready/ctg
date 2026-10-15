@@ -109,9 +109,10 @@ test.describe('FAQs: the decision questions, one to three sentences each', () =>
 });
 
 test.describe('Home', () => {
-  test('carousel slide 5 is tagged "Reach at Scale" (people trained is reach, not impact)', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the reach slide is the sixth
+  test('carousel slide 6 is tagged "Reach at Scale" (people trained is reach, not impact)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(4).locator('.hs__eyebrow')).toHaveText('Reach at Scale');
+    await expect(page.locator('[data-hs-slide]').nth(5).locator('.hs__eyebrow')).toHaveText('Reach at Scale');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Impact at Scale');
   });
 
@@ -123,10 +124,11 @@ test.describe('Home', () => {
     const mentoring = byLabel.get('Mentoring')!;
     const work = byLabel.get('Work Entry')!;
     expect(mentoring[mentoring.length - 1]).toBe('Varies; often self-directed');
-    expect(work[work.length - 1]).toBe('Work-entry support depends on the provider and package.');
+    // WP42 (cycle-19 review): every cell is a fragment with no trailing period, in sentence case, in CodersTrust's column and the comparison column alike
+    expect(work[work.length - 1]).toBe('Work-entry support depends on the provider and package');
     expect(mentoring[mentoring.length - 1]).not.toBe(work[work.length - 1]);
     // WP31: the independent-evidence cell is one clause on Home (the shared cell keeps its longer wording elsewhere)
-    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome.');
+    expect(byLabel.get('Independent Evidence')![1]).toBe('One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome');
   });
 
   test('the recognition band leads with the university and UN-mandated partners, then AWS, then the EdTech listing; the 2014–2016 press list is a link away', async ({ page }) => {

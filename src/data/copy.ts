@@ -134,6 +134,9 @@ export const TRIAL_SCOPE = {
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
  * WP40 (cycle-17 review): Local Partners' statement is two sentences that divide the work (the partner mobilizes and hosts; CodersTrust supports delivery, mentoring, placement and reporting), because its audience and outcome
  * are in the hero and the problem band above and the four responsibility cards follow it; the gate declares it whole for that page as well (POSITION_WHOLE_STATEMENT).
+ * WP42 (cycle-19 reviews): Development Partners and Governments state what the model does in the two shared sentences alone (their audience and outcome are in the hero, the problem band and the glance above), each with its reader
+ * as the one changed word ("Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope"; "Your agency receives monthly reports on progress toward paid work"); the gate declares both whole.
+ * SuperKids' statement is two plain sentences, what the program offers and what the agreements are (the gate asks nothing of its wording: it carries no comparison clause).
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
@@ -158,11 +161,16 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['PD-08'],
   },
   developmentPartners: {
-    text: `For development partners and NGOs who need youth employment results they can report, CodersTrust offers an integrated training-to-earnings model with outcome tracking after each course, as agreed in the program scope. ${UNLIKE_APPROVED}`,
-    facts: ['PD-01', 'PD-08'],
+    // WP42 (cycle-19 review): the hero, the problem band and the glance above say who the page is for and what they need, so "Our Approach" states what the model does, in the two shared sentences with the tracking said as the page's
+    // cards say it ("outcome tracking after each course, as agreed in the program scope"). scripts/check-facts.mjs declares it whole for /partner-with-us/development-partners/ (POSITION_WHOLE_STATEMENT). It rests on PD-01
+    // (training, mentoring, placement support), PD-08 (monthly reports) and PD-09 (follow-up surveys at 3, 6 and 12 months).
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
+    facts: ['PD-01', 'PD-08', 'PD-09'],
   },
   governments: {
-    text: `For governments that need educated, unemployed youth in paid digital work through the labs and colleges they already have, CodersTrust offers an integrated training-to-earnings model. ${UNLIKE_APPROVED}`,
+    // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
+    // (POSITION_WHOLE_STATEMENT); it rests on PD-01 and PD-08.
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
   foundations: {
@@ -205,8 +213,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
   // supports a comparison with other approaches, so the statement stops at what GV-08 and the page definition already say.
+  // WP42 (cycle-19 review): two plain sentences in place of one long qualified one: what the program offers, and that the two agreements set targets (GV-08: "target reach 20M+ students"), not delivered reach.
   superkids: {
-    text: 'For schools and education partners who want children to build digital skills early, CodersTrust offers SuperKids, a K-12 STEAM program of block coding, robotics and digital art, offered through schools and education partners under agreements with DoICT and NCTB (agreements and targets, not delivered reach).',
+    text: 'SuperKids offers block coding, robotics and digital art through schools and education partners. DoICT and NCTB agreements set targets, not delivered reach.',
     facts: ['GV-08'],
   },
 };
@@ -541,18 +550,32 @@ export const HOME_META = {
 };
 
 /**
+ * The trial's employment result and the survey's employment readings as the short evidence lines word them (Investors, Universities, Local Partners): read from RC-02 (the trial's stat, "+10.3 pp", in words) and OC-01
+ * (the survey tile's value and its before-training reading), so no figure is typed on a page and a line cannot drift from the register. Throws, naming the caller, if either stat changes shape.
+ */
+function trialAndSurveyReadings(who: string): { points: string; employment: string; before: string } {
+  const rc = fact('RC-02').stat;
+  const oc = fact('OC-01').stat;
+  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error(`${who}: RC-02 or OC-01 no longer has the expected stat`);
+  return { points: rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points'), employment: oc.value, before: oc.from };
+}
+
+/** The trial line of a strip that links the evidence pages (Universities, Local Partners): the predecessor program is named, the result is RC-02's, and the line makes no claim about the page's own offer. */
+const predecessorTrialLine = (points: string): CopyBlock => ({
+  text: `A randomized trial of the predecessor WSDFM program found women offered a place were ${points} more likely to be employed.`,
+  facts: ['RC-02'],
+});
+
+/**
  * The Independent Evidence body on Investors (WP36, cycle-13 review): the trial and the survey in three sentences, the last saying that youth-program outcomes are not platform outcomes. It replaces the
  * band that restated the trial's plain-language reading, the income headline, the +10.3 pp tile, the trial chart and the survey sentence. The figures are read from RC-02 and OC-01, so the sentences
  * cannot drift from the register, and the builder throws if either stat changes shape. The survey sentence reads "was 77.9% at the October 2026 survey, up from 47.4% before training", as Home's survey card and
  * the Impact tile word it: a report by surveyed completers, with the base named and no multiplier.
  */
 function investorEvidence(): CopyBlock {
-  const rc = fact('RC-02').stat;
-  const oc = fact('OC-01').stat;
-  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from) throw new Error('INVESTOR_EVIDENCE: RC-02 or OC-01 no longer has the expected stat');
-  const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  const { points, employment, before } = trialAndSurveyReadings('INVESTOR_EVIDENCE');
   return {
-    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${oc.value} at the October 2026 survey, up from ${oc.from} before training. Youth-program outcomes are not platform outcomes.`,
+    text: `A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were ${points} more likely to be employed. Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training. Youth-program outcomes are not platform outcomes.`,
     facts: ['RC-02', 'OC-01'],
   };
 }
@@ -564,17 +587,23 @@ export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
  * changes shape. The survey line names its base ("Among surveyed completers") and reads as OC-01's tile does: "was 77.9% at the October 2026 survey, up from 47.4% before training".
  */
 function universityEvidence(): CopyBlock[] {
-  const rc = fact('RC-02').stat;
-  const oc = fact('OC-01').stat;
+  const { points, employment, before } = trialAndSurveyReadings('UNIVERSITY_EVIDENCE');
   const degree = /(\d+(?:\.\d+)?% hold a bachelor’s degree or higher)/.exec(fact('OC-09').text)?.[1];
-  if (!rc || !/^\+[\d.]+ pp$/.test(rc.value) || !oc?.from || !degree) throw new Error('UNIVERSITY_EVIDENCE: RC-02, OC-01 or OC-09 no longer has the expected stat or wording');
-  const points = rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
-  return [
-    { text: `A randomized trial of the predecessor WSDFM program found women offered a place were ${points} more likely to be employed.`, facts: ['RC-02'] },
-    { text: `Among surveyed completers, ${degree}; employment was ${oc.value} at the October 2026 survey, up from ${oc.from} before training.`, facts: ['OC-09', 'OC-01'] },
-  ];
+  if (!degree) throw new Error('UNIVERSITY_EVIDENCE: OC-09 no longer has the expected wording');
+  return [predecessorTrialLine(points), { text: `Among surveyed completers, ${degree}; employment was ${employment} at the October 2026 survey, up from ${before} before training.`, facts: ['OC-09', 'OC-01'] }];
 }
 export const UNIVERSITY_EVIDENCE: CopyBlock[] = universityEvidence();
+
+/**
+ * The two lines of Local Partners' evidence strip (WP42, cycle-19 review), in place of the full trial-and-survey band (the +41% and +54% income results, the 52.8% / 63.1% employment chart and its table, the survey chart and the
+ * median income): the trial result and the survey's employment readings, worded as Universities' strip words them (WP38) without the degree share, which is a Universities point. The program-result cards and the two evidence
+ * links stay on the page. Figures are read from RC-02 and OC-01, so the lines cannot drift from the register.
+ */
+function localPartnerEvidence(): CopyBlock[] {
+  const { points, employment, before } = trialAndSurveyReadings('LOCAL_PARTNER_EVIDENCE');
+  return [predecessorTrialLine(points), { text: `Among surveyed completers, employment was ${employment} at the October 2026 survey, up from ${before} before training.`, facts: ['OC-01'] }];
+}
+export const LOCAL_PARTNER_EVIDENCE: CopyBlock[] = localPartnerEvidence();
 
 /** C11 on funder-facing pages (Home, development partners, foundations, YouthWIDE), after the program options. */
 export const ACCOUNTABILITY: CopyBlock = {

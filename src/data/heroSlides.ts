@@ -8,8 +8,8 @@ import { cta } from '../lib/mailto';
  * driven by src/scripts/heroSlider.ts). Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register
  * sentence); no number is typed here.
  * HOME_HERO is the stable hero: the page's only h1, one value proposition, one primary action, one text link, the audience links and the three
- * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then survey income and employment,
- * program results (named programs), speed to earning, reach, government and National University partners, and the programs (employment programs first, SuperKids last).
+ * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then (WP42, cycle-19 review) the government contracts and the National University partnership, then survey income,
+ * program results (named programs), speed to earning, reach, and the programs (employment programs first, SuperKids last).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
  * WP23: the survey slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
@@ -183,6 +183,23 @@ export const HOME_SLIDES: HeroSlide[] = [
     photo: 'general/classroom-girls',
   },
   {
+    id: 'government-trust',
+    eyebrow: 'Government and University Partners',
+    // WP42 (cycle-19 review): second, after the trial and before the survey, because most readers never reach slide 6: the trial, then government scale, then the survey and the program results. Wording unchanged.
+    // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
+    title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
+    titleFacts: ['GV-12'],
+    // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
+    lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
+    leadFacts: ['GV-12'],
+    // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
+    links: [
+      { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
+      { label: 'For Universities', href: '/partner-with-us/universities/', variant: 'secondary' },
+    ],
+    photo: 'general/nu-affiliation-group',
+  },
+  {
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
     // WP31: said as what surveyed completers report, not as a before-and-after effect.
@@ -234,22 +251,6 @@ export const HOME_SLIDES: HeroSlide[] = [
     stats: [{ factId: 'SC-03', caption: () => reachCaption }],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
     photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide
-  },
-  {
-    id: 'government-trust',
-    eyebrow: 'Government and University Partners',
-    // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
-    title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
-    titleFacts: ['GV-12'],
-    // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
-    lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
-    leadFacts: ['GV-12'],
-    // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
-    links: [
-      { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
-      { label: 'For Universities', href: '/partner-with-us/universities/', variant: 'secondary' },
-    ],
-    photo: 'general/nu-affiliation-group',
   },
   {
     id: 'programs',

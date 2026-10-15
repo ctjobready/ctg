@@ -38,9 +38,10 @@ async function faqJsonLd(page: Page) {
 const answerOf = async (page: Page, question: string) => compact(await page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: question }) }).first().locator('.faq__a').textContent());
 
 test.describe('Home: each figure once', () => {
-  test('slide 2 shows the income result only; the 77.9% is the hero’s survey card', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the survey, program-result, speed and reach slides are the third to the sixth
+  test('slide 3 shows the income result only; the 77.9% is the hero’s survey card', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(1);
+    const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
@@ -50,9 +51,9 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review): the slide has SC-03's "15" as its tile again (tests/wp38.spec.ts holds the tile); the 130,000+ stays the hero's reach card alone
-  test('slide 5 is headed "Explore Where Our Programs Have Run" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
+  test('slide 6 is headed "Explore Where Our Programs Have Run" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(4);
+    const slide = page.locator('[data-hs-slide]').nth(5);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Reach at Scale');
     await expect(slide.locator('h2')).toHaveText('Explore Where Our Programs Have Run');
     await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
@@ -67,9 +68,9 @@ test.describe('Home: each figure once', () => {
 
   // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
   // percentage; the survey qualifier and the base are on the slide itself (eyebrow, lead, tile)
-  test('slide 4 is headed "First Earnings Within Six Months" (the finding, no percentage), and keeps "surveyed completers" in the lead and the 58.8% tile', async ({ page }) => {
+  test('slide 5 is headed "First Earnings Within Six Months" (the finding, no percentage), and keeps "surveyed completers" in the lead and the 58.8% tile', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(3);
+    const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
     expect(await slide.locator('h2').textContent()).toBe(titleCase('First Earnings Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
@@ -77,9 +78,9 @@ test.describe('Home: each figure once', () => {
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
   });
 
-  test('slide 3 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
+  test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
     await open(page, '');
-    const lines = await page.locator('[data-hs-slide]').nth(2).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
+    const lines = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
     expect(lines).toEqual(['Women in Online Work, Kosovo: 68% in work (102 of 150).', 'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.', 'Her Power: 47% of 800 tracked women in work.']);
     expect(lines[1]).not.toMatch(/in work/);
   });
@@ -236,9 +237,10 @@ test.describe('Contact', () => {
     expect(third).not.toMatch(/governments, foundations, universities/);
   });
 
-  test('"Hire or Train" has a Schools and Education Partners route that reuses SuperKids’ inquiry (same address, same prefilled subject)', async ({ page }) => {
+  // WP42 (cycle-19 review): the group is "Educate, Hire or Train" (it also holds the universities and the schools)
+  test('"Educate, Hire or Train" has a Schools and Education Partners route that reuses SuperKids’ inquiry (same address, same prefilled subject)', async ({ page }) => {
     await open(page, 'contact/');
-    const group = page.locator('.ct-group', { has: page.getByRole('heading', { level: 3, name: 'Hire or Train' }) });
+    const group = page.locator('.ct-group', { has: page.getByRole('heading', { level: 3, name: 'Educate, Hire or Train' }) });
     expect(await group.locator('h4').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual([
       'Universities and Colleges',
       'Employers: Train Your Team',
@@ -279,9 +281,9 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
     await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
-    // the other pages keep the audience sentence and the shared closing sentences
-    await open(page, 'partner-with-us/development-partners/');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toMatch(/^For development partners and NGOs who need .* We combine training, mentoring and placement support in existing labs and colleges\. Partners receive monthly reports on progress toward paid work\.$/);
+    // the pages that are not declared whole keep the audience sentence and the shared closing sentences (WP42: Development Partners and Governments are declared whole too, tests/wp42.spec.ts)
+    await open(page, 'partner-with-us/foundations/');
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toMatch(/^For foundations and CSR funders who need .* We combine training, mentoring and placement support in existing labs and colleges\. Partners receive monthly reports on progress toward paid work\.$/);
   });
 });
 
@@ -412,7 +414,7 @@ test.describe('option bands: program sizes are not a commitment', () => {
 });
 
 test.describe('one figure, one label: the 31,200+ is tagged "Contract Scope" everywhere', () => {
-  // WP38 (cycle-15 review): Home's Track Record band has no tile for it any more; slide 6 states it and says "contract scope, not people trained" (tests/wp31.spec.ts)
+  // WP38 (cycle-15 review): Home's Track Record band has no tile for it any more; slide 2 (since WP42) states it and says "contract scope, not people trained" (tests/wp31.spec.ts)
   const TILES: [string, string][] = [
     ['partner-with-us/governments/', '#glance li'],
     ['impact/', '#glance li'],

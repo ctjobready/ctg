@@ -72,12 +72,15 @@ test.describe('home hero slider', () => {
     // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ (the hero's reach card does)
     // WP38 (cycle-15 review): the reach slide has SC-03's figure as its tile (tests/wp38.spec.ts)
     // WP41 (cycle-18 reviews): the speed slide's heading is the finding alone, with no percentage (the 58.8% and its base are the tile), and the government slide counts its contracts (tests/wp41.spec.ts)
-    expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
+    // WP42 (cycle-19 review): the government slide is second, after the trial: trial, government scale, survey, program results, speed, reach, programs
+    expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
+      'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
       'First Earnings Within Six Months',
       'Explore Where Our Programs Have Run',
     ]);
+    expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
     // WP31: the first slide states the offered-place results only (employment, then income); the attenders' income is on the trial page it links
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
@@ -86,8 +89,8 @@ test.describe('home hero slider', () => {
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
     // the placement slide lists three programs (WP35: the WSDFM 71% is program records, read beside the trial's 63.1%, so it left the slide; the case card and the case study keep it)
-    await expect(slides.nth(2).locator('.hs__lines li')).toHaveCount(3);
-    await expect(slides.nth(2).locator('.hs__lines li').nth(2)).toHaveText('Her Power: 47% of 800 tracked women in work.');
+    await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(3);
+    await expect(slides.nth(3).locator('.hs__lines li').nth(2)).toHaveText('Her Power: 47% of 800 tracked women in work.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {
@@ -177,7 +180,8 @@ test.describe('home hero slider', () => {
     for (const el of await hidden.all()) {
       await expect(el).toHaveAttribute('inert', '');
     }
-    await page.locator('[data-hs-dot]').nth(1).click();
+    // (the survey-income slide is the third, since WP42 put the government slide second)
+    await page.locator('[data-hs-dot]').nth(2).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Surveyed Completers Report Higher Income');

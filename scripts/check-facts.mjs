@@ -17,11 +17,12 @@
 //     a period, none left in front of punctuation the page typed)
 //   - copy conventions (doc 06 global rules): no straight apostrophe inside a word and no bare "pp" before "percentage points" is spelled out,
 //     outside the archived /news/ posts and the styleguide; negative self-tests below
-//   - [PLAIN-LINE] (plan v1.10, v1.13): /impact/independent-evaluation/ and the WSDFM case study (/impact/case-studies/wsdfm-women-freelancers/, whose header leads with it)
+//   - [PLAIN-LINE] (plan v1.10, v1.13): /impact/independent-evaluation/ (and, until WP42, the WSDFM case study, whose header led with it)
 //     must carry "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
 //     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below. WP35 (cycle-12 review): Home and /partner-with-us/development-partners/ no longer restate the trial in an evidence band, so they are not required
-//     to carry the sentence; Home's plain-language reading lives on its hero "Strongest Proof" card and is held to RC-02 and RC-07 there ([PROOF-CARD], below)
+//     to carry the sentence; Home's plain-language reading lives on its hero "Strongest Proof" card and is held to RC-02 and RC-07 there ([PROOF-CARD], below). WP42 (cycle-19 review): the WSDFM case study's hero no longer
+//     prints the sentence (it repeated, in prose, the result its RC-02 tile shows beside it), so that one page is listed as exempt (PLAIN_LINE_EXEMPT_PAGES); the numbers of the sentence stay held on any page that carries it
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/ and /programs/youthwide/ must show, inside the C13 CTA band (#cta; YouthWIDE: its "Choose Your
 //     Entry Point" band, #entry-point), ONE paragraph in the plan's exact words for THAT page: the lead "What the discovery session covers:" (development partners; first item "your country, priority groups and
 //     locations") or "What the briefing covers:" (governments: "your priority groups and locations"), then the three
@@ -34,7 +35,9 @@
 //     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
 //     second part); WP36: /programs/youthwide/ declares its statement whole (POSITION_WHOLE_STATEMENT: the two shared sentences with the program as the subject), and carries exactly
 //     that text; WP40 (cycle-17 review): /partner-with-us/local-partners/ declares its statement whole as well (the partner mobilizes and hosts, CodersTrust supports delivery, mentoring, placement and
-//     reporting; the audience and outcome are in the hero and the problem band above it), and carries exactly that text; no other page is affected; WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement
+//     reporting; the audience and outcome are in the hero and the problem band above it), and carries exactly that text; WP42 (cycle-19 reviews): /partner-with-us/development-partners/ and
+//     /partner-with-us/governments/ declare theirs whole too (the two shared sentences, the reader named in the second; their audience and outcome are in the hero, the problem band and the glance above); no other page
+//     is affected (SuperKids' wording, which carries no comparison clause, is not pinned: it opens the band and says what the program offers); WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement
 //     (it restated the hero and returned to cohort language on a page about backing the platform; POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
@@ -215,12 +218,16 @@ const visibleText = (markup) => decode(markup.replace(/<head\b[\s\S]*?<\/head>/i
 
 /* ---- [PLAIN-LINE] (RC-02 in plain language, plan v1.10) ---- */
 // "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)."
-// is built in src/data/copy.ts from RC-02's stat; it is required on the independent-evaluation page and the
-// WSDFM case study (its header leads with the randomized trial's plain-language line, the program result second),
+// is built in src/data/copy.ts from RC-02's stat; it is required on the independent-evaluation page (and was, until WP42, on the
+// WSDFM case study, whose header led with the randomized trial's plain-language line, the program result second),
 // WP35 (cycle-12 review: the trial was restated on every audience page): Home's evidence band and the Development Partners proof band that carried it are gone, and Home's reading moved to the hero card ([PROOF-CARD] below),
 // and wherever it appears its numbers must be RC-02's: "+10.3 percentage points" is the stat value with "pp" spelled out, "about 10" its rounding.
 // The expected sentence is derived here from the register on its own (not read from copy.ts), so a drift in either place fails the build.
-const PLAIN_LINE_PAGES = ['/impact/independent-evaluation/', '/impact/case-studies/wsdfm-women-freelancers/'];
+// WP42 (cycle-19 review): the WSDFM case study's hero stated the trial result in prose (this sentence) and the program record in prose, directly above the tiles that show both, so its two paragraphs are gone: the tiles
+// (the RC-02 tile, "+10.3 pp", tagged Randomized Trial; the PR-01 tile, tagged Program Record) carry the results and one line above them names the two kinds of evidence. That one page is exempt from REQUIRING the
+// sentence (PLAIN_LINE_EXEMPT_PAGES, below); the exemption is not an exemption from the numbers: a page that carries the sentence, exempt or not, must carry RC-02's.
+const PLAIN_LINE_PAGES = ['/impact/independent-evaluation/'];
+const PLAIN_LINE_EXEMPT_PAGES = ['/impact/case-studies/wsdfm-women-freelancers/'];
 const PLAIN_LINE_SHAPE = /For every 100 women offered a place, about (\d+) more were in work at follow-up than among 100 comparable women in the control group \(([^)]*)\)\./;
 const plainLineWanted = (stat) => {
   const points = `${stat.prefix ?? ''}${stat.numeric.toFixed(stat.decimals ?? 0)} percentage points`;
@@ -358,7 +365,7 @@ const POSITION_PAGES = [
 // Delivery", lower on the page, says how the platform relates to delivery once), so the statement was deleted there. The page is exempt from [POSITION] and from nothing else: every page in POSITION_PAGES keeps the rule unchanged,
 // and the self-tests below keep the exemption to this one page (it must not also be listed, and it must be a real page of the site, so a rename cannot leave a stale entry).
 const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/'];
-// SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
+// SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement carries no comparison clause (WP42: it says what the program offers and that the two agreements set targets, not delivered reach).
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
   'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
@@ -375,12 +382,16 @@ const POSITION_EMPLOYER_CLOSING = {
 };
 // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so its "Our Approach" statement is the two shared sentences alone, with the program named as the
 // subject. WP40 (cycle-17 review): Local Partners' hero and problem band already say who the page is for and what they need, and the four cards under the statement are the responsibilities, so its statement is the two
-// sentences that divide the work. Each is declared WHOLE, for its one page: a page listed here must carry exactly this text as its statement (nothing may precede it in the band, as on every page), and the
-// audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (two pages are listed, and the self-tests below keep it at these two). Declared here independently of src/data/copy.ts
-// (POSITIONING.youthwide, POSITIONING.localPartners), so a change to either has to be made twice on purpose; negative self-tests below.
+// sentences that divide the work. WP42 (cycle-19 reviews): Development Partners' and Governments' hero, problem band and glance already say who the page is for and what they need, so each page's statement is the two shared
+// sentences with the reader named in the second (Development Partners: "Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope."; Governments: "Your agency receives monthly
+// reports on progress toward paid work."). Each is declared WHOLE, for its one page: a page listed here must carry exactly this text as its statement (nothing may precede it in the band, as on every page), and the
+// audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (four pages are listed, and the self-tests below keep it at these four). Declared here independently of src/data/copy.ts
+// (POSITIONING.youthwide, POSITIONING.localPartners, POSITIONING.developmentPartners, POSITIONING.governments), so a change to any has to be made twice on purpose; negative self-tests below.
 const POSITION_WHOLE_STATEMENT = {
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
+  '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
+  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
 };
 /**
  * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence).
@@ -769,7 +780,10 @@ function numberGuardPage(path, html, allow = []) {
   if (!archiveWordingProblems('/impact/outcomes-2026/', '<body><li>does not mean every learner’s income Tripled.</li></body>').length) problems.push('self-test: the wording gate accepted "tripled" outside the archive');
   if (archiveWordingProblems('/news/some-archived-post/', '<body>income tripled</body>').length) problems.push('self-test: the wording gate flagged "tripled" inside an archived post');
   if (archiveWordingProblems('/our-model/', '<body>A triple-lens model; triplet; tripleshot</body>').length) problems.push('self-test: the wording gate flagged "triple" words that are not "tripled"');
-  // [PLAIN-LINE]: required on three pages, numbers derived from RC-02, rendered by <PlainLine> with RC-02's footnote marker
+  // [PLAIN-LINE]: required on the independent-evaluation page, numbers derived from RC-02 wherever it appears, rendered by <PlainLine> with RC-02's footnote marker (WP42: the exemption is one page, the WSDFM case study, and not also a required page)
+  if (PLAIN_LINE_PAGES.length !== 1 || PLAIN_LINE_PAGES[0] !== '/impact/independent-evaluation/') problems.push('self-test: the [PLAIN-LINE] is required on exactly /impact/independent-evaluation/ (WP42)');
+  if (PLAIN_LINE_EXEMPT_PAGES.length !== 1 || PLAIN_LINE_EXEMPT_PAGES[0] !== '/impact/case-studies/wsdfm-women-freelancers/') problems.push('self-test: the [PLAIN-LINE] exemption is exactly /impact/case-studies/wsdfm-women-freelancers/ (WP42) and no other page');
+  for (const exempt of PLAIN_LINE_EXEMPT_PAGES) if (PLAIN_LINE_PAGES.includes(exempt)) problems.push(`self-test: ${exempt} is exempt from the [PLAIN-LINE] but also listed as a page that must carry it`);
   const rc02 = facts['RC-02'].stat;
   const want = plainLineWanted(rc02);
   const plainBlock = (sentence) => `<p class="plainline" data-plain-line data-fact="RC-02" data-astro-cid-x>${sentence}</p>`;
@@ -927,10 +941,10 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a lead line before the whole statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeYw)}</header>`), { whole: wholeYw });
   posBad('the whole statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeYw)}</header>`));
   posBad('the whole statement on a page that declares an employer closing', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { closing: empClosing });
-  // WP40: Local Partners declares its statement whole too, with the same guarantees, and the declarations stay at these two pages
+  // WP40: Local Partners declares its statement whole too, with the same guarantees, and (WP42) so do Development Partners and Governments; the declarations stay at these four pages
   const wholeLp = POSITION_WHOLE_STATEMENT['/partner-with-us/local-partners/'];
   if (wholeLp !== 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.') problems.push('self-test: the Local Partners whole statement is no longer the WP40 wording');
-  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/local-partners/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/ and /partner-with-us/local-partners/ declare a whole positioning statement (WP36, WP40) and no other page');
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/development-partners/ /partner-with-us/governments/ /partner-with-us/local-partners/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40) and /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42) declare a whole positioning statement and no other page');
   posOk('the declared whole statement on the page that declares it (Local Partners)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeLp });
   posBad('the shared audience-plus-[UNLIKE] statement on Local Partners, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeLp });
   posBad('a reworded Local Partners statement', mech(`${headerHtml}${posBlock(wholeLp.replace('mobilizes', 'recruits'))}</header>`), { whole: wholeLp });
@@ -938,6 +952,22 @@ function numberGuardPage(path, html, allow = []) {
   posBad('the YouthWIDE statement on Local Partners (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeLp });
   posBad('the Local Partners statement on YouthWIDE (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeYw });
   posBad('the Local Partners statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeLp)}</header>`));
+  // WP42: Development Partners and Governments declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only)
+  const wholeDp = POSITION_WHOLE_STATEMENT['/partner-with-us/development-partners/'];
+  const wholeGov = POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'];
+  if (wholeDp !== 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.') problems.push('self-test: the Development Partners whole statement is no longer the WP42 wording');
+  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
+  for (const [name, own, other, otherName] of [['Development Partners', wholeDp, wholeGov, 'Governments'], ['Governments', wholeGov, wholeDp, 'Development Partners']]) {
+    posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
+    posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
+    posBad(`the shared audience-plus-[UNLIKE] statement on ${name}, which declares a whole statement`, mech(`${headerHtml}${posBlock()}</header>`), { whole: own });
+    posBad(`a reworded ${name} statement`, mech(`${headerHtml}${posBlock(own.replace('combine', 'blend'))}</header>`), { whole: own });
+    posBad(`a ${name} statement with the audience sentence in front of it`, mech(`${headerHtml}${posBlock(`${posFor} ${own}`)}</header>`), { whole: own });
+    posBad(`a lead line before the ${name} statement`, mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(own)}</header>`), { whole: own });
+    posBad(`the ${otherName} statement on ${name} (each page carries only its own)`, mech(`${headerHtml}${posBlock(other)}</header>`), { whole: own });
+    posBad(`the ${name} statement on a page that must carry the audience sentence and [UNLIKE]`, mech(`${headerHtml}${posBlock(own)}</header>`));
+  }
+  posBad('the YouthWIDE statement on Governments (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeGov });
   for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
   // WP39: the exemption is one page and not also a [POSITION] page
   if (POSITION_EXEMPT_PAGES.length !== 1 || POSITION_EXEMPT_PAGES[0] !== '/partner-with-us/investors/') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and no other page');
@@ -1154,7 +1184,7 @@ for (const file of htmlFiles(dist)) {
   for (const p of certNoteProblems(text)) problems.push(`${path}: ${p}`);
   // archive-only wording: British "enquir*" (D6) and "tripled" (OC-03) outside the archived news posts
   problems.push(...archiveWordingProblems(path, html));
-  // [PLAIN-LINE] required on Home, the development-partners page, the independent-evaluation page and the WSDFM case study; its numbers are RC-02's wherever it appears
+  // [PLAIN-LINE] required on the independent-evaluation page (WP42: no longer on the WSDFM case study, the exempt page); its numbers are RC-02's wherever it appears
   seenPaths.add(path);
   const plainRequired = PLAIN_LINE_PAGES.includes(path);
   if (plainRequired) plainLinePages++;
@@ -1208,8 +1238,8 @@ if (pages === 0) {
   console.error(`check-facts: no HTML found in ${dist}. Run "npm run build" first.`);
   process.exit(1);
 }
-// A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all.
-for (const p of new Set([...PLAIN_LINE_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_EXEMPT_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
+// A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all (and so does a page exempted from one of them, so a rename cannot leave a stale exemption).
+for (const p of new Set([...PLAIN_LINE_PAGES, ...PLAIN_LINE_EXEMPT_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_EXEMPT_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.

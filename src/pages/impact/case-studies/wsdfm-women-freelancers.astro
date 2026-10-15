@@ -9,12 +9,13 @@ import Fact from '../../../components/facts/Fact.astro';
 import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
-import { wsdfmRecordLine } from '../../../components/pages/impact/evidence';
 import { fact } from '../../../data/facts';
 import { RCT_HEADLINE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 
+// WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone, because the three tiles under them show both results; one line directly above the tiles (heroNote) says
+// what kinds of evidence they are. The detailed results and the chart below are unchanged, and scripts/check-facts.mjs lists this page as exempt from the [PLAIN-LINE] (the Independent Evaluation page keeps it).
 // RC-09 (BIGD employment status at follow-up). The chart values must match the register text.
 const control = [47.2, 40.9, 11.9];
 const offered = [36.9, 34.6, 28.5];
@@ -33,8 +34,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
   slug="wsdfm-women-freelancers"
   pageTitle="WSDFM Case Study"
   description="WSDFM, commissioned by Porticus: a randomized trial of the predecessor program found income rose for women offered a place; 711 of 1,000 women in work."
-  plainLine
-  heroNote={`${wsdfmRecordLine()}. The trial figures below come from a separate randomized trial of the predecessor program, not from these records.`}
+  heroNote="Program records and a separate randomized trial of the predecessor program."
   trialLink
   stats={[
     { id: 'PR-01' },
