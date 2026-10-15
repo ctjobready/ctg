@@ -167,6 +167,7 @@ const optionText: Record<string, string> = {
 
   <!-- C11 · Offer -->
   <OfferCards
+    eyebrow="Options"
     title="Choose Where to Start"
     lead={PROGRAM_SIZES_NOTE}
     cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}

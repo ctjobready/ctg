@@ -183,13 +183,13 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
     await expect(slide.locator('h2')).toHaveText('Results by Program');
-    await expect(slide.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
+    await expect(slide.locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
     await expect(slide.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
+      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
     ]);
   });
 
@@ -201,7 +201,8 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     }
     // WP49 (cycle-24 review): each page's one secondary tile (RC-06a, RC-02, PR-02) is the glance's fourth tile, in the main group, with no "More Results" heading (tests/wp49.spec.ts)
     await open(page, 'partner-with-us/development-partners/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03', 'RC-06a']);
+    // WP52 (cycle-27 review, Kimi M2): Development Partners' ">4×" tile (RC-06a) is gone from the glance; its comparison is the +10.3 tile's note (tests/wp52.spec.ts)
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     await open(page, 'partner-with-us/foundations/');
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-04', 'OC-03', 'PR-02', 'RC-02']);
     await open(page, 'partner-with-us/governments/');
@@ -359,7 +360,7 @@ test.describe('plain words and plain claims', () => {
   test('Governments: the delivery card names the follow-up surveys at 3, 6 and 12 months; the contracts table and the services line use plain words', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
-    await expect(page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
+    await expect(page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
     const contracts = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');

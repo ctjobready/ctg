@@ -12,7 +12,8 @@ import { linkAttrs } from '../../../lib/url';
  * scope are never read as one undifferentiated group. Figures, labels and notes are read from the facts register (stat.value,
  * stat.glance ?? stat.label); a page may reword a label or add a caveat, never retype a number. WP45 (cycle-21 review): a figure in "pp" ("+10.3 pp") shows "+10.3" with "percentage points" on a line under it.
  * WP49 (cycle-24 review): a "More Results" heading over ONE tile is no heading at all, so a single secondary tile joins the main group (four tiles in one row from 1100 px, two by two from 720 px, stacked on a phone); the heading and
- * its own row stay where it introduces several tiles. (Development Partners, Foundations and Governments each have three lead tiles and one more.)
+ * its own row stay where it introduces several tiles. (Foundations and Governments each have three lead tiles and one more; WP52, cycle-27 review: Development Partners has the three lead tiles alone, its ">4×" tile
+ * having become the +10.3 tile's `note`.)
  */
 type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 interface Tile {

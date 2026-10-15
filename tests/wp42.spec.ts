@@ -349,7 +349,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body is two sentences; the contract scope carries the clause "contract scope, not a count of completers" and the 25,125 and 2,500 are off the slide (tests/wp48.spec.ts)
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -373,22 +373,19 @@ test.describe('Home: the government slide is second (item 10)', () => {
   });
 });
 
-test.describe('Development Partners: the >4x tile quotes the multiplier only (item 11)', () => {
-  test('the tile’s label gives the nine-trial average and does not repeat the +10.3 percentage points of the lead tile', async ({ page }) => {
+// WP52 (cycle-27 review, Kimi M2): the ">4×" tile is gone from the glance; its comparison is the +10.3 tile's note, "More than four times the 2.3-point average across nine vocational-training trials." (tests/wp52.spec.ts)
+test.describe('Development Partners: the >4x comparison is the +10.3 tile’s note, not a second tile (item 11)', () => {
+  test('there is no ">4×" tile; the +10.3 tile carries the nine-trial average as its note and the 10.3 is stated once', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    // WP49 (cycle-24 review): the tile is the glance's fourth, in the main group (it stood alone under a "More Results" heading)
-    const tile = page.locator('#glance .pg__lead a[data-fact="RC-06a"]');
-    await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.pg__value')).toHaveText('>4×');
-    // WP48 (cycle-23 review): the label says what is compared; it was "Employment effect over four times the nine-trial average". WP49 (cycle-24 review): it says the ratio too ("... was more than four times the 2.3-point average ...").
-    // The note under it ("Against 2.3 percentage points on average across nine vocational-training trials.") repeated the label, so the tile has no note.
-    await expect(tile.locator('.pg__desc')).toHaveText('The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials');
-    await expect(tile.locator('.pg__note')).toHaveCount(0);
-    expect(compact(await tile.textContent())).not.toMatch(/10\.3|\+10/);
+    await expect(page.locator('#glance .pg__lead a[data-fact="RC-06a"]')).toHaveCount(0);
+    expect(compact(await page.locator('#glance').textContent())).not.toContain('>4×');
+    const lead = page.locator('#glance .pg__lead a[data-fact^="RC-02"]');
+    await expect(lead).toHaveCount(1);
+    await expect(lead.locator('.pg__note')).toHaveText('More than four times the 2.3-point average across nine vocational-training trials.');
     // the +10.3 is stated once in the glance: the lead tile
     const glance = compact(await page.locator('#glance').textContent());
     expect(count(glance, '10.3'), 'the 10.3 is the lead tile’s alone').toBe(1);
-    await expect(page.locator('#glance .pg__lead a[data-fact="RC-02"]')).toContainText('+10.3 percentage points');
+    await expect(lead).toContainText('+10.3 percentage points');
   });
 
   test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the glance label says so without a repeating note', () => {

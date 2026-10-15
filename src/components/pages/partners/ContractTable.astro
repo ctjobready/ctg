@@ -10,7 +10,7 @@ import { factPart } from './partners';
  * Counts are contract training scopes (GV-10), never delivered scale. Every number comes from the register.
  * No Status column (visual polish, WP1p; confirmed 2026-10-12, item #29): the register states a status for no single contract (GV-10 says only that "some
  * contracts are still in progress"), so a column would read "Status to confirm" in every row. The note under the table says once that delivery
- * status is confirmed per contract on request. When a status is registered for a contract, add the column back.
+ * status is confirmed for each contract in a briefing (WP52; it said "per contract on request"). When a status is registered for a contract, add the column back.
  * No Curriculum-reach column: only Her Power has one, so its figures (the national program's training total and the manuals published) sit in
  * that row's Training Figure cell (WP41; they were in its scope text). A column returns when two or more contracts carry a value.
  * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
@@ -26,6 +26,8 @@ import { factPart } from './partners';
  * cover. The cells are unchanged.
  * WP50 (cycle-25 review): Her Power's three lines are full sentences with a full stop ("CodersTrust trained 2,500 women directly." / "The national program trained 25,125 women across 130 sub-districts (upazilas)." / "54,609 manuals and guidelines
  * were distributed."), still one per line, with a space between the items so a text export keeps them apart.
+ * WP52 (cycle-27 reviews): the note sat beside Her Power's delivered figures yet said all scopes are "not delivered scale"; it now reads "Delivery status is confirmed for each contract in a briefing. Apart from the Her Power figures, scopes are contracted
+ * scopes of work, not delivered scale." (two sentences; Claude m5, then Grok m2: "on request" read as a barrier, and the page's first step is a briefing), and the table's screen-reader caption makes the same exception.
  */
 interface Row {
   contract: string;
@@ -99,7 +101,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
   <SectionHeader id={`${id}-h`} eyebrow="Government Contracts" title={title} lead={lead} />
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
-      <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Counts are contract training scopes, not delivered scale.</caption>
+      <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Apart from the Her Power figures, counts are contract training scopes, not delivered scale.</caption>
       <thead>
         <tr>
           <th scope="col">Contract</th>
@@ -121,7 +123,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
     </table>
   </section>
   <div class="ct__notes" data-reveal>
-    <p data-fact="GV-10">Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.</p>
+    <p data-fact="GV-10">Delivery status is confirmed for each contract in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.</p>
   </div>
   {more && <p class="ct__more" data-reveal><a class="link" href={linkAttrs(more.href).href}>{more.label}<Icon name="arrow-right" size={16} /></a></p>}
 </Section>

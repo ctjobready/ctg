@@ -240,7 +240,7 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
     expect(await tile.getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await tile.textContent())).toContain('58.8%');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(compact(await tile.textContent())).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
+    expect(compact(await tile.textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)');
     const link = slide.locator('a', { hasText: 'See When Completers First Earn' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');

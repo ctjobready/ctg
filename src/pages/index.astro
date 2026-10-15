@@ -11,6 +11,8 @@
 // WP51 (cycle-26 reviews): the comparison is headed "How CodersTrust Compares with Self-Paced Courses" (the table compares CodersTrust with one other approach), and its Outcome Tracking row carries the scope qualifier ("as agreed in the program scope");
 // the positioning statement's reports are scoped the same way (POSITIONING.home); the first Imagine card is a scene ("A young woman invoices her first foreign client from her own laptop."), not "You hear from ..."; the WSDFM card of "Proof in Practice"
 // shows its delivery context in place of the figure the fourth carousel slide already states (caseStudyItems).
+// WP52 (cycle-27 reviews): the hero's value proposition begins "We help ..."; the carousel's government slide, speed slide and program-results slide changed (src/data/heroSlides.ts); the Results You Can Check card promises
+// "Monthly reports will show progress toward paid work, as agreed in the program scope."; the recognition band's AWS item has a line under its title (HomeRecognition).
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -90,8 +92,9 @@ const includes = [
     icon: 'clipboard-check',
     // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"), not an unscoped inclusion. WP45 (cycle-21 review): one line. The follow-up surveys and the documentary evidence are in the FAQ ("How Do You Prove Outcomes?")
     // and on the evidence pages, so the card states the monthly reports alone (PD-08), as the positioning statement and the comparison table do.
+    // WP52 (cycle-27 review, Grok M3): "Monthly reports will show ..." (it said "show", which states the reports as an existing standard; elsewhere the same promise is planned for every cohort).
     title: 'Results You Can Check',
-    text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
+    text: 'Monthly reports will show progress toward paid work, as agreed in the program scope.',
     facts: ['PD-08'],
   },
   {

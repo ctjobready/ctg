@@ -32,7 +32,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     {
       title: 'Results You Can Check',
       // WP45 (cycle-21 review): one line, the monthly reports (PD-08), scoped
-      text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
+      text: 'Monthly reports will show progress toward paid work, as agreed in the program scope.',
       pain: 'P2',
       facts: ['PD-08'],
     },
@@ -106,7 +106,7 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     // (WP42, cycle-19 review: the government slide is the second slide)
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
     // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."; WP48, cycle-23 review: the slide keeps the note's first clause, "31,200+ people: contract scope, not a count of completers.")
-    expect(slide2).toContain('31,200+ people: contract scope, not a count of completers');
+    expect(slide2).toContain('31,200+ people. This is contract scope, not a count of completers');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);
@@ -278,7 +278,7 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)');
   });
 });
 
@@ -291,13 +291,14 @@ test.describe('wording fixes', () => {
     expect(third).toContain('Impact investors: the deck and data room follow under NDA.');
   });
 
-  for (const [route, id] of [['about/', 'about-cta'], ['about/team/', 'team-cta']]) {
-    test(`${route}: "Talk to the Team" asks for goals and offers a partnership route, not a first cohort`, async ({ page }) => {
+  // WP52 (cycle-27 review, Kimi M3): About's band is "Start a Conversation" (the action is a general discovery email; the team page keeps "Talk to the Team")
+  for (const [route, id, heading] of [['about/', 'about-cta', 'Start a Conversation'], ['about/team/', 'team-cta', 'Talk to the Team']]) {
+    test(`${route}: "${heading}" asks for goals and offers a partnership route, not a first cohort`, async ({ page }) => {
       await open(page, route);
       const cta = page.locator(`#${id}`);
       await expect(cta).toHaveCount(1);
       const text = compact(await cta.textContent());
-      expect(text).toContain('Talk to the Team');
+      expect(text).toContain(heading);
       expect(text).toContain('Tell us your goals, and we will discuss the right partnership route.');
       expect(text).not.toMatch(/priority groups|first cohort/);
     });

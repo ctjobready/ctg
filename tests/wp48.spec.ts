@@ -64,7 +64,7 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
+  'Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   test('slide 2 body is the contract scope with its clause, then the National University sentence; no 25,125, no 2,500; the lead rests on GV-12 alone; the links stay', async ({ page }) => {
@@ -483,7 +483,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
 
   test('the hero line names the underemployed, as ID-01 does; the H1 is unchanged', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('.hh__lead')).toHaveText('Help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.');
+    await expect(page.locator('.hh__lead')).toHaveText('We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.');
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
   });
@@ -532,11 +532,12 @@ test.describe('Investors and Development Partners (items 25 and 27)', () => {
     expect(fact('RC-06a').stat?.glance?.note).toBeUndefined();
     const average = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
     expect(LABEL).toContain(`${average}-point average`);
+    // WP52 (cycle-27 review, Kimi M2): the ">4×" tile is gone from Development Partners' glance; its comparison is the +10.3 tile's note, read from this label (tests/wp52.spec.ts)
     await open(page, 'partner-with-us/development-partners/');
-    const tile = page.locator('#glance .pg__lead a[data-fact="RC-06a"]');
-    await expect(tile.locator('.pg__value')).toHaveText('>4×');
-    await expect(tile.locator('.pg__desc')).toHaveText(LABEL);
-    await expect(tile.locator('.pg__note')).toHaveCount(0);
+    await expect(page.locator('#glance .pg__lead a[data-fact="RC-06a"]')).toHaveCount(0);
+    const lead = page.locator('#glance .pg__lead a[data-fact~="RC-06a"]');
+    await expect(lead).toHaveCount(1);
+    await expect(lead.locator('.pg__note')).toHaveText(`${LABEL.replace(/^The employment effect for women offered a place was m/, 'M')}.`);
     expect(builtPages().filter((p) => p.html.includes('Against 2.3 percentage points on average across nine vocational-training trials')).map((p) => p.route)).toEqual([]);
   });
 });
@@ -546,6 +547,8 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition and the Outcomes page defines the term once: tests/wp49.spec.ts)
   const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
   const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
+  const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
   const NOTE = 'Months are counted from the end of the course; the shares are cumulative and include earnings during the course.';
   const MEASURE = 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)';
@@ -571,7 +574,7 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
       expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
       await expect(s.locator('.hs__lead')).toHaveCount(0);
       expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
-      expect(compact(await s.locator('.hs__stat').textContent())).toContain(LABEL);
+      expect(compact(await s.locator('.hs__stat').textContent())).toContain(define(LABEL));
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       expect(await s.evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
     }
@@ -579,7 +582,7 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
 
   test('Impact’s tile, Outcomes 2026 (summary tile, paragraph, chart note) and the data file all say it the same way; the values are unchanged', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(GLANCE);
+    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
@@ -632,7 +635,7 @@ test.describe('The evidence ladder’s first rung is "Independent Evaluation (BI
     expect(((await link.getAttribute('href')) ?? '').replace(/^\/ctg/, '')).toBe('/impact/independent-evaluation/');
     expect(await first.locator('th [data-evidence]').getAttribute('data-evidence')).toBe('Randomized Trial');
     const shows = compact(await first.locator('td[data-label="What It Shows"]').textContent());
-    expect(shows).toBe(`The effect of one CodersTrust program (WSDFM) on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
+    expect(shows).toBe(`The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
     const text = await mainText(page);
     expect(count(text, INSTITUTE), 'the institute is spelled out once on Impact').toBe(1);
     expect(count(text, 'BIGD'), 'the abbreviation appears once, in the rung name').toBe(1);

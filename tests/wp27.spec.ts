@@ -107,7 +107,7 @@ test.describe('JobReady@Campus and JobReady@Work', () => {
   test('the hub employer card covers both halves of JobReady@Work: training a team and hiring talent', async ({ page }) => {
     await open(page, 'programs/');
     const card = compact(await page.locator('#programs-grid li:has(a[href$="programs/jobready-work/"])').textContent());
-    expect(card).toContain('Corporate training custom-developed for each organization, plus access to job-ready talent.');
+    expect(card).toContain('Corporate training custom-developed for each organization, plus a route to hire job-ready talent.');
   });
 });
 

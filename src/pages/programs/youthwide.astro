@@ -22,6 +22,8 @@
 // the step sequence above it and the timing question in the FAQ (Q7-model). The procurement sentence is still on the page, in the Governments entry card and in that answer; the risk band's eyebrow is "Managed Rollout".
 // WP50 (cycle-25 review): step 4 of "What Happens Next" says "Training starts in existing labs and colleges on the agreed schedule." (it pointed at "the window below", which WP49 had removed).
 // WP51 (cycle-26 review): the options lead no longer describes the website ("Program options are shown without prices; the indicative budget is shared in the discovery session."): it says "We share an indicative budget in the discovery session."
+// WP52 (cycle-27 reviews, Claude): the hero's ministry-briefing text link is labelled with its audience, "Governments: Request a Briefing for Your Ministry" (the label sits outside the link, as in CTABand's `routes`; the one primary button is unchanged);
+// the glance's first row says "Bangladesh is where most delivery has been" where it said "Bangladesh is the reference implementation" (IN-02 says it the same way; the Bangladesh band's heading, "Reference Country and 2030 Aim", is unchanged).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -102,7 +104,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
         {
           briefing.href && (
             <nav class="routes" aria-label="Other Ways to Start">
-              <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
+              <span class="route">Governments: <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a></span>
             </nav>
           )
         }
@@ -115,7 +117,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     rows={[
       // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million vulnerable youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
       // WP48 (cycle-23 review): the row says "2 million vulnerable youth", IN-01's own wording, as the Programs menu, Home and the Programs hub do.
-      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.', facts: ['IN-02', 'IN-01'] },
+      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.', facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },

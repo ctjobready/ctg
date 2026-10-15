@@ -108,7 +108,7 @@ test.describe('Programs', () => {
   test('the YouthWIDE hub card reads "from training to paid work"', async ({ page }) => {
     await open(page, 'programs/');
     const text = compact(await main(page));
-    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on paid-work outcomes, not only enrollment.');
+    expect(text).toContain('Ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.');
   });
 
   test('YouthWIDE: the 2030 aim keeps its own "Target" tag and its not-delivered note in the Bangladesh band, beside two delivered-scale figures', async ({ page }) => {
@@ -121,7 +121,8 @@ test.describe('Programs', () => {
   test('Campus says the empathy line once, and puts the Track Record before the vision', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
     const text = compact(await main(page));
-    expect(text.split('You see capable students finish their degrees').length - 1).toBe(1);
+    // WP52 (cycle-27 review): the line is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it read "You see capable students finish their degrees and still struggle to find work, ...")
+    expect(text.split('Help students prepare for paid digital work and build placement evidence from your campus cohorts.').length - 1).toBe(1);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(order.indexOf('guide'), 'guide band').toBeGreaterThan(-1);
     const titles = await page.locator('main h2').allInnerTexts();

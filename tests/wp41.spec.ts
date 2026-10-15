@@ -235,7 +235,7 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     const tile = compact(await slide.locator('.hs__stat').textContent());
     expect(tile).toContain('58.8%');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(tile).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
+    expect(tile).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)');
   });
 
   test('slide 2 counts the contracts and names Bangladesh’s National University', async ({ page }) => {
@@ -291,11 +291,11 @@ test.describe('Governments: the contracts table has short scope phrases and ever
     expect(await mainText(page)).not.toContain('372 of 800 women trained directly');
   });
 
-  test('the manuals figure is stated once, in the table; the "Capacity That Stays" card of the delivery band no longer repeats it', async ({ page }) => {
+  test('the manuals figure is stated once, in the table; the "Capacity Designed to Stay" card of the delivery band no longer repeats it', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const text = await mainText(page);
     expect(count(text, '54,609')).toBe(1);
-    const card = compact(await page.locator('#mechanism li', { hasText: 'Capacity That Stays' }).first().textContent());
+    const card = compact(await page.locator('#mechanism li', { hasText: 'Capacity Designed to Stay' }).first().textContent());
     expect(card).toContain('Training of Trainers, curriculum and manuals, then preparation for industry certification.');
     expect(card).not.toMatch(/54,609|for Her Power/);
   });

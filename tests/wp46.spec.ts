@@ -112,9 +112,10 @@ test.describe('Development Partners and Foundations: the final call to action do
     expect(count(await mainText(page), 'Public procurement follows the agency’s own timeline')).toBe(1);
   });
 
-  test('Governments keeps its own procurement note (its steps band says "Briefing", not the grant timing); the pages whose urgency line is not the grant timing are unaffected', async ({ page }) => {
+  test('Governments states its procurement note in the steps band ("Briefing", not the grant timing) and the FAQ; WP52 (cycle-27 review) removed the call-to-action band’s own copy of it; the pages whose urgency line is not the grant timing are unaffected', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(await texts(page, '#cta .cta-band__notes li')).toContain('Public procurement follows the agency’s own timeline — we start with a briefing that fits it.');
+    expect(await texts(page, '#cta .cta-band__notes li')).toEqual([]);
+    expect(compact(await page.locator('#cta').textContent())).not.toContain('Public procurement follows the agency’s own timeline');
     await open(page, 'partner-with-us/universities/');
     expect(await texts(page, '#cta .cta-band__notes li')).toContain('Timing follows your academic calendar: tracks and campus labs are agreed in co-design before the first cohort starts.');
   });
@@ -155,7 +156,7 @@ test.describe('NU diploma course pages: "What You Will Work On" is gone, "What Y
 
 test.describe('About: "On This Page" is back under the hero, one link for each of the main bands (item 7)', () => {
   // WP51 (cycle-26 review): the list had left out two existing H2s, "The People Who Started It" (#founders) and "Industry Recognition" (#recognition); it links all eight bands now
-  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'The People Who Started It', 'Four Principles Behind Every Program', 'Industry Recognition', 'Talk to the Team'];
+  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'The People Who Started It', 'Four Principles Behind Every Program', 'Industry Recognition', 'Start a Conversation'];
 
   test('the list sits directly after the hero and before the first band, links the eight H2s in page order, and every label is the heading it opens (Title Case)', async ({ page }) => {
     await open(page, 'about/');
@@ -184,7 +185,7 @@ test.describe('About: "On This Page" is back under the hero, one link for each o
 
   test('a link opens its band, and the page has no horizontal overflow on a phone or a desktop', async ({ page }) => {
     await open(page, 'about/');
-    await page.locator('nav[aria-label="On this page"]').getByRole('link', { name: 'Talk to the Team' }).click();
+    await page.locator('nav[aria-label="On this page"]').getByRole('link', { name: 'Start a Conversation' }).click();
     await expect(page).toHaveURL(/#about-cta$/);
     await expect(page.locator('#about-cta-h')).toBeInViewport();
     for (const vp of [DESKTOP, MOBILE]) {
@@ -231,17 +232,18 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): Home slide 2 keeps only the note's first clause ("contract scope, not a count of completers"), read from the note; the Impact and Governments tiles above keep the whole note (tests/wp48.spec.ts)
-    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
     expect(builtPages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 });
 
-test.describe('Investors: the guide line asks for what is proven and what is still being built (item 13)', () => {
-  test('the empathy line reads "Impact investors need to see what is proven and what is still being built." and the "only promised" test is gone', async ({ page }) => {
+// WP52 (cycle-27 review, Grok m1): the Investors Track Record band no longer opens with the guide line ("Impact investors need to see what is proven and what is still being built."); it starts with its record (tests/wp52.spec.ts)
+test.describe('Investors: the guide band has no empathy line, and the "only promised" test stays gone (item 13)', () => {
+  test('the band starts with its heading and the origin line; the "only promised" wording is gone', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('#guide .ig__empathy').textContent())).toBe('Impact investors need to see what is proven and what is still being built.');
+    await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('only promised');
   });
 });
@@ -460,6 +462,8 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition; tests/wp49.spec.ts)
   const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
   const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
+  const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
 
   test('the register states the reference point in its text, stat label and glance label', () => {
     const oc05 = fact('OC-05');
@@ -469,18 +473,18 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(oc05.stat?.value).toBe('58.8%');
   });
 
-  test('Home slide 5 says "by Six Months After the Course" in its heading and shows the register’s label in its tile', async ({ page }) => {
+  test('Home slide 5 says "by Six Months After the Course" in its heading and shows the register’s label in its tile (with the term defined, WP52)', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
     await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
     expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain(LABEL);
+    expect(compact(await s.locator('.hs__stat').textContent())).toContain(define(LABEL));
   });
 
   test('Impact’s tile and Outcomes 2026 (summary tile, paragraph, chart note, data file) all read the reference point from the fact', async ({ page }) => {
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(GLANCE);
+    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(define(GLANCE));
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);

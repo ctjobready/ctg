@@ -241,7 +241,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): the slide keeps "work scoped for 31,200+ people" and follows it with the clause "contract scope, not a count of completers"; Her Power's 25,125 and the 2,500 are off the slide (tests/wp48.spec.ts)
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 31,200\+/.test(p.html)).map((p) => p.route);
@@ -253,7 +253,8 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     await open(page, 'partner-with-us/governments/');
     const tile = page.locator('#glance a[data-fact^="PR-05"]');
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
-    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(LABEL);
+    // WP52 (cycle-27 review): the tile names the program ("Her Power: ..."); the case cards below sit under the program's name and keep the bare caption
+    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(`Her Power: ${LABEL}`);
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');

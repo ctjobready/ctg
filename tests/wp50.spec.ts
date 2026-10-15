@@ -101,12 +101,12 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
   test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records, not trial data"; each line names its facts', async ({ page }) => {
     await open(page, '');
     await expect(slide(page).locator('h2')).toHaveText('Results by Program');
-    await expect(slide(page).locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
+    await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
+      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
     ]);
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01', 'PR-03 PR-06', 'PR-05']);
   });
@@ -203,13 +203,14 @@ test.describe('Foundations: the first pain and the track-record band (items 2 an
 });
 
 test.describe('Universities: the track-record band opens with the origin line; JobReady@Campus keeps the sentence (item 7)', () => {
-  const CAMPUS_SENTENCE = 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.';
+  // WP52 (cycle-27 review): the sentence is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it read "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.")
+  const CAMPUS_SENTENCE = 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.';
 
   test('the Universities partner page’s band opens with "Since 2014, ..." and has no empathy line', async ({ page }) => {
     await open(page, UNI);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe(ORIGIN_LINE);
-    expect(await everything(page)).not.toContain('You see capable students finish their degrees');
+    expect(await everything(page)).not.toContain(CAMPUS_SENTENCE);
   });
 
   test('JobReady@Campus still states the sentence once, as its problem band’s lead (EMPATHY.universities)', async ({ page }) => {
@@ -238,7 +239,7 @@ test.describe('Local Partners, YouthWIDE and Development Partners: the lines the
   test('Local Partners: the problem lead is the offer, under the unchanged heading', async ({ page }) => {
     await open(page, LOCAL);
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
     expect(await everything(page)).not.toContain('Local organizations often lack');
   });
 
@@ -379,9 +380,10 @@ test.describe('Development Partners and Governments: no closing line repeats the
     for (const name of ['UNDP', 'World Bank Group', 'BRAC']) expect(strip, name).toContain(name);
   });
 
-  test('Governments: the closing band has the briefing line alone; the track-record band’s strip names the five government bodies the line named', async ({ page }) => {
+  // WP52 (cycle-27 review, Claude m4): the briefing line that closed the page ("Your agency’s procurement timeline sets the pace; we start with a briefing.") is gone with the strip around it: it repeated the procurement point the FAQ answer and the steps band state (tests/wp52.spec.ts)
+  test('Governments: the track-record band’s strip names the five government bodies the closing line named; no closing strip follows the steps (WP52)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(await texts(page, '#reinforce li')).toEqual(['Your agency’s procurement timeline sets the pace; we start with a briefing.']);
+    await expect(page.locator('#reinforce')).toHaveCount(0);
     expect(await everything(page)).not.toContain('Government partners include Bangladesh’s ICT Division');
     const strip = await page.locator('#guide .partners').first().evaluate((el) => `${el.textContent ?? ''} ${Array.from(el.querySelectorAll('img')).map((i) => i.getAttribute('alt') ?? '').join(' ')}`);
     for (const name of ['ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority', 'NSDA', 'BCC']) expect(strip, name).toContain(name);

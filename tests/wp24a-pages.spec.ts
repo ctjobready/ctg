@@ -81,7 +81,8 @@ test.describe('Investors page structure', () => {
     expect(text).not.toContain('Three featured case studies, each with its partner.');
     // Cycle 5 (triage-c5, Partner): the guide line reads "need to distinguish a model that is working from one that is only promised" (copy.ts EMPATHY.investors).
     // WP46 (cycle-22 review): it now reads "need to see what is proven and what is still being built" (the earlier line invited a platform-proof test the page cannot pass).
-    expect(text).toContain('Impact investors need to see what is proven and what is still being built.');
+    // WP52 (cycle-27 review, Grok m1): the guide line is gone from the Track Record band (tests/wp52.spec.ts)
+    expect(text).not.toContain('Impact investors need to see what is proven and what is still being built.');
     expect(text).not.toContain('only promised');
     // WP30c: the path-to-scale paragraph is gone from the reach band (the scale FAQ answers it)
     expect(text).not.toContain('Path to scale');

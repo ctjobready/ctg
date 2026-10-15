@@ -202,7 +202,7 @@ test.describe('About: "On This Page" lists all eight bands (item 6)', () => {
     ['The People Who Started It', 'founders'],
     ['Four Principles Behind Every Program', 'how-we-work'],
     ['Industry Recognition', 'recognition'],
-    ['Talk to the Team', 'about-cta'],
+    ['Start a Conversation', 'about-cta'],
   ];
 
   test('the two added entries use the existing ids (#founders, #recognition), sit in page order, and are the H2s they open', async ({ page }) => {
@@ -402,7 +402,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
+      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
     ]);
     expect(await slide(page, 4).locator('.hs__lines li').nth(3).getAttribute('data-fact')).toBe('PR-05');
   });
@@ -429,11 +429,12 @@ test.describe('Programs: the grid’s eyebrow counts the five program cards (ite
 });
 
 test.describe('Governments: the empathy line and the glance tile (items 14 and 18)', () => {
-  test('the Track Record band’s empathy line says the budgets "must produce young people in work, not only seats filled"', async ({ page }) => {
-    expect(EMPATHY.governments).toBe('You answer for training budgets that must produce young people in work, not only seats filled.');
+  // WP52 (cycle-27 reviews, Grok M2 and Gemini m6): the Track Record band opens with the origin line; the empathy line that WP51 reworded ("... must produce young people in work, not only seats filled.") is gone, with its EMPATHY key (tests/wp52.spec.ts)
+  test('the Track Record band has no empathy line (the earlier wordings are on no built page either)', async ({ page }) => {
+    expect(Object.keys(EMPATHY)).not.toContain('governments');
     await open(page, GOV);
-    expect(compact(await page.locator('#guide p.lead').textContent())).toBe(EMPATHY.governments);
-    expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work')).map((p) => p.route)).toEqual([]);
+    await expect(page.locator('#guide p.lead')).toHaveCount(0);
+    expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work') || visible(p.html).includes('must produce young people in work, not only seats filled')).map((p) => p.route)).toEqual([]);
   });
 
   test('the GV-12 tile keeps the register note’s first sentence and points to the contracts table (which states Her Power’s two figures); Impact keeps the full note', async ({ page }) => {

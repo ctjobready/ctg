@@ -34,6 +34,8 @@
  * comparison and in the Funding Route 2 passage); the passage keeps its one sentence and the link stays beside the comparison (WP37 had added it to the passage). "Discuss a YouthWIDE Cohort Grant" was linked once, so it is unchanged.
  * WP51 (cycle-26 review): the closing partner line under "What Happens Next" ("Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.") moved, unchanged, into the Track Record
  * band ("We’ve Built This Path Since 2014"), directly after the BIGD line (C14.validateFor.foundations is passed to PartnerGuideBand's `statements`); the page now ends on its first-action line alone, as Development Partners and Governments do since WP50.
+ * WP52 (cycle-27 review): the cohort-grant offer's lead is the program-sizes note alone; "Prefer to fund the platform? See JobReady Platform Grants below." is gone (the funding-route comparison above carries the platform-grant row and its inquiry link,
+ * and the Funding Route 2 passage below keeps its #platform-grants id, which no link points to).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -219,7 +221,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     id="cohort-grants"
     eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
     title="Choose Where to Start Your Cohort Grant"
-    lead={`${PROGRAM_SIZES_NOTE} Prefer to fund the platform? See JobReady Platform Grants below.`}
+    lead={PROGRAM_SIZES_NOTE}
     cards={funderOptionCards()}
     recommended={0}
   />

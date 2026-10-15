@@ -80,14 +80,15 @@ test.describe('audience pages', () => {
     });
   }
 
-  for (const slug of ['development-partners', 'governments', 'foundations']) {
-    // WP49 (cycle-24 review): the one secondary tile joins the main group (a "More Results" heading over a single tile is gone), so the glance is four tiles in one group, each tagged with its evidence type (tests/wp49.spec.ts)
-    test(`${slug}: Results at a Glance is four tiles in one group, each tagged with its evidence type`, async ({ page }) => {
+  // WP52 (cycle-27 review, Kimi M2): Development Partners' glance is the three lead tiles (its ">4×" tile became the +10.3 tile's note); Governments and Foundations keep four (tests/wp49.spec.ts, tests/wp52.spec.ts)
+  for (const [slug, tiles] of [['development-partners', 3], ['governments', 4], ['foundations', 4]] as const) {
+    // WP49 (cycle-24 review): the one secondary tile joins the main group (a "More Results" heading over a single tile is gone), so the glance is one group, each tile tagged with its evidence type (tests/wp49.spec.ts)
+    test(`${slug}: Results at a Glance is ${tiles} tiles in one group, each tagged with its evidence type`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
-      await expect(page.locator('#glance .pg__lead > li')).toHaveCount(4);
+      await expect(page.locator('#glance .pg__lead > li')).toHaveCount(tiles);
       const tags = await texts(page, '#glance .evidence-tag');
       // WP35: the WSDFM tile left the glance (its 71% is program records, read beside the trial's 63.1%); every tile carries a tag
-      expect(tags.length).toBe(4);
+      expect(tags.length).toBe(tiles);
       for (const t of tags) expect(['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Contract Scope']).toContain(t);
       await expect(page.locator('#glance .pg__more')).toHaveCount(0);
     });
@@ -110,7 +111,8 @@ test.describe('audience pages', () => {
     await expect(page.locator('#ministry-sees')).toHaveCount(0);
     const card = page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' });
     await expect(card).toHaveCount(1);
-    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
+    // WP52 (cycle-27 review): the card scopes its reports and surveys ("..., as agreed in the program scope.")
+    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.');
   });
 
   test('governments: the contracts table becomes stacked rows on a phone', async ({ page }) => {

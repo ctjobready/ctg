@@ -112,7 +112,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
     expect('Connect Your Community to Paid Digital Work').toBe(titleCase('Connect Your Community to Paid Digital Work'));
     // WP50 (cycle-25 review): the problem band's lead is "Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it was "Local organizations often lack ..."; tests/wp50.spec.ts)
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
     // the track-record band opens with its method paragraph, which names the Bangladesh team; its empathy line is gone
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');
@@ -288,7 +288,8 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
 
   test('Foundations and Universities, which also carry the cost answer, do not repeat its pricing sentence in their "Choose Where to Start" leads', async ({ page }) => {
     await open(page, FOUND);
-    expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(`${PROGRAM_SIZES_NOTE} Prefer to fund the platform? See JobReady Platform Grants below.`);
+    // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
+    expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, DP);
@@ -301,27 +302,29 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
 });
 
 test.describe('Results at a Glance: one secondary tile has no heading of its own (item 13)', () => {
-  const PAGES: [string, string[]][] = [
-    [DP, ['RC-02', 'OC-01', 'PR-03', 'RC-06a']],
-    [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02']],
-    [FOUND, ['RC-04', 'OC-03', 'PR-02', 'RC-02']],
+  // WP52 (cycle-27 review, Kimi M2): Development Partners' ">4×" tile is gone (its comparison is the +10.3 tile's note), so its glance is the three lead tiles in one row from 720 px; Governments and Foundations keep their fourth tile
+  // (tests/wp52.spec.ts). Each entry: the route, the tiles in order, the rows at 900 and the rows at 390.
+  const PAGES: [string, string[], number, number][] = [
+    [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
+    [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02'], 2, 4],
+    [FOUND, ['RC-04', 'OC-03', 'PR-02', 'RC-02'], 2, 4],
   ];
 
-  for (const [route, ids] of PAGES) {
-    test(`${route}: four tiles in the main group, no "More Results" heading, each tile tagged; one row at 1280, two by two at 900, stacked at 390`, async ({ page }) => {
+  for (const [route, ids, rows900, rows390] of PAGES) {
+    test(`${route}: ${ids.length} tiles in the main group, no "More Results" heading, each tile tagged; one row at 1280, ${rows900} at 900, ${rows390} at 390`, async ({ page }) => {
       await open(page, route);
       expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(ids);
       await expect(page.locator('#glance h3')).toHaveCount(0);
       await expect(page.locator('#glance .pg__more')).toHaveCount(0);
       expect(compact(await page.locator('#glance').textContent())).not.toContain('More Results');
-      await expect(page.locator('#glance .pg__lead .evidence-tag')).toHaveCount(4);
+      await expect(page.locator('#glance .pg__lead .evidence-tag')).toHaveCount(ids.length);
       const tops = () => page.locator('#glance .pg__lead > li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
       await page.setViewportSize(DESKTOP);
       expect(new Set(await tops()).size, 'one row at 1280').toBe(1);
       await page.setViewportSize({ width: 900, height: 900 });
-      expect(new Set(await tops()).size, 'two rows at 900').toBe(2);
+      expect(new Set(await tops()).size, `${rows900} row(s) at 900`).toBe(rows900);
       await page.setViewportSize(MOBILE);
-      expect(new Set(await tops()).size, 'four rows at 390').toBe(4);
+      expect(new Set(await tops()).size, `${rows390} rows at 390`).toBe(rows390);
       expect(await noOverflow(page)).toBe(true);
     });
   }
@@ -396,10 +399,11 @@ test.describe('"What Happens Next" (item 16)', () => {
 });
 
 test.describe('About: the meta description (item 17)', () => {
-  test('it reads "has trained and mentored ... across 15 countries and territories since 2014" in 155 characters, in the meta description and in og:description', async ({ page }) => {
+  // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts)
+  test('it reads "Since 2014, New York-headquartered CodersTrust has trained ... in 15 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
     await open(page, 'about/');
-    const D = 'Headquartered in New York, CodersTrust has trained and mentored educated, unemployed youth for digital work across 15 countries and territories since 2014.';
-    expect(D.length).toBe(155);
+    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 15 countries and territories.';
+    expect(D.length).toBe(153);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
   });
@@ -510,17 +514,19 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain('surveyed new earners');
     await open(page, '');
-    expect(compact(await page.locator('[data-hs-slide]').nth(4).locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course');
+    expect(compact(await page.locator('[data-hs-slide]').nth(4).locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
   });
 
-  test('RC-06a’s glance label states the ratio ("was more than four times the 2.3-point average"); the ">4×" value is unchanged', async ({ page }) => {
+  // WP52 (cycle-27 review, Kimi M2): Development Partners no longer shows a ">4×" tile; the register's glance label is the source of the +10.3 tile's note ("More than four times the 2.3-point average across nine vocational-training trials."; tests/wp52.spec.ts)
+  test('RC-06a’s glance label states the ratio ("was more than four times the 2.3-point average"); the ">4×" value is unchanged; Development Partners’ +10.3 tile quotes it as its note', async ({ page }) => {
     const rc06a = fact('RC-06a');
     expect(rc06a.stat?.glance?.label).toBe('The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials');
     expect(rc06a.stat?.value).toBe('>4×');
     await open(page, DP);
-    const tile = page.locator('#glance a[data-fact="RC-06a"]');
-    await expect(tile.locator('.pg__value')).toHaveText('>4×');
-    await expect(tile.locator('.pg__desc')).toHaveText(rc06a.stat!.glance!.label);
+    await expect(page.locator('#glance a[data-fact="RC-06a"]')).toHaveCount(0);
+    const tile = page.locator('#glance a[data-fact~="RC-06a"]');
+    await expect(tile.locator('.pg__value')).toContainText('+10.3');
+    await expect(tile.locator('.pg__note')).toHaveText('More than four times the 2.3-point average across nine vocational-training trials.');
   });
 });
 

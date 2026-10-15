@@ -21,9 +21,12 @@ if (!pa05) throw new Error('HomeRecognition: PA-05 no longer reads "University p
 // and the list's name moves into the heading above it.
 const pa08 = /^CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 (in 2023 \(STEAM Category\) and 2024)$/.exec(fact('PA-08').text);
 if (!pa08) throw new Error('HomeRecognition: PA-08 no longer reads "CodersTrust Was Listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM Category) and 2024"');
+// PA-06 reads "AWS Authorized Training Partner". WP52 (cycle-27 review, Kimi m2): the badge title is that name and the line under it is the status as a sentence ("CodersTrust is an AWS Authorized Training Partner."), as the two items beside it have a line under their titles.
+const pa06 = fact('PA-06').text;
+if (pa06 !== 'AWS Authorized Training Partner') throw new Error('HomeRecognition: PA-06 no longer reads "AWS Authorized Training Partner"');
 const items = [
   { id: 'PA-05', icon: 'landmark', title: 'University and UN-Mandated Partners', text: `${pa05[1]}.` },
-  { id: 'PA-06', icon: 'cloud', title: 'AWS Authorized Training Partner' },
+  { id: 'PA-06', icon: 'cloud', title: pa06, text: `CodersTrust is an ${pa06}.` },
   { id: 'PA-08', icon: 'award', title: 'HolonIQ South Asia EdTech 100', text: `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STEAM category')}.` },
 ];
 ---

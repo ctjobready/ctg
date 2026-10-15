@@ -96,7 +96,8 @@ test.describe('identity: headquartered in New York, parent organization CT USA, 
     expect(t).toContain('parent organization is CT USA, Inc.');
     expect(t).toContain('CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office');
     expect(t).toContain('Additional country and regional offices are planned in the next few years');
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Headquartered in New York, .*15 countries and territories since 2014\.$/);
+    // WP52 (cycle-27 review, GLM m4): the description opens with the year and names New York as the headquarters: "Since 2014, New York-headquartered CodersTrust has trained ... in 15 countries and territories."
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Since 2014, New York-headquartered CodersTrust .*in 15 countries and territories\.$/);
   });
 
   test('the world map line says Headquarters: New York and Country office: Dhaka', async ({ page }) => {

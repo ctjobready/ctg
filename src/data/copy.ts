@@ -31,7 +31,8 @@ export type Audience =
 /** C1 value propositions — one sentence, at most 15 words (CMF). */
 export const VALUE_PROPOSITION: Record<Audience, string> = {
   // WP48 (cycle-23 review): "unemployed and underemployed", as ID-01 has the group (16 words, one over the CMF guideline above; no gate enforces it and the audience lines below run longer).
-  home: 'Help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.',
+  // WP52 (cycle-27 review): "We help ..." (it began "Help ...", an instruction with no subject), as the audience lines below begin; 17 words, two over the guideline.
+  home: 'We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.',
   developmentPartners: 'We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.',
   governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
@@ -62,13 +63,14 @@ export const HEADLINE: Record<Audience, string> = {
 // WP49 (cycle-24 review): nor does Local Partners': its line ("You reach young people that national programs miss, ...") was the third statement of an unqualified comparison with national programs, and the paragraph after it already names the Bangladesh team.
 // WP50 (cycle-25 review): nor do Foundations ("You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.") and the Universities partner page: each line restated the problem band just above its
 // track-record band, which now opens with the origin line. `universities` stays because JobReady@Campus states the sentence once, as its problem band's lead (tests/wp25s.spec.ts); the Universities partner page does not read it.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations'>, string> = {
-  // WP51 (cycle-26 review): "... must produce young people in work, not only seats filled." (it said "... must show up as young people in work, not only as seats filled.").
-  governments: 'You answer for training budgets that must produce young people in work, not only seats filled.',
-  universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
-  employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
-  // WP46 (cycle-22 review): the earlier line ("... distinguish a model that is working from one that is only promised") invited a platform-proof test the page cannot pass; it now asks only for what is proven and what is still being built.
-  investors: 'Impact investors need to see what is proven and what is still being built.',
+// WP52 (cycle-27 reviews, Grok M2 and m1, and Gemini m6 for Governments): nor do Governments ("You answer for training budgets that must produce young people in work, not only seats filled.") and Investors ("Impact investors need to see what is proven and
+// what is still being built."): each line restated the problem band above its track-record band, which now starts with the origin line (Governments) or its record (Investors), as Local Partners' and Foundations' do. `employers` and `nuPgd` remain.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations' | 'governments' | 'investors'>, string> = {
+  // WP52 (cycle-27 review): "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.",
+  // which assumed the institution has no results to show). JobReady@Campus's problem band reads it as its lead; its heading, "Capable Students Still Struggle to Find Work", speaks of students, not of the reader, and stays.
+  universities: 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.',
+  // WP52 (cycle-27 review): "... teams that need AI skills for their daily work." (it said "... faster than hiring or generic courses can supply them.", a speed comparison nothing on the page supports). Employers and JobReady@Work both read this line.
+  employers: 'You have roles to fill and teams that need AI skills for their daily work.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 
@@ -90,6 +92,20 @@ function originShort(): CopyBlock {
 }
 export const ORIGIN_SHORT: CopyBlock = originShort();
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
+
+/**
+ * WP52 (cycle-27 review): OC-05's labels call the 170 "surveyed new earners", a term the Outcomes 2026 page defines once (WP49), so the 58.8% read away from that definition (Home's speed slide, the Impact tile) could be taken for a
+ * share of all completers. Those two surfaces define the term in place: "... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course ...".
+ * The definition is the words of OC-05's own text ("Among the 170 surveyed completers who first earned during or after training"); the label is the register's, with the definition inserted after the term, never retyped. The build
+ * stops if the register's text or the label stops reading that way. The register's labels (OC-05's stat and glance) are unchanged, so the Outcomes page keeps its short labels beside its one definition.
+ */
+const NEW_EARNERS_TERM = 'surveyed new earners';
+const NEW_EARNERS_DEFINITION = 'completers who first earned during or after training';
+export function defineNewEarners(label: string): string {
+  if (!fact('OC-05').text.includes(NEW_EARNERS_DEFINITION)) throw new Error(`defineNewEarners: OC-05's text no longer says "${NEW_EARNERS_DEFINITION}"`);
+  if (!label.includes(NEW_EARNERS_TERM)) throw new Error(`defineNewEarners: the label "${label}" no longer says "${NEW_EARNERS_TERM}"`);
+  return label.replace(NEW_EARNERS_TERM, `${NEW_EARNERS_TERM} (${NEW_EARNERS_DEFINITION})`);
+}
 
 /** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */
 export const TRIAL_BAND_HEADING = 'An Independent Randomized Trial';

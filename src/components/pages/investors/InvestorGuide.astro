@@ -4,12 +4,12 @@ import Icon from '../../system/Icon.astro';
 import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import { EMPATHY, INVESTOR_PARTNERS, ORIGIN_SHORT } from '../../../data/copy';
+import { INVESTOR_PARTNERS, ORIGIN_SHORT } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * C5 Guide (Investors), empathy first and before the vision (credibility before the future state, as on Home): empathy ([EMP] P8) → the origin line (ORIGIN_SHORT) → what has been delivered since 2014 (SC-01, SC-02, SC-03) →
+ * C5 Guide (Investors), before the vision (credibility before the future state, as on Home): the origin line (ORIGIN_SHORT) → what has been delivered since 2014 (SC-01, SC-02, SC-03) →
  * the institutions that work with CodersTrust, as one short paragraph by type (INVESTOR_PARTNERS: governments, development partners, universities, private-sector partners; PA-02, PA-01, PA-05, PA-03) → the link to the
  * leadership team → TalentLEAP (IN-06).
  * WP38 (cycle-15 review): the origin is one line, as on the other audience pages; Home keeps the two-sentence history (ORIGIN).
@@ -21,6 +21,8 @@ import { linkAttrs } from '../../../lib/url';
  * lists are ONE compact paragraph by type, naming institutions the register names (src/data/copy.ts INVESTOR_PARTNERS), and the people entries are the "Meet the Leadership Team" link that closed the page's call-to-action band
  * (the team page has the biographies, as on Home's Guide band; no new biographies here).
  * WP47 (cycle-22 review): the heading is "A Record Built Since 2014"; the institutions it used to name in a trailing clause follow directly below it.
+ * WP52 (cycle-27 review, Grok m1): the band no longer opens with the empathy line ("Impact investors need to see what is proven and what is still being built."; EMPATHY.investors is gone): after the eyebrow and heading it starts with its record,
+ * the origin line, as the other audience pages' Track Record bands do.
  */
 interface Props {
   id?: string;
@@ -46,7 +48,6 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   <div class="ig">
     <div class="ig__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
-      <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014</h2>
       <CopyBlock block={ORIGIN_SHORT} class="ig__origin" />
       <p class="ig__method" data-fact="IN-06">
@@ -88,14 +89,6 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   }
   .ig__copy > * {
     margin: 0;
-  }
-  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the empathy line (it was a 4 px tertiary border with a left inset). */
-  .ig__empathy {
-    font-size: var(--fs-heading-l);
-    line-height: var(--lh-heading-l);
-    font-weight: var(--fw-medium);
-    color: var(--secondary);
-    max-width: 36rem;
   }
   .ig__origin {
     font-size: var(--fs-body-m);

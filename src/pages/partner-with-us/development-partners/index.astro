@@ -25,6 +25,10 @@
  * WP50 (cycle-25 review): the problem band's lead says "... keeping hard-to-reach groups engaged, is the hard part." (it said "... groups in, ...").
  * WP51 (cycle-26 review, Kimi P2): the Track Record band opens with the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT, as on Governments and Foundations), in place of
  * "Launched in Copenhagen in 2014."; PartnerGuideBand no longer swaps in the launch alone for a band that shows SC-03's tile (Investors prints the same shared line in its own band, InvestorGuide: Grok m1).
+ * WP52 (cycle-27 review, Kimi M2): the ">4×" tile is gone from the glance, which is now three tiles in one row (the trial, the survey and UNDP YES, Korail); its comparison is the +10.3 tile's note ("More than four times the 2.3-point average across
+ * nine vocational-training trials."). Foundations and Governments never showed the ">4×" tile, and Home's first slide keeps its own (there it is the slide's benchmark, not a repeat of a glance tile).
+ * WP52 (cycle-27 reviews, Gemini): the "Where They Work" card says "Placement support into local, remote and global work, ..." (it said "... local, remote, overseas and freelance work", not the site's usual wording); the "Choose Where to Start" band's eyebrow is "Options"
+ * (see the Governments page).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -52,6 +56,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -63,6 +68,12 @@ const { title, description } = meta(
   'Youth Employment for Development Partners',
   'A randomized trial of a predecessor program found women offered a place were 10.3 percentage points more likely to be employed. Results you can report.',
 );
+
+// WP52 (cycle-27 review, Kimi M2): the ">4×" tile (RC-06a) showed the trial result a second time beside the "+10.3 percentage points" tile (the third reviewer in three cycles to say so), so it is gone and its comparison is the +10.3 tile's note.
+// The note is read from RC-06a's glance label ("The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials"), never retyped, and the build stops if the label stops ending that way.
+const benchmark = /(more than four times the 2\.3-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
+if (!benchmark) throw new Error('Development Partners: the RC-06a glance label no longer ends "... more than four times the 2.3-point average across nine vocational-training trials"; update the +10.3 tile\'s note');
+const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
@@ -89,8 +100,8 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
   <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp }]}
-    more={[{ id: 'RC-06a', href: '/impact/independent-evaluation/' }]}
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp }]}
+    more={[]}
   />
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
 
@@ -130,7 +141,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support into local, remote, overseas and freelance work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support into local, remote and global work, with outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
     ]}
     link={{ label: 'How Our Model Works', href: LINKS.model }}
   />
@@ -180,7 +191,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferCards title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
+  <OfferCards eyebrow="Options" title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE} cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>

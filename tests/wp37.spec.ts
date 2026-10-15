@@ -88,7 +88,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     const text = await mainText(page);
     expect(count(text, '102 of 150'), 'Kosovo, slide 4').toBe(1);
     expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
-    expect(count(text, 'Her Power: 47% of 800 tracked women in work (2,500 trained directly).'), 'Her Power, slide 4').toBe(1);
+    expect(count(text, 'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
     expect(text).not.toContain('372 of 800');
     // WP51 (cycle-26 review): WSDFM's figure is slide 4's alone as well, and no card names PR-01 any more
     expect(count(text, '711 of 1,000'), 'WSDFM, slide 4').toBe(1);
@@ -294,7 +294,7 @@ test.describe('Investors: "The Ambition and the Vision" states the 3M+ once', ()
     expect(await band.locator('.vis__copy').getAttribute('data-fact')).toBe('ID-05');
     expect(await band.locator('.factstat').getAttribute('data-fact')).toBe('IN-05');
     await expect(band.locator('.factstat')).toContainText('3M+');
-    await expect(band.locator('.factstat')).toContainText('learners and professionals targeted on JobReady by the fiscal year ending June 30, 2032');
+    await expect(band.locator('.factstat')).toContainText('learners and professionals JobReady aims to have on the platform by the fiscal year ending June 30, 2032');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
@@ -343,7 +343,7 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
     const card = page.locator('#delivery .card', { has: page.getByRole('heading', { level: 3, name: heading }) });
     await expect(card).toHaveCount(1);
     expect(titleCase(heading)).toBe(heading);
-    expect(compact(await card.locator('.card__text').textContent())).toBe('Lessons run on a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.');
+    expect(compact(await card.locator('.card__text').textContent())).toBe('Lessons work over a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.');
     expect(await card.locator('.card__text').getAttribute('data-fact')).toBe('PD-07');
     expect(await mainText(page)).not.toContain('Connectivity-Light Delivery');
     // six cards, as before

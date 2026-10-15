@@ -24,7 +24,9 @@ const since = fact('ID-02').stat?.value;
 // WP30b: a global organization (headquartered in New York, ID-11; programs in 15 countries and territories, SC-03), not a Bangladesh one.
 const countries = fact('SC-03').stat?.value;
 // WP49 (cycle-24 review): "has trained and mentored ... across N countries and territories since 2014" (the count and the year are the register's, so the sentence reports a record, not a present-tense claim); 155 characters, the SEO limit.
-const description = `Headquartered in New York, CodersTrust has trained and mentored educated, unemployed youth for digital work across ${countries} countries and territories since ${since}.`;
+// WP52 (cycle-27 review, GLM m4): the description names the group as ID-01 does ("educated, unemployed and underemployed youth") and keeps the register's year and count: "Since 2014, New York-headquartered CodersTrust has trained ... in 15 countries and
+// territories." It is 153 characters; "and mentored" is out to make room within the 155 limit, which the guard below enforces.
+const description = `Since ${since}, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in ${countries} countries and territories.`;
 if (description.length > 155) throw new Error(`About meta description is ${description.length} characters (max 155)`);
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
@@ -82,6 +84,8 @@ const jsonLd = [
 
 <BaseLayout title="About Us" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="A Global Workforce Organization, Built on Evidence" lead={fact('ID-01').text} artSeed="about-codertrust">
+    <!-- WP52 (cycle-27 review, Claude m10): where CodersTrust is based and how its entities relate (owner statement, ID-11) is the first thing under the lede, moved here from "Where We Are Today" (not repeated there) -->
+    <div class="about-identity" data-hero-in><Fact id="ID-11" as="p" /></div>
     <Fragment slot="actions">
       <a class="link" href={linkAttrs('/impact/').href}>See Our Impact<Icon name="arrow-right" size={16} /></a>
     </Fragment>
@@ -97,7 +101,7 @@ const jsonLd = [
     { label: 'The People Who Started It', href: '#founders' },
     { label: 'Four Principles Behind Every Program', href: '#how-we-work' },
     { label: 'Industry Recognition', href: '#recognition' },
-    { label: 'Talk to the Team', href: '#about-cta' },
+    { label: 'Start a Conversation', href: '#about-cta' },
   ]} />
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
@@ -120,14 +124,11 @@ const jsonLd = [
 
   <Section id="glance" aria-labelledby="glance-h">
     <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
-    <!-- WP30b: where CodersTrust is based and how its entities relate (owner statement, ID-11), as the design system's lead paragraph (body-l, left-aligned) under the figures, spaced by the stack utility -->
-    <div class="stack stack--lg">
-      <div class="about-stats">
-        <FactStat id="SC-01" />
-        <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Split} count={sc02Stat.numeric !== undefined} /></div>
-        {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
-      </div>
-      <Fact id="ID-11" as="p" class="lead" />
+    <!-- WP30b set where CodersTrust is based and how its entities relate (owner statement, ID-11) under these figures as a lead paragraph; WP52 (cycle-27 review) moved it to the hero, directly under the lede, so the figures stand alone here -->
+    <div class="about-stats">
+      <FactStat id="SC-01" />
+      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Split} count={sc02Stat.numeric !== undefined} /></div>
+      {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
     </div>
   </Section>
 
@@ -181,7 +182,7 @@ const jsonLd = [
 
   <CTABand
     id="about-cta"
-    heading="Talk to the Team"
+    heading="Start a Conversation"
     text="Tell us your goals, and we will discuss the right partnership route."
     cta={{ label: 'Request a Discovery Session', href: ctaHref('discovery') }}
     secondary={{ label: 'Read the evidence', href: '/impact/' }}
@@ -191,6 +192,16 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  /* WP52: the identity sentences (ID-11) sit directly under the hero's lede and are set like it: body-m, muted, the same measure as .hero__lead */
+  .about-identity {
+    max-width: 34em;
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
+    color: var(--on-surface-variant);
+  }
+  .about-identity :global(p) {
+    margin: 0;
+  }
   .about-statement {
     margin: 0;
     font-size: var(--fs-heading-m);

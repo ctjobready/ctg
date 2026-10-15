@@ -123,7 +123,8 @@ const PAGES: PageSpec[] = [
     cards: [
       {
         title: 'Certified Facilitators and a Local Curriculum',
-        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Local capacity stays after a funded cohort ends, and you do not have to build the curriculum or certification route yourself.',
+        // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included in the program scope, ..."); it read "Local capacity stays after a funded cohort ends, ..."
+        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Where included in the program scope, trained facilitators and localized curricula remain after funding ends, and you do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
         pain: 'P1',
       },
@@ -395,7 +396,7 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
     ]);
     expect(cells[0].startsWith('CodersTrust trained 2,500 women directly.')).toBe(true);
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
-    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.');
+    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('Delivery status is confirmed for each contract in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.');
     expect(await mainText(page)).not.toContain('Direct Training');
   });
 });

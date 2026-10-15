@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from './copy';
+import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION, defineNewEarners } from './copy';
 import { navGroups, type NavLink } from './nav';
 import { cta } from '../lib/mailto';
 
@@ -42,6 +42,9 @@ import { cta } from '../lib/mailto';
  * WP51 (cycle-26 review): the speed slide's heading names its subgroup: "Most Surveyed New Earners Were Earning by Six Months After the Course" (OC-05's label calls the 170 "surveyed new earners"; the heading dropped the subgroup).
  * WP51 (cycle-26 review, Grok): the government slide is "Six Government Contracts and Bangladesh’s National University" (GV-12's own name for the partner; "a National University Partnership" read as any university), and Her Power's line on the
  * program-results slide carries its base: "Her Power: 47% of 800 tracked women in work (2,500 trained directly)." (PR-05's "from the 2,500 trained directly by CodersTrust", shortened to keep the line on one row at 1280 px).
+ * WP52 (cycle-27 reviews): the speed slide's caption defines the term it uses, "surveyed new earners (completers who first earned during or after training)" (defineNewEarners in copy.ts); the government slide's body is "... work scoped for 31,200+ people.
+ * This is contract scope, not a count of completers. CodersTrust is also the official training partner of ..." (three sentences); the program-results lead is "Four delivered programs, each with its partner, ...". The hero's value proposition
+ * (VALUE_PROPOSITION.home) begins "We help ...".
  */
 
 export interface HeroSlideStat {
@@ -130,6 +133,7 @@ if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N trac
  * "... tracked women in work (2,500 trained directly)." The number is read from the label, never retyped; the build stops if the label stops reading that way. The fuller wording ("..., from the 2,500 trained directly by CodersTrust.", or the
  * case cards' "among the 2,500 women CodersTrust trained directly", WP47) takes a second line at 1280 px, which makes this slide 18 px taller than "Find Your Program" and leaves the other slides 57 px unused (the limit is 48,
  * tests/hero-slider.spec.ts); the UNDP YES line already takes two lines, and the WSDFM line is one line at 1280, so shortening its parenthesis would not have helped.
+ * WP52 (cycle-27 review, Grok M1): the base is set apart by a semicolon, "... tracked women in work; 2,500 trained directly." (see PR_TEXT.herPower), so the parenthesis cannot be read as 47% of the 2,500; same number, same guard, same one row.
  */
 const herPowerDirect = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: \d+%$/.exec(fact('PR-05').stat?.label ?? '')?.[1];
 if (!herPowerDirect) throw new Error('heroSlides: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
@@ -181,7 +185,10 @@ const PR_TEXT = {
   wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
   wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records, not trial data).`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
-  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work (${herPowerDirect} trained directly).`,
+  // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
+  // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
+  // is already in "tracked women", so it is left out of the second clause to keep the line on one row (tests/wp51.spec.ts and tests/hero-slider.spec.ts hold the budget).
+  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work; ${herPowerDirect} trained directly.`,
 };
 
 /** The survey card's caption: OC-01's tile label. (WP35 added "in Bangladesh"; reverted until the owner confirms the survey's country scope — OC-09 gives districts, not an all-Bangladesh sample.) */
@@ -252,7 +259,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // CodersTrust trained 2,500 women directly."), so the 25,125 is not read as CodersTrust's; and the last sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment.
     // WP48 (cycle-23 review): the body is two sentences, the contract scope in GV-12's words followed by the clause that keeps it true ("... work scoped for 31,200+ people: contract scope, not a count of completers."), then the National University sentence.
     // The 25,125 and the 2,500 are no longer on the slide, so the lead rests on GV-12 alone (the glance note's clause is GV-12's, as are the contracts and the National University sentence).
-    lead: `${governmentScope[1]} for ${governmentScope[2]}: ${contractScope}. CodersTrust is the ${governmentScope[3]}.`,
+    // WP52 (cycle-27 reviews, Claude P1 and GLM m1): two sentences for the contracts, "... work scoped for 31,200+ people. This is contract scope, not a count of completers." (it was one sentence joined by a colon), and "CodersTrust is also the official
+    // training partner of ..." for the university (the "also" keeps the two facts from reading as one scale; GV-12's "onboarding 1.5M+ learners" wording is unchanged).
+    lead: `${governmentScope[1]} for ${governmentScope[2]}. This is ${contractScope}. CodersTrust is also the ${governmentScope[3]}.`,
     leadFacts: ['GV-12'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
@@ -282,7 +291,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     title: 'Results by Program',
     // WP50 (cycle-25 review): four programs, in the order of the Impact page and the case studies (Kosovo first). WP35 had left WSDFM out (read beside the trial's 63.1% its 71% looked like a second result for the same program); its line is back
     // with the case card's qualifier, "program records, not trial data".
-    lead: 'Four programs, each with its partner, with results from their own program records.',
+    // WP52 (cycle-27 review, Kimi M1): "Four delivered programs, ..." (it said "Four programs, ...", which clashed with the Programs page's "four partner programs ... and the NU Postgraduate Diploma", a different four; these are the delivered programs whose own records give the results).
+    // The review's wording ended "... from their own program records."; that is 683 px against the 626 px the lead has at 1280 px (the old line was 610 px), so it wrapped and made this the tallest slide, 14 px taller than "Find Your Program", which left every
+    // other slide 55 px unused (the limit is 48, tests/hero-slider.spec.ts). "Program" is left out of "records" (615 px; the eyebrow says "Program Records" and the WSDFM line says "program records, not trial data").
+    lead: 'Four delivered programs, each with its partner, with results from their own records.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
       { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
@@ -306,7 +318,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP51 (cycle-26 review): the heading names the subgroup, in the register's own term for it (OC-05's label: "the 170 surveyed new earners"): "Most Surveyed New Earners Were Earning by Six Months After the Course" (still cumulative: "by ... after").
     title: 'Most Surveyed New Earners Were Earning by Six Months After the Course',
     titleFacts: ['OC-05'],
-    stats: [{ factId: 'OC-05' }],
+    // WP52 (cycle-27 review): the caption defines the term where the 58.8% appears ("... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)"),
+    // so the figure is not read as a share of all completers. The caption is OC-05's label with the definition inserted (defineNewEarners); the register's label is unchanged.
+    stats: [{ factId: 'OC-05', caption: (f) => defineNewEarners(f.stat?.label ?? '') }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/lab-women-screen',
   },

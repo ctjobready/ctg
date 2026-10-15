@@ -89,7 +89,7 @@ test.describe('Home: each figure once', () => {
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
+      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
     ]);
     expect(lines[2]).not.toMatch(/in work/);
   });
@@ -129,8 +129,8 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await open(page, 'partner-with-us/development-partners/');
     expect(count(await mainText(page), '102 of 150')).toBe(1);
     await expect(page.locator('#cases article', { hasText: '102 of 150' })).toHaveCount(1);
-    // WP49 (cycle-24 review): the ">4×" tile (RC-06a) is the glance's fourth tile (it stood under a "More Results" heading alone); tests/wp49.spec.ts
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03', 'RC-06a']);
+    // WP49 (cycle-24 review): the ">4×" tile (RC-06a) was the glance's fourth tile (it stood under a "More Results" heading alone); WP52 (cycle-27 review, Kimi M2): it is the +10.3 tile's note now, so the glance is three tiles; tests/wp49.spec.ts, tests/wp52.spec.ts
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     const tile = page.locator('#glance .pg__lead a[data-fact="PR-03"]');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tile).toContainText('67%');
@@ -141,7 +141,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
 
   test('Development Partners: the mechanism card says "Placement support into ..."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const card = page.locator('#mechanism').getByText('Placement support into local, remote, overseas and freelance work, with outcome tracking for 12 months after each course.');
+    const card = page.locator('#mechanism').getByText('Placement support into local, remote and global work, with outcome tracking for 12 months after each course.');
     await expect(card).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/Placement into local/);
   });

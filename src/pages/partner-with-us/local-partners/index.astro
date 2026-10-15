@@ -44,6 +44,10 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * to finish the job, and training is still measured by enrollment, not earnings.").
  * WP51 (cycle-26 review): Samina's excerpt is the story's own sentence about what she did, not generic praise ("Today, she is an inspiration to the young people in her community."): "During the training period, she began offering her services as
  * a graphic designer on the freelance marketplace Fiverr." LearnerVoice requires a verbatim passage of the story file, so the reviewer's shorter wording could not be used as written.
+ * WP52 (cycle-27 review): the "Certified Facilitators and a Local Curriculum" card scopes what stays after funding ends ("Where included in the program scope, trained facilitators and localized curricula remain after funding ends, ..."; it said "Local capacity
+ * stays after a funded cohort ends, ..."), as the "What Happens When Funding Ends?" answer does; the "Monthly Reporting" block says what the monthly reports cover and scopes them ("Where a funder is involved, monthly reports cover enrollment, completion,
+ * certification, placements and first earnings, as agreed in the program scope."; it said the funder "sees" these "every month", which read as if each outcome happened monthly).
+ * WP52 (cycle-27 review, Claude P4): the problem band's lead is "Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it began "Connect your community reach with ...", the heading's own words).
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -80,7 +84,7 @@ const ways = [
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr." program="WSDFM" tone="white" />
 
   <!-- C2 -->
-  <ProblemBand id="problem" title="Connect Your Community to Paid Digital Work" bluf="Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." factIds={['PX-03']}>
+  <ProblemBand id="problem" title="Connect Your Community to Paid Digital Work" bluf="Pair your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." factIds={['PX-03']}>
     <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
   </ProblemBand>
 
@@ -112,7 +116,7 @@ const ways = [
         { label: 'Your Organization', title: 'Mobilizes and Hosts', text: 'You reach young people and host cohorts in your labs, classrooms or centers.', icon: 'building-2' },
         { label: 'With CodersTrust', title: 'Trains and Prepares for Certification', text: 'Certified local facilitators, a localized curriculum and preparation for industry certification, delivered in blended classes.', icon: 'graduation-cap' },
         { label: 'Together', title: 'Mentoring and Placement', text: 'Three months of milestone-based mentoring, with placement support alongside into local, remote and global work.', icon: 'handshake' },
-        { label: 'Throughout', title: 'Monthly Reporting', text: 'Where a funder is involved, it sees enrollment, completion, certification, placements and first earnings every month.', icon: 'chart-bar' },
+        { label: 'Throughout', title: 'Monthly Reporting', text: 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings, as agreed in the program scope.', icon: 'chart-bar' },
       ]}
       link={{ label: 'How Our Model Works', href: '/our-model/' }}
     />
@@ -153,7 +157,7 @@ const ways = [
         painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
         icon: 'graduation-cap',
         title: 'Certified Facilitators and a Local Curriculum',
-        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Local capacity stays after a funded cohort ends, and you do not have to build the curriculum or certification route yourself.',
+        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Where included in the program scope, trained facilitators and localized curricula remain after funding ends, and you do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
       },
       {

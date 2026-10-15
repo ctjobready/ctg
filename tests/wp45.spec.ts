@@ -69,7 +69,7 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
     await expect(heading).toHaveText('Bangladesh: Reference Country and 2030 Aim');
     expect('Bangladesh: Reference Country and 2030 Aim').toBe(titleCase('Bangladesh: Reference Country and 2030 Aim'));
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
     expect(description!.length).toBeLessThanOrEqual(155);
@@ -109,7 +109,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     await open(page, '');
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Results You Can Check' }) });
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    await expect(card.locator('.card__text')).toHaveText('Monthly reports will show progress toward paid work, as agreed in the program scope.');
     expect(await card.getAttribute('data-fact')).toBe('PD-08');
     expect(await card.getAttribute('data-relieves')).toBe('P2');
   });
@@ -122,7 +122,7 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
     // WP46 (cycle-22 review): the note said who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the slide keeps only the note's first clause ("contract scope, not a count of completers") and no longer mentions the 25,125 or the 2,500, so the lead rests on GV-12 alone (tests/wp48.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12');
     expect(compact(await lead.textContent())).not.toContain('not people trained');

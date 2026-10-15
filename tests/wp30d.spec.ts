@@ -56,12 +56,12 @@ test.describe('impactful H1s, Title Case, no trailing period', () => {
 
 test.describe('YouthWIDE leads with the global program', () => {
   // WP40 (cycle-17 review): the row is headed "Designed for Three Regions" ("Where It Runs" read as the countries it runs in today; tests/wp40.spec.ts)
-  test('the glance table opens with the three regions it is designed for, Bangladesh as the reference implementation', async ({ page }) => {
+  test('the glance table opens with the three regions it is designed for, Bangladesh as where most delivery has been', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
     await expect(first).toContainText('South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
-    await expect(first).toContainText('Bangladesh is the reference implementation');
+    await expect(first).toContainText('Bangladesh is where most delivery has been');
   });
 
   test('the Bangladesh initiative band keeps #governments (linked from the Governments page and a case study) and says the 2030 aim is not delivered', async ({ page }) => {
