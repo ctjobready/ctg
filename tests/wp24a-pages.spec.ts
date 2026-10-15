@@ -37,16 +37,17 @@ test.describe('Investors page structure', () => {
   });
 
   // WP42 (cycle-19 review): "Delivered Since 2014" moved into the track-record band (#guide), before the institutional relationships; the contract scope stays in its own labeled block in #reach ("Contracts, Pipeline and Recognition")
+  // WP43 (cycle-20 review): the band's only sub-heading is "Delivered Since 2014"; the relationships are one paragraph under the figures, and the leadership entries are the "Meet the Leadership Team" link under that paragraph
   test('delivered reach leads the track-record band; the contract scope is its own labeled block in the next reach band', async ({ page }) => {
     await page.goto(URL);
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014', 'Four Kinds of Institutional Relationship', 'Founders', 'Current Leadership']);
+    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
     expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
     const order = await page.evaluate(() => {
       const top = (sel: string) => (document.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-      return { delivered: top('#guide .ig__delivered'), relationships: top('#guide .ig__channels'), leadership: top('#guide .ig__lead-h') };
+      return { delivered: top('#guide .ig__delivered'), partners: top('#guide .ig__names'), leadership: top('#guide .ig__leaders') };
     });
-    expect(order.delivered, 'the delivered figures come before the relationships').toBeLessThan(order.relationships);
-    expect(order.relationships, 'the relationships come before the leadership').toBeLessThan(order.leadership);
+    expect(order.delivered, 'the delivered figures come before the paragraph that names the institutions').toBeLessThan(order.partners);
+    expect(order.partners, 'the institutions come before the link to the leadership team').toBeLessThan(order.leadership);
   });
 
   test('the offer is one four-step sequence: no separate low-risk band, no second next-steps band', async ({ page }) => {
@@ -86,10 +87,11 @@ test.describe('Investors page structure', () => {
     expect(text).not.toContain('Our Approach');
   });
 
-  test('WP34: the approaches comparison is gone from Investors (it compared supported youth cohorts, on a page about backing the platform); a short band stands in its place', async ({ page }) => {
+  // WP43 (cycle-20 review): the one-sentence platform band WP34 put in its place ("How JobReady Builds on Delivery") is gone too (tests/wp43.spec.ts holds that)
+  test('WP34: the approaches comparison is gone from Investors (it compared supported youth cohorts, on a page about backing the platform)', async ({ page }) => {
     await page.goto(URL);
     await expect(page.locator('#compare')).toHaveCount(0);
-    await expect(page.locator('#platform h2')).toHaveText('How JobReady Builds on Delivery');
+    await expect(page.locator('#platform')).toHaveCount(0);
   });
 });
 

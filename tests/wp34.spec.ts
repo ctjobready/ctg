@@ -92,7 +92,7 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
   });
 });
 
-test.describe('Investors: how JobReady builds on delivery, no cohort comparison', () => {
+test.describe('Investors: no cohort comparison, and (WP43) no one-sentence platform band in its place', () => {
   test('the approaches comparison is gone from Investors and stays on Home', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#compare')).toHaveCount(0);
@@ -102,32 +102,18 @@ test.describe('Investors: how JobReady builds on delivery, no cohort comparison'
     await expect(page.locator('#compare h2')).toHaveText('How the Approaches Compare');
   });
 
-  test('a short band follows the FAQ: the heading and one statement, tied to IN-04, with the live and pre-launch wording of the register', async ({ page }) => {
+  // WP43 (cycle-20 review): the one-sentence band WP34 added after the FAQ ("The Platform": "How JobReady Builds on Delivery", tied to IN-04) is gone: the evidence block ends "Youth-program outcomes are not platform
+  // outcomes." (WP36) and "What JobReady Does" states what is live and in pre-launch. The page goes from the questions to the offer.
+  test('no platform band follows the FAQ: the offer follows it, and "Youth-program outcomes are not platform outcomes." is said once, closing the evidence block', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    const band = page.locator('#platform');
-    await expect(band.locator('h2')).toHaveText('How JobReady Builds on Delivery');
-    const line = band.locator('p.lead');
-    await expect(line).toHaveCount(1);
-    // WP36 (cycle-13 review): "Youth-program outcomes are not platform outcomes." now closes the Independent Evidence band, beside the figures it qualifies, and is said once on the page
-    expect(compact(await line.textContent())).toBe('JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs.');
-    expect(compact(await page.locator('main').textContent()).split('Youth-program outcomes are not platform outcomes.').length - 1, 'said once').toBe(1);
-    expect(await line.getAttribute('data-fact')).toBe('IN-04');
-    await expect(band.locator('table, ul, ol')).toHaveCount(0);
+    await expect(page.locator('#platform')).toHaveCount(0);
+    const text = compact(await page.locator('main').textContent());
+    expect(text).not.toMatch(/How JobReady Builds on Delivery|JobReady adds live partner portals and pre-launch work marketplaces/);
+    await expect(page.locator('main .eyebrow', { hasText: 'The Platform' })).toHaveCount(0);
+    expect(text.split('Youth-program outcomes are not platform outcomes.').length - 1, 'said once').toBe(1);
+    expect(compact(await page.locator('#proof-band').textContent())).toContain('Youth-program outcomes are not platform outcomes.');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(order.indexOf('platform')).toBe(order.indexOf('faq') + 1);
-    expect(order.indexOf('offer')).toBe(order.indexOf('platform') + 1);
-  });
-
-  test('the band is its heading and statement: no gap is left under the text (the header drops its bottom margin)', async ({ page }) => {
-    await page.setViewportSize(DESKTOP);
-    await open(page, 'partner-with-us/investors/');
-    const gap = await page.locator('#platform').evaluate((el) => {
-      const header = el.querySelector('header')!.getBoundingClientRect();
-      const band = el.getBoundingClientRect();
-      return { header: getComputedStyle(el.querySelector('header')!).marginBottom, below: band.bottom - header.bottom, pad: parseFloat(getComputedStyle(el).paddingBottom) };
-    });
-    expect(gap.header).toBe('0px');
-    expect(Math.abs(gap.below - gap.pad)).toBeLessThan(1);
+    expect(order.indexOf('offer')).toBe(order.indexOf('faq') + 1);
   });
 
   test('the meta description names the staged rollout and stays within the SEO limit', async ({ page }) => {

@@ -67,15 +67,16 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
-  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, lead, tile)
-  test('slide 5 is headed "First Earnings Within Six Months" (the finding, no percentage), and keeps "surveyed completers" in the lead and the 58.8% tile', async ({ page }) => {
+  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile)
+  test('slide 5 is headed "First Earnings Within Six Months" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
     expect(await slide.locator('h2').textContent()).toBe(titleCase('First Earnings Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    await expect(slide.locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('surveyed completers');
   });
 
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
@@ -332,7 +333,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
       expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/#faqs$/);
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?');
       expect(ld?.text).toBe(COST);
-      expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection/i);
+      expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include training/i);
     });
   }
 
@@ -354,8 +355,8 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/');
     const cost = await answerOf(page, 'What Does It Cost?');
     const safe = await answerOf(page, 'What About Safeguarding and Data Protection?');
-    // WP41 (cycle-18 review): the list is scoped to supported youth cohorts ("For supported youth cohorts, standard inclusions are …")
-    expect(cost).toContain('For supported youth cohorts, standard inclusions are outreach and selection');
+    // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
+    expect(cost).toContain('Supported youth cohorts include training, certification exam preparation and the exam fee');
     expect(safe).toContain('Guardian consent and supervision apply to anyone under 18');
     for (const a of [cost, safe]) expect(sentences(a).length).toBeLessThanOrEqual(3);
     const ld = await faqJsonLd(page);

@@ -31,16 +31,6 @@ export function expandSsc(text: string): string {
   return /Secondary School Certificate/.test(text) ? text : text.replace(/\bSSC holders\b/, 'holders of the Secondary School Certificate (SSC)');
 }
 
-/**
- * PA-02 ("Government partners include Bangladesh’s ICT Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC") with its
- * acronyms spelled out, for the first mention on a page. The names come from the register (GV-07 for BCC, confirm item 24 for NSDA, F30 for DoICT).
- */
-export function governmentPartners(): string {
-  return fact('PA-02')
-    .text.replace(', DoICT,', ', the Department of ICT (DoICT),')
-    .replace('NSDA and BCC', 'the National Skills Development Authority (NSDA) and the Bangladesh Computer Council (BCC)');
-}
-
 /** The two PX-03 rates, read from the register ("graduate unemployment is 13.5% vs. 2.0% for SSC holders"), so a page sentence never retypes them. */
 export function graduateRates(): { graduate: string; ssc: string } {
   const m = fact('PX-03').text.match(/graduate unemployment is ([\d.]+%) vs\.? ([\d.]+%) for/);

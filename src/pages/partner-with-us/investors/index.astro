@@ -16,12 +16,14 @@
 // personalized and adaptive learning on the roadmap) and one text link goes to the full rollout status. The band keeps its id (#features): the first FAQ answer links it.
 // WP42 (cycle-19 review): the track-record band (#guide) opens with the delivered figures ("Delivered Since 2014": 130,000+ learners, 150,000+ enrollments, 15 countries and territories, with their enrollment and location note), before the
 // institutional relationships and the leadership; the band that held them is "Contracts, Pipeline and Recognition" (#reach: the contract scope in its own labeled block, the National University pipeline and the two badges).
+// WP43 (cycle-20 review): the track-record band (#guide) is the delivered tiles, the origin line and ONE paragraph that names the institutions by type, then the link to the leadership team (it was four relationship lists and seven
+// founder and leadership entries, a directory in the middle of the platform story; the link was the closing band's secondary action). The mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided
+// Model: Learn, Earn, Prosper"). The one-sentence platform band ("The Platform": "How JobReady Builds on Delivery") is gone: the evidence block above ends "Youth-program outcomes are not platform outcomes." and "What JobReady Does"
+// (#features, which the first FAQ answer links) states what is live, in pre-launch and planned.
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
-import Section from '../../../components/ui/Section.astro';
-import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import Icon from '../../../components/system/Icon.astro';
 import Tone from '../../../components/pages/home/Tone.astro';
 import HomeMechanism from '../../../components/pages/home/HomeMechanism.astro';
@@ -106,7 +108,7 @@ const mechanismBlocks = [
   <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
+    <HomeMechanism id="mechanism" tone="airy" eyebrow="The Model" title="How JobReady Connects Learning to Work" blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
   </Tone>
 
   <Tone cmf="C7"><InvestorReach id="reach" /></Tone>
@@ -130,25 +132,14 @@ const mechanismBlocks = [
 
   <Tone cmf="C9"><FaqBlock id="faq" audience="investors" ids={FAQ_IDS} tone="ice" title="Questions Investors Ask" eyebrow="Fit and Objections"><InvestorFit /></FaqBlock></Tone>
 
-  <!-- C10 · Differentiation: WP34 (cycle-11 review) swapped the approaches comparison for one statement. It rests on IN-04 (what is live and what is in pre-launch) and keeps the wording of the hero lead. -->
-  <Tone cmf="C10">
-    <Section id="platform" pad="sm" aria-labelledby="platform-h">
-      <SectionHeader id="platform-h" eyebrow="The Platform" title="How JobReady Builds on Delivery" flush>
-        <p class="lead" data-fact="IN-04">JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs.</p>
-      </SectionHeader>
-    </Section>
-  </Tone>
+  <!-- C10 · Differentiation: WP34 (cycle-11 review) swapped the approaches comparison for one statement ("How JobReady Builds on Delivery"); WP43 (cycle-20 review) removed that band: the evidence block above it ends "Youth-program outcomes are not platform outcomes."
+       and "What JobReady Does" (the live, pre-launch and planned status) is the platform statement, so the page goes from the questions to the offer. -->
 
   <Tone cmf="C11"><InvestorOffer id="offer" /></Tone>
 
+  <!-- WP43 (cycle-20 review): the "Meet the Leadership Team" link that was this band's secondary action is in the track-record band (#guide), where the leadership entries were. -->
   <Tone cmf="C13">
-    <CTABand
-      id="cta"
-      tone="klein"
-      heading="Let’s Talk About Backing the Platform"
-      cta={{ label: investor.label, href: investor.href }}
-      secondary={{ label: 'Meet the Leadership Team', href: '/about/team/' }}
-    />
+    <CTABand id="cta" tone="klein" heading="Let’s Talk About Backing the Platform" cta={{ label: investor.label, href: investor.href }} />
   </Tone>
 
 </LandingLayout>

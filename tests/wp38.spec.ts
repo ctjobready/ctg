@@ -5,7 +5,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
 /**
- * WP38 behaviors (cycle-15 whole-site reviews, GPT-6.1 Sol and GLM 5.3): Home's "What Your Partnership Includes" is three short cards, Universities' evidence band is a two-line strip, the Home Guide band drops the two
+ * WP38 behaviors (cycle-15 whole-site reviews, GPT-6.1 Sol and GLM 5.3): Home's "What Your Partnership Includes" is three short cards, Universities' evidence band is a two-line strip (WP43 removed that strip), the Home Guide band drops the two
  * tiles the carousel states, the Home cost-of-waiting card states one finding, the audience pages' Guide band has a one-line origin, the three funder pains that had no line have one, one title pattern, the carousel's
  * reach slide has its figure again, and the smaller wording fixes (Contact, About, Investors, press headlines, SuperKids, the program pages' route strip). Retrospective coverage (the owner exempted this project from
  * test-first work); each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp38.spec.ts --project=chromium`).
@@ -132,39 +132,33 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
   });
 });
 
-test.describe('Universities: the evidence strip, the National University heading and the third pain', () => {
-  test('#proof-band is "Evidence from Our Wider Youth Programs": the trial line, the survey line and the two links; no chart, tile, list or second block', async ({ page }) => {
+// WP43 (cycle-20 review): the second evidence strip this page had since WP38 ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two links, #proof-band) is gone; the first band's linked strip
+// ("Broader Evidence from Our Youth Programs") is the one evidence pointer left (tests/wp43.spec.ts)
+test.describe('Universities: the one evidence strip, the National University heading and the third pain', () => {
+  test('there is one evidence strip: no #proof-band, no "Evidence from Our Wider Youth Programs", no trial or survey result line; the first band links the trial, the survey and the case studies', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    const band = page.locator('#proof-band');
-    await expect(band).toHaveCount(1);
-    await expect(band.locator('h2')).toHaveText('Evidence from Our Wider Youth Programs');
-    expect(await texts(page, '#proof-band p.lead')).toEqual([
-      'A randomized trial of the predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.',
-      'Among surveyed completers, 84.6% hold a bachelor’s degree or higher; employment was 77.9% at the October 2026 survey, up from 47.4% before training.',
-    ]);
-    expect(await band.locator('p.lead').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'OC-09 OC-01']);
-    expect(await texts(page, '#proof-band a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);
-    expect((await hrefs(page, '#proof-band a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
-    await expect(band.locator('svg:not(.icon), .stat, .ba, .ev, table, [data-plain-line], .proofband')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
+    expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program|Among surveyed completers, 84\.6%|An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
+    expect(await texts(page, '#offer-evidence nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']);
+    expect((await hrefs(page, '#offer-evidence nav a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/', 'impact/case-studies/']);
+    await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
   });
 
-  test('the strip sits on a light ground right after the dark mechanism band and before the features band; no two dark bands meet', async ({ page }) => {
+  test('the features band follows the dark mechanism band directly; no two dark bands meet', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     const order = await bands(page);
     const ids = order.map((b) => b.id);
-    expect(ids.indexOf('proof-band')).toBe(ids.indexOf('mechanism') + 1);
-    expect(ids.indexOf('features')).toBe(ids.indexOf('proof-band') + 1);
-    expect(await page.locator('#proof-band').getAttribute('class')).toMatch(/band--(airy|ice|white)/);
+    expect(ids.indexOf('features')).toBe(ids.indexOf('mechanism') + 1);
+    expect(await page.locator('#features').getAttribute('class')).toMatch(/band--(airy|ice|white)/);
     for (let i = 1; i < order.length; i++) expect(order[i].dark && order[i - 1].dark, `${order[i - 1].id} then ${order[i].id}`).toBe(false);
   });
 
-  test('the strip fits at 1280 and 390 without sideways scroll', async ({ page }) => {
+  test('the page fits at 1280 and 390 without sideways scroll, and the evidence links are visible', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, 'partner-with-us/universities/');
-      await expect(page.locator('#proof-band a').first()).toBeVisible();
+      await expect(page.locator('#offer-evidence a').first()).toBeVisible();
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });
@@ -263,7 +257,8 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
   });
 
   // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
-  test('slide 5 reads "First Earnings Within Six Months" (Title Case, tied to OC-05) and keeps its survey base in the lead and the tile', async ({ page }) => {
+  // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile
+  test('slide 5 reads "First Earnings Within Six Months" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
     const heading = 'First Earnings Within Six Months';
@@ -271,7 +266,7 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(slide.locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');
   });
 });

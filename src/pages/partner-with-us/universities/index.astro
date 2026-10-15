@@ -10,6 +10,8 @@
  * employment readings, and the two evidence links. The National University band's heading names the partnership, and its clarifying sentence stays under it.
  * WP39 (cycle-16 review): "What Your Students Get" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix; the Guide band no longer repeats the National University partnership sentence
  * ("The National University Partnership" states it).
+ * WP43 (cycle-20 review): the light evidence strip WP38 made ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two links) is gone, because the first band already ends in the linked strip
+ * "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies) and the later strip said it again; the page has no #proof-band now (no page linked it). The survey's degree share stays in the meta description.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -34,7 +36,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, factPart, meta, pricingParts, programOptions } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, UNIVERSITY_EVIDENCE, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -150,19 +152,9 @@ const optionText: Record<string, string> = {
     ]}
     link={{ label: 'About JobReady@Campus', href: LINKS.campus }}
   />
-  <!-- C7 · Proof: the broader evidence from the youth programs, one line each for the trial and the survey (WP38; the National University partnership band opens the page, before the challenge). The band keeps its id (#proof-band) and sits on a light ground after the dark mechanism band. -->
-  <PairedEvidence
-    id="proof-band"
-    eyebrow="The Evidence"
-    title="Evidence from Our Wider Youth Programs"
-    items={[]}
-    statements={UNIVERSITY_EVIDENCE}
-    broader={[
-      { label: 'The Randomized Trial', href: LINKS.trial },
-      { label: 'Impact Survey 2026', href: LINKS.outcomes },
-    ]}
-    broaderLabel="Evidence from our wider youth programs"
-  />
+
+  <!-- C7 · Proof: the National University partnership band opens the page, before the challenge, and ends in the linked strip "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies). WP43 (cycle-20 review): the second
+       evidence band that stood here ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two of the same links) is gone; it said again what that strip links, and no page linked its anchor (#proof-band). -->
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (degree holders struggle to find work; employers cannot find the
        skills they need; institutions lack placement results they can publish). Each sentence rests on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10 and PD-02

@@ -350,17 +350,17 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     expect(compact(await page.locator('#features').textContent())).toContain('Partner portals and AI chat are live.');
   });
 
-  test('the mechanism band opens with its eyebrow and heading; "Our Approach" and its statement are gone; "How JobReady Builds on Delivery" stays', async ({ page }) => {
+  // WP43 (cycle-20 review): the mechanism band is headed "How JobReady Connects Learning to Work" (it was "A Multi-Sided Model: Learn, Earn, Prosper"), and the "How JobReady Builds on Delivery" band WP39 kept is gone (tests/wp43.spec.ts)
+  test('the mechanism band opens with its eyebrow and heading; "Our Approach" and its statement are gone', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#mechanism .eyebrow').first()).toHaveText('The Model');
-    await expect(page.locator('#mechanism h2')).toHaveText('A Multi-Sided Model: Learn, Earn, Prosper');
+    await expect(page.locator('#mechanism h2')).toHaveText('How JobReady Connects Learning to Work');
     await expect(page.locator('#mechanism .pos, .pos__label, .pos__text')).toHaveCount(0);
     const text = await mainText(page);
     expect(text).not.toContain('Our Approach');
     expect(text).not.toContain('weighing a platform for emerging-market youth employment');
     expect(text).not.toContain('Partners receive monthly reports on progress toward paid work');
-    await expect(page.locator('#platform h2')).toHaveText('How JobReady Builds on Delivery');
-    expect(compact(await page.locator('#platform').textContent())).toContain('JobReady adds live partner portals and pre-launch work marketplaces to CodersTrust’s training and mentoring programs.');
+    await expect(page.locator('#platform')).toHaveCount(0);
   });
 
   test('every other page keeps its "Our Approach" statement', async ({ page }) => {

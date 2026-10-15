@@ -129,13 +129,15 @@ export const TRIAL_SCOPE = {
  * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
  * The NU postgraduate diploma page has no statement: its copy waits for National University sign-off.
- * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" says how the
- * platform relates to delivery once; scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
+ * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" said how the
+ * platform relates to delivery once (WP43, cycle-20 review, removed that one-sentence band: the evidence block and "What JobReady Does" say it); scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
  * WP40 (cycle-17 review): Local Partners' statement is two sentences that divide the work (the partner mobilizes and hosts; CodersTrust supports delivery, mentoring, placement and reporting), because its audience and outcome
  * are in the hero and the problem band above and the four responsibility cards follow it; the gate declares it whole for that page as well (POSITION_WHOLE_STATEMENT).
  * WP42 (cycle-19 reviews): Development Partners and Governments state what the model does in the two shared sentences alone (their audience and outcome are in the hero, the problem band and the glance above), each with its reader
  * as the one changed word ("Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope"; "Your agency receives monthly reports on progress toward paid work"); the gate declares both whole.
+ * WP43 (cycle-20 review): JobReady@Campus' statement is two sentences too, with the program as the subject ("JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside
+ * academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope."); the gate declares it whole as well.
  * SuperKids' statement is two plain sentences, what the program offers and what the agreements are (the gate asks nothing of its wording: it carries no comparison clause).
  */
 export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
@@ -203,7 +205,11 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-01', 'PD-01', 'PD-08'],
   },
   campus: {
-    text: `For universities and colleges who need their degree holders to leave with a practical route into digital work, CodersTrust offers JobReady@Campus, training with industry-certification preparation that runs in parallel with academic studies. ${UNLIKE_APPROVED}`,
+    // WP43 (cycle-20 review): the audience sentence ("For universities and colleges who need ...") restated the hero lead and the glance above it, so "Our Approach" states what the program does and what the institution receives, in two
+    // sentences, with the program as the subject (as YouthWIDE's does) and the reporting scoped as the Development Partners and Governments statements scope it ("as agreed in the program scope"; PD-08 states the reports for
+    // funders and the page's cards state them for the institution, in the program scope). scripts/check-facts.mjs declares it whole for /programs/jobready-campus/ (POSITION_WHOLE_STATEMENT). It rests on IN-09 (training in parallel
+    // with academic studies, in on-campus labs, with preparation for industry-recognized certifications), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
+    text: 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   work: {
@@ -550,7 +556,7 @@ export const HOME_META = {
 };
 
 /**
- * The trial's employment result and the survey's employment readings as the short evidence lines word them (Investors, Universities, Local Partners): read from RC-02 (the trial's stat, "+10.3 pp", in words) and OC-01
+ * The trial's employment result and the survey's employment readings as the short evidence lines word them (Investors, Local Partners): read from RC-02 (the trial's stat, "+10.3 pp", in words) and OC-01
  * (the survey tile's value and its before-training reading), so no figure is typed on a page and a line cannot drift from the register. Throws, naming the caller, if either stat changes shape.
  */
 function trialAndSurveyReadings(who: string): { points: string; employment: string; before: string } {
@@ -560,7 +566,7 @@ function trialAndSurveyReadings(who: string): { points: string; employment: stri
   return { points: rc.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points'), employment: oc.value, before: oc.from };
 }
 
-/** The trial line of a strip that links the evidence pages (Universities, Local Partners): the predecessor program is named, the result is RC-02's, and the line makes no claim about the page's own offer. */
+/** The trial line of a strip that links the evidence pages (Local Partners): the predecessor program is named, the result is RC-02's, and the line makes no claim about the page's own offer. */
 const predecessorTrialLine = (points: string): CopyBlock => ({
   text: `A randomized trial of the predecessor WSDFM program found women offered a place were ${points} more likely to be employed.`,
   facts: ['RC-02'],
@@ -582,22 +588,40 @@ function investorEvidence(): CopyBlock {
 export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
 
 /**
- * The two lines of Universities' "Evidence from Our Wider Youth Programs" band (WP38, cycle-15 review): the trial result and the survey's degree share and employment readings, in place of the full evidence band
- * (offered-place and attender income, survey chart, education profile). Figures are read from RC-02, OC-01 and OC-09, so the sentences cannot drift from the register; the builder throws if a stat or the OC-09 phrase
- * changes shape. The survey line names its base ("Among surveyed completers") and reads as OC-01's tile does: "was 77.9% at the October 2026 survey, up from 47.4% before training".
+ * The institutions Investors' track-record band names (WP43, cycle-20 review): ONE short paragraph, by type (governments, development partners, universities, private-sector partners), in place of four relationship lists
+ * and the founders and leadership entries. Each sentence is the register's own pattern ("Government partners include ...", PA-02; "Development and NGO partners include ...", PA-01; "University partners: ...", PA-05;
+ * "Private-sector partners include ...", PA-03) with a short selection of the names that fact lists (at most three for a type), so "include" keeps every list open exactly as the register words it; the full lists stay in the
+ * register and on the pages that show the logos. A relationship qualifier travels with its name: National University is "(official training partner)" and The City College of New York is "a memorandum of understanding (MoU)
+ * partner since 2024" (PA-05 words the relationship so; SC-04, in the band "Contracts, Pipeline and Recognition", says in full that CodersTrust is National University's official training partner). DoICT is spelled out where the
+ * page first names it (the Her Power answer below says "DoICT"; the expansion is the confirmed one, F30). The builder throws if the register stops naming one of these institutions or changes one of those two relationships, so
+ * the paragraph cannot outlive the facts it rests on.
  */
-function universityEvidence(): CopyBlock[] {
-  const { points, employment, before } = trialAndSurveyReadings('UNIVERSITY_EVIDENCE');
-  const degree = /(\d+(?:\.\d+)?% hold a bachelor’s degree or higher)/.exec(fact('OC-09').text)?.[1];
-  if (!degree) throw new Error('UNIVERSITY_EVIDENCE: OC-09 no longer has the expected wording');
-  return [predecessorTrialLine(points), { text: `Among surveyed completers, ${degree}; employment was ${employment} at the October 2026 survey, up from ${before} before training.`, facts: ['OC-09', 'OC-01'] }];
+function investorPartners(): CopyBlock {
+  const named = (id: string, ...needles: string[]) => {
+    const text = fact(id).text;
+    for (const needle of needles) if (!text.includes(needle)) throw new Error(`INVESTOR_PARTNERS: ${id} no longer names "${needle}"; update the Investors partner paragraph`);
+  };
+  named('PA-02', 'Bangladesh’s ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority');
+  named('PA-01', 'UNDP', 'the World Bank Group', 'the World Food Programme');
+  named('PA-05', 'National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024');
+  named('PA-03', 'Grameenphone Academy', 'Accenture', 'AWS');
+  return {
+    text: [
+      'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority.',
+      'Development partners include UNDP, the World Bank Group and the World Food Programme.',
+      'University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MoU) partner since 2024.',
+      'Private-sector partners include Grameenphone Academy, Accenture and AWS.',
+    ].join(' '),
+    facts: ['PA-02', 'PA-01', 'PA-05', 'PA-03'],
+  };
 }
-export const UNIVERSITY_EVIDENCE: CopyBlock[] = universityEvidence();
+export const INVESTOR_PARTNERS: CopyBlock = investorPartners();
 
 /**
  * The two lines of Local Partners' evidence strip (WP42, cycle-19 review), in place of the full trial-and-survey band (the +41% and +54% income results, the 52.8% / 63.1% employment chart and its table, the survey chart and the
- * median income): the trial result and the survey's employment readings, worded as Universities' strip words them (WP38) without the degree share, which is a Universities point. The program-result cards and the two evidence
- * links stay on the page. Figures are read from RC-02 and OC-01, so the lines cannot drift from the register.
+ * median income): the trial result and the survey's employment readings, worded as the survey tile words them ("was 77.9% at the October 2026 survey, up from 47.4% before training"; the survey line names its base, "Among
+ * surveyed completers"). The program-result cards and the two evidence links stay on the page. Figures are read from RC-02 and OC-01, so the lines cannot drift from the register.
+ * (WP38 had a strip like it on Universities, with the degree share; WP43, cycle-20 review, removed that strip, so Local Partners' is the one page that states the trial and the survey as two lines.)
  */
 function localPartnerEvidence(): CopyBlock[] {
   const { points, employment, before } = trialAndSurveyReadings('LOCAL_PARTNER_EVIDENCE');

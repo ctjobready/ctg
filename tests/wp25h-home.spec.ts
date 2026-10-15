@@ -108,9 +108,10 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide(page, 3).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
-    // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow, the lead and the tile keep "surveyed completers"
+    // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow and the tile keep "surveyed completers";
+    // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile)
     await expect(slide(page, 5).locator('h2')).toHaveText('First Earnings Within Six Months');
-    await expect(slide(page, 5).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    await expect(slide(page, 5).locator('.hs__lead')).toHaveCount(0);
     await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership

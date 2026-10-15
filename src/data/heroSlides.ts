@@ -26,6 +26,7 @@ import { cta } from '../lib/mailto';
  * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
  * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
  * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $82 before training" comparison are its tile alone (OC-03), not the heading too.
+ * WP43 (cycle-20 review): the speed slide ("First Earnings Within Six Months") has no lead: it repeated the heading and the tile, so the slide is the heading, the 58.8% tile with its full base and the link.
  */
 
 export interface HeroSlideStat {
@@ -231,12 +232,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
     // WP36 and WP38 (cycle-13 and cycle-15 reviews) worded the heading as the figure plus its base ("58.8% of Completers Who Started Earning Began Within Six Months"). WP41 (cycle-18 reviews): the heading is the finding alone,
-    // "First Earnings Within Six Months", with no percentage; the tile carries the 58.8% with its base (the 170 surveyed completers who first earned during or after training), and the eyebrow ("Impact Survey 2026") and the lead
-    // name the surveyed completers.
+    // "First Earnings Within Six Months", with no percentage; the tile carries the 58.8% with its base (the 170 surveyed completers who first earned during or after training), and the eyebrow ("Impact Survey 2026") and the tile
+    // name the surveyed completers. WP43 (cycle-20 review): no lead; the sentence under the heading ("Among surveyed completers who first earned during or after training, most started within six months.") said what the heading
+    // and the tile already say, so the slide is its heading, the tile with its full base, and the evidence link.
     title: 'First Earnings Within Six Months',
     titleFacts: ['OC-05'],
-    lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
-    leadFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/lab-women-screen',

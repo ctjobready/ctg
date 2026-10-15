@@ -101,13 +101,13 @@ test.describe('survey figures say what completers report, not an effect', () => 
     await expect(page.locator('#why-partner li[data-fact="OC-01"] .wp__note')).toHaveText('Up from 47.4% before training.');
   });
 
-  // WP38 (cycle-15 review): Universities' evidence band is two lines; the median income and the chart left it, and the survey line keeps the two-readings form ("was 77.9% ... up from 47.4% before training")
-  test('Universities states the survey as two readings, with no "rose", no multiplier, no chart and no median income', async ({ page }) => {
+  // WP38 (cycle-15 review): Universities' evidence band was two lines; the median income and the chart left it, and the survey line kept the two-readings form ("was 77.9% ... up from 47.4% before training").
+  // WP43 (cycle-20 review): that strip is gone (the first band's linked strip points to the Impact Survey 2026 page), so Universities states no survey reading; it still has no "rose", no multiplier, no chart and no median income
+  test('Universities states no survey reading, and has no "rose", no multiplier, no chart and no median income', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    const band = compact(await page.locator('#proof-band').textContent());
-    expect(band).toContain('employment was 77.9% at the October 2026 survey, up from 47.4% before training.');
-    expect(band).not.toMatch(/rose from|3×|median monthly income/);
-    await expect(page.locator('#proof-band .ba__data, #proof-band .ev')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
+    expect(await mainText(page)).not.toMatch(/employment was 77\.9%|rose from|3×|median monthly income/);
+    await expect(page.locator('main .ba__data, main .ev')).toHaveCount(0);
   });
 
   test('the Impact Survey 2026 page keeps its own descriptive "Change" chip: it is the survey’s data page and says the survey does not show cause', async ({ page }) => {
@@ -240,13 +240,14 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
 
   // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of the predecessor WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator
   // WP42 (cycle-19 review): Local Partners' evidence band is the same two-line strip, so it names no evaluator either (the trial page it links spells it out)
-  test('Local Partners and Universities name no evaluator: their evidence is a two-line strip that links the trial page', async ({ page }) => {
-    for (const route of ['partner-with-us/local-partners/', 'partner-with-us/universities/']) {
+  // WP43 (cycle-20 review): Universities' two-line strip is gone; the linked strip that ends its first band ("Broader Evidence from Our Youth Programs", #offer-evidence) links the trial page and names no evaluator
+  test('Local Partners and Universities name no evaluator: the evidence is a strip that links the trial page', async ({ page }) => {
+    for (const [route, strip] of [['partner-with-us/local-partners/', '#proof'], ['partner-with-us/universities/', '#offer-evidence']]) {
       await open(page, route);
       expect(await mainText(page), route).not.toContain('BIGD');
       expect(await mainText(page), route).not.toContain(SPELLED);
       await expect(page.locator('.proofband__head'), route).toHaveCount(0);
-      await expect(page.locator('#proof, #proof-band').getByRole('link', { name: 'The Randomized Trial' }), route).toHaveAttribute('href', /\/impact\/independent-evaluation\/$/);
+      await expect(page.locator(strip).getByRole('link', { name: 'The Randomized Trial' }), route).toHaveAttribute('href', /\/impact\/independent-evaluation\/$/);
     }
   });
 });
@@ -354,8 +355,8 @@ test.describe('plain words and plain claims', () => {
     };
     const cost = await answer('What Does It Cost?');
     expect(cost).toBe(
-      // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"
-      'Pricing is set per program, and we share an indicative budget in the discovery session. For supported youth cohorts, standard inclusions are outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reports and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
+      // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
+      'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
     );
     const safeguarding = await answer('What About Safeguarding and Data Protection?');
     expect(safeguarding).toBe(

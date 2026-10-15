@@ -80,8 +80,9 @@ test.describe('YouthWIDE: "What Success Looks Like" is about young people earnin
 });
 
 test.describe('"What Does It Cost?" and Home’s inclusions heading: standard inclusions are for supported youth cohorts (item 2)', () => {
+  // WP43 (cycle-20 review): the answer is three shorter sentences; the inclusions are still said for "Supported youth cohorts" ("include ..."), and the separately budgeted items stay
   const COST =
-    'Pricing is set per program, and we share an indicative budget in the discovery session. For supported youth cohorts, standard inclusions are outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reports and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -95,7 +96,7 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
   test('the full answer is on the hub only: route pages keep their one line and their own variants', async ({ page }) => {
     for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
-      expect(await mainText(page), route).not.toContain('standard inclusions are outreach and selection');
+      expect(await mainText(page), route).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include training/);
     }
     await open(page, 'partner-with-us/employers/');
     expect(await mainText(page)).toContain('Standard inclusions are a needs assessment, a customized curriculum');
@@ -111,16 +112,15 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
   });
 });
 
-test.describe('Investors: the track-record heading names relationships, not distribution (item 3)', () => {
-  test('"Four Kinds of Institutional Relationship" heads the four unchanged descriptions', async ({ page }) => {
+// WP43 (cycle-20 review): the heading "Four Kinds of Institutional Relationship" and the four lists under it are gone; the institutions are one paragraph by type (tests/wp43.spec.ts). What this test still holds: the band does not
+// talk about distribution (WP41: that read as platform distribution channels), and the paragraph rests on the same four register facts the four lists did.
+test.describe('Investors: the track-record band names relationships, not distribution (item 3)', () => {
+  test('the paragraph that names the institutions rests on PA-02, PA-01, PA-05 and PA-03, and no heading or text says "distribution"', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    const heading = page.locator('#guide .ig__channels h3');
-    await expect(heading).toHaveText('Four Kinds of Institutional Relationship');
-    expect('Four Kinds of Institutional Relationship').toBe(titleCase('Four Kinds of Institutional Relationship'));
-    expect(await texts(page, '#guide .ig__label')).toEqual(['Governments', 'Development Partners', 'Universities', 'Private-Sector Partners']);
-    const facts = await page.locator('#guide .ig__channels li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')));
-    expect(facts).toEqual(['PA-02', 'PA-01', 'PA-05', 'PA-03']);
-    expect(await mainText(page)).not.toContain('Distribution Through');
+    expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03');
+    await expect(page.locator('#guide .ig__channels')).toHaveCount(0);
+    expect(await mainText(page)).not.toMatch(/Distribution Through|Four Kinds of Institutional Relationship/);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014, with Institutions That Reach Youth', 'Delivered Since 2014']);
   });
 });
 
@@ -239,14 +239,15 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
 
 test.describe('Home: slide headings, tile and meta description (items 8, 13 and 16)', () => {
   // WP42 (cycle-19 review): the government slide moved to second, so the speed slide is the fifth
-  test('slide 5 is "First Earnings Within Six Months": no percentage in the heading, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  // WP43 (cycle-20 review): the slide has no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated the heading and the tile)
+  test('slide 5 is "First Earnings Within Six Months": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
     expect('First Earnings Within Six Months').toBe(titleCase('First Earnings Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(slide.locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    await expect(slide.locator('.hs__lead')).toHaveCount(0);
     const tile = compact(await slide.locator('.hs__stat').textContent());
     expect(tile).toContain('58.8%');
     expect(tile).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');

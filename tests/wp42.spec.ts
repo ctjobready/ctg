@@ -50,18 +50,18 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(page.locator('#reach .status-tag')).toHaveCount(0);
   });
 
-  test('the figures come before the institutional relationships, and those before the founders and the current leadership', async ({ page }) => {
+  // WP43 (cycle-20 review): the relationship panel and the founder and leadership strips are gone (tests/wp43.spec.ts); the figures still come first, then the one paragraph that names the institutions, then the link to the leadership team
+  test('the figures come before the institutional relationships (one paragraph), and those before the link to the leadership team', async ({ page }) => {
     await open(page, URL);
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014', 'Four Kinds of Institutional Relationship', 'Founders', 'Current Leadership']);
-    const [delivered, relationships, founders, leadership] = await Promise.all([topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__channels'), topOf(page, '#guide h3.ig__lead-h'), topOf(page, '#guide h3.ig__lead-h ~ h3.ig__lead-h')]);
+    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
+    const [delivered, relationships, leadership] = await Promise.all([topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__names'), topOf(page, '#guide .ig__leaders')]);
     expect(delivered, 'delivered figures above the relationships').toBeLessThan(relationships);
-    expect(relationships, 'relationships above the founders').toBeLessThan(founders);
-    expect(founders, 'founders above the current leadership').toBeLessThan(leadership);
+    expect(relationships, 'relationships above the leadership link').toBeLessThan(leadership);
     // and in the markup, so the order holds for a screen reader and without styles
     const domOrder = await page.evaluate(() => {
       const el = (s: string) => document.querySelector(s) as Element;
       const before = (a: Element, b: Element) => Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
-      return [before(el('#guide .ig__delivered'), el('#guide .ig__channels')), before(el('#guide .ig__channels'), el('#guide h3.ig__lead-h'))];
+      return [before(el('#guide .ig__delivered'), el('#guide .ig__names')), before(el('#guide .ig__names'), el('#guide .ig__leaders'))];
     });
     expect(domOrder).toEqual([true, true]);
   });
@@ -108,26 +108,26 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     for (let i = 1; i < list.length; i++) expect(list[i].dark && list[i - 1].dark, `bands ${list[i - 1].id} and ${list[i].id}`).toBe(false);
   });
 
-  test('desktop: the three tiles share a row beside the heading, the relationships panel spans the band below them; phone: one column, no overflow', async ({ page }) => {
+  // WP43 (cycle-20 review): the relationships are one paragraph under both columns (it was a panel that spanned the band), at a reading width
+  test('desktop: the three tiles share a row beside the heading, the paragraph that names the institutions is below them; phone: one column, no overflow', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, URL);
     const tiles = await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => ({ top: Math.round(e.getBoundingClientRect().top), left: Math.round(e.getBoundingClientRect().left) })));
     expect(new Set(tiles.map((t) => t.top)).size, 'the three tiles are on one row at 1280').toBe(1);
     const copy = await page.locator('#guide .ig__copy').boundingBox();
     const delivered = await page.locator('#guide .ig__delivered').boundingBox();
-    const channels = await page.locator('#guide .ig__channels').boundingBox();
-    const row = await page.locator('#guide .ig').boundingBox();
+    const names = await page.locator('#guide .ig__names').boundingBox();
     expect(delivered!.x, 'the figures sit to the right of the copy').toBeGreaterThan(copy!.x + copy!.width - 1);
     expect(delivered!.y, 'and level with it').toBeLessThan(copy!.y + copy!.height);
-    expect(channels!.y, 'the relationships panel is below both').toBeGreaterThan(Math.max(copy!.y + copy!.height, delivered!.y + delivered!.height) - 1);
-    expect(channels!.width, 'and spans the band').toBeGreaterThan(row!.width - 2);
+    expect(names!.y, 'the paragraph is below both').toBeGreaterThan(Math.max(copy!.y + copy!.height, delivered!.y + delivered!.height) - 1);
+    expect(names!.width, 'at a reading width (48rem)').toBeLessThanOrEqual(769);
     expect(await noOverflow(page)).toBe(true);
     await page.setViewportSize(MOBILE);
     await open(page, URL);
     expect(await noOverflow(page), '390px').toBe(true);
-    const [copyTop, deliveredTop, channelsTop] = await Promise.all([topOf(page, '#guide .ig__copy'), topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__channels')]);
+    const [copyTop, deliveredTop, namesTop] = await Promise.all([topOf(page, '#guide .ig__copy'), topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__names')]);
     expect(copyTop).toBeLessThan(deliveredTop);
-    expect(deliveredTop).toBeLessThan(channelsTop);
+    expect(deliveredTop).toBeLessThan(namesTop);
   });
 });
 

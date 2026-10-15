@@ -4,33 +4,28 @@ import Icon from '../../system/Icon.astro';
 import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import LeadershipStrip from './LeadershipStrip.astro';
-import { EMPATHY, ORIGIN_LAUNCH } from '../../../data/copy';
+import { EMPATHY, INVESTOR_PARTNERS, ORIGIN_LAUNCH } from '../../../data/copy';
 import { fact } from '../../../data/facts';
-import { governmentPartners } from '../../sections/copyText';
 import { linkAttrs } from '../../../lib/url';
 
 /**
  * C5 Guide (Investors), empathy first and before the vision (credibility before the future state, as on Home): empathy ([EMP] P8) → the launch line (ORIGIN_LAUNCH) → what has been delivered since 2014 (SC-01, SC-02, SC-03) →
- * four kinds of institutional relationship: governments, development partners, universities and private-sector partners (PA-02, PA-01, PA-05, PA-03; WP41, cycle-18 review: the heading no longer says "distribution", which read as
- * platform distribution channels) → the founders
- * (the cards carry ID-03; no separate sentence) → current leadership → TalentLEAP (IN-06).
+ * the institutions that work with CodersTrust, as one short paragraph by type (INVESTOR_PARTNERS: governments, development partners, universities, private-sector partners; PA-02, PA-01, PA-05, PA-03) → the link to the
+ * leadership team → TalentLEAP (IN-06).
  * WP38 (cycle-15 review): the origin is one line, as on the other audience pages; Home keeps the two-sentence history (ORIGIN).
  * WP42 (cycle-19 review): the delivered figures lead the band, before the institutional relationships and the leadership: "Delivered Since 2014" (the three tiles with their enrollment and location note) moved here from "Contracts,
  * Pipeline and Recognition" (#reach), which keeps the contract scope in its own labeled block, apart from what was delivered. The band shows SC-03's tile, so the origin line is the launch alone (ORIGIN_LAUNCH), as on Development
- * Partners: the count of countries and territories is the tile's, stated once. The relationships are one panel across the band (four across on a wide screen) in place of a tall column beside the heading.
+ * Partners: the count of countries and territories is the tile's, stated once.
+ * WP43 (cycle-20 review): the band was a directory interrupting the platform story (four relationship lists in a panel, then seven founder and leadership cards). The delivered tiles and the origin line stay; the relationship
+ * lists are ONE compact paragraph by type, naming institutions the register names (src/data/copy.ts INVESTOR_PARTNERS), and the people entries are the "Meet the Leadership Team" link that closed the page's call-to-action band
+ * (the team page has the biographies, as on Home's Guide band; no new biographies here).
  */
 interface Props {
   id?: string;
 }
 const { id = 'guide' } = Astro.props;
 const talentleap = linkAttrs('/our-model/talentleap/');
-const channels = [
-  { icon: 'landmark', label: 'Governments', fact: 'PA-02' },
-  { icon: 'globe', label: 'Development Partners', fact: 'PA-01' },
-  { icon: 'graduation-cap', label: 'Universities', fact: 'PA-05' },
-  { icon: 'building-2', label: 'Private-Sector Partners', fact: 'PA-03' },
-];
+const team = linkAttrs('/about/team/');
 const delivered = ['SC-01', 'SC-02', 'SC-03'] as const;
 const stat = (sid: string) => {
   const s = fact(sid).stat;
@@ -72,26 +67,10 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
       <p class="ig__notes" data-fact="SC-02 SC-03">{notes.join(' ')}</p>
     </div>
   </div>
-  <div class="ig__channels" data-reveal>
-    <h3 class="t-heading-l">Four Kinds of Institutional Relationship</h3>
-    <ul role="list">
-      {
-        channels.map((c) => (
-          <li data-fact={c.fact}>
-            <Icon name={c.icon} size={28} strokeWidth={1.5} />
-            <div>
-              <p class="ig__label">{c.label}</p>
-              <p class="ig__text">{c.fact === 'PA-02' ? governmentPartners() : fact(c.fact).text}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ul>
+  <div class="ig__partners" data-reveal>
+    <CopyBlock block={INVESTOR_PARTNERS} class="ig__names" />
+    <p class="ig__leaders"><a class="link" href={team.href}>Meet the Leadership Team<Icon name="arrow-right" size={16} /></a></p>
   </div>
-  <h3 class="t-heading-l ig__lead-h" data-reveal>Founders</h3>
-  <LeadershipStrip groups={['founders']} label="Founders" />
-  <h3 class="t-heading-l ig__lead-h" data-reveal>Current Leadership</h3>
-  <LeadershipStrip groups={['executive']} label="Current leadership" />
 </Section>
 
 <style>
@@ -129,7 +108,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     align-items: flex-start;
     gap: var(--space-sm);
   }
-  /* what has been delivered: the band's figures, before the relationships (WP42) */
+  /* what has been delivered: the band's figures, beside the copy (WP42) */
   .ig__delivered {
     display: grid;
     gap: var(--space-md);
@@ -137,16 +116,12 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     min-width: 0;
   }
   /* a sub-section heading: heading-xl (28/36/600), DESIGN.md §3 "Supporting section or large card heading" */
-  h3.ig__h,
-  h3.ig__lead-h {
+  h3.ig__h {
     margin: 0;
     color: var(--secondary);
     font-size: var(--fs-heading-xl);
     line-height: var(--lh-heading-xl);
     font-weight: var(--fw-semibold);
-  }
-  h3.ig__lead-h {
-    margin: var(--space-lg) 0 var(--space-md);
   }
   /* three tiles across where the column allows, two and one below them otherwise (the 130,000+ at this size needs about 9.5rem) */
   .ig__tiles {
@@ -168,55 +143,17 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
     font-size: var(--fs-body-xs);
     line-height: var(--lh-body-xs);
   }
-  .ig__channels {
-    padding: var(--space-gutter);
-    background: var(--surface-container-low);
-    border: 1px solid var(--primary-fixed);
-    border-radius: var(--radius-lg);
+  /* the institutions, as one paragraph at the reading width the audience pages' Guide band uses (PartnerGuideBand: 48rem), and the link to the team one step (16px) under it (WP43). The paragraph is the shared
+     CopyBlock, which does not carry this component's scope attribute, so it takes the body text size and color (no rule here would reach it). */
+  .ig__partners {
     display: grid;
-    gap: var(--space-md);
-    align-content: start;
-  }
-  .ig__channels h3 {
-    margin: 0;
-    color: var(--secondary);
-  }
-  .ig__channels ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-md) var(--space-lg);
-  }
-  .ig__channels li {
-    display: flex;
-    gap: var(--space-md);
-    align-items: flex-start;
-  }
-  .ig__channels li :global(.icon) {
-    color: var(--primary);
-    flex: none;
-    margin-top: var(--space-xs);
-  }
-  .ig__channels p {
-    margin: 0;
-  }
-  .ig__label {
-    font-weight: var(--fw-bold);
-    color: var(--on-surface);
-  }
-  .ig__text {
-    font-size: var(--fs-body-xs);
-    line-height: var(--lh-body-xs);
-    color: var(--on-surface-variant);
+    gap: var(--stack-link);
+    justify-items: start;
+    max-width: 48rem;
   }
   @media (min-width: 768px) {
-    h3.ig__h,
-    h3.ig__lead-h {
+    h3.ig__h {
       letter-spacing: -0.5px;
-    }
-    .ig__channels ul {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   @media (min-width: 1024px) {
@@ -224,9 +161,6 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-xl);
       align-items: start;
-    }
-    .ig__channels ul {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 </style>
