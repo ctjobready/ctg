@@ -72,7 +72,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(line).toHaveCount(1);
     expect(compact(await line.textContent())).toBe('Launched in Copenhagen in 2014.');
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).not.toMatch(/from a Copenhagen launch to programs in|began developing freelancers|Korail settlement/);
+    expect(guide).not.toMatch(/from a Copenhagen launch to programs in|began (?:developing|training) freelancers|Korail settlement/);
     expect(count(guide, 'countries and territories'), 'the tile’s label and SC-03’s note, nothing else').toBe(2);
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
@@ -330,12 +330,13 @@ test.describe('Home: the government slide is second (item 10)', () => {
   test('the carousel runs trial, government scale, survey, program results, speed, reach, programs; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
-      'Women Offered a Place Earned an Estimated 41% More',
+      // WP48 (cycle-23 review): the heading names the predecessor program
+      'Women Offered a Place in a Predecessor Program Earned an Estimated 41% More',
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course
-      'Most First Earnings Came Within Six Months of the Course Ending',
+      // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course; WP48 (cycle-23 review, item 32): "by", because OC-05 is cumulative and includes those who first earned during the course
+      'Most Had Started Earning by Six Months After the Course',
       'Programs in 15 Countries and Territories',
       'Find Your Program',
     ]);
@@ -345,7 +346,8 @@ test.describe('Home: the government slide is second (item 10)', () => {
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP48 (cycle-23 review): the body is two sentences; the contract scope carries the clause "contract scope, not a count of completers" and the 25,125 and 2,500 are off the slide (tests/wp48.spec.ts)
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -370,13 +372,15 @@ test.describe('Home: the government slide is second (item 10)', () => {
 });
 
 test.describe('Development Partners: the >4x tile quotes the multiplier only (item 11)', () => {
-  test('the tile’s note gives the nine-trial average with its unit and does not repeat the +10.3 percentage points of the lead tile', async ({ page }) => {
+  test('the tile’s label gives the nine-trial average and does not repeat the +10.3 percentage points of the lead tile', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const tile = page.locator('#glance .pg__more a[data-fact="RC-06a"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__value')).toHaveText('>4×');
-    await expect(tile.locator('.pg__desc')).toHaveText('Employment effect over four times the nine-trial average');
-    await expect(tile.locator('.pg__note')).toHaveText('Against 2.3 percentage points on average across nine vocational-training trials.');
+    // WP48 (cycle-23 review): the label says what is compared ("The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials"); it was "Employment effect over four times the nine-trial average".
+    // The note under it ("Against 2.3 percentage points on average across nine vocational-training trials.") repeated the label, so the tile has no note.
+    await expect(tile.locator('.pg__desc')).toHaveText('The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials');
+    await expect(tile.locator('.pg__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/10\.3|\+10/);
     // the +10.3 is stated once in the glance: the lead tile
     const glance = compact(await page.locator('#glance').textContent());
@@ -384,11 +388,11 @@ test.describe('Development Partners: the >4x tile quotes the multiplier only (it
     await expect(page.locator('#glance .pg__lead a[data-fact="RC-02"]')).toContainText('+10.3 percentage points');
   });
 
-  test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the new note says so with its unit', () => {
+  test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the glance label says so without a repeating note', () => {
     const rc06a = fact('RC-06a');
     expect(rc06a.text).toContain('which was 2.3 percentage points');
-    expect(rc06a.stat?.glance?.label).toBe('Employment effect over four times the nine-trial average');
-    expect(rc06a.stat?.glance?.note).toBe('Against 2.3 percentage points on average across nine vocational-training trials.');
+    expect(rc06a.stat?.glance?.label).toBe('The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials');
+    expect(rc06a.stat?.glance?.note).toBeUndefined();
   });
 });
 

@@ -15,6 +15,9 @@
 // two-sentence variant (Q7-model), because "What Happens Next" below shows the sequence the shared answer counted out week by week.
 // WP41 (cycle-18 review): the "What Success Looks Like" band (#future) is about young people earning ("Young People Earning, Locally and Globally": jobs, freelance clients and businesses of their own); the monthly
 // reports it used to describe are already in the glance's Reporting row and the C8 cards, so it no longer explains them a third time.
+// WP48 (cycle-23 reviews, consistent with the owner decision of 2026-10-15 for the audience pages): the page no longer repeats Home's persuasion bands. The Cost of Waiting band ("Training Without Work Entry Leaves Budgets Without Results", #cost)
+// and the Imagine band ("Young People Earning, Locally and Globally", #future) are gone, and so are the hero's two links back to audience pages ("For Development Partners", "For Governments"; the ministry briefing stays beside the one button).
+// The challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy, Klein. The Bangladesh band's labs tile (GV-09) shows the register's qualifier as its note (lab access and seats are confirmed per program).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -28,13 +31,11 @@ import StatusTag from '../../components/system/StatusTag.astro';
 import Icon from '../../components/system/Icon.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
-import FutureBand from '../../components/sections/FutureBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../../components/sections/IncludesBand.astro';
 import GainsPains from '../../components/pages/partners/GainsPains.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
-import CostSection from '../../components/pages/programs/CostSection.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
@@ -45,8 +46,7 @@ import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, painForList, painForRow } from '../../data/copy';
 import { fact } from '../../data/facts';
-import { futurePhotos, galleryPhotos } from '../../data/photos';
-import { CLAIM_PX06, CLAIM_RC06 } from '../../components/sections/copyText';
+import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
 import { webPage } from '../../lib/schema';
 import { url } from '../../lib/url';
@@ -95,11 +95,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     >
       <Fragment slot="actions">
         <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
-        <nav class="routes" aria-label="Other Ways to Start">
-          {briefing.href && <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>}
-          <a class="link" href={url('/partner-with-us/development-partners/')}>For Development Partners<Icon name="arrow-right" size={16} /></a>
-          <a class="link" href={url('/partner-with-us/governments/')}>For Governments<Icon name="arrow-right" size={16} /></a>
-        </nav>
+        {
+          briefing.href && (
+            <nav class="routes" aria-label="Other Ways to Start">
+              <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
+            </nav>
+          )
+        }
       </Fragment>
     </Hero>
   </div>
@@ -107,8 +109,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <ProgramGlance
     title="YouthWIDE at a Glance"
     rows={[
-      // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
-      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million youth by 2030.', facts: ['IN-02', 'IN-01'] },
+      // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million vulnerable youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
+      // WP48 (cycle-23 review): the row says "2 million vulnerable youth", IN-01's own wording, as the Programs menu, Home and the Programs hub do.
+      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.', facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
@@ -122,14 +125,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <GainsPains painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
   </ProblemSection>
 
-  <!-- C3 -->
-  <CostSection
-    title="Training Without Work Entry Leaves Budgets Without Results"
-    blocks={[
-      { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
-      { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
-    ]}
-  />
+  <!-- C3 (Cost of Waiting) is left to Home since WP48 (cycle-23 review, consistent with the owner decision of 2026-10-15). -->
 
   <!-- C5 (credibility before the vision) -->
   <GuideSection
@@ -139,17 +135,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     method={{ text: 'TalentLEAP organizes skills into career paths.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   />
 
-  <!-- C4 -->
-  <FutureBand
-    photos={futurePhotos('youthwide')}
-    title="Young People Earning, Locally and Globally"
-    lead="Illustrative: imagine young people earning from jobs, freelance clients and businesses of their own. Your board or agency sees their progress in monthly reports."
-    vignettes={[
-      { kind: 'Functional', title: 'Earning from a Job', text: 'A first paid job, close to home or abroad.' },
-      { kind: 'Emotional', title: 'Earning from Freelance Clients', text: 'Freelance work for clients near and far.' },
-      { kind: 'Social', title: 'Earning from Their Own Business', text: 'A business built on digital skills.' },
-    ]}
-  />
+  <!-- C4 (Imagine) is left to Home since WP48 (cycle-23 review, consistent with the owner decision of 2026-10-15). -->
 
   <!-- C6 (the positioning statement opens the band) -->
   <MechanismSection
@@ -166,7 +152,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   />
 
   <!-- The Bangladesh initiative: one band (WP30d), built from the shared C6 band (eyebrow, headline, one paragraph, proof, text link). #governments is linked from the Governments partner page and a case study.
-       WP45 (cycle-21 review): headed "Reference Country and 2030 Aim", not "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million youth by 2030). -->
+       WP45 (cycle-21 review): headed "Reference Country and 2030 Aim", not "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030). -->
   <MechanismSection
     id="governments"
     tone="airy"

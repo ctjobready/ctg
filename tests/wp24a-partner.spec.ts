@@ -96,8 +96,8 @@ test.describe('audience pages', () => {
     await page.goto('partner-with-us/governments/');
     const tile = page.locator('#glance li', { hasText: '31,200+' });
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
-    // WP46 (cycle-22 review): the note says who trained whom, so the 25,125 is not read as CodersTrust's own count
-    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    // WP46 (cycle-22 review): the note says who trained whom, so the 25,125 is not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
+    await expect(tile).toContainText('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
   // WP46 (cycle-22 review): "What a Ministry Sees" (WP24a, WP29) is gone: it restated the reporting cadence the page already gives. Its one detail that stood nowhere else, the follow-up surveys counted from the end of each course, is in the delivery model's card.

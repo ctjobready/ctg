@@ -21,7 +21,7 @@
 //     must carry "For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points)." rendered by
 //     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below. WP35 (cycle-12 review): Home and /partner-with-us/development-partners/ no longer restate the trial in an evidence band, so they are not required
-//     to carry the sentence; Home's plain-language reading lives on its hero "Strongest Proof" card and is held to RC-02 and RC-07 there ([PROOF-CARD], below). WP42 (cycle-19 review): the WSDFM case study's hero no longer
+//     to carry the sentence; Home's plain-language reading lives on its hero's Randomized Trial proof card and is held to RC-02 and RC-07 there ([PROOF-CARD], below). WP42 (cycle-19 review): the WSDFM case study's hero no longer
 //     prints the sentence (it repeated, in prose, the result its RC-02 tile shows beside it), so that one page is listed as exempt (PLAIN_LINE_EXEMPT_PAGES); the numbers of the sentence stay held on any page that carries it
 //   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/ and /programs/youthwide/ must show, inside the C13 CTA band (#cta; YouthWIDE: its "Choose Your
 //     Entry Point" band, #entry-point), ONE paragraph in the plan's exact words for THAT page: the lead "What the discovery session covers:" (development partners; first item "your country, priority groups and
@@ -143,8 +143,8 @@ const DISCIPLINE = [
   [/\bdashboards?\b/i, '"dashboard" (use "monthly reports")'],
   [/into first income/i, '"into first income" (use "milestone-based mentoring")'],
   [/\b30[- ]minute/i, 'unsourced "30 minutes" promise'],
-  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners started earning within six months of finishing the course." (WP46: the owner's answer of 2026-10-15 counts the six months from the end of the course), with the 58.8%, its base and the survey qualifier immediately below
-  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners started earning within six months of finishing the course.", with the 58.8%, its base and the survey qualifier below it)'],
+  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners had started earning by six months after finishing the course." (WP46: the owner's answer of 2026-10-15 counts the months from the end of the course; WP48, cycle-23 review: OC-05 is cumulative and includes those who first earned during the course, so "by ... after", never "within ... of finishing"), with the 58.8%, its base and the survey qualifier immediately below
+  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners had started earning by six months after finishing the course.", with the 58.8%, its base and the survey qualifier below it)'],
 ];
 // The investor CTA label and its mailto subject are allowed.
 const ALLOWED = [/Investor(%20| )deck(%20| )request/gi];
@@ -253,7 +253,7 @@ function plainLineProblems(markup, text, stat, required) {
   return out;
 }
 
-/* ---- [PROOF-CARD]: the plain-language trial reading on Home's hero "Strongest Proof" card (WP35, cycle-12 review) ---- */
+/* ---- [PROOF-CARD]: the plain-language trial reading on Home's hero Randomized Trial proof card (WP35, cycle-12 review; its strip is headed "Proof at a Glance" since WP48) ---- */
 // Home states the trial in the hero's Randomized Trial card and in the first carousel slide; its evidence band no longer restates it, so the [PLAIN-LINE] anchor for Home moved to the card (the gate keeps its
 // strength: the card's numbers are held to the register, as the [PLAIN-LINE]'s are). The card (<li class="hh__card" data-fact="RC-02">) carries the eyebrow "Randomized Trial", RC-02's value ("+10.3") with the unit
 // "percentage points", and the plain-language caption "For every 100 women offered a place in a 200-hour predecessor program, about 10 more were in work than in the control group." The caption's numbers
@@ -1085,7 +1085,7 @@ function numberGuardPage(path, html, allow = []) {
   // retired wording: the USP heading "Earning starts within months" overgeneralizes OC-05 (round 14, m3)
   const disciplineHits = (text) => DISCIPLINE.filter(([re]) => re.test(text)).length;
   if (!disciplineHits('<h3>Earning starts within months</h3>')) problems.push('self-test: the wording gate accepted the retired USP heading "Earning starts within months"');
-  if (disciplineHits('<h3>Most surveyed new earners started earning within six months.</h3>')) problems.push('self-test: the wording gate flagged the round-14 USP heading');
+  if (disciplineHits('<h3>Most surveyed new earners had started earning by six months after finishing the course.</h3>')) problems.push('self-test: the wording gate flagged the round-14 USP heading');
 
   // number guard: an unregistered figure on an evergreen page fails; registered figures pass in any format; archive posts, stubs, the styleguide
   // and the 404 are exempt; the whitelist is per page and per text

@@ -1,6 +1,7 @@
 ---
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
+import { TRIAL_RUNG_NAME } from '../../../data/copy';
 
 /**
  * Compact evidence ladder (review round 9 enhancement 1): the four kinds of evidence from EvidenceLadder, one line each, strongest
@@ -8,6 +9,7 @@ import { linkAttrs } from '../../../lib/url';
  * the same context tokens (`--ctx-num-bg`, `--ctx-num-fg`), so it adapts to light and dark bands. It is plain server-rendered
  * markup (an ordered list), so it works without JS, and it carries no figures of its own: the only numerals are the list numbers
  * and the trial's years. `data-fact` names the register entry each rung describes (for the status gate).
+ * WP48 (cycle-23 review, item 34): the first rung's name is TRIAL_RUNG_NAME ("Independent Randomized Trial (BIGD)", it was "Randomized Trial (BIGD)"), the one name the full ladder on /impact/ also uses.
  */
 interface Props {
   id?: string;
@@ -16,7 +18,7 @@ interface Props {
 const { id = 'ladder-compact', class: className } = Astro.props;
 
 const rungs = [
-  { name: 'Randomized Trial (BIGD)', text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
+  { name: TRIAL_RUNG_NAME, text: 'causal effect for women offered a place in one program (WSDFM, Dhaka, 2020–21)', fact: 'RC-01' },
   { name: 'Impact Survey 2026', text: 'what surveyed completers report', fact: 'OC-01' },
   { name: 'Program Results', text: 'results reported by each program, each with its own measure', fact: 'PR-01' },
   { name: 'Learner Stories', text: 'individual journeys, not typical outcomes', fact: undefined },

@@ -211,9 +211,10 @@ test.describe('JobReady Platform: the record band is "The Record Behind JobReady
 });
 
 test.describe('The contract-scope note says who trained whom, and Home’s slide 2 names its subject (item 9)', () => {
-  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.';
+  // WP48 (cycle-23 review): the note reads "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly." (it was "The total is ... ; it includes Her Power’s national program, which trained ...")
+  const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 
-  test('the register’s GV-12 note, the Impact and Governments tiles and Home slide 2 read the same note; no page still says "(25,125 women trained)"', async ({ page }) => {
+  test('the register’s GV-12 note and the Impact and Governments tiles read the same note, and Home slide 2 keeps its first clause; no page still says "(25,125 women trained)"', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
     // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('trained 25,125 women');
@@ -227,8 +228,10 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(NOTE);
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    expect(lead).toBe(`Six government contracts with training and curriculum work scoped for 31,200+ people. ${NOTE} CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`);
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    // WP48 (cycle-23 review): Home slide 2 keeps only the note's first clause ("contract scope, not a count of completers"), read from the note; the Impact and Governments tiles above keep the whole note (tests/wp48.spec.ts)
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
     expect(builtPages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 });
@@ -272,11 +275,12 @@ test.describe('Foundations: "What Happens After You Say Yes" has the four steps,
 });
 
 test.describe('Home: the investor route card says what JobReady is (item 15)', () => {
-  test('the "Impact Investors" card reads "JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
+  // WP48 (cycle-23 review, item 33): the card also states the investor's route: "Back JobReady, the platform we are building to connect emerging-market youth to work." (tests/wp48.spec.ts)
+  test('the "Impact Investors" card reads "Back JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Impact Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await card.textContent())).toContain('Back JobReady, the platform we are building to connect emerging-market youth to work.');
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });
@@ -441,10 +445,12 @@ test.describe('Home: the post-inquiry steps are labelled "For Grant-Funded Pilot
   });
 });
 
-test.describe('OC-05: the six months are counted from the end of the course (item 29, owner answer 2026-10-15)', () => {
-  const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% within six months of finishing it; 77.1% within a year; 90.6% within two years (cumulative)';
-  const LABEL = 'of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 170 surveyed completers who first earned during or after training had started earning within six months of finishing the course, including 23.5% who first earned during the course';
+// WP48 (cycle-23 review, item 32, a logic error this item introduced): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "started earning within six months of finishing the course"
+// contradicted itself (they started before it ended). The wording is "had started earning by six months after finishing" (tests/wp48.spec.ts pins the rest of item 32).
+test.describe('OC-05: the six months are counted from the end of the course (item 29, owner answer 2026-10-15; "by", not "within": item 32 of cycle 23)', () => {
+  const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
+  const LABEL = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course, including 23.5% who first earned during the course';
 
   test('the register states the reference point in its text, stat label and glance label', () => {
     const oc05 = fact('OC-05');
@@ -454,11 +460,11 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(oc05.stat?.value).toBe('58.8%');
   });
 
-  test('Home slide 5 says "of the Course Ending" in its heading and shows the register’s label in its tile', async ({ page }) => {
+  test('Home slide 5 says "by Six Months After the Course" in its heading and shows the register’s label in its tile', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
-    expect('Most First Earnings Came Within Six Months of the Course Ending').toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
+    await expect(s.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await s.locator('.hs__stat').textContent())).toContain(LABEL);
   });
@@ -469,18 +475,18 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
-    expect(compact(await page.locator('#speed .colc__note').textContent())).toBe('Months are counted from the end of the course.');
+    expect(compact(await page.locator('#speed .colc__note').textContent())).toBe('Months are counted from the end of the course; the shares are cumulative and include earnings during the course.');
     expect(await texts(page, '#speed .colc__label')).toEqual(['During the Course', 'Within 3 Months', 'Within 6 Months', 'Within 12 Months', 'Within 2 Years']);
     const csv = readFileSync('public/data/outcomes-2026-aggregates.csv', 'utf8');
     const rows = csv.split('\n').filter((l) => l.startsWith('OC-05,'));
     expect(rows).toHaveLength(5);
-    for (const r of rows) expect(r, r).toContain('with months counted from the end of the course (timing only)');
+    for (const r of rows) expect(r, r).toContain('with months counted from the end of the course and including earnings during the course (timing only)');
   });
 
-  test('no built page says a bare "within six months" for OC-05 (every one names the end of the course)', () => {
-    const bare = builtPages().filter((p) => /within six months(?! of (?:finishing|the course ending))/i.test(p.html)).map((p) => p.route);
-    expect(bare).toEqual([]);
-    const named = builtPages().filter((p) => /within six months of (?:finishing|the course ending)/i.test(p.html)).map((p) => p.route).sort();
+  test('no built page says "within six months" (OC-05 counts those who started during the course too); the three pages that state it say "by six months after"', () => {
+    const old = builtPages().filter((p) => /within six months/i.test(p.html)).map((p) => p.route);
+    expect(old).toEqual([]);
+    const named = builtPages().filter((p) => /by six months after (?:finishing|the course)/i.test(p.html)).map((p) => p.route).sort();
     expect(named).toEqual(['/', '/impact/', '/impact/outcomes-2026/']);
   });
 });

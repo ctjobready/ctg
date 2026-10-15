@@ -3,7 +3,7 @@ import Fact from '../../facts/Fact.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
 import { fact } from '../../../data/facts';
-import { BIGD_FULL } from '../../../data/copy';
+import { BIGD_INSTITUTE, TRIAL_RUNG_NAME } from '../../../data/copy';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { trialEmploymentLabel, wsdfmFigureLabel } from './evidence';
 
@@ -13,6 +13,8 @@ import { trialEmploymentLabel, wsdfmFigureLabel } from './evidence';
  * The program-results rung shows PR-01 with the register's program-data label, once, on its own line; the rung's title and notes do not repeat it.
  * WP47 (cycle-22 review): when `links` is set the rung's NAME is the link (the matrix row header, the card title). It used to render the name, the evidence tag and a second link whose text repeated the name, and a screen reader read
  * all three as one row header ("Impact Survey 2026, Surveyed Completers, Impact Survey 2026").
+ * WP48 (cycle-23 review, item 34): the first rung's name is TRIAL_RUNG_NAME ("Independent Randomized Trial (BIGD)", it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)") in both variants; the evaluator is spelled out once,
+ * in that rung's "What It Shows" text, which the cards and the matrix share.
  */
 interface Props {
   /** Link each rung to its page (hub) or leave plain (inside the report). */
@@ -25,14 +27,14 @@ interface Props {
 const { links = true, headingLevel = 3, class: className, variant = 'cards' } = Astro.props;
 /** What each rung shows and does not show, once: the cards and the matrix read the same wording. */
 const TEXT = {
-  trial: { shows: 'The effect of one CodersTrust program (WSDFM) on women in Dhaka, against a randomly chosen control group.', not: 'Results for other countries, groups or today’s standard track.' },
+  trial: { shows: `The effect of one CodersTrust program (WSDFM) on women in Dhaka, evaluated by the ${BIGD_INSTITUTE} against a randomly chosen control group.`, not: 'Results for other countries, groups or today’s standard track.' },
   survey: { shows: 'What alumni who responded report about work and income after training.', not: 'Cause: respondents are not a random sample and may over-represent successful learners.' },
   records: { shows: 'What each named program recorded (in work, or a first job within three months), from CodersTrust program records.', not: 'What would have happened without training.' },
   stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
 };
 const matrix = [
-  // WP35 (cycle-12 review): the matrix is where the Impact page first names the evaluator, so it is spelled out here
-  { n: 1, name: `Independent Evaluation by ${BIGD_FULL}`, tag: 'Randomized Trial' as const, text: TEXT.trial, href: '/impact/independent-evaluation/' },
+  // WP35 (cycle-12 review): the matrix is where the Impact page first names the evaluator; WP48: the name carries the abbreviation and the row's "What It Shows" text spells the evaluator out
+  { n: 1, name: TRIAL_RUNG_NAME, tag: 'Randomized Trial' as const, text: TEXT.trial, href: '/impact/independent-evaluation/' },
   { n: 2, name: 'Impact Survey 2026', tag: 'Surveyed Completers' as const, text: TEXT.survey, href: '/impact/outcomes-2026/' },
   { n: 3, name: 'Program Results', tag: 'Program Record' as const, text: TEXT.records, href: '/impact/case-studies/' },
   { n: 4, name: 'Learner Stories', tag: 'Individual Story' as const, text: TEXT.stories, href: '/impact/stories/' },
@@ -70,7 +72,7 @@ const storyExample = fact('ST-03').text;
 <ol class="ladder" role="list">
   <li class="ladder__rung" data-reveal>
     <span class="ladder__num" aria-hidden="true">1</span>
-    <H class="ladder__title">{links ? <a class="link ladder__name" href={linkAttrs('/impact/independent-evaluation/').href}>Randomized Trial<Icon name="arrow-right" size={16} /></a> : 'Randomized Trial'}</H>
+    <H class="ladder__title">{links ? <a class="link ladder__name" href={linkAttrs('/impact/independent-evaluation/').href}>{TRIAL_RUNG_NAME}<Icon name="arrow-right" size={16} /></a> : TRIAL_RUNG_NAME}</H>
     <EvidenceTag type="Randomized Trial" />
     <p class="ladder__fig"><Fact id="RC-02" field="value" /> <span>{trialEmploymentLabel()}</span></p>
     <dl class="ladder__dl">

@@ -67,65 +67,23 @@ test.describe('timelines name their starting point', () => {
   });
 });
 
-test.describe('paid-work pathways comparison (OC-04)', () => {
-  /** The figures the block must show, read from the register's own sentence (not typed here). */
-  const expected = (() => {
-    const m = /salaried employment rose from ([\d.]+%) before training to ([\d.]+%) at the October 2026 survey, freelancing from ([\d.]+%) to ([\d.]+%)(?: \([\d.]+×\))? and business ownership from ([\d.]+%) to ([\d.]+%)/.exec(fact('OC-04').text)!;
-    return [
-      ['Salaried Employment', m[1], m[2]],
-      ['Freelancing', m[3], m[4]],
-      ['Business Ownership', m[5], m[6]],
-    ];
-  })();
-
-  // WP31: the Employers page no longer carries the youth programs' pathway block (it links to the evidence pages); Home keeps it
-  for (const route of ['']) {
-    test(`${route || 'Home'}: salaried, freelancing and business ownership, before training and at the October 2026 survey, tagged Surveyed Completers`, async ({ page }) => {
+// WP31: the Employers page carries no pathways block; WP48 (cycle-23 review): Home's "Evidence You Can Check" band, the one place the block stood, is gone with its 72.3% tile (the Impact Survey 2026 page keeps the table and the 72.3%), so no
+// page but the survey page shows the paid-work pathways comparison any more (tests/wp48.spec.ts)
+test.describe('paid-work pathways comparison (OC-04): the Impact Survey 2026 page alone', () => {
+  for (const route of ['', 'partner-with-us/employers/']) {
+    test(`${route || 'Home'} carries no pathways block (a landing page shows no youth-program survey table, only links to the evidence pages)`, async ({ page }) => {
       await open(page, route);
-      const block = page.locator('#proof-band .pwp');
-      await expect(block).toHaveCount(1);
-      expect(await block.getAttribute('data-fact')).toBe('OC-04');
-      await expect(block.locator('h3')).toHaveText('Paid-Work Pathways Among Surveyed Completers');
-      await expect(block.locator('.evidence-tag')).toHaveText('Surveyed Completers');
-      expect((await block.locator('thead th').allTextContents()).map(compact)).toEqual(['Pathway', 'Before Training', 'October 2026 Survey']);
-      const rows = await block.locator('tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
-      expect(rows).toEqual(expected);
+      await expect(page.locator('.pwp')).toHaveCount(0);
+      await expect(page.locator('#proof-band .pwp, #proof-band [data-fact="OC-04"]')).toHaveCount(0);
     });
   }
 
-  test('Home: the comparison sits in the survey area, below the heading and beside the 72.3% tile (WP35: there is no trial block above it), and the table itself shows salaried work as the largest pathway', async ({ page }) => {
-    await open(page, '');
-    const tops = await page.locator('#proof-band').evaluate((el) => {
-      const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-      return { head: top('.he__head'), tile: top('.he__stat'), pathways: top('.pwp') };
-    });
-    expect(tops.pathways).toBeGreaterThan(tops.head);
-    // WP30c: no note under the table on Home (the figures say it: salaried employment 53.3% against freelancing 14.0% and business ownership 10.6%)
-    await expect(page.locator('#proof-band .pwp__note')).toHaveCount(0);
+  test('the survey page keeps the three pathways, before training and at the October 2026 survey (OC-04)', async ({ page }) => {
+    const m = /salaried employment rose from ([\d.]+%) before training to ([\d.]+%) at the October 2026 survey, freelancing from ([\d.]+%) to ([\d.]+%)(?: \([\d.]+×\))? and business ownership from ([\d.]+%) to ([\d.]+%)/.exec(fact('OC-04').text)!;
+    await open(page, 'impact/outcomes-2026/');
+    const text = compact(await page.locator('main').textContent());
+    for (const share of [m[1], m[2], m[3], m[4], m[5], m[6]]) expect(text, share).toContain(share);
   });
-
-  test('Employers carries no pathways block (WP31): a corporate offer page shows no youth-program survey figure, only links to the evidence pages', async ({ page }) => {
-    await open(page, 'partner-with-us/employers/');
-    await expect(page.locator('.pwp')).toHaveCount(0);
-    await expect(page.locator('#proof-band')).toHaveCount(0);
-  });
-
-  for (const vp of [DESKTOP, MOBILE]) {
-    for (const route of ['']) {
-      test(`${route || 'Home'} at ${vp.width}px: the comparison fits its band with no horizontal overflow`, async ({ page }) => {
-        await page.setViewportSize(vp);
-        await open(page, route);
-        const fits = await page.locator('#proof-band .pwp').evaluate((el) => {
-          const band = el.closest('section') as HTMLElement;
-          const r = el.getBoundingClientRect();
-          const b = band.getBoundingClientRect();
-          return r.left >= b.left - 1 && r.right <= b.right + 1;
-        });
-        expect(fits, 'the card stays inside its band').toBe(true);
-        expect(await noOverflow(page), 'no horizontal overflow').toBe(true);
-      });
-    }
-  }
 });
 
 // WP37 (cycle-14 review): the "Her Power, with the ICT Division" model-partnership card (the five separate fields, the three figure tiles) is gone. Its figures are Results at a Glance's Her Power tile and the

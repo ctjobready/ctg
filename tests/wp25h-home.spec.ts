@@ -6,7 +6,7 @@ import { pageByRoute } from './support/pages';
 /**
  * WP25h: Home cycle-5 fixes. Each test states one behavior, read from the built DOM (text, order, structure), not from pixels.
  *   - UNDP YES, Korail reports "found a first job within three months", never "in work" (PR-03, PR-06, slide 4 since WP42);
- *   - the evidence band: the paid-work pathways beside the 72.3% result (34 of 47); WP33 removed the trial chart and WP35 (cycle-12 review) the trial block (WP30c removed the evidence ladder from the band; see tests/wp28.spec.ts, tests/wp33.spec.ts and tests/wp35.spec.ts);
+ *   - the evidence band: it held the paid-work pathways beside the 72.3% result (34 of 47) after WP33 removed the trial chart and WP35 (cycle-12 review) the trial block (WP30c removed the evidence ladder from the band); WP48 (cycle-23 review) removed the band itself (tests/wp48.spec.ts);
  *   - the carousel, vision, proof, FAQ and offer wording accepted in the cycle-5 triage;
  *   - the "Learner Journeys" strip of three registered stories;
  *   - no " & " in Home labels.
@@ -27,8 +27,9 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     }
     // the tile's own label covers all three programs, so it must not call the shared measure "in work" either
     expect(pr06.stat?.glance?.label, 'PR-06 glance label').not.toMatch(/\bin work\b/i);
-    expect(fact('PR-03').text).toContain('found their first job within 3 months');
-    expect(fact('PR-03').stat?.label).toBe('of the 350 trained found their first job within 3 months');
+    // WP48 (cycle-23 review): "three months", not "3 months", in prose labels (tests/wp48.spec.ts)
+    expect(fact('PR-03').text).toContain('found their first job within three months');
+    expect(fact('PR-03').stat?.label).toBe('of the 350 trained found their first job within three months');
   });
 
   // WP42 (cycle-19 review): the government slide moved to second, so the program-results slide is the fourth
@@ -54,49 +55,15 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
   });
 });
 
-test.describe('evidence band (#proof-band)', () => {
-  test('shows the paid-work pathways beside the 72.3% result with its base (WP35: no trial block; WP30c: no ladder)', async ({ page }) => {
+// WP48 (cycle-23 review): the evidence band ("Evidence You Can Check", #proof-band) is gone from Home with its paid-work pathways table and its 72.3% line (34 of 47): they repeated survey detail the hero's survey card and the carousel carry, and the
+// Impact Survey 2026 page keeps both. The band's two evidence links close the "Proof in Practice" link row (tests/wp48.spec.ts). It had held no trial block, chart, ladder or program record since WP30c, WP33 and WP35.
+test.describe('evidence band (#proof-band): gone from Home (WP48)', () => {
+  test('Home has no #proof-band, no pathways table, no 72.3% tile and none of the trial or program-record content the band had already shed', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    const band = page.locator('#proof-band');
-    const stat = band.locator('[data-fact="OC-02"]');
-    await expect(stat).toContainText('72.3%');
-    await expect(stat).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-    // document order: the pathways comparison, then the 72.3% tile (WP35: the trial sub-block, its sentence and its link are gone; WP33: no chart)
-    const order = await band.evaluate((el) => {
-      const at = (sel: string) => {
-        const n = el.querySelector(sel);
-        return n ? Array.from(el.querySelectorAll('*')).indexOf(n) : -1;
-      };
-      return { stat: at('[data-fact="OC-02"]'), pathways: at('.pwp'), ladder: at('.lc'), trial: at('.he__trial'), sentence: at('[data-plain-line]'), chart: at('.ba, .he__chart') };
-    });
-    expect(order.pathways).toBeGreaterThan(-1);
-    expect(order.stat).toBeGreaterThan(order.pathways);
-    expect(order.trial, 'no trial sub-block in the band (WP35)').toBe(-1);
-    expect(order.sentence, 'no plain-language trial sentence in the band (WP35)').toBe(-1);
-    expect(order.chart, 'no trial chart in the band (WP33)').toBe(-1);
-    expect(order.ladder, 'no evidence ladder in the band').toBe(-1);
-  });
-
-  test('does not retell the trial or the survey: no trial at all, no chart, and (WP29) one survey comparison the carousel does not carry', async ({ page }) => {
-    await open(page, pageByRoute('/'));
-    const band = page.locator('#proof-band');
-    await expect(band.locator('h2')).toHaveText('Evidence You Can Check');
-    // WP29 (benchmark review): the paid-work pathways comparison (OC-04) is the band's one extra survey block; the carousel states no pathway figure.
-    // WP35: the trial's sub-heading is gone with its sentence (the hero card and the first slide state the trial)
-    await expect(band.locator('h3')).toHaveText(['Paid-Work Pathways Among Surveyed Completers']);
-    await expect(band.locator('[data-fact="OC-04"]')).toHaveCount(1);
-    await expect(band.locator('[data-plain-line]')).toHaveCount(0);
-    await expect(band.locator('.ba, .ba__data, figure'), 'no chart, chart table or figure in the band').toHaveCount(0);
-    const t = collapse(await band.textContent());
-    for (const retold of ['41% higher', '54% higher', 'BIGD found', 'From the October 2026 Survey', '10.3', 'predecessor']) expect(t, `no "${retold}" in the band`).not.toContain(retold);
-    expect(t.match(/72\.3%/g)?.length, 'the 72.3% appears once').toBe(1);
-    expect(t, 'program records stay out of the evidence band').not.toMatch(/71%|711 of 1,000/);
-  });
-
-  test('carries no chart, chart table or chart note, and no trial figure or sub-heading (WP33, WP35)', async ({ page }) => {
-    await open(page, pageByRoute('/'));
-    const t = collapse(await page.locator('#proof-band').textContent());
-    for (const gone of ['Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table', '52.8%', '63.1%', 'Control Group', 'Offered a Place', 'An Independent Randomized Trial of a Predecessor Program']) expect(t, `no "${gone}" in the band`).not.toContain(gone);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
+    await expect(page.locator('.pwp, .he__top, .he__trial, .lc, [data-plain-line], [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
+    const t = collapse(await page.locator('main').textContent());
+    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47', 'Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table']) expect(t, `no "${gone}" on Home`).not.toContain(gone);
   });
 });
 
@@ -111,19 +78,23 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow and the tile keep "surveyed completers";
     // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile); WP45 (cycle-21 review): "Most First Earnings Came Within Six Months", a majority and not a promise;
     // WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
-    await expect(slide(page, 5).locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
+    // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
+    await expect(slide(page, 5).locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
     await expect(slide(page, 5).locator('.hs__lead')).toHaveCount(0);
     await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
     await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP48 (cycle-23 review): the body is two sentences, the contract scope with the clause that keeps it true, then the National University sentence; Her Power's 25,125 and the 2,500 are not on the slide (tests/wp48.spec.ts)
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 
-  test('the third vision scenario starts "You see employers hire AI-ready talent from your cohort"', async ({ page }) => {
+  // WP48 (cycle-23 review, three reviewers): the third scenario is "Employers Hiring from Your Cohort" ("AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; tests/wp48.spec.ts)
+  test('the third vision scenario is "Employers Hiring from Your Cohort": "You see employers hire completers whose skills match current employer demand."', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    expect(await text(page, '#future')).toContain('You see employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.');
+    expect(await text(page, '#future')).toContain('You see employers hire completers whose skills match current employer demand.');
+    expect(await text(page, '#future')).not.toContain('AI-ready');
   });
 
   test('Proof in Practice points to all four case studies, with a link', async ({ page }) => {

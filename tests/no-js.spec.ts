@@ -211,17 +211,25 @@ test.describe('no JS', () => {
   }
 });
 
-/** Control: with JS on and motion allowed the probe must see reveal content hidden below the fold, otherwise "no hidden reveals" proves nothing. */
+/**
+ * Control: with JS on and motion allowed the probe must see reveal content hidden below the fold, otherwise "no hidden reveals" proves nothing.
+ * WP48 (cycle-23 review): Home has no count-up any more (its "Evidence You Can Check" band, whose 72.3% was the page's only one, is gone), so the count-up probe's control runs on Impact Survey 2026, which has nine.
+ */
 test.describe('no JS: control (JS on)', () => {
   test.use({ viewport: DESKTOP, javaScriptEnabled: true, reducedMotion: 'no-preference' });
-  test('home: reveal and count-up probes detect hidden or unfinished content when JS runs', async ({ page }) => {
+  test('home: reveal probe and JS-only-control probe detect hidden or shown content when JS runs', async ({ page }) => {
     await open(page, pageByRoute('/'), 'domcontentloaded');
     const info = await page.evaluate(contentProbe);
     expect(info.jsClass, 'JavaScript is on').toBe(true);
     expect(info.revealCount, 'reveal elements on home').toBeGreaterThan(0);
     expect(info.hiddenReveals.length, 'reveal elements still hidden before they scroll into view').toBeGreaterThan(0);
-    expect(info.wrongCountups.length, 'count-ups not yet at their final value').toBeGreaterThan(0);
     expect(info.deadControls.length, 'JS-only controls are shown when JS runs').toBeGreaterThan(0);
+  });
+  test('impact survey: the count-up probe detects unfinished count-ups when JS runs', async ({ page }) => {
+    await open(page, pageByRoute('/impact/outcomes-2026/'), 'domcontentloaded');
+    const info = await page.evaluate(contentProbe);
+    expect(info.jsClass, 'JavaScript is on').toBe(true);
+    expect(info.wrongCountups.length, 'count-ups not yet at their final value').toBeGreaterThan(0);
   });
   test.describe('sticky CTA bar', () => {
     test.use({ viewport: MOBILE });

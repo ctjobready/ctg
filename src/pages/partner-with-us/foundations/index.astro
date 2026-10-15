@@ -23,6 +23,7 @@
  * Cohort Could Show") are gone; Home carries them. No gate or test needed them here: the page's problem band is statements without a tile (as before), so the 62 million (PX-01) that the cost band's first
  * card carried is now left to Home; the monthly reports and the follow-up surveys they mentioned are in the cards, the FAQ and "Reporting and Review". Funding Route 2's platform status reads "Live today: partner portals and AI chat."
  * (the subset Investors uses; JobReady Platform keeps the full list).
+ * WP48 (cycle-23 review): the "Reporting and Review" callout before the call to action is gone; the "Progress You Can See Every Month" card already says the page's reporting (monthly reports, a quarterly steering review, the pilot scorecard).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -109,7 +110,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       slot="lead"
       pains={[
         { q: 'Grants buy training hours, but rarely earnings', text: 'Attendance is easy to count; a change in income is harder to show.' },
-        { q: 'Independent evidence is hard to find', text: 'Independent evidence on youth-employment programs is thin.' },
+        // WP48 (cycle-23 review): "Independent evidence on youth-employment programs is thin." was a claim about the whole sector; the card states the funder's need instead.
+        { q: 'Independent evidence is hard to find', text: 'You need independent evidence, not a provider’s own count.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
         { q: 'Accountability must keep pace with scale', text: 'You need monthly outcome reports as delivery expands.' },
       ]}
@@ -227,14 +229,10 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review): the partnership overview's reporting band
-       (#review-cycle) is gone, so the callout below states the reporting and review once and has no link to it (the due-diligence item above links to Governance and Accountability). -->
+  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review) left a "Reporting and Review" callout
+       after it; WP48 (cycle-23 review): that callout is gone, because its sentence (monthly reports track progress; quarterly reviews guide corrective action and any expansion) repeated the "Progress You Can See Every Month"
+       card above (monthly reports and a quarterly steering review). The due-diligence item links to Governance and Accountability. -->
   <DueDiligenceView brief id="due-diligence" />
-  <SubBand>
-    <Callout eyebrow="Reporting and Review">
-      <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
-    </Callout>
-  </SubBand>
 
   <!-- C13 · Call to action -->
   <CTABand

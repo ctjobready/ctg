@@ -69,7 +69,8 @@ test.describe('Investors page structure', () => {
     const text = await page.locator('main').innerText();
     // WP30c: the thesis band has no lead line; its three cards carry the argument (the online-learning card says what content-only courses lack)
     expect(text).toContain('Many online courses provide content without the work-entry support that turns skills into income');
-    expect(text).toContain('is an opportunity employers and communities are not yet capturing');
+    // WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone; it added no fact
+    expect(text).not.toContain('is an opportunity employers and communities are not yet capturing');
     expect(text).not.toContain('leaves that gap open');
     expect(text).not.toContain('in every program');
     // WP40 (cycle-17 review): "What JobReady Does" is three cards; the first scopes the inclusions to supported cohorts ("Supported cohorts include mentoring, certification exam preparation and placement support."), where the old row said "in every supported cohort"

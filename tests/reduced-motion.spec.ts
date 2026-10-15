@@ -54,16 +54,14 @@ test.describe('reduced motion', () => {
 
 /**
  * Positive control: the same probes must see motion when motion is allowed, otherwise a green result above would prove
- * nothing. Home has hero drift, reveals, the logo marquee and count-ups.
+ * nothing. Home has hero drift and reveals. WP48 (cycle-23 review): Home has no count-up any more (its "Evidence You Can Check" band, whose 72.3% was the
+ * page's only one, is gone), so the count-up control runs on Impact Survey 2026, which has nine.
  */
 test.describe('reduced motion: control (motion allowed)', () => {
   test.use({ reducedMotion: 'no-preference', viewport: DESKTOP });
 
-  test('home: the probes detect reveal, marquee and count-up motion', async ({ page }) => {
+  test('home: the probes detect reveal and running-animation motion', async ({ page }) => {
     await open(page, pageByRoute('/'), 'domcontentloaded');
-    const early = await page.evaluate(motionProbe, EPS_MS);
-    expect(early.countup.total, 'count-ups on home').toBeGreaterThan(0);
-    expect(early.countup.wrong.length, 'count-ups start below their final value when motion is allowed').toBeGreaterThan(0);
     await page.waitForLoadState('load');
     const late = await page.evaluate(motionProbe, EPS_MS);
     expect(late.reveal.total, 'reveal elements on home').toBeGreaterThan(0);
@@ -71,6 +69,13 @@ test.describe('reduced motion: control (motion allowed)', () => {
     const sweep = await page.evaluate(globalMotionProbe, EPS_MS);
     expect(sweep.declaredTotal, 'declared animations/transitions detected').toBeGreaterThan(0);
     expect(sweep.running.length, 'running animations detected').toBeGreaterThan(0);
+  });
+
+  test('impact survey: the probes detect count-up motion', async ({ page }) => {
+    await open(page, pageByRoute('/impact/outcomes-2026/'), 'domcontentloaded');
+    const early = await page.evaluate(motionProbe, EPS_MS);
+    expect(early.countup.total, 'count-ups on the Impact Survey 2026 page').toBeGreaterThan(0);
+    expect(early.countup.wrong.length, 'count-ups start below their final value when motion is allowed').toBeGreaterThan(0);
   });
 
   // WP24a: Home's partner logos are grouped relationship cards, no longer a marquee; the marquee probe is checked on the component gallery (staging builds only).

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { fact } from '../src/data/facts';
-import { BIGD_NAME, EMPLOYER_HIRING_STEPS, PROGRAM_SIZES_NOTE } from '../src/data/copy';
+import { EMPLOYER_HIRING_STEPS, PROGRAM_SIZES_NOTE } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -109,14 +109,15 @@ test.describe('Audience pages: no Cost of Waiting, Imagine or Compare band (item
 });
 
 test.describe('Home: the router is the band after the carousel; Cost of Waiting, Imagine and Compare stay, with less padding (items 5-8)', () => {
-  test('the role router sits directly after "Results and Programs", before the problem band; one router; the hero keeps its audience links; the risk band is directly before the closing call to action again', async ({ page }) => {
+  test('the role router sits directly after "Results and Programs", before the problem band; one router; the hero keeps its audience links; the offer band is directly before the closing call to action (WP48: the risk band is gone from Home)', async ({ page }) => {
     await open(page, '');
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'ROUTER'), 'one router').toHaveLength(1);
     await expect(page.locator('#router')).toHaveCount(1);
     expect(order.indexOf('ROUTER'), `router after the carousel (order: ${order.join(' > ')})`).toBe(order.indexOf('RESULTS') + 1);
     expect(order[order.indexOf('ROUTER') + 1], 'problem band after the router').toBe('C2');
-    expect(order.slice(order.indexOf('C12')), 'risk, closing call to action, next steps').toEqual(['C12', 'C13', 'C14']);
+    // WP48 (cycle-23 review): the risk band (C12) is gone from Home; its one line leads the closing band (tests/wp48.spec.ts), so the offer (C11) is directly before the call to action
+    expect(order.slice(order.indexOf('C11')), 'offer, closing call to action, next steps').toEqual(['C11', 'C13', 'C14']);
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Impact Investors']);
     expect(await texts(page, 'nav[aria-label="Choose your audience"] a')).toEqual(['Development Partners', 'Governments', 'Foundations', 'Investors']);
     await expect(page.locator('#router h2')).toHaveText('What Brings You Here?');
@@ -178,7 +179,8 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
 });
 
 test.describe('Impact: each evidence-ladder rung name is the link (item 30)', () => {
-  const NAMES = [`Independent Evaluation by the ${BIGD_NAME}`, 'Impact Survey 2026', 'Program Results', 'Learner Stories'];
+  // WP48 (cycle-23 review, item 34): the first rung's name is "Independent Randomized Trial (BIGD)" (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)")
+  const NAMES = ['Independent Randomized Trial (BIGD)', 'Impact Survey 2026', 'Program Results', 'Learner Stories'];
   const TAGS = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Individual Story'];
   const PATHS = ['/impact/independent-evaluation/', '/impact/outcomes-2026/', '/impact/case-studies/', '/impact/stories/'];
 
@@ -230,10 +232,11 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(fact('GV-12').text).toBe(GV12);
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
+    // WP48 (cycle-23 review): the slide keeps "work scoped for 31,200+ people" and follows it with the clause "contract scope, not a count of completers"; Her Power's 25,125 and the 2,500 are off the slide (tests/wp48.spec.ts)
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 31,200\+/.test(p.html)).map((p) => p.route);
     expect(stale, 'pages with the old sentence').toEqual([]);
   });
@@ -255,7 +258,8 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
   });
 
-  test('item 35: Foundations’ Funding Route 2 says "Live today: partner portals and AI chat."; JobReady Platform and the Employers FAQ keep the full list', async ({ page }) => {
+  // WP48 (cycle-23 review, item 5): the Employers FAQ no longer lists the full tooling; it says "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)
+  test('item 35: Foundations’ Funding Route 2 says "Live today: partner portals and AI chat."; JobReady Platform keeps the full list', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const cell = page.locator('#funding-routes tbody tr').nth(1).locator('td[data-label="What It Supports"]');
     expect(compact(await cell.textContent())).toBe('A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
@@ -265,7 +269,8 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     await open(page, 'our-model/jobready-platform/');
     expect(await mainText(page)).toContain('Partner portals, marketing automation, customer relationship management and AI chat are live');
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
+    expect(await mainText(page)).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
+    expect(await mainText(page)).not.toMatch(/marketing automation|customer relationship management/i);
   });
 
   test('item 36: the degree-holders pain says "A degree alone does not guarantee a job offer." on Governments and Universities, under the unchanged card titles', async ({ page }) => {

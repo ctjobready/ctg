@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
+import { fact } from '../src/data/facts';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -97,14 +98,14 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     expect(guide).not.toMatch(/31,200|1\.5M/);
     await expect(page.locator('#guide .stat, #guide .guide__panel, #guide .guide__tile, #guide [data-evidence]')).toHaveCount(0);
     expect(guide).toContain('We’ve Built This Path Since 2014');
-    expect(guide).toContain('CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh.');
+    expect(guide).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
     await expect(page.locator('#guide').getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(page.locator('#guide').getByRole('link', { name: 'Meet the Leadership Team' })).toHaveCount(1);
     await expect(page.locator('#guide .rel__title')).toHaveCount(4);
     // (WP42, cycle-19 review: the government slide is the second slide)
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
-    // (WP45, cycle-21 review: the scope is GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).")
-    expect(slide2).toContain('31,200+ people. The total is contract scope, not a count of completers');
+    // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."; WP48, cycle-23 review: the slide keeps the note's first clause, "31,200+ people: contract scope, not a count of completers.")
+    expect(slide2).toContain('31,200+ people: contract scope, not a count of completers');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);
@@ -122,15 +123,15 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     }
   });
 
-  test('the cost card states the 21% finding alone, still rests on PX-06, and keeps its "What It Means" line; the pages that print the whole fact still do', async ({ page }) => {
+  // WP48 (cycle-23 review): YouthWIDE's cost band, the one other page that printed the whole PX-06 sentence, is gone; the register keeps the whole fact (tests/wp48.spec.ts)
+  test('the cost card states the 21% finding alone, still rests on PX-06, and keeps its "What It Means" line; the register keeps the whole fact', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#cost article').first();
     expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release.');
     expect(await card.locator('.cost__data').getAttribute('data-fact')).toBe('PX-06');
     expect(compact(await card.locator('.cost__impl').textContent())).toBe('What It Means Training has to follow current employer demand, not last year’s job market.');
     expect(await mainText(page)).not.toMatch(/image-creation|17%/);
-    await open(page, 'programs/youthwide/');
-    expect(await mainText(page)).toContain('image-creation postings fell 17% within about a year of image-generating AI');
+    expect(fact('PX-06').text).toContain('image-creation postings fell 17% within about a year of image-generating AI');
   });
 });
 
@@ -203,7 +204,7 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
       const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
       await expect(line).toHaveCount(1);
       expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
-      expect(compact(await page.locator('#guide').textContent())).not.toMatch(/began developing freelancers|first UNDP-supported pilot|Korail settlement/);
+      expect(compact(await page.locator('#guide').textContent())).not.toMatch(/began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
     });
   }
 
@@ -213,17 +214,17 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
     await expect(line).toHaveCount(1);
     expect(compact(await line.textContent())).toBe('Launched in Copenhagen in 2014.');
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).not.toMatch(/began developing freelancers|first UNDP-supported pilot|Korail settlement/);
+    expect(guide).not.toMatch(/began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
     expect(count(guide, 'countries and territories'), 'the count of countries and territories is the tile’s alone').toBe(2);
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
 
   test('Home keeps the two-sentence history; YouthWIDE and Local Partners never carried it', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.');
+    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.');
     for (const route of ['programs/youthwide/', 'partner-with-us/local-partners/']) {
       await open(page, route);
-      expect(compact(await page.locator('#guide').textContent()), route).not.toContain('began developing freelancers');
+      expect(compact(await page.locator('#guide').textContent()), route).not.toMatch(/began (?:developing|training) freelancers/);
     }
   });
 });
@@ -262,16 +263,17 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
   // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
   // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile. WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so "... of the Course Ending"
-  test('slide 5 reads "Most First Earnings Came Within Six Months of the Course Ending" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
+  test('slide 5 reads "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    const heading = 'Most First Earnings Came Within Six Months of the Course Ending';
+    const heading = 'Most Had Started Earning by Six Months After the Course';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
   });
 });
 

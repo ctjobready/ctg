@@ -12,9 +12,10 @@ import { fact } from '../../../data/facts';
  * Sub-Saharan Africa, named in full because "these regions" would have no antecedent (the PX-01 label above carries the register's
  * short form; PX-02, never a youth figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
  * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
- * PX-08, which is global). Stakes: every trained young person who remains out of work is an opportunity employers and communities are not yet capturing (positive framing; no claim that the gap is widening).
+ * PX-08, which is global).
  * WP30c (owner direction 2026-10-14, "less is more"): no lead line under the heading (the three cards are the thesis), and the 19M+ floor figure and the ChatGPT posting
  * decline are gone from this band (the 62 million and 72% tiles and the AI-skills growth figure carry the thesis; the posting decline is on Home and in the FAQ).
+ * WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone: it added no fact, so the band ends with its three cards.
  */
 interface Props {
   id?: string;
@@ -57,7 +58,6 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
       </div>
     </article>
   </div>
-  <p class="th__stakes" data-reveal>Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.</p>
 </Section>
 
 <style>
@@ -72,14 +72,5 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
   .th__more {
     color: var(--on-surface-variant);
     font-size: var(--fs-body-base);
-  }
-  .th__stakes {
-    margin: var(--space-lg) 0 0;
-    font-size: var(--fs-heading-xl);
-    line-height: var(--lh-heading-xl);
-    font-weight: var(--fw-bold);
-    color: var(--secondary);
-    letter-spacing: -0.5px;
-    max-width: 40rem;
   }
 </style>

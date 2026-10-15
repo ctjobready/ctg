@@ -74,8 +74,8 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   });
 
   test('the 31,200+ note says the total is contract scope, not a count of completers, and that Her Power’s 25,125 women were trained; Impact and Governments read the same register line', async ({ page }) => {
-    // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count)
-    const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.';
+    // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
+    const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
     await open(page, 'partner-with-us/governments/');
@@ -122,22 +122,18 @@ test.describe('survey figures say what completers report, not an effect', () => 
 });
 
 test.describe('the trial and the survey are shown once per page', () => {
-  test('Home: the evidence band keeps the paid-work pathways and the 72.3% tile; the trial sub-block, its plain-language sentence and its sub-heading are gone, a text link to the trial results stays', async ({ page }) => {
+  // WP48 (cycle-23 review): the evidence band (the paid-work pathways and the 72.3% tile) is gone from Home; the trial-results and survey links close the "Proof in Practice" link row (tests/wp48.spec.ts)
+  test('Home: the trial is shown once (no plain-language sentence, no trial block outside the hero card and the first slide); a text link to the trial results and one to the survey close the Proof in Practice row', async ({ page }) => {
     await open(page, '');
-    const band = page.locator('#proof-band');
-    await expect(band.locator('h2')).toHaveText('Evidence You Can Check');
-    expect(await texts(page, '#proof-band h3')).toEqual(['Paid-Work Pathways Among Surveyed Completers']);
-    await expect(band.locator('.he__trial')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]')).toHaveCount(0);
-    await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-    await expect(band.locator('[data-fact="OC-04"]')).toHaveCount(1);
-    expect(compact(await band.textContent())).not.toMatch(/10\.3|predecessor|randomized/i);
-    expect(await texts(page, '#proof-band .he__links a')).toEqual(['Read the Trial Results', 'Impact Survey 2026']);
-    expect((await hrefs(page, '#proof-band .he__links a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect((await hrefs(page, '#cases .csc__more a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/case-studies/', 'impact/independent-evaluation/', 'impact/outcomes-2026/']);
   });
 
   // WP45 (cycle-21 review): the first slide states the trial's income result for the offered-place women (the employment result is this card's, the bar's and the slide's >4× tile)
-  test('Home: the hero’s "Strongest Proof" card carries the plain-language reading of the trial (the check:facts anchor moved here), and the first slide still states the offered-place results', async ({ page }) => {
+  // WP48 (cycle-23 review): the hero's proof strip is headed "Proof at a Glance" (it was "The Strongest Proof"; screen-reader heading), and the first slide's heading names the predecessor program
+  test('Home: the hero’s Randomized Trial card carries the plain-language reading of the trial (the check:facts anchor moved here), and the first slide still states the offered-place results', async ({ page }) => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="RC-02"]');
     await expect(card.locator('.hh__eyebrow')).toHaveText('Randomized Trial');
@@ -234,13 +230,17 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     }
   });
 
-  test('Impact: the evidence-ladder row is the first mention and spells it out; the "Go Deeper" card that repeated it is gone', async ({ page }) => {
+  // WP48 (cycle-23 review, item 34): the rung's name is "Independent Randomized Trial (BIGD)" (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)"), so the institute is spelled out, once,
+  // in the same row's "What It Shows" cell; the page says "BIGD" once (the rung name) and the full name once (tests/wp48.spec.ts)
+  test('Impact: the evidence-ladder row is the first mention; its "What It Shows" cell spells the evaluator out once; the "Go Deeper" card that repeated it is gone', async ({ page }) => {
     await open(page, 'impact/');
-    const row = compact(await page.locator('#evidence-ladder tbody tr').first().locator('th').textContent());
-    expect(row).toContain(`Independent Evaluation by the ${SPELLED}`);
+    const first = page.locator('#evidence-ladder tbody tr').first();
+    const row = compact(await first.locator('th').textContent());
+    expect(row).toContain('Independent Randomized Trial (BIGD)');
+    expect(compact(await first.locator('td[data-label="What It Shows"]').textContent())).toContain('BRAC Institute of Governance and Development');
     const text = await mainText(page);
-    expect(text.indexOf('BIGD')).toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);
     expect(count(text, 'BIGD')).toBe(1);
+    expect(count(text, 'BRAC Institute of Governance and Development')).toBe(1);
   });
 
   // WP38 (cycle-15 review): Universities' evidence band is two lines ("A randomized trial of the predecessor WSDFM program found ..."), so, like Development Partners and Governments, it no longer names the evaluator

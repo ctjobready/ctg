@@ -220,7 +220,8 @@ test.describe('Development Partners: the women-and-marginalized-groups answer do
     await open(page, 'partner-with-us/development-partners/');
     const answer = await answerOf(page, QUESTION);
     expect(answer).toBe(
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we have early delivery experience and measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+      // WP48 (cycle-23 review): "we have early delivery experience and" is gone (tests/wp48.spec.ts)
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
     expect(answer).not.toMatch(SHARED_FIGURES);
@@ -362,8 +363,11 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
     const listing = pagesWithMarkup(/marketing automation/i);
     // the platform page, the Employers and JobReady@Work FAQs (WP47, cycle-22 review: the Foundations comparison lists "partner portals and AI chat" only; WP40, cycle-17 review: Investors' "What JobReady Does" is three short cards that name the two modules institutions use, "Partner portals and AI chat
     // are live", beside a link to the full rollout status, as its hero lead does; so Investors no longer lists marketing automation)
-    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/', '/partner-with-us/employers/', '/programs/jobready-work/']));
+    // WP48 (cycle-23 review, item 5): the Employers and JobReady@Work FAQs ("Is the JobReady Platform Live?") no longer list the internal tooling ("Partner portals and AI chat are live; ..."); the JobReady Platform page keeps the full list
+    expect(listing.map((p) => p.route)).toEqual(expect.arrayContaining(['/our-model/jobready-platform/']));
     expect(listing.map((p) => p.route)).not.toContain('/partner-with-us/foundations/');
+    expect(listing.map((p) => p.route)).not.toContain('/partner-with-us/employers/');
+    expect(listing.map((p) => p.route)).not.toContain('/programs/jobready-work/');
     expect(listing.filter((p) => !/customer relationship management/i.test(readFileSync(p.file, 'utf8'))).map((p) => p.route)).toEqual([]);
   });
 
@@ -384,7 +388,8 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       const answer = await answerOf(page, 'Is the JobReady Platform Live?');
-      expect(answer, route).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
+      // WP48 (cycle-23 review): the answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
+      expect(answer, route).toBe('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.');
       expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
     }
     await open(page, 'our-model/jobready-platform/');

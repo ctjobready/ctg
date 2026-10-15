@@ -1,8 +1,9 @@
 ---
 /**
  * Home hero (WP17, owner decision 2026-10-14: hybrid). A stable hero that never rotates: the page's only h1, a value proposition of at most
- * 15 words, ONE primary action, one secondary text link, the audience links, and the three strongest proof cards (the randomized trial, the
+ * 15 words, ONE primary action, one secondary text link, the audience links, and the three proof cards (the randomized trial, the
  * survey, the scale), always visible. The "Results and Programs" carousel (HeroSlider) sits directly below it.
+ * WP48 (cycle-23 review): the proof strip's heading (screen-reader only) reads "Proof at a Glance", not "The Strongest Proof": the survey card is descriptive evidence, so the strip does not rank its cards.
  * LCP: the photograph is the hero's only image and loads eagerly with high priority; the carousel's images are lazy. Figures are read from the
  * facts register (data/heroSlides.ts names the facts) and carry data-fact for the facts gate.
  */
@@ -59,7 +60,7 @@ const cards = hero.proof.map((c) => {
     </div>
   </div>
   <div class="hh__proof container">
-    <h2 class="sr-only">The Strongest Proof</h2>
+    <h2 class="sr-only">Proof at a Glance</h2>
     <ul class="hh__cards" role="list">
       {
         cards.map((c) => (

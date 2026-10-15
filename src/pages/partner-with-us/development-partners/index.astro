@@ -17,6 +17,8 @@
  * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Build Work Entry into the Training Budget") and the Imagine band ("What Your Monthly Report
  * Could Show") are gone; Home carries them. Nothing on this page depended on them: the monthly reports, follow-up surveys and documentary evidence (where available) are stated in the "Questions Partners Ask"
  * answers, "Results Your Evaluators Can Check" and "Reporting and Review".
+ * WP48 (cycle-23 review, item 25): the ">4×" tile's label says what is compared ("The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials"), so RC-06a's glance note
+ * ("Against 2.3 percentage points on average ...") repeated it and is gone.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -95,7 +97,8 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Skills programs miss their employment targets', text: 'Enrollment targets are often met, while employment results lag behind.' },
+        // WP48 (cycle-23 review): "Enrollment targets are often met, while employment results lag behind." was a claim about the whole sector; the card says only what the page can stand behind.
+        { q: 'Skills programs miss their employment targets', text: 'Enrollment is easy to count. Paid work is not.' },
         { q: 'The hardest-to-reach groups drop out', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
         { q: 'Outcomes are hard to audit', text: 'Without a baseline and documentary evidence, evaluators have little to check.' },
       ]}

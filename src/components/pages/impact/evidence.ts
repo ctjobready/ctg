@@ -79,10 +79,10 @@ export function programResultRows(): ProgramResultRow[] {
     if (v === null || v === undefined) throw new Error(`program results table: ${what} not found in the register`);
     return v;
   };
-  // PR-03: "<program>, 2017: 350 trained; 97.5% completed the program; 67% of the 350 trained found their first job within 3 months"
+  // PR-03: "<program>, 2017: 350 trained; 97.5% completed the program; 67% of the 350 trained found their first job within three months" (WP48, cycle-23 review: "three months", not "3 months", in prose, as the rest of the page says it)
   const trained = need(/(\d[\d,]*) trained;/.exec(pr03.text)?.[1], 'PR-03 trained');
   const completed = need(/(\d+(?:\.\d+)?%) completed the program/.exec(pr03.text)?.[1], 'PR-03 completed');
-  const firstJob = need(/(\d+(?:\.\d+)?%) of the (\d[\d,]*) trained found their first job within 3 months/.exec(pr03.text), 'PR-03 first job');
+  const firstJob = need(/(\d+(?:\.\d+)?%) of the (\d[\d,]*) trained found their first job within three months/.exec(pr03.text), 'PR-03 first job');
   // PR-05: "372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, were in work (47%)"
   const direct = need(/(\d[\d,]*) women trained directly by CodersTrust/.exec(gv13.text)?.[1], 'GV-13 trained directly');
   return [
@@ -110,7 +110,7 @@ export function programResultRows(): ProgramResultRow[] {
       geography: 'Korail settlement, Dhaka',
       trained,
       completed,
-      inWork: `${firstJob[1]} found a first job within 3 months`,
+      inWork: `${firstJob[1]} found a first job within three months`,
     },
     {
       id: 'PR-05',

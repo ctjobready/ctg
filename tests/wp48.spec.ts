@@ -1,0 +1,671 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { expect, test, type Page } from '@playwright/test';
+import { titleCase } from '../src/lib/titleCase.mjs';
+import { fact } from '../src/data/facts';
+import { faqs } from '../src/data/faqs';
+import { DESKTOP, MOBILE, open } from './support/browser';
+import { listPages } from './support/pages';
+
+/**
+ * WP48 behaviors (cycle-23 whole-site reviews, GPT-6.1 Sol items 1-8 and Claude Sonnet 5.5 items 9-21): Home slide 2 has a two-sentence body; the Universities FAQ says that further levels are "published"; the Local Partners
+ * definition says the central coordination is a design; YouthWIDE no longer repeats Home's Cost of Waiting and Imagine bands or the hero's links back to audience pages, and its labs tile carries the registered qualifier; the shared
+ * "Is the JobReady Platform Live?" answer drops the internal tooling; the Governments contracts column is "Scale and Outputs" and its glance is "Results and Contract Scope at a Glance"; Foundations has no second "Reporting and Review"
+ * callout; the WSDFM headline tile says "gain versus the control group"; Home's proof strip is "Proof at a Glance" and its "Evidence You Can Check" band is folded into the "Proof in Practice" link row; the GV-12 note, the Governments
+ * blurb, the 2030 aim wording, the PX-05 year, the "three months" wording and the Programs H1 read as the reviews asked. Items 22-34 (Kimi K3, GLM 5.3 and Grok 4.7): Home loses its "Low Risk" band (one line leads the closing band), the FAQ trial answer is two
+ * sentences, the RC-06a tile label says what is compared, the hero line names the underemployed, slide 1 names the predecessor program, the Imagine card is "Employers Hiring from Your Cohort", OC-05 says "had started earning by six months after
+ * finishing", the Home investor card says "Back JobReady", and the evidence ladder's first rung is "Independent Randomized Trial (BIGD)". Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first, then
+ * `PORT=<port> npx playwright test tests/wp48.spec.ts --project=chromium`.
+ */
+
+const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
+const mainText = async (page: Page) => compact(await page.locator('main').textContent());
+const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
+const hrefs = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
+const sitePath = (href: string) => href.replace(/^\/ctg(?=\/)/, '');
+const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
+const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
+const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
+/** The ids of the page's top-level sections, in order. */
+const sectionIds = (page: Page) => page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
+/** The visible text of a built page's HTML (scripts, styles and the head dropped), for scans across every page. */
+const visible = (html: string) =>
+  html
+    .replace(/<head[\s\S]*?<\/head>/i, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ');
+const builtPages = () => listPages().map((p) => ({ route: p.route, html: readFileSync(p.file, 'utf8') }));
+/** The built pages that are not archived news posts (those keep their original wording). */
+const sitePages = () => builtPages().filter((p) => !p.route.startsWith('/news/'));
+const metaDescription = (html: string) => /<meta name="description" content="([^"]*)"/.exec(html)?.[1].replace(/&amp;/g, '&').replace(/&#39;|&#x27;/g, '’') ?? '';
+
+/** Every FAQPage question and answer text in the page's JSON-LD. */
+async function faqJsonLd(page: Page) {
+  const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const out: { name: string; text: string }[] = [];
+  const walk = (n: unknown): void => {
+    if (Array.isArray(n)) n.forEach(walk);
+    else if (n && typeof n === 'object') {
+      const o = n as Record<string, unknown>;
+      if (o['@type'] === 'FAQPage') for (const q of (o.mainEntity as { name: string; acceptedAnswer?: { text: string } }[]) ?? []) out.push({ name: q.name, text: q.acceptedAnswer?.text ?? '' });
+      Object.values(o).forEach(walk);
+    }
+  };
+  blobs.forEach((b) => walk(JSON.parse(b)));
+  return out;
+}
+/** One FAQ item on the page, and its answer text. */
+const itemOf = (page: Page, question: string) => page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: question }) }).first();
+const answerOf = async (page: Page, question: string) => compact(await itemOf(page, question).locator('.faq__a').textContent());
+
+const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
+const SLIDE2_LEAD =
+  'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
+
+test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
+  test('slide 2 body is the contract scope with its clause, then the National University sentence; no 25,125, no 2,500; the lead rests on GV-12 alone; the links stay', async ({ page }) => {
+    await open(page, '');
+    const s = slide(page, 2);
+    const lead = s.locator('.hs__lead');
+    expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12');
+    expect(compact(await s.textContent())).not.toMatch(/25,125|2,500|Her Power/);
+    await expect(s.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
+      { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
+      { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
+    ]);
+  });
+
+  test('the slide reads its clause from the register note, and the Impact and Governments tiles print the whole new note', async ({ page }) => {
+    expect(fact('GV-12').stat?.glance?.note).toBe(GV12_NOTE);
+    expect(SLIDE2_LEAD).toContain(GV12_NOTE.split('. ')[0].replace('The figure is ', ''));
+    await open(page, 'impact/');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
+    await open(page, 'partner-with-us/governments/');
+    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(GV12_NOTE);
+  });
+
+  test('no built page still prints the old note ("The total is contract scope ... it includes Her Power’s national program")', () => {
+    const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
+    expect(hits.map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('The "what happens after" sentence (item 2)', () => {
+  const UNIVERSITIES =
+    'Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring, and TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published.';
+
+  test('Universities: "What Happens After the First Cohort?" says that further levels are published; the JSON-LD says the same', async ({ page }) => {
+    await open(page, 'partner-with-us/universities/');
+    const answer = await answerOf(page, 'What Happens After the First Cohort?');
+    expect(answer).toBe(UNIVERSITIES);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'What Happens After the First Cohort?')?.text).toBe(answer);
+  });
+
+  test('the shared "What Happens When Funding Ends?" answer (Development Partners, Governments, Foundations, Local Partners, TalentLEAP, Governance) ends the same clause: "... with progressive levels as further levels are published."', async ({ page }) => {
+    const ENDING = 'TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published.';
+    for (const route of ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'our-model/talentleap/', 'about/governance/']) {
+      await open(page, route);
+      const answer = await answerOf(page, 'What Happens When Funding Ends?');
+      expect(answer.endsWith(ENDING), route).toBe(true);
+      expect(answer, route).not.toContain('so completers can keep advancing');
+      expect((await faqJsonLd(page)).find((q) => q.name === 'What Happens When Funding Ends?')?.text, route).toBe(answer);
+    }
+  });
+
+  test('no page says "so they can keep advancing" or "so completers can keep advancing", and TalentLEAP’s worked example is unchanged', async ({ page }) => {
+    expect(builtPages().filter((p) => /so (?:they|completers) can keep advancing/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+    await open(page, 'our-model/talentleap/');
+    expect(await mainText(page)).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
+  });
+});
+
+test.describe('Local Partners: the definition block (item 3)', () => {
+  test('the central coordination is a design, and what CodersTrust Bangladesh gives local partners is its own sentence', async ({ page }) => {
+    await open(page, 'partner-with-us/local-partners/');
+    const p = page.locator('#definition p[data-fact="PD-06 GV-09"]');
+    await expect(p).toHaveCount(1);
+    expect(compact(await p.textContent())).toBe(
+      'Larger programs are designed to run through certified local facilitators in existing labs and colleges, coordinated centrally. CodersTrust Bangladesh supports local partners with curriculum, certification, mentoring, reporting and safeguarding.',
+    );
+    expect(await mainText(page)).not.toContain('Larger programs run through');
+  });
+});
+
+test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero links back to audience pages (items 4 and 11)', () => {
+  test('neither band is on the page, with their headings and eyebrows', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    for (const id of ['cost', 'future']) await expect(page.locator(`#${id}`), `#${id}`).toHaveCount(0);
+    const text = await mainText(page);
+    for (const gone of ['The Cost of Waiting', 'What Success Looks Like', 'Training Without Work Entry Leaves Budgets Without Results', 'Young People Earning, Locally and Globally', 'Earning from Their Own Business', 'Illustrative: imagine']) {
+      expect(text, gone).not.toContain(gone);
+    }
+    expect(text).not.toMatch(/Training Does Not Always Lead to Employment|AI Is Changing Freelance Demand/);
+    expect(builtPages().filter((p) => p.html.includes('>Training Without Work Entry Leaves Budgets Without Results<')).map((p) => p.route)).toEqual([]);
+  });
+
+  test('the challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy and never puts two dark bands together', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    const ids = await sectionIds(page);
+    expect(ids.indexOf('problem'), 'the challenge band stays').toBeGreaterThanOrEqual(0);
+    expect(ids.slice(ids.indexOf('problem'), ids.indexOf('problem') + 4)).toEqual(['problem', 'guide', 'mechanism', 'governments']);
+    const tones = await page.evaluate(() => {
+      const tone = (id: string) => /\bband--(white|airy|ice|klein|deep-ink)\b/.exec(document.getElementById(id)?.className ?? '')?.[1];
+      return ['problem', 'guide', 'mechanism', 'governments'].map(tone);
+    });
+    expect(tones).toEqual(['white', 'airy', 'white', 'airy']);
+    const adjacent = await page.evaluate(() => {
+      const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
+      const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));
+      return dark.flatMap((d, i) => (d && i > 0 && dark[i - 1] ? [`#${bands[i - 1].id} then #${bands[i].id}`] : []));
+    });
+    expect(adjacent).toEqual([]);
+    await expect(page.locator('#guide h2')).toHaveText(/We Have Built This Path Since/);
+  });
+
+  test('the hero keeps one primary button and the ministry briefing as its one text link; "For Development Partners" and "For Governments" are gone from it', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    const hero = page.locator('#hero');
+    await expect(hero.locator('.btn--primary')).toHaveCount(1);
+    const links = hero.locator('.hero__actions nav a.link');
+    await expect(links).toHaveCount(1);
+    expect(await links.getAttribute('href')).toMatch(/^mailto:/);
+    expect(compact(await hero.textContent())).not.toMatch(/For Development Partners|For Governments/);
+    expect((await hrefs(page, '#hero a')).filter((h) => /partner-with-us\//.test(h))).toEqual([]);
+  });
+
+  test('Home keeps its Cost of Waiting and Imagine bands; no other program page has a Cost of Waiting band, and the unused component is gone', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('#cost')).toHaveCount(1);
+    await expect(page.locator('#future')).toHaveCount(1);
+    const withBand = sitePages().filter((p) => visible(p.html).includes('The Cost of Waiting')).map((p) => p.route);
+    expect(withBand.filter((r) => r !== '/' && r !== '/styleguide/'), 'pages other than Home and the component gallery').toEqual([]);
+    expect(existsSync(resolve('src/components/pages/programs/CostSection.astro'))).toBe(false);
+    const photos = readFileSync(resolve('src/data/photos.ts'), 'utf8');
+    expect(/const FUTURE[\s\S]*?\n};/.exec(photos)?.[0] ?? '').not.toMatch(/\byouthwide:/);
+  });
+});
+
+test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 10)', () => {
+  const QUALIFIER = 'In Bangladesh; lab access and seats are confirmed per program.';
+
+  test('the qualifier is the fact’s own detail line, shown as the tile’s note on YouthWIDE and on Local Partners; the 2030 aim stays the only Target tile', async ({ page }) => {
+    expect(fact('GV-09').stat?.detail).toBe(QUALIFIER);
+    await open(page, 'programs/youthwide/');
+    const tile = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
+    await expect(tile).toHaveCount(1);
+    expect(compact(await tile.locator('.stat__note').textContent())).toBe(QUALIFIER);
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('government digital labs that could host blended learning');
+    await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
+    await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
+    await open(page, 'partner-with-us/local-partners/');
+    expect(compact(await page.locator('#guide .factstat[data-fact="GV-09"] .stat__note').textContent())).toBe(QUALIFIER);
+  });
+});
+
+test.describe('"Is the JobReady Platform Live?" (item 5)', () => {
+  const ANSWER = 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.';
+
+  test('Employers and JobReady@Work give the short answer, without the internal tooling; the JSON-LD says what the page says', async ({ page }) => {
+    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
+      await open(page, route);
+      const answer = await answerOf(page, 'Is the JobReady Platform Live?');
+      expect(answer, route).toBe(ANSWER);
+      expect(answer, route).not.toMatch(/marketing automation|customer relationship management|Upwork|Fiverr|employer and gig-work/i);
+      expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
+    }
+  });
+
+  test('the JobReady Platform page and the register keep the full list', async ({ page }) => {
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    await open(page, 'our-model/jobready-platform/');
+    expect(compact(await page.locator('main').textContent())).toContain('Partner portals, marketing automation, customer relationship management and AI chat are live');
+  });
+});
+
+test.describe('Governments: the contracts column and the glance heading (items 6 and 16)', () => {
+  test('the last column is "Scale and Outputs" (header and mobile label); the cells are unchanged', async ({ page }) => {
+    await open(page, 'partner-with-us/governments/');
+    expect(await texts(page, '#contracts thead th')).toEqual(['Contract', 'CodersTrust Scope', 'Scale and Outputs']);
+    expect('Scale and Outputs').toBe(titleCase('Scale and Outputs'));
+    expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Scale and Outputs'));
+    expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
+      '2,500 women trained directly',
+      'National program trained 25,125 women across 130 sub-districts (upazilas)',
+      '54,609 manuals and guidelines distributed',
+    ]);
+    const cells = await texts(page, '#contracts td.ct__num');
+    for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
+    expect(await mainText(page)).not.toContain('Training Figure');
+  });
+
+  test('the glance is headed "Results and Contract Scope at a Glance" on Governments; the other pages keep "Results at a Glance"', async ({ page }) => {
+    await open(page, 'partner-with-us/governments/');
+    await expect(page.locator('#glance h2.pg__title')).toHaveText('Results and Contract Scope at a Glance');
+    expect('Results and Contract Scope at a Glance').toBe(titleCase('Results and Contract Scope at a Glance'));
+    for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
+      await open(page, route);
+      await expect(page.locator('#glance h2.pg__title'), route).toHaveText('Results at a Glance');
+    }
+  });
+});
+
+test.describe('"Reporting and Review" (item 7)', () => {
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
+  const callout = (page: Page) => page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
+
+  test('Foundations has no "Reporting and Review" callout; its "Progress You Can See Every Month" card already says monthly reports and a quarterly steering review; the due-diligence band is followed by the call to action', async ({ page }) => {
+    await open(page, 'partner-with-us/foundations/');
+    await expect(callout(page)).toHaveCount(0);
+    const text = await mainText(page);
+    expect(text).not.toContain(SENTENCE);
+    expect(text).toContain('Progress You Can See Every Month');
+    expect(text).toContain('Monthly reports, a quarterly steering review and a pilot scorecard');
+    const ids = await sectionIds(page);
+    expect(ids.indexOf('cta')).toBe(ids.indexOf('due-diligence') + 1);
+  });
+
+  test('Development Partners keeps the callout: it is the one place the page names the quarterly reviews', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    await expect(callout(page)).toHaveCount(1);
+    expect(compact(await callout(page).locator('.callout__body p').first().textContent())).toBe(SENTENCE);
+    expect(count(await mainText(page), 'quarterly'), 'quarterly reviews are named once on the page').toBe(1);
+  });
+});
+
+test.describe('WSDFM case study: the +41% tile says gain versus the control group (item 8)', () => {
+  const LABEL = 'estimated monthly income gain versus the control group, for women in Dhaka offered a place (randomized trial of a predecessor program)';
+
+  test('the label comes from RC-01; the tile shows it, and only the case study and the component gallery print it', async ({ page }) => {
+    expect(fact('RC-01').stat?.label).toBe(LABEL);
+    await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
+    const tile = page.locator('.hero .cs__stat').nth(2);
+    await expect(tile.locator('.stat__value')).toHaveText('+41%');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe(LABEL);
+    expect(builtPages().filter((p) => p.html.includes('estimated monthly income for women in Dhaka offered a place')).map((p) => p.route)).toEqual([]);
+    expect(builtPages().filter((p) => p.html.includes(LABEL)).map((p) => p.route)).toEqual(['/impact/case-studies/wsdfm-women-freelancers/', '/styleguide/']);
+  });
+});
+
+test.describe('Home: the proof strip and the evidence band (items 9 and 13)', () => {
+  test('the hero’s proof strip is headed "Proof at a Glance" (screen-reader heading); no page says "The Strongest Proof"', async ({ page }) => {
+    await open(page, '');
+    const h2 = page.locator('.hh__proof h2');
+    await expect(h2).toHaveText('Proof at a Glance');
+    await expect(h2).toHaveClass(/sr-only/);
+    expect('Proof at a Glance').toBe(titleCase('Proof at a Glance'));
+    expect(builtPages().filter((p) => p.html.includes('The Strongest Proof')).map((p) => p.route)).toEqual([]);
+  });
+
+  test('"Evidence You Can Check" is gone with its pathways table and its 72.3% line; the two evidence links close the "Proof in Practice" link row', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('#proof-band')).toHaveCount(0);
+    await expect(page.locator('.pwp, .he__top, .he__head, [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
+    const text = await mainText(page);
+    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47']) expect(text, gone).not.toContain(gone);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect((await hrefs(page, '#cases .csc__more a')).map(sitePath)).toEqual(['/impact/case-studies/', '/impact/independent-evaluation/', '/impact/outcomes-2026/']);
+    const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
+    expect(order.filter((c) => c === 'C7'), 'one C7 proof position').toHaveLength(1);
+    expect(order[order.indexOf('C6') + 1], 'the proof band follows the mechanism band').toBe('C7');
+    expect(order[order.indexOf('C7') + 1]).toBe('RECOGNITION');
+  });
+
+  test('the Impact Survey 2026 page keeps the pathways and the 72.3%', async ({ page }) => {
+    await open(page, 'impact/outcomes-2026/');
+    const text = await mainText(page);
+    expect(text).toContain('72.3%');
+    expect(text).toContain('34 of 47');
+    expect(text).toContain('38.3%');
+    expect(text).toContain('53.3%');
+  });
+
+  test('the link row wraps as a row at 1280 and 390 and the page does not scroll sideways', async ({ page }) => {
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      await open(page, '');
+      const row = page.locator('#cases .csc__more');
+      expect(await row.evaluate((el) => getComputedStyle(el).display), `${vp.width}px`).toBe('flex');
+      expect(await noOverflow(page), `${vp.width}px`).toBe(true);
+    }
+  });
+});
+
+test.describe('Development Partners, Foundations and Governments: sector generalizations (items 14 and 15)', () => {
+  test('the Development Partners and Foundations pains say what the page can stand behind', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    const dp = await mainText(page);
+    // the pain headings render in Title Case (the sentence-case source strings are converted when the page prints them); the headings are unchanged
+    expect(dp).toContain('Skills Programs Miss Their Employment Targets');
+    expect(dp).toContain('Enrollment is easy to count. Paid work is not.');
+    expect(dp).not.toContain('Enrollment targets are often met, while employment results lag behind.');
+    await open(page, 'partner-with-us/foundations/');
+    const foundations = await mainText(page);
+    expect(foundations).toContain('Independent Evidence Is Hard to Find');
+    expect(foundations).toContain('You need independent evidence, not a provider’s own count.');
+    expect(foundations).not.toContain('Independent evidence on youth-employment programs is thin.');
+  });
+
+  test('"Can It Reach Women and Marginalized Groups?" says "we measure outcomes in each pilot" on Development Partners (the bank answer says it too); the JSON-LD says what the page says', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    const answer = await answerOf(page, 'Can It Reach Women and Marginalized Groups?');
+    expect(answer).toBe(
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+    );
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Can It Reach Women and Marginalized Groups?')?.text).toBe(answer);
+    expect(faqs.find((f) => f.id === 'Q6')!.a).toContain('For other priority groups, we measure outcomes in each pilot.');
+    expect(builtPages().filter((p) => visible(p.html).includes('early delivery experience')).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => {
+  const BLURB = 'Curriculum, trainer training and phased delivery for ministries.';
+  const AIM = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.';
+
+  test('the Partner with Us menu, its featured panel, Home’s router and the partner hub say the new blurb; no page says "National programs for youth employment"', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize(DESKTOP);
+    await open(page, '');
+    expect(compact(await page.locator('#mega-partner a.mega__link[href$="partner-with-us/governments/"] .mega__desc').textContent())).toBe(BLURB);
+    expect(compact(await page.locator('#mega-partner .mega__feature-text').textContent())).toBe(BLURB);
+    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/governments/"] .cat__text').textContent())).toBe(BLURB.replace(/\.$/, ''));
+    await open(page, 'partner-with-us/');
+    // the hub's route cards are written as "For <who>: <what the route offers>." (src/pages/partner-with-us/index.astro; they do not read nav.ts)
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/governments/"] .cat__text').first().textContent())).toBe('For ministries and public agencies: curriculum, trainer training and phased delivery.');
+    expect(builtPages().filter((p) => /national programs for youth employment/i.test(p.html)).map((p) => p.route)).toEqual([]);
+  });
+
+  test('the aim is "2 million vulnerable youth" in the Programs menu and panel, on Home slide 7 and in the YouthWIDE glance row; no site page says "2 million youth"', async ({ page }) => {
+    await page.setViewportSize(DESKTOP);
+    await open(page, '');
+    expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(AIM);
+    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(AIM);
+    expect(compact(await slide(page, 7).locator('.hs__program[href$="programs/youthwide/"] span').textContent())).toBe(AIM);
+    await open(page, 'programs/youthwide/');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
+    expect(sitePages().filter((p) => /2 million youth/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20)', () => {
+  test('the employer-shortage figure says 2026 at its source and on every page that shows it', async ({ page }) => {
+    expect(fact('PX-05').stat?.label).toBe('of employers globally reported difficulty finding talent in 2026');
+    expect(fact('PX-05').text.startsWith('In 2026, 72% of employers globally reported difficulty finding the talent they need')).toBe(true);
+    for (const route of ['partner-with-us/investors/', 'partner-with-us/employers/', 'partner-with-us/universities/']) {
+      await open(page, route);
+      // Investors prints it as a stat tile and Employers and Universities as a fact card; all three read the register's label
+      const text = await mainText(page);
+      expect(text, route).toContain('of employers globally reported difficulty finding talent in 2026');
+      expect(await page.locator('[data-fact~="PX-05"]').count(), route).toBeGreaterThan(0);
+    }
+    await open(page, 'programs/nu-postgraduate-diploma/');
+    expect(await texts(page, 'main .pcs__label')).toContain('of employers worldwide reported difficulty finding the talent they need in 2026');
+    await open(page, 'programs/jobready-work/');
+    const description = await page.locator('meta[name="description"]').getAttribute('content');
+    expect(description).toBe('JobReady@Work builds custom AI-ready training for your team and sources talent. In 2026, 72% of employers globally reported difficulty finding talent.');
+    expect([...description!].length).toBeLessThanOrEqual(155);
+    expect(sitePages().filter((p) => /(?:employers|of employers) (?:globally|worldwide) report difficulty|Globally, 72% of employers report/.test(visible(p.html) + metaDescription(p.html))).map((p) => p.route)).toEqual([]);
+  });
+
+  test('PR-03 reads "within three months" in the register, on the Impact tiles and in the case study’s description; no site page says "within 3 months"', async ({ page }) => {
+    const pr03 = fact('PR-03');
+    expect(pr03.text.endsWith('67% of the 350 trained found their first job within three months')).toBe(true);
+    expect(pr03.stat?.label).toBe('of the 350 trained found their first job within three months');
+    expect(pr03.stat?.glance?.label).toBe('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    await open(page, 'impact/');
+    expect(compact(await page.locator('#glance').textContent())).toContain('found their first job within three months');
+    await open(page, 'partner-with-us/development-partners/');
+    expect(compact(await page.locator('#glance .pg__lead a[data-fact="PR-03"]').textContent())).toContain('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    await open(page, 'impact/case-studies/undp-yes-korail/');
+    const description = await page.locator('meta[name="description"]').getAttribute('content');
+    expect(description).toBe('UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% completed, 67% of the 350 trained found a first job within three months.');
+    expect([...description!].length).toBeLessThanOrEqual(155);
+    expect(sitePages().filter((p) => /within 3 months/.test(visible(p.html) + metaDescription(p.html))).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('Programs: the H1 (item 21)', () => {
+  test('"Programs That Take Learners from Classroom to Career" is the one H1, in Title Case', async ({ page }) => {
+    await open(page, 'programs/');
+    await expect(page.locator('main h1')).toHaveText('Programs That Take Learners from Classroom to Career');
+    expect('Programs That Take Learners from Classroom to Career').toBe(titleCase('Programs That Take Learners from Classroom to Career'));
+    expect(builtPages().filter((p) => p.html.includes('Digital Skills for Every Stage')).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the first slide, the Imagine card and the track record (items 23, 24, 26, 28, 30 and 31)', () => {
+  test('the "Low Risk" band is gone from Home and its line leads the closing band, which keeps one primary button and two text routes; the audience pages keep their own risk bands; no two dark bands meet', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('#risk')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
+    const cta = page.locator('#cta');
+    expect(compact(await cta.locator('.cta-band__text').textContent())).toBe('Start with a multi-cohort pilot, agree the scorecard up front, and decide on expansion from the evidence.');
+    await expect(cta.locator('h2')).toHaveText('Let’s Design Your First Cohort');
+    await expect(cta.locator('.btn--primary, .btn--inverse')).toHaveCount(1);
+    expect(await texts(page, '#cta .cta-band__route')).toHaveLength(2);
+    const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
+    expect(order.slice(order.indexOf('C11')), 'the offer, the closing call to action, the next steps').toEqual(['C11', 'C13', 'C14']);
+    const adjacent = await page.evaluate(() => {
+      const bands = Array.from(document.querySelectorAll('main section.band')).filter((b) => !b.parentElement?.closest('section.band'));
+      const dark = bands.map((b) => /\bband--(klein|deep-ink)\b/.test(b.className));
+      return dark.flatMap((d, i) => (d && i > 0 && dark[i - 1] ? [`#${bands[i - 1].id} then #${bands[i].id}`] : []));
+    });
+    expect(adjacent).toEqual([]);
+    for (const route of ['partner-with-us/governments/', 'partner-with-us/local-partners/', 'partner-with-us/universities/', 'partner-with-us/employers/']) {
+      await open(page, route);
+      await expect(page.locator('#risk'), route).toHaveCount(1);
+    }
+  });
+
+  test('"Does the Trial Apply to Your Program?" is two sentences: the trial covered a 200-hour predecessor program, not today’s 100-hour tracks; later programs rest on the survey and program records, which are descriptive', async ({ page }) => {
+    await open(page, '');
+    const answer = await answerOf(page, 'Does the Trial Apply to Your Program?');
+    expect(answer).toBe(
+      'The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for later programs come from the October 2026 survey of completers and from program records, which are descriptive.',
+    );
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Does the Trial Apply to Your Program?')?.text).toBe(answer);
+  });
+
+  test('the hero line names the underemployed, as ID-01 does; the H1 is unchanged', async ({ page }) => {
+    await open(page, '');
+    await expect(page.locator('.hh__lead')).toHaveText('Help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.');
+    await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
+    expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
+  });
+
+  test('slide 1 names the predecessor program in its heading; the lead, the eyebrow and the >4× tile stay', async ({ page }) => {
+    await open(page, '');
+    const first = slide(page, 1);
+    const title = 'Women Offered a Place in a Predecessor Program Earned an Estimated 41% More';
+    await expect(first.locator('h2')).toHaveText(title);
+    expect(title).toBe(titleCase(title));
+    expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
+    await expect(first.locator('.hs__eyebrow')).toHaveText('Independent Evaluation');
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
+  });
+
+  test('the third Imagine scenario is "Employers Hiring from Your Cohort"; "AI-Ready Talent" is no longer a Home heading', async ({ page }) => {
+    await open(page, '');
+    expect(await texts(page, '#future h3')).toEqual(['A First Foreign Client, Billed from Home', 'First Earnings, Not Just Certificates', 'Employers Hiring from Your Cohort']);
+    expect('Employers Hiring from Your Cohort').toBe(titleCase('Employers Hiring from Your Cohort'));
+    expect(await texts(page, '#future .card__text')).toContain('You see employers hire completers whose skills match current employer demand.');
+    expect(await mainText(page)).not.toContain('AI-Ready Talent');
+  });
+
+  test('"Our Track Record" says CodersTrust "began training freelancers in Bangladesh"', async ({ page }) => {
+    await open(page, '');
+    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.');
+    expect(builtPages().filter((p) => p.route === '/' && p.html.includes('began developing freelancers')).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('Investors and Development Partners (items 25 and 27)', () => {
+  test('the Investors thesis band ends with its three cards; the stakes line is gone', async ({ page }) => {
+    await open(page, 'partner-with-us/investors/');
+    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    await expect(page.locator('#thesis .th__stakes')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Every trained young person who remains out of work');
+    expect(await page.locator('#thesis').evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom))).toBeGreaterThanOrEqual(40);
+  });
+
+  test('the ">4×" tile says what is compared; the 2.3-point average in the label is the one in the register’s sentence; the note that repeated it is gone', async ({ page }) => {
+    const LABEL = 'The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials';
+    expect(fact('RC-06a').stat?.glance?.label).toBe(LABEL);
+    expect(fact('RC-06a').stat?.glance?.note).toBeUndefined();
+    const average = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
+    expect(LABEL).toContain(`${average}-point average`);
+    await open(page, 'partner-with-us/development-partners/');
+    const tile = page.locator('#glance .pg__more a[data-fact="RC-06a"]');
+    await expect(tile.locator('.pg__value')).toHaveText('>4×');
+    await expect(tile.locator('.pg__desc')).toHaveText(LABEL);
+    await expect(tile.locator('.pg__note')).toHaveCount(0);
+    expect(builtPages().filter((p) => p.html.includes('Against 2.3 percentage points on average across nine vocational-training trials')).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('OC-05: "had started earning by six months after finishing" (item 32)', () => {
+  const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
+  const LABEL = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  const HEADING = 'Most Had Started Earning by Six Months After the Course';
+  const NOTE = 'Months are counted from the end of the course; the shares are cumulative and include earnings during the course.';
+  const MEASURE = 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)';
+
+  test('the register says "by six months after finishing" in its text, stat label and glance label; the figures and the base are unchanged', () => {
+    const oc05 = fact('OC-05');
+    expect(oc05.text).toBe(TEXT);
+    expect(oc05.stat?.value).toBe('58.8%');
+    expect(oc05.stat?.label).toBe(LABEL);
+    expect(oc05.stat?.glance?.label).toBe(GLANCE);
+    // the cumulative figures include the 23.5% who first earned during the course, who cannot have started "within six months of" the course ending
+    expect(oc05.text).toContain('23.5% first earned during the course');
+    expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
+  });
+
+  test('Home slide 5 is headed "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05); its tile caption is the register’s label; it fits the carousel at 1280 and 390', async ({ page }) => {
+    expect(HEADING).toBe(titleCase(HEADING));
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      await open(page, '');
+      const s = slide(page, 5);
+      await expect(s.locator('h2'), `${vp.width}px`).toHaveText(HEADING);
+      expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
+      await expect(s.locator('.hs__lead')).toHaveCount(0);
+      expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
+      expect(compact(await s.locator('.hs__stat').textContent())).toContain(LABEL);
+      const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
+      expect(await s.evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
+    }
+  });
+
+  test('Impact’s tile, Outcomes 2026 (summary tile, paragraph, chart note) and the data file all say it the same way; the values are unchanged', async ({ page }) => {
+    await open(page, 'impact/');
+    expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain(GLANCE);
+    await open(page, 'impact/outcomes-2026/');
+    expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
+    expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
+    expect(compact(await page.locator('#speed .colc__note').textContent())).toBe(NOTE);
+    const rows = readFileSync(resolve('public/data/outcomes-2026-aggregates.csv'), 'utf8').split('\n').filter((l) => l.startsWith('OC-05,'));
+    expect(rows).toHaveLength(5);
+    for (const r of rows) expect(r, r).toContain(`"${MEASURE}"`);
+    expect(rows.map((r) => r.split('"')[2].split(',').slice(1, 6).join('|'))).toEqual([
+      'During the Course|percent|23.5|170|published',
+      'Within 3 Months|percent|38.2|170|published',
+      'Within 6 Months|percent|58.8|170|published',
+      'Within 12 Months|percent|77.1|170|published',
+      'Within 2 Years|percent|90.6|170|published',
+    ]);
+  });
+
+  test('no built page keeps the contradictory wording, and the check-facts advice string uses the new one', () => {
+    const stale = sitePages().filter((p) => /within six months of (?:finishing|the course)|started earning within|Within Six Months of the Course Ending|First Earnings Came Within/i.test(visible(p.html) + metaDescription(p.html)));
+    expect(stale.map((p) => p.route)).toEqual([]);
+    const advice = readFileSync(resolve('scripts/check-facts.mjs'), 'utf8');
+    expect(advice).toContain('Most surveyed new earners had started earning by six months after finishing the course.');
+    expect(advice).not.toMatch(/started earning within six months of finishing/);
+  });
+});
+
+test.describe('The Home router’s investor card states the route (item 33)', () => {
+  test('Home reads "Back JobReady, the platform we are building to connect emerging-market youth to work."; the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
+    const BACK = 'Back JobReady, the platform we are building to connect emerging-market youth to work.';
+    await open(page, '');
+    expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
+    await open(page, 'partner-with-us/');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.');
+    // the old Home wording, without "Back", is gone from every page
+    expect(builtPages().filter((p) => /cat__text[^>]*>JobReady, the platform we are building/.test(p.html)).map((p) => p.route)).toEqual([]);
+  });
+});
+
+test.describe('The evidence ladder’s first rung is "Independent Randomized Trial (BIGD)" (item 34)', () => {
+  const NAME = 'Independent Randomized Trial (BIGD)';
+  const INSTITUTE = 'BRAC Institute of Governance and Development';
+
+  test('Impact: the matrix row is the one link named so, with the trial tag; the institute is spelled out once, in that row’s "What It Shows" cell; "BIGD" appears once on the page', async ({ page }) => {
+    await open(page, 'impact/');
+    const first = page.locator('#evidence-ladder tbody tr').first();
+    const link = first.locator('th a');
+    await expect(link).toHaveCount(1);
+    expect(compact(await link.textContent())).toBe(NAME);
+    expect(((await link.getAttribute('href')) ?? '').replace(/^\/ctg/, '')).toBe('/impact/independent-evaluation/');
+    expect(await first.locator('th [data-evidence]').getAttribute('data-evidence')).toBe('Randomized Trial');
+    const shows = compact(await first.locator('td[data-label="What It Shows"]').textContent());
+    expect(shows).toBe(`The effect of one CodersTrust program (WSDFM) on women in Dhaka, evaluated by the ${INSTITUTE} against a randomly chosen control group.`);
+    const text = await mainText(page);
+    expect(count(text, INSTITUTE), 'the institute is spelled out once on Impact').toBe(1);
+    expect(count(text, 'BIGD'), 'the abbreviation appears once, in the rung name').toBe(1);
+    expect(text).not.toContain('Independent Evaluation by');
+    expect(sitePages().filter((p) => visible(p.html).includes('Independent Evaluation by the BRAC')).map((p) => p.route)).toEqual([]);
+  });
+
+  test('the name is read from one constant, so the matrix, the cards variant and the compact ladder cannot drift', () => {
+    const copy = readFileSync(resolve('src/data/copy.ts'), 'utf8');
+    expect(copy).toContain(`export const TRIAL_RUNG_NAME = '${NAME}';`);
+    for (const file of ['EvidenceLadder.astro', 'EvidenceLadderCompact.astro']) {
+      const source = readFileSync(resolve(`src/components/pages/impact/${file}`), 'utf8');
+      expect(source, file).toContain('TRIAL_RUNG_NAME');
+      expect(source, file).not.toMatch(/name: '(?:Randomized Trial \(BIGD\)|Independent Evaluation by)|`Independent Evaluation by/);
+    }
+    // the cards variant prints the name as the link text and as the plain title; neither is the old bare "Randomized Trial"
+    const cards = readFileSync(resolve('src/components/pages/impact/EvidenceLadder.astro'), 'utf8');
+    expect(cards).toContain('>{TRIAL_RUNG_NAME}<Icon');
+    expect(cards).toContain(': TRIAL_RUNG_NAME}</H>');
+  });
+
+  for (const vp of [DESKTOP, MOBILE]) {
+    test(`at ${vp.width}px the shorter rung name does not make Impact scroll sideways, and its link takes keyboard focus`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      await open(page, 'impact/');
+      const link = page.locator('#evidence-ladder tbody tr').first().locator('th a');
+      await link.focus();
+      await expect(link).toBeFocused();
+      expect(await noOverflow(page)).toBe(true);
+    });
+  }
+});
+
+test.describe('YouthWIDE: nothing links to the removed bands', () => {
+  test('no page links to /programs/youthwide/#cost or #future', () => {
+    const stale = builtPages().flatMap((p) => (p.html.match(/href="[^"]*programs\/youthwide\/#(?:cost|future)"/g) ?? []).map((h) => `${p.route}: ${h}`));
+    expect(stale).toEqual([]);
+  });
+});
+
+test.describe('layout', () => {
+  for (const vp of [DESKTOP, MOBILE]) {
+    test(`the changed pages do not scroll sideways at ${vp.width}px`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      for (const route of ['', 'programs/', 'programs/youthwide/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'partner-with-us/development-partners/', 'impact/case-studies/wsdfm-women-freelancers/', 'impact/']) {
+        await open(page, route);
+        expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);
+      }
+    });
+  }
+});

@@ -160,11 +160,12 @@ test.describe('the due-diligence item on the five audience pages', () => {
     await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(4);
   });
 
-  test('Development Partners and Foundations keep the "Reporting and Review" callout that links the hub (the item does not replace it)', async ({ page }) => {
-    for (const slug of ['development-partners', 'foundations']) {
-      await open(page, `partner-with-us/${slug}/`);
-      await expect(page.locator('main').getByText('Reporting and Review', { exact: true }), slug).toHaveCount(1);
-    }
+  // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout, the one place the page names the quarterly reviews
+  test('Development Partners keeps the "Reporting and Review" callout (the item does not replace it); Foundations no longer has one', async ({ page }) => {
+    await open(page, 'partner-with-us/development-partners/');
+    await expect(page.locator('main').getByText('Reporting and Review', { exact: true }), 'development-partners').toHaveCount(1);
+    await open(page, 'partner-with-us/foundations/');
+    await expect(page.locator('main').getByText('Reporting and Review', { exact: true }), 'foundations').toHaveCount(0);
   });
 });
 

@@ -18,47 +18,30 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 const wordCount = (s: string) => s.split(/\s+/).filter(Boolean).length;
 
-test.describe('Home evidence band (#proof-band): the survey area only (WP35: the trial sub-block is gone)', () => {
-  test('the band is the paid-work pathways and the 72.3% tile: no trial sub-block, no plain-language trial sentence, no sub-heading, no chart, chart table or chart note', async ({ page }) => {
+// WP48 (cycle-23 review): the evidence band (#proof-band, "Evidence You Can Check") is gone from Home, with its paid-work pathways table and its 72.3% tile (the Impact Survey 2026 page keeps both); its two evidence links close the
+// "Proof in Practice" link row (tests/wp48.spec.ts). The band had held no trial block since WP35, so the trial figure is the hero card's and the first slide's.
+test.describe('Home evidence band (#proof-band): gone (WP48); the trial and survey links close the Proof in Practice row', () => {
+  test('there is no #proof-band, no plain-language trial sentence and no chart; the link row links the case studies, the trial results and the survey', async ({ page }) => {
     await open(page, '');
-    const band = page.locator('#proof-band');
-    await expect(band.locator('h2')).toHaveText('Evidence You Can Check');
-    await expect(band.locator('.he__trial')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]')).toHaveCount(0);
-    expect(await texts(page, '#proof-band h3')).toEqual(['Paid-Work Pathways Among Surveyed Completers']);
-    // no chart, no data table, no chart note, none of the chart's figures
-    await expect(band.locator('.ba, .ba__data, figure, details')).toHaveCount(0);
-    const t = compact(await band.textContent());
-    for (const gone of ['Employment at Trial Follow-Up', 'View Chart Data as a Table', 'Chart data:', '52.8%', '63.1%', '10.3', 'predecessor']) expect(t, `no "${gone}" in the band`).not.toContain(gone);
+    await expect(page.locator('main .ba, main .ba__data')).toHaveCount(0);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    await expect(page.locator('#cases a[href$="/impact/independent-evaluation/"]'), 'one link to the trial results in the row').toHaveCount(1);
   });
 
-  test('the strip under the band links the trial results and the survey; the survey content stays (pathways table, 72.3% tile)', async ({ page }) => {
+  test('the trial figure is the hero card’s (+10.3 percentage points); the Proof in Practice band does not restate it', async ({ page }) => {
     await open(page, '');
-    const band = page.locator('#proof-band');
-    expect(await texts(page, '#proof-band .he__links a')).toEqual(['Read the Trial Results', 'Impact Survey 2026']);
-    await expect(band.locator('a[href$="/impact/independent-evaluation/"]'), 'one link to the trial results in the band').toHaveCount(1);
-    await expect(band.locator('.pwp')).toHaveCount(1);
-    await expect(band.locator('[data-fact="OC-02"]')).toContainText('72.3%');
-    await expect(band.locator('[data-fact="OC-02"]')).toContainText('34 of 47 surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey');
-  });
-
-  test('the trial figure is not stated in the band: the hero card and the first slide state it (+10.3 percentage points)', async ({ page }) => {
-    await open(page, '');
-    expect((await texts(page, '#proof-band p')).filter((p) => p.includes('10.3 percentage points'))).toHaveLength(0);
     expect(compact(await page.locator('.hh__card[data-fact="RC-02"]').textContent())).toContain('+10.3 percentage points');
+    expect(compact(await page.locator('#cases').textContent())).not.toContain('10.3 percentage points');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the survey area sits below the heading, its trial-results link is visible and the page does not scroll sideways`, async ({ page }) => {
+    test(`at ${vp.width}px the link row is visible and the page does not scroll sideways`, async ({ page }) => {
       await page.setViewportSize(vp);
       await open(page, '');
-      const tops = await page.locator('#proof-band').evaluate((el) => {
-        const top = (sel: string) => (el.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
-        return { head: top('.he__head'), survey: top('.he__top'), link: top('.he__links a') };
-      });
-      expect(tops.survey).toBeGreaterThan(tops.head);
-      expect(tops.link).toBeGreaterThan(tops.survey);
-      await expect(page.locator('#proof-band .he__links a').first()).toBeVisible();
+      await expect(page.locator('#cases .csc__more a').first()).toBeVisible();
+      await expect(page.locator('#cases .csc__more a').last()).toBeVisible();
       expect(await noOverflow(page), 'no horizontal overflow').toBe(true);
     });
   }

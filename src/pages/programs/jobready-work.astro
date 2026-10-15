@@ -30,7 +30,9 @@ import { webPage } from '../../lib/schema';
 const path = '/programs/jobready-work/';
 const LAST_UPDATED = PAGE_UPDATED.work;
 const title = 'JobReady@Work: Upskill Teams, Hire Talent';
-const description = `JobReady@Work builds custom AI-ready training for your team and sources job-ready talent. Globally, ${statValue('PX-05')} of employers report difficulty finding talent.`;
+// WP48 (cycle-23 review): the employer-shortage figure is dated ("In 2026, 72% of employers globally reported ..."; PX-05's survey is the 2026 one). The first sentence says "sources talent" (it said "job-ready talent", which the hero lead keeps) so the
+// description stays within the 155 characters the SEO lint allows.
+const description = `JobReady@Work builds custom AI-ready training for your team and sources talent. In 2026, ${statValue('PX-05')} of employers globally reported difficulty finding talent.`;
 const work = ctaFor('work');
 const talent = ctaFor('talent');
 

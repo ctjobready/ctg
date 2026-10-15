@@ -51,9 +51,9 @@ async function faqJsonLd(page: Page) {
 test.describe('The Bangladesh initiative is an aim, not an existing national program (item 9)', () => {
   // The three regions are named on the YouthWIDE page, the Programs hub card and the funding-route table; the one-line menu description (and so slide 7's program card) says "three regions", because the full list made slide 7
   // two lines taller and left the other slides more unused space than tests/hero-slider.spec.ts allows
-  const LINE = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.';
+  const LINE = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.';
 
-  test('the Programs menu, its featured panel and Home slide 7 say the cohorts are designed for three regions and that the Bangladesh initiative aims to train 2 million youth by 2030 (IN-01 and IN-02)', async ({ page }) => {
+  test('the Programs menu, its featured panel and Home slide 7 say the cohorts are designed for three regions and that the Bangladesh initiative aims to train 2 million vulnerable youth by 2030 (IN-01 and IN-02; WP48: IN-01’s own "vulnerable youth")', async ({ page }) => {
     await open(page, '');
     expect(fact('IN-01').stat?.value, 'the figure in the line is the register’s').toBe('2 million');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(LINE);
@@ -69,7 +69,7 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
     await expect(heading).toHaveText('Bangladesh: Reference Country and 2030 Aim');
     expect('Bangladesh: Reference Country and 2030 Aim').toBe(titleCase('Bangladesh: Reference Country and 2030 Aim'));
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million youth by 2030.');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
     expect(description!.length).toBeLessThanOrEqual(155);
@@ -82,10 +82,11 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 });
 
 test.describe('Home: the trial slide leads with income and keeps its scope (item 11)', () => {
-  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More": RC-01 and RC-04, the predecessor program named, the >4× tile kept', async ({ page }) => {
+  // WP48 (cycle-23 review): the heading itself names the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
+  test('slide 1 is "Women Offered a Place in a Predecessor Program Earned an Estimated 41% More": RC-01 and RC-04, the predecessor program named, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More');
+    await expect(first.locator('h2')).toHaveText('Women Offered a Place in a Predecessor Program Earned an Estimated 41% More');
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
@@ -114,26 +115,28 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
 });
 
 test.describe('Home: the government slide states the contract scope in GV-12’s note (item 10)', () => {
-  test('slide 2 reads the Impact and Governments wording, with Her Power’s 25,125 women, and keeps the National University sentence', async ({ page }) => {
+  test('slide 2 reads the note’s first clause (the Impact and Governments tiles print the whole note, with Her Power’s 25,125 women) and keeps the National University sentence', async ({ page }) => {
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
-    // WP46 (cycle-22 review): the note says who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
+    // WP46 (cycle-22 review): the note said who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
+    // WP48 (cycle-23 review): the slide keeps only the note's first clause ("contract scope, not a count of completers") and no longer mentions the 25,125 or the 2,500, so the lead rests on GV-12 alone (tests/wp48.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12');
     expect(compact(await lead.textContent())).not.toContain('not people trained');
-    expect(fact('GV-12').stat?.glance?.note).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 });
 
 test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
-  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so the heading ends "of the Course Ending" (tests/wp46.spec.ts)
-  test('slide 5 is "Most First Earnings Came Within Six Months of the Course Ending" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course (tests/wp46.spec.ts)
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself; the heading is "Most Had Started Earning by Six Months After the Course" (tests/wp48.spec.ts)
+  test('slide 5 is "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
-    expect('Most First Earnings Came Within Six Months of the Course Ending').toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
+    await expect(s.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(s.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -165,10 +168,12 @@ test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
   });
 });
 
-test.describe('YouthWIDE: the cost heading (item 28)', () => {
-  test('"Training Without Work Entry Leaves Budgets Without Results"', async ({ page }) => {
+// WP48 (cycle-23 review, consistent with the owner decision of 2026-10-15): YouthWIDE's cost band, headed "Training Without Work Entry Leaves Budgets Without Results" here, is gone (Home carries the shared band; tests/wp48.spec.ts)
+test.describe('YouthWIDE: the cost heading (item 28; WP48: the band is gone)', () => {
+  test('"Training Without Work Entry Leaves Budgets Without Results" is on no page; it stays in Title Case', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    await expect(page.locator('#cost h2')).toHaveText('Training Without Work Entry Leaves Budgets Without Results');
+    await expect(page.locator('#cost')).toHaveCount(0);
+    expect(builtPages().filter((p) => p.html.includes('Training Without Work Entry Leaves Budgets Without Results')).map((p) => p.route)).toEqual([]);
     expect('Training Without Work Entry Leaves Budgets Without Results').toBe(titleCase('Training Without Work Entry Leaves Budgets Without Results'));
   });
 });
@@ -216,7 +221,8 @@ test.describe('Partner with Us hub: no reporting band, two FAQs, no dead link (i
     expect(dead.map((p) => p.route)).toEqual([]);
   });
 
-  for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
+  // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout
+  for (const route of ['partner-with-us/development-partners/']) {
     test(`${route}: the "Reporting and Review" callout keeps its sentence and has no link to the removed band`, async ({ page }) => {
       await open(page, route);
       const callout = page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });

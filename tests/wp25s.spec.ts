@@ -314,7 +314,8 @@ test.describe('Our Model and Investors', () => {
     await open(page, 'our-model/talentleap/');
     const text = compact(await everything(page));
     expect(text).toContain('Every supported TalentLEAP cohort pairs');
-    expect(text).toContain('so completers can keep advancing as further levels are published');
+    // WP48 (cycle-23 review): "... progressive levels as further levels are published." (it ended ", so completers can keep advancing as further levels are published"; tests/wp48.spec.ts)
+    expect(text).toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
     expect(text).toContain('by the BRAC Institute of Governance and Development (BIGD) at BRAC University');
   });
 

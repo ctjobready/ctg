@@ -231,11 +231,11 @@ const FUTURE: Record<string, [string, string, string]> = {
   'nu-pgd': ['nu-pgd/students-laptops', 'general/lab-women-screen', 'general/learner-mosaic'],
   // Home (WP19, item 12): none of these three is used by the hero or the carousel above it.
   home: ['general/her-power-laptops-2', 'general/office-meeting', 'general/office-support-headset'],
-  youthwide: ['general/woman-learner-laptop', 'general/yes-collage', 'general/classroom-girls'],
   'jobready-campus': ['general/graduates-caps', 'general/office-support-headset', 'general/computer-lab-rows'],
   'jobready-work': ['general/computer-lab-rows', 'general/woman-learner-laptop', 'general/lab-women-screen'],
   superkids: ['superkids/classroom-uniform', 'superkids/circuit-building', 'superkids/mat-activity'],
   // WP47 (owner decision 2026-10-15): the audience pages (Development Partners, Employers, Foundations, Governments, Local Partners, Universities) have no "what success looks like" band any more, so their entries are gone.
+  // WP48 (cycle-23 review): YouthWIDE's band ("Young People Earning, Locally and Globally") is gone as well, so its entry is gone too.
 };
 export const futurePhotos = (page: string): Photo[] => (FUTURE[page] ?? []).map(photo);
 

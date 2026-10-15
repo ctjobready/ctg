@@ -39,43 +39,24 @@ async function faqJsonLd(page: Page) {
   return out;
 }
 
-/** The three ways of earning the YouthWIDE band's line names (jobs, freelance clients, businesses of their own), with the photographs the page already used. */
-const FUTURE_CARDS = [
-  { title: 'Earning from a Job', text: 'A first paid job, close to home or abroad.' },
-  { title: 'Earning from Freelance Clients', text: 'Freelance work for clients near and far.' },
-  { title: 'Earning from Their Own Business', text: 'A business built on digital skills.' },
-];
 
-test.describe('YouthWIDE: "What Success Looks Like" is about young people earning (item 1)', () => {
-  test('the band keeps its id and its illustrative label; the heading, the line and the three vignettes are about earning from jobs, freelance clients and businesses of their own', async ({ page }) => {
-    await open(page, 'programs/youthwide/');
-    await expect(page.locator('section#future')).toHaveCount(1);
-    await expect(page.locator('#future .eyebrow')).toHaveText('What Success Looks Like');
-    await expect(page.locator('#future h2')).toHaveText('Young People Earning, Locally and Globally');
-    expect('Young People Earning, Locally and Globally').toBe(titleCase('Young People Earning, Locally and Globally'));
-    const lead = compact(await page.locator('#future .sh__lead').textContent());
-    expect(lead.startsWith('Illustrative: imagine'), 'the band says it is an imagined future, not a result').toBe(true);
-    expect(lead).toContain('Imagine young people earning from jobs, freelance clients and businesses of their own. Your board or agency sees their progress in monthly reports.'.replace('Imagine', 'imagine'));
-    expect(await texts(page, '#future h3')).toEqual(FUTURE_CARDS.map((c) => c.title));
-    for (const c of FUTURE_CARDS) expect(c.title, 'a vignette heading is in Title Case').toBe(titleCase(c.title));
-    expect(await texts(page, '#future .card__text')).toEqual(FUTURE_CARDS.map((c) => c.text));
-    await expect(page.locator('#future .card__media img')).toHaveCount(3);
-  });
 
-  test('the old reporting vignettes are gone from the page: the glance and the C8 cards carry the reporting', async ({ page }) => {
+// WP48 (cycle-23 review, consistent with the owner decision of 2026-10-15): YouthWIDE's "What Success Looks Like" band (#future, "Young People Earning, Locally and Globally") is gone; Home carries the shared Imagine band (tests/wp48.spec.ts).
+// The reporting that band once explained stays in the glance's Reporting row and the C8 cards.
+test.describe('YouthWIDE: no "What Success Looks Like" band (item 1; WP48: the band is gone)', () => {
+  test('the page has no #future band, none of its headings or vignettes, and none of the old reporting vignettes; the glance and the C8 cards carry the reporting', async ({ page }) => {
     await open(page, 'programs/youthwide/');
+    await expect(page.locator('#future')).toHaveCount(0);
     const text = await mainText(page);
+    expect(text).not.toMatch(/What Success Looks Like|Young People Earning, Locally and Globally|Earning from a Job|Earning from Freelance Clients|Earning from Their Own Business|Illustrative: imagine/);
     expect(text).not.toMatch(/Reports That Show Who Started Earning|Monthly Reports Your Board or Agency Can Read|See Who Started Earning|Evidence Your Evaluators Can Check/);
     expect(await texts(page, '#program-glance dt')).toEqual(expect.arrayContaining(['Reporting']));
-    // the band names the reports once, in its line; none of the three vignettes explains them again
-    expect(count(compact(await page.locator('#future').textContent()), 'monthly reports')).toBe(1);
-    expect((await texts(page, '#future .card__text')).join(' ')).not.toMatch(/report/i);
   });
 
-  test('the band keeps its id (#future) and still follows "Our Track Record" (#guide), so the credibility-before-vision order is unchanged', async ({ page }) => {
+  test('"Our Track Record" (#guide) is followed by the delivery model (#mechanism): the credibility comes straight before the mechanism', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
-    expect(ids.indexOf('future')).toBe(ids.indexOf('guide') + 1);
+    expect(ids.indexOf('mechanism')).toBe(ids.indexOf('guide') + 1);
   });
 });
 
@@ -187,7 +168,8 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
     await expect(page).toHaveURL(/#status$/);
     await open(page, 'partner-with-us/employers/');
     const answer = compact(await page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) }).locator('.faq__a').textContent());
-    expect(answer).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
+    // WP48 (cycle-23 review): the shared answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
+    expect(answer).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
   });
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
@@ -241,17 +223,18 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   // WP42 (cycle-19 review): the government slide moved to second, so the speed slide is the fifth
   // WP43 (cycle-20 review): the slide has no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated the heading and the tile)
   // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"; WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
-  test('slide 5 is "Most First Earnings Came Within Six Months of the Course Ending": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
+  test('slide 5 is "Most Had Started Earning by Six Months After the Course": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
-    expect('Most First Earnings Came Within Six Months of the Course Ending').toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
+    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     const tile = compact(await slide.locator('.hs__stat').textContent());
     expect(tile).toContain('58.8%');
-    expect(tile).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
+    expect(tile).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
   });
 
   test('slide 2 counts the contracts and says "a National University Partnership"', async ({ page }) => {
@@ -284,8 +267,8 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   });
 });
 
-test.describe('Governments: the contracts table has short scope phrases and every figure in "Training Figure" (item 9)', () => {
-  test('no scope cell carries a number or a sentence; Her Power’s three figures are in its Training Figure cell, each saying whose it is', async ({ page }) => {
+test.describe('Governments: the contracts table has short scope phrases and every figure in its last column (item 9; WP48: the column is "Scale and Outputs")', () => {
+  test('no scope cell carries a number or a sentence; Her Power’s three figures are in its last-column cell, each saying whose it is', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const scopes = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(scopes).toHaveLength(6);

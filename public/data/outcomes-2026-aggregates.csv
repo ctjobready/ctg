@@ -16,11 +16,11 @@ OC-04,"Employment by type, among surveyed completers","Freelancing, before train
 OC-04,"Employment by type, among surveyed completers","Freelancing, at the October 2026 survey",percent,14.0,321,published
 OC-04,"Employment by type, among surveyed completers","Business Ownership, before training",percent,2.8,,"published; base is n = 321, as for the other rows of this measure"
 OC-04,"Employment by type, among surveyed completers","Business Ownership, at the October 2026 survey",percent,10.6,321,published
-OC-05,"Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)",During the Course,percent,23.5,170,published
-OC-05,"Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)",Within 3 Months,percent,38.2,170,published
-OC-05,"Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)",Within 6 Months,percent,58.8,170,published
-OC-05,"Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)",Within 12 Months,percent,77.1,170,published
-OC-05,"Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)",Within 2 Years,percent,90.6,170,published
+OC-05,"Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)",During the Course,percent,23.5,170,published
+OC-05,"Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)",Within 3 Months,percent,38.2,170,published
+OC-05,"Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)",Within 6 Months,percent,58.8,170,published
+OC-05,"Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)",Within 12 Months,percent,77.1,170,published
+OC-05,"Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)",Within 2 Years,percent,90.6,170,published
 OC-06-recommend,Recommendation score (0–10),0,percent,5.5,,published; base not stated in the report
 OC-06-recommend,Recommendation score (0–10),1,percent,1.8,,published; base not stated in the report
 OC-06-recommend,Recommendation score (0–10),2,percent,0.7,,published; base not stated in the report

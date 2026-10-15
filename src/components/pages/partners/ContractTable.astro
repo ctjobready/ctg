@@ -22,12 +22,14 @@ import { factPart } from './partners';
  * scope marked "Contract scope:") and the note say which is which.
  * WP41 (cycle-18 review): the scope column is a short phrase in every row (Her Power's was a sentence carrying three figures, which read as a report annex), and every number is in the "Training Figure" column: Her Power's cell
  * lists its three figures, one per line, each saying whose it is (the women CodersTrust trained directly; the national program's total; the manuals distributed).
+ * WP48 (cycle-23 review): the last column reads "Scale and Outputs", not "Training Figure": its cells hold people (a delivered count in one row, contract scopes in the others) and distributed documents, which "Training Figure" did not
+ * cover. The cells are unchanged.
  */
 interface Row {
   contract: string;
   facts: string[];
   scope: string;
-  /** The "Training Figure" cell: one text, or one line per figure (Her Power's three). */
+  /** The "Scale and Outputs" cell: one text, or one line per figure (Her Power's three). */
   direct: string | string[];
 }
 const SCOPE = 'Contract scope:';
@@ -98,7 +100,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
         <tr>
           <th scope="col">Contract</th>
           <th scope="col">CodersTrust Scope</th>
-          <th scope="col">Training Figure</th>
+          <th scope="col">Scale and Outputs</th>
         </tr>
       </thead>
       <tbody>
@@ -107,7 +109,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
             <tr data-fact={r.facts.join(' ')}>
               <th scope="row">{r.contract}</th>
               <td data-label="CodersTrust Scope">{r.scope}</td>
-              <td class="ct__num" data-label="Training Figure">{typeof r.direct === 'string' ? r.direct : <ul class="ct__lines" role="list">{r.direct.map((line) => <li>{line}</li>)}</ul>}</td>
+              <td class="ct__num" data-label="Scale and Outputs">{typeof r.direct === 'string' ? r.direct : <ul class="ct__lines" role="list">{r.direct.map((line) => <li>{line}</li>)}</ul>}</td>
             </tr>
           ))
         }

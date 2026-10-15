@@ -201,8 +201,9 @@ test.describe('mega-menu featured panels point to a different decisive page than
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
       ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.'],
-      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.'],
-      ['partner', '/partner-with-us/governments/', 'National programs for youth employment.'],
+      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.'],
+      // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts)
+      ['partner', '/partner-with-us/governments/', 'Curriculum, trainer training and phased delivery for ministries.'],
     ];
     for (const [id, href, text] of cases) {
       const target = page.locator(`#mega-${id} .mega__links a.mega__link[href$="${href}"] .mega__desc`);

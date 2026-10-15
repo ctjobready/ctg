@@ -140,7 +140,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
     expect(titleCase('Designed for Three Regions')).toBe('Designed for Three Regions');
-    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million youth by 2030.');
+    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
     expect(await mainText(page)).not.toContain('Where It Runs');
   });
 
@@ -169,7 +169,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
   });
 });
 
-test.describe('Foundations: the links, the pain and "Reporting and Review" (items 3, 4 and 5)', () => {
+test.describe('Foundations: the links and the pain (items 3 and 5; WP48: the "Reporting and Review" callout of item 4 is gone from this page)', () => {
   test('under "Two Ways to Fund the Path" there are two links, one for each route, named for what they open; the numbered jump links and the duplicate platform link are gone', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     expect(await texts(page, '#mechanism .mech__link a')).toEqual(['Explore YouthWIDE Delivery', 'Explore JobReady’s Rollout']);
@@ -218,7 +218,8 @@ test.describe('Foundations: the links, the pain and "Reporting and Review" (item
 test.describe('"Reporting and Review" says what the reports and reviews do (item 4)', () => {
   const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
   // WP45 (cycle-21 review): the hub's reporting band (#review-cycle) the callouts linked to is gone, so the callouts carry the sentence and no link (tests/wp45.spec.ts)
-  for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
+  // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout
+  for (const route of ['partner-with-us/development-partners/']) {
     test(`${route}: the callout carries the sentence (scoped), tied to PD-08 and PD-11, with no link to the removed hub band`, async ({ page }) => {
       await open(page, route);
       const callout = page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
@@ -279,21 +280,21 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
     expect(await page.locator('#cost .container > :last-child').getAttribute('class')).toContain('grid-cards');
   });
 
-  // WP47 (owner decision 2026-10-15): the six audience pages that had a cost band have none now (tests/wp47.spec.ts); YouthWIDE's is the other one that ends with its cards
-  test('the YouthWIDE cost band ends with its cards; the Investors thesis band ends with its stakes line', async ({ page }) => {
-    for (const route of ['programs/youthwide/']) {
-      await open(page, route);
-      expect(await page.locator('#cost .container > :last-child').getAttribute('class'), route).toContain('grid-cards');
-      await expect(page.locator('#cost .cost__transition'), route).toHaveCount(0);
-    }
+  // WP47 (owner decision 2026-10-15): the six audience pages that had a cost band have none now (tests/wp47.spec.ts). WP48 (cycle-23 reviews): YouthWIDE's is gone too (tests/wp48.spec.ts), and the Investors thesis band's closing stakes line is gone,
+  // so the band ends with its three cards
+  test('YouthWIDE has no cost band; the Investors thesis band ends with its three cards', async ({ page }) => {
+    await open(page, 'programs/youthwide/');
+    await expect(page.locator('#cost')).toHaveCount(0);
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('#thesis .container > :last-child').textContent())).toBe('Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.');
+    expect(await page.locator('#thesis .container > :last-child').getAttribute('class')).toContain('grid-cards');
+    await expect(page.locator('#thesis .th__stakes')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('is an opportunity employers and communities are not yet capturing');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {
-    test(`at ${vp.width}px the cost bands and the thesis band have no sideways scroll and keep room under their last element`, async ({ page }) => {
+    test(`at ${vp.width}px the cost band and the thesis band have no sideways scroll and keep room under their last element`, async ({ page }) => {
       await page.setViewportSize(vp);
-      for (const route of ['', 'programs/youthwide/', 'partner-with-us/investors/']) {
+      for (const route of ['', 'partner-with-us/investors/']) {
         await open(page, route);
         expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);
         const id = route === 'partner-with-us/investors/' ? '#thesis' : '#cost';
@@ -306,11 +307,8 @@ test.describe('the "It doesn’t have to be this way." line is gone from every p
 test.describe('the two research headings are short (item 8)', () => {
   const PX06 = 'AI Is Changing Freelance Demand';
   const RC06 = 'Training Does Not Always Lead to Employment';
-  /** The pages whose cost band shows each research card (WP47: Home and YouthWIDE; the audience pages have no cost band). */
-  const PAGES: [string, string[]][] = [
-    ['', [PX06, RC06]],
-    ['programs/youthwide/', [RC06, PX06]],
-  ];
+  /** The pages whose cost band shows each research card (WP47: Home and YouthWIDE; the audience pages have no cost band; WP48: Home alone). */
+  const PAGES: [string, string[]][] = [['', [PX06, RC06]]];
 
   test('both headings are in Title Case and the old sentence-length headings are on no page', async () => {
     expect(titleCase(PX06)).toBe(PX06);
@@ -329,12 +327,11 @@ test.describe('the two research headings are short (item 8)', () => {
   }
 
   test('the quantified sentences beneath the headings are the register’s own, unchanged', async ({ page }) => {
-    await open(page, 'programs/youthwide/');
-    const data = await texts(page, '#cost .cost__data');
-    expect(data[0]).toContain('found only three with significant employment impacts');
-    expect(data[0]).toContain('David McKenzie (2017)');
-    expect(data[1]).toContain('postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs');
-    expect(data[1]).toContain('image-creation postings fell 17%');
+    // WP48 (cycle-23 review): YouthWIDE's cost band, which printed the whole register sentences, is gone, so they are read from the register
+    expect(fact('RC-06').text).toContain('found only three with significant employment impacts');
+    expect(fact('RC-06').text).toContain('David McKenzie (2017)');
+    expect(fact('PX-06').text).toContain('postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs');
+    expect(fact('PX-06').text).toContain('image-creation postings fell 17%');
     await open(page, '');
     const home = await texts(page, '#cost .cost__data');
     expect(home[0]).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release.');

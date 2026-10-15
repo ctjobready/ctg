@@ -64,7 +64,8 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place Earned an Estimated 41% More');
+    // WP48 (cycle-23 review): the heading names the predecessor program
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place in a Predecessor Program Earned an Estimated 41% More');
     // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
     // WP25h: the framing sentence names the order of the evidence; the program-results slide is "Results by Program".
     // WP30c: the framing sentence is five words long (the slides label their own evidence types)
@@ -76,11 +77,12 @@ test.describe('home hero slider', () => {
     // WP42 (cycle-19 review): the government slide is second, after the trial: trial, government scale, survey, program results, speed, reach, programs
     // WP45 (cycle-21 review): the speed slide says "Most First Earnings Came Within Six Months" and the reach slide "Programs in 15 Countries and Territories" (tests/wp45.spec.ts);
     // WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course ("... of the Course Ending")
+    // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
     expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'Most First Earnings Came Within Six Months of the Course Ending',
+      'Most Had Started Earning by Six Months After the Course',
       'Programs in 15 Countries and Territories',
     ]);
     expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');

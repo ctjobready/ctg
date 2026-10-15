@@ -74,11 +74,11 @@ test.describe('figures say what they measure', () => {
   });
 
   // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both); the slide says what kind of figure the 31,200+ is in words
-  // WP45 (cycle-21 review): the slide says it in GV-12's own note (the Impact and Governments wording), with Her Power's 25,125 women trained
+  // WP45 (cycle-21 review): the slide said it in GV-12's own note (the Impact and Governments wording), with Her Power's 25,125 women trained; WP48 (cycle-23 review): the slide keeps the note's first clause only (tests/wp48.spec.ts)
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people: contract scope, not a count of completers.');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
@@ -196,9 +196,11 @@ test.describe('corporate offer pages carry no youth-program trial block', () => 
     });
   }
 
-  test('Home keeps the paid-work pathways block that Employers lost', async ({ page }) => {
+  // WP48 (cycle-23 review, item 13): Home's "Evidence You Can Check" band, which held the paid-work pathways block, is gone; the table stays on Impact Survey 2026 (tests/wp48.spec.ts)
+  test('Home no longer carries the paid-work pathways block (it is on Impact Survey 2026)', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#proof-band .pwp')).toHaveCount(1);
+    await expect(page.locator('.pwp')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
   });
 });
 
@@ -315,17 +317,20 @@ test.describe('smaller wording fixes', () => {
     expect(card).not.toContain('outcome evidence so far');
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.');
+    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.');
     expect(await page.evaluate(() => document.body.innerText.includes('across three regions'))).toBe(false);
   });
 
+  // WP48 (cycle-23 review, item 23): Home's "Low Risk" band (the risk-reversal cards) is gone, so only the audience pages that keep the band carry the sentence; Home has none
   test('"Review early progress at three months" (no work outcome can exist at month three)', async ({ page }) => {
-    for (const route of ['', 'partner-with-us/local-partners/']) {
+    for (const route of ['partner-with-us/local-partners/']) {
       await open(page, route);
       const text = await mainText(page);
-      expect(text, route || 'home').toContain('Review early progress at three months');
-      expect(text, route || 'home').not.toContain('Review early results at three months');
+      expect(text, route).toContain('Review early progress at three months');
+      expect(text, route).not.toContain('Review early results at three months');
     }
+    await open(page, '');
+    expect(await mainText(page), 'home').not.toContain('Review early results at three months');
   });
 
   test('jargon: "Training has to follow current employer demand" and "follow-up surveys" instead of "tracks have to follow" and "tracer surveys"', async ({ page }) => {
@@ -354,12 +359,10 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('[data-hs-slide]').nth(6).locator('h2')).toHaveText('Find Your Program');
   });
 
-  test('Home: the evidence band has no scope line (the survey tag carries the scope) and no trial sub-heading (WP35); the comparison drops the freelance-marketplace column', async ({ page }) => {
+  // WP48 (cycle-23 review): the evidence band (it had no scope line and no trial sub-heading) is gone from Home (tests/wp48.spec.ts); the comparison below it is unchanged
+  test('Home: the evidence band is gone; the comparison drops the freelance-marketplace column', async ({ page }) => {
     await open(page, '');
-    const band = page.locator('#proof-band');
-    expect(compact(await band.locator('.he__head').textContent())).toBe('The EvidenceEvidence You Can Check');
-    // WP33: the chart note that named the predecessor program is gone with the chart; WP35: so is the trial's sub-heading (the hero card and the first slide carry the trial)
-    await expect(band.locator('.he__trial')).toHaveCount(0);
+    await expect(page.locator('#proof-band')).toHaveCount(0);
     expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
   });
 

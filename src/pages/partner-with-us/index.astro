@@ -7,6 +7,7 @@
 // WP36 (cycle-13 review): "Choose Your Route" is the hero button only; the route cards' section label is "Partnership Routes" (the H2 keeps "Which Route Is Yours?").
 // WP45 (cycle-21 review): the hub stacked reporting and safeguarding three times (the "Monthly Reports and Quarterly Reviews" band, the due-diligence cards and two FAQs). The band (#review-cycle) and the FAQs "How Do You Prove Outcomes?" and
 // "What About Safeguarding and Data Protection?" are gone; the due-diligence view states both once and links to Governance, and every route page answers the rest. The FAQ block is two questions.
+// WP48 (cycle-23 review, item 17): the Governments card no longer says "national programs for youth employment" (a 100,000+ national program is a design option CodersTrust has not yet delivered); it states what the route offers, as the nav.ts menu blurb does.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -42,7 +43,7 @@ const discovery = cta('discovery');
 // a peer route card (it was a link in the "Not sure where you fit?" helper), and the seventh card takes the last row on its own (see .hub__routes).
 const audiences = [
   { title: 'Prove Delivery in Your Portfolio', icon: 'globe', href: '/partner-with-us/development-partners/', text: 'For development partners and NGOs: evidence-led delivery for your portfolio.' },
-  { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: national programs for youth employment.' },
+  { title: 'Turn Existing Labs into a Workforce Pipeline', icon: 'landmark', href: '/partner-with-us/governments/', text: 'For ministries and public agencies: curriculum, trainer training and phased delivery.' },
   { title: 'Fund Tracked Paths to Earnings', icon: 'heart-handshake', href: '/partner-with-us/foundations/', text: 'For foundations and CSR teams: fund outcomes you can track.' },
   { title: 'Prepare Students and Graduates for Work', icon: 'graduation-cap', href: '/partner-with-us/universities/', text: 'For universities and colleges: JobReady@Campus alongside the degree.' },
   { title: 'Build AI-Ready Teams and Hire Talent', icon: 'briefcase', href: '/partner-with-us/employers/', text: 'For employers: train your team or hire job-ready talent.' },

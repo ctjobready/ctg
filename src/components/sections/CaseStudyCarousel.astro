@@ -59,8 +59,11 @@ const stated = items.filter((i) => !i.context).map((i) => i.factId).join(' ') ||
 </Section>
 
 <style>
-  /* the band's own "see all" link sits inside the band, like Learner Journeys' (WP30 merge review) */
+  /* the band's own "see all" link sits inside the band, like Learner Journeys' (WP30 merge review); WP48 (cycle-23 review): Home's row holds three links (the case studies and the two evidence pages), so it wraps as a row */
   .csc__more {
     margin: var(--space-md) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
   }
 </style>

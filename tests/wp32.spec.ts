@@ -254,10 +254,13 @@ test.describe('Home', () => {
     }
   });
 
-  test('the low-risk band is headed "Start with a Multi-Cohort Pilot, Then Decide on Evidence" (one sentence, no period inside the heading)', async ({ page }) => {
+  // WP48 (cycle-23 review): Home's low-risk band is gone (the audience pages keep theirs); its one line, "Start with a multi-cohort pilot, agree the scorecard up front, and decide on expansion from the evidence.", leads the closing band (tests/wp48.spec.ts)
+  test('the low-risk band is gone from Home; no heading is split into "Start with a Multi-Cohort Pilot. Decide on Evidence"', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#risk h2')).toHaveText('Start with a Multi-Cohort Pilot, Then Decide on Evidence');
+    await expect(page.locator('#risk')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Start with a Multi-Cohort Pilot. Decide on Evidence');
+    await open(page, 'partner-with-us/local-partners/');
+    await expect(page.locator('#risk h2')).toHaveText('Start with a Pilot Cohort, Then Decide on Evidence');
   });
 
   // WP42 (cycle-19 review): the government slide is second

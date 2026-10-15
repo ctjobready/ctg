@@ -6,7 +6,8 @@ import Fact from '../facts/Fact.astro';
 
 /**
  * C3 Cost of inaction: three CLAIM / DATA / IMPLICATION blocks. (WP40, cycle-17 review: the closing transition line, "It doesn’t have to be this way.", is gone.)
- * WP47 (owner decision 2026-10-15): the audience pages no longer carry a cost-of-waiting band, so no page uses this shared band but the component gallery (/styleguide/); Home has its own (HomeCost) and YouthWIDE uses CostSection.
+ * WP47 (owner decision 2026-10-15): the audience pages no longer carry a cost-of-waiting band, so no page uses this shared band but the component gallery (/styleguide/); Home has its own (HomeCost).
+ * WP48 (cycle-23 review): YouthWIDE's cost band (CostSection, its one page) is gone too, and the component with it.
  */
 interface Block {
   claim: string;

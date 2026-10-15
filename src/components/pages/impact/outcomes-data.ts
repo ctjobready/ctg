@@ -327,8 +327,8 @@ function recs(): Rec[] {
     out.push(pctRec('OC-04', m, `${t.label}, before training`, t.before, EMPLOYMENT_BASE));
     out.push(pctRec('OC-04', m, `${t.label}, at the October 2026 survey`, t.after, EMPLOYMENT_BASE));
   }
-  // WP46 (cycle-22 review, owner answer 2026-10-15): the months are counted from the end of the course (OC-05: "within six months of finishing it").
-  for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of completers who first earned during or after training and started earning by each point, with months counted from the end of the course (timing only)', c.label, c.pct, SPEED_BASE));
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the months are counted from the end of the course. WP48 (cycle-23 review): the shares are cumulative and include the completers who first earned during the course (OC-05: "had started earning by six months after finishing it").
+  for (const c of SPEED) out.push(pctRec('OC-05', 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)', c.label, c.pct, SPEED_BASE));
   // Recommendation score: the published share for each score 0–10 (no base is stated; no cell is folded).
   for (const c of RECOMMEND.cells) out.push(pctRec(RECOMMEND.id, RECOMMEND.measure, c.label, c.pct));
   for (const d of [CAREER, SOURCE, AGE, EDUCATION]) for (const c of d.cells) out.push(pctRec(d.id, d.measure, c.label, c.pct, d.statedBase));

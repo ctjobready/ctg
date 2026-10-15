@@ -6,6 +6,8 @@
 // WP47 (owner decision 2026-10-15): Home carries the persuasion bands (Cost of Waiting, Imagine, Compare); the audience pages no longer repeat them and go straight from their own proof to their offer. So Home routes readers to
 // their audience page sooner (the role router sits directly after the Results and Programs carousel) and spends fewer words on those bands: the Cost of Waiting band ends with its two cards (no closing value-proposition line) and
 // the Track Record band opens with its heading (no empathy line before it). "What a Supported Youth Cohort Includes" stays: the FAQ band below it does not ask the cost question (Q8) that lists a cohort's inclusions.
+// WP48 (cycle-23 review): "Evidence You Can Check" is gone (its paid-work pathways table and its 72.3% line repeated survey detail the hero strip and the carousel already carry; both stay on the Impact Survey 2026 page); its two evidence links
+// close the "Proof in Practice" link row. The Low Risk band ("Start with a Multi-Cohort Pilot, Then Decide on Evidence") is gone from Home too (the audience pages keep theirs); its one line leads the closing call to action.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -14,12 +16,10 @@ import LearnerJourneys from '../components/pages/home/LearnerJourneys.astro';
 import DefinitionBand from '../components/sections/DefinitionBand.astro';
 import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
-import HomeEvidence from '../components/pages/home/HomeEvidence.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
 import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
-import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
 import CTABand from '../components/ui/CTABand.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeRouter from '../components/pages/home/HomeRouter.astro';
@@ -44,6 +44,9 @@ import { webPage } from '../lib/schema';
 
 const discovery = cta('discovery');
 const caseStudies = linkAttrs('/impact/case-studies/');
+// The evidence links of the former "Evidence You Can Check" band (WP48): they close the "Proof in Practice" link row.
+const trialResults = linkAttrs('/impact/independent-evaluation/');
+const surveyResults = linkAttrs('/impact/outcomes-2026/');
 // Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
 // WP30c: three questions, the ones a funder decides on (the country, the trial's scope, the proof); the AI question is answered by the cost-of-waiting band and the curriculum row.
 const FAQ_IDS = ['Q1', 'Q15', 'Q3'];
@@ -137,29 +140,23 @@ const includes = [
       vignettes={[
         { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman who invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
-        { kind: 'Social', title: 'AI-Ready Talent', text: 'You see employers hire AI-ready talent from your cohort, including completers prepared for an industry certification exam.' },
+        // WP48 (cycle-23 review, three reviewers): not "AI-Ready Talent" ("AI-ready" is a positioning term explained on Employers and JobReady@Work, which Home does not carry); the scenario says what the reader sees.
+        { kind: 'Social', title: 'Employers Hiring from Your Cohort', text: 'You see employers hire completers whose skills match current employer demand.' },
       ]}
     />
   </Tone>
 
   <Tone cmf="C6"><HomeMechanism id="mechanism" title="One Path from Learning to Earning" tone="white" positioning={POSITIONING.home} link={{ label: 'How Our Model Works', href: '/our-model/' }} /></Tone>
 
-  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP35 (cycle-12 review): nor the trial at all (the hero card and the first slide state it); the band keeps the paid-work pathways beside the 72.3% no-prior-income result (34 of 47), and a text link to the trial's results sits with the survey link. -->
-  <Tone cmf="C7">
-    <HomeEvidence
-      id="proof-band"
-      title="Evidence You Can Check"
-      links={[
-        { label: 'Read the Trial Results', href: '/impact/independent-evaluation/' },
-        { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' },
-      ]}
-    />
-  </Tone>
-
+  <!-- WP19, item 8: the "At a Glance" band is gone. WP25h: the band no longer retells the trial and the survey (the carousel states them). WP35 (cycle-12 review): nor the trial at all (the hero card and the first slide state it); the band kept the paid-work pathways
+       beside the 72.3% no-prior-income result (34 of 47). WP48 (cycle-23 review): both are gone from Home (the hero's survey card and the carousel carry the survey; the Impact Survey 2026 page keeps the table and the 72.3%), which left "Evidence You Can Check" with its two
+       links alone, so the band is gone and its two links sit in the link row of "Proof in Practice" below (the C7 proof position). -->
   <Tone cmf="C7" join>
     <!-- WP37 (cycle-14 review): slide 3 of the results carousel states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems); the WSDFM card keeps its figure. -->
     <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>
+      <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
+      <a slot="more" class="link" href={surveyResults.href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
     </CaseStudyCarousel>
     <!-- WP25h (benchmark review): three registered learner stories, one from each program above, replace the single Her Power learner voice (Maria Dewan is one of the three). -->
     <LearnerJourneys id="journeys" tone="airy" />
@@ -180,7 +177,8 @@ const includes = [
 
   <Tone cmf="C11"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} /></Tone>
 
-  <Tone cmf="C12" tone="airy"><RiskReversalBand id="risk" title="Start with a Multi-Cohort Pilot, Then Decide on Evidence" /></Tone>
+  <!-- C12 (Low Risk) is left to the audience pages since WP48 (cycle-23 review): Home's four cards (pilot, scorecard thresholds, expansion review, independent evaluation) repeated points made in "Choose Where to Start", the FAQ and the comparison, so
+       the one line that survives is the closing band's lead, directly above the call to action. -->
 
   <!-- WP45 (cycle-21 review): the band has no "Planning a Grant-Funded Cohort?" block: it assumed grant funding for every audience that reaches the page (ministries, employers, impact investors), and the grant timeline is in the C14 steps below. -->
   <Tone cmf="C13">
@@ -188,6 +186,7 @@ const includes = [
       id="cta"
       tone="klein"
       heading="Let’s Design Your First Cohort"
+      text="Start with a multi-cohort pilot, agree the scorecard up front, and decide on expansion from the evidence."
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
       routes={[

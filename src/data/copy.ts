@@ -30,7 +30,8 @@ export type Audience =
 
 /** C1 value propositions — one sentence, at most 15 words (CMF). */
 export const VALUE_PROPOSITION: Record<Audience, string> = {
-  home: 'Help educated, unemployed youth reach paid digital work through training, mentoring and placement support.',
+  // WP48 (cycle-23 review): "unemployed and underemployed", as ID-01 has the group (16 words, one over the CMF guideline above; no gate enforces it and the audience lines below run longer).
+  home: 'Help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.',
   developmentPartners: 'We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.',
   governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
@@ -70,7 +71,8 @@ export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home'>, 
 };
 
 export const ORIGIN: CopyBlock = {
-  text: 'CodersTrust launched in 2014 in Copenhagen and began developing freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.',
+  // WP48 (cycle-23 review): "began training freelancers", where it read "began developing freelancers" (Home's Our Track Record band; the About timeline keeps its own wording).
+  text: 'CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh. Our first UNDP-supported pilot (2015) was in Dhaka’s Korail settlement.',
   facts: ['ID-02', 'PR-03a'],
 };
 
@@ -204,7 +206,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
-  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million youth by 2030).
+  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030).
   nationwide: {
     text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'PD-01', 'PD-08'],
@@ -414,9 +416,17 @@ export const SURVEY_INCOME: CopyBlock = surveyIncome();
  * The trial's evaluator spelled out (WP35, cycle-12 review: BIGD was not expanded on first mention). The register's RC-01 headline says "by BIGD"; a band that is the first place a page
  * names the evaluator runs the sentence through spellOutBigd(), the way /our-model/ and /our-model/talentleap/ expand it.
  */
-export const BIGD_NAME = 'BRAC Institute of Governance and Development (BIGD)';
+export const BIGD_INSTITUTE = 'BRAC Institute of Governance and Development';
+export const BIGD_NAME = `${BIGD_INSTITUTE} (BIGD)`;
 export const BIGD_FULL = `the ${BIGD_NAME}`;
 export const spellOutBigd = (sentence: string): string => sentence.replace('by BIGD', `by ${BIGD_FULL}`);
+
+/**
+ * The evidence ladder's first rung (WP48, cycle-23 review, item 34: it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)" in the matrix on /impact/ and
+ * "Randomized Trial (BIGD)" in the compact ladder). Every rendering of the ladder (the matrix, its cards variant and the compact ladder) reads this one name, so they cannot drift.
+ * The name uses the abbreviation, so the rung's "What It Shows" text spells the evaluator out (BIGD_INSTITUTE), once, on /impact/.
+ */
+export const TRIAL_RUNG_NAME = 'Independent Randomized Trial (BIGD)';
 
 /**
  * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed

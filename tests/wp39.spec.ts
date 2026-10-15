@@ -267,12 +267,14 @@ test.describe('Partner with Us hub: no reporting band, and no page links to one 
     expect(await mainText(page)).not.toContain('A quarterly review with you decides');
   });
 
-  test('the route pages that linked to the band keep their scoped sentence and no longer link to it', async ({ page }) => {
+  // WP48 (cycle-23 review): Foundations' "Reporting and Review" callout is gone (its card says the same); Development Partners keeps its scoped sentence
+  test('the route pages that linked to the band no longer link to it; Development Partners keeps its scoped sentence', async ({ page }) => {
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle')), route).toBe(false);
-      expect(await mainText(page), route).toContain('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
     }
+    await open(page, 'partner-with-us/development-partners/');
+    expect(await mainText(page)).toContain('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
   });
 });
 
@@ -338,7 +340,8 @@ test.describe('Investors: the platform-status question points to "What JobReady 
 
   // WP41 (cycle-18 review): the platform page points to its "Rollout Status" band the same way (tests/wp41.spec.ts), so the shared answer is in full on Employers and JobReady@Work only
   test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work); Investors no longer lists the status a third time', async ({ page }) => {
-    const shared = 'Partly — modules are rolling out in stages. Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace';
+    // WP48 (cycle-23 review): the shared answer is "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)
+    const shared = 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.';
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).toContain(shared);
@@ -372,11 +375,12 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   });
 });
 
-test.describe('Governments: the contracts table says "Training Figure" (item 6)', () => {
-  test('the last column header is "Training Figure"; the other cells and the note are unchanged', async ({ page }) => {
+// WP48 (cycle-23 review): the last column is "Scale and Outputs" (it was "Training Figure"; tests/wp48.spec.ts); the cells and the note are as WP39 and WP41 left them
+test.describe('Governments: the contracts table’s last column (item 6; WP48: "Scale and Outputs")', () => {
+  test('the last column header is "Scale and Outputs"; the other cells and the note are unchanged', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(await texts(page, '#contracts thead th')).toEqual(['Contract', 'CodersTrust Scope', 'Training Figure']);
-    expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Training Figure'));
+    expect(await texts(page, '#contracts thead th')).toEqual(['Contract', 'CodersTrust Scope', 'Scale and Outputs']);
+    expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Scale and Outputs'));
     const cells = await texts(page, '#contracts td.ct__num');
     // WP41 (cycle-18 review): Her Power's cell lists its three figures, one per line (tests/wp41.spec.ts): the first is still the women CodersTrust trained directly
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([

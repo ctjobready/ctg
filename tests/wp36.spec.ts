@@ -68,12 +68,13 @@ test.describe('Home: each figure once', () => {
 
   // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
   // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so the heading ends "of the Course Ending"
-  test('slide 5 is headed "Most First Earnings Came Within Six Months of the Course Ending" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
+  test('slide 5 is headed "Most Had Started Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
+    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -126,7 +127,8 @@ test.describe('Development Partners and Governments: each figure once', () => {
     const tile = page.locator('#glance .pg__lead a[data-fact="PR-03"]');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tile).toContainText('67%');
-    await expect(tile).toContainText('of the 350 trained in UNDP YES, Korail, found their first job within 3 months');
+    // WP48 (cycle-23 review): "three months", not "3 months", in prose labels (tests/wp48.spec.ts)
+    await expect(tile).toContainText('of the 350 trained in UNDP YES, Korail, found their first job within three months');
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
   });
 
@@ -378,7 +380,8 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/development-partners/');
     const answer = await answerOf(page, 'Can It Reach Women and Marginalized Groups?');
     expect(answer).toBe(
-      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we have early delivery experience and measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
+      // WP48 (cycle-23 review): "we have early delivery experience and" is gone (tests/wp48.spec.ts)
+      'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can It Reach Women and Marginalized Groups?')?.text).toBe(answer);

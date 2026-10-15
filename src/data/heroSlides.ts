@@ -31,6 +31,9 @@ import { cta } from '../lib/mailto';
  * government slide states the contract scope in GV-12's own note (it includes Her Power's 25,125 women trained); the speed slide is "Most First Earnings Came Within Six Months" (a majority, not a promise); the reach slide is
  * "Programs in 15 Countries and Territories" (the figure in the heading, so no tile repeats it).
  * WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course: "Most First Earnings Came Within Six Months of the Course Ending" (the tile caption is OC-05's label).
+ * WP48 (cycle-23 review): the speed slide is "Most Had Started Earning by Six Months After the Course" (OC-05 is cumulative and includes those who first earned during the course; "by", not "within ... of the course ending").
+ * WP48 (cycle-23 review): the government slide's body is two sentences, the contract scope in GV-12's words ("... work scoped for 31,200+ people: contract scope, not a count of completers.") and the National University sentence; Her Power's 25,125 women and
+ * the 2,500 CodersTrust trained directly stay on the Impact and Governments tiles (GV-12's glance note) and are no longer on the slide.
  */
 
 export interface HeroSlideStat {
@@ -131,14 +134,19 @@ if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six go
  * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
  * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.
  * WP46 (cycle-22 review): the note now also says "CodersTrust trained 2,500 women directly" (GV-11 and GV-13), so "25,125 women trained" cannot be read as CodersTrust's own count.
+ * WP48 (cycle-23 review): the slide packed four things into one passage (the contract scope, the national program, direct delivery and the National University onboarding), so it keeps only the note's first clause, "contract scope, not a count
+ * of completers", which is what keeps the 31,200+ true; the rest of the note stays on the Impact and Governments tiles. The clause is read from the note, never retyped, and the build stops if the note stops opening with it.
+ * The note itself now reads "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly." (WP48, cycle-23 review; it was "The total is contract scope, ...;
+ * it includes Her Power's national program, which trained 25,125 women; ...").
  */
 const governmentNote = fact('GV-12').stat?.glance?.note;
-if (!governmentNote || !/^The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained \d[\d,]* women; CodersTrust trained \d[\d,]* women directly\.$/.test(governmentNote)) throw new Error('heroSlides: GV-12 glance note no longer reads "The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained N women; CodersTrust trained N women directly."');
+const contractScope = /^The figure is (contract scope, not a count of completers)\./.exec(governmentNote ?? '')?.[1];
+if (!contractScope) throw new Error('heroSlides: GV-12 glance note no longer opens "The figure is contract scope, not a count of completers. ..."');
 if (!fact('OC-05').stat?.value) throw new Error('heroSlides: OC-05 no longer carries the figure the speed slide shows (its tile; the heading does not state it, WP41)');
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
-const firstJob = /^of the (\d+) trained found their first job within 3 months$/.exec(fact('PR-03').stat?.label ?? '');
-if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
+const firstJob = /^of the (\d+) trained found their first job within three months$/.exec(fact('PR-03').stat?.label ?? '');
+if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within three months"');
 /** Kosovo's base (PR-02's stat value, "102 of 150") closes its line, as Her Power's "of 800 tracked women" and UNDP YES's "of the 350 trained" do (WP36, cycle-13 review: each result names its base). */
 const kosovoBase = fact('PR-02').stat?.value;
 if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
@@ -186,7 +194,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     eyebrow: 'Independent Evaluation',
     // WP45 (cycle-21 review): Home states the trial's employment result three times already (the hero's Randomized Trial card, the announcement bar, the ">4×" tile on this slide), so the slide's own finding is the trial's income result
     // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with the predecessor program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
-    title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More`,
+    // WP48 (cycle-23 review, the third reviewer to raise it): the heading names the predecessor program ("... in a Predecessor Program Earned an Estimated 41% More"), where only the lead below it did.
+    title: `Women Offered a Place in a Predecessor Program Earned an Estimated ${incomeOffered}% More`,
     titleFacts: ['RC-01'],
     lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
     leadFacts: ['RC-01', 'RC-04'],
@@ -207,8 +216,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note, the wording Impact and Governments print, in place of
     // "(contract scope, not people trained)". WP46 (cycle-22 review): the note says who trained whom ("The total is contract scope, not a count of completers; it includes Her Power's national program, which trained 25,125 women;
     // CodersTrust trained 2,500 women directly."), so the 25,125 is not read as CodersTrust's; and the last sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment.
-    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${governmentNote} CodersTrust is the ${governmentScope[3]}.`,
-    leadFacts: ['GV-12', 'GV-01', 'GV-11'],
+    // WP48 (cycle-23 review): the body is two sentences, the contract scope in GV-12's words followed by the clause that keeps it true ("... work scoped for 31,200+ people: contract scope, not a count of completers."), then the National University sentence.
+    // The 25,125 and the 2,500 are no longer on the slide, so the lead rests on GV-12 alone (the glance note's clause is GV-12's, as are the contracts and the National University sentence).
+    lead: `${governmentScope[1]} for ${governmentScope[2]}: ${contractScope}. CodersTrust is the ${governmentScope[3]}.`,
+    leadFacts: ['GV-12'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
@@ -253,7 +264,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // and the tile already say, so the slide is its heading, the tile with its full base, and the evidence link.
     // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months" says it is a majority of the survey's first earnings (58.8% of the 170 surveyed completers who first earned during or after training), not a promise that earnings begin within six months.
     // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the END of the course, so the heading says so ("... of the Course Ending"); the tile's caption (OC-05's label) says "of finishing the course".
-    title: 'Most First Earnings Came Within Six Months of the Course Ending',
+    // WP48 (cycle-23 review, a logic error WP46 introduced): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, who cannot have started "within six months of the course ending"; the heading says what the figure counts,
+    // "Most Had Started Earning by Six Months After the Course", and the tile's caption (OC-05's label) says "had started earning by six months after finishing the course".
+    title: 'Most Had Started Earning by Six Months After the Course',
     titleFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],

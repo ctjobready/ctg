@@ -21,8 +21,9 @@ const trialPoints = `+${trial.numeric} Percentage Points`;
  * and the Bangladesh initiative as an AIM, "an initiative that aims to train 2 million vulnerable youth for digital employment by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national program).
  * The figure is the register's. The three regions are not listed here: with them spelled out (no "MENA") the line is 180 characters and slide 7 of the Home carousel, whose program cards are three columns wide, grows two lines taller,
  * which leaves the other slides 68 px of unused space at 1280 (tests/hero-slider.spec.ts allows 48); this line wraps as the one it replaces did.
+ * WP48 (cycle-23 review): the line says "2 million vulnerable youth", IN-01's own wording, as the register, About and the Programs hub do (it said "2 million youth"; the group differed between pages).
  */
-const youthwideLine = `Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train ${stat('IN-01').value} youth by 2030.`;
+const youthwideLine = `Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train ${stat('IN-01').value} vulnerable youth by 2030.`;
 
 export interface NavLink {
   label: string;
@@ -162,7 +163,8 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Partnership Overview', href: '/partner-with-us/', description: 'Choose the route that fits your organization.' },
       { label: 'Development Partners and NGOs', href: '/partner-with-us/development-partners/', description: 'Evidence-led delivery for your portfolio.' },
-      { label: 'Governments', href: '/partner-with-us/governments/', description: 'National programs for youth employment.' },
+      // WP48 (cycle-23 review): not "National programs for youth employment." (a 100,000+ national program is a design option CodersTrust has not yet delivered); the blurb says what the Governments page offers. The featured panel below and the audience router (Home, 404, partner hub) say the same.
+      { label: 'Governments', href: '/partner-with-us/governments/', description: 'Curriculum, trainer training and phased delivery for ministries.' },
       { label: 'Foundations and CSR', href: '/partner-with-us/foundations/', description: 'Fund outcomes you can track.' },
       { label: 'Universities', href: '/partner-with-us/universities/', description: 'Make graduates job-ready.' },
       { label: 'Employers', href: '/partner-with-us/employers/', description: 'Train your team or hire talent.' },
@@ -173,7 +175,7 @@ export const navGroups: NavGroup[] = [
       kind: 'discovery',
       eyebrow: 'For Ministries and Public Agencies',
       title: 'Governments',
-      text: 'National programs for youth employment.',
+      text: 'Curriculum, trainer training and phased delivery for ministries.',
       cta: { label: 'Explore the Government Route', href: '/partner-with-us/governments/' },
     },
   },
@@ -246,11 +248,12 @@ export const footerBottomLinks: NavLink[] = [
 /** Audience router (Home, 404, partner hub): who are you? Same order as the Partner with Us menu. */
 export const audiences = [
   { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
-  { id: 'governments', title: 'Governments', icon: 'landmark', text: 'National programs for youth employment', href: '/partner-with-us/governments/' },
+  { id: 'governments', title: 'Governments', icon: 'landmark', text: 'Curriculum, trainer training and phased delivery for ministries', href: '/partner-with-us/governments/' },
   { id: 'foundations', title: 'Foundations and CSR', icon: 'heart-handshake', text: 'Fund outcomes you can track', href: '/partner-with-us/foundations/' },
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
   // WP46 (cycle-22 review): JobReady is not defined on Home, so the investor card says what it is, in the partner hub's words for this route.
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
+  // WP48 (cycle-23 review, item 33): the card now also states the investor's route ("Back JobReady, ...").
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Back JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
 ] as const;

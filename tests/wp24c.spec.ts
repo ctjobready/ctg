@@ -33,12 +33,13 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(next.locator('ul li strong')).toHaveText(['Governments.', 'Funders.']);
   });
 
-  test('the hero holds one primary button; the briefing and partner routes are text links below it', async ({ page }) => {
+  // WP48 (cycle-23 review): the hero's two links back to audience pages ("For Development Partners", "For Governments") are gone; the ministry briefing stays as the one text link beside the one button (tests/wp48.spec.ts)
+  test('the hero holds one primary button; the ministry briefing is the one text link below it', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const hero = page.locator('#hero');
     await expect(hero.locator('.btn--primary')).toHaveCount(1);
     const routes = hero.locator('.hero__actions nav a.link');
-    await expect(routes).toHaveCount(3);
+    await expect(routes).toHaveCount(1);
   });
 
   test('WP30d: the Bangladesh initiative is one band (#governments, headed as the reference country and its 2030 aim) and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
@@ -50,20 +51,22 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(band).toContainText('not a delivered figure');
   });
 
-  test('the Cost of Waiting band drops the 72% employer card and keeps the two evidence cards', async ({ page }) => {
+  // WP48 (cycle-23 review): the Cost of Waiting band (it had dropped the 72% employer card and kept two evidence cards) is gone from YouthWIDE; Home carries the shared band (tests/wp48.spec.ts)
+  test('the page has no Cost of Waiting band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    await expect(page.locator('#cost')).not.toContainText('72%');
-    await expect(page.locator('#cost article.card')).toHaveCount(2);
+    await expect(page.locator('#cost')).toHaveCount(0);
+    await expect(page.locator('main', { hasText: 'The Cost of Waiting' })).toHaveCount(0);
   });
 
-  test('the track record comes before what success looks like', async ({ page }) => {
+  // WP48 (cycle-23 review): "What Success Looks Like" ("Young People Earning, Locally and Globally") is gone from YouthWIDE, so the track record is followed by the delivery model (tests/wp41.spec.ts, tests/wp48.spec.ts)
+  test('the track record comes before the delivery model, and the page has no "what success looks like" band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const titles = await headingsOf(page);
     const record = titles.findIndex((t) => /We Have Built This Path/i.test(t));
-    // WP41 (cycle-18 review): the band is about young people earning (it was "Reports That Show Who Started Earning")
-    const vision = titles.findIndex((t) => /Young People Earning, Locally and Globally/i.test(t));
+    const model = titles.findIndex((t) => /One Delivery Model, from Selection to Paid Work/i.test(t));
     expect(record).toBeGreaterThan(-1);
-    expect(vision).toBeGreaterThan(record);
+    expect(model).toBeGreaterThan(record);
+    expect(titles.findIndex((t) => /Young People Earning, Locally and Globally/i.test(t))).toBe(-1);
   });
 
   test('the FAQ is trimmed to five decision questions, the national-scale answer leading with Her Power in two short paragraphs', async ({ page }) => {

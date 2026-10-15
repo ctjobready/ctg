@@ -27,7 +27,8 @@ const ROUTES = [
 
 test.describe('impactful H1s, Title Case, no trailing period', () => {
   const H1: [string, string][] = [
-    ['programs/', 'Digital Skills for Every Stage, from Classroom to Career'],
+    // WP48 (cycle-23 review): "Programs That Take Learners from Classroom to Career" (it was "Digital Skills for Every Stage, from Classroom to Career")
+    ['programs/', 'Programs That Take Learners from Classroom to Career'],
     ['programs/youthwide/', 'From Training to Paid Digital Work, Country by Country'],
     ['programs/jobready-campus/', 'Give Your Students a Degree and a Route into Digital Work'],
     ['programs/jobready-work/', 'Build AI-Ready Teams Around Your Own Roles'],

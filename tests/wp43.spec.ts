@@ -227,8 +227,9 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
   test('slide 5 is its heading, the 58.8% tile with its full base and the evidence link; the sentence that repeated them is gone', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months"; WP46, cycle-22 review, owner answer 2026-10-15: "... of the Course Ending", the six months counted from the end of the course)
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
+    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months"; WP46, cycle-22 review, owner answer 2026-10-15: "... of the Course Ending", the six months counted from the end of the course;
+    // WP48, cycle-23 review, item 32: "Most Had Started Earning by Six Months After the Course", because OC-05 is cumulative and includes those who first earned during the course)
+    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
@@ -237,7 +238,7 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
     await expect(tile).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await tile.textContent())).toContain('58.8%');
-    expect(compact(await tile.textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
+    expect(compact(await tile.textContent())).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
     const link = slide.locator('a', { hasText: 'See When Completers First Earn' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');
