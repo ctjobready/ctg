@@ -272,11 +272,12 @@ test.describe('Foundations: "What Happens After You Say Yes" has the four steps,
 });
 
 test.describe('Home: the investor route card says what JobReady is (item 15)', () => {
-  test('the "Impact Investors" card reads "For impact investors: JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
+  test('the "Impact Investors" card reads "JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Impact Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await card.textContent())).toContain('JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });
 });

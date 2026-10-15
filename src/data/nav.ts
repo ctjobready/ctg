@@ -252,5 +252,5 @@ export const audiences = [
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
   // WP46 (cycle-22 review): JobReady is not defined on Home, so the investor card says what it is, in the partner hub's words for this route.
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
 ] as const;
