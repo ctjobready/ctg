@@ -1,0 +1,6 @@
+# Review Kit 26 (review-r26, site review round 5 cycle 21, text only)
+
+Source commit: 35a5e8b31b5e803fc995aad3983273048382c80f (ctjobready/ctg, fresh clone of main, depth 1; the expected commit 35a5e8b or later), built with npm ci and npm run build (Node v25.6.0; .nvmrc says 24); build reported 99 real pages (98 index pages including the staging styleguide, plus 404.html).
+Excluded from this kit: styleguide (staging-only internal page). Result: 97 real pages in pages/ and PAGES.md, the same set as kit25 (no pages added or removed); 8 page files changed content since kit25 (about, home, partner-with-us, partner-with-us--development-partners, partner-with-us--foundations, partner-with-us--investors, partner-with-us--universities, programs--jobready-campus).
+
+Files: REVIEWER-BRIEF.md (header updated for review-r26; "Owner Direction (14 October 2026)" section kept; cycle 20 fixes (WP43) appended to the settled paragraph), PAGES.md, pages/*.md (97 real pages; home.md includes all carousel slides as "[slide N of M]"), site-chrome-and-ia.md (drawer CTA "Talk to Us" listed in the desktop header utilities and the mobile drawer; H1/H2 outline per page with H3 headings indented under each H2).
