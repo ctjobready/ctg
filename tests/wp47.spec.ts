@@ -269,7 +269,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   test('item 35: Foundations’ Funding Route 2 says "Live today: partner portals and AI chat."; JobReady Platform keeps the full list', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const cell = page.locator('#funding-routes tbody tr').nth(1).locator('td[data-label="What It Supports"]');
-    expect(compact(await cell.textContent())).toBe('A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(compact(await cell.textContent())).toBe('A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
     const text = await mainText(page);
     expect(text).not.toMatch(/marketing automation|customer relationship management/i);
     expect(await page.locator('#funding-routes tbody tr').nth(1).getAttribute('data-fact')).toBe('IN-04');
@@ -279,7 +279,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(platform).toContain('Marketing automation, customer relationship management and AI chat');
     expect(platform).toContain('Partner portals');
     await open(page, 'partner-with-us/employers/');
-    expect(await mainText(page)).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
+    expect(await mainText(page)).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.');
     expect(await mainText(page)).not.toMatch(/marketing automation|customer relationship management/i);
   });
 

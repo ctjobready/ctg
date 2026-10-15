@@ -32,6 +32,8 @@
  * WP50 (cycle-25 review): the first pain is "Track earnings, not only training hours" (Title Case when rendered; it said that grants "rarely" buy earnings, a statement about all grants), and the track-record band opens with its origin line
  * ("Since 2014, ..."): the empathy line that restated the problem ("You want your grant to change a young person’s income, ...") is gone, because the problem band above says it. "Discuss a JobReady Platform Grant" was linked twice (under the funding-routes
  * comparison and in the Funding Route 2 passage); the passage keeps its one sentence and the link stays beside the comparison (WP37 had added it to the passage). "Discuss a YouthWIDE Cohort Grant" was linked once, so it is unchanged.
+ * WP51 (cycle-26 review): the closing partner line under "What Happens Next" ("Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.") moved, unchanged, into the Track Record
+ * band ("We’ve Built This Path Since 2014"), directly after the BIGD line (C14.validateFor.foundations is passed to PartnerGuideBand's `statements`); the page now ends on its first-action line alone, as Development Partners and Governments do since WP50.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -128,6 +130,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <PartnerGuideBand
     statements={[
       { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.` },
+      // WP51 (cycle-26 review, Kimi m1): the partner line that closed the page under "What Happens Next" moved here, unchanged, directly after the BIGD line.
+      C14.validateFor.foundations,
     ]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
@@ -247,7 +251,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
        without steps and kept the cohort timing in the C13 urgency line; the steps now carry that timing (about three weeks to agreement, 6–8 weeks from signing to training), so the urgency line that repeated it is gone, as on Development Partners.
        The "introductory call" sentence is gone with the stepless band: the page names one first step, the discovery session. -->
   <NextStepsBand lead="For cohort grants." timing={false} />
-  <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
+  <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />
 </LandingLayout>

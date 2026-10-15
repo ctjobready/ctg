@@ -87,13 +87,16 @@ const jsonLd = [
     </Fragment>
   </Hero>
 
-  <!-- WP46 (cycle-22 review): the jump list is back under the hero (WP30e had cut it while the sub-pages and Impact kept theirs). Each label is the H2 it jumps to; the CTA band's id is its anchor. -->
+  <!-- WP46 (cycle-22 review): the jump list is back under the hero (WP30e had cut it while the sub-pages and Impact kept theirs). Each label is the H2 it jumps to; the CTA band's id is its anchor.
+       WP51 (cycle-26 review): the list had left out two existing H2s, "The People Who Started It" (#founders) and "Industry Recognition" (#recognition); it now links all eight, in page order. -->
   <PageNav links={[
     { label: 'Why We Exist', href: '#mission' },
     { label: 'Where We Are Today', href: '#glance' },
     { label: TRIAL_BAND_HEADING, href: '#proof' },
     { label: 'From a Copenhagen Launch to National Programs', href: '#story' },
+    { label: 'The People Who Started It', href: '#founders' },
     { label: 'Four Principles Behind Every Program', href: '#how-we-work' },
+    { label: 'Industry Recognition', href: '#recognition' },
     { label: 'Talk to the Team', href: '#about-cta' },
   ]} />
 

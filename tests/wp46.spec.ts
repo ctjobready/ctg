@@ -154,9 +154,10 @@ test.describe('NU diploma course pages: "What You Will Work On" is gone, "What Y
 });
 
 test.describe('About: "On This Page" is back under the hero, one link for each of the main bands (item 7)', () => {
-  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'Four Principles Behind Every Program', 'Talk to the Team'];
+  // WP51 (cycle-26 review): the list had left out two existing H2s, "The People Who Started It" (#founders) and "Industry Recognition" (#recognition); it links all eight bands now
+  const LABELS = ['Why We Exist', 'Where We Are Today', 'An Independent Randomized Trial', 'From a Copenhagen Launch to National Programs', 'The People Who Started It', 'Four Principles Behind Every Program', 'Industry Recognition', 'Talk to the Team'];
 
-  test('the list sits directly after the hero and before the first band, links the six H2s in page order, and every label is the heading it opens (Title Case)', async ({ page }) => {
+  test('the list sits directly after the hero and before the first band, links the eight H2s in page order, and every label is the heading it opens (Title Case)', async ({ page }) => {
     await open(page, 'about/');
     const nav = page.locator('nav[aria-label="On this page"]');
     await expect(nav).toHaveCount(1);
@@ -214,7 +215,8 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
   // WP48 (cycle-23 review): the note reads "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly." (it was "The total is ... ; it includes Her Power’s national program, which trained ...")
   const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 
-  test('the register’s GV-12 note and the Impact and Governments tiles read the same note, and Home slide 2 keeps its first clause; no page still says "(25,125 women trained)"', async ({ page }) => {
+  // WP51 (cycle-26 review, Kimi m2): the Governments tile keeps the note's first sentence and points to its contracts table; the Impact tile reads the register note
+  test('the register’s GV-12 note and the Impact tile read the same note, the Governments tile keeps its first sentence, and Home slide 2 keeps its first clause; no page still says "(25,125 women trained)"', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
     // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('trained 25,125 women');
@@ -225,7 +227,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(NOTE);
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(NOTE);
+    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe('The figure is contract scope, not a count of completers. The contracts table below shows each scope.');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): Home slide 2 keeps only the note's first clause ("contract scope, not a count of completers"), read from the note; the Impact and Governments tiles above keep the whole note (tests/wp48.spec.ts)
@@ -245,8 +247,9 @@ test.describe('Investors: the guide line asks for what is proven and what is sti
 });
 
 // WP49 (cycle-24 review): the band's heading is "What Happens Next" (it was "What Happens After You Say Yes", which presumed a commitment; tests/wp49.spec.ts)
+// WP51 (cycle-26 review, Kimi m1): the partner line moved, unchanged, from the closing strip into the Track Record band, directly after the BIGD line (tests/wp51.spec.ts); the closing strip keeps the first-action line alone
 test.describe('Foundations: "What Happens Next" has the four steps, and the partner line is not mislabeled (item 14)', () => {
-  test('the band leads with "For cohort grants.", shows the Development Partners steps (PD-04), and the closing partner line is "Organizations that have worked with CodersTrust include…"', async ({ page }) => {
+  test('the band leads with "For cohort grants.", shows the Development Partners steps (PD-04), and the partner line is "Organizations that have worked with CodersTrust include…", in the Track Record band', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
@@ -257,7 +260,8 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
     expect(foundations, 'the same four steps as Development Partners').toEqual(await stepsOf());
     expect(foundations).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
     await open(page, 'partner-with-us/foundations/');
-    expect(compact(await page.locator('#reinforce').textContent())).toContain('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
+    expect(compact(await page.locator('#guide').textContent())).toContain('Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.');
+    expect(compact(await page.locator('#reinforce').textContent())).not.toContain('Organizations that have worked with CodersTrust include');
     expect(await mainText(page)).not.toMatch(/Development and NGO partners include|introductory call/);
     // the platform route is still scoped in the discovery session, by the agenda in the call-to-action band above
     expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toContain('For a platform grant, we discuss JobReady’s staged rollout.');
@@ -365,7 +369,8 @@ test.describe('Outcomes 2026: the download link names the data, not the file (it
 test.describe('The WSDFM card says its 71% is program records, not trial data (item 23)', () => {
   test('every page that shows the WSDFM caption reads "WSDFM program records (not trial data): 71% in work"', async () => {
     const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial data): 71% in work'));
-    expect(withCaption.map((p) => p.route).filter((r) => r !== '/styleguide/').sort()).toEqual(['/', '/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/local-partners/', '/programs/youthwide/']);
+    // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure and its caption (the fourth carousel slide states the figure), so Home is not in the list
+    expect(withCaption.map((p) => p.route).filter((r) => r !== '/styleguide/').sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/local-partners/', '/programs/youthwide/']);
     // the old caption is gone everywhere (Impact’s tile has its own label, "WSDFM program records: women in work (71%)", and its own note, "Program records, separate from the randomized trial of the predecessor program.": different lines, unchanged)
     expect(builtPages().filter((p) => p.html.includes('program records, separate from the trial')).map((p) => p.route)).toEqual([]);
   });
@@ -379,7 +384,7 @@ test.describe('Universities and Employers: no card restates the 72% tile (item 2
     expect(compact(await first.locator('.gp__a').textContent())).toBe('AI skills are the hardest to find.');
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     await open(page, 'partner-with-us/universities/');
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']);
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']);
     expect(await mainText(page)).not.toContain('Employers report difficulty finding the talent they need.');
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     // the two cards fill the row: no empty third column on a desktop, one column on a phone
@@ -467,8 +472,8 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
   test('Home slide 5 says "by Six Months After the Course" in its heading and shows the register’s label in its tile', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
-    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
+    await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
+    expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await s.locator('.hs__stat').textContent())).toContain(LABEL);
   });

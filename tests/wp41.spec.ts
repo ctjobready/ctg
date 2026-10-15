@@ -169,7 +169,7 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
     await open(page, 'partner-with-us/employers/');
     const answer = compact(await page.locator('#faq details', { has: page.locator('summary', { hasText: 'Is the JobReady Platform Live?' }) }).locator('.faq__a').textContent());
     // WP48 (cycle-23 review): the shared answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-    expect(answer).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
+    expect(answer).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.');
   });
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
@@ -224,11 +224,11 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   // WP43 (cycle-20 review): the slide has no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated the heading and the tile)
   // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"; WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 is "Most Had Started Earning by Six Months After the Course": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  test('slide 5 is "Most Surveyed New Earners Were Earning by Six Months After the Course": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
-    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
+    await expect(slide.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
+    expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
@@ -238,11 +238,11 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     expect(tile).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
   });
 
-  test('slide 2 counts the contracts and says "a National University Partnership"', async ({ page }) => {
+  test('slide 2 counts the contracts and names Bangladesh’s National University', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(1);
-    await expect(slide.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
-    expect('Six Government Contracts and a National University Partnership').toBe(titleCase('Six Government Contracts and a National University Partnership'));
+    await expect(slide.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
+    expect('Six Government Contracts and Bangladesh’s National University').toBe(titleCase('Six Government Contracts and Bangladesh’s National University'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(fact('GV-12').text.startsWith('Six government contracts')).toBe(true);
   });

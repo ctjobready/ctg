@@ -39,7 +39,7 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
   // WP32 (cycle-9 review): "staged rollout" alone did not say what is live, so the hero adds IN-04's status in one sentence (the Investors page marks the lead data-fact="IN-04"); it is two sentences by design.
   // The two marketplaces are named as two, as IN-04 and tests/wp25s.spec.ts ("named as two") have them: never "the employer and gig-work marketplaces".
-  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.',
+  investors: 'Back JobReady’s staged rollout, built on CodersTrust’s training and mentoring programs. Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.',
   localPartners: 'We help local organizations prepare young people for paid digital work through mentored, certification-focused training.',
   nuPgd: 'We help learners prepare for digital work through a National University postgraduate diploma.',
 };
@@ -63,7 +63,8 @@ export const HEADLINE: Record<Audience, string> = {
 // WP50 (cycle-25 review): nor do Foundations ("You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.") and the Universities partner page: each line restated the problem band just above its
 // track-record band, which now opens with the origin line. `universities` stays because JobReady@Campus states the sentence once, as its problem band's lead (tests/wp25s.spec.ts); the Universities partner page does not read it.
 export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations'>, string> = {
-  governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
+  // WP51 (cycle-26 review): "... must produce young people in work, not only seats filled." (it said "... must show up as young people in work, not only as seats filled.").
+  governments: 'You answer for training budgets that must produce young people in work, not only seats filled.',
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   // WP46 (cycle-22 review): the earlier line ("... distinguish a model that is working from one that is only promised") invited a platform-proof test the page cannot pass; it now asks only for what is proven and what is still being built.
@@ -88,17 +89,7 @@ function originShort(): CopyBlock {
   return { text: `Since ${year}, from a Copenhagen launch to programs in ${countries} countries and territories.`, facts: ['ID-02', 'SC-03'] };
 }
 export const ORIGIN_SHORT: CopyBlock = originShort();
-
-/**
- * ORIGIN_SHORT without the count, for a Guide band that already shows SC-03's tile (Development Partners: "15 countries and territories, including Bangladesh" sits beside it), so the figure is not stated twice in one band.
- * The year is ID-02's stat value, as in ORIGIN_SHORT.
- */
-function originLaunch(): CopyBlock {
-  const year = fact('ID-02').stat?.value;
-  if (!year || !/^\d{4}$/.test(year)) throw new Error('ORIGIN_LAUNCH: ID-02 no longer has a four-digit stat value');
-  return { text: `Launched in Copenhagen in ${year}.`, facts: ['ID-02'] };
-}
-export const ORIGIN_LAUNCH: CopyBlock = originLaunch();
+// WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */
 export const TRIAL_BAND_HEADING = 'An Independent Randomized Trial';
@@ -159,9 +150,10 @@ const WORK_POSITIONING =
 /**
  * Home's closing sentence (WP19, item 13: two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins it for Home only).
  * WP50 (cycle-25 review): the first of the two ("Many programs cover one step: training, self-paced courses or freelance matching.") is gone; the sentence that names what CodersTrust connects stays.
+ * WP51 (cycle-26 review): the monthly reports are scoped as every other reporting statement on the site is ("..., as agreed in the program scope"); scripts/check-facts.mjs declares the sentence independently (POSITION_EMPLOYER_CLOSING['/']).
  */
 const HOME_POSITIONING =
-  'CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
+  'CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
@@ -569,12 +561,15 @@ export const RISK_EYEBROW = 'Managed Rollout';
 export const C14 = {
   // WP50 (cycle-25 review): Development Partners and Governments print no closing validation line any more (their Track Record band's logo strip names the same organizations: UNDP, the World Bank Group and BRAC; the Bangladesh government bodies),
   // so `validate` (the development-partner line, "Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.", PA-01) and `validateFor.governments` ("Government partners include Bangladesh’s ICT
-  // Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.", PA-02) are gone. Foundations, Universities and Employers keep theirs.
+  // Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.", PA-02) are gone. Foundations, Universities and Employers kept theirs.
+  // WP51 (cycle-26 reviews): Universities' line ("University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).", PA-05) is gone by the same rule: the page already names
+  // the three universities above its closing strip (the National University Partnership band's University Partners tile, and the Track Record band's logo alt text). Foundations' line is not deleted but MOVED, unchanged: it is the second statement
+  // of the Foundations Track Record band, directly after the BIGD line (the page passes `C14.validateFor.foundations` to PartnerGuideBand's `statements`), and no longer closes the page under "What Happens Next".
+  // Employers keeps its closing line (that page was not part of the review).
   // WP21: one validation line per audience (the closing strip no longer repeats the same three organizations on every partner page); each uses names from one registered partner fact.
   validateFor: {
     // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust"; the names are still from PA-01.
     foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
-    universities: { text: 'University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).', facts: ['PA-05'] } as CopyBlock,
     employers: { text: 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.', facts: ['PA-03'] } as CopyBlock,
   },
   reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,

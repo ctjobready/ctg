@@ -73,13 +73,15 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     }
   });
 
-  test('the 31,200+ note says the total is contract scope, not a count of completers, and that Her Power’s 25,125 women were trained; Impact and Governments read the same register line', async ({ page }) => {
+  // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the register note's first sentence and points to its contracts table, which states Her Power's two figures; Impact keeps the whole note (tests/wp51.spec.ts)
+  test('the 31,200+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments points to its contracts table', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
     const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
+    const GOV_NOTE = 'The figure is contract scope, not a count of completers. The contracts table below shows each scope.';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note')).toHaveText(NOTE);
+    await expect(page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
     expect(await mainText(page)).not.toMatch(/delivered-training total|Includes Her Power’s 25,125 women/);
   });
 });
@@ -187,7 +189,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work.',
+      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
     ]);
   });
 
@@ -206,12 +208,15 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['GV-12', 'PR-05', 'RC-02', 'PR-02']);
   });
 
+  // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure (the fourth carousel slide states it); the pages that keep the figure still print the caption
   test('the Proof in Practice cards and the case study still state the WSDFM program records, apart from the trial', async ({ page }) => {
-    for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
+    for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       // WP46 (cycle-22 review): "WSDFM program records (not trial data): 71% in work"
-      expect((await texts(page, '#cases article')).join(' | '), route || 'home').toContain('WSDFM program records (not trial data): 71% in work');
+      expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial data): 71% in work');
     }
+    await open(page, '');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
   });
@@ -268,11 +273,11 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
 });
 
 test.describe('Partner with Us hub', () => {
-  test('the hero has one button, "Choose Your Route", that jumps to the route cards, and no email button comes before the closing call to action', async ({ page }) => {
+  test('the hero has one button, "See Partnership Routes", that jumps to the route cards, and no email button comes before the closing call to action', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const hero = page.locator('#hero');
     await expect(hero.locator('.btn')).toHaveCount(1);
-    await expect(hero.locator('.btn')).toHaveText('Choose Your Route');
+    await expect(hero.locator('.btn')).toHaveText('See Partnership Routes');
     expect(await hero.locator('.btn').getAttribute('href')).toBe('#audiences');
     await expect(hero.locator('.routelinks, a.link')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Not Sure? Email Us Your Goals');

@@ -39,6 +39,9 @@ import { cta } from '../lib/mailto';
  * WP50 (cycle-25 review): the trial slide's heading is "Women Offered a Place Earned an Estimated 41% More" again, with the qualifier in the slide's eyebrow ("Randomized Trial of a Predecessor Program") and in the lead; the ">4×" tile's caption says
  * the multiple in words ("More than four times the average employment effect across nine vocational-training trials."), without the +10.3 the hero's trial card states. Both are the slide's own text: RC-06a's labels are unchanged.
  * The hero's Randomized Trial card says "10.3 more were in work than in the control group" (RC-02's figure, as in the "+10.3" above it), where it said "about 10 more" (RC-02 rounded).
+ * WP51 (cycle-26 review): the speed slide's heading names its subgroup: "Most Surveyed New Earners Were Earning by Six Months After the Course" (OC-05's label calls the 170 "surveyed new earners"; the heading dropped the subgroup).
+ * WP51 (cycle-26 review, Grok): the government slide is "Six Government Contracts and Bangladesh’s National University" (GV-12's own name for the partner; "a National University Partnership" read as any university), and Her Power's line on the
+ * program-results slide carries its base: "Her Power: 47% of 800 tracked women in work (2,500 trained directly)." (PR-05's "from the 2,500 trained directly by CodersTrust", shortened to keep the line on one row at 1280 px).
  */
 
 export interface HeroSlideStat {
@@ -123,6 +126,14 @@ if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a n
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
 /**
+ * WP51 (cycle-26 review, Grok M1): Her Power's line on the program-results slide carries the base the Impact and Governments tiles state, in PR-05's words ("tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%"):
+ * "... tracked women in work (2,500 trained directly)." The number is read from the label, never retyped; the build stops if the label stops reading that way. The fuller wording ("..., from the 2,500 trained directly by CodersTrust.", or the
+ * case cards' "among the 2,500 women CodersTrust trained directly", WP47) takes a second line at 1280 px, which makes this slide 18 px taller than "Find Your Program" and leaves the other slides 57 px unused (the limit is 48,
+ * tests/hero-slider.spec.ts); the UNDP YES line already takes two lines, and the WSDFM line is one line at 1280, so shortening its parenthesis would not have helped.
+ */
+const herPowerDirect = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: \d+%$/.exec(fact('PR-05').stat?.label ?? '')?.[1];
+if (!herPowerDirect) throw new Error('heroSlides: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
+/**
  * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
  * WP45 (cycle-21 review): the heading states the figure ("Programs in 15 Countries and Territories", SC-03's stat value, never typed here), so the slide no longer carries SC-03's tile as well: the same "15" would sit twice in the same few lines.
  */
@@ -170,7 +181,7 @@ const PR_TEXT = {
   wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
   wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records, not trial data).`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
-  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
+  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work (${herPowerDirect} trained directly).`,
 };
 
 /** The survey card's caption: OC-01's tile label. (WP35 added "in Bangladesh"; reverted until the owner confirms the survey's country scope — OC-09 gives districts, not an all-Bangladesh sample.) */
@@ -233,7 +244,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     eyebrow: 'Government and University Partners',
     // WP42 (cycle-19 review): second, after the trial and before the survey, because most readers never reach slide 6: the trial, then government scale, then the survey and the program results. Wording unchanged.
     // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
-    title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
+    // WP51 (cycle-26 review, Grok m5): "... and Bangladesh’s National University" (five reviewers questioned "a National University Partnership", which Grok read as any university): GV-12 names the partner as "Bangladesh’s National University".
+    title: `${governmentScope[1].split(' ')[0]} Government Contracts and Bangladesh’s National University`,
     titleFacts: ['GV-12'],
     // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note, the wording Impact and Governments print, in place of
     // "(contract scope, not people trained)". WP46 (cycle-22 review): the note says who trained whom ("The total is contract scope, not a count of completers; it includes Her Power's national program, which trained 25,125 women;
@@ -291,7 +303,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the END of the course, so the heading says so ("... of the Course Ending"); the tile's caption (OC-05's label) says "of finishing the course".
     // WP48 (cycle-23 review, a logic error WP46 introduced): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, who cannot have started "within six months of the course ending"; the heading says what the figure counts,
     // "Most Had Started Earning by Six Months After the Course", and the tile's caption (OC-05's label) says "had started earning by six months after finishing the course".
-    title: 'Most Had Started Earning by Six Months After the Course',
+    // WP51 (cycle-26 review): the heading names the subgroup, in the register's own term for it (OC-05's label: "the 170 surveyed new earners"): "Most Surveyed New Earners Were Earning by Six Months After the Course" (still cumulative: "by ... after").
+    title: 'Most Surveyed New Earners Were Earning by Six Months After the Course',
     titleFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],

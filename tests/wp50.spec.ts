@@ -74,7 +74,8 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
 
   test('"One Path from Learning to Earning" states one closing sentence: the "Many programs cover one step" sentence is gone from the statement and from the source', async ({ page }) => {
     const expected =
-      'For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
+      // WP51 (cycle-26 review): the reports are scoped like every other reporting statement on the site ("..., as agreed in the program scope"; tests/wp51.spec.ts)
+      'For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
     expect(POSITIONING.home.text).toBe(expected);
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
     await open(page, '');
@@ -105,7 +106,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work.',
+      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
     ]);
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01', 'PR-03 PR-06', 'PR-05']);
   });
@@ -114,6 +115,10 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await open(page, '');
     const lines = await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li');
     expect(lines).toHaveLength(4);
+    // WP51 (cycle-26 review): the slide's line is the one place Home states the figure, so Home's WSDFM card shows delivery context; the figure and its caption are the card's on Development Partners (tests/wp51.spec.ts)
+    const homeCard = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
+    await expect(homeCard.locator('.case__value')).toHaveCount(0);
+    await open(page, 'partner-with-us/development-partners/');
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
     expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data): 71% in work');
@@ -382,10 +387,9 @@ test.describe('Development Partners and Governments: no closing line repeats the
     for (const name of ['ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority', 'NSDA', 'BCC']) expect(strip, name).toContain(name);
   });
 
-  test('Foundations, Universities and Employers keep their closing lines (they are not part of this review)', async ({ page }) => {
+  // WP51 (cycle-26 reviews): Universities' closing line is gone by the same rule (its three universities are named above it) and Foundations' line moved into its Track Record band (tests/wp51.spec.ts); Employers keeps its closing line
+  test('Employers keeps its closing line (that page is not part of the cycle-26 review)', async ({ page }) => {
     const lines: [string, string][] = [
-      [FOUND, 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.'],
-      [UNI, 'University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).'],
       [EMP, 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.'],
     ];
     for (const [route, line] of lines) {

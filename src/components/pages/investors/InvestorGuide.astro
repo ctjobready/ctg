@@ -4,18 +4,19 @@ import Icon from '../../system/Icon.astro';
 import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import { EMPATHY, INVESTOR_PARTNERS, ORIGIN_LAUNCH } from '../../../data/copy';
+import { EMPATHY, INVESTOR_PARTNERS, ORIGIN_SHORT } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
 /**
- * C5 Guide (Investors), empathy first and before the vision (credibility before the future state, as on Home): empathy ([EMP] P8) → the launch line (ORIGIN_LAUNCH) → what has been delivered since 2014 (SC-01, SC-02, SC-03) →
+ * C5 Guide (Investors), empathy first and before the vision (credibility before the future state, as on Home): empathy ([EMP] P8) → the origin line (ORIGIN_SHORT) → what has been delivered since 2014 (SC-01, SC-02, SC-03) →
  * the institutions that work with CodersTrust, as one short paragraph by type (INVESTOR_PARTNERS: governments, development partners, universities, private-sector partners; PA-02, PA-01, PA-05, PA-03) → the link to the
  * leadership team → TalentLEAP (IN-06).
  * WP38 (cycle-15 review): the origin is one line, as on the other audience pages; Home keeps the two-sentence history (ORIGIN).
  * WP42 (cycle-19 review): the delivered figures lead the band, before the institutional relationships and the leadership: "Delivered Since 2014" (the three tiles with their enrollment and location note) moved here from "Contracts,
- * Pipeline and Recognition" (#reach), which keeps the contract scope in its own labeled block, apart from what was delivered. The band shows SC-03's tile, so the origin line is the launch alone (ORIGIN_LAUNCH), as on Development
- * Partners: the count of countries and territories is the tile's, stated once.
+ * Pipeline and Recognition" (#reach), which keeps the contract scope in its own labeled block, apart from what was delivered. The band shows SC-03's tile, so the origin line was the launch alone ("Launched in Copenhagen in 2014."), as on Development
+ * Partners: the count of countries and territories was the tile's, stated once. WP51 (cycle-26 review, Grok m1): both pages print the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT, the line
+ * Governments and Foundations print), so the 15 is also in the line.
  * WP43 (cycle-20 review): the band was a directory interrupting the platform story (four relationship lists in a panel, then seven founder and leadership cards). The delivered tiles and the origin line stay; the relationship
  * lists are ONE compact paragraph by type, naming institutions the register names (src/data/copy.ts INVESTOR_PARTNERS), and the people entries are the "Meet the Leadership Team" link that closed the page's call-to-action band
  * (the team page has the biographies, as on Home's Guide band; no new biographies here).
@@ -47,7 +48,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
       <p class="eyebrow" data-reveal>Our Track Record</p>
       <p class="ig__empathy" data-reveal>{EMPATHY.investors}</p>
       <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014</h2>
-      <CopyBlock block={ORIGIN_LAUNCH} class="ig__origin" />
+      <CopyBlock block={ORIGIN_SHORT} class="ig__origin" />
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>

@@ -1,6 +1,6 @@
 ---
 /**
- * The two Foundations funding routes as a two-row comparison (WP29, Benchmark): one row per route, two columns, What It Supports and Evidence Relationship.
+ * The two Foundations funding routes as a two-row comparison (WP29, Benchmark): one row per route, two columns, What It Supports and What the Evidence Covers (WP51, cycle-26 review: it was "Evidence Relationship").
  * Existing copy only: the sentences were the two route cards' own text in the C6 mechanism band, which now holds the route names and this table.
  * Route 2's evidence cell states the line the benchmark asked for ("Youth-program outcomes are not platform outcomes.") beside the page's own sentence that
  * the outcome evidence comes from the youth programs. The platform's status sentence ("Live today: ... In pre-launch: ...") is IN-04's, so that cell carries IN-04.
@@ -30,7 +30,7 @@ const rows = [
   {
     n: 'Funding Route 2',
     name: 'JobReady Platform Grants',
-    supports: 'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',
+    supports: 'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.',
     evidence: 'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
     facts: 'IN-04',
   },
@@ -44,7 +44,7 @@ const rows = [
       <tr>
         <th scope="col">Funding Route</th>
         <th scope="col">What It Supports</th>
-        <th scope="col">Evidence Relationship</th>
+        <th scope="col">What the Evidence Covers</th>
       </tr>
     </thead>
     <tbody>
@@ -53,7 +53,7 @@ const rows = [
           <tr data-fact={r.facts}>
             <th scope="row"><span class="fr__n">{r.n}</span>{' '}{r.name}</th>
             <td data-label="What It Supports">{r.supports}</td>
-            <td data-label="Evidence Relationship">{r.evidence}</td>
+            <td data-label="What the Evidence Covers">{r.evidence}</td>
           </tr>
         ))
       }

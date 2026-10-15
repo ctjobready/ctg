@@ -133,11 +133,11 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
 test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course (tests/wp46.spec.ts)
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself; the heading is "Most Had Started Earning by Six Months After the Course" (tests/wp48.spec.ts)
-  test('slide 5 is "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
+  test('slide 5 is "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
-    expect('Most Had Started Earning by Six Months After the Course').toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
+    await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
+    expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(s.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -260,13 +260,13 @@ test.describe('Investors: the scale answer says larger programs are designed to 
 });
 
 test.describe('Our Model menu names both pre-launch marketplaces (item 15)', () => {
-  const LINE = 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.';
+  const LINE = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.';
 
   test('the menu line and the featured panel say it as IN-04 does, never "employer and gig-work"', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('#mega-model a.mega__link[href$="our-model/jobready-platform/"] .mega__desc').textContent())).toBe(LINE);
     expect(compact(await page.locator('#mega-model .mega__feature-text').textContent())).toBe(LINE);
-    expect(fact('IN-04').text).toContain('In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(fact('IN-04').text).toContain('In pre-launch: the employer marketplace and the gig-work marketplace.');
     expect(compact(await page.locator('header').first().textContent())).not.toMatch(/employer and gig-work/i);
   });
 });

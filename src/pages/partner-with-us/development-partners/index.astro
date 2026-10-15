@@ -23,6 +23,8 @@
  * "What Your Portfolio Gets" says in its first card that one delivery partner connects training, mentoring and placement support (the hours stay in the delivery model above); the ">4×" tile is the fourth tile of "Results at a Glance" (a
  * single tile needs no "More Results" heading); the closing steps band is "What Happens Next".
  * WP50 (cycle-25 review): the problem band's lead says "... keeping hard-to-reach groups engaged, is the hard part." (it said "... groups in, ...").
+ * WP51 (cycle-26 review, Kimi P2): the Track Record band opens with the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT, as on Governments and Foundations), in place of
+ * "Launched in Copenhagen in 2014."; PartnerGuideBand no longer swaps in the launch alone for a band that shows SC-03's tile (Investors prints the same shared line in its own band, InvestorGuide: Grok m1).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -112,7 +114,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
 
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the launch line. -->
+  <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the origin line. WP51 (cycle-26 review): that line is the one Governments and Foundations print, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT), in place of the launch alone. -->
   <PartnerGuideBand
     stats={['SC-01', 'SC-03']}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}

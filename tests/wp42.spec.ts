@@ -66,14 +66,16 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(domOrder).toEqual([true, true]);
   });
 
-  test('the band shows SC-03’s tile, so the origin line is the launch alone and the count of countries and territories is stated once in the band’s tile and note', async ({ page }) => {
+  // WP51 (cycle-26 review, Grok m1): the band prints the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (the line Governments, Foundations and Development Partners print), in place of
+  // the launch alone, so the count of countries and territories is in the origin line as well as in the tile and its note (tests/wp51.spec.ts)
+  test('the band prints the shared origin line, and the tile and its note still carry SC-03', async ({ page }) => {
     await open(page, URL);
-    const line = page.locator('#guide p[data-fact="ID-02"]');
+    const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe('Launched in Copenhagen in 2014.');
+    expect(compact(await line.textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 15 countries and territories.');
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).not.toMatch(/from a Copenhagen launch to programs in|began (?:developing|training) freelancers|Korail settlement/);
-    expect(count(guide, 'countries and territories'), 'the tile’s label and SC-03’s note, nothing else').toBe(2);
+    expect(guide).not.toMatch(/Launched in Copenhagen|began (?:developing|training) freelancers|Korail settlement/);
+    expect(count(guide, 'countries and territories'), 'the origin line, the tile’s label and SC-03’s note').toBe(3);
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
 
@@ -332,16 +334,16 @@ test.describe('Home: the government slide is second (item 10)', () => {
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
       // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
       'Women Offered a Place Earned an Estimated 41% More',
-      'Six Government Contracts and a National University Partnership',
+      'Six Government Contracts and Bangladesh’s National University',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
       // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course; WP48 (cycle-23 review, item 32): "by", because OC-05 is cumulative and includes those who first earned during the course
-      'Most Had Started Earning by Six Months After the Course',
+      'Most Surveyed New Earners Were Earning by Six Months After the Course',
       'Programs in 15 Countries and Territories',
       'Find Your Program',
     ]);
     const slides = page.locator('#results [data-hs-slide]');
-    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 7: Six Government Contracts and a National University Partnership');
+    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 7: Six Government Contracts and Bangladesh’s National University');
     await expect(slides.nth(6)).toHaveAttribute('aria-label', /^7 of 7: Find Your Program/);
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
@@ -365,7 +367,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
       const scroll = await page.locator('#results [data-hs-slide]').evaluateAll((els) => els.map((e) => Math.round((e as HTMLElement).scrollHeight)));
       for (const h of scroll) expect(h, `${vp.width}px`).toBeLessThanOrEqual(track + 1);
       await page.locator('[data-hs-dot]').nth(1).click();
-      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText('Six Government Contracts and a National University Partnership');
+      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });
@@ -404,7 +406,7 @@ test.describe('Home: the comparison table is one style (item 13)', () => {
     expect(rows).toEqual([
       ['Mentoring', 'Three months of milestone-based mentoring', 'Varies; often self-directed'],
       ['Work Entry', 'Placement support into local, remote and global work', 'Work-entry support depends on the provider and package'],
-      ['Outcome Tracking', 'Planned for every cohort: follow-up surveys at 3, 6 and 12 months; monthly reports', 'Reporting emphasis varies; check whether employment outcomes are included'],
+      ['Outcome Tracking', 'Planned for every cohort, as agreed in the program scope: monthly reports and follow-up surveys at 3, 6 and 12 months', 'Reporting emphasis varies; check whether employment outcomes are included'],
       ['Independent Evidence', 'One randomized trial of a predecessor program (200 hours, women in Dhaka); independent evaluation of your cohort welcome', 'Varies'],
     ]);
     for (const [, ...cells] of rows) {

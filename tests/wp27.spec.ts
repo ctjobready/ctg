@@ -139,7 +139,7 @@ test.describe('Partner with Us', () => {
     await expect(page.locator('#audiences .grid-cards a[href$="partner-with-us/investors/"]')).toHaveCount(1);
     // WP35 (cycle-12 review): the hero's one button jumps to the route cards (it was an email button, with "Choose Your Route" a text link under it)
     const button = page.locator('#hero .btn');
-    await expect(button).toHaveText('Choose Your Route');
+    await expect(button).toHaveText('See Partnership Routes');
     expect(await button.getAttribute('href')).toBe('#audiences');
     expect(compact(await page.locator('#how-h').locator('xpath=preceding-sibling::*[1]').textContent())).toBe('For Grant-Funded Supported Cohorts');
   });

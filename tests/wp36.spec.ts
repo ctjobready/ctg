@@ -70,11 +70,11 @@ test.describe('Home: each figure once', () => {
   // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 is headed "Most Had Started Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed new earners" (WP49, cycle-24 review: the register’s term for this group) in the 58.8% tile', async ({ page }) => {
+  test('slide 5 is headed "Most Surveyed New Earners Were Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed new earners" (WP49, cycle-24 review: the register’s term for this group) in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most Had Started Earning by Six Months After the Course'));
+    await expect(slide.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -89,7 +89,7 @@ test.describe('Home: each figure once', () => {
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work.',
+      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
     ]);
     expect(lines[2]).not.toMatch(/in work/);
   });
@@ -167,12 +167,14 @@ test.describe('Development Partners and Governments: each figure once', () => {
 });
 
 test.describe('Partner with Us hub', () => {
-  test('"Choose Your Route" is the hero button only; the route cards’ label is "Partnership Routes" and the H2 is unchanged', async ({ page }) => {
+  // WP51 (cycle-26 review): the hero button, which read "Choose Your Route", reads "See Partnership Routes" (same anchor); "Choose Your Route" is on no page now (tests/wp51.spec.ts)
+  test('"See Partnership Routes" is the hero button only; the route cards’ label is "Partnership Routes" and the H2 is unchanged', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    await expect(page.locator('#hero .btn')).toHaveText('Choose Your Route');
+    await expect(page.locator('#hero .btn')).toHaveText('See Partnership Routes');
     await expect(page.locator('#audiences .eyebrow').first()).toHaveText('Partnership Routes');
     await expect(page.locator('#audiences h2')).toHaveText('Which Route Is Yours?');
-    expect(count(await mainText(page), 'Choose Your Route')).toBe(1);
+    expect(count(await mainText(page), 'See Partnership Routes')).toBe(1);
+    expect(count(await mainText(page), 'Choose Your Route')).toBe(0);
   });
 });
 
@@ -306,7 +308,7 @@ test.describe('the ranked pains are statements, not questions', () => {
     // WP50 (cycle-25 review): the first Foundations pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
     ['partner-with-us/foundations/', ['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
-    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']],
+    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],
   ];
   for (const [route, titles] of PAGES) {
@@ -388,15 +390,15 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
   });
 
   // WP37 (cycle-14 review): Development Partners no longer restates the three program figures (its Proof in Practice band, directly above, shows them): a page variant of Q6 (tests/wp37.spec.ts)
-  test('Development Partners: "Can It Reach Women and Marginalized Groups?" is three plain sentences', async ({ page }) => {
+  test('Development Partners: "Can You Reach Women and Other Priority Groups?" is three plain sentences', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const answer = await answerOf(page, 'Can It Reach Women and Marginalized Groups?');
+    const answer = await answerOf(page, 'Can You Reach Women and Other Priority Groups?');
     expect(answer).toBe(
       // WP48 (cycle-23 review): "we have early delivery experience and" is gone (tests/wp48.spec.ts)
       'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
     );
     expect(sentences(answer)).toHaveLength(3);
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Can It Reach Women and Marginalized Groups?')?.text).toBe(answer);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Reach Women and Other Priority Groups?')?.text).toBe(answer);
   });
 });
 
@@ -425,11 +427,12 @@ test.describe('option bands: program sizes are not a commitment', () => {
   }
 
   // WP49 (cycle-24 review, item 28): a page that also carries the "What Does It Cost?" answer does not repeat its pricing sentence in the "Choose Where to Start" lead; Universities' lead is the note alone (tests/wp49.spec.ts)
-  test('Universities’ lead is the note alone (its cost answer is in the FAQ); JobReady@Campus keeps its pricing statement beside it', async ({ page }) => {
+  // WP51 (cycle-26 review): "Program options are shown without prices." described the website itself and is gone from JobReady@Campus' lead; the pricing statement under the options stays (tests/wp51.spec.ts)
+  test('Universities’ lead is the note alone (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone too, and its pricing statement stays beside the options', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await open(page, 'programs/jobready-campus/');
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toContain('Program options are shown without prices.');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);
   });
 });

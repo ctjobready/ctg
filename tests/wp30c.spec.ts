@@ -200,7 +200,7 @@ test.describe('mega-menu featured panels point to a different decisive page than
     await open(page, '');
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
-      ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.'],
+      ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.'],
       ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.'],
       // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts)
       ['partner', '/partner-with-us/governments/', 'Curriculum, trainer training and phased delivery for ministries.'],

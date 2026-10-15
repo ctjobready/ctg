@@ -128,15 +128,15 @@ test.describe('Governments: Her Power is a row of the contracts table and a link
 test.describe('Foundations: the two funding routes as a comparison', () => {
   const table = (page: Page) => page.locator('#mechanism #funding-routes');
 
-  test('two rows (YouthWIDE Cohort Grants, JobReady Platform Grants) under What It Supports and Evidence Relationship, in existing copy', async ({ page }) => {
+  test('two rows (YouthWIDE Cohort Grants, JobReady Platform Grants) under What It Supports and What the Evidence Covers, in existing copy', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    expect((await table(page).locator('thead th').allTextContents()).map(compact)).toEqual(['Funding Route', 'What It Supports', 'Evidence Relationship']);
+    expect((await table(page).locator('thead th').allTextContents()).map(compact)).toEqual(['Funding Route', 'What It Supports', 'What the Evidence Covers']);
     const rows = await table(page).locator('tbody tr').evaluateAll((trs) => trs.map((tr) => Array.from(tr.querySelectorAll('th, td')).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())));
     expect(rows).toEqual([
       ['Funding Route 1 YouthWIDE Cohort Grants', 'Co-fundable country programs designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa.', 'Builds on results from earlier programs in Bangladesh and Kosovo.'],
       [
         'Funding Route 2 JobReady Platform Grants',
-        'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.',
+        'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.',
         'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
       ],
     ]);
@@ -156,8 +156,8 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
     await open(page, 'partner-with-us/foundations/');
     const cell = table(page).locator('tr[data-fact="IN-04"] td').first();
     // WP37 (cycle-14 review): "CRM" is written out as "customer relationship management" (in IN-04 and wherever the full live list is printed); WP47 (cycle-22 review): the table lists the live subset only
-    expect(compact(await cell.textContent())).toContain('Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(compact(await cell.textContent())).toContain('Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
   });
 
   test('on a phone the table becomes one card per route (table hidden), with no horizontal overflow', async ({ page }) => {

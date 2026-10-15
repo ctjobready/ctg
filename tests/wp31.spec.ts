@@ -52,16 +52,18 @@ test.describe('figures say what they measure', () => {
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
-    // WP46 (cycle-22 review): the caption reads "WSDFM program records (not trial data): 71% in work"
-    expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records (not trial data): 71% in work');
+    // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial data): 71% in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
+    expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
   });
 
   // WP37 (cycle-14 review): Home's Her Power card says what was delivered instead of stating the figure (the program-results slide of the carousel states it; tests/wp37.spec.ts), so only the pages that show it carry the shared caption.
-  test('every WSDFM and Her Power case card reads the same wherever it shows its figure (Development Partners shows the shared Her Power caption; Home’s Her Power card shows delivery context)', async ({ page }) => {
+  // WP51 (cycle-26 review): Home's WSDFM card shows delivery context too (the fourth slide states its figure), so only the pages that show the figures carry the shared captions
+  test('every WSDFM and Her Power case card reads the same wherever it shows its figure (Development Partners shows the shared Her Power caption; Home’s cards show delivery context)', async ({ page }) => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
-      expect(cards, route || 'home').toContain('WSDFM program records (not trial data): 71% in work');
+      if (route === '') expect(cards, 'home').not.toContain('WSDFM program records (not trial data): 71% in work');
+      else expect(cards, route).toContain('WSDFM program records (not trial data): 71% in work');
       if (cards.includes('Her Power')) {
         if (route === '') {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
@@ -353,7 +355,7 @@ test.describe('smaller wording fixes', () => {
   test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Find Your Program"', async ({ page }) => {
     await open(page, '');
     expect(await mainText(page)).not.toContain('outside Dhaka');
-    await expect(page.locator('#future')).toContainText('You hear from a young woman who invoices her first foreign client from her own laptop.');
+    await expect(page.locator('#future')).toContainText('A young woman invoices her first foreign client from her own laptop.');
     await expect(page.locator('#news, #news-teaser')).toHaveCount(0);
     const order = await ids(page);
     expect(order[order.length - 1], 'the page ends on its next steps').toBe('next-steps');
@@ -367,10 +369,10 @@ test.describe('smaller wording fixes', () => {
     expect(await texts(page, '#compare thead th')).toEqual(['Approach', 'CodersTrust Supported Cohort', 'Self-Paced Course Platforms']);
   });
 
-  test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "Choose Your Route" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
+  test('Partner with Us hub: the hero asks for the choice of partnership (WP32) with one "See Partnership Routes" button and no email before the closing call to action (WP35), three evidence tiles (trial, survey, reach), the investor card says "we are building"', async ({ page }) => {
     await open(page, 'partner-with-us/');
     await expect(page.locator('.hero__lead').first()).toHaveText('Choose a partnership for youth employment, campus skills, team training, hiring or JobReady’s staged rollout.');
-    await expect(page.locator('#hero .btn')).toHaveText('Choose Your Route');
+    await expect(page.locator('#hero .btn')).toHaveText('See Partnership Routes');
     await expect(page.locator('#hero a[href^="mailto:"], #audiences a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');

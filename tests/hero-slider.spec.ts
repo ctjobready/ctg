@@ -79,10 +79,10 @@ test.describe('home hero slider', () => {
     // WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course ("... of the Course Ending")
     // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
     expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
-      'Six Government Contracts and a National University Partnership',
+      'Six Government Contracts and Bangladesh’s National University',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'Most Had Started Earning by Six Months After the Course',
+      'Most Surveyed New Earners Were Earning by Six Months After the Course',
       'Programs in 15 Countries and Territories',
     ]);
     expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');
@@ -96,7 +96,7 @@ test.describe('home hero slider', () => {
     // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")
     await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(4);
     await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
-    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work.');
+    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work (2,500 trained directly).');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {

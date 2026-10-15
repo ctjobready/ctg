@@ -41,18 +41,14 @@ const itemOf = (page: Page, question: string) => page.locator('#faq details, #fa
 const answerOf = async (page: Page, question: string) => compact(await itemOf(page, question).locator('.faq__a').textContent());
 
 test.describe('Home: Proof in Practice says what was delivered where its carousel already states the figures', () => {
-  test('the Kosovo and Her Power cards show a line of delivery context and no figure; the WSDFM card keeps its figure', async ({ page }) => {
+  // WP51 (cycle-26 review): slide 4 states WSDFM's "711 of 1,000" too (WP50), so the WSDFM card shows delivery context like the other two (tests/wp51.spec.ts holds the pages that keep the figure)
+  test('all three cards show a line of delivery context and no figure', async ({ page }) => {
     await open(page, '');
     const cards = page.locator('#cases article');
     await expect(cards).toHaveCount(3);
 
-    const wsdfm = cards.nth(0);
-    await expect(wsdfm.locator('.case__value')).toHaveText('711 of 1,000');
-    // WP46 (cycle-22 review): "(not trial data)", where it read ", separate from the trial,"
-    expect(compact(await wsdfm.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data): 71% in work');
-    await expect(wsdfm.locator('.case__context')).toHaveCount(0);
-
     const delivery = [
+      { i: 0, title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', context: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.', slug: 'wsdfm-women-freelancers' },
       { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Digital literacy followed by real online work.', slug: 'kosovo-women-in-online-work' },
       { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
     ];
@@ -72,7 +68,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, '');
-      for (const i of [1, 2]) {
+      for (const i of [0, 1, 2]) {
         const card = page.locator('#cases article').nth(i);
         const order = await card.evaluate((el) => {
           const context = el.querySelector('.case__context')!.getBoundingClientRect();
@@ -87,14 +83,16 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     }
   });
 
-  test('each program figure is stated once on Home: Kosovo and Her Power are in slide 4 only, and the band names only the fact it still states', async ({ page }) => {
+  test('each program figure is stated once on Home: Kosovo, WSDFM and Her Power are in slide 4 only, and the band names no fact (its cards state none)', async ({ page }) => {
     await open(page, '');
     const text = await mainText(page);
     expect(count(text, '102 of 150'), 'Kosovo, slide 4').toBe(1);
     expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
-    expect(count(text, 'Her Power: 47% of 800 tracked women in work.'), 'Her Power, slide 4').toBe(1);
+    expect(count(text, 'Her Power: 47% of 800 tracked women in work (2,500 trained directly).'), 'Her Power, slide 4').toBe(1);
     expect(text).not.toContain('372 of 800');
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01']);
+    // WP51 (cycle-26 review): WSDFM's figure is slide 4's alone as well, and no card names PR-01 any more
+    expect(count(text, '711 of 1,000'), 'WSDFM, slide 4').toBe(1);
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual([]);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {
@@ -214,7 +212,7 @@ test.describe('JobReady@Work: the hero offers hiring beside training', () => {
 });
 
 test.describe('Development Partners: the women-and-marginalized-groups answer does not restate the program figures', () => {
-  const QUESTION = 'Can It Reach Women and Marginalized Groups?';
+  const QUESTION = 'Can You Reach Women and Other Priority Groups?';
   const SHARED_FIGURES = /71%|68%|372 of 800|47%|2,500/;
 
   test('the answer says the programs report work outcomes, points to Proof in Practice and keeps the trial’s scope; the FAQ JSON-LD says the same', async ({ page }) => {
@@ -355,7 +353,7 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
 
 test.describe('"CRM" is written out wherever the live-platform list is printed', () => {
   test('the register’s IN-04 says "customer relationship management" and no longer "CRM"', () => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
     expect(fact('IN-04').text).not.toMatch(/\bCRM\b/);
   });
 
@@ -391,7 +389,7 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
       await open(page, route);
       const answer = await answerOf(page, 'Is the JobReady Platform Live?');
       // WP48 (cycle-23 review): the answer names the live modules a partner or employer deals with, not the internal tooling (tests/wp48.spec.ts)
-      expect(answer, route).toBe('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.');
+      expect(answer, route).toBe('Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.');
       expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
     }
     await open(page, 'our-model/jobready-platform/');

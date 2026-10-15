@@ -49,7 +49,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
     },
     {
       title: 'Connect to Paid Work',
-      text: 'The employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
+      text: 'The employer marketplace and the gig-work marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
       facts: ['IN-04'],
     },
     {
@@ -77,12 +77,12 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
   });
 
   test('every status word is the register’s: live and pre-launch as IN-04 has them (the two marketplaces named as two), the levels as IN-08, the roadmap as IN-06', async ({ page }) => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
     expect(fact('IN-06').text).toContain('personalized and adaptive learning (roadmap)');
     await open(page, 'partner-with-us/investors/');
     const band = compact(await page.locator('#features').textContent());
-    expect(band).toContain('The employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
+    expect(band).toContain('The employer marketplace and the gig-work marketplace are in pre-launch.');
     expect(band, 'the two marketplaces are named as two (tests/wp25s.spec.ts)').not.toMatch(/employer and gig-work/i);
     expect(band).toContain('Partner portals and AI chat are live.');
     expect(band).toContain('marketplaces such as Upwork and Fiverr');

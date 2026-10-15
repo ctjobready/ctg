@@ -74,20 +74,21 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12');
     expect(compact(await s.textContent())).not.toMatch(/25,125|2,500|Her Power/);
-    await expect(s.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
     ]);
   });
 
-  test('the slide reads its clause from the register note, and the Impact and Governments tiles print the whole new note', async ({ page }) => {
+  // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the note's first sentence and points to its contracts table (Her Power's figures are in the table); Impact still prints the whole note
+  test('the slide reads its clause from the register note, and the Impact tile prints the whole new note while the Governments tile keeps its first sentence', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(GV12_NOTE);
     expect(SLIDE2_LEAD).toContain(GV12_NOTE.split('. ')[0].replace('The figure is ', ''));
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(GV12_NOTE);
+    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(`${GV12_NOTE.split('. ')[0]}. The contracts table below shows each scope.`);
   });
 
   test('no built page still prints the old note ("The total is contract scope ... it includes Her Power’s national program")', () => {
@@ -211,7 +212,7 @@ test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 1
 });
 
 test.describe('"Is the JobReady Platform Live?" (item 5)', () => {
-  const ANSWER = 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.';
+  const ANSWER = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team.';
 
   test('Employers and JobReady@Work give the short answer, without the internal tooling; the JSON-LD says what the page says', async ({ page }) => {
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
@@ -224,7 +225,7 @@ test.describe('"Is the JobReady Platform Live?" (item 5)', () => {
   });
 
   test('the JobReady Platform page and the register keep the full list', async ({ page }) => {
-    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
+    expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.');
     await open(page, 'our-model/jobready-platform/');
     // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table keeps the full list (its "Across the Platform" row and the partner-portals row; tests/wp49.spec.ts)
     const text = compact(await page.locator('main').textContent());
@@ -359,13 +360,13 @@ test.describe('Development Partners, Foundations and Governments: sector general
     expect(foundations).not.toContain('Independent evidence on youth-employment programs is thin.');
   });
 
-  test('"Can It Reach Women and Marginalized Groups?" says "we measure outcomes in each pilot" on Development Partners (the bank answer says it too); the JSON-LD says what the page says', async ({ page }) => {
+  test('"Can You Reach Women and Other Priority Groups?" says "we measure outcomes in each pilot" on Development Partners (the bank answer says it too); the JSON-LD says what the page says', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const answer = await answerOf(page, 'Can It Reach Women and Marginalized Groups?');
+    const answer = await answerOf(page, 'Can You Reach Women and Other Priority Groups?');
     expect(answer).toBe(
       'Our women-focused programs report work outcomes; see Proof in Practice above. For other priority groups, we measure outcomes in each pilot. The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.',
     );
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Can It Reach Women and Marginalized Groups?')?.text).toBe(answer);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Reach Women and Other Priority Groups?')?.text).toBe(answer);
     expect(faqs.find((f) => f.id === 'Q6')!.a).toContain('For other priority groups, we measure outcomes in each pilot.');
     expect(builtPages().filter((p) => visible(p.html).includes('early delivery experience')).map((p) => p.route)).toEqual([]);
   });
@@ -545,7 +546,7 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition and the Outcomes page defines the term once: tests/wp49.spec.ts)
   const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
   const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
-  const HEADING = 'Most Had Started Earning by Six Months After the Course';
+  const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
   const NOTE = 'Months are counted from the end of the course; the shares are cumulative and include earnings during the course.';
   const MEASURE = 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)';
 
@@ -560,7 +561,7 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
   });
 
-  test('Home slide 5 is headed "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05); its tile caption is the register’s label; it fits the carousel at 1280 and 390', async ({ page }) => {
+  test('Home slide 5 is headed "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05); its tile caption is the register’s label; it fits the carousel at 1280 and 390', async ({ page }) => {
     expect(HEADING).toBe(titleCase(HEADING));
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);

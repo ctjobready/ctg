@@ -103,7 +103,7 @@ test.describe('Investors: no cohort comparison, and (WP43) no one-sentence platf
     const text = await mainText(page);
     expect(text).not.toMatch(/How the Approaches Compare|Self-Paced Course Platforms|Freelance Marketplaces Alone/);
     await open(page, '');
-    await expect(page.locator('#compare h2')).toHaveText('How the Approaches Compare');
+    await expect(page.locator('#compare h2')).toHaveText('How CodersTrust Compares with Self-Paced Courses');
   });
 
   // WP43 (cycle-20 review): the one-sentence band WP34 added after the FAQ ("The Platform": "How JobReady Builds on Delivery", tied to IN-04) is gone: the evidence block ends "Youth-program outcomes are not platform
@@ -201,13 +201,13 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
     // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case; WP36 (cycle-13 review): they are statements, not questions
     // WP46 (cycle-22 review): the employers' pain card is gone (the 72% tile directly below states it), so two pains are left
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']);
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']);
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');
     await expect(problem.locator('[data-fact="PX-03"]')).toHaveCount(0);
     expect(compact(await problem.textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
-    expect(await texts(page, '#problem .card__title')).toEqual(['Employers Cannot See the Skills', 'No Placement Results to Publish']);
+    expect(await texts(page, '#problem .card__title')).toEqual(['Make Students’ Skills Visible', 'Build Placement Evidence']);
   });
 
   test('the Bangladesh pages keep it: Local Partners and the NU Postgraduate Diploma', async ({ page }) => {

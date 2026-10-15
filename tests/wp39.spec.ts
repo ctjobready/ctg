@@ -345,7 +345,7 @@ test.describe('Investors: the platform-status question points to "What JobReady 
   // WP41 (cycle-18 review): the platform page points to its "Rollout Status" band the same way (tests/wp41.spec.ts), so the shared answer is in full on Employers and JobReady@Work only
   test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work); Investors no longer lists the status a third time', async ({ page }) => {
     // WP48 (cycle-23 review): the shared answer is "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)
-    const shared = 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.';
+    const shared = 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.';
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).toContain(shared);

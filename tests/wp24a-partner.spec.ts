@@ -93,12 +93,15 @@ test.describe('audience pages', () => {
     });
   }
 
-  test('governments: the 31,200+ tile says "People in the Scopes of Six Government Contracts" (WP36), that the total is contract scope and not a count of completers, and that Her Power’s 25,125 women were trained (WP35)', async ({ page }) => {
+  test('governments: the 31,200+ tile says "People in the Scopes of Six Government Contracts" (WP36), that the total is contract scope and not a count of completers, and where each scope is shown (WP51)', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
     const tile = page.locator('#glance li', { hasText: '31,200+' });
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
-    // WP46 (cycle-22 review): the note says who trained whom, so the 25,125 is not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
-    await expect(tile).toContainText('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    // WP46 (cycle-22 review): the note said who trained whom, so the 25,125 was not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
+    // WP51 (cycle-26 review, Kimi m2): Her Power's figures are in the contracts table below, so the tile keeps the first sentence and points to the table (Impact keeps the whole note: tests/wp35.spec.ts)
+    await expect(tile).toContainText('The figure is contract scope, not a count of completers. The contracts table below shows each scope.');
+    await expect(tile).not.toContainText('25,125');
+    await expect(page.locator('#contracts')).toContainText('The national program trained 25,125 women across 130 sub-districts (upazilas).');
   });
 
   // WP46 (cycle-22 review): "What a Ministry Sees" (WP24a, WP29) is gone: it restated the reporting cadence the page already gives. Its one detail that stood nowhere else, the follow-up surveys counted from the end of each course, is in the delivery model's card.

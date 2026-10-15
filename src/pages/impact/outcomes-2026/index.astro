@@ -180,7 +180,8 @@ const howToRead = `<ul>
       <BarChart title="Share of Completers by Direction of Income Change" items={incomeItems} />
     </div>
     <div class="ro__measure" data-fact="OC-03c">
-      <h3 class="t-heading-l">Median Individual Change</h3>
+      {/* WP51 (cycle-26 review): "Median Change per Person", where "Median Individual Change" beside the +$82 could be read as the $82 before-training median; the tile's label (OC-03c) is unchanged. */}
+      <h3 class="t-heading-l">Median Change per Person</h3>
       <div class="ro__stats ro__stats--one"><FactStat id="OC-03c" /></div>
     </div>
     <p data-fact="OC-02"><Fact id="OC-02" /></p>

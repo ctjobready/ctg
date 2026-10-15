@@ -102,7 +102,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
 
   test('Universities: the institution’s pain says what it needs', async ({ page }) => {
     await open(page, UNI);
-    const line = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: 'Institutions Lack Placement Results They Can Publish' }) }).locator('.gp__a');
+    const line = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: 'Build Placement Results You Can Publish' }) }).locator('.gp__a');
     expect(compact(await line.textContent())).toBe('Your institution needs placement data it can report to a board or ministry.');
     expect(await mainText(page)).not.toContain('is rarely collected');
   });

@@ -181,7 +181,7 @@ test.describe('the three funder pains that had a heading and no line now have on
     ['partner-with-us/foundations/', 'Accountability Must Keep Pace with Scale', 'You need monthly outcome reports as delivery expands.'],
     // WP49 (cycle-24 reviews): the Governments and Universities lines say what the agency or institution needs, not what is "rarely" so across a sector (tests/wp49.spec.ts)
     ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Is Thin', 'National delivery needs trained facilitators and localized curricula.'],
-    ['partner-with-us/universities/', 'Institutions Lack Placement Results They Can Publish', 'Your institution needs placement data it can report to a board or ministry.'],
+    ['partner-with-us/universities/', 'Build Placement Results You Can Publish', 'Your institution needs placement data it can report to a board or ministry.'],
   ];
   for (const [route, title, line] of LINES) {
     test(`${route}: "${title}" carries its line, and every pain on the page has one`, async ({ page }) => {
@@ -210,14 +210,16 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
     });
   }
 
-  test('Development Partners: its Guide band shows SC-03’s tile, so the origin line is the launch alone and the 15 is stated once', async ({ page }) => {
+  // WP51 (cycle-26 review, Kimi P2): Development Partners prints the shared origin line like Governments and Foundations (ORIGIN_SHORT), in place of the launch alone that WP38 gave a band showing SC-03's tile; the 15 is therefore in the
+  // origin line as well as in the tile (tests/wp51.spec.ts)
+  test('Development Partners: its Guide band prints the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const line = page.locator('#guide p[data-fact="ID-02"]');
+    const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe('Launched in Copenhagen in 2014.');
+    expect(compact(await line.textContent())).toBe(ORIGIN_SHORT);
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).not.toMatch(/began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
-    expect(count(guide, 'countries and territories'), 'the count of countries and territories is the tile’s alone').toBe(2);
+    expect(guide).not.toMatch(/Launched in Copenhagen|began (?:developing|training) freelancers|first UNDP-supported pilot|Korail settlement/);
+    // the tile is the one element marked SC-03 alone; the origin line carries the pair "ID-02 SC-03"
     await expect(page.locator('#guide [data-fact="SC-03"]')).toHaveCount(1);
   });
 
@@ -266,10 +268,10 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
   // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile. WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so "... of the Course Ending"
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 reads "Most Had Started Earning by Six Months After the Course" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
+  test('slide 5 reads "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    const heading = 'Most Had Started Earning by Six Months After the Course';
+    const heading = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');

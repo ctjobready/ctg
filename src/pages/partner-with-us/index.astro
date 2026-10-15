@@ -5,6 +5,7 @@
 // WP35 (cycle-12 review): the hero's one button jumps to the route cards ("Choose Your Route"), instead of opening an email that skips the chooser; the second email button ("Not Sure? Email Us Your Goals") and its
 // helper line are gone, so the closing call to action holds the page's one email button; the reporting band is two sentences and a link (the route pages state their own reporting).
 // WP36 (cycle-13 review): "Choose Your Route" is the hero button only; the route cards' section label is "Partnership Routes" (the H2 keeps "Which Route Is Yours?").
+// WP51 (cycle-26 review): the hero button reads "See Partnership Routes" (a label for where it goes, as the route cards' section label is "Partnership Routes"); its anchor (#audiences) is unchanged.
 // WP45 (cycle-21 review): the hub stacked reporting and safeguarding three times (the "Monthly Reports and Quarterly Reviews" band, the due-diligence cards and two FAQs). The band (#review-cycle) and the FAQs "How Do You Prove Outcomes?" and
 // "What About Safeguarding and Data Protection?" are gone; the due-diligence view states both once and links to Governance, and every route page answers the rest. The FAQ block is two questions.
 // WP48 (cycle-23 review, item 17): the Governments card no longer says "national programs for youth employment" (a 100,000+ national program is a design option CodersTrust has not yet delivered); it states what the route offers, as the nav.ts menu blurb does.
@@ -69,7 +70,7 @@ const jsonLd = [
 
 <BaseLayout title={title} description={description} breadcrumbs={[{ label: 'Partner with Us' }]} jsonLd={jsonLd}>
   <Tone cmf="HERO">
-    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: 'Choose Your Route', href: '#audiences', icon: 'arrow-down' }} artSeed="partner-hub" />
+    <HeroBand variant="inner" audience="Partnerships" title="Partner with Us to Turn Training into Paid Work" lead={BLUF} cta={{ label: 'See Partnership Routes', href: '#audiences', icon: 'arrow-down' }} artSeed="partner-hub" />
   </Tone>
 
   <DefinitionBand />

@@ -12,7 +12,7 @@
 // WP39 (cycle-16 review): the platform-status question points to "What JobReady Does" instead of listing the status a third time (Q11-investor), and the mechanism band carries no "Our Approach" statement (it restated the hero
 // and returned to cohort language; "How JobReady Builds on Delivery" says how the platform builds on delivery).
 // WP40 (cycle-17 review): "What JobReady Does" is three short cards (IncludesBand, as on every other audience page) in place of the status table, which still read as a concern / inclusion / benefit matrix. Each card states its
-// status once (IN-04: partner portals and AI chat live, the employer marketplace and the gig-work (Earn) marketplace in pre-launch; IN-06 and IN-08: Competent the published first level, Proficient and Expert planned,
+// status once (IN-04: partner portals and AI chat live, the employer marketplace and the gig-work marketplace in pre-launch; IN-06 and IN-08: Competent the published first level, Proficient and Expert planned,
 // personalized and adaptive learning on the roadmap) and one text link goes to the full rollout status. The band keeps its id (#features): the first FAQ answer links it.
 // WP42 (cycle-19 review): the track-record band (#guide) opens with the delivered figures ("Delivered Since 2014": 130,000+ learners, 150,000+ enrollments, 15 countries and territories, with their enrollment and location note), before the
 // institutional relationships and the leadership; the band that held them is "Contracts, Pipeline and Recognition" (#reach: the contract scope in its own labeled block, the National University pipeline and the two badges).
@@ -54,7 +54,7 @@ const FAQ_IDS = ['Q11-investor', 'Q5', 'Q2-investor'];
 const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 // "What JobReady Does" (WP40, cycle-17 review): three cards, one for each job the platform does for a reader of this page: learning, paid work, institutions. The status words are the register's (IN-04: "Live today: partner
-// portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace."; IN-06: personalized and adaptive learning is roadmap;
+// portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace."; IN-06: personalized and adaptive learning is roadmap;
 // IN-08: "Competent is the first level; Proficient and Expert are planned"), and the two marketplaces are named as two (tests/wp25s.spec.ts). "marketplaces such as Upwork and Fiverr" keeps the old row's "such as": placement
 // does not run through these two alone.
 const includes = [
@@ -67,7 +67,7 @@ const includes = [
   {
     icon: 'briefcase',
     title: 'Connect to Paid Work',
-    text: 'The employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
+    text: 'The employer marketplace and the gig-work marketplace are in pre-launch. Until launch, placement runs through CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.',
     facts: ['IN-04'],
   },
   {

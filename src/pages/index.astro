@@ -8,6 +8,9 @@
 // the Track Record band opens with its heading (no empathy line before it). "What a Supported Youth Cohort Includes" stays: the FAQ band below it does not ask the cost question (Q8) that lists a cohort's inclusions.
 // WP48 (cycle-23 review): "Evidence You Can Check" is gone (its paid-work pathways table and its 72.3% line repeated survey detail the hero strip and the carousel already carry; both stay on the Impact Survey 2026 page); its two evidence links
 // close the "Proof in Practice" link row. The Low Risk band ("Start with a Multi-Cohort Pilot, Then Decide on Evidence") is gone from Home too (the audience pages keep theirs); its one line leads the closing call to action.
+// WP51 (cycle-26 reviews): the comparison is headed "How CodersTrust Compares with Self-Paced Courses" (the table compares CodersTrust with one other approach), and its Outcome Tracking row carries the scope qualifier ("as agreed in the program scope");
+// the positioning statement's reports are scoped the same way (POSITIONING.home); the first Imagine card is a scene ("A young woman invoices her first foreign client from her own laptop."), not "You hear from ..."; the WSDFM card of "Proof in Practice"
+// shows its delivery context in place of the figure the fourth carousel slide already states (caseStudyItems).
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -141,7 +144,7 @@ const includes = [
       title="Imagine the Next 12 Months"
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
-        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'You hear from a young woman who invoices her first foreign client from her own laptop.' },
+        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'A young woman invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
         // WP48 (cycle-23 review, three reviewers): not "AI-Ready Talent" ("AI-ready" is a positioning term explained on Employers and JobReady@Work, which Home does not carry); the scenario says what the reader sees.
         { kind: 'Social', title: 'Employers Hiring from Your Cohort', text: 'You see employers hire completers whose skills match current employer demand.' },
@@ -155,7 +158,8 @@ const includes = [
        beside the 72.3% no-prior-income result (34 of 47). WP48 (cycle-23 review): both are gone from Home (the hero's survey card and the carousel carry the survey; the Impact Survey 2026 page keeps the table and the 72.3%), which left "Evidence You Can Check" with its two
        links alone, so the band is gone and its two links sit in the link row of "Proof in Practice" below (the C7 proof position). -->
   <Tone cmf="C7" join>
-    <!-- WP37 (cycle-14 review): slide 3 of the results carousel states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems); the WSDFM card keeps its figure. -->
+    <!-- WP37 (cycle-14 review): slide 3 of the results carousel states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems). WP51 (cycle-26 review): the fourth slide states the WSDFM figure too
+         (WP50), so all three cards show delivery context and none repeats a figure. -->
     <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
@@ -176,7 +180,7 @@ const includes = [
     <FAQBand id="faq" audience="home" ids={FAQ_IDS} title="Questions Partners Ask" allLink={{ label: 'Find the Answers for Your Route', href: '/partner-with-us/#audiences' }} />
   </Tone>
 
-  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How the Approaches Compare" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs', 'Freelance Marketplaces Alone']} ownCells={{ 'Independent Evidence': independentEvidence }} /></Tone>
+  <Tone cmf="C10" tone="ice"><ComparisonBand id="compare" title="How CodersTrust Compares with Self-Paced Courses" lead="What each approach typically includes." withoutDoingNothing onlyRows={['Mentoring', 'Work Entry', 'Outcome Tracking', 'Independent Evidence']} dropColumns={['Conventional Skills Programs', 'Freelance Marketplaces Alone']} ownCells={{ 'Independent Evidence': independentEvidence }} /></Tone>
 
   <Tone cmf="C11"><HomeOffer id="offer" lead={PROGRAM_SIZES_NOTE} /></Tone>
 

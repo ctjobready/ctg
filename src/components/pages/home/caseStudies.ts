@@ -5,6 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
+import { caseBySlug } from '../impact/case-studies';
 
 interface CardPhoto {
   src: ImageMetadata;
@@ -48,9 +49,12 @@ export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, '
  * cards show a line of delivery context in the figure's place (`context`, from each case study's own scope: Kosovo "Two-phase delivery that built digital literacy first, then real online work";
  * Her Power "Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly"). The WSDFM card kept its figure because the slide did not list WSDFM.
  * WP50 (cycle-25 review): the slide (now the fourth, still "Results by Program") lists WSDFM again as the fourth of four programs, with the same qualifier ("program records, not trial data"); this card still shows its figure.
+ * WP51 (cycle-26 review): that slide now shows "711 of 1,000 ... 71% in work", so the WSDFM card repeated it: like the Kosovo and Her Power cards, it shows a line of delivery context in the figure's place. The line is the case study's own
+ * scope (CASE_STUDIES: "ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring"), read from there so the card and the case-study card cannot drift apart. Home is the only page that passes these items: Development
+ * Partners, Foundations, Local Partners and YouthWIDE list their own cards (no `context`), so they keep the figure and its caption (CASE_CARD_LABELS).
  */
 export const caseStudyItems = [
-  { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', statLabel: wsdfmLabel, href: '/impact/case-studies/wsdfm-women-freelancers/' },
+  { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: `${caseBySlug('wsdfm-women-freelancers').scope}.`, href: '/impact/case-studies/wsdfm-women-freelancers/' },
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: 'Digital literacy followed by real online work.', href: '/impact/case-studies/kosovo-women-in-online-work/' },
   { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
 ];

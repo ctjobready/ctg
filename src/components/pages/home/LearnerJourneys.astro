@@ -15,6 +15,7 @@ import { linkAttrs } from '../../../lib/url';
  * for the Kosovo participant, the register's own sentence, exactly as the Success Stories page states them (src/pages/impact/stories/index.astro).
  * The cards are <StoryGallery> cards, so the permissions rule applies as it does on the Success Stories page (a story that may not render is dropped).
  * The individual-story caveat (the Success Stories page's own sentence) is stated once, in the lead; the cards carry the "Individual Story" tag.
+ * WP51 (cycle-26 review): the lead names the band it counts from, "One learner from each program in Proof in Practice: ..." ("each program above" was ambiguous once the fourth carousel slide listed four programs).
  */
 interface Props {
   id?: string;
@@ -66,7 +67,7 @@ const stories = linkAttrs('/impact/stories/');
 ---
 
 <Section id={id} tone={tone} pad="md" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Individual Stories" title="Learner Journeys" lead="One learner from each program above: individual stories, not typical or promised outcomes." />
+  <SectionHeader id={`${id}-h`} eyebrow="Individual Stories" title="Learner Journeys" lead="One learner from each program in Proof in Practice: individual stories, not typical or promised outcomes." />
   <div class="lj__cards" data-fact="ST-03 ST-05 ST-06">
     <StoryGallery cards={cards} filter={false} />
   </div>

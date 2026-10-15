@@ -96,14 +96,14 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'How It Works', href: '/our-model/', description: 'From partner goals to training, placement support and tracked outcomes.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
-      // WP45 (cycle-21 review): IN-04 names two marketplaces in pre-launch, the employer marketplace and the gig-work (Earn) marketplace, so the menu names both (tests/wp25s.spec.ts forbids "employer and gig-work").
-      { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.' },
+      // WP45 (cycle-21 review): IN-04 names two marketplaces in pre-launch, the employer marketplace and the gig-work marketplace, so the menu names both (tests/wp25s.spec.ts forbids "employer and gig-work").
+      { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.' },
     ],
     feature: {
       kind: 'pilot',
       eyebrow: 'Platform Status',
       title: 'JobReady Platform',
-      text: 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.',
+      text: 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.',
       cta: { label: 'See the Rollout Status', href: '/our-model/jobready-platform/' },
     },
   },

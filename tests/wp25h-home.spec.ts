@@ -45,7 +45,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work.',
+      'Her Power: 47% of 800 tracked women in work (2,500 trained directly).',
     ]);
   });
 
@@ -80,12 +80,12 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile); WP45 (cycle-21 review): "Most First Earnings Came Within Six Months", a majority and not a promise;
     // WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
     // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
-    await expect(slide(page, 5).locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    await expect(slide(page, 5).locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
     await expect(slide(page, 5).locator('.hs__lead')).toHaveCount(0);
     await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
-    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
     // WP48 (cycle-23 review): the body is two sentences, the contract scope with the clause that keeps it true, then the National University sentence; Her Power's 25,125 and the 2,500 are not on the slide (tests/wp48.spec.ts)
     await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people: contract scope, not a count of completers. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');

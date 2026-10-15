@@ -5,6 +5,8 @@
 // WP39 (cycle-16 review): "Built Around What Institutions Ask For" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix.
 // WP41 (cycle-18 review): the hero lead speaks to the institution in two short sentences ("Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and
 // build placement evidence from your own cohorts."); the mechanism's last block says "Mentoring and placement support toward paid work" (support toward work, not a promise that it leads into work).
+// WP51 (cycle-26 review): the two problem cards after the first are "Make Students’ Skills Visible" and "Build Placement Evidence" (what the program does for the students, not a deficiency of the institution); the options lead is the
+// program-sizes note alone ("Program options are shown without prices." described the website itself; the budget sentence under the options stays).
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
@@ -87,8 +89,10 @@ const options = [
     title="Capable Students Still Struggle to Find Work"
     bluf={EMPATHY.universities}
     extra={[
-      { title: 'Employers Cannot See the Skills', text: 'Employers cannot see the skills your students have.' },
-      { title: 'No Placement Results to Publish', text: 'Institutions are asked for placement results they cannot yet show.' },
+      // WP51 (cycle-26 review): the cards say what the program does for the institution's students instead of presuming the institution is deficient. Card 1 rests on IN-09 (preparation for industry-recognized
+      // certifications, in parallel with academic studies); card 2 uses PD-09's own terms (a baseline at enrollment and follow-up surveys) and PD-08 (placements and first earnings reported monthly).
+      { title: 'Make Students’ Skills Visible', text: 'Prepare students for industry certification alongside the degree.', factIds: ['IN-09'] },
+      { title: 'Build Placement Evidence', text: 'Track where completers start earning, with a baseline and follow-up surveys.', factIds: ['PD-08', 'PD-09'] },
     ]}
   />
 
@@ -137,8 +141,8 @@ const options = [
     ]}
   />
 
-  <!-- C8. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the pains this page names (degree holders struggle to find work; employers cannot see the skills your
-       students have; no placement results to publish). The sentences keep the matrix rows' words and rest on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10
+  <!-- C8. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the pains this page names (degree holders struggle to find work; students’ skills are not visible to
+       employers; placement evidence is missing; WP51 words the last two as the cards "Make Students’ Skills Visible" and "Build Placement Evidence"). The sentences keep the matrix rows' words and rest on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10
        and PD-02 (tracks set from employer demand, an AI-ready curriculum), PD-08 and PD-09 (follow-up surveys, monthly reports, documentary evidence where available). -->
   <IncludesBand
     title="Built Around What Institutions Ask For"
@@ -154,7 +158,7 @@ const options = [
 
   <!-- C11 -->
   <!-- WP36 (cycle-13 review): Home's line that program sizes are not a commitment, ahead of the sizes. -->
-  <OfferSection title="Two Ways to Start a Campus Program" lead={`${PROGRAM_SIZES_NOTE} Program options are shown without prices.`} options={options} recommended={0}>
+  <OfferSection title="Two Ways to Start a Campus Program" lead={PROGRAM_SIZES_NOTE} options={options} recommended={0}>
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 

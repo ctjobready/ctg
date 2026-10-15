@@ -55,7 +55,8 @@ test.describe('Investors: the track-record band (item 1)', () => {
     await open(page, URL);
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '15']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
-    expect(compact(await page.locator('#guide p[data-fact="ID-02"]').textContent())).toBe('Launched in Copenhagen in 2014.');
+    // WP51 (cycle-26 review, Grok m1): the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (it was "Launched in Copenhagen in 2014.")
+    expect(compact(await page.locator('#guide p[data-fact="ID-02 SC-03"]').textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 15 countries and territories.');
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
     expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');
@@ -229,7 +230,7 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
     const slide = page.locator('[data-hs-slide]').nth(4);
     // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months"; WP46, cycle-22 review, owner answer 2026-10-15: "... of the Course Ending", the six months counted from the end of the course;
     // WP48, cycle-23 review, item 32: "Most Had Started Earning by Six Months After the Course", because OC-05 is cumulative and includes those who first earned during the course)
-    await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
+    await expect(slide.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);

@@ -20,6 +20,11 @@ interface Tile {
   href: string;
   /** Page-specific wording for the tile's label (the register's glance label is the default). */
   label?: string;
+  /**
+   * Page-level wording for the tile's note, in place of the register's glance note (WP51, cycle-26 review: Governments shows the first sentence of GV-12's note and points to its contracts table instead of repeating Her Power's two figures,
+   * which that table states; Impact keeps the full note). The page derives it from the register's note, so a change to the register's first sentence stops the build there. A `caveat` still follows it.
+   */
+  note?: string;
   /** A short caveat after the register's note ("contracted scopes, not a delivered-training total"). */
   caveat?: string;
   /** Other facts the tile's note rests on, added to data-fact. */
@@ -46,7 +51,7 @@ const defaultType = (fid: string): EvidenceType => {
 const toTile = (t: Tile) => {
   const f = fact(t.id);
   if (!f.stat) throw new Error(`<PartnerGlance>: fact ${t.id} has no stat`);
-  const note = [f.stat.glance?.note, t.caveat].filter(Boolean).join(' ');
+  const note = [t.note ?? f.stat.glance?.note, t.caveat].filter(Boolean).join(' ');
   const { figure, unit } = spellUnit(f.stat.value);
   return {
     ...t,
