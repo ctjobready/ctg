@@ -17,11 +17,11 @@ const { tone = 'note', label, class: className } = Astro.props;
 </div>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the callout (it was a 4 px primary border, tertiary on a caveat); it keeps its 1 px outline and radius. */
   .callout {
     padding: var(--space-md) var(--space-gutter);
     border-radius: var(--radius-default);
     border: 1px solid var(--primary-fixed);
-    border-inline-start: 4px solid var(--primary);
     background: var(--surface-container-low);
     color: var(--on-surface);
     max-width: var(--measure);
@@ -34,7 +34,6 @@ const { tone = 'note', label, class: className } = Astro.props;
   .callout--caveat {
     background: var(--warning-subtle);
     border-color: var(--warning);
-    border-inline-start-color: var(--tertiary);
   }
   .callout__label {
     margin: 0 0 var(--space-xs);

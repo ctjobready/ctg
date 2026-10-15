@@ -245,6 +245,13 @@ export const footerBottomLinks: NavLink[] = [
   { label: 'Accessibility', href: '/accessibility/' },
 ];
 
+/**
+ * JobReady's definition, as IN-04 registers it ("JobReady is CodersTrust’s digital education and employment platform, being built as ..."). The investor card names the platform in these words and says nothing about what it does for youth
+ * (IN-04: the employer and gig-work marketplaces are in pre-launch, so the card does not say the platform "connects" youth to work); the build stops if the register stops opening with the definition.
+ */
+const jobreadyDefinition = /^JobReady is (CodersTrust’s digital education and employment platform)\b/.exec(fact('IN-04').text)?.[1];
+if (!jobreadyDefinition) throw new Error('nav: IN-04 no longer opens "JobReady is CodersTrust’s digital education and employment platform"; update the investor card');
+
 /** Audience router (Home, 404, partner hub): who are you? Same order as the Partner with Us menu. */
 export const audiences = [
   { id: 'development-partners', title: 'Development Partners', icon: 'globe', text: 'Evidence-led delivery for your portfolio', href: '/partner-with-us/development-partners/' },
@@ -255,5 +262,7 @@ export const audiences = [
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
   // WP46 (cycle-22 review): JobReady is not defined on Home, so the investor card says what it is, in the partner hub's words for this route.
   // WP48 (cycle-23 review, item 33): the card now also states the investor's route ("Back JobReady, ...").
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'Back JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
+  // WP50 (cycle-25 review, item 14): the card backs the staged rollout and names the platform in IN-04's own definition; it was "Back JobReady, the platform we are building to connect emerging-market youth to work.", which understated the live modules
+  // and claimed a connection to work while the marketplaces are in pre-launch.
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: `Back the staged rollout of JobReady, ${jobreadyDefinition}.`, href: '/partner-with-us/investors/' },
 ] as const;

@@ -11,6 +11,7 @@ import ReportSection from '../../../components/pages/impact/ReportSection.astro'
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import CompetencyLevels from '../../../components/pages/model/CompetencyLevels.astro';
 import StagePipeline from '../../../components/pages/model/StagePipeline.astro';
+import { STAGE_STEPS } from '../../../components/pages/model/stagePipeline';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { describedList } from '../../../components/pages/impact/jsonld';
 import { MICRO_COMMITMENT } from '../../../data/copy';
@@ -25,14 +26,9 @@ const descriptor = 'CodersTrust’s Competency-Based Talent Development Model';
 const bluf = 'TalentLEAP organizes learning around assessed skill units and career paths. Competent is the published first level; Proficient and Expert are planned. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.';
 const description = desc('TalentLEAP is CodersTrust’s competency-based model: assessed skill units, career paths, and Learn, Earn, Prosper with three months of mentoring.');
 
-// The steps of the visible stage pipeline (StagePipeline), for the structured data.
-const steps = [
-  { name: 'Assess', text: 'A readiness assessment routes each applicant to a career or foundation track.' },
-  { name: 'Learn', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
-  { name: 'Prepare for Certification', text: 'Certification exam preparation, exam fee included.' },
-  { name: 'Earn', text: 'Milestone-based mentoring and placement support toward the track’s work-entry goal.' },
-  { name: 'Prosper', text: 'Career paths, continuing development and the alumni network. Progressive levels are planned beyond the first published level.' },
-];
+// The steps of the visible stage pipeline (StagePipeline), for the structured data. WP50 (cycle-25 review): read from the pipeline's own source (components/pages/model/stagePipeline.ts), where they were restated by hand;
+// the last one ends "Further TalentLEAP levels are planned."
+const steps = STAGE_STEPS;
 const levels = [
   { name: 'Level 1 · Competent', description: 'Introduction to Digital Marketing with Google and Meta Certifications: three months of mentorship by an experienced professional, three months of membership of a digital-marketing expertise community and bonus mini-courses in essential business and leadership skills. Proficient and Expert levels are planned.' },
 ];

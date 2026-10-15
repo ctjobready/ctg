@@ -278,11 +278,12 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
 test.describe('Home: the investor route card says what JobReady is (item 15)', () => {
   // WP48 (cycle-23 review, item 33): the card also states the investor's route: "Back JobReady, the platform we are building to connect emerging-market youth to work." (tests/wp48.spec.ts)
   // WP49 (cycle-24 review): the card's title is "Investors" (it was "Impact Investors"); its text is unchanged
-  test('the "Investors" card reads "Back JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
+  // WP50 (cycle-25 review, item 14): the text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (IN-04's definition; tests/wp50.spec.ts)
+  test('the "Investors" card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform."', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('Back JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await card.textContent())).toContain('Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.');
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });

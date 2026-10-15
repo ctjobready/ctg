@@ -249,9 +249,10 @@ test.describe('Partner with Us', () => {
 
   test('Employers: one pricing sentence, and the scoped-candidate sentence is not repeated', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    const text = compact(await main(page));
+    // WP50 (cycle-25 review): the pricing sentence is said once, in the "What Does It Cost?" answer (a closed accordion item, so it is read from the markup's own text, not from innerText); the options band has no lead (tests/wp50.spec.ts)
+    const text = compact(await everything(page));
     const pricing = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
-    expect(text).toContain(pricing);
+    expect(text.split(pricing).length - 1).toBe(1);
     expect(text).not.toContain('Pricing is set per program and shared after the needs assessment');
     expect(text.split('scoped against the experience and credentials available').length - 1).toBeLessThanOrEqual(3);
   });
@@ -327,8 +328,8 @@ test.describe('Our Model and Investors', () => {
   });
 
   // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; WP40 (cycle-17 review): YouthWIDE, whose "What Happens Next"
-  // shows the sequence, uses it too; the Governments variant keeps "typically"
-  test('the timeline answers are hedged: YouthWIDE and Our Model say "allow about", Governments says "typically"', async ({ page }) => {
+  // shows the sequence, uses it too; the Governments variant kept "typically". WP50 (cycle-25 review, item 23): the Governments variant is the procurement sentence alone, with no grant-pilot timing to hedge (tests/wp50.spec.ts)
+  test('the timeline answers are hedged: YouthWIDE and Our Model say "allow about"; Governments states no timing beyond the agency’s own procurement timeline', async ({ page }) => {
     for (const route of ['programs/youthwide/', 'our-model/']) {
       await open(page, route);
       const text = compact(await everything(page));
@@ -336,8 +337,8 @@ test.describe('Our Model and Investors', () => {
     }
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await everything(page));
-    expect(gov).toContain('agreement typically takes about three weeks from first conversation');
-    expect(gov).toContain('typically in training 6–8 weeks after signing');
+    expect(gov).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(gov).not.toMatch(/agreement typically takes about three weeks|typically in training 6–8 weeks after signing/);
   });
 
   test('Investors: program results appear once, the national-scale answer leads with CodersTrust’s role', async ({ page }) => {

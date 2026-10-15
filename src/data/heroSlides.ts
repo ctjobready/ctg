@@ -34,6 +34,11 @@ import { cta } from '../lib/mailto';
  * WP48 (cycle-23 review): the speed slide is "Most Had Started Earning by Six Months After the Course" (OC-05 is cumulative and includes those who first earned during the course; "by", not "within ... of the course ending").
  * WP48 (cycle-23 review): the government slide's body is two sentences, the contract scope in GV-12's words ("... work scoped for 31,200+ people: contract scope, not a count of completers.") and the National University sentence; Her Power's 25,125 women and
  * the 2,500 CodersTrust trained directly stay on the Impact and Governments tiles (GV-12's glance note) and are no longer on the slide.
+ * WP50 (cycle-25 review): the program-results slide lists four programs again ("Four programs, each with its partner, ...", as Impact and Case Studies say "Four Programs"): WSDFM's line (PR-01) is back, between Kosovo and UNDP YES, with the
+ * qualifier "program records, not trial data" that the Home case card uses, so its 71% is not read as a second result of the randomized trial of the predecessor program.
+ * WP50 (cycle-25 review): the trial slide's heading is "Women Offered a Place Earned an Estimated 41% More" again, with the qualifier in the slide's eyebrow ("Randomized Trial of a Predecessor Program") and in the lead; the ">4×" tile's caption says
+ * the multiple in words ("More than four times the average employment effect across nine vocational-training trials."), without the +10.3 the hero's trial card states. Both are the slide's own text: RC-06a's labels are unchanged.
+ * The hero's Randomized Trial card says "10.3 more were in work than in the control group" (RC-02's figure, as in the "+10.3" above it), where it said "about 10 more" (RC-02 rounded).
  */
 
 export interface HeroSlideStat {
@@ -101,17 +106,19 @@ function before(f: Fact): string {
 
 const discovery = cta('discovery');
 
-/** The trial's employment effect and the nine-trial average, read from the register so no figure is typed here. */
+/** The trial's employment effect, read from the register so no figure is typed here. */
 const offeredPoints = fact('RC-02').stat?.numeric;
-const nineTrialAverage = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
 const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 /** The trial's estimated income difference for all women offered a place (RC-01's tile), stated before the attenders' figure. */
 const incomeOffered = fact('RC-01').stat?.numeric;
 /** The same women's estimated gain in dollars a month (RC-04's tile, "+$27"), stated beside the percentage on the first slide. */
 const dollarsOffered = fact('RC-04').stat?.numeric;
-if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeOffered === undefined || dollarsOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04, RC-06a or RC-07 no longer carries the figure a slide reads');
-/** Women per 100 offered a place who were in work beyond the control group, as RC-02 rounds it (the [PLAIN-LINE] wording). */
-const perHundred = Math.round(offeredPoints);
+if (offeredPoints === undefined || !hours || incomeOffered === undefined || dollarsOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04 or RC-07 no longer carries the figure a slide reads');
+/**
+ * The trial slide's ">4×" tile is RC-06a's value; its caption (WP50, cycle-25 review) says the multiple in words, "More than four times the average employment effect across nine vocational-training trials.", and states neither the +10.3 nor
+ * the 2.3 (the hero's trial card states the +10.3, the Independent Evaluation page the nine-trial comparison). The caption is the slide's own: RC-06a's tile label and glance label are unchanged. The build stops if the tile stops reading ">4×".
+ */
+if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a no longer has the tile value ">4×"; update the caption of the trial slide ("More than four times ...")');
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
@@ -150,8 +157,18 @@ if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the 
 /** Kosovo's base (PR-02's stat value, "102 of 150") closes its line, as Her Power's "of 800 tracked women" and UNDP YES's "of the 350 trained" do (WP36, cycle-13 review: each result names its base). */
 const kosovoBase = fact('PR-02').stat?.value;
 if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
+/**
+ * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% in work")
+ * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the slide before the program results is the
+ * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px: the slide may not be taller than "Find Your Program", or every other slide leaves more than 48 px unused below its content
+ * (tests/hero-slider.spec.ts). The program's full name, which would need a second line, is on the Proof in Practice card below.
+ */
+const wsdfmLabel = fact('PR-01').stat?.label ?? '';
+const wsdfmBase = fact('PR-01').stat?.value;
+if (!/^WSDFM: \d+% in work$/.test(wsdfmLabel) || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
 const PR_TEXT = {
   wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
+  wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records, not trial data).`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
   herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work.`,
 };
@@ -181,7 +198,9 @@ export const HOME_HERO = {
       factId: 'RC-02',
       value: `+${offeredPoints}`,
       unit: 'percentage points',
-      caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, about ${perHundred} more were in work than in the control group.`,
+      // WP50 (cycle-25 review): "10.3 more", RC-02's own figure, which is the "+10.3" directly above the caption (it read "about 10 more", RC-02 rounded; the Independent Evaluation page's [PLAIN-LINE] keeps the rounded reading).
+      // scripts/check-facts.mjs derives this caption on its own ([PROOF-CARD]).
+      caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, ${offeredPoints} more were in work than in the control group.`,
     },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
     { eyebrow: 'Reach Since 2014', factId: 'SC-16' },
@@ -191,17 +210,20 @@ export const HOME_HERO = {
 export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'evidence',
-    eyebrow: 'Independent Evaluation',
+    // WP50 (cycle-25 review): the eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; it was "Independent Evaluation"), so the heading can be short again. It is this slide's own text (the pill is not the shared evidence tag).
+    eyebrow: 'Randomized Trial of a Predecessor Program',
     // WP45 (cycle-21 review): Home states the trial's employment result three times already (the hero's Randomized Trial card, the announcement bar, the ">4×" tile on this slide), so the slide's own finding is the trial's income result
     // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with the predecessor program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
-    // WP48 (cycle-23 review, the third reviewer to raise it): the heading names the predecessor program ("... in a Predecessor Program Earned an Estimated 41% More"), where only the lead below it did.
-    title: `Women Offered a Place in a Predecessor Program Earned an Estimated ${incomeOffered}% More`,
+    // WP48 (cycle-23 review, the third reviewer to raise it): the heading named the predecessor program ("... in a Predecessor Program Earned an Estimated 41% More"), where only the lead below it did.
+    // WP50 (cycle-25 review): two reviewers wanted it shorter and three had wanted the qualifier, so the heading is "Women Offered a Place Earned an Estimated 41% More" and the qualifier sits in the eyebrow directly above it and in the lead below it ("In the predecessor WSDFM program, ...").
+    title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More`,
     titleFacts: ['RC-01'],
     lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
     leadFacts: ['RC-01', 'RC-04'],
+    // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
     proof: {
       factId: 'RC-06a',
-      caption: () => `Employment effect for women offered a place: +${offeredPoints} percentage points, against ${nineTrialAverage} on average across nine vocational-training trials.`,
+      caption: () => 'More than four times the average employment effect across nine vocational-training trials.',
     },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
     photo: 'general/classroom-girls',
@@ -246,9 +268,12 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'placement',
     eyebrow: 'Program Records',
     title: 'Results by Program',
-    lead: 'Three programs, each with its partner, with results from their own program records.',
+    // WP50 (cycle-25 review): four programs, in the order of the Impact page and the case studies (Kosovo first). WP35 had left WSDFM out (read beside the trial's 63.1% its 71% looked like a second result for the same program); its line is back
+    // with the case card's qualifier, "program records, not trial data".
+    lead: 'Four programs, each with its partner, with results from their own program records.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
+      { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
       { text: PR_TEXT.herPower, factIds: ['PR-05'] },
     ],

@@ -16,14 +16,15 @@ import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import { ctaFor, statValue } from '../../components/pages/programs/meta';
 import { MICRO_COMMITMENT, NU_ELIGIBILITY } from '../../data/copy';
 import { linkAttrs } from '../../lib/url';
-import { formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
+// WP50 (cycle-25 review): the overview prints no "Last updated" line (it read as a draft stamp on a hub page); the date stays in the page's JSON-LD (dateModified). The program pages, the evidence pages and the legal pages keep theirs.
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (WP20c had set 2026-10-14; PAGE_UPDATED.programs is 2026-10-10)
 // R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
 // is a diploma), so the H1 speaks of stages ("from classroom to career"), not of one outcome. The meta description is the plan's P9 wording.
 // WP48 (cycle-23 review): the H1 is "Programs That Take Learners from Classroom to Career" (it was "Digital Skills for Every Stage, from Classroom to Career").
+// WP50 (cycle-25 review): the H1 is "Digital Skills Programs, from School to Work" (the WP48 line did not cover SuperKids or people already employed).
 const title = 'Programs';
 const description = 'Explore CodersTrust programs, from school to the workplace: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Postgraduate Diploma.';
 const discovery = ctaFor('discovery');
@@ -50,7 +51,7 @@ const jsonLd = [
 <BaseLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs' }]} jsonLd={jsonLd}>
   <Hero
     eyebrow="Programs"
-    title="Programs That Take Learners from Classroom to Career"
+    title="Digital Skills Programs, from School to Work"
     lead="CodersTrust offers four partner programs for institutions — YouthWIDE, JobReady@Campus, JobReady@Work and SuperKids — and the NU Postgraduate Diploma for individual learners."
     artSeed="programs-hub"
   >
@@ -115,10 +116,6 @@ const jsonLd = [
     cta={discovery}
     micro={MICRO_COMMITMENT}
   />
-
-  <Section pad="sm" aria-label="Last updated">
-    <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
-  </Section>
 </BaseLayout>
 
 <style>
@@ -164,11 +161,6 @@ const jsonLd = [
   }
   .hub__more {
     margin: var(--space-lg) 0 0;
-    color: var(--on-surface-variant);
-  }
-  .updated {
-    margin: 0 0 var(--space-md);
-    font-size: var(--fs-body-xs);
     color: var(--on-surface-variant);
   }
 </style>

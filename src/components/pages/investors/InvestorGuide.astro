@@ -88,13 +88,12 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   .ig__copy > * {
     margin: 0;
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the empathy line (it was a 4 px tertiary border with a left inset). */
   .ig__empathy {
     font-size: var(--fs-heading-l);
     line-height: var(--lh-heading-l);
     font-weight: var(--fw-medium);
     color: var(--secondary);
-    padding-left: var(--space-md);
-    border-left: 4px solid var(--tertiary);
     max-width: 36rem;
   }
   .ig__origin {

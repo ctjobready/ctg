@@ -22,10 +22,9 @@ const { cite, role, size = 'md', class: className } = Astro.props;
 </figure>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on a quote (it was a 4 px accent border with a gutter inset). */
   .quote {
     margin: 0;
-    padding-left: var(--space-gutter);
-    border-left: 4px solid var(--ctx-accent);
   }
   .quote blockquote {
     margin: 0;

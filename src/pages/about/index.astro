@@ -30,6 +30,12 @@ if (description.length > 155) throw new Error(`About meta description is ${descr
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
 const sc02 = fact('SC-02');
 const sc02Stat = sc02.stat!;
+// WP50 (cycle-25 review): the tile keeps its number and label; its detail line is a sentence, "Including 111,268 direct enrollments and 40,043 through courseware." (it was "111,268 direct enrollments; 40,043 through courseware").
+// Both figures are read from SC-02's text ("... 111,268 through direct training across 45 programs and 40,043 through CodersTrust courseware"), never typed here.
+const sc02Direct = /([\d,]+) through direct training/.exec(sc02.text)?.[1];
+const sc02Courseware = /([\d,]+) through CodersTrust courseware/.exec(sc02.text)?.[1];
+if (!sc02Direct || !sc02Courseware) throw new Error('About: SC-02 no longer reads "N through direct training ... N through CodersTrust courseware"; update the enrollments tile');
+const sc02Split = `Including ${sc02Direct} direct enrollments and ${sc02Courseware} through courseware.`;
 // WP30e: the employment result in one sentence; the income detail is on the Independent Evaluation page.
 const trial = RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0];
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trial)) throw new Error('About: RC-01 headline wording changed; update the trial line');
@@ -115,7 +121,7 @@ const jsonLd = [
     <div class="stack stack--lg">
       <div class="about-stats">
         <FactStat id="SC-01" />
-        <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note="111,268 direct enrollments; 40,043 through courseware" count={sc02Stat.numeric !== undefined} /></div>
+        <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Split} count={sc02Stat.numeric !== undefined} /></div>
         {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
       </div>
       <Fact id="ID-11" as="p" class="lead" />

@@ -397,7 +397,7 @@ const views = slides.map((s, i) => {
     max-width: none;
   }
 
-  /* Named results, one per line (the placement slide). */
+  /* Named results, one per line (the placement slide). WP50 (owner design rule 2026-10-16): no left-edge accent bar on the result cards (it was a 4 px secondary border); they keep their radius and shadow. */
   .hs__lines {
     list-style: none;
     margin: 0;
@@ -409,7 +409,6 @@ const views = slides.map((s, i) => {
   .hs__lines li {
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-lg);
-    border-left: 4px solid var(--secondary);
     background: var(--surface);
     box-shadow: var(--shadow-card);
     color: var(--on-surface);

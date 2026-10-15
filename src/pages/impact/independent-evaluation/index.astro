@@ -11,7 +11,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
-import { MICRO_COMMITMENT } from '../../../data/copy';
+import { BIGD_FULL, MICRO_COMMITMENT } from '../../../data/copy';
 import { buildFaq, para } from '../../../components/pages/programs/faq';
 import { faqPage } from '../../../lib/schema';
 import { hostOf, linkAttrs } from '../../../lib/url';
@@ -79,7 +79,8 @@ const attendedDetail = fact('RC-13').stat?.glance?.note;
 if (!attendedDetail) throw new Error('RC-13 no longer has a glance note');
 // WP22: the direct answer under the H1 (40 to 60 words): what the trial found, for which program, and what it does not measure. The callout below keeps the
 // plain-language line (PlainLine) and the income results, so the 10.3-point result is stated formally once here and in plain words once there.
-const directAnswer = 'A randomized trial by BIGD found that women offered a place in CodersTrust’s predecessor WSDFM program, a 200-hour program for women in Dhaka, were 10.3 percentage points more likely to be employed than the control group. It is evidence about that predecessor program, not a measurement of today’s 100-hour tracks.';
+// WP50 (cycle-25 review): this lead is where the page first names the evaluator, so it spells it out (BIGD_FULL: "the BRAC Institute of Governance and Development (BIGD)"); the later "BIGD" on the page ("Read the BIGD Study") is the abbreviation it introduces.
+const directAnswer = `A randomized trial by ${BIGD_FULL} found that women offered a place in CodersTrust’s predecessor WSDFM program, a 200-hour program for women in Dhaka, were 10.3 percentage points more likely to be employed than the control group. It is evidence about that predecessor program, not a measurement of today’s 100-hour tracks.`;
 const answerWords = directAnswer.split(/\s+/).length;
 if (answerWords < 40 || answerWords > 60) throw new Error(`Independent evaluation direct answer is ${answerWords} words (40 to 60)`);
 if (!fact('RC-01').text.includes('10.3 percentage points') || !fact('RC-07').text.includes('200 hours') || fact('PD-01').stat?.value !== '100') throw new Error('Independent evaluation direct answer: RC-01, RC-07 or PD-01 changed');

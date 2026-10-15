@@ -110,8 +110,8 @@ const grid = count === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
   .offer__after :global(.note p) {
     margin: 0;
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the key note (it was a 4 px primary border); it keeps its 1 px outline and radius. */
   .offer__after :global(.note--key) {
-    border-left: 4px solid var(--primary);
     color: var(--on-surface);
     font-weight: var(--fw-medium);
   }

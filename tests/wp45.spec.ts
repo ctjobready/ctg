@@ -82,19 +82,20 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 });
 
 test.describe('Home: the trial slide leads with income and keeps its scope (item 11)', () => {
-  // WP48 (cycle-23 review): the heading itself names the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
-  test('slide 1 is "Women Offered a Place in a Predecessor Program Earned an Estimated 41% More": RC-01 and RC-04, the predecessor program named, the >4× tile kept', async ({ page }) => {
+  // WP48 (cycle-23 review): the heading itself named the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
+  // WP50 (cycle-25 review): the heading is "Women Offered a Place Earned an Estimated 41% More" and the slide's eyebrow is "Randomized Trial of a Predecessor Program"; the >4× tile's caption says the multiple in words (tests/wp50.spec.ts)
+  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More": RC-01 and RC-04, the predecessor program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    await expect(first.locator('h2')).toHaveText('Women Offered a Place in a Predecessor Program Earned an Estimated 41% More');
+    await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More');
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');
-    await expect(first.locator('.hs__eyebrow')).toHaveText('Independent Evaluation');
+    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('+10.3 percentage points, against 2.3 on average across nine vocational-training trials');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('More than four times the average employment effect across nine vocational-training trials.');
   });
 
   test('the employment result is no longer retold in the slide’s heading or lead (the hero card, the bar and the >4× tile state it)', async ({ page }) => {

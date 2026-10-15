@@ -9,25 +9,27 @@ import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
  * C14 post-decision reinforcement (doc 04 §8), directly under the next-steps band: the first action
  * (with the audience variant where one exists), validation, the timeline reminder for grant-funded
  * pilots, and a partner logo row (PA-04 caption) when the page has not already shown that group. The logo row is the
- * validation: the one-line validation sentence (C14.validate) is printed only on pages that show no row.
+ * validation: a one-line validation sentence is printed only on a page that shows no row and passes one.
+ * WP50 (cycle-25 review): Development Partners and Governments pass none (their Track Record band's logo strip already names the organizations their closing line named), so a page prints a validation sentence only when it passes
+ * one; there is no default line any more (it was the development-partner line, C14.validate).
  */
 interface Props {
   firstAction?: string;
   /** Grant-funded pilots only: the 6–8 week reminder. */
   reminder?: boolean;
   logos?: PartnerGroup | PartnerGroup[] | false;
-  /** The validation sentence for a page with no logo row (default: the development-partner line; WP21: each audience page passes its own). */
+  /** The validation sentence for a page with no logo row (WP21: Foundations, Universities and Employers pass their own; WP50: none by default). */
   validate?: CopyBlock;
   id?: string;
 }
-const { firstAction = C14.firstAction, reminder = true, logos = 'development', validate = C14.validate, id = 'reinforce' } = Astro.props;
+const { firstAction = C14.firstAction, reminder = true, logos = 'development', validate, id = 'reinforce' } = Astro.props;
 ---
 
 <SubBand tone="airy" pull id={id}>
   <ul class="rf" role="list">
     <li class="rf__first"><strong>{firstAction}</strong></li>
-    {/* The validation line names a few of the organizations the logo row below shows; it is only printed when there is no row. */}
-    {logos === false && <li><CopyText block={validate} as="span" /></li>}
+    {/* The validation line names a few of the organizations the logo row below shows; it is only printed when there is no row (and the page passes one). */}
+    {logos === false && validate && <li><CopyText block={validate} as="span" /></li>}
     {reminder && <li><CopyText block={C14.reminder} as="span" /></li>}
   </ul>
   {logos !== false && <PartnerStrip variant="grid" group={logos} caption={PARTNER_CAPTION} />}

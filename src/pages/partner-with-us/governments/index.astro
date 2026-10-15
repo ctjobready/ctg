@@ -28,6 +28,9 @@
  * sector-wide generalizations; the page's action is a ministry briefing, so its cost answer (Q8-government) and the note in its "Choose Where to Start" lead say "in the briefing" (PROGRAM_SIZES_NOTE_BRIEFING), not "in the discovery session";
  * that lead no longer repeats the cost answer's pricing sentence (the "What Does It Cost?" answer below states it); "What Your Agency Gets" speaks of completers, not graduates (the site's word for people who finished a program);
  * the fourth glance tile (Kosovo) is part of "Results and Contract Scope at a Glance" (a single tile needs no "More Results" heading); the steps band is "What Happens Next".
+ * WP50 (cycle-25 reviews): Her Power's three lines in the contracts table are full sentences (ContractTable); the closing "Government partners include ..." line is gone, because the Track Record band's logo strip names the same five bodies;
+ * the "How Fast Can We Start?" answer (Q7-government) is the procurement sentence alone ("Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry."), without the grant-pilot timing;
+ * the call-to-action band's text link reads "Explore Our Programs" (it read "See government programs"); its destination, the Bangladesh band of the YouthWIDE page (LINKS.nationwide), is unchanged.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -212,7 +215,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     id="cta"
     heading="Let’s Plan a First Phase with Your Ministry"
     cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: 'See government programs', href: LINKS.nationwide }}
+    secondary={{ label: 'Explore Our Programs', href: LINKS.nationwide }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
   >
     <SessionAgenda lead="governments" />
@@ -227,7 +230,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
       { title: 'Launch in Existing Labs', text: 'Seats are confirmed per program.' },
     ]}
   />
-  <Reinforcement firstAction={C14.variants.governments} logos={false} reminder={false} validate={C14.validateFor.governments} />
+  <Reinforcement firstAction={C14.variants.governments} logos={false} reminder={false} />
 
   <PageEnhancements />
 </LandingLayout>

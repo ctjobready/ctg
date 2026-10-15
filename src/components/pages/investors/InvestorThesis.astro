@@ -10,12 +10,13 @@ import { fact } from '../../../data/facts';
  * P1 educated young people aged 15–24 are not in work or training (PX-01); separately, university-educated
  * people of all working ages (ages 15+, a floor) are unemployed across South Asia, the Middle East and North Africa (MENA) and
  * Sub-Saharan Africa, named in full because "these regions" would have no antecedent (the PX-01 label above carries the register's
- * short form; PX-02, never a youth figure); globally, employers cannot find skills (PX-05). P2 many online courses provide content without
- * the work-entry support that turns skills into income; P3 AI is raising the bar for entry work (PX-06,
+ * short form; PX-02, never a youth figure); globally, employers cannot find skills (PX-05). P2 learning needs to connect with work-entry support (mentoring and placement support); P3 AI is raising the bar for entry work (PX-06,
  * PX-08, which is global).
  * WP30c (owner direction 2026-10-14, "less is more"): no lead line under the heading (the three cards are the thesis), and the 19M+ floor figure and the ChatGPT posting
  * decline are gone from this band (the 62 million and 72% tiles and the AI-skills growth figure carry the thesis; the posting decline is on Home and in the FAQ).
  * WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone: it added no fact, so the band ends with its three cards.
+ * WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do; it was "Online Learning Sells Content, Not Earnings" (a heading that read as absolute) over a sentence
+ * about what many online courses lack ("... without the work-entry support that turns skills into income: mentoring, certification and placement").
  */
 interface Props {
   id?: string;
@@ -46,8 +47,8 @@ if (!/^globally\b/i.test(px08)) throw new Error('PX-08 no longer says "Globally"
     <article class="card th__card" data-reveal>
       <div class="card__body">
         <Icon name="book-open" size={36} strokeWidth={1.5} class="th__icon" />
-        <h3 class="card__title">Online Learning Sells Content, Not Earnings</h3>
-        <p class="card__text">Many online courses provide content without the work-entry support that turns skills into income: mentoring, certification and placement.</p>
+        <h3 class="card__title">Connect Learning to Paid Work</h3>
+        <p class="card__text" data-fact="IN-04">JobReady is being built to connect learning with mentoring and placement support.</p>
       </div>
     </article>
     <article class="card th__card" data-reveal>

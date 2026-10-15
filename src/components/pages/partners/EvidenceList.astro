@@ -61,8 +61,5 @@ const { heading, items } = Astro.props;
     gap: var(--space-sm);
     color: var(--ctx-text);
   }
-  .ev__list li {
-    padding-left: var(--space-md);
-    border-left: 3px solid var(--ctx-accent);
-  }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the list items (they had a 3 px accent border with a left inset). */
 </style>

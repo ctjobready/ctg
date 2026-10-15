@@ -67,8 +67,10 @@ test.describe('Investors page structure', () => {
   test('thesis, scope and case-study wording', async ({ page }) => {
     await page.goto(URL);
     const text = await page.locator('main').innerText();
-    // WP30c: the thesis band has no lead line; its three cards carry the argument (the online-learning card says what content-only courses lack)
-    expect(text).toContain('Many online courses provide content without the work-entry support that turns skills into income');
+    // WP30c: the thesis band has no lead line; its three cards carry the argument. WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do
+    // (it was "Online Learning Sells Content, Not Earnings" over a sentence about what many online courses lack; tests/wp50.spec.ts)
+    expect(text).toContain('JobReady is being built to connect learning with mentoring and placement support.');
+    expect(text).not.toContain('Many online courses provide content without the work-entry support that turns skills into income');
     // WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone; it added no fact
     expect(text).not.toContain('is an opportunity employers and communities are not yet capturing');
     expect(text).not.toContain('leaves that gap open');

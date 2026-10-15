@@ -169,13 +169,13 @@ const share = {
     font-size: var(--fs-body-xs);
     color: var(--on-surface-variant);
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the archive banner (it was a 4 px tertiary border); it keeps its tinted ground and radius. */
   .archive-banner {
     display: flex;
     gap: var(--space-sm);
     align-items: flex-start;
     margin: 0 0 var(--space-lg);
     padding: var(--space-sm) var(--space-md);
-    border-left: 4px solid var(--tertiary);
     border-radius: var(--radius-sm);
     background: var(--tertiary-container);
     color: var(--on-tertiary-container);

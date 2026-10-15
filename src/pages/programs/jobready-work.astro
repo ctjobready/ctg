@@ -3,6 +3,8 @@
 // WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the seven-step process cards and the three track cards are cut; the approach is four
 // short blocks (Scope, Deliver, Measure, Support) that keep the "measures you set" and "team capability" wording. #mechanism and #next-steps stay (linked from the employer due-diligence view).
 // WP37 (cycle-14 review): the hero serves training and hiring ("Pick one or both"), so "Hire JobReady Talent" (the same prefilled inquiry as the call-to-action band) is a text link right under the one primary button.
+// WP50 (cycle-25 review): the pricing sentence ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.") is said once, in the FAQ answer "What Does It Cost?" (Q8-employer);
+// the options band no longer repeats it under its two cards.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import CTABand from '../../components/ui/CTABand.astro';
@@ -21,7 +23,7 @@ import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_HIRING_STEPS, EMPLOYER_PRICING, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
+import { EMPATHY, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -113,6 +115,7 @@ const approach = [
   <FaqSection sources={faqSources} title="Questions About the Program" />
 
   <!-- C11 -->
+  <!-- WP50 (cycle-25 review): no pricing note under the two cards; the "What Does It Cost?" answer in the FAQ above says it once. -->
   <OfferSection
     title="A Training Program for Your Team, and Talent When You Need It"
     lead="Pick one or both."
@@ -120,9 +123,7 @@ const approach = [
       { icon: 'presentation', title: 'Train Your Team', text: 'A training program scoped to your team: needs assessment, a customized curriculum and interactive workshops.' },
       { icon: 'briefcase', title: 'Hire Job-Ready Talent', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.' },
     ]}
-  >
-    <p class="note note--key" data-fact="PD-02">{EMPLOYER_PRICING}</p>
-  </OfferSection>
+  />
 
   <!-- C12 -->
   <RiskSection

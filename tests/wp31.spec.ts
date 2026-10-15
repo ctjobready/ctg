@@ -46,11 +46,12 @@ test.describe('figures say what they measure', () => {
   });
 
   // WP45 (cycle-21 review): the slide states the offered-place women's income result (the employment result is the hero card's, the bar's and the >4× tile's), with the predecessor program named
-  test('Home slide 1 states the offered-place income result only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: the program-results slide no longer lists WSDFM; WP42: it is the fourth slide)', async ({ page }) => {
+  // WP50 (cycle-25 review, item 10): the fourth slide lists WSDFM again, as program records and not trial data, so a reader does not take its 71% for a second result of the trial (tests/wp50.spec.ts)
+  test('Home slide 1 states the offered-place income result only; the program-results slide and the case card say the WSDFM 71% is program records, separate from the trial (WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
-    await expect(page.locator('[data-hs-slide]').nth(3)).not.toContainText('WSDFM');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
     // WP46 (cycle-22 review): the caption reads "WSDFM program records (not trial data): 71% in work"
     expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records (not trial data): 71% in work');
   });

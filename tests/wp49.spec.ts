@@ -111,7 +111,8 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
     await open(page, LOCAL);
     await expect(page.locator('#problem h2')).toHaveText('Connect Your Community to Paid Digital Work');
     expect('Connect Your Community to Paid Digital Work').toBe(titleCase('Connect Your Community to Paid Digital Work'));
-    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Local organizations often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings.');
+    // WP50 (cycle-25 review): the problem band's lead is "Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting." (it was "Local organizations often lack ..."; tests/wp50.spec.ts)
+    expect(compact(await page.locator('#problem .sh__lead').textContent())).toBe('Connect your community reach with CodersTrust’s curriculum, mentoring, placement support and reporting.');
     // the track-record band opens with its method paragraph, which names the Bangladesh team; its empathy line is gone
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide .guide__method').textContent())).toContain('CodersTrust Bangladesh, our country office in');
@@ -357,11 +358,12 @@ test.describe('Home: the router card, the closing steps and the first-step line 
     'The first cohort begins training; monthly reports follow.',
   ];
 
-  test('the investor card is "Investors" (the menu, the footer and the hub use it) and keeps "Back JobReady, ..."', async ({ page }) => {
+  // WP50 (cycle-25 review, item 14): the card's text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (it was "Back JobReady, the platform we are building to connect emerging-market youth to work."; tests/wp50.spec.ts)
+  test('the investor card is "Investors" (the menu, the footer and the hub use it) and keeps "Back ..."', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
-    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.');
     expect(sitePages().filter((p) => /cat__title[^>]*>\s*Impact Investors/.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 

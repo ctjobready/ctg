@@ -133,7 +133,8 @@ test.describe('Governments: Her Power is told once', () => {
     const firstRow = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(firstRow).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
     expect(firstRow).toContain('25,125 women across 130 sub-districts (upazilas)');
-    expect(firstRow).toContain('2,500 women trained directly');
+    // WP50 (cycle-25 review, item 15): the row's lines are full sentences ("CodersTrust trained 2,500 women directly."; tests/wp50.spec.ts)
+    expect(firstRow).toContain('CodersTrust trained 2,500 women directly.');
     // the contracts table is followed directly by "What Your Agency Gets"
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(ids.indexOf('features')).toBe(ids.indexOf('contracts') + 1);
@@ -242,18 +243,18 @@ test.describe('Development Partners: the women-and-marginalized-groups answer do
   });
 });
 
-test.describe('Foundations: the Funding Route 2 passage says what a platform grant supports and links the inquiry', () => {
-  test('one sentence and the platform-grant inquiry link; the platform introduction and the live list are in the comparison table only', async ({ page }) => {
+// WP50 (cycle-25 review, item 20): the passage no longer repeats the platform-grant inquiry link; the one link is under the funding-routes comparison (tests/wp50.spec.ts)
+test.describe('Foundations: the Funding Route 2 passage says what a platform grant supports; the inquiry link sits under the comparison', () => {
+  test('one sentence and no link of its own; the platform-grant inquiry link is the one under the comparison; the platform introduction and the live list are in the comparison table only', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const passage = page.locator('#platform-grants .callout', { hasText: 'Funding Route 2 · JobReady Platform Grants' });
     await expect(passage).toHaveCount(1);
     expect(compact(await passage.locator('p[data-fact="IN-04"]').textContent())).toBe('A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
-    const link = passage.getByRole('link', { name: /Discuss a JobReady Platform Grant/ });
-    await expect(link).toHaveCount(1);
+    await expect(passage.getByRole('link')).toHaveCount(0);
     const inquiry = page.locator('.fr__inquire a', { hasText: 'Discuss a JobReady Platform Grant' });
     await expect(inquiry).toHaveCount(1);
-    expect(await link.getAttribute('href')).toMatch(/^mailto:.*JobReady%20platform%20grant/);
-    expect(await link.getAttribute('href'), 'the same inquiry as the link under the comparison').toBe(await inquiry.getAttribute('href'));
+    expect(await inquiry.getAttribute('href')).toMatch(/^mailto:.*JobReady%20platform%20grant/);
+    await expect(page.getByRole('link', { name: /Discuss a JobReady Platform Grant/ }), 'the link is on the page once').toHaveCount(1);
     expect(compact(await passage.textContent())).not.toMatch(/Live today|In pre-launch|Modules are rolling out|AI-native|jobready\.global/);
     // the list is stated once on the page, in the comparison
     expect(count(await mainText(page), 'Live today:')).toBe(1);

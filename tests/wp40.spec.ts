@@ -202,7 +202,8 @@ test.describe('Foundations: the links and the pain (items 3 and 5; WP48: the "Re
   test('the third pain is about accountability keeping pace with scale, in Title Case, and no longer compares implementers', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const qs = await texts(page, '.gp__q');
-    expect(qs).toEqual(['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
+    // WP50 (cycle-25 review): the first pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
+    expect(qs).toEqual(['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
     for (const q of qs) expect(q, q).toBe(titleCase(q));
     const item = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: 'Accountability Must Keep Pace with Scale' }) });
     expect(compact(await item.locator('.gp__a').textContent())).toBe('You need monthly outcome reports as delivery expands.');

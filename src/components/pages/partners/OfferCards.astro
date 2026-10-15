@@ -9,6 +9,8 @@ import { pricingParts } from './partners';
  * C11 offer cards for audiences whose options differ from the three-option OfferBand (universities:
  * Pilot and Scale for a campus cohort; employers: a training program and talent access). Same structure
  * and styling as OfferBand. No prices: budgets are shared in the discovery session.
+ * WP50 (cycle-25 review): a band without a `lead` has none. It used to fall back to the pricing line ("Pricing is set per program, and we share an indicative budget in the discovery session."); every page passed its own lead, and
+ * Employers' band now passes none, because its FAQ answer says the pricing once.
  */
 interface Card {
   /** Anchor for an in-page route to this card. */
@@ -38,7 +40,7 @@ const pricing = pricingParts();
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead ?? pricing.lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
     {
       cards.map((c, i) => (

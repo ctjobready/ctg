@@ -64,8 +64,8 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
-    // WP48 (cycle-23 review): the heading names the predecessor program
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place in a Predecessor Program Earned an Estimated 41% More');
+    // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the heading is short again and the slide's eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; tests/wp50.spec.ts)
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place Earned an Estimated 41% More');
     // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
     // WP25h: the framing sentence names the order of the evidence; the program-results slide is "Results by Program".
     // WP30c: the framing sentence is five words long (the slides label their own evidence types)
@@ -93,9 +93,10 @@ test.describe('home hero slider', () => {
     expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('predecessor WSDFM program'));
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
-    // the placement slide lists three programs (WP35: the WSDFM 71% is program records, read beside the trial's 63.1%, so it left the slide; the case card and the case study keep it)
-    await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(3);
-    await expect(slides.nth(3).locator('.hs__lines li').nth(2)).toHaveText('Her Power: 47% of 800 tracked women in work.');
+    // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")
+    await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(4);
+    await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
+    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {

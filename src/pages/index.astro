@@ -33,7 +33,7 @@ import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -48,14 +48,17 @@ const trialResults = linkAttrs('/impact/independent-evaluation/');
 const surveyResults = linkAttrs('/impact/outcomes-2026/');
 // Q2 (national scale), Q7 (speed) and Q8 (cost) are not asked here: the offer band states the scale and the pricing, and the call to action states the timing, each once (WP17).
 // WP30c: three questions, the ones a funder decides on (the country, the trial's scope, the proof); the AI question is answered by the cost-of-waiting band and the curriculum row.
-const FAQ_IDS = ['Q1', 'Q15', 'Q3'];
+// WP50 (cycle-25 review): the proof question is Home's own two-sentence variant (Q3-home), not the shared Q3, which reads as a governance answer and stays in the bank and on the audience pages that print it.
+const FAQ_IDS = ['Q1', 'Q15', 'Q3-home'];
 const jsonLd = [webPage({ path: '/', name: HOME_META.title, description: HOME_META.description }), faqJsonLd('home', '/', FAQ_IDS)];
 // The other two funder routes sit beside the single discovery button as text links (PRD: one primary button per view).
 const briefing = cta('briefing');
 const introduction = cta('investor');
 
 // C2 BLUF (WP30c): the 62 million and 19M+ figures are the two cards under it, so the sentence does not state them a second time. WP47 (cycle-22 review): two sentences, one claim each (it was one sentence joining the two with "and").
-const problemBluf = 'Millions of educated young people are out of work and out of training. Training budgets rarely show who starts earning.';
+// WP50 (cycle-25 review): the second sentence speaks to the reader's own budget (it was "Training budgets rarely show who starts earning."), and the band's H2 is "Education Alone Is Not Leading to Jobs" (it was "Education Is Not Turning into Jobs").
+// The closing steps band is headed NEXT_STEPS_TITLE, "What Happens Next", as on every other page with that band (it was "What Happens After You Contact Us").
+const problemBluf = 'Millions of educated young people are out of work and out of training. Your training budget needs to show who starts earning.';
 
 // C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
@@ -111,7 +114,7 @@ const includes = [
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
   <Tone cmf="C2">
-    <ProblemBand id="problem" title="Education Is Not Turning into Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
+    <ProblemBand id="problem" title="Education Alone Is Not Leading to Jobs" bluf={problemBluf} factIds={['PX-01', 'PX-02']}>
       <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={FUNDER_PAINS.map(painForList)} />
     </ProblemBand>
   </Tone>
@@ -203,7 +206,7 @@ const includes = [
     <ConversionNextSteps
       id="next-steps"
       eyebrow="For Grant-Funded Pilots"
-      title="What Happens After You Contact Us"
+      title={NEXT_STEPS_TITLE}
       timing={false}
       firstAction={C14.firstActionLabeled}
       otherRoutes={{

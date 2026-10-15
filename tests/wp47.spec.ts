@@ -165,7 +165,8 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
   test('item 33: the Challenge lead is two sentences, one claim each', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('#problem .sh__lead').textContent());
-    expect(lead).toBe('Millions of educated young people are out of work and out of training. Training budgets rarely show who starts earning.');
+    // WP50 (cycle-25 review): the second sentence speaks to the reader's own budget (it was "Training budgets rarely show who starts earning."; tests/wp50.spec.ts)
+    expect(lead).toBe('Millions of educated young people are out of work and out of training. Your training budget needs to show who starts earning.');
     expect(lead.split('. ')).toHaveLength(2);
   });
 
@@ -301,7 +302,8 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
   test('item 37: About’s enrollment tile counts "direct enrollments" beside the courseware enrollments', async ({ page }) => {
     await open(page, 'about/');
     const note = compact(await page.locator('#glance .about-stats__tile[data-fact="SC-02"] .stat__note').textContent());
-    expect(note).toBe('111,268 direct enrollments; 40,043 through courseware');
+    // WP50 (cycle-25 review, item 21): the detail line is a sentence (tests/wp50.spec.ts); the figures are SC-02's
+    expect(note).toBe('Including 111,268 direct enrollments and 40,043 through courseware.');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {

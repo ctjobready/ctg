@@ -348,6 +348,7 @@ test.describe('Development Partners and Foundations: headings that are not absol
     expect('Fund Training That Reaches Paid Work').toBe(titleCase('Fund Training That Reaches Paid Work'));
     expect(await mainText(page)).not.toContain('Grants Buy Hours. You Want Earnings');
     await expect(page.locator('#problem .gp__pains li')).toHaveCount(3);
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
+    // WP50 (cycle-25 review): the first pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
   });
 });

@@ -78,7 +78,7 @@ export const FIRST_COHORT_REMINDER: CopyBlock = {
 };
 
 /** Sentence-case an inclusion fragment from PD-02, as OfferBand does. */
-export function pricingParts(): { lead: string; inclusions: string[]; separate: string } {
+export function pricingParts(): { inclusions: string[]; separate: string } {
   const text = fact('PD-02').text;
   const inclusions = text
     .split('Standard inclusions: ')[1]
@@ -86,7 +86,6 @@ export function pricingParts(): { lead: string; inclusions: string[]; separate: 
     .split(' · ')
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1));
   return {
-    lead: 'Pricing is set per program, and we share an indicative budget in the discovery session.',
     inclusions,
     separate: 'Devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.',
   };

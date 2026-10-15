@@ -20,6 +20,7 @@
 // The challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy, Klein. The Bangladesh band's labs tile (GV-09) shows the register's qualifier as its note (lab access and seats are confirmed per program).
 // WP49 (cycle-24 review): the closing paragraph under "What Happens Next" (PD-04 in full: "For grant-funded pilots: Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3), ...; training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.") is gone: it repeated
 // the step sequence above it and the timing question in the FAQ (Q7-model). The procurement sentence is still on the page, in the Governments entry card and in that answer; the risk band's eyebrow is "Managed Rollout".
+// WP50 (cycle-25 review): step 4 of "What Happens Next" says "Training starts in existing labs and colleges on the agreed schedule." (it pointed at "the window below", which WP49 had removed).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -295,7 +296,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { title: 'Briefing or Discovery', text: 'Governments start with a briefing; funders start with a discovery session.' },
       { title: 'Co-Design', text: 'Priority groups, tracks, labs, safeguarding and the scorecard are shaped together with you.' },
       { title: 'Agreement', text: 'Scope, schedule and success measures are agreed, on the agency’s own timeline where it applies.' },
-      { title: 'First Cohort', text: 'Training starts in existing labs and colleges within the window below.' },
+      { title: 'First Cohort', text: 'Training starts in existing labs and colleges on the agreed schedule.' },
       { title: 'Monthly Reports', text: 'Reports are designed to show enrollment, completion, certification, placement and first earnings.' },
     ]}
     roleActions={[
@@ -328,9 +329,9 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the 2030 aim (it was a 4 px tertiary border with a left inset); its "Target" tag and note still set it apart. */
   .mech-target {
-    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
-    border-left: 4px solid var(--tertiary);
+    padding: var(--space-xs) 0;
     display: grid;
     gap: var(--space-xs);
     justify-items: start;
@@ -367,7 +368,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     padding: var(--space-md);
     background: var(--surface);
     border: 1px solid var(--primary-fixed);
-    border-left: 4px solid var(--secondary);
     border-radius: var(--radius-default);
     color: var(--on-surface);
     scroll-margin-top: var(--space-xl);

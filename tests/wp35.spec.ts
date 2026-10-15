@@ -139,10 +139,13 @@ test.describe('the trial and the survey are shown once per page', () => {
     await expect(card.locator('.hh__eyebrow')).toHaveText('Randomized Trial');
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
-    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, about 10 more were in work than in the control group.');
+    // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
+    await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.');
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('their monthly income was an estimated 41% higher than the control group’s');
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('+10.3 percentage points');
+    // WP50 (cycle-25 review, item 18): the slide's >4× tile says the multiple in words and no longer repeats the +10.3 percentage points, which this card states
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('More than four times the average employment effect across nine vocational-training trials.');
+    expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('+10.3 percentage points');
   });
 
   for (const slug of THREE) {
@@ -171,15 +174,21 @@ test.describe('the trial and the survey are shown once per page', () => {
   }
 });
 
-test.describe('the WSDFM 71% leaves the carousel and the glance tiles (the case cards and the case study keep it)', () => {
+// WP50 (cycle-25 review): the WSDFM 71% is back in Home's program-results slide (as the second of four programs, "program records, not trial data"); it stays off the glance tiles
+test.describe('the WSDFM 71% is off the glance tiles (the case cards and the case study keep it; WP50: the Home program-results slide lists it again)', () => {
   // WP42 (cycle-19 review): the government slide is second, so the program-results slide is the fourth
-  test('Home slide 4 lists three programs: Women in Online Work, UNDP YES and Her Power', async ({ page }) => {
+  test('Home slide 4 lists four programs: Women in Online Work, WSDFM, UNDP YES and Her Power', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
     await expect(slide.locator('h2')).toHaveText('Results by Program');
-    await expect(slide.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
-    // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
-    await expect(slide.locator('.hs__lines li')).toHaveText(['Women in Online Work, Kosovo: 68% in work (102 of 150).', 'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.', 'Her Power: 47% of 800 tracked women in work.']);
+    await expect(slide.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
+    // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
+    await expect(slide.locator('.hs__lines li')).toHaveText([
+      'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
+      'Her Power: 47% of 800 tracked women in work.',
+    ]);
   });
 
   test('Results at a Glance on Development Partners, Governments and Foundations carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it)', async ({ page }) => {

@@ -18,6 +18,7 @@ import Fact from '../../facts/Fact.astro';
 </aside>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the status box (it was a 4 px tertiary border). */
   .ps {
     margin-top: var(--space-lg);
     display: flex;
@@ -25,7 +26,6 @@ import Fact from '../../facts/Fact.astro';
     align-items: flex-start;
     padding: var(--space-md) var(--space-gutter);
     background: var(--tertiary-container);
-    border-left: 4px solid var(--tertiary);
     border-radius: var(--radius-default);
     color: var(--on-tertiary-container);
   }

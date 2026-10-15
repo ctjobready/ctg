@@ -15,6 +15,8 @@
  * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("AI Is Changing the Skills Your Teams Need": the 11M and 9M jobs, the AI-skills growth) and the Imagine
  * band ("What Changes for Your Team") are gone; Home carries them. Nothing on this page depended on them: the 72% hiring gap stays in the problem band, and the
  * AI-workflow and certification claims are in "JobReady@Work: Built Around Your Roles" and "What Your Business Gets". The hiring route's two steps are the shared EMPLOYER_HIRING_STEPS (JobReady@Work uses them too).
+ * WP50 (cycle-25 review): the pricing sentence ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.") is said once, in the "What Does It Cost?" answer (Q8-employer);
+ * "Choose How to Work with Us" no longer repeats it as its lead, so the band has none (the EMPLOYER_PRICING constant is gone from copy.ts with its last two readers).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -43,7 +45,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, EMPLOYER_PRICING, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -178,7 +180,6 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
   <!-- C11 · Offer: the two in-page routes (Train Your Team, Hire Talent) -->
   <OfferCards
     title="Choose How to Work with Us"
-    lead={EMPLOYER_PRICING}
     cards={[
       { id: 'train-your-team', eyebrow: 'Option 1', title: 'A Training Program Scoped to Your Team', text: 'Custom curriculum and interactive workshops, built from a needs assessment of your roles.', facts: ['IN-10'] },
       { eyebrow: 'Option 2', title: 'Talent Through the Placement Team', text: 'Access to job-ready candidates introduced through CodersTrust’s placement team.', facts: ['IN-04'] },

@@ -97,12 +97,11 @@
 
 /* ---- Definition band ("What Is CodersTrust?") -------------------------------------------------------------------------------------
    Shared by DefinitionBand, DefinitionBlock, DefinitionPlus and InvestorDefinition. On a wide screen the question sits beside its answer
-   (two columns), so the band has no empty right half; on a phone they stack. */
+   (two columns), so the band has no empty right half; on a phone they stack.
+   WP50 (owner design rule 2026-10-16): no left-edge accent bar (it was a 3 px primary border with an inset), so the block aligns with the other bands. */
 .def {
   display: grid;
   gap: var(--stack-title);
-  padding-inline-start: var(--space-md);
-  border-inline-start: 3px solid var(--primary);
 }
 .def > * {
   margin: 0;
@@ -284,8 +283,6 @@
   color: var(--primary);
 }
 .prose blockquote {
-  border-left: 4px solid var(--primary-fixed);
-  padding-left: var(--space-md);
   color: var(--on-surface);
   font-size: var(--fs-body-l);
 }

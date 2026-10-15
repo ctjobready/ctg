@@ -34,11 +34,10 @@ const scope = at === -1 ? '' : before.slice(at + 2).replace(/^./, (c) => c.toUpp
 </Section>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the quote (it was a 4 px tertiary border with a gutter inset). */
   .cq {
     margin: 0;
     max-width: 48rem;
-    padding-left: var(--space-gutter);
-    border-left: 4px solid var(--tertiary);
   }
   .cq__eyebrow {
     margin: 0 0 var(--space-xs);

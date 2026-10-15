@@ -63,7 +63,8 @@ test.describe('post-inquiry band (#next-steps)', () => {
   test('the week-by-week steps are labelled "For Grant-Funded Pilots", ahead of the heading', async ({ page }) => {
     await open(page, '');
     await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Pilots');
-    await expect(band(page).locator('h2')).toHaveText('What Happens After You Contact Us');
+    // WP50 (cycle-25 review, item 25): "What Happens Next" (NEXT_STEPS_TITLE), the heading every other page gives this band (it was "What Happens After You Contact Us"; tests/wp50.spec.ts)
+    await expect(band(page).locator('h2')).toHaveText('What Happens Next');
     // WP29: each step names its starting point
     await expect(band(page).locator('ol h3')).toHaveText([/Discovery \(Week 1\)/, /Co-Design \(Week 2\)/, /Agreement \(Week 3\)/, /Training Starts 6–8 Weeks After Signing/]);
   });

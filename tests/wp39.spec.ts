@@ -387,12 +387,13 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
     expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Scale and Outputs'));
     const cells = await texts(page, '#contracts td.ct__num');
     // WP41 (cycle-18 review): Her Power's cell lists its three figures, one per line (tests/wp41.spec.ts): the first is still the women CodersTrust trained directly
+    // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
-      '2,500 women trained directly',
-      'National program trained 25,125 women across 130 sub-districts (upazilas)',
-      '54,609 manuals and guidelines distributed',
+      'CodersTrust trained 2,500 women directly.',
+      'The national program trained 25,125 women across 130 sub-districts (upazilas).',
+      '54,609 manuals and guidelines were distributed.',
     ]);
-    expect(cells[0].startsWith('2,500 women trained directly')).toBe(true);
+    expect(cells[0].startsWith('CodersTrust trained 2,500 women directly.')).toBe(true);
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.');
     expect(await mainText(page)).not.toContain('Direct Training');

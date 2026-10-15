@@ -16,12 +16,12 @@ const { eyebrow, class: className } = Astro.props;
 </div>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the callout (it was a 4 px tertiary border with square left corners); it has its full radius and its shadow. */
   .callout {
     max-width: 56rem;
     padding: var(--space-md) var(--space-gutter);
-    border-left: 4px solid var(--tertiary);
     background: var(--surface);
-    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    border-radius: var(--radius-default);
     box-shadow: var(--shadow-card);
     display: grid;
     gap: var(--stack-title);

@@ -114,6 +114,7 @@ const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.p
     display: grid;
     gap: var(--space-xs);
   }
+  /* The 3 px left rule is the table of contents' active-section marker (navigation, not a box accent): it is transparent until the link is active (WP50, owner design rule 2026-10-16: kept, and allow-listed in tests/wp50-accent-bars.spec.ts). */
   .lf-toc a {
     display: block;
     padding: var(--space-sm) var(--space-compact);

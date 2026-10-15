@@ -66,12 +66,12 @@ const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, fi
   .next__roles > .next__first {
     margin: 0;
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the first-action box (it was a 4 px primary border with square left corners); it has its full radius. */
   .next__first {
     margin: var(--space-lg) 0 0;
     padding: var(--space-md) var(--space-gutter);
-    border-left: 4px solid var(--primary);
     background: var(--surface-container-low);
-    border-radius: 0 var(--radius-default) var(--radius-default) 0;
+    border-radius: var(--radius-default);
     color: var(--on-surface);
     max-width: 46rem;
   }

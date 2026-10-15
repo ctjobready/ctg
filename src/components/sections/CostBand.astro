@@ -42,10 +42,9 @@ const { title, lead, blocks, id = 'cost' } = Astro.props;
 </Section>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the data line (it was a 4 px tertiary border with a left inset). */
   .cost__data {
     color: var(--on-surface);
-    padding-left: var(--space-md);
-    border-left: 4px solid var(--tertiary);
   }
   /* The implication follows its data at one fixed distance (it is not pushed to the card's bottom, which stretched a gap of any size
      between them in the shorter cards of a row). */

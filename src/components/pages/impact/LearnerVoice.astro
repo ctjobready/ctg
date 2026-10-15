@@ -23,7 +23,7 @@ interface Props {
   id?: string;
   /** Link to more stories. */
   more?: boolean;
-  /** Show the "Individual Story" evidence tag (Impact pages, WP24b). */
+  /** Show the "Individual Story" evidence tag (Impact pages, WP24b). WP50 (cycle-25 review): with the tag the card has no "Individual Learner Story" kicker, which repeated it; the section keeps that name as its accessible label. */
   tag?: boolean;
 }
 const { story, excerpt, outcome, program, tone = 'white', id = 'learner-voice', more = true, tag = false } = Astro.props;

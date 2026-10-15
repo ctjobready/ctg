@@ -73,16 +73,18 @@ test.describe('the OC-03 tile note says the survey once, without repeating $245'
 });
 
 test.describe('the Governments "How Fast Can We Start?" answer does not count the weeks the steps band shows', () => {
-  test('the answer keeps the three-week and 6–8 week timing and drops the Week 1 to 3 sentence, in the page and in its FAQ JSON-LD', async ({ page }) => {
+  // WP50 (cycle-25 review, item 23): the answer is the procurement sentence alone; the grant-pilot timing sentence it carried (three weeks to agreement, 6–8 weeks to training) is gone (tests/wp50.spec.ts)
+  test('the answer is the procurement sentence alone and has no Week 1 to 3 sentence or grant-pilot timing, in the page and in its FAQ JSON-LD', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const item = page.locator('#faq details', { hasText: 'How Fast Can We Start?' });
     await expect(item).toHaveCount(1);
     const answer = compact(await item.textContent());
     expect(answer).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
-    expect(answer).toContain('agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
+    expect(answer).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(answer).not.toMatch(/Counting from the first conversation|Week 1 is a briefing|Week 3 the agreement/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain('agreement typically takes about three weeks from first conversation');
+    expect(ld).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(ld).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(ld).not.toContain('Counting from the first conversation');
     // the steps band after the FAQ still shows the sequence the answer no longer counts out
     const steps = (await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''));

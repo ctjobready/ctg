@@ -71,10 +71,12 @@ const excerpt = `${paras[1]} ${paras[2]}`;
     gap: var(--space-xs);
     max-width: var(--measure);
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the role box (it was a square 4 px tertiary border); the box has its 1 px outline and radius, as the other notes do. */
   .hp__role {
     margin: 0 0 var(--space-sm);
     padding: var(--space-sm) var(--space-md);
-    border-left: 4px solid var(--tertiary);
+    border: 1px solid var(--primary-fixed);
+    border-radius: var(--radius-default);
     background: var(--surface);
     color: var(--on-surface);
   }

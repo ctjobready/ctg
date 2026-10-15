@@ -80,6 +80,7 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
     color: var(--on-surface-variant);
     font-size: var(--fs-body-base);
   }
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the accountability note (it was a 4 px tertiary border). */
   .offer__acc {
     margin: var(--space-lg) 0 0;
     display: flex;
@@ -87,7 +88,6 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
     align-items: flex-start;
     padding: var(--space-md) var(--space-gutter);
     background: var(--tertiary-container);
-    border-left: 4px solid var(--tertiary);
     border-radius: var(--radius-default);
     color: var(--on-tertiary-container);
     font-size: var(--fs-body-l);

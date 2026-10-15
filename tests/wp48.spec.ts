@@ -240,10 +240,11 @@ test.describe('Governments: the contracts column and the glance heading (items 6
     expect(await texts(page, '#contracts thead th')).toEqual(['Contract', 'CodersTrust Scope', 'Scale and Outputs']);
     expect('Scale and Outputs').toBe(titleCase('Scale and Outputs'));
     expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Scale and Outputs'));
+    // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
-      '2,500 women trained directly',
-      'National program trained 25,125 women across 130 sub-districts (upazilas)',
-      '54,609 manuals and guidelines distributed',
+      'CodersTrust trained 2,500 women directly.',
+      'The national program trained 25,125 women across 130 sub-districts (upazilas).',
+      '54,609 manuals and guidelines were distributed.',
     ]);
     const cells = await texts(page, '#contracts td.ct__num');
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
@@ -437,11 +438,12 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
 });
 
 test.describe('Programs: the H1 (item 21)', () => {
-  test('"Programs That Take Learners from Classroom to Career" is the one H1, in Title Case', async ({ page }) => {
+  // WP50 (cycle-25 review): the H1 is "Digital Skills Programs, from School to Work" (it was "Programs That Take Learners from Classroom to Career", which does not cover SuperKids or people already employed; tests/wp50.spec.ts)
+  test('"Digital Skills Programs, from School to Work" is the one H1, in Title Case, and neither earlier H1 is on the site', async ({ page }) => {
     await open(page, 'programs/');
-    await expect(page.locator('main h1')).toHaveText('Programs That Take Learners from Classroom to Career');
-    expect('Programs That Take Learners from Classroom to Career').toBe(titleCase('Programs That Take Learners from Classroom to Career'));
-    expect(builtPages().filter((p) => p.html.includes('Digital Skills for Every Stage')).map((p) => p.route)).toEqual([]);
+    await expect(page.locator('main h1')).toHaveText('Digital Skills Programs, from School to Work');
+    expect('Digital Skills Programs, from School to Work').toBe(titleCase('Digital Skills Programs, from School to Work'));
+    expect(builtPages().filter((p) => p.html.includes('Digital Skills for Every Stage') || p.html.includes('Programs That Take Learners from Classroom to Career')).map((p) => p.route)).toEqual([]);
   });
 });
 
@@ -485,14 +487,15 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect(fact('ID-01').text).toContain('educated, unemployed and underemployed youth');
   });
 
-  test('slide 1 names the predecessor program in its heading; the lead, the eyebrow and the >4× tile stay', async ({ page }) => {
+  // WP50 (cycle-25 review): the predecessor program is named in the slide's eyebrow ("Randomized Trial of a Predecessor Program") and the lead; the heading is short again (tests/wp50.spec.ts)
+  test('slide 1 names the predecessor program, in the eyebrow above its heading and in its lead; the >4× tile stays', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    const title = 'Women Offered a Place in a Predecessor Program Earned an Estimated 41% More';
+    const title = 'Women Offered a Place Earned an Estimated 41% More';
     await expect(first.locator('h2')).toHaveText(title);
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
-    await expect(first.locator('.hs__eyebrow')).toHaveText('Independent Evaluation');
+    await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
   });
@@ -602,8 +605,9 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
 });
 
 test.describe('The Home router’s investor card states the route (item 33)', () => {
-  test('Home reads "Back JobReady, the platform we are building to connect emerging-market youth to work."; the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
-    const BACK = 'Back JobReady, the platform we are building to connect emerging-market youth to work.';
+  // WP50 (cycle-25 review, item 14): Home's card now reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (tests/wp50.spec.ts); the partner hub's card is the one this test still holds
+  test('Home states the investor’s route ("Back ..."); the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
+    const BACK = 'Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.';
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');

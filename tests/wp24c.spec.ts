@@ -183,7 +183,8 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
     await expect(page.getByRole('link', { name: 'See Our Impact' }).first()).toBeVisible();
     await expect(page.locator('#how-we-work')).toContainText('As agreed in the program scope');
     await expect(page.locator('#how-we-work')).not.toContainText('see progress in reports every month');
-    await expect(page.locator('#glance')).toContainText('111,268 direct enrollments; 40,043 through courseware');
+    // WP50 (cycle-25 review, item 21): "Including 111,268 direct enrollments and 40,043 through courseware." (tests/wp50.spec.ts)
+    await expect(page.locator('#glance')).toContainText('Including 111,268 direct enrollments and 40,043 through courseware.');
   });
 
   test('Governance: leadership is two sentences, reporting is scope-aware, the FAQ is renamed and On This Page labels equal the H2s', async ({ page }) => {

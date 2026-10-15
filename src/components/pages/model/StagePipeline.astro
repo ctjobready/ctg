@@ -1,5 +1,6 @@
 ---
 import Icon from '../../system/Icon.astro';
+import { STAGE_GROUPS } from './stagePipeline';
 
 /**
  * TalentLEAP stage pipeline (WP17, item 13; WP24c grouping): the path a learner takes, drawn as five connected steps (Assess, Learn,
@@ -8,6 +9,7 @@ import Icon from '../../system/Icon.astro';
  * nested ordered list: it works without JavaScript, reads in order for assistive technology (each step names its stage in text, the
  * connectors are decorative), reflows to a vertical pipeline on phones and prints. The step wording restates the TalentLEAP page's own
  * steps; it carries no figure. The exam fee is stated here once ("exam fee included").
+ * WP50 (cycle-25 review): the steps live in ./stagePipeline.ts, which the TalentLEAP page's structured data reads too; the last one ends "Further TalentLEAP levels are planned."
  */
 interface Props {
   /** Heading level of the visible title (default 3). */
@@ -17,21 +19,8 @@ interface Props {
 }
 const { level = 3, title = 'The TalentLEAP Stage Pipeline', id = 'stage-pipeline' } = Astro.props;
 const H = `h${level}` as 'h2' | 'h3';
-const groups = [
-  {
-    stage: 'Learn',
-    steps: [
-      { name: 'Assess', icon: 'clipboard-check', text: 'A readiness assessment routes each applicant to a career or foundation track.' },
-      { name: 'Learn', icon: 'graduation-cap', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
-      { name: 'Prepare for Certification', icon: 'award', text: 'Certification exam preparation, exam fee included.' },
-    ],
-  },
-  { stage: 'Earn', steps: [{ name: 'Earn', icon: 'briefcase', text: 'Milestone-based mentoring and placement support toward the track’s work-entry goal.' }] },
-  {
-    stage: 'Prosper',
-    steps: [{ name: 'Prosper', icon: 'trending-up', text: 'Career paths, continuing development and the alumni network. Progressive levels are planned beyond the first published level.' }],
-  },
-];
+// The steps are in ./stagePipeline.ts (WP50: one source for this pipeline and the TalentLEAP page's structured data).
+const groups = STAGE_GROUPS;
 let n = 0;
 ---
 

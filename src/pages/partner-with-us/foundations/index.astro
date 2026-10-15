@@ -29,6 +29,9 @@
  * no longer repeats them; the first card says results are measured "against the agreed scorecard, including first paid work, not attendance alone" (the scorecard also covers completion, certification and sustained work, PD-11);
  * the "Choose Where to Start" lead no longer repeats the cost answer's pricing sentence (the "What Does It Cost?" answer states it); the fourth glance tile (the Kosovo result) is part of "Results at a Glance" (a single tile needs no
  * "More Results" heading); the steps band is "What Happens Next" (lead "For cohort grants."). The two route actions under "Two Ways to Fund the Path" are text links, as the brief asks (FundingRoutes).
+ * WP50 (cycle-25 review): the first pain is "Track earnings, not only training hours" (Title Case when rendered; it said that grants "rarely" buy earnings, a statement about all grants), and the track-record band opens with its origin line
+ * ("Since 2014, ..."): the empathy line that restated the problem ("You want your grant to change a young person’s income, ...") is gone, because the problem band above says it. "Discuss a JobReady Platform Grant" was linked twice (under the funding-routes
+ * comparison and in the Funding Route 2 passage); the passage keeps its one sentence and the link stays beside the comparison (WP37 had added it to the passage). "Discuss a YouthWIDE Cohort Grant" was linked once, so it is unchanged.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -45,7 +48,6 @@ import FAQBand from '../../../components/sections/FAQBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
-import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
@@ -55,10 +57,9 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
+import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
-import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
@@ -66,8 +67,6 @@ const primary = cta('funding');
 // WP27: the two funding routes each get a text link with its own prefilled subject, under the one primary button; WP30c: they sit under the two-route comparison.
 const routeYouthwide = cta('fundingYouthwide');
 const routePlatform = cta('fundingPlatform');
-// WP37: the Funding Route 2 passage under the offer cards links the same inquiry as the comparison above it.
-const platformInquiry = linkAttrs(routePlatform.href);
 // The partner-edition report request (doc 04 §7), straight from the shared CTA library.
 const reportCta = cta('report');
 const report = { label: reportCta.label, href: reportCta.href };
@@ -114,7 +113,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Grants buy training hours, but rarely earnings', text: 'Attendance is easy to count; a change in income is harder to show.' },
+        { q: 'Track earnings, not only training hours', text: 'Attendance is easy to count; a change in income is harder to show.' },
         // WP48 (cycle-23 review): "Independent evidence on youth-employment programs is thin." was a claim about the whole sector; the card states the funder's need instead.
         { q: 'Independent evidence is hard to find', text: 'You need independent evidence, not a provider’s own count.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
@@ -125,9 +124,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
 
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). -->
+  <!-- C5 · Guide. WP50 (cycle-25 review): no empathy line; the band opens with the origin line, since the problem band above states the problem. -->
   <PartnerGuideBand
-    empathy={EMPATHY.foundations}
     statements={[
       { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.` },
     ]}
@@ -224,13 +222,6 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <SubBand tone="airy" pull id="platform-grants">
     <Callout eyebrow="Funding Route 2 · JobReady Platform Grants">
       <p data-fact="IN-04">A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
-      <p>
-        <a class="link" href={platformInquiry.href}>
-          {routePlatform.label}
-          {platformInquiry.srText && <span class="sr-only"> {platformInquiry.srText}</span>}
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </p>
     </Callout>
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>

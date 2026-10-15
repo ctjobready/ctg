@@ -46,7 +46,8 @@ export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, '
 /**
  * Home's three cards. WP37 (cycle-14 review): the results carousel above the band (slide 3, "Results by Program") already states the Kosovo (102 of 150) and Her Power (372 of 800) figures, so those two
  * cards show a line of delivery context in the figure's place (`context`, from each case study's own scope: Kosovo "Two-phase delivery that built digital literacy first, then real online work";
- * Her Power "Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly"). The WSDFM card keeps its figure: slide 3 no longer lists WSDFM.
+ * Her Power "Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly"). The WSDFM card kept its figure because the slide did not list WSDFM.
+ * WP50 (cycle-25 review): the slide (now the fourth, still "Results by Program") lists WSDFM again as the fourth of four programs, with the same qualifier ("program records, not trial data"); this card still shows its figure.
  */
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', statLabel: wsdfmLabel, href: '/impact/case-studies/wsdfm-women-freelancers/' },

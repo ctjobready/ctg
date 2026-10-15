@@ -60,9 +60,10 @@ export const HEADLINE: Record<Audience, string> = {
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
 // WP44 (cycle-21 review): Development Partners' guide band has no empathy line (it opens with the launch line), so its key is gone. WP47 (owner decision 2026-10-15): nor does Home's, so `home` is gone too.
 // WP49 (cycle-24 review): nor does Local Partners': its line ("You reach young people that national programs miss, ...") was the third statement of an unqualified comparison with national programs, and the paragraph after it already names the Bangladesh team.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners'>, string> = {
+// WP50 (cycle-25 review): nor do Foundations ("You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.") and the Universities partner page: each line restated the problem band just above its
+// track-record band, which now opens with the origin line. `universities` stays because JobReady@Campus states the sentence once, as its problem band's lead (tests/wp25s.spec.ts); the Universities partner page does not read it.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations'>, string> = {
   governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
-  foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   // WP46 (cycle-22 review): the earlier line ("... distinguish a model that is working from one that is only promised") invited a platform-proof test the page cannot pass; it now asks only for what is proven and what is still being built.
@@ -155,9 +156,12 @@ const UNLIKE_APPROVED =
 const WORK_POSITIONING =
   'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.';
 
-/** Home's closing sentences (WP19, item 13): two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins them for Home only. */
+/**
+ * Home's closing sentence (WP19, item 13: two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins it for Home only).
+ * WP50 (cycle-25 review): the first of the two ("Many programs cover one step: training, self-paced courses or freelance matching.") is gone; the sentence that names what CodersTrust connects stays.
+ */
 const HOME_POSITIONING =
-  'Many programs cover one step: training, self-paced courses or freelance matching. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
+  'CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
@@ -371,8 +375,8 @@ export const PRICING: CopyBlock = {
   facts: ['PD-02', 'PD-02a'],
 };
 
-/** One pricing sentence for the two employer pages and their FAQ answer (WP25s): the budget comes in the discovery session and is confirmed after the needs assessment. */
-export const EMPLOYER_PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
+// WP50 (cycle-25 review): EMPLOYER_PRICING ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.", WP25s) is gone. The two employer pages printed it a second time in
+// their options band, so the sentence is now said once on each page, in the "What Does It Cost?" answer (Q8-employer in faqs.ts).
 
 /** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
 export const EMPLOYER_HIRING_ROUTE = 'We scope your talent request against the experience and credentials available in the candidate pool.';
@@ -563,12 +567,13 @@ export const RISK_EYEBROW = 'Managed Rollout';
 
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
-  validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
+  // WP50 (cycle-25 review): Development Partners and Governments print no closing validation line any more (their Track Record band's logo strip names the same organizations: UNDP, the World Bank Group and BRAC; the Bangladesh government bodies),
+  // so `validate` (the development-partner line, "Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.", PA-01) and `validateFor.governments` ("Government partners include Bangladesh’s ICT
+  // Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.", PA-02) are gone. Foundations, Universities and Employers keep theirs.
   // WP21: one validation line per audience (the closing strip no longer repeats the same three organizations on every partner page); each uses names from one registered partner fact.
   validateFor: {
-    // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust" (as C14.validate does); the names are still from PA-01.
+    // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust"; the names are still from PA-01.
     foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
-    governments: { text: 'Government partners include Bangladesh’s ICT Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.', facts: ['PA-02'] } as CopyBlock,
     universities: { text: 'University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).', facts: ['PA-05'] } as CopyBlock,
     employers: { text: 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.', facts: ['PA-03'] } as CopyBlock,
   },

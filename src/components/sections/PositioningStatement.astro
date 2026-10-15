@@ -19,10 +19,10 @@ const { text, facts = [], class: className } = Astro.props;
 </div>
 
 <style>
+  /* WP50 (owner design rule 2026-10-16): no left-edge accent bar on the statement block (it was a 4 px accent border with a left inset). */
   .pos {
     margin-top: var(--space-xs);
-    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
-    border-left: 4px solid var(--ctx-accent);
+    padding: var(--space-xs) 0;
     display: grid;
     gap: var(--stack-title);
     max-width: 48rem;

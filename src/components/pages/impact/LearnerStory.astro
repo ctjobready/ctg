@@ -13,6 +13,8 @@ import type { ImageMetadata } from 'astro';
  *  - anonymized (`name` omitted, or `assetId` not allowed to render): an outcome line with no name, quote or photo
  *    (learners from groups that need a documented release: minors, refugees, third-gender trainees, slum residents).
  * Every story carries the individual-story caveat; outliers say so.
+ * WP50 (cycle-25 review): where the "Individual Story" evidence tag shows (`tag`), a named story has no kicker above its outcome (the tag already says it, and the Impact card read "Individual Story" over "Individual Learner Story"); the kicker
+ * stays where there is no tag (the audience pages' "Individual Learner Story") and on an anonymized story, whose kicker says something the tag does not ("Learner Outcome, Shared Without a Name").
  */
 interface Props {
   /** Register story fact (ST-xx) for the footnote marker; omit for anonymized lines (the register entry carries a name). */
@@ -25,9 +27,9 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   assetId?: string;
-  /** Eyebrow of a named story (default "Learner Story"). */
+  /** Eyebrow of a named story (default "Learner Story"); not printed on a named story that shows the evidence tag (WP50). */
   eyebrow?: string;
-  /** Show the "Individual Story" evidence tag above the story (Impact pages, WP24b). */
+  /** Show the "Individual Story" evidence tag above the story (Impact pages, WP24b); it stands in for the kicker of a named story (WP50). */
   tag?: boolean;
 }
 const props = Astro.props;
@@ -38,6 +40,8 @@ const name = named ? props.name : undefined;
 const excerpt = named ? props.excerpt : undefined;
 const image = named ? props.image : undefined;
 const imageAlt = props.imageAlt ?? '';
+// WP50: the evidence tag takes the kicker's place on a named story; an anonymized story keeps its kicker (it says the name is withheld).
+const showKicker = !(tag && name);
 ---
 
 <article class="ls" data-asset={name ? assetId : undefined} data-fact={factId}>
@@ -46,7 +50,7 @@ const imageAlt = props.imageAlt ?? '';
   </div>
   <div class="ls__body">
     {tag && <p class="ls__tag"><EvidenceTag type="Individual Story" /></p>}
-    <p class="eyebrow">{name ? (props.eyebrow ?? 'Learner Story') : 'Learner Outcome, Shared Without a Name'}</p>
+    {showKicker && <p class="eyebrow">{name ? (props.eyebrow ?? 'Learner Story') : 'Learner Outcome, Shared Without a Name'}</p>}
     <p class="ls__outcome">{outcome}</p>
     {excerpt && <p class="ls__excerpt">{excerpt}</p>}
     {name && <p class="ls__name"><b>{name}</b><span>{program}</span></p>}

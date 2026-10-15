@@ -58,7 +58,9 @@ test.describe('timelines name their starting point', () => {
   test('the "How Fast Can We Start?" answers say the weeks count from the first conversation (WP33: Governments, whose steps band shows the sequence, does not count them out again; WP40: nor does YouthWIDE)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await page.locator('#faq').textContent());
-    expect(gov).toContain('agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
+    // WP50 (cycle-25 review, item 23): the Governments answer is the procurement sentence alone, without the grant-pilot timing (tests/wp50.spec.ts)
+    expect(gov).toContain('Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry.');
+    expect(gov).not.toContain('agreement typically takes about three weeks from first conversation');
     expect(gov).not.toContain('Counting from the first conversation');
     await open(page, 'programs/youthwide/');
     const main = compact(await page.locator('main').textContent());
@@ -99,8 +101,9 @@ test.describe('Governments: Her Power is a row of the contracts table and a link
     expect(text).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
     expect(text).toContain('25,125 women across 130 sub-districts (upazilas)');
     expect(fact('GV-01').text).toContain('trained 25,125 women across 130 sub-districts (upazilas)');
-    expect(text).toContain('54,609 manuals and guidelines distributed');
-    expect(text).toContain('2,500 women trained directly');
+    // WP50 (cycle-25 review, item 15): the row's three lines are full sentences ("CodersTrust trained 2,500 women directly." ...; tests/wp50.spec.ts); the register's GV-11 string is unchanged
+    expect(text).toContain('54,609 manuals and guidelines were distributed.');
+    expect(text).toContain('CodersTrust trained 2,500 women directly.');
     expect(fact('GV-11').text).toContain('2,500 women trained directly; 54,609 manuals and guidelines distributed');
     // the tracked outcome (372 of 800, from the 2,500 trained directly) is the glance tile's, never beside the 25,125 as one figure
     expect(text).not.toContain('372 of 800');

@@ -84,8 +84,14 @@ test.describe('Home: each figure once', () => {
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
     await open(page, '');
     const lines = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(lines).toEqual(['Women in Online Work, Kosovo: 68% in work (102 of 150).', 'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.', 'Her Power: 47% of 800 tracked women in work.']);
-    expect(lines[1]).not.toMatch(/in work/);
+    // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts)
+    expect(lines).toEqual([
+      'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
+      'Her Power: 47% of 800 tracked women in work.',
+    ]);
+    expect(lines[2]).not.toMatch(/in work/);
   });
 
   // WP38 (cycle-15 review): Home's band is three short cards, so there are no Practical Benefit cells; the card titles are Title Case like every other heading
@@ -297,7 +303,8 @@ test.describe('the ranked pains are statements, not questions', () => {
     ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Is Thin']],
     // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
     ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
-    ['partner-with-us/foundations/', ['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
+    // WP50 (cycle-25 review): the first Foundations pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
+    ['partner-with-us/foundations/', ['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
     ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],

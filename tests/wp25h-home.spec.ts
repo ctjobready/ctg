@@ -33,19 +33,20 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
   });
 
   // WP42 (cycle-19 review): the government slide moved to second, so the program-results slide is the fourth
-  test('slide 4 states Korail with its own measure; WP35: the WSDFM line is gone (its 71% is program records, read beside the trial’s 63.1%), so it lists three programs', async ({ page }) => {
+  // WP50 (cycle-25 review): WP35 had taken the WSDFM line off the slide (its 71% is program records, read beside the trial’s 63.1%); it is back as the second of four programs, with the qualifier "program records, not trial data" (tests/wp50.spec.ts)
+  test('slide 4 states Korail with its own measure, and lists four programs, WSDFM among them with its qualifier', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const s = slide(page, 4);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
-    await expect(s.locator('.hs__lead')).toHaveText('Three programs, each with its partner, with results from their own program records.');
+    await expect(s.locator('.hs__lead')).toHaveText('Four programs, each with its partner, with results from their own program records.');
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 47% of 800 tracked women in work.',
     ]);
-    await expect(s).not.toContainText('WSDFM');
   });
 
   test('no sentence on Home calls the Korail result "in work"', async ({ page }) => {

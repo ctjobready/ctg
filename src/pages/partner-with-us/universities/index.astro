@@ -17,6 +17,8 @@
  * blended-learning centers and the follow-up surveys are stated in the delivery model and in "What Your Students Get". The "Degree Holders Struggle to Find Work" card says "A degree alone does not guarantee a job offer."
  * WP49 (cycle-24 reviews): the institution's pain says what it needs ("Your institution needs placement data it can report to a board or ministry."); "Choose Where to Start" no longer repeats the cost answer's pricing sentence in its lead (the
  * "What Does It Cost?" answer states it; the lead is the program-sizes note); the risk band's eyebrow is "Managed Rollout"; the steps band is "What Happens Next".
+ * WP50 (cycle-25 review): the track-record band opens with its origin line ("Since 2014, ..."): the empathy line that restated the problem ("You see capable students finish their degrees and still struggle to find work, and you are asked for
+ * placement results you cannot yet show.") is gone from it, because the problem band above says it. EMPATHY.universities stays in copy.ts for JobReady@Campus, where the sentence is its problem band's lead.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -38,7 +40,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -114,10 +116,10 @@ const optionText: Record<string, string> = {
 
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). -->
-  <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos. -->
+  <!-- C5 · Guide. -->
+  <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos.
+       WP50 (cycle-25 review): no empathy line either: the band opens with the origin line, since the problem band above states the problem (JobReady@Campus keeps the sentence as its own problem band's lead). -->
   <PartnerGuideBand
-    empathy={EMPATHY.universities}
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
   />

@@ -330,8 +330,8 @@ test.describe('Home: the government slide is second (item 10)', () => {
   test('the carousel runs trial, government scale, survey, program results, speed, reach, programs; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
-      // WP48 (cycle-23 review): the heading names the predecessor program
-      'Women Offered a Place in a Predecessor Program Earned an Estimated 41% More',
+      // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
+      'Women Offered a Place Earned an Estimated 41% More',
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
