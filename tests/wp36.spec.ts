@@ -282,9 +282,9 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
     await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
-    // the pages that are not declared whole keep the audience sentence and the shared closing sentences (WP42: Development Partners and Governments are declared whole too, tests/wp42.spec.ts)
+    // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toMatch(/^For foundations and CSR funders who need .* We combine training, mentoring and placement support in existing labs and colleges\. Partners receive monthly reports on progress toward paid work\.$/);
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe('Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.');
   });
 });
 

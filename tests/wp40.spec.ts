@@ -256,13 +256,15 @@ test.describe('Local Partners: the positioning statement divides the work (item 
     expect(text).not.toMatch(/who need to move young people in their communities|integrated training-to-earnings model delivered through certified local facilitators/);
   });
 
-  // WP42 (cycle-19 reviews): Development Partners and Governments are declared whole too (tests/wp42.spec.ts), so the pages that still keep the audience sentence are Foundations and Universities
-  test('the other statements keep the audience sentence and the shared closing (the declaration is for the pages the gate lists only)', async ({ page }) => {
-    for (const route of ['partner-with-us/foundations/', 'partner-with-us/universities/']) {
+  // WP44 (cycle-21 review): Foundations and Universities are declared whole too (tests/wp44.spec.ts), so neither keeps the audience sentence any more
+  test('Foundations and Universities carry their own declared statements, not the audience sentence (the declaration is for the pages the gate lists only)', async ({ page }) => {
+    const WHOLE: [string, string][] = [
+      ['partner-with-us/foundations/', 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.'],
+      ['partner-with-us/universities/', 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.'],
+    ];
+    for (const [route, statement] of WHOLE) {
       await open(page, route);
-      const statement = compact(await page.locator('#mechanism .pos__text').textContent());
-      expect(statement.startsWith('For '), route).toBe(true);
-      expect(statement.endsWith('We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.'), route).toBe(true);
+      expect(compact(await page.locator('#mechanism .pos__text').textContent()), route).toBe(statement);
     }
   });
 });

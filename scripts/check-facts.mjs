@@ -388,14 +388,17 @@ const POSITION_EMPLOYER_CLOSING = {
 // sentences with the reader named in the second (Development Partners: "Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope."; Governments: "Your agency receives monthly
 // reports on progress toward paid work, as agreed in the program scope."). WP43 (cycle-20 review): JobReady@Campus' hero and glance already say who the page is for and what they need, so its statement is two sentences with the program as the subject (what it
 // combines, in campus labs alongside academic studies; the monthly reports the institution receives, as agreed in the program scope). Each is declared WHOLE, for its one page: a page listed here must carry exactly this text as its
-// statement (nothing may precede it in the band, as on every page), and the audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (five pages are listed, and the self-tests below keep it at
-// these five). Declared here independently of src/data/copy.ts (POSITIONING.youthwide, POSITIONING.localPartners, POSITIONING.developmentPartners, POSITIONING.governments, POSITIONING.campus), so a change to any has to be made
+// statement (nothing may precede it in the band, as on every page), and the audience-sentence-plus-[UNLIKE] shape stays the rule for every page that is not listed (WP44 adds Foundations and Universities, so seven pages are listed, and the self-tests below keep it at
+// these seven). Declared here independently of src/data/copy.ts (POSITIONING.youthwide, POSITIONING.localPartners, POSITIONING.developmentPartners, POSITIONING.governments, POSITIONING.campus, POSITIONING.foundations, POSITIONING.universities), so a change to any has to be made
 // twice on purpose; negative self-tests below.
 const POSITION_WHOLE_STATEMENT = {
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
   '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
   '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
+  // WP44 (cycle-21 review): Foundations' and Universities' statements are whole too (see the comment on the WP43 entry below)
+  '/partner-with-us/foundations/': 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+  '/partner-with-us/universities/': 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
   '/programs/jobready-campus/': 'JobReady@Campus combines certification exam preparation, mentoring and placement support in campus labs alongside academic studies. Institutions receive monthly reports on progress toward paid work, as agreed in the program scope.',
 };
 /**
@@ -949,7 +952,7 @@ function numberGuardPage(path, html, allow = []) {
   // WP40: Local Partners declares its statement whole too, with the same guarantees, and (WP42) so do Development Partners and Governments, and (WP43) JobReady@Campus; the declarations stay at these five pages
   const wholeLp = POSITION_WHOLE_STATEMENT['/partner-with-us/local-partners/'];
   if (wholeLp !== 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.') problems.push('self-test: the Local Partners whole statement is no longer the WP40 wording');
-  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/development-partners/ /partner-with-us/governments/ /partner-with-us/local-partners/ /programs/jobready-campus/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40), /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42) and /programs/jobready-campus/ (WP43) declare a whole positioning statement and no other page');
+  if (Object.keys(POSITION_WHOLE_STATEMENT).sort().join(' ') !== '/partner-with-us/development-partners/ /partner-with-us/foundations/ /partner-with-us/governments/ /partner-with-us/local-partners/ /partner-with-us/universities/ /programs/jobready-campus/ /programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/, /partner-with-us/local-partners/ (WP36, WP40), /partner-with-us/development-partners/ and /partner-with-us/governments/ (WP42), /programs/jobready-campus/ (WP43) and /partner-with-us/foundations/ and /partner-with-us/universities/ (WP44) declare a whole positioning statement and no other page');
   posOk('the declared whole statement on the page that declares it (Local Partners)', mech(`${headerHtml}${posBlock(wholeLp)}</header>`), { whole: wholeLp });
   posBad('the shared audience-plus-[UNLIKE] statement on Local Partners, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeLp });
   posBad('a reworded Local Partners statement', mech(`${headerHtml}${posBlock(wholeLp.replace('mobilizes', 'recruits'))}</header>`), { whole: wholeLp });
@@ -986,6 +989,22 @@ function numberGuardPage(path, html, allow = []) {
   posBad('the Governments statement on JobReady@Campus (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeGov)}</header>`), { whole: wholeCampus });
   posBad('the JobReady@Campus statement on Governments (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`), { whole: wholeGov });
   posBad('the JobReady@Campus statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeCampus)}</header>`));
+  // WP44: Foundations and Universities declare theirs whole, with the same guarantees (the exact wording, nothing in front of it, each page its own text only); Universities keeps its scope clause
+  const wholeFdn = POSITION_WHOLE_STATEMENT['/partner-with-us/foundations/'];
+  const wholeUni = POSITION_WHOLE_STATEMENT['/partner-with-us/universities/'];
+  if (wholeFdn !== 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.') problems.push('self-test: the Foundations whole statement is no longer the WP44 wording');
+  if (wholeUni !== 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Universities whole statement is no longer the WP44 wording');
+  for (const [name, own, other, otherName] of [['Foundations', wholeFdn, wholeUni, 'Universities'], ['Universities', wholeUni, wholeFdn, 'Foundations']]) {
+    posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
+    posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });
+    posBad(`the shared audience-plus-[UNLIKE] statement on ${name}, which declares a whole statement`, mech(`${headerHtml}${posBlock()}</header>`), { whole: own });
+    posBad(`a reworded ${name} statement`, mech(`${headerHtml}${posBlock(own.replace('combine', 'blend'))}</header>`), { whole: own });
+    posBad(`a ${name} statement with the audience sentence in front of it`, mech(`${headerHtml}${posBlock(`${posFor} ${own}`)}</header>`), { whole: own });
+    posBad(`a lead line before the ${name} statement`, mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(own)}</header>`), { whole: own });
+    posBad(`the ${otherName} statement on ${name} (each page carries only its own)`, mech(`${headerHtml}${posBlock(other)}</header>`), { whole: own });
+    posBad(`the ${name} statement on a page that must carry the audience sentence and [UNLIKE]`, mech(`${headerHtml}${posBlock(own)}</header>`));
+  }
+  posBad('a Universities statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeUni.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeUni });
   for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
   // WP39: the exemption is one page and not also a [POSITION] page
   if (POSITION_EXEMPT_PAGES.length !== 1 || POSITION_EXEMPT_PAGES[0] !== '/partner-with-us/investors/') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and no other page');

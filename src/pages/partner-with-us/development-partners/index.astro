@@ -44,7 +44,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -116,9 +116,8 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     />
   </div>
 
-  <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the launch line. -->
   <PartnerGuideBand
-    empathy={EMPATHY.developmentPartners}
     stats={['SC-01', 'SC-03']}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"

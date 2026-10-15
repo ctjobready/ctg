@@ -19,6 +19,8 @@ export const NU_PATH = '/programs/nu-postgraduate-diploma/';
 /** Schedule, intake and location are not in the published admissions facts; one wording on all three NU pages states who confirms them. */
 export const NU_SCHEDULE_NOTE = 'Admissions confirms intake dates and schedule with each applicant.';
 export const NU_LOCATION_NOTE = 'Admissions confirms the teaching location with each applicant.';
+/** WP44 (cycle-21 review): the FAQ answer states the schedule and the location in one sentence (the rows keep NU_SCHEDULE_NOTE and NU_LOCATION_NOTE). */
+export const NU_ADMISSIONS_NOTE = 'Admissions confirms intake dates, schedule and teaching location with each applicant.';
 export const NU_NAME = 'National University Postgraduate Diploma';
 /** WP21: one name for each NU track on every surface (menu, footer, <title>, H1, cards, breadcrumbs). Official module titles are untouched. */
 export const NU_COURSE_NAME: Record<string, string> = {

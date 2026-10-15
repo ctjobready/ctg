@@ -213,13 +213,13 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     await expect(page.locator('#mega-impact a.mega__link[href$="independent-evaluation/"] .mega__desc')).toHaveText('The randomized trial of a predecessor program.');
   });
 
-  test('Foundations: the track-record band spells it out; the benefits card (later) uses the acronym', async ({ page }) => {
+  test('Foundations: the track-record band spells it out once; the benefits cards no longer name the evaluator (WP44: the second card is the scorecard)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const text = await mainText(page);
     expect(text.indexOf('BIGD')).toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);
     expect(compact(await page.locator('#guide').textContent())).toContain(`The ${SPELLED} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.`);
     expect(count(text, SPELLED)).toBe(1);
-    expect(compact(await page.locator('#features').textContent())).toContain('A randomized trial by BIGD on the predecessor WSDFM program');
+    expect(compact(await page.locator('#features').textContent())).not.toContain('BIGD');
   });
 
   test('Development Partners and Governments no longer name the evaluator at all (their proof band is a strip of links)', async ({ page }) => {
@@ -325,15 +325,15 @@ test.describe('plain words and plain claims', () => {
     expect(gov.join(' ')).not.toContain('curricula that stay');
   });
 
-  test('Foundations: the independent-evidence card says the evidence is on the predecessor program and that evaluating your own cohort is welcome, once', async ({ page }) => {
+  test('Foundations: the second features card is the pilot scorecard the grant agrees (WP44: it replaced the predecessor-evidence card)', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    // WP39 (cycle-16 review): the features band is three short cards; the second is headed "Independent Evidence on the Predecessor Program"
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Independent Evidence on the Predecessor Program' }) });
+    // WP39 (cycle-16 review) headed this card "Independent Evidence on the Predecessor Program"; WP44 (cycle-21 review) describes the scorecard instead, since the card lists a deliverable (tests/wp44.spec.ts)
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'A Pilot Scorecard Agreed with You' }) });
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__text')).toHaveText('A randomized trial by BIGD on the predecessor WSDFM program. Independent evaluation of your cohort is welcome.');
+    await expect(card.locator('.card__text')).toHaveText('Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.');
     const text = await mainText(page);
     expect(text).not.toMatch(/Independent evidence on a CodersTrust program|fund a model with independent evidence/);
-    expect(count(compact(await card.textContent()), 'independent evaluation'.toLowerCase()) + count(compact(await card.textContent()), 'Independent evaluation')).toBe(1);
+    expect(compact(await card.textContent())).not.toContain('Independent evaluation');
   });
 
   test('Governments: "What a Ministry Sees" names the follow-up surveys at 3, 6 and 12 months in its lead; the contracts table and the services line use plain words', async ({ page }) => {

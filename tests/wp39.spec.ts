@@ -87,7 +87,7 @@ const PAGES: PageSpec[] = [
         text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against first paid work, not attendance, using the agreed scorecard.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
-      { title: 'Independent Evidence on the Predecessor Program', text: 'A randomized trial by BIGD on the predecessor WSDFM program. Independent evaluation of your cohort is welcome.', facts: ['RC-01'] },
+      { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
       {
         title: 'Progress You Can See Every Month',
         text: 'Monthly reports, a quarterly steering review and a pilot scorecard, with the contracting entity and due-diligence documents confirmed in co-design. Where agreed in the program scope: SDG-mapped reporting tailored to your CSR framework, and co-branded certificates and events.',

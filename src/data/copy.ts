@@ -57,9 +57,9 @@ export const HEADLINE: Record<Audience, string> = {
 };
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
-export const EMPATHY: Record<Audience, string> = {
+// WP44 (cycle-21 review): Development Partners' guide band has no empathy line (it opens with the launch line), so its key is gone.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners'>, string> = {
   home: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
-  developmentPartners: 'You need more than enrollment numbers: you need credible evidence that young people are moving into paid work.',
   governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
@@ -176,12 +176,16 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['PD-01', 'PD-08'],
   },
   foundations: {
-    text: `For foundations and CSR funders who need a grant to change a young person’s income, and evidence that it did, CodersTrust offers an integrated training-to-earnings model with a pilot scorecard agreed in co-design. ${UNLIKE_APPROVED}`,
-    facts: ['PD-01', 'PD-08', 'PD-11'],
+    // WP44 (cycle-21 review): the hero and the Funding Route chooser already say who the page is for, so "Our Approach" states what the two grants fund and what they agree, in two sentences. scripts/check-facts.mjs declares it whole
+    // for /partner-with-us/foundations/ (POSITION_WHOLE_STATEMENT). It rests on IN-04 (the platform grant), PD-01 (training, mentoring, placement support), PD-08 (monthly reports) and PD-11 (the pilot scorecard agreed in co-design).
+    text: 'Fund a YouthWIDE cohort or JobReady’s platform infrastructure. For cohort grants, we agree a pilot scorecard and combine training, mentoring and placement support, with monthly progress reports.',
+    facts: ['IN-04', 'PD-01', 'PD-08', 'PD-11'],
   },
   universities: {
-    text: `For universities and colleges that need to prepare their degree holders for paid digital work, CodersTrust offers an integrated training-to-earnings model that runs alongside the degree. ${UNLIKE_APPROVED}`,
-    facts: ['PD-01', 'PD-08'],
+    // WP44 (cycle-21 review): as JobReady@Campus: the program is the subject, and the institution's reports are scoped as the program scope says. scripts/check-facts.mjs declares it whole for /partner-with-us/universities/ (POSITION_WHOLE_STATEMENT).
+    // It rests on IN-09 (training in parallel with academic studies, in on-campus labs), PD-01 (mentoring, placement support) and PD-08 (monthly reports).
+    text: 'JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.',
+    facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   employers: {
     // WP20b: employer-specific (the [UNLIKE] sentence describes the youth-cohort model); scripts/check-facts.mjs may pin it for this page only.

@@ -31,7 +31,8 @@ interface Statement {
 }
 interface Props {
   title?: string;
-  empathy: string;
+  /** The empathy line that opens the band; a page that does not open with one (Development Partners, WP44) leaves it out. */
+  empathy?: string;
   /** Fact IDs rendered as stat tiles (need a stat). */
   stats?: string[];
   /** Size of the stat tiles (default md). A band whose one figure is its headline shows it large. */
@@ -53,7 +54,7 @@ const hasProof = stats.length > 0 || statements.length > 0;
   <SectionHeader id={`${id}-h`} eyebrow="Our Track Record" title={title} />
   <div class:list={['pg', !hasProof && 'pg--solo']}>
     <div class="pg__copy" data-reveal>
-      <p class="lead">{empathy}</p>
+      {empathy && <p class="lead">{empathy}</p>}
       <CopyText block={origin} markers={[]} class="pg__origin" />
       <p class="pg__method">
         {method.text}{' '}

@@ -222,12 +222,13 @@ test.describe('Development Partners, Governments and SuperKids: the approach in 
     expect(count(await mainText(page), 'not delivered reach')).toBe(2);
   });
 
-  test('Foundations and Universities keep the audience sentence and the shared closing (the declaration is for the pages the gate lists)', async ({ page }) => {
+  // WP44 (cycle-21 review): Foundations and Universities are declared whole now (tests/wp44.spec.ts); the audience sentence is no longer on either page
+  test('Foundations and Universities carry their declared whole statements (the declaration is for the pages the gate lists)', async ({ page }) => {
     for (const route of ['partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
       const statement = compact(await page.locator('#mechanism .pos__text').textContent());
-      expect(statement.startsWith('For '), route).toBe(true);
-      expect(statement.endsWith('We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.'), route).toBe(true);
+      expect(statement.startsWith('For '), route).toBe(false);
+      expect(statement.endsWith('We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.'), route).toBe(false);
     }
   });
 });

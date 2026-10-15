@@ -315,11 +315,12 @@ test.describe('JobReady@Campus: "Our Approach" is two sentences with the reporti
     expect(fact('IN-09').text).toMatch(/preparation for industry-recognized certifications/);
   });
 
-  test('the Universities page keeps its own statement (audience sentence plus the shared closing)', async ({ page }) => {
+  // WP44 (cycle-21 review): Universities is declared whole (tests/wp44.spec.ts) and no longer carries the audience sentence and the shared closing
+  test('the Universities page carries its declared whole statement, not the audience sentence and the shared closing', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     const statement = compact(await page.locator('#mechanism .pos__text').textContent());
-    expect(statement.startsWith('For universities and colleges that need to prepare their degree holders for paid digital work')).toBe(true);
-    expect(statement.endsWith('We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.')).toBe(true);
+    expect(statement.startsWith('For universities and colleges that need to prepare their degree holders for paid digital work')).toBe(false);
+    expect(statement).toBe('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies. Your institution receives monthly reports on progress toward paid work, as agreed in the program scope.');
   });
 });
 
