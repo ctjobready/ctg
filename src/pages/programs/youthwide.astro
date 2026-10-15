@@ -13,6 +13,8 @@
 // funder concern / what is included / practical benefit matrix; "Choose Your Entry Point" keeps both route actions and the procurement sentence and has ONE agenda line under the two cards in place of two near-identical agendas.
 // WP40 (cycle-17 review): the glance row that says where the program is designed to run is headed "Designed for Three Regions" ("Where It Runs" read as a list of countries where it runs today); the timing question uses the
 // two-sentence variant (Q7-model), because "What Happens Next" below shows the sequence the shared answer counted out week by week.
+// WP41 (cycle-18 review): the "What Success Looks Like" band (#future) is about young people earning ("Young People Earning, Locally and Globally": jobs, freelance clients and businesses of their own); the monthly
+// reports it used to describe are already in the glance's Reporting row and the C8 cards, so it no longer explains them a third time.
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -139,12 +141,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <!-- C4 -->
   <FutureBand
     photos={futurePhotos('youthwide')}
-    title="Reports That Show Who Started Earning"
-    lead="Illustrative: monthly reports follow each cohort from enrollment to first earnings."
+    title="Young People Earning, Locally and Globally"
+    lead="Illustrative: imagine young people earning from jobs, freelance clients and businesses of their own. Your board or agency sees their progress in monthly reports."
     vignettes={[
-      { kind: 'Functional', title: 'Monthly Reports Your Board or Agency Can Read', text: 'Enrollment, completion, certification, placements and first earnings, with women’s and priority-group shares reported.' },
-      { kind: 'Emotional', title: 'See Who Started Earning', text: 'You see who started earning, from jobs, freelance clients and businesses of their own, locally, remotely and abroad.' },
-      { kind: 'Social', title: 'Evidence Your Evaluators Can Check', text: 'Follow-up results are designed to be backed by payslips, offer letters, platform logs and bank receipts.' },
+      { kind: 'Functional', title: 'Earning from a Job', text: 'A first paid job, close to home or abroad.' },
+      { kind: 'Emotional', title: 'Earning from Freelance Clients', text: 'Freelance work for clients near and far.' },
+      { kind: 'Social', title: 'Earning from Their Own Business', text: 'A business built on digital skills.' },
     ]}
   />
 

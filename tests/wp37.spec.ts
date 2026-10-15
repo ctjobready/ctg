@@ -376,13 +376,19 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
     });
   }
 
-  test('the "Is the JobReady Platform Live?" answer reads in full wherever it is asked, and in its FAQ JSON-LD', async ({ page }) => {
-    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/', 'our-model/jobready-platform/']) {
+  // WP41 (cycle-18 review): the platform page has "Rollout Status" directly above its questions (the table and the "What Is Live Today" callout), so its answer points there instead of listing the status a third time
+  // (tests/wp41.spec.ts); the shared answer stays in full on Employers and JobReady@Work
+  test('the "Is the JobReady Platform Live?" answer reads in full on Employers and JobReady@Work and points to "Rollout Status" on the platform page, and the FAQ JSON-LD says what the page says', async ({ page }) => {
+    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       const answer = await answerOf(page, 'Is the JobReady Platform Live?');
       expect(answer, route).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
       expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
     }
+    await open(page, 'our-model/jobready-platform/');
+    const platform = await answerOf(page, 'Is the JobReady Platform Live?');
+    expect(platform).toBe('Partly. See Rollout Status above for live, pre-launch and planned capabilities.');
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(platform);
     // WP39 (cycle-16 review): Investors lists the status in "What JobReady Does", directly above its questions, so its answer points there (tests/wp39.spec.ts); the JSON-LD still reads the same as the page
     await open(page, 'partner-with-us/investors/');
     const investors = await answerOf(page, 'Is the JobReady Platform Live?');

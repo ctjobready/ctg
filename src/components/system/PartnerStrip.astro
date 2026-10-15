@@ -19,6 +19,7 @@ import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type LogoFit,
  *
  * Optical size: the logo's box is picked from the artwork's aspect ratio (a wide wordmark is limited by the tile's width,
  * a crest by its height), then nudged per organization by LOGO_FIT in src/lib/logos.ts.
+ * The default slot (WP41) is a line under the logos, inside the strip's landmark: Employers states its AWS credential there, beside the AWS logo.
  */
 interface Item {
   /** Partner or outlet id from src/data/partners.ts; items without one (sample data) carry no data-asset. */
@@ -123,6 +124,7 @@ const itemStyle = (it: (typeof list)[number]) => (it.fit?.scale ? `--k:${it.fit.
       </>
     )
   }
+  <slot />
 </section>
 
 <style>

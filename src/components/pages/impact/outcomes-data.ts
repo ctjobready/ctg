@@ -26,7 +26,7 @@
  */
 export const SOURCE_SNAPSHOT = 'October 2026';
 export const DATE_PUBLISHED = '2026-10-07';
-export const PAGE_LAST_REVIEWED = '2026-10-10';
+export const PAGE_LAST_REVIEWED = '2026-10-15'; // WP41: the page's heading changed (the survey's name moved to the eyebrow)
 
 export interface ShareCell {
   label: string;

@@ -60,7 +60,8 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await open(page, 'programs/youthwide/');
     const titles = await headingsOf(page);
     const record = titles.findIndex((t) => /We Have Built This Path/i.test(t));
-    const vision = titles.findIndex((t) => /Reports That Show Who Started Earning/i.test(t));
+    // WP41 (cycle-18 review): the band is about young people earning (it was "Reports That Show Who Started Earning")
+    const vision = titles.findIndex((t) => /Young People Earning, Locally and Globally/i.test(t));
     expect(record).toBeGreaterThan(-1);
     expect(vision).toBeGreaterThan(record);
   });

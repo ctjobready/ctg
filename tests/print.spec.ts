@@ -17,7 +17,7 @@ import { pageByRoute } from './support/pages';
 const CANONICAL_ORIGIN = 'https://coderstrust.global';
 const EVIDENCE = [
   { route: '/impact/independent-evaluation/', h1: 'Randomized Trial: Women Offered a Place Were More Likely to Work' },
-  { route: '/impact/outcomes-2026/', h1: 'Impact Survey 2026: Surveyed Completers Report More Work and Higher Income' },
+  { route: '/impact/outcomes-2026/', h1: 'Surveyed Completers Report More Work and Higher Income' },
 ];
 
 /** The chrome and the calls to action that never print. */

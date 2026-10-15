@@ -335,9 +335,10 @@ test.describe('Investors: the platform-status question points to "What JobReady 
     expect(compact(await page.locator('main').textContent())).toContain(ANSWER);
   });
 
-  test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work, the platform page); Investors no longer lists the status a third time', async ({ page }) => {
+  // WP41 (cycle-18 review): the platform page points to its "Rollout Status" band the same way (tests/wp41.spec.ts), so the shared answer is in full on Employers and JobReady@Work only
+  test('the shared answer stays in full wherever else it is asked (Employers, JobReady@Work); Investors no longer lists the status a third time', async ({ page }) => {
     const shared = 'Partly — modules are rolling out in stages. Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace';
-    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/', 'our-model/jobready-platform/']) {
+    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).toContain(shared);
     }
@@ -371,12 +372,18 @@ test.describe('Investors: the platform-status question points to "What JobReady 
 });
 
 test.describe('Governments: the contracts table says "Training Figure" (item 6)', () => {
-  test('the last column header is "Training Figure"; the cells and the note are unchanged', async ({ page }) => {
+  test('the last column header is "Training Figure"; the other cells and the note are unchanged', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     expect(await texts(page, '#contracts thead th')).toEqual(['Contract', 'CodersTrust Scope', 'Training Figure']);
     expect(await page.locator('#contracts td.ct__num').evaluateAll((els) => els.map((e) => e.getAttribute('data-label')))).toEqual(Array(6).fill('Training Figure'));
     const cells = await texts(page, '#contracts td.ct__num');
-    expect(cells[0]).toBe('2,500 women trained directly');
+    // WP41 (cycle-18 review): Her Power's cell lists its three figures, one per line (tests/wp41.spec.ts): the first is still the women CodersTrust trained directly
+    expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
+      '2,500 women trained directly',
+      'National program trained 25,125 women across 130 sub-districts (upazilas)',
+      '54,609 manuals and guidelines distributed',
+    ]);
+    expect(cells[0].startsWith('2,500 women trained directly')).toBe(true);
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('Delivery status is confirmed per contract on request; scopes are contracted scopes of work, not delivered scale.');
     expect(await mainText(page)).not.toContain('Direct Training');

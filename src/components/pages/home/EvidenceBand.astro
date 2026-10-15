@@ -2,11 +2,10 @@
 import { titleCase } from '../../../lib/titleCase.mjs';
 import Section from '../../ui/Section.astro';
 import Stat from '../../system/Stat.astro';
-import PlainLine from '../../facts/PlainLine.astro';
 import BeforeAfter from '../../ui/BeforeAfter.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
-import { RCT_COMPARISON, TRIAL_BAND_HEADING, TRIAL_SENTENCE } from '../../../data/copy';
+import { RCT_COMPARISON, TRIAL_BAND_HEADING, TRIAL_LINE, TRIAL_SENTENCE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import { endSentence } from '../../sections/copyText';
 
@@ -21,32 +20,33 @@ import { endSentence } from '../../sections/copyText';
 interface Props {
   title: string;
   lead?: string;
-  /** Trial tiles, under their own heading ("From the Randomized Trial"). */
+  /** Trial tiles, under their own heading ("From the Randomized Trial"); may be empty (the Programs hub states the trial as one line, `trialLine`). */
   statIds: string[];
   /** Survey tiles, under their own heading ("From the October 2026 Survey"), apart from the trial (WP17, item 4). */
   surveyStatIds?: string[];
   /**
    * Which chart the band carries. `survey` (default): the before/after employment of surveyed completers, from `chartId` (OC-01).
    * `trial`: the randomized trial's comparison, employment at follow-up for the control group beside women offered a place
-   * (RC-02; figures read from its text by RCT_COMPARISON). Home uses `trial` (review round 13, enhancement 2); the survey chart
-   * stays on /impact/ and /impact/outcomes-2026/.
+   * (RC-02; figures read from its text by RCT_COMPARISON). Home used `trial` (review round 13, enhancement 2); the survey chart
+   * stays on /impact/ and /impact/outcomes-2026/. `none` (WP41, cycle-18 review): no chart, and the band is one column; the Programs hub states the trial result as one line instead.
    */
-  chart?: 'survey' | 'trial';
+  chart?: 'survey' | 'trial' | 'none';
   chartId?: string;
   chartTitle?: string;
   /** `trial` chart only: draw the "+10.3 percentage points" chip on the chart. Off when a tile beside it already states the difference. */
   chip?: boolean;
   headlineFact?: string;
-  /** Show the [PLAIN-LINE] (RC-02 in plain language) directly after the randomized-trial headline. */
-  plainLine?: boolean;
   /**
-   * WP32 (YouthWIDE): state the trial result once, as the single sentence TRIAL_SENTENCE, in place of the plain line and the RC-01 headline, which said it twice in a row.
+   * WP32 (YouthWIDE): state the trial result once, as the single sentence TRIAL_SENTENCE, in place of the RC-01 headline, which said it twice in a row.
    * The tiles, the chart and the links stay.
    */
   trialSentence?: boolean;
+  /**
+   * WP41 (Programs hub, cycle-18 review): state the trial result as ONE line, TRIAL_LINE (the employment result in plain words), and nothing more of the trial: pass `chart="none"` and no `statIds`, so there is no tile and no chart.
+   * (The [PLAIN-LINE] that `plainLine` used to print here is required only on /impact/independent-evaluation/ and the WSDFM case study, scripts/check-facts.mjs.)
+   */
+  trialLine?: boolean;
   links?: { label: string; href: string }[];
-  /** Show the "View Chart Data as a Table" disclosure under the chart (default true). The Programs hub turns it off (WP31); the chart keeps its text alternative. */
-  chartTable?: boolean;
   /** Show each survey tile's detail line under its label (default true). The Programs hub leaves them out (WP31): its tile states the result alone. */
   surveyNotes?: boolean;
   /**
@@ -58,14 +58,22 @@ interface Props {
   trialHeading?: string;
   id?: string;
 }
-const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, plainLine = false, trialSentence = false, chip = true, links = [], chartTable = true, surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
+const { title, lead, statIds, surveyStatIds = [], chart = 'survey', chartId = 'OC-01', chartTitle, headlineFact, trialSentence = false, trialLine = false, chip = true, links = [], surveyNotes = true, bandHeading, trialHeading, id = 'proof-band' } = Astro.props;
 const split = !!trialHeading;
 const trial = chart === 'trial';
-// Same structure as ProofBand: a short H2 when the randomized trial heads the band, with the RC-02 employment statement (the [PLAIN-LINE]
-// where the page asks for it) ahead of the RC-01 headline, which is body text.
+const showChart = chart !== 'none';
+// Same structure as ProofBand: a short H2 when the randomized trial heads the band.
 const heading = bandHeading ?? (headlineFact ? TRIAL_BAND_HEADING : titleCase(title));
 const headlineText = headlineFact ? (fact(headlineFact).headline ?? fact(headlineFact).text) : undefined;
 const employmentLine: string | undefined = undefined; // RC-01's headline now leads with the +10.3 pp employment result (WP7).
+// The one statement of the trial result, by option: the single sentence (YouthWIDE), the one-line employment result (the Programs hub) or the register's RC-01 headline.
+const statement: { text: string; facts: string } | undefined = trialSentence
+  ? { text: TRIAL_SENTENCE.text, facts: TRIAL_SENTENCE.facts.join(' ') }
+  : trialLine
+    ? { text: TRIAL_LINE.text, facts: TRIAL_LINE.facts.join(' ') }
+    : headlineFact && headlineText
+      ? { text: headlineText, facts: headlineFact }
+      : undefined;
 
 const tile = (sid: string) => {
   const f = fact(sid);
@@ -99,63 +107,61 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
   <header class="eb__head" data-reveal data-fact={headlineFact}>
     <p class="eyebrow">The Evidence</p>
     <h2 class="eb__title" id={`${id}-h`}>{heading}</h2>
-    {!split && trialSentence && <p class="lead eb__headline" data-fact={TRIAL_SENTENCE.facts.join(' ')}>{TRIAL_SENTENCE.text}</p>}
-    {!split && !trialSentence && plainLine && <PlainLine />}
+    {!split && statement && <p class="lead eb__headline" data-fact={statement.facts}>{statement.text}</p>}
     {employmentLine && <p class="lead eb__employment" data-fact="RC-02">{employmentLine}</p>}
-    {!split && !trialSentence && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
     {lead && <p class="lead">{lead}</p>}
   </header>
-  <div class="eb">
+  <div class:list={['eb', !showChart && 'eb--single']}>
     <div class="eb__group">
       {split && <h3 class="eb__sub t-heading-l">{trialHeading}</h3>}
       {!split && surveyStats.length > 0 && <h3 class="eb__sub t-heading-l">From the Randomized Trial</h3>}
-      {split && trialSentence && <p class="lead eb__headline" data-fact={TRIAL_SENTENCE.facts.join(' ')}>{TRIAL_SENTENCE.text}</p>}
-      {split && !trialSentence && plainLine && <PlainLine />}
-      {split && !trialSentence && headlineFact && headlineText && <p class="lead eb__headline" data-fact={headlineFact}>{headlineText}</p>}
-      <div class="eb__stats">
-        {
-          stats.map((s, i) => (
-            <div class="eb__stat" data-fact={s.id}>
-              <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
-              </Stat>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-    <div class="eb__chart">
+      {split && statement && <p class="lead eb__headline" data-fact={statement.facts}>{statement.text}</p>}
       {
-        trial ? (
-          <>
-            <BeforeAfter
-              mode="comparison"
-              title={chartHeading}
-              before={{ label: 'Control Group', value: before }}
-              after={{ label: 'Offered a Place', value: after }}
-              delta={delta}
-              chip={chip}
-              unit={unit}
-              table={chartTable}
-              tone="dark"
-            />
-            <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group.</p>
-          </>
-        ) : (
-          <>
-            <BeforeAfter
-              title={chartHeading}
-              before={{ label: 'Before', value: before, caption: 'Before Training' }}
-              after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
-              delta={delta}
-              unit={unit}
-              table={chartTable}
-              tone="dark"
-            />
-            <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
-          </>
+        stats.length > 0 && (
+          <div class="eb__stats">
+            {stats.map((s, i) => (
+              <div class="eb__stat" data-fact={s.id}>
+                <Stat value={s.value} label={s.label} note={s.detail} tone={i % 2 === 0 ? 'dark' : 'accent'} size="lg" count={s.numeric}>
+                </Stat>
+              </div>
+            ))}
+          </div>
         )
       }
     </div>
+    {
+      showChart && (
+        <div class="eb__chart">
+          {trial ? (
+            <>
+              <BeforeAfter
+                mode="comparison"
+                title={chartHeading}
+                before={{ label: 'Control Group', value: before }}
+                after={{ label: 'Offered a Place', value: after }}
+                delta={delta}
+                chip={chip}
+                unit={unit}
+                tone="dark"
+              />
+              <p class="eb__fn" data-fact="RC-02">Chart data: employment at follow-up, women offered a place and the control group.</p>
+            </>
+          ) : (
+            <>
+              <BeforeAfter
+                title={chartHeading}
+                before={{ label: 'Before', value: before, caption: 'Before Training' }}
+                after={{ label: 'October 2026 Survey', value: after, caption: 'Surveyed Completers' }}
+                delta={delta}
+                unit={unit}
+                tone="dark"
+              />
+              <p class="eb__fn">Chart data: {endSentence(cf.stat?.label ?? '')}</p>
+            </>
+          )}
+        </div>
+      )
+    }
   </div>
   {
     surveyStats.length > 0 && (
@@ -223,9 +229,12 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
       letter-spacing: -0.5px;
     }
   }
-  .eb__group > .eb__headline,
-  .eb__group > :global(.plainline) {
+  .eb__group > .eb__headline {
     margin: 0 0 var(--space-md);
+  }
+  /* the trial line with no tile under it ends its group (WP41) */
+  .eb__group > .eb__headline:last-child {
+    margin-bottom: 0;
   }
   .eb__survey {
     margin-top: var(--space-xl);
@@ -250,8 +259,9 @@ const chartHeading = chartTitle ?? (trial ? 'Employment at Follow-Up (Nov–Dec 
     flex-wrap: wrap;
     gap: var(--space-sm) var(--space-lg);
   }
+  /* a band with no chart (`chart="none"`, WP41) is one column: the trial line has no tile or chart beside it */
   @media (min-width: 1024px) {
-    .eb {
+    .eb:not(.eb--single) {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-xl);
       align-items: center;

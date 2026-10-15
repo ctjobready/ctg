@@ -350,7 +350,8 @@ test.describe('plain words and plain claims', () => {
     };
     const cost = await answer('What Does It Cost?');
     expect(cost).toBe(
-      'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions are outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reports and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
+      // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"
+      'Pricing is set per program, and we share an indicative budget in the discovery session. For supported youth cohorts, standard inclusions are outreach and selection, blended training, an AI-ready curriculum, certification exam preparation (exam fee included), three months of mentoring, placement support, monthly reports and outcome tracking for 12 months after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
     );
     const safeguarding = await answer('What About Safeguarding and Data Protection?');
     expect(safeguarding).toBe(

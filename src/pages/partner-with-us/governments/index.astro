@@ -14,6 +14,8 @@
  * "Read the Her Power Case Study" text link under the table, and the national-scale answer no longer retells Her Power: "We scale in phases. A 100,000+ national program is a design option we have not yet delivered.",
  * with its closing sentence linking the contracts table.
  * WP39 (cycle-16 review): "What Your Agency Gets" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix; the contracts table's last column reads "Training Figure" (it mixes delivered and scoped figures).
+ * WP41 (cycle-18 review): the contracts table's scope cells are short phrases in every row (Her Power's was a sentence with three figures), and every figure sits in the "Training Figure" column; the "Capacity That Stays" card of
+ * the delivery band no longer repeats the manuals figure (the table keeps it).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -43,7 +45,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { LINKS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
@@ -64,7 +66,6 @@ const { title, description } = meta(
 const herPowerLabel = CASE_CARD_LABELS['PR-05'];
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-route'];
-const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
 ---
 
 <LandingLayout
@@ -149,7 +150,7 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
     blocks={[
       { label: 'Who We Reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Government Digital Labs', text: 'Blended learning in government labs you already run; lab access and seats are confirmed per program.', icon: 'landmark' },
-      { label: 'What We Deliver', title: 'Capacity That Stays', text: `Training of Trainers, curriculum and manuals (${manuals} for Her Power), then preparation for industry certification.`, icon: 'award' },
+      { label: 'What We Deliver', title: 'Capacity That Stays', text: 'Training of Trainers, curriculum and manuals, then preparation for industry certification.', icon: 'award' },
       { label: 'Where They Work', title: 'Placement and Monthly Reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
     ]}
     link={{ label: 'See How YouthWIDE Works', href: LINKS.youthwide }}

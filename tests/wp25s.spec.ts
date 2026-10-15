@@ -24,7 +24,8 @@ test.describe('direct answers under the H1', () => {
 
   for (const [route, needle] of [
     ['programs/youthwide/', 'YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support.'],
-    ['programs/jobready-campus/', 'JobReady@Campus runs mentored, certification-focused training in on-campus labs'],
+    // WP41 (cycle-18 review): the lead speaks to the institution ("Run mentored, certification-focused training in your campus labs alongside academic studies.")
+    ['programs/jobready-campus/', 'Run mentored, certification-focused training in your campus labs alongside academic studies.'],
     ['programs/jobready-work/', 'JobReady@Work builds custom AI-ready training for your team'],
     ['programs/superkids/', 'SuperKids brings block coding, robotics and graphic design for kids into schools'],
     ['our-model/', 'One integrated path: assessment, certification-focused training'],
@@ -188,7 +189,8 @@ test.describe('About', () => {
   test('Careers: the two application routes are explained in one line, and the H1 says what the work is', async ({ page }) => {
     await open(page, 'careers/');
     await expect(page.locator('#apply .cr-mail')).toContainText('opens a prefilled email to');
-    await expect(page.locator('#apply .cr-mail')).toContainText('you can also send your CV to that address yourself');
+    // WP41 (cycle-18 review): American English, "resume" (tests/wp41.spec.ts)
+    await expect(page.locator('#apply .cr-mail')).toContainText('you can also send your resume to that address yourself');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Help Put Young People into Paid Digital Work');
   });
 

@@ -32,8 +32,8 @@ const csvPath = join(process.cwd(), 'public/data/outcomes-2026-aggregates.csv');
 if (readFileSync(csvPath, 'utf8') !== D.csvText()) throw new Error('public/data/outcomes-2026-aggregates.csv is out of date; regenerate it from outcomes-data.ts');
 
 const path = '/impact/outcomes-2026/';
-// H1 (WP30e): the result, scoped to who answered.
-const H1 = 'Impact Survey 2026: Surveyed Completers Report More Work and Higher Income';
+// H1 (WP30e): the result, scoped to who answered. WP41 (cycle-18 review): the heading is the finding alone; the survey's name is the eyebrow, the breadcrumb and the meta title ("Impact Survey 2026 Outcomes").
+const H1 = 'Surveyed Completers Report More Work and Higher Income';
 const csvHref = url('/data/outcomes-2026-aggregates.csv');
 const description = desc(`Surveyed completers: employment rose from ${val('OC-01', 'from')} to ${val('OC-01')} at the October 2026 survey.`);
 
@@ -104,7 +104,7 @@ const howToRead = `<ul>
 <LongformLayout
   title={title('Impact Survey 2026 Outcomes')}
   heading={H1}
-  eyebrow="Surveyed Completers"
+  eyebrow="Impact Survey 2026"
   lead={directAnswer}
   description={description}
   path={path}

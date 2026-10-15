@@ -65,14 +65,16 @@ test.describe('Home: each figure once', () => {
     expect(count(await mainText(page), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
   });
 
-  // WP38 (cycle-15 review): the heading leads with its figure and then names the base ("completers who started earning"); the survey qualifier is on the slide itself (eyebrow, lead, tile)
-  test('slide 4 leads with its figure, says "completers who started earning", and keeps "surveyed completers" in the lead', async ({ page }) => {
+  // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
+  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, lead, tile)
+  test('slide 4 is headed "First Earnings Within Six Months" (the finding, no percentage), and keeps "surveyed completers" in the lead and the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
-    await expect(slide.locator('h2')).toHaveText('58.8% of Completers Who Started Earning Began Within Six Months');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('58.8% of Completers Who Started Earning Began Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('First Earnings Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
   });
 
   test('slide 3 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
@@ -83,7 +85,7 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review): Home's band is three short cards, so there are no Practical Benefit cells; the card titles are Title Case like every other heading
-  test('the three cards of "What Your Partnership Includes" carry Title Case headings', async ({ page }) => {
+  test('the three cards of "What a Supported Youth Cohort Includes" (WP41: it was "What Your Partnership Includes") carry Title Case headings', async ({ page }) => {
     await open(page, '');
     const titles = await texts(page, '#features .card__title');
     expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Results You Can Check', 'Tracks Chosen from Employer Demand']);
@@ -328,7 +330,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
       expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/#faqs$/);
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?');
       expect(ld?.text).toBe(COST);
-      expect(await mainText(page)).not.toContain('Standard inclusions are outreach and selection');
+      expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection/i);
     });
   }
 
@@ -350,7 +352,8 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/');
     const cost = await answerOf(page, 'What Does It Cost?');
     const safe = await answerOf(page, 'What About Safeguarding and Data Protection?');
-    expect(cost).toContain('Standard inclusions are outreach and selection');
+    // WP41 (cycle-18 review): the list is scoped to supported youth cohorts ("For supported youth cohorts, standard inclusions are …")
+    expect(cost).toContain('For supported youth cohorts, standard inclusions are outreach and selection');
     expect(safe).toContain('Guardian consent and supervision apply to anyone under 18');
     for (const a of [cost, safe]) expect(sentences(a).length).toBeLessThanOrEqual(3);
     const ld = await faqJsonLd(page);
@@ -429,9 +432,10 @@ test.describe('one figure, one label: the 31,200+ is tagged "Contract Scope" eve
 });
 
 test.describe('dating lines', () => {
-  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 10, 2026"; no page says "Page last reviewed"', async ({ page }) => {
+  // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow), so its "Last updated" is that day; the source snapshot stays October 2026
+  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 15, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 10, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 15, 2026');
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

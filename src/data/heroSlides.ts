@@ -105,8 +105,6 @@ const perHundred = Math.round(offeredPoints);
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
-/** The new earners' share, for the speed slide's headline. */
-const startedSixMonths = fact('OC-05').stat?.value;
 /**
  * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
  * WP38 (cycle-15 review): the slide has a figure of its own, SC-03's stat ("15", captioned "countries and territories with CodersTrust programs": the register's label without its ", including Bangladesh" tail, which the line
@@ -123,7 +121,7 @@ const reachCaption = reachLabel.replace(/, including Bangladesh$/, '');
  */
 const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
-if (!startedSixMonths) throw new Error('heroSlides: OC-05 no longer carries the figure a slide headline reads');
+if (!fact('OC-05').stat?.value) throw new Error('heroSlides: OC-05 no longer carries the figure the speed slide shows (its tile; the heading does not state it, WP41)');
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
 const firstJob = /^of the (\d+) trained found their first job within 3 months$/.exec(fact('PR-03').stat?.label ?? '');
@@ -215,10 +213,10 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'fast-to-earning',
     eyebrow: 'Impact Survey 2026',
-    // WP36 (cycle-13 review): "completers", the term the Outcomes 2026 page and the register use, not "earners". The clause "who started earning" is the base (the 170 who first earned during or after training).
-    // WP38 (cycle-15 review, clarity of base): the figure leads and the base follows it ("58.8% of completers who started earning began within six months"). The heading stays two lines at 1280 px: with "Surveyed" before "Completers"
-    // (71 characters) it wraps to three, which makes this the tallest slide and leaves the others more than 48 px of empty space. The survey qualifier is on the slide itself: the eyebrow ("Impact Survey 2026"), the lead and the tile name the surveyed completers.
-    title: `${startedSixMonths} of Completers Who Started Earning Began Within Six Months`,
+    // WP36 and WP38 (cycle-13 and cycle-15 reviews) worded the heading as the figure plus its base ("58.8% of Completers Who Started Earning Began Within Six Months"). WP41 (cycle-18 reviews): the heading is the finding alone,
+    // "First Earnings Within Six Months", with no percentage; the tile carries the 58.8% with its base (the 170 surveyed completers who first earned during or after training), and the eyebrow ("Impact Survey 2026") and the lead
+    // name the surveyed completers.
+    title: 'First Earnings Within Six Months',
     titleFacts: ['OC-05'],
     lead: 'Among surveyed completers who first earned during or after training, most started within six months.',
     leadFacts: ['OC-05'],
@@ -240,7 +238,9 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'government-trust',
     eyebrow: 'Government and University Partners',
-    title: 'Government Contracts and National University Partnership',
+    // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
+    title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
+    titleFacts: ['GV-12'],
     // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
     lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
     leadFacts: ['GV-12'],

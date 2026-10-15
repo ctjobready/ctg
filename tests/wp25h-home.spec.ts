@@ -106,12 +106,13 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
-    // WP38 (cycle-15 review): the heading leads with the figure and then names the base; the eyebrow, the lead and the tile keep "surveyed completers"
-    await expect(slide(page, 4).locator('h2')).toHaveText('58.8% of Completers Who Started Earning Began Within Six Months');
+    // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow, the lead and the tile keep "surveyed completers"
+    await expect(slide(page, 4).locator('h2')).toHaveText('First Earnings Within Six Months');
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Among surveyed completers who first earned during or after training, most started within six months.');
     await expect(slide(page, 4).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 6).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
-    await expect(slide(page, 6).locator('h2')).toHaveText('Government Contracts and National University Partnership');
+    // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
+    await expect(slide(page, 6).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
     await expect(slide(page, 6).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 

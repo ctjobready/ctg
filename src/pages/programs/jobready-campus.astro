@@ -3,6 +3,8 @@
 // WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the "Includes" fact list, the three-step band, the pricing paragraph and the scorecard
 // paragraph are cut (each repeated what the glance table, the model band, the options or the pilot points already say).
 // WP39 (cycle-16 review): "Built Around What Institutions Ask For" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix.
+// WP41 (cycle-18 review): the hero lead speaks to the institution in two short sentences ("Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and
+// build placement evidence from your own cohorts."); the mechanism's last block says "Mentoring and placement support toward paid work" (support toward work, not a promise that it leads into work).
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
@@ -64,7 +66,7 @@ const options = [
   <HeroBand
     audience="JobReady@Campus · For Universities and Colleges"
     title="Give Your Students a Degree and a Route into Digital Work"
-    lead="JobReady@Campus runs mentored, certification-focused training in on-campus labs, in parallel with academic studies, so universities and colleges can prepare students for paid work and build placement evidence from their own students."
+    lead="Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and build placement evidence from your own cohorts."
     cta={campus}
     artSeed="jobready-campus"
   />
@@ -119,7 +121,7 @@ const options = [
       { label: 'When', title: 'In Parallel with Studies', text: 'Industry-oriented skills training runs alongside the academic program.', icon: 'calendar-check' },
       { label: 'Where', title: 'On-Campus Labs', text: 'Labs serve as blended-learning centers, with faculty members as coordinators.', icon: 'school' },
       { label: 'What', title: 'Certification and Internships', text: 'Preparation for industry-recognized certifications, plus professional internships where employer placements are available.', icon: 'award' },
-      { label: 'After', title: 'Freelance, Local, Remote and Overseas Work', text: 'Mentoring and placement support lead into work.', icon: 'globe' },
+      { label: 'After', title: 'Freelance, Local, Remote and Overseas Work', text: 'Mentoring and placement support toward paid work.', icon: 'globe' },
     ]}
     factIds={['IN-09', 'PD-06']}
   />

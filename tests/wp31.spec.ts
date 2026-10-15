@@ -111,14 +111,16 @@ test.describe('figures say what they measure', () => {
     expect(links.map((l) => l.label)).toContain('Where We Are Heading');
   });
 
-  test('the Programs hub keeps the plain trial sentence, the chart and the 77.9% tile; the income paragraph, the chart table and the 5.9% line are gone', async ({ page }) => {
+  // WP41 (cycle-18 review): the hub states the trial as ONE line (the employment result, the predecessor program named) and keeps the 77.9% tile; the plain-language paragraph (WP31 kept it), the +10.3 pp tile and the chart
+  // (WP31 kept them too) are gone, with the income paragraph and the 5.9% line before them (tests/wp41.spec.ts covers the band in full)
+  test('the Programs hub states the trial as one line and keeps the 77.9% tile; the plain-language paragraph, the chart, the income paragraph and the 5.9% line are gone', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     const text = compact(await band.textContent());
-    expect(text).toContain('For every 100 women offered a place, about 10 more were in work at follow-up than among 100 comparable women in the control group (+10.3 percentage points).');
+    expect(text).toContain('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed than the control group.');
     expect(text).toContain('77.9%');
-    expect(text).not.toMatch(/41% higher|54% higher|5\.9%|View Chart Data as a Table/);
-    await expect(band.locator('svg[role="img"]').first()).toBeVisible();
+    expect(text).not.toMatch(/For every 100 women|41% higher|54% higher|5\.9%|View Chart Data as a Table/);
+    await expect(band.locator('svg[role="img"]')).toHaveCount(0);
     await expect(band.locator('.ba__data')).toHaveCount(0);
   });
 
@@ -279,9 +281,10 @@ test.describe('smaller wording fixes', () => {
     expect(cards.toLowerCase()).not.toContain('then placement support');
   });
 
-  test('YouthWIDE: the vignette says "See Who Started Earning" (no attribution), and the page says the cohorts are designed for three regions', async ({ page }) => {
+  test('YouthWIDE: no vignette is attributed to a funder ("Know Whether the Budget Produced Earnings"), and the page says the cohorts are designed for three regions', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(await texts(page, '#future h3')).toContain('See Who Started Earning');
+    // WP41 (cycle-18 review): the "What Success Looks Like" band is about young people earning, so the "See Who Started Earning" vignette is gone (tests/wp41.spec.ts)
+    expect(await texts(page, '#future h3')).not.toContain('See Who Started Earning');
     expect(await mainText(page)).not.toContain('Know Whether the Budget Produced Earnings');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('designed for three regions');

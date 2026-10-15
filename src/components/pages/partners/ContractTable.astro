@@ -12,7 +12,7 @@ import { factPart } from './partners';
  * contracts are still in progress"), so a column would read "Status to confirm" in every row. The note under the table says once that delivery
  * status is confirmed per contract on request. When a status is registered for a contract, add the column back.
  * No Curriculum-reach column: only Her Power has one, so its figures (the national program's training total and the manuals published) sit in
- * that row's scope text. A column returns when two or more contracts carry a value.
+ * that row's Training Figure cell (WP41; they were in its scope text). A column returns when two or more contracts carry a value.
  * Abbreviations are expanded in the contract names (PMIS, NHRDF, NSDA, DoICT, BCC), and every scope count carries the "Contract scope:" prefix.
  * WP35 (cycle-12 review): the scope column uses plain words ("Training in digital technologies"; "Training for staff on the learning platform and lab operations"); GV-02 and GV-05 in the register keep their wording.
  * WP30c: one note under the table (delivery status; scopes are not delivered scale). The 31,200+ total is the Results at a Glance tile's, and the COVID-19
@@ -20,12 +20,15 @@ import { factPart } from './partners';
  * WP37 (cycle-14 review): the Her Power band that followed the table (and restated the Results at a Glance tile and the scale FAQ) is gone; the first row's program has its case study as a text link under the note (`more`).
  * WP39 (cycle-16 review): the last column reads "Training Figure", not "Direct Training": the column holds a delivered figure in one row (Her Power's women trained directly) and contract scopes in the others, and the cells (each
  * scope marked "Contract scope:") and the note say which is which.
+ * WP41 (cycle-18 review): the scope column is a short phrase in every row (Her Power's was a sentence carrying three figures, which read as a report annex), and every number is in the "Training Figure" column: Her Power's cell
+ * lists its three figures, one per line, each saying whose it is (the women CodersTrust trained directly; the national program's total; the manuals distributed).
  */
 interface Row {
   contract: string;
   facts: string[];
   scope: string;
-  direct: string;
+  /** The "Training Figure" cell: one text, or one line per figure (Her Power's three). */
+  direct: string | string[];
 }
 const SCOPE = 'Contract scope:';
 
@@ -33,9 +36,14 @@ const rows: Row[] = [
   {
     contract: 'Her Power (Department of ICT (DoICT), ICT Division)',
     facts: ['GV-01', 'GV-11'],
-    // GV-01's own order: curriculum, manuals and guidelines for the national program (its goal), Training of Trainers, then the manuals published.
-    scope: `Curriculum, training manuals and mentorship guidelines for a national program that trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}; Training of Trainers; ${factPart('GV-11', /[\d,]+ manuals and guidelines distributed/)}`,
-    direct: factPart('GV-11', /[\d,]+ women trained directly/),
+    // GV-11's role: curriculum, training manuals and mentorship guidelines; Training of Trainers. The figures are GV-11's (women trained directly, manuals distributed) and GV-01's (the national program's total, which is the
+    // program's, not CodersTrust's own).
+    scope: 'Curriculum, manuals, mentorship guidelines and Training of Trainers',
+    direct: [
+      factPart('GV-11', /[\d,]+ women trained directly/),
+      `National program trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}`,
+      factPart('GV-11', /[\d,]+ manuals and guidelines distributed/),
+    ],
   },
   {
     // PMIS is the Center for Project Management and Information Systems at the University of Dhaka (named in full in the EDGE news item).
@@ -99,7 +107,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
             <tr data-fact={r.facts.join(' ')}>
               <th scope="row">{r.contract}</th>
               <td data-label="CodersTrust Scope">{r.scope}</td>
-              <td class="ct__num" data-label="Training Figure">{r.direct}</td>
+              <td class="ct__num" data-label="Training Figure">{typeof r.direct === 'string' ? r.direct : <ul class="ct__lines" role="list">{r.direct.map((line) => <li>{line}</li>)}</ul>}</td>
             </tr>
           ))
         }
@@ -160,6 +168,14 @@ const { title, lead, id = 'contracts', more } = Astro.props;
   .ct__num {
     color: var(--on-surface);
     font-weight: var(--fw-medium);
+  }
+  /* Her Power's three figures, one per line (WP41) */
+  .ct__lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xs);
   }
   .ct__notes {
     margin-top: var(--space-md);

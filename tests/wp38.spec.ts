@@ -20,7 +20,7 @@ const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.
 /** The ids of the page's bands, in order, with whether each is a dark one. */
 const bands = (page: Page) => page.evaluate(() => Array.from(document.querySelectorAll('main .band[id]')).map((b) => ({ id: b.id, dark: /band--(klein|deep-ink)/.test(b.className) })));
 
-test.describe('Home: "What Your Partnership Includes" is three short cards, not a concern / inclusion / benefit matrix', () => {
+test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "What Your Partnership Includes") is three short cards, not a concern / inclusion / benefit matrix', () => {
   const CARDS = [
     {
       title: 'Training, Mentoring and Placement Support',
@@ -44,7 +44,7 @@ test.describe('Home: "What Your Partnership Includes" is three short cards, not 
 
   test('three cards, each a heading and its sentences, in the order of the three ranked pains and tied to their register facts', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#features h2')).toHaveText('What Your Partnership Includes');
+    await expect(page.locator('#features h2')).toHaveText('What a Supported Youth Cohort Includes');
     const cards = page.locator('#features li.card');
     await expect(cards).toHaveCount(3);
     for (const [i, c] of CARDS.entries()) {
@@ -257,10 +257,11 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
     await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
   });
 
-  test('slide 4 reads "58.8% of Completers Who Started Earning Began Within Six Months" (Title Case, tied to OC-05) and keeps its survey base in the lead and the tile', async ({ page }) => {
+  // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
+  test('slide 4 reads "First Earnings Within Six Months" (Title Case, tied to OC-05) and keeps its survey base in the lead and the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
-    const heading = '58.8% of Completers Who Started Earning Began Within Six Months';
+    const heading = 'First Earnings Within Six Months';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');

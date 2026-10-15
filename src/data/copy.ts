@@ -283,6 +283,23 @@ function trialSentence(): CopyBlock {
 export const TRIAL_SENTENCE: CopyBlock = trialSentence();
 
 /**
+ * The trial result as the one line of the Programs hub's evidence band (WP41, cycle-18 review: the hub restated the trial in prose, in the +10.3 pp tile and in a chart): the employment result alone, in plain words, with the
+ * predecessor program named; RC-01 and RC-02 state it. The figure is RC-02's stat with its "pp" spelled out, so the sentence cannot drift from the register; it throws if the stat changes shape.
+ */
+function trialLine(): CopyBlock {
+  const employment = fact('RC-02').stat;
+  if (!employment || !/^\+[\d.]+ pp$/.test(employment.value)) {
+    throw new Error(`TRIAL_LINE: RC-02 no longer has a "+N pp" stat value: ${JSON.stringify(employment?.value)}`);
+  }
+  const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
+  return {
+    text: `Women offered a place in the predecessor WSDFM program were ${points} more likely to be employed than the control group.`,
+    facts: ['RC-01', 'RC-02'],
+  };
+}
+export const TRIAL_LINE: CopyBlock = trialLine();
+
+/**
  * Employment at follow-up in the randomized trial, read from RC-02's text ("than the control group (52.8%)"), so the Home C7
  * comparison chart never retypes a figure. The women offered a place are the control rate plus RC-02's stat (+10.3 pp). It throws
  * if the text stops reading that way.
@@ -519,8 +536,8 @@ export const DEFINITION_HEADING = 'What Is CodersTrust?';
 export const HOME_META = {
   // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
   title: 'CodersTrust: From Learning to Earning for Youth',
-  // WP23: at most 155 characters; the ending names what the program does (it was "We prepare youth for work.").
-  description: 'Randomized trial of a predecessor program: women offered a place were 10.3 percentage points more likely to be employed. Training, mentoring and placement.',
+  // WP23: at most 155 characters. WP41 (cycle-18 review): it opens with what CodersTrust does (ID-01: it trains and mentors educated, unemployed youth for digital work) and ends with the evidence, instead of leading with the trial abstract.
+  description: 'CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of a predecessor program.',
 };
 
 /**

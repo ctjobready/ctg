@@ -21,9 +21,10 @@ const path = '/our-model/jobready-platform/';
 const JOBREADY = 'https://jobready.global/';
 // WP37 (cycle-14 review): "CRM" is written out wherever the live list is printed (the table row and the callout below, the Q11 answer); the meta description names the two live modules the menu names, since the full list does not fit its 155 characters.
 const description = desc('JobReady is CodersTrust’s education and employment platform. Partner portals and AI chat are live; more modules follow.');
-const faqIds = ['Q11'];
+// WP41 (cycle-18 review): the answer points to "Rollout Status" (#status) above it instead of listing the status a third time (the table and the callout say it).
+const faqIds = ['Q11-platform'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-14', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-15', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -61,7 +62,7 @@ const d = discoveryCta();
   lead="JobReady is CodersTrust’s digital education and employment platform, being built as an AI-native platform. Modules are rolling out in stages."
   description={description}
   path={path}
-  updated="2026-10-14"
+  updated="2026-10-15"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}

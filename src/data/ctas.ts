@@ -162,7 +162,7 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     label: 'Send a Speculative Application',
     to: 'career@coderstrustbd.com', // CAREERS_EMAIL (checked below)
     subject: 'Application — [role or "speculative application"]',
-    body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your CV or portfolio'],
+    body: ['Name', 'Role you are applying for (or "speculative application")', 'Location', 'Link to your resume or portfolio'],
   },
   /** Mentor applications (About / Mentors): same pattern as `media`, general address. */
   mentor: {
