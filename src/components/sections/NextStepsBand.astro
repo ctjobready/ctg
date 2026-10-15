@@ -4,7 +4,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import StepFlow from '../ui/StepFlow.astro';
 import { fact } from '../../data/facts';
 import { NEXT_STEPS_TITLE } from '../../data/copy';
-import { grantStartTitles } from '../pages/partners/partners';
+import { grantStartSteps } from '../pages/partners/partners';
 import { endSentence } from './copyText';
 
 /** C14 Next steps: Discovery → Co-design → Agreement → Training starts; the weeks and the window come from PD-04 (WP29: each names its starting point). */
@@ -19,13 +19,8 @@ interface Props {
 const { title = NEXT_STEPS_TITLE, lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
-const [discovery, codesign, agreement, training] = grantStartTitles();
-const steps = [
-  { title: discovery, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: codesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
-  { title: agreement, text: 'Scope, schedule and success measures are agreed.' },
-  { title: training, text: 'The first cohort begins training (grant-funded pilots).' },
-];
+// The step texts are the hub's and Home's (grantStartSteps), so the grant-funded sequence reads the same on every page that shows it.
+const steps = grantStartSteps();
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
