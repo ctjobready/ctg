@@ -391,7 +391,7 @@ const POSITION_WHOLE_STATEMENT = {
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
   '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
-  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
+  '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
 };
 /**
  * Problems with the C6 band's opening: the statement exists, nothing but eyebrow and H2 precedes it, and it ends with the verbatim [UNLIKE] sentence (or, on a page in POSITION_EMPLOYER_CLOSING, that page's employer sentence).
@@ -956,7 +956,7 @@ function numberGuardPage(path, html, allow = []) {
   const wholeDp = POSITION_WHOLE_STATEMENT['/partner-with-us/development-partners/'];
   const wholeGov = POSITION_WHOLE_STATEMENT['/partner-with-us/governments/'];
   if (wholeDp !== 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.') problems.push('self-test: the Development Partners whole statement is no longer the WP42 wording');
-  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
+  if (wholeGov !== 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Governments whole statement is no longer the WP42 wording');
   for (const [name, own, other, otherName] of [['Development Partners', wholeDp, wholeGov, 'Governments'], ['Governments', wholeGov, wholeDp, 'Development Partners']]) {
     posOk(`the declared whole statement on the page that declares it (${name})`, mech(`${headerHtml}${posBlock(own)}</header>`), { whole: own });
     posOk(`the declared ${name} statement with the statement before the header (nothing precedes it)`, mech(`${posBlock(own)}${headerHtml}</header>`), { whole: own });

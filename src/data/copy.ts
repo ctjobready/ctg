@@ -170,7 +170,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   governments: {
     // WP42 (cycle-19 review): as Development Partners: the two shared sentences, the reader named in the second ("Your agency receives monthly reports on progress toward paid work"). Declared whole for /partner-with-us/governments/
     // (POSITION_WHOLE_STATEMENT); it rests on PD-01 and PD-08.
-    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
+    text: 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
     facts: ['PD-01', 'PD-08'],
   },
   foundations: {

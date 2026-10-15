@@ -230,7 +230,7 @@ test.describe('the positioning statements share one plain closing', () => {
     'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
     'partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
     'partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
-    'partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work.',
+    'partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
   };
   for (const route of PAGES) {
     test(`${route}: ${WHOLE[route] ? 'the statement is the two sentences declared for this page' : 'the audience sentence stays, the comparison sentence is gone'}`, async ({ page }) => {
