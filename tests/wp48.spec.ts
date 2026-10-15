@@ -576,10 +576,10 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     for (const r of rows) expect(r, r).toContain(`"${MEASURE}"`);
     expect(rows.map((r) => r.split('"')[2].split(',').slice(1, 6).join('|'))).toEqual([
       'During the Course|percent|23.5|170|published',
-      'Within 3 Months|percent|38.2|170|published',
-      'Within 6 Months|percent|58.8|170|published',
-      'Within 12 Months|percent|77.1|170|published',
-      'Within 2 Years|percent|90.6|170|published',
+      'By 3 Months|percent|38.2|170|published',
+      'By 6 Months|percent|58.8|170|published',
+      'By 12 Months|percent|77.1|170|published',
+      'By 2 Years|percent|90.6|170|published',
     ]);
   });
 

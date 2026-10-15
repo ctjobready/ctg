@@ -115,10 +115,10 @@ export const EXIT = { share: 5.9 };
 export const SPEED_BASE = 170;
 export const SPEED: ShareCell[] = [
   { label: 'During the Course', pct: 23.5 },
-  { label: 'Within 3 Months', pct: 38.2 },
-  { label: 'Within 6 Months', pct: 58.8 },
-  { label: 'Within 12 Months', pct: 77.1 },
-  { label: 'Within 2 Years', pct: 90.6 },
+  { label: 'By 3 Months', pct: 38.2 },
+  { label: 'By 6 Months', pct: 58.8 },
+  { label: 'By 12 Months', pct: 77.1 },
+  { label: 'By 2 Years', pct: 90.6 },
 ];
 
 // ---- Income direction (OC-03b, stated base 277) ---------------------------------------------

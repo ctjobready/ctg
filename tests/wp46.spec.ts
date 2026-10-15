@@ -476,7 +476,7 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(LABEL);
     expect(compact(await page.locator('#speed p[data-fact="OC-05"]').textContent())).toContain(`${TEXT}.`);
     expect(compact(await page.locator('#speed .colc__note').textContent())).toBe('Months are counted from the end of the course; the shares are cumulative and include earnings during the course.');
-    expect(await texts(page, '#speed .colc__label')).toEqual(['During the Course', 'Within 3 Months', 'Within 6 Months', 'Within 12 Months', 'Within 2 Years']);
+    expect(await texts(page, '#speed .colc__label')).toEqual(['During the Course', 'By 3 Months', 'By 6 Months', 'By 12 Months', 'By 2 Years']);
     const csv = readFileSync('public/data/outcomes-2026-aggregates.csv', 'utf8');
     const rows = csv.split('\n').filter((l) => l.startsWith('OC-05,'));
     expect(rows).toHaveLength(5);
