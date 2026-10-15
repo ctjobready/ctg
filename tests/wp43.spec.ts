@@ -225,7 +225,8 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
   test('slide 5 is its heading, the 58.8% tile with its full base and the evidence link; the sentence that repeated them is gone', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
+    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months")
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
@@ -254,7 +255,7 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
 
 test.describe('Partner with Us hub: "What Does It Cost?" is three shorter sentences (item 5)', () => {
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the hub answer is the three sentences, the FAQ JSON-LD says the same words, and the delivery inventory is gone', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -262,7 +263,7 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
     const answer = compact(await item.locator('.faq__a').textContent());
     expect(answer).toBe(COST);
     expect(sentences(answer)).toHaveLength(3);
-    expect(answer).not.toMatch(/outreach and selection|blended training|AI-ready curriculum|monthly reports/);
+    expect(answer).not.toMatch(/blended training|AI-ready curriculum|monthly reports/);
     expect((await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?')?.text).toBe(COST);
     const tagged = await item.evaluate((el) => [el, ...Array.from(el.querySelectorAll('[data-fact]'))].map((e) => e.getAttribute('data-fact') ?? '').join(' '));
     expect(tagged, 'the answer is tied to PD-02').toContain('PD-02');
@@ -280,7 +281,7 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
     for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
       expect(await mainText(page), route).toContain('Pricing is set per program; we share an indicative budget in the discovery session.');
-      expect(await mainText(page), route).not.toContain('Supported youth cohorts include training');
+      expect(await mainText(page), route).not.toMatch(/Supported youth cohorts include (outreach and selection, )?training/);
     }
   });
 });

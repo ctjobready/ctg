@@ -1,8 +1,8 @@
 ---
-import { parseFigure } from '../../lib/format';
+import { labelWithoutUnit, parseFigure, spellUnit } from '../../lib/format';
 
 interface Props {
-  /** Display value, e.g. "77.9%", "130,000+", "15". Final text is always in the HTML. */
+  /** Display value, e.g. "77.9%", "130,000+", "15". Final text is always in the HTML. A value in "pp" ("+10.3 pp") shows its figure with "percentage points" on a line under it (WP45). */
   value: string;
   label: string;
   /** default: Primary figure on light grounds; dark: white numerals on Klein/Deep Ink; accent: orange numerals on dark. */
@@ -16,7 +16,10 @@ interface Props {
   /** Evidence label under the label, set apart by a rule (e.g. the register's program-data label); used by <FactStat>. */
   class?: string;
 }
-const { value, label, tone = 'default', size = 'md', align = 'start', count = true, note, class: className } = Astro.props;
+const { value: registerValue, label: registerLabel, tone = 'default', size = 'md', align = 'start', count = true, note, class: className } = Astro.props;
+// "+10.3 pp": the figure is counted and shown big, "percentage points" is its unit line (no bare "pp"), and the label does not say the unit a second time.
+const { figure: value, unit } = spellUnit(registerValue);
+const label = unit ? labelWithoutUnit(registerLabel) : registerLabel;
 const fig = count ? parseFigure(value) : null;
 // Reserve width for the final value: D-DIN has no tabular figures.
 const widthCh = value.length;
@@ -45,6 +48,7 @@ const widthCh = value.length;
         <span class="stat__num" style={`min-width:${widthCh}ch`}>{value}</span>
       )
     }
+    {unit && <>{' '}<span class="fig-unit">{unit}</span></>}
   </p>
   <p class="stat__label">{label}<slot /></p>
   {note && <p class="stat__note">{note}</p>}

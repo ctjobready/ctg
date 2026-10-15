@@ -5,6 +5,7 @@ import Icon from '../../system/Icon.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
+import { labelWithoutUnit, spellUnit } from '../../../lib/format';
 import { linkAttrs } from '../../../lib/url';
 import { evidenceOf } from './evidence';
 
@@ -37,11 +38,13 @@ const { groups, title = 'At a Glance', lead, eyebrow = 'Headline Results', id = 
 const toTile = (t: Tile) => {
   const f = fact(t.id);
   if (!f.stat) throw new Error(`<ImpactGlance>: fact ${t.id} has no stat`);
+  // WP45 (cycle-21 review): "+10.3 pp" shows "+10.3" with "percentage points" on a line under it, and the label does not say the unit twice (as in <PartnerGlance>)
+  const { figure, unit } = spellUnit(f.stat.value);
   return {
     ...t,
-    value: f.stat.value,
-    // "+10.3 pp ... in percentage points" says the unit twice: the value carries it (as in <PartnerGlance>)
-    label: (t.label ?? f.stat.glance?.label ?? f.stat.label).replace(', in percentage points,', ''),
+    value: figure,
+    unit,
+    label: labelWithoutUnit(t.label ?? f.stat.glance?.label ?? f.stat.label),
     note: t.note ?? f.stat.glance?.note,
     facts: [t.id, ...(t.also ?? [])].join(' '),
     evidence: evidenceOf(t.id),
@@ -69,7 +72,7 @@ const grouped = groups.map((g) => {
                     {t.status && <StatusTag status={t.status} />}
                   </span>
                 )}
-                <span class="glance__value">{t.value}</span>
+                <span class="glance__value">{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</span>
                 <span class="glance__desc">{t.label}</span>
                 {t.note && <span class="glance__note">{t.note}</span>}
                 <Icon name="arrow-right" size={16} />

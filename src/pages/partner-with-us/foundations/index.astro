@@ -50,7 +50,7 @@ import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPE
 import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
-import { linkAttrs, url } from '../../../lib/url';
+import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const PATH = '/partner-with-us/foundations/';
@@ -247,12 +247,12 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     <Callout eyebrow="Accountability"><p data-fact="PD-11">For cohort grants, every pilot is judged on cost per completer and per verified outcome, with thresholds agreed with you before the first cohort starts.</p></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the partnership overview; WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
+  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review): the partnership overview's reporting band
+       (#review-cycle) is gone, so the callout below states the reporting and review once and has no link to it (the due-diligence item above links to Governance and Accountability). -->
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
       <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
-      <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>
 

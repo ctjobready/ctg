@@ -62,7 +62,7 @@ test.describe('YouthWIDE leads with the global program', () => {
     await expect(first).toContainText('Bangladesh is the reference implementation');
   });
 
-  test('the Bangladesh national initiative keeps #governments (linked from the Governments page and a case study) and says the 2030 aim is not delivered', async ({ page }) => {
+  test('the Bangladesh initiative band keeps #governments (linked from the Governments page and a case study) and says the 2030 aim is not delivered', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('section#governments')).toHaveCount(1);
     expect(compact(await page.locator('section#governments').innerText())).toContain('not a delivered figure');

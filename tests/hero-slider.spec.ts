@@ -63,29 +63,31 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
     await expect(page.locator('#results h1')).toHaveCount(0);
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: About 10 More Women in Work for Every 100 Offered a Place');
+    // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place Earned an Estimated 41% More');
     // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
     // WP25h: the framing sentence names the order of the evidence; the program-results slide is "Results by Program".
     // WP30c: the framing sentence is five words long (the slides label their own evidence types)
     await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
     // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ (the hero's reach card does)
-    // WP38 (cycle-15 review): the reach slide has SC-03's figure as its tile (tests/wp38.spec.ts)
+    // WP38 (cycle-15 review): the reach slide had SC-03's figure as its tile; WP45 (cycle-21 review): the figure is its heading and the tile is gone (tests/wp38.spec.ts)
     // WP41 (cycle-18 reviews): the speed slide's heading is the finding alone, with no percentage (the 58.8% and its base are the tile), and the government slide counts its contracts (tests/wp41.spec.ts)
     // WP42 (cycle-19 review): the government slide is second, after the trial: trial, government scale, survey, program results, speed, reach, programs
+    // WP45 (cycle-21 review): the speed slide says "Most First Earnings Came Within Six Months" and the reach slide "Programs in 15 Countries and Territories" (tests/wp45.spec.ts)
     expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'First Earnings Within Six Months',
-      'Explore Where Our Programs Have Run',
+      'Most First Earnings Came Within Six Months',
+      'Programs in 15 Countries and Territories',
     ]);
     expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
-    // WP31: the first slide states the offered-place results only (employment, then income); the attenders' income is on the trial page it links
+    // WP31: the first slide states the offered-place results only; the attenders' income is on the trial page it links. WP45 (cycle-21 review): the income result (the employment result is the hero card's), still the offered-place women's
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
-    expect(lead.indexOf('10.3 percentage points'), 'employment result first').toBeGreaterThan(-1);
-    expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('10.3 percentage points'));
+    expect(lead.indexOf('predecessor WSDFM program'), 'the scope comes first').toBeGreaterThan(-1);
+    expect(lead.indexOf('41% higher')).toBeGreaterThan(lead.indexOf('predecessor WSDFM program'));
     expect(lead).not.toContain('54%');
     expect(lead).not.toContain('who attended');
     // the placement slide lists three programs (WP35: the WSDFM 71% is program records, read beside the trial's 63.1%, so it left the slide; the case card and the case study keep it)

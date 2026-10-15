@@ -204,8 +204,9 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
     facts: ['PD-01', 'PD-08'],
   },
+  // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million youth by 2030).
   nationwide: {
-    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh, a national initiative. ${UNLIKE_APPROVED}`,
+    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'PD-01', 'PD-08'],
   },
   campus: {
@@ -464,12 +465,6 @@ export const STEPS = [
   { title: 'Place and Report', text: 'Placement support, monthly reports and follow-up surveys at 3, 6 and 12 months.' },
 ] as const;
 export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
-
-/** Home C13 backward-planning line (WP17): the same registered timing as SPEED (PD-04), stated as a plan to work back from. */
-export const BACKWARD_PLAN: CopyBlock = {
-  text: 'Allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Work backward from your intended training start date.',
-  facts: ['PD-04'],
-};
 
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
 /** The same reassurance on the Employers page, whose first step may be a hiring request rather than a discovery session (WP36, cycle-13 review). */

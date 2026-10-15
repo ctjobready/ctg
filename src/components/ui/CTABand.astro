@@ -11,8 +11,6 @@ import EmailFallback from './EmailFallback.astro';
 interface Props {
   heading: string;
   text?: string;
-  /** A small heading and a line between the lead and the button (Home, WP19: the timing sits before the ask). */
-  plan?: { heading: string; text: string };
   cta: { label: string; href: string };
   urgency?: string;
   micro?: string;
@@ -28,7 +26,7 @@ interface Props {
   /** Who the fallback address belongs to when it is a specific team ("the Bangladesh team at"). */
   fallbackLabel?: string;
 }
-const { heading, text, plan, cta, urgency, micro, secondary, more = [], routes = [], reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
+const { heading, text, cta, urgency, micro, secondary, more = [], routes = [], reinforce = [], tone = 'airy', id, fallbackLabel } = Astro.props;
 // A withheld route (empty href) is not drawn.
 const shownRoutes = routes.filter((r) => r.href);
 const dark = tone === 'klein';
@@ -41,14 +39,6 @@ const withheld = !cta.href;
   <div class="cta-band">
     <h2 id={`${id ?? 'cta'}-h`} class="cta-band__title" data-reveal>{heading}</h2>
     {text && <p class="lead cta-band__text" data-reveal>{text}</p>}
-    {
-      plan && (
-        <div class="cta-band__plan" data-reveal>
-          <h3 class="cta-band__plan-title">{plan.heading}</h3>
-          <p>{plan.text}</p>
-        </div>
-      )
-    }
     <div class="cta-band__actions" data-reveal>
       <Button variant={dark ? 'inverse' : 'primary'} href={cta.href} iconEnd="arrow-right">{cta.label}</Button>
       {
@@ -156,18 +146,6 @@ const withheld = !cta.href;
     max-width: 40rem;
   }
   .cta-band__title {
-    color: var(--ctx-section-heading);
-  }
-  .cta-band__plan {
-    display: grid;
-    gap: var(--stack-title);
-    max-width: 40rem;
-  }
-  .cta-band__plan > * {
-    margin: 0;
-  }
-  .cta-band__plan-title {
-    font: var(--fw-bold) var(--fs-body-l) / var(--lh-body-l) var(--font-sans);
     color: var(--ctx-section-heading);
   }
 </style>

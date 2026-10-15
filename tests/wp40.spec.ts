@@ -140,7 +140,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
     expect(titleCase('Designed for Three Regions')).toBe('Designed for Three Regions');
-    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation and has a national initiative of its own.');
+    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million youth by 2030.');
     expect(await mainText(page)).not.toContain('Where It Runs');
   });
 
@@ -217,27 +217,22 @@ test.describe('Foundations: the links, the pain and "Reporting and Review" (item
 
 test.describe('"Reporting and Review" says what the reports and reviews do (item 4)', () => {
   const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
+  // WP45 (cycle-21 review): the hub's reporting band (#review-cycle) the callouts linked to is gone, so the callouts carry the sentence and no link (tests/wp45.spec.ts)
   for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
-    test(`${route}: the callout carries the sentence (scoped like the hub it links to), tied to PD-08 and PD-11, and keeps its optional link`, async ({ page }) => {
+    test(`${route}: the callout carries the sentence (scoped), tied to PD-08 and PD-11, with no link to the removed hub band`, async ({ page }) => {
       await open(page, route);
       const callout = page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
       await expect(callout).toHaveCount(1);
       const line = callout.locator('.callout__body p').first();
       expect(compact(await line.textContent())).toBe(SENTENCE);
       expect(await line.getAttribute('data-fact')).toBe('PD-08 PD-11');
-      const link = callout.locator('a.link');
-      await expect(link).toHaveText('See Reporting and Review');
-      expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/partner-with-us/#review-cycle');
+      await expect(callout.locator('a.link')).toHaveCount(0);
       expect(await mainText(page)).not.toContain('are set out once, on the partnership overview');
     });
   }
 
-  test('the sentence keeps the two qualifiers of the hub line it links to (the scope, and "any" expansion: PD-11 says expansion is the funder’s decision)', async ({ page }) => {
+  test('the sentence keeps the two qualifiers it had on the hub (the scope, and "any" expansion: PD-11 says expansion is the funder’s decision)', async () => {
     expect(fact('PD-11').text).toContain('expansion is the funder’s decision');
-    await open(page, 'partner-with-us/');
-    const hub = compact(await page.locator('#review-cycle .sh__lead').textContent());
-    expect(hub).toContain('For supported cohorts');
-    expect(hub).toContain('guide corrective action and any expansion');
     expect(SENTENCE).toContain('For supported cohorts');
     expect(SENTENCE).toContain('guide corrective action and any expansion');
   });

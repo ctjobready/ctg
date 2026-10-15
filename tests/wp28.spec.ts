@@ -12,7 +12,8 @@ const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-
 
 test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "What Your Partnership Includes")', () => {
   // WP38 (cycle-15 review): on Home the band is three short cards (IncludesBand), not the concern / inclusion / benefit rows; the scoping stays in the card's sentences (tests/wp38.spec.ts holds the whole band)
-  test('the reporting card is scoped: "as agreed in the program scope", documentary evidence "where available"', async ({ page }) => {
+  // WP45 (cycle-21 review): the card is one line (the monthly reports, scoped); the follow-up surveys and the documentary evidence "where available" are in the FAQ and on the evidence pages
+  test('the reporting card is scoped: "as agreed in the program scope"', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#features li[data-fact~="PD-08"]');
     await expect(card).toHaveCount(1);
@@ -20,7 +21,6 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
     const t = compact(await card.textContent());
     expect(t).not.toContain('Documentary Evidence of Earnings');
     expect(t).toContain('as agreed in the program scope');
-    expect(t).toContain('Documentary evidence is checked where available');
   });
 
   test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three cards answer the three ranked pains)', async ({ page }) => {

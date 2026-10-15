@@ -33,7 +33,6 @@ import FAQBand from '../../../components/sections/FAQBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
 import SessionAgenda from '../../../components/ui/SessionAgenda.astro';
-import Icon from '../../../components/system/Icon.astro';
 import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PartnerGuideBand from '../../../components/pages/partners/PartnerGuideBand.astro';
 import SubBand from '../../../components/pages/partners/SubBand.astro';
@@ -49,7 +48,6 @@ import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
-import { url } from '../../../lib/url';
 
 const PATH = '/partner-with-us/development-partners/';
 const primary = cta('discovery');
@@ -198,12 +196,12 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     <Callout eyebrow="Accountability"><CopyText block={ACCOUNTABILITY} /></Callout>
   </SubBand>
 
-  <!-- C12 · Risk reversal (immediately before C13): the full reporting and review cycle lives on the hub; WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
+  <!-- C12 · Risk reversal (immediately before C13): WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in. WP45 (cycle-21 review): the hub's reporting band (#review-cycle) is gone,
+       so the callout below states the reporting and review once and has no link to it (the due-diligence item above links to Governance and Accountability). -->
   <DueDiligenceView brief id="due-diligence" />
   <SubBand>
     <Callout eyebrow="Reporting and Review">
       <p data-fact="PD-08 PD-11">For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.</p>
-      <a class="link" href={url('/partner-with-us/#review-cycle')}>See Reporting and Review<Icon name="arrow-right" size={16} /></a>
     </Callout>
   </SubBand>
 

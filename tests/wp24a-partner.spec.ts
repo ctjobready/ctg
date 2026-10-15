@@ -36,19 +36,20 @@ test.describe('Partner with Us hub', () => {
     await expect(dd).toContainText('Consent, protected records and grievance handling are specified for each program.');
   });
 
-  test('the trial tile does not repeat "percentage points" beside "pp"', async ({ page }) => {
+  test('the trial tile spells the unit out once: "+10.3" with "percentage points" under it (WP45: no bare "pp")', async ({ page }) => {
     await page.goto(URL);
     const tile = (await texts(page, '#why-partner li'))[0];
-    expect(tile).toContain('+10.3 pp');
-    expect(tile).not.toMatch(/in percentage points/);
+    expect(tile).toContain('+10.3 percentage points');
+    expect(tile.match(/percentage points/g) ?? []).toHaveLength(1);
+    expect(tile).not.toMatch(/\bpp\b|in percentage points/);
   });
 
-  test('WP30c: the hub has no RACI roles table (an internal-report view); the route cards, the first 90 days and four FAQs remain', async ({ page }) => {
+  test('WP30c: the hub has no RACI roles table (an internal-report view); the route cards, the first 90 days and two FAQs remain (WP45)', async ({ page }) => {
     await page.goto(URL);
     await expect(page.locator('.raci')).toHaveCount(0);
     await expect(page.locator('#who-does-what')).toHaveCount(0);
     await expect(page.locator('#how-partnering-works ol > li')).toHaveCount(4);
-    await expect(page.locator('#faqs details')).toHaveCount(4);
+    await expect(page.locator('#faqs details')).toHaveCount(2);
   });
 });
 

@@ -46,6 +46,12 @@ const news = defineCollection({
        * The H1 and the NewsArticle headline keep the full headline.
        */
       seoTitle: z.string().max(46).optional(),
+      /**
+       * Optional one-line note for the archive banner (WP45, cycle-21 review): what a post that announced an aim ended up as, in the register's words ("Delivered: the national program trained 25,125 women."). It is printed on its own
+       * line under the banner's standard sentences; `archiveNoteFacts` names the register facts it states (rendered as data-fact).
+       */
+      archiveNote: z.string().max(120).optional(),
+      archiveNoteFacts: z.array(z.string()).default([]),
       /** More photographs from the old post that the body does not place inline; shown as a PhotoGallery under the text. */
       gallery: z.array(z.object({ image: image(), alt: z.string() })).default([]),
     }),

@@ -50,15 +50,15 @@ test.describe('Home: each figure once', () => {
     expect(count(await mainText(page), '77.9%'), 'the 77.9% is stated once on Home').toBe(1);
   });
 
-  // WP38 (cycle-15 review): the slide has SC-03's "15" as its tile again (tests/wp38.spec.ts holds the tile); the 130,000+ stays the hero's reach card alone
-  test('slide 6 is headed "Explore Where Our Programs Have Run" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
+  // WP38 (cycle-15 review): the slide had SC-03's "15" as its tile; WP45 (cycle-21 review): the heading states the 15 ("Programs in 15 Countries and Territories", tests/wp45.spec.ts) and the tile is gone; the 130,000+ stays the hero's reach card alone
+  test('slide 6 is headed "Programs in 15 Countries and Territories" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(5);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Reach at Scale');
-    await expect(slide.locator('h2')).toHaveText('Explore Where Our Programs Have Run');
+    await expect(slide.locator('h2')).toHaveText('Programs in 15 Countries and Territories');
     await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('SC-03');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBeNull();
+    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('SC-03');
     const text = compact(await slide.textContent());
     expect(text).not.toContain('130,000');
     await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
@@ -67,12 +67,12 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
-  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile)
-  test('slide 5 is headed "First Earnings Within Six Months" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
+  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
+  test('slide 5 is headed "Most First Earnings Came Within Six Months" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('First Earnings Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most First Earnings Came Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -333,7 +333,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
       expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/#faqs$/);
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?');
       expect(ld?.text).toBe(COST);
-      expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include training/i);
+      expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include (outreach and selection, )?training/i);
     });
   }
 
@@ -351,16 +351,17 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     });
   }
 
-  test('the Partner with Us hub keeps the full cost and safeguarding answers (three sentences each)', async ({ page }) => {
+  // WP45 (cycle-21 review): the hub's FAQ block is two questions (the country and the cost); the full safeguarding answer is gone from it (the due-diligence view and Governance state it; tests/wp45.spec.ts)
+  test('the Partner with Us hub keeps the full cost answer (three sentences) and no longer prints the full safeguarding answer', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const cost = await answerOf(page, 'What Does It Cost?');
-    const safe = await answerOf(page, 'What About Safeguarding and Data Protection?');
-    // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
-    expect(cost).toContain('Supported youth cohorts include training, certification exam preparation and the exam fee');
-    expect(safe).toContain('Guardian consent and supervision apply to anyone under 18');
-    for (const a of [cost, safe]) expect(sentences(a).length).toBeLessThanOrEqual(3);
+    // WP41 (cycle-18 review): the list is scoped to supported youth cohorts; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"; WP45: "… include outreach and selection, training, …"
+    expect(cost).toContain('Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee');
+    expect(sentences(cost).length).toBeLessThanOrEqual(3);
+    expect(await mainText(page)).not.toContain('Guardian consent and supervision apply to anyone under 18');
     const ld = await faqJsonLd(page);
     expect(ld.find((q) => q.name === 'What Does It Cost?')?.text).toBe(cost);
+    expect(ld.find((q) => q.name === 'What About Safeguarding and Data Protection?')).toBeUndefined();
   });
 
   test('the other cost and "Will This Work in Our Country?" answers are untouched', async ({ page }) => {

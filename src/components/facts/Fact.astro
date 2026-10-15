@@ -30,7 +30,8 @@ else if (field === 'headline') out = f.headline ?? f.text;
 else {
   const v = f.stat?.[field];
   if (v === undefined) throw new Error(`<Fact id="${id}" field="${field}">: fact has no stat.${field}`);
-  out = v;
+  // A value in "pp" ("+10.3 pp") is spelled out where it runs inline (WP45, cycle-21 review: no bare "pp").
+  out = field === 'value' ? v.replace(/ pp$/, ' percentage points') : v;
 }
 // Facts that name vendor certifications (PD-03, IN-08) carry the non-affiliation note, once per page (rule 13).
 const namesVendors = CERT_FACT_IDS.includes(id) && (field === 'text' || field === 'headline');

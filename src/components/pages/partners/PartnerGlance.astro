@@ -3,13 +3,14 @@ import Section from '../../ui/Section.astro';
 import Icon from '../../system/Icon.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
+import { labelWithoutUnit, spellUnit } from '../../../lib/format';
 import { linkAttrs } from '../../../lib/url';
 
 /**
  * Results at a Glance for the audience pages (WP24a): three lead tiles chosen for the audience, then the secondary tiles below under their own
  * heading. Every tile names the kind of evidence it rests on (EvidenceTag), so a trial figure, a survey figure, a program record and a contract
  * scope are never read as one undifferentiated group. Figures, labels and notes are read from the facts register (stat.value,
- * stat.glance ?? stat.label); a page may reword a label or add a caveat, never retype a number.
+ * stat.glance ?? stat.label); a page may reword a label or add a caveat, never retype a number. WP45 (cycle-21 review): a figure in "pp" ("+10.3 pp") shows "+10.3" with "percentage points" on a line under it.
  */
 type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 interface Tile {
@@ -44,11 +45,13 @@ const toTile = (t: Tile) => {
   const f = fact(t.id);
   if (!f.stat) throw new Error(`<PartnerGlance>: fact ${t.id} has no stat`);
   const note = [f.stat.glance?.note, t.caveat].filter(Boolean).join(' ');
+  const { figure, unit } = spellUnit(f.stat.value);
   return {
     ...t,
-    value: f.stat.value,
-    // "+10.3 pp ... in percentage points" says the unit twice: the value carries it.
-    label: (t.label ?? f.stat.glance?.label ?? f.stat.label).replace(', in percentage points,', ''),
+    value: figure,
+    unit,
+    // "+10.3 percentage points ... in percentage points" says the unit twice: the unit line carries it.
+    label: labelWithoutUnit(t.label ?? f.stat.glance?.label ?? f.stat.label),
     note: note || undefined,
     type: t.evidence ?? defaultType(t.id),
     facts: [t.id, ...(t.also ?? [])].join(' '),
@@ -66,7 +69,7 @@ const moreTiles = more.map(toTile);
         <li>
           <a class="pg__tile pg__tile--lead" href={linkAttrs(t.href).href} data-fact={t.facts}>
             <EvidenceTag type={t.type} />
-            <span class="pg__value">{t.value}</span>
+            <span class="pg__value">{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</span>
             <span class="pg__desc">{t.label}</span>
             {t.note && <span class="pg__note">{t.note}</span>}
             <Icon name="arrow-right" size={16} />
@@ -82,7 +85,7 @@ const moreTiles = more.map(toTile);
         <li>
           <a class="pg__tile" href={linkAttrs(t.href).href} data-fact={t.facts}>
             <EvidenceTag type={t.type} />
-            <span class="pg__value pg__value--sm">{t.value}</span>
+            <span class="pg__value pg__value--sm">{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</span>
             <span class="pg__desc">{t.label}</span>
             {t.note && <span class="pg__note">{t.note}</span>}
             <Icon name="arrow-right" size={16} />

@@ -117,3 +117,15 @@ export function parseFigure(display: string) {
     grouped: raw.includes(','),
   };
 }
+/**
+ * A register figure in "pp" ("+10.3 pp", RC-02's tile value) as the figure and its unit spelled out, for tiles and cards that set the unit on a line of its own under the figure
+ * ("+10.3" over "percentage points"; the global `.fig-unit` class): the site shows no bare "pp" where a unit line fits (WP45, cycle-21 review). Any other value has no unit.
+ * "+10.3 pp" -> {figure:"+10.3", unit:"percentage points"}; "77.9%" -> {figure:"77.9%"}.
+ */
+export function spellUnit(value: string): { figure: string; unit?: string } {
+  return value.endsWith(' pp') ? { figure: value.slice(0, -3), unit: 'percentage points' } : { figure: value };
+}
+/** A tile label for a figure whose unit is on its own line: the register's label says "in percentage points" itself, so the unit is not said twice ("more employment, in percentage points, for women ..." -> "more employment for women ..."). */
+export function labelWithoutUnit(label: string): string {
+  return label.replace(', in percentage points,', '');
+}

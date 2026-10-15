@@ -257,21 +257,21 @@ test.describe('"What You Get" is three short cards on every audience and program
   }
 });
 
-test.describe('Partner with Us hub: the reporting line is scoped to supported cohorts (item 2)', () => {
-  test('"Monthly Reports and Quarterly Reviews" reads "For supported cohorts, monthly reports begin with the first cohort. Quarterly reviews guide corrective action and any expansion."', async ({ page }) => {
+// WP39 (cycle-16 review) scoped the hub's reporting band ("Monthly Reports and Quarterly Reviews", #review-cycle) to supported cohorts; WP45 (cycle-21 review) removed the band from the hub (the due-diligence view and the route pages
+// state the reporting), so the hub carries no reporting line and the two route pages that linked to the band keep their sentence without the link (tests/wp45.spec.ts, tests/wp40.spec.ts)
+test.describe('Partner with Us hub: no reporting band, and no page links to one (item 2, WP45)', () => {
+  test('the hub has no "Monthly Reports and Quarterly Reviews" band and does not say "A quarterly review with you decides"', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    const band = page.locator('#review-cycle');
-    await expect(band.locator('h2')).toHaveText('Monthly Reports and Quarterly Reviews');
-    await expect(band.locator('.sh__lead')).toHaveText('For supported cohorts, monthly reports begin with the first cohort. Quarterly reviews guide corrective action and any expansion.');
-    expect(await band.getAttribute('data-fact')).toBe('PD-08 PD-11');
-    await expect(band.locator('a')).toHaveText('See What YouthWIDE Reports');
+    await expect(page.locator('#review-cycle')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Monthly Reports and Quarterly Reviews');
     expect(await mainText(page)).not.toContain('A quarterly review with you decides');
   });
 
-  test('the pages that link to the band still land on it', async ({ page }) => {
+  test('the route pages that linked to the band keep their scoped sentence and no longer link to it', async ({ page }) => {
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
-      expect((await hrefs(page, 'main a')).some((h) => h.endsWith('/partner-with-us/#review-cycle')), route).toBe(true);
+      expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle')), route).toBe(false);
+      expect(await mainText(page), route).toContain('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
     }
   });
 });

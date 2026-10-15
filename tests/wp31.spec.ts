@@ -43,10 +43,11 @@ test.describe('figures say what they measure', () => {
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
   });
 
-  test('Home slide 1 states the offered-place results only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: the program-results slide no longer lists WSDFM; WP42: it is the fourth slide)', async ({ page }) => {
+  // WP45 (cycle-21 review): the slide states the offered-place women's income result (the employment result is the hero card's, the bar's and the >4× tile's), with the predecessor program named
+  test('Home slide 1 states the offered-place income result only; the case card says the WSDFM 71% is program records, separate from the trial (WP35: the program-results slide no longer lists WSDFM; WP42: it is the fourth slide)', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
-    expect(lead).toBe('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed. Their monthly income was an estimated 41% higher than the control group’s.');
+    expect(lead).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     await expect(page.locator('[data-hs-slide]').nth(3)).not.toContainText('WSDFM');
     expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records, separate from the trial: 71% in work');
   });
@@ -70,10 +71,11 @@ test.describe('figures say what they measure', () => {
   });
 
   // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both); the slide says what kind of figure the 31,200+ is in words
-  test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not people trained', async ({ page }) => {
+  // WP45 (cycle-21 review): the slide says it in GV-12's own note (the Impact and Governments wording), with Her Power's 25,125 women trained
+  test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people (contract scope, not people trained)');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
@@ -95,7 +97,7 @@ test.describe('figures say what they measure', () => {
     const group = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Trial Results, Predecessor Program' }) });
     const facts = await group.locator('li a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]));
     expect(facts).toEqual(['RC-02']);
-    await expect(group.locator('li').first()).toContainText('+10.3 pp');
+    await expect(group.locator('li').first()).toContainText('+10.3 percentage points');
   });
 
   test('the Impact "On This Page" labels are the headings they jump to (a short form only where the heading is long), and every heading has one', async ({ page }) => {
@@ -303,12 +305,12 @@ test.describe('smaller wording fixes', () => {
   test('the YouthWIDE menu lines, the Programs card and the funding-route table say "designed for", and "builds on results from earlier programs"', async ({ page }) => {
     await open(page, 'programs/');
     const card = compact(await page.locator('#programs-grid li', { hasText: 'YouthWIDE' }).first().textContent());
-    expect(card).toContain('designed as co-funded country cohorts for South Asia, MENA and Sub-Saharan Africa');
+    expect(card).toContain('designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
     expect(card).toContain('It builds on results from earlier programs in Bangladesh and Kosovo.');
     expect(card).not.toContain('outcome evidence so far');
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    expect(desc).toBe('Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.');
+    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.');
     expect(await page.evaluate(() => document.body.innerText.includes('across three regions'))).toBe(false);
   });
 
@@ -329,8 +331,9 @@ test.describe('smaller wording fixes', () => {
     }
     await open(page, '');
     await expect(page.locator('#cost h2')).toHaveText('Training and Evidence Fall Behind While You Wait');
-    // WP38: Home's band is three short cards; the reporting card says "follow-up surveys" in its sentence
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('Monthly reports and follow-up surveys, as agreed in the program scope');
+    // WP38: Home's band is three short cards; WP45 (cycle-21 review): the reporting card is one line about the monthly reports (the "follow-up surveys" are in Home's FAQ answer)
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports show progress toward paid work, as agreed in the program scope.');
+    expect(compact(await page.locator('#faq').textContent())).toContain('follow-up surveys at 3, 6 and 12 months');
     await open(page, 'programs/youthwide/');
     // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; the second one says "follow-up surveys"
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('A baseline, monthly reports and follow-up surveys, as agreed in the program scope.');

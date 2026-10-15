@@ -24,12 +24,15 @@ test.describe('Partner with Us hub', () => {
     await expect(page.locator('#audiences .grid-cards > a')).toHaveCount(7);
   });
 
-  test('the reporting link says what YouthWIDE reports, not that there is a sample report; it still opens the YouthWIDE page', async ({ page }) => {
+  // WP45 (cycle-21 review): the hub's reporting band (and its "See What YouthWIDE Reports" link) is gone; the hub still promises no sample report, and the Programs link under the route cards opens the programs
+  test('no link promises a sample report; the hub still links to the programs', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    const link = page.locator('#review-cycle a', { hasText: 'See What YouthWIDE Reports' });
-    await expect(link).toHaveCount(1);
-    expect(await link.getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
+    await expect(page.locator('#review-cycle')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Sample Monthly Report');
+    expect(await mainText(page)).not.toContain('See What YouthWIDE Reports');
+    const programs = page.locator('.hub__programs a.link');
+    await expect(programs).toHaveCount(1);
+    expect(await programs.getAttribute('href')).toMatch(/\/programs\/$/);
   });
 
   test('"Why Partner with CodersTrust" reads trial, survey, reach: the reach tile is the registered 130,000+ with its glance label, tied to SC-16', async ({ page }) => {
@@ -133,7 +136,8 @@ test.describe('YouthWIDE', () => {
     const text = compact(await band.textContent());
     expect(text).not.toMatch(/about 10 more were in work|For women who attended|A randomized trial by BIGD found/);
     // the chart's data table repeats the difference as a table cell; as a paragraph, the sentence is the only statement of the effect
-    expect((await texts(page, '#proof-band p')).filter((p) => p.includes('10.3 percentage points')), 'one paragraph states the effect').toHaveLength(1);
+    // (WP45: the RC-02 tile's figure line is a paragraph too, "+10.3" over "percentage points"; it is a tile, not a statement of the effect)
+    expect((await texts(page, '#proof-band p:not(.stat__value)')).filter((p) => p.includes('10.3 percentage points')), 'one paragraph states the effect').toHaveLength(1);
     await expect(band.locator('.eb__stat')).toHaveCount(2);
     await expect(band.locator('svg[role="img"]').first()).toBeVisible();
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['Impact Survey 2026', 'The Randomized Trial']);

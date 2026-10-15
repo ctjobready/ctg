@@ -62,14 +62,14 @@ test.describe('one NU eligibility sentence', () => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
     // WP31: designed for the three regions (no wording that implies cohorts already run in all of them)
-    expect(desc).toBe('Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.');
+    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.');
   });
 
   test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('#mega-programs .mega__feature-text').textContent());
     // the panel states the target page's own menu description (WP30c); this line was left on the older wording until WP31
-    expect(text).toBe('Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.');
+    expect(text).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.');
     expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
     const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
     expect(learners).toContain('NU Postgraduate Diploma');

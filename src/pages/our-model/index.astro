@@ -50,10 +50,11 @@ const cards = [
 const d = discoveryCta();
 
 // Three decision questions with short answers; the timeline answer is this page's variant of Q7 (WP37, cycle-14 review: the shared answer's second sentence counted the weeks out again).
+// WP45 (cycle-21 review): the cost answer is the shared Q8, so the partner hub and this page list the same inclusions ("Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, ...").
 const faqSources: FaqSource[] = [
   { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
   { audience: 'variants', id: 'Q7-model' },
-  { q: 'What Does It Cost?', html: 'Pricing is set per program, and we share an indicative budget in the discovery session. Standard inclusions run from outreach and selection to placement support and 12 months of outcome tracking, with the exam fee included; devices, stipends, connectivity and independent evaluation are budgeted separately where a program needs them.', evidence: ['PD-02', 'PD-02a', 'PD-05'] },
+  { audience: 'all', id: 'Q8' },
 ];
 ---
 

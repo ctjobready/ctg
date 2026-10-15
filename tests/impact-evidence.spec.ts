@@ -102,8 +102,10 @@ test.describe('/impact/ At a Glance', () => {
   test('the trial tile (WP35: the one trial group tile) names the predecessor program and the +10.3 label does not repeat itself', async ({ page }) => {
     await open(page, 'impact/');
     await expect(page.locator('#glance')).toContainText(/more employment for women offered a place \(randomized trial of a predecessor program\)/);
-    const text = await page.locator('main').innerText();
-    expect(text).not.toMatch(/\+10\.3 pp[^\n]*in percentage points/);
+    // WP45 (cycle-21 review): the figure is "+10.3" with "percentage points" under it, and the label does not say the unit a second time
+    const tile = await page.locator('#glance a[data-fact~="RC-02"]').innerText();
+    expect(tile.match(/percentage points/g) ?? []).toHaveLength(1);
+    expect(await page.locator('main').innerText()).not.toMatch(/\bpp\b/);
   });
 });
 
@@ -207,7 +209,7 @@ test.describe('case studies', () => {
     await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tiles.nth(0)).toContainText('711 of 1,000');
     await expect(tiles.nth(1).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
-    await expect(tiles.nth(1)).toContainText('+10.3 pp');
+    await expect(tiles.nth(1)).toContainText('+10.3 percentage points');
     await expect(tiles.nth(2).locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
   });
 

@@ -82,7 +82,7 @@ test.describe('YouthWIDE: "What Success Looks Like" is about young people earnin
 test.describe('"What Does It Cost?" and Home’s inclusions heading: standard inclusions are for supported youth cohorts (item 2)', () => {
   // WP43 (cycle-20 review): the answer is three shorter sentences; the inclusions are still said for "Supported youth cohorts" ("include ..."), and the separately budgeted items stay
   const COST =
-    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
+    'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.';
 
   test('the partner hub FAQ says it for supported youth cohorts, in three sentences, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'partner-with-us/');
@@ -96,7 +96,7 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
   test('the full answer is on the hub only: route pages keep their one line and their own variants', async ({ page }) => {
     for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
-      expect(await mainText(page), route).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include training/);
+      expect(await mainText(page), route).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include (outreach and selection, )?training/);
     }
     await open(page, 'partner-with-us/employers/');
     expect(await mainText(page)).toContain('Standard inclusions are a needs assessment, a customized curriculum');
@@ -240,11 +240,12 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
 test.describe('Home: slide headings, tile and meta description (items 8, 13 and 16)', () => {
   // WP42 (cycle-19 review): the government slide moved to second, so the speed slide is the fifth
   // WP43 (cycle-20 review): the slide has no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated the heading and the tile)
-  test('slide 5 is "First Earnings Within Six Months": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
+  test('slide 5 is "Most First Earnings Came Within Six Months": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('First Earnings Within Six Months');
-    expect('First Earnings Within Six Months').toBe(titleCase('First Earnings Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
+    expect('Most First Earnings Came Within Six Months').toBe(titleCase('Most First Earnings Came Within Six Months'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);

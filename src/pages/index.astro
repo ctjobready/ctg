@@ -31,7 +31,7 @@ import { grantStartTitles } from '../components/pages/partners/partners';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { BACKWARD_PLAN, C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -76,10 +76,11 @@ const includes = [
   {
     painId: painForRow(FUNDER_PAINS, 'P2').painId,
     icon: 'clipboard-check',
-    // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"; documentary evidence "where available"), not an unscoped inclusion.
+    // WP28: scoped like the FAQ and the comparison ("as agreed in the program scope"), not an unscoped inclusion. WP45 (cycle-21 review): one line. The follow-up surveys and the documentary evidence are in the FAQ ("How Do You Prove Outcomes?")
+    // and on the evidence pages, so the card states the monthly reports alone (PD-08), as the positioning statement and the comparison table do.
     title: 'Results You Can Check',
-    text: 'Monthly reports and follow-up surveys, as agreed in the program scope, show progress toward paid work. Documentary evidence is checked where available.',
-    facts: ['PD-08', 'PD-09'],
+    text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
+    facts: ['PD-08'],
   },
   {
     painId: painForRow(FUNDER_PAINS, 'P3').painId,
@@ -178,12 +179,12 @@ const includes = [
   <!-- WP23, item 3: the role router sits just before the closing call to action (the hero's audience links and the menu route earlier). -->
   <Tone cmf="ROUTER" tone="white"><HomeRouter id="router" /></Tone>
 
+  <!-- WP45 (cycle-21 review): the band has no "Planning a Grant-Funded Cohort?" block: it assumed grant funding for every audience that reaches the page (ministries, employers, impact investors), and the grant timeline is in the C14 steps below. -->
   <Tone cmf="C13">
     <CTABand
       id="cta"
       tone="klein"
       heading="Let’s Design Your First Cohort"
-      plan={{ heading: 'Planning a Grant-Funded Cohort?', text: BACKWARD_PLAN.text }}
       cta={{ label: discovery.label, href: discovery.href }}
       secondary={{ label: 'Read the evidence', href: '/impact/' }}
       routes={[
@@ -195,7 +196,7 @@ const includes = [
   </Tone>
 
   <Tone cmf="C14">
-    <!-- The 6–8 week start is stated in the C13 plan line and in the "First cohort" step only (doc 04 §4, one statement per fact): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
+    <!-- The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact; WP45 removed the C13 plan line that stated it too): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
     <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Cohorts" (as on the hub), and one line names the audiences that get a route-specific next step. WP30c: the four steps are their headings alone (each names its week; the sentences under them restated the headings). -->
     <ConversionNextSteps
       id="next-steps"

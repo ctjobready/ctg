@@ -1,7 +1,7 @@
 ---
 // P10 — YouthWIDE /programs/youthwide/ (T3 conversion page; doc 04 matrices 4.1, 4.2 and 4.3; C1 → C14).
 // One page for both audiences (WP4c: NationWIDE was renamed YouthWIDE and merged in). WP30d (owner direction 2026-10-14: less is more, global first): the page leads with the
-// co-funded country cohorts (funders and development partners; the program is designed for South Asia, MENA and Sub-Saharan Africa) and gives the Bangladesh national initiative
+// co-funded country cohorts (funders and development partners; the program is designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa) and gives the Bangladesh initiative
 // ONE band of its own (#governments, linked from the Governments partner page and a case study). Cut as report-like: In Short, the definition band, the priority-group cards, the
 // delivery grid, the work-entry plans, the roadmap and reporting timelines, the RACI and decision sheet, the comparison table, the offer notes and the four gain rows of the C8 map.
 // Kept because a gate or a registered claim needs them: the three ranked pains (C2) and one C8 row each, the positioning statement opening C6, both session agendas, the trial relevance
@@ -54,7 +54,7 @@ import { url } from '../../lib/url';
 const path = '/programs/youthwide/';
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
-const description = 'YouthWIDE prepares educated, unemployed youth for paid digital work: co-funded cohorts designed for three regions and a national initiative in Bangladesh.';
+const description = 'YouthWIDE prepares educated, unemployed youth for paid digital work: co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.';
 const discovery = ctaFor('discovery');
 const briefing = ctaFor('briefing');
 const cofunding = ctaFor('nationalFunding');
@@ -107,7 +107,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   <ProgramGlance
     title="YouthWIDE at a Glance"
     rows={[
-      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation and has a national initiative of its own.', facts: ['IN-02', 'IN-01'] },
+      // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
+      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation, with an initiative of its own that aims to train 2 million youth by 2030.', facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
@@ -123,7 +124,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C3 -->
   <CostSection
-    title="Training Without Work Entry Spends the Budget Without the Result"
+    title="Training Without Work Entry Leaves Budgets Without Results"
     blocks={[
       { claim: CLAIM_RC06, factId: 'RC-06', implication: 'Too many funders receive attendance and completion counts but little evidence of earnings.' },
       { claim: CLAIM_PX06, factId: 'PX-06', implication: 'Training has to follow current employer demand, not last year’s job market.' },
@@ -164,12 +165,13 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     link={{ label: 'How Our Model Works', href: '/our-model/' }}
   />
 
-  <!-- The Bangladesh national initiative: one band (WP30d), built from the shared C6 band (eyebrow, headline, one paragraph, proof, text link). #governments is linked from the Governments partner page and a case study. -->
+  <!-- The Bangladesh initiative: one band (WP30d), built from the shared C6 band (eyebrow, headline, one paragraph, proof, text link). #governments is linked from the Governments partner page and a case study.
+       WP45 (cycle-21 review): headed "Reference Country and 2030 Aim", not "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million youth by 2030). -->
   <MechanismSection
     id="governments"
     tone="airy"
     eyebrow="For Governments and Ministries"
-    title="Bangladesh: The National Initiative and Reference Country"
+    title="Bangladesh: Reference Country and 2030 Aim"
     lead="Designed for delivery through existing government digital labs and colleges; lab access and seats are confirmed per program."
     link={{ label: cofunding.label, href: cofunding.href }}
   >

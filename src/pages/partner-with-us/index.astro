@@ -1,11 +1,12 @@
 ---
-// P2 Partner with us hub (doc 06 P2, T2): audience cards → why partner → how partnering works (StepFlow) → what funders
-// receive monthly → due diligence (governance) → FAQ → CTA band.
+// P2 Partner with us hub (doc 06 P2, T2): audience cards → why partner → how partnering works (StepFlow) → due diligence (governance) → FAQ → CTA band.
 // WP30c (owner direction 2026-10-14, "less is more"): the hub chooses a route and does not repeat the route pages. The RACI table (an internal-report view of
 // roles) and the "Protected by Design" band (the Due Diligence band already states safeguarding and links to Governance) are gone; four FAQs, not six.
 // WP35 (cycle-12 review): the hero's one button jumps to the route cards ("Choose Your Route"), instead of opening an email that skips the chooser; the second email button ("Not Sure? Email Us Your Goals") and its
 // helper line are gone, so the closing call to action holds the page's one email button; the reporting band is two sentences and a link (the route pages state their own reporting).
 // WP36 (cycle-13 review): "Choose Your Route" is the hero button only; the route cards' section label is "Partnership Routes" (the H2 keeps "Which Route Is Yours?").
+// WP45 (cycle-21 review): the hub stacked reporting and safeguarding three times (the "Monthly Reports and Quarterly Reviews" band, the due-diligence cards and two FAQs). The band (#review-cycle) and the FAQs "How Do You Prove Outcomes?" and
+// "What About Safeguarding and Data Protection?" are gone; the due-diligence view states both once and links to Governance, and every route page answers the rest. The FAQ block is two questions.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -18,7 +19,6 @@ import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
 import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
 import { grantStartTitles } from '../../components/pages/partners/partners';
-import ReviewCycle from '../../components/pages/hub/ReviewCycle.astro';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
 import { MICRO_COMMITMENT } from '../../data/copy';
 import { cta } from '../../lib/mailto';
@@ -27,8 +27,8 @@ import { faqJsonLd } from '../../lib/faq';
 import { pageUrl, ref, webPage, ORG_ID } from '../../lib/schema';
 import { linkAttrs } from '../../lib/url';
 
-// Compact cross-audience FAQ: the four questions every partner type asks before it starts (the country, the proof, the cost, safeguarding).
-const HUB_FAQ = ['Q1', 'Q3', 'Q8', 'Q9'];
+// Compact cross-audience FAQ: the two questions every partner type asks before it starts (the country and the cost). The proof (Q3) and safeguarding (Q9) answers are in the due-diligence view below and on the route pages (WP45).
+const HUB_FAQ = ['Q1', 'Q8'];
 const path = '/partner-with-us/';
 const title = 'Partner with Us';
 // WP32 (cycle-9 review): the hub routes more than cohorts (campus skills, team training, hiring, the JobReady platform), so the hero asks for the choice of partnership and does not
@@ -102,14 +102,10 @@ const jsonLd = [
     </Section>
   </Tone>
 
-  <Tone cmf="REPORTS">
-    <ReviewCycle title="Monthly Reports and Quarterly Reviews" sample={{ label: 'See What YouthWIDE Reports', href: '/programs/youthwide/' }} />
-  </Tone>
-
   <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView /></Tone>
 
   <Tone cmf="FAQ">
-    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Four questions every partner asks. Each route page answers the rest." />
+    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Two questions every partner asks. Each route page answers the rest." />
   </Tone>
 
   <Tone cmf="CTA">

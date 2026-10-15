@@ -27,6 +27,9 @@ import { cta } from '../lib/mailto';
  * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
  * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $82 before training" comparison are its tile alone (OC-03), not the heading too.
  * WP43 (cycle-20 review): the speed slide ("First Earnings Within Six Months") has no lead: it repeated the heading and the tile, so the slide is the heading, the 58.8% tile with its full base and the link.
+ * WP45 (cycle-21 review): the trial slide leads with the trial's income result ("Women Offered a Place Earned an Estimated 41% More", RC-01 and RC-04), since the hero card, the announcement bar and the ">4×" tile state the employment result; the
+ * government slide states the contract scope in GV-12's own note (it includes Her Power's 25,125 women trained); the speed slide is "Most First Earnings Came Within Six Months" (a majority, not a promise); the reach slide is
+ * "Programs in 15 Countries and Territories" (the figure in the heading, so no tile repeats it).
  */
 
 export interface HeroSlideStat {
@@ -100,7 +103,9 @@ const nineTrialAverage = /which was ([\d.]+) percentage points/.exec(fact('RC-06
 const hours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
 /** The trial's estimated income difference for all women offered a place (RC-01's tile), stated before the attenders' figure. */
 const incomeOffered = fact('RC-01').stat?.numeric;
-if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-06a or RC-07 no longer carries the figure a slide reads');
+/** The same women's estimated gain in dollars a month (RC-04's tile, "+$27"), stated beside the percentage on the first slide. */
+const dollarsOffered = fact('RC-04').stat?.numeric;
+if (offeredPoints === undefined || !nineTrialAverage || !hours || incomeOffered === undefined || dollarsOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04, RC-06a or RC-07 no longer carries the figure a slide reads');
 /** Women per 100 offered a place who were in work beyond the control group, as RC-02 rounds it (the [PLAIN-LINE] wording). */
 const perHundred = Math.round(offeredPoints);
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
@@ -108,20 +113,24 @@ const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
 /**
  * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
- * WP38 (cycle-15 review): the slide has a figure of its own, SC-03's stat ("15", captioned "countries and territories with CodersTrust programs": the register's label without its ", including Bangladesh" tail, which the line
- * above the tile says), so it reads like the survey slides, each with its figure.
+ * WP45 (cycle-21 review): the heading states the figure ("Programs in 15 Countries and Territories", SC-03's stat value, never typed here), so the slide no longer carries SC-03's tile as well: the same "15" would sit twice in the same few lines.
  */
 const reachDetail = fact('SC-03').stat?.detail;
 if (!reachDetail || !/^Bangladesh plus \d+ other countries and territories; most delivery has been in Bangladesh\.$/.test(reachDetail)) throw new Error('heroSlides: SC-03 detail no longer reads "Bangladesh plus N other countries and territories; most delivery has been in Bangladesh."');
-const reachLabel = fact('SC-03').stat?.label;
-if (!reachLabel || !/^countries and territories with CodersTrust programs(, including Bangladesh)?$/.test(reachLabel)) throw new Error('heroSlides: SC-03 label no longer reads "countries and territories with CodersTrust programs, including Bangladesh"');
-const reachCaption = reachLabel.replace(/, including Bangladesh$/, '');
+const reachCount = fact('SC-03').stat?.value;
+if (!reachCount || !/^\d+$/.test(reachCount)) throw new Error('heroSlides: SC-03 value no longer reads as a plain count of countries and territories');
 /**
  * GV-12 reads "Six government contracts with training and curriculum scopes covering 31,200+ people; official training partner of Bangladesh’s National University for
  * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
  */
 const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
+/**
+ * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
+ * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.
+ */
+const governmentNote = fact('GV-12').stat?.glance?.note;
+if (!governmentNote || !/^The total is contract scope, not a count of completers; it includes Her Power’s national program \(\d[\d,]* women trained\)\.$/.test(governmentNote)) throw new Error('heroSlides: GV-12 glance note no longer reads "The total is contract scope, not a count of completers; it includes Her Power’s national program (N women trained)."');
 if (!fact('OC-05').stat?.value) throw new Error('heroSlides: OC-05 no longer carries the figure the speed slide shows (its tile; the heading does not state it, WP41)');
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
@@ -172,10 +181,12 @@ export const HOME_SLIDES: HeroSlide[] = [
   {
     id: 'evidence',
     eyebrow: 'Independent Evaluation',
-    title: `About ${perHundred} More Women in Work for Every 100 Offered a Place`,
-    // WP31: two sentences, the offered-place results; the attenders' income (RC-13) is on the trial page the slide links.
-    lead: `Women offered a place in the predecessor WSDFM program were ${offeredPoints} percentage points more likely to be employed. Their monthly income was an estimated ${incomeOffered}% higher than the control group’s.`,
-    leadFacts: ['RC-01', 'RC-02'],
+    // WP45 (cycle-21 review): Home states the trial's employment result three times already (the hero's Randomized Trial card, the announcement bar, the ">4×" tile on this slide), so the slide's own finding is the trial's income result
+    // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with the predecessor program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
+    title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More`,
+    titleFacts: ['RC-01'],
+    lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
+    leadFacts: ['RC-01', 'RC-04'],
     proof: {
       factId: 'RC-06a',
       caption: () => `Employment effect for women offered a place: +${offeredPoints} percentage points, against ${nineTrialAverage} on average across nine vocational-training trials.`,
@@ -190,9 +201,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
     title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
     titleFacts: ['GV-12'],
-    // WP25h: the contracts' scope is stated as scope ("for 31,200+ people (contract scope, not people trained)"), and the National University sentence stays as registered.
-    lead: `${governmentScope[1]} for ${governmentScope[2]} (contract scope, not people trained). ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
-    leadFacts: ['GV-12'],
+    // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note ("The total is contract scope, not a count of completers; it includes
+    // Her Power's national program (25,125 women trained)."), the wording Impact and Governments print, in place of "(contract scope, not people trained)".
+    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${governmentNote} ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
+    leadFacts: ['GV-12', 'GV-01'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
@@ -235,7 +247,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // "First Earnings Within Six Months", with no percentage; the tile carries the 58.8% with its base (the 170 surveyed completers who first earned during or after training), and the eyebrow ("Impact Survey 2026") and the tile
     // name the surveyed completers. WP43 (cycle-20 review): no lead; the sentence under the heading ("Among surveyed completers who first earned during or after training, most started within six months.") said what the heading
     // and the tile already say, so the slide is its heading, the tile with its full base, and the evidence link.
-    title: 'First Earnings Within Six Months',
+    // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months" says it is a majority of the survey's first earnings (58.8% of the 170 surveyed completers who first earned during or after training), not a promise that earnings begin within six months.
+    title: 'Most First Earnings Came Within Six Months',
     titleFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
@@ -245,10 +258,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'scale',
     eyebrow: 'Reach at Scale', // WP30c (cycle-7 review, GLM): the slide states reach (people trained), which is an output, not impact
     // WP36 (cycle-13 review): the hero's "Reach Since 2014" card states the 130,000+ and the 15 countries and territories, so this slide points to where the programs ran and carries SC-03's detail line only.
-    title: 'Explore Where Our Programs Have Run',
+    // WP45 (cycle-21 review): the heading states the finding and its figure ("Programs in 15 Countries and Territories", SC-03), so the SC-03 tile of WP38 is gone: it said the same "15" a second time.
+    title: `Programs in ${reachCount} Countries and Territories`,
+    titleFacts: ['SC-03'],
     lead: reachDetail,
     leadFacts: ['SC-03'],
-    stats: [{ factId: 'SC-03', caption: () => reachCaption }],
     links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
     photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide
   },

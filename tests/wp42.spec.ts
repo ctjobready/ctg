@@ -245,7 +245,7 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     await expect(hero.locator('[data-plain-line]')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]'), 'the plain-language line is not on this page at all (the evaluation page keeps it)').toHaveCount(0);
     await expect(hero.locator('.cs__stat')).toHaveCount(3);
-    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['711 of 1,000', '+10.3 pp', '+41%']);
+    expect(await texts(page, '.hero .cs__stat .stat__value')).toEqual(['711 of 1,000', '+10.3 percentage points', '+41%']);
   });
 
   test('the one line names the two kinds of evidence and sits directly above the tiles, in the same row group', async ({ page }) => {
@@ -330,12 +330,12 @@ test.describe('Home: the government slide is second (item 10)', () => {
   test('the carousel runs trial, government scale, survey, program results, speed, reach, programs; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
-      'About 10 More Women in Work for Every 100 Offered a Place',
+      'Women Offered a Place Earned an Estimated 41% More',
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'First Earnings Within Six Months',
-      'Explore Where Our Programs Have Run',
+      'Most First Earnings Came Within Six Months',
+      'Programs in 15 Countries and Territories',
       'Find Your Program',
     ]);
     const slides = page.locator('#results [data-hs-slide]');
@@ -343,7 +343,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await expect(slides.nth(6)).toHaveAttribute('aria-label', /^7 of 7: Find Your Program/);
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -379,7 +379,7 @@ test.describe('Development Partners: the >4x tile quotes the multiplier only (it
     // the +10.3 is stated once in the glance: the lead tile
     const glance = compact(await page.locator('#glance').textContent());
     expect(count(glance, '10.3'), 'the 10.3 is the lead tile’s alone').toBe(1);
-    await expect(page.locator('#glance .pg__lead a[data-fact="RC-02"]')).toContainText('+10.3 pp');
+    await expect(page.locator('#glance .pg__lead a[data-fact="RC-02"]')).toContainText('+10.3 percentage points');
   });
 
   test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the new note says so with its unit', () => {

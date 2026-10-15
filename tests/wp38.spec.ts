@@ -30,9 +30,10 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     },
     {
       title: 'Results You Can Check',
-      text: 'Monthly reports and follow-up surveys, as agreed in the program scope, show progress toward paid work. Documentary evidence is checked where available.',
+      // WP45 (cycle-21 review): one line, the monthly reports (PD-08), scoped
+      text: 'Monthly reports show progress toward paid work, as agreed in the program scope.',
       pain: 'P2',
-      facts: ['PD-08', 'PD-09'],
+      facts: ['PD-08'],
     },
     {
       title: 'Tracks Chosen from Employer Demand',
@@ -102,7 +103,8 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     await expect(page.locator('#guide .rel__title')).toHaveCount(4);
     // (WP42, cycle-19 review: the government slide is the second slide)
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
-    expect(slide2).toContain('31,200+ people (contract scope, not people trained)');
+    // (WP45, cycle-21 review: the scope is GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).")
+    expect(slide2).toContain('31,200+ people. The total is contract scope, not a count of completers');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);
@@ -243,25 +245,24 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
 
 test.describe('Home carousel: the reach slide has its figure, the speed slide leads with its figure', () => {
   // WP42 (cycle-19 review): the government slide is second, so the speed slide is the fifth and the reach slide the sixth
-  test('slide 6 shows SC-03’s 15 with its caption above the unchanged heading, line and link', async ({ page }) => {
+  // WP45 (cycle-21 review): the reach slide's figure is its heading ("Programs in 15 Countries and Territories", SC-03's value), so the SC-03 tile of WP38 is gone: the same 15 would stand twice in the slide
+  test('slide 6 states SC-03’s 15 in its heading, above the unchanged line and link, with no tile that repeats it', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(5);
-    await expect(slide.locator('h2')).toHaveText('Explore Where Our Programs Have Run');
+    await expect(slide.locator('h2')).toHaveText('Programs in 15 Countries and Territories');
+    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('SC-03');
     await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
-    await expect(slide.locator('.hs__stat')).toHaveCount(1);
-    expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('SC-03');
-    await expect(slide.locator('.stat__value')).toHaveText('15');
-    await expect(slide.locator('.stat__label')).toHaveText('countries and territories with CodersTrust programs');
+    await expect(slide.locator('.hs__stat')).toHaveCount(0);
     expect(compact(await slide.textContent())).not.toContain('130,000');
     await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
   });
 
   // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
-  // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile
-  test('slide 5 reads "First Earnings Within Six Months" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
+  // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile. WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
+  test('slide 5 reads "Most First Earnings Came Within Six Months" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    const heading = 'First Earnings Within Six Months';
+    const heading = 'Most First Earnings Came Within Six Months';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');

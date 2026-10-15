@@ -29,7 +29,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await expect(group.locator('li')).toHaveCount(1);
     const tile = group.locator('li a');
     expect(await tile.getAttribute('data-fact')).toBe('RC-02');
-    await expect(tile).toContainText('+10.3 pp');
+    await expect(tile).toContainText('+10.3 percentage points');
     await expect(tile).toContainText('more employment for women offered a place (randomized trial of a predecessor program)');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/independent-evaluation\/$/);
@@ -135,6 +135,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     expect((await hrefs(page, '#proof-band .he__links a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/']);
   });
 
+  // WP45 (cycle-21 review): the first slide states the trial's income result for the offered-place women (the employment result is this card's, the bar's and the slide's >4× tile)
   test('Home: the hero’s "Strongest Proof" card carries the plain-language reading of the trial (the check:facts anchor moved here), and the first slide still states the offered-place results', async ({ page }) => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="RC-02"]');
@@ -142,7 +143,9 @@ test.describe('the trial and the survey are shown once per page', () => {
     await expect(card.locator('.hh__num')).toHaveText('+10.3');
     await expect(card.locator('.hh__unit')).toHaveText('percentage points');
     await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, about 10 more were in work than in the control group.');
-    expect(compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent())).toContain('10.3 percentage points more likely to be employed');
+    const first = page.locator('[data-hs-slide]').nth(0);
+    expect(compact(await first.locator('.hs__lead').textContent())).toContain('their monthly income was an estimated 41% higher than the control group’s');
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('+10.3 percentage points');
   });
 
   for (const slug of THREE) {
@@ -298,17 +301,16 @@ test.describe('Partner with Us hub', () => {
     }
   });
 
-  // WP39 (cycle-16 review): the hub serves every route, so the line is scoped to supported cohorts (tests/wp39.spec.ts)
-  test('the reporting band is two sentences and a link: for supported cohorts, monthly reports begin with the first cohort; quarterly reviews guide corrective action and any expansion', async ({ page }) => {
+  // WP39 (cycle-16 review): the hub serves every route, so the line was scoped to supported cohorts (tests/wp39.spec.ts). WP45 (cycle-21 review): the hub's reporting band (#review-cycle) is gone, since the due-diligence view and the route
+  // pages state the reporting (tests/wp45.spec.ts); the due-diligence card that linked to the band links to Governance instead
+  test('the hub has no reporting band; the due-diligence view states the monthly reports and follow-up surveys once and links to Governance', async ({ page }) => {
     await open(page, 'partner-with-us/');
-    const band = page.locator('#review-cycle');
-    await expect(band.locator('h2')).toHaveText('Monthly Reports and Quarterly Reviews');
-    await expect(band.locator('.sh__lead')).toHaveText('For supported cohorts, monthly reports begin with the first cohort. Quarterly reviews guide corrective action and any expansion.');
-    expect(await band.getAttribute('data-fact')).toBe('PD-08 PD-11');
-    await expect(band.locator('a')).toHaveText('See What YouthWIDE Reports');
-    await expect(band.locator('h3, ul, ol, li, .rc__panel')).toHaveCount(0);
-    // the pages that link to the band (Foundations, Development Partners, the due-diligence view) still land on #review-cycle
-    expect((await hrefs(page, '#due-diligence a')).some((h) => h.endsWith('/partner-with-us/#review-cycle'))).toBe(true);
+    await expect(page.locator('#review-cycle')).toHaveCount(0);
+    expect(await mainText(page)).not.toContain('Monthly Reports and Quarterly Reviews');
+    const card = page.locator('#due-diligence .ddv__item', { hasText: 'Monthly Reports and Follow-Up Surveys' });
+    await expect(card).toHaveCount(1);
+    expect(await card.getAttribute('data-fact')).toBe('PD-08 PD-09');
+    expect((await hrefs(page, '#due-diligence a')).some((h) => h.endsWith('/about/governance/#faq'))).toBe(true);
   });
 });
 
@@ -347,7 +349,8 @@ test.describe('plain words and plain claims', () => {
     expect(text).not.toMatch(/4IR|LMS and operation/);
   });
 
-  test('FAQ: the cost answer is three sentences and the safeguarding answer says "data with personal details protected"', async ({ page }) => {
+  // WP45 (cycle-21 review): the hub keeps the cost answer only (the safeguarding answer is in the due-diligence view and on Governance); the cost inclusions name "outreach and selection" (tests/wp45.spec.ts)
+  test('FAQ: the hub’s cost answer is three sentences; the Governance page says funders receive data with personal details protected', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const answer = async (q: string) => {
       const item = page.locator('#faqs details', { has: page.locator('summary', { hasText: q }) });
@@ -356,13 +359,10 @@ test.describe('plain words and plain claims', () => {
     const cost = await answer('What Does It Cost?');
     expect(cost).toBe(
       // WP41 (cycle-18 review): "For supported youth cohorts, standard inclusions are …"; WP43 (cycle-20 review): "Supported youth cohorts include training, certification exam preparation and the exam fee, …"
-      'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
+      'Pricing is set per program; we share an indicative budget in the discovery session. Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course. Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.',
     );
-    const safeguarding = await answer('What About Safeguarding and Data Protection?');
-    expect(safeguarding).toBe(
-      'Safeguarding and data protection are specified for each program and agreed before enrollment. Each program design covers accessible selection, consent-based data collection, protected records, grievance handling, harassment and fraud response and referral pathways. Guardian consent and supervision apply to anyone under 18, and funders receive data with personal details protected.',
-    );
-    for (const a of [cost, safeguarding]) expect(a.split(/(?<=[.!?])\s+(?=[A-Z“])/).length).toBeLessThanOrEqual(3);
+    expect(cost.split(/(?<=[.!?])\s+(?=[A-Z“])/).length).toBeLessThanOrEqual(3);
+    await expect(page.locator('#faqs details', { has: page.locator('summary', { hasText: 'What About Safeguarding and Data Protection?' }) })).toHaveCount(0);
     await open(page, 'about/governance/');
     const text = await mainText(page);
     expect(text).toContain('funders receive data with personal details protected and monthly reports');

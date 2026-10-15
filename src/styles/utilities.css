@@ -588,3 +588,15 @@ details.acc[open] > summary .acc__chev {
 .cluster > .btn--enroll {
   width: auto;
 }
+
+/* A figure's unit spelled out on a line of its own under the figure ("+10.3" over "percentage points"): the stat tiles, the glance tiles and the hub's trial tile
+   use it, so no tile shows a bare "pp" (WP45, cycle-21 review; src/lib/format.ts spellUnit). It takes the figure's colour and sits in the small body size. */
+.fig-unit {
+  display: block;
+  margin-top: var(--space-xs);
+  font-size: var(--fs-body-xs);
+  line-height: var(--lh-body-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0;
+  color: inherit;
+}

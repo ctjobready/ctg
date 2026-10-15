@@ -1,6 +1,6 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * Every statistic below is read from the Facts Register (facts.ts): ID-02, RC-02. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
+ * Every statistic below is read from the Facts Register (facts.ts): ID-02, RC-02, IN-01. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
  * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
  * WP30c (cycle-7 IA review): a featured panel points to a different decisive page than the first item of its own menu, with that page's own menu description
  * as its text (About: Governance and Accountability; Our Model: the JobReady Platform status; Programs: YouthWIDE; Partner with Us: Governments).
@@ -16,6 +16,13 @@ const stat = (id: string) => {
 };
 const trial = stat('RC-02');
 const trialPoints = `+${trial.numeric} Percentage Points`;
+/**
+ * YouthWIDE's one-line description (the Programs menu, its featured panel and Home slide 7): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, the Middle East and North Africa, and Sub-Saharan Africa)
+ * and the Bangladesh initiative as an AIM, "an initiative that aims to train 2 million vulnerable youth for digital employment by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national program).
+ * The figure is the register's. The three regions are not listed here: with them spelled out (no "MENA") the line is 180 characters and slide 7 of the Home carousel, whose program cards are three columns wide, grows two lines taller,
+ * which leaves the other slides 68 px of unused space at 1280 (tests/hero-slider.spec.ts allows 48); this line wraps as the one it replaces did.
+ */
+const youthwideLine = `Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train ${stat('IN-01').value} youth by 2030.`;
 
 export interface NavLink {
   label: string;
@@ -88,13 +95,14 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'How It Works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
-      { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.' },
+      // WP45 (cycle-21 review): IN-04 names two marketplaces in pre-launch, the employer marketplace and the gig-work (Earn) marketplace, so the menu names both (tests/wp25s.spec.ts forbids "employer and gig-work").
+      { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.' },
     ],
     feature: {
       kind: 'pilot',
       eyebrow: 'Platform Status',
       title: 'JobReady Platform',
-      text: 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.',
+      text: 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.',
       cta: { label: 'See the Rollout Status', href: '/our-model/jobready-platform/' },
     },
   },
@@ -105,7 +113,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
       // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country; IN-01: the Bangladesh initiative).
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.', factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: youthwideLine, factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
@@ -119,7 +127,7 @@ export const navGroups: NavGroup[] = [
       kind: 'pilot',
       eyebrow: 'Partner Programs',
       title: 'YouthWIDE',
-      text: 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.',
+      text: youthwideLine,
       factIds: ['IN-01', 'IN-02'],
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },

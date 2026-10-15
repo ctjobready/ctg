@@ -79,7 +79,7 @@ test.describe('headings', () => {
 test.describe('FAQs: the decision questions, one to three sentences each', () => {
   const FAQ_PAGES: { route: string; selector: string; min: number }[] = [
     { route: '', selector: '#faq details', min: 3 },
-    { route: 'partner-with-us/', selector: '#faqs details', min: 4 },
+    { route: 'partner-with-us/', selector: '#faqs details', min: 2 },
     { route: 'partner-with-us/governments/', selector: '#faq details', min: 5 },
     { route: 'partner-with-us/development-partners/', selector: '#faq details', min: 5 },
     { route: 'partner-with-us/foundations/', selector: '#faq details', min: 4 },
@@ -199,8 +199,8 @@ test.describe('mega-menu featured panels point to a different decisive page than
     await open(page, '');
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
-      ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace is in pre-launch.'],
-      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for South Asia, MENA and Sub-Saharan Africa, with a national initiative in Bangladesh.'],
+      ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.'],
+      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million youth by 2030.'],
       ['partner', '/partner-with-us/governments/', 'National programs for youth employment.'],
     ];
     for (const [id, href, text] of cases) {

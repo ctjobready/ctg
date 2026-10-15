@@ -14,7 +14,8 @@ import { NEWS_CTA, type NewsAudience } from './news';
 /**
  * T6 news article shell. Like the shared ArticleLayout, but with a separate <title> (kept within 60
  * characters while the H1 and the NewsArticle headline carry the full headline), the archive banner
- * above the hero image, and an X share link.
+ * above the hero image (WP45: with an optional one-line note of its own, front matter `archiveNote`, for a post
+ * that announced an aim the register now reports as delivered), and an X share link.
  *
  * The <title>, og:title and twitter:title come from the post's `seoTitle` (front matter; the layout adds
  * " | CodersTrust"). A headline short enough to fit needs none; a longer one without a seoTitle fails the
@@ -38,8 +39,12 @@ interface Props {
   heroCaption?: string;
   /** Who the post is about: picks the closing call to action (NEWS_CTA). */
   audience?: NewsAudience;
+  /** One line under the banner's standard sentences (front matter `archiveNote`): what an announced aim ended up as, in the register's words. */
+  archiveNote?: string;
+  /** Register facts the note states (front matter `archiveNoteFacts`), rendered as data-fact. */
+  archiveNoteFacts?: string[];
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general' } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', archiveNote, archiveNoteFacts = [] } = Astro.props;
 const closing = NEWS_CTA[audience];
 const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
@@ -94,6 +99,7 @@ const share = {
         Archived post, lightly edited. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
         <a class="link" href={url('/impact/')}>Impact pages</a>.
         Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
+        {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}</span>}
       </span>
     </p>
     {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" />{heroCaption && <figcaption class="art__caption">{heroCaption}</figcaption>}</figure>}
@@ -176,6 +182,12 @@ const share = {
   .archive-banner :global(.icon) {
     flex: none;
     margin-top: var(--space-xs);
+  }
+  /* the post's own note (front matter archiveNote): a line of its own under the standard sentences */
+  .archive-banner__note {
+    display: block;
+    margin-top: var(--space-xs);
+    font-weight: var(--fw-bold);
   }
   .art__hero {
     margin: 0 0 var(--space-lg);

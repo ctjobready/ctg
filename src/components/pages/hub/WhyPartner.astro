@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
+import { spellUnit } from '../../../lib/format';
 import { linkAttrs } from '../../../lib/url';
 
 /**
@@ -11,19 +12,33 @@ import { linkAttrs } from '../../../lib/url';
  * young people trained since 2014). The trial and the survey stay apart and each carries its own label; the reach tile is labeled as it is on Home.
  * WP31: the 12-month outcome tracking (PD-02) is a commitment, not a result, so it left these tiles; the hero line states it.
  * WP32 (cycle-9 review): the reach tile came back as the third, so the strip reads trial, survey, reach.
+ * WP45 (cycle-21 review): the trial tile shows "+10.3" with "percentage points" on a line under it, not the register's "pp".
  */
 interface Props {
   id?: string;
+}
+interface Tile {
+  kicker: string;
+  value: string;
+  /** The figure's unit, spelled out on its own line under it (a value in "pp"). */
+  unit?: string;
+  label: string;
+  note?: string;
+  href: string;
+  link: string;
+  ids: string;
 }
 const { id = 'why-partner' } = Astro.props;
 const rc02 = fact('RC-02');
 const oc01 = fact('OC-01');
 const sc16 = fact('SC-16');
 if (!rc02.stat || !oc01.stat || !sc16.stat) throw new Error('WhyPartner: RC-02, OC-01 and SC-16 need a stat');
-const tiles = [
+const trialFigure = spellUnit(rc02.stat.value);
+const tiles: Tile[] = [
   {
     kicker: 'Randomized Trial of a Predecessor Program',
-    value: rc02.stat.value,
+    value: trialFigure.figure,
+    unit: trialFigure.unit,
     label: 'more employment for women offered a place',
     href: '/impact/independent-evaluation/',
     link: 'The Randomized Trial',
@@ -57,7 +72,7 @@ const tiles = [
       tiles.map((t) => (
         <li class="wp__tile" data-fact={t.ids} data-reveal>
           <p class="wp__kicker">{t.kicker}</p>
-          <p class="wp__value">{t.value}</p>
+          <p class="wp__value">{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</p>
           <p class="wp__desc">{t.label}</p>
           {t.note && <p class="wp__note">{t.note}</p>}
           <a class="link wp__link" href={linkAttrs(t.href).href}>{t.link}<Icon name="arrow-right" size={16} /></a>

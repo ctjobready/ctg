@@ -163,7 +163,8 @@ test.describe('Investors: the national-scale answer closes on two short sentence
       'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas).',
     );
     // the 41-word closing sentence is now two, each short
-    expect(sentences[1]).toBe('We scale in phases: larger programs run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges.');
+    // WP45 (cycle-21 review): "are designed to run" (PD-06 states a design, not a delivered capacity)
+    expect(sentences[1]).toBe('We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges.');
     expect(sentences[2]).toBe('A 100,000+ national program is a design option we have not yet delivered.');
     expect(wordCount(sentences[1])).toBeLessThanOrEqual(25);
     expect(wordCount(sentences[2])).toBeLessThanOrEqual(15);

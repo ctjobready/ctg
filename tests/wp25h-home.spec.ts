@@ -109,14 +109,15 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 3).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
     // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow and the tile keep "surveyed completers";
-    // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile)
-    await expect(slide(page, 5).locator('h2')).toHaveText('First Earnings Within Six Months');
+    // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile); WP45 (cycle-21 review): "Most First Earnings Came Within Six Months", a majority and not a promise
+    await expect(slide(page, 5).locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
     await expect(slide(page, 5).locator('.hs__lead')).toHaveCount(0);
     await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
     await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people (contract scope, not people trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 
   test('the third vision scenario starts "You see employers hire AI-ready talent from your cohort"', async ({ page }) => {

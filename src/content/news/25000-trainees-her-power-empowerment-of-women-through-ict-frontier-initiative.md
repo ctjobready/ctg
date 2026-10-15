@@ -1,7 +1,7 @@
 ---
 title: "Her Power Contract Aims to Train 25,125 Women: Empowerment of Women Through ICT Frontier Initiative"
 date: 2023-04-13
-updated: 2026-10-13
+updated: 2026-10-15
 topic: partnerships
 excerpt: "CodersTrust signs a contract with the DoICT for Her Power, which aims to train and support 25,125 women as ICT professionals and entrepreneurs."
 cover: ../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg
@@ -9,6 +9,8 @@ coverAlt: "Two people signing an agreement at a table, with CodersTrust and part
 legacyUrl: "https://coderstrust.global/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/"
 tags: []
 seoTitle: "Her Power Contract Aims to Train 25,125 Women"
+archiveNote: "Delivered: the national program trained 25,125 women."
+archiveNoteFacts: ["GV-01"]
 ---
 
 ![Two people signing an agreement at a table, with CodersTrust and partner staff standing behind them](../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg)

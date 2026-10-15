@@ -99,7 +99,8 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
 ---
 
 <BaseLayout title="Recognition and Media" description={description} breadcrumbs={[{ label: 'About', href: '/about/' }, { label: 'Recognition and Media' }]} jsonLd={jsonLd}>
-  <Hero eyebrow="About Us" title="Recognized, Honored and Covered Worldwide" lead="CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024, its co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
+  <!-- WP45 (cycle-21 review): the H1 states what the register supports (PA-08: listed in the HolonIQ South Asia EdTech 100 in 2023 and 2024), not "Recognized, Honored and Covered Worldwide", which claimed more than the listings, the founder's honors and the 2014 to 2016 press coverage show; the lead no longer repeats the listing (the Industry Recognition band below gives the years). -->
+  <Hero eyebrow="About Us" title="Twice Listed in the HolonIQ South Asia EdTech 100" lead="CodersTrust’s co-founder and Chairman, Aziz Ahmad, has received appointments and honors, and its work has been covered in the press." art={false}>
     <Fragment slot="actions">
       <Button href={media.href} icon="mail">{media.label}</Button>
       <a class="link" href="#press-kit">Press Kit<Icon name="arrow-right" size={16} /></a>
