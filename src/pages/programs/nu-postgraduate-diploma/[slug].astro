@@ -17,7 +17,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuFitSentence, nuModuleFaqs, nuOverview } from '../../../components/pages/programs/nuPgd';
 import { NU_ELIGIBILITY } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate } from '../../../lib/format';
@@ -45,8 +45,8 @@ const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
 const faqSources: FaqSource[] = [
   // "What Will I Study?" repeats the module list above; the second answer names concrete modules.
   ...nuModuleFaqs(c).slice(1),
-  // WP27: admissions' own eligibility sentence (NU-01), the one every NU page states.
-  { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. It is right for you if you meet that and want a digital career. Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
+  // WP27: admissions' own eligibility sentence (NU-01), the one every NU page states. WP49 (cycle-24 review): the sentence after it is the course's own (nuFitSentence: what the course teaches, from its module list), no longer the one both course pages shared.
+  { q: 'Is This the Right Course for Me?', html: `Eligibility: ${NU_ELIGIBILITY}. ${nuFitSentence(c)} Not right if you want a short self-paced course: see ${anchor(COURSES_URL, 'JobReady.global')}.`, evidence: [eligibilityId] },
 ];
 
 const jsonLd = [

@@ -39,12 +39,13 @@ test.describe('timelines name their starting point', () => {
     });
   }
 
-  test('YouthWIDE in Bangladesh: the timing line reads the same sequence and keeps procurement timing as its own sentence', async ({ page }) => {
+  // WP49 (cycle-24 review): the closing timing paragraph under YouthWIDE's "What Happens Next" (PD-04 in full) is gone: it repeated the step sequence above it and the timing question in the FAQ. The procurement sentence is still on the page (tests/wp49.spec.ts)
+  test('YouthWIDE: no closing timing line repeats the sequence; the page still says that public procurement follows the agency’s own timeline', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    const line = compact(await page.locator('.next-timing').textContent());
-    expect(line).toContain('Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)');
-    expect(line).toContain('training starts 6–8 weeks after signing.');
-    expect(line).toMatch(/signing\. Public procurement follows the agency’s own timeline\.$/);
+    await expect(page.locator('.next-timing')).toHaveCount(0);
+    const main = compact(await page.locator('main').textContent());
+    expect(main).not.toContain('Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)');
+    expect(main).toContain('Public procurement follows the agency’s own timeline');
   });
 
   test('PD-04 (the register) carries the sequence the pages read', () => {

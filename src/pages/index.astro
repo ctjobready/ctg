@@ -30,7 +30,6 @@ import Icon from '../components/system/Icon.astro';
 import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
-import { grantStartTitles } from '../components/pages/partners/partners';
 import { futurePhotos } from '../data/photos';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
@@ -62,8 +61,9 @@ const problemBluf = 'Millions of educated young people are out of work and out o
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
 // WP38 (cycle-15 review): on Home the rows are three short cards (IncludesBand), not the concern / inclusion / benefit matrix of FeaturesTable (WP39: the audience and program pages use IncludesBand too). Each card keeps its pain's id (`data-relieves`, held by
 // check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan approved before
-// enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The AI-ready line keeps "designed to" (the register states the
-// track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it.
+// enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The curriculum line keeps "designed to" (the register states the
+// track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it. WP49 (cycle-24 review, three reviewers): it no longer says "An AI-ready curriculum is ..." ("AI-ready" is a positioning term that
+// Employers and JobReady@Work explain, not Home): "A curriculum designed to follow the skills employers ask for as entry-level tasks change."
 const hours = fact('PD-01').stat?.value;
 // The comparison's "Independent Evidence" cell on Home (WP31): the trial in one clause, the predecessor program's length read from RC-07 (not retyped).
 const trialHours = /was (\d+) hours/.exec(fact('RC-07').text)?.[1];
@@ -92,7 +92,7 @@ const includes = [
     painId: painForRow(FUNDER_PAINS, 'P3').painId,
     icon: 'briefcase',
     title: 'Tracks Chosen from Employer Demand',
-    text: 'An AI-ready curriculum is designed to follow the skills employers ask for as entry-level tasks change.',
+    text: 'A curriculum designed to follow the skills employers ask for as entry-level tasks change.',
     facts: ['PD-02', 'PD-10'],
   },
 ];
@@ -199,14 +199,13 @@ const includes = [
 
   <Tone cmf="C14">
     <!-- The 6–8 week start is stated in the "First cohort" step only (doc 04 §4, one statement per fact; WP45 removed the C13 plan line that stated it too): no PD-04 timing line, no reminder. The micro-commitment is stated once, in C13. -->
-    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Pilots" (WP46, cycle-22 review: it read "Cohorts"; the hub's and Development Partners' timing is for grant-funded pilots), and one line names the audiences that get a route-specific next step. WP30c: the four steps are their headings alone (each names its week; the sentences under them restated the headings). -->
+    <!-- WP28: the week-by-week steps are labelled "For Grant-Funded Pilots" (WP46, cycle-22 review: it read "Cohorts"; the hub's and Development Partners' timing is for grant-funded pilots), and one line names the audiences that get a route-specific next step. WP30c: the four steps were their headings alone (each names its week; the sentences under them restated the headings); WP49 (cycle-24 review): each step has its one-line description again, the hub's (grantStartSteps, ConversionNextSteps' default), because the hub and the audience pages describe theirs. -->
     <ConversionNextSteps
       id="next-steps"
       eyebrow="For Grant-Funded Pilots"
       title="What Happens After You Contact Us"
-      steps={grantStartTitles().map((title) => ({ title }))}
       timing={false}
-      firstAction={C14.firstAction}
+      firstAction={C14.firstActionLabeled}
       otherRoutes={{
         audiences: [
           { label: 'Ministries', href: '/partner-with-us/governments/' },

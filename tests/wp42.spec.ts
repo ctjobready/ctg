@@ -374,12 +374,13 @@ test.describe('Home: the government slide is second (item 10)', () => {
 test.describe('Development Partners: the >4x tile quotes the multiplier only (item 11)', () => {
   test('the tile’s label gives the nine-trial average and does not repeat the +10.3 percentage points of the lead tile', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const tile = page.locator('#glance .pg__more a[data-fact="RC-06a"]');
+    // WP49 (cycle-24 review): the tile is the glance's fourth, in the main group (it stood alone under a "More Results" heading)
+    const tile = page.locator('#glance .pg__lead a[data-fact="RC-06a"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__value')).toHaveText('>4×');
-    // WP48 (cycle-23 review): the label says what is compared ("The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials"); it was "Employment effect over four times the nine-trial average".
+    // WP48 (cycle-23 review): the label says what is compared; it was "Employment effect over four times the nine-trial average". WP49 (cycle-24 review): it says the ratio too ("... was more than four times the 2.3-point average ...").
     // The note under it ("Against 2.3 percentage points on average across nine vocational-training trials.") repeated the label, so the tile has no note.
-    await expect(tile.locator('.pg__desc')).toHaveText('The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials');
+    await expect(tile.locator('.pg__desc')).toHaveText('The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials');
     await expect(tile.locator('.pg__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/10\.3|\+10/);
     // the +10.3 is stated once in the glance: the lead tile
@@ -391,7 +392,7 @@ test.describe('Development Partners: the >4x tile quotes the multiplier only (it
   test('the register’s wording (RC-06a): the average is 2.3 percentage points across nine trials, and the glance label says so without a repeating note', () => {
     const rc06a = fact('RC-06a');
     expect(rc06a.text).toContain('which was 2.3 percentage points');
-    expect(rc06a.stat?.glance?.label).toBe('The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials');
+    expect(rc06a.stat?.glance?.label).toBe('The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials');
     expect(rc06a.stat?.glance?.note).toBeUndefined();
   });
 });

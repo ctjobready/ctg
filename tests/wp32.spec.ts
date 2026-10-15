@@ -43,7 +43,8 @@ test.describe('Partner with Us hub', () => {
     expect(await tiles.evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['RC-02', 'OC-01', 'SC-16']);
     const reach = tiles.nth(2);
     await expect(reach.locator('.wp__value')).toHaveText('130,000+');
-    await expect(reach.locator('.wp__desc')).toHaveText('young people trained since 2014');
+    // WP49 (cycle-24 review): "learners trained", SC-01's wording (the 130,000+ includes teacher and staff enrollments, so it is not "young people")
+    await expect(reach.locator('.wp__desc')).toHaveText('learners trained since 2014');
     await expect(reach.locator('.wp__note')).toHaveText('Through 150,000+ enrollments across 15 countries and territories.');
     expect(await reach.locator('a.wp__link').getAttribute('href')).toMatch(/\/impact\/global-reach\/$/);
   });
@@ -69,10 +70,11 @@ test.describe('Partner with Us hub', () => {
 test.describe('Foundations', () => {
   // WP46 (cycle-22 review): WP32 had left this band without steps (the two funding routes do not share one process) and kept the cohort timing in the call-to-action urgency line; the band now has the four Development Partners
   // steps, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the call-to-action agenda says), and the urgency line that would repeat them is gone.
-  test('"What Happens After You Say Yes" shows the four grant-funded steps scoped "For cohort grants."; the call-to-action band no longer repeats their timing', async ({ page }) => {
+  // WP49 (cycle-24 review): the heading is "What Happens Next" (it was "What Happens After You Say Yes", which presumed a commitment)
+  test('"What Happens Next" shows the four grant-funded steps scoped "For cohort grants."; the call-to-action band no longer repeats their timing', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
-    await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
+    await expect(band.locator('h2')).toHaveText('What Happens Next');
     expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
     expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
     expect(await band.locator('[data-fact]').first().getAttribute('data-fact')).toBe('PD-04');
@@ -273,9 +275,10 @@ test.describe('Home', () => {
     ]);
   });
 
-  test('the "What Brings You Here?" router calls the investor card "Impact Investors"; the main menu keeps "Investors"', async ({ page }) => {
+  // WP49 (cycle-24 review): the router card is "Investors" (nav.ts, the title the menu, the footer and the hub use); it was "Impact Investors" (tests/wp49.spec.ts)
+  test('the "What Brings You Here?" router calls the investor card "Investors", as the main menu does', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Impact Investors']);
+    expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     const menu = page.locator('a.mega__link[href$="partner-with-us/investors/"] .mega__title').first();
     await expect(menu).toHaveText('Investors');
   });

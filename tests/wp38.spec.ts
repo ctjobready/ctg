@@ -38,7 +38,8 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
     },
     {
       title: 'Tracks Chosen from Employer Demand',
-      text: 'An AI-ready curriculum is designed to follow the skills employers ask for as entry-level tasks change.',
+      // WP49 (cycle-24 review, three reviewers): "AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; the line keeps "designed to" (the register states the track menu is set from employer demand, not that the curriculum follows every change)
+      text: 'A curriculum designed to follow the skills employers ask for as entry-level tasks change.',
       pain: 'P3',
       facts: ['PD-02', 'PD-10'],
     },
@@ -178,8 +179,9 @@ test.describe('the three funder pains that had a heading and no line now have on
   const LINES: [string, string, string][] = [
     // WP40 (cycle-17 review): the third Foundations pain is about accountability keeping pace with scale, not about how rare other implementers are
     ['partner-with-us/foundations/', 'Accountability Must Keep Pace with Scale', 'You need monthly outcome reports as delivery expands.'],
-    ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Is Thin', 'Trainers and localized curricula are rarely ready at national scale.'],
-    ['partner-with-us/universities/', 'Institutions Lack Placement Results They Can Publish', 'Placement data that would satisfy a board or ministry is rarely collected.'],
+    // WP49 (cycle-24 reviews): the Governments and Universities lines say what the agency or institution needs, not what is "rarely" so across a sector (tests/wp49.spec.ts)
+    ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Is Thin', 'National delivery needs trained facilitators and localized curricula.'],
+    ['partner-with-us/universities/', 'Institutions Lack Placement Results They Can Publish', 'Your institution needs placement data it can report to a board or ministry.'],
   ];
   for (const [route, title, line] of LINES) {
     test(`${route}: "${title}" carries its line, and every pain on the page has one`, async ({ page }) => {
@@ -273,7 +275,8 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
   });
 });
 

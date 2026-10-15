@@ -38,7 +38,9 @@ test.describe('one NU eligibility sentence', () => {
     test(`${route} answers "is it right for me" with the eligibility sentence, never "if you hold a degree"`, async ({ page }) => {
       await open(page, route);
       const text = await everything(page);
-      expect(text).toContain(`Eligibility: ${ELIGIBILITY}. It is right for you if you meet that`);
+      // WP49 (cycle-24 review): the two course pages say what the course teaches after the eligibility sentence (tests/wp49.spec.ts); the overview keeps the generic sentence
+      const fit = route === `${NU}ict/` ? 'Choose ICT if you want to study programming, databases, networks and mobile or web development.' : route === `${NU}digital-marketing/` ? 'Choose Digital Marketing if you want to study SEO, social media, advertising and analytics.' : 'It is right for you if you meet that';
+      expect(text).toContain(`Eligibility: ${ELIGIBILITY}. ${fit}`);
       expect(text).not.toMatch(/if you hold a degree|degree holders who want/i);
       // the Before You Apply table keeps the register sentence in its Eligibility row
       expect(compact(await page.locator('#before-you-apply .ba__row', { hasText: 'Eligibility' }).first().textContent())).toContain(ELIGIBILITY);

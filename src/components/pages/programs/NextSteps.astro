@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import StepFlow from '../../ui/StepFlow.astro';
 import RouteBlock from '../../ui/RouteBlock.astro';
+import { NEXT_STEPS_TITLE } from '../../../data/copy';
 
 /**
  * C14 Next steps: StepFlow plus the first-action line (C14-FIRST or an audience variant) and an
@@ -24,7 +25,7 @@ interface Props {
   tone?: 'white' | 'airy';
   id?: string;
 }
-const { eyebrow = 'Next Steps', title = 'What Happens Next', lead, steps, route, firstAction, roleActions = [], tone = 'white', id = 'next-steps' } = Astro.props;
+const { eyebrow = 'Next Steps', title = NEXT_STEPS_TITLE, lead, steps, route, firstAction, roleActions = [], tone = 'white', id = 'next-steps' } = Astro.props;
 ---
 
 <Section id={id} tone={tone} aria-labelledby={`${id}-h`}>

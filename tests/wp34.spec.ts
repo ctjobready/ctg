@@ -21,7 +21,8 @@ const INTRODUCTIONS = 'Job-ready candidates are introduced through CodersTrustâ€
 test.describe('Employers and JobReady@Work: the closing steps name their routes', () => {
   // WP46 (cycle-22 review): Employers' hiring route is two steps in the training route's step component ("Discovery": the scoping sentence; "Introductions": the placement-team sentence); WP47: JobReady@Work's is the same two steps
   const PAGES = [
-    { route: 'partner-with-us/employers/', title: 'What Happens After You Say Yes', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery', 'Introductions'] },
+    // WP49 (cycle-24 review): the heading is "What Happens Next" on every page that had "What Happens After You Say Yes" (tests/wp49.spec.ts)
+    { route: 'partner-with-us/employers/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery', 'Introductions'] },
     { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: ['Discovery', 'Introductions'] },
   ];
 
@@ -169,10 +170,11 @@ test.describe('the due-diligence item on the five audience pages', () => {
   });
 });
 
-test.describe('Development Partners: the hardest-to-reach answer names the barriers', () => {
-  test('"The hardest-to-reach groups drop out" (WP36: a statement, no longer a question) is explained with the barriers, not by repeating the title', async ({ page }) => {
+test.describe('Development Partners: the barriers answer names the barriers', () => {
+  // WP49 (cycle-24 review): the card is headed "Barriers Can Interrupt Training" (it was "The Hardest-to-Reach Groups Drop Out"); its body is unchanged
+  test('"Barriers can interrupt training" (WP36: a statement, no longer a question) is explained with the barriers, not by repeating the title', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const pain = page.locator('#problem .gp__pains li', { hasText: 'The Hardest-to-Reach Groups Drop Out' });
+    const pain = page.locator('#problem .gp__pains li', { hasText: 'Barriers Can Interrupt Training' });
     await expect(pain).toHaveCount(1);
     expect(compact(await pain.locator('.gp__a').textContent())).toBe('Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.');
     expect(await mainText(page)).not.toContain('They drop out, or are never reached in the first place.');
@@ -254,7 +256,7 @@ test.describe('Foundations: what is discussed for each funding route is said onc
   test('the Next Steps band no longer repeats it: the four steps scoped "For cohort grants.", with no route cards and no agenda sentence', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
-    await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
+    await expect(band.locator('h2')).toHaveText('What Happens Next');
     expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
     await expect(band.locator('ol h3')).toHaveCount(4);
     await expect(band.locator('.next__routes')).toHaveCount(0);

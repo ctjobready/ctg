@@ -7,7 +7,7 @@ import Icon from '../../system/Icon.astro';
 import CopyBlock from './CopyBlock.astro';
 import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
-import { grantStartTitles } from '../partners/partners';
+import { grantStartSteps } from '../partners/partners';
 import { linkAttrs } from '../../../lib/url';
 import type { CopyBlock as CopyBlockData } from '../../../data/copy';
 
@@ -38,14 +38,8 @@ interface Props {
 const { title, lead, steps, timing = !steps, validate, reminder, firstAction, logos = false, tone = 'airy', id = 'next-steps', eyebrow = 'Next Steps', otherRoutes } = Astro.props;
 
 const pd04 = fact('PD-04');
-// WP29: each step names its starting point (weeks from the first conversation, then the window after signing), read from PD-04 so nothing is retyped.
-const [discovery, codesign, agreement, training] = grantStartTitles();
-const flow = steps ?? [
-  { title: discovery, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: codesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
-  { title: agreement, text: 'Scope, schedule and success measures are agreed.' },
-  { title: training, text: 'The first cohort begins training (grant-funded pilots).' },
-];
+// WP29: each step names its starting point (weeks from the first conversation, then the window after signing), read from PD-04 so nothing is retyped. WP49 (cycle-24 review): and describes it, in the words of the partner hub's "Your First 90 Days" (grantStartSteps).
+const flow = steps ?? grantStartSteps();
 // With the logo row below, the row is the validation; the sentence naming a few of the same organizations would only repeat it.
 const notes = [
   validate && !logos && { icon: 'handshake', label: 'Who Has Worked with Us', body: validate },

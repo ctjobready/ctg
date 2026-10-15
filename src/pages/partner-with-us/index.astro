@@ -19,7 +19,7 @@ import CategoryCard from '../../components/system/CategoryCard.astro';
 import Icon from '../../components/system/Icon.astro';
 import Tone from '../../components/pages/home/Tone.astro';
 import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
-import { grantStartTitles } from '../../components/pages/partners/partners';
+import { grantStartSteps } from '../../components/pages/partners/partners';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
 import { MICRO_COMMITMENT } from '../../data/copy';
 import { cta } from '../../lib/mailto';
@@ -51,14 +51,8 @@ const audiences = [
   { title: 'Back JobReady’s Staged Rollout', icon: 'trending-up', href: '/partner-with-us/investors/', text: 'For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.' },
 ];
 
-// Partnering steps: the weeks and the cohort window are read from PD-04 (never retyped); WP29: each step heading names its starting point.
-const [startDiscovery, startCoDesign, startAgreement, startTraining] = grantStartTitles();
-const steps = [
-  { title: startDiscovery, text: 'A conversation about your goals, priority groups and timeline.' },
-  { title: startCoDesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
-  { title: startAgreement, text: 'Scope, schedule and the pilot scorecard are agreed.' },
-  { title: startTraining, text: 'The first cohort begins training; monthly reports follow.' },
-];
+// Partnering steps: the weeks and the cohort window are read from PD-04 (never retyped); WP29: each step heading names its starting point. WP49 (cycle-24 review): the four steps and their one-line descriptions are grantStartSteps(), the source Home's closing band reads too.
+const steps = grantStartSteps();
 
 const jsonLd = [
   webPage({ path, name: `${title} | CodersTrust`, description, type: 'CollectionPage' }),

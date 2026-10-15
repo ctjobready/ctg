@@ -154,11 +154,13 @@ test.describe('less is more: the report-like bands are gone', () => {
     expect(text).not.toContain('Why Mentoring Is Milestone-Based');
   });
 
-  test('the JobReady Platform page states the live-today summary once', async ({ page }) => {
+  // WP49 (cycle-24 review): the "What Is Live Today" callout (which carried the live-today summary and "Adaptive learning remains on the roadmap.") is gone; the status table says what is live and "Planned Adaptive Learning" says the roadmap once (tests/wp49.spec.ts)
+  test('the JobReady Platform page states the live-today status once, in its table; the roadmap is one sentence under "Planned Adaptive Learning"', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
     expect(text.split('AI chat is live today').length - 1).toBe(0);
-    expect(text.split('Adaptive learning remains on the roadmap').length - 1).toBe(1);
+    expect(text.split('Adaptive learning remains on the roadmap').length - 1).toBe(0);
+    expect(text.split('This is roadmap, not live.').length - 1).toBe(1);
   });
 });
 

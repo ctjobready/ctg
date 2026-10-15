@@ -3,6 +3,7 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import StepFlow from '../ui/StepFlow.astro';
 import { fact } from '../../data/facts';
+import { NEXT_STEPS_TITLE } from '../../data/copy';
 import { grantStartTitles } from '../pages/partners/partners';
 import { endSentence } from './copyText';
 
@@ -15,7 +16,7 @@ interface Props {
   id?: string;
 }
 // WP46 (cycle-22 review): the stepless variant (WP34, Foundations only) is gone: Foundations now shows these four steps, with the lead "For cohort grants.".
-const { title = 'What Happens Next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
+const { title = NEXT_STEPS_TITLE, lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
 const [discovery, codesign, agreement, training] = grantStartTitles();

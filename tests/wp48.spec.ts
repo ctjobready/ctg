@@ -14,7 +14,7 @@ import { listPages } from './support/pages';
  * callout; the WSDFM headline tile says "gain versus the control group"; Home's proof strip is "Proof at a Glance" and its "Evidence You Can Check" band is folded into the "Proof in Practice" link row; the GV-12 note, the Governments
  * blurb, the 2030 aim wording, the PX-05 year, the "three months" wording and the Programs H1 read as the reviews asked. Items 22-34 (Kimi K3, GLM 5.3 and Grok 4.7): Home loses its "Low Risk" band (one line leads the closing band), the FAQ trial answer is two
  * sentences, the RC-06a tile label says what is compared, the hero line names the underemployed, slide 1 names the predecessor program, the Imagine card is "Employers Hiring from Your Cohort", OC-05 says "had started earning by six months after
- * finishing", the Home investor card says "Back JobReady", and the evidence ladder's first rung is "Independent Randomized Trial (BIGD)". Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first, then
+ * finishing", the Home investor card says "Back JobReady", and the evidence ladder's first rung is "Independent Randomized Trial (BIGD)" (WP49: "Independent Evaluation (BIGD)"). Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first, then
  * `PORT=<port> npx playwright test tests/wp48.spec.ts --project=chromium`.
  */
 
@@ -96,23 +96,25 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   });
 });
 
+// WP49 (cycle-24 review, GLM M3): both answers end after the alumni-network clause; the TalentLEAP clause ("... progressive levels as further levels are published.") that WP48 reworded does not answer the question and is gone (tests/wp49.spec.ts)
 test.describe('The "what happens after" sentence (item 2)', () => {
   const UNIVERSITIES =
-    'Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring, and TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published.';
+    'Where included in the program scope, what the program builds stays on your campus: certified local facilitators, localized curricula and campus labs that serve as blended-learning centers. Completers join CodersTrust’s alumni network after their three months of mentoring.';
 
-  test('Universities: "What Happens After the First Cohort?" says that further levels are published; the JSON-LD says the same', async ({ page }) => {
+  test('Universities: "What Happens After the First Cohort?" ends after the alumni-network clause; the JSON-LD says the same', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     const answer = await answerOf(page, 'What Happens After the First Cohort?');
     expect(answer).toBe(UNIVERSITIES);
     expect((await faqJsonLd(page)).find((q) => q.name === 'What Happens After the First Cohort?')?.text).toBe(answer);
   });
 
-  test('the shared "What Happens When Funding Ends?" answer (Development Partners, Governments, Foundations, Local Partners, TalentLEAP, Governance) ends the same clause: "... with progressive levels as further levels are published."', async ({ page }) => {
-    const ENDING = 'TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published.';
+  test('the shared "What Happens When Funding Ends?" answer (Development Partners, Governments, Foundations, Local Partners, TalentLEAP, Governance) ends after the alumni-network clause, with no TalentLEAP clause', async ({ page }) => {
+    const ENDING = 'completers join CodersTrust’s alumni network after their three months of mentoring.';
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/', 'our-model/talentleap/', 'about/governance/']) {
       await open(page, route);
       const answer = await answerOf(page, 'What Happens When Funding Ends?');
       expect(answer.endsWith(ENDING), route).toBe(true);
+      expect(answer, route).not.toContain('TalentLEAP');
       expect(answer, route).not.toContain('so completers can keep advancing');
       expect((await faqJsonLd(page)).find((q) => q.name === 'What Happens When Funding Ends?')?.text, route).toBe(answer);
     }
@@ -224,7 +226,11 @@ test.describe('"Is the JobReady Platform Live?" (item 5)', () => {
   test('the JobReady Platform page and the register keep the full list', async ({ page }) => {
     expect(fact('IN-04').text).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat. In pre-launch: the employer marketplace and the gig-work (Earn) marketplace.');
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('main').textContent())).toContain('Partner portals, marketing automation, customer relationship management and AI chat are live');
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table keeps the full list (its "Across the Platform" row and the partner-portals row; tests/wp49.spec.ts)
+    const text = compact(await page.locator('main').textContent());
+    expect(text).toContain('Marketing automation, customer relationship management and AI chat');
+    expect(text).toContain('Partner portals');
+    expect(text).not.toContain('are live, and the course storefront operates');
   });
 });
 
@@ -265,7 +271,8 @@ test.describe('"Reporting and Review" (item 7)', () => {
     const text = await mainText(page);
     expect(text).not.toContain(SENTENCE);
     expect(text).toContain('Progress You Can See Every Month');
-    expect(text).toContain('Monthly reports, a quarterly steering review and a pilot scorecard');
+    // WP49 (cycle-24 review): the card is two sentences: "Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events." (tests/wp49.spec.ts)
+    expect(text).toContain('Monthly reports and quarterly reviews keep progress visible');
     const ids = await sectionIds(page);
     expect(ids.indexOf('cta')).toBe(ids.indexOf('due-diligence') + 1);
   });
@@ -340,8 +347,8 @@ test.describe('Development Partners, Foundations and Governments: sector general
   test('the Development Partners and Foundations pains say what the page can stand behind', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const dp = await mainText(page);
-    // the pain headings render in Title Case (the sentence-case source strings are converted when the page prints them); the headings are unchanged
-    expect(dp).toContain('Skills Programs Miss Their Employment Targets');
+    // the pain headings render in Title Case (the sentence-case source strings are converted when the page prints them). WP49 (cycle-24 review): the first card is headed "Training Must Connect to Paid Work" (it was "Skills Programs Miss Their Employment Targets"; tests/wp49.spec.ts)
+    expect(dp).toContain('Training Must Connect to Paid Work');
     expect(dp).toContain('Enrollment is easy to count. Paid work is not.');
     expect(dp).not.toContain('Enrollment targets are often met, while employment results lag behind.');
     await open(page, 'partner-with-us/foundations/');
@@ -515,13 +522,14 @@ test.describe('Investors and Development Partners (items 25 and 27)', () => {
   });
 
   test('the ">4×" tile says what is compared; the 2.3-point average in the label is the one in the register’s sentence; the note that repeated it is gone', async ({ page }) => {
-    const LABEL = 'The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials';
+    // WP49 (cycle-24 review): "... was more than four times the 2.3-point average ..." (the label states the ratio the ">4×" figure shows)
+    const LABEL = 'The employment effect for women offered a place was more than four times the 2.3-point average across nine vocational-training trials';
     expect(fact('RC-06a').stat?.glance?.label).toBe(LABEL);
     expect(fact('RC-06a').stat?.glance?.note).toBeUndefined();
     const average = /which was ([\d.]+) percentage points/.exec(fact('RC-06a').text)?.[1];
     expect(LABEL).toContain(`${average}-point average`);
     await open(page, 'partner-with-us/development-partners/');
-    const tile = page.locator('#glance .pg__more a[data-fact="RC-06a"]');
+    const tile = page.locator('#glance .pg__lead a[data-fact="RC-06a"]');
     await expect(tile.locator('.pg__value')).toHaveText('>4×');
     await expect(tile.locator('.pg__desc')).toHaveText(LABEL);
     await expect(tile.locator('.pg__note')).toHaveCount(0);
@@ -531,8 +539,9 @@ test.describe('Investors and Development Partners (items 25 and 27)', () => {
 
 test.describe('OC-05: "had started earning by six months after finishing" (item 32)', () => {
   const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
-  const LABEL = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition and the Outcomes page defines the term once: tests/wp49.spec.ts)
+  const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
   const HEADING = 'Most Had Started Earning by Six Months After the Course';
   const NOTE = 'Months are counted from the end of the course; the shares are cumulative and include earnings during the course.';
   const MEASURE = 'Cumulative share of completers who first earned during or after training and had started earning by each point, with months counted from the end of the course and including earnings during the course (timing only)';
@@ -604,8 +613,9 @@ test.describe('The Home router’s investor card states the route (item 33)', ()
   });
 });
 
-test.describe('The evidence ladder’s first rung is "Independent Randomized Trial (BIGD)" (item 34)', () => {
-  const NAME = 'Independent Randomized Trial (BIGD)';
+// WP49 (cycle-24 review, item 14): the rung's name is "Independent Evaluation (BIGD)" (WP48 had "Independent Randomized Trial (BIGD)", which printed the type twice beside the "Randomized Trial" tag); tests/wp49.spec.ts pins the tag and the single name
+test.describe('The evidence ladder’s first rung is "Independent Evaluation (BIGD)" (item 34)', () => {
+  const NAME = 'Independent Evaluation (BIGD)';
   const INSTITUTE = 'BRAC Institute of Governance and Development';
 
   test('Impact: the matrix row is the one link named so, with the trial tag; the institute is spelled out once, in that row’s "What It Shows" cell; "BIGD" appears once on the page', async ({ page }) => {

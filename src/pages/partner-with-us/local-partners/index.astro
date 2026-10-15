@@ -20,7 +20,7 @@ import GainsPains from '../../../components/pages/partners/GainsPains.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import { LINKS } from '../../../components/pages/partners/partners';
 import { localCta } from '../../../components/pages/about/routes';
-import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, EMPATHY, HEADLINE, MICRO_COMMITMENT, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
+import { LOCAL_PARTNER_EVIDENCE, LOCAL_PARTNER_PAINS, HEADLINE, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, VALUE_PROPOSITION, painForList, painForRow } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
 import { BANGLADESH_HQ } from '../../../lib/site';
@@ -37,6 +37,9 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * are in the problem band, "How a Local Partnership Works" and "What Your Community Gets".
  * WP48 (cycle-23 review): the definition block says the central-coordination arrangement as a design, as Our Model does ("Larger programs are designed to run through certified local facilitators ... coordinated centrally."), and the
  * support CodersTrust Bangladesh gives local partners is its own sentence.
+ * WP49 (cycle-24 review): the comparison with national programs ("reach the young people national programs miss") was stated three times without a source, so it is gone from the problem heading ("Connect Your Community to Paid Digital Work"),
+ * from the track-record band (its opening line is gone; the paragraph after it already names the Bangladesh team) and from the third partnership option ("Mobilize priority groups in your community, ..."); the problem band's lead names its subject
+ * ("Local organizations often lack ...") because the heading no longer does; the steps band is "What Happens Next".
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -51,7 +54,7 @@ const jsonLd = [
 const ways = [
   { icon: 'building-2', title: 'Host a Cohort', text: 'Open your labs or classrooms for blended training, so cohorts meet where young people already are.' },
   { icon: 'graduation-cap', title: 'Supply Certified Facilitators', text: 'Put trainers through certified facilitator training so delivery capacity stays in your community.' },
-  { icon: 'users', title: 'Mobilize Priority Groups', text: 'Reach the young people national programs miss, with women a priority in every group.' },
+  { icon: 'users', title: 'Mobilize Priority Groups', text: 'Mobilize priority groups in your community, with women a priority in every group.' },
 ];
 ---
 
@@ -73,7 +76,7 @@ const ways = [
   <LearnerVoice story="samina-tasneem-chowdhury" excerpt="Today, she is an inspiration to the young people in her community." program="WSDFM" tone="white" />
 
   <!-- C2 -->
-  <ProblemBand id="problem" title="Local Organizations Reach the Young People National Programs Miss" bluf="They often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03']}>
+  <ProblemBand id="problem" title="Connect Your Community to Paid Digital Work" bluf="Local organizations often lack the curriculum, certification and placement links to finish the job, and training is still measured by enrollment, not earnings." factIds={['PX-03']}>
     <GainsPains slot="lead" painsHeading="What Gets in the Way" pains={LOCAL_PARTNER_PAINS.map(painForList)} />
   </ProblemBand>
 
@@ -84,7 +87,6 @@ const ways = [
     <GuideBand
       id="guide"
       title="Delivered with a Bangladesh Team Beside You"
-      empathy={EMPATHY.localPartners}
       authorityIds={['SC-11', 'GV-09']}
       partnerGroup={['government', 'development']}
       variant="grid"
@@ -205,7 +207,7 @@ const ways = [
 
   <!-- C14 -->
   <Section id="next-steps" aria-labelledby="next-h">
-    <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens After You Say Yes" />
+    <SectionHeader id="next-h" eyebrow="After You Write" title={NEXT_STEPS_TITLE} />
     <StepFlow steps={[
       { title: 'Discovery Session', text: 'A conversation about your organization and the young people you reach.' },
       { title: 'Fit Check and Co-Design', text: 'We shape the cohort, tracks, safeguarding and reporting with you.' },

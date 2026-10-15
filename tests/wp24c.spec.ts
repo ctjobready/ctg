@@ -247,9 +247,10 @@ test.describe('About, Governance, Recognition, Careers and Contact', () => {
 });
 
 test.describe('Our Model', () => {
-  test('the hub states the registered problem figure, a partner Q&A band and the safeguarding heading', async ({ page }) => {
+  // WP49 (cycle-24 review, Kimi m4): the hub's definition band no longer carries the 62 million (PX-01); it stays on Home and the audience pages (tests/wp49.spec.ts)
+  test('the hub is a definition band without the problem figure, a partner Q&A band and the safeguarding heading', async ({ page }) => {
     await open(page, 'our-model/');
-    await expect(page.locator('#definition')).toContainText('An estimated 62 million');
+    await expect(page.locator('#definition')).not.toContainText('62 million');
     await expect(page.locator('#definition')).not.toContainText('Tens of millions');
     await expect(page.getByRole('heading', { level: 2, name: 'Questions Partners Ask' })).toBeVisible();
     await expect(page.locator('#faq details')).not.toHaveCount(0);
@@ -268,7 +269,8 @@ test.describe('Our Model', () => {
     const rows = page.locator('#status tbody th');
     await expect(rows).toContainText(['Train', 'Connect to Work', 'Supply Talent', 'Equip Institutions']);
     await expect(page.locator('#why a', { hasText: 'How TalentLEAP Works' })).toHaveCount(1);
-    await expect(page.locator('#status')).toContainText('Adaptive learning remains on the roadmap.');
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the roadmap says adaptive learning is planned, not live
+    await expect(page.locator('#roadmap')).toContainText('This is roadmap, not live.');
   });
 
   test('TalentLEAP: How It Works is the five-step stage pipeline (no repeated rows) and every On This Page label equals its heading', async ({ page }) => {

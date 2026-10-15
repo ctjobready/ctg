@@ -119,6 +119,40 @@ const ANSWER_MODULES: Record<string, { module: string; words: string }[]> = {
 /** "a, b, c and d" */
 const andList = (items: string[]) => `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
 
+/**
+ * WP49 (cycle-24 review): "Is This the Right Course for Me?" said the same sentence on both course pages ("It is right for you if you meet that and want a digital career."). It now says what the course teaches, in the words of its own
+ * modules ("Choose ICT if you want to study programming, databases, networks and mobile or web development."; the topics are the ones NU_COURSE_COPY names for the course). Each topic lists the modules it draws on; a module that is not in the course's own list
+ * fails the build (as ANSWER_MODULES does), so the sentence cannot say more than the module list does. The eligibility sentence (NU-01) stays in the answer, before it.
+ */
+const FIT_TOPICS: Record<string, { name: string; topics: { modules: string[]; words: string }[] }> = {
+  'digital-marketing': {
+    name: 'Digital Marketing',
+    topics: [
+      { modules: ['Search Engine Optimization (SEO) - Practical'], words: 'SEO' },
+      { modules: ['Social Media Marketing'], words: 'social media' },
+      { modules: ['AdWords & PPC'], words: 'advertising' },
+      { modules: ['Web & Google Analytics (Practical)'], words: 'analytics' },
+    ],
+  },
+  ict: {
+    name: 'ICT',
+    topics: [
+      { modules: ['Java Programming'], words: 'programming' },
+      { modules: ['Database Management Systems'], words: 'databases' },
+      { modules: ['Computer Networks Maintenance'], words: 'networks' },
+      { modules: ['Mobile Application Development', 'Web Application & Web Site Design'], words: 'mobile or web development' },
+    ],
+  },
+};
+
+/** The course's own "right for me" sentence: "Choose ICT if you want to study programming, databases, networks and mobile or web development." */
+export function nuFitSentence(c: NuCourse): string {
+  const fit = FIT_TOPICS[c.slug];
+  if (!fit) throw new Error(`nuFitSentence: no fit topics for ${c.slug}`);
+  for (const t of fit.topics) for (const m of t.modules) if (!c.modules.includes(m)) throw new Error(`nuFitSentence: "${m}" is not a module of ${c.slug}`);
+  return `Choose ${fit.name} if you want to study ${andList(fit.topics.map((t) => t.words))}.`;
+}
+
 /** Course-page questions, answered from the course's module names only (no outcome, role or service claim). */
 export function nuModuleFaqs(c: NuCourse): { q: string; html: string }[] {
   const names = c.modules.map((m) => esc(m));

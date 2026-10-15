@@ -188,12 +188,13 @@ test.describe('the WSDFM 71% leaves the carousel and the glance tiles (the case 
       await expect(page.locator('#glance [data-fact~="PR-01"]'), slug).toHaveCount(0);
       expect(compact(await page.locator('#glance').textContent()), slug).not.toMatch(/711 of 1,000|WSDFM/);
     }
+    // WP49 (cycle-24 review): each page's one secondary tile (RC-06a, RC-02, PR-02) is the glance's fourth tile, in the main group, with no "More Results" heading (tests/wp49.spec.ts)
     await open(page, 'partner-with-us/development-partners/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03', 'RC-06a']);
     await open(page, 'partner-with-us/foundations/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-04', 'OC-03', 'PR-02']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-04', 'OC-03', 'PR-02', 'RC-02']);
     await open(page, 'partner-with-us/governments/');
-    expect(await page.locator('#glance .pg__more a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['PR-02']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['GV-12', 'PR-05', 'RC-02', 'PR-02']);
   });
 
   test('the Proof in Practice cards and the case study still state the WSDFM program records, apart from the trial', async ({ page }) => {
@@ -230,13 +231,13 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     }
   });
 
-  // WP48 (cycle-23 review, item 34): the rung's name is "Independent Randomized Trial (BIGD)" (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)"), so the institute is spelled out, once,
-  // in the same row's "What It Shows" cell; the page says "BIGD" once (the rung name) and the full name once (tests/wp48.spec.ts)
+  // WP48 (cycle-23 review, item 34): the rung's name carries the abbreviation (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)"), so the institute is spelled out, once,
+  // in the same row's "What It Shows" cell; the page says "BIGD" once (the rung name) and the full name once (tests/wp48.spec.ts). WP49 (cycle-24 review, item 14): the name is "Independent Evaluation (BIGD)"; the evidence tag says "Randomized Trial" (tests/wp49.spec.ts)
   test('Impact: the evidence-ladder row is the first mention; its "What It Shows" cell spells the evaluator out once; the "Go Deeper" card that repeated it is gone', async ({ page }) => {
     await open(page, 'impact/');
     const first = page.locator('#evidence-ladder tbody tr').first();
     const row = compact(await first.locator('th').textContent());
-    expect(row).toContain('Independent Randomized Trial (BIGD)');
+    expect(row).toContain('Independent Evaluation (BIGD)');
     expect(compact(await first.locator('td[data-label="What It Shows"]').textContent())).toContain('BRAC Institute of Governance and Development');
     const text = await mainText(page);
     expect(count(text, 'BIGD')).toBe(1);

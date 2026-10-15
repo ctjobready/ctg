@@ -7,10 +7,14 @@ import Icon from '../system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../lib/logos';
 
-/** C5 Guide: empathy (we have been here) + authority (fact stats) + method signal + partner logo marquee. */
+/**
+ * C5 Guide: empathy (we have been here) + authority (fact stats) + method signal + partner logo marquee.
+ * WP49 (cycle-24 review): the empathy line is optional, as it is in PartnerGuideBand and GuideSection: Local Partners' band opens with its method paragraph (which names the Bangladesh team).
+ */
 interface Props {
   title: string;
-  empathy: string;
+  /** The empathy line that opens the band; a page that does not open with one leaves it out. */
+  empathy?: string;
   authorityIds: string[];
   method?: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
@@ -24,7 +28,7 @@ const { title, empathy, authorityIds, method, partnerGroup, variant = 'marquee',
   <SectionHeader id={`${id}-h`} eyebrow="Our Track Record" title={title} />
   <div class="guide">
     <div class="guide__copy" data-reveal>
-      <p class="lead">{empathy}</p>
+      {empathy && <p class="lead">{empathy}</p>}
       {
         method && (
           <p class="guide__method">

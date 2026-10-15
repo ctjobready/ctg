@@ -156,8 +156,9 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
     expect(ld?.text).toBe(answer);
     const text = await mainText(page);
     expect(text).not.toMatch(/Counting from the first conversation|Week 1 is a discovery session/);
-    // "What Happens Next" still shows the timing once, in its own line
-    expect(compact(await page.locator('.next-timing').textContent())).toContain('6–8 weeks after signing');
+    // WP49 (cycle-24 review): "What Happens Next" no longer prints the timing in a line of its own (it repeated this answer and the steps above it); the answer here is where the page states it
+    await expect(page.locator('.next-timing')).toHaveCount(0);
+    expect(answer).toContain('6–8 weeks from signing to training');
   });
 
   test('the shared answer with the Week 1 to 3 sentence stays in the objection bank; no built page prints it any more except the component gallery', async () => {

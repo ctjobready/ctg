@@ -372,7 +372,8 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   });
 
   for (const [route, expected] of [
-    ['our-model/jobready-platform/', ['Marketing automation, customer relationship management and AI chat', 'Partner portals, marketing automation, customer relationship management and AI chat are live, and the course storefront operates.']],
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table names the live list in its "Across the Platform" row and says the course storefront operates in its first row
+    ['our-model/jobready-platform/', ['Marketing automation, customer relationship management and AI chat', 'CodersTrust’s course storefront operates at jobready.global.']],
     ['partner-with-us/investors/', ['Partner portals and AI chat are live.']],
   ] as [string, string[]][]) {
     test(`${route}: the live list reads in full`, async ({ page }) => {

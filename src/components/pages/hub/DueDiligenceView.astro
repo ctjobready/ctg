@@ -5,6 +5,7 @@ import Icon from '../../system/Icon.astro';
 import { cta } from '../../../lib/mailto';
 import { linkAttrs } from '../../../lib/url';
 import { TRACER_MONTHS } from '../partners/partners';
+import { CONTRACTING_ENTITIES } from '../../../data/copy';
 
 /**
  * "Due Diligence in One View" (WP24a, Benchmark): what a funder, ministry or procurement team asks first, each with the page that answers it.
@@ -31,7 +32,7 @@ interface Props {
 }
 const { compact = false, brief = false, tone = 'ice', id = 'due-diligence', audience = 'funders' } = Astro.props;
 const diligence = cta('diligence');
-const entities = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh, depending on the program’s country and';
+const entities = `${CONTRACTING_ENTITIES}, depending on the program’s country and`;
 const contracting = { icon: 'building-2', title: 'Contracting Entities', text: `${entities} the ${audience === 'funders' ? 'funder' : 'contracting party'}’s requirements.`, href: '/about/governance/#contracting', link: 'Contracting and Accountability', ids: 'ID-07 PD-13' };
 const independent = { icon: 'search-check', title: 'Independent Evaluation Welcome', text: 'We support third-party evaluation of outcomes, and the randomized trial of a predecessor program is public.', href: '/impact/independent-evaluation/', link: 'Independent Evaluation', ids: 'PD-08 RC-01' };
 const funderItems = [

@@ -2,11 +2,15 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
+import { CONTRACTING_ENTITIES } from '../../../data/copy';
+import { linkAttrs } from '../../../lib/url';
 
 /**
  * C11 Offer (Investors): the offer is the deck request, shown once as one four-step sequence (WP24a, replacing the separate offer, low-risk and next-steps bands):
  * an introduction call, an NDA, the deck and data room, then your questions. Each step carries its own reassurance (the call commits neither side, you decide
  * whether to continue). Thesis and results only; no financial terms are published (D2).
+ * WP49 (cycle-24 reviews): one due-diligence line under the steps, as the other route pages have theirs: it names the contracting entities as the register does (CONTRACTING_ENTITIES: ID-07, PD-13) and links Governance and Accountability;
+ * the eyebrow is "Next Steps", the label the other pages give this band (it was "The Offer"; the band is a process, not an offer).
  */
 interface Props {
   id?: string;
@@ -21,7 +25,7 @@ const steps = [
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The Offer" title="What Happens After You Ask" lead="Four steps, at your pace. This page covers the thesis and results only." />
+  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title="What Happens After You Ask" lead="Four steps, at your pace. This page covers the thesis and results only." />
   <ol class="grid-cards io" role="list">
     {
       steps.map((s, i) => (
@@ -37,6 +41,7 @@ const steps = [
     }
   </ol>
   <p class="io__first" data-reveal>Your first step: an introduction call. In your inquiry, include two suitable times for it.</p>
+  <p class="io__diligence" data-reveal data-fact="ID-07 PD-13">Due diligence: CodersTrust contracts through {CONTRACTING_ENTITIES}. <a class="link" href={linkAttrs('/about/governance/').href}>Governance and Accountability<Icon name="arrow-right" size={16} /></a></p>
 </Section>
 
 <style>
@@ -52,6 +57,10 @@ const steps = [
     margin: var(--space-lg) 0 0;
     font-weight: var(--fw-medium);
     color: var(--on-surface);
+  }
+  .io__diligence {
+    margin: var(--space-sm) 0 0;
+    color: var(--on-surface-variant);
   }
   @media (min-width: 1024px) {
     .io.io {

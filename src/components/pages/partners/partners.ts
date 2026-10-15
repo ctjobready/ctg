@@ -55,6 +55,20 @@ export function grantStartTitles(): [string, string, string, string] {
 }
 
 /**
+ * The grant-funded start sequence with each step's one-line description: the partner hub's "Your First 90 Days" and Home's closing band read these four (WP49, cycle-24 review: Home showed the headings alone, while the hub
+ * and the audience pages describe each step). The headings are grantStartTitles(), so no week is retyped.
+ */
+export function grantStartSteps(): { title: string; text: string }[] {
+  const [discovery, codesign, agreement, training] = grantStartTitles();
+  return [
+    { title: discovery, text: 'A conversation about your goals, priority groups and timeline.' },
+    { title: codesign, text: 'We shape tracks, cohorts, safeguarding and reporting with you.' },
+    { title: agreement, text: 'Scope, schedule and the pilot scorecard are agreed.' },
+    { title: training, text: 'The first cohort begins training; monthly reports follow.' },
+  ];
+}
+
+/**
  * First-cohort timing line for the contact and local-partner pages (grant-funded pilots): a plan, not a promise. It replaces
  * C14.reminder on those pages; the PD-04 and PD-08 facts it rests on are unchanged.
  */

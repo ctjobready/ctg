@@ -2,8 +2,12 @@
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../system/Icon.astro';
+import { RISK_EYEBROW } from '../../data/copy';
 
-/** C12 Risk reversal: decide on evidence, expansion is the partner's choice. */
+/**
+ * C12 Risk reversal: decide on evidence, expansion is the partner's choice.
+ * WP49 (cycle-24 review): the eyebrow is RISK_EYEBROW ("Managed Rollout"; it was "Low Risk", which read as a blanket assurance), the one eyebrow of every risk-reversal band (RiskSection reads it too).
+ */
 interface Props {
   title?: string;
   lead?: string;
@@ -24,7 +28,7 @@ const {
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Low Risk" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={RISK_EYEBROW} title={title} lead={lead} />
   <ul class="risk grid-cards grid-cards--4" role="list">
     {
       points.map((p) => (

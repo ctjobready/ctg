@@ -140,7 +140,8 @@ test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(s.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain('170 surveyed completers');
+    // WP49 (cycle-24 review): "surveyed new earners" (the register's term; the Outcomes page defines it)
+    expect(compact(await s.locator('.hs__stat').textContent())).toContain('170 surveyed new earners');
   });
 
   test('slide 6 is "Programs in 15 Countries and Territories" (the 15 is SC-03’s, in the heading), keeps SC-03’s detail line and has no second tile with the same 15', async ({ page }) => {

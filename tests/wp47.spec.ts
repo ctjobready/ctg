@@ -118,7 +118,8 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
     expect(order[order.indexOf('ROUTER') + 1], 'problem band after the router').toBe('C2');
     // WP48 (cycle-23 review): the risk band (C12) is gone from Home; its one line leads the closing band (tests/wp48.spec.ts), so the offer (C11) is directly before the call to action
     expect(order.slice(order.indexOf('C11')), 'offer, closing call to action, next steps').toEqual(['C11', 'C13', 'C14']);
-    expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Impact Investors']);
+    // WP49 (cycle-24 review): the investor card is "Investors", as in the menu, the footer and the hub (it was "Impact Investors")
+    expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     expect(await texts(page, 'nav[aria-label="Choose your audience"] a')).toEqual(['Development Partners', 'Governments', 'Foundations', 'Investors']);
     await expect(page.locator('#router h2')).toHaveText('What Brings You Here?');
   });
@@ -179,8 +180,8 @@ test.describe('Home: the router is the band after the carousel; Cost of Waiting,
 });
 
 test.describe('Impact: each evidence-ladder rung name is the link (item 30)', () => {
-  // WP48 (cycle-23 review, item 34): the first rung's name is "Independent Randomized Trial (BIGD)" (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)")
-  const NAMES = ['Independent Randomized Trial (BIGD)', 'Impact Survey 2026', 'Program Results', 'Learner Stories'];
+  // WP48 (cycle-23 review, item 34): the first rung's name carries the abbreviation (it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)"); WP49 (cycle-24 review, item 14): it is "Independent Evaluation (BIGD)", since the tag says "Randomized Trial"
+  const NAMES = ['Independent Evaluation (BIGD)', 'Impact Survey 2026', 'Program Results', 'Learner Stories'];
   const TAGS = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Individual Story'];
   const PATHS = ['/impact/independent-evaluation/', '/impact/outcomes-2026/', '/impact/case-studies/', '/impact/stories/'];
 
@@ -218,12 +219,17 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   test('item 31: the program-sizes note is a full sentence on every page that carries it', async ({ page }) => {
     const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
     expect(PROGRAM_SIZES_NOTE).toBe(NOTE);
-    for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'programs/jobready-campus/']) {
+    // WP49 (cycle-24 reviews, items 12 and 33): the Governments page, whose action is a briefing, carries the same sentence with "in the briefing" (PROGRAM_SIZES_NOTE_BRIEFING; tests/wp49.spec.ts)
+    for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'programs/jobready-campus/']) {
       await open(page, route);
       const text = await mainText(page);
       expect(text, route || 'home').toContain(NOTE);
       expect(text, route || 'home').not.toContain('Program sizes, not a commitment');
     }
+    await open(page, 'partner-with-us/governments/');
+    const governments = await mainText(page);
+    expect(governments).toContain(NOTE.replace('in the discovery session', 'in the briefing'));
+    expect(governments).not.toContain('Program sizes, not a commitment');
     expect(builtPages().filter((p) => p.html.includes('Program sizes, not a commitment')).map((p) => p.route)).toEqual([]);
   });
 
@@ -267,7 +273,10 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(text).not.toMatch(/marketing automation|customer relationship management/i);
     expect(await page.locator('#funding-routes tbody tr').nth(1).getAttribute('data-fact')).toBe('IN-04');
     await open(page, 'our-model/jobready-platform/');
-    expect(await mainText(page)).toContain('Partner portals, marketing automation, customer relationship management and AI chat are live');
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table's "Across the Platform" row keeps the full list (tests/wp49.spec.ts)
+    const platform = await mainText(page);
+    expect(platform).toContain('Marketing automation, customer relationship management and AI chat');
+    expect(platform).toContain('Partner portals');
     await open(page, 'partner-with-us/employers/');
     expect(await mainText(page)).toContain('Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.');
     expect(await mainText(page)).not.toMatch(/marketing automation|customer relationship management/i);

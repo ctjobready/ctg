@@ -23,7 +23,9 @@ const founders = (await getCollection('team', (e) => e.data.group === 'founders'
 const since = fact('ID-02').stat?.value;
 // WP30b: a global organization (headquartered in New York, ID-11; programs in 15 countries and territories, SC-03), not a Bangladesh one.
 const countries = fact('SC-03').stat?.value;
-const description = `Headquartered in New York, CodersTrust trains and mentors educated, unemployed youth for digital work in ${countries} countries and territories since ${since}.`;
+// WP49 (cycle-24 review): "has trained and mentored ... across N countries and territories since 2014" (the count and the year are the register's, so the sentence reports a record, not a present-tense claim); 155 characters, the SEO limit.
+const description = `Headquartered in New York, CodersTrust has trained and mentored educated, unemployed youth for digital work across ${countries} countries and territories since ${since}.`;
+if (description.length > 155) throw new Error(`About meta description is ${description.length} characters (max 155)`);
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
 const sc02 = fact('SC-02');

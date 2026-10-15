@@ -24,6 +24,10 @@
  * "Spending Measured Against Outcomes"; the capacity claim stays in "Capacity That Stays" and "Capacity Designed to Stay in Your System". The "Graduates Struggle to Find Work" card says "A degree alone does not guarantee a job offer."
  * WP48 (cycle-23 review): the contracts table's last column reads "Scale and Outputs" (it was "Training Figure"; the cells hold people, scopes and distributed documents). The cells are unchanged. The glance is headed "Results and
  * Contract Scope at a Glance" (it was "Results at a Glance"; its first tile is the contract scope).
+ * WP49 (cycle-24 reviews): two of the "What Gets in the Way" lines say what the agency needs ("Track who is earning afterward, not only who enrolled.", "National delivery needs trained facilitators and localized curricula.") in place of
+ * sector-wide generalizations; the page's action is a ministry briefing, so its cost answer (Q8-government) and the note in its "Choose Where to Start" lead say "in the briefing" (PROGRAM_SIZES_NOTE_BRIEFING), not "in the discovery session";
+ * that lead no longer repeats the cost answer's pricing sentence (the "What Does It Cost?" answer below states it); "What Your Agency Gets" speaks of completers, not graduates (the site's word for people who finished a program);
+ * the fourth glance tile (Kosovo) is part of "Results and Contract Scope at a Glance" (a single tile needs no "More Results" heading); the steps band is "What Happens Next".
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -50,7 +54,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION } from '../../../data/copy';
 import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -67,8 +71,8 @@ const { title, description } = meta(
 
 // The Her Power tile reads as the Development Partners and Foundations cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts).
 const herPowerLabel = CASE_CARD_LABELS['PR-05'];
-// Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
-const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-route'];
+// Q8-government: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36); it says "in the briefing", the first step on this page (WP49, cycle-24 review; the other route pages use Q8-route).
+const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-government'];
 ---
 
 <LandingLayout
@@ -111,9 +115,10 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
       slot="lead"
       pains={[
         { q: 'Graduates struggle to find work', text: 'A degree alone does not guarantee a job offer.' },
-        { q: 'Training budgets do not show up as earnings', text: 'Budgets are measured by enrollment, not by who is earning afterward.' },
+        // WP49 (cycle-24 review): this line and the next say what the agency needs, not what is "rarely" so across a sector.
+        { q: 'Training budgets do not show up as earnings', text: 'Track who is earning afterward, not only who enrolled.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact.
-        { q: 'Trainer and curriculum capacity is thin', text: 'Trainers and localized curricula are rarely ready at national scale.' },
+        { q: 'Trainer and curriculum capacity is thin', text: 'National delivery needs trained facilitators and localized curricula.' },
       ]}
     />
   </ProblemBand>
@@ -162,7 +167,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
   <IncludesBand
     title="What Your Agency Gets"
     cards={[
-      { icon: 'award', title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point graduates toward paid work.', facts: ['PD-10', 'PD-01'] },
+      { icon: 'award', title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point completers toward paid work.', facts: ['PD-10', 'PD-01'] },
       { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
@@ -179,7 +184,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
   <!-- C11 · Offer -->
-  <OfferCards title="Choose Where to Start" lead={`${PROGRAM_SIZES_NOTE} Pricing is set per program, and we share an indicative budget in the discovery session.`} cards={funderOptionCards()} recommended={0} />
+  <OfferCards title="Choose Where to Start" lead={PROGRAM_SIZES_NOTE_BRIEFING} cards={funderOptionCards()} recommended={0} />
   <SubBand tone="airy" pull>
     <EvidenceList
       heading="Services We Can Scope for an Agency"
@@ -215,7 +220,6 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
 
   <!-- C14 · Next steps -->
   <StepsBand
-    title="What Happens After You Say Yes"
     steps={[
       { title: 'Briefing', text: 'A briefing for your ministry or agency, shaped to its procurement timeline.' },
       { title: 'Co-design with the agency', text: 'Priority groups, tracks, labs and the pilot scorecard are agreed together.' },

@@ -70,7 +70,7 @@ test.describe('Home: each figure once', () => {
   // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 is headed "Most Had Started Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
+  test('slide 5 is headed "Most Had Started Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed new earners" (WP49, cycle-24 review: the register’s term for this group) in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
     await expect(slide.locator('h2')).toHaveText('Most Had Started Earning by Six Months After the Course');
@@ -78,7 +78,7 @@ test.describe('Home: each figure once', () => {
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('surveyed completers');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('surveyed new earners');
   });
 
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
@@ -123,7 +123,8 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await open(page, 'partner-with-us/development-partners/');
     expect(count(await mainText(page), '102 of 150')).toBe(1);
     await expect(page.locator('#cases article', { hasText: '102 of 150' })).toHaveCount(1);
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
+    // WP49 (cycle-24 review): the ">4×" tile (RC-06a) is the glance's fourth tile (it stood under a "More Results" heading alone); tests/wp49.spec.ts
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03', 'RC-06a']);
     const tile = page.locator('#glance .pg__lead a[data-fact="PR-03"]');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tile).toContainText('67%');
@@ -294,7 +295,8 @@ test.describe('TalentLEAP and YouthWIDE', () => {
 test.describe('the ranked pains are statements, not questions', () => {
   const PAGES: [string, string[]][] = [
     ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Is Thin']],
-    ['partner-with-us/development-partners/', ['Skills Programs Miss Their Employment Targets', 'The Hardest-to-Reach Groups Drop Out', 'Outcomes Are Hard to Audit']],
+    // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
+    ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
     ['partner-with-us/foundations/', ['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
     ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']],
@@ -325,18 +327,21 @@ test.describe('the ranked pains are statements, not questions', () => {
 
 test.describe('cost and safeguarding: full on the hub, one line and a link on the route pages', () => {
   const COST = 'Pricing is set per program; we share an indicative budget in the discovery session. See what a partnership includes.';
+  // WP49 (cycle-24 review): Governments' action is a ministry briefing, so its one-line answer says "in the briefing" (Q8-government; tests/wp49.spec.ts)
+  const COST_GOVERNMENTS = 'Pricing is set per program; we share an indicative budget in the briefing. See what a partnership includes.';
   const SAFE = 'Safeguarding and data protection are specified for each program and agreed before enrollment. See how we handle them.';
 
   for (const route of ['partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
     test(`${route}: "What Does It Cost?" is one line and links to the hub FAQ; the FAQ JSON-LD says the same words`, async ({ page }) => {
       await open(page, route);
       const answer = await answerOf(page, 'What Does It Cost?');
-      expect(answer).toBe(COST);
+      const COST_HERE = route === 'partner-with-us/governments/' ? COST_GOVERNMENTS : COST;
+      expect(answer).toBe(COST_HERE);
       const link = page.locator('#faq details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) }).locator('.faq__a a');
       await expect(link).toHaveText('See what a partnership includes.');
       expect(await link.getAttribute('href')).toMatch(/\/partner-with-us\/#faqs$/);
       const ld = (await faqJsonLd(page)).find((q) => q.name === 'What Does It Cost?');
-      expect(ld?.text).toBe(COST);
+      expect(ld?.text).toBe(COST_HERE);
       expect(await mainText(page)).not.toMatch(/standard inclusions are outreach and selection|Supported youth cohorts include (outreach and selection, )?training/i);
     });
   }
@@ -412,9 +417,10 @@ test.describe('option bands: program sizes are not a commitment', () => {
     });
   }
 
-  test('Universities and JobReady@Campus keep their pricing statement beside it', async ({ page }) => {
+  // WP49 (cycle-24 review, item 28): a page that also carries the "What Does It Cost?" answer does not repeat its pricing sentence in the "Choose Where to Start" lead; Universities' lead is the note alone (tests/wp49.spec.ts)
+  test('Universities’ lead is the note alone (its cost answer is in the FAQ); JobReady@Campus keeps its pricing statement beside it', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toContain('Pricing is set per program, and we share an indicative budget in the discovery session.');
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toContain('Program options are shown without prices.');
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);

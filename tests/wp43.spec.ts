@@ -238,7 +238,8 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
     await expect(tile).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await tile.textContent())).toContain('58.8%');
-    expect(compact(await tile.textContent())).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
+    expect(compact(await tile.textContent())).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
     const link = slide.locator('a', { hasText: 'See When Completers First Earn' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');
@@ -283,7 +284,9 @@ test.describe('Partner with Us hub: "What Does It Cost?" is three shorter senten
   test('the route pages keep their one-line answer and do not print the hub’s full one', async ({ page }) => {
     for (const route of ['partner-with-us/governments/', 'partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/universities/']) {
       await open(page, route);
-      expect(await mainText(page), route).toContain('Pricing is set per program; we share an indicative budget in the discovery session.');
+      // WP49 (cycle-24 review): Governments' action is a ministry briefing, so its one-line answer says "in the briefing" (tests/wp49.spec.ts)
+      const budget = route === 'partner-with-us/governments/' ? 'in the briefing' : 'in the discovery session';
+      expect(await mainText(page), route).toContain(`Pricing is set per program; we share an indicative budget ${budget}.`);
       expect(await mainText(page), route).not.toMatch(/Supported youth cohorts include (outreach and selection, )?training/);
     }
   });

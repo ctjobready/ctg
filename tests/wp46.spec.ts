@@ -244,11 +244,12 @@ test.describe('Investors: the guide line asks for what is proven and what is sti
   });
 });
 
-test.describe('Foundations: "What Happens After You Say Yes" has the four steps, and the partner line is not mislabeled (item 14)', () => {
-  test('the band keeps its heading, leads with "For cohort grants.", shows the Development Partners steps (PD-04), and the closing partner line is "Organizations that have worked with CodersTrust include…"', async ({ page }) => {
+// WP49 (cycle-24 review): the band's heading is "What Happens Next" (it was "What Happens After You Say Yes", which presumed a commitment; tests/wp49.spec.ts)
+test.describe('Foundations: "What Happens Next" has the four steps, and the partner line is not mislabeled (item 14)', () => {
+  test('the band leads with "For cohort grants.", shows the Development Partners steps (PD-04), and the closing partner line is "Organizations that have worked with CodersTrust include…"', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
-    await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
+    await expect(band.locator('h2')).toHaveText('What Happens Next');
     expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
     const stepsOf = async () => (await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''));
     const foundations = await stepsOf();
@@ -276,9 +277,10 @@ test.describe('Foundations: "What Happens After You Say Yes" has the four steps,
 
 test.describe('Home: the investor route card says what JobReady is (item 15)', () => {
   // WP48 (cycle-23 review, item 33): the card also states the investor's route: "Back JobReady, the platform we are building to connect emerging-market youth to work." (tests/wp48.spec.ts)
-  test('the "Impact Investors" card reads "Back JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
+  // WP49 (cycle-24 review): the card's title is "Investors" (it was "Impact Investors"); its text is unchanged
+  test('the "Investors" card reads "Back JobReady, the platform we are building to connect emerging-market youth to work."', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Impact Investors' }) });
+    const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Investors' }) });
     await expect(card).toHaveCount(1);
     expect(compact(await card.textContent())).toContain('Back JobReady, the platform we are building to connect emerging-market youth to work.');
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
@@ -449,8 +451,9 @@ test.describe('Home: the post-inquiry steps are labelled "For Grant-Funded Pilot
 // contradicted itself (they started before it ended). The wording is "had started earning by six months after finishing" (tests/wp48.spec.ts pins the rest of item 32).
 test.describe('OC-05: the six months are counted from the end of the course (item 29, owner answer 2026-10-15; "by", not "within": item 32 of cycle 23)', () => {
   const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
-  const LABEL = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition; tests/wp49.spec.ts)
+  const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
 
   test('the register states the reference point in its text, stat label and glance label', () => {
     const oc05 = fact('OC-05');

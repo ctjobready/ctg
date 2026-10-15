@@ -12,13 +12,16 @@
  * WP39 (cycle-16 review): "What Your Portfolio Gets" is three short cards (IncludesBand), not the funder concern / what is included / practical benefit matrix.
  * WP40 (cycle-17 review): "Reporting and Review" says what the reports and reviews do instead of pointing at the overview; the closing "It doesn’t have to be this way." line of the cost band is gone.
  * WP42 (cycle-19 reviews): "Our Approach" is the two shared sentences with the tracking said as the cards say it ("Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope."; POSITIONING.developmentPartners,
- * declared whole in scripts/check-facts.mjs), and the YouthWIDE explanation still follows it; the ">4×" tile in "More Results" quotes the multiplier and the nine-trial average only (the +10.3 is the lead tile's: RC-06a's glance note).
+ * declared whole in scripts/check-facts.mjs), and the YouthWIDE explanation still follows it; the ">4×" tile (the glance's fourth) quotes the multiplier and the nine-trial average only (the +10.3 is the lead tile's: RC-06a's glance note).
  * WP43 (cycle-20 review): the cost-of-waiting heading is "Build Work Entry into the Training Budget" (the old one, "Training Without Placement Spends Budget Without Earnings", was an absolute claim; the two cards under it still carry the claims).
  * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("Build Work Entry into the Training Budget") and the Imagine band ("What Your Monthly Report
  * Could Show") are gone; Home carries them. Nothing on this page depended on them: the monthly reports, follow-up surveys and documentary evidence (where available) are stated in the "Questions Partners Ask"
  * answers, "Results Your Evaluators Can Check" and "Reporting and Review".
  * WP48 (cycle-23 review, item 25): the ">4×" tile's label says what is compared ("The employment effect for women offered a place, against the 2.3-point average across nine vocational-training trials"), so RC-06a's glance note
  * ("Against 2.3 percentage points on average ...") repeated it and is gone.
+ * WP49 (cycle-24 review): the problem band is headed "Show Who Reaches Paid Work" and its first two cards "Training Must Connect to Paid Work" and "Barriers Can Interrupt Training" (the earlier headings stated sector-wide conclusions; the card bodies are unchanged);
+ * "What Your Portfolio Gets" says in its first card that one delivery partner connects training, mentoring and placement support (the hours stay in the delivery model above); the ">4×" tile is the fourth tile of "Results at a Glance" (a
+ * single tile needs no "More Results" heading); the closing steps band is "What Happens Next".
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -90,7 +93,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
 
   <!-- C2 · Problem -->
   <ProblemBand
-    title="Enrollment Targets Are Often Met. Paid Work Lags"
+    title="Show Who Reaches Paid Work"
     bluf="You can count who enrolled. Showing who is earning, and keeping hard-to-reach groups in, is the hard part."
     factIds={['PX-01']}
   >
@@ -98,8 +101,9 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
       slot="lead"
       pains={[
         // WP48 (cycle-23 review): "Enrollment targets are often met, while employment results lag behind." was a claim about the whole sector; the card says only what the page can stand behind.
-        { q: 'Skills programs miss their employment targets', text: 'Enrollment is easy to count. Paid work is not.' },
-        { q: 'The hardest-to-reach groups drop out', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
+        // WP49 (cycle-24 review): the two card titles were broad sector conclusions too ("Skills Programs Miss Their Employment Targets", "The Hardest-to-Reach Groups Drop Out"), as was the band heading; they say what the partner needs, and the bodies stay.
+        { q: 'Training must connect to paid work', text: 'Enrollment is easy to count. Paid work is not.' },
+        { q: 'Barriers can interrupt training', text: 'Computer skills, devices, connectivity and social barriers can keep learners from joining or staying.' },
         { q: 'Outcomes are hard to audit', text: 'Without a baseline and documentary evidence, evaluators have little to check.' },
       ]}
     />
@@ -149,13 +153,14 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     ]}
   />
 
-  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (targets met but paid work lags; the hardest-to-reach groups
-       drop out; outcomes are hard to audit). Each sentence rests on the register: PD-01 (hours, mentoring, placement support), PD-02 and PD-10 (outreach and selection, tracks from employer demand), PD-12 (safeguarding specified per
-       program), PD-08 and PD-09 (monthly reports, baseline, follow-up surveys, documentary evidence where available). -->
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (training must connect to paid work; barriers can interrupt training;
+       outcomes are hard to audit). Each sentence rests on the register: PD-01 (mentoring and placement support alongside the training; WP49, cycle-24 review: the first card says only that one delivery partner connects them, because the 100 hours
+       per certification are in the delivery model above), PD-02 and PD-10 (outreach and selection, tracks from employer demand), PD-12 (safeguarding specified per program), PD-08 and PD-09 (monthly reports, baseline, follow-up surveys,
+       documentary evidence where available). -->
   <IncludesBand
     title="What Your Portfolio Gets"
     cards={[
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: `${HOURS} training hours per certification, followed by three months of milestone-based mentoring and placement support.`, facts: ['PD-01'] },
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'One delivery partner connects training, mentoring and placement support.', facts: ['PD-01'] },
       { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { icon: 'clipboard-check', title: 'Results Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
@@ -199,7 +204,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
 
   <!-- C14 · Next steps -->
   <!-- WP46 (cycle-22 review): the grant-funded timing (about three weeks to agreement, 6–8 weeks from signing to training, procurement on the agency's own timeline) is stated once on this page, in the steps and lead below; the C13 urgency line that repeated it is gone (as on Foundations, whose steps band is the same). -->
-  <NextStepsBand title="What Happens After You Say Yes" timing={false} />
+  <NextStepsBand timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />

@@ -60,7 +60,8 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/development-partners/',
     h2: 'What Your Portfolio Gets',
     cards: [
-      { title: 'Training, Mentoring and Placement Support', text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support.', facts: ['PD-01'] },
+      // WP49 (cycle-24 review): "One delivery partner connects training, mentoring and placement support." (the 100 hours per certification stay in the delivery model above; tests/wp49.spec.ts)
+      { title: 'Training, Mentoring and Placement Support', text: 'One delivery partner connects training, mentoring and placement support.', facts: ['PD-01'] },
       { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { title: 'Results Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ],
@@ -69,7 +70,8 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/governments/',
     h2: 'What Your Agency Gets',
     cards: [
-      { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point graduates toward paid work.', facts: ['PD-10', 'PD-01'] },
+      // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates")
+      { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point completers toward paid work.', facts: ['PD-10', 'PD-01'] },
       { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
@@ -84,14 +86,16 @@ const PAGES: PageSpec[] = [
     cards: [
       {
         title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against first paid work, not attendance, using the agreed scorecard.',
+        // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
+        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },
       {
         title: 'Progress You Can See Every Month',
-        text: 'Monthly reports, a quarterly steering review and a pilot scorecard, with the contracting entity and due-diligence documents confirmed in co-design. Where agreed in the program scope: SDG-mapped reporting tailored to your CSR framework, and co-branded certificates and events.',
-        facts: ['PD-08', 'PD-11', 'PD-13', 'PD-18'],
+        // WP49 (cycle-24 review): two sentences; the scorecard and the contracting entity and due-diligence confirmation are stated elsewhere on the page (the first two cards, the Due Diligence band), so the card rests on PD-08 and PD-18 alone
+        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+        facts: ['PD-08', 'PD-18'],
       },
     ],
   },

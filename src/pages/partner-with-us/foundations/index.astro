@@ -24,6 +24,11 @@
  * card carried is now left to Home; the monthly reports and the follow-up surveys they mentioned are in the cards, the FAQ and "Reporting and Review". Funding Route 2's platform status reads "Live today: partner portals and AI chat."
  * (the subset Investors uses; JobReady Platform keeps the full list).
  * WP48 (cycle-23 review): the "Reporting and Review" callout before the call to action is gone; the "Progress You Can See Every Month" card already says the page's reporting (monthly reports, a quarterly steering review, the pilot scorecard).
+ * WP49 (cycle-24 reviews): the "Progress You Can See Every Month" card is two sentences (monthly reports and quarterly reviews keep progress visible; where agreed, SDG-mapped reporting follows the CSR framework, with co-branded certificates and events):
+ * the scorecard is stated by the first two cards, the Accountability callout (thresholds, cost per completer and per verified outcome) and the session agenda, and the contracting entity and due-diligence confirmation by the Due Diligence band, so the card
+ * no longer repeats them; the first card says results are measured "against the agreed scorecard, including first paid work, not attendance alone" (the scorecard also covers completion, certification and sustained work, PD-11);
+ * the "Choose Where to Start" lead no longer repeats the cost answer's pricing sentence (the "What Does It Cost?" answer states it); the fourth glance tile (the Kosovo result) is part of "Results at a Glance" (a single tile needs no
+ * "More Results" heading); the steps band is "What Happens Next" (lead "For cohort grants."). The two route actions under "Two Ways to Fund the Path" are text links, as the brief asks (FundingRoutes).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -171,14 +176,15 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (grants buy hours, rarely earnings; independent evidence is
        hard to find; accountable implementers are hard to find). The fourth row (SDG-mapped reporting, co-branded certificates and events, "Added Benefit") joins the reporting card as its second sentence, so nothing it said is lost.
-       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard; WP44: the second card is the scorecard, not the predecessor trial, because it describes a deliverable), PD-08 and PD-13 (monthly reports, the quarterly steering review, the contracting entity and due-diligence documents confirmed in co-design) and PD-18 (SDG-mapped reporting, co-branded certificates and events). -->
+       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard; WP44: the second card is the scorecard, not the predecessor trial, because it describes a deliverable), PD-08 (monthly reports and the quarterly steering review) and PD-18 (SDG-mapped reporting, co-branded certificates and events).
+       WP49 (cycle-24 review): the third card no longer lists the scorecard (the first two cards, the Accountability callout and the agenda state it) or the contracting entity and due-diligence documents (the Due Diligence band states them), so its facts are PD-08 and PD-18. -->
   <IncludesBand
     title="What Your Cohort Grant Gets"
     cards={[
       {
         icon: 'target',
         title: 'Mentoring, Placement Support and Outcome Tracking',
-        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against first paid work, not attendance, using the agreed scorecard.`,
+        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.`,
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       {
@@ -190,8 +196,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       {
         icon: 'file-check',
         title: 'Progress You Can See Every Month',
-        text: 'Monthly reports, a quarterly steering review and a pilot scorecard, with the contracting entity and due-diligence documents confirmed in co-design. Where agreed in the program scope: SDG-mapped reporting tailored to your CSR framework, and co-branded certificates and events.',
-        facts: ['PD-08', 'PD-11', 'PD-13', 'PD-18'],
+        text: 'Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.',
+        facts: ['PD-08', 'PD-18'],
       },
     ]}
   />
@@ -211,7 +217,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     id="cohort-grants"
     eyebrow="Funding Route 1 · YouthWIDE Cohort Grants"
     title="Choose Where to Start Your Cohort Grant"
-    lead={`${PROGRAM_SIZES_NOTE} Pricing is set per program, and we share an indicative budget in the discovery session. Prefer to fund the platform? See JobReady Platform Grants below.`}
+    lead={`${PROGRAM_SIZES_NOTE} Prefer to fund the platform? See JobReady Platform Grants below.`}
     cards={funderOptionCards()}
     recommended={0}
   />
@@ -249,7 +255,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <!-- WP46 (cycle-22 review): the band has the same four steps as Development Partners, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the C13 agenda above says). WP32 (cycle-9 review) had left the band
        without steps and kept the cohort timing in the C13 urgency line; the steps now carry that timing (about three weeks to agreement, 6–8 weeks from signing to training), so the urgency line that repeated it is gone, as on Development Partners.
        The "introductory call" sentence is gone with the stepless band: the page names one first step, the discovery session. -->
-  <NextStepsBand title="What Happens After You Say Yes" lead="For cohort grants." timing={false} />
+  <NextStepsBand lead="For cohort grants." timing={false} />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />

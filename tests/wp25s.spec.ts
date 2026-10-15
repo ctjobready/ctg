@@ -274,12 +274,13 @@ test.describe('Partner with Us', () => {
     const named = compact(await everything(page));
     expect(named).toContain('Funding Route 1');
     expect(named).toContain('Funding Route 2');
-    // WP39 (cycle-16 review): the features band is three short cards; the first says results are "measured against first paid work, not attendance"
-    expect(text).toContain('Results are measured against first paid work, not attendance, using the agreed scorecard.');
+    // WP39 (cycle-16 review): the features band is three short cards; the first says how results are measured. WP49 (cycle-24 review): against the agreed scorecard (which also covers completion, certification and sustained work), "including first paid work, not attendance alone"
+    expect(text).toContain('Results are measured against the agreed scorecard, including first paid work, not attendance alone.');
     expect(text).not.toContain('followed through to first paid work');
     // WP30c: the "Reporting and Recognition" paragraph is gone (the features rows state reporting once); the monitoring row stays scope-aware
     expect(text).not.toContain('Funders receive job and income outcomes');
-    expect(text).toContain('contracting entity and due-diligence documents confirmed in co-design');
+    // WP49 (cycle-24 review): the third card no longer lists the contracting entity and due-diligence documents; the Due Diligence band states them (tests/wp49.spec.ts)
+    expect(text).toContain('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
     // WP40 (cycle-17 review): the two links under the comparison are one for each route, named for what they open (tests/wp40.spec.ts)
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore YouthWIDE Delivery' })).toHaveAttribute('href', /\/programs\/youthwide\/$/);
     await expect(page.locator('#mechanism').getByRole('link', { name: 'Explore JobReady’s Rollout' })).toHaveAttribute('href', /\/our-model\/jobready-platform\/$/);
@@ -290,7 +291,11 @@ test.describe('Our Model and Investors', () => {
   test('the platform names two marketplaces, and the National University pipeline sits in its own group', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = compact(await main(page));
-    expect(text).toContain('The employer marketplace and the gig-work (Earn) marketplace are in pre-launch');
+    // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the status table names the two marketplaces as two rows, each in pre-launch (never "the employer and gig-work marketplaces")
+    const rows = page.locator('#status tbody tr');
+    await expect(rows.filter({ hasText: 'Gig-work (Earn) marketplace' })).toContainText('Pre-Launch');
+    await expect(rows.filter({ hasText: 'Employer marketplace' })).toContainText('Pre-Launch');
+    expect(text).not.toMatch(/employer and gig-work marketplaces/i);
     const why = page.locator('#why');
     const tile = (title: string) => why.locator('.jr__whystat', { has: page.getByRole('heading', { level: 3, name: title }) });
     await expect(tile('In the Pipeline')).toContainText('1.5M+');
@@ -314,8 +319,10 @@ test.describe('Our Model and Investors', () => {
     await open(page, 'our-model/talentleap/');
     const text = compact(await everything(page));
     expect(text).toContain('Every supported TalentLEAP cohort pairs');
-    // WP48 (cycle-23 review): "... progressive levels as further levels are published." (it ended ", so completers can keep advancing as further levels are published"; tests/wp48.spec.ts)
-    expect(text).toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
+    // WP48 (cycle-23 review): "... progressive levels as further levels are published." (it ended ", so completers can keep advancing as further levels are published"; tests/wp48.spec.ts).
+    // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
+    expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
+    expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
     expect(text).toContain('by the BRAC Institute of Governance and Development (BIGD) at BRAC University');
   });
 

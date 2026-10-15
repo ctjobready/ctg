@@ -81,14 +81,15 @@ test.describe('audience pages', () => {
   }
 
   for (const slug of ['development-partners', 'governments', 'foundations']) {
-    test(`${slug}: Results at a Glance leads with three tiles, each tagged with its evidence type, secondary tiles below`, async ({ page }) => {
+    // WP49 (cycle-24 review): the one secondary tile joins the main group (a "More Results" heading over a single tile is gone), so the glance is four tiles in one group, each tagged with its evidence type (tests/wp49.spec.ts)
+    test(`${slug}: Results at a Glance is four tiles in one group, each tagged with its evidence type`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
-      await expect(page.locator('#glance .pg__lead > li')).toHaveCount(3);
+      await expect(page.locator('#glance .pg__lead > li')).toHaveCount(4);
       const tags = await texts(page, '#glance .evidence-tag');
-      // WP35: the WSDFM tile left the glance (its 71% is program records, read beside the trial's 63.1%), so three lead tiles and at least one secondary tile carry a tag
-      expect(tags.length).toBeGreaterThanOrEqual(4);
+      // WP35: the WSDFM tile left the glance (its 71% is program records, read beside the trial's 63.1%); every tile carries a tag
+      expect(tags.length).toBe(4);
       for (const t of tags) expect(['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Contract Scope']).toContain(t);
-      await expect(page.locator('#glance .pg__more')).toHaveCount(1);
+      await expect(page.locator('#glance .pg__more')).toHaveCount(0);
     });
   }
 

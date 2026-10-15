@@ -234,7 +234,8 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     const tile = compact(await slide.locator('.hs__stat').textContent());
     expect(tile).toContain('58.8%');
-    expect(tile).toContain('of the 170 surveyed completers who first earned during or after training had started earning by six months after finishing the course (October 2026 survey)');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
+    expect(tile).toContain('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
   });
 
   test('slide 2 counts the contracts and says "a National University Partnership"', async ({ page }) => {
@@ -351,14 +352,17 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
   }
 });
 
-test.describe('Our Model: the problem line is PX-01 in its registered wording (item 12)', () => {
-  test('"What Is CodersTrust?" carries PX-01: aged 15–24 with higher-secondary education or more, the range, and the three regions', async ({ page }) => {
+// WP49 (cycle-24 review, Kimi m4): the problem line (PX-01, the 62 million) is gone from Our Model's definition band, which defines CodersTrust and carries no problem statistic; Home and the audience pages keep PX-01 (tests/wp49.spec.ts)
+test.describe('Our Model: the definition band carries the definition alone (item 12 of cycle 18, reversed by item 21 of cycle 24)', () => {
+  test('"What Is CodersTrust?" is ID-01 and nothing else: no PX-01 sentence, no 62 million', async ({ page }) => {
     await open(page, 'our-model/');
-    const line = compact(await page.locator('#definition .def__extra').textContent());
-    expect(line).toBe(`${fact('PX-01').text}.`);
-    expect(line).toContain('An estimated 62 million young people aged 15–24 with higher-secondary education or more (range 61–78 million)');
-    expect(line).toContain('across South Asia, the Middle East and North Africa, and Sub-Saharan Africa');
-    expect(await page.locator('#definition .def__extra [data-fact="PX-01"]').count()).toBeGreaterThanOrEqual(1);
+    await expect(page.locator('#definition .def__extra')).toHaveCount(0);
+    expect(await page.locator('#definition [data-fact="PX-01"]').count()).toBe(0);
+    expect(compact(await page.locator('#definition').textContent())).not.toContain('62 million');
+    // the register still carries the figure, and Home keeps it
+    expect(fact('PX-01').text).toContain('62 million');
+    await open(page, '');
+    expect(compact(await page.locator('#problem [data-fact="PX-01"]').textContent())).toContain('62 million');
   });
 });
 

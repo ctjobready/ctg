@@ -2,10 +2,12 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
+import { RISK_EYEBROW } from '../../../data/copy';
 
 /**
  * C12 Risk reversal. Like RiskReversalBand but takes any number of points, a named `lead` slot (for the
  * scorecard paragraph) and a default slot after the points (decision sheet etc.).
+ * WP49 (cycle-24 review): the eyebrow defaults to RISK_EYEBROW ("Managed Rollout"), the same constant RiskReversalBand uses.
  */
 interface Point {
   icon?: string;
@@ -20,7 +22,7 @@ interface Props {
   points?: Point[];
   id?: string;
 }
-const { eyebrow = 'Low Risk', title, lead, points = [], id = 'risk' } = Astro.props;
+const { eyebrow = RISK_EYEBROW, title, lead, points = [], id = 'risk' } = Astro.props;
 const grid = points.length === 4 ? 'grid-cards grid-cards--4' : points.length === 2 ? 'grid-cards grid-cards--2' : 'grid-cards';
 ---
 

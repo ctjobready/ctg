@@ -59,14 +59,14 @@ export const HEADLINE: Record<Audience, string> = {
 
 /** C5 opens with empathy for the reader's struggling moment, then ORIGIN, authority and the method signal. */
 // WP44 (cycle-21 review): Development Partners' guide band has no empathy line (it opens with the launch line), so its key is gone. WP47 (owner decision 2026-10-15): nor does Home's, so `home` is gone too.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home'>, string> = {
+// WP49 (cycle-24 review): nor does Local Partners': its line ("You reach young people that national programs miss, ...") was the third statement of an unqualified comparison with national programs, and the paragraph after it already names the Bangladesh team.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners'>, string> = {
   governments: 'You answer for training budgets that must show up as young people in work, not only as seats filled.',
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
   // WP46 (cycle-22 review): the earlier line ("... distinguish a model that is working from one that is only promised") invited a platform-proof test the page cannot pass; it now asks only for what is proven and what is still being built.
   investors: 'Impact investors need to see what is proven and what is still being built.',
-  localPartners: 'You reach young people that national programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 
@@ -425,8 +425,9 @@ export const spellOutBigd = (sentence: string): string => sentence.replace('by B
  * The evidence ladder's first rung (WP48, cycle-23 review, item 34: it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)" in the matrix on /impact/ and
  * "Randomized Trial (BIGD)" in the compact ladder). Every rendering of the ladder (the matrix, its cards variant and the compact ladder) reads this one name, so they cannot drift.
  * The name uses the abbreviation, so the rung's "What It Shows" text spells the evaluator out (BIGD_INSTITUTE), once, on /impact/.
+ * WP49 (cycle-24 review, item 14): the name is "Independent Evaluation (BIGD)", not "Independent Randomized Trial (BIGD)": the rung's evidence tag already says "Randomized Trial", so the type was printed twice.
  */
-export const TRIAL_RUNG_NAME = 'Independent Randomized Trial (BIGD)';
+export const TRIAL_RUNG_NAME = 'Independent Evaluation (BIGD)';
 
 /**
  * Answer-first opening of /impact/ (WP20d; 40 to 60 words): the randomized trial (a predecessor program) and the survey (surveyed
@@ -452,8 +453,14 @@ export const WOMEN_INCLUSION: CopyBlock = {
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 
+/**
+ * The two contracting entities as the register names them (ID-07, PD-13), in one phrase. The Governance hero (GOVERNANCE below), the due-diligence rows (DueDiligenceView, ContractingPanel) and the Investors
+ * offer band's due-diligence line read it, so the names cannot drift (WP49, cycle-24 review).
+ */
+export const CONTRACTING_ENTITIES = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh';
+
 export const GOVERNANCE: CopyBlock = {
-  text: 'CodersTrust contracts through CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.',
+  text: `CodersTrust contracts through ${CONTRACTING_ENTITIES}; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.`,
   facts: ['ID-07', 'PD-13'],
 };
 
@@ -492,6 +499,11 @@ export const MICRO_COMMITMENT_EMPLOYERS = 'Your first step is a conversation, no
  * WP47 (cycle-22 review): a full sentence with its subject ("These are program sizes, not commitments: ..."), where it was a fragment that began with a noun phrase.
  */
 export const PROGRAM_SIZES_NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
+/**
+ * The same note on the Governments page, whose first step is a briefing for the ministry, not a discovery session (WP49, cycle-24 review: the page's cost answer and its "Choose Where to Start" lead said "discovery session"
+ * beside a "Request a Briefing" button). The page's cost answer says "in the briefing" too (faqs.ts, Q8-government).
+ */
+export const PROGRAM_SIZES_NOTE_BRIEFING = 'These are program sizes, not commitments: in the briefing you choose a starting scope for your goals, country and delivery capacity.';
 
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
@@ -541,6 +553,14 @@ export const sessionAgendaText = (kind: 'discovery' | 'governments' | 'foundatio
   return `${lead} ${[first, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 };
 
+/**
+ * The heading of the C14 next-steps band on every audience and program page that has one (WP49, cycle-24 review: "What Happens After You Say Yes" presumed a commitment; YouthWIDE already said "What Happens Next").
+ * The framework's own label for the band ("C14 What happens after you say yes") stays an internal name.
+ */
+export const NEXT_STEPS_TITLE = 'What Happens Next';
+/** The eyebrow over the C12 risk-reversal bands (WP49, cycle-24 review: "Low Risk" read as a blanket assurance; the bands say how a rollout is paced and reviewed). */
+export const RISK_EYEBROW = 'Managed Rollout';
+
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
   validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
@@ -554,6 +574,8 @@ export const C14 = {
   },
   reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
+  // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).
+  firstActionLabeled: 'A discovery session. In your inquiry, include two suitable times.',
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
     investors: 'Your first step: an introduction call.',

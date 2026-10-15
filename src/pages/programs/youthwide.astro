@@ -18,6 +18,8 @@
 // WP48 (cycle-23 reviews, consistent with the owner decision of 2026-10-15 for the audience pages): the page no longer repeats Home's persuasion bands. The Cost of Waiting band ("Training Without Work Entry Leaves Budgets Without Results", #cost)
 // and the Imagine band ("Young People Earning, Locally and Globally", #future) are gone, and so are the hero's two links back to audience pages ("For Development Partners", "For Governments"; the ministry briefing stays beside the one button).
 // The challenge band stays, then the track record and the delivery model; the tone alternates white, airy, white, airy, Klein. The Bangladesh band's labs tile (GV-09) shows the register's qualifier as its note (lab access and seats are confirmed per program).
+// WP49 (cycle-24 review): the closing paragraph under "What Happens Next" (PD-04 in full: "For grant-funded pilots: Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3), ...; training starts 6–8 weeks after signing. Public procurement follows the agency’s own timeline.") is gone: it repeated
+// the step sequence above it and the timing question in the FAQ (Q7-model). The procurement sentence is still on the page, in the Governments entry card and in that answer; the risk band's eyebrow is "Managed Rollout".
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -289,7 +291,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   </Section>
 
   <NextSteps
-    title="What Happens Next"
     steps={[
       { title: 'Briefing or Discovery', text: 'Governments start with a briefing; funders start with a discovery session.' },
       { title: 'Co-Design', text: 'Priority groups, tracks, labs, safeguarding and the scorecard are shaped together with you.' },
@@ -301,9 +302,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { role: 'Governments', text: C14.variants.governments },
       { role: 'Funders', text: C14_FIRST },
     ]}
-  >
-    <p class="next-timing"><Icon name="clock" size={16} /> <span data-fact="PD-04">{fact('PD-04').text}.</span></p>
-  </NextSteps>
+  />
 
   <Section pad="sm" aria-label="Last updated">
     <p class="updated">Last updated <time datetime={isoDate(LAST_UPDATED)}>{formatDate(LAST_UPDATED)}</time></p>
@@ -412,11 +411,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     color: var(--on-primary-fixed);
     font-weight: var(--fw-medium);
     font-size: var(--fs-body-base);
-  }
-  .next-timing {
-    margin: var(--space-md) 0 0;
-    font-size: var(--fs-body-xs);
-    color: var(--on-surface-variant);
   }
   .updated {
     margin: 0 0 var(--space-md);

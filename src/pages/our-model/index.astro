@@ -4,6 +4,7 @@
 // WP37 (cycle-14 review): the connectivity card is headed "Learning with Limited Connectivity" (the body is unchanged), and the timeline answer says the weeks once (a page variant of Q7).
 // WP41 (cycle-18 review): the problem line under "What Is CodersTrust?" is PX-01 in its registered wording (young people aged 15–24 with higher-secondary education or more, and the 61–78 million range), as the other pages' tiles carry it;
 // "CV writing" in the placement-support card reads "resume writing" (American English; register PD-15).
+// WP49 (cycle-24 review): the problem line under "What Is CodersTrust?" (PX-01, the 62 million) is gone: a definition band defines CodersTrust and does not carry a problem statistic (Home and the audience pages keep PX-01).
 // WP42 (cycle-19 reviews): the H1 is "One Path from Learning to Earning, with Outcomes Tracked" (Home's phrase for the one path; the meta title does not derive from the H1), and the path lead says who agrees the tracking plan:
 // "Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins."
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -16,7 +17,6 @@ import CTABand from '../../components/ui/CTABand.astro';
 import FeatureCard from '../../components/ui/FeatureCard.astro';
 import ProgramCard from '../../components/ui/ProgramCard.astro';
 import DefinitionBlock from '../../components/pages/programs/DefinitionBlock.astro';
-import Fact from '../../components/facts/Fact.astro';
 import CopyText from '../../components/pages/impact/CopyText.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import StagePipeline from '../../components/pages/model/StagePipeline.astro';
@@ -67,9 +67,7 @@ const faqSources: FaqSource[] = [
     </Fragment>
   </Hero>
 
-  <DefinitionBlock>
-    <Fact id="PX-01" as="p" />
-  </DefinitionBlock>
+  <DefinitionBlock />
 
   <Section id="path" tone="airy" aria-labelledby="path-h">
     <SectionHeader id="path-h" eyebrow="How It Works" title="Three Stages: Learn, Earn, Prosper" lead="Each stage prepares learners for the next. Partners agree an outcome-tracking plan for every supported cohort before delivery begins." />
