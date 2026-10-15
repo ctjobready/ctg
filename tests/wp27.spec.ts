@@ -80,9 +80,10 @@ test.describe('one NU eligibility sentence', () => {
 test.describe('JobReady@Campus and JobReady@Work', () => {
   test('Campus states exam preparation, not the certification itself', async ({ page }) => {
     await open(page, 'programs/jobready-campus/');
-    const included = (await page.locator('#features .fc__included').allTextContents()).map(compact);
-    expect(included).toContain('Industry Certification Exam Preparation by Track and Three Months of Milestone-Based Mentoring');
-    expect(included.join(' ')).not.toContain('Industry Certifications by Track');
+    // WP39 (cycle-16 review): the features band is three short cards
+    const cards = (await page.locator('#features .card__text').allTextContents()).map(compact).join(' ');
+    expect(cards).toContain('Industry certification exam preparation by track');
+    expect(cards.toLowerCase()).not.toContain('industry certifications by track');
   });
 
   for (const [route, label] of [

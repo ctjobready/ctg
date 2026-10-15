@@ -373,12 +373,17 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   }
 
   test('the "Is the JobReady Platform Live?" answer reads in full wherever it is asked, and in its FAQ JSON-LD', async ({ page }) => {
-    for (const route of ['partner-with-us/investors/', 'partner-with-us/employers/', 'programs/jobready-work/', 'our-model/jobready-platform/']) {
+    for (const route of ['partner-with-us/employers/', 'programs/jobready-work/', 'our-model/jobready-platform/']) {
       await open(page, route);
       const answer = await answerOf(page, 'Is the JobReady Platform Live?');
       expect(answer, route).toContain('Live today: partner portals, marketing automation, customer relationship management and AI chat.');
       expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text, route).toBe(answer);
     }
+    // WP39 (cycle-16 review): Investors lists the status in "What JobReady Does", directly above its questions, so its answer points there (tests/wp39.spec.ts); the JSON-LD still reads the same as the page
+    await open(page, 'partner-with-us/investors/');
+    const investors = await answerOf(page, 'Is the JobReady Platform Live?');
+    expect(investors).toBe('Partly. See What JobReady Does above for the live, pre-launch and planned capabilities.');
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(investors);
   });
 
   test('the platform page’s meta description names the live modules the menu names and fits the 155-character limit', async ({ page }) => {

@@ -129,9 +129,11 @@ export const TRIAL_SCOPE = {
  * WP31 (cycle-8 review): the long "Unlike approaches that typically focus on one part of the path …" sentence, which eight pages repeated, is two plain sentences now.
  * Built only from the approved positioning table and existing page copy: no figures and no named competitors.
  * The NU postgraduate diploma page has no statement: its copy waits for National University sign-off.
+ * WP39 (cycle-16 review): the Investors page has none either: its statement restated the hero lead and returned to cohort language on a page about backing the platform, and "How JobReady Builds on Delivery" says how the
+ * platform relates to delivery once; scripts/check-facts.mjs exempts that one page (POSITION_EXEMPT_PAGES).
  * WP36: YouthWIDE's statement is the two shared sentences alone, with "YouthWIDE" in place of "We" (its audience and regions are in the hero and the glance right above it); the gate declares it whole for that page.
  */
-export type PositioningKey = Exclude<Audience, 'nuPgd'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
+export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwide' | 'nationwide' | 'campus' | 'work' | 'superkids';
 
 /**
  * The shared closing of the positioning statements (the slot doc 04 §1 calls [UNLIKE] + [WE]), word for word; scripts/check-facts.mjs declares it independently (UNLIKE_SENTENCE).
@@ -174,10 +176,6 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     text: 'CodersTrust offers employer training built from a needs assessment, and job-ready digital talent through its placement team. Training is customized to your roles, and hiring starts from your talent request.',
     facts: ['IN-10', 'IN-04'],
   },
-  investors: {
-    text: `For impact investors weighing a platform for emerging-market youth employment, CodersTrust offers JobReady, a platform rolling out in stages on top of its training and mentoring programs. CodersTrust’s program results are measured, reported and open to independent evaluation. ${UNLIKE_APPROVED}`,
-    facts: ['PD-01', 'PD-08'],
-  },
   localPartners: {
     text: `For Bangladeshi NGOs, colleges and chambers who need to move young people in their communities into paid digital work, CodersTrust offers an integrated training-to-earnings model delivered through certified local facilitators and existing labs. ${UNLIKE_APPROVED}`,
     facts: ['PD-01', 'PD-06', 'PD-08'],
@@ -212,7 +210,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
 /**
  * Ranked C2b pains for the three bespoke conversion pages (review round 14, M4): Home and YouthWIDE (a funder audience) and the
  * local-partners page. Each page's C2 band lists them as P1 to P3 (`name` as the heading, `text` under it, in the reader's own words)
- * and its C8 table has exactly one row per pain: pain (`name`) → how we relieve it → the registered feature behind it. Both bands read
+ * and its C8 band has exactly one card per pain: pain (`name`) → how we relieve it → the registered feature behind it. Both bands read
  * this list, so the wording cannot drift between them; scripts/check-facts.mjs checks the one-to-one map from the built pages
  * (`data-pain` in C2, `data-relieves` in C8). The pains carry no figure; `facts` ties one to the register fact it rests on.
  */
@@ -235,7 +233,7 @@ export const LOCAL_PARTNER_PAINS: Pain[] = [
 ];
 /** A pain as the C2 list (GainsPains) takes it. */
 export const painForList = (p: Pain) => ({ id: p.id, q: p.name, text: p.text, facts: p.facts });
-/** The `painId` and `relieves` fields of the C8 row (FeaturesTable) that relieves pain `id` of `pains`. */
+/** The `painId` of the C8 card (IncludesBand) that relieves pain `id` of `pains` (and the pain's name, `relieves`, for a table row that still names its concern). */
 export const painForRow = (pains: Pain[], id: PainId) => {
   const p = pains.find((x) => x.id === id);
   if (!p) throw new Error(`painForRow: no pain ${id}`);
@@ -446,21 +444,20 @@ export const PROGRAM_SIZES_NOTE = 'Program sizes, not a commitment: use the disc
 /**
  * [SESSION-AGENDA] (plan v1.12 round-11 enhancement, v1.13 wording; grounded in PD-04, PD-11, PD-19 and FAQ Q8): what the first conversation
  * covers, as ONE sentence beside the C13 primary CTA: the lead, three items separated by semicolons and a single final period. It is shown
- * on the development-partners page and on YouthWIDE, where the CTA books a discovery session (first item: your country,
- * priority groups and locations), and on the governments page and YouthWIDE in Bangladesh, where the primary CTA is a briefing (first item: your priority
- * groups and districts); see <SessionAgenda>. The foundations page, which offers two funding routes, says what is discussed for each instead (SESSION_AGENDA_ROUTES below).
+ * on the development-partners page, where the CTA books a discovery session (first item: your country, priority groups and locations), and on the governments page, where the primary CTA is a
+ * briefing (first item: your priority groups and locations); see <SessionAgenda>. The foundations page, which offers two funding routes, says what is discussed for each instead (SESSION_AGENDA_ROUTES below),
+ * and YouthWIDE's "Choose Your Entry Point" has one line for both of its routes (SESSION_AGENDA_SHARED below).
  * The micro-commitment line stays where it is.
  *
  * "an indicative budget" makes the same claim as [PRICING] and FAQ Q8, so the agenda rests on the same fact, PD-02: `facts` becomes its
  * data-fact marker exactly as [PRICING]'s does, so the agenda, [PRICING] and Q8 stand or fall together.
  */
 export const SESSION_AGENDA_LEAD = 'What the discovery session covers:';
-/** The lead on the pages whose primary CTA is "Request a Briefing" (governments, YouthWIDE in Bangladesh). */
+/** The lead on the page whose primary CTA is "Request a Briefing" (governments). */
 export const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 /** The first item differs by kind (round 12, Mi1: "districts" does not fit the international pages). */
 export const SESSION_AGENDA_FIRST_ITEM = 'your country, priority groups and locations';
-export const SESSION_AGENDA_FIRST_ITEM_BRIEFING = 'your priority groups and districts';
-/** The governments page serves ministries in any country, so its briefing names "locations"; "districts" stays on YouthWIDE in Bangladesh (Bangladesh's national program). */
+/** The governments page serves ministries in any country, so its briefing names "locations", not "districts". */
 export const SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS = 'your priority groups and locations';
 /** The second and third items are shared. WP32 (cycle-9 review): "the follow-up survey schedule" replaces the plan's "the tracer timeline" (scripts/check-facts.mjs pins the same wording). */
 export const SESSION_AGENDA_COMMON_ITEMS = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the follow-up survey schedule'] as const;
@@ -474,15 +471,21 @@ export const SESSION_AGENDA_ROUTES = [
   { lead: 'For a platform grant,', text: 'we discuss JobReady’s staged rollout.' },
 ] as const;
 /**
- * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule."
- * or, for the YouthWIDE Bangladesh briefing: "What the briefing covers: your priority groups and districts; employer demand and certification tracks; …",
- * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …",
- * or, for Foundations: "For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout."
+ * YouthWIDE's "Choose Your Entry Point" (WP39, cycle-16 review): the funders' discovery session and the governments' briefing cover the same ground, so the band carries ONE line in place of two near-identical agendas.
+ * It keeps the PD-02 marker ("indicative budget"); scripts/check-facts.mjs pins the sentence for /programs/youthwide/ on its own.
  */
-export const sessionAgendaText = (kind: 'discovery' | 'briefing' | 'governments' | 'foundations' = 'discovery'): string => {
+export const SESSION_AGENDA_SHARED = 'We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.';
+/**
+ * "What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule."
+ * or, for the governments briefing: "What the briefing covers: your priority groups and locations; employer demand and certification tracks; …",
+ * or, for Foundations: "For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.",
+ * or, for YouthWIDE: "We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan."
+ */
+export const sessionAgendaText = (kind: 'discovery' | 'governments' | 'foundations' | 'shared' = 'discovery'): string => {
+  if (kind === 'shared') return SESSION_AGENDA_SHARED;
   if (kind === 'foundations') return SESSION_AGENDA_ROUTES.map((r) => `${r.lead} ${r.text}`).join(' ');
   const lead = kind === 'discovery' ? SESSION_AGENDA_LEAD : SESSION_AGENDA_LEAD_BRIEFING;
-  const first = kind === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS : kind === 'briefing' ? SESSION_AGENDA_FIRST_ITEM_BRIEFING : SESSION_AGENDA_FIRST_ITEM;
+  const first = kind === 'governments' ? SESSION_AGENDA_FIRST_ITEM_GOVERNMENTS : SESSION_AGENDA_FIRST_ITEM;
   return `${lead} ${[first, ...SESSION_AGENDA_COMMON_ITEMS].join('; ')}.`;
 };
 

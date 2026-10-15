@@ -20,9 +20,9 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(band.locator('.btn--primary')).toHaveCount(1);
     await expect(band.locator('#cta-governments .btn')).toHaveCount(0);
     await expect(band.locator('#cta-governments a.link').first()).toBeVisible();
-    // each card keeps its session agenda
-    await expect(band.locator('#cta [data-session-agenda]')).toHaveCount(1);
-    await expect(band.locator('#cta-governments [data-session-agenda]')).toHaveCount(1);
+    // WP39 (cycle-16 review): the two near-identical session agendas are ONE line under both cards (tests/wp39.spec.ts holds its wording)
+    await expect(band.locator('[data-session-agenda]')).toHaveCount(1);
+    await expect(band.locator('#cta [data-session-agenda], #cta-governments [data-session-agenda]')).toHaveCount(0);
   });
 
   test('one shared "What Happens Next" with two short role-specific actions', async ({ page }) => {

@@ -25,6 +25,7 @@ import { cta } from '../lib/mailto';
  * carries SC-03's detail line only (the 130,000+ and the 15 countries and territories are the hero's reach card). The program-results slide names the base of every result (Kosovo "(102 of 150)", UNDP YES
  * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
  * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
+ * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $82 before training" comparison are its tile alone (OC-03), not the heading too.
  */
 
 export interface HeroSlideStat {
@@ -45,7 +46,7 @@ export interface HeroSlide {
   eyebrow?: string;
   /** The heading: the page's h1 on the first slide, an h2 on the others. */
   title: string;
-  /** Fact IDs whose figures the heading states (data-fact on the heading). */
+  /** Fact IDs whose figures the heading states, or the finding it rests on ("Report Higher Income" rests on OC-03) (data-fact on the heading). */
   titleFacts?: string[];
   lead?: string;
   /** Fact IDs the lead states (data-fact on the lead paragraph). */
@@ -104,10 +105,8 @@ const perHundred = Math.round(offeredPoints);
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
-/** The new earners' share and the survey's income figures, for the survey slide headlines. */
+/** The new earners' share, for the speed slide's headline. */
 const startedSixMonths = fact('OC-05').stat?.value;
-const incomeNow = fact('OC-03').stat?.value;
-const incomeBefore = fact('OC-03').stat?.from;
 /**
  * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
  * WP38 (cycle-15 review): the slide has a figure of its own, SC-03's stat ("15", captioned "countries and territories with CodersTrust programs": the register's label without its ", including Bangladesh" tail, which the line
@@ -124,7 +123,8 @@ const reachCaption = reachLabel.replace(/, including Bangladesh$/, '');
  */
 const governmentScope = /^(Six government contracts with training and curriculum scopes) covering ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... covering N+ people; official training partner of ... onboarding N+ learners"');
-if (!startedSixMonths || !incomeNow || !incomeBefore) throw new Error('heroSlides: OC-03 or OC-05 no longer carries the figure a slide headline reads');
+if (!startedSixMonths) throw new Error('heroSlides: OC-05 no longer carries the figure a slide headline reads');
+if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
 const firstJob = /^of the (\d+) trained found their first job within 3 months$/.exec(fact('PR-03').stat?.label ?? '');
 if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within 3 months"');
@@ -188,9 +188,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
     // WP31: said as what surveyed completers report, not as a before-and-after effect.
-    title: `Surveyed Completers Report a Median Income of ${incomeNow}, Up from ${incomeBefore} Before Training`,
+    // WP39 (cycle-16 review): the heading says the finding and whose it is; the figure and its before-training comparison are the tile's ($245, "up from $82 before training"), so the heading no longer states them a second time.
+    title: 'Surveyed Completers Report Higher Income',
     titleFacts: ['OC-03'],
-    // No lead (WP31): the heading says whose figures these are, and the tile's caption says it again; the longer heading would otherwise make this the tallest slide and leave the others too much empty space.
+    // No lead (WP31): the heading says whose finding this is, and the tile's caption says it again.
     // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },

@@ -13,6 +13,7 @@
  * WP37 (cycle-14 review): Her Power is stated once in full, in Results at a Glance (the tile links its case study) and in the contracts table's first row. The "Her Power, with the ICT Division" band is gone, replaced by a
  * "Read the Her Power Case Study" text link under the table, and the national-scale answer no longer retells Her Power: "We scale in phases. A 100,000+ national program is a design option we have not yet delivered.",
  * with its closing sentence linking the contracts table.
+ * WP39 (cycle-16 review): "What Your Agency Gets" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix; the contracts table's last column reads "Training Figure" (it mixes delivered and scoped figures).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -27,7 +28,7 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
@@ -170,28 +171,15 @@ const manuals = factPart('GV-11', /[\d,]+ manuals and guidelines distributed/);
   <!-- WP37 (cycle-14 review): the Her Power band (WP29) that followed the table is gone: the glance tile and the table's first row state what it showed, and the case study is a text link under the table. -->
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." more={{ label: 'Read the Her Power Case Study', href: LINKS.caseHerPower }} />
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (graduates struggle to find work; budgets are measured by
+       enrollment, not earnings; trainer and curriculum capacity is thin). The sentences keep the matrix rows' words; they rest on PD-10 and PD-01 (tracks from employer demand, mentoring and placement support), PD-11 and PD-08
+       (the pilot scorecard and its cost per completer and per verified outcome, monthly reports), GV-11, PD-06 and PD-07 (Training of Trainers, curriculum and manuals, certified local facilitators, limited connectivity). -->
+  <IncludesBand
     title="What Your Agency Gets"
-    rows={[
-      {
-        feature: 'Certification Tracks Chosen from Employer Demand, Then Mentoring and Placement Support',
-        means: 'Certification, mentoring and placement support point them toward paid work.',
-        outcome: 'Graduates prepared for work',
-        relieves: 'Graduates struggle to find work',
-      },
-      {
-        feature: 'A pilot scorecard with cost per completer and per verified outcome; monthly reports',
-        means: 'Your budget is assessed against the agreed scorecard.',
-        outcome: 'Spending measured against outcomes',
-        relieves: 'Budgets are measured by enrollment, not earnings',
-      },
-      {
-        feature: 'Training of Trainers, curriculum and manuals; certified local facilitators; blended learning in existing labs that works with limited connectivity',
-        means: 'Capacity stays in your system and rural labs can take part.',
-        outcome: 'Trainers and curricula designed to stay in your system',
-        relieves: 'Trainer and curriculum capacity is thin',
-      },
+    cards={[
+      { icon: 'award', title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point graduates toward paid work.', facts: ['PD-10', 'PD-01'] },
+      { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
+      { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
   />
   <MinistrySees />

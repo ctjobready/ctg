@@ -9,6 +9,8 @@
 // WP36 (cycle-13 reviews): "Our Approach" states what the program does (training, mentoring and placement support in existing labs and colleges, monthly reports) and no longer restates the audience and the regions the hero
 // and the glance already give; scripts/check-facts.mjs declares that statement for this page (POSITION_WHOLE_STATEMENT). The Bangladesh band says "Designed for delivery through existing government digital labs
 // and colleges", and the glance's Delivery row says "a central team coordinating local labs for larger programs" in place of "hub-and-spoke" (as Our Model does).
+// WP39 (cycle-16 review): the hero lead is one sentence (audience, outcome and mechanism; the scope word "as agreed in the program scope" moved to the glance's Reporting row); the three-card C8 band (IncludesBand) replaces the
+// funder concern / what is included / practical benefit matrix; "Choose Your Entry Point" keeps both route actions and the procurement sentence and has ONE agenda line under the two cards in place of two near-identical agendas.
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -24,7 +26,7 @@ import FactStat from '../../components/facts/FactStat.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../components/sections/IncludesBand.astro';
 import GainsPains from '../../components/pages/partners/GainsPains.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -84,7 +86,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     <Hero
       eyebrow="YouthWIDE · Youth Digital Employment Program"
       title="From Training to Paid Digital Work, Country by Country"
-      lead="YouthWIDE is the program through which governments, development partners and funders prepare educated, unemployed youth for paid digital work: mentored, certification-focused training, placement support and outcome tracking as agreed in the program scope."
+      lead="YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support."
       artSeed="youthwide"
     >
       <Fragment slot="actions">
@@ -106,7 +108,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
-      { label: 'Reporting', text: 'Monthly reports, follow-up surveys and documentary evidence of earnings where available.', facts: ['PD-08', 'PD-09'] },
+      { label: 'Reporting', text: 'Monthly reports, follow-up surveys and documentary evidence of earnings where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 
@@ -204,30 +206,32 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     ]}
   />
 
-  <!-- C8: one row per ranked pain of C2 (pain → how we relieve it → the registered feature), checked by scripts/check-facts.mjs -->
-  <FeaturesTable
+  <!-- C8: one card per ranked pain of C2 (pain → how we relieve it → the registered facts behind it), checked by scripts/check-facts.mjs (`data-relieves`).
+       WP39 (cycle-16 review): three short cards in place of the funder concern / what is included / practical benefit matrix; the sentences keep the matrix rows' words (PD-15, PD-01 and PD-19: placement support, three months
+       of milestone-based mentoring, a work-entry plan per track approved before enrollment; PD-08 and PD-09: the baseline, monthly reports, follow-up surveys, documentary evidence where available; PD-02 and PD-10: an
+       AI-ready curriculum, entry-level tracks set per country from employer demand). -->
+  <IncludesBand
     title="Built Around What Funders and Agencies Ask"
-    concernLabel="Funder Concern Addressed"
-    rows={[
+    cards={[
       {
-        ...painForRow(FUNDER_PAINS, 'P1'),
-        feature: 'Placement Support, Three Months of Milestone-Based Mentoring and a Work-Entry Plan per Track Approved Before Enrollment',
-        means: 'Success is measured against agreed outcomes, including paid work, not attendance alone.',
-        outcome: 'Results measured in paid work',
+        painId: painForRow(FUNDER_PAINS, 'P1').painId,
+        icon: 'route',
+        title: 'Placement Support and Mentoring',
+        text: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment. Success is measured against agreed outcomes, including paid work, not attendance alone.',
         facts: ['PD-15', 'PD-01', 'PD-19'],
       },
       {
-        ...painForRow(FUNDER_PAINS, 'P2'),
-        feature: 'Baseline, Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope',
-        means: 'Your evaluators can check results against payslips, offer letters, platform logs or bank receipts where available.',
-        outcome: 'Auditable results',
+        painId: painForRow(FUNDER_PAINS, 'P2').painId,
+        icon: 'clipboard-check',
+        title: 'Results Your Evaluators Can Check',
+        text: 'A baseline, monthly reports and follow-up surveys, as agreed in the program scope. Your evaluators can check results against payslips, offer letters, platform logs or bank receipts where available.',
         facts: ['PD-08', 'PD-09'],
       },
       {
-        ...painForRow(FUNDER_PAINS, 'P3'),
-        feature: 'An AI-Ready Curriculum, with Entry-Level Tracks Set per Country from Employer Demand',
-        means: 'Courses are designed to keep pace with employer demand as AI changes entry-level tasks.',
-        outcome: 'Tracks that follow what employers ask for',
+        painId: painForRow(FUNDER_PAINS, 'P3').painId,
+        icon: 'briefcase',
+        title: 'Tracks That Follow Employer Demand',
+        text: 'An AI-ready curriculum, with entry-level tracks set per country from employer demand, designed to keep pace as AI changes entry-level tasks.',
         facts: ['PD-02', 'PD-10'],
       },
     ]}
@@ -259,7 +263,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
 
   <!-- C13 + C14 (WP24c): ONE "Choose Your Entry Point" chooser (the funders' discovery card holds the page's one primary button; the Bangladesh briefing for
        governments is a text link in its own card, so two primary buttons never stand in one view) and ONE shared "What Happens Next".
-       The cards keep the ids #cta and #cta-governments (each carries its SESSION-AGENDA, checked by scripts/check-facts.mjs). -->
+       The cards keep the ids #cta and #cta-governments. WP39 (cycle-16 review): the two near-identical session agendas (one in each card) are ONE line under both cards; scripts/check-facts.mjs pins it for the band (#entry-point). -->
   <Section id="entry-point" tone="airy" aria-labelledby="entry-point-h">
     <SectionHeader id="entry-point-h" eyebrow="Get Started" title="Choose Your Entry Point" lead="Funders start with a discovery session. Governments start with a briefing that fits the agency’s timeline." />
     <div class="entry">
@@ -273,7 +277,6 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
             </div>
             {discovery.href.startsWith('mailto:') && <EmailFallback href={discovery.href} />}
             <p class="entry__micro">{MICRO_COMMITMENT}</p>
-            <SessionAgenda />
           </section>
         )
       }
@@ -286,11 +289,11 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
               <a class="link" href={briefing.href}>{briefing.label}<Icon name="arrow-right" size={16} /></a>
             </p>
             {briefing.href.startsWith('mailto:') && <EmailFallback href={briefing.href} />}
-            <SessionAgenda lead="briefing" />
           </section>
         )
       }
     </div>
+    <div class="entry__agenda"><SessionAgenda lead="shared" /></div>
   </Section>
 
   <NextSteps
@@ -354,7 +357,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     justify-items: start;
     align-content: start;
   }
-  /* Choose Your Entry Point (WP24c): two cards, funders and governments */
+  /* Choose Your Entry Point (WP24c): two cards, funders and governments; WP39: one agenda line under both (it replaced two near-identical agendas, one in each card) */
   .entry {
     display: grid;
     gap: var(--space-md);
@@ -393,6 +396,11 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-sm) var(--space-lg);
+  }
+  /* the shared agenda line sits under both cards, across their full width */
+  .entry__agenda :global(.agenda) {
+    margin-top: var(--space-md);
+    max-width: none;
   }
   .measures {
     list-style: none;

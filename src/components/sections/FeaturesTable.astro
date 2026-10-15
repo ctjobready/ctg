@@ -6,15 +6,11 @@ import Icon from '../system/Icon.astro';
 
 /**
  * C8 Features → benefits as concern-led cards (WP18b, review round 5 cycle 2: the four-column table read as a wall of cells).
- * Each card carries the concern it answers, what is included, and the practical benefit; the concern label maps each card 1:1 to a
- * problem card (Home, YouthWIDE, local partners).
+ * Each card carries the concern it answers, what is included, and the practical benefit.
  *
- * Review round 14, M4: on Home, YouthWIDE and the local-partners page the concern is keyed to the ranked pains of the C2 band. A row
- * with `painId` ("P1" to "P3") carries `data-relieves` and shows the pain's number in the same circle as the C2 list; a row without
- * one is a gain creator and shows "Added benefit". `facts` ties the row to the registered facts it rests on (`data-fact`, so the
- * status gate and the production holds see it). scripts/check-facts.mjs checks that each C2 pain has exactly one card.
- * WP38 (cycle-15 review): Home no longer uses this component (its labelled concern / inclusion / benefit parts read as a matrix); its band is three short cards (components/pages/home/HomeIncludes.astro), which carry the same
- * `data-relieves` and `data-fact`, so the one-card-per-pain check holds. The audience and program pages keep this layout.
+ * WP38 and WP39 (cycle-15 and cycle-16 reviews): the labelled concern / inclusion / benefit parts read as a matrix, so Home, every audience page and the program pages (YouthWIDE, JobReady@Campus) state what a partnership
+ * includes as three short cards instead (components/sections/IncludesBand.astro; the ranked-pain map, `data-relieves`, lives there). This component stays where the rows are a status table, not a list of benefits: Investors'
+ * "What JobReady Does" (live, pre-launch, roadmap). A row without a `relieves` concern is a gain creator and shows "Added Benefit". `facts` ties a row to the registered facts it rests on (`data-fact`).
  */
 interface Row {
   feature: string;
@@ -24,8 +20,6 @@ interface Row {
   outcome?: string;
   /** Pain relieved (mirror of a problem-band card). */
   relieves?: string;
-  /** The C2 pain this row relieves, e.g. "P1". */
-  painId?: string;
   /** Fact IDs the row rests on. */
   facts?: string[];
 }
@@ -34,12 +28,9 @@ interface Props {
   lead?: string;
   rows: Row[];
   id?: string;
-  /** Label above the concern ("Funder Concern Addressed" on funder pages). */
-  concernLabel?: string;
 }
-const { title, lead, rows, id = 'features', concernLabel = 'Concern Addressed' } = Astro.props;
+const { title, lead, rows, id = 'features' } = Astro.props;
 const showPain = rows.some((r) => r.relieves);
-const painNumber = (painId: string) => painId.replace(/^P/, '');
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -47,14 +38,14 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
   <ul class="fc" role="list" aria-label="Features and benefits" data-reveal>
     {
       rows.map((r) => (
-        <li class="fc__card" data-relieves={r.painId} data-fact={r.facts?.join(' ')}>
+        <li class="fc__card" data-fact={r.facts?.join(' ')}>
           {showPain && (
             <div class="fc__concern">
               {r.relieves ? (
                 <>
-                  <p class="fc__label">{concernLabel}</p>
+                  <p class="fc__label">Concern Addressed</p>
                   <p class="fc__pain">
-                    {r.painId ? <span class="fc__n" aria-hidden="true">{painNumber(r.painId)}</span> : <Icon name="circle-check" size={16} />}
+                    <Icon name="circle-check" size={16} />
                     <span>{r.relieves}</span>
                   </p>
                 </>
@@ -167,21 +158,5 @@ const painNumber = (painId: string) => painId.replace(/^P/, '');
   .fc__means {
     margin-top: var(--space-xs) !important;
     color: var(--on-surface-variant);
-  }
-  /* the pain's number: the same circle as the ranked list in the C2 band */
-  .fc__n {
-    flex: none;
-    width: 22px;
-    height: 22px;
-    margin-top: 1px;
-    border-radius: var(--radius-full);
-    background: var(--primary-fixed);
-    color: var(--on-primary-fixed);
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-body-xs);
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 </style>

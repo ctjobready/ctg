@@ -13,7 +13,7 @@ import ProblemBand from '../components/sections/ProblemBand.astro';
 import FutureBand from '../components/sections/FutureBand.astro';
 import HomeEvidence from '../components/pages/home/HomeEvidence.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
-import HomeIncludes from '../components/pages/home/HomeIncludes.astro';
+import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import RiskReversalBand from '../components/sections/RiskReversalBand.astro';
@@ -54,7 +54,7 @@ const problemBluf = 'Millions of educated young people are out of work and out o
 
 // C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
-// WP38 (cycle-15 review): on Home the rows are three short cards (HomeIncludes), not the concern / inclusion / benefit matrix of FeaturesTable, which the audience pages keep. Each card keeps its pain's id (`data-relieves`, held by
+// WP38 (cycle-15 review): on Home the rows are three short cards (IncludesBand), not the concern / inclusion / benefit matrix of FeaturesTable (WP39: the audience and program pages use IncludesBand too). Each card keeps its pain's id (`data-relieves`, held by
 // check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan approved before
 // enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The AI-ready line keeps "designed to" (the register states the
 // track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it.
@@ -159,9 +159,9 @@ const includes = [
 
   <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
 
-  <!-- WP38: three short cards (HomeIncludes) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
+  <!-- WP38: three short cards (IncludesBand) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
   <Tone cmf="C8" tone="airy">
-    <HomeIncludes id="features" title="What Your Partnership Includes" cards={includes} />
+    <IncludesBand id="features" tone="airy" title="What Your Partnership Includes" cards={includes} />
   </Tone>
 
   <Tone cmf="C9" tone="white">

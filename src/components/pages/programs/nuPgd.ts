@@ -114,13 +114,25 @@ export function relatedCareerAreas(raw: string[], slug?: string): string[] {
 /**
  * WP25s: the modules named in "What Will I Be Able to Do After This Course?". Each is one of the course's own module titles (a title that is not in
  * the course's list fails the build), so the answer names concrete subjects and promises nothing beyond the module list.
+ * WP39 (cycle-16 review): the answer says each module in plain words (`words`, the subject of the registered module title: "WordPress Design (Practical)" is "WordPress design", "Database Management Systems" is "databases"),
+ * so the sentence reads "Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module." instead of a list of module titles.
  */
-const ANSWER_MODULES: Record<string, string[]> = {
-  'digital-marketing': ['WordPress Design (Practical)', 'Content Marketing (Practical)', 'Search Engine Optimization (SEO) - Practical', 'Web & Google Analytics (Practical)'],
-  ict: ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development'],
+const ANSWER_MODULES: Record<string, { module: string; words: string }[]> = {
+  'digital-marketing': [
+    { module: 'WordPress Design (Practical)', words: 'WordPress design' },
+    { module: 'Content Marketing (Practical)', words: 'content marketing' },
+    { module: 'Search Engine Optimization (SEO) - Practical', words: 'SEO' },
+    { module: 'Web & Google Analytics (Practical)', words: 'analytics' },
+  ],
+  ict: [
+    { module: 'Java Programming', words: 'programming' },
+    { module: 'Database Management Systems', words: 'databases' },
+    { module: 'Computer Networks Maintenance', words: 'networks' },
+    { module: 'Mobile Application Development', words: 'mobile applications' },
+  ],
 };
-/** A module title as it reads in a sentence: without its "(Practical)" or "- Practical" mark. */
-const plainModule = (m: string) => m.replace(/\s*\(Practical\)$/, '').replace(/\s*-\s*Practical$/, '');
+/** "a, b, c and d" */
+const andList = (items: string[]) => `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
 
 /** Course-page questions, answered from the course's module names only (no outcome, role or service claim). */
 export function nuModuleFaqs(c: NuCourse): { q: string; html: string }[] {
@@ -128,11 +140,11 @@ export function nuModuleFaqs(c: NuCourse): { q: string; html: string }[] {
   const last = names[names.length - 1];
   const picked = ANSWER_MODULES[c.slug];
   if (!picked) throw new Error(`nuModuleFaqs: no answer modules for ${c.slug}`);
-  for (const m of picked) if (!c.modules.includes(m)) throw new Error(`nuModuleFaqs: "${m}" is not a module of ${c.slug}`);
-  const topics = picked.map((m) => esc(plainModule(m)));
+  for (const m of picked) if (!c.modules.includes(m.module)) throw new Error(`nuModuleFaqs: "${m.module}" is not a module of ${c.slug}`);
+  if (!c.modules.some((m) => /^Internship/i.test(m))) throw new Error(`nuModuleFaqs: ${c.slug} no longer has its final internship, project work and seminar module`);
   return [
     { q: 'What Will I Study?', html: `${c.modules.length} modules: ${names.slice(0, -1).join('; ')}; and ${last.toLowerCase().startsWith('internship') ? 'a final module of ' + last.toLowerCase() : last}.` },
-    { q: 'What Will I Be Able to Do After This Course?', html: `After this course you can describe and show the work you did in modules such as ${topics.slice(0, -1).join(', ')} and ${topics[topics.length - 1]}, and in the final module of internship, project work and a seminar. What you do next depends on your own experience, portfolio and the local market.` },
+    { q: 'What Will I Be Able to Do After This Course?', html: `Build practical work in ${andList(picked.map((m) => m.words))}, followed by the final internship, project work and seminar module. Your next step depends on your experience, portfolio and local market.` },
   ];
 }
 const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

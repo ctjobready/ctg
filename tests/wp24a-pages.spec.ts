@@ -73,7 +73,8 @@ test.describe('Investors page structure', () => {
     // WP36 (cycle-13 review): the sector taxonomy ("The Sectors Involved") stalled the page and is gone from the mechanism band
     expect(text).not.toContain('all in emerging markets: skill training; freelance marketplaces and job sites; HR tech; and higher-ed EdTech.');
     expect(text).not.toContain('The Sectors Involved');
-    expect(text).toContain('CodersTrust’s program results are measured, reported and open to independent evaluation.');
+    // WP39 (cycle-16 review): the "Our Approach" statement that carried "program results are measured, reported and open to independent evaluation" is deleted on Investors (tests/wp39.spec.ts holds the absence)
+    expect(text).not.toContain('Our Approach');
   });
 
   test('WP34: the approaches comparison is gone from Investors (it compared supported youth cohorts, on a page about backing the platform); a short band stands in its place', async ({ page }) => {

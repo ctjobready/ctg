@@ -9,6 +9,8 @@ import { linkAttrs } from '../../../lib/url';
  * WP35 (cycle-12 review: the band repeated what the route pages say about reporting): two sentences and the link to what YouthWIDE reports, in place of the two panels (what a monthly report
  * covers, what you decide at each review). The sentences rest on PD-08 (monthly reports, the quarterly steering review) and PD-11 (a missed threshold triggers a corrective plan; expansion is the
  * funder's decision), so the band carries both facts. The panels are ./ReviewPanels.astro.
+ * WP39 (cycle-16 review): the hub serves every route, not one cohort, so the sentences are scoped ("For supported cohorts, monthly reports begin with the first cohort.") and the review "guides" corrective action and
+ * "any" expansion (PD-11: a missed threshold triggers a corrective plan; expansion is the funder's decision).
  */
 interface Props {
   title?: string;
@@ -20,7 +22,7 @@ interface Props {
 const {
   title = 'Start with a Pilot, Then Decide on Evidence',
   eyebrow = 'Reporting and Review',
-  lead = 'Monthly reports from the first cohort. A quarterly review with you decides corrective action and expansion.',
+  lead = 'For supported cohorts, monthly reports begin with the first cohort. Quarterly reviews guide corrective action and any expansion.',
   sample,
   id = 'review-cycle',
 } = Astro.props;

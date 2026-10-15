@@ -8,7 +8,7 @@ import { futurePhotos } from '../../../data/photos';
 import GuideBand from '../../../components/sections/GuideBand.astro';
 import ProofBand from '../../../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
@@ -32,6 +32,7 @@ import { BANGLADESH_HQ } from '../../../lib/site';
  * Local Partners in Bangladesh (T3). WP30c (owner direction 2026-10-14, "less is more"): every CMF band stays, each states its point once. Gone: the In Short summary, the fit
  * check, the lab-access paragraph, the planned third-gender program sentence, the page-local copy of the comparison table (the shared one now has the corrected
  * rows), the restated three-step list and the second timing reminder. The H1 names the outcome; the page stays Bangladesh-specific because its audience is.
+ * WP39 (cycle-16 review): "What Your Community Gets" is three short cards (IncludesBand), one for each ranked pain, not the concern / inclusion / benefit matrix.
  */
 const local = localCta();
 // Q9-route: the one-line safeguarding answer with a link to the governance page, which keeps the full account (WP36).
@@ -139,30 +140,32 @@ const ways = [
     ]}
   />
 
-  <!-- C8 (review round 14, M4): one row per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting" -->
-  <FeaturesTable
+  <!-- C8 (review round 14, M4): one card per ranked pain of C2, keyed to the C6 elements "Trains and certifies", "Mentoring and placement" and "Monthly reporting".
+       WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix; each keeps its pain's id (`data-relieves`, held by scripts/check-facts.mjs) and its register facts, and its sentences keep
+       the matrix rows' words (PD-06 and PD-02: certified local facilitators, a localized curriculum, preparation for industry certification; PD-01 and PD-15: mentoring with placement support alongside; PD-08: monthly reports). -->
+  <IncludesBand
     id="features"
     title="What Your Community Gets"
-    rows={[
+    cards={[
       {
-        ...painForRow(LOCAL_PARTNER_PAINS, 'P1'),
-        feature: 'Certified-Facilitator Training, a Localized Curriculum and Preparation for Industry Certification',
-        means: 'Local capacity that stays after a funded cohort ends, with a curriculum and a certification route you do not have to build yourself.',
-        outcome: 'Certified facilitators from your community',
+        painId: painForRow(LOCAL_PARTNER_PAINS, 'P1').painId,
+        icon: 'graduation-cap',
+        title: 'Certified Facilitators and a Local Curriculum',
+        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Local capacity stays after a funded cohort ends, and you do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
       },
       {
-        ...painForRow(LOCAL_PARTNER_PAINS, 'P2'),
-        feature: 'Three Months of Milestone-Based Mentoring with Placement Support Alongside',
-        means: 'Your completers get a route into work that your organization does not have to build alone.',
-        outcome: 'Work-entry connections for your completers',
+        painId: painForRow(LOCAL_PARTNER_PAINS, 'P2').painId,
+        icon: 'handshake',
+        title: 'Mentoring and Placement Support',
+        text: 'Three months of milestone-based mentoring, with placement support alongside, gives your completers a route into work that your organization does not have to build alone.',
         facts: ['PD-01', 'PD-15'],
       },
       {
-        ...painForRow(LOCAL_PARTNER_PAINS, 'P3'),
-        feature: 'Monthly Reports to the Funder, Where One Is Involved',
-        means: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
-        outcome: 'Progress you and the funder can both see',
+        painId: painForRow(LOCAL_PARTNER_PAINS, 'P3').painId,
+        icon: 'chart-bar',
+        title: 'Monthly Reports and Program Updates',
+        text: 'Where a funder is involved, it receives monthly reports, and your organization receives agreed program updates on enrollment, completion, certification and placement.',
         facts: ['PD-08'],
       },
     ]}

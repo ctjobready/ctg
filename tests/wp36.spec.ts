@@ -41,7 +41,7 @@ test.describe('Home: each figure once', () => {
   test('slide 2 shows the income result only; the 77.9% is the hero’s survey card', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(1);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
+    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     expect(compact(await slide.textContent())).not.toContain('77.9');
@@ -144,9 +144,10 @@ test.describe('Development Partners and Governments: each figure once', () => {
   test('Governments: the glance tile reads "People in the Scopes of Six Government Contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
-    const card = page.locator('#features .fc__card', { hasText: 'Budgets are measured by enrollment, not earnings' });
-    await expect(card.locator('.fc__benefit')).toHaveText('Spending measured against outcomes');
-    await expect(card.locator('.fc__means')).toHaveText('Your budget is assessed against the agreed scorecard.');
+    // WP39 (cycle-16 review): the features band is three short cards; the second one keeps "Spending Measured Against Outcomes" and the budget "assessed against the agreed scorecard"
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Spending Measured Against Outcomes' }) });
+    await expect(card).toHaveCount(1);
+    expect(compact(await card.locator('.card__text').textContent())).toContain('Your budget is assessed against the agreed scorecard.');
     expect(await mainText(page)).not.toMatch(/judged against verified outcomes|Spending tied to verified outcomes/);
   });
 });
@@ -195,7 +196,8 @@ test.describe('Investors', () => {
   test('"The Sectors Involved" is gone from the mechanism band; the band keeps its model blocks and its link', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(await mainText(page)).not.toMatch(/Sectors Involved|four sectors|freelance marketplaces and job sites/);
-    await expect(page.locator('#mechanism .pos__text')).toHaveCount(1);
+    // WP39 (cycle-16 review): the band carries no "Our Approach" statement any more (tests/wp39.spec.ts)
+    await expect(page.locator('#mechanism .pos__text')).toHaveCount(0);
     await expect(page.locator('#mechanism').getByRole('link', { name: 'How Our Model Works' })).toHaveCount(1);
     expect(await texts(page, '#mechanism h3'), 'the four model blocks are the band’s only sub-headings').toEqual(['Courses, Bootcamps and University Programs', 'Jobs, Freelance Work and Gigs', 'Career Paths and Continuing Development', 'A Digital Delivery Platform']);
   });

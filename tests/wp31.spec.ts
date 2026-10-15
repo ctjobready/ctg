@@ -38,7 +38,7 @@ test.describe('figures say what they measure', () => {
   test('Home slide 2 reads as what surveyed completers report, and has no lead line to repeat it', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(1);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
+    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
   });
 
@@ -216,10 +216,10 @@ test.describe('the positioning statements share one plain closing', () => {
     'partner-with-us/foundations/',
     'partner-with-us/universities/',
     'partner-with-us/local-partners/',
-    'partner-with-us/investors/',
     'programs/youthwide/',
     'programs/jobready-campus/',
   ];
+  // WP39 (cycle-16 review): Investors carries no statement (it restated the hero and returned to cohort language; scripts/check-facts.mjs exempts that one page, tests/wp39.spec.ts holds the absence)
   // WP36 (cycle-13 review): YouthWIDE's hero and glance already say who the program is for and where it runs, so its statement is the two shared sentences alone, with the program as the subject
   // (scripts/check-facts.mjs declares it whole for that page); every other page keeps its audience sentence and the shared closing
   const WHOLE: Record<string, string> = {
@@ -269,11 +269,12 @@ test.describe('smaller wording fixes', () => {
     expect(await mainText(page)).not.toMatch(/madrasah youth and third-gender people/);
   });
 
-  test('Local Partners: mentoring comes "with Placement Support Alongside", not "Then Placement Support"', async ({ page }) => {
+  // WP39 (cycle-16 review): the features band is three short cards
+  test('Local Partners: mentoring comes "with placement support alongside", not "then placement support"', async ({ page }) => {
     await open(page, 'partner-with-us/local-partners/');
-    const included = await texts(page, '#features .fc__included');
-    expect(included).toContain('Three Months of Milestone-Based Mentoring with Placement Support Alongside');
-    expect(included.join(' ')).not.toContain('Then Placement Support');
+    const cards = (await texts(page, '#features .card__text')).join(' ');
+    expect(cards).toContain('Three months of milestone-based mentoring, with placement support alongside');
+    expect(cards.toLowerCase()).not.toContain('then placement support');
   });
 
   test('YouthWIDE: the vignette says "See Who Started Earning" (no attribution), and the page says the cohorts are designed for three regions', async ({ page }) => {
@@ -318,7 +319,8 @@ test.describe('smaller wording fixes', () => {
     // WP38: Home's band is three short cards; the reporting card says "follow-up surveys" in its sentence
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('Monthly reports and follow-up surveys, as agreed in the program scope');
     await open(page, 'programs/youthwide/');
-    expect(await texts(page, '#features .fc__included')).toContain('Baseline, Monthly Reports and Follow-Up Surveys, as Agreed in the Program Scope');
+    // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; the second one says "follow-up surveys"
+    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('A baseline, monthly reports and follow-up surveys, as agreed in the program scope.');
   });
 
   test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Find Your Program"', async ({ page }) => {

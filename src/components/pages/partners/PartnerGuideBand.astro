@@ -17,6 +17,7 @@ import { endSentence } from '../../sections/copyText';
  * Same visual structure as the shared GuideBand; it adds what that band cannot hold: the origin
  * line and authority statements that are sentences rather than numbers.
  * WP38 (cycle-15 review): the origin is one line (ORIGIN_SHORT), not the two-sentence history that Home keeps (ORIGIN); where the band shows SC-03's tile it is the launch alone (ORIGIN_LAUNCH).
+ * WP39 (cycle-16 review): a band with neither tiles nor statements (Universities: "The National University Partnership" states the NU relationship) has no proof column: the copy is one column at a reading width.
  */
 interface Statement {
   /** Fact(s) behind the statement (data-fact and footnote markers). */
@@ -39,11 +40,12 @@ interface Props {
 const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statements = [], method, partnerGroup, id = 'guide' } = Astro.props;
 // A band that already shows SC-03's tile (Development Partners) does not state the count of countries and territories a second time in its origin line.
 const origin = stats.includes('SC-03') ? ORIGIN_LAUNCH : ORIGIN_SHORT;
+const hasProof = stats.length > 0 || statements.length > 0;
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow="Our Track Record" title={title} />
-  <div class="pg">
+  <div class:list={['pg', !hasProof && 'pg--solo']}>
     <div class="pg__copy" data-reveal>
       <p class="lead">{empathy}</p>
       <CopyText block={origin} markers={[]} class="pg__origin" />
@@ -54,21 +56,25 @@ const origin = stats.includes('SC-03') ? ORIGIN_LAUNCH : ORIGIN_SHORT;
         )}
       </p>
     </div>
-    <div class="pg__proof">
-      {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} />)}</div>}
-      {
-        statements.length > 0 && (
-          <ul class="pg__list" role="list">
-            {statements.map((s) => (
-              <li data-fact={s.facts.join(' ')}>
-                <Icon name="circle-check" size={20} />
-                <span>{endSentence(s.text ?? fact(s.facts[0]).text)}</span>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </div>
+    {
+      hasProof && (
+        <div class="pg__proof">
+          {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} />)}</div>}
+          {
+            statements.length > 0 && (
+              <ul class="pg__list" role="list">
+                {statements.map((s) => (
+                  <li data-fact={s.facts.join(' ')}>
+                    <Icon name="circle-check" size={20} />
+                    <span>{endSentence(s.text ?? fact(s.facts[0]).text)}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      )
+    }
   </div>
   <PartnerStrip variant="grid" group={partnerGroup} caption={PARTNER_CAPTION} />
 </Section>
@@ -132,6 +138,10 @@ const origin = stats.includes('SC-03') ? ORIGIN_LAUNCH : ORIGIN_SHORT;
       grid-template-columns: 1.1fr 0.9fr;
       gap: var(--space-xl);
       align-items: start;
+    }
+    /* no tiles and no statements: the copy is the whole band, one column (its lines keep their reading width) */
+    .pg--solo {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

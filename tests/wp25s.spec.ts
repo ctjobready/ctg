@@ -23,7 +23,7 @@ test.describe('direct answers under the H1', () => {
   });
 
   for (const [route, needle] of [
-    ['programs/youthwide/', 'YouthWIDE is the program through which governments, development partners and funders prepare educated, unemployed youth'],
+    ['programs/youthwide/', 'YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support.'],
     ['programs/jobready-campus/', 'JobReady@Campus runs mentored, certification-focused training in on-campus labs'],
     ['programs/jobready-work/', 'JobReady@Work builds custom AI-ready training for your team'],
     ['programs/superkids/', 'SuperKids brings block coding, robotics and graphic design for kids into schools'],
@@ -125,7 +125,8 @@ test.describe('Programs', () => {
     expect(order.indexOf('guide'), 'guide band').toBeGreaterThan(-1);
     const titles = await page.locator('main h2').allInnerTexts();
     expect(titles.findIndex((t) => /Universities Partner with CodersTrust/.test(t))).toBeLessThan(titles.findIndex((t) => /What a Campus Cohort Can Produce/.test(t)));
-    expect(text).toContain('Training is built around the skills employers say they cannot find');
+    // WP39 (cycle-16 review): the features band is three short cards; the second says tracks are "built around the skills employers say they cannot find"
+    expect(text).toContain('built around the skills employers say they cannot find');
     expect(text).not.toContain('training matches what employers say');
   });
 
@@ -150,18 +151,20 @@ test.describe('Programs', () => {
     await expect(page.locator('#offer-evidence .pe__more a')).toHaveText(['The Randomized Trial', 'Impact Survey 2026']);
   });
 
-  test('the NU course answer names concrete modules', async ({ page }) => {
+  // WP39 (cycle-16 review): the answer names the practical work in plain words (tests/wp39.spec.ts holds both answers); each subject is a module of the course, which the build checks
+  test('the NU course answer names concrete work', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/digital-marketing/');
     const dm = compact(await everything(page));
-    expect(dm).toContain('modules such as WordPress Design, Content Marketing, Search Engine Optimization (SEO) and Web & Google Analytics');
+    expect(dm).toContain('Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module.');
     expect(dm).not.toContain('You can explain the digital skills');
     await open(page, 'programs/nu-postgraduate-diploma/ict/');
-    expect(compact(await everything(page))).toContain('modules such as Java Programming, Database Management Systems, Computer Networks Maintenance and Mobile Application Development');
+    expect(compact(await everything(page))).toContain('Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module.');
   });
 
+  // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; its third says the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stays)
   test('YouthWIDE and Investors say courses are designed to keep pace with employer demand', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(compact(await main(page))).toContain('Courses are designed to keep pace with employer demand');
+    expect(compact(await main(page))).toContain('designed to keep pace as AI changes entry-level tasks');
     await open(page, 'partner-with-us/investors/');
     expect(compact(await main(page))).toContain('Courses are designed to keep pace with employer demand');
   });
@@ -265,7 +268,8 @@ test.describe('Partner with Us', () => {
     expect(text).not.toMatch(/Funding Vehicle|Track 1|Track 2|Choose Your Route/);
     expect(text).toContain('Funding Route 1');
     expect(text).toContain('Funding Route 2');
-    expect(text).toContain('A grant measured against first paid work');
+    // WP39 (cycle-16 review): the features band is three short cards; the first says results are "measured against first paid work, not attendance"
+    expect(text).toContain('Results are measured against first paid work, not attendance, using the agreed scorecard.');
     expect(text).not.toContain('followed through to first paid work');
     // WP30c: the "Reporting and Recognition" paragraph is gone (the features rows state reporting once); the monitoring row stays scope-aware
     expect(text).not.toContain('Funders receive job and income outcomes');

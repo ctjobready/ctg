@@ -72,7 +72,7 @@ test.describe('home hero slider', () => {
     // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ (the hero's reach card does)
     // WP38 (cycle-15 review): the speed slide's heading leads with its figure and then names the base; the reach slide has SC-03's figure as its tile (tests/wp38.spec.ts)
     expect(titles.slice(1, 5), 'survey, placement, speed and reach headlines').toEqual([
-      'Surveyed Completers Report a Median Income of $245, Up from $82 Before Training',
+      'Surveyed Completers Report Higher Income',
       'Results by Program',
       '58.8% of Completers Who Started Earning Began Within Six Months',
       'Explore Where Our Programs Have Run',
@@ -179,7 +179,7 @@ test.describe('home hero slider', () => {
     await page.locator('[data-hs-dot]').nth(1).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
+    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Surveyed Completers Report Higher Income');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();

@@ -8,6 +8,8 @@
  * (a first campus program is read beside "1,000–2,500 trainees" otherwise).
  * WP38 (cycle-15 review): the full evidence band (offered-place and attender income, survey chart, education profile) is a light strip, "Evidence from Our Wider Youth Programs": the trial result, the survey's degree share and
  * employment readings, and the two evidence links. The National University band's heading names the partnership, and its clarifying sentence stays under it.
+ * WP39 (cycle-16 review): "What Your Students Get" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix; the Guide band no longer repeats the National University partnership sentence
+ * ("The National University Partnership" states it).
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -19,7 +21,7 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
@@ -118,11 +120,9 @@ const optionText: Record<string, string> = {
   </div>
 
   <!-- C5 · Guide (empathy first). WP31: credibility comes before the vision, as on Home. -->
+  <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos. -->
   <PartnerGuideBand
     empathy={EMPATHY.universities}
-    statements={[
-      { facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' },
-    ]}
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
   />
@@ -165,28 +165,15 @@ const optionText: Record<string, string> = {
     broaderLabel="Evidence from our wider youth programs"
   />
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (degree holders struggle to find work; employers cannot find the
+       skills they need; institutions lack placement results they can publish). Each sentence rests on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10 and PD-02
+       (tracks set from employer demand, an AI-ready curriculum), PD-08 and PD-09 (follow-up surveys, monthly reports, documentary evidence where available). -->
+  <IncludesBand
     title="What Your Students Get"
-    rows={[
-      {
-        feature: 'Industry Certification Exam Preparation by Track and Three Months of Milestone-Based Mentoring',
-        means: 'Each track prepares students for an industry certification, with mentoring toward a first client or a first job.',
-        outcome: 'A supported route to a recognized credential',
-        relieves: 'Degree holders struggle to find work',
-      },
-      {
-        feature: 'Tracks set from employer demand; an AI-ready curriculum',
-        means: 'Training is built around the skills employers say they cannot find.',
-        outcome: 'Skills employers ask for',
-        relieves: 'Employers cannot find the skills they need',
-      },
-      {
-        feature: 'As Agreed in the Program Scope: Follow-Up Surveys, Monthly Reports and Documentary Evidence Where Available',
-        means: 'Your institution has outcome data it can report.',
-        outcome: 'Placement results you can discuss',
-        relieves: 'No placement results to publish',
-      },
+    cards={[
+      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
+      { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
+      { icon: 'clipboard-check', title: 'Placement Results You Can Discuss', text: 'Follow-up surveys, monthly reports and documentary evidence where available, as agreed in the program scope, give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

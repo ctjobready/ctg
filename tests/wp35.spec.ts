@@ -293,11 +293,12 @@ test.describe('Partner with Us hub', () => {
     }
   });
 
-  test('the reporting band is two sentences and a link: monthly reports from the first cohort, a quarterly review with you that decides corrective action and expansion', async ({ page }) => {
+  // WP39 (cycle-16 review): the hub serves every route, so the line is scoped to supported cohorts (tests/wp39.spec.ts)
+  test('the reporting band is two sentences and a link: for supported cohorts, monthly reports begin with the first cohort; quarterly reviews guide corrective action and any expansion', async ({ page }) => {
     await open(page, 'partner-with-us/');
     const band = page.locator('#review-cycle');
     await expect(band.locator('h2')).toHaveText('Monthly Reports and Quarterly Reviews');
-    await expect(band.locator('.sh__lead')).toHaveText('Monthly reports from the first cohort. A quarterly review with you decides corrective action and expansion.');
+    await expect(band.locator('.sh__lead')).toHaveText('For supported cohorts, monthly reports begin with the first cohort. Quarterly reviews guide corrective action and any expansion.');
     expect(await band.getAttribute('data-fact')).toBe('PD-08 PD-11');
     await expect(band.locator('a')).toHaveText('See What YouthWIDE Reports');
     await expect(band.locator('h3, ul, ol, li, .rc__panel')).toHaveCount(0);
@@ -307,23 +308,24 @@ test.describe('Partner with Us hub', () => {
 });
 
 test.describe('plain words and plain claims', () => {
-  test('Development Partners: "Training designed to reach hard-to-reach groups"; Governments: "Trainers and curricula designed to stay in your system" (designed, not achieved)', async ({ page }) => {
+  // WP39 (cycle-16 review): the features band is three short cards; Development Partners says delivery is "chosen" and safeguarding "agreed" (no claim to reach), Governments keeps "designed to stay" in its card heading
+  test('Development Partners: "Accessible Local Delivery" claims no reach; Governments: "Capacity Designed to Stay in Your System" (designed, not achieved)', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const dp = await texts(page, '#features .fc__benefit');
-    expect(dp).toContain('Training designed to reach hard-to-reach groups');
-    expect(dp.join(' ')).not.toContain('Training that reaches');
+    const dp = (await texts(page, '#features li.card')).join(' ');
+    expect(dp).toContain('Accessible Local Delivery');
+    expect(dp).not.toMatch(/Training that reaches|Training designed to reach hard-to-reach groups/);
     await open(page, 'partner-with-us/governments/');
-    const gov = await texts(page, '#features .fc__benefit');
-    expect(gov).toContain('Trainers and curricula designed to stay in your system');
+    const gov = await texts(page, '#features li.card h3');
+    expect(gov).toContain('Capacity Designed to Stay in Your System');
     expect(gov.join(' ')).not.toContain('curricula that stay');
   });
 
   test('Foundations: the independent-evidence card says the evidence is on the predecessor program and that evaluating your own cohort is welcome, once', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    const card = page.locator('#features .fc__card', { hasText: 'Independent evidence is thin' });
-    await expect(card.locator('.fc__included')).toHaveText('A randomized trial by BIGD on the predecessor WSDFM program');
-    await expect(card.locator('.fc__benefit')).toHaveText('Independent evidence on the predecessor program');
-    await expect(card.locator('.fc__means')).toHaveText('Independent evaluation of your cohort is welcome.');
+    // WP39 (cycle-16 review): the features band is three short cards; the second is headed "Independent Evidence on the Predecessor Program"
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Independent Evidence on the Predecessor Program' }) });
+    await expect(card).toHaveCount(1);
+    await expect(card.locator('.card__text')).toHaveText('A randomized trial by BIGD on the predecessor WSDFM program. Independent evaluation of your cohort is welcome.');
     const text = await mainText(page);
     expect(text).not.toMatch(/Independent evidence on a CodersTrust program|fund a model with independent evidence/);
     expect(count(compact(await card.textContent()), 'independent evaluation'.toLowerCase()) + count(compact(await card.textContent()), 'Independent evaluation')).toBe(1);

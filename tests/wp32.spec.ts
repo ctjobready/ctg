@@ -174,7 +174,7 @@ test.describe('the follow-up survey schedule', () => {
     ['partner-with-us/development-partners/', 1],
     ['partner-with-us/governments/', 1],
     // WP34 (cycle-11 review): Foundations offers a cohort grant and a platform grant, so its line says what is discussed for each route instead (tests/wp34.spec.ts)
-    ['programs/youthwide/', 2],
+    // WP39 (cycle-16 review): YouthWIDE's two near-identical agendas are one line for both entry routes, "We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan." (tests/wp39.spec.ts)
   ];
   for (const [route, agendas] of PAGES) {
     test(`${route}: the session agenda ends "the pilot scorecard and the follow-up survey schedule" (${agendas} agenda${agendas > 1 ? 's' : ''}); nothing says "tracer timeline"`, async ({ page }) => {
@@ -188,23 +188,30 @@ test.describe('the follow-up survey schedule', () => {
 });
 
 test.describe('benefit lines start with a capital letter', () => {
-  // WP38 (cycle-15 review): Home's band is three short cards (HomeIncludes), not concern / inclusion / benefit rows, so it has no .fc__means lines; its card sentences are held to the same rule below
-  const ROUTES = [
+  // WP38 and WP39 (cycle-15 and cycle-16 reviews): Home and every audience and program page state their features as three short cards (IncludesBand), not concern / inclusion / benefit rows, so they have no .fc__means lines;
+  // their card sentences are held to the same rule below. Investors keeps the table (a status table), so its benefit lines are held here.
+  const CARD_ROUTES = [
     'partner-with-us/development-partners/',
     'partner-with-us/governments/',
     'partner-with-us/foundations/',
     'partner-with-us/universities/',
     'partner-with-us/employers/',
     'partner-with-us/local-partners/',
-    'partner-with-us/investors/',
     'programs/youthwide/',
     'programs/jobready-campus/',
   ];
-  test('every "Practical Benefit" explanation (.fc__means) on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
-    for (const route of ROUTES) {
+  test('every "Practical Benefit" explanation (.fc__means) on Investors opens with a capital letter or a figure', async ({ page }) => {
+    await open(page, 'partner-with-us/investors/');
+    const lines = await texts(page, '#features .fc__means');
+    expect(lines.length, 'Investors has benefit lines').toBeGreaterThan(0);
+    for (const l of lines) expect(l, `Investors: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
+  });
+
+  test('every card sentence on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {
+    for (const route of CARD_ROUTES) {
       await open(page, route);
-      const lines = await texts(page, '#features .fc__means');
-      expect(lines.length, `${route} has benefit lines`).toBeGreaterThan(0);
+      const lines = await texts(page, '#features .card__text');
+      expect(lines.length, `${route} has three card sentences`).toBe(3);
       for (const l of lines) expect(l, `${route}: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
     }
   });
@@ -216,19 +223,15 @@ test.describe('benefit lines start with a capital letter', () => {
     for (const l of lines) expect(l, `home: "${l.slice(0, 40)}…"`).toMatch(/^[A-Z0-9]/);
   });
 
-  test('Development Partners "What Your Portfolio Gets": three standalone sentences under the bold benefit line', async ({ page }) => {
+  // WP39 (cycle-16 review): "What Your Portfolio Gets" is three short cards (tests/wp39.spec.ts holds their words); the sentence is its own paragraph below the card heading
+  test('Development Partners "What Your Portfolio Gets": three cards, each a heading with its sentence below it', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#features h2')).toHaveText('What Your Portfolio Gets');
-    expect(await texts(page, '#features .fc__means')).toEqual([
-      'Success is measured against agreed outcomes, including paid work, not attendance alone.',
-      'Priority groups can join a local lab and train for work that local employers want.',
-      'Your evaluators can check results against documentary evidence where available.',
-    ]);
-    // the explanation is its own paragraph below the bold benefit line, not a continuation of it
-    const sameLine = await page.locator('#features .fc__card').first().evaluate((card) => {
-      const benefit = card.querySelector('.fc__benefit')!.getBoundingClientRect();
-      const means = card.querySelector('.fc__means')!.getBoundingClientRect();
-      return means.top < benefit.bottom - 1;
+    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Results Your Evaluators Can Check']);
+    const sameLine = await page.locator('#features li.card').first().evaluate((card) => {
+      const title = card.querySelector('.card__title')!.getBoundingClientRect();
+      const text = card.querySelector('.card__text')!.getBoundingClientRect();
+      return text.top < title.bottom - 1;
     });
     expect(sameLine).toBe(false);
   });

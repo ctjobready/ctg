@@ -12,6 +12,7 @@
  * statements; the cost and safeguarding questions have the one-line route answers, each with a link to the full answer.
  * WP37 (cycle-14 review): the Funding Route 2 passage under the offer cards no longer retells the platform and its live and pre-launch list (the comparison above it has them); it says what a platform grant
  * supports in one sentence and links the platform-grant inquiry.
+ * WP39 (cycle-16 review): "What Your Cohort Grant Gets" is three short cards (IncludesBand), not the funder concern / what is included / practical benefit matrix.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -26,7 +27,7 @@ import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
@@ -182,33 +183,30 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     ]}
   />
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (grants buy hours, rarely earnings; independent evidence is
+       hard to find; accountable implementers are hard to find). The fourth row (SDG-mapped reporting, co-branded certificates and events, "Added Benefit") joins the reporting card as its second sentence, so nothing it said is lost.
+       Each sentence rests on the register: PD-01 and PD-02 (mentoring and placement support; outcome tracking for 12 months after each course, in the standard inclusions), PD-11 (the pilot scorecard), RC-01 (the BIGD trial of the
+       predecessor WSDFM program), PD-08 and PD-13 (monthly reports, the quarterly steering review, the contracting entity and due-diligence documents confirmed in co-design) and PD-18 (SDG-mapped reporting, co-branded certificates and events). -->
+  <IncludesBand
     title="What Your Cohort Grant Gets"
-    concernLabel="Funder Concern Addressed"
-    rows={[
+    cards={[
       {
-        feature: `Mentoring, Placement Support and Outcome Tracking for ${TRACKING_MONTHS} Months, in the Standard Inclusions`,
-        means: 'Results are measured against first paid work, not attendance, using the agreed scorecard.',
-        outcome: 'A grant measured against first paid work',
-        relieves: 'Grants buy hours, rarely earnings',
+        icon: 'target',
+        title: 'Mentoring, Placement Support and Outcome Tracking',
+        text: `Mentoring and placement support are standard inclusions, and outcomes are tracked for ${TRACKING_MONTHS} months after each course. Results are measured against first paid work, not attendance, using the agreed scorecard.`,
+        facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       {
-        feature: 'A randomized trial by BIGD on the predecessor WSDFM program',
-        means: 'Independent evaluation of your cohort is welcome.',
-        outcome: 'Independent evidence on the predecessor program',
-        relieves: 'Independent evidence is thin',
+        icon: 'badge-check',
+        title: 'Independent Evidence on the Predecessor Program',
+        text: 'A randomized trial by BIGD on the predecessor WSDFM program. Independent evaluation of your cohort is welcome.',
+        facts: ['RC-01'],
       },
       {
-        feature: 'Monthly reports, a quarterly steering review and a pilot scorecard; contracting entity and due-diligence documents confirmed in co-design',
-        means: 'You see progress monthly, know who you are contracting with, and can decide expansion on evidence.',
-        outcome: 'Progress you can see every month',
-        relieves: 'Accountable implementers are hard to find',
-      },
-      {
-        feature: 'SDG-Mapped Reporting Tailored to Your CSR Framework and Co-Branded Certificates and Events, Where Agreed in the Program Scope',
-        means: 'Reporting that fits your framework.',
-        outcome: 'Reports mapped to the SDGs',
+        icon: 'file-check',
+        title: 'Progress You Can See Every Month',
+        text: 'Monthly reports, a quarterly steering review and a pilot scorecard, with the contracting entity and due-diligence documents confirmed in co-design. Where agreed in the program scope: SDG-mapped reporting tailored to your CSR framework, and co-branded certificates and events.',
+        facts: ['PD-08', 'PD-11', 'PD-13', 'PD-18'],
       },
     ]}
   />

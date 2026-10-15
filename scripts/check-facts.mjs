@@ -22,21 +22,22 @@
 //     <PlainLine> carrying data-fact="RC-02"; its numbers are re-derived here from RC-02 (+10.3 pp, rounded 10) and must match wherever the
 //     sentence appears; negative self-tests below. WP35 (cycle-12 review): Home and /partner-with-us/development-partners/ no longer restate the trial in an evidence band, so they are not required
 //     to carry the sentence; Home's plain-language reading lives on its hero "Strongest Proof" card and is held to RC-02 and RC-07 there ([PROOF-CARD], below)
-//   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/, /programs/youthwide/ and
-//     /programs/youthwide/ must show, inside the C13 CTA band (#cta, and for the Bangladesh briefing #cta-governments), ONE paragraph in the plan's exact words for THAT page: the lead "What
-//     the discovery session covers:" (development partners, YouthWIDE; first item "your country, priority groups and
-//     locations") or "What the briefing covers:" (YouthWIDE in Bangladesh: first item "your priority groups and districts"; governments: "your priority groups and locations"), then the three
+//   - [SESSION-AGENDA] (plan v1.13): /partner-with-us/governments/, /development-partners/, /foundations/ and /programs/youthwide/ must show, inside the C13 CTA band (#cta; YouthWIDE: its "Choose Your
+//     Entry Point" band, #entry-point), ONE paragraph in the plan's exact words for THAT page: the lead "What the discovery session covers:" (development partners; first item "your country, priority groups and
+//     locations") or "What the briefing covers:" (governments: "your priority groups and locations"), then the three
 //     items separated by semicolons and one final period, carrying data-fact="PD-02" like [PRICING] and FAQ Q8 (its "indicative budget"
 //     claim, so the three stand on the same fact); WP34: Foundations has two funding routes, so its paragraph says what is discussed for each ("For a cohort grant, we discuss …
-//     For a platform grant, we discuss …"), still one paragraph with the PD-02 marker; negative self-tests below
-//   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the 13 pages that carry a positioning statement, the statement is the first
+//     For a platform grant, we discuss …"), still one paragraph with the PD-02 marker; WP39 (cycle-16 review): YouthWIDE's two entry routes (the discovery session and the briefing) share ONE line,
+//     "We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.", still one paragraph with the PD-02 marker, in place of the two near-identical agendas; negative self-tests below
+//   - [POSITION] opens C6 (plan v1.13, conversion-page rule 9): on the pages that carry a positioning statement (POSITION_PAGES; WP39: Investors is the one page without), the statement is the first
 //     thing in the C6 band (#mechanism): only its eyebrow and H2 may come first (never a lead line, diagram or other text), and it reads as
 //     the audience sentence followed by the verbatim shared closing sentences, called [UNLIKE] here (SuperKids, whose clause is pending, is exempt from that
 //     second part); WP36: /programs/youthwide/ declares its statement whole (POSITION_WHOLE_STATEMENT: the two shared sentences with the program as the subject), and carries exactly
-//     that text; no other page is affected; negative self-tests below
+//     that text; no other page is affected; WP39 (cycle-16 review): /partner-with-us/investors/ carries no statement (it restated the hero and returned to cohort language on a page about backing the platform;
+//     POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
-//     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 table (#features) exactly one row for
-//     each (<tr data-relieves="P1">..), in the same order; rows without data-relieves are gain creators; negative self-tests below
+//     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
+//     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
 //     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
@@ -286,37 +287,44 @@ function proofCardProblems(markup, stat, rc07Text) {
 const SESSION_AGENDA_LEAD_DISCOVERY = 'What the discovery session covers:';
 const SESSION_AGENDA_LEAD_BRIEFING = 'What the briefing covers:';
 const SESSION_AGENDA_FIRST_DISCOVERY = 'your country, priority groups and locations';
-const SESSION_AGENDA_FIRST_BRIEFING = 'your priority groups and districts';
 const SESSION_AGENDA_FIRST_GOVERNMENTS = 'your priority groups and locations';
 // WP32 (cycle-9 review): the third item says "the follow-up survey schedule", where the plan's v1.13 wording said "the tracer timeline" (jargon to a funder); the planning register needs the same change.
 const SESSION_AGENDA_COMMON = ['employer demand and certification tracks', 'an indicative budget, the pilot scorecard and the follow-up survey schedule'];
 const sessionAgendaWanted = (lead, first) => `${lead} ${[first, ...SESSION_AGENDA_COMMON].join('; ')}.`;
 const SESSION_AGENDA_DISCOVERY = sessionAgendaWanted(SESSION_AGENDA_LEAD_DISCOVERY, SESSION_AGENDA_FIRST_DISCOVERY);
-const SESSION_AGENDA_BRIEFING = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_BRIEFING);
 const SESSION_AGENDA_GOVERNMENTS = sessionAgendaWanted(SESSION_AGENDA_LEAD_BRIEFING, SESSION_AGENDA_FIRST_GOVERNMENTS);
 // WP34 (cycle-11 review): Foundations offers a cohort grant and a platform grant, and the discovery-session agenda is a cohort agenda, so its paragraph says what is discussed for each route (declared here on its
 // own, like the others; src/data/copy.ts SESSION_AGENDA_ROUTES builds it, so a wording change has to be made in both places on purpose).
 const SESSION_AGENDA_FOUNDATIONS = 'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.';
+// WP39 (cycle-16 review): YouthWIDE's "Choose Your Entry Point" has two routes (a discovery session for funders, a briefing for governments) whose agendas were near-identical, so the band carries ONE line for both,
+// in the #entry-point band (SESSION_AGENDA_BAND), not in a C13 CTA band (#cta). Declared here on its own, like the others (src/data/copy.ts SESSION_AGENDA_SHARED builds it).
+const SESSION_AGENDA_YOUTHWIDE = 'We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.';
 /** page path -> the exact agenda sentence that page must carry */
 const SESSION_AGENDA_BY_PAGE = {
   '/partner-with-us/development-partners/': SESSION_AGENDA_DISCOVERY,
   '/partner-with-us/foundations/': SESSION_AGENDA_FOUNDATIONS,
-  '/programs/youthwide/': SESSION_AGENDA_DISCOVERY,
+  '/programs/youthwide/': SESSION_AGENDA_YOUTHWIDE,
   '/partner-with-us/governments/': SESSION_AGENDA_GOVERNMENTS,
 };
-/** WP4c: NationWIDE merged into YouthWIDE; the merged page also carries the Bangladesh briefing agenda in its own governments C13 band (#cta-governments). */
-const SESSION_AGENDA_EXTRA_BANDS = { '/programs/youthwide/': { id: 'cta-governments', wanted: SESSION_AGENDA_BRIEFING } };
+/**
+ * The band an agenda sits in, where it is not the C13 CTA band (#cta). WP39: YouthWIDE's one line sits in its "Choose Your Entry Point" band, whose two route cards are <section>s nested in it, so that band is read
+ * up to the next band (bandMarkup), not up to the first </section>. (WP4c/WP24c had two agendas there, one in #cta and one in #cta-governments; both are gone.)
+ */
+const SESSION_AGENDA_BAND = { '/programs/youthwide/': 'entry-point' };
 const SESSION_AGENDA_PAGES = Object.keys(SESSION_AGENDA_BY_PAGE);
 const SESSION_AGENDA_FACT = 'PD-02';
 /** Problems with the agenda on one page: one paragraph inside the C13 band (#cta), in the plan's exact words for that page (`wanted`), with the PD-02 marker. */
 function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
-  const band = new RegExp(`<section\\b[^>]*\\bid="${bandId}"[^>]*>[\\s\\S]*?<\\/section>`).exec(markup);
-  if (!band) return [`the C13 call-to-action band (#${bandId}) is missing, so the [SESSION-AGENDA] has no CTA to sit beside`];
-  const open = /<([a-z][a-z0-9]*)\b([^>]*)\bdata-session-agenda\b([^>]*)>/.exec(band[0]);
-  if (!open) return ['the [SESSION-AGENDA] (what the discovery session or briefing covers) is missing from the C13 band'];
+  // the C13 CTA band is one <section> with no nested section; a band with nested sections (WP39: #entry-point) is read up to the next band
+  const band = bandId === 'cta' ? new RegExp(`<section\\b[^>]*\\bid="${bandId}"[^>]*>[\\s\\S]*?<\\/section>`).exec(markup)?.[0] : bandMarkup(markup, bandId);
+  if (!band) return [bandId === 'cta' ? 'the C13 call-to-action band (#cta) is missing, so the [SESSION-AGENDA] has no CTA to sit beside' : `the #${bandId} band is missing, so the [SESSION-AGENDA] has nowhere to sit`];
+  const open = /<([a-z][a-z0-9]*)\b([^>]*)\bdata-session-agenda\b([^>]*)>/.exec(band);
+  if (!open) return [bandId === 'cta' ? 'the [SESSION-AGENDA] (what the discovery session or briefing covers) is missing from the C13 band' : `the [SESSION-AGENDA] (what the first conversation covers) is missing from the #${bandId} band`];
   const out = [];
+  const agendas = band.match(/\bdata-session-agenda\b/g).length;
+  if (agendas !== 1) out.push(`[SESSION-AGENDA] must appear once in the #${bandId} band, found ${agendas}`);
   if (open[1] !== 'p') out.push(`[SESSION-AGENDA] must be one paragraph (<p>), not a <${open[1]}> (no heading, no list)`);
-  const inner = /^<p\b[^>]*>([\s\S]*?)<\/p>/.exec(band[0].slice(open.index));
+  const inner = /^<p\b[^>]*>([\s\S]*?)<\/p>/.exec(band.slice(open.index));
   if (inner) {
     if (/<(ul|ol|li|h[1-6])\b/.test(inner[1])) out.push('[SESSION-AGENDA] must be one line of text: no list items and no heading inside it');
     const text = decode(inner[1].replace(/<sup\b[\s\S]*?<\/sup>/g, ''));
@@ -333,7 +341,7 @@ function sessionAgendaProblems(markup, wanted, bandId = 'cta') {
 // body text, no diagram, no list. The [UNLIKE] sentence is declared here independently of src/data/copy.ts, so a change to it must be made twice on purpose.
 const POSITION_PAGES = [
   '/',
-  '/partner-with-us/investors/',
+  // '/partner-with-us/investors/' is exempt: see POSITION_EXEMPT_PAGES below (WP39).
   '/partner-with-us/governments/',
   '/partner-with-us/development-partners/',
   '/partner-with-us/foundations/',
@@ -345,6 +353,10 @@ const POSITION_PAGES = [
   '/programs/jobready-work/',
   '/programs/superkids/',
 ];
+// WP39 (cycle-16 review): the one page that carries no positioning statement. Investors' "Our Approach" restated the hero lead and returned to cohort language on a page about backing the platform ("How JobReady Builds on
+// Delivery", lower on the page, says how the platform relates to delivery once), so the statement was deleted there. The page is exempt from [POSITION] and from nothing else: every page in POSITION_PAGES keeps the rule unchanged,
+// and the self-tests below keep the exemption to this one page (it must not also be listed, and it must be a real page of the site, so a rename cannot leave a stale entry).
+const POSITION_EXEMPT_PAGES = ['/partner-with-us/investors/'];
 // SuperKids' "unlike ... we ..." clause waits for CodersTrust's approval (doc 06 P14), so its statement is the audience sentence alone.
 const POSITION_WITHOUT_UNLIKE = ['/programs/superkids/'];
 const UNLIKE_SENTENCE =
@@ -399,12 +411,12 @@ function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, wh
 /* ---- ranked pains (C2b) and the C8 map on the bespoke pages (review round 14, M4) ---- */
 // Home, /partner-with-us/local-partners/ and /programs/youthwide/ are built by hand, not from a band matrix, so the messaging framework's C2b and
 // C8b rules are checked on the built pages: the C2 band (#problem) states exactly THREE ranked pains, each a list item with data-pain="P1", "P2",
-// "P3" in that order, and the C8 table (#features) has exactly ONE row for each of them, in the same order, as <tr data-relieves="P1"> (pain →
-// how we relieve it → the registered feature behind it). A row without data-relieves is a gain creator and is not counted. Only the two bands
+// "P3" in that order, and the C8 band (#features) has exactly ONE card for each of them, in the same order, as <li data-relieves="P1"> (pain →
+// how we relieve it → the registered feature behind it; WP38/WP39: three short cards, components/sections/IncludesBand.astro). An item without data-relieves is a gain creator and is not counted. Only the two bands
 // are read: the same attributes elsewhere on the page count for nothing. The wording lives in src/data/copy.ts (FUNDER_PAINS, LOCAL_PARTNER_PAINS).
 const PAIN_PAGES = ['/', '/partner-with-us/local-partners/', '/programs/youthwide/'];
 const PAIN_IDS = ['P1', 'P2', 'P3'];
-/** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; the C8 table's own wrapper is not one). */
+/** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; a section nested in the band, such as a route card, is not one). */
 function bandMarkup(markup, id) {
   const open = new RegExp(`<section\\b[^>]*\\bid="${id}"[^>]*>`).exec(markup);
   if (!open) return null;
@@ -420,7 +432,7 @@ function painMapProblems(markup) {
   if (c8 === null) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
   if (c2 === null || c8 === null) return out;
   const pains = [...c2.matchAll(/<li\b[^>]*\bdata-pain="([^"]*)"/g)].map((m) => m[1]);
-  // WP18b: the C8 rows are concern-led cards (<li>); a table row (<tr>) is still read
+  // WP18b: the C8 rows were concern-led cards (<li>); WP38/WP39: three short cards (<li>). A table row (<tr>) is still read
   const rows = [...c8.matchAll(/<(?:tr|li)\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
   if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
   for (const id of PAIN_IDS) {
@@ -805,25 +817,26 @@ function numberGuardPage(path, html, allow = []) {
   const agendaP = (text, { tag = 'p', fact = 'PD-02', attrs = '' } = {}) => `<${tag} class="agenda" data-session-agenda${fact ? ` data-fact="${fact}"` : ''}${attrs} data-astro-cid-x><span class="agenda__lead">${text.split(': ')[0]}:</span> ${text.split(': ').slice(1).join(': ')}</${tag}>`;
   const ctaBand = (inner) => `<main><section class="band band--airy" id="cta" aria-labelledby="cta-h"><div class="container"><div class="cta-band"><h2 id="cta-h">Let’s</h2><a href="/x/">Book</a><ul><li>A discovery session is a conversation, not a commitment.</li></ul>${inner}</div></div></section></main>`;
   const agendaWant = SESSION_AGENDA_DISCOVERY;
-  const agendaWantB = SESSION_AGENDA_BRIEFING;
   const agendaWantG = SESSION_AGENDA_GOVERNMENTS;
   const agendaWantF = SESSION_AGENDA_FOUNDATIONS;
+  const agendaWantY = SESSION_AGENDA_YOUTHWIDE;
   if (agendaWant !== 'What the discovery session covers: your country, priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the discovery agenda is no longer the plan wording');
-  if (agendaWantB !== 'What the briefing covers: your priority groups and districts; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the briefing agenda is no longer the plan wording');
   if (agendaWantG !== 'What the briefing covers: your priority groups and locations; employer demand and certification tracks; an indicative budget, the pilot scorecard and the follow-up survey schedule.') problems.push('self-test: the governments briefing agenda is no longer the plan wording');
   if (agendaWantF !== 'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.') problems.push('self-test: the Foundations two-route agenda is no longer the WP34 wording');
+  if (agendaWantY !== 'We discuss your priority groups, locations, tracks, indicative budget, scorecard and reporting plan.') problems.push('self-test: the YouthWIDE shared agenda is no longer the WP39 wording');
   // WP34: Foundations says what is discussed for each funding route, with the route as the bold lead-in of each sentence; still one paragraph with the PD-02 marker
   const agendaRoutesP = `<p class="agenda" data-session-agenda data-fact="PD-02" data-astro-cid-x><span class="agenda__lead">For a cohort grant,</span> we discuss your country, priority groups, tracks, budget and scorecard. <span class="agenda__lead">For a platform grant,</span> we discuss JobReady’s staged rollout.</p>`;
   if (sessionAgendaProblems(ctaBand(agendaRoutesP), agendaWantF).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct Foundations agenda: ${sessionAgendaProblems(ctaBand(agendaRoutesP), agendaWantF).join('; ')}`);
-  for (const [why, text] of [['discovery lead', agendaWant], ['briefing lead', agendaWantB], ['governments briefing lead', agendaWantG]]) {
+  for (const [why, text] of [['discovery lead', agendaWant], ['governments briefing lead', agendaWantG]]) {
     const ok = ctaBand(agendaP(text));
     if (sessionAgendaProblems(ok, text).length) problems.push(`self-test: the [SESSION-AGENDA] check rejected a correct agenda (${why}): ${sessionAgendaProblems(ok, text).join('; ')}`);
   }
   // per page: every configured page maps to the discovery or the briefing sentence, and the two pages groups really differ
   const byPage = (p) => SESSION_AGENDA_BY_PAGE[p];
-  for (const p of ['/partner-with-us/development-partners/', '/programs/youthwide/']) if (byPage(p) !== agendaWant) problems.push(`self-test: ${p} must carry the discovery agenda ("your country, priority groups and locations")`);
+  if (byPage('/partner-with-us/development-partners/') !== agendaWant) problems.push('self-test: /partner-with-us/development-partners/ must carry the discovery agenda ("your country, priority groups and locations")');
+  if (byPage('/programs/youthwide/') !== agendaWantY) problems.push('self-test: /programs/youthwide/ must carry the one shared line for both entry routes ("We discuss your priority groups, locations, tracks, …")');
+  if (SESSION_AGENDA_BAND['/programs/youthwide/'] !== 'entry-point') problems.push('self-test: the YouthWIDE agenda must be read in the #entry-point band, whose route cards are nested sections');
   if (byPage('/partner-with-us/foundations/') !== agendaWantF) problems.push('self-test: /partner-with-us/foundations/ must carry the two-route agenda ("For a cohort grant, … For a platform grant, …")');
-  if (SESSION_AGENDA_EXTRA_BANDS["/programs/youthwide/"]?.wanted !== agendaWantB) problems.push("self-test: the #cta-governments band on /programs/youthwide/ must carry the briefing agenda (\"your priority groups and districts\")");
   if (byPage('/partner-with-us/governments/') !== agendaWantG) problems.push('self-test: /partner-with-us/governments/ must carry the governments briefing agenda ("your priority groups and locations")');
   const agendaBad = (why, markup, wanted = agendaWant) => {
     if (!sessionAgendaProblems(markup, wanted).length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why}`);
@@ -845,14 +858,29 @@ function numberGuardPage(path, html, allow = []) {
   agendaBad('an agenda without the PD-02 marker', ctaBand(agendaP(agendaWant, { fact: '' })));
   agendaBad('an agenda tied to the wrong fact', ctaBand(agendaP(agendaWant, { fact: 'PD-04' })));
   // the first item is per page: the briefing wording on a discovery page and the other way round both fail
-  agendaBad('the briefing agenda ("districts") on a discovery-session page', ctaBand(agendaP(agendaWantB)));
-  agendaBad('the discovery agenda on a briefing page', ctaBand(agendaP(agendaWant)), agendaWantB);
   agendaBad('"districts" in the first item on a discovery-session page', ctaBand(agendaP(agendaWant.replace('your country, priority groups and locations', 'your priority groups and districts'))));
-  agendaBad('"your country, priority groups and locations" on a briefing page', ctaBand(agendaP(agendaWantB.replace('your priority groups and districts', 'your country, priority groups and locations'))), agendaWantB);
-  agendaBad('"districts" on the governments page', ctaBand(agendaP(agendaWantB)), agendaWantG);
-  agendaBad('"locations" on the YouthWIDE briefing band (Bangladesh)', ctaBand(agendaP(agendaWantG)), agendaWantB);
+  agendaBad('"districts" on the governments page', ctaBand(agendaP(agendaWantG.replace('your priority groups and locations', 'your priority groups and districts'))), agendaWantG);
   agendaBad('the discovery agenda on the governments page', ctaBand(agendaP(agendaWant)), agendaWantG);
-  agendaBad('the discovery lead over the briefing items on a briefing page', ctaBand(agendaP(agendaWantB.replace('What the briefing covers:', 'What the discovery session covers:'))), agendaWantB);
+  agendaBad('the discovery lead over the briefing items on the governments page', ctaBand(agendaP(agendaWantG.replace('What the briefing covers:', 'What the discovery session covers:'))), agendaWantG);
+  // WP39: YouthWIDE's one shared line is read in the #entry-point band, whose two route cards are <section>s nested in it
+  const sharedP = (text = agendaWantY, { tag = 'p', fact = 'PD-02' } = {}) => `<${tag} class="agenda" data-session-agenda${fact ? ` data-fact="${fact}"` : ''} data-astro-cid-x>${text}</${tag}>`;
+  const entryBand = (inner, inCard = '') => `<main><section class="band band--airy" id="entry-point" aria-labelledby="entry-point-h"><div class="container"><h2 id="entry-point-h">Choose Your Entry Point</h2><div class="entry"><section id="cta" class="entry__card"><h3>Funders</h3><a href="/x/">Book</a>${inCard}</section><section id="cta-governments" class="entry__card"><h3>Governments</h3><p>Public procurement follows the agency’s own timeline.</p></section></div>${inner}</div></section><section class="band" id="next-steps"><p>Next band</p></section></main>`;
+  if (sessionAgendaProblems(entryBand(sharedP()), agendaWantY, 'entry-point').length) problems.push(`self-test: the [SESSION-AGENDA] check rejected the correct YouthWIDE line: ${sessionAgendaProblems(entryBand(sharedP()), agendaWantY, 'entry-point').join('; ')}`);
+  const sharedBad = (why, markup) => {
+    if (!sessionAgendaProblems(markup, agendaWantY, 'entry-point').length) problems.push(`self-test: the [SESSION-AGENDA] check accepted ${why} (YouthWIDE)`);
+  };
+  sharedBad('an entry-point band with no agenda', entryBand(''));
+  sharedBad('a page with no entry-point band', '<main><p>nothing</p></main>');
+  sharedBad('an agenda after the entry-point band', entryBand('') + sharedP());
+  sharedBad('the old funders agenda in the first route card instead of the shared line', entryBand('', agendaP(agendaWant)));
+  sharedBad('the shared line and a second agenda in a route card (two agendas)', entryBand(sharedP(), agendaP(agendaWant)));
+  sharedBad('the shared line twice', entryBand(sharedP() + sharedP()));
+  sharedBad('the shared line set as a heading', entryBand(sharedP(agendaWantY, { tag: 'h3' })));
+  sharedBad('the shared line without the PD-02 marker', entryBand(sharedP(agendaWantY, { fact: '' })));
+  sharedBad('a changed item in the shared line', entryBand(sharedP(agendaWantY.replace('scorecard', 'plan'))));
+  sharedBad('the shared line without its final period', entryBand(sharedP(agendaWantY.slice(0, -1))));
+  sharedBad('the shared line wrapping a list', entryBand(`<p class="agenda" data-session-agenda data-fact="PD-02">We discuss <ul><li>your priority groups</li></ul></p>`));
+  if (!sessionAgendaProblems(ctaBand(agendaP(agendaWant)), agendaWantY).length) problems.push('self-test: the [SESSION-AGENDA] check accepted the discovery agenda where YouthWIDE\'s shared line is wanted');
 
   // [POSITION] opens C6: the statement first (after, at most, the band's eyebrow and H2), then the verbatim [UNLIKE] sentence
   const posFor = 'For governments who need youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.';
@@ -896,14 +924,23 @@ function numberGuardPage(path, html, allow = []) {
   posBad('the whole statement on a page that must carry the audience sentence and [UNLIKE]', mech(`${headerHtml}${posBlock(wholeYw)}</header>`));
   posBad('the whole statement on a page that declares an employer closing', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { closing: empClosing });
   for (const wholePage of Object.keys(POSITION_WHOLE_STATEMENT)) if (!POSITION_PAGES.includes(wholePage)) problems.push(`self-test: ${wholePage} declares a whole positioning statement but is not one of the [POSITION] pages`);
+  // WP39: the exemption is one page and not also a [POSITION] page
+  if (POSITION_EXEMPT_PAGES.length !== 1 || POSITION_EXEMPT_PAGES[0] !== '/partner-with-us/investors/') problems.push('self-test: the [POSITION] exemption is exactly /partner-with-us/investors/ (WP39) and no other page');
+  for (const exempt of POSITION_EXEMPT_PAGES) if (POSITION_PAGES.includes(exempt)) problems.push(`self-test: ${exempt} is exempt from [POSITION] but also listed as a [POSITION] page`);
 
   // ranked pains and the C8 map (M4): exactly P1, P2, P3 in C2, exactly one C8 row for each, in order; only the two bands are read
   const painLi = (id) => `<li data-pain="${id}" data-astro-cid-x><span class="gp__n">1</span><div><p class="gp__q">A pain</p><p class="gp__a">Its words.</p></div></li>`;
   const painTr = (id) => `<tr data-relieves="${id}" data-fact="PD-15"><th scope="row">A feature</th><td>Which means</td><td>Outcome</td><td>Relieves</td></tr>`;
-  const painPage = ({ pains = PAIN_IDS, rows = PAIN_IDS, c2 = true, c8 = true } = {}) =>
+  // WP38/WP39: the C8 band is three short cards (IncludesBand: <li class="card inc__card" data-relieves="P1" data-fact="…">), not a table
+  const painCard = (id) => `<li class="card inc__card" data-relieves="${id}" data-fact="PD-15" data-reveal data-astro-cid-x><div class="card__body"><h3 class="card__title">A card</h3><p class="card__text">Its sentence.</p></div></li>`;
+  const painPage = ({ pains = PAIN_IDS, rows = PAIN_IDS, c2 = true, c8 = true, cards = false } = {}) =>
     '<main>' +
     (c2 ? `<section class="band band--white band--pad-md" id="problem" aria-labelledby="problem-h"><div class="container"><header class="sh"><h2 id="problem-h">Problem</h2><div class="gp"><ol class="gp__pains">${pains.map(painLi).join('')}</ol></div></header></div></section>` : '') +
-    (c8 ? `<section class="band band--white band--pad-md" id="features" aria-labelledby="features-h"><div class="container"><header class="sh"><h2 id="features-h">Features</h2></header><section class="ft" aria-label="Features and benefits"><table><tbody>${rows.map(painTr).join('')}<tr><th scope="row">A gain creator</th><td>Which means</td><td>Outcome</td><td>—</td></tr></tbody></table></section></div></section>` : '') +
+    (c8
+      ? cards
+        ? `<section class="band band--white band--pad-md" id="features" aria-labelledby="features-h"><div class="container"><header class="sh"><h2 id="features-h">What You Get</h2></header><ul class="grid-cards inc" role="list">${rows.map(painCard).join('')}</ul></div></section>`
+        : `<section class="band band--white band--pad-md" id="features" aria-labelledby="features-h"><div class="container"><header class="sh"><h2 id="features-h">Features</h2></header><section class="ft" aria-label="Features and benefits"><table><tbody>${rows.map(painTr).join('')}<tr><th scope="row">A gain creator</th><td>Which means</td><td>Outcome</td><td>—</td></tr></tbody></table></section></div></section>`
+      : '') +
     // the same attributes in a later band count for nothing
     `<section class="band band--white" id="faq"><ol><li data-pain="P4">x</li></ol><table><tr data-relieves="P4"><td>x</td></tr></table></section></main>`;
   const painOk = (why, markup) => {
@@ -914,6 +951,10 @@ function numberGuardPage(path, html, allow = []) {
     if (!painMapProblems(markup).length) problems.push(`self-test: the pain-map check accepted ${why}`);
   };
   painOk('three pains with one C8 row each (and a gain-creator row, and decoys in a later band)', painPage());
+  painOk('three pains with one C8 card each (IncludesBand, WP38/WP39)', painPage({ cards: true }));
+  painBad('a pain with no C8 card (P2 missing)', painPage({ cards: true, rows: ['P1', 'P3'] }));
+  painBad('two C8 cards for one pain (P1 twice)', painPage({ cards: true, rows: ['P1', 'P1', 'P2', 'P3'] }));
+  painBad('C8 cards that do not follow the ranking', painPage({ cards: true, rows: ['P3', 'P1', 'P2'] }));
   painBad('two pains in C2', painPage({ pains: ['P1', 'P2'] }));
   painBad('four pains in C2', painPage({ pains: ['P1', 'P2', 'P3', 'P4'] }));
   painBad('no pains in C2', painPage({ pains: [] }));
@@ -1121,12 +1162,12 @@ for (const file of htmlFiles(dist)) {
     }
     problems.push(...g.problems);
   }
-  // [POSITION] opens C6 on the 13 pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval)
+  // [POSITION] opens C6 on the pages that carry a positioning statement (SuperKids' [UNLIKE] clause is pending approval; Investors carries none, POSITION_EXEMPT_PAGES)
   if (POSITION_PAGES.includes(path)) {
     positionPages++;
     for (const p of positionProblems(markup, { unlike: !POSITION_WITHOUT_UNLIKE.includes(path), closing: POSITION_EMPLOYER_CLOSING[path] ?? UNLIKE_SENTENCE, whole: POSITION_WHOLE_STATEMENT[path] })) problems.push(`${path}: ${p}`);
   }
-  // three ranked pains in C2 and one C8 row for each, on the three bespoke pages (round 14, M4)
+  // three ranked pains in C2 and one C8 card for each, on the three bespoke pages (round 14, M4)
   if (PAIN_PAGES.includes(path)) {
     painPages++;
     for (const p of painMapProblems(markup)) problems.push(`${path}: ${p}`);
@@ -1140,9 +1181,7 @@ for (const file of htmlFiles(dist)) {
   // [SESSION-AGENDA] required beside the C13 CTA on the five funder and government pages
   if (SESSION_AGENDA_PAGES.includes(path)) {
     agendaPages++;
-    for (const p of sessionAgendaProblems(markup, SESSION_AGENDA_BY_PAGE[path])) problems.push(`${path}: ${p}`);
-    const extra = SESSION_AGENDA_EXTRA_BANDS[path];
-    if (extra) for (const p of sessionAgendaProblems(markup, extra.wanted, extra.id)) problems.push(`${path}: ${p}`);
+    for (const p of sessionAgendaProblems(markup, SESSION_AGENDA_BY_PAGE[path], SESSION_AGENDA_BAND[path])) problems.push(`${path}: ${p}`);
   }
   // sentences and inline links: no doubled period from <Fact>, no link glued to the text before it
   for (const p of markupProblems(markup)) problems.push(`${path}: ${p}`);
@@ -1155,7 +1194,7 @@ if (pages === 0) {
   process.exit(1);
 }
 // A page that must carry the [PLAIN-LINE], the [SESSION-AGENDA], the [POSITION] statement, the ranked pains or the trial relevance line has to be in the build at all.
-for (const p of new Set([...PLAIN_LINE_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
+for (const p of new Set([...PLAIN_LINE_PAGES, ...PROOF_CARD_PAGES, ...SESSION_AGENDA_PAGES, ...POSITION_PAGES, ...POSITION_EXEMPT_PAGES, ...PAIN_PAGES, ...TRIAL_SCOPE_PAGES])) if (!seenPaths.has(p)) problems.push(`${p}: page not found in ${relative(root, dist) || '.'}, so its [PLAIN-LINE], [PROOF-CARD], [SESSION-AGENDA], [POSITION], ranked pains or trial relevance line cannot be checked`);
 // A whitelist entry that no page used any more is stale: the list stays as small as the site needs it.
 for (const e of allowList) if (!e.used) problems.push(`scripts/facts-guard-allow.json: the entry for "${e.text}" on ${e.page} matched nothing in ${relative(root, dist) || '.'} (stale; remove it)`);
 // Production fact holds: a held fact must not be rendered anywhere. Only fact IDs, item numbers and page paths are printed.
@@ -1171,6 +1210,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 row each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 card each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

@@ -57,15 +57,14 @@ test.describe('Home: "What Your Partnership Includes" is three short cards, not 
     }
   });
 
-  test('Home carries none of the matrix labels; YouthWIDE and Development Partners keep them', async ({ page }) => {
+  // WP39 (cycle-16 review): the audience and program pages state their features as three short cards too (tests/wp39.spec.ts holds them); only Investors keeps the table, as a status table
+  test('Home carries none of the matrix labels; Investors keeps its status table, the only table left', async ({ page }) => {
     await open(page, '');
     expect(compact(await page.locator('#features').textContent())).not.toMatch(/Funder Concern Addressed|What Is Included|Practical Benefit|Added Benefit/);
     await expect(page.locator('#features .fc__card')).toHaveCount(0);
-    for (const route of ['programs/youthwide/', 'partner-with-us/development-partners/']) {
-      await open(page, route);
-      expect(compact(await page.locator('#features').textContent()), route).toContain('Funder Concern Addressed');
-      expect(await page.locator('#features .fc__card').count(), route).toBeGreaterThan(0);
-    }
+    await open(page, 'partner-with-us/investors/');
+    expect(compact(await page.locator('#features').textContent())).toContain('What Is Included');
+    expect(await page.locator('#features .fc__card').count()).toBeGreaterThan(0);
   });
 
   test('the band keeps its id and its place (after Recognition, before the questions) and has room under the cards', async ({ page }) => {

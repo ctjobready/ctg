@@ -2,13 +2,14 @@
 // P12 — JobReady@Campus /programs/jobready-campus/ (T3 conversion page; doc 04 matrix 4.5 — universities; C1 → C14).
 // WP30d (owner direction 2026-10-14: less is more): In Short, the definition band, the "Includes" fact list, the three-step band, the pricing paragraph and the scorecard
 // paragraph are cut (each repeated what the glance table, the model band, the options or the pilot points already say).
+// WP39 (cycle-16 review): "Built Around What Institutions Ask For" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import FutureBand from '../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../data/photos';
 import RouteLink from '../../components/pages/partners/RouteLink.astro';
-import FeaturesTable from '../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../components/sections/IncludesBand.astro';
 import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
@@ -134,13 +135,15 @@ const options = [
     ]}
   />
 
-  <!-- C8 -->
-  <FeaturesTable
+  <!-- C8. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the pains this page names (degree holders struggle to find work; employers cannot see the skills your
+       students have; no placement results to publish). The sentences keep the matrix rows' words and rest on the register: PD-02 and PD-01 (certification exam preparation, three months of milestone-based mentoring), PD-10
+       and PD-02 (tracks set from employer demand, an AI-ready curriculum), PD-08 and PD-09 (follow-up surveys, monthly reports, documentary evidence where available). -->
+  <IncludesBand
     title="Built Around What Institutions Ask For"
-    rows={[
-      { feature: 'Industry Certification Exam Preparation by Track and Three Months of Milestone-Based Mentoring', means: 'Each track prepares students for an industry certification, with mentoring toward a first client or a first job.', outcome: 'A supported route to a recognized credential', relieves: 'Degree holders struggle to find work' },
-      { feature: 'Tracks set from employer demand; AI-ready curriculum', means: 'Training is built around the skills employers say they cannot find.', outcome: 'Skills employers ask for', relieves: 'Employers cannot see the skills your students have' },
-      { feature: 'As Agreed in the Program Scope: Follow-Up Surveys, Monthly Reports and Documentary Evidence Where Available', means: 'Your institution has outcome data it can report.', outcome: 'Placement evidence you can report', relieves: 'No placement results to publish' },
+    cards={[
+      { icon: 'award', title: 'Certification Exam Preparation and Mentoring', text: 'Industry certification exam preparation by track, followed by three months of milestone-based mentoring toward a first client or a first job.', facts: ['PD-02', 'PD-01'] },
+      { icon: 'briefcase', title: 'Skills Employers Ask For', text: 'Tracks are set from employer demand in an AI-ready curriculum, built around the skills employers say they cannot find.', facts: ['PD-10', 'PD-02'] },
+      { icon: 'clipboard-check', title: 'Placement Evidence You Can Report', text: 'Follow-up surveys, monthly reports and documentary evidence where available, as agreed in the program scope, give your institution outcome data it can report.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

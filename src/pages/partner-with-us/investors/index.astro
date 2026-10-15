@@ -9,6 +9,8 @@
 // WP36 (cycle-13 reviews): "Independent Evidence" is three sentences (the trial, the survey, the line that these are youth-program outcomes, not platform outcomes) and three links (the survey, the trial, the case
 // studies); the trial explanation, the +10.3 pp chart and table and the three case-study cards are on the Impact pages. The sector taxonomy ("The Sectors Involved") is gone from the mechanism band. The platform band
 // keeps its first sentence: the youth-program line now sits beside the figures it qualifies, and is said once.
+// WP39 (cycle-16 review): the platform-status question points to "What JobReady Does" instead of listing the status a third time (Q11-investor), and the mechanism band carries no "Our Approach" statement (it restated the hero
+// and returned to cohort language; "How JobReady Builds on Delivery" says how the platform builds on delivery).
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
 import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
@@ -26,7 +28,7 @@ import InvestorReach from '../../../components/pages/investors/InvestorReach.ast
 import InvestorFit from '../../../components/pages/investors/InvestorFit.astro';
 import InvestorOffer from '../../../components/pages/investors/InvestorOffer.astro';
 import FaqBlock from '../../../components/pages/hub/FaqBlock.astro';
-import { HEADLINE, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, VALUE_PROPOSITION } from '../../../data/copy';
 import { cta } from '../../../lib/mailto';
 import { faqJsonLd } from '../../../lib/faq';
 import { webPage } from '../../../lib/schema';
@@ -38,7 +40,8 @@ const title = 'Investors';
 const description = 'For impact investors: back JobReady’s staged rollout. Request an introduction call; the deck follows under NDA.';
 if (description.length > 155) throw new Error(`Investors meta description is ${description.length} characters (max 155)`);
 const investor = cta('investor');
-const FAQ_IDS = ['Q11', 'Q5', 'Q2-investor'];
+// Q11-investor (WP39, cycle-16 review): the live / pre-launch / planned list is "What JobReady Does" directly above, so the answer points there; the shared Q11 (Employers, JobReady@Work, the platform page) keeps the list.
+const FAQ_IDS = ['Q11-investor', 'Q5', 'Q2-investor'];
 const jsonLd = [webPage({ path, name: `${title} | CodersTrust`, description }), faqJsonLd('investors', path, FAQ_IDS)];
 
 const featureRows = [
@@ -78,7 +81,7 @@ const mechanismBlocks = [
   <Tone cmf="C4"><InvestorVision id="vision" /></Tone>
 
   <Tone cmf="C6">
-    <HomeMechanism id="mechanism" tone="airy" statementFirst eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" positioning={POSITIONING.investors} blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
+    <HomeMechanism id="mechanism" tone="airy" eyebrow="The Model" title="A Multi-Sided Model: Learn, Earn, Prosper" blocks={mechanismBlocks} link={{ label: 'How Our Model Works', href: '/our-model/' }} />
   </Tone>
 
   <Tone cmf="C7"><InvestorReach id="reach" /></Tone>

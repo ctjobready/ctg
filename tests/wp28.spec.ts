@@ -11,7 +11,7 @@ const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ')
 const UPEACE = 'news/coderstrust-students-invited-to-join-upeaces-young-leaders-for-peace-summer-programme-2026/';
 
 test.describe('What Your Partnership Includes (#features)', () => {
-  // WP38 (cycle-15 review): on Home the band is three short cards (HomeIncludes), not the concern / inclusion / benefit rows; the scoping stays in the card's sentences (tests/wp38.spec.ts holds the whole band)
+  // WP38 (cycle-15 review): on Home the band is three short cards (IncludesBand), not the concern / inclusion / benefit rows; the scoping stays in the card's sentences (tests/wp38.spec.ts holds the whole band)
   test('the reporting card is scoped: "as agreed in the program scope", documentary evidence "where available"', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#features li[data-fact~="PD-08"]');

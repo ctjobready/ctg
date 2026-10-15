@@ -8,6 +8,7 @@
  * group to the evidence pages (no figure from the youth programs is shown here).
  * WP32 (cycle-9 review): the employer credentials (Grameenphone Academy enrollments, AWS Authorized Training Partner, AIvolve) are stated once, in "Our Track Record"; the delivery-record cards that repeated them are gone.
  * WP36 (cycle-13 review): the three pains are statements; the closing reassurance reads "Your first step is a conversation, not a commitment." (the first step here may be a hiring request).
+ * WP39 (cycle-16 review): "What Your Business Gets" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -19,7 +20,7 @@ import CostSection from '../../../components/pages/programs/CostSection.astro';
 import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import RiskReversalBand from '../../../components/sections/RiskReversalBand.astro';
 import Section from '../../../components/ui/Section.astro';
@@ -168,28 +169,15 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     ]}
   />
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (you cannot find the digital talent you need; hiring alone
+       does not close the gap; your teams need upskilling for AI workflows). The sentences keep the matrix rows' words; they rest on the register: IN-04 and PD-10 (job-ready talent, tracks set from employer demand), PD-02 and
+       PD-19 (an AI-ready curriculum; each track's AI content and work-entry plan agreed before enrollment), IN-10 (JobReady@Work: customized curriculum, interactive workshops). -->
+  <IncludesBand
     title="What Your Business Gets"
-    rows={[
-      {
-        feature: 'A Placement Team, Plus Trainees from Employer-Demand Certification Tracks',
-        means: 'Access to candidates from CodersTrust’s placement team for your roles.',
-        outcome: 'Job-ready candidates for your roles',
-        relieves: 'You cannot find the digital talent you need',
-      },
-      {
-        feature: 'An AI-Ready Curriculum, with Each Track’s AI Content and Work-Entry Plan Agreed Before Enrollment',
-        means: 'Your training includes AI content agreed before enrollment.',
-        outcome: 'People ready to work with AI tools',
-        relieves: 'Hiring alone does not close the gap',
-      },
-      {
-        feature: 'JobReady@Work Customized Curriculum and Interactive Workshops',
-        means: 'Your team learns on tasks from your own roles.',
-        outcome: 'A team trained on its own tasks',
-        relieves: 'Your teams need upskilling for AI workflows',
-      },
+    cards={[
+      { icon: 'users', title: 'Job-Ready Candidates for Your Roles', text: 'Access to candidates from CodersTrust’s placement team for your roles, plus trainees from employer-demand certification tracks.', facts: ['IN-04', 'PD-10'] },
+      { icon: 'cpu', title: 'AI Content Agreed Before Enrollment', text: 'An AI-ready curriculum, designed to prepare people to work with AI tools. Each track’s AI content and work-entry plan are agreed before enrollment.', facts: ['PD-02', 'PD-19'] },
+      { icon: 'presentation', title: 'Customized Curriculum and Workshops', text: 'JobReady@Work builds a customized curriculum and interactive workshops, so your team learns on tasks from your own roles.', facts: ['IN-10'] },
     ]}
   />
 

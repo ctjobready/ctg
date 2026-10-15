@@ -9,6 +9,7 @@
  * WP36 (cycle-13 reviews): each figure is stated once. The Kosovo result (102 of 150) is on its Proof in Practice card, so the glance's program-record tile is UNDP YES, Korail (PR-03: a program with UNDP, one of the development partners in PA-01)
  * and the Kosovo tile is gone; the mechanism card says "Placement support into ..."; the three pains are statements ("What Gets in the Way"); the cost question has the one-line route answer and a link to the hub FAQ.
  * WP37 (cycle-14 review): the women-and-marginalized-groups answer no longer restates the three program figures (Proof in Practice, directly above, shows them); it says so and keeps the scope of the trial.
+ * WP39 (cycle-16 review): "What Your Portfolio Gets" is three short cards (IncludesBand), not the funder concern / what is included / practical benefit matrix.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -23,7 +24,7 @@ import FutureBand from '../../../components/sections/FutureBand.astro';
 import { futurePhotos } from '../../../data/photos';
 import MechanismBand from '../../../components/sections/MechanismBand.astro';
 import CaseStudyCarousel from '../../../components/sections/CaseStudyCarousel.astro';
-import FeaturesTable from '../../../components/sections/FeaturesTable.astro';
+import IncludesBand from '../../../components/sections/IncludesBand.astro';
 import FAQBand from '../../../components/sections/FAQBand.astro';
 import NextStepsBand from '../../../components/sections/NextStepsBand.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
@@ -167,29 +168,15 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     ]}
   />
 
-  <!-- C8 · Features to benefits -->
-  <FeaturesTable
+  <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (targets met but paid work lags; the hardest-to-reach groups
+       drop out; outcomes are hard to audit). Each sentence rests on the register: PD-01 (hours, mentoring, placement support), PD-02 and PD-10 (outreach and selection, tracks from employer demand), PD-12 (safeguarding specified per
+       program), PD-08 and PD-09 (monthly reports, baseline, follow-up surveys, documentary evidence where available). -->
+  <IncludesBand
     title="What Your Portfolio Gets"
-    concernLabel="Funder Concern Addressed"
-    rows={[
-      {
-        feature: `${HOURS} Training Hours per Certification, Three Months of Milestone-Based Mentoring, Placement Support`,
-        means: 'Success is measured against agreed outcomes, including paid work, not attendance alone.',
-        outcome: 'Results measured in paid work',
-        relieves: 'Enrollment targets are often met, while employment results lag behind',
-      },
-      {
-        feature: 'Outreach and accessible selection; tracks set per country from employer demand; safeguarding and data protection specified per program',
-        means: 'Priority groups can join a local lab and train for work that local employers want.',
-        outcome: 'Training designed to reach hard-to-reach groups',
-        relieves: 'Hardest-to-reach groups drop out',
-      },
-      {
-        feature: 'As Agreed in the Program Scope: Baseline at Enrollment, Follow-Up Surveys, Monthly Reports and Documentary Evidence Where Available',
-        means: 'Your evaluators can check results against documentary evidence where available.',
-        outcome: 'Auditable results',
-        relieves: 'Outcomes are hard to audit',
-      },
+    cards={[
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: `${HOURS} training hours per certification, followed by three months of milestone-based mentoring and placement support.`, facts: ['PD-01'] },
+      { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
+      { icon: 'clipboard-check', title: 'Results Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

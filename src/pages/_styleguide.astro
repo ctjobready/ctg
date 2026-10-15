@@ -46,6 +46,7 @@ import MechanismBand from '../components/sections/MechanismBand.astro';
 import ProofBand from '../components/sections/ProofBand.astro';
 import CaseStudyCarousel from '../components/sections/CaseStudyCarousel.astro';
 import FeaturesTable from '../components/sections/FeaturesTable.astro';
+import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import OfferBand from '../components/sections/OfferBand.astro';
@@ -577,6 +578,11 @@ const sectionLinks = [
       { feature: 'Certification Exam Preparation', means: 'Each track prepares learners for a credential employers recognize.', outcomeFactId: 'PD-03', relieves: 'Employers cannot find talent' },
       { feature: 'Three Months of Milestone-Based Mentoring', means: 'Learners get structured support from first profile to first client.', outcomeFactId: 'OC-05', relieves: 'Educated youth stay jobless' },
       { feature: 'Outcome Tracking After Each Course', means: 'You get evidence, not anecdotes.', outcomeFactId: 'PD-09', relieves: 'Training that never reports results' },
+    ]} />
+    <IncludesBand id="band-includes" tone="airy" title="What Your Partnership Includes" cards={[
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support.', facts: ['PD-01'] },
+      { icon: 'clipboard-check', title: 'Results You Can Check', text: 'Monthly reports and follow-up surveys, as agreed in the program scope, show progress toward paid work. Documentary evidence is checked where available.', facts: ['PD-08', 'PD-09'] },
+      { icon: 'briefcase', title: 'Tracks Chosen from Employer Demand', text: 'An AI-ready curriculum is designed to follow the skills employers ask for as entry-level tasks change.', facts: ['PD-02', 'PD-10'] },
     ]} />
     <ProofBand id="band-proof" title="Independent Evidence and Survey Results" headlineFact="RC-01" statIds={['RC-01', 'RC-02', 'OC-01', 'OC-03']} links={[{ label: 'Impact Survey 2026', href: '/impact/outcomes-2026/' }, { label: 'The Randomized Trial', href: '/impact/independent-evaluation/' }]} />
     <CaseStudyCarousel id="band-cases" title="Proof in Practice" items={[

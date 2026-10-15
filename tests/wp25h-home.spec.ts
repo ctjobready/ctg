@@ -103,7 +103,7 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   test('the carousel slides carry the accepted headings, bases and links', async ({ page }) => {
     await open(page, pageByRoute('/'));
     // WP31: said as what surveyed completers report, not as a before-and-after effect; the heading says whose figures these are, so the slide has no lead
-    await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report a Median Income of $245, Up from $82 Before Training');
+    await expect(slide(page, 2).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide(page, 2).locator('.hs__lead')).toHaveCount(0);
     // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
     // WP38 (cycle-15 review): the heading leads with the figure and then names the base; the eyebrow, the lead and the tile keep "surveyed completers"
