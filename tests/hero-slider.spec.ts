@@ -74,12 +74,13 @@ test.describe('home hero slider', () => {
     // WP38 (cycle-15 review): the reach slide had SC-03's figure as its tile; WP45 (cycle-21 review): the figure is its heading and the tile is gone (tests/wp38.spec.ts)
     // WP41 (cycle-18 reviews): the speed slide's heading is the finding alone, with no percentage (the 58.8% and its base are the tile), and the government slide counts its contracts (tests/wp41.spec.ts)
     // WP42 (cycle-19 review): the government slide is second, after the trial: trial, government scale, survey, program results, speed, reach, programs
-    // WP45 (cycle-21 review): the speed slide says "Most First Earnings Came Within Six Months" and the reach slide "Programs in 15 Countries and Territories" (tests/wp45.spec.ts)
+    // WP45 (cycle-21 review): the speed slide says "Most First Earnings Came Within Six Months" and the reach slide "Programs in 15 Countries and Territories" (tests/wp45.spec.ts);
+    // WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course ("... of the Course Ending")
     expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
       'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'Most First Earnings Came Within Six Months',
+      'Most First Earnings Came Within Six Months of the Course Ending',
       'Programs in 15 Countries and Territories',
     ]);
     expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');

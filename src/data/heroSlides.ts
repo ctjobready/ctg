@@ -30,6 +30,7 @@ import { cta } from '../lib/mailto';
  * WP45 (cycle-21 review): the trial slide leads with the trial's income result ("Women Offered a Place Earned an Estimated 41% More", RC-01 and RC-04), since the hero card, the announcement bar and the ">4×" tile state the employment result; the
  * government slide states the contract scope in GV-12's own note (it includes Her Power's 25,125 women trained); the speed slide is "Most First Earnings Came Within Six Months" (a majority, not a promise); the reach slide is
  * "Programs in 15 Countries and Territories" (the figure in the heading, so no tile repeats it).
+ * WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course: "Most First Earnings Came Within Six Months of the Course Ending" (the tile caption is OC-05's label).
  */
 
 export interface HeroSlideStat {
@@ -128,9 +129,10 @@ if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six go
 /**
  * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
  * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.
+ * WP46 (cycle-22 review): the note now also says "CodersTrust trained 2,500 women directly" (GV-11 and GV-13), so "25,125 women trained" cannot be read as CodersTrust's own count.
  */
 const governmentNote = fact('GV-12').stat?.glance?.note;
-if (!governmentNote || !/^The total is contract scope, not a count of completers; it includes Her Power’s national program \(\d[\d,]* women trained\)\.$/.test(governmentNote)) throw new Error('heroSlides: GV-12 glance note no longer reads "The total is contract scope, not a count of completers; it includes Her Power’s national program (N women trained)."');
+if (!governmentNote || !/^The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained \d[\d,]* women; CodersTrust trained \d[\d,]* women directly\.$/.test(governmentNote)) throw new Error('heroSlides: GV-12 glance note no longer reads "The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained N women; CodersTrust trained N women directly."');
 if (!fact('OC-05').stat?.value) throw new Error('heroSlides: OC-05 no longer carries the figure the speed slide shows (its tile; the heading does not state it, WP41)');
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
@@ -201,10 +203,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
     title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
     titleFacts: ['GV-12'],
-    // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note ("The total is contract scope, not a count of completers; it includes
-    // Her Power's national program (25,125 women trained)."), the wording Impact and Governments print, in place of "(contract scope, not people trained)".
-    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${governmentNote} ${governmentScope[3][0].toUpperCase()}${governmentScope[3].slice(1)}.`,
-    leadFacts: ['GV-12', 'GV-01'],
+    // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note, the wording Impact and Governments print, in place of
+    // "(contract scope, not people trained)". WP46 (cycle-22 review): the note says who trained whom ("The total is contract scope, not a count of completers; it includes Her Power's national program, which trained 25,125 women;
+    // CodersTrust trained 2,500 women directly."), so the 25,125 is not read as CodersTrust's; and the last sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment.
+    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${governmentNote} CodersTrust is the ${governmentScope[3]}.`,
+    leadFacts: ['GV-12', 'GV-01', 'GV-11'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },
@@ -248,7 +251,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // name the surveyed completers. WP43 (cycle-20 review): no lead; the sentence under the heading ("Among surveyed completers who first earned during or after training, most started within six months.") said what the heading
     // and the tile already say, so the slide is its heading, the tile with its full base, and the evidence link.
     // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months" says it is a majority of the survey's first earnings (58.8% of the 170 surveyed completers who first earned during or after training), not a promise that earnings begin within six months.
-    title: 'Most First Earnings Came Within Six Months',
+    // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the END of the course, so the heading says so ("... of the Course Ending"); the tile's caption (OC-05's label) says "of finishing the course".
+    title: 'Most First Earnings Came Within Six Months of the Course Ending',
     titleFacts: ['OC-05'],
     stats: [{ factId: 'OC-05' }],
     links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],

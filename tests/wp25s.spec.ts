@@ -213,7 +213,8 @@ test.describe('About', () => {
   test('About: "Inclusion by Design" says who can join, in one plain sentence', async ({ page }) => {
     await open(page, 'about/');
     const text = compact(await page.locator('#how-we-work').innerText());
-    expect(text).toContain('Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.');
+    // WP46 (cycle-22 review): scoped to the supported youth cohorts ("Programs" also covered the corporate, school and diploma programs)
+    expect(text).toContain('Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every group.');
     expect(text).not.toContain('interview guide selection and placement');
   });
 });

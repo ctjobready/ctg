@@ -43,8 +43,10 @@ interface Props {
   archiveNote?: string;
   /** Register facts the note states (front matter `archiveNoteFacts`), rendered as data-fact. */
   archiveNoteFacts?: string[];
+  /** A text link that closes the note (front matter `archiveNoteLink`): the page that now tells the story, e.g. its case study (WP46). */
+  archiveNoteLink?: { label: string; href: string };
 }
-const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', archiveNote, archiveNoteFacts = [] } = Astro.props;
+const { headline, seoTitle, description, path, date, updated, topic, image, imageAlt, imageAsset, heroCaption, audience = 'general', archiveNote, archiveNoteFacts = [], archiveNoteLink } = Astro.props;
 const closing = NEWS_CTA[audience];
 const closingHref = ctaHref(closing.cta);
 const canonical = canonicalUrl(path);
@@ -99,7 +101,7 @@ const share = {
         Archived post, lightly edited. Figures, job titles and references to officeholders reflect the date of publication; current figures are on the{' '}
         <a class="link" href={url('/impact/')}>Impact pages</a>.
         Published <time datetime={isoDate(date)}>{formatDate(date)}</time>{updated && <>; updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time></>}.
-        {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}</span>}
+        {archiveNote && <span class="archive-banner__note" data-fact={archiveNoteFacts.length ? archiveNoteFacts.join(' ') : undefined}>{archiveNote}{archiveNoteLink && <>{' '}<a class="link" href={url(archiveNoteLink.href)}>{archiveNoteLink.label}</a></>}</span>}
       </span>
     </p>
     {Astro.slots.has('hero') && <figure class="art__hero"><slot name="hero" />{heroCaption && <figcaption class="art__caption">{heroCaption}</figcaption>}</figure>}

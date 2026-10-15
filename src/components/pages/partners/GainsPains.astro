@@ -45,7 +45,7 @@ const solo = gains.length === 0;
   }
   <div class="gp__col">
     <h3 class="gp__h">{painsHeading}</h3>
-    <ol class="gp__pains" role="list">
+    <ol class="gp__pains" role="list" style={solo ? `--gp-cols:${Math.min(pains.length, 3)}` : undefined}>
       {
         pains.map((p, i) => (
           <li data-pain={p.id} data-fact={p.facts?.join(' ')}>
@@ -136,12 +136,12 @@ const solo = gains.length === 0;
       grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       gap: var(--space-lg) var(--space-xl);
     }
-    /* pains alone: the three ranked pains side by side, one compact row */
+    /* pains alone: the ranked pains side by side, one compact row (three columns; WP46: two where a page states two, so the row is not left with an empty third) */
     .gp--solo {
       grid-template-columns: minmax(0, 1fr);
     }
     .gp--solo .gp__pains {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--gp-cols, 3), minmax(0, 1fr));
       gap: var(--space-md) var(--space-lg);
     }
   }

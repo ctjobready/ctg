@@ -240,18 +240,18 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
 test.describe('Home: slide headings, tile and meta description (items 8, 13 and 16)', () => {
   // WP42 (cycle-19 review): the government slide moved to second, so the speed slide is the fifth
   // WP43 (cycle-20 review): the slide has no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated the heading and the tile)
-  // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  test('slide 5 is "Most First Earnings Came Within Six Months": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
+  // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"; WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
+  test('slide 5 is "Most First Earnings Came Within Six Months of the Course Ending": no percentage in the heading, no lead, and the 58.8% tile keeps its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
-    expect('Most First Earnings Came Within Six Months').toBe(titleCase('Most First Earnings Came Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
+    expect('Most First Earnings Came Within Six Months of the Course Ending').toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     const tile = compact(await slide.locator('.hs__stat').textContent());
     expect(tile).toContain('58.8%');
-    expect(tile).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');
+    expect(tile).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
   });
 
   test('slide 2 counts the contracts and says "a National University Partnership"', async ({ page }) => {

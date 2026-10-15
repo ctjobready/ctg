@@ -56,7 +56,9 @@ test.describe('Investors: the track-record band (item 1)', () => {
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '15']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     expect(compact(await page.locator('#guide p[data-fact="ID-02"]').textContent())).toBe('Launched in Copenhagen in 2014.');
-    expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths with progressive levels.');
+    // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
+    expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
+    expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014, with Institutions That Reach Youth');
     expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
   });
@@ -225,8 +227,8 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
   test('slide 5 is its heading, the 58.8% tile with its full base and the evidence link; the sentence that repeated them is gone', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months")
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
+    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months"; WP46, cycle-22 review, owner answer 2026-10-15: "... of the Course Ending", the six months counted from the end of the course)
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
@@ -235,7 +237,7 @@ test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
     await expect(tile).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await tile.textContent())).toContain('58.8%');
-    expect(compact(await tile.textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');
+    expect(compact(await tile.textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
     const link = slide.locator('a', { hasText: 'See When Completers First Earn' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');

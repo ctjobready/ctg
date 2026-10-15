@@ -48,7 +48,8 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
 
     const wsdfm = cards.nth(0);
     await expect(wsdfm.locator('.case__value')).toHaveText('711 of 1,000');
-    expect(compact(await wsdfm.locator('.case__label').textContent())).toBe('WSDFM program records, separate from the trial: 71% in work');
+    // WP46 (cycle-22 review): "(not trial data)", where it read ", separate from the trial,"
+    expect(compact(await wsdfm.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data): 71% in work');
     await expect(wsdfm.locator('.case__context')).toHaveCount(0);
 
     const delivery = [

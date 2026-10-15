@@ -96,15 +96,17 @@ test.describe('audience pages', () => {
     await page.goto('partner-with-us/governments/');
     const tile = page.locator('#glance li', { hasText: '31,200+' });
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
-    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    // WP46 (cycle-22 review): the note says who trained whom, so the 25,125 is not read as CodersTrust's own count
+    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
-  test('governments: "What a Ministry Sees" names each step\'s starting point (WP29): the first cohort, then 6 and 12 months after each course', async ({ page }) => {
+  // WP46 (cycle-22 review): "What a Ministry Sees" (WP24a, WP29) is gone: it restated the reporting cadence the page already gives. Its one detail that stood nowhere else, the follow-up surveys counted from the end of each course, is in the delivery model's card.
+  test('governments: the ministry timeline strip is gone; the "Placement and Monthly Reports" card names the follow-up surveys at 3, 6 and 12 months after each course', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
-    const strip = page.locator('#ministry-sees');
-    await expect(strip.locator('h2')).toHaveText('What a Ministry Sees');
-    expect(await texts(page, '#ministry-sees ol > li .ms__when')).toEqual(['Month 1 of the First Cohort', '6 Months After Each Course', '12 Months After Each Course']);
-    await expect(strip).toContainText('as agreed in the program scope');
+    await expect(page.locator('#ministry-sees')).toHaveCount(0);
+    const card = page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' });
+    await expect(card).toHaveCount(1);
+    await expect(card).toContainText('Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
   });
 
   test('governments: the contracts table becomes stacked rows on a phone', async ({ page }) => {

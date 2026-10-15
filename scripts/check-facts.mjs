@@ -143,8 +143,8 @@ const DISCIPLINE = [
   [/\bdashboards?\b/i, '"dashboard" (use "monthly reports")'],
   [/into first income/i, '"into first income" (use "milestone-based mentoring")'],
   [/\b30[- ]minute/i, 'unsourced "30 minutes" promise'],
-  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners started earning within six months.", with the 58.8%, its base and the survey qualifier immediately below
-  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners started earning within six months.", with the 58.8%, its base and the survey qualifier below it)'],
+  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners started earning within six months of finishing the course." (WP46: the owner's answer of 2026-10-15 counts the six months from the end of the course), with the 58.8%, its base and the survey qualifier immediately below
+  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners started earning within six months of finishing the course.", with the 58.8%, its base and the survey qualifier below it)'],
 ];
 // The investor CTA label and its mailto subject are allowed.
 const ALLOWED = [/Investor(%20| )deck(%20| )request/gi];

@@ -100,9 +100,10 @@ test.describe('the UPEACE news headline matches its body', () => {
 test.describe('post-inquiry band (#next-steps)', () => {
   const band = (page: Page) => page.locator('#next-steps');
 
-  test('the week-by-week steps are labelled "For Grant-Funded Cohorts", ahead of the heading', async ({ page }) => {
+  // WP46 (cycle-22 review): the label reads "For Grant-Funded Pilots" (it read "Cohorts"), the term the hub and Development Partners use for this timing
+  test('the week-by-week steps are labelled "For Grant-Funded Pilots", ahead of the heading', async ({ page }) => {
     await open(page, '');
-    await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Cohorts');
+    await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Pilots');
     await expect(band(page).locator('h2')).toHaveText('What Happens After You Contact Us');
     // WP29: each step names its starting point
     await expect(band(page).locator('ol h3')).toHaveText([/Discovery \(Week 1\)/, /Co-Design \(Week 2\)/, /Agreement \(Week 3\)/, /Training Starts 6–8 Weeks After Signing/]);

@@ -12,14 +12,10 @@ interface Props {
   lead?: string;
   /** Show the full PD-04 timing line under the steps. A page that already states the window elsewhere turns it off. */
   timing?: boolean;
-  /**
-   * WP34 (cycle-11 review): a band with no steps, for a page whose routes do not share one process (Foundations: a cohort grant and a platform grant; the call-to-action band
-   * above it says what is discussed for each route, so the band does not say it again). The band is then its heading and `lead`, with no PD-04 marker, no timing line and no default lead.
-   */
-  stepless?: boolean;
   id?: string;
 }
-const { title = 'What Happens Next', stepless = false, lead = stepless ? undefined : 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
+// WP46 (cycle-22 review): the stepless variant (WP34, Foundations only) is gone: Foundations now shows these four steps, with the lead "For cohort grants.".
+const { title = 'What Happens Next', lead = 'For grant-funded pilots. Public procurement follows the agency’s own timeline.', timing = true, id = 'next-steps' } = Astro.props;
 const pd04 = fact('PD-04');
 // Step headings are read from PD-04 ("Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3)", then the window after signing) so timings are never retyped.
 const [discovery, codesign, agreement, training] = grantStartTitles();
@@ -32,7 +28,7 @@ const steps = [
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} flush={stepless} />
-  {!stepless && <div data-fact="PD-04"><StepFlow steps={steps} /></div>}
-  {timing && !stepless && <p class="next__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
+  <SectionHeader id={`${id}-h`} eyebrow="Next Steps" title={title} lead={lead} />
+  <div data-fact="PD-04"><StepFlow steps={steps} /></div>
+  {timing && <p class="next__fn text-muted t-body-xs">Timing: {endSentence(pd04.text)}</p>}
 </Section>

@@ -74,7 +74,8 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   });
 
   test('the 31,200+ note says the total is contract scope, not a count of completers, and that Her Power’s 25,125 women were trained; Impact and Governments read the same register line', async ({ page }) => {
-    const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).';
+    // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count)
+    const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
     await open(page, 'partner-with-us/governments/');
@@ -202,7 +203,8 @@ test.describe('the WSDFM 71% leaves the carousel and the glance tiles (the case 
   test('the Proof in Practice cards and the case study still state the WSDFM program records, apart from the trial', async ({ page }) => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
-      expect((await texts(page, '#cases article')).join(' | '), route || 'home').toContain('WSDFM program records, separate from the trial: 71% in work');
+      // WP46 (cycle-22 review): "WSDFM program records (not trial data): 71% in work"
+      expect((await texts(page, '#cases article')).join(' | '), route || 'home').toContain('WSDFM program records (not trial data): 71% in work');
     }
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
@@ -338,9 +340,11 @@ test.describe('plain words and plain claims', () => {
     expect(compact(await card.textContent())).not.toContain('Independent evaluation');
   });
 
-  test('Governments: "What a Ministry Sees" names the follow-up surveys at 3, 6 and 12 months in its lead; the contracts table and the services line use plain words', async ({ page }) => {
+  // WP46 (cycle-22 review): "What a Ministry Sees" is gone; the delivery model's "Placement and Monthly Reports" card names the follow-up surveys at 3, 6 and 12 months after each course
+  test('Governments: the delivery card names the follow-up surveys at 3, 6 and 12 months; the contracts table and the services line use plain words', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#ministry-sees .sh__lead')).toHaveText('Planned for every cohort, as agreed in the program scope. Reports run monthly, with follow-up surveys at 3, 6 and 12 months after each course.');
+    await expect(page.locator('#ministry-sees')).toHaveCount(0);
+    await expect(page.locator('#mechanism .model__block', { hasText: 'Placement and Monthly Reports' })).toContainText('with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course.');
     const contracts = await texts(page, '#contracts tbody td:nth-child(2)');
     expect(contracts).toContain('Training in digital technologies');
     expect(contracts).toContain('Training for staff on the learning platform and lab operations');
@@ -373,7 +377,8 @@ test.describe('plain words and plain claims', () => {
     for (const route of ['', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/development-partners/', 'partner-with-us/universities/', 'partner-with-us/local-partners/', 'programs/youthwide/']) {
       await open(page, route);
       const qs = await texts(page, '.gp__q');
-      expect(qs.length, route || 'home').toBeGreaterThanOrEqual(3);
+      // WP46 (cycle-22 review): Universities states two pains (the employers' pain is the 72% tile directly below them)
+      expect(qs.length, route || 'home').toBeGreaterThanOrEqual(route === 'partner-with-us/universities/' ? 2 : 3);
       for (const q of qs) expect(q, `${route || 'home'}: "${q}"`).toBe(titleCase(q));
     }
     await open(page, 'partner-with-us/governments/');

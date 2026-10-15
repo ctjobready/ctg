@@ -47,25 +47,14 @@ const SAFE_FAQS: Record<string, number[]> = {
   ict: [1],
 };
 
-/** One point of the "Why This Course" band: every line names modules of the course and says nothing beyond them. */
-export interface NuWhy {
-  title: string;
-  text: string;
-}
-
-/** Short, claim-light summary per course, written from the module names. */
-export const NU_COURSE_COPY: Record<string, { short: string; lead: string; description: string; topics: string[]; titleTag: string; why: NuWhy[]; alsoConsider: string }> = {
+/** Short, claim-light summary per course, written from the module names. (WP46: the "Why This Course" points are gone with the "What You Will Work On" band, which restated the module list.) */
+export const NU_COURSE_COPY: Record<string, { short: string; lead: string; description: string; topics: string[]; titleTag: string; alsoConsider: string }> = {
   'digital-marketing': {
     short: 'Practical digital marketing: SEO, social media, advertising and analytics.',
     lead: 'Practical digital marketing skills, from SEO and social media to advertising and analytics, in a National University postgraduate diploma delivered by CodersTrust.',
     description: 'A National University postgraduate diploma in digital marketing, delivered by CodersTrust: SEO, social media, advertising and analytics.',
     topics: ['SEO and analytics', 'Social media marketing', 'E-commerce'],
     titleTag: 'NU Postgraduate Diploma in Digital Marketing',
-    why: [
-      { title: 'A Practical Core', text: 'Five modules are marked practical: WordPress Design, Content Marketing, Affiliate & E-mail Marketing, Search Engine Optimization (SEO) and Web & Google Analytics.' },
-      { title: 'Channels and Commerce', text: 'Separate modules cover AdWords & PPC, Social Media Marketing and E-Commerce.' },
-      { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
-    ],
     alsoConsider: 'Prefer programming, databases and networks? The NU Postgraduate Diploma in ICT is the course for those modules.',
   },
   ict: {
@@ -74,12 +63,6 @@ export const NU_COURSE_COPY: Record<string, { short: string; lead: string; descr
     description: 'A National University postgraduate diploma in ICT, delivered by CodersTrust: programming, databases, networks, mobile and web development.',
     topics: ['Programming and databases', 'Networks and troubleshooting', 'Mobile and web development'],
     titleTag: 'NU Postgraduate Diploma in ICT',
-    why: [
-      { title: 'Programming and Data', text: 'Modules on Java Programming and Database Management Systems.' },
-      { title: 'Systems and Networks', text: 'Modules on Office Automation, System Maintenance and Troubleshooting, and Computer Networks Maintenance.' },
-      { title: 'Apps, Web and Media', text: 'Modules on Mobile Application Development, Web Application & Web Site Design, and Multimedia Design and Developments.' },
-      { title: 'A Final Module', text: 'The last module combines an internship, project work and a seminar.' },
-    ],
     alsoConsider: 'Prefer SEO, social media and advertising? The NU Postgraduate Diploma in Digital Marketing is the course for those modules.',
   },
 };

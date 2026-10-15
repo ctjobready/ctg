@@ -117,21 +117,23 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
   test('slide 2 reads the Impact and Governments wording, with Her Power’s 25,125 women, and keeps the National University sentence', async ({ page }) => {
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
+    // WP46 (cycle-22 review): the note says who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum scopes for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly. CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
     expect(compact(await lead.textContent())).not.toContain('not people trained');
-    expect(fact('GV-12').stat?.glance?.note).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    expect(fact('GV-12').stat?.glance?.note).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 });
 
 test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
-  test('slide 5 is "Most First Earnings Came Within Six Months" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so the heading ends "of the Course Ending" (tests/wp46.spec.ts)
+  test('slide 5 is "Most First Earnings Came Within Six Months of the Course Ending" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
-    expect('Most First Earnings Came Within Six Months').toBe(titleCase('Most First Earnings Came Within Six Months'));
+    await expect(s.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
+    expect('Most First Earnings Came Within Six Months of the Course Ending').toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(s.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -282,7 +284,10 @@ test.describe('News: the Her Power post carries a delivery note (item 20)', () =
     await open(page, HER_POWER);
     const banner = page.locator('.archive-banner');
     const note = banner.locator('.archive-banner__note');
-    await expect(note).toHaveText('Delivered: the national program trained 25,125 women.');
+    // WP46 (cycle-22 review): the note closes with a text link to the Her Power case study (the sentence itself is unchanged)
+    await expect(note).toHaveText('Delivered: the national program trained 25,125 women. See the Her Power case study.');
+    await expect(note.locator('a')).toHaveText('See the Her Power case study.');
+    expect(await note.locator('a').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
     expect(await note.getAttribute('data-fact')).toBe('GV-01');
     expect(fact('GV-01').text).toContain('a national program that trained 25,125 women');
     expect(compact(await banner.textContent())).toContain('Archived post, lightly edited.');
@@ -296,11 +301,12 @@ test.describe('News: the Her Power post carries a delivery note (item 20)', () =
   });
 });
 
-test.describe('The cost inclusions are one sentence in the hub and in Our Model (item 21)', () => {
+// WP46 (cycle-22 review): Our Model no longer prints the hub's inclusion answer word for word; its "What Does It Cost?" is the one-line route answer with a link to the hub's FAQ (tests/wp46.spec.ts)
+test.describe('The cost inclusions are one sentence in the hub (item 21); Our Model links to it (WP46)', () => {
   const SENTENCE = 'Supported youth cohorts include outreach and selection, training, certification exam preparation and the exam fee, three months of mentoring, placement support and 12 months of outcome tracking after each course.';
   const COST = `Pricing is set per program; we share an indicative budget in the discovery session. ${SENTENCE} Devices, stipends, connectivity and independent evaluation are budgeted separately where needed.`;
 
-  for (const route of ['partner-with-us/', 'our-model/']) {
+  for (const route of ['partner-with-us/']) {
     test(`${route}: "What Does It Cost?" is the three-sentence answer, tied to PD-02, and the FAQ JSON-LD says the same words`, async ({ page }) => {
       await open(page, route);
       const item = page.locator('details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) });
@@ -312,6 +318,17 @@ test.describe('The cost inclusions are one sentence in the hub and in Our Model 
       expect(tagged).toContain('PD-02');
     });
   }
+
+  test('our-model/: "What Does It Cost?" is the one-line route answer and a link to the hub FAQ, tied to PD-02; the inclusion sentence is not printed a second time', async ({ page }) => {
+    await open(page, 'our-model/');
+    const item = page.locator('details', { has: page.locator('summary', { hasText: 'What Does It Cost?' }) });
+    await expect(item).toHaveCount(1);
+    expect(compact(await item.locator('.faq__a').textContent())).toBe('Pricing is set per program; we share an indicative budget in the discovery session. See what a supported cohort includes.');
+    expect(await item.locator('.faq__a a').getAttribute('href')).toMatch(/\/partner-with-us\/#faqs$/);
+    expect(compact(await page.locator('main').textContent())).not.toContain(SENTENCE);
+    const tagged = await item.evaluate((el) => [el, ...Array.from(el.querySelectorAll('[data-fact]'))].map((e) => e.getAttribute('data-fact') ?? '').join(' '));
+    expect(tagged).toContain('PD-02');
+  });
 
   test('every inclusion in the sentence is one of PD-02’s standard inclusions', async () => {
     const pd02 = fact('PD-02').text.toLowerCase();

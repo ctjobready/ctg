@@ -52,6 +52,8 @@ const news = defineCollection({
        */
       archiveNote: z.string().max(120).optional(),
       archiveNoteFacts: z.array(z.string()).default([]),
+      /** WP46 (cycle-22 review): an optional text link that closes the archive note, to the page that now tells the story (a case study); `href` is a site path, `label` a full sentence ("See the Her Power case study."). */
+      archiveNoteLink: z.object({ label: z.string().max(60), href: z.string().startsWith('/') }).optional(),
       /** More photographs from the old post that the body does not place inline; shown as a PhotoGallery under the text. */
       gallery: z.array(z.object({ image: image(), alt: z.string() })).default([]),
     }),

@@ -68,11 +68,12 @@ test.describe('Home: each figure once', () => {
 
   // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
   // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  test('slide 5 is headed "Most First Earnings Came Within Six Months" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so the heading ends "of the Course Ending"
+  test('slide 5 is headed "Most First Earnings Came Within Six Months of the Course Ending" (the finding, no percentage), has no lead, and keeps "surveyed completers" in the 58.8% tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most First Earnings Came Within Six Months'));
+    await expect(slide.locator('h2')).toHaveText('Most First Earnings Came Within Six Months of the Course Ending');
+    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most First Earnings Came Within Six Months of the Course Ending'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
     expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
@@ -293,11 +294,12 @@ test.describe('the ranked pains are statements, not questions', () => {
     ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Is Thin']],
     ['partner-with-us/development-partners/', ['Skills Programs Miss Their Employment Targets', 'The Hardest-to-Reach Groups Drop Out', 'Outcomes Are Hard to Audit']],
     ['partner-with-us/foundations/', ['Grants Buy Training Hours, but Rarely Earnings', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
-    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Employers Struggle to Find the Skills They Need', 'Institutions Lack Placement Results They Can Publish']],
+    // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
+    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],
   ];
   for (const [route, titles] of PAGES) {
-    test(`${route}: three Title Case statements, none a question, and no answer line that repeats its title`, async ({ page }) => {
+    test(`${route}: ${titles.length === 2 ? 'two' : 'three'} Title Case statements, none a question, and no answer line that repeats its title`, async ({ page }) => {
       await open(page, route);
       expect(await texts(page, '.gp__q')).toEqual(titles);
       for (const t of titles) expect(t, t).toBe(titleCase(t));

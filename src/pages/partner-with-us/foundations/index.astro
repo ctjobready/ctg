@@ -17,6 +17,8 @@
  * "Explore JobReady’s Rollout", one for each route, in place of "See Funding Route 1 / 2" and the platform link beside them; "Reporting and Review" says what the reports and reviews do; the closing
  * "It doesn’t have to be this way." line of the cost band is gone.
  * WP43 (cycle-20 review): the problem band's heading is "Fund Training That Reaches Paid Work" (it was "Grants Buy Hours. You Want Earnings"); the first pain below it still says that grants buy hours, but rarely earnings.
+ * WP46 (cycle-22 review): "What Happens After You Say Yes" has the four Development Partners steps, scoped "For cohort grants." (the call-to-action band above keeps what is discussed for a platform grant), and the cohort timing that the
+ * call-to-action urgency line carried is now the steps' own; the closing partner line reads "Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus." (it was "Development and NGO partners include ...", which mislabeled the foundations among them).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -46,7 +48,7 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { BIGD_NAME, C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -132,7 +134,7 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     statements={[
       { facts: ['PR-01', 'RC-01'], markers: ['RC-01'], text: `The ${BIGD_NAME} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.` },
     ]}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />
 
@@ -262,16 +264,16 @@ const sixMonth = factPart('PD-09', /surveys at \d+, (\d+) and \d+ months/);
     heading="Let’s Explore a Funding Partnership"
     cta={{ label: primary.label, href: primary.href }}
     secondary={report}
-    urgency={SPEED.text}
   >
     <!-- WP34 (cycle-11 review): the funders here choose a cohort grant or a platform grant, so the line says what is discussed for each (the cohort-only discovery-session agenda is on the pages that sell cohorts). It is said once; the band below does not repeat it. -->
     <SessionAgenda lead="foundations" />
   </CTABand>
 
   <!-- C14 · Next steps -->
-  <!-- WP32 (cycle-9 review): the two funding routes do not share one process, so the band shows no week-by-week steps. A cohort grant's timing (6–8 weeks after signing) stays in the C13 urgency line above, where it
-       is labeled as grant-funded pilot timing. WP34 (cycle-11 review): what is discussed for each route is said once, in the C13 band above, so this band keeps only the introductory-call line. -->
-  <NextStepsBand title="What Happens After You Say Yes" lead="Details of what the grant delivers are discussed in the introductory call." stepless />
+  <!-- WP46 (cycle-22 review): the band has the same four steps as Development Partners, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the C13 agenda above says). WP32 (cycle-9 review) had left the band
+       without steps and kept the cohort timing in the C13 urgency line; the steps now carry that timing (about three weeks to agreement, 6–8 weeks from signing to training), so the urgency line that repeated it is gone, as on Development Partners.
+       The "introductory call" sentence is gone with the stepless band: the page names one first step, the discovery session. -->
+  <NextStepsBand title="What Happens After You Say Yes" lead="For cohort grants." timing={false} />
   <Reinforcement logos={false} reminder={false} validate={C14.validateFor.foundations} />
 
   <PageEnhancements />

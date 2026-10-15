@@ -39,6 +39,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import DualCtaBand from '../../../components/pages/partners/DualCtaBand.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import RouteBlock from '../../../components/ui/RouteBlock.astro';
+import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
@@ -59,6 +60,13 @@ const { title, description } = meta(
 
 // Q8-employer: the employer pricing answer (the same variant JobReady@Work uses), not the youth-cohort pricing answer.
 const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
+
+// WP46 (cycle-22 review): the hiring route is two steps in the same step component as the training route (it was one sentence beside four steps), both in wording this page already has:
+// the scoping sentence (EMPLOYER_HIRING_ROUTE, IN-04) and "Job-ready candidates are introduced through CodersTrust’s placement team." (the "Hire Talent" band's lead).
+const hiringSteps = [
+  { title: 'Discovery', text: EMPLOYER_HIRING_ROUTE },
+  { title: 'Introductions', text: 'Job-ready candidates are introduced through CodersTrust’s placement team.' },
+];
 ---
 
 <LandingLayout
@@ -106,7 +114,8 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'You struggle to find the digital talent you need', text: 'Employers worldwide report difficulty finding talent, and AI skills are the hardest to find.' },
+        // WP46 (cycle-22 review): the 72% tile directly below states that employers worldwide report difficulty finding talent (PX-05), so the card adds only what the tile does not headline: AI skills are the hardest to find.
+        { q: 'You struggle to find the digital talent you need', text: 'AI skills are the hardest to find.' },
         { q: 'Hiring alone does not close the gap', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
         { q: 'Your teams need upskilling for AI workflows', text: 'The upskilling has to cover tasks from their own roles.' },
       ]}
@@ -131,7 +140,7 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     statSize="lg"
     statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-07'] }]}
     logoNote={{ facts: ['PA-06'] }}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="private"
   />
 
@@ -235,7 +244,7 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     ]}
   >
     <RouteBlock label="For Hiring">
-      <p class="lead" data-fact="IN-04" data-reveal>{EMPLOYER_HIRING_ROUTE}</p>
+      <div data-fact="IN-04"><StepFlow level={4} steps={hiringSteps} /></div>
     </RouteBlock>
   </StepsBand>
   <Reinforcement firstAction={C14.variants.employers} logos={false} reminder={false} validate={C14.validateFor.employers} />

@@ -17,11 +17,12 @@
  * WP41 (cycle-18 review): the contracts table's scope cells are short phrases in every row (Her Power's was a sentence with three figures), and every figure sits in the "Training Figure" column; the "Capacity That Stays" card of
  * the delivery band no longer repeats the manuals figure (the table keeps it).
  * WP42 (cycle-19 review): "Our Approach" is the two shared sentences with the reader named in the second ("Your agency receives monthly reports on progress toward paid work, as agreed in the program scope."; POSITIONING.governments, declared whole in scripts/check-facts.mjs).
+ * WP46 (cycle-22 review): "What a Ministry Sees" is gone (it restated the reporting cadence the "Our Approach" statement, the delivery model and the FAQ already give); its one detail that stood nowhere else, the follow-up surveys at 3, 6 and 12 months
+ * after each course (PD-09, read as TRACER_MONTHS), now sits in the delivery model's "Placement and Monthly Reports" card.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
-import MinistrySees from '../../../components/pages/partners/MinistrySees.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
 import LandingLayout from '../../../layouts/LandingLayout.astro';
 import HeroBand from '../../../components/sections/HeroBand.astro';
@@ -46,7 +47,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
@@ -90,7 +91,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
   <DefinitionBand />
   <PartnerGlance
     lead={[
-      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', also: ['SC-06', 'GV-10'] },
+      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', also: ['SC-06', 'GV-10', 'GV-01', 'GV-11'] },
       { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
     ]}
@@ -128,7 +129,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
   <PartnerGuideBand
     empathy={EMPATHY.governments}
     statements={[{ facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' }]}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
   />
 
@@ -152,7 +153,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
       { label: 'Who We Reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Government Digital Labs', text: 'Blended learning in government labs you already run; lab access and seats are confirmed per program.', icon: 'landmark' },
       { label: 'What We Deliver', title: 'Capacity That Stays', text: 'Training of Trainers, curriculum and manuals, then preparation for industry certification.', icon: 'award' },
-      { label: 'Where They Work', title: 'Placement and Monthly Reports', text: 'Placement support into local, remote and global work, with monthly reports to the agency.', icon: 'globe' },
+      { label: 'Where They Work', title: 'Placement and Monthly Reports', text: `Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at ${TRACER_MONTHS} after each course.`, icon: 'globe' },
     ]}
     link={{ label: 'See How YouthWIDE Works', href: LINKS.youthwide }}
   />
@@ -183,7 +184,6 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-r
       { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
   />
-  <MinistrySees />
 
   <!-- C9 · Objections -->
   <FAQBand

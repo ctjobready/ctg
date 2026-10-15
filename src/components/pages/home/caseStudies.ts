@@ -28,11 +28,12 @@ if (!herPowerParts) throw new Error('caseStudies: PR-05 label no longer reads "t
 const herPowerLabel = `tracked women in work (${herPowerParts[2]}), ${herPowerParts[1]}`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
- * 71% is program records, separate from the trial, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.
+ * 71% is program records, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.
+ * WP46 (cycle-22 review): "(not trial data)", where it read "separate from the trial", which suggested the records contradict the trial of the same predecessor program.
  */
 const wsdfmShare = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
 if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> in work"');
-const wsdfmLabel = `WSDFM program records, separate from the trial: ${wsdfmShare[1]}`;
+const wsdfmLabel = `WSDFM program records (not trial data): ${wsdfmShare[1]}`;
 
 /**
  * The caption a case-study card puts under its figure, by register fact. CaseStudyCarousel uses it wherever a page gives no caption of its own, so the WSDFM and Her Power

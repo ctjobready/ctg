@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { DESKTOP, MOBILE, open } from './support/browser';
 
 /**
@@ -14,30 +14,41 @@ const mainText = async (page: Page) => compact(await page.locator('main').textCo
 const texts = (page: Page, selector: string) => page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
-const stepTitles = async (page: Page, selector: string) => (await texts(page, selector)).map((t) => t.replace(/^Step \d+: /, ''));
 
 const HIRING = 'We scope your talent request against the experience and credentials available in the candidate pool.';
+const INTRODUCTIONS = 'Job-ready candidates are introduced through CodersTrust’s placement team.';
 
 test.describe('Employers and JobReady@Work: the closing steps name their routes', () => {
+  // WP46 (cycle-22 review): Employers' hiring route is two steps in the training route's step component ("Discovery": the scoping sentence; "Introductions": the placement-team sentence); JobReady@Work's is still one sentence
   const PAGES = [
-    { route: 'partner-with-us/employers/', title: 'What Happens After You Say Yes', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'] },
-    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'] },
+    { route: 'partner-with-us/employers/', title: 'What Happens After You Say Yes', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort'], hiringSteps: ['Discovery', 'Introductions'] },
+    { route: 'programs/jobready-work/', title: 'What Happens Next', steps: ['Discovery Session', 'Needs Assessment', 'Agreement', 'First Workshop or Cohort', 'Progress Evaluation'], hiringSteps: [] as string[] },
   ];
 
   for (const p of PAGES) {
-    test(`${p.route}: the existing steps are labeled "For Team Training", and "For Hiring" is a parallel route with its own sentence`, async ({ page }) => {
+    test(`${p.route}: the existing steps are labeled "For Team Training", and "For Hiring" is a parallel route with its own ${p.hiringSteps.length ? 'two steps' : 'sentence'}`, async ({ page }) => {
       await open(page, p.route);
       const band = page.locator('#next-steps');
       await expect(band.locator('h2')).toHaveText(p.title);
       expect(await texts(page, '#next-steps h3')).toEqual(['For Team Training', 'For Hiring']);
       // the steps are the training route's, one heading level under its label
-      expect(await stepTitles(page, '#next-steps ol h4')).toEqual(p.steps);
+      const routes = band.locator('.route');
+      const routeSteps = async (route: Locator) => (await route.locator('ol h4').allTextContents()).map((t) => compact(t).replace(/^Step \d+: /, ''));
+      expect(await routeSteps(routes.nth(0))).toEqual(p.steps);
       await expect(band.locator('ol h3')).toHaveCount(0);
-      // the hiring route is one sentence, tied to IN-04 like the other hiring statements, and sits after the training steps
+      // the hiring route is tied to IN-04 like the other hiring statements, and sits after the training steps
       const hiring = band.locator('.route', { has: page.locator('h3', { hasText: 'For Hiring' }) });
-      await expect(hiring.locator('p')).toHaveCount(1);
-      expect(compact(await hiring.locator('p').textContent())).toBe(HIRING);
-      expect(await hiring.locator('p').getAttribute('data-fact')).toBe('IN-04');
+      if (p.hiringSteps.length) {
+        expect(await routeSteps(hiring)).toEqual(p.hiringSteps);
+        expect((await hiring.locator('.steps__text').allTextContents()).map(compact)).toEqual([HIRING, INTRODUCTIONS]);
+        expect(await hiring.locator('[data-fact]').first().getAttribute('data-fact')).toBe('IN-04');
+        await expect(hiring.locator('p.lead')).toHaveCount(0);
+      } else {
+        await expect(hiring.locator('p')).toHaveCount(1);
+        expect(compact(await hiring.locator('p').textContent())).toBe(HIRING);
+        expect(await hiring.locator('p').getAttribute('data-fact')).toBe('IN-04');
+      }
+      await expect(routes).toHaveCount(2);
       const order = await band.evaluate((el) => {
         const steps = el.querySelector('ol')!.getBoundingClientRect();
         const hire = Array.from(el.querySelectorAll('h3')).find((h) => h.textContent?.trim() === 'For Hiring')!.getBoundingClientRect();
@@ -63,10 +74,8 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
         expect(l.s).toBeGreaterThanOrEqual(27.5);
       }
       const levels = await page.locator('#next-steps h2, #next-steps h3, #next-steps h4').evaluateAll((els) => els.map((e) => e.tagName));
-      expect(levels[0]).toBe('H2');
-      expect(levels.slice(1, 2)).toEqual(['H3']);
-      expect(levels.slice(2, 2 + p.steps.length)).toEqual(p.steps.map(() => 'H4'));
-      expect(levels[levels.length - 1]).toBe('H3');
+      // the band's H2, the training label (H3) over its steps (H4), then the hiring label (H3) over its steps (H4) where it has them (WP46: Employers)
+      expect(levels).toEqual(['H2', 'H3', ...p.steps.map(() => 'H4'), 'H3', ...p.hiringSteps.map(() => 'H4')]);
     });
   }
 
@@ -194,7 +203,8 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
     // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case; WP36 (cycle-13 review): they are statements, not questions
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Employers Struggle to Find the Skills They Need', 'Institutions Lack Placement Results They Can Publish']);
+    // WP46 (cycle-22 review): the employers' pain card is gone (the 72% tile directly below states it), so two pains are left
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Institutions Lack Placement Results They Can Publish']);
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');
@@ -245,16 +255,19 @@ test.describe('Foundations: what is discussed for each funding route is said onc
     expect(compact(await page.locator('#cta').textContent())).not.toContain('What the discovery session covers');
   });
 
-  test('the Next Steps band no longer repeats it: the heading and the introductory-call line only, with no route cards', async ({ page }) => {
+  // WP46 (cycle-22 review): the Next Steps band is no longer a heading and one line: it has the four grant-funded steps, scoped "For cohort grants." (tests/wp32.spec.ts); it still has no route cards and does not repeat the agenda
+  test('the Next Steps band no longer repeats it: the four steps scoped "For cohort grants.", with no route cards and no agenda sentence', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
-    expect(compact(await band.locator('.lead').textContent())).toBe('Details of what the grant delivers are discussed in the introductory call.');
-    await expect(band.locator('.next__routes, ol, ul, li')).toHaveCount(0);
+    expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
+    await expect(band.locator('ol h3')).toHaveCount(4);
+    await expect(band.locator('.next__routes')).toHaveCount(0);
+    expect(compact(await band.textContent())).not.toMatch(/we discuss your country|we discuss JobReady/);
     const main = await mainText(page);
     expect(count(main, COHORT), 'the cohort sentence').toBe(1);
     expect(count(main, PLATFORM), 'the platform sentence').toBe(1);
-    expect(count(main, 'Details of what the grant delivers are discussed in the introductory call.'), 'the introductory-call line').toBe(1);
+    expect(count(main, 'introductory call'), 'no introductory-call line').toBe(0);
   });
 
   test('the discovery-session agenda stays on the pages that sell cohorts (Development Partners)', async ({ page }) => {
@@ -302,7 +315,8 @@ test.describe('Our Model: two delivery cards say what they mean', () => {
     expect(compact(await training.textContent())).toContain('Each certification track includes 100 training hours over 3–6 months.');
     const scale = page.locator('#delivery .card', { hasText: 'Local Labs, Coordinated Delivery' });
     await expect(scale).toHaveCount(1);
-    expect(compact(await scale.textContent())).toContain('From about month 5, programs can run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.');
+    // WP46 (cycle-22 review): "are designed to run" (as Q2 and Investors say it), not "can run"
+    expect(compact(await scale.textContent())).toContain('From about month 5, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.');
     expect(await scale.locator('[data-fact]').getAttribute('data-fact')).toBe('PD-06');
     const text = await mainText(page);
     expect(text).not.toMatch(/Hub-and-Spoke Delivery at Scale|Each certification takes|Larger programs use hub-and-spoke/);
@@ -339,7 +353,8 @@ test.describe('layout', () => {
     for (const route of ['partner-with-us/employers/', 'programs/jobready-work/']) {
       await open(page, route);
       const box = await page.locator('#next-steps .route').nth(1).locator('h3').boundingBox();
-      const steps = await page.locator('#next-steps ol').boundingBox();
+      // (the first list is the training route's steps; WP46: Employers' hiring route has a list of its own after it)
+      const steps = await page.locator('#next-steps ol').first().boundingBox();
       expect(box!.y, route).toBeGreaterThan(steps!.y + steps!.height);
       expect(box!.x + box!.width, route).toBeLessThanOrEqual(MOBILE.width);
     }

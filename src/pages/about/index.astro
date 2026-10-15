@@ -10,6 +10,7 @@ import Fact from '../../components/facts/Fact.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
 import TeamCard from '../../components/pages/about/TeamCard.astro';
+import PageNav from '../../components/pages/about/PageNav.astro';
 import Stat from '../../components/system/Stat.astro';
 import { fact } from '../../data/facts';
 import { MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING } from '../../data/copy';
@@ -42,7 +43,8 @@ const principles = [
   {
     icon: 'users',
     title: 'Inclusion by Design',
-    text: 'Programs are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
+    // WP46 (cycle-22 review): scoped to the supported youth cohorts; "Programs" also covered the corporate, school and diploma programs, which the sentence does not describe.
+    text: 'Supported youth cohorts are built so that people with fewer computer or English skills can still join, with women a priority in every group.',
     link: { label: 'How Our Model Works', href: '/our-model/' },
   },
   {
@@ -76,6 +78,16 @@ const jsonLd = [
       <a class="link" href={linkAttrs('/impact/').href}>See Our Impact<Icon name="arrow-right" size={16} /></a>
     </Fragment>
   </Hero>
+
+  <!-- WP46 (cycle-22 review): the jump list is back under the hero (WP30e had cut it while the sub-pages and Impact kept theirs). Each label is the H2 it jumps to; the CTA band's id is its anchor. -->
+  <PageNav links={[
+    { label: 'Why We Exist', href: '#mission' },
+    { label: 'Where We Are Today', href: '#glance' },
+    { label: TRIAL_BAND_HEADING, href: '#proof' },
+    { label: 'From a Copenhagen Launch to National Programs', href: '#story' },
+    { label: 'Four Principles Behind Every Program', href: '#how-we-work' },
+    { label: 'Talk to the Team', href: '#about-cta' },
+  ]} />
 
   <Section id="mission" tone="airy" aria-labelledby="mission-h">
     <SectionHeader id="mission-h" eyebrow="Mission and Vision" title="Why We Exist" />

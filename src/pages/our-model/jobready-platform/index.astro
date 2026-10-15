@@ -44,7 +44,7 @@ const rows: { job: string; capability: string; status: Status; note: string }[] 
 const toc = [
   { id: 'jobs', label: 'Four Jobs, One Platform' },
   { id: 'status', label: 'Rollout Status' },
-  { id: 'why', label: 'Why Institutions Choose JobReady' },
+  { id: 'why', label: 'The Record Behind JobReady' },
   { id: 'roadmap', label: 'Planned Adaptive Learning' },
   { id: 'faq', label: 'Questions About the Platform' },
 ];
@@ -92,7 +92,8 @@ const d = discoveryCta();
     <p><a class="link" href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>Visit jobready.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> (opens JobReady.global)</span></a></p>
   </ReportSection>
 
-  <ReportSection id="why" title="Why Institutions Choose JobReady">
+  <!-- WP46 (cycle-22 review): the band shows CodersTrust's record (delivered, in the pipeline, contracted), not evidence that institutions adopt JobReady, so the heading says so. The id stays: tests and deep links use #why. -->
+  <ReportSection id="why" title="The Record Behind JobReady">
     <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
     <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
     <div class="jr__why">
@@ -117,7 +118,7 @@ const d = discoveryCta();
 
   <aside class="jr__next" aria-label="Talk to us about JobReady">
     <h2 class="jr__nexttitle">Talk to Us About JobReady</h2>
-    <p>A discovery session covers how JobReady fits your program. A platform grant helps CodersTrust roll out the remaining modules; details are shared in the introductory call.</p>
+    <p>A discovery session covers how JobReady fits your program. A platform grant helps CodersTrust roll out the remaining modules; details are shared in the discovery session.</p>
     <div class="jr__actions">
       <Button href={d.href} iconEnd="arrow-right">{d.label}</Button>
       <a class="link" href={f.href}>Discuss a Platform Grant for JobReady’s Next Stage</a>

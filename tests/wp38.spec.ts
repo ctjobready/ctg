@@ -186,7 +186,8 @@ test.describe('the three funder pains that had a heading and no line now have on
       const item = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: title }) });
       await expect(item).toHaveCount(1);
       expect(compact(await item.locator('.gp__a').textContent())).toBe(line);
-      await expect(page.locator('.gp__pains li .gp__a')).toHaveCount(3);
+      // WP46 (cycle-22 review): Universities states two pains now, so every pain on it (two) still has its line
+      await expect(page.locator('.gp__pains li .gp__a')).toHaveCount(route === 'partner-with-us/universities/' ? 2 : 3);
     });
   }
 });
@@ -233,7 +234,8 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
     await open(page, 'partner-with-us/investors/');
     expect(await texts(page, '#definition .def__text')).toEqual([
       'CodersTrust is a workforce-development organization that trains and mentors educated, unemployed and underemployed youth in emerging markets for digital work and connects them to local, remote and global work.',
-      'CodersTrust is building JobReady, an AI-native digital education and employment platform for emerging markets.',
+      // WP46 (cycle-22 review): no "AI-native" (an unexplained label; tests/wp46.spec.ts)
+      'CodersTrust is building JobReady, a digital education and employment platform for emerging markets.',
     ]);
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(compact(await page.locator('#definition').textContent())).not.toContain('130,000');
@@ -259,16 +261,17 @@ test.describe('Home carousel: the reach slide has its figure, the speed slide le
 
   // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
   // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile. WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  test('slide 5 reads "Most First Earnings Came Within Six Months" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
+  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so "... of the Course Ending"
+  test('slide 5 reads "Most First Earnings Came Within Six Months of the Course Ending" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(4);
-    const heading = 'Most First Earnings Came Within Six Months';
+    const heading = 'Most First Earnings Came Within Six Months of the Course Ending';
     await expect(slide.locator('h2')).toHaveText(heading);
     expect(heading).toBe(titleCase(heading));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(0);
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months (October 2026 survey)');
+    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed completers who first earned during or after training started earning within six months of finishing the course (October 2026 survey)');
   });
 });
 

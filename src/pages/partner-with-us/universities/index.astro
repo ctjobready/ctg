@@ -101,9 +101,9 @@ const optionText: Record<string, string> = {
     <GainsPains
       slot="lead"
       pains={[
+        // WP46 (cycle-22 review): the employers' pain is the 72% tile directly below (PX-05, worldwide), so a card that restated it is gone; the two pains left are the students' and the institution's.
         { q: 'Degree holders struggle to find work', text: 'A degree alone is not producing job offers.' },
-        { q: 'Employers struggle to find the skills they need', text: 'Employers report difficulty finding the talent they need.' },
-        // WP38 (cycle-15 review): a general institutional pain, stated in one line like its two neighbors; it rests on no CodersTrust fact.
+        // WP38 (cycle-15 review): a general institutional pain, stated in one line like its neighbor; it rests on no CodersTrust fact.
         { q: 'Institutions lack placement results they can publish', text: 'Placement data that would satisfy a board or ministry is rarely collected.' },
       ]}
     />
@@ -124,7 +124,7 @@ const optionText: Record<string, string> = {
   <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos. -->
   <PartnerGuideBand
     empathy={EMPATHY.universities}
-    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
   />
 

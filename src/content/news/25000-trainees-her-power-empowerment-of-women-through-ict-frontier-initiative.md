@@ -11,6 +11,9 @@ tags: []
 seoTitle: "Her Power Contract Aims to Train 25,125 Women"
 archiveNote: "Delivered: the national program trained 25,125 women."
 archiveNoteFacts: ["GV-01"]
+archiveNoteLink:
+  label: "See the Her Power case study."
+  href: "/impact/case-studies/her-power/"
 ---
 
 ![Two people signing an agreement at a table, with CodersTrust and partner staff standing behind them](../../assets/images/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/signing-with-her-power-project.jpg)

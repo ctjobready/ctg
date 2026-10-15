@@ -1,9 +1,11 @@
 ---
 // P16–P17 — NU PGD course pages /programs/nu-postgraduate-diploma/digital-marketing/ and /ict/ (T10), generated from the
-// `nu-pgd` collection (kind: course). One H1 (the course name). Moved under /programs/ in WP20a. Every course-specific line (Why This Course, the FAQ answers,
+// `nu-pgd` collection (kind: course). One H1 (the course name). Moved under /programs/ in WP20a. Every course-specific line (the FAQ answers,
 // the related fields) is derived from the course's module list; nothing promises an outcome.
 // WP30d (owner direction 2026-10-14: less is more): the generic "What Is CodersTrust?" band, the instructors line, the wider-programs outcome band and the two FAQ answers that repeated the
 // module list and the Before You Apply table are cut.
+// WP46 (cycle-22 review): the "What You Will Work On" band (#why) is cut too: its points restated the module list in "What You Study" directly above. "Also Consider" turns white, so the bands
+// keep alternating (airy "What You Study", white "Also Consider", ice FAQ) instead of two airy bands in a row.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Hero from '../../../components/system/Hero.astro';
 import Button from '../../../components/system/Button.astro';
@@ -118,23 +120,7 @@ const jsonLd = [
     </details>
   </Section>
 
-  <Section id="why" aria-labelledby="why-h">
-    <SectionHeader id="why-h" eyebrow="Why This Course" title="What You Will Work On" lead="Each point below comes from the course’s module list." />
-    <div class={copy.why.length === 4 ? 'grid-cards grid-cards--4' : 'grid-cards'}>
-      {
-        copy.why.map((w) => (
-          <article class="card" data-reveal>
-            <div class="card__body">
-              <h3 class="card__title">{w.title}</h3>
-              <p class="card__text">{w.text}</p>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-  </Section>
-
-  <Section id="also-consider" tone="airy" aria-labelledby="also-h">
+  <Section id="also-consider" aria-labelledby="also-h">
     <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={copy.alsoConsider} />
     <p><a class="link" href={url(`${NU_PATH}${other}/`)}>View the Course<Icon name="arrow-right" size={16} /></a> or <a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
   </Section>

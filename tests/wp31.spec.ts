@@ -28,7 +28,9 @@ test.describe('figures say what they measure', () => {
     const glance = compact(await page.locator('#glance').textContent());
     expect(glance).toContain('14.0%');
     expect(glance).toContain('of surveyed completers freelance, up from 6.2% before training');
-    expect(glance).toContain('Business ownership rose from 2.8% to 10.6%. Nearly one in eight earns mainly from foreign clients or jobs abroad.');
+    // WP46 (cycle-22 review): the note keeps the business-ownership sentence only; the foreign-client income share (OC-07) is stated on the survey page, not stacked on this tile
+    expect(glance).toContain('Business ownership rose from 2.8% to 10.6%.');
+    expect(glance).not.toMatch(/Nearly one in eight|foreign clients or jobs abroad/);
     expect(glance).not.toMatch(/growth in freelancing|2\.3×|3\.8×|3× the median/);
     await open(page, 'impact/outcomes-2026/');
     const survey = await mainText(page);
@@ -49,7 +51,8 @@ test.describe('figures say what they measure', () => {
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     await expect(page.locator('[data-hs-slide]').nth(3)).not.toContainText('WSDFM');
-    expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records, separate from the trial: 71% in work');
+    // WP46 (cycle-22 review): the caption reads "WSDFM program records (not trial data): 71% in work"
+    expect(compact(await page.locator('#cases article').first().textContent())).toContain('WSDFM program records (not trial data): 71% in work');
   });
 
   // WP37 (cycle-14 review): Home's Her Power card says what was delivered instead of stating the figure (the program-results slide of the carousel states it; tests/wp37.spec.ts), so only the pages that show it carry the shared caption.
@@ -57,7 +60,7 @@ test.describe('figures say what they measure', () => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
-      expect(cards, route || 'home').toContain('WSDFM program records, separate from the trial: 71% in work');
+      expect(cards, route || 'home').toContain('WSDFM program records (not trial data): 71% in work');
       if (cards.includes('Her Power')) {
         if (route === '') {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
@@ -75,13 +78,14 @@ test.describe('figures say what they measure', () => {
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent());
-    expect(lead).toContain('Official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP46 (cycle-22 review): the sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment
+    expect(lead).toContain('CodersTrust is the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await mainText(page)).not.toContain('official skills partner');
   });
 
@@ -259,12 +263,13 @@ test.describe('Foundations keeps the two grant routes apart', () => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#features h2')).toHaveText('What Your Cohort Grant Gets');
     await expect(page.locator('#faq h2')).toHaveText('Questions About Cohort Grants');
-    // WP32 (cycle-9 review): the four cohort-only steps are gone; WP34 (cycle-11 review): what is discussed for each route is said once, in the call-to-action band, and the Next Steps band keeps only
-    // the introductory-call line (tests/wp32.spec.ts and tests/wp34.spec.ts pin the two)
+    // WP32 (cycle-9 review): the four cohort-only steps were gone; WP34 (cycle-11 review): what is discussed for each route is said once, in the call-to-action band; WP46 (cycle-22 review): the Next Steps band
+    // has the four steps again, scoped "For cohort grants." (tests/wp32.spec.ts and tests/wp34.spec.ts pin the two)
     expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toBe(
       'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.',
     );
-    expect(compact(await page.locator('#next-steps').textContent())).toContain('Details of what the grant delivers are discussed in the introductory call.');
+    expect(compact(await page.locator('#next-steps .lead').textContent())).toBe('For cohort grants.');
+    expect(compact(await page.locator('#next-steps').textContent())).not.toContain('introductory call');
   });
 });
 

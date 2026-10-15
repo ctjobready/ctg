@@ -77,7 +77,9 @@ test.describe('Investors page structure', () => {
     // WP36: the three case-study cards and their lead are gone (one "Case Studies" link stands in)
     expect(text).not.toContain('Three featured case studies, each with its partner.');
     // Cycle 5 (triage-c5, Partner): the guide line reads "need to distinguish a model that is working from one that is only promised" (copy.ts EMPATHY.investors).
-    expect(text).toContain('need to distinguish a model that is working from one that is only promised');
+    // WP46 (cycle-22 review): it now reads "need to see what is proven and what is still being built" (the earlier line invited a platform-proof test the page cannot pass).
+    expect(text).toContain('Impact investors need to see what is proven and what is still being built.');
+    expect(text).not.toContain('only promised');
     // WP30c: the path-to-scale paragraph is gone from the reach band (the scale FAQ answers it)
     expect(text).not.toContain('Path to scale');
     // WP36 (cycle-13 review): the sector taxonomy ("The Sectors Involved") stalled the page and is gone from the mechanism band

@@ -12,20 +12,23 @@ const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ')
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 
 test.describe('timelines name their starting point', () => {
-  test('Governments, "What a Ministry Sees": reports count from the first cohort, follow-up surveys from the end of each course', async ({ page }) => {
+  // WP46 (cycle-22 review): "What a Ministry Sees" is gone; the follow-up surveys are still counted from the end of each course ("at 3, 6 and 12 months after each course", in the delivery model's card), never as "Month 6" or "Month 12"
+  test('Governments: the follow-up surveys count from the end of each course, never as a bare "Month 6" or "Month 12"', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    const when = await page.locator('#ministry-sees ol > li .ms__when').allTextContents();
-    expect(when.map(compact)).toEqual(['Month 1 of the First Cohort', '6 Months After Each Course', '12 Months After Each Course']);
-    expect(compact(await page.locator('#ministry-sees').textContent())).not.toMatch(/\bMonth (6|12)\b/);
-    await expect(page.locator('#ministry-sees ol > li .ms__title')).toHaveText(['Monthly Reports Begin', 'The 6-Month Follow-Up Survey', 'The 12-Month Follow-Up Survey']);
+    await expect(page.locator('#ministry-sees')).toHaveCount(0);
+    const text = compact(await page.locator('main').textContent());
+    expect(text).toContain('follow-up surveys at 3, 6 and 12 months after each course');
+    expect(text).not.toMatch(/\bMonth (6|12)\b/);
   });
 
   // every grant-funded week sequence on the site reads Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing
-  // (WP32: Foundations no longer shows the sequence; its closing band states what is discussed for a cohort grant and for a platform grant, tests/wp32.spec.ts)
+  // (WP32 had taken the sequence off Foundations, whose call-to-action band states what is discussed for a cohort grant and for a platform grant, tests/wp32.spec.ts; WP46 put it back, scoped "For cohort grants.")
   const SEQUENCES: { page: string; steps: string }[] = [
     { page: '', steps: '#next-steps ol h3' },
     { page: 'partner-with-us/', steps: '#how-partnering-works ol h3' },
     { page: 'partner-with-us/development-partners/', steps: '#next-steps ol h3' },
+    // WP46 (cycle-22 review): Foundations' "What Happens After You Say Yes" has the same four steps, scoped "For cohort grants."
+    { page: 'partner-with-us/foundations/', steps: '#next-steps ol h3' },
   ];
   for (const s of SEQUENCES) {
     test(`${s.page || 'Home'}: the grant-funded steps read Discovery (Week 1) → Co-Design (Week 2) → Agreement (Week 3) → Training Starts 6–8 Weeks After Signing`, async ({ page }) => {

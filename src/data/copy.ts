@@ -64,7 +64,8 @@ export const EMPATHY: Record<Exclude<Audience, 'developmentPartners'>, string> =
   foundations: "You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.",
   universities: 'You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.',
   employers: 'You have roles to fill and teams that need AI skills faster than hiring or generic courses can supply them.',
-  investors: 'Impact investors need to distinguish a model that is working from one that is only promised.',
+  // WP46 (cycle-22 review): the earlier line ("... distinguish a model that is working from one that is only promised") invited a platform-proof test the page cannot pass; it now asks only for what is proven and what is still being built.
+  investors: 'Impact investors need to see what is proven and what is still being built.',
   localPartners: 'You reach young people that national programs miss, often without the curriculum, certification and placement links to finish the job.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
@@ -375,10 +376,7 @@ export const EMPLOYER_PRICING = 'Pricing is set per program; we share an indicat
 /** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
 export const EMPLOYER_HIRING_ROUTE = 'We scope your talent request against the experience and credentials available in the candidate pool.';
 
-export const SPEED: CopyBlock = {
-  text: 'For grant-funded pilots: about three weeks from first conversation to agreement, and the first cohort in training 6–8 weeks after signing. Public procurement follows the agency’s own timeline.',
-  facts: ['PD-04'],
-};
+// WP46 (cycle-22 review): SPEED, the grant-pilot urgency line, is gone: the call-to-action bands of Development Partners and Foundations no longer repeat the timing that the Next Steps band directly below them shows as steps (PD-04).
 
 /** C13 urgency line for the universities page: a university's start follows its academic calendar, so it makes no grant-pilot timing claim (PD-04 is for grant-funded pilots). */
 export const SPEED_UNIVERSITIES: CopyBlock = {
@@ -529,7 +527,8 @@ export const C14 = {
   validate: { text: 'Organizations that have worked with CodersTrust include UNDP (from 2015), the World Bank Group and BRAC.', facts: ['PA-01'] } as CopyBlock,
   // WP21: one validation line per audience (the closing strip no longer repeats the same three organizations on every partner page); each uses names from one registered partner fact.
   validateFor: {
-    foundations: { text: 'Development and NGO partners include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
+    // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust" (as C14.validate does); the names are still from PA-01.
+    foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
     governments: { text: 'Government partners include Bangladesh’s ICT Division, DoICT, Bangladesh Hi-Tech Park Authority, NSDA and BCC.', facts: ['PA-02'] } as CopyBlock,
     universities: { text: 'University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).', facts: ['PA-05'] } as CopyBlock,
     employers: { text: 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.', facts: ['PA-03'] } as CopyBlock,

@@ -44,6 +44,7 @@ const related = relatedNews(all, post);
   audience={newsAudience(post)}
   archiveNote={d.archiveNote}
   archiveNoteFacts={d.archiveNoteFacts}
+  archiveNoteLink={d.archiveNoteLink}
 >
   {showHero && cover && <Img slot="hero" src={cover} alt={coverAlt(d.coverAlt)} width={1100} widths={[640, 1100]} sizes="(min-width:1024px) 800px, 100vw" loading="eager" fetchpriority="high" assetId={asset} />}
   <Content />

@@ -43,7 +43,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACER_MONTHS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, SPEED, VALUE_PROPOSITION } from '../../../data/copy';
+import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION } from '../../../data/copy';
 import { CLAIM_PX06, CLAIM_RC06 } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -117,7 +117,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the launch line. -->
   <PartnerGuideBand
     stats={['SC-01', 'SC-03']}
-    method={{ text: 'Our TalentLEAP method organizes skills into career paths with progressive levels.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
+    method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
   />
 
@@ -211,14 +211,13 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     heading="Let’s Design Your First Cohort"
     cta={{ label: primary.label, href: primary.href }}
     secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
-    urgency={SPEED.text}
     micro={MICRO_COMMITMENT}
   >
     <SessionAgenda />
   </CTABand>
 
   <!-- C14 · Next steps -->
-  <!-- The 6–8 week statement appears twice on this page: in the C13 urgency line and in the C14 "First cohort" step. -->
+  <!-- WP46 (cycle-22 review): the grant-funded timing (about three weeks to agreement, 6–8 weeks from signing to training, procurement on the agency's own timeline) is stated once on this page, in the steps and lead below; the C13 urgency line that repeated it is gone (as on Foundations, whose steps band is the same). -->
   <NextStepsBand title="What Happens After You Say Yes" timing={false} />
   <Reinforcement logos={false} reminder={false} />
 

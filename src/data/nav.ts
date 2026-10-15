@@ -93,7 +93,7 @@ export const navGroups: NavGroup[] = [
     label: 'Our Model',
     href: '/our-model/',
     items: [
-      { label: 'How It Works', href: '/our-model/', description: 'From partner goals to employed program completers, end to end.' },
+      { label: 'How It Works', href: '/our-model/', description: 'From partner goals to training, placement support and tracked outcomes.' },
       { label: 'TalentLEAP', href: '/our-model/talentleap/', description: 'Our competency-based talent model.' },
       // WP45 (cycle-21 review): IN-04 names two marketplaces in pre-launch, the employer marketplace and the gig-work (Earn) marketplace, so the menu names both (tests/wp25s.spec.ts forbids "employer and gig-work").
       { label: 'JobReady Platform', href: '/our-model/jobready-platform/', description: 'Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch.' },
@@ -251,5 +251,6 @@ export const audiences = [
   { id: 'universities', title: 'Universities', icon: 'graduation-cap', text: 'Make graduates job-ready', href: '/partner-with-us/universities/' },
   { id: 'employers', title: 'Employers', icon: 'briefcase', text: 'Train your team or hire talent', href: '/partner-with-us/employers/' },
   { id: 'local-partners', title: 'Local Partners in Bangladesh', icon: 'map-pin', text: 'NGOs, colleges, chambers and associations delivering locally', href: '/partner-with-us/local-partners/' },
-  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'For impact investors backing JobReady', href: '/partner-with-us/investors/' },
+  // WP46 (cycle-22 review): JobReady is not defined on Home, so the investor card says what it is, in the partner hub's words for this route.
+  { id: 'investors', title: 'Investors', icon: 'trending-up', text: 'For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.', href: '/partner-with-us/investors/' },
 ] as const;

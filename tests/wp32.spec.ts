@@ -67,25 +67,30 @@ test.describe('Partner with Us hub', () => {
 });
 
 test.describe('Foundations', () => {
-  test('"What Happens After You Say Yes" shows no week-by-week steps; WP34 (cycle-11 review): what is discussed for each route is said once, in the call-to-action band, so this band keeps only the introductory-call line', async ({ page }) => {
+  // WP46 (cycle-22 review): WP32 had left this band without steps (the two funding routes do not share one process) and kept the cohort timing in the call-to-action urgency line; the band now has the four Development Partners
+  // steps, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the call-to-action agenda says), and the urgency line that would repeat them is gone.
+  test('"What Happens After You Say Yes" shows the four grant-funded steps scoped "For cohort grants."; the call-to-action band no longer repeats their timing', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens After You Say Yes');
-    expect(compact(await band.locator('.lead').textContent())).toBe('Details of what the grant delivers are discussed in the introductory call.');
-    await expect(band.locator('ol, ul')).toHaveCount(0);
-    await expect(band.locator('[data-fact]')).toHaveCount(0);
-    expect(compact(await band.textContent())).not.toMatch(/Week \d|Training Starts|Co-Design|Agreement|we discuss your country|we discuss JobReady/);
-    // a cohort grant's timing stays where it is labeled as grant-funded pilot timing: the call to action's urgency line
-    expect(compact(await page.locator('#cta').textContent())).toContain('For grant-funded pilots: about three weeks from first conversation to agreement');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
+    expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
+    expect(await band.locator('[data-fact]').first().getAttribute('data-fact')).toBe('PD-04');
+    await expect(band.locator('.next__fn')).toHaveCount(0);
+    // the timing is the steps' own; the call to action keeps its button, its links and the agenda, and no urgency line
+    const cta = compact(await page.locator('#cta').textContent());
+    expect(cta).not.toMatch(/grant-funded pilots|three weeks|6–8|Public procurement/);
+    await expect(page.locator('#cta .cta-band__notes')).toHaveCount(0);
+    expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toContain('For a platform grant, we discuss JobReady’s staged rollout.');
+    expect(count(await mainText(page), '6–8'), 'the window is stated once on Foundations').toBe(1);
   });
 
-  test('the cohort-grant offer is headed "Choose Where to Start Your Cohort Grant"; the platform route says "introductory call" like the closing band', async ({ page }) => {
+  test('the cohort-grant offer is headed "Choose Where to Start Your Cohort Grant"; the page names the discovery session as its one first step and never an "introductory call"', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     await expect(page.locator('#cohort-grants h2')).toHaveText('Choose Where to Start Your Cohort Grant');
-    const platform = compact(await page.locator('#platform-grants').textContent());
-    expect(platform).not.toContain('discussed in the introductory call'); // said once, in the Next Steps band
-    expect(compact(await page.locator('main').textContent())).toContain('Details of what the grant delivers are discussed in the introductory call.');
-    expect(await mainText(page)).not.toContain('introduction call');
+    const main = await mainText(page);
+    expect(main).not.toMatch(/introductory call|introduction call|Details of what the grant delivers/);
+    expect(main).toContain('A conversation about your goals, priority groups and timeline.');
   });
 
   test('Development Partners keeps its four grant-funded steps (they are cohort steps)', async ({ page }) => {
