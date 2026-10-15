@@ -148,7 +148,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
 });
 
 test.describe('Home: the reporting answer is two sentences, and the full answer stays elsewhere (item 12)', () => {
-  const HOME_ANSWER = 'Every cohort agrees a scorecard before delivery. Partners receive monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome.';
+  const HOME_ANSWER = 'Every cohort agrees a scorecard before delivery. As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome.';
 
   test('Home’s "How Do You Prove Outcomes?" is the Q3-home variant, tied to PD-11, PD-08 and PD-09, and the FAQ JSON-LD says the same words', async ({ page }) => {
     const variant = faqsFor('variants').find((f) => f.id === 'Q3-home')!;
@@ -327,11 +327,11 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
     expect(compact(await card.locator('.cat__text').textContent())).not.toMatch(/we are building|connect/i);
   });
 
-  test('the 404 page reads the same single source; only the partner hub’s own card still carries the earlier phrase (not part of this review)', async ({ page }) => {
+  test('the 404 page reads the same single source; the partner hub’s card names the platform the same way (primary follow-up)', async ({ page }) => {
     await open(page, '404.html');
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(CARD);
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital education and employment platform.');
     expect(sitePages().filter((p) => /Back JobReady, the platform we are building/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -571,14 +571,14 @@ test.describe('Home and Governments: the closing band heading and link (items 25
     expect(sitePages().filter((p) => visible(p.html).includes('What Happens After You Contact Us')).map((p) => p.route)).toEqual([]);
   });
 
-  test('the Governments call-to-action band’s text link reads "Explore Our Programs" and keeps its destination (the Bangladesh band of the YouthWIDE page)', async ({ page }) => {
+  test('the Governments call-to-action band’s text link reads "See YouthWIDE for Governments" and keeps its destination (the Bangladesh band of the YouthWIDE page)', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    const link = page.locator('#cta').getByRole('link', { name: /Explore Our Programs/ });
+    const link = page.locator('#cta').getByRole('link', { name: /See YouthWIDE for Governments/ });
     await expect(link).toHaveCount(1);
     expect(await link.getAttribute('href')).toMatch(/\/programs\/youthwide\/#governments$/);
     await expect(link).not.toHaveClass(/btn/);
     expect(sitePages().filter((p) => visible(p.html).includes('See government programs')).map((p) => p.route)).toEqual([]);
-    expect('Explore Our Programs').toBe(titleCase('Explore Our Programs'));
+    expect('See YouthWIDE for Governments').toBe(titleCase('See YouthWIDE for Governments'));
   });
 });
 

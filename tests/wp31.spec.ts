@@ -374,7 +374,7 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('#hero a[href^="mailto:"], #audiences a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');
-    await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, the platform we are building to connect emerging-market youth to work.');
+    await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, CodersTrust’s digital education and employment platform.');
   });
 
   test('Contact: the third step names employers hiring talent, in the Employers page’s own scope wording', async ({ page }) => {

@@ -30,7 +30,7 @@
  * the fourth glance tile (Kosovo) is part of "Results and Contract Scope at a Glance" (a single tile needs no "More Results" heading); the steps band is "What Happens Next".
  * WP50 (cycle-25 reviews): Her Power's three lines in the contracts table are full sentences (ContractTable); the closing "Government partners include ..." line is gone, because the Track Record band's logo strip names the same five bodies;
  * the "How Fast Can We Start?" answer (Q7-government) is the procurement sentence alone ("Public procurement follows the agency’s own timeline, so the first step is a briefing for your ministry."), without the grant-pilot timing;
- * the call-to-action band's text link reads "Explore Our Programs" (it read "See government programs"); its destination, the Bangladesh band of the YouthWIDE page (LINKS.nationwide), is unchanged.
+ * the call-to-action band's text link reads "See YouthWIDE for Governments" (it read "See government programs"; "Explore Our Programs" mislabelled this YouthWIDE destination); its destination, the Bangladesh band of the YouthWIDE page (LINKS.nationwide), is unchanged.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -215,7 +215,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     id="cta"
     heading="Let’s Plan a First Phase with Your Ministry"
     cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: 'Explore Our Programs', href: LINKS.nationwide }}
+    secondary={{ label: 'See YouthWIDE for Governments', href: LINKS.nationwide }}
     urgency="Public procurement follows the agency’s own timeline — we start with a briefing that fits it."
   >
     <SessionAgenda lead="governments" />

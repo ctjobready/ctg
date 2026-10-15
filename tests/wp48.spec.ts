@@ -611,7 +611,7 @@ test.describe('The Home router’s investor card states the route (item 33)', ()
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, the platform we are building to connect emerging-market youth to work.');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital education and employment platform.');
     // the old Home wording, without "Back", is gone from every page
     expect(builtPages().filter((p) => /cat__text[^>]*>JobReady, the platform we are building/.test(p.html)).map((p) => p.route)).toEqual([]);
   });
