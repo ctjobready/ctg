@@ -135,12 +135,12 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
 });
 
 test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)', () => {
-  test('the first glance row is headed "Designed for Three Regions"; its text is unchanged; "Where It Runs" is gone', async ({ page }) => {
+  test('the first glance row is headed "Designed for Three Regions"; its text names the regions without repeating "designed for"; "Where It Runs" is gone', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
     expect(titleCase('Designed for Three Regions')).toBe('Designed for Three Regions');
-    expect(compact(await first.textContent())).toContain('Co-funded country cohorts, designed for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. Bangladesh is the reference implementation and has a national initiative of its own.');
+    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is the reference implementation and has a national initiative of its own.');
     expect(await mainText(page)).not.toContain('Where It Runs');
   });
 
