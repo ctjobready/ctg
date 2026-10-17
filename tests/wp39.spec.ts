@@ -148,7 +148,8 @@ const PAGES: PageSpec[] = [
     cards: [
       {
         title: 'Placement Support and Mentoring',
-        text: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track approved before enrollment. Success is measured against agreed outcomes, including paid work, not attendance alone.',
+        // WP54 (cycle-28 review, Claude S25): "agreed before enrollment" (it said "approved")
+        text: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track agreed before enrollment. Success is measured against agreed outcomes, including paid work, not attendance alone.',
         facts: ['PD-15', 'PD-01', 'PD-19'],
         pain: 'P1',
       },

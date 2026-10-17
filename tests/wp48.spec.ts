@@ -374,7 +374,8 @@ test.describe('Development Partners, Foundations and Governments: sector general
 
 test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => {
   const BLURB = 'Curriculum, trainer training and phased delivery for ministries.';
-  const AIM = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.';
+  // WP54 (cycle-28 review, Claude S7): the Programs menu line no longer carries the aim (it was "..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.")
+  const MENU_LINE = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
 
   test('the Partner with Us menu, its featured panel, Home’s router and the partner hub say the new blurb; no page says "National programs for youth employment"', async ({ page }) => {
     test.setTimeout(120_000);
@@ -389,12 +390,12 @@ test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => 
     expect(builtPages().filter((p) => /national programs for youth employment/i.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 
-  // WP53 (owner decision 2026-10-16): Home's carousel has no programs slide any more, so the aim is in the Programs menu and panel and the YouthWIDE glance row
-  test('the aim is "2 million vulnerable youth" in the Programs menu and panel and in the YouthWIDE glance row; no site page says "2 million youth"', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): Home's carousel has no programs slide any more, so the aim was in the Programs menu and panel and the YouthWIDE glance row. WP54 (cycle-28 review, Claude S7): the menu and panel no longer carry it; the glance row does
+  test('the aim is "2 million vulnerable youth" in the YouthWIDE glance row and not in the Programs menu and panel; no site page says "2 million youth"', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
-    expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(AIM);
-    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(AIM);
+    expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(MENU_LINE);
+    expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(MENU_LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     await open(page, 'programs/youthwide/');
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
@@ -566,13 +567,14 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
   });
 
   // WP53 (owner decision 2026-10-16): the speed slide (headed HEADING) is gone; the survey slide's one body line is OC-05's value and label with the term defined (WP52), without the label's "(October 2026 survey)", and it fits the carousel at 1280 and 390
-  test('Home slide 3’s body line is OC-05’s value and the register’s label with the term defined; the former speed heading is on no slide; the slide fits the carousel at 1280 and 390', async ({ page }) => {
+  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 170 surveyed completers who first earned during or after training, 58.8% ...", and needs no term (tests/wp54.spec.ts)
+  test('Home slide 3’s body line is OC-05’s value and the register’s closing clause, leading with its base; the former speed heading is on no slide; the slide fits the carousel at 1280 and 390', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, '');
       const s = slide(page, 3);
       expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-      expect(compact(await s.locator('.hs__lead').textContent()), `${vp.width}px`).toBe(`58.8% ${define(LABEL.replace(/ \(October 2026 survey\)$/, ''))}.`);
+      expect(compact(await s.locator('.hs__lead').textContent()), `${vp.width}px`).toBe('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.');
       expect(compact(await page.locator('#results').textContent())).not.toContain(HEADING);
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       expect(await s.evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);

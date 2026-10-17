@@ -197,16 +197,16 @@ test.describe('About: the 2025–2026 timeline entry is sentences, not a semicol
   });
 });
 
-test.describe('"Surveyed new earners" is defined where the 58.8% appears: Home’s survey slide and the Impact tile (item 8)', () => {
+// WP54 (cycle-28 reviews, Claude S23 and GLM L1): Home's survey slide no longer uses the term; its body line leads with the base in the words of OC-05's own text (tests/wp54.spec.ts). The Impact tile still defines the term where it uses it.
+test.describe('"Surveyed new earners" is defined where the 58.8% appears: the Impact tile (item 8); Home’s survey slide names the subgroup in OC-05’s own words (WP54)', () => {
   const DEFINITION = '(completers who first earned during or after training)';
-  const SLIDE_CAPTION = `of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course (October 2026 survey)`;
-  // WP53 (owner decision 2026-10-16): the speed slide's tile caption is the survey slide's body line now, "58.8% " plus the caption without the label's "(October 2026 survey)", which the slide's own eyebrow ("Impact Survey 2026") says
-  const SLIDE_LINE = `58.8% of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course.`;
+  // WP53 (owner decision 2026-10-16): the speed slide's tile caption became the survey slide's body line; WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's text
+  const SLIDE_LINE = 'Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.';
   const TILE_LABEL = `of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course, including 23.5% who first earned during the course`;
 
-  test('the survey slide’s body line defines the term: the register’s label with the definition inserted after it', async ({ page }) => {
-    expect(defineNewEarners(fact('OC-05').stat!.label)).toBe(SLIDE_CAPTION);
-    expect(SLIDE_LINE).toBe(`58.8% ${SLIDE_CAPTION.replace(' (October 2026 survey)', '')}.`);
+  test('the survey slide’s body line names the subgroup in OC-05’s own words, so it needs no definition of the term', async ({ page }) => {
+    expect(fact('OC-05').text.startsWith('Among the 170 surveyed completers who first earned during or after training: ')).toBe(true);
+    expect(fact('OC-05').stat?.value).toBe('58.8%');
     await open(page, HOME);
     const s = slide(page, 3);
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');

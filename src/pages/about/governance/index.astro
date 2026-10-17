@@ -16,7 +16,7 @@ import TeamCard from '../../../components/pages/about/TeamCard.astro';
 import ContractingPanel from '../../../components/pages/about/ContractingPanel.astro';
 import PageNav from '../../../components/pages/about/PageNav.astro';
 import { diligenceCta } from '../../../components/pages/about/routes';
-import { GOVERNANCE, SAFEGUARDING, RCT_HEADLINE } from '../../../data/copy';
+import { BIGD_FULL, GOVERNANCE, SAFEGUARDING, RCT_HEADLINE, spellOutBigd } from '../../../data/copy';
 import { formatDate, isoDate } from '../../../lib/format';
 import { webPage } from '../../../lib/schema';
 import { OFFICES } from '../../../lib/site';
@@ -37,8 +37,10 @@ const diligence = diligenceCta();
 const [usa, bd] = OFFICES;
 // RC-01's headline restated for a due-diligence reader: the intent-to-treat employment result only.
 // WP22: the governance reader gets the employment result in one sentence and a link; the income detail is on the trial page (and on About).
-const trialLine = RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0];
+// WP54 (cycle-28 review, GPT-6.1 Sol G8): this sentence is the page's one mention of the evaluator, so it is spelled out ("by the BRAC Institute of Governance and Development (BIGD)"); the register's headline says "by BIGD".
+const trialLine = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trialLine)) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
+if (!trialLine.includes(BIGD_FULL)) throw new Error('Governance: the RC-01 headline no longer says "by BIGD"; update the expansion');
 const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
 
 // The checklist ("What We Confirm with You in Co-Design", below) restates PD-13 as three lines (owner decision 2026-10-16, WP53): the legal status (ID-12, built from the register), the audited accounts (they exist; shared on request) and the safeguarding,

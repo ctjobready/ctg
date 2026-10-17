@@ -25,7 +25,8 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
   const CARDS = [
     {
       title: 'Training, Mentoring and Placement Support',
-      text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is approved before enrollment.',
+      // WP54 (cycle-28 review, Claude S25): "agreed before enrollment" (it said "approved")
+      text: '100 training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.',
       pain: 'P1',
       facts: ['PD-01', 'PD-15', 'PD-19'],
     },
@@ -180,7 +181,8 @@ test.describe('the three funder pains that had a heading and no line now have on
     // WP40 (cycle-17 review): the third Foundations pain is about accountability keeping pace with scale, not about how rare other implementers are
     ['partner-with-us/foundations/', 'Accountability Must Keep Pace with Scale', 'You need monthly outcome reports as delivery expands.'],
     // WP49 (cycle-24 reviews): the Governments and Universities lines say what the agency or institution needs, not what is "rarely" so across a sector (tests/wp49.spec.ts)
-    ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Is Thin', 'National delivery needs trained facilitators and localized curricula.'],
+    // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "... Takes Time to Build" (it said capacity "Is Thin"); the line is unchanged
+    ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Takes Time to Build', 'National delivery needs trained facilitators and localized curricula.'],
     ['partner-with-us/universities/', 'Build Placement Results You Can Publish', 'Your institution needs placement data it can report to a board or ministry.'],
   ];
   for (const [route, title, line] of LINES) {
@@ -271,8 +273,8 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 });
@@ -281,9 +283,10 @@ test.describe('wording fixes', () => {
   test('Contact: step 3 says "a program scope, designed with you" (only that sentence changed)', async ({ page }) => {
     await open(page, 'contact/');
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
-    expect(third).toContain('Development partners, governments, universities and local partners: a program scope, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles.');
+    // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines; "Program partners" stands for the four partner types that share the program-scope sentence (tests/wp54.spec.ts)
+    expect(third).toContain('Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool.');
     expect(third).not.toContain('a first cohort, designed with you');
-    expect(third).toContain('Impact investors: the deck and data room follow under NDA.');
+    expect(third).toContain('Impact investors: the deck and data room, under NDA.');
   });
 
   // WP52 (cycle-27 review, Kimi M3): About's band is "Start a Conversation" (the action is a general discovery email; the team page keeps "Talk to the Team")

@@ -5,6 +5,7 @@ import Accordion from '../../ui/Accordion.astro';
 import Icon from '../../system/Icon.astro';
 import { faqItems } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
+import { FAQ_EYEBROW } from '../../../data/copy';
 import type { FaqAudience } from '../../../data/faqs';
 
 /**
@@ -23,7 +24,7 @@ interface Props {
   allLink?: { label: string; href: string };
   id?: string;
 }
-const { audience, ids, title, eyebrow = 'Objections, Answered', lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
+const { audience, ids, title, eyebrow = FAQ_EYEBROW, lead, tone = 'ice', allLink, id = 'faq' } = Astro.props;
 const items = faqItems(audience, ids);
 ---
 

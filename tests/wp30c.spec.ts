@@ -203,7 +203,8 @@ test.describe('mega-menu featured panels point to a different decisive page than
     const cases: [string, string, string][] = [
       ['about', '/about/governance/', 'How CodersTrust is organized and reports to partners.'],
       ['model', '/our-model/jobready-platform/', 'Partner portals and AI chat are live; the employer marketplace and the gig-work marketplace are in pre-launch.'],
-      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.'],
+      // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
+      ['programs', '/programs/youthwide/', 'Co-funded country cohorts, designed for three regions, from training to paid digital work.'],
       // WP48 (cycle-23 review): the Governments blurb no longer implies a delivered national program (tests/wp48.spec.ts)
       ['partner', '/partner-with-us/governments/', 'Curriculum, trainer training and phased delivery for ministries.'],
     ];

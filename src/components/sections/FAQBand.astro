@@ -5,10 +5,11 @@ import Accordion from '../ui/Accordion.astro';
 import Icon from '../system/Icon.astro';
 import { faqItems } from '../../lib/faq';
 import { linkAttrs } from '../../lib/url';
+import { FAQ_EYEBROW } from '../../data/copy';
 import type { FaqAudience } from '../../data/faqs';
 
 /**
- * C9 Objection handling. Items come from faqsFor(audience) (src/data/faqs.ts).
+ * C9 Objection handling. Items come from faqsFor(audience) (src/data/faqs.ts). The eyebrow is FAQ_EYEBROW ("Questions, Answered"; WP54, cycle-28 review: it printed the framework's own label, "Objections, Answered").
  * The FAQPage JSON-LD for the same items must be added by the PAGE (one @graph per page):
  *   jsonLd={[faqJsonLd('home', '/', ['Q1','Q2'])]}   // from src/lib/faq.ts
  */
@@ -28,7 +29,7 @@ const items = faqItems(audience, ids);
 ---
 
 <Section id={id} tone="ice" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Objections, Answered" title={title} lead={lead} />
+  <SectionHeader id={`${id}-h`} eyebrow={FAQ_EYEBROW} title={title} lead={lead} />
   <Accordion items={items} name={name} />
   {allLink && <p class="faqband__all"><a class="link" href={linkAttrs(allLink.href).href}>{allLink.label}<Icon name="arrow-right" size={16} /></a></p>}
 </Section>

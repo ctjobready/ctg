@@ -22,6 +22,8 @@ import { endSentence } from '../../sections/copyText';
  * SC-03's tile and used to carry the launch alone); Investors' own band (InvestorGuide) prints it too.
  * WP41 (cycle-18 review): Employers' band was a figure, a contract line, an AWS badge and an AIvolve note in a row of bullets. Its one delivered figure is now the band's headline stat (`statSize="lg"`), the two lines that
  * remain follow it, and the AWS credential is a short line under the logo strip, beside the AWS logo (`logoNote`; the strip's default slot).
+ * WP54 (cycle-28 review, Kimi K3): that credential is a sentence of the logo strip's caption now (`captionNote`: "... These are working relationships, not endorsements. CodersTrust is an AWS Authorized Training Partner."), not a lone
+ * paragraph under the logos; the strip's slot and this band's `.pg__logonote` style are gone.
  */
 interface Statement {
   /** Fact(s) behind the statement (data-fact and footnote markers). */
@@ -40,13 +42,13 @@ interface Props {
   /** Size of the stat tiles (default md). A band whose one figure is its headline shows it large. */
   statSize?: 'md' | 'lg';
   statements?: Statement[];
-  /** A registered credential as a short line under the logo strip, beside the logos it belongs to, instead of a bullet in the list above (same fields as a statement). */
-  logoNote?: Statement;
+  /** A registered credential as one more sentence in the logo strip's caption, instead of a bullet in the list above (same fields as a statement; the page gives the sentence in `text`). */
+  captionNote?: Statement;
   method: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
   id?: string;
 }
-const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], logoNote, method, partnerGroup, id = 'guide' } = Astro.props;
+const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], captionNote, method, partnerGroup, id = 'guide' } = Astro.props;
 const hasProof = stats.length > 0 || statements.length > 0;
 ---
 
@@ -83,9 +85,12 @@ const hasProof = stats.length > 0 || statements.length > 0;
       )
     }
   </div>
-  <PartnerStrip variant="grid" group={partnerGroup} caption={PARTNER_CAPTION}>
-    {logoNote && <p class="pg__logonote" data-fact={logoNote.facts.join(' ')}>{endSentence(logoNote.text ?? fact(logoNote.facts[0]).text)}</p>}
-  </PartnerStrip>
+  <PartnerStrip
+    variant="grid"
+    group={partnerGroup}
+    caption={PARTNER_CAPTION}
+    captionNote={captionNote && { text: endSentence(captionNote.text ?? fact(captionNote.facts[0]).text), facts: captionNote.facts }}
+  />
 </Section>
 
 <style>
@@ -141,15 +146,6 @@ const hasProof = stats.length > 0 || statements.length > 0;
     color: var(--success);
     margin-top: var(--space-xs);
     flex: none;
-  }
-  /* a credential stated under the logo strip (WP41): the strip's caption style, so it reads as the caption of the logo it names */
-  .pg__logonote {
-    margin: 0;
-    font-size: var(--fs-body-xs);
-    line-height: var(--lh-body-xs);
-    font-weight: var(--fw-bold);
-    color: var(--ctx-text);
-    text-align: center;
   }
   @media (min-width: 1024px) {
     .pg {

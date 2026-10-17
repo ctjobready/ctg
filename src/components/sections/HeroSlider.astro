@@ -10,9 +10,11 @@
  * active slide, the dots, the inert state of the hidden slides and the live region.
  * Pattern: WAI-ARIA Authoring Practices carousel (region, slides with roledescription "slide", a labelled previous and next, a slide picker,
  * a pause control). Figures come from the facts register (src/data/facts.ts) and carry data-fact for the facts gate.
+ * WP54 (cycle-28 review, GLM L1): a slide that sets `statsFirst` shows its figure tiles (HeroSlideStats) directly under the heading, before the lead (the survey slide: the income figure, then the timing sentence); the order is the markup's order.
  */
 import Icon from '../system/Icon.astro';
 import Stat from '../system/Stat.astro';
+import HeroSlideStats from './HeroSlideStats.astro';
 import Fact from '../facts/Fact.astro';
 import HeroArt from '../ui/HeroArt.astro';
 import Img from '../ui/Img.astro';
@@ -89,6 +91,7 @@ const views = slides.map((s, i) => {
               )}
               {s.eyebrow && <p class="hs__eyebrow" data-hero-in={first ? '' : undefined}>{s.eyebrow}</p>}
               <h2 class="hs__title t-display-4xl" data-fact={s.titleFacts?.join(' ')}>{s.title}</h2>
+              {s.statsFirst && <HeroSlideStats stats={stats} />}
               {s.fact ? (
                 <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />
               ) : (
@@ -101,15 +104,7 @@ const views = slides.map((s, i) => {
                   ))}
                 </ul>
               )}
-              {stats.length > 0 && (
-                <div class="hs__stats">
-                  {stats.map((v) => (
-                    <div class="hs__stat" data-fact={v.factId}>
-                      <Stat value={v.value} label={v.label} size="lg" count={false} />
-                    </div>
-                  ))}
-                </div>
-              )}
+              {!s.statsFirst && <HeroSlideStats stats={stats} />}
               {s.links && (
                 <div class="hs__actions" data-hero-in={first ? '' : undefined}>
                   {s.links.map((l) => (

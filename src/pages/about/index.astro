@@ -13,7 +13,7 @@ import TeamCard from '../../components/pages/about/TeamCard.astro';
 import PageNav from '../../components/pages/about/PageNav.astro';
 import Stat from '../../components/system/Stat.astro';
 import { fact } from '../../data/facts';
-import { MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING } from '../../data/copy';
+import { BIGD_FULL, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
 import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
@@ -39,8 +39,10 @@ const sc02Courseware = /([\d,]+) through CodersTrust courseware/.exec(sc02.text)
 if (!sc02Direct || !sc02Courseware) throw new Error('About: SC-02 no longer reads "N through direct training ... N through CodersTrust courseware"; update the enrollments tile');
 const sc02Split = `Including ${sc02Direct} direct enrollments and ${sc02Courseware} through courseware.`;
 // WP30e: the employment result in one sentence; the income detail is on the Independent Evaluation page.
-const trial = RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0];
+// WP54 (cycle-28 review, GPT-6.1 Sol G8): this sentence is the page's one mention of the evaluator, so it is spelled out ("by the BRAC Institute of Governance and Development (BIGD)"); the register's headline says "by BIGD".
+const trial = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trial)) throw new Error('About: RC-01 headline wording changed; update the trial line');
+if (!trial.includes(BIGD_FULL)) throw new Error('About: the RC-01 headline no longer says "by BIGD"; update the expansion');
 
 const principles = [
   {

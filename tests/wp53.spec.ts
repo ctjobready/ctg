@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
-import { defineNewEarners } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -41,7 +40,8 @@ const TITLES = [
   'Surveyed Completers Report Higher Income',
   'Results by Program',
 ];
-const TIMING = '58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course.';
+// WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's own text (it was "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning ...")
+const TIMING = 'Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.';
 
 test.describe('Home: the carousel is four slides (item 1)', () => {
   test.use({ viewport: DESKTOP });
@@ -96,17 +96,19 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(0);
   });
 
-  test('the survey slide: the income heading, the eyebrow, the $245 tile and the evidence link are unchanged; the timing is ONE body line from OC-05 with its defined base, stated once', async ({ page }) => {
+  test('the survey slide: the income heading, the eyebrow, the $245 tile and the evidence link are unchanged; the timing is ONE body line from OC-05 leading with its base, stated once', async ({ page }) => {
     await open(page, HOME);
     const s = slide(page, 3);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-03');
-    // the line is the owner’s sentence, built from the register (value and label, the term defined in place)
+    // the line is the owner’s sentence, built from the register (WP54: the count and base from OC-05's text, the value from its stat, the closing clause from its label)
     await expect(s.locator('.hs__lead')).toHaveCount(1);
     expect(compact(await s.locator('.hs__lead').textContent())).toBe(TIMING);
-    const stat = fact('OC-05').stat!;
-    expect(TIMING).toBe(`${stat.value} ${defineNewEarners(stat.label.replace(/ \(October 2026 survey\)$/, ''))}.`);
+    const oc05 = fact('OC-05');
+    const stat = oc05.stat!;
+    expect(oc05.text.startsWith('Among the 170 surveyed completers who first earned during or after training: ')).toBe(true);
+    expect(TIMING).toBe(`Of the 170 surveyed completers who first earned during or after training, ${stat.value} ${stat.label.replace(/^of the 170 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     // one tile: the income result, with its before-training comparison
     await expect(s.locator('.hs__stat')).toHaveCount(1);

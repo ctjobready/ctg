@@ -74,9 +74,10 @@ test.describe('Employers and JobReady@Work: the closing steps name their routes'
     });
   }
 
-  test('Employers: the "first step: a discovery session" line belongs to team training, so it says so (it follows both routes)', async ({ page }) => {
+  // WP54 (cycle-28 review, Kimi K5): the line follows both routes and the first step is a discovery session on both (the hiring route's first step is "Discovery"), so it says "for team training or hiring" (tests/wp54.spec.ts)
+  test('Employers: the "first step: a discovery session" line names both routes, team training and hiring (it follows both routes)', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    expect(compact(await page.locator('#reinforce .rf__first').textContent())).toBe('For team training, your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.');
+    expect(compact(await page.locator('#reinforce .rf__first').textContent())).toBe('Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.');
   });
 
   test('JobReady@Work: the first-action line sits inside the team-training route, before "For Hiring"', async ({ page }) => {

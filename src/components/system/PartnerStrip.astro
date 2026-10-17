@@ -4,7 +4,7 @@ import Img from '../ui/Img.astro';
 import { linkAttrs } from '../../lib/url';
 import { slugify } from '../../lib/format';
 import { mayRender } from '../../lib/permissions';
-import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type LogoFit, type PartnerGroup } from '../../lib/logos';
+import { partnerLogos, pressLogos, PARTNER_CAPTION, PARTNER_CAPTION_SENTENCE, PRESS_CAPTION, type LogoFit, type PartnerGroup } from '../../lib/logos';
 
 /**
  * PartnerStrip — quiet credibility band. Logos come from src/data/partners.ts (relationships, not
@@ -19,7 +19,8 @@ import { partnerLogos, pressLogos, PARTNER_CAPTION, PRESS_CAPTION, type LogoFit,
  *
  * Optical size: the logo's box is picked from the artwork's aspect ratio (a wide wordmark is limited by the tile's width,
  * a crest by its height), then nudged per organization by LOGO_FIT in src/lib/logos.ts.
- * The default slot (WP41) is a line under the logos, inside the strip's landmark: Employers states its AWS credential there, beside the AWS logo.
+ * WP41 gave the strip a default slot, a line under the logos, where Employers stated its AWS credential. WP54 (cycle-28 review, Kimi K3) moved that line into the caption paragraph above the logos (`captionNote`), so the credential is a sentence of the
+ * caption and not a lone paragraph under the row, and removed the slot. The partner caption is PARTNER_CAPTION (PA-04's sentence and "These are working relationships, not endorsements.", K1), the same on every page that prints it.
  */
 interface Item {
   /** Partner or outlet id from src/data/partners.ts; items without one (sample data) carry no data-asset. */
@@ -35,11 +36,13 @@ interface Props {
   kind?: 'partners' | 'press';
   /** Filter partners by group. */
   group?: PartnerGroup | PartnerGroup[];
-  /** Caption above the strip; defaults to the PA-04 caption (partners) or "Press Coverage, 2014–2016" (press). */
+  /** Caption above the strip; defaults to the partner caption (PARTNER_CAPTION: PA-04's sentence and "These are working relationships, not endorsements.") for partners, or "Press Coverage, 2014–2016" for press. */
   caption?: string | false;
+  /** One more sentence in the caption paragraph, after the caption (Employers: "CodersTrust is an AWS Authorized Training Partner."); `facts` are the register facts it states (data-fact). */
+  captionNote?: { text: string; facts?: string[] };
   /**
    * Accessible name of the strip's landmark. Names must be unique on a page: by default the caption, extended with the
-   * group when the shared PA-04 caption is used for a filtered strip ("…2014–2026: academic partners").
+   * group when the shared partner caption is used for a filtered strip ("Organizations we have worked with, 2014–2026: academic partners"; the name uses PA-04's sentence, not the whole caption).
    */
   label?: string;
   variant?: 'grid' | 'marquee';
@@ -50,7 +53,7 @@ interface Props {
   class?: string;
 }
 import type { ImageMetadata } from 'astro';
-const { kind = 'partners', group, caption, label: labelProp, variant = 'grid', items, link = false, class: className } = Astro.props;
+const { kind = 'partners', group, caption, captionNote, label: labelProp, variant = 'grid', items, link = false, class: className } = Astro.props;
 const source: Item[] = items ?? (kind === 'press' ? pressLogos() : partnerLogos(group));
 const list = source.map((it) => {
   const assetId = it.id && it.logo ? (kind === 'press' ? `press-${slugify(it.name)}` : `partner-${it.id}`) : undefined;
@@ -60,7 +63,8 @@ const list = source.map((it) => {
 const cap = (caption === undefined ? (kind === 'press' ? PRESS_CAPTION : PARTNER_CAPTION) : caption);
 const GROUP_NAME: Record<PartnerGroup, string> = { development: 'development and NGO partners', government: 'government partners', private: 'private-sector partners', academic: 'academic partners' };
 const groups = group === undefined ? [] : Array.isArray(group) ? group : [group];
-const base = cap || (kind === 'press' ? 'Press coverage' : 'Partners');
+// The landmark's name is PA-04's sentence, not the whole two-sentence caption (K1): "Organizations we have worked with, 2014–2026.", or ".. 2014–2026: private-sector partners" for a filtered strip.
+const base = cap === PARTNER_CAPTION ? PARTNER_CAPTION_SENTENCE : cap || (kind === 'press' ? 'Press coverage' : 'Partners');
 const label = labelProp ?? (cap === PARTNER_CAPTION && groups.length ? `${base.replace(/\.$/, '')}: ${groups.map((g) => GROUP_NAME[g]).join(' and ')}` : base);
 
 /** Box for the artwork inside the tile, by aspect ratio (width / height): xl ≥ 5.5, wide ≥ 3.2, mid ≥ 1.8, sq ≥ 0.8, tall below. */
@@ -80,7 +84,7 @@ const itemStyle = (it: (typeof list)[number]) => (it.fit?.scale ? `--k:${it.fit.
 ---
 
 <section class:list={['partners', `partners--${variant}`, className]} aria-label={label} data-marquee={variant === 'marquee' ? '' : undefined}>
-  {cap && <p class="partners__title">{cap}</p>}
+  {cap && <p class="partners__title">{cap}{captionNote && <>{' '}<span data-fact={captionNote.facts?.join(' ')}>{captionNote.text}</span></>}</p>}
   {
     variant === 'grid' ? (
       <ul class="partners__row" role="list" style={rowVars}>
@@ -124,7 +128,6 @@ const itemStyle = (it: (typeof list)[number]) => (it.fit?.scale ? `--k:${it.fit.
       </>
     )
   }
-  <slot />
 </section>
 
 <style>

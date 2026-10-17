@@ -28,6 +28,7 @@ import { factPart } from './partners';
  * were distributed."), still one per line, with a space between the items so a text export keeps them apart.
  * WP52 (cycle-27 reviews): the note sat beside Her Power's delivered figures yet said all scopes are "not delivered scale"; it now reads "Delivery status is confirmed for each contract in a briefing. Apart from the Her Power figures, scopes are contracted
  * scopes of work, not delivered scale." (two sentences; Claude m5, then Grok m2: "on request" read as a barrier, and the page's first step is a briefing), and the table's screen-reader caption makes the same exception.
+ * WP54 (cycle-28 review, Claude S20): the NHRDF contract's name reads "..., implemented by the National Skills Development Authority, NSDA" (it was "Implemented by", a capital in the middle of a parenthesis; GV-04 words it "implemented by NSDA").
  */
 interface Row {
   contract: string;
@@ -67,7 +68,7 @@ const rows: Row[] = [
     direct: `${SCOPE} ${factPart('GV-03', /[\d,]+ people/)}`,
   },
   {
-    contract: 'NHRDF (National Human Resource Development Fund, Implemented by the National Skills Development Authority, NSDA)',
+    contract: 'NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)',
     facts: ['GV-04'],
     scope: 'Training service provider',
     // WP31: the scope first, then the first batch inside it (GV-04: "initial 200 trainees, scope 1,000+"); the 31,200+ total counts the scope.

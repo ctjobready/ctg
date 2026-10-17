@@ -116,15 +116,18 @@ test.describe('Universities: the institution’s pain is headed as the goal (ite
 });
 
 // WP53 (owner decision 2026-10-16): the speed slide (slide 5, headed HEADING) is gone; its subgroup is named in the survey slide's body line (slide 3), in the register's term and with the cumulative "by ... after" wording
+// WP54 (cycle-28 reviews, Claude S23 and GLM L1): the body line names the subgroup in the words of OC-05's text ("the 170 surveyed completers who first earned during or after training") instead of the term (tests/wp54.spec.ts)
 test.describe('Home: the survey slide names its subgroup (item 3; WP53: the speed slide it was named on is gone)', () => {
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
   const survey = (page: Page) => page.locator('[data-hs-slide]').nth(2);
 
-  test('the body line uses the register’s term, keeps the cumulative "by ... after" wording, tied to OC-05; the former speed heading is on no slide', async ({ page }) => {
+  test('the body line names the subgroup, keeps the cumulative "by ... after" wording, tied to OC-05; the former speed heading is on no slide', async ({ page }) => {
     expect(fact('OC-05').stat?.label).toContain('surveyed new earners');
+    expect(fact('OC-05').text).toContain('Among the 170 surveyed completers who first earned during or after training');
     await open(page, '');
     const line = compact(await survey(page).locator('.hs__lead').textContent());
-    expect(line).toContain('surveyed new earners');
+    expect(line).toContain('the 170 surveyed completers who first earned during or after training');
+    expect(line).not.toContain('surveyed new earners');
     expect(line).toContain('had started earning by six months after finishing the course');
     expect(line).not.toMatch(/within|of finishing|of the course ending/i);
     expect(await survey(page).locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
@@ -285,9 +288,11 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 
-  test('Employers keeps its closing line (that page was not part of the review)', async ({ page }) => {
+  // WP54 (cycle-28 review, Kimi K2): Employers' closing line is gone as well (its strip names the same five organizations); the closing band holds the first-action line alone (tests/wp50.spec.ts and tests/wp54.spec.ts)
+  test('Employers: the closing line ("Private-sector partners include ...") is gone with the other pages’; the closing band holds the first-action line alone', async ({ page }) => {
     await open(page, EMP);
-    expect(compact(await page.locator('#reinforce').textContent())).toContain('Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.');
+    expect(compact(await page.locator('#reinforce').textContent())).not.toContain('Private-sector partners include');
+    expect(await texts(page, '#reinforce li')).toEqual(['Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.']);
   });
 
   test('the Foundations Track Record band and the Development Partners band do not scroll sideways', async ({ page }) => {
@@ -328,10 +333,11 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
 });
 
 test.describe('Home: the first Imagine card and the Learner Journeys lead (items 16 and 22)', () => {
-  test('the first Imagine card is a scene, "A young woman invoices her first foreign client from her own laptop."', async ({ page }) => {
+  // WP54 (cycle-28 review, GLM L2): the scene is "A young woman in your cohort invoices her first foreign client from her own laptop." (the other two cards speak to the reader; tests/wp54.spec.ts)
+  test('the first Imagine card is a scene, "A young woman in your cohort invoices her first foreign client from her own laptop."', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#future .card__text')).toEqual([
-      'A young woman invoices her first foreign client from her own laptop.',
+      'A young woman in your cohort invoices her first foreign client from her own laptop.',
       'You review monthly reports showing who is earning, not only who completed.',
       'You see employers hire completers whose skills match current employer demand.',
     ]);

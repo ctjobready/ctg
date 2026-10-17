@@ -2,7 +2,8 @@
  * Program locations (SC-03): Bangladesh plus 14 international locations = 15 countries and territories.
  * Years, target groups and skills follow CodersTrust program records. Somaliland is its own row and pin, labelled neutrally.
  * The USA is not a program location; offices are listed separately (OFFICES_LINE). No funder is named for any location;
- * only Kosovo's partner (the World Bank Group) is published, in `note`.
+ * only the World Bank Group's partnerships, in Kosovo and Albania, are published, in `note`.
+ * WP54 (cycle-28 review, Grok R1; owner's investor deck): the Albania program (2021–2022) was with the World Bank Group, so its row says "Partner: World Bank Group" as Kosovo's does. No amount or investment figure is published.
  */
 export interface ProgramLocation {
   id: string;
@@ -34,7 +35,7 @@ export const locations: ProgramLocation[] = [
   { id: 'somalia', name: 'Somalia', region: 'Africa', lat: 2.0469, lon: 45.3182, years: '2016', targetGroup: 'Higher-secondary students', skills: 'Data entry and freelancing' },
   { id: 'somaliland', name: 'Somaliland', region: 'Africa', lat: 9.5600, lon: 44.0650, years: '2017', targetGroup: 'Students interested in after-school programs', skills: 'Basic computing, data entry and freelancing' },
   { id: 'uganda', name: 'Uganda', region: 'Africa', lat: 0.3476, lon: 32.5825, years: '2016', targetGroup: '100 participants from across Uganda aged 18 to 40', skills: 'Basic computing, data entry and freelancing' },
-  { id: 'albania', name: 'Albania', region: 'Europe', lat: 41.3275, lon: 19.8187, years: '2021–2022', targetGroup: 'Young Albanian women aged 16 to 35', skills: 'Digital marketing, graphic design and web development' },
+  { id: 'albania', name: 'Albania', region: 'Europe', lat: 41.3275, lon: 19.8187, years: '2021–2022', targetGroup: 'Young Albanian women aged 16 to 35', skills: 'Digital marketing, graphic design and web development', note: 'Partner: World Bank Group' },
   { id: 'denmark', name: 'Denmark', region: 'Europe', lat: 55.6761, lon: 12.5683, years: '2014', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Coding, development, mobile development and data analytics', note: 'Launch location of CodersTrust' },
   { id: 'kosovo', name: 'Kosovo', region: 'Europe', lat: 42.6629, lon: 21.1655, years: '2016–2017', targetGroup: 'Young women', skills: 'Front-end web development, coding, graphic design and digital marketing', note: 'Partner: World Bank Group (Women in Online Work pilot, 2017)' },
   { id: 'poland', name: 'Poland', region: 'Europe', lat: 52.2297, lon: 21.0122, years: '2016–2017', targetGroup: 'Students, youth and people from across Poland aged 18 to 45', skills: 'Full-stack, front-end and back-end development' },

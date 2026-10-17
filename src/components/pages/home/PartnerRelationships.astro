@@ -7,6 +7,7 @@ import { PARTNER_CAPTION } from '../../../lib/logos';
  * relationship instead of one undifferentiated run: funders and development partners, government programs, education partners, employers.
  * Relationships, not endorsements: the caption says so, and no card implies that an organization endorses CodersTrust. Logos follow the permissions rule
  * of PartnerStrip (a logo that may not render shows the organization's name).
+ * WP54 (cycle-28 review, Kimi K1): the caption is PARTNER_CAPTION in full ("Organizations we have worked with, 2014–2026. These are working relationships, not endorsements."), the one caption every logo band prints; this band added the second sentence by hand before.
  */
 const groups = [
   { title: 'Funders and Development Partners', group: 'development', label: 'Funders and development partners' },
@@ -17,7 +18,7 @@ const groups = [
 ---
 
 <div class="rel">
-  <p class="rel__caption" data-reveal>{PARTNER_CAPTION} These are working relationships, not endorsements.</p>
+  <p class="rel__caption" data-reveal>{PARTNER_CAPTION}</p>
   <ul class="rel__cards" role="list">
     {
       groups.map((g) => (

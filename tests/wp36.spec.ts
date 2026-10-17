@@ -62,8 +62,9 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review), WP41 (cycle-18 reviews), WP43 (cycle-20 review), WP45 to WP48 (cycles 21 to 23) and WP51 (cycle-26 review) shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course": the finding, no percentage, the
-  // 58.8% in a tile). WP53 (owner decision 2026-10-16): that slide is gone and its finding is the survey slide's ONE body line, which keeps the register's term "surveyed new earners" (WP49, cycle-24 review) and is tied to OC-05 (tests/wp53.spec.ts).
-  test('the survey slide’s body line states the 58.8% with "surveyed new earners" (the register’s term for this group), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
+  // 58.8% in a tile). WP53 (owner decision 2026-10-16): that slide is gone and its finding is the survey slide's ONE body line, tied to OC-05 (tests/wp53.spec.ts). WP54 (cycle-28 review): the line leads with its base, "Of the 170 surveyed completers who
+  // first earned during or after training, 58.8% ...", and no longer uses the register's term "surveyed new earners" (tests/wp54.spec.ts).
+  test('the survey slide’s body line states the 58.8% with its base ("the 170 surveyed completers who first earned during or after training"), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
@@ -71,7 +72,7 @@ test.describe('Home: each figure once', () => {
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await slide.locator('.hs__lead').textContent())).toContain('58.8%');
-    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('surveyed new earners');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('the 170 surveyed completers who first earned during or after training');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
@@ -235,13 +236,14 @@ test.describe('Foundations', () => {
 
 test.describe('Contact', () => {
   // WP38 (cycle-15 review): the shared sentence says "a program scope, designed with you" (a "first cohort" was one kind of scope; the sentence is for four routes)
-  test('step 3 names foundations’ two grants; development partners, governments, universities and local partners share the program-scope sentence', async ({ page }) => {
+  // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines ("Program partners: ...", tests/wp54.spec.ts); the program-scope sentence and the two grants stay.
+  test('step 3 names foundations’ two grants; the program partners share the program-scope sentence', async ({ page }) => {
     await open(page, 'contact/');
     expect(compact(await page.locator('#next .steps__item').nth(2).textContent())).toContain(
-      'Development partners, governments, universities and local partners: a program scope, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles.',
+      'Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool.',
     );
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
-    expect(third).toContain('Impact investors: the deck and data room follow under NDA.');
+    expect(third).toContain('Impact investors: the deck and data room, under NDA.');
     expect(third).not.toMatch(/governments, foundations, universities/);
   });
 
@@ -297,7 +299,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
 
 test.describe('the ranked pains are statements, not questions', () => {
   const PAGES: [string, string[]][] = [
-    ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Is Thin']],
+    ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
     // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
     ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
     // WP50 (cycle-25 review): the first Foundations pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)

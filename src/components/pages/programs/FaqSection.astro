@@ -2,9 +2,10 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Accordion from '../../ui/Accordion.astro';
+import { FAQ_EYEBROW } from '../../../data/copy';
 import { buildFaq, type FaqSource } from './faq';
 
-/** C9 Objections. Accordion from FAQ v1.2 entries plus page-specific entries; default slot follows it. */
+/** C9 Objections. Accordion from FAQ v1.2 entries plus page-specific entries; default slot follows it. The default eyebrow is FAQ_EYEBROW ("Questions, Answered"; WP54, cycle-28 review). */
 interface Props {
   sources: FaqSource[];
   title?: string;
@@ -13,7 +14,7 @@ interface Props {
   id?: string;
   tone?: 'ice' | 'white' | 'airy';
 }
-const { sources, title = 'Questions people ask', lead, eyebrow = 'Objections, Answered', id = 'faq', tone = 'ice' } = Astro.props;
+const { sources, title = 'Questions people ask', lead, eyebrow = FAQ_EYEBROW, id = 'faq', tone = 'ice' } = Astro.props;
 const items = buildFaq(sources);
 ---
 

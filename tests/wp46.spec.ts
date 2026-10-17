@@ -476,13 +476,13 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
   });
 
   // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; the survey slide's one body line is OC-05's value and the register's label with the term defined (WP52),
-  // without the label's closing "(October 2026 survey)", which the slide's own eyebrow ("Impact Survey 2026") says
-  test('Home slide 3 shows OC-05’s value and the register’s label in its body line, "by six months after finishing the course" (with the term defined, WP52)', async ({ page }) => {
+  // without the label's closing "(October 2026 survey)", which the slide's own eyebrow ("Impact Survey 2026") says. WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's text, and needs no term
+  test('Home slide 3 shows OC-05’s value and the register’s closing clause in its body line, "had started earning by six months after finishing the course" (WP54: the line leads with its base)', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 3);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     const line = compact(await s.locator('.hs__lead').textContent());
-    expect(line).toBe(`58.8% ${define(LABEL.replace(/ \(October 2026 survey\)$/, ''))}.`);
+    expect(line).toBe(`Of the 170 surveyed completers who first earned during or after training, 58.8% ${LABEL.replace(/^of the 170 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
     expect(line).toContain('had started earning by six months after finishing the course');
   });
 

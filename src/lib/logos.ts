@@ -59,6 +59,11 @@ export function pressLogos(): LogoItem[] {
   return pressOutlets.map((p) => ({ id: p.id, name: p.name, logo: find(pressImgs, p.logo), white: p.bg === 'white', href: p.url, fit: LOGO_FIT[p.id] }));
 }
 
-/** PA-04 caption (verbatim). */
-export const PARTNER_CAPTION = 'Organizations we have worked with, 2014–2026.';
+/** PA-04's caption sentence (verbatim): the first sentence of every partner-logo caption, and the base of each strip's accessible name (PartnerStrip). */
+export const PARTNER_CAPTION_SENTENCE = 'Organizations we have worked with, 2014–2026.';
+/**
+ * The caption every partner-logo band prints (WP54, cycle-28 review, Kimi K1): PA-04's sentence, then the statement Home's band carried beside its own copy of the sentence, so no band reads as a list of endorsements. It was PA-04's
+ * sentence alone on every page but Home. One source for all of them: PartnerStrip's default, the caption GuideBand, GuideSection, PartnerGuideBand and Reinforcement pass to it, and Home's PartnerRelationships.
+ */
+export const PARTNER_CAPTION = `${PARTNER_CAPTION_SENTENCE} These are working relationships, not endorsements.`;
 export const PRESS_CAPTION = 'Press Coverage, 2014–2016';

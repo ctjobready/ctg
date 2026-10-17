@@ -45,6 +45,12 @@
       "tag": "h3",
       "text": "5 Companies Making A Splash For A Better World",
       "reason": "Verbatim headline of a third-party press article, cited as published; the same string is quoted in the facts register (PA-09), whose wording is locked."
+    },
+    {
+      "page": "/partner-with-us/governments/",
+      "tag": "th",
+      "text": "NHRDF (National Human Resource Development Fund, implemented by the National Skills Development Authority, NSDA)",
+      "reason": "A contract name in the register's own wording (GV-04: \"NHRDF (implemented by NSDA)\"): \"implemented by\" is a clause inside the parenthesis, not a heading word, and a capital I in the middle of the name read as an error (cycle-28 review, Claude S20)."
     }
   ]
 }

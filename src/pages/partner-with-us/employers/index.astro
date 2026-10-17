@@ -17,6 +17,9 @@
  * AI-workflow and certification claims are in "JobReady@Work: Built Around Your Roles" and "What Your Business Gets". The hiring route's two steps are the shared EMPLOYER_HIRING_STEPS (JobReady@Work uses them too).
  * WP50 (cycle-25 review): the pricing sentence ("Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.") is said once, in the "What Does It Cost?" answer (Q8-employer);
  * "Choose How to Work with Us" no longer repeats it as its lead, so the band has none (the EMPLOYER_PRICING constant is gone from copy.ts with its last two readers).
+ * WP54 (cycle-28 reviews, Kimi K2, K3 and K5): the closing strip under "What Happens Next" is the first-action line alone ("Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times."): the
+ * "Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS." line is gone, because the Track Record band's logo strip names the same organizations (as on Development Partners, Governments, Universities and Foundations);
+ * "AWS Authorized Training Partner" is a sentence of that strip's caption ("... not endorsements. CodersTrust is an AWS Authorized Training Partner."), not a lone paragraph under the logos.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -47,6 +50,7 @@ import PageEnhancements from '../../../components/pages/partners/PageEnhancement
 import { LINKS, meta } from '../../../components/pages/partners/partners';
 import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
+import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -64,6 +68,9 @@ const { title, description } = meta(
 const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
 // WP46 (cycle-22 review): the hiring route is two steps in the same step component as the training route (it was one sentence beside four steps), both in wording this page already has (EMPLOYER_HIRING_STEPS in copy.ts;
 // WP47: JobReady@Work uses the same two steps).
+// WP54 (cycle-28 review, Kimi K3): the AWS credential (PA-06, "AWS Authorized Training Partner") is one more sentence of the Track Record logo strip's caption. The sentence is built from the register's words, and the build stops if PA-06 changes.
+const aws = fact('PA-06').text;
+if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06 no longer reads "AWS Authorized Training Partner"; update the caption note');
 ---
 
 <LandingLayout
@@ -127,7 +134,7 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
     stats={['SC-15']}
     statSize="lg"
     statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-07'] }]}
-    logoNote={{ facts: ['PA-06'] }}
+    captionNote={{ facts: ['PA-06'], text: `CodersTrust is an ${aws}.` }}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="private"
   />
@@ -221,7 +228,7 @@ const FAQ_IDS = ['Q1-employer', 'Q8-employer', 'Q11'];
       <div data-fact="IN-04"><StepFlow level={4} steps={EMPLOYER_HIRING_STEPS} /></div>
     </RouteBlock>
   </StepsBand>
-  <Reinforcement firstAction={C14.variants.employers} logos={false} reminder={false} validate={C14.validateFor.employers} />
+  <Reinforcement firstAction={C14.variants.employers} logos={false} reminder={false} />
 
   <PageEnhancements />
 </LandingLayout>

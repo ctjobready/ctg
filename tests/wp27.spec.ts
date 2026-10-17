@@ -64,15 +64,15 @@ test.describe('one NU eligibility sentence', () => {
   test('the YouthWIDE menu description leads with the co-funded country cohorts, not with Bangladesh alone', async ({ page }) => {
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    // WP31: designed for the three regions (no wording that implies cohorts already run in all of them)
-    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.');
+    // WP31: designed for the three regions (no wording that implies cohorts already run in all of them). WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
+    expect(desc).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
   });
 
   test('the Programs featured panel (WP30c) points to YouthWIDE with its menu description; individual learners stay in the menu group "For Individual Learners"', async ({ page }) => {
     await open(page, '');
     const text = compact(await page.locator('#mega-programs .mega__feature-text').textContent());
-    // the panel states the target page's own menu description (WP30c); this line was left on the older wording until WP31
-    expect(text).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.');
+    // the panel states the target page's own menu description (WP30c); this line was left on the older wording until WP31. WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim
+    expect(text).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
     expect(await page.locator('#mega-programs .mega__feature a.link').getAttribute('href')).toMatch(/\/programs\/youthwide\/$/);
     const learners = (await page.locator('#mega-programs a.mega__link').allTextContents()).map(compact).join(' ');
     expect(learners).toContain('NU Postgraduate Diploma');
@@ -198,7 +198,8 @@ test.describe('evidence pages end with a next step for every reader', () => {
     const steps = (await section.locator('.steps__title').allTextContents()).map((t) => compact(t.replace(/^Step \d+:/, '')));
     expect(steps).toEqual(['Your Inquiry', 'A Conversation', 'The Next Step Depends on Your Route']);
     const third = compact(await section.locator('.steps__item').nth(2).textContent());
-    for (const route of ['Development partners', 'Employers training a team', 'Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool.', 'Impact investors']) expect(third).toContain(route);
+    // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap is four short lines, one per kind of route (tests/wp54.spec.ts)
+    for (const route of ['Program partners: a program scope, designed with you.', 'Foundations: a cohort or platform grant.', 'Employers: a needs assessment, or a talent request scoped against the candidate pool.', 'Impact investors: the deck and data room, under NDA.']) expect(third).toContain(route);
   });
 });
 

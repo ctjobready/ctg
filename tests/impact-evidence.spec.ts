@@ -203,7 +203,8 @@ test.describe('case studies', () => {
   // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone; one line above the tiles names the two kinds of evidence, and each tile carries its own tag
   test('WSDFM states which figure is program records and which is the trial', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of the predecessor program.');
+    // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note spells out the evaluator, the page's first mention of BIGD
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of the predecessor program by the BRAC Institute of Governance and Development (BIGD).');
     const tiles = page.locator('.hero .cs__stat');
     await expect(tiles).toHaveCount(3);
     await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);

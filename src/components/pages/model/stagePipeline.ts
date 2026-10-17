@@ -3,6 +3,7 @@
  * TalentLEAP page's structured data (its "How TalentLEAP Works" list), which restated the same wording by hand until WP50.
  * WP50 (cycle-25 review): the last step's second sentence is "Further TalentLEAP levels are planned." (it was "Progressive levels are planned beyond the first published level."). IN-06 and IN-08: Competent is the one published level;
  * Proficient and Expert are planned.
+ * WP54 (cycle-28 review, GPT-6.1 Sol G4): the first step says the assessment "routes applicants" (it said "routes each applicant", which contradicted "Some applicants may not be selected" on Our Model; PD-14).
  */
 export interface PipelineStep {
   name: string;
@@ -18,7 +19,7 @@ export const STAGE_GROUPS: PipelineGroup[] = [
   {
     stage: 'Learn',
     steps: [
-      { name: 'Assess', icon: 'clipboard-check', text: 'A readiness assessment routes each applicant to a career or foundation track.' },
+      { name: 'Assess', icon: 'clipboard-check', text: 'A readiness assessment routes applicants to a career or foundation track.' },
       { name: 'Learn', icon: 'graduation-cap', text: 'Skill units on a track set from employer demand, with hands-on labs.' },
       { name: 'Prepare for Certification', icon: 'award', text: 'Certification exam preparation, exam fee included.' },
     ],

@@ -1,6 +1,6 @@
 /**
  * Navigation structure (planning/03 §3). Paths are root-relative and resolved by url().
- * Every statistic below is read from the Facts Register (facts.ts): ID-02, RC-02, IN-01. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
+ * Every statistic below is read from the Facts Register (facts.ts): ID-02, RC-02. Cards that show a figure list its fact IDs in `factIds` (rendered as data-fact).
  * The About card shows no count: SC-01 and SC-03 need their footnotes, and a menu card has no room for them (review round 11, F17/M10).
  * WP30c (cycle-7 IA review): a featured panel points to a different decisive page than the first item of its own menu, with that page's own menu description
  * as its text (About: Governance and Accountability; Our Model: the JobReady Platform status; Programs: YouthWIDE; Partner with Us: Governments).
@@ -17,13 +17,12 @@ const stat = (id: string) => {
 const trial = stat('RC-02');
 const trialPoints = `+${trial.numeric} Percentage Points`;
 /**
- * YouthWIDE's one-line description (the Programs menu and its featured panel; Home's carousel showed it on a seventh slide until WP53): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, the Middle East and North Africa, and Sub-Saharan Africa)
- * and the Bangladesh initiative as an AIM, "an initiative that aims to train 2 million vulnerable youth for digital employment by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national program).
- * The figure is the register's. The three regions are not listed here: with them spelled out (no "MENA") the line is 180 characters. It was kept short for the Home carousel's programs slide (its program cards were three columns wide, and a longer
- * line made that slide taller than the others); that slide is gone (WP53), and the line is unchanged.
- * WP48 (cycle-23 review): the line says "2 million vulnerable youth", IN-01's own wording, as the register, About and the Programs hub do (it said "2 million youth"; the group differed between pages).
+ * YouthWIDE's one-line description (the Programs menu and its featured panel; Home's carousel showed it on a seventh slide until WP53): co-funded country cohorts designed for three regions (IN-02; the YouthWIDE page names them: South Asia, the Middle East and North Africa, and Sub-Saharan Africa),
+ * from training to paid digital work. The three regions are not listed here: with them spelled out (no "MENA") the line is longer than a menu line should be.
+ * WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim. It said "..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030" (IN-01; WP45, cycle-21 review: "a national initiative in Bangladesh" read as an existing national
+ * program; WP48: IN-01's own "vulnerable youth"), which put a Bangladesh target in the menu of every page of a global site. The aim stays on the YouthWIDE page, the Programs hub and Impact, where it is labeled as an aim; this line states IN-02 only.
  */
-const youthwideLine = `Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train ${stat('IN-01').value} vulnerable youth by 2030.`;
+const youthwideLine = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
 
 export interface NavLink {
   label: string;
@@ -113,8 +112,8 @@ export const navGroups: NavGroup[] = [
     href: '/programs/',
     items: [
       { label: 'Programs Overview', href: '/programs/', description: 'Every program, by audience and delivery route.' },
-      // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country; IN-01: the Bangladesh initiative).
-      { label: 'YouthWIDE', href: '/programs/youthwide/', description: youthwideLine, factIds: ['IN-01', 'IN-02'], group: PARTNER_PROGRAMS },
+      // WP27: not "National…" alone, which fits Bangladesh only: the page's own description (IN-02: the program through which funders deploy the model in a country). WP54: the line states IN-02 only (the Bangladesh aim, IN-01, is no longer in it).
+      { label: 'YouthWIDE', href: '/programs/youthwide/', description: youthwideLine, factIds: ['IN-02'], group: PARTNER_PROGRAMS },
       { label: 'JobReady@Campus', href: '/programs/jobready-campus/', description: 'For universities and colleges.', group: PARTNER_PROGRAMS },
       { label: 'JobReady@Work', href: '/programs/jobready-work/', description: 'For employers and corporate teams.', group: PARTNER_PROGRAMS },
       { label: 'SuperKids', href: '/programs/superkids/', description: 'For schools and young learners.', group: PARTNER_PROGRAMS },
@@ -129,7 +128,7 @@ export const navGroups: NavGroup[] = [
       eyebrow: 'Partner Programs',
       title: 'YouthWIDE',
       text: youthwideLine,
-      factIds: ['IN-01', 'IN-02'],
+      factIds: ['IN-02'],
       cta: { label: 'Explore YouthWIDE', href: '/programs/youthwide/' },
     },
   },

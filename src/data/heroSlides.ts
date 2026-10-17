@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { HEADLINE, VALUE_PROPOSITION, defineNewEarners } from './copy';
+import { HEADLINE, VALUE_PROPOSITION } from './copy';
 import { cta } from '../lib/mailto';
 
 /**
@@ -47,6 +47,10 @@ import { cta } from '../lib/mailto';
  * WP53 (owner decision 2026-10-16, "Trim it": the cycle-27 Claude proposal): the carousel is four slides, not seven. The reach slide ("Programs in 15 Countries and Territories") and the programs slide ("Find Your Program") are deleted (the reach figure
  * stays in the hero's "Proof at a Glance" strip; the Programs menu, the role router and the Programs page cover the programs), and the two Impact Survey slides are one: the income slide ("Surveyed Completers Report Higher Income", with its $245 tile) takes the
  * timing slide's finding as one body line (OC-05 with its defined base; see surveyTiming). The notes above about the speed, reach and programs slides are the history of wording that is gone, or that the survey slide's line inherits.
+ * WP54 (cycle-28 reviews, Claude S23 and GLM L1): the survey slide's body line leads with its base ("Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course."),
+ * so the slide no longer uses the register's term "surveyed new earners" or defines it in brackets (the Impact tile still does); and the slide shows its income tile directly under the heading, before that line (`statsFirst`).
+ * WP54 (cycle-28 review, Grok R2): the trial slide's ">4×" callout reads "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it read "More than four times the average employment effect across nine
+ * vocational-training trials.", which sat under an income heading without saying what was compared; see trialMultiple).
  * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
  */
 
@@ -79,6 +83,11 @@ export interface HeroSlide {
   lines?: { text: string; factIds: string[] }[];
   /** Figures in white tiles under the lead. */
   stats?: HeroSlideStat[];
+  /**
+   * Show the figure tiles directly under the heading, before the lead (WP54, cycle-28 review, GLM L1: on the survey slide the 58.8% sentence came first under "Surveyed Completers Report Higher Income", a heading about income, which invited
+   * the percentage to be quoted as the slide's income result). The order is the document order too, not a visual reordering.
+   */
+  statsFirst?: boolean;
   /** One figure on a Klein-blue band (the evidence proof): a card over the photograph on desktop, under it on phones. */
   proof?: HeroSlideStat;
   links?: HeroSlideLink[];
@@ -106,10 +115,15 @@ const incomeOffered = fact('RC-01').stat?.numeric;
 const dollarsOffered = fact('RC-04').stat?.numeric;
 if (offeredPoints === undefined || !hours || incomeOffered === undefined || dollarsOffered === undefined) throw new Error('heroSlides: RC-01, RC-02, RC-04 or RC-07 no longer carries the figure a slide reads');
 /**
- * The trial slide's ">4×" tile is RC-06a's value; its caption (WP50, cycle-25 review) says the multiple in words, "More than four times the average employment effect across nine vocational-training trials.", and states neither the +10.3 nor
+ * The trial slide's ">4×" tile is RC-06a's value; its caption (WP50, cycle-25 review) said the multiple in words, "More than four times the average employment effect across nine vocational-training trials.", and stated neither the +10.3 nor
  * the 2.3 (the hero's trial card states the +10.3, the Independent Evaluation page the nine-trial comparison). The caption is the slide's own: RC-06a's tile label and glance label are unchanged. The build stops if the tile stops reading ">4×".
+ * WP54 (cycle-28 review, Grok R2): the callout sits under the heading about income, so it names what is compared and the average it is compared with: "Employment effect: more than four times the 2.3-point average across nine vocational-training
+ * trials." The average is read from RC-06a's glance label ("... was more than four times the 2.3-point average across nine vocational-training trials"), never typed; it is an average of nine trials, never "typical". The build stops if the label changes shape.
  */
-if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a no longer has the tile value ">4×"; update the caption of the trial slide ("More than four times ...")');
+if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a no longer has the tile value ">4×"; update the caption of the trial slide ("Employment effect: more than four times ...")');
+const nineTrialAverage = /more than four times the ([\d.]+-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
+if (!nineTrialAverage) throw new Error('heroSlides: RC-06a’s glance label no longer ends "more than four times the N-point average across nine vocational-training trials"; update the callout of the trial slide');
+const trialMultiple = `Employment effect: more than four times the ${nineTrialAverage}.`;
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
@@ -142,14 +156,19 @@ const governmentNote = fact('GV-12').stat?.glance?.note;
 const contractScope = /^The figure is (contract scope, not a count of completers)\./.exec(governmentNote ?? '')?.[1];
 if (!contractScope) throw new Error('heroSlides: GV-12 glance note no longer opens "The figure is contract scope, not a count of completers. ..."');
 /**
- * The survey slide's timing line (WP53, owner decision 2026-10-16): OC-05's value and label with the term defined where it appears (defineNewEarners, WP52), as one sentence:
- * "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course."
- * The label's closing "(October 2026 survey)" is left off: the slide's eyebrow says "Impact Survey 2026". Read from the register, never retyped; the build stops if OC-05's value or label changes shape.
+ * The survey slide's timing line (WP53, owner decision 2026-10-16; reworded in WP54, cycle-28 reviews, Claude S23 and GLM L1): OC-05's finding as one sentence that leads with its base, in the words of OC-05's own text:
+ * "Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course."
+ * (WP53 had "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning ...", which opened with the percentage and defined the register's term in brackets; this sentence needs no term.)
+ * Read from the register, never retyped: the count and the base come from OC-05's text ("Among the 170 surveyed completers who first earned during or after training: ..."), the figure from its stat value, and the closing clause from its stat label,
+ * without the label's "(October 2026 survey)" (the slide's eyebrow says "Impact Survey 2026"). The build stops if the text, the value or the label changes shape.
  */
-const timing = fact('OC-05').stat;
-const timingBase = timing?.label.replace(/ \(October 2026 survey\)$/, '');
-if (!timing || !/^\d+(?:\.\d+)?%$/.test(timing.value) || !timingBase || timingBase === timing.label) throw new Error('heroSlides: OC-05 no longer has a percentage value and a label ending "(October 2026 survey)"; update the timing line of the survey slide');
-const surveyTiming = `${timing.value} ${defineNewEarners(timingBase)}.`;
+const timing = fact('OC-05');
+const timingBase = /^Among the (\d+) (surveyed completers who first earned during or after training):/.exec(timing.text);
+const timingClause = /^of the (\d+) surveyed new earners (had started earning by six months after finishing the course) \(October 2026 survey\)$/.exec(timing.stat?.label ?? '');
+if (!timingBase || !timingClause || timingBase[1] !== timingClause[1] || !timing.stat || !/^\d+(?:\.\d+)?%$/.test(timing.stat.value)) {
+  throw new Error('heroSlides: OC-05 no longer reads "Among the N surveyed completers who first earned during or after training: ..." with a percentage value and the label "of the N surveyed new earners had started earning by six months after finishing the course (October 2026 survey)"; update the timing line of the survey slide');
+}
+const surveyTiming = `Of the ${timingBase[1]} ${timingBase[2]}, ${timing.stat.value} ${timingClause[2]}.`;
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
 const firstJob = /^of the (\d+) trained found their first job within three months$/.exec(fact('PR-03').stat?.label ?? '');
@@ -224,9 +243,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
+    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (see trialMultiple); the tile (">4×") and its data-fact are unchanged.
     proof: {
       factId: 'RC-06a',
-      caption: () => 'More than four times the average employment effect across nine vocational-training trials.',
+      caption: () => trialMultiple,
     },
     links: [{ label: 'See the Trial', href: '/impact/independent-evaluation/', variant: 'primary' }],
     photo: 'general/classroom-girls',
@@ -265,8 +285,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP53 (owner decision 2026-10-16, "trim the carousel"): this is now the carousel's one survey slide. It takes over the finding of the former timing slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") as ONE body line, OC-05's
     // 58.8% with its defined base (see surveyTiming), under the heading and above the income tile. The heading, the eyebrow, the $245 tile and the evidence link are unchanged. The body line is the owner's first choice; a second small tile
     // (the component supports two) was the alternative and is not used. The line was the tile's caption before; it is the lead now, so the slide still states 58.8% once.
+    // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the order under the heading is the income tile first ($245, "up from $82 before training"), then the timing sentence, which leads with its base ("Of the 170 surveyed completers who first earned
+    // during or after training, 58.8% ..."); the heading is about income, and the percentage under it read as the income result. The tile, the sentence, their data-fact attributes and the eyebrow are unchanged; only the order is (statsFirst).
     lead: surveyTiming,
     leadFacts: ['OC-05'],
+    statsFirst: true,
     // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },

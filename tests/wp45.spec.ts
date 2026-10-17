@@ -50,17 +50,18 @@ async function faqJsonLd(page: Page) {
 
 test.describe('The Bangladesh initiative is an aim, not an existing national program (item 9)', () => {
   // The three regions are named on the YouthWIDE page, the Programs hub card and the funding-route table; the one-line menu description says "three regions" (it was kept short for Home's former programs slide, which is gone: WP53)
-  const LINE = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.';
+  // WP54 (cycle-28 review, Claude S7): the menu line no longer carries the Bangladesh aim ("..., with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030."); the aim stays on the YouthWIDE page, the Programs hub and Impact (tests/wp54.spec.ts)
+  const LINE = 'Co-funded country cohorts, designed for three regions, from training to paid digital work.';
 
-  test('the Programs menu and its featured panel say the cohorts are designed for three regions and that the Bangladesh initiative aims to train 2 million vulnerable youth by 2030 (IN-01 and IN-02; WP48: IN-01’s own "vulnerable youth"); WP53: Home’s carousel no longer repeats it on a programs slide', async ({ page }) => {
+  test('the Programs menu and its featured panel say the cohorts are designed for three regions (IN-02) and no longer state the Bangladesh initiative’s aim (IN-01); WP53: Home’s carousel does not repeat it on a programs slide', async ({ page }) => {
     await open(page, '');
-    expect(fact('IN-01').stat?.value, 'the figure in the line is the register’s').toBe('2 million');
+    expect(fact('IN-01').stat?.value, 'the register’s aim is still 2 million').toBe('2 million');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(LINE);
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     const factIds = await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"]').evaluate((el) => `${el.getAttribute('data-fact') ?? ''} ${el.querySelector('[data-fact]')?.getAttribute('data-fact') ?? ''}`);
-    expect(factIds).toContain('IN-01');
     expect(factIds).toContain('IN-02');
+    expect(factIds).not.toContain('IN-01');
   });
 
   // WP53 (owner follow-up, 2026-10-16): "Reference" was the jargon WP52 removed from the glance row and IN-02, so the band is headed "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
@@ -95,7 +96,8 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     expect(fact('RC-04').stat?.value).toBe('+$27');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('More than four times the average employment effect across nine vocational-training trials.');
+    // WP54 (cycle-28 review, Grok R2): the callout names the comparison and its average (tests/wp54.spec.ts)
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect: more than four times the 2.3-point average across nine vocational-training trials.');
   });
 
   test('the employment result is no longer retold in the slide’s heading or lead (the hero card, the bar and the >4× tile state it)', async ({ page }) => {
@@ -134,14 +136,15 @@ test.describe('Home: the speed and reach slides (items 16 and 28; WP53: they are
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course (tests/wp46.spec.ts)
   // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself (tests/wp48.spec.ts)
   // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; its finding is the survey slide's one body line, tied to OC-05, with the base the register defines
-  test('the survey slide (slide 3) carries the 58.8% in one body line tied to OC-05, with "170 surveyed new earners" (WP49: the register’s term; the Outcomes page defines it)', async ({ page }) => {
+  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 170 surveyed completers who first earned during or after training, 58.8% ...", and no longer uses the register's term (tests/wp54.spec.ts)
+  test('the survey slide (slide 3) carries the 58.8% in one body line tied to OC-05, with its base, "the 170 surveyed completers who first earned during or after training"', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 3);
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(s.locator('.hs__lead')).toHaveCount(1);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await s.locator('.hs__lead').textContent())).toContain('58.8%');
-    expect(compact(await s.locator('.hs__lead').textContent())).toContain('170 surveyed new earners');
+    expect(compact(await s.locator('.hs__lead').textContent())).toContain('the 170 surveyed completers who first earned during or after training');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 

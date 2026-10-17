@@ -74,8 +74,9 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP31: said as what surveyed completers report, not as a before-and-after effect. WP42 (cycle-19 review): the order is the trial, the government contracts, the survey income and the program results.
     // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone. The survey slide (slide 3) keeps its heading, tile and evidence link and carries the finding of the former speed slide as ONE body line, OC-05's 58.8%
     // with the base the register defines ("surveyed new earners", WP36, WP49, WP52); the earlier heading ("Most Surveyed New Earners Were Earning by Six Months After the Course") is on no slide (tests/wp53.spec.ts).
+    // WP54 (cycle-28 reviews, Claude S23 and GLM L1): that line leads with its base, in the words of OC-05's text, and follows the income tile (tests/wp54.spec.ts).
     await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    await expect(slide(page, 3).locator('.hs__lead')).toHaveText('58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course.');
+    await expect(slide(page, 3).locator('.hs__lead')).toHaveText('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.');
     await expect(slide(page, 3).locator('a').first()).toHaveText('Read the Impact Survey 2026');
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');

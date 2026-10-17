@@ -392,15 +392,14 @@ test.describe('Development Partners and Governments: no closing line repeats the
     for (const name of ['ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority', 'NSDA', 'BCC']) expect(strip, name).toContain(name);
   });
 
-  // WP51 (cycle-26 reviews): Universities' closing line is gone by the same rule (its three universities are named above it) and Foundations' line moved into its Track Record band (tests/wp51.spec.ts); Employers keeps its closing line
-  test('Employers keeps its closing line (that page is not part of the cycle-26 review)', async ({ page }) => {
-    const lines: [string, string][] = [
-      [EMP, 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.'],
-    ];
-    for (const [route, line] of lines) {
-      await open(page, route);
-      expect(compact(await page.locator('#reinforce').textContent()), route).toContain(line);
-    }
+  // WP51 (cycle-26 reviews): Universities' closing line is gone by the same rule (its three universities are named above it) and Foundations' line moved into its Track Record band (tests/wp51.spec.ts); Employers kept its closing line.
+  // WP54 (cycle-28 review, Kimi K2): Employers' line is gone by the same rule, because the track-record band's strip names the five private-sector partners it named (tests/wp54.spec.ts)
+  test('Employers: the closing band has the first-action line alone; the track-record band’s strip names the five private-sector partners the closing line named (WP54)', async ({ page }) => {
+    await open(page, EMP);
+    expect(await texts(page, '#reinforce li')).toEqual(['Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.']);
+    expect(await everything(page)).not.toContain('Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.');
+    const strip = await page.locator('#guide .partners').evaluate((el) => `${el.textContent ?? ''} ${Array.from(el.querySelectorAll('img')).map((i) => i.getAttribute('alt') ?? '').join(' ')}`);
+    for (const name of ['Grameenphone Academy', 'Robi', 'Accenture', 'BASIS', 'AWS']) expect(strip, name).toContain(name);
   });
 });
 
@@ -425,14 +424,16 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect(sitePages().filter((p) => visible(p.html).includes('Women Offered a Place in a Predecessor Program Earned')).map((p) => p.route)).toEqual([]);
   });
 
+  // WP54 (cycle-28 review, Grok R2): the support line is "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it said "More than four times the average employment effect across nine
+  // vocational-training trials." and stated no 2.3); it still does not repeat the +10.3 (tests/wp54.spec.ts)
   test('the ">4×" tile’s support line says the multiple in words and does not repeat the trial result; its value is still RC-06a’s', async ({ page }) => {
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, '');
     const proof = first(page).locator('.hs__proof');
     expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
     await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('More than four times the average employment effect across nine vocational-training trials.');
-    expect(compact(await proof.textContent())).not.toMatch(/10\.3|2\.3|percentage points/);
+    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect: more than four times the 2.3-point average across nine vocational-training trials.');
+    expect(compact(await proof.textContent())).not.toMatch(/10\.3|percentage points/);
     // the register is unchanged: RC-06a keeps its tile label and its glance label
     expect(fact('RC-06a').stat?.label).toContain('+10.3 percentage points for women offered a place, against 2.3 on average');
   });

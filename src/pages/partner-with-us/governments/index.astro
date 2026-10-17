@@ -39,6 +39,8 @@
  * repeats the procurement point (its urgency line and the first-action line that closed the page are gone; the "How Fast Can We Start?" answer and the steps band state it); the contracts-table note excepts the Her Power figures from "not delivered scale".
  * WP52 (cycle-27 reviews, Grok M2 and Gemini m6): the Track Record band no longer opens with the empathy line ("You answer for training budgets that must produce young people in work, not only seats filled."); it starts with the origin line.
  * WP52 (cycle-27 review, Gemini P1): the "Choose Where to Start" band's eyebrow is "Options" (it was the shared default, "Start", which echoed the heading's last word); Development Partners and Universities, which paired the same eyebrow with the same heading, changed with it.
+ * WP54 (cycle-28 reviews, GPT-6.1 Sol G2 and Claude S20): the third pain is "Trainer and curriculum capacity takes time to build" (it said capacity "is thin", which presumed a deficiency; the line under it is unchanged); the NHRDF contract's name says
+ * "implemented by" in lower case (it was "Implemented by", a capital in the middle of a parenthesis; see ContractTable).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -135,7 +137,8 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
         // WP49 (cycle-24 review): this line and the next say what the agency needs, not what is "rarely" so across a sector.
         { q: 'Training budgets do not show up as earnings', text: 'Track who is earning afterward, not only who enrolled.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact.
-        { q: 'Trainer and curriculum capacity is thin', text: 'National delivery needs trained facilitators and localized curricula.' },
+        // WP54 (cycle-28 review, GPT-6.1 Sol G2): "takes time to build", not "is thin" (which said the sector's capacity is deficient); the band is still a barrier band, and the line under it is unchanged.
+        { q: 'Trainer and curriculum capacity takes time to build', text: 'National delivery needs trained facilitators and localized curricula.' },
       ]}
     />
   </ProblemBand>
@@ -178,7 +181,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
   <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." more={{ label: 'Read the Her Power Case Study', href: LINKS.caseHerPower }} />
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (graduates struggle to find work; budgets are measured by
-       enrollment, not earnings; trainer and curriculum capacity is thin). The sentences keep the matrix rows' words; they rest on PD-10 and PD-01 (tracks from employer demand, mentoring and placement support), PD-11 and PD-08
+       enrollment, not earnings; trainer and curriculum capacity takes time to build). The sentences keep the matrix rows' words; they rest on PD-10 and PD-01 (tracks from employer demand, mentoring and placement support), PD-11 and PD-08
        (the pilot scorecard and its cost per completer and per verified outcome, monthly reports), GV-11, PD-06 and PD-07 (Training of Trainers, curriculum and manuals, certified local facilitators, limited connectivity). -->
   <IncludesBand
     title="What Your Agency Gets"

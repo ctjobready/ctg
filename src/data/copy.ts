@@ -264,10 +264,11 @@ export const FUNDER_PAINS: Pain[] = [
   { id: 'P2', name: 'Results you cannot verify or report', text: 'Enrollment is easy to count. Showing who started earning, to a board or an evaluator, is much harder.' },
   { id: 'P3', name: 'Skills that age fast as AI changes entry-level work', text: 'AI is shifting which entry-level skills employers ask for, so last year’s course list can miss this year’s demand.', facts: ['PX-06'] },
 ];
+// WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training); P1 already says "often".
 export const LOCAL_PARTNER_PAINS: Pain[] = [
   { id: 'P1', name: 'Missing curriculum, trainers and certification', text: 'You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are often out of reach.' },
   { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
-  { id: 'P3', name: 'Reporting and accountability demands', text: 'Funders ask who is earning, but training is still measured by enrollment, not earnings.' },
+  { id: 'P3', name: 'Reporting and accountability demands', text: 'Funders ask who is earning, but training is often measured by enrollment, not earnings.' },
 ];
 /** A pain as the C2 list (GainsPains) takes it. */
 export const painForList = (p: Pain) => ({ id: p.id, q: p.name, text: p.text, facts: p.facts });
@@ -298,9 +299,22 @@ function plainLine(): CopyBlock {
 export const PLAIN_LINE: CopyBlock = plainLine();
 
 /**
+ * The trial's evaluator spelled out (WP35, cycle-12 review: BIGD was not expanded on first mention). The register's RC-01 headline says "by BIGD"; a band that is the first place a page
+ * names the evaluator runs the sentence through spellOutBigd(), the way /our-model/ and /our-model/talentleap/ expand it.
+ * WP54 (cycle-28 review, GPT-6.1 Sol G8): About, Governance, the WSDFM case study and YouthWIDE (TRIAL_SENTENCE, below) spell it out at their first mention too. These four constants moved here from further down this file,
+ * because TRIAL_SENTENCE is built when the module loads and reads BIGD_FULL.
+ */
+export const BIGD_INSTITUTE = 'BRAC Institute of Governance and Development';
+export const BIGD_NAME = `${BIGD_INSTITUTE} (BIGD)`;
+export const BIGD_FULL = `the ${BIGD_NAME}`;
+export const spellOutBigd = (sentence: string): string => sentence.replace('by BIGD', `by ${BIGD_FULL}`);
+
+/**
  * The trial result as ONE sentence (WP32, cycle-9 review: YouthWIDE's evidence band explained the trial twice in a row, in the plain line and again in the RC-01 headline). It names
  * the evaluator and the predecessor program, then the two results RC-01 headlines for women offered a place: the employment effect (RC-02's stat, in percentage points) and the
  * estimated income difference (RC-01's stat). Both figures are read from the register, so the sentence cannot drift from it; it throws if either stat changes shape.
+ * WP54 (cycle-28 review, GPT-6.1 Sol G8): it is where YouthWIDE first names the evaluator, so it spells it out: "In the randomized trial of the predecessor WSDFM program by the BRAC Institute of Governance and Development (BIGD), ..."
+ * (it said "In BIGD’s randomized trial of the predecessor WSDFM program, ...").
  */
 function trialSentence(): CopyBlock {
   const employment = fact('RC-02').stat;
@@ -310,7 +324,7 @@ function trialSentence(): CopyBlock {
   }
   const points = employment.value.replace(/^\+/, '').replace(/ pp$/, ' percentage points');
   return {
-    text: `In BIGD’s randomized trial of the predecessor WSDFM program, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
+    text: `In the randomized trial of the predecessor WSDFM program by ${BIGD_FULL}, women offered a place were ${points} more likely to be employed and had an estimated ${income.value.replace(/^\+/, '')} higher monthly income than the control group.`,
     facts: ['RC-01', 'RC-02'],
   };
 }
@@ -425,15 +439,6 @@ function surveyIncome(): CopyBlock {
 export const SURVEY_INCOME: CopyBlock = surveyIncome();
 
 /**
- * The trial's evaluator spelled out (WP35, cycle-12 review: BIGD was not expanded on first mention). The register's RC-01 headline says "by BIGD"; a band that is the first place a page
- * names the evaluator runs the sentence through spellOutBigd(), the way /our-model/ and /our-model/talentleap/ expand it.
- */
-export const BIGD_INSTITUTE = 'BRAC Institute of Governance and Development';
-export const BIGD_NAME = `${BIGD_INSTITUTE} (BIGD)`;
-export const BIGD_FULL = `the ${BIGD_NAME}`;
-export const spellOutBigd = (sentence: string): string => sentence.replace('by BIGD', `by ${BIGD_FULL}`);
-
-/**
  * The evidence ladder's first rung (WP48, cycle-23 review, item 34: it was "Independent Evaluation by the BRAC Institute of Governance and Development (BIGD)" in the matrix on /impact/ and
  * "Randomized Trial (BIGD)" in the compact ladder). Every rendering of the ladder (the matrix, its cards variant and the compact ladder) reads this one name, so they cannot drift.
  * The name uses the abbreviation, so the rung's "What It Shows" text spells the evaluator out (BIGD_INSTITUTE), once, on /impact/.
@@ -493,9 +498,12 @@ export const PROGRAM_OPTIONS = [
 ] as const;
 export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 
-/** "How it works in three steps" (C8d) for funded programs. */
+/**
+ * "How it works in three steps" (C8d) for funded programs.
+ * WP54 (cycle-28 review, Claude S25): the work-entry plan is "agreed before enrollment", as every other page says it (Employers, the FAQ answer on AI); it said "approved", which left open who approves.
+ */
 export const STEPS = [
-  { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is approved before enrollment.' },
+  { title: 'Discover and Co-Design', text: 'A discovery session sets priority groups, tracks, the indicative budget and the pilot scorecard; each track’s demand and work-entry plan is agreed before enrollment.' },
   { title: 'Train and Mentor', text: '100 training hours per certification, then three months of milestone-based one-to-one mentoring, with placement support alongside. Mentoring works toward each track’s agreed work-entry goal (for freelance tracks: profile live, first bids, first client).' },
   { title: 'Place and Report', text: 'Placement support, monthly reports and follow-up surveys at 3, 6 and 12 months.' },
 ] as const;
@@ -572,6 +580,11 @@ export const sessionAgendaText = (kind: 'discovery' | 'governments' | 'foundatio
 export const NEXT_STEPS_TITLE = 'What Happens Next';
 /** The eyebrow over the C12 risk-reversal bands (WP49, cycle-24 review: "Low Risk" read as a blanket assurance; the bands say how a rollout is paced and reviewed). */
 export const RISK_EYEBROW = 'Managed Rollout';
+/**
+ * The eyebrow over a page's FAQ band, the default of FAQBand, FaqSection and FaqBlock (WP54, cycle-28 review, GLM L9: "Objections, Answered" printed the sales framework's own label for the band, C9 "Objection handling"; the band is a list of questions).
+ * A page may still pass its own eyebrow ("Questions" on Governance, "Partner Questions" on Our Model, "Fit and Objections" on Investors).
+ */
+export const FAQ_EYEBROW = 'Questions, Answered';
 
 /** C14 post-decision reinforcement (messaging framework §8). */
 export const C14 = {
@@ -581,12 +594,12 @@ export const C14 = {
   // WP51 (cycle-26 reviews): Universities' line ("University partners include National University, the University for Peace (UPEACE) and The City College of New York (CCNY).", PA-05) is gone by the same rule: the page already names
   // the three universities above its closing strip (the National University Partnership band's University Partners tile, and the Track Record band's logo alt text). Foundations' line is not deleted but MOVED, unchanged: it is the second statement
   // of the Foundations Track Record band, directly after the BIGD line (the page passes `C14.validateFor.foundations` to PartnerGuideBand's `statements`), and no longer closes the page under "What Happens Next".
-  // Employers keeps its closing line (that page was not part of the review).
+  // WP54 (cycle-28 review, Kimi K2): Employers' line ("Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.", PA-03) is gone by the same rule: the Track Record band's logo strip names the same organizations,
+  // so the page ends on its first-action line alone.
   // WP21: one validation line per audience (the closing strip no longer repeats the same three organizations on every partner page); each uses names from one registered partner fact.
   validateFor: {
     // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust"; the names are still from PA-01.
     foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
-    employers: { text: 'Private-sector partners include Grameenphone Academy, Robi, Accenture, BASIS and AWS.', facts: ['PA-03'] } as CopyBlock,
   },
   reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
@@ -595,8 +608,9 @@ export const C14 = {
   variants: {
     governments: 'Your agency’s procurement timeline sets the pace; we start with a briefing.',
     investors: 'Your first step: an introduction call.',
-    // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring); the discovery session is the training route's first step, so the line says so.
-    employers: 'For team training, your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
+    // WP34 (cycle-11 review): the Employers closing band has two routes (team training, hiring), so the line names the route it is for.
+    // WP54 (cycle-28 review, Kimi K5): the first step is a discovery session on both routes (the hiring route's first step is "Discovery" too, EMPLOYER_HIRING_STEPS), so the line says "for team training or hiring" and, like Home's labeled line, asks for "two suitable times".
+    employers: 'Your first step, for team training or hiring: a discovery session. In your inquiry, include two suitable times.',
   },
 };
 

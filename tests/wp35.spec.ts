@@ -146,7 +146,8 @@ test.describe('the trial and the survey are shown once per page', () => {
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('their monthly income was an estimated 41% higher than the control group’s');
     // WP50 (cycle-25 review, item 18): the slide's >4× tile says the multiple in words and no longer repeats the +10.3 percentage points, which this card states
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('More than four times the average employment effect across nine vocational-training trials.');
+    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (still no +10.3; tests/wp54.spec.ts)
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect: more than four times the 2.3-point average across nine vocational-training trials.');
     expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('+10.3 percentage points');
   });
 

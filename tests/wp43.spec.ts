@@ -236,8 +236,8 @@ test.describe('Home: the survey slide’s timing line is one sentence that repea
     expect(compact(await slide.textContent())).not.toMatch(/most started within six months|Among surveyed completers who first earned/);
     const line = compact(await slide.locator('.hs__lead').textContent());
     expect(line).toContain('58.8%');
-    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(line).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
+    expect(line).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     expect(compact(await slide.locator('.hs__stat').textContent())).not.toContain('58.8%');

@@ -100,11 +100,14 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
     <SectionHeader id="next-h" eyebrow="After You Write" title="What Happens After Your Inquiry" lead="For program and funding inquiries, the first two steps are shared and the third follows your route." />
     <div class="ct-next">
       <StepFlow steps={[
-        { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times for a discovery conversation.' },
+        // WP54 (cycle-28 review, Grok R7): step 1 asks for "two suitable times" without naming a discovery conversation; the route a reader chooses may begin with a briefing (governments) or an introduction call (investors), and step 2 says what the conversation covers.
+        { title: 'Your Inquiry', text: 'In your inquiry, include two suitable times.' },
         { title: 'A Conversation', text: 'We talk through your goals, priority groups and timeline.' },
         // WP27: the third step follows the route chosen above; each line restates what that route's own page and contact card already say.
         // WP36 (cycle-13 review): foundations choose between a cohort grant and a platform grant, so they are not in the "first cohort" sentence.
-        { title: 'The Next Step Depends on Your Route', text: 'Development partners, governments, universities and local partners: a program scope, designed with you. Foundations: a cohort grant or a JobReady platform grant. Employers training a team: a needs assessment of your roles. Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool. Impact investors: the deck and data room follow under NDA.' },
+        // WP54 (cycle-28 review, GPT-6.1 Sol G7): the recap was too dense (four partner types in one clause, both employer routes in full), so it is four short lines, one per kind of route: "Program partners" (development partners, governments, universities and local partners:
+        // the four whose next step is a program scope), foundations, employers (a needs assessment for a team, or a talent request) and impact investors. Every route and the hiring qualifier ("scoped against the candidate pool") stay; the route cards above name each partner type.
+        { title: 'The Next Step Depends on Your Route', text: 'Program partners: a program scope, designed with you. Foundations: a cohort or platform grant. Employers: a needs assessment, or a talent request scoped against the candidate pool. Impact investors: the deck and data room, under NDA.' },
       ]} />
       <ul class="ct-c14" role="list">
         <li><CopyBlock block={FIRST_COHORT_REMINDER} /></li>

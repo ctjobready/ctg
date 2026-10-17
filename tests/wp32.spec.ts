@@ -136,7 +136,8 @@ test.describe('YouthWIDE', () => {
     const band = page.locator('#proof-band');
     await expect(band.locator('.eb__headline')).toHaveCount(1);
     await expect(band.locator('.eb__headline')).toHaveText(
-      'In BIGD’s randomized trial of the predecessor WSDFM program, women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
+      // WP54 (cycle-28 review, GPT-6.1 Sol G8): the evaluator is spelled out where YouthWIDE first names it (it said "In BIGD’s randomized trial of the predecessor WSDFM program, ...")
+      'In the randomized trial of the predecessor WSDFM program by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed and had an estimated 41% higher monthly income than the control group.',
     );
     expect(await band.locator('.eb__headline').getAttribute('data-fact')).toBe('RC-01 RC-02');
     await expect(band.locator('[data-plain-line]')).toHaveCount(0);

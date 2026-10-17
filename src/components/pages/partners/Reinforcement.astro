@@ -2,34 +2,30 @@
 import SubBand from './SubBand.astro';
 import CopyText from './CopyText.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
-import { C14, type CopyBlock } from '../../../data/copy';
+import { C14 } from '../../../data/copy';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
 
 /**
  * C14 post-decision reinforcement (doc 04 §8), directly under the next-steps band: the first action
- * (with the audience variant where one exists), validation, the timeline reminder for grant-funded
- * pilots, and a partner logo row (PA-04 caption) when the page has not already shown that group. The logo row is the
- * validation: a one-line validation sentence is printed only on a page that shows no row and passes one.
- * WP50 (cycle-25 review): Development Partners and Governments pass none (their Track Record band's logo strip already names the organizations their closing line named), so a page prints a validation sentence only when it passes
- * one; there is no default line any more (it was the development-partner line, C14.validate).
+ * (with the audience variant where one exists), the timeline reminder for grant-funded pilots, and a partner logo row
+ * (PA-04 caption) when the page has not already shown that group. The logo row is the validation.
+ * WP50 (cycle-25 review): Development Partners and Governments print no validation sentence (their Track Record band's logo strip already names the organizations their closing line named); WP51: nor do Universities, whose
+ * universities are named above, and Foundations, whose line moved into its Track Record band. WP54 (cycle-28 review, Kimi K2): Employers' line is gone by the same rule, so no page passes a validation sentence any more
+ * and the component's `validate` prop is removed (the line was C14.validateFor.employers).
  */
 interface Props {
   firstAction?: string;
   /** Grant-funded pilots only: the 6–8 week reminder. */
   reminder?: boolean;
   logos?: PartnerGroup | PartnerGroup[] | false;
-  /** The validation sentence for a page with no logo row (WP21: Foundations, Universities and Employers pass their own; WP50: none by default). */
-  validate?: CopyBlock;
   id?: string;
 }
-const { firstAction = C14.firstAction, reminder = true, logos = 'development', validate, id = 'reinforce' } = Astro.props;
+const { firstAction = C14.firstAction, reminder = true, logos = 'development', id = 'reinforce' } = Astro.props;
 ---
 
 <SubBand tone="airy" pull id={id}>
   <ul class="rf" role="list">
     <li class="rf__first"><strong>{firstAction}</strong></li>
-    {/* The validation line names a few of the organizations the logo row below shows; it is only printed when there is no row (and the page passes one). */}
-    {logos === false && validate && <li><CopyText block={validate} as="span" /></li>}
     {reminder && <li><CopyText block={C14.reminder} as="span" /></li>}
   </ul>
   {logos !== false && <PartnerStrip variant="grid" group={logos} caption={PARTNER_CAPTION} />}

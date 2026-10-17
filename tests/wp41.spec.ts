@@ -232,8 +232,8 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     const line = compact(await slide.locator('.hs__lead').textContent());
     expect(line).toContain('58.8%');
-    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(line).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
+    expect(line).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
@@ -323,14 +323,15 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     expect(compact(await page.locator('#guide').textContent())).not.toMatch(/Also delivered/);
   });
 
-  test('"AWS Authorized Training Partner" is a line under the logo strip, beside the AWS logo, and is stated once', async ({ page }) => {
+  // WP54 (cycle-28 review, Kimi K3): the credential was a lone line under the logo strip ("AWS Authorized Training Partner."); it is a sentence of the strip's caption now ("... not endorsements. CodersTrust is an AWS Authorized Training Partner."; tests/wp54.spec.ts)
+  test('"AWS Authorized Training Partner" is a sentence of the logo strip’s caption, above the AWS logo, tied to PA-06, and is stated once', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    const note = page.locator('#guide section.partners .pg__logonote');
-    await expect(note).toHaveText('AWS Authorized Training Partner.');
-    expect(await note.getAttribute('data-fact')).toBe('PA-06');
+    const note = page.locator('#guide section.partners .partners__title [data-fact="PA-06"]');
+    await expect(note).toHaveText('CodersTrust is an AWS Authorized Training Partner.');
+    await expect(page.locator('#guide .pg__logonote')).toHaveCount(0);
     await expect(page.locator('#guide .partners__row img[alt="AWS"]')).toHaveCount(1);
     const [rowBox, noteBox] = await Promise.all([page.locator('#guide .partners__row').boundingBox(), note.boundingBox()]);
-    expect(noteBox!.y, 'the line sits under the logos').toBeGreaterThanOrEqual(rowBox!.y + rowBox!.height);
+    expect(noteBox!.y + noteBox!.height, 'the sentence sits above the logos, in the caption').toBeLessThanOrEqual(rowBox!.y + 1);
     expect(count(compact(await page.locator('main').textContent()), 'AWS Authorized Training Partner')).toBe(1);
     await expect(page.locator('#guide .pg__list')).not.toContainText('AWS');
   });

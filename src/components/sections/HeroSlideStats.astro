@@ -1,0 +1,24 @@
+---
+import Stat from '../system/Stat.astro';
+
+/**
+ * The figure tiles of one HeroSlider slide (white tiles, each tied to its register fact by data-fact). Their styles are the carousel's own (global, in HeroSlider.astro). A slide shows them under its lead, or, when it sets
+ * `statsFirst`, directly under its heading, before the lead (WP54, cycle-28 review, GLM L1: the survey slide). The markup is the same in both places, which is why it is a component rather than two copies.
+ */
+interface Props {
+  stats: { factId: string; value: string; label: string }[];
+}
+const { stats } = Astro.props;
+---
+
+{
+  stats.length > 0 && (
+    <div class="hs__stats">
+      {stats.map((v) => (
+        <div class="hs__stat" data-fact={v.factId}>
+          <Stat value={v.value} label={v.label} size="lg" count={false} />
+        </div>
+      ))}
+    </div>
+  )
+}

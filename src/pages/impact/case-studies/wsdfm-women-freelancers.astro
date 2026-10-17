@@ -10,12 +10,13 @@ import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
-import { RCT_HEADLINE } from '../../../data/copy';
+import { BIGD_FULL, RCT_HEADLINE } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 
 // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone, because the three tiles under them show both results; one line directly above the tiles (heroNote) says
 // what kinds of evidence they are. The detailed results and the chart below are unchanged, and scripts/check-facts.mjs lists this page as exempt from the [PLAIN-LINE] (the Independent Evaluation page keeps it).
+// WP54 (cycle-28 review, GPT-6.1 Sol G8): the hero note is where the page first names the evaluator, so it spells it out (BIGD_FULL); the tiles' evidence lines, the trial sub-heading and the chart note below use the abbreviation it introduces.
 // RC-09 (BIGD employment status at follow-up). The chart values must match the register text.
 const control = [47.2, 40.9, 11.9];
 const offered = [36.9, 34.6, 28.5];
@@ -34,7 +35,7 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
   slug="wsdfm-women-freelancers"
   pageTitle="WSDFM Case Study"
   description="WSDFM, commissioned by Porticus: a randomized trial of the predecessor program found income rose for women offered a place; 711 of 1,000 women in work."
-  heroNote="Program records and a separate randomized trial of the predecessor program."
+  heroNote={`Program records and a separate randomized trial of the predecessor program by ${BIGD_FULL}.`}
   trialLink
   stats={[
     { id: 'PR-01' },

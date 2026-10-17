@@ -11,7 +11,7 @@
  * WP39 (cycle-16 review): "What Your Students Get" is three short cards (IncludesBand), not the concern / inclusion / benefit matrix; the Guide band no longer repeats the National University partnership sentence
  * ("The National University Partnership" states it).
  * WP43 (cycle-20 review): the light evidence strip WP38 made ("Evidence from Our Wider Youth Programs": the trial line, the survey line and two links) is gone, because the first band already ends in the linked strip
- * "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies) and the later strip said it again; the page has no #proof-band now (no page linked it). The survey's degree share stays in the meta description.
+ * "Broader Evidence from Our Youth Programs" (the trial, the survey, the case studies) and the later strip said it again; the page has no #proof-band now (no page linked it). The survey's degree share stayed in the meta description until WP54.
  * WP47 (owner decision 2026-10-15): the page opens with its own proof and goes straight to its offer. The Cost of Waiting band ("No Placement Evidence Weakens Your Employment Story") and the Imagine band ("What Your Students
  * Leave With") are gone; Home carries them. Nothing on this page depended on them: the certification terms (eligibility, attempts and terms agreed in the program scope), the campus labs as
  * blended-learning centers and the follow-up surveys are stated in the delivery model and in "What Your Students Get". The "Degree Holders Struggle to Find Work" card says "A degree alone does not guarantee a job offer."
@@ -41,7 +41,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACKING_MONTHS, factPart, meta, programOptions } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACKING_MONTHS, meta, programOptions } from '../../../components/pages/partners/partners';
 import { HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { offerDurationText } from '../../../components/sections/copyText';
 import { faqJsonLd } from '../../../lib/faq';
@@ -51,10 +51,11 @@ import { webPage } from '../../../lib/schema';
 const PATH = '/partner-with-us/universities/';
 const primary = cta('campus');
 
-const degreeShare = factPart('OC-09', /84\.6% hold a bachelor’s degree or higher/);
+// WP54 (cycle-28 review, Kimi K4): the description states only what the page body states (the hero's "universities and colleges" and "Our Approach": "JobReady@Campus combines training, mentoring and placement support in campus labs alongside
+// academic studies"). It carried the survey's 84.6% degree share ("Among surveyed completers, 84.6% hold a bachelor’s degree or higher."), a figure that is not on this page.
 const { title, description } = meta(
   'JobReady@Campus for Universities and Colleges',
-  `JobReady@Campus helps degree holders prepare for digital work with mentoring. Among surveyed completers, ${degreeShare}.`,
+  'For universities and colleges: JobReady@Campus combines training, mentoring and placement support in campus labs, alongside academic studies.',
 );
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).

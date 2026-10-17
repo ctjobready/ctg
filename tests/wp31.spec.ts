@@ -322,7 +322,8 @@ test.describe('smaller wording fixes', () => {
     expect(card).not.toContain('outcome evidence so far');
     await open(page, '');
     const desc = compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent());
-    expect(desc).toBe('Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.');
+    // WP54 (cycle-28 review, Claude S7): the line no longer carries the Bangladesh aim (tests/wp54.spec.ts)
+    expect(desc).toBe('Co-funded country cohorts, designed for three regions, from training to paid digital work.');
     expect(await page.evaluate(() => document.body.innerText.includes('across three regions'))).toBe(false);
   });
 
@@ -358,7 +359,7 @@ test.describe('smaller wording fixes', () => {
   test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Results by Program"', async ({ page }) => {
     await open(page, '');
     expect(await mainText(page)).not.toContain('outside Dhaka');
-    await expect(page.locator('#future')).toContainText('A young woman invoices her first foreign client from her own laptop.');
+    await expect(page.locator('#future')).toContainText('A young woman in your cohort invoices her first foreign client from her own laptop.');
     await expect(page.locator('#news, #news-teaser')).toHaveCount(0);
     const order = await ids(page);
     expect(order[order.length - 1], 'the page ends on its next steps').toBe('next-steps');
@@ -383,10 +384,11 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, CodersTrust’s digital learning and earning platform.');
   });
 
-  test('Contact: the third step names employers hiring talent, in the Employers page’s own scope wording', async ({ page }) => {
+  // WP54 (cycle-28 review, GPT-6.1 Sol G7): the step's recap is shorter ("Employers: a needs assessment, or a talent request scoped against the candidate pool."); the Employers page keeps the full scope wording
+  test('Contact: the third step names employers hiring talent, scoped against the candidate pool, as the Employers page scopes it', async ({ page }) => {
     await open(page, 'contact/');
     const third = compact(await page.locator('#next .steps__item').nth(2).textContent());
-    expect(third).toContain('Employers hiring talent: a talent request scoped against the experience and credentials available in the candidate pool.');
+    expect(third).toContain('Employers: a needs assessment, or a talent request scoped against the candidate pool.');
     await open(page, 'partner-with-us/employers/');
     expect(await mainText(page)).toContain('Talent requests are scoped against the experience and credentials available in the candidate pool.');
   });

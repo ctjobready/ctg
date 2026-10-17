@@ -15,6 +15,9 @@
 // "Monthly reports will show progress toward paid work, as agreed in the program scope."; the recognition band's AWS item has a line under its title (HomeRecognition).
 // WP53 (owner decision 2026-10-16, "Trim it"): the carousel is four slides (the randomized trial, the government contracts and the National University, the Impact Survey 2026, the results by program); the reach slide and the programs slide are gone, and the two survey
 // slides are one (src/data/heroSlides.ts). The band is headed "Results" and has no framing sentence: "Results and Programs" and "Evidence first, then our programs." described a programs slide that no longer exists.
+// WP54 (cycle-28 reviews): the survey slide of the carousel shows its income figure directly under the heading, then the timing sentence, which now leads with its base ("Of the 170 surveyed completers who first earned during or after training, 58.8% had
+// started earning by six months after finishing the course."; src/data/heroSlides.ts); the first Imagine card is "A young woman in your cohort invoices her first foreign client from her own laptop." (GLM L2: the other two cards speak to the reader's own
+// program; the first read as a scene about someone else); the work-entry plan is "agreed before enrollment" (Claude S25: "approved" left open who approves).
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -70,7 +73,7 @@ const problemBluf = 'Millions of educated young people are out of work and out o
 // C8: the three ranked pains (FUNDER_PAINS) and one C8 card for each, in that order. Numbers inside the cards come from the register.
 // WP30c: only the three rows that answer a ranked pain stay; the accessible readiness assessment, the 100 training hours and the exam preparation are stated in the program options and the comparison.
 // WP38 (cycle-15 review): on Home the rows are three short cards (IncludesBand), not the concern / inclusion / benefit matrix of FeaturesTable (WP39: the audience and program pages use IncludesBand too). Each card keeps its pain's id (`data-relieves`, held by
-// check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan approved before
+// check:facts) and its register facts (`data-fact`); every clause rests on the register: PD-01 (100 hours, three months of milestone-based mentoring, placement support alongside), PD-19 (work-entry plan agreed before
 // enrollment), PD-08 and PD-09 (monthly reports, follow-up surveys, documentary evidence where available), PD-10 and PD-02 (tracks set from employer demand, AI-ready curriculum). The curriculum line keeps "designed to" (the register states the
 // track menu is set from employer demand, not that the curriculum follows every change), as YouthWIDE and Investors say it. WP49 (cycle-24 review, three reviewers): it no longer says "An AI-ready curriculum is ..." ("AI-ready" is a positioning term that
 // Employers and JobReady@Work explain, not Home): "A curriculum designed to follow the skills employers ask for as entry-level tasks change."
@@ -86,7 +89,7 @@ const includes = [
     icon: 'route',
     // WP23, item 5: placement support, not matching, toward local, remote and global work.
     title: 'Training, Mentoring and Placement Support',
-    text: `${hours} training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is approved before enrollment.`,
+    text: `${hours} training hours per certification, followed by three months of milestone-based mentoring and placement support. Each track’s work-entry plan is agreed before enrollment.`,
     facts: ['PD-15', 'PD-01', 'PD-19'],
   },
   {
@@ -149,7 +152,7 @@ const includes = [
       title="Imagine the Next 12 Months"
       lead="Three illustrative scenarios, not case studies."
       vignettes={[
-        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'A young woman invoices her first foreign client from her own laptop.' },
+        { kind: 'Functional', title: 'A First Foreign Client, Billed from Home', text: 'A young woman in your cohort invoices her first foreign client from her own laptop.' },
         { kind: 'Emotional', title: 'First Earnings, Not Just Certificates', text: 'You review monthly reports showing who is earning, not only who completed.' },
         // WP48 (cycle-23 review, three reviewers): not "AI-Ready Talent" ("AI-ready" is a positioning term explained on Employers and JobReady@Work, which Home does not carry); the scenario says what the reader sees.
         { kind: 'Social', title: 'Employers Hiring from Your Cohort', text: 'You see employers hire completers whose skills match current employer demand.' },
