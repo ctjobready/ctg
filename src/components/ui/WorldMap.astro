@@ -2,6 +2,9 @@
 import { WORLD_LAND_PATH, WORLD_W, WORLD_H, LAT_TOP, LAT_SPAN } from '../../data/world-land';
 import { locations, OFFICES_LINE, type ProgramLocation } from '../../data/countries';
 import { assertMapEquivalence, tooltipFields, tableRow } from '../../lib/mapFields';
+import { photo as registryPhoto } from '../../data/photos';
+import { mayRender } from '../../lib/permissions';
+import Img from './Img.astro';
 
 /**
  * WorldMap ➕ (M17) — inline SVG equirectangular map (Natural Earth 110m, public domain) with one pin
@@ -19,7 +22,12 @@ interface Props {
 }
 const { items = locations, caption = 'Where CodersTrust Programs Have Run', class: className } = Astro.props;
 assertMapEquivalence(items);
-const rowsData = items.map((l) => tableRow(l));
+// WP55: a location that has a CodersTrust photograph shows it in its table row, under the partner or note (the pins stay text only, so the table still holds every detail a pin shows).
+// The photograph sits in the data cell, not in the row header, so its alt text is read with that cell and not with every cell of the row.
+const rowsData = items.map((l) => {
+  const p = l.photo ? registryPhoto(l.photo) : undefined;
+  return { ...tableRow(l), photo: p && mayRender(p.assetId) ? p : undefined };
+});
 
 const pos = (l: ProgramLocation) => ({
   x: ((l.lon + 180) / 360) * 100,
@@ -83,7 +91,10 @@ const pins = items.map((l) => {
             <td data-label="Years">{r.years}</td>
             <td data-label="Target Group">{r.targetGroup}</td>
             <td data-label="Skills">{r.skills}</td>
-            <td data-label="Partner / Note">{r.funderNote}</td>
+            <td data-label="Partner / Note">
+              {r.funderNote}
+              {r.photo && <span class="wmap__photo"><Img src={r.photo.src} alt={r.photo.alt} width={240} widths={[160, 240]} sizes="120px" assetId={r.photo.assetId} /></span>}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -291,6 +302,22 @@ const pins = items.map((l) => {
     display: block;
     font-weight: var(--fw-regular);
     color: var(--outline);
+  }
+  /* WP55: the location's photograph, a 3:2 thumbnail under the partner or note (the same 3:2 frame as every card and hero photograph) */
+  .wmap__photo {
+    display: block;
+    width: 120px;
+    aspect-ratio: 3 / 2;
+    margin-top: var(--space-sm);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface-container-low);
+  }
+  .wmap__photo :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .wmap__table tr:last-child th,
   .wmap__table tr:last-child td {

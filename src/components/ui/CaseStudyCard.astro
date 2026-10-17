@@ -20,10 +20,15 @@ interface Props {
    * states the Kosovo and Her Power results). The card then shows no figure. Used only when there is no `stat`.
    */
   context?: string;
+  /**
+   * WP55 (owner decision 2026-10-17, "Show both"): one short line under the figure or the context, for a figure a second source reports for the same program. The Kosovo card says "World Bank: 77 trainees won at
+   * least one online contract." under the program records (WB_KOSOVO, src/data/copy.ts); `facts` are the register facts the line states (data-fact).
+   */
+  note?: { text: string; facts: string[] };
   href: string;
   class?: string;
 }
-const { title, program, partner, image, imageAlt = '', assetId, stat, context, href, class: className } = Astro.props;
+const { title, program, partner, image, imageAlt = '', assetId, stat, context, note, href, class: className } = Astro.props;
 const a = linkAttrs(href);
 ---
 
@@ -41,6 +46,7 @@ const a = linkAttrs(href);
       </p>
     )}
     {!stat && context && <p class="case__context">{context}</p>}
+    {note && <p class="case__note" data-fact={note.facts.join(' ')}>{note.text}</p>}
     <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
     {(program || partner) && <p class="card__meta">{[program, partner].filter(Boolean).join(' · ')}</p>}
     <span class="card__more" aria-hidden="true">Read the Case Study<span class="sr-only">: {title}</span><Icon name="arrow-right" size={16} /></span>
@@ -70,6 +76,12 @@ const a = linkAttrs(href);
     line-height: var(--lh-body-xs);
     font-weight: var(--fw-medium);
     color: var(--secondary);
+  }
+  /* the second source's line (WP55) sits under the figure in the label's small type */
+  .case__note {
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
   }
   /* the delivery-context line sits where the stat sits, set as a short statement in the system's body type */
   .case__context {

@@ -107,3 +107,38 @@ export const press: PressItem[] = [
     legacyUrl: "https://coderstrust.global/featured-media/kosovos-women-go-wow-online-and-working/",
   },
 ];
+
+/**
+ * WP55 (owner decision 2026-10-18, synthesis 3.5): the "As covered by" line on Home and About, as text links with their years and no logos. The outlets are PA-09's, in date order, each with the link the research
+ * checked on 17-18 October 2026 (a live page where one answers, otherwise the Wayback Machine copy: Forbes, The Wall Street Journal and USA Today open only as copies). `press` above is unchanged: the Recognition and Media
+ * page keeps its logo list and its headlines, and links only where the original URL is known.
+ */
+export interface CoveredItem {
+  outlet: string;
+  year: string;
+  /** A qualifier that keeps the claim true (Forbes' piece is a contributor post, not staff reporting). */
+  note?: string;
+  href: string;
+}
+
+export const COVERED_BY: CoveredItem[] = [
+  { outlet: 'Gulf News', year: '2014', href: 'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190' },
+  { outlet: 'TechCrunch', year: '2014', href: 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/' },
+  { outlet: 'Forbes', year: '2014', note: 'contributor post', href: 'https://web.archive.org/web/20140924225212/http://www.forbes.com/sites/ilyapozin/2014/08/21/5-companies-making-a-splash-for-a-better-world/' },
+  { outlet: 'The Wall Street Journal', year: '2014', href: 'https://web.archive.org/web/20141224065551/http://blogs.wsj.com/cio/2014/09/24/startup-aims-to-boost-number-of-qualified-it-workers/' },
+  { outlet: 'USA Today', year: '2014', href: 'https://web.archive.org/web/20141228085159/http://www.usatoday.com/story/tech/columnist/shinal/2014/12/22/new-york-bangladesh-global-technology-trends/20734365/' },
+  { outlet: 'Tech in Asia', year: '2015', href: 'https://www.techinasia.com/microfinance-startup-coders-trust-teaches-code' },
+  { outlet: 'The Times of India', year: '2016', href: 'https://timesofindia.indiatimes.com/home/sunday-times/Cook-to-coder-How-low-income-youth-are-writing-a-better-future/articleshow/53575603.cms' },
+];
+
+/** World Bank pages that name CodersTrust among the implementing partners (PA-12): the Kosovo feature story (2016) and country brief (2017), and the Albania press release (2021). */
+export const COVERED_BY_WORLD_BANK: { place: string; pages: { year: string; href: string }[] }[] = [
+  {
+    place: 'Kosovo',
+    pages: [
+      { year: '2016', href: 'https://web.archive.org/web/20170504003520/http://www.worldbank.org/en/news/feature/2016/09/19/kosovos-women-go-wow-online-and-working' },
+      { year: '2017', href: 'https://www.worldbank.org/en/country/kosovo/brief/kosovo-wow' },
+    ],
+  },
+  { place: 'Albania', pages: [{ year: '2021', href: 'https://www.worldbank.org/en/news/press-release/2021/09/14/women-in-albania-to-gain-greater-access-to-global-digital-jobs-market-with-world-bank-support' }] },
+];

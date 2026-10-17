@@ -24,7 +24,8 @@ const ALT: Record<string, string> = {
   'general/panel-international-forum': 'Four speakers seated at a panel table at an international forum, with a wood-paneled wall behind them',
   'general/nctb-meeting': 'CodersTrust and NCTB representatives seated around a table at the MoU meeting',
   'general/kosovo-women-screens': 'Women learners at computers in a training room in Kosovo, one in the foreground turned toward the front of the room',
-  'general/albania-trainees-group': 'A group of young women and men trainees posing together in a computer room, with a caption reading CodersTrust trainees, World Bank project, Albania',
+  // WP55 (owner decision 2026-10-17): this photograph shows the Kosovo Women in Online Work pilot, not Albania (the word ALBANIA was burned into the old file; the caption is cropped out). It was "general/albania-trainees-group".
+  'general/kosovo-wow-group': 'Thirteen people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners',
   'general/kosovo-woman-training': 'A woman learner seated at a computer among other learners in a Women in Online Work training room in Kosovo',
   'general/her-power-laptops-1': 'Women receiving laptops at a Her Power laptop distribution ceremony, in front of the event banner',
   'general/her-power-laptops-2': 'A woman in a yellow coat accepting a laptop box from a participant at a Her Power laptop distribution ceremony',
@@ -84,6 +85,21 @@ const ALT: Record<string, string> = {
   'field/ccny-mou-signing': 'Two signatories seated at a table at the City College of New York and CT USA (CodersTrust) MoU ceremony, with three people applauding behind them',
   'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
   'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
+  // WP55 (owner decisions 2026-10-17/18, global positioning): CodersTrust’s work outside Bangladesh. All are CodersTrust Global ApS assets, now owned by CT USA, Inc. (owner ruling 2026-10-18; clearance id OWNER-2026-10-18-CTUSA-ASSETS). A permissions row has five fields only
+  // (scripts/check-permissions.mjs), so each file's source is recorded here. Files are JPEG at most 2,000 px wide; WebP and PNG sources were converted, and the Albania visual (a transparent cut-out) was set on Airy Blue.
+  //   global/copenhagen-launch-dinner     coderstrust.com 2014, Copenhagen event page: https://web.archive.org/web/20140724165037id_/http://uploads.webflow.com/5379a5938fa1ea4e1cba8034/537ef64562d006ce3554f435_branson15.jpg
+  //   global/dubai-start-up-event         coderstrust.com 2014, Dubai event page:      https://web.archive.org/web/20140724115738id_/http://uploads.webflow.com/5379a5938fa1ea4e1cba8034/537ef7887b58dcd035272223_dubai14.jpg
+  //   global/somaliland-hour-of-code      coderstrust.global gallery, 2023:            https://coderstrust.global/wp-content/uploads/2023/06/CT-in-Somaliland.webp
+  //   global/bhutan-batch-inauguration    coderstrust.global gallery, 2023:            https://coderstrust.global/wp-content/uploads/2023/06/11.webp
+  //   global/digital-jobs-albania         digitaljobsalbania.com, 2021 (Wayback):      https://web.archive.org/web/20210915013219id_/https://www.digitaljobsalbania.com/wp-content/uploads/2021/08/apply-2.png
+  //   impact/kosovo-graduate-portrait     coderstrust.global case study, 2024:         https://coderstrust.global/wp-content/uploads/2024/09/Erlisa-Zherka-e1727695144944.jpg
+  //   general/kosovo-wow-group            the site's own file (the old "Albania" photograph), cropped above the burned-in caption; legacy source https://coderstrust.global/wp-content/uploads/2023/07/CodersTrust-slider-albania-color-.webp
+  'global/copenhagen-launch-dinner': 'Guests seated at round tables in an ornate hotel hall at a dinner, with a speaker standing beneath a projection screen at the far end',
+  'global/dubai-start-up-event': 'Attendees seated and standing in a lounge at an evening start-up event',
+  'global/somaliland-hour-of-code': 'About thirty men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner',
+  'global/bhutan-batch-inauguration': 'Dozens of people in Bhutanese dress, including a monk in an orange robe and two men in suits, pose in rows on the steps of a building at a trainee batch inauguration ceremony',
+  'global/digital-jobs-albania': 'A smiling woman with glasses seated with a laptop on her lap, gesturing with an open hand, on a light blue background',
+  'impact/kosovo-graduate-portrait': 'Portrait of Erlisa Zherka, a graduate of the Women in Online Work pilot in Kosovo',
 };
 
 /** Short caption under a photograph in the "In the field" archive: program, event or place, and a year only where the source states it. */
@@ -122,8 +138,15 @@ export const CAPTION: Record<string, string> = {
   'general/her-power-group': 'Her Power program event',
   'impact/her-power-training-lab': 'Her Power training lab',
   'general/kosovo-women-screens': 'Women learners in a computer room, Kosovo',
-  'general/kosovo-woman-training': 'Women in Online Work pilot, Kosovo, 2017',
-  'general/albania-trainees-group': 'CodersTrust trainees, World Bank project, Albania',
+  // WP55: the pilot ran from February 2016 to February 2017 (World Bank, Ministry of Economic Development of Kosovo), so both Kosovo group photographs say "2016–17" ("2017" was the year the pilot closed).
+  'general/kosovo-woman-training': 'Women in Online Work pilot, Kosovo, 2016–17',
+  'general/kosovo-wow-group': 'Women in Online Work trainees, Kosovo, 2016–17',
+  'global/copenhagen-launch-dinner': 'Launch dinner for Virgin Unite, Copenhagen, April 2014',
+  'global/dubai-start-up-event': 'Start-up event at In5, Dubai Internet City, April 2014',
+  'global/somaliland-hour-of-code': 'Hour of Code with Tima-ade University, Somaliland, December 2015',
+  'global/bhutan-batch-inauguration': 'Trainee batch inauguration ceremony, Bhutan',
+  'global/digital-jobs-albania': 'Digital Jobs Albania, an online training program for women, 2021–2022',
+  'impact/kosovo-graduate-portrait': 'Erlisa Zherka, Women in Online Work graduate, Kosovo',
   'general/yes-trainees-group': 'UNDP YES (Youth Employment through Skills) trainees, Korail',
   'general/yes-collage': 'UNDP YES (Youth Employment through Skills) trainees in class and in group portraits',
   'general/woman-learner-laptop': 'A UNDP YES program completer at her laptop',
@@ -189,9 +212,11 @@ export function photo(key: string): Photo {
  * Hero photograph per page, keyed by the page's `artSeed` (the key the generated hero art took). Hero.astro shows it in the
  * landscape media frame; the heading, lead and buttons stay on the hero's own surface, so text contrast is unchanged.
  * WP30b (owner direction 2026-10-14: the site is not Bangladesh-focused): CodersTrust is a global organization, so a page that is not about a
- * Bangladesh program takes the photograph from abroad that fits its subject (Kosovo, Albania, the forums and roundtables, the City College of
+ * Bangladesh program takes the photograph from abroad that fits its subject (Kosovo, Somaliland, Bhutan, the forums and roundtables, the City College of
  * New York agreement); a page about a Bangladesh program keeps its Bangladesh photograph. A hero is never repeated in the same page's "what
  * success looks like" band (assertion below); the case studies take theirs from CASE_CARD.
+ * WP55 (owner decision 2026-10-17): the old "Albania" photograph is the Kosovo pilot, so it is not a hero any more (Development Partners takes the Somaliland group photograph, the Case Studies hub the Bhutan inauguration);
+ * the Home hero keeps the World Bank Kosovo photograph (owner decision 2026-10-18).
  */
 const HERO: Record<string, string> = {
   // Home: a training room in Kosovo (the home hero reads HOME_HERO.photo in src/data/heroSlides.ts, kept equal to this entry).
@@ -203,7 +228,7 @@ const HERO: Record<string, string> = {
   superkids: 'superkids/steam-workshop',
   investors: 'recognition/davos-sdg-lab',
   'partner-hub': 'recognition/us-chamber',
-  'partners-development': 'general/albania-trainees-group',
+  'partners-development': 'global/somaliland-hour-of-code',
   'partners-foundations': 'general/her-power-laptops-1',
   'partners-governments': 'general/dict-hitech-mou',
   'local-partners': 'general/empowering-women-event',
@@ -220,7 +245,7 @@ const HERO: Record<string, string> = {
   careers: 'general/team-tshirts',
   contact: 'general/office-support-headset',
   'impact-hub': 'general/kosovo-women-screens',
-  'case-studies-hub': 'general/albania-trainees-group',
+  'case-studies-hub': 'global/bhutan-batch-inauguration',
   'stories-hub': 'general/learner-mosaic',
   'field-hub': 'general/classroom-girls',
 };
@@ -250,11 +275,13 @@ const GALLERY: Record<string, string[]> = {
   superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
   // WP30b: the programs abroad lead, then the Bangladesh program and agreement.
-  youthwide: ['general/kosovo-woman-training', 'general/albania-trainees-group', 'general/her-power-laptops-1', 'general/dict-hitech-mou'],
+  // WP55: the second photograph was the old "Albania" one (it is the Kosovo pilot, and is a Kosovo photograph only); the Somaliland Hour of Code, a program abroad, takes its place.
+  youthwide: ['general/kosovo-woman-training', 'global/somaliland-hour-of-code', 'general/her-power-laptops-1', 'general/dict-hitech-mou'],
   'her-power': ['general/her-power-laptops-1', 'general/her-power-laptops-2', 'general/her-power-group'],
   'wsdfm-women-freelancers': ['general/women-learners-classroom', 'general/classroom-girls'],
   'undp-yes-korail': ['general/yes-trainees-group', 'general/woman-learner-laptop', 'general/yes-collage'],
-  'kosovo-women-in-online-work': ['general/kosovo-woman-training', 'general/kosovo-women-screens'],
+  // WP55: the Kosovo pilot's group photograph (the old "Albania" file, captioned and cropped) joins the Kosovo case study, where Kosovo is meant.
+  'kosovo-women-in-online-work': ['general/kosovo-woman-training', 'general/kosovo-women-screens', 'general/kosovo-wow-group'],
   'aziz-ahmad': ['recognition/speaking-students', 'recognition/davos-sdg-lab', 'recognition/us-chamber', 'recognition/european-parliament', 'recognition/pope-francis', 'recognition/nasdaq-sba', 'recognition/supply-chain-award'],
   recognition: ['recognition/supply-chain-award', 'recognition/nasdaq-sba', 'recognition/davos-sdg-lab', 'recognition/european-parliament'],
   careers: ['general/office-support-headset', 'general/computer-lab-rows', 'general/office-meeting', 'general/office-exterior'],
@@ -271,6 +298,8 @@ const CASE_CARD: Record<string, string> = {
   'wsdfm-women-freelancers': 'general/women-learners-classroom',
   'kosovo-women-in-online-work': 'general/kosovo-women-screens',
   'undp-yes-korail': 'general/yes-trainees-group',
+  // WP55: the Digital Jobs Albania program visual (a transparent cut-out set on Airy Blue; no event photograph of the Albania program exists).
+  'digital-jobs-albania': 'global/digital-jobs-albania',
 };
 export const caseCardPhoto = (slug: string): Photo | undefined => (CASE_CARD[slug] ? photo(CASE_CARD[slug]) : undefined);
 

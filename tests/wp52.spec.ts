@@ -378,11 +378,11 @@ test.describe('About: the identity sentences sit directly under the lede (item 1
 
   test('the meta description is 153 characters, within the limit of 155, with the register’s year and count, and names the underemployed (also in og:description)', async ({ page }) => {
     await open(page, ABOUT);
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 15 countries and territories.';
+    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 17 countries and territories.';
     expect(D.length).toBe(153);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
-    expect(fact('SC-03').stat?.value).toBe('15');
+    expect(fact('SC-03').stat?.value).toBe('17'); // WP55 (owner decision 2026-10-18): 17, with Egypt and Benin added
     expect(fact('ID-02').stat?.value).toBe('2014');
   });
 });
@@ -554,7 +554,7 @@ test.describe('The Track Record bands of Governments and Investors start with th
     expect(Object.keys(EMPATHY)).not.toContain('governments');
     await open(page, GOV);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 15 countries and territories.');
+    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 17 countries and territories.');
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 
@@ -563,7 +563,7 @@ test.describe('The Track Record bands of Governments and Investors start with th
     await open(page, INVEST);
     await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
     const kids = await page.locator('#guide .ig__copy').first().evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'Since 2014, from a Copenhagen launch to programs in 15 countries and territories.']);
+    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'Since 2014, from a Copenhagen launch to programs in 17 countries and territories.']);
     expect(pagesWith('Impact investors need to see what is proven')).toEqual([]);
   });
 

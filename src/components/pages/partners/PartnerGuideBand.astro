@@ -4,7 +4,9 @@ import SectionHeader from '../../ui/SectionHeader.astro';
 import FactStat from '../../facts/FactStat.astro';
 import PartnerStrip from '../../system/PartnerStrip.astro';
 import Icon from '../../system/Icon.astro';
+import WorldStrip from '../../ui/WorldStrip.astro';
 import CopyText from './CopyText.astro';
+import { WORLD_STRIP_SHORT } from '../../../data/globalStrip';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
 import { ORIGIN_SHORT } from '../../../data/copy';
@@ -46,9 +48,11 @@ interface Props {
   captionNote?: Statement;
   method: { text: string; link?: { label: string; href: string } };
   partnerGroup?: PartnerGroup | PartnerGroup[];
+  /** WP55 (owner decisions 2026-10-17/18): the three-tile "CodersTrust Around the World" strip (Copenhagen, Dubai, Kosovo) under the origin line, for the audience pages that open their track record with it. */
+  strip?: boolean;
   id?: string;
 }
-const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], captionNote, method, partnerGroup, id = 'guide' } = Astro.props;
+const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
 const hasProof = stats.length > 0 || statements.length > 0;
 ---
 
@@ -85,6 +89,7 @@ const hasProof = stats.length > 0 || statements.length > 0;
       )
     }
   </div>
+  {strip && <div class="pg__world"><WorldStrip tiles={WORLD_STRIP_SHORT} level={3} id="world" /></div>}
   <PartnerStrip
     variant="grid"
     group={partnerGroup}
@@ -97,6 +102,10 @@ const hasProof = stats.length > 0 || statements.length > 0;
   .pg {
     display: grid;
     gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  /* WP55: the short strip is one band's sub-block, a section step (32px) under the copy and tiles and above the logo strip */
+  .pg__world {
     margin-bottom: var(--space-lg);
   }
   .pg__copy {

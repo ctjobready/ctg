@@ -140,7 +140,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Impact Overview', href: '/impact/', description: 'Headline outcomes and the evidence ladder.' },
       { label: 'Independent Evaluation', href: '/impact/independent-evaluation/', description: 'The randomized trial of a predecessor program.' },
       { label: 'Impact Survey 2026', href: '/impact/outcomes-2026/', description: 'Findings from the Impact Survey 2026.' },
-      { label: 'Case Studies', href: '/impact/case-studies/', description: 'Four programs with partners, in depth.' },
+      { label: 'Case Studies', href: '/impact/case-studies/', description: 'Five programs with partners, in depth.' },
       { label: 'Success Stories', href: '/impact/stories/', description: 'Individual learner stories and outcomes.' },
       { label: 'Global Reach', href: '/impact/global-reach/', description: 'Where our programs have run.' },
       { label: 'In the Field', href: '/impact/in-the-field/', description: 'Photographs from programs and events.' },

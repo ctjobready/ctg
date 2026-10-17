@@ -317,7 +317,7 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     await expect(page.locator('.pwp, .he__top, .he__head, [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
     const text = await mainText(page);
     for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47']) expect(text, gone).not.toContain(gone);
-    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Five Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     expect((await hrefs(page, '#cases .csc__more a')).map(sitePath)).toEqual(['/impact/case-studies/', '/impact/independent-evaluation/', '/impact/outcomes-2026/']);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'C7'), 'one C7 proof position').toHaveLength(1);

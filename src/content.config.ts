@@ -31,7 +31,11 @@ const news = defineCollection({
        * page then shows the cover once, as the hero, and drops the body image (src/lib/newsCover.mjs).
        */
       coverInBody: z.boolean().default(false),
-      legacyUrl: z.string(),
+      /**
+       * The post's URL on the previous coderstrust.global site. Every migrated post has one (42 of them; scripts/test-manifest.mjs holds that count). WP55 (owner decision 2026-10-18): the archive entries added from dated public sources (ADDED_NEWS in
+       * scripts/manifest-lib.mjs) never had a page on the old site, so they have none; each says so in its archive note.
+       */
+      legacyUrl: z.string().optional(),
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
       /**

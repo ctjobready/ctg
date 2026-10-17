@@ -59,7 +59,7 @@ const UNI = 'partner-with-us/universities/';
 const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
-const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to programs in 15 countries and territories.';
+const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to programs in 17 countries and territories.';
 const PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
 
 test.describe('Home: the challenge band and the positioning statement (items 1 and 11)', () => {
@@ -111,7 +111,9 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01', 'PR-03 PR-06', 'PR-05']);
   });
 
-  test('the count agrees with Impact ("Four Programs, from Kosovo to Bangladesh") and with the case-studies page, in the same order, and WSDFM’s figure is the case card’s', async ({ page }) => {
+  // WP55 (owner decision 2026-10-18): Impact lists five case studies ("Five Programs, from Kosovo to Bangladesh"). The slide's four are the four with program records, in Impact's order; the fifth, Digital Jobs Albania, has only the World Bank's published figures
+  // (interest and enrollment, no program-record result) and so is not a line on this slide.
+  test('the four lines are Impact’s case studies with program-record results, in the same order ("Five Programs, from Kosovo to Bangladesh" adds Digital Jobs Albania), and WSDFM’s figure is the case card’s', async ({ page }) => {
     await open(page, '');
     const lines = await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li');
     expect(lines).toHaveLength(4);
@@ -123,10 +125,11 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
     expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data): 71% in work');
     await open(page, 'impact/');
-    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Four Programs, from Kosovo to Bangladesh' })).toBeVisible();
-    await expect(page.locator('#cases article.card')).toHaveCount(4);
+    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toBeVisible();
+    await expect(page.locator('#cases article.card')).toHaveCount(5);
     const hrefs = await page.locator('#cases a.card__link').evaluateAll((els) => els.map((e) => (e.getAttribute('href') ?? '').split('/').filter(Boolean).pop()));
-    expect(hrefs).toEqual(['kosovo-women-in-online-work', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
+    expect(hrefs).toEqual(['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
+    expect(hrefs.filter((h) => h !== 'digital-jobs-albania'), 'the slide’s four, in Impact’s order').toEqual(['kosovo-women-in-online-work', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
   });
 
   test('at 1280 px the WSDFM line is one line, and the slide’s copy fits the carousel (the 48 px unused-space budget is held for every slide by tests/hero-slider.spec.ts)', async ({ page }) => {

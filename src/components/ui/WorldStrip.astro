@@ -1,0 +1,166 @@
+---
+import Img from './Img.astro';
+import Icon from '../system/Icon.astro';
+import { photo } from '../../data/photos';
+import type { StripTile } from '../../data/globalStrip';
+import { mayRender } from '../../lib/permissions';
+import { linkAttrs } from '../../lib/url';
+
+/**
+ * WorldStrip ➕ (WP55): "CodersTrust Around the World", the chronological strip of where CodersTrust has worked outside Bangladesh (src/data/globalStrip.ts), ending on Bangladesh, where most delivery has been. The full strip has seven
+ * tiles (Home, About), the short form three (the audience pages). Each tile is a card with a 3:2 photograph and ONE line under it: the place and date in bold, then what happened. A tile whose photograph the D13 rule does not
+ * let render (or that has none, as Albania's) shows the program's name in the photograph's place, so no tile is ever empty. No script; the tiles are not links, and the strip has one text link, "See Global Reach".
+ * The heading is part of the component (a page can set its level: an H2 band on Home, an H3 inside the Our Story band on About and inside the Our Track Record band of the audience pages).
+ */
+interface Props {
+  tiles: StripTile[];
+  title?: string;
+  /** Heading level of the strip's title. */
+  level?: 2 | 3;
+  id?: string;
+  /** Show the "See Global Reach" link under the tiles (default true). */
+  link?: boolean;
+  class?: string;
+}
+const { tiles, title = 'CodersTrust Around the World', level = 2, id = 'world', link = true, class: className } = Astro.props;
+const Title = `h${level}` as 'h2' | 'h3';
+const items = tiles.map((t) => {
+  const p = t.photo ? photo(t.photo) : undefined;
+  return { ...t, photo: p && mayRender(p.assetId) ? p : undefined };
+});
+const reach = linkAttrs('/impact/global-reach/');
+---
+
+<div class:list={['wst', `wst--${tiles.length > 3 ? 'full' : 'short'}`, className]} id={id} data-world-strip>
+  <Title class:list={['wst__title', level === 2 ? 't-heading-3xl' : 't-heading-xl']} id={`${id}-h`}>{title}</Title>
+  <ol class="wst__list" role="list" aria-labelledby={`${id}-h`}>
+    {
+      items.map((t) => (
+        <li class:list={['wst__tile', t.wide && 'wst__tile--wide']} data-fact={t.factIds.join(' ')} data-tile={t.id}>
+          <figure class="card wst__card">
+            <div class="card__media wst__media">
+              {t.photo ? (
+                <Img src={t.photo.src} alt={t.photo.alt} width={640} widths={[320, 640]} sizes="(min-width:1024px) 290px, (min-width:640px) 33vw, 50vw" assetId={t.photo.assetId} />
+              ) : (
+                <span class="wst__mark">{t.mark ?? t.place}</span>
+              )}
+            </div>
+            <figcaption class="wst__cap"><strong class="wst__where">{t.place}, {t.when}.</strong> {t.line}.</figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ol>
+  {link && <p class="wst__more"><a class="link" href={reach.href}>See Global Reach<Icon name="arrow-right" size={16} /></a></p>}
+</div>
+
+<style>
+  .wst {
+    display: grid;
+    gap: var(--space-lg);
+  }
+  .wst__title {
+    margin: 0;
+    color: var(--ctx-section-heading);
+  }
+  .wst__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wst__tile {
+    min-width: 0;
+  }
+  .wst__card {
+    margin: 0;
+    height: 100%;
+  }
+  .wst__media {
+    /* the 3:2 frame of every card photograph (utilities.css .card__media) */
+    flex: none;
+  }
+  /* the type tile: the program's name where a photograph would be, on the same Airy Blue ground as an empty photo frame */
+  .wst__mark {
+    padding: var(--space-md);
+    text-align: center;
+    font-size: var(--fs-heading-m);
+    line-height: var(--lh-heading-m);
+    font-weight: var(--fw-semibold);
+    color: var(--secondary);
+    text-wrap: balance;
+  }
+  .wst__cap {
+    flex: 1;
+    margin: 0;
+    padding: var(--space-compact) var(--space-md) var(--space-md);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
+  }
+  .wst__where {
+    color: var(--on-surface);
+  }
+  .wst__more {
+    margin: 0;
+  }
+  /* the wide tile (Bangladesh, the last of the full strip) and the odd last tile of the short strip take a whole row, photograph beside its line */
+  .wst__tile--wide,
+  .wst--short .wst__tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .wst__tile--wide .wst__card,
+  .wst--short .wst__tile:last-child:nth-child(odd) .wst__card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .wst__tile--wide .wst__media,
+  .wst--short .wst__tile:last-child:nth-child(odd) .wst__media {
+    flex: 0 0 46%;
+    aspect-ratio: auto;
+    min-height: 9rem;
+  }
+  .wst__tile--wide .wst__cap,
+  .wst--short .wst__tile:last-child:nth-child(odd) .wst__cap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-md);
+    font-size: var(--fs-body-base);
+    line-height: var(--lh-body-base);
+  }
+  @media (min-width: 640px) {
+    .wst__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    /* the short strip is three tiles in one row from here: no odd tile left to take a row */
+    .wst--short .wst__tile:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+    .wst--short .wst__tile:last-child:nth-child(odd) .wst__card {
+      flex-direction: column;
+    }
+    .wst--short .wst__tile:last-child:nth-child(odd) .wst__media {
+      flex: none;
+      aspect-ratio: 3 / 2;
+      min-height: 0;
+    }
+    .wst--short .wst__tile:last-child:nth-child(odd) .wst__cap {
+      display: block;
+      padding: var(--space-compact) var(--space-md) var(--space-md);
+      font-size: var(--fs-body-xs);
+      line-height: var(--lh-body-xs);
+    }
+  }
+  @media (min-width: 1024px) {
+    .wst--full .wst__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    /* seven tiles in four columns: four, then the Albania type tile, New York and the wide Bangladesh tile across two columns */
+    .wst--full .wst__tile--wide {
+      grid-column: span 2;
+    }
+  }
+</style>

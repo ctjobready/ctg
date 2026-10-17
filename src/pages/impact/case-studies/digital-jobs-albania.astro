@@ -1,0 +1,76 @@
+---
+import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro';
+import Callout from '../../../components/pages/impact/Callout.astro';
+import Fact from '../../../components/facts/Fact.astro';
+import Icon from '../../../components/system/Icon.astro';
+import { sources } from '../../../data/facts';
+import { linkAttrs } from '../../../lib/url';
+
+/**
+ * Digital Jobs Albania, a short case study (WP55, owner decision 2026-10-18; WP55 spec item 6). It follows the template of the other four, in the World Bank's own wording (press release, Tirana, 14 September 2021):
+ * "a new World Bank initiative" that gives "women aged 16-35 years" an "intensive 3-month training in digital skills", "implemented in partnership with the Government of Albania, Coderstrust (an international digital
+ * skills training provider), and EuroPartners Development (a local consulting company)". The owner's ruling (decision 2) is that this is CodersTrust's work, so the page says so and never names another company.
+ * The two figures are the World Bank's, published in May 2022 while the training was still running (PR-07, PR-08): interest and enrollment, not completion or employment, and the page says so. They are not program records,
+ * so there is no "Program Record" pill (evidenceOf). No money amount, price or investment figure appears. There is no learner story, so the template leaves that band out (CaseStudyPage).
+ */
+const release = linkAttrs(sources.WBDJA21.url ?? '');
+---
+
+<CaseStudyPage
+  slug="digital-jobs-albania"
+  pageTitle="Digital Jobs Albania"
+  description="Digital Jobs Albania, a World Bank initiative: an online three-month course in digital skills for women in Albania, 2021–2022."
+  stats={[{ id: 'PR-07' }]}
+  context={[
+    'In September 2021, the World Bank launched Digital Jobs Albania to help women in Albania gain better access to online work and connect with the global economy.',
+    'The initiative was implemented with the Government of Albania, CodersTrust and EuroPartners Development, a local consulting company.',
+  ]}
+  challenges={[
+    'Women’s labor force participation in Albania is lower than men’s.',
+    'Online freelancing takes technical skills, and the soft skills to compete for project work.',
+  ]}
+  solution={[
+    'An intensive three-month online training program in digital skills.',
+    'Tracks in graphic design, web development and digital marketing.',
+    'Mentorship, and help with the soft skills needed to compete for project work on online freelancer websites.',
+  ]}
+>
+  <p slot="solution-lead" class="dja__lead">The World Bank names CodersTrust as the international digital skills training provider in the partnership. The initiative gave participants:</p>
+
+  <Fragment slot="results">
+    <Callout tone="bluf" label="What the World Bank Reported">
+      <dl class="dja__results">
+        <div data-fact="PR-08"><dt>Interest</dt><dd><Fact id="PR-08" field="value" /> women expressed interest, far exceeding the available spots.</dd></div>
+        <div data-fact="PR-07"><dt>Enrolled</dt><dd><Fact id="PR-07" field="value" /> students enrolled in the three-month course.</dd></div>
+      </dl>
+    </Callout>
+    <p>The World Bank published these figures in May 2022, while the training was still running. They show interest and enrollment, not completion or employment.</p>
+    <p><a class="link" href={release.href} rel={release.rel}>Read the World Bank Announcement<span class="sr-only"> (opens worldbank.org)</span><Icon name="arrow-right" size={16} /></a></p>
+  </Fragment>
+</CaseStudyPage>
+
+<style>
+  .dja__lead {
+    margin: 0 0 var(--space-md);
+    color: var(--on-surface-variant);
+  }
+  .dja__results {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+  }
+  .dja__results > div {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .dja__results dt {
+    font-size: var(--fs-body-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+  .dja__results dd {
+    margin: 0;
+  }
+</style>

@@ -94,12 +94,12 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     expect(await text(page, '#future')).not.toContain('AI-ready');
   });
 
-  test('Proof in Practice points to all four case studies, with a link', async ({ page }) => {
+  test('Proof in Practice points to all five case studies, with a link', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    // WP30c: the lead sentence is gone; the heading, three cards and one link to all four case studies remain
+    // WP30c: the lead sentence is gone; the heading, three cards and one link to all five case studies remain (WP55: Digital Jobs Albania is the fifth)
     await expect(page.locator('#cases-h')).toHaveText('Proof in Practice');
     await expect(page.locator('#cases article')).toHaveCount(3);
-    const link = page.getByRole('link', { name: 'See All Four Case Studies' });
+    const link = page.getByRole('link', { name: 'See All Five Case Studies' });
     await expect(link).toHaveCount(1);
     expect(await link.getAttribute('href')).toMatch(/\/impact\/case-studies\/$/);
   });

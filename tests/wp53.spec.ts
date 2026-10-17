@@ -76,7 +76,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
   test('the reach slide and the programs slide are gone, and so is the programs grid; the Programs menu still links every program', async ({ page }) => {
     await open(page, HOME);
     const region = compact(await page.locator('#results').evaluate((el) => el.textContent ?? ''));
-    for (const gone of ['Programs in 15 Countries and Territories', 'Reach at Scale', 'Explore Global Reach', 'Find Your Program', 'Our Programs', 'Explore Programs', 'Most Surveyed New Earners Were Earning', 'See When Completers First Earn']) {
+    for (const gone of ['Programs in 15 Countries and Territories', 'Programs in 17 Countries and Territories', 'Reach at Scale', 'Explore Global Reach', 'Find Your Program', 'Our Programs', 'Explore Programs', 'Most Surveyed New Earners Were Earning', 'See When Completers First Earn']) {
       expect(region, gone).not.toContain(gone);
     }
     await expect(page.locator('.hs__programs, .hs__program')).toHaveCount(0);
@@ -87,13 +87,16 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     }
   });
 
-  test('the reach figure stays in the hero’s "Proof at a Glance" strip, stated once (SC-16: 130,000+ learners, 15 countries and territories)', async ({ page }) => {
+  test('the reach figure stays in the hero’s "Proof at a Glance" strip, stated once (SC-16: 130,000+ learners, 17 countries and territories)', async ({ page }) => {
     await open(page, HOME);
     const card = page.locator('.hh__card[data-fact="SC-16"]');
     await expect(card).toContainText('130,000+');
-    await expect(card).toContainText('15 countries and territories');
+    await expect(card).toContainText('17 countries and territories');
     expect(count(compact(await page.locator('main').textContent()), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
-    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(0);
+    // WP55 (owner decisions 2026-10-17/18): SC-03 is on Home once, as the "CodersTrust Around the World" strip's Bangladesh tile ("Most delivery has been in Bangladesh"); the carousel never carries it
+    await expect(page.locator('#results [data-fact~="SC-03"]')).toHaveCount(0);
+    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(1);
+    await expect(page.locator('main [data-world-strip] [data-tile="bangladesh"][data-fact~="SC-03"]')).toHaveCount(1);
   });
 
   test('the survey slide: the income heading, the eyebrow, the $245 tile and the evidence link are unchanged; the timing is ONE body line from OC-05 leading with its base, stated once', async ({ page }) => {

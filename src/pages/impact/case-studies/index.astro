@@ -14,7 +14,7 @@ import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const path = '/impact/case-studies/';
-const description = desc('Four CodersTrust case studies, each with its result, its base and what it does not show: Women in Online Work in Kosovo, WSDFM, UNDP YES and Her Power.');
+const description = desc('Five CodersTrust case studies, each with its result and what it does not show: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
@@ -25,10 +25,10 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Case Studies: Kosovo to Bangladesh')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Learners Reaching Paid Work, from Kosovo to Bangladesh" lead="Four programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Learners Reaching Paid Work, from Kosovo to Bangladesh" lead="Five programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, Results First" />
+    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Five Programs, Results First" />
     <CaseGrid />
     <p class="ch__link"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>See Where These Results Sit on the Evidence Ladder<Icon name="arrow-right" size={16} /></a></p>
   </Section>

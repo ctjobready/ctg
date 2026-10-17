@@ -16,7 +16,7 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { IMPACT_ANSWER, MICRO_COMMITMENT, defineNewEarners } from '../../data/copy';
+import { IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, defineNewEarners } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
@@ -37,7 +37,7 @@ const sdgs = [
 const onThisPage = [
   { label: 'In Short', href: '#summary' },
   { label: 'Results at a Glance', href: '#glance' },
-  { label: 'Four Programs', href: '#cases' },
+  { label: 'Five Programs', href: '#cases' },
   { label: 'Four Kinds of Evidence', href: '#evidence-ladder' },
   { label: 'Where We Are Heading', href: '#heading' },
   { label: 'Seven Global Goals, Three at the Core', href: '#sdg' },
@@ -87,7 +87,7 @@ const d = discoveryCta();
         },
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [
-        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: 'A 2017 pilot with the World Bank Group.', also: ['PR-06'] },
+        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
         { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: 'Program records, separate from the randomized trial of the predecessor program.', also: ['PR-06'] },
         { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
         { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,500 CodersTrust trained directly', note: 'Within the national program scope; the national program’s reach is counted separately.' },
@@ -97,8 +97,8 @@ const d = discoveryCta();
 
   <!-- WP30e: link cards, one per case study (program, partner and place), Kosovo first. The results are in Results at a Glance, so no figure is repeated here. -->
   <Section id="cases" tone="airy" aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Four Programs, from Kosovo to Bangladesh" />
-    <ul class="grid-cards grid-cards--2 ih__cases" role="list">
+    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Five Programs, from Kosovo to Bangladesh" />
+    <ul class="grid-cards ih__cases" role="list">
       {
         CASE_STUDIES.map((c) => (
           <li>

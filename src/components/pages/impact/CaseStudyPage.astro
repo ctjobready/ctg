@@ -20,7 +20,7 @@ import { discoveryCta, articleNode, desc, title as chkTitle } from './page-utils
 import { caseBySlug } from './case-studies';
 
 /**
- * Template for the four case-study pages (T5): outcome-first header (stat row) → context → challenges →
+ * Template for the five case-study pages (T5): outcome-first header (stat row) → context → challenges →
  * CodersTrust solution → results → learner story → related program → discovery CTA.
  * Slots: `context` (extra context), `solution-lead` (CodersTrust's own role, set above the generic practices), `results`, `story`, `after-results`.
  */
@@ -122,10 +122,13 @@ const d = discoveryCta();
   </Section>
   <slot name="after-results" />
 
-  <Section tone="airy" aria-labelledby="story-h">
-    <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} lead="Individual stories, not typical or promised outcomes." />
-    <slot name="story" />
-  </Section>
+  {/* WP55: a case study with no learner story (Digital Jobs Albania: the World Bank's figures are enrollment, and no learner story is registered) leaves the band out instead of showing an empty one. */}
+  {Astro.slots.has('story') && (
+    <Section tone="airy" aria-labelledby="story-h">
+      <SectionHeader id="story-h" eyebrow={storyEyebrow} title={storyTitle} lead="Individual stories, not typical or promised outcomes." />
+      <slot name="story" />
+    </Section>
+  )}
 
   <PhotoGallery id="in-the-field" tone="white" eyebrow="In the Field" title="From the Program" photos={galleryPhotos(slug).filter((p) => p.assetId !== hero?.assetId)} />
 
@@ -133,7 +136,7 @@ const d = discoveryCta();
     <!-- WP25s: an eyebrow and a descriptive link label, so "All Case Studies" is not read as a heading of its own above the closing call to action -->
     <p class="eyebrow">Keep Reading</p>
     <h2 class="t-heading-2xl" id="related-h">Where the Model Runs Next</h2>
-    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>Compare the Four Case Studies<Icon name="arrow-right" size={16} /></a></p>
+    <p class="cs__related"><a class="link" href={related.href}>{c.related.label}<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/case-studies/').href}>Compare the Five Case Studies<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <CTABand id="cta" tone="klein" heading="Talk to Us About a First Cohort" cta={{ label: d.label, href: d.href }} secondary={trialLink ? { label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' } : { label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />

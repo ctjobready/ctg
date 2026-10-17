@@ -31,6 +31,8 @@ import IncludesBand from '../components/sections/IncludesBand.astro';
 import FAQBand from '../components/sections/FAQBand.astro';
 import ComparisonBand from '../components/sections/ComparisonBand.astro';
 import CTABand from '../components/ui/CTABand.astro';
+import Section from '../components/ui/Section.astro';
+import WorldStrip from '../components/ui/WorldStrip.astro';
 import Tone from '../components/pages/home/Tone.astro';
 import HomeRouter from '../components/pages/home/HomeRouter.astro';
 import HomeCost from '../components/pages/home/HomeCost.astro';
@@ -41,6 +43,7 @@ import HomeOffer from '../components/pages/home/HomeOffer.astro';
 import ConversionNextSteps from '../components/pages/home/ConversionNextSteps.astro';
 import { caseStudyItems } from '../components/pages/home/caseStudies';
 import { futurePhotos } from '../data/photos';
+import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
 import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
@@ -169,7 +172,7 @@ const includes = [
     <!-- WP37 (cycle-14 review): the program-results slide of the carousel (slide 4) states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems). WP51 (cycle-26 review): the same slide states the WSDFM figure too
          (WP50), so all three cards show delivery context and none repeats a figure. -->
     <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
-      <a slot="more" class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>
+      <a slot="more" class="link" href={caseStudies.href}>See All Five Case Studies<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={trialResults.href}>Read the Trial Results<Icon name="arrow-right" size={16} /></a>
       <a slot="more" class="link" href={surveyResults.href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a>
     </CaseStudyCarousel>
@@ -178,6 +181,12 @@ const includes = [
   </Tone>
 
   <Tone cmf="RECOGNITION"><HomeRecognition id="recognition" /></Tone>
+
+  <!-- WP55 (owner decisions 2026-10-17/18, global positioning): CodersTrust is a New York organization with work in 17 countries and territories, so Home carries one small strip of where, in order, ending on Bangladesh (where most delivery has been). Its own
+       light ground (ice) keeps the rhythm between the white recognition band above and the airy band below. -->
+  <Tone cmf="GLOBAL" tone="ice">
+    <Section tone="ice" aria-labelledby="world-h"><WorldStrip tiles={WORLD_STRIP} level={2} id="world" /></Section>
+  </Tone>
 
   <!-- WP38: three short cards (IncludesBand) in place of the concern / inclusion / benefit matrix; one band, so no `join` (it had left this band without bottom padding). -->
   <Tone cmf="C8" tone="airy">

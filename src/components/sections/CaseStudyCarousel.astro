@@ -21,6 +21,8 @@ interface Item {
    * its fact is not named in the band's data-fact (the card states none of it).
    */
   context?: string;
+  /** WP55: a second source's line for the same program, shown under the figure or the context (the Kosovo card's World Bank figure, WB_KOSOVO); its facts are named in the band's data-fact. */
+  note?: { text: string; facts: string[] };
   href: string;
   image?: ImageMetadata | string;
   imageAlt?: string;
@@ -44,15 +46,15 @@ const cards = items.map((it) => {
   const own = it.image ? undefined : casePhoto(/case-studies\/([^/]+)/.exec(it.href)?.[1] ?? '');
   return { ...it, ...(own && { image: own.src, imageAlt: own.alt, assetId: own.assetId }), stat: s && { value: s.value, label: it.statLabel ?? CASE_CARD_LABELS[it.factId] ?? s.label } };
 });
-// The facts the band states: those of the cards that show a figure.
-const stated = items.filter((i) => !i.context).map((i) => i.factId).join(' ') || undefined;
+// The facts the band states: those of the cards that show a figure, and those a card's note states (WP55).
+const stated = [...items.filter((i) => !i.context).map((i) => i.factId), ...items.flatMap((i) => i.note?.facts ?? [])].join(' ') || undefined;
 ---
 
 <Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
   <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
   <div data-fact={stated}>
     <Carousel label="Case Studies" perView={3} count={cards.length}>
-      {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} context={c.context} href={c.href} />)}
+      {cards.map((c) => <CaseStudyCard title={c.title} program={c.program} partner={c.partner} image={c.image} imageAlt={c.imageAlt} assetId={c.assetId} stat={c.stat} context={c.context} note={c.note} href={c.href} />)}
     </Carousel>
   </div>
   {Astro.slots.has('more') && <p class="csc__more"><slot name="more" /></p>}

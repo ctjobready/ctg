@@ -12,7 +12,10 @@ import { caseCardPhoto } from '../../../data/photos';
 import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 
-/** Grid of the four published case-study cards: outcome-first stat from the register, then the program. */
+/**
+ * Grid of the published case-study cards (five since WP55): outcome-first stat from the register, then the program.
+ * No `grid-cards--2` modifier: five cards read 3 + 2 in the system's default three columns (a two-column grid would leave the fifth alone in its row), and a set of four still reads 2 × 2 by the system's own rule (utilities.css).
+ */
 interface Props {
   /** Case-study slugs to exclude (for "more case studies" on a case-study page). */
   except?: string;
@@ -31,7 +34,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
 });
 ---
 
-<div class:list={['grid-cards', 'grid-cards--2', className]} data-fact={cards.map((c) => c.factId).join(' ')}>
+<div class:list={['grid-cards', className]} data-fact={[...cards.map((c) => c.factId), ...cards.flatMap((c) => c.note?.facts ?? [])].join(' ')}>
   {
     cards.map((c) => {
       const a = linkAttrs(c.path);
@@ -49,6 +52,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
                 <dd>
                   <span class="case__tags"><StatusTag status="Delivered" />{c.evidence && <EvidenceTag type={c.evidence} />}</span>
                   <span class="case__value">{c.stat.value}</span>{' '}<span class="case__label">{c.resultLabel}</span>
+                  {c.note && <span class="case__second" data-fact={c.note.facts.join(' ')}>{c.note.text}</span>}
                 </dd>
               </div>
             </dl>
@@ -109,6 +113,13 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
     line-height: var(--lh-body-xs);
     color: var(--on-surface-variant);
     text-wrap: balance;
+  }
+  /* WP55: a second source's line for the same program (the World Bank's figure for Kosovo), in the label's small type */
+  .case__second {
+    margin-top: var(--space-xs);
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
   }
   .case__evid {
     font-size: var(--fs-body-xs);

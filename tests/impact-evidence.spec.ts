@@ -136,7 +136,7 @@ test.describe('/impact/ program results', () => {
     const links = await page.locator('nav[aria-label="On this page"] a, .page-nav a').allInnerTexts();
     const flat = links.join('|');
     expect(flat).toContain('Results at a Glance');
-    expect(flat).toContain('Four Programs');
+    expect(flat).toContain('Five Programs');
     // WP31: the jump labels are the headings they jump to (a short form only where the heading is long), and every heading has one
     expect(flat).toContain('Four Kinds of Evidence');
     expect(flat).toContain('Where We Are Heading');
@@ -191,13 +191,13 @@ test.describe('Independent Evaluation', () => {
 test.describe('case studies', () => {
   test.use({ viewport: DESKTOP });
 
-  test('four cards, Kosovo first, and no side-by-side table that repeats their results', async ({ page }) => {
+  test('five cards, Kosovo first, and no side-by-side table that repeats their results', async ({ page }) => {
     await open(page, 'impact/case-studies/');
-    await expect(page.locator('article.case')).toHaveCount(4);
+    await expect(page.locator('article.case')).toHaveCount(5);
     const names = await page.locator('article.case .card__title').allInnerTexts();
     expect(names.map((n) => n.trim())[0]).toBe('Women in Online Work, Kosovo');
     await expect(page.getByRole('heading', { level: 2, name: 'WSDFM, Women in Online Work and Her Power, Side by Side' })).toHaveCount(0);
-    await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(4);
+    await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(5);
   });
 
   // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone; one line above the tiles names the two kinds of evidence, and each tile carries its own tag

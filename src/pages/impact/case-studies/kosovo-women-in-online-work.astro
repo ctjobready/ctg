@@ -3,7 +3,12 @@ import CaseStudyPage from '../../../components/pages/impact/CaseStudyPage.astro'
 import LearnerStory from '../../../components/pages/impact/LearnerStory.astro';
 import Callout from '../../../components/pages/impact/Callout.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
+import Fact from '../../../components/facts/Fact.astro';
 import { fact } from '../../../data/facts';
+import { photo } from '../../../data/photos';
+
+// WP55: her portrait (the previous site's case study showed it beside her story; CodersTrust-owned, owner ruling 2026-10-18), with its own permissions row.
+const portrait = photo('impact/kosovo-graduate-portrait');
 
 // ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
 const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
@@ -49,10 +54,12 @@ const results = [
       </dl>
     </Callout>
     <p>Women in Online Work was a pilot with the World Bank Group in 2017. The figures above are from CodersTrust program records.</p>
+    <!-- WP55 (owner decision 2026-10-17, "Show both"): the World Bank's own count for the same pilot, in its full sentence (PR-02b), directly after the program records. -->
+    <p><Fact id="PR-02b" /></p>
   </Fragment>
 
   <Fragment slot="story">
-    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" program="Women in Online Work, Kosovo, 2017" outcome={outcome} tag />
+    <LearnerStory factId="ST-05" name="Erlisa Zherka" assetId="story-erlisa-zherka" image={portrait.src} imageAlt={portrait.alt} imageAssetId={portrait.assetId} program="Women in Online Work, Kosovo, 2017" outcome={outcome} tag />
   </Fragment>
 </CaseStudyPage>
 

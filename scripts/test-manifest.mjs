@@ -5,7 +5,7 @@
  *     with a destination (WITHHELD rows may be empty by the doc; ours carry the parent page) and an approved reason on withheld rows,
  *   - every published/merged/redirected destination exists in dist/ (and its #fragment, when it has one),
  *   - WITHHELD items are not linked from any page and not in the sitemap,
- *   - 42/42 posts are accounted for (each legacy post -> its /news/<slug>/ article, which exists in dist/),
+ *   - 42/42 posts are accounted for (each legacy post -> its /news/<slug>/ article, which exists in dist/); the declared archive entries added from dated sources (ADDED_NEWS, WP55) have no legacy post and are checked apart,
  *   - no legacy upload route serves a document: PDF media rows resolve to a landing page and dist/ holds no PDF,
  *   - the generated files (redirects.ts, bulk-redirects.csv, id-map.json) match the manifest.
  * Prints the counts.
@@ -18,6 +18,7 @@ import {
   HOLD_TEXT,
   REPO_ROOT,
   STATE_OF,
+  ADDED_NEWS,
   contentEntries,
   distFile,
   envConfig,
@@ -128,19 +129,33 @@ for (const r of withheld.filter((x) => x.class === 'page')) {
   if (h === null || !isRedirectStub(h)) err(`withheld ${r.legacy_url} should redirect to its parent page (no stub found)`);
 }
 
-// 4. 42/42 posts accounted for.
-const news = contentEntries().news.filter((n) => !n.draft);
+// 4. 42/42 posts accounted for. WP55: the archive entries added from dated public sources (ADDED_NEWS in manifest-lib.mjs) have no legacy post, so they are counted apart: every other article must be the destination of
+// a legacy post row, the count of migrated posts is still exactly 42, and an article without a `legacyUrl` that is not declared in ADDED_NEWS fails.
+const allNews = contentEntries().news.filter((n) => !n.draft);
+const addedNews = allNews.filter((n) => ADDED_NEWS.includes(n.id));
+const news = allNews.filter((n) => !ADDED_NEWS.includes(n.id));
 const postRows = rows.filter((r) => r.class === 'post' && r.disposition === 'MOVE' && /^\/[^/]+\/$/.test(r.legacy_url));
 const mapped = new Set(postRows.map((r) => r.destination));
 for (const n of news) {
   const route = `/news/${n.id}/`;
+  if (!n.legacyUrl) err(`news article ${n.id} has no legacyUrl and is not declared in ADDED_NEWS (scripts/manifest-lib.mjs)`);
   if (!mapped.has(route)) err(`news article ${n.id} has no legacy post row pointing at it`);
   const h = html(route);
   if (h === null || isRedirectStub(h)) err(`news article ${route} missing from dist/`);
   else if (!/Published\s/.test(h)) err(`news article ${route} has no dated archive banner`);
 }
+for (const id of ADDED_NEWS) {
+  const route = `/news/${id}/`;
+  const entry = addedNews.find((n) => n.id === id);
+  if (!entry) err(`ADDED_NEWS lists ${id}, which is not a published news entry`);
+  else if (entry.legacyUrl) err(`news entry ${id} is declared added but carries a legacyUrl (a migrated post belongs in the 42)`);
+  if (mapped.has(route)) err(`news entry ${id} is declared added but a legacy post row points at it`);
+  const h = html(route);
+  if (h === null || isRedirectStub(h)) err(`added news entry ${route} missing from dist/`);
+  else if (!/Published\s/.test(h)) err(`added news entry ${route} has no dated archive banner`);
+}
 for (const r of postRows) if (!news.some((n) => `/news/${n.id}/` === r.destination)) err(`post ${r.legacy_url} points at ${r.destination}, which is not an article`);
-if (postRows.length !== 42 || news.length !== 42) err(`posts accounted for: ${postRows.length} legacy post rows, ${news.length} articles (expected 42/42)`);
+if (postRows.length !== 42 || news.length !== 42) err(`posts accounted for: ${postRows.length} legacy post rows, ${news.length} migrated articles (expected 42/42)`);
 
 // 5. No legacy upload route serves a document (planning/02 §5b, D9).
 let docs = 0;
@@ -168,7 +183,7 @@ console.log(`  withheld             ${states.withheld}   (${withheld.filter((r) 
 console.log(`  four-state coverage  ${states.published + states.merged + states.redirected + states.withheld}/${rows.length}`);
 console.log(`  destinations checked in dist/   ${checkedDest.size}`);
 console.log(`  pages scanned for withheld links ${linkScanned}`);
-console.log(`  posts accounted for  ${postRows.length}/42 legacy posts, ${news.length}/42 articles in dist/`);
+console.log(`  posts accounted for  ${postRows.length}/42 legacy posts, ${news.length}/42 migrated articles in dist/, plus ${addedNews.length} added archive entries`);
 console.log(`  documents in media rows ${docs}, resolved to landing pages`);
 console.log(`  by class: ${Object.entries(byClass).map(([k, v]) => `${k} ${v}`).join(', ')}`);
 if (errors.length) {

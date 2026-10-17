@@ -12,6 +12,9 @@ import StoryTimeline from '../../components/pages/about/StoryTimeline.astro';
 import TeamCard from '../../components/pages/about/TeamCard.astro';
 import PageNav from '../../components/pages/about/PageNav.astro';
 import Stat from '../../components/system/Stat.astro';
+import WorldStrip from '../../components/ui/WorldStrip.astro';
+import AsCoveredBy from '../../components/ui/AsCoveredBy.astro';
+import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
 import { BIGD_FULL, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
 import { timeline } from '../../data/timeline';
@@ -146,6 +149,8 @@ const jsonLd = [
   <Section id="story" tone="ice" aria-labelledby="timeline-h">
     <SectionHeader id="timeline-h" eyebrow="Our Story" title="From a Copenhagen Launch to National Programs" />
     <StoryTimeline items={timeline} />
+    <!-- WP55 (synthesis 3.1): the strip sits directly under the timeline, as a sub-heading of the Our Story band (an H3, so the jump list above keeps its eight H2s); its Copenhagen tile illustrates the 2014 entry. -->
+    <div class="about-world"><WorldStrip tiles={WORLD_STRIP} level={3} id="world" /></div>
   </Section>
 
   <Section id="founders" aria-labelledby="founders-h">
@@ -178,6 +183,8 @@ const jsonLd = [
     <SectionHeader id="rec-h" eyebrow="Recognition" title="Industry Recognition" />
     <div class="about-rec">
       <p class="lead" data-fact="PA-08">CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.</p>
+      <!-- WP55 (synthesis 3.5): the "As covered by" line, under the listing sentence. -->
+      <AsCoveredBy />
       <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and Media<Icon name="arrow-right" size={16} /></a>
     </div>
   </Section>
@@ -252,6 +259,10 @@ const jsonLd = [
   }
   .about-more {
     margin: var(--space-lg) 0 0;
+  }
+  /* WP55: the strip sits one sub-section step (40px) under the last timeline entry */
+  .about-world {
+    margin-top: var(--space-xl);
   }
   .principle__icon {
     display: inline-flex;

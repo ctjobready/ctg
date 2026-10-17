@@ -66,7 +66,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -120,7 +120,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
       { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
     ]}
-    more={[{ id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' }]}
+    more={[{ id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
   />
   <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
 
@@ -150,6 +150,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     statements={[{ facts: ['SC-04'], markers: [], text: 'CodersTrust has been National University’s official training partner for digital career skills and credentials since 2023.' }]}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup={['government', 'academic']}
+    strip
   />
 
   <!-- C6 · Mechanism (YouthWIDE-style delivery) -->

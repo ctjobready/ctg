@@ -402,9 +402,9 @@ test.describe('"What Happens Next" (item 16)', () => {
 
 test.describe('About: the meta description (item 17)', () => {
   // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts)
-  test('it reads "Since 2014, New York-headquartered CodersTrust has trained ... in 15 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
+  test('it reads "Since 2014, New York-headquartered CodersTrust has trained ... in 17 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
     await open(page, 'about/');
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 15 countries and territories.';
+    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 17 countries and territories.';
     expect(D.length).toBe(153);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
@@ -414,13 +414,13 @@ test.describe('About: the meta description (item 17)', () => {
 test.describe('SC-16 reads "learners trained" (item 18)', () => {
   test('the register, Home, Impact and the partner hub say "learners trained"; no page says "young people trained"', async ({ page }) => {
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments in 15 countries and territories since 2014');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments in 15 countries and territories since 2014');
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments in 17 countries and territories since 2014');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments in 17 countries and territories since 2014');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments across 15 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments across 17 countries and territories.');
     expect(sc16.stat?.value).toBe('130,000+');
     await open(page, '');
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments in 15 countries and territories since 2014');
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments in 17 countries and territories since 2014');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="SC-16"]').textContent())).toContain('learners trained since 2014');
     await open(page, 'partner-with-us/');

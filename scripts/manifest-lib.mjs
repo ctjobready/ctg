@@ -295,6 +295,19 @@ const fmValue = (fm, key) => {
   return m ? m[1].trim().replace(/^["']|["']$/g, '') : undefined;
 };
 
+/**
+ * WP55 (owner decision 2026-10-18, global positioning): archive entries written from dated public sources, which never had a post on the previous site. They carry no `legacyUrl`, so they are outside the 42/42 migration
+ * count (scripts/test-manifest.mjs and scripts/validate-content.mjs still hold exactly 42 migrated posts, each with a legacy row), and each is declared here on purpose: a news entry without a `legacyUrl` that is not
+ * listed is an error in both scripts, so a migrated post that loses its `legacyUrl` cannot slip through as "added".
+ */
+export const ADDED_NEWS = [
+  'coderstrust-launches-in-copenhagen-with-a-virgin-unite-dinner',
+  'coderstrust-presents-at-in5-in-dubai',
+  'hour-of-code-in-somaliland',
+  'coderstrust-sets-up-in-india',
+  'coderstrust-announces-learning-partnerships-in-uganda',
+];
+
 /** Content entries with their legacyUrl, keyed by collection. */
 export function contentEntries() {
   const root = path.join(REPO_ROOT, 'src', 'content');

@@ -7,6 +7,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ADDED_NEWS } from './manifest-lib.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
@@ -103,15 +104,26 @@ function collection(name, dir, check, { bodyRequired = false } = {}) {
 }
 
 // ---- news
+// WP55: the archive entries added from dated public sources (ADDED_NEWS, scripts/manifest-lib.mjs) never had a post on the previous site: no legacyUrl, and an entry may have no photograph (then no cover and no cover alt text).
+// Every other post is a migrated one and keeps all the old requirements (a legacyUrl that matches its slug, a cover with alt text); a post without a legacyUrl that is not declared is an error.
+const addedNews = new Set(ADDED_NEWS);
 collection('news', 'news', (file, fm, body, slug) => {
-  req(file, fm, ['title', 'date', 'topic', 'excerpt', 'coverAlt', 'legacyUrl']);
+  const added = addedNews.has(slug);
+  req(file, fm, ['title', 'date', 'topic', 'excerpt', ...(added ? [] : ['coverAlt', 'legacyUrl'])]);
   if (!Array.isArray(fm.tags)) err(file, '"tags" must be an array');
   if (!isDate(fm.date)) err(file, `invalid date ${fm.date}`);
   if (fm.updated !== undefined && !isDate(fm.updated)) err(file, `invalid updated ${fm.updated}`);
   oneOf(file, fm, 'topic', ['partnerships', 'recognition', 'programs-events', 'leadership-advocacy', 'insights']);
   if (typeof fm.excerpt === 'string' && fm.excerpt.length > 180) err(file, `excerpt is ${fm.excerpt.length} chars (max 180)`);
-  if (!fm.cover) err(file, 'missing cover image'); else imageExists(file, fm.cover, 'cover');
-  if (typeof fm.legacyUrl === 'string' && !fm.legacyUrl.includes(`/${slug}/`)) err(file, 'legacyUrl does not match slug');
+  if (!fm.cover) {
+    if (!added) err(file, 'missing cover image');
+  } else {
+    imageExists(file, fm.cover, 'cover');
+    if (added && !fm.coverAlt) err(file, 'cover without coverAlt');
+  }
+  if (added) {
+    if (fm.legacyUrl) err(file, 'an added archive entry has no legacyUrl (it is declared in ADDED_NEWS; a migrated post belongs in the 42)');
+  } else if (typeof fm.legacyUrl === 'string' && !fm.legacyUrl.includes(`/${slug}/`)) err(file, 'legacyUrl does not match slug');
   if (fm.draft !== undefined && typeof fm.draft !== 'boolean') err(file, '"draft" must be boolean');
 }, { bodyRequired: true });
 
@@ -201,7 +213,7 @@ for (const name of ['press', 'endorsements']) {
   for (const m of t.matchAll(/date: "([^"]+)"/g)) if (!isDate(m[1])) err(file, `invalid date ${m[1]}`);
 }
 if (counts.endorsements !== 4) errors.push(`endorsements: expected 4, found ${counts.endorsements}`);
-if (counts.news !== 42) errors.push(`news: expected 42 posts, found ${counts.news}`);
+if (counts.news !== 42 + ADDED_NEWS.length) errors.push(`news: expected 42 migrated posts plus ${ADDED_NEWS.length} added archive entries, found ${counts.news}`);
 if (counts.team !== 13) errors.push(`team: expected 13 profiles, found ${counts.team}`);
 if (counts.mentors !== 15) errors.push(`mentors: expected 15, found ${counts.mentors}`);
 

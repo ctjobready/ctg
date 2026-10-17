@@ -15,9 +15,10 @@ import { linkAttrs } from '../../../lib/url';
 
 const path = '/impact/global-reach/';
 const headline = `${fact('SC-03').text}.`;
-const description = desc('Programs in 15 countries and territories: Bangladesh since 2014, plus 14 international locations, with each location’s target group and skills.');
-const jsonLd = [articleNode({ path, headline: 'Global Reach', description, datePublished: '2026-10-08', dateModified: '2026-10-10', author: 'CodersTrust' })];
-// WP30e: the footprint leads. The 14 locations beyond Bangladesh are listed from the same data as the map and the table, so the list cannot drift from them.
+// WP55 (owner decision 2026-10-18, 17 countries and territories): the count in the description is SC-03's, and the number of locations beyond Bangladesh is that count less one, so neither is typed.
+const description = desc(`Programs in ${val('SC-03')} countries and territories: Bangladesh since 2014, plus ${Number(val('SC-03')) - 1} international locations, with each location’s target group and skills.`);
+const jsonLd = [articleNode({ path, headline: 'Global Reach', description, datePublished: '2026-10-08', dateModified: '2026-10-18', author: 'CodersTrust' })];
+// WP30e: the footprint leads. The locations beyond Bangladesh are listed from the same data as the map and the table, so the list cannot drift from them.
 const beyond = locations.filter((l) => l.id !== 'bangladesh').map((l) => l.name).sort((x, y) => x.localeCompare(y));
 const beyondLine = `${beyond.slice(0, -1).join(', ')} and ${beyond[beyond.length - 1]}`;
 const d = discoveryCta();

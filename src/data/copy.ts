@@ -82,7 +82,7 @@ export const ORIGIN: CopyBlock = {
 
 /**
  * ORIGIN in one line, for the audience pages' Guide band (WP38, cycle-15 review: the two-sentence history was word for word on seven pages). Home keeps ORIGIN whole. The year is ID-02's stat value ("2014") and the
- * count of countries and territories is SC-03's ("15"), so the line cannot drift from the register; the builder throws if either stat changes shape.
+ * count of countries and territories is SC-03's stat value, so the line cannot drift from the register; the builder throws if either stat changes shape.
  */
 function originShort(): CopyBlock {
   const year = fact('ID-02').stat?.value;
@@ -91,6 +91,17 @@ function originShort(): CopyBlock {
   return { text: `Since ${year}, from a Copenhagen launch to programs in ${countries} countries and territories.`, facts: ['ID-02', 'SC-03'] };
 }
 export const ORIGIN_SHORT: CopyBlock = originShort();
+
+/**
+ * WP55 (owner decision 2026-10-17, "Show both"): wherever the Kosovo program records ("102 of 150", PR-02) are shown, this one short line shows the World Bank's own figure beside them: "World Bank: 77 trainees won at least one
+ * online contract." The count is PR-02b's stat value, so the line cannot drift from the register; the builder throws if the value stops being a plain count. It names its source in its first words and never replaces the program records.
+ */
+function wbKosovo(): CopyBlock {
+  const n = fact('PR-02b').stat?.value;
+  if (!n || !/^\d+$/.test(n)) throw new Error('WB_KOSOVO: PR-02b no longer has a plain count as its stat value');
+  return { text: `World Bank: ${n} trainees won at least one online contract.`, facts: ['PR-02b'] };
+}
+export const WB_KOSOVO: CopyBlock = wbKosovo();
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /**
@@ -372,7 +383,7 @@ export const RCT_COMPARISON: RctComparison = rctComparison();
 /**
  * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are
  * a smaller share (no enrollment figures are given here). Used wherever the two figures sit side by side (the C5 guide bands). The
- * count of other locations is SC-03's 15 less Bangladesh, so it is derived, not typed.
+ * count of other locations is SC-03's count less Bangladesh, so it is derived, not typed.
  */
 function trainedReach(): CopyBlock {
   const sc01 = fact('SC-01');

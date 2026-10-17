@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  * ("often measured by enrollment"); the readiness-assessment step ("routes applicants"); Contact steps 1 and 3; the evaluator (BIGD) spelled out at its first mention on every page that names it; the Programs menu line for YouthWIDE
  * (no Bangladesh aim); Home's survey slide (the income tile first, then a sentence that leads with its base) and trial slide (the ">4×" callout); "agreed before enrollment" everywhere; the one partner-logo caption on every page
  * that prints it; the Employers closing band (the first-action line alone, the AWS credential as a sentence of the logo caption); the Universities meta description; Home's first Imagine card; the FAQ eyebrow; the Albania partner on Global Reach
- * (the photo caption keeps its words).
+ * (WP55: the former "Albania" photograph is a Kosovo photograph, so no photograph is captioned as Albania any more, and Global Reach lists 17 locations).
  * Retrospective coverage (the owner exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then
  * `PORT=<port> npx playwright test tests/wp54.spec.ts --project=chromium`).
  */
@@ -398,36 +398,37 @@ test.describe('The FAQ eyebrow is "Questions, Answered" (item L9)', () => {
   });
 });
 
-// Item R1 as revised (the owner's investor deck confirms that the Albania 2021–2022 program was with the World Bank Group): the photograph keeps its caption, and Global Reach names the partner in the Albania row, as it does for Kosovo.
-test.describe('Albania: the photograph keeps its caption, and Global Reach names the World Bank Group as the partner (item R1, revised)', () => {
-  const CAPTION = 'CodersTrust trainees, World Bank project, Albania';
-  const ALT = `A group of young women and men trainees posing together in a computer room, with a caption reading ${CAPTION}`;
+// Item R1 as revised (the owner's investor deck confirms that the Albania 2021–2022 program was with the World Bank Group): Global Reach names the partner in the Albania row, as it does for Kosovo.
+// WP55 (owner decisions 2026-10-17/18): the photograph that WP54 kept captioned "CodersTrust trainees, World Bank project, Albania" is the Kosovo Women in Online Work pilot (the word ALBANIA was burned into the file). It is cropped, re-keyed and
+// captioned as Kosovo (tests/wp55.spec.ts), so no photograph is captioned or described as Albania any more; Global Reach now lists 17 locations, and the partner cells follow the owner's corrected rows.
+test.describe('Albania and Kosovo: no photograph is captioned as Albania, and Global Reach names the World Bank Group as the partner (item R1, revised by WP55)', () => {
+  const CAPTION = 'Women in Online Work trainees, Kosovo, 2016–17';
 
-  test('YouthWIDE and In the Field keep the caption "CodersTrust trainees, World Bank project, Albania"; the alt text describes the same words', async ({ page }) => {
+  test('In the Field captions the former "Albania" photograph as Kosovo ("Women in Online Work trainees, Kosovo, 2016–17"), and no figure on YouthWIDE or In the Field says Albania', async ({ page }) => {
+    await open(page, FIELD);
+    expect(await texts(page, 'figure:has(img[alt*="Women in Online Work banners"]) figcaption')).toEqual([CAPTION]);
     for (const route of [YOUTHWIDE, FIELD]) {
       await open(page, route);
-      const captions = await texts(page, 'figure:has(img[alt*="Albania"]) figcaption');
-      expect(captions.length, route).toBeGreaterThan(0);
-      expect(new Set(captions), route).toEqual(new Set([CAPTION]));
-      expect(await page.locator('img[alt*="World Bank project, Albania"]').first().getAttribute('alt'), route).toBe(ALT);
+      expect(await texts(page, 'figure:has(img[alt*="Albania"]) figcaption'), route).toEqual([]);
+      expect(await page.locator('main').evaluate((el) => el.textContent ?? ''), route).not.toContain('World Bank project, Albania');
     }
   });
 
-  test('Global Reach: the Albania row’s "Partner / Note" cell is "Partner: World Bank Group" (Kosovo’s pattern), names no amount or investment figure, and no other row gains a partner', async ({ page }) => {
+  test('Global Reach: the Albania row’s "Partner / Note" cell names the World Bank Group and the program (Kosovo’s pattern), names no amount or investment figure, and exactly the rows with a named partner say so', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const row = (name: string) => page.locator('.wmap__table tbody tr', { has: page.locator('th[scope="row"]', { hasText: name }) });
     const cell = (name: string) => row(name).locator('td[data-label="Partner / Note"]');
     await expect(cell('Albania')).toHaveCount(1);
-    expect(compact(await cell('Albania').textContent())).toBe('Partner: World Bank Group');
-    expect(compact(await cell('Kosovo').textContent())).toBe('Partner: World Bank Group (Women in Online Work pilot, 2017)');
+    expect(compact(await cell('Albania').textContent())).toBe('Partner: World Bank Group (Digital Jobs Albania, with the Government of Albania and EuroPartners Development)');
+    expect(compact(await cell('Kosovo').textContent())).toBe('Partner: World Bank Group (Women in Online Work pilot, 2016–2017)');
     expect(compact(await cell('Albania').textContent())).not.toMatch(/[$€£\d]|million|investment|invested|funded|grant|amount/i);
-    // only Kosovo and Albania name a partner (Bangladesh and Denmark carry other notes; every other location keeps the dash)
+    // WP55: the rows that name a partner are Albania, Benin, Egypt, Kosovo, Somaliland and Uganda (the 2020 partnerships and the two World Bank programs); Bangladesh, Denmark and Iraq carry other notes; every other location keeps the dash
     const cells = await page.locator('.wmap__table tbody tr').evaluateAll((rows) =>
       rows.map((r) => ({ name: (r.querySelector('th')?.firstChild?.textContent ?? '').trim(), cell: (r.querySelector('td[data-label="Partner / Note"]')?.textContent ?? '').replace(/\s+/g, ' ').trim() })),
     );
-    expect(cells.filter((c) => c.cell.startsWith('Partner:')).map((c) => c.name).sort()).toEqual(['Albania', 'Kosovo']);
-    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner:')).map((c) => c.name).sort()).toEqual(['Bangladesh', 'Denmark']);
-    expect(cells, 'the table lists the 15 program locations').toHaveLength(15);
+    expect(cells.filter((c) => c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Albania', 'Benin', 'Egypt', 'Kosovo', 'Somaliland', 'Uganda']);
+    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Bangladesh', 'Denmark', 'Iraq']);
+    expect(cells, 'the table lists the 17 program locations').toHaveLength(17);
   });
 
   test('the Albania pin card on the map shows the same note, so the table holds every detail a pin shows (the map’s equivalence contract)', async ({ page }) => {

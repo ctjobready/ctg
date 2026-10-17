@@ -1,5 +1,7 @@
+import { WB_KOSOVO } from '../../../data/copy';
+
 /**
- * The four published case studies (planning v1.3 P24), Kosovo first (WP30e: the international footprint leads). A fifth study is intentionally withheld and has no
+ * The five published case studies (planning v1.3 P24), Kosovo first (WP30e: the international footprint leads), then Digital Jobs Albania (WP55, owner decision 2026-10-18: a short case study from the World Bank's wording). Another study is intentionally withheld and has no
  * entry, route, card or link anywhere; completeness is measured against the release manifest.
  */
 export interface CaseStudy {
@@ -18,6 +20,8 @@ export interface CaseStudy {
   place: string;
   who: string;
   scope: string;
+  /** WP55 ("Show both"): a second source's figure for the same program, as one short line under the card's result (Kosovo: the World Bank's 77 trainees with an online contract). */
+  note?: { text: string; facts: string[] };
   related: { label: string; href: string };
 }
 
@@ -36,6 +40,22 @@ export const CASE_STUDIES: CaseStudy[] = [
     place: 'World Bank Group; Kosovo, 2017',
     who: 'Young women',
     scope: 'Two-phase delivery that built digital literacy first, then real online work',
+    note: WB_KOSOVO,
+    related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
+  },
+  {
+    slug: 'digital-jobs-albania',
+    path: `${base}digital-jobs-albania/`,
+    name: 'Digital Jobs Albania',
+    heading: 'Digital Jobs Albania: Online Skills for Women, with the World Bank',
+    program: 'World Bank, 2021–2022',
+    partner: 'Online training program',
+    // PR-07 is the World Bank's own figure (500+ students enrolled, May 2022), not a CodersTrust program record, and takes no "Program Record" tag (evidenceOf).
+    factId: 'PR-07',
+    summary: 'A World Bank initiative that gave women in Albania a three-month online course in digital skills.',
+    place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
+    who: 'Women aged 16 to 35',
+    scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

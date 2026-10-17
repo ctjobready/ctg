@@ -92,7 +92,9 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     expect(text).not.toContain('372 of 800');
     // WP51 (cycle-26 review): WSDFM's figure is slide 4's alone as well, and no card names PR-01 any more
     expect(count(text, '711 of 1,000'), 'WSDFM, slide 4').toBe(1);
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual([]);
+    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."); the band's wrapper and that line carry it.
+    // The program-record figures (PR-01, PR-02, PR-05) stay slide 4's alone, so no other fact is named.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02b', 'PR-02b']);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {

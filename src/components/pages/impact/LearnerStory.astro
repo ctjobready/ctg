@@ -27,6 +27,8 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   assetId?: string;
+  /** WP55: the D13 asset id of the portrait when it has a row of its own (a story and its portrait were cleared separately); defaults to the story's `assetId`. */
+  imageAssetId?: string;
   /** Eyebrow of a named story (default "Learner Story"); not printed on a named story that shows the evidence tag (WP50). */
   eyebrow?: string;
   /** Show the "Individual Story" evidence tag above the story (Impact pages, WP24b); it stands in for the kicker of a named story (WP50). */
@@ -38,7 +40,9 @@ const { factId, program, outcome, outlier = false, assetId, tag = false } = prop
 const named = Boolean(props.name) && (!assetId || mayRender(assetId));
 const name = named ? props.name : undefined;
 const excerpt = named ? props.excerpt : undefined;
-const image = named ? props.image : undefined;
+// The portrait follows its own row where it has one (WP55): a portrait the D13 rule does not let render leaves the story's icon in its place.
+const imageAsset = props.imageAssetId ?? assetId;
+const image = named && (!imageAsset || mayRender(imageAsset)) ? props.image : undefined;
 const imageAlt = props.imageAlt ?? '';
 // WP50: the evidence tag takes the kicker's place on a named story; an anonymized story keeps its kicker (it says the name is withheld).
 const showKicker = !(tag && name);
@@ -46,7 +50,7 @@ const showKicker = !(tag && name);
 
 <article class="ls" data-asset={name ? assetId : undefined} data-fact={factId}>
   <div class="ls__media" aria-hidden={image ? undefined : 'true'}>
-    {image ? <Img src={image} alt={imageAlt} width={480} height={480} widths={[240, 480]} sizes="160px" assetId={assetId} /> : <Icon name="user" size={44} strokeWidth={1.25} />}
+    {image ? <Img src={image} alt={imageAlt} width={480} height={480} widths={[240, 480]} sizes="160px" assetId={imageAsset} /> : <Icon name="user" size={44} strokeWidth={1.25} />}
   </div>
   <div class="ls__body">
     {tag && <p class="ls__tag"><EvidenceTag type="Individual Story" /></p>}

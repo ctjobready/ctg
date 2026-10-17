@@ -51,7 +51,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, painForList, painForRow } from '../../data/copy';
+import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList, painForRow } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -71,7 +71,7 @@ const hours = statValue('PD-01');
 // Five decision questions, one to three sentences each (cost is answered in the options band). Longer answers live on the evidence pages and in the discovery session.
 const faqSources: FaqSource[] = [
   { q: 'Is YouthWIDE Right for Our Organization?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing labs and colleges. YouthWIDE is not the right fit if you need a ${nationalSize} rollout delivered by one provider in a single phase; we plan national delivery phase by phase.`, evidence: ['PD-05'] },
-  { q: 'Will This Work in Our Country?', html: 'That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh, and the Kosovo pilot adds program results from outside it. CodersTrust has run programs since 2014 in 15 countries and territories.', evidence: ['SC-03', 'IN-02', 'PD-10', 'PR-02'] },
+  { q: 'Will This Work in Our Country?', html: `That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh, and the Kosovo pilot adds program results from outside it. CodersTrust has run programs since 2014 in ${statValue('SC-03')} countries and territories.`, evidence: ['SC-03', 'IN-02', 'PD-10', 'PR-02'] },
   {
     q: 'Can You Deliver at National Scale?',
     html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="PD-06 PD-05">We scale in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
@@ -200,7 +200,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     title="Results from Delivered Programs"
     items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />

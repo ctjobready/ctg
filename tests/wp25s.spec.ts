@@ -48,13 +48,14 @@ test.describe('Impact', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('WSDFM: A Predecessor Program Evaluated by a Randomized Trial');
   });
 
-  test('"Four Programs, from Kosovo to Bangladesh" is four link cards, Kosovo first, and repeats no figure', async ({ page }) => {
+  // WP55 (owner decision 2026-10-18): Digital Jobs Albania is the fifth case study; the two World Bank programs lead, then the three Bangladesh programs in their earlier order
+  test('"Five Programs, from Kosovo to Bangladesh" is five link cards, Kosovo first, and repeats no figure', async ({ page }) => {
     await open(page, 'impact/');
     const band = page.locator('#cases');
-    await expect(band.getByRole('heading', { level: 2, name: 'Four Programs, from Kosovo to Bangladesh' })).toBeVisible();
-    await expect(band.locator('article.card')).toHaveCount(4);
+    await expect(band.getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toBeVisible();
+    await expect(band.locator('article.card')).toHaveCount(5);
     const hrefs = await band.locator('a.card__link').evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
-    expect(hrefs.map((h) => h.split('/').filter(Boolean).pop())).toEqual(['kosovo-women-in-online-work', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
+    expect(hrefs.map((h) => h.split('/').filter(Boolean).pop())).toEqual(['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
     // Results at a Glance carries the figures; the band restates none of them.
     expect(await band.innerText()).not.toMatch(/\d+%|\d[\d,]* of [\d,]+|\d+ pp/);
     await expect(band.locator('[data-fact]')).toHaveCount(0);
@@ -77,12 +78,12 @@ test.describe('Impact', () => {
   });
 
   test('every case study closes with a labelled "Keep Reading" band, not a bare "All Case Studies" heading', async ({ page }) => {
-    for (const slug of ['wsdfm-women-freelancers', 'kosovo-women-in-online-work', 'undp-yes-korail', 'her-power']) {
+    for (const slug of ['wsdfm-women-freelancers', 'kosovo-women-in-online-work', 'digital-jobs-albania', 'undp-yes-korail', 'her-power']) {
       await open(page, `impact/case-studies/${slug}/`);
       const band = page.locator('section[aria-labelledby="related-h"]');
       await expect(band.locator('.eyebrow')).toHaveText('Keep Reading');
       await expect(band.getByRole('heading', { level: 2 })).toHaveText('Where the Model Runs Next');
-      await expect(band.getByRole('link', { name: /Compare the Four Case Studies/ })).toHaveCount(1);
+      await expect(band.getByRole('link', { name: /Compare the Five Case Studies/ })).toHaveCount(1);
       expect(await page.locator('main').innerText(), slug).not.toContain('All Case Studies');
     }
   });

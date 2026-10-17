@@ -5,6 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
+import { WB_KOSOVO } from '../../../data/copy';
 import { caseBySlug } from '../impact/case-studies';
 
 interface CardPhoto {
@@ -55,6 +56,7 @@ export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, '
  */
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: `${caseBySlug('wsdfm-women-freelancers').scope}.`, href: '/impact/case-studies/wsdfm-women-freelancers/' },
-  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: 'Digital literacy followed by real online work.', href: '/impact/case-studies/kosovo-women-in-online-work/' },
+  // WP55 (owner decision 2026-10-17, "Show both"): the slide above states the program records (102 of 150); this card adds the World Bank's own figure in one line (WB_KOSOVO).
+  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: 'Digital literacy followed by real online work.', note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
   { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
 ];

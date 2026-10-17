@@ -26,7 +26,7 @@ test.describe('Home evidence band (#proof-band): gone (WP48); the trial and surv
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]')).toHaveCount(0);
     await expect(page.locator('main .ba, main .ba__data')).toHaveCount(0);
-    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Five Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     await expect(page.locator('#cases a[href$="/impact/independent-evaluation/"]'), 'one link to the trial results in the row').toHaveCount(1);
   });
 

@@ -49,7 +49,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await expect(page.locator('#explore')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Go Deeper');
     // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
-    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Four Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core']);
+    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Five Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core']);
     expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education, Gender Equality, and Decent Work and Economic Growth');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
@@ -129,7 +129,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     await open(page, '');
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]')).toHaveCount(0);
-    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Four Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Five Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     expect((await hrefs(page, '#cases .csc__more a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/case-studies/', 'impact/independent-evaluation/', 'impact/outcomes-2026/']);
   });
 

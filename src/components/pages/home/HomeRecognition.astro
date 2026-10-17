@@ -1,5 +1,6 @@
 ---
 import Section from '../../ui/Section.astro';
+import AsCoveredBy from '../../ui/AsCoveredBy.astro';
 import Icon from '../../system/Icon.astro';
 import { linkAttrs } from '../../../lib/url';
 import { fact } from '../../../data/facts';
@@ -44,6 +45,8 @@ const items = [
       </div>
     ))
   }
+  <!-- WP55 (synthesis 3.5): "As covered by ...", the outlets with their years as text links, under the three badges; the logo list stays on Recognition and Media. -->
+  <AsCoveredBy class="rec__covered" />
   <p class="rec__press">
     <a class="link" href={linkAttrs('/about/recognition/').href}>See All Recognition and Media<Icon name="arrow-right" size={16} /></a>
   </p>
@@ -90,5 +93,9 @@ const items = [
   .rec__press {
     margin: 0;
     color: var(--on-surface);
+  }
+  /* WP55: the "As covered by" line sits one step (16px) under the badges, and the link row one step under it */
+  :global(.rec__covered) {
+    margin: var(--space-md) 0 var(--space-md);
   }
 </style>

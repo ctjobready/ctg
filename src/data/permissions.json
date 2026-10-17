@@ -145,7 +145,7 @@
   { "assetId": "legacy-general-panel-international-forum", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-general-nctb-meeting", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-general-kosovo-women-screens", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
-  { "assetId": "legacy-general-albania-trainees-group", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-general-kosovo-wow-group", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-general-kosovo-woman-training", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-general-her-power-laptops-1", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-general-her-power-laptops-2", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
@@ -200,5 +200,14 @@
   { "assetId": "legacy-recognition-supply-chain-award", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-nu-pgd-digital-marketing", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-nu-pgd-ict", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
-  { "assetId": "legacy-nu-pgd-students-laptops", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false }
+  { "assetId": "legacy-nu-pgd-students-laptops", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-global-copenhagen-launch-dinner", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "legacy-global-dubai-start-up-event", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "legacy-global-somaliland-hour-of-code", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-global-bhutan-batch-inauguration", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-global-digital-jobs-albania", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "legacy-impact-kosovo-graduate-portrait", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": true },
+  { "assetId": "news-coderstrust-launches-in-copenhagen-with-a-virgin-unite-dinner", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "news-coderstrust-presents-at-in5-in-dubai", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
+  { "assetId": "news-hour-of-code-in-somaliland", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false }
 ]

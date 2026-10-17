@@ -149,7 +149,7 @@ test.describe('Home: the survey slide names its subgroup (item 3; WP53: the spee
 test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery context (item 4)', () => {
   const CONTEXT = 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.';
 
-  test('all three cards show a context line in the figure’s place and the band names no fact; the WSDFM line is the case study’s own scope', async ({ page }) => {
+  test('all three cards show a context line in the figure’s place and the band names only the World Bank’s Kosovo figure (PR-02b, WP55); the WSDFM line is the case study’s own scope', async ({ page }) => {
     expect(`${CASE_STUDIES.find((c) => c.slug === 'wsdfm-women-freelancers')!.scope}.`).toBe(CONTEXT);
     await open(page, '');
     const cards = page.locator('#cases article');
@@ -157,7 +157,8 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery co
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     expect(await texts(page, '#cases .case__context')).toEqual([CONTEXT, 'Digital literacy followed by real online work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual([]);
+    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b); the band's wrapper and that line carry it. No program-record fact (PR-01, PR-02, PR-05) is named.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02b', 'PR-02b']);
   });
 
   test('the figure is stated once on Home, in slide 4, with its qualifier', async ({ page }) => {
@@ -356,7 +357,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
 
 test.describe('The shared origin line on Development Partners and Investors (items 13, 20 and 27)', () => {
   test('Development Partners, Governments and Foundations print the same line, from the same source (ORIGIN_SHORT)', async ({ page }) => {
-    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 15 countries and territories.');
+    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 17 countries and territories.');
     for (const route of [DP, GOV, FOUND]) {
       await open(page, route);
       const line = page.locator('#guide .pg__origin');

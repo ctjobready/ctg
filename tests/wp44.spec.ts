@@ -88,11 +88,11 @@ test.describe('NU Postgraduate Diploma: one admissions sentence in the FAQ (item
 });
 
 test.describe('Development Partners: the guide band has no empathy line (item 8)', () => {
-  // WP51 (cycle-26 review, Kimi P2): the opening line is the shared origin line, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (it was the launch alone, "Launched in Copenhagen in 2014.")
+  // WP51 (cycle-26 review, Kimi P2): the opening line is the shared origin line, "Since 2014, from a Copenhagen launch to programs in 17 countries and territories." (it was the launch alone, "Launched in Copenhagen in 2014.")
   test('the band opens with the origin line and carries no lead paragraph', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('You need more than enrollment numbers');
-    await expect(page.locator('#guide .pg__origin').first()).toHaveText('Since 2014, from a Copenhagen launch to programs in 15 countries and territories.');
+    await expect(page.locator('#guide .pg__origin').first()).toHaveText('Since 2014, from a Copenhagen launch to programs in 17 countries and territories.');
   });
 });
