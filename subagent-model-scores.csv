@@ -183,4 +183,4 @@ timestamp,model_slug,reasoning_effort,score,task_complexity
 2026-10-17T09:18:08Z,gpt-6.1-sol,high,5,medium
 2026-10-17T09:47:48Z,claude-sonnet-5-5,max,5,medium
 2026-10-17T10:20:38Z,claude-sonnet-5-5,max,5,medium
-2026-10-17T13:15:19Z,2026-10-17T12:58:07Z,claude-sonnet-5-5,max,5,medium
+2026-10-17T12:58:07Z,claude-sonnet-5-5,max,5,medium
