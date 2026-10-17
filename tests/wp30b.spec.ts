@@ -97,8 +97,8 @@ test.describe('identity: headquartered in New York, parent organization CT USA, 
     expect(t).toContain('parent organization is CT USA, Inc.');
     expect(t).toContain('CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office');
     expect(t).toContain('Additional country and regional offices are planned in the next few years');
-    // WP52 (cycle-27 review, GLM m4): the description opens with the year and names New York as the headquarters: "Since 2014, New York-headquartered CodersTrust has trained ... in 17 countries and territories."
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Since 2014, New York-headquartered CodersTrust .*in 17 countries and territories\.$/);
+    // WP52 (cycle-27 review, GLM m4): the description opens with the year and names New York as the headquarters: "Since 2014, New York-headquartered CodersTrust has trained ... in 16 countries and territories."
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Since 2014, New York-headquartered CodersTrust .*in 16 countries and territories\.$/);
   });
 
   test('the world map line says Headquarters: New York and Country office: Dhaka', async ({ page }) => {
@@ -139,7 +139,7 @@ test.describe('identity: headquartered in New York, parent organization CT USA, 
     expect(lines[0]).toBe('# CodersTrust');
     expect(lines[1]).toMatch(/^CodersTrust is a workforce-development organization/);
     expect(lines[2]).toMatch(/^CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc\. CodersTrust Bangladesh \(CodersTrust Bangladesh Ltd\.\) is a country office\./);
-    expect(lines[3]).toMatch(/^Programs in 17 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014\.$/);
+    expect(lines[3]).toMatch(/^Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014\.$/);
     expect(lines[4]).toBe('');
   });
 });

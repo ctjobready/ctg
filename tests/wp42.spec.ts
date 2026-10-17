@@ -32,13 +32,13 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await open(page, URL);
     const group = page.locator('#guide .ig__delivered');
     await expect(group.locator('h3')).toHaveText('Delivered Since 2014');
-    expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '17']);
+    expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained since 2014', 'enrollments since 2014', 'countries and territories with CodersTrust programs, including Bangladesh']);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered', 'Delivered']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware. Bangladesh plus 16 other countries and territories; most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware. Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03');
     // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice: the tile, and the register's own "Of 150,000+ enrollments" note), and the Reach band holds none of it
     const text = await mainText(page);
@@ -66,13 +66,13 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(domOrder).toEqual([true, true]);
   });
 
-  // WP51 (cycle-26 review, Grok m1): the band prints the shared origin line, "Since 2014, from a Copenhagen launch to programs in 17 countries and territories." (the line Governments, Foundations and Development Partners print), in place of
+  // WP51 (cycle-26 review, Grok m1): the band prints the shared origin line, "Since 2014, from a Copenhagen launch to programs in 16 countries and territories." (the line Governments, Foundations and Development Partners print), in place of
   // the launch alone, so the count of countries and territories is in the origin line as well as in the tile and its note (tests/wp51.spec.ts)
   test('the band prints the shared origin line, and the tile and its note still carry SC-03', async ({ page }) => {
     await open(page, URL);
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 17 countries and territories.');
+    expect(compact(await line.textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide).not.toMatch(/Launched in Copenhagen|began (?:developing|training) freelancers|Korail settlement/);
     expect(count(guide, 'countries and territories'), 'the origin line, the tile’s label and SC-03’s note').toBe(3);

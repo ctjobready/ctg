@@ -357,7 +357,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
 
 test.describe('The shared origin line on Development Partners and Investors (items 13, 20 and 27)', () => {
   test('Development Partners, Governments and Foundations print the same line, from the same source (ORIGIN_SHORT)', async ({ page }) => {
-    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 17 countries and territories.');
+    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
     for (const route of [DP, GOV, FOUND]) {
       await open(page, route);
       const line = page.locator('#guide .pg__origin');

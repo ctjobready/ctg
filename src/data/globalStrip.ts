@@ -4,6 +4,7 @@ import { fact } from './facts';
  * "CodersTrust Around the World" (WP55, owner decisions 2026-10-17/18; synthesis 3.1): the chronological strip of seven tiles on Home and About, and its three-tile short form in the audience pages' "Our Track Record" band.
  * Each tile is one line, place and date first: the date and the line are the register's (TL-01 to TL-06: `stat.value` is the date, `stat.label` the line; the photographs and their captions are in src/data/photos.ts), so no
  * wording or date is typed here. The strip ends on Bangladesh, the country where most delivery has been: that tile's line is SC-03's own clause, "most delivery has been in Bangladesh".
+ * TL-07 (the 2015–2016 Rockefeller Foundation grant for a feasibility study in Kenya and Nigeria) is not a tile: it is a line of the About timeline (src/data/timeline.ts), and Nigeria is not a location.
  * Albania has no photograph of the program (the only visual is the program's own cut-out, used on its case study), so its tile is a type tile: the program's name where a photograph would be.
  */
 export interface StripTile {
@@ -29,7 +30,7 @@ const dated = (factId: string, id: string, place: string, extra: Partial<StripTi
   return { id, place, when: s.value, line: s.label, factIds: [factId], ...extra };
 };
 
-// SC-03's detail reads "Bangladesh plus 16 other countries and territories; most delivery has been in Bangladesh."; the tile says its second clause.
+// SC-03's detail reads "Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh."; the tile says its second clause.
 const bangladeshClause = /; (most delivery has been in Bangladesh)\.?$/.exec(fact('SC-03').stat?.detail ?? '')?.[1];
 if (!bangladeshClause) throw new Error('globalStrip: SC-03 detail no longer ends "...; most delivery has been in Bangladesh."');
 

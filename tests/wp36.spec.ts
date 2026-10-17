@@ -50,15 +50,15 @@ test.describe('Home: each figure once', () => {
     expect(count(await mainText(page), '77.9%'), 'the 77.9% is stated once on Home').toBe(1);
   });
 
-  // WP38 (cycle-15 review) and WP45 (cycle-21 review) had a reach slide ("Programs in 15 Countries and Territories", SC-03's detail line, no tile). WP53 (owner decision 2026-10-16): that slide is gone. The 130,000+ and the 17 countries and territories
+  // WP38 (cycle-15 review) and WP45 (cycle-21 review) had a reach slide ("Programs in 15 Countries and Territories", SC-03's detail line, no tile). WP53 (owner decision 2026-10-16): that slide is gone. The 130,000+ and the 16 countries and territories
   // are the hero's reach card alone (SC-16), stated once.
-  test('the reach slide is gone; the 130,000+ and the 17 countries and territories are the hero’s reach card, stated once', async ({ page }) => {
+  test('the reach slide is gone; the 130,000+ and the 16 countries and territories are the hero’s reach card, stated once', async ({ page }) => {
     await open(page, '');
-    expect(compact(await page.locator('#results').textContent())).not.toMatch(/Programs in 1[57] Countries and Territories/);
+    expect(compact(await page.locator('#results').textContent())).not.toMatch(/Programs in 1[567] Countries and Territories/);
     await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('130,000+');
-    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('17 countries and territories');
+    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('16 countries and territories');
     expect(count(await mainText(page), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
-    expect(count(await mainText(page), 'countries and territories'), 'the 17 countries and territories are stated once on Home').toBe(1);
+    expect(count(await mainText(page), 'countries and territories'), 'the 16 countries and territories are stated once on Home').toBe(1);
   });
 
   // WP38 (cycle-15 review), WP41 (cycle-18 reviews), WP43 (cycle-20 review), WP45 to WP48 (cycles 21 to 23) and WP51 (cycle-26 review) shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course": the finding, no percentage, the

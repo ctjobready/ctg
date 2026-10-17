@@ -13,8 +13,8 @@ import { listPages } from './support/pages';
 /**
  * WP55 behaviors (owner decisions 2026-10-17/18: global positioning; "CodersTrust Around the World"). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable
  * behavior of the built site or of the register behind it (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp55.spec.ts --project=chromium`):
- *   - the register: SC-03 and SC-16 say 17 countries and territories; the dated tile facts (TL-01 to TL-06), the World Bank's Kosovo figure (PR-02b), the two Digital Jobs Albania figures (PR-07, PR-08) and the World Bank pages (PA-13) have sources;
- *   - Global Reach: 17 locations (Egypt and Benin added; Uganda, Somaliland, Iraq, Albania and Kosovo corrected), a photograph in every row that has one;
+ *   - the register: SC-03 and SC-16 say 16 countries and territories; the dated tile facts (TL-01 to TL-06), the World Bank's Kosovo figure (PR-02b), the two Digital Jobs Albania figures (PR-07, PR-08) and the World Bank pages (PA-13) have sources;
+ *   - Global Reach: 16 locations (Egypt and Benin added, Somalia removed by WP56; Uganda, Somaliland, Iraq, Albania and Kosovo corrected), a photograph in every row that has one;
  *   - the "CodersTrust Around the World" strip: seven tiles on Home and About, three on the audience pages, ending on Bangladesh;
  *   - the "As covered by" press line (text links, no logos);
  *   - Kosovo "show both": the program records (102 of 150) and the World Bank's 77 trainees, wherever PR-02 is shown;
@@ -61,21 +61,22 @@ const NEWS = [
 ];
 
 /** The sources WP55 added to the register (each links to its public page or its Wayback Machine copy); SC-03 also keeps the two older internal sources, which have no link. */
-const NEW_SOURCES = ['BORSEN14', 'CTCPH14', 'DAILYSTAR14', 'NATIONAL14', 'GULFNEWS14', 'CTDUBAI14', 'TUMBLRHOC15', 'CTGALLERY23', 'CTACADEMY20', 'WBKOSOVO', 'WBKOSOVO17', 'MED17', 'WBFEATURE16', 'WBDJA21', 'WBBLOG22', 'TBSCCNY24'];
+const NEW_SOURCES = ['BORSEN14', 'CTCPH14', 'DAILYSTAR14', 'NATIONAL14', 'GULFNEWS14', 'CTDUBAI14', 'TUMBLRHOC15', 'CTGALLERY23', 'CTACADEMY20', 'WBKOSOVO', 'WBKOSOVO17', 'MED17', 'WBFEATURE16', 'WBDJA21', 'WBBLOG22', 'TBSCCNY24', 'JUBATV15', 'RFGRANT15'];
 // (the private never-publish and content-rule lists are checked by the production gate over the built pages and the committed files; this spec checks what it can without naming them)
 const MONEY = /[$€£]|\bmillion\b|\bbillion\b/i;
 
-test.describe('the register: 17 countries and territories, and the new dated and World Bank facts', () => {
-  test('SC-03 is 17 (Bangladesh plus 16 others) and keeps "most delivery has been in Bangladesh"; SC-16 says 17 too; the Global Reach list has 17 locations', () => {
+test.describe('the register: 16 countries and territories, and the new dated and World Bank facts', () => {
+  // WP56 (owner decision 2026-10-18, "Merge into Somaliland, show 16"): the count was 17 after WP55 and is 16 with Somalia removed (Nigeria is a timeline line only and is not counted).
+  test('SC-03 is 16 (Bangladesh plus 15 others) and keeps "most delivery has been in Bangladesh"; SC-16 says 16 too; the Global Reach list has 16 locations', () => {
     const sc03 = fact('SC-03');
-    expect(sc03.stat?.value).toBe('17');
-    expect(sc03.stat?.numeric).toBe(17);
-    expect(sc03.text).toBe('Programs in 17 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
-    expect(sc03.stat?.detail).toBe('Bangladesh plus 16 other countries and territories; most delivery has been in Bangladesh.');
-    expect(fact('SC-16').text).toContain('17 countries and territories');
-    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments across 17 countries and territories.');
-    expect(locations).toHaveLength(17);
-    expect(new Set(locations.map((l) => l.name)).size, 'no location is listed twice').toBe(17);
+    expect(sc03.stat?.value).toBe('16');
+    expect(sc03.stat?.numeric).toBe(16);
+    expect(sc03.text).toBe('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
+    expect(sc03.stat?.detail).toBe('Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh.');
+    expect(fact('SC-16').text).toContain('16 countries and territories');
+    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments across 16 countries and territories.');
+    expect(locations).toHaveLength(16);
+    expect(new Set(locations.map((l) => l.name)).size, 'no location is listed twice').toBe(16);
     expect(locations.length).toBe(Number(sc03.stat?.value));
   });
 
@@ -89,7 +90,7 @@ test.describe('the register: 17 countries and territories, and the new dated and
     expect(tl.map((f) => f.stat?.label)).toEqual([
       'Launched at a Virgin Unite dinner',
       'Start-up event at In5, Dubai Internet City',
-      'Hour of Code with Tima-ade University',
+      'Hour of Code, and an ICT program at Tima-ade University',
       'Women in Online Work, with the World Bank',
       'A World Bank initiative, delivered online',
       'MoU with The City College of New York',
@@ -97,7 +98,7 @@ test.describe('the register: 17 countries and territories, and the new dated and
   });
 
   test('every new or changed fact names sources that exist and link out; none states a money amount', () => {
-    for (const id of ['SC-03', 'TL-01', 'TL-02', 'TL-03', 'TL-04', 'TL-05', 'TL-06', 'PR-02b', 'PR-07', 'PR-08', 'PA-13']) {
+    for (const id of ['SC-03', 'TL-01', 'TL-02', 'TL-03', 'TL-04', 'TL-05', 'TL-06', 'TL-07', 'PR-02b', 'PR-07', 'PR-08', 'PA-13']) {
       const f = fact(id);
       expect(f.sourceIds?.length, `${id} has a source`).toBeGreaterThan(0);
       for (const s of f.sourceIds ?? []) {
@@ -145,18 +146,18 @@ test.describe('the register: 17 countries and territories, and the new dated and
   });
 });
 
-test.describe('Global Reach: 17 locations, the owner’s corrected rows, and a photograph where one exists', () => {
+test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a photograph where one exists', () => {
   const row = (page: Page, name: string) => page.locator('.wmap__table tbody tr', { has: page.locator('th[scope="row"]', { hasText: name }) }).first();
   const cell = (page: Page, name: string, label: string) => row(page, name).locator(`td[data-label="${label}"]`);
 
-  test('the table lists the 17 locations and the map has 17 pins', async ({ page }) => {
+  test('the table lists the 16 locations (no Somalia) and the map has 16 pins', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const names = await page.locator('.wmap__table tbody tr').evaluateAll((rows) => rows.map((r) => (r.querySelector('th')?.firstChild?.textContent ?? '').trim()).sort());
-    expect(names).toEqual(['Albania', 'Bangladesh', 'Benin', 'Bhutan', 'Denmark', 'Egypt', 'Honduras', 'India', 'Iraq', 'Jordan', 'Kenya', 'Kosovo', 'Malaysia', 'Poland', 'Somalia', 'Somaliland', 'Uganda']);
-    await expect(page.locator('.wmap__pins > li')).toHaveCount(17);
+    expect(names).toEqual(['Albania', 'Bangladesh', 'Benin', 'Bhutan', 'Denmark', 'Egypt', 'Honduras', 'India', 'Iraq', 'Jordan', 'Kenya', 'Kosovo', 'Malaysia', 'Poland', 'Somaliland', 'Uganda']);
+    await expect(page.locator('.wmap__pins > li')).toHaveCount(16);
   });
 
-  test('Egypt and Benin are 2020 partnerships (CrossWorkers; SOS Children’s Villages), Uganda is 2020 (three partners), Somaliland is 2015–2016 (Tima-ade University), Iraq is 2018 and says "announced" only', async ({ page }) => {
+  test('Egypt and Benin are 2020 partnerships (CrossWorkers; SOS Children’s Villages), Uganda is 2020 (three partners), Somaliland is 2015–2016 (an Hour of Code, and an ICT program at Tima-ade University), Iraq is 2018 and says "announced" only', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const get = async (name: string) => ({
       years: compact(await cell(page, name, 'Years').textContent()),
@@ -172,7 +173,7 @@ test.describe('Global Reach: 17 locations, the owner’s corrected rows, and a p
     expect(uganda.target, 'the unsupported "100 participants aged 18 to 40" is gone').not.toMatch(/\d/);
     const somaliland = await get('Somaliland');
     expect(somaliland.years).toBe('2015–2016');
-    expect(somaliland.note).toBe('Partner: Tima-ade University (Hour of Code, December 2015)');
+    expect(somaliland.note).toBe('Hour of Code, and an ICT program at Tima-ade University');
     const iraq = await get('Iraq');
     expect(iraq.years).toBe('2018');
     expect(iraq.note).toBe('Cooperation with the World Food Programme announced in March 2018');
@@ -201,10 +202,10 @@ test.describe('Global Reach: 17 locations, the owner’s corrected rows, and a p
     await expect(page.locator('.wmap__table th[scope="row"] img')).toHaveCount(0);
   });
 
-  test('the hero and description say 17 countries and territories; the thumbnails fit at 390 and 1280 with no sideways scroll', async ({ page }) => {
+  test('the hero and description say 16 countries and territories; the thumbnails fit at 390 and 1280 with no sideways scroll', async ({ page }) => {
     await open(page, GLOBAL_REACH);
-    await expect(page.locator('main h1')).toHaveText('Delivered in 17 Countries and Territories');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/Programs in 17 countries and territories: Bangladesh since 2014, plus 16 international locations/);
+    await expect(page.locator('main h1')).toHaveText('Delivered in 16 Countries and Territories');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
     for (const vp of [MOBILE, DESKTOP]) {
       await page.setViewportSize(vp);
       await scrollThrough(page);
@@ -226,7 +227,7 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
   const EXPECTED = [
     ['copenhagen', 'Copenhagen, April 2014. Launched at a Virgin Unite dinner.', 'legacy-global-copenhagen-launch-dinner'],
     ['dubai', 'Dubai, April 2014. Start-up event at In5, Dubai Internet City.', 'legacy-global-dubai-start-up-event'],
-    ['somaliland', 'Somaliland, 2015. Hour of Code with Tima-ade University.', 'legacy-global-somaliland-hour-of-code'],
+    ['somaliland', 'Somaliland, 2015. Hour of Code, and an ICT program at Tima-ade University.', 'legacy-global-somaliland-hour-of-code'],
     ['kosovo', 'Kosovo, 2016–2017. Women in Online Work, with the World Bank.', 'legacy-general-kosovo-wow-group'],
     ['albania', 'Albania, 2021–2022. A World Bank initiative, delivered online.', ''],
     ['new-york', 'New York, April 2024. MoU with The City College of New York.', 'legacy-field-ccny-mou-signing'],
@@ -526,7 +527,7 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
     const gallery = await page.locator('#in-the-field figure img').evaluateAll((imgs) => imgs.map((i) => i.getAttribute('data-asset')));
     expect(gallery[1]).toBe('legacy-global-somaliland-hour-of-code');
     expect(gallery).toHaveLength(4);
-    expect(await texts(page, '#in-the-field figure figcaption')).toContain('Hour of Code with Tima-ade University, Somaliland, December 2015');
+    expect(await texts(page, '#in-the-field figure figcaption')).toContain('Hour of Code, and an ICT program at Tima-ade University, Somaliland, December 2015');
   });
 });
 

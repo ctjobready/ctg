@@ -143,7 +143,8 @@ export const CAPTION: Record<string, string> = {
   'general/kosovo-wow-group': 'Women in Online Work trainees, Kosovo, 2016–17',
   'global/copenhagen-launch-dinner': 'Launch dinner for Virgin Unite, Copenhagen, April 2014',
   'global/dubai-start-up-event': 'Start-up event at In5, Dubai Internet City, April 2014',
-  'global/somaliland-hour-of-code': 'Hour of Code with Tima-ade University, Somaliland, December 2015',
+  // WP56 (owner decision 13, 2026-10-18): no source says the Hour of Code was held with the university; the photograph shows a Tima-ade University banner (see its alt text).
+  'global/somaliland-hour-of-code': 'Hour of Code, and an ICT program at Tima-ade University, Somaliland, December 2015',
   'global/bhutan-batch-inauguration': 'Trainee batch inauguration ceremony, Bhutan',
   'global/digital-jobs-albania': 'Digital Jobs Albania, an online training program for women, 2021–2022',
   'impact/kosovo-graduate-portrait': 'Erlisa Zherka, Women in Online Work graduate, Kosovo',

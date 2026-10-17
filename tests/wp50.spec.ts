@@ -59,7 +59,7 @@ const UNI = 'partner-with-us/universities/';
 const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
-const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to programs in 17 countries and territories.';
+const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to programs in 16 countries and territories.';
 const PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
 
 test.describe('Home: the challenge band and the positioning statement (items 1 and 11)', () => {
