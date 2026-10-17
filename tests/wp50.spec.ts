@@ -129,7 +129,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     expect(hrefs).toEqual(['kosovo-women-in-online-work', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
   });
 
-  test('at 1280 px the WSDFM line is one line, and the slide is not the tallest, so no other slide leaves more than 48 px unused (tests/hero-slider.spec.ts)', async ({ page }) => {
+  test('at 1280 px the WSDFM line is one line, and the slide’s copy fits the carousel (the 48 px unused-space budget is held for every slide by tests/hero-slider.spec.ts)', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     const lineHeights = await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
@@ -137,8 +137,10 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     expect(lineHeights[1], 'the WSDFM line wraps').toBe(lineHeights[0]);
     expect(lineHeights[2]).toBeGreaterThan(lineHeights[0]);
     const copyHeights = await page.locator('[data-hs-slide] .hs__copy').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
-    expect(copyHeights).toHaveLength(7);
-    expect(copyHeights[3], 'the program-results copy is taller than the tallest slide (Find Your Program)').toBeLessThanOrEqual(Math.max(...copyHeights.filter((_, i) => i !== 3)));
+    expect(copyHeights).toHaveLength(4);
+    // WP53 (owner decision 2026-10-16): the "Find Your Program" slide, which used to be the tallest, is gone; the program-results copy may now be the tallest, and it must fit the carousel (the 48 px budget is held for every slide by tests/hero-slider.spec.ts)
+    const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
+    expect(copyHeights[3], 'the program-results copy fits the carousel').toBeLessThanOrEqual(track);
   });
 
   test('at 390 px the slide has no sideways scroll and the four lines stay inside their cards', async ({ page }) => {
@@ -322,10 +324,11 @@ test.describe('Programs: the H1 (item 9)', () => {
 });
 
 test.describe('Home: the Investors router card names the platform in IN-04’s words (item 14)', () => {
-  const CARD = 'Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.';
+  // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
+  const CARD = 'Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.';
 
-  test('the card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform."; the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
-    expect(fact('IN-04').text.startsWith('JobReady is CodersTrust’s digital education and employment platform,')).toBe(true);
+  test('the card reads "Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform."; the definition is IN-04’s own; the card does not say the platform "connects" youth to work', async ({ page }) => {
+    expect(fact('IN-04').text.startsWith('JobReady is CodersTrust’s digital learning and earning platform,')).toBe(true);
     await open(page, '');
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
     await expect(card.locator('.cat__title')).toHaveText('Investors');
@@ -337,7 +340,7 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
     await open(page, '404.html');
     expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe(CARD);
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital education and employment platform.');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital learning and earning platform.');
     expect(sitePages().filter((p) => /Back JobReady, the platform we are building/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -412,12 +415,13 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
     expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(await first(page).locator('h2').getAttribute('data-fact')).toBe('RC-01');
-    expect(await first(page).getAttribute('aria-label')).toBe('1 of 7: Women Offered a Place Earned an Estimated 41% More');
+    expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More');
   });
 
   test('the eyebrow is this slide’s own text: the menu’s trial card and the partner hub keep their wording, and the other slides keep their eyebrows', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of a Predecessor Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records', 'Impact Survey 2026', 'Reach at Scale', 'Our Programs']);
+    // WP53 (owner decision 2026-10-16): the second "Impact Survey 2026" slide, "Reach at Scale" and "Our Programs" are gone
+    expect(await texts(page, '[data-hs-slide] .hs__eyebrow')).toEqual(['Randomized Trial of a Predecessor Program', 'Government and University Partners', 'Impact Survey 2026', 'Program Records']);
     expect(sitePages().filter((p) => visible(p.html).includes('Women Offered a Place in a Predecessor Program Earned')).map((p) => p.route)).toEqual([]);
   });
 
@@ -437,7 +441,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     const dots = page.locator('[data-hs-dot]');
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       await dots.nth(i).click();
       await expect(page.locator('[data-hs-slide]').nth(i)).toHaveClass(/is-active/);
       await page.waitForTimeout(450);

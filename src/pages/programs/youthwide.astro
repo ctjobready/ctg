@@ -23,7 +23,8 @@
 // WP50 (cycle-25 review): step 4 of "What Happens Next" says "Training starts in existing labs and colleges on the agreed schedule." (it pointed at "the window below", which WP49 had removed).
 // WP51 (cycle-26 review): the options lead no longer describes the website ("Program options are shown without prices; the indicative budget is shared in the discovery session."): it says "We share an indicative budget in the discovery session."
 // WP52 (cycle-27 reviews, Claude): the hero's ministry-briefing text link is labelled with its audience, "Governments: Request a Briefing for Your Ministry" (the label sits outside the link, as in CTABand's `routes`; the one primary button is unchanged);
-// the glance's first row says "Bangladesh is where most delivery has been" where it said "Bangladesh is the reference implementation" (IN-02 says it the same way; the Bangladesh band's heading, "Reference Country and 2030 Aim", is unchanged).
+// the glance's first row says "Bangladesh is where most delivery has been" where it said "Bangladesh is the reference implementation" (IN-02 says it the same way).
+// WP53 (owner follow-up, 2026-10-16, consistent with that change): the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" ("Reference" was the same jargon), and the options band's eyebrow is "Options" (it was "Start", directly above "Three Ways to Start, ...").
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -158,12 +159,12 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   />
 
   <!-- The Bangladesh initiative: one band (WP30d), built from the shared C6 band (eyebrow, headline, one paragraph, proof, text link). #governments is linked from the Governments partner page and a case study.
-       WP45 (cycle-21 review): headed "Reference Country and 2030 Aim", not "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030). -->
+       WP45 (cycle-21 review): not headed "The National Initiative", which read as an existing national program (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030); WP53: headed "Bangladesh: Delivery Base and 2030 Aim" (it said "Reference Country"). -->
   <MechanismSection
     id="governments"
     tone="airy"
     eyebrow="For Governments and Ministries"
-    title="Bangladesh: Reference Country and 2030 Aim"
+    title="Bangladesh: Delivery Base and 2030 Aim"
     lead="Designed for delivery through existing government digital labs and colleges; lab access and seats are confirmed per program."
     link={{ label: cofunding.label, href: cofunding.href }}
   >
@@ -247,7 +248,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
   </Section>
 
   <!-- C11: the three options; prices are not published, the budget comes in the discovery session -->
-  <OfferSection title="Three Ways to Start, Sized to Your Goals" lead="Each phase is planned with the agency or funder on the results of the one before. We share an indicative budget in the discovery session." options={PROGRAM_OPTIONS} />
+  <OfferSection eyebrow="Options" title="Three Ways to Start, Sized to Your Goals" lead="Each phase is planned with the agency or funder on the results of the one before. We share an indicative budget in the discovery session." options={PROGRAM_OPTIONS} />
 
   <!-- C12 -->
   <RiskSection title="Start with a Pilot, Then Decide on Evidence">

@@ -15,7 +15,7 @@ interface Props {
   lead?: string;
   /** Short description per option, in the same order as PD-05 (Pilot, Scale, National). */
   blurbs?: string[];
-  /** Small label above the title (default "Start"). */
+  /** Small label above the title (default "Options"; WP53: it was "Start", beside the default title "Three Ways to Start, ..."). */
   eyebrow?: string;
   id?: string;
   /** Mark the first (pilot) option "Recommended First Step" (default on). */
@@ -27,7 +27,7 @@ const {
   lead = 'Pricing is set per program, and we share an indicative budget in the discovery session.',
   blurbs = ['Prove the model in one country or region.', 'Expand to more cohorts and locations on the pilot’s results.', 'A multi-year national program with government and partners.'],
   id = 'offer',
-  eyebrow = 'Start',
+  eyebrow = 'Options',
 } = Astro.props;
 
 // PD-05: "Program options: Pilot 1,000–2,500 trainees, 8–14 months (tracking to month 23); Scale …; National …"

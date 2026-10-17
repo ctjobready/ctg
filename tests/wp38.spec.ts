@@ -240,7 +240,8 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
     expect(await texts(page, '#definition .def__text')).toEqual([
       'CodersTrust is a workforce-development organization that trains and mentors educated, unemployed and underemployed youth in emerging markets for digital work and connects them to local, remote and global work.',
       // WP46 (cycle-22 review): no "AI-native" (an unexplained label; tests/wp46.spec.ts)
-      'CodersTrust is building JobReady, a digital education and employment platform for emerging markets.',
+      // WP53 (owner decision 2026-10-16): "a digital learning and earning platform"
+      'CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.',
     ]);
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(compact(await page.locator('#definition').textContent())).not.toContain('130,000');
@@ -250,35 +251,29 @@ test.describe('Investors: the definition band no longer repeats the 130,000+', (
   });
 });
 
-test.describe('Home carousel: the reach slide has its figure, the speed slide leads with its figure', () => {
-  // WP42 (cycle-19 review): the government slide is second, so the speed slide is the fifth and the reach slide the sixth
-  // WP45 (cycle-21 review): the reach slide's figure is its heading ("Programs in 15 Countries and Territories", SC-03's value), so the SC-03 tile of WP38 is gone: the same 15 would stand twice in the slide
-  test('slide 6 states SC-03’s 15 in its heading, above the unchanged line and link, with no tile that repeats it', async ({ page }) => {
+test.describe('Home carousel: the reach slide and the speed slide are one survey slide and the hero (WP53)', () => {
+  // WP38 (cycle-15 review) gave the reach slide SC-03's "15" as a tile and WP45 (cycle-21 review) as its heading ("Programs in 15 Countries and Territories"). WP53 (owner decision 2026-10-16): that slide is gone; SC-03 is no longer on Home, and the 15 countries and
+  // territories are the hero's reach card (SC-16), with no second statement of the figure.
+  test('the reach slide is gone: no slide states SC-03’s 15, and the 130,000+ and the 15 countries and territories stand once, in the hero’s reach card', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(5);
-    await expect(slide.locator('h2')).toHaveText('Programs in 15 Countries and Territories');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('SC-03');
-    await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
-    await expect(slide.locator('.hs__stat')).toHaveCount(0);
-    expect(compact(await slide.textContent())).not.toContain('130,000');
-    await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
+    expect(compact(await page.locator('#results').textContent())).not.toMatch(/Programs in 15 Countries|Explore Global Reach|130,000/);
+    await expect(page.locator('main [data-fact~="SC-03"]')).toHaveCount(0);
+    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('15 countries and territories');
   });
 
-  // WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"); the 58.8% and its base stay in the tile
-  // WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile), so the survey base is in the eyebrow and the tile. WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course, so "... of the Course Ending"
-  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 reads "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05), has no lead, and keeps its survey base in the tile', async ({ page }) => {
+  // WP41 (cycle-18 reviews), WP43 (cycle-20 review) and WP45 to WP51 shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course", Title Case, tied to OC-05, the 58.8% and its base in a tile). WP53 (owner decision 2026-10-16): that slide is gone;
+  // its finding is the survey slide's one body line, tied to OC-05, with the base the register defines.
+  test('the survey slide (slide 3) states the 58.8% with its survey base in one body line tied to OC-05, under the unchanged income heading and "Impact Survey 2026" eyebrow', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(4);
-    const heading = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
-    await expect(slide.locator('h2')).toHaveText(heading);
-    expect(heading).toBe(titleCase(heading));
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
+    const slide = page.locator('[data-hs-slide]').nth(2);
+    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(slide.locator('.hs__lead')).toHaveCount(0);
+    await expect(slide.locator('.hs__lead')).toHaveCount(1);
+    expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 });
 

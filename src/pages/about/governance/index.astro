@@ -41,15 +41,8 @@ const trialLine = RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0];
 if (!/10\.3 percentage points more likely to be employed\.$/.test(trialLine)) throw new Error('Governance: RC-01 headline wording changed; update the trial line');
 const leaders = (await getCollection('team', (e) => ['aziz-ahmad', 'shamsul-haque'].includes(e.id))).sort((a, b) => a.data.order - b.data.order);
 
-// PD-13 list, restated as items confirmed with the funder during co-design (no document is promised as ready).
-const checklist = [
-  'Contracting entity and legal status',
-  'Audited accounts',
-  'Safeguarding policy',
-  'Anti-fraud policy',
-  'Data-protection policy',
-  'Sanctions-screening policy',
-];
+// The checklist ("What We Confirm with You in Co-Design", below) restates PD-13 as three lines (owner decision 2026-10-16, WP53): the legal status (ID-12, built from the register), the audited accounts (they exist; shared on request) and the safeguarding,
+// anti-fraud, data-protection and sanctions-screening arrangements, which are agreed for each program in co-design. The four policies are still being drafted for adoption, so no line names a policy document or promises one as ready.
 
 const description = "CodersTrust’s offices, leadership, safeguarding and data-protection arrangements, and how funders can ask about due diligence.";
 const jsonLd = [
@@ -119,9 +112,11 @@ const jsonLd = [
   <Section id="checklist" tone="airy" aria-labelledby="check-h">
     <SectionHeader id="check-h" eyebrow="Due Diligence" title="What We Confirm with You in Co-Design" />
     <div class="gov-check" data-fact="PD-13">
-      <p>Tell us which documents you need and by when, and we confirm what is available for your program.</p>
+      <p>Tell us which documents you need and by when.</p>
       <ul class="gov-check__list" role="list">
-        {checklist.map((c) => <li>{c}</li>)}
+        <li><span>Legal status: <Fact id="ID-12" /></span></li>
+        <li data-fact="PD-13"><span>Audited accounts, on request.</span></li>
+        <li data-fact="PD-12 PD-13"><span>Safeguarding, anti-fraud, data-protection and sanctions-screening arrangements, agreed for each program in co-design.</span></li>
       </ul>
       <div class="gov-print"><button type="button" class="link gov-print__btn" data-print><Icon name="printer" size={16} />Print This Checklist</button></div>
     </div>
@@ -183,7 +178,7 @@ const jsonLd = [
     align-items: center;
     gap: var(--space-md);
     min-height: 48px;
-    padding: 0 var(--space-md);
+    padding: var(--space-sm) var(--space-md);
     background: var(--surface);
     border: 1px solid var(--primary-fixed);
     border-radius: var(--radius-default);

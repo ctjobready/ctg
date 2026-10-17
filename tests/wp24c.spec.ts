@@ -42,10 +42,10 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
     await expect(routes).toHaveCount(1);
   });
 
-  test('WP30d: the Bangladesh initiative is one band (#governments, headed as the reference country and its 2030 aim) and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
+  test('WP30d: the Bangladesh initiative is one band (#governments, headed as the delivery base and its 2030 aim; WP53: "Reference Country" became "Delivery Base") and the 2030 aim is the only Target-tagged tile', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const band = page.locator('section#governments');
-    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Reference Country and 2030 Aim');
+    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
     await expect(band.locator('.status-tag', { hasText: 'Target' })).toHaveCount(1);
     await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
     await expect(band).toContainText('not a delivered figure');

@@ -389,12 +389,13 @@ test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => 
     expect(builtPages().filter((p) => /national programs for youth employment/i.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 
-  test('the aim is "2 million vulnerable youth" in the Programs menu and panel, on Home slide 7 and in the YouthWIDE glance row; no site page says "2 million youth"', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): Home's carousel has no programs slide any more, so the aim is in the Programs menu and panel and the YouthWIDE glance row
+  test('the aim is "2 million vulnerable youth" in the Programs menu and panel and in the YouthWIDE glance row; no site page says "2 million youth"', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(AIM);
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(AIM);
-    expect(compact(await slide(page, 7).locator('.hs__program[href$="programs/youthwide/"] span').textContent())).toBe(AIM);
+    await expect(page.locator('#results .hs__program')).toHaveCount(0);
     await open(page, 'programs/youthwide/');
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
     expect(sitePages().filter((p) => /2 million youth/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
@@ -564,17 +565,15 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
   });
 
-  test('Home slide 5 is headed "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05); its tile caption is the register’s label; it fits the carousel at 1280 and 390', async ({ page }) => {
-    expect(HEADING).toBe(titleCase(HEADING));
+  // WP53 (owner decision 2026-10-16): the speed slide (headed HEADING) is gone; the survey slide's one body line is OC-05's value and label with the term defined (WP52), without the label's "(October 2026 survey)", and it fits the carousel at 1280 and 390
+  test('Home slide 3’s body line is OC-05’s value and the register’s label with the term defined; the former speed heading is on no slide; the slide fits the carousel at 1280 and 390', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, '');
-      const s = slide(page, 5);
-      await expect(s.locator('h2'), `${vp.width}px`).toHaveText(HEADING);
-      expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-      await expect(s.locator('.hs__lead')).toHaveCount(0);
-      expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
-      expect(compact(await s.locator('.hs__stat').textContent())).toContain(define(LABEL));
+      const s = slide(page, 3);
+      expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+      expect(compact(await s.locator('.hs__lead').textContent()), `${vp.width}px`).toBe(`58.8% ${define(LABEL.replace(/ \(October 2026 survey\)$/, ''))}.`);
+      expect(compact(await page.locator('#results').textContent())).not.toContain(HEADING);
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       expect(await s.evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
     }
@@ -609,13 +608,14 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
 });
 
 test.describe('The Home router’s investor card states the route (item 33)', () => {
-  // WP50 (cycle-25 review, item 14): Home's card now reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (tests/wp50.spec.ts); the partner hub's card is the one this test still holds
+  // WP50 (cycle-25 review, item 14): Home's card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (tests/wp50.spec.ts); the partner hub's card is the one this test still holds
+  // WP53 (owner decision 2026-10-16): the definition is "CodersTrust’s digital learning and earning platform" on both cards (tests/wp53.spec.ts)
   test('Home states the investor’s route ("Back ..."); the partner hub’s card already names its audience and is unchanged', async ({ page }) => {
-    const BACK = 'Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.';
+    const BACK = 'Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.';
     await open(page, '');
     expect(compact(await page.locator('#router a.cat[href$="partner-with-us/investors/"] .cat__text').textContent())).toBe(BACK);
     await open(page, 'partner-with-us/');
-    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital education and employment platform.');
+    expect(compact(await page.locator('main a.cat[href$="partner-with-us/investors/"] .cat__text').first().textContent())).toBe('For impact investors: JobReady, CodersTrust’s digital learning and earning platform.');
     // the old Home wording, without "Back", is gone from every page
     expect(builtPages().filter((p) => /cat__text[^>]*>JobReady, the platform we are building/.test(p.html)).map((p) => p.route)).toEqual([]);
   });

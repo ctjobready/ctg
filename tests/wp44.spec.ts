@@ -60,10 +60,11 @@ test.describe('Universities: "Our Approach" is one whole statement with the repo
 });
 
 test.describe('JobReady Platform: the hero drops "AI-native" (item 5)', () => {
-  test('the lead reads "JobReady is CodersTrust’s digital education and employment platform. Modules are rolling out in stages." and the page no longer says AI-native', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): "JobReady is CodersTrust’s digital learning and earning platform." (it said "education and employment")
+  test('the lead reads "JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages." and the page no longer says AI-native', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const text = await mainText(page);
-    expect(text).toContain('JobReady is CodersTrust’s digital education and employment platform. Modules are rolling out in stages.');
+    expect(text).toContain('JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages.');
     expect(text).not.toContain('AI-native');
   });
 });

@@ -82,9 +82,10 @@ test.describe('Our Model menu: "How It Works" no longer implies guaranteed emplo
 });
 
 test.describe('Investors: the definition band no longer calls JobReady "AI-native" (item 4)', () => {
-  test('the platform sentence reads "a digital education and employment platform", and no page, JSON-LD block or llms.txt still says AI-native', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): "a digital learning and earning platform" (it said "education and employment"; tests/wp53.spec.ts)
+  test('the platform sentence reads "a digital learning and earning platform", and no page, JSON-LD block or llms.txt still says AI-native', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(await texts(page, '#definition .def__text')).toContain('CodersTrust is building JobReady, a digital education and employment platform for emerging markets.');
+    expect(await texts(page, '#definition .def__text')).toContain('CodersTrust is building JobReady, a digital learning and earning platform for emerging markets.');
     expect(await page.locator('#definition .def').getAttribute('data-fact')).toBe('ID-01 IN-04');
     expect(await mainText(page)).not.toMatch(/AI-native/i);
     const stale = builtPages().filter((p) => /AI[- ]native/i.test(p.html)).map((p) => p.route);
@@ -285,11 +286,12 @@ test.describe('Home: the investor route card says what JobReady is (item 15)', (
   // WP48 (cycle-23 review, item 33): the card also states the investor's route: "Back JobReady, the platform we are building to connect emerging-market youth to work." (tests/wp48.spec.ts)
   // WP49 (cycle-24 review): the card's title is "Investors" (it was "Impact Investors"); its text is unchanged
   // WP50 (cycle-25 review, item 14): the text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (IN-04's definition; tests/wp50.spec.ts)
-  test('the "Investors" card reads "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform."', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform", so the card reads "... digital learning and earning platform." (tests/wp53.spec.ts)
+  test('the "Investors" card reads "Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform."', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#router .cat', { has: page.locator('.cat__title', { hasText: 'Investors' }) });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.textContent())).toContain('Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.');
+    expect(compact(await card.textContent())).toContain('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
     expect(compact(await card.textContent())).not.toContain('For impact investors:');
     expect(await mainText(page)).not.toContain('For impact investors backing JobReady');
   });
@@ -473,13 +475,15 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(oc05.stat?.value).toBe('58.8%');
   });
 
-  test('Home slide 5 says "by Six Months After the Course" in its heading and shows the register’s label in its tile (with the term defined, WP52)', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; the survey slide's one body line is OC-05's value and the register's label with the term defined (WP52),
+  // without the label's closing "(October 2026 survey)", which the slide's own eyebrow ("Impact Survey 2026") says
+  test('Home slide 3 shows OC-05’s value and the register’s label in its body line, "by six months after finishing the course" (with the term defined, WP52)', async ({ page }) => {
     await open(page, '');
-    const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
-    expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain(define(LABEL));
+    const s = slide(page, 3);
+    expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    const line = compact(await s.locator('.hs__lead').textContent());
+    expect(line).toBe(`58.8% ${define(LABEL.replace(/ \(October 2026 survey\)$/, ''))}.`);
+    expect(line).toContain('had started earning by six months after finishing the course');
   });
 
   test('Impact’s tile and Outcomes 2026 (summary tile, paragraph, chart note, data file) all read the reference point from the fact', async ({ page }) => {

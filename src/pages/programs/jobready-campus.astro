@@ -10,6 +10,7 @@
 // WP52 (cycle-27 review): the problem band's lead (EMPATHY.universities) is "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are
 // asked for placement results you cannot yet show.", which assumed the institution has none); the band's heading is about students, not about the reader, so it stays. The third vignette is "Capacity Designed to Stay on Campus" (it was
 // "Capacity That Stays on Campus", a promise with no scope; the Governments delivery card changed the same way).
+// WP53 (owner follow-up, 2026-10-16): the options band's eyebrow is "Options" (it was "Start", directly above "Two Ways to Start a Campus Program"), as on Governments, Development Partners, Universities and YouthWIDE.
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
@@ -161,7 +162,7 @@ const options = [
 
   <!-- C11 -->
   <!-- WP36 (cycle-13 review): Home's line that program sizes are not a commitment, ahead of the sizes. -->
-  <OfferSection title="Two Ways to Start a Campus Program" lead={PROGRAM_SIZES_NOTE} options={options} recommended={0}>
+  <OfferSection eyebrow="Options" title="Two Ways to Start a Campus Program" lead={PROGRAM_SIZES_NOTE} options={options} recommended={0}>
     <p class="note note--key" data-fact="PD-02">{pricingFirst}</p>
   </OfferSection>
 

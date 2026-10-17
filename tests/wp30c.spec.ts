@@ -109,11 +109,13 @@ test.describe('FAQs: the decision questions, one to three sentences each', () =>
 });
 
 test.describe('Home', () => {
-  // WP42 (cycle-19 review): the government slide is second, so the reach slide is the sixth
-  test('carousel slide 6 is tagged "Reach at Scale" (people trained is reach, not impact)', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the reach slide was the sixth. WP53 (owner decision 2026-10-16): the reach slide is gone; the reach figure is the hero's "Reach Since 2014" card
+  test('the reach figure is tagged as reach, not impact: the hero card is "Reach Since 2014" and no carousel slide says "Reach at Scale" or "Impact at Scale"', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(5).locator('.hs__eyebrow')).toHaveText('Reach at Scale');
-    expect(compact(await page.locator('#results').textContent())).not.toContain('Impact at Scale');
+    await expect(page.locator('.hh__card[data-fact="SC-16"] .hh__eyebrow')).toHaveText('Reach Since 2014');
+    const region = compact(await page.locator('#results').textContent());
+    expect(region).not.toContain('Impact at Scale');
+    expect(region).not.toContain('Reach at Scale');
   });
 
   test('the comparison answers each row with its own cell: the self-paced Mentoring cell is not its Work Entry cell; WP31 dropped the freelance-marketplace column on Home', async ({ page }) => {

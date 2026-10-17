@@ -329,7 +329,8 @@ test.describe('Our Model: one slogan for the one path, and who agrees the tracki
 });
 
 test.describe('Home: the government slide is second (item 10)', () => {
-  test('the carousel runs trial, government scale, survey, program results, speed, reach, programs; the government slide’s text and links are unchanged', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line), so the carousel runs trial, government scale, survey, program results
+  test('the carousel runs trial, government scale, survey, program results; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
       // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
@@ -337,14 +338,10 @@ test.describe('Home: the government slide is second (item 10)', () => {
       'Six Government Contracts and Bangladesh’s National University',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course; WP48 (cycle-23 review, item 32): "by", because OC-05 is cumulative and includes those who first earned during the course
-      'Most Surveyed New Earners Were Earning by Six Months After the Course',
-      'Programs in 15 Countries and Territories',
-      'Find Your Program',
     ]);
     const slides = page.locator('#results [data-hs-slide]');
-    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 7: Six Government Contracts and Bangladesh’s National University');
-    await expect(slides.nth(6)).toHaveAttribute('aria-label', /^7 of 7: Find Your Program/);
+    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 4: Six Government Contracts and Bangladesh’s National University');
+    await expect(slides.nth(3)).toHaveAttribute('aria-label', /^4 of 4: Results by Program/);
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")

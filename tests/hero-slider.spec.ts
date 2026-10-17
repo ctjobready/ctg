@@ -4,7 +4,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 import { pageByRoute } from './support/pages';
 
 /**
- * Home "Results and Programs" carousel (WP13, moved below the stable hero in WP17; src/components/sections/HeroSlider.astro,
+ * Home "Results" carousel (WP13, moved below the stable hero in WP17, headed "Results and Programs" until WP53; src/components/sections/HeroSlider.astro,
  * src/scripts/heroSlider.ts). WCAG 2.2 AA, APG carousel pattern. The hero above it (#hero, HomeHero) holds the page's only h1, the primary
  * action and the three proof cards; the carousel's slides are all h2.
  *   - keyboard: the next, previous and dot controls (Enter, Space, Tab, arrow keys on the controls) change the slide;
@@ -18,7 +18,7 @@ import { pageByRoute } from './support/pages';
  *   - the region does not change height when the script runs (no layout shift on load);
  *   - every slide has its own cleared photograph, all loaded lazily (the hero's own photograph is the eager one);
  *   - no slide leaves more than 48 px of unused space between its content and the controls (1280 and 390).
- * Slide order (WP19): trial, survey income and employment, placement, speed to earning, reach, government and National University, programs.
+ * Slide order (WP53, owner decision 2026-10-16: four slides): the randomized trial, government and National University, the Impact Survey 2026 (income, with the timing of first earnings as one body line), results by program.
  * The autoplay checks use the real 7 s step, so they take a few seconds each.
  */
 
@@ -47,45 +47,38 @@ async function unusedBelow(page: Page): Promise<number> {
 test.describe('home hero slider', () => {
   test.use({ viewport: DESKTOP });
 
-  test('is a labelled carousel of seven slides; the only h1 is in the stable hero above it', async ({ page }) => {
+  test('is a labelled carousel of four slides; the only h1 is in the stable hero above it', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const region = page.locator('#results');
     await expect(region).toHaveAttribute('aria-roledescription', 'carousel');
     await expect(region).toHaveAttribute('aria-labelledby', 'results-h');
-    await expect(page.locator('#results-h')).toHaveText('Results and Programs');
+    // WP53 (owner decision 2026-10-16): the band is headed "Results" (it was "Results and Programs"; the programs slide is gone)
+    await expect(page.locator('#results-h')).toHaveText('Results');
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(7);
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 7: /);
-    await expect(slides.nth(6)).toHaveAttribute('aria-label', /^7 of 7: /);
+    await expect(slides).toHaveCount(4);
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', /^1 of 4: /);
+    await expect(slides.nth(3)).toHaveAttribute('aria-label', /^4 of 4: /);
     await expect(slides.nth(0)).toHaveAttribute('role', 'group');
     await expect(slides.nth(0)).toHaveAttribute('aria-roledescription', 'slide');
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
     await expect(page.locator('#results h1')).toHaveCount(0);
-    await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(7);
+    await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(4);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
     // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the heading is short again and the slide's eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; tests/wp50.spec.ts)
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 7: Women Offered a Place Earned an Estimated 41% More');
-    // WP23: one framing sentence for the carousel, the survey and reach slides state their figure in the heading, and no heading ends with a period.
-    // WP25h: the framing sentence names the order of the evidence; the program-results slide is "Results by Program".
-    // WP30c: the framing sentence is five words long (the slides label their own evidence types)
-    await expect(page.locator('.hs__intro')).toHaveText('Evidence first, then our programs.');
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 41% More');
+    // WP23, WP25h and WP30c gave the band one framing sentence ("Evidence first, then our programs."). WP53 (owner decision 2026-10-16): the programs slide is gone, so the band is headed "Results" and has no framing sentence.
+    // No slide heading ends with a period.
+    await expect(page.locator('.hs__intro')).toHaveCount(0);
     const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
-    // WP36 (cycle-13 reviews): the speed slide says "surveyed completers" (the survey page's term), and the reach slide no longer states the 130,000+ (the hero's reach card does)
-    // WP38 (cycle-15 review): the reach slide had SC-03's figure as its tile; WP45 (cycle-21 review): the figure is its heading and the tile is gone (tests/wp38.spec.ts)
-    // WP41 (cycle-18 reviews): the speed slide's heading is the finding alone, with no percentage (the 58.8% and its base are the tile), and the government slide counts its contracts (tests/wp41.spec.ts)
-    // WP42 (cycle-19 review): the government slide is second, after the trial: trial, government scale, survey, program results, speed, reach, programs
-    // WP45 (cycle-21 review): the speed slide says "Most First Earnings Came Within Six Months" and the reach slide "Programs in 15 Countries and Territories" (tests/wp45.spec.ts);
-    // WP46 (cycle-22 review, owner answer 2026-10-15): the speed slide's six months are counted from the end of the course ("... of the Course Ending")
-    // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
-    expect(titles.slice(1, 6), 'government, survey, placement, speed and reach headlines').toEqual([
+    // WP42 (cycle-19 review): the government slide is second, after the trial. WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line, tests/wp53.spec.ts),
+    // so the order is the trial, the government scale, the survey and the program results
+    expect(titles.slice(1), 'government, survey and program-result headlines').toEqual([
       'Six Government Contracts and Bangladesh’s National University',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
-      'Most Surveyed New Earners Were Earning by Six Months After the Course',
-      'Programs in 15 Countries and Territories',
     ]);
-    expect(titles[6], 'the programs slide stays last').toBe('Find Your Program');
+    expect(titles[3], 'the program results stay last').toBe('Results by Program');
     for (const t of titles) expect(t, 'slide titles carry no trailing period').not.toMatch(/\.$/);
     // WP31: the first slide states the offered-place results only; the attenders' income is on the trial page it links. WP45 (cycle-21 review): the income result (the employment result is the hero card's), still the offered-place women's
     const lead = (await slides.nth(0).locator('.hs__lead').textContent()) ?? '';
@@ -182,7 +175,7 @@ test.describe('home hero slider', () => {
     const hero = page.locator('#results');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     const hidden = page.locator('[data-hs-slide]:not(.is-active)');
-    await expect(hidden).toHaveCount(6);
+    await expect(hidden).toHaveCount(3);
     for (const el of await hidden.all()) {
       await expect(el).toHaveAttribute('inert', '');
     }
@@ -201,7 +194,7 @@ test.describe('home hero slider', () => {
     const hero = page.locator('#results');
     const first = await hero.boundingBox();
     expect(first).not.toBeNull();
-    for (let i = 1; i < 7; i++) {
+    for (let i = 1; i < 4; i++) {
       await page.locator('[data-hs-dot]').nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       const box = await hero.boundingBox();
@@ -215,7 +208,7 @@ test.describe('home hero slider at phone width', () => {
 
   test('no horizontal scroll on any slide, and every control has a 24 px target', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       await page.locator('[data-hs-dot]').nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -252,7 +245,7 @@ test.describe('home hero slider in print', () => {
     await open(page, pageByRoute('/'));
     await page.emulateMedia({ media: 'print' });
     const headings = page.locator('#results [data-hs-slide] h2');
-    await expect(headings).toHaveCount(7);
+    await expect(headings).toHaveCount(4);
     for (const h of await headings.all()) {
       await expect(h).toBeVisible();
     }
@@ -268,20 +261,20 @@ test.describe('home hero slider without JavaScript', () => {
   test('every slide is present and stacked, with its links, and no controls show', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const hero = page.locator('#results');
-    await expect(hero.getByRole('heading')).toHaveCount(7);
+    await expect(hero.getByRole('heading')).toHaveCount(4);
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(7);
+    await expect(slides).toHaveCount(4);
     for (const s of await slides.all()) {
       await expect(s).toBeVisible();
     }
     await expect(page.locator('[data-hs-toggle]')).toBeHidden();
     await expect(page.locator('[data-hs-prev]')).toBeHidden();
     await expect(page.locator('[data-hs-next]')).toBeHidden();
-    await expect(hero.getByRole('link', { name: 'Explore Global Reach' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'See the Trial' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'Read the Impact Survey 2026' })).toBeVisible();
-    await expect(hero.getByRole('link', { name: 'YouthWIDE' })).toBeVisible();
+    await expect(hero.getByRole('link', { name: 'See the Case Studies' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'For Governments' })).toBeVisible();
+    await expect(hero.getByRole('link', { name: 'For Universities' })).toBeVisible();
   });
 });
 
@@ -327,9 +320,9 @@ test.describe('home hero slider layout', () => {
       status: string;
     }[];
     const slides = page.locator('[data-hs-slide]');
-    await expect(slides).toHaveCount(7);
+    await expect(slides).toHaveCount(4);
     const assets: string[] = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       const img = slides.nth(i).locator('img');
       await expect(img, `photograph on slide ${i + 1}`).toHaveCount(1);
       await expect(img).toHaveAttribute('loading', 'lazy');
@@ -338,13 +331,13 @@ test.describe('home hero slider layout', () => {
       assets.push(asset);
       expect(permissions.find((p) => p.assetId === asset)?.status, `slide ${i + 1} photograph ${asset} is cleared`).toBe('cleared');
     }
-    expect(new Set(assets).size, 'each slide shows a different photograph').toBe(7);
+    expect(new Set(assets).size, 'each slide shows a different photograph').toBe(4);
   });
 
   test('no slide leaves more than 48 px of unused space below its content (1280)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const dots = page.locator('[data-hs-dot]');
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       await dots.nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       await page.waitForTimeout(450);
@@ -359,7 +352,7 @@ test.describe('home hero slider layout at phone width', () => {
   test('no slide leaves more than 48 px of unused space below its content (390)', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const dots = page.locator('[data-hs-dot]');
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       await dots.nth(i).click();
       await expect.poll(() => activeIndex(page)).toBe(i);
       await page.waitForTimeout(450);

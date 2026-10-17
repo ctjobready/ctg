@@ -224,24 +224,24 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
   });
 });
 
-test.describe('Home: the speed slide has no lead sentence (item 4)', () => {
-  test('slide 5 is its heading, the 58.8% tile with its full base and the evidence link; the sentence that repeated them is gone', async ({ page }) => {
+test.describe('Home: the survey slide’s timing line is one sentence that repeats neither the heading nor a tile (item 4; WP53)', () => {
+  // WP43 (cycle-20 review): the speed slide had no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated its heading and its tile). WP53 (owner decision 2026-10-16): that slide is gone;
+  // its finding is ONE body line on the survey slide (slide 3), the 58.8% with its defined base, stated once and in no tile.
+  test('slide 3 has the 58.8% once, with its full base, in one body line; its one tile is the income result; the evidence link stays; the old repeating sentence is gone', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(4);
-    // (WP45, cycle-21 review: the heading is "Most First Earnings Came Within Six Months"; WP46, cycle-22 review, owner answer 2026-10-15: "... of the Course Ending", the six months counted from the end of the course;
-    // WP48, cycle-23 review, item 32: "Most Had Started Earning by Six Months After the Course", because OC-05 is cumulative and includes those who first earned during the course)
-    await expect(slide.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
+    const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(slide.locator('.hs__lead')).toHaveCount(0);
+    await expect(slide.locator('.hs__lead')).toHaveCount(1);
+    expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await slide.textContent())).not.toMatch(/most started within six months|Among surveyed completers who first earned/);
-    const tile = slide.locator('.hs__stat');
-    await expect(tile).toHaveCount(1);
-    expect(await tile.getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await tile.textContent())).toContain('58.8%');
+    const line = compact(await slide.locator('.hs__lead').textContent());
+    expect(line).toContain('58.8%');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts)
-    expect(compact(await tile.textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)');
-    const link = slide.locator('a', { hasText: 'See When Completers First Earn' });
+    expect(line).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    await expect(slide.locator('.hs__stat')).toHaveCount(1);
+    expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
+    expect(compact(await slide.locator('.hs__stat').textContent())).not.toContain('58.8%');
+    const link = slide.locator('a', { hasText: 'Read the Impact Survey 2026' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');
   });

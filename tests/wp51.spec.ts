@@ -115,18 +115,21 @@ test.describe('Universities: the institution’s pain is headed as the goal (ite
   });
 });
 
-test.describe('Home: slide 5 names its subgroup (item 3)', () => {
+// WP53 (owner decision 2026-10-16): the speed slide (slide 5, headed HEADING) is gone; its subgroup is named in the survey slide's body line (slide 3), in the register's term and with the cumulative "by ... after" wording
+test.describe('Home: the survey slide names its subgroup (item 3; WP53: the speed slide it was named on is gone)', () => {
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
-  const slide5 = (page: Page) => page.locator('[data-hs-slide]').nth(4);
+  const survey = (page: Page) => page.locator('[data-hs-slide]').nth(2);
 
-  test('the heading uses the register’s term, keeps the cumulative "by ... after" wording and is Title Case, tied to OC-05', async ({ page }) => {
-    expect(HEADING).toBe(titleCase(HEADING));
+  test('the body line uses the register’s term, keeps the cumulative "by ... after" wording, tied to OC-05; the former speed heading is on no slide', async ({ page }) => {
     expect(fact('OC-05').stat?.label).toContain('surveyed new earners');
-    expect(HEADING).not.toMatch(/within|of finishing|of the course ending/i);
     await open(page, '');
-    await expect(slide5(page).locator('h2')).toHaveText(HEADING);
-    expect(await slide5(page).locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    await expect(page.locator('[data-hs-slide]').nth(4)).toHaveAttribute('aria-label', `5 of 7: ${HEADING}`);
+    const line = compact(await survey(page).locator('.hs__lead').textContent());
+    expect(line).toContain('surveyed new earners');
+    expect(line).toContain('had started earning by six months after finishing the course');
+    expect(line).not.toMatch(/within|of finishing|of the course ending/i);
+    expect(await survey(page).locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    await expect(survey(page)).toHaveAttribute('aria-label', '3 of 4: Surveyed Completers Report Higher Income');
+    expect(compact(await page.locator('#results').textContent())).not.toContain(HEADING);
   });
 
   test('the slide fits the carousel at 1280 and 390 (the slider’s unused-space budget is held by tests/hero-slider.spec.ts), and the page does not scroll sideways', async ({ page }) => {
@@ -134,7 +137,7 @@ test.describe('Home: slide 5 names its subgroup (item 3)', () => {
       await page.setViewportSize(vp);
       await open(page, '');
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
-      expect(await slide5(page).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
+      expect(await survey(page).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });
@@ -389,7 +392,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
     await open(page, '');
     await expect(slide(page, 2).locator('h2')).toHaveText(HEADING);
     expect(await slide(page, 2).locator('h2').getAttribute('data-fact')).toBe('GV-12');
-    await expect(slide(page, 2)).toHaveAttribute('aria-label', `2 of 7: ${HEADING}`);
+    await expect(slide(page, 2)).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
   });
 
   test('slide 4’s Her Power line carries its base (the 2,500 trained directly), read from PR-05’s label, and stays one line at 1280 like the Kosovo and WSDFM lines', async ({ page }) => {

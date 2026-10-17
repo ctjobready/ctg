@@ -362,11 +362,12 @@ test.describe('Home: the router card, the closing steps and the first-step line 
   ];
 
   // WP50 (cycle-25 review, item 14): the card's text is "Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform." (it was "Back JobReady, the platform we are building to connect emerging-market youth to work."; tests/wp50.spec.ts)
+  // WP53 (owner decision 2026-10-16): IN-04's definition is "CodersTrust’s digital learning and earning platform", so the card reads "... digital learning and earning platform." (tests/wp53.spec.ts)
   test('the investor card is "Investors" (the menu, the footer and the hub use it) and keeps "Back ..."', async ({ page }) => {
     await open(page, '');
     expect(await texts(page, '#router .cat__title')).toEqual(['Development Partners and NGOs', 'Governments', 'Foundations and CSR', 'Investors']);
     const card = page.locator('#router a.cat[href$="partner-with-us/investors/"]');
-    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital education and employment platform.');
+    expect(compact(await card.locator('.cat__text').textContent())).toBe('Back the staged rollout of JobReady, CodersTrust’s digital learning and earning platform.');
     expect(sitePages().filter((p) => /cat__title[^>]*>\s*Impact Investors/.test(p.html)).map((p) => p.route)).toEqual([]);
   });
 
@@ -514,7 +515,8 @@ test.describe('The OC-05 and RC-06a labels (items 24 and 26)', () => {
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="OC-05"]').textContent())).toContain('surveyed new earners');
     await open(page, '');
-    expect(compact(await page.locator('[data-hs-slide]').nth(4).locator('.hs__stat').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
+    // WP53 (owner decision 2026-10-16): Home's survey slide (slide 3) states it in its body line (it was the speed slide's tile)
+    expect(compact(await page.locator('[data-hs-slide]').nth(2).locator('.hs__lead').textContent())).toContain('of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course');
   });
 
   // WP52 (cycle-27 review, Kimi M2): Development Partners no longer shows a ">4×" tile; the register's glance label is the source of the +10.3 tile's note ("More than four times the 2.3-point average across nine vocational-training trials."; tests/wp52.spec.ts)
