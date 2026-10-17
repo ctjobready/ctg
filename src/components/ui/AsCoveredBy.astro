@@ -4,7 +4,7 @@ import { linkAttrs } from '../../lib/url';
 
 /**
  * AsCoveredBy (WP55, synthesis 3.5): one line of text links, each outlet with its year, no logos and no photographs. The seven outlets are PA-09's (Forbes' item is a contributor post, as the line says; PA-09's eighth item, the
- * World Bank's 2016 Kosovo feature story, is in the World Bank clause); the World Bank pages are PA-12 (the Kosovo feature story and country brief, the Albania press release). The Recognition and Media page keeps the logo list. Links leave the site, so each carries
+ * World Bank's 2016 Kosovo feature story, is in the World Bank clause); the World Bank pages are PA-13 (the Kosovo feature story and country brief, the Albania press release). The Recognition and Media page keeps the logo list. Links leave the site, so each carries
  * the rel from linkAttrs and a screen-reader "(opens host)" suffix like every other external link.
  */
 interface Props {
@@ -15,7 +15,7 @@ const media = COVERED_BY.map((c) => ({ ...c, a: linkAttrs(c.href) }));
 const wb = COVERED_BY_WORLD_BANK.map((w) => ({ place: w.place, pages: w.pages.map((p) => ({ ...p, a: linkAttrs(p.href) })) }));
 ---
 
-<p class:list={['cov', className]} data-fact="PA-09 PA-12">
+<p class:list={['cov', className]} data-fact="PA-09 PA-13">
   As covered by
   {
     media.map((c, i) => (
