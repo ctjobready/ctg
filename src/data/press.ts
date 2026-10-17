@@ -131,7 +131,7 @@ export const COVERED_BY: CoveredItem[] = [
   { outlet: 'The Times of India', year: '2016', href: 'https://timesofindia.indiatimes.com/home/sunday-times/Cook-to-coder-How-low-income-youth-are-writing-a-better-future/articleshow/53575603.cms' },
 ];
 
-/** World Bank pages that name CodersTrust among the implementing partners (PA-12): the Kosovo feature story (2016) and country brief (2017), and the Albania press release (2021). */
+/** World Bank pages that name CodersTrust among the implementing partners (PA-13): the Kosovo feature story (2016) and country brief (2017), and the Albania press release (2021). */
 export const COVERED_BY_WORLD_BANK: { place: string; pages: { year: string; href: string }[] }[] = [
   {
     place: 'Kosovo',

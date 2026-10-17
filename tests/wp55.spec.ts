@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
 /**
  * WP55 behaviors (owner decisions 2026-10-17/18: global positioning; "CodersTrust Around the World"). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable
  * behavior of the built site or of the register behind it (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp55.spec.ts --project=chromium`):
- *   - the register: SC-03 and SC-16 say 17 countries and territories; the dated tile facts (TL-01 to TL-06), the World Bank's Kosovo figure (PR-02b), the two Digital Jobs Albania figures (PR-07, PR-08) and the World Bank pages (PA-12) have sources;
+ *   - the register: SC-03 and SC-16 say 17 countries and territories; the dated tile facts (TL-01 to TL-06), the World Bank's Kosovo figure (PR-02b), the two Digital Jobs Albania figures (PR-07, PR-08) and the World Bank pages (PA-13) have sources;
  *   - Global Reach: 17 locations (Egypt and Benin added; Uganda, Somaliland, Iraq, Albania and Kosovo corrected), a photograph in every row that has one;
  *   - the "CodersTrust Around the World" strip: seven tiles on Home and About, three on the audience pages, ending on Bangladesh;
  *   - the "As covered by" press line (text links, no logos);
@@ -97,7 +97,7 @@ test.describe('the register: 17 countries and territories, and the new dated and
   });
 
   test('every new or changed fact names sources that exist and link out; none states a money amount', () => {
-    for (const id of ['SC-03', 'TL-01', 'TL-02', 'TL-03', 'TL-04', 'TL-05', 'TL-06', 'PR-02b', 'PR-07', 'PR-08', 'PA-12']) {
+    for (const id of ['SC-03', 'TL-01', 'TL-02', 'TL-03', 'TL-04', 'TL-05', 'TL-06', 'PR-02b', 'PR-07', 'PR-08', 'PA-13']) {
       const f = fact(id);
       expect(f.sourceIds?.length, `${id} has a source`).toBeGreaterThan(0);
       for (const s of f.sourceIds ?? []) {
@@ -391,7 +391,7 @@ test.describe('"As covered by": a line of text links with years, no logos, on Ho
       expect(await line.locator('a').evaluateAll((as) => as.map((a) => a.getAttribute('href')))).toEqual(HREFS);
       expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
       await expect(line.locator('img, svg, picture')).toHaveCount(0);
-      expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-12');
+      expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
       // every link says where it goes, for a screen reader
       expect(await line.locator('a .sr-only').count()).toBe(10);
     });
