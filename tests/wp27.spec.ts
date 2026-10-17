@@ -18,12 +18,13 @@ const hrefOf = (page: Page, selector: string) => page.locator(selector).evaluate
 const subjectOf = (href: string) => decodeURIComponent(/subject=([^&]*)/.exec(href)?.[1] ?? '');
 
 test.describe('one NU eligibility sentence', () => {
-  test('the Programs menu description and the Home slide state it in the register’s words', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): Home's carousel no longer has a programs slide, so the Programs menu states it (the Programs hub and the NU pages follow in the tests below)
+  test('the Programs menu description states it in the register’s words, and Home’s carousel no longer has a programs grid', async ({ page }) => {
     await open(page, '');
     const menu = page.locator(`#mega-programs a.mega__link[href$="${NU}"] .mega__desc`);
     expect(compact(await menu.textContent())).toBe(`Eligibility: ${ELIGIBILITY}.`);
-    const slide = page.locator(`.hs__program[href$="${NU}"]`).first();
-    expect(compact(await slide.textContent())).toContain(`For individual learners: ${ELIGIBILITY}.`);
+    await expect(page.locator('.hs__program')).toHaveCount(0);
+    expect(compact(await page.locator('#results').textContent())).not.toContain('For individual learners');
   });
 
   test('the Programs hub card states it; "degree holders" is gone from the NU entries', async ({ page }) => {

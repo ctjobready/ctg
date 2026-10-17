@@ -472,7 +472,7 @@ export const WOMEN_INCLUSION: CopyBlock = {
 export const CONTRACTING_ENTITIES = 'CT USA, Inc. in the United States or CodersTrust Bangladesh Ltd. in Bangladesh';
 
 export const GOVERNANCE: CopyBlock = {
-  text: `CodersTrust contracts through ${CONTRACTING_ENTITIES}; the contracting entity depends on the program’s country and the funder’s requirements. Legal-status and due-diligence documents for a specific program are confirmed with the funder during co-design.`,
+  text: `CodersTrust contracts through ${CONTRACTING_ENTITIES}; the contracting entity depends on the program’s country and the funder’s requirements. Legal status and due-diligence arrangements for a specific program are confirmed with the funder during co-design.`,
   facts: ['ID-07', 'PD-13'],
 };
 

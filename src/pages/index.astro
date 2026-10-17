@@ -4,7 +4,7 @@
 // WP30c (owner direction 2026-10-14, "less is more"): the page is the hook for an intro call. Every band keeps its CMF place but states its point once:
 // no methodology asides, no repeated explanations, no stat shown twice, FAQ answers of one to three sentences.
 // WP47 (owner decision 2026-10-15): Home carries the persuasion bands (Cost of Waiting, Imagine, Compare); the audience pages no longer repeat them and go straight from their own proof to their offer. So Home routes readers to
-// their audience page sooner (the role router sits directly after the Results and Programs carousel) and spends fewer words on those bands: the Cost of Waiting band ends with its two cards (no closing value-proposition line) and
+// their audience page sooner (the role router sits directly after the Results carousel) and spends fewer words on those bands: the Cost of Waiting band ends with its two cards (no closing value-proposition line) and
 // the Track Record band opens with its heading (no empathy line before it). "What a Supported Youth Cohort Includes" stays: the FAQ band below it does not ask the cost question (Q8) that lists a cohort's inclusions.
 // WP48 (cycle-23 review): "Evidence You Can Check" is gone (its paid-work pathways table and its 72.3% line repeated survey detail the hero strip and the carousel already carry; both stay on the Impact Survey 2026 page); its two evidence links
 // close the "Proof in Practice" link row. The Low Risk band ("Start with a Multi-Cohort Pilot, Then Decide on Evidence") is gone from Home too (the audience pages keep theirs); its one line leads the closing call to action.
@@ -13,6 +13,8 @@
 // shows its delivery context in place of the figure the fourth carousel slide already states (caseStudyItems).
 // WP52 (cycle-27 reviews): the hero's value proposition begins "We help ..."; the carousel's government slide, speed slide and program-results slide changed (src/data/heroSlides.ts); the Results You Can Check card promises
 // "Monthly reports will show progress toward paid work, as agreed in the program scope."; the recognition band's AWS item has a line under its title (HomeRecognition).
+// WP53 (owner decision 2026-10-16, "Trim it"): the carousel is four slides (the randomized trial, the government contracts and the National University, the Impact Survey 2026, the results by program); the reach slide and the programs slide are gone, and the two survey
+// slides are one (src/data/heroSlides.ts). The band is headed "Results" and has no framing sentence: "Results and Programs" and "Evidence first, then our programs." described a programs slide that no longer exists.
 import LandingLayout from '../layouts/LandingLayout.astro';
 import HeroSlider from '../components/sections/HeroSlider.astro';
 import HomeHero from '../components/pages/home/HomeHero.astro';
@@ -109,13 +111,13 @@ const includes = [
 
 <LandingLayout title={HOME_META.title} titleSuffix={false} description={HOME_META.description} jsonLd={jsonLd} stickyCta={{ label: discovery.label, href: discovery.href }}>
   <Tone cmf="C1"><HomeHero id="hero" /></Tone>
-  <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results and Programs carousel. -->
+  <!-- WP19, item 6: "What Is CodersTrust?" sits directly under the hero, before the Results carousel. -->
   <Tone cmf="GEO"><DefinitionBand id="definition" /></Tone>
   <Tone cmf="RESULTS">
-    <HeroSlider id="results" label="Results and Programs" heading="Results and Programs" intro="Evidence first, then our programs." slides={HOME_SLIDES} />
+    <HeroSlider id="results" label="Results" heading="Results" slides={HOME_SLIDES} />
   </Tone>
 
-  <!-- WP47 (owner decision 2026-10-15): the site is the hook for an introductory call, so the role router sits directly after the Results and Programs carousel, where a reader can reach their audience page sooner (it was the band before the
+  <!-- WP47 (owner decision 2026-10-15): the site is the hook for an introductory call, so the role router sits directly after the Results carousel, where a reader can reach their audience page sooner (it was the band before the
        closing call to action; WP23). One router on the page; the hero's own audience links stay. Its own light ground (airy) keeps the rhythm between the carousel above and the white problem band below. -->
   <Tone cmf="ROUTER"><HomeRouter id="router" /></Tone>
 
@@ -161,7 +163,7 @@ const includes = [
        beside the 72.3% no-prior-income result (34 of 47). WP48 (cycle-23 review): both are gone from Home (the hero's survey card and the carousel carry the survey; the Impact Survey 2026 page keeps the table and the 72.3%), which left "Evidence You Can Check" with its two
        links alone, so the band is gone and its two links sit in the link row of "Proof in Practice" below (the C7 proof position). -->
   <Tone cmf="C7" join>
-    <!-- WP37 (cycle-14 review): slide 3 of the results carousel states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems). WP51 (cycle-26 review): the fourth slide states the WSDFM figure too
+    <!-- WP37 (cycle-14 review): the program-results slide of the carousel (slide 4) states the Kosovo and Her Power figures, so those two cards show delivery context instead (caseStudyItems). WP51 (cycle-26 review): the same slide states the WSDFM figure too
          (WP50), so all three cards show delivery context and none repeats a figure. -->
     <CaseStudyCarousel id="cases" eyebrow="Case Studies" title="Proof in Practice" items={caseStudyItems}>
       <a slot="more" class="link" href={caseStudies.href}>See All Four Case Studies<Icon name="arrow-right" size={16} /></a>

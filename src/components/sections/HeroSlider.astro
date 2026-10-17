@@ -1,8 +1,8 @@
 ---
 /**
- * Home "Results and Programs" carousel (WP13; layout and photographs reworked in WP13b; WP17: it sits directly below the stable hero, so every
+ * Home "Results" carousel (WP13; headed "Results and Programs" until WP53, when the programs slide went and the carousel became four slides; layout and photographs reworked in WP13b; WP17: it sits directly below the stable hero, so every
  * slide heading is a level 2, the photographs load lazily and the slide links are text links; the hero owns the page's h1 and the primary button).
- * Each slide has a copy column (eyebrow, heading, lead or register sentence, figures or programs, links) and a visual column (one cleared
+ * Each slide has a copy column (eyebrow, heading, lead or register sentence, named results or figures, links) and a visual column (one cleared
  * photograph; the evidence slide adds a Klein-blue proof band: a card over the photograph on the desktop visual column, under it on phones). Every slide is in the markup. Without JavaScript the slides
  * stack, with no controls (print prints them in order). With JavaScript, html.js is set before first paint (BaseLayout), so the carousel
  * layout is in place from the first paint: the slides share one grid cell, the showing one is `.is-active`, and the controls keep their space.
@@ -110,28 +110,7 @@ const views = slides.map((s, i) => {
                   ))}
                 </div>
               )}
-              {s.programs && (
-                <ul class="hs__programs">
-                  {s.programs.map((p) => (
-                    <li>
-                      <a class="hs__program" href={linkAttrs(p.href).href} data-fact={p.factIds?.join(' ')}>
-                        <strong>{p.label}</strong>
-                        {p.description && <span>{p.description}</span>}
-                      </a>
-                    </li>
-                  ))}
-                  {s.links?.map((l) => (
-                    // A slide with a program grid carries its link as the grid's last cell, so the link does not add a row (the slide stays within the carousel's height).
-                    <li class="hs__programs-link">
-                      <a class="link hs__link" href={linkAttrs(l.href).href}>
-                        {l.label}
-                        <Icon name="arrow-right" size={16} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {s.links && !s.programs && (
+              {s.links && (
                 <div class="hs__actions" data-hero-in={first ? '' : undefined}>
                   {s.links.map((l) => (
                     <a class="link hs__link" href={linkAttrs(l.href).href}>
@@ -416,54 +395,6 @@ const views = slides.map((s, i) => {
     font-weight: var(--fw-bold);
   }
 
-  /* Programs: a grid of links (two columns at phone width, three on the desktop copy column). */
-  .hs__programs {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-sm);
-    width: 100%;
-  }
-  @media (min-width: 1024px) {
-    .hs__programs {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .hs__programs li {
-    display: flex;
-  }
-  .hs__programs .hs__programs-link {
-    align-items: center;
-    padding-inline: var(--space-sm);
-  }
-  .hs__program {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--stack-title);
-    padding: var(--space-md);
-    border-radius: var(--radius-lg);
-    border: 1px solid transparent;
-    background: var(--surface);
-    box-shadow: var(--shadow-card);
-    color: var(--on-surface);
-    text-decoration: none;
-  }
-  .hs__program:hover {
-    border-color: var(--primary-fixed);
-  }
-  .hs__program strong {
-    font-weight: var(--fw-bold);
-    color: var(--primary);
-  }
-  .hs__program span {
-    font-size: var(--fs-body-xs);
-    line-height: var(--lh-body-xs);
-    color: var(--on-surface-variant);
-  }
-
   /* The photograph: a 4:3 frame on the desktop visual column; below the desktop breakpoint it fills the space the copy leaves (see the slide rule),
      with the Klein wash of Hero.astro. */
   .hs__visual {
@@ -633,9 +564,6 @@ const views = slides.map((s, i) => {
     }
     .hs__stat {
       padding: var(--space-compact);
-    }
-    .hs__program {
-      padding: var(--space-compact) var(--space-md);
     }
     .hs__nav {
       gap: var(--space-xs);

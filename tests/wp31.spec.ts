@@ -37,12 +37,14 @@ test.describe('figures say what they measure', () => {
     expect(survey).not.toMatch(/growth in freelancing|about 3× the median/);
   });
 
-  // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third
-  test('Home slide 3 reads as what surveyed completers report, and has no lead line to repeat it', async ({ page }) => {
+  // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third. WP53 (owner decision 2026-10-16): it also carries the former speed slide's finding as one body line (OC-05), which does not repeat the heading
+  test('Home slide 3 reads as what surveyed completers report; its one body line is the timing of first earnings (OC-05), not a repeat of the heading', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    await expect(slide.locator('.hs__lead')).toHaveCount(0);
+    await expect(slide.locator('.hs__lead')).toHaveCount(1);
+    expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    expect(compact(await slide.locator('.hs__lead').textContent())).not.toMatch(/income/i);
   });
 
   // WP45 (cycle-21 review): the slide states the offered-place women's income result (the employment result is the hero card's, the bar's and the >4× tile's), with the predecessor program named
@@ -352,14 +354,16 @@ test.describe('smaller wording fixes', () => {
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('A baseline, monthly reports and follow-up surveys, as agreed in the program scope.');
   });
 
-  test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Find Your Program"', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the carousel's programs slide ("Find Your Program") is gone, so its last slide is the program results
+  test('Home: no "outside Dhaka", no Latest News band after the final call to action, the carousel’s last slide is "Results by Program"', async ({ page }) => {
     await open(page, '');
     expect(await mainText(page)).not.toContain('outside Dhaka');
     await expect(page.locator('#future')).toContainText('A young woman invoices her first foreign client from her own laptop.');
     await expect(page.locator('#news, #news-teaser')).toHaveCount(0);
     const order = await ids(page);
     expect(order[order.length - 1], 'the page ends on its next steps').toBe('next-steps');
-    await expect(page.locator('[data-hs-slide]').nth(6).locator('h2')).toHaveText('Find Your Program');
+    await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
+    await expect(page.locator('[data-hs-slide]').nth(3).locator('h2')).toHaveText('Results by Program');
   });
 
   // WP48 (cycle-23 review): the evidence band (it had no scope line and no trial sub-heading) is gone from Home (tests/wp48.spec.ts); the comparison below it is unchanged
@@ -376,7 +380,7 @@ test.describe('smaller wording fixes', () => {
     await expect(page.locator('#hero a[href^="mailto:"], #audiences a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.locator('#why-partner li')).toHaveCount(3);
     expect(await mainText(page)).not.toContain('The platform connecting emerging-market youth to work');
-    await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, CodersTrust’s digital education and employment platform.');
+    await expect(page.locator('#audiences .grid-cards')).toContainText('JobReady, CodersTrust’s digital learning and earning platform.');
   });
 
   test('Contact: the third step names employers hiring talent, in the Employers page’s own scope wording', async ({ page }) => {

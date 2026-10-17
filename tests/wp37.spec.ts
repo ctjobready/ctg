@@ -406,7 +406,8 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
   test('the platform page’s meta description names the live modules the menu names and fits the 155-character limit', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toBe('JobReady is CodersTrust’s education and employment platform. Partner portals and AI chat are live; more modules follow.');
+    // WP53 (owner decision 2026-10-16): JobReady is "CodersTrust’s digital learning and earning platform"
+    expect(description).toBe('JobReady is CodersTrust’s digital learning and earning platform. Partner portals and AI chat are live; more modules follow.');
     expect(description.length).toBeLessThanOrEqual(155);
   });
 });

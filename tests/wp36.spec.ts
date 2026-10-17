@@ -50,35 +50,29 @@ test.describe('Home: each figure once', () => {
     expect(count(await mainText(page), '77.9%'), 'the 77.9% is stated once on Home').toBe(1);
   });
 
-  // WP38 (cycle-15 review): the slide had SC-03's "15" as its tile; WP45 (cycle-21 review): the heading states the 15 ("Programs in 15 Countries and Territories", tests/wp45.spec.ts) and the tile is gone; the 130,000+ stays the hero's reach card alone
-  test('slide 6 is headed "Programs in 15 Countries and Territories" and keeps SC-03’s detail line; the 130,000+ is the hero’s reach card', async ({ page }) => {
+  // WP38 (cycle-15 review) and WP45 (cycle-21 review) had a reach slide ("Programs in 15 Countries and Territories", SC-03's detail line, no tile). WP53 (owner decision 2026-10-16): that slide is gone. The 130,000+ and the 15 countries and territories
+  // are the hero's reach card alone (SC-16), stated once.
+  test('the reach slide is gone; the 130,000+ and the 15 countries and territories are the hero’s reach card, stated once', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(5);
-    await expect(slide.locator('.hs__eyebrow')).toHaveText('Reach at Scale');
-    await expect(slide.locator('h2')).toHaveText('Programs in 15 Countries and Territories');
-    await expect(slide.locator('.hs__lead')).toHaveText('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
-    expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('SC-03');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('SC-03');
-    const text = compact(await slide.textContent());
-    expect(text).not.toContain('130,000');
-    await expect(slide.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
+    expect(compact(await page.locator('#results').textContent())).not.toContain('Programs in 15 Countries and Territories');
     await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('130,000+');
+    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('15 countries and territories');
     expect(count(await mainText(page), '130,000+'), 'the 130,000+ is stated once on Home').toBe(1);
+    expect(count(await mainText(page), 'countries and territories'), 'the 15 countries and territories are stated once on Home').toBe(1);
   });
 
-  // WP38 (cycle-15 review): the heading led with its figure and then named the base ("completers who started earning"). WP41 (cycle-18 reviews): the heading is the finding alone, "First Earnings Within Six Months", with no
-  // percentage; the survey qualifier and the base are on the slide itself (eyebrow, tile). WP43 (cycle-20 review): the lead sentence is gone (it repeated the heading and the tile). WP45 (cycle-21 review): "Most First Earnings Came Within Six Months"
-  // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course
-  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned during the course, so the heading is "Most Had Started Earning by Six Months After the Course"
-  test('slide 5 is headed "Most Surveyed New Earners Were Earning by Six Months After the Course" (the finding, no percentage), has no lead, and keeps "surveyed new earners" (WP49, cycle-24 review: the register’s term for this group) in the 58.8% tile', async ({ page }) => {
+  // WP38 (cycle-15 review), WP41 (cycle-18 reviews), WP43 (cycle-20 review), WP45 to WP48 (cycles 21 to 23) and WP51 (cycle-26 review) shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course": the finding, no percentage, the
+  // 58.8% in a tile). WP53 (owner decision 2026-10-16): that slide is gone and its finding is the survey slide's ONE body line, which keeps the register's term "surveyed new earners" (WP49, cycle-24 review) and is tied to OC-05 (tests/wp53.spec.ts).
+  test('the survey slide’s body line states the 58.8% with "surveyed new earners" (the register’s term for this group), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
     await open(page, '');
-    const slide = page.locator('[data-hs-slide]').nth(4);
-    await expect(slide.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    expect(await slide.locator('h2').textContent()).toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    await expect(slide.locator('.hs__lead')).toHaveCount(0);
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('58.8%');
-    expect(compact(await slide.locator('.hs__stat').textContent())).toContain('surveyed new earners');
+    const slide = page.locator('[data-hs-slide]').nth(2);
+    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+    await expect(slide.locator('.hs__lead')).toHaveCount(1);
+    expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('58.8%');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('surveyed new earners');
+    expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
@@ -139,9 +133,10 @@ test.describe('Development Partners and Governments: each figure once', () => {
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
   });
 
-  test('Development Partners: the mechanism card says "Placement support into ..."', async ({ page }) => {
+  // WP53 (owner follow-up, 2026-10-16): "local, remote and global work" is said once, in the card's title; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
+  test('Development Partners: the mechanism card says "Placement support ..." with its 12 months of outcome tracking, not "Placement into local ..."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const card = page.locator('#mechanism').getByText('Placement support into local, remote and global work, with outcome tracking for 12 months after each course.');
+    const card = page.locator('#mechanism').getByText('Placement support and outcome tracking for 12 months after each course.');
     await expect(card).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/Placement into local/);
   });

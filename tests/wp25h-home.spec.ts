@@ -71,18 +71,13 @@ test.describe('evidence band (#proof-band): gone from Home (WP48)', () => {
 test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   test('the carousel slides carry the accepted headings, bases and links', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    // WP31: said as what surveyed completers report, not as a before-and-after effect; the heading says whose figures these are, so the slide has no lead
-    // WP42 (cycle-19 review): the order is the trial, the government contracts, the survey income, the program results, the speed to earning, the reach and the programs
+    // WP31: said as what surveyed completers report, not as a before-and-after effect. WP42 (cycle-19 review): the order is the trial, the government contracts, the survey income and the program results.
+    // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone. The survey slide (slide 3) keeps its heading, tile and evidence link and carries the finding of the former speed slide as ONE body line, OC-05's 58.8%
+    // with the base the register defines ("surveyed new earners", WP36, WP49, WP52); the earlier heading ("Most Surveyed New Earners Were Earning by Six Months After the Course") is on no slide (tests/wp53.spec.ts).
     await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    await expect(slide(page, 3).locator('.hs__lead')).toHaveCount(0);
-    // WP36 (cycle-13 review): "surveyed completers", the survey page's term; the base is the clause "who started earning" (the lead gives it in full)
-    // WP38 (cycle-15 review): the heading led with the figure and then named the base; WP41 (cycle-18 reviews): the heading is the finding alone ("First Earnings Within Six Months"), and the eyebrow and the tile keep "surveyed completers";
-    // WP43 (cycle-20 review): no lead sentence (it repeated the heading and the tile); WP45 (cycle-21 review): "Most First Earnings Came Within Six Months", a majority and not a promise;
-    // WP46 (cycle-22 review, owner answer 2026-10-15): counted from the end of the course, so "... of the Course Ending"
-    // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes those who first earned during the course, so "Most Had Started Earning by Six Months After the Course"
-    await expect(slide(page, 5).locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    await expect(slide(page, 5).locator('.hs__lead')).toHaveCount(0);
-    await expect(slide(page, 5).locator('a').first()).toHaveText('See When Completers First Earn');
+    await expect(slide(page, 3).locator('.hs__lead')).toHaveText('58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course.');
+    await expect(slide(page, 3).locator('a').first()).toHaveText('Read the Impact Survey 2026');
+    await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
     await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');

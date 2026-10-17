@@ -7,7 +7,7 @@ import { listPages } from './support/pages';
 
 /**
  * WP45 behaviors (cycle-21 whole-site review, Claude Sonnet 5.5 items 9-29): the Bangladesh initiative is an aim, not an existing national program (Programs menu and panel, Home slide 7, YouthWIDE); Home's trial slide leads with the
- * income result, its government slide states the contract scope in GV-12's note, its speed slide says "Most", its reach slide states the 15 in the heading, and its closing band has no grant-funding block; the partner hub has no
+ * income result, its government slide states the contract scope in GV-12's note, its speed slide says "Most", its reach slide states the 15 in the heading (WP53: the speed and reach slides, and Home's programs slide, are gone), and its closing band has no grant-funding block; the partner hub has no
  * reporting band and two FAQs; the Programs card links Foundations; the Investors scale answer says "designed to run"; the Our Model menu names both marketplaces; the Recognition H1 is the HolonIQ listing; the Her Power post carries a
  * delivery note; the hub and Our Model state the same cost inclusions; the survey's +$82 tile says whose change it is; the Samina alt text; no bare "pp" or "MENA"; the SDG award has the register's name. Retrospective coverage (the owner
  * exempted this project from test-first work); run `npm run build` first, then `PORT=<port> npx playwright test tests/wp45.spec.ts --project=chromium`.
@@ -49,26 +49,26 @@ async function faqJsonLd(page: Page) {
 }
 
 test.describe('The Bangladesh initiative is an aim, not an existing national program (item 9)', () => {
-  // The three regions are named on the YouthWIDE page, the Programs hub card and the funding-route table; the one-line menu description (and so slide 7's program card) says "three regions", because the full list made slide 7
-  // two lines taller and left the other slides more unused space than tests/hero-slider.spec.ts allows
+  // The three regions are named on the YouthWIDE page, the Programs hub card and the funding-route table; the one-line menu description says "three regions" (it was kept short for Home's former programs slide, which is gone: WP53)
   const LINE = 'Co-funded country cohorts, designed for three regions, with a Bangladesh initiative that aims to train 2 million vulnerable youth by 2030.';
 
-  test('the Programs menu, its featured panel and Home slide 7 say the cohorts are designed for three regions and that the Bangladesh initiative aims to train 2 million vulnerable youth by 2030 (IN-01 and IN-02; WP48: IN-01’s own "vulnerable youth")', async ({ page }) => {
+  test('the Programs menu and its featured panel say the cohorts are designed for three regions and that the Bangladesh initiative aims to train 2 million vulnerable youth by 2030 (IN-01 and IN-02; WP48: IN-01’s own "vulnerable youth"); WP53: Home’s carousel no longer repeats it on a programs slide', async ({ page }) => {
     await open(page, '');
     expect(fact('IN-01').stat?.value, 'the figure in the line is the register’s').toBe('2 million');
     expect(compact(await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"] .mega__desc').textContent())).toBe(LINE);
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(LINE);
-    expect(compact(await slide(page, 7).locator('.hs__program[href$="programs/youthwide/"] span').textContent())).toBe(LINE);
+    await expect(page.locator('#results .hs__program')).toHaveCount(0);
     const factIds = await page.locator('#mega-programs a.mega__link[href$="programs/youthwide/"]').evaluate((el) => `${el.getAttribute('data-fact') ?? ''} ${el.querySelector('[data-fact]')?.getAttribute('data-fact') ?? ''}`);
     expect(factIds).toContain('IN-01');
     expect(factIds).toContain('IN-02');
   });
 
-  test('YouthWIDE: the Bangladesh band is headed "Bangladesh: Reference Country and 2030 Aim" (Title Case), the glance row says "aims", the meta description says "a 2030 aim"', async ({ page }) => {
+  // WP53 (owner follow-up, 2026-10-16): "Reference" was the jargon WP52 removed from the glance row and IN-02, so the band is headed "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
+  test('YouthWIDE: the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" (Title Case), the glance row says "aims", the meta description says "a 2030 aim"', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
-    await expect(heading).toHaveText('Bangladesh: Reference Country and 2030 Aim');
-    expect('Bangladesh: Reference Country and 2030 Aim').toBe(titleCase('Bangladesh: Reference Country and 2030 Aim'));
+    await expect(heading).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
+    expect('Bangladesh: Delivery Base and 2030 Aim').toBe(titleCase('Bangladesh: Delivery Base and 2030 Aim'));
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
@@ -130,38 +130,36 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
   });
 });
 
-test.describe('Home: the speed and reach slides (items 16 and 28)', () => {
+test.describe('Home: the speed and reach slides (items 16 and 28; WP53: they are gone)', () => {
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course (tests/wp46.spec.ts)
-  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself; the heading is "Most Had Started Earning by Six Months After the Course" (tests/wp48.spec.ts)
-  test('slide 5 is "Most Surveyed New Earners Were Earning by Six Months After the Course" (Title Case, tied to OC-05), no lead, the 58.8% tile with its base', async ({ page }) => {
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself (tests/wp48.spec.ts)
+  // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; its finding is the survey slide's one body line, tied to OC-05, with the base the register defines
+  test('the survey slide (slide 3) carries the 58.8% in one body line tied to OC-05, with "170 surveyed new earners" (WP49: the register’s term; the Outcomes page defines it)', async ({ page }) => {
     await open(page, '');
-    const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    expect('Most Surveyed New Earners Were Earning by Six Months After the Course').toBe(titleCase('Most Surveyed New Earners Were Earning by Six Months After the Course'));
-    expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-05');
-    await expect(s.locator('.hs__lead')).toHaveCount(0);
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
-    // WP49 (cycle-24 review): "surveyed new earners" (the register's term; the Outcomes page defines it)
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain('170 surveyed new earners');
+    const s = slide(page, 3);
+    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(s.locator('.hs__lead')).toHaveCount(1);
+    expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    expect(compact(await s.locator('.hs__lead').textContent())).toContain('58.8%');
+    expect(compact(await s.locator('.hs__lead').textContent())).toContain('170 surveyed new earners');
+    expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
-  test('slide 6 is "Programs in 15 Countries and Territories" (the 15 is SC-03’s, in the heading), keeps SC-03’s detail line and has no second tile with the same 15', async ({ page }) => {
-    await open(page, '');
-    const s = slide(page, 6);
-    await expect(s.locator('h2')).toHaveText('Programs in 15 Countries and Territories');
-    expect('Programs in 15 Countries and Territories').toBe(titleCase('Programs in 15 Countries and Territories'));
+  // WP53 (owner decision 2026-10-16): the reach slide ("Programs in 15 Countries and Territories", SC-03's detail line) is gone; SC-03's "15" stays the register's value and the hero's reach card (SC-16) says the 15 countries and territories
+  test('the reach slide is gone: SC-03 is still "15" in the register, and no slide says "Programs in 15 Countries and Territories" or links "Explore Global Reach"', async ({ page }) => {
     expect(fact('SC-03').stat?.value).toBe('15');
-    expect(await s.locator('h2').getAttribute('data-fact')).toBe('SC-03');
-    expect(compact(await s.locator('.hs__lead').textContent())).toBe('Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh.');
-    await expect(s.locator('.hs__stat')).toHaveCount(0);
-    await expect(s.locator('a', { hasText: 'Explore Global Reach' })).toHaveCount(1);
+    await open(page, '');
+    const region = compact(await page.locator('#results').textContent());
+    expect(region).not.toContain('Programs in 15 Countries and Territories');
+    expect(region).not.toContain('Bangladesh plus 14 other countries and territories');
+    await expect(page.locator('#results a', { hasText: 'Explore Global Reach' })).toHaveCount(0);
   });
 
-  test('the carousel keeps seven slides, one height, and no horizontal overflow at 1280 and 390', async ({ page }) => {
+  test('the carousel keeps four slides, one height, and no horizontal overflow at 1280 and 390', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, '');
-      await expect(page.locator('[data-hs-slide]')).toHaveCount(7);
+      await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
       const heights = await page.locator('[data-hs-slide]').evaluateAll((els) => els.map((e) => Math.round((e as HTMLElement).scrollHeight)));
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       for (const h of heights) expect(h, `${vp.width}px`).toBeLessThanOrEqual(track + 1);

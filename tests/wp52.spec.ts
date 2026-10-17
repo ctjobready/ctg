@@ -197,19 +197,22 @@ test.describe('About: the 2025–2026 timeline entry is sentences, not a semicol
   });
 });
 
-test.describe('"Surveyed new earners" is defined where the 58.8% appears: Home slide 5 and the Impact tile (item 8)', () => {
+test.describe('"Surveyed new earners" is defined where the 58.8% appears: Home’s survey slide and the Impact tile (item 8)', () => {
   const DEFINITION = '(completers who first earned during or after training)';
   const SLIDE_CAPTION = `of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course (October 2026 survey)`;
+  // WP53 (owner decision 2026-10-16): the speed slide's tile caption is the survey slide's body line now, "58.8% " plus the caption without the label's "(October 2026 survey)", which the slide's own eyebrow ("Impact Survey 2026") says
+  const SLIDE_LINE = `58.8% of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course.`;
   const TILE_LABEL = `of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course, including 23.5% who first earned during the course`;
 
-  test('slide 5 keeps its heading and its caption defines the term: the register’s label with the definition inserted after it', async ({ page }) => {
+  test('the survey slide’s body line defines the term: the register’s label with the definition inserted after it', async ({ page }) => {
     expect(defineNewEarners(fact('OC-05').stat!.label)).toBe(SLIDE_CAPTION);
+    expect(SLIDE_LINE).toBe(`58.8% ${SLIDE_CAPTION.replace(' (October 2026 survey)', '')}.`);
     await open(page, HOME);
-    const s = slide(page, 5);
-    await expect(s.locator('h2')).toHaveText('Most Surveyed New Earners Were Earning by Six Months After the Course');
-    expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain('58.8%');
-    expect(compact(await s.locator('.hs__stat').textContent())).toContain(SLIDE_CAPTION);
+    const s = slide(page, 3);
+    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
+    expect(compact(await s.locator('.hs__lead').textContent())).toBe(SLIDE_LINE);
+    await expect(s.locator('.hs__stat')).toHaveCount(1);
   });
 
   test('the Impact tile defines it too, from the register’s glance label', async ({ page }) => {
@@ -234,12 +237,13 @@ test.describe('"Surveyed new earners" is defined where the 58.8% appears: Home s
     expect(() => defineNewEarners('of the 170 completers had started earning')).toThrow(/no longer says/);
   });
 
-  test('slide 5 still fits the carousel at 1280 and 390 (the unused-space budget is held by tests/hero-slider.spec.ts)', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the slide that states the 58.8% is the survey slide (slide 3)
+  test('the survey slide (slide 3) still fits the carousel at 1280 and 390 (the unused-space budget is held by tests/hero-slider.spec.ts)', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, HOME);
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
-      expect(await slide(page, 5).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: slide 5 fits its track`).toBeLessThanOrEqual(track + 1);
+      expect(await slide(page, 3).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: slide 3 fits its track`).toBeLessThanOrEqual(track + 1);
     }
   });
 });
@@ -402,8 +406,8 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(
       'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.',
     );
-    // the Bangladesh band’s heading ("Reference Country and 2030 Aim") is not the item’s subject and is unchanged
-    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Reference Country and 2030 Aim');
+    // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it is "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
+    await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
     expect(pagesWith('reference implementation')).toEqual([]);
     // the YouthWIDE service node in the page’s JSON-LD carries IN-02’s text
     const blobs = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -433,12 +437,13 @@ test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 re
     expect(pagesWith('Four programs, each with its partner', 'in work (2,500 trained directly)')).toEqual([]);
   });
 
-  test('slides 2, 4 and 5 fit the carousel at 1280 and 390, and the page does not scroll sideways', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): the carousel is four slides; the slide that had been the fifth (the speed slide) is the survey slide's body line now (slide 3)
+  test('slides 2, 3 and 4 fit the carousel at 1280 and 390, and the page does not scroll sideways', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, HOME);
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
-      for (const n of [2, 4, 5]) expect(await slide(page, n).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: slide ${n} fits its track`).toBeLessThanOrEqual(track + 1);
+      for (const n of [2, 3, 4]) expect(await slide(page, n).evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: slide ${n} fits its track`).toBeLessThanOrEqual(track + 1);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });
@@ -523,10 +528,11 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
     expect(compact(await slide(page, 1).locator('.hs__proof').textContent())).toContain('>4×');
   });
 
-  test('"Placement support into local, remote and global work, with outcome tracking for 12 months after each course."', async ({ page }) => {
+  // WP53 (owner follow-up, 2026-10-16): the card said "local, remote and global work" in its title and again in its text; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
+  test('"Placement support and outcome tracking for 12 months after each course." (the title says "local, remote and global work" once)', async ({ page }) => {
     await open(page, DP);
     const card = page.locator('#mechanism li', { has: page.locator('.model__title', { hasText: 'Local, Remote and Global Work' }) });
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support into local, remote and global work, with outcome tracking for 12 months after each course.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course.');
     expect(pagesWith('local, remote, overseas and freelance work')).toEqual([]);
   });
 

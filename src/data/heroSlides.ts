@@ -1,15 +1,14 @@
 import { fact, type Fact } from './facts';
-import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION, defineNewEarners } from './copy';
-import { navGroups, type NavLink } from './nav';
+import { HEADLINE, VALUE_PROPOSITION, defineNewEarners } from './copy';
 import { cta } from '../lib/mailto';
 
 /**
- * The home hero (WP17, hybrid) and the "Results and Programs" carousel below it (WP13, WP13b; rendered by src/components/sections/HeroSlider.astro,
+ * The home hero (WP17, hybrid) and the "Results" carousel below it (WP13, WP13b; headed "Results and Programs" until WP53; rendered by src/components/sections/HeroSlider.astro,
  * driven by src/scripts/heroSlider.ts). Every figure is read from the facts register at build time (fact(id).stat, or <Fact> for a register
  * sentence); no number is typed here.
  * HOME_HERO is the stable hero: the page's only h1, one value proposition, one primary action, one text link, the audience links and the three
- * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7): the trial first, then (WP42, cycle-19 review) the government contracts and the National University partnership, then survey income,
- * program results (named programs), speed to earning, reach, and the programs (employment programs first, SuperKids last).
+ * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7; four since WP53, owner decision 2026-10-16): the trial first, then (WP42, cycle-19 review) the government contracts and the National University partnership,
+ * then the Impact Survey 2026 (income, with the timing of first earnings as one body line), then the results by program (named programs).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
  * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
  * WP23: the survey slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
@@ -17,7 +16,7 @@ import { cta } from '../lib/mailto';
  * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
  * with its own measure (67% found a first job within three months, never "in work"; PR-03).
  * WP31 (cycle-8 reviews): the trial slide states the offered-place results only (two sentences); the survey-income slide is headed as what surveyed completers
- * report and has no lead; the last slide is "Find Your Program".
+ * report and had no lead (WP53: it has one body line, OC-05's timing); the last slide was "Find Your Program" (WP53: gone; the last slide is "Results by Program").
  * WP35 (cycle-12 review): the program-results slide no longer lists WSDFM (its 71% in work is program records, and read beside the trial's 63.1% it looked like a second result for the same
  * program; the case card and the case study keep it), so it lists three programs; the survey proof card on the hero says in its caption that the survey is of surveyed completers in Bangladesh
  * (OC-09: 58 of 64 districts). The caption, not the eyebrow, carries it: "Impact Survey 2026 in Bangladesh" wraps to two lines in the three-column range (768 to about 950 px) and pushes that card's figure out of line.
@@ -45,6 +44,10 @@ import { cta } from '../lib/mailto';
  * WP52 (cycle-27 reviews): the speed slide's caption defines the term it uses, "surveyed new earners (completers who first earned during or after training)" (defineNewEarners in copy.ts); the government slide's body is "... work scoped for 31,200+ people.
  * This is contract scope, not a count of completers. CodersTrust is also the official training partner of ..." (three sentences); the program-results lead is "Four delivered programs, each with its partner, ...". The hero's value proposition
  * (VALUE_PROPOSITION.home) begins "We help ...".
+ * WP53 (owner decision 2026-10-16, "Trim it": the cycle-27 Claude proposal): the carousel is four slides, not seven. The reach slide ("Programs in 15 Countries and Territories") and the programs slide ("Find Your Program") are deleted (the reach figure
+ * stays in the hero's "Proof at a Glance" strip; the Programs menu, the role router and the Programs page cover the programs), and the two Impact Survey slides are one: the income slide ("Surveyed Completers Report Higher Income", with its $245 tile) takes the
+ * timing slide's finding as one body line (OC-05 with its defined base; see surveyTiming). The notes above about the speed, reach and programs slides are the history of wording that is gone, or that the survey slide's line inherits.
+ * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
  */
 
 export interface HeroSlideStat {
@@ -78,29 +81,11 @@ export interface HeroSlide {
   stats?: HeroSlideStat[];
   /** One figure on a Klein-blue band (the evidence proof): a card over the photograph on desktop, under it on phones. */
   proof?: HeroSlideStat;
-  /** Program links, in a grid. */
-  programs?: NavLink[];
   links?: HeroSlideLink[];
   /** First slide only: audience links above the heading. */
   audience?: { label: string; href: string }[];
   /** Key of the photograph registry (src/data/photos.ts, photo()). */
   photo: string;
-}
-
-/** Program links, in slide order. Labels and one-line descriptors are the navigation's own (src/data/nav.ts), so the two stay in step. */
-const PROGRAM_HREFS = ['/programs/youthwide/', '/programs/jobready-campus/', '/programs/jobready-work/', '/programs/nu-postgraduate-diploma/', '/programs/superkids/'] as const;
-
-function navLink(href: string): NavLink {
-  const item = navGroups.flatMap((g) => g.items).find((i) => i.href === href);
-  if (!item) throw new Error(`heroSlides: no navigation entry for ${href}`);
-  return item;
-}
-
-/** Slide 7 names the NU Postgraduate Diploma for individual learners and states admissions' eligibility sentence (NU-01) as the menu does (WP27); the menu's lead-in is "Eligibility:", the slide's is its audience. */
-const NU_SLIDE_HREF = '/programs/nu-postgraduate-diploma/';
-function slideLink(href: string): NavLink {
-  const item = navLink(href);
-  return href === NU_SLIDE_HREF ? { ...item, description: `For individual learners: ${NU_ELIGIBILITY}.`, factIds: ['NU-01'] } : item;
 }
 
 /** The before-training figure of a survey fact (stat.from), for a caption such as "up from 47.4% before training". */
@@ -138,14 +123,6 @@ if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N trac
 const herPowerDirect = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: \d+%$/.exec(fact('PR-05').stat?.label ?? '')?.[1];
 if (!herPowerDirect) throw new Error('heroSlides: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
 /**
- * The reach slide's one line (WP36): SC-03's own detail, "Bangladesh plus 14 other countries and territories; most delivery has been in Bangladesh." The 130,000+ is the hero's reach card, so the slide does not state it again.
- * WP45 (cycle-21 review): the heading states the figure ("Programs in 15 Countries and Territories", SC-03's stat value, never typed here), so the slide no longer carries SC-03's tile as well: the same "15" would sit twice in the same few lines.
- */
-const reachDetail = fact('SC-03').stat?.detail;
-if (!reachDetail || !/^Bangladesh plus \d+ other countries and territories; most delivery has been in Bangladesh\.$/.test(reachDetail)) throw new Error('heroSlides: SC-03 detail no longer reads "Bangladesh plus N other countries and territories; most delivery has been in Bangladesh."');
-const reachCount = fact('SC-03').stat?.value;
-if (!reachCount || !/^\d+$/.test(reachCount)) throw new Error('heroSlides: SC-03 value no longer reads as a plain count of countries and territories');
-/**
  * GV-12 reads "Six government contracts with training and curriculum work scoped for 31,200+ people; official training partner of Bangladesh’s National University for
  * digital career skills and credentials, onboarding 1.5M+ learners" (WP31: the National University relationship is worded as SC-04 words it, on every page).
  * WP47 (cycle-22 review): "work scoped for" where it read "scopes covering", which could be read as people served.
@@ -164,7 +141,15 @@ if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six go
 const governmentNote = fact('GV-12').stat?.glance?.note;
 const contractScope = /^The figure is (contract scope, not a count of completers)\./.exec(governmentNote ?? '')?.[1];
 if (!contractScope) throw new Error('heroSlides: GV-12 glance note no longer opens "The figure is contract scope, not a count of completers. ..."');
-if (!fact('OC-05').stat?.value) throw new Error('heroSlides: OC-05 no longer carries the figure the speed slide shows (its tile; the heading does not state it, WP41)');
+/**
+ * The survey slide's timing line (WP53, owner decision 2026-10-16): OC-05's value and label with the term defined where it appears (defineNewEarners, WP52), as one sentence:
+ * "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course."
+ * The label's closing "(October 2026 survey)" is left off: the slide's eyebrow says "Impact Survey 2026". Read from the register, never retyped; the build stops if OC-05's value or label changes shape.
+ */
+const timing = fact('OC-05').stat;
+const timingBase = timing?.label.replace(/ \(October 2026 survey\)$/, '');
+if (!timing || !/^\d+(?:\.\d+)?%$/.test(timing.value) || !timingBase || timingBase === timing.label) throw new Error('heroSlides: OC-05 no longer has a percentage value and a label ending "(October 2026 survey)"; update the timing line of the survey slide');
+const surveyTiming = `${timing.value} ${defineNewEarners(timingBase)}.`;
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
 /** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
 const firstJob = /^of the (\d+) trained found their first job within three months$/.exec(fact('PR-03').stat?.label ?? '');
@@ -174,9 +159,9 @@ const kosovoBase = fact('PR-02').stat?.value;
 if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
 /**
  * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% in work")
- * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the slide before the program results is the
- * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px: the slide may not be taller than "Find Your Program", or every other slide leaves more than 48 px unused below its content
- * (tests/hero-slider.spec.ts). The program's full name, which would need a second line, is on the Proof in Practice card below.
+ * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the first slide is the
+ * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
+ * slide that used to set the carousel's height is gone, WP53, and this slide's copy is now the tallest). The program's full name, which would need a second line, is on the Proof in Practice card below.
  */
 const wsdfmLabel = fact('PR-01').stat?.label ?? '';
 const wsdfmBase = fact('PR-01').stat?.value;
@@ -277,7 +262,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP39 (cycle-16 review): the heading says the finding and whose it is; the figure and its before-training comparison are the tile's ($245, "up from $82 before training"), so the heading no longer states them a second time.
     title: 'Surveyed Completers Report Higher Income',
     titleFacts: ['OC-03'],
-    // No lead (WP31): the heading says whose finding this is, and the tile's caption says it again.
+    // WP53 (owner decision 2026-10-16, "trim the carousel"): this is now the carousel's one survey slide. It takes over the finding of the former timing slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") as ONE body line, OC-05's
+    // 58.8% with its defined base (see surveyTiming), under the heading and above the income tile. The heading, the eyebrow, the $245 tile and the evidence link are unchanged. The body line is the owner's first choice; a second small tile
+    // (the component supports two) was the alternative and is not used. The line was the tile's caption before; it is the lead now, so the slide still states 58.8% once.
+    lead: surveyTiming,
+    leadFacts: ['OC-05'],
     // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
@@ -303,46 +292,5 @@ export const HOME_SLIDES: HeroSlide[] = [
     ],
     links: [{ label: 'See the Case Studies', href: '/impact/case-studies/', variant: 'primary' }],
     photo: 'general/yes-trainees-group',
-  },
-  {
-    id: 'fast-to-earning',
-    eyebrow: 'Impact Survey 2026',
-    // WP36 and WP38 (cycle-13 and cycle-15 reviews) worded the heading as the figure plus its base ("58.8% of Completers Who Started Earning Began Within Six Months"). WP41 (cycle-18 reviews): the heading is the finding alone,
-    // "First Earnings Within Six Months", with no percentage; the tile carries the 58.8% with its base (the 170 surveyed completers who first earned during or after training), and the eyebrow ("Impact Survey 2026") and the tile
-    // name the surveyed completers. WP43 (cycle-20 review): no lead; the sentence under the heading ("Among surveyed completers who first earned during or after training, most started within six months.") said what the heading
-    // and the tile already say, so the slide is its heading, the tile with its full base, and the evidence link.
-    // WP45 (cycle-21 review): "Most First Earnings Came Within Six Months" says it is a majority of the survey's first earnings (58.8% of the 170 surveyed completers who first earned during or after training), not a promise that earnings begin within six months.
-    // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the END of the course, so the heading says so ("... of the Course Ending"); the tile's caption (OC-05's label) says "of finishing the course".
-    // WP48 (cycle-23 review, a logic error WP46 introduced): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, who cannot have started "within six months of the course ending"; the heading says what the figure counts,
-    // "Most Had Started Earning by Six Months After the Course", and the tile's caption (OC-05's label) says "had started earning by six months after finishing the course".
-    // WP51 (cycle-26 review): the heading names the subgroup, in the register's own term for it (OC-05's label: "the 170 surveyed new earners"): "Most Surveyed New Earners Were Earning by Six Months After the Course" (still cumulative: "by ... after").
-    title: 'Most Surveyed New Earners Were Earning by Six Months After the Course',
-    titleFacts: ['OC-05'],
-    // WP52 (cycle-27 review): the caption defines the term where the 58.8% appears ("... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course (October 2026 survey)"),
-    // so the figure is not read as a share of all completers. The caption is OC-05's label with the definition inserted (defineNewEarners); the register's label is unchanged.
-    stats: [{ factId: 'OC-05', caption: (f) => defineNewEarners(f.stat?.label ?? '') }],
-    links: [{ label: 'See When Completers First Earn', href: '/impact/outcomes-2026/', variant: 'primary' }],
-    photo: 'general/lab-women-screen',
-  },
-  {
-    id: 'scale',
-    eyebrow: 'Reach at Scale', // WP30c (cycle-7 review, GLM): the slide states reach (people trained), which is an output, not impact
-    // WP36 (cycle-13 review): the hero's "Reach Since 2014" card states the 130,000+ and the 15 countries and territories, so this slide points to where the programs ran and carries SC-03's detail line only.
-    // WP45 (cycle-21 review): the heading states the finding and its figure ("Programs in 15 Countries and Territories", SC-03), so the SC-03 tile of WP38 is gone: it said the same "15" a second time.
-    title: `Programs in ${reachCount} Countries and Territories`,
-    titleFacts: ['SC-03'],
-    lead: reachDetail,
-    leadFacts: ['SC-03'],
-    links: [{ label: 'Explore Global Reach', href: '/impact/global-reach/', variant: 'primary' }],
-    photo: 'general/albania-trainees-group', // WP21: a photograph from one of the programs abroad; the madrasah photograph is no longer a placement for this slide
-  },
-  {
-    id: 'programs',
-    eyebrow: 'Our Programs',
-    title: 'Find Your Program',
-    // No lead: the title and the five program links say it, and a lead would make this the tallest slide by more than the layout test allows (WP19).
-    programs: PROGRAM_HREFS.map(slideLink),
-    links: [{ label: 'Explore Programs', href: '/programs/', variant: 'primary' }],
-    photo: 'general/computer-lab-rows',
   },
 ];
