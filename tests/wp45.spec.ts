@@ -149,12 +149,14 @@ test.describe('Home: the speed and reach slides (items 16 and 28; WP53: they are
   });
 
   // WP53 (owner decision 2026-10-16): the reach slide ("Programs in 15 Countries and Territories" then, SC-03's detail line) is gone; SC-03 stays the register's value and the hero's reach card (SC-16) says the countries and territories.
-  // WP55 (owner decision 2026-10-18): the count is 17 (Egypt and Benin added), so the guards below name 17 and 16 other.
-  test('the reach slide is gone: SC-03 is still "17" in the register, and no slide says "Programs in 17 Countries and Territories" or links "Explore Global Reach"', async ({ page }) => {
-    expect(fact('SC-03').stat?.value).toBe('17');
+  // WP55 (owner decision 2026-10-18): the count was 17 (Egypt and Benin added). WP56 (owner decision 2026-10-18, Somalia merged into Somaliland): it is 16, so the guards below name 16 and 15 other, and still refuse the earlier counts.
+  test('the reach slide is gone: SC-03 is still "16" in the register, and no slide says "Programs in 16 Countries and Territories" (or the earlier 17) or links "Explore Global Reach"', async ({ page }) => {
+    expect(fact('SC-03').stat?.value).toBe('16');
     await open(page, '');
     const region = compact(await page.locator('#results').textContent());
+    expect(region).not.toContain('Programs in 16 Countries and Territories');
     expect(region).not.toContain('Programs in 17 Countries and Territories');
+    expect(region).not.toContain('Bangladesh plus 15 other countries and territories');
     expect(region).not.toContain('Bangladesh plus 16 other countries and territories');
     await expect(page.locator('#results a', { hasText: 'Explore Global Reach' })).toHaveCount(0);
   });
