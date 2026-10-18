@@ -32,6 +32,9 @@ const sdgs = [
   { n: 9, label: 'Industry and Innovation', core: false },
   { n: 10, label: 'Reduced Inequalities', core: false },
 ];
+// WP57 (cycle-29 review, Kimi K3, item K1): the closing band's heading is one constant for the band and its last jump entry; the discovery CTA is read here, above the list, because a withheld CTA draws no band and so no entry.
+const d = discoveryCta();
+const CLOSING_HEADING = 'Discuss the Evidence for Your Program';
 // WP31: the jump labels are the headings they jump to (a short form only where the heading is long: the part before the comma), and every heading has one.
 // WP42 (cycle-19 review): the goals entry is the full heading, "Seven Global Goals, Three at the Core": its short form dropped the qualifier that says which goals are the focus.
 const onThisPage = [
@@ -41,6 +44,8 @@ const onThisPage = [
   { label: 'Four Kinds of Evidence', href: '#evidence-ladder' },
   { label: 'Where We Are Heading', href: '#heading' },
   { label: 'Seven Global Goals, Three at the Core', href: '#sdg' },
+  // the closing band is the last entry, as About's list ends on its own ("Start a Conversation"): its label is its heading, its id (#cta) the anchor
+  ...(d.href ? [{ label: CLOSING_HEADING, href: '#cta' }] : []),
 ];
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
@@ -48,7 +53,6 @@ const wsdfmLabel = wsdfmFigureLabel();
 // WP52 (cycle-27 review): the 58.8% tile defines "surveyed new earners" where the figure appears ("... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course,
 // including 23.5% who first earned during the course"), so it is not read as a share of all completers. It is OC-05's glance label with the definition inserted (defineNewEarners); the register's labels are unchanged.
 const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
-const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Impact You Can Verify')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
@@ -145,7 +149,7 @@ const d = discoveryCta();
     </ul>
   </Section>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading={CLOSING_HEADING} text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

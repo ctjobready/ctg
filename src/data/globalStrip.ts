@@ -1,7 +1,7 @@
 import { fact } from './facts';
 
 /**
- * "CodersTrust Around the World" (WP55, owner decisions 2026-10-17/18; synthesis 3.1): the chronological strip of seven tiles on Home and About, and its three-tile short form in the audience pages' "Our Track Record" band.
+ * "CodersTrust Around the World" (WP55, owner decisions 2026-10-17/18; synthesis 3.1): the chronological strip of seven tiles on Home and About, and its three-tile short form in the audience pages' "Our Track Record" band (WP57: the short form leads with Kosovo, then Copenhagen and Dubai).
  * Each tile is one line, place and date first: the date and the line are the register's (TL-01 to TL-06: `stat.value` is the date, `stat.label` the line; the photographs and their captions are in src/data/photos.ts), so no
  * wording or date is typed here. The strip ends on Bangladesh, the country where most delivery has been: that tile's line is SC-03's own clause, "most delivery has been in Bangladesh".
  * TL-07 (the 2015–2016 Rockefeller Foundation grant for a feasibility study in Kenya and Nigeria) is not a tile: it is a line of the About timeline (src/data/timeline.ts), and Nigeria is not a location.
@@ -55,5 +55,8 @@ const TILES: Record<string, StripTile> = {
 /** The full strip: Home and About. */
 export const WORLD_STRIP: StripTile[] = ['copenhagen', 'dubai', 'somaliland', 'kosovo', 'albania', 'new-york', 'bangladesh'].map((id) => TILES[id]);
 
-/** The short form for the audience pages (Development Partners, Governments, Foundations): the launch, the Gulf and the first World Bank program. Somaliland is the Development Partners hero, so no photograph repeats on that page. */
-export const WORLD_STRIP_SHORT: StripTile[] = ['copenhagen', 'dubai', 'kosovo'].map((id) => TILES[id]);
+/**
+ * The short form for the audience pages (Development Partners, Governments, Foundations): the first World Bank program, then the launch and the Gulf. WP57 (cycle-29 review, GPT-6.1 Sol G5): it opens with Kosovo, a World Bank program,
+ * and not with the two launch events that date order puts first; Home and About keep the chronological strip above. Somaliland is the Development Partners hero, so no photograph repeats on that page.
+ */
+export const WORLD_STRIP_SHORT: StripTile[] = ['kosovo', 'copenhagen', 'dubai'].map((id) => TILES[id]);

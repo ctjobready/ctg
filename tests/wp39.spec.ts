@@ -41,7 +41,7 @@ interface CardSpec {
   title: string;
   text: string;
   facts: string[];
-  /** The ranked pain the card answers (Home, YouthWIDE and Local Partners only). */
+  /** The ranked pain the card answers (Local Partners only here: Home is not in this list, and YouthWIDE has had no C8 band since WP57). */
   pain?: string;
 }
 interface PageSpec {
@@ -142,31 +142,7 @@ const PAGES: PageSpec[] = [
       },
     ],
   },
-  {
-    route: 'programs/youthwide/',
-    h2: 'Built Around What Funders and Agencies Ask',
-    cards: [
-      {
-        title: 'Placement Support and Mentoring',
-        // WP54 (cycle-28 review, Claude S25): "agreed before enrollment" (it said "approved")
-        text: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track agreed before enrollment. Success is measured against agreed outcomes, including paid work, not attendance alone.',
-        facts: ['PD-15', 'PD-01', 'PD-19'],
-        pain: 'P1',
-      },
-      {
-        title: 'Results Your Evaluators Can Check',
-        text: 'A baseline, monthly reports and follow-up surveys, as agreed in the program scope. Your evaluators can check results against payslips, offer letters, platform logs or bank receipts where available.',
-        facts: ['PD-08', 'PD-09'],
-        pain: 'P2',
-      },
-      {
-        title: 'Tracks That Follow Employer Demand',
-        text: 'An AI-ready curriculum, with entry-level tracks set per country from employer demand, designed to keep pace as AI changes entry-level tasks.',
-        facts: ['PD-02', 'PD-10'],
-        pain: 'P3',
-      },
-    ],
-  },
+  // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band ("Built Around What Funders and Agencies Ask") is gone; tests/wp57.spec.ts holds the page to having no C8 band and its Reporting row
   {
     route: 'programs/jobready-campus/',
     h2: 'Built Around What Institutions Ask For',
@@ -213,8 +189,9 @@ test.describe('"What You Get" is three short cards on every audience and program
     }
   });
 
-  test('YouthWIDE and Local Partners keep their one-to-one map: three ranked pains in C2, three cards in C8, P1 to P3 in order', async ({ page }) => {
-    for (const route of ['programs/youthwide/', 'partner-with-us/local-partners/']) {
+  // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE has no C8 band any more, so only Local Partners keeps the one-to-one map; YouthWIDE states its three ranked pains in C2 alone (tests/wp57.spec.ts)
+  test('Local Partners keeps its one-to-one map: three ranked pains in C2, three cards in C8, P1 to P3 in order', async ({ page }) => {
+    for (const route of ['partner-with-us/local-partners/']) {
       await open(page, route);
       const pains = await page.locator('#problem [data-pain]').evaluateAll((els) => els.map((e) => e.getAttribute('data-pain')));
       const relieves = await page.locator('#features [data-relieves]').evaluateAll((els) => els.map((e) => e.getAttribute('data-relieves')));
@@ -415,7 +392,8 @@ test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 an
     await expect(page.locator('#program-glance-h')).toHaveText('YouthWIDE at a Glance');
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     await expect(row).toHaveCount(1);
-    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports, follow-up surveys and documentary evidence of earnings where available, as agreed in the program scope.');
+    // WP57 (cycle-29 review, GPT-6.1 Sol G2): the removed C8 card's verification detail is in this row
+    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with earnings checked against payslips, offer letters, platform logs or bank receipts where available, as agreed in the program scope.');
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
   });
 

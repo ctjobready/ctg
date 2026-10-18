@@ -5,7 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
-import { WB_KOSOVO } from '../../../data/copy';
+import { KOSOVO_RECORDS, WB_KOSOVO } from '../../../data/copy';
 import { caseBySlug } from '../impact/case-studies';
 
 interface CardPhoto {
@@ -53,10 +53,13 @@ export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, '
  * WP51 (cycle-26 review): that slide now shows "711 of 1,000 ... 71% in work", so the WSDFM card repeated it: like the Kosovo and Her Power cards, it shows a line of delivery context in the figure's place. The line is the case study's own
  * scope (CASE_STUDIES: "ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring"), read from there so the card and the case-study card cannot drift apart. Home is the only page that passes these items: Development
  * Partners, Foundations, Local Partners and YouthWIDE list their own cards (no `context`), so they keep the figure and its caption (CASE_CARD_LABELS).
+ * WP57 (cycle-29 review, Gemini GM4; owner decision 7, "show both"): the Kosovo card is the exception to the delivery-context rule: its `context` line is the program records ("Program records: 102 of 150 women in work.") and its `note` the World Bank's
+ * figure, so the card shows both Kosovo figures itself (the slide's line stays as it is).
  */
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: `${caseBySlug('wsdfm-women-freelancers').scope}.`, href: '/impact/case-studies/wsdfm-women-freelancers/' },
-  // WP55 (owner decision 2026-10-17, "Show both"): the slide above states the program records (102 of 150); this card adds the World Bank's own figure in one line (WB_KOSOVO).
-  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: 'Digital literacy followed by real online work.', note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
+  // WP55 (owner decision 2026-10-17, "Show both"): this card adds the World Bank's own figure in one line (WB_KOSOVO). WP57 (cycle-29 review, Gemini GM4): the card showed only that line, with the program records in the slide far above it, so
+  // it now shows both: "Program records: 102 of 150 women in work." (KOSOVO_RECORDS, PR-02) where the delivery-context line was ("Digital literacy followed by real online work."), then the World Bank's line.
+  { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: KOSOVO_RECORDS.text, contextFacts: KOSOVO_RECORDS.facts, note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
   { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
 ];

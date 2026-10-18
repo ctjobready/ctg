@@ -107,7 +107,8 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     // (WP42, cycle-19 review: the government slide is the second slide)
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
     // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."; WP48, cycle-23 review: the slide keeps the note's first clause, "31,200+ people: contract scope, not a count of completers.")
-    expect(slide2).toContain('31,200+ people. This is contract scope, not a count of completers');
+    // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
+    expect(slide2).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);

@@ -153,13 +153,14 @@ test.describe('the due-diligence item on the five audience pages', () => {
     });
   }
 
-  test('the hub keeps the full "Due Diligence in One View" (the same component, not changed), and Employers keeps its four rows', async ({ page }) => {
+  // WP57 (cycle-29 review, GPT-6.1 Sol G7): Employers' compact view is three rows now (its "Independent Evaluation Welcome" row is gone; tests/wp57.spec.ts); the hub keeps all four
+  test('the hub keeps the full "Due Diligence in One View" (the same component, not changed), and Employers keeps its compact view of three rows', async ({ page }) => {
     await open(page, 'partner-with-us/');
     await expect(page.locator('#due-diligence h2')).toHaveText('Due Diligence in One View');
     await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(4);
     await open(page, 'partner-with-us/employers/');
     await expect(page.locator('#due-diligence h2')).toHaveText('Due Diligence in One View');
-    await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(4);
+    await expect(page.locator('#due-diligence .ddv__item')).toHaveCount(3);
   });
 
   // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout, the one place the page names the quarterly reviews

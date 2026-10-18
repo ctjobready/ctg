@@ -217,8 +217,10 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
   // WP48 (cycle-23 review): the note reads "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly." (it was "The total is ... ; it includes Her Power’s national program, which trained ...")
   const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 
-  // WP51 (cycle-26 review, Kimi m2): the Governments tile keeps the note's first sentence and points to its contracts table; the Impact tile reads the register note
-  test('the register’s GV-12 note and the Impact tile read the same note, the Governments tile keeps its first sentence, and Home slide 2 keeps its first clause; no page still says "(25,125 women trained)"', async ({ page }) => {
+  // WP51 (cycle-26 review, Kimi m2): the Governments tile kept the note's first sentence and pointed to its contracts table; the Impact tile reads the register note.
+  // WP57 (cycle-29 review, Grok R2 with Gemini GM1): R2 restores the note's WP35 wording on the Governments tile and Home slide 2 ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), which WP46
+  // had retired so the 25,125 is not read as CodersTrust's own count; the two pages that print it say "Her Power’s national program", and the Impact tile keeps the register's note, which adds that CodersTrust trained 2,500 women directly.
+  test('the register’s GV-12 note and the Impact tile read the same note; the Governments tile and Home slide 2 say the total includes Her Power’s national program (25,125 women trained), and only those two pages say it', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
     // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('trained 25,125 women');
@@ -229,14 +231,13 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(NOTE);
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe('The figure is contract scope, not a count of completers. The contracts table below shows each scope.');
+    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    // WP48 (cycle-23 review): Home slide 2 keeps only the note's first clause ("contract scope, not a count of completers"), read from the note; the Impact and Governments tiles above keep the whole note (tests/wp48.spec.ts)
-    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
-    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route).sort()).toEqual(['/', '/partner-with-us/governments/']);
   });
 });
 

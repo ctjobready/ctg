@@ -49,7 +49,8 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await expect(page.locator('#explore')).toHaveCount(0);
     expect(await mainText(page)).not.toContain('Go Deeper');
     // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
-    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Five Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core']);
+    // WP57 (cycle-29 review, Kimi K3, item K1): the closing band is the last entry (tests/wp57.spec.ts)
+    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Five Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Discuss the Evidence for Your Program']);
     expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education, Gender Equality, and Decent Work and Economic Growth');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
@@ -74,10 +75,11 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   });
 
   // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the register note's first sentence and points to its contracts table, which states Her Power's two figures; Impact keeps the whole note (tests/wp51.spec.ts)
-  test('the 31,200+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments points to its contracts table', async ({ page }) => {
+  test('the 31,200+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
     const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
-    const GOV_NOTE = 'The figure is contract scope, not a count of completers. The contracts table below shows each scope.';
+    // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained)
+    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
     await open(page, 'partner-with-us/governments/');
@@ -419,7 +421,8 @@ test.describe('plain words and plain claims', () => {
   test('the Foundations meta description is one complete sentence within the SEO limit', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place had an estimated $27 higher monthly income.');
+    // WP57 (cycle-29 review, Kimi K3, item K2): "earned an estimated $27 more a month" (it said "had an estimated $27 higher monthly income")
+    expect(description).toBe('Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place earned an estimated $27 more a month.');
     expect(description!.length).toBeLessThanOrEqual(155);
   });
 });

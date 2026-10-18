@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { HEADLINE, VALUE_PROPOSITION } from './copy';
+import { CONTRACT_TOTAL_NOTE, HEADLINE, VALUE_PROPOSITION } from './copy';
 import { cta } from '../lib/mailto';
 
 /**
@@ -152,9 +152,10 @@ if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six go
  * The note itself now reads "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly." (WP48, cycle-23 review; it was "The total is contract scope, ...;
  * it includes Her Power's national program, which trained 25,125 women; ...").
  */
-const governmentNote = fact('GV-12').stat?.glance?.note;
-const contractScope = /^The figure is (contract scope, not a count of completers)\./.exec(governmentNote ?? '')?.[1];
-if (!contractScope) throw new Error('heroSlides: GV-12 glance note no longer opens "The figure is contract scope, not a count of completers. ..."');
+/*
+ * WP57 (cycle-29 review, Grok R2, with Gemini GM1): the slide says the total includes Her Power's national program again, in CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women
+ * trained)."; src/data/copy.ts reads the 25,125 from GV-01 and guards the clause against the register), which the Governments tile prints too. It replaces the WP48/WP52 sentence "This is contract scope, not a count of completers.", which left the 25,125 unsaid.
+ */
 /**
  * The survey slide's timing line (WP53, owner decision 2026-10-16; reworded in WP54, cycle-28 reviews, Claude S23 and GLM L1): OC-05's finding as one sentence that leads with its base, in the words of OC-05's own text:
  * "Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course."
@@ -266,8 +267,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // The 25,125 and the 2,500 are no longer on the slide, so the lead rests on GV-12 alone (the glance note's clause is GV-12's, as are the contracts and the National University sentence).
     // WP52 (cycle-27 reviews, Claude P1 and GLM m1): two sentences for the contracts, "... work scoped for 31,200+ people. This is contract scope, not a count of completers." (it was one sentence joined by a colon), and "CodersTrust is also the official
     // training partner of ..." for the university (the "also" keeps the two facts from reading as one scale; GV-12's "onboarding 1.5M+ learners" wording is unchanged).
-    lead: `${governmentScope[1]} for ${governmentScope[2]}. This is ${contractScope}. CodersTrust is also the ${governmentScope[3]}.`,
-    leadFacts: ['GV-12'],
+    // WP57 (cycle-29 review, Grok R2, with Gemini GM1): the second sentence is CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), so the lead rests on GV-12 and GV-01.
+    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${CONTRACT_TOTAL_NOTE.text} CodersTrust is also the ${governmentScope[3]}.`,
+    leadFacts: ['GV-12', 'GV-01'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },

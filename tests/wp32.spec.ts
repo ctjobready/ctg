@@ -210,7 +210,7 @@ test.describe('benefit lines start with a capital letter', () => {
     'partner-with-us/universities/',
     'partner-with-us/employers/',
     'partner-with-us/local-partners/',
-    'programs/youthwide/',
+    // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band is gone, so the page is not in this list
     'programs/jobready-campus/',
   ];
   test('every card sentence on the audience and program pages opens with a capital letter or a figure', async ({ page }) => {

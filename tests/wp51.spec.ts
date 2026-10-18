@@ -149,16 +149,17 @@ test.describe('Home: the survey slide names its subgroup (item 3; WP53: the spee
 test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery context (item 4)', () => {
   const CONTEXT = 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.';
 
-  test('all three cards show a context line in the figure’s place and the band names only the World Bank’s Kosovo figure (PR-02b, WP55); the WSDFM line is the case study’s own scope', async ({ page }) => {
+  test('all three cards show a context line in the figure’s place and the band names only the two Kosovo facts (PR-02 and PR-02b); the WSDFM line is the case study’s own scope', async ({ page }) => {
     expect(`${CASE_STUDIES.find((c) => c.slug === 'wsdfm-women-freelancers')!.scope}.`).toBe(CONTEXT);
     await open(page, '');
     const cards = page.locator('#cases article');
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
-    expect(await texts(page, '#cases .case__context')).toEqual([CONTEXT, 'Digital literacy followed by real online work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
+    // WP57 (cycle-29 review, Gemini GM4): the Kosovo card's context line is its program records
+    expect(await texts(page, '#cases .case__context')).toEqual([CONTEXT, 'Program records: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
-    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b); the band's wrapper and that line carry it. No program-record fact (PR-01, PR-02, PR-05) is named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02b', 'PR-02b']);
+    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WSDFM's and Her Power's facts (PR-01, PR-05) are not named.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 PR-02b', 'PR-02', 'PR-02b']);
   });
 
   test('the figure is stated once on Home, in slide 4, with its qualifier', async ({ page }) => {
@@ -447,14 +448,14 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work') || visible(p.html).includes('must produce young people in work, not only seats filled')).map((p) => p.route)).toEqual([]);
   });
 
-  test('the GV-12 tile keeps the register note’s first sentence and points to the contracts table (which states Her Power’s two figures); Impact keeps the full note', async ({ page }) => {
+  // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the tile's note is the shared "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)." (tests/wp57.spec.ts); the contracts table still states the 2,500 and the 130 sub-districts
+  test('the GV-12 tile says the total includes Her Power’s national program (25,125 women trained); Impact keeps the full register note; the contracts table below states the rest', async ({ page }) => {
     const FULL = fact('GV-12').stat?.glance?.note;
     expect(FULL).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
     await open(page, GOV);
     const tile = page.locator('#glance li', { hasText: '31,200+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The figure is contract scope, not a count of completers. The contracts table below shows each scope.');
-    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06');
-    await expect(tile).not.toContainText('25,125');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01');
     // the table is below the tile and states the two figures Her Power's note used to repeat
     const contracts = compact(await page.locator('#contracts').textContent());
     expect(contracts).toContain('CodersTrust trained 2,500 women directly.');

@@ -161,7 +161,8 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 16 countries and territories.');
     await expect(page.locator('.about-stats .factstat[data-fact="SC-03"] .stat__value')).toHaveText('16');
     await open(page, GLOBAL_REACH);
-    await expect(page.locator('main h1')).toHaveText('Delivered in 16 Countries and Territories');
+    // WP57 (cycle-29 review, Grok R1): the H1 is "Where We Have Worked: 16 Countries and Territories"; the page title keeps "Global Reach: 16 Countries and Territories"
+    await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect(await page.title()).toContain('Global Reach: 16 Countries and Territories');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/^Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');

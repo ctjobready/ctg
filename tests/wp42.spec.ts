@@ -346,8 +346,8 @@ test.describe('Home: the government slide is second (item 10)', () => {
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
-    // WP48 (cycle-23 review): the body is two sentences; the contract scope carries the clause "contract scope, not a count of completers" and the 25,125 and 2,500 are off the slide (tests/wp48.spec.ts)
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained)
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -418,10 +418,11 @@ test.describe('Home: the comparison table is one style (item 13)', () => {
 });
 
 test.describe('Impact: the jump list names the goals heading in full (item 15)', () => {
-  test('the last "On This Page" entry is the H2 it jumps to, and the others still open their headings', async ({ page }) => {
+  // WP57 (cycle-29 review, Kimi K3, item K1): the closing band ("Discuss the Evidence for Your Program", #cta) is now the last entry, so the goals entry is the one before it (tests/wp57.spec.ts)
+  test('the goals "On This Page" entry is the H2 it jumps to, and the others still open their headings', async ({ page }) => {
     await open(page, 'impact/');
     const links = await page.locator('nav[aria-label="On this page"] a').evaluateAll((els) => els.map((a) => ({ label: (a.textContent ?? '').replace(/\s+/g, ' ').trim(), id: (a.getAttribute('href') ?? '').replace(/^.*#/, '') })));
-    const goals = links[links.length - 1];
+    const goals = links[links.length - 2];
     expect(goals).toEqual({ label: 'Seven Global Goals, Three at the Core', id: 'sdg' });
     await expect(page.locator('#sdg-h')).toHaveText(goals.label);
     expect(goals.label).toBe(titleCase(goals.label));

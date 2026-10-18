@@ -83,8 +83,8 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
     await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
-    // WP48 (cycle-23 review): the body is two sentences, the contract scope with the clause that keeps it true, then the National University sentence; Her Power's 25,125 and the 2,500 are not on the slide (tests/wp48.spec.ts)
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    // WP48 (cycle-23 review): the body was two sentences, the contract scope with the clause that keeps it true, then the National University sentence; WP57 (cycle-29 review, Grok R2): the clause names Her Power's national program again (25,125 women trained)
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
   });
 
   // WP48 (cycle-23 review, three reviewers): the third scenario is "Employers Hiring from Your Cohort" ("AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; tests/wp48.spec.ts)

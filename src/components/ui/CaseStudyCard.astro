@@ -18,8 +18,11 @@ interface Props {
   /**
    * WP37 (cycle-14 review): one line of delivery context in the stat's place, for a card whose figure the same page already shows elsewhere (Home: the Results carousel
    * states the Kosovo and Her Power results). The card then shows no figure. Used only when there is no `stat`.
+   * WP57 (cycle-29 review, Gemini GM4): Home's Kosovo card puts its program-records line here ("Program records: 102 of 150 women in work.", KOSOVO_RECORDS), so the card shows both Kosovo figures (the World Bank's is its `note`).
    */
   context?: string;
+  /** WP57: the register facts the `context` line states, when it states any (data-fact on the line; the Kosovo card's "Program records: ..." line is PR-02's). */
+  contextFacts?: string[];
   /**
    * WP55 (owner decision 2026-10-17, "Show both"): one short line under the figure or the context, for a figure a second source reports for the same program. The Kosovo card says "World Bank: 77 trainees won at
    * least one online contract." under the program records (WB_KOSOVO, src/data/copy.ts); `facts` are the register facts the line states (data-fact).
@@ -28,7 +31,7 @@ interface Props {
   href: string;
   class?: string;
 }
-const { title, program, partner, image, imageAlt = '', assetId, stat, context, note, href, class: className } = Astro.props;
+const { title, program, partner, image, imageAlt = '', assetId, stat, context, contextFacts, note, href, class: className } = Astro.props;
 const a = linkAttrs(href);
 ---
 
@@ -45,7 +48,7 @@ const a = linkAttrs(href);
         {stat.evidence && <span class="case__evid">{stat.evidence}</span>}
       </p>
     )}
-    {!stat && context && <p class="case__context">{context}</p>}
+    {!stat && context && <p class="case__context" data-fact={contextFacts?.length ? contextFacts.join(' ') : undefined}>{context}</p>}
     {note && <p class="case__note" data-fact={note.facts.join(' ')}>{note.text}</p>}
     <h3 class="card__title"><a class="card__link" href={a.href} rel={a.rel}>{title}</a></h3>
     {(program || partner) && <p class="card__meta">{[program, partner].filter(Boolean).join(' · ')}</p>}

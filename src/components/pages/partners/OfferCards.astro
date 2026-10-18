@@ -11,6 +11,7 @@ import { pricingParts } from './partners';
  * and styling as OfferBand. No prices: budgets are shared in the discovery session.
  * WP50 (cycle-25 review): a band without a `lead` has none. It used to fall back to the pricing line ("Pricing is set per program, and we share an indicative budget in the discovery session."); every page passed its own lead, and
  * Employers' band now passes none, because its FAQ answer says the pricing once.
+ * WP57 (cycle-29 review, Grok R5): with no cards the band is its heading and lead alone (Universities: "Start with one campus: ..."), with no empty grid, no gap under the header (`flush`) and the small band padding.
  */
 interface Card {
   /** Anchor for an in-page route to this card. */
@@ -39,8 +40,10 @@ const { title, lead, cards, inclusions = false, recommended, eyebrow = 'Start', 
 const pricing = pricingParts();
 ---
 
-<Section id={id} tone="airy" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+<Section id={id} tone="airy" pad={cards.length === 0 && !inclusions ? 'sm' : undefined} aria-labelledby={`${id}-h`}>
+  <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} flush={cards.length === 0 && !inclusions} />
+  {
+    cards.length > 0 && (
   <div class:list={['grid-cards', cards.length === 2 && 'grid-cards--2']}>
     {
       cards.map((c, i) => (
@@ -57,6 +60,8 @@ const pricing = pricingParts();
       ))
     }
   </div>
+    )
+  }
   {
     inclusions && (
       <div class="oc__incl" data-reveal data-fact="PD-02 PD-02a">

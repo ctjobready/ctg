@@ -280,13 +280,14 @@ test.describe('"Agreed before enrollment" everywhere (item S25)', () => {
     expect(sitePages().filter((p) => /approved before enrollment/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
-  test('Home, TalentLEAP and YouthWIDE say "agreed before enrollment"', async ({ page }) => {
+  // WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card band, whose first card said "a work-entry plan per track agreed before enrollment" (PD-19), is gone; the page no longer states the work-entry plan at all
+  test('Home and TalentLEAP say "agreed before enrollment"; YouthWIDE no longer carries the removed card’s sentence', async ({ page }) => {
     await open(page, HOME);
     expect(await everything(page)).toContain('Each track’s work-entry plan is agreed before enrollment.');
     await open(page, TALENTLEAP);
     expect(await everything(page)).toContain('each track’s work-entry plan is agreed before enrollment.');
     await open(page, YOUTHWIDE);
-    expect(await everything(page)).toContain('a work-entry plan per track agreed before enrollment.');
+    expect(await everything(page)).not.toContain('a work-entry plan per track agreed before enrollment.');
   });
 });
 

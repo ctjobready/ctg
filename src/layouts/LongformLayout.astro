@@ -4,7 +4,10 @@ import { formatDate, isoDate } from '../lib/format';
 import { titleCase } from '../lib/titleCase.mjs';
 import type { BaseLayoutProps } from '../lib/layout';
 
-/** T4 Evidence / long-form: header, sticky table of contents, "Last updated". */
+/**
+ * T4 Evidence / long-form: header, sticky table of contents, "Last updated".
+ * WP57 (cycle-29 review, Grok P1): the table of contents' "On This Page" is an H2 (inside the box's summary, which stays the control that opens and closes it), as it is on the About pages; it was plain text in the summary.
+ */
 interface Props extends BaseLayoutProps {
   eyebrow?: string;
   /** H1 (defaults to `title`). */
@@ -46,7 +49,7 @@ const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.p
       (toc.length > 0 || Astro.slots.has('toc')) && (
         <div class="lf-toc" data-toc>
           <details class="lf-toc__box" open>
-            <summary>On This Page</summary>
+            <summary><h2 class="lf-toc__title">On This Page</h2></summary>
             <nav aria-label="On this page">
               <slot name="toc">
                 <ol role="list">
@@ -106,6 +109,13 @@ const { eyebrow, heading, lead, toc = [], updated, snapshot, ...base } = Astro.p
     min-height: 32px;
     display: flex;
     align-items: center;
+  }
+  /* the heading in the summary keeps the summary's look (bold, the heading colour, no margin) */
+  .lf-toc__title {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
   }
   .lf-toc ol {
     list-style: none;

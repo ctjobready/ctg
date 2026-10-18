@@ -63,17 +63,19 @@ const itemOf = (page: Page, question: string) => page.locator('#faq details, #fa
 const answerOf = async (page: Page, question: string) => compact(await itemOf(page, question).locator('.faq__a').textContent());
 
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
+// WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
+  'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
-  test('slide 2 body is the contract scope with its clause, then the National University sentence; no 25,125, no 2,500; the lead rests on GV-12 alone; the links stay', async ({ page }) => {
+  test('slide 2 body is the contract scope with its clause and Her Power’s national program (25,125 women trained), then the National University sentence; no 2,500; the lead rests on GV-12 and GV-01; the links stay', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12');
-    expect(compact(await s.textContent())).not.toMatch(/25,125|2,500|Her Power/);
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(compact(await s.textContent())).toContain('it includes Her Power’s national program (25,125 women trained)');
+    expect(compact(await s.textContent())).not.toMatch(/2,500/);
     await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -88,12 +90,13 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe(`${GV12_NOTE.split('. ')[0]}. The contracts table below shows each scope.`);
+    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
   });
 
-  test('no built page still prints the old note ("The total is contract scope ... it includes Her Power’s national program")', () => {
+  // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording
+  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on Home slide 2 and the Governments tile only', () => {
     const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
-    expect(hits.map((p) => p.route)).toEqual([]);
+    expect(hits.map((p) => p.route).sort()).toEqual(['/', '/partner-with-us/governments/']);
   });
 });
 

@@ -228,7 +228,8 @@ test.describe('Foundations', () => {
   test('the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66"', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const tile = page.locator('#glance .pg__lead a[data-fact="RC-04"]');
-    await expect(tile.locator('.pg__value')).toHaveText('+$27');
+    // WP57 (cycle-29 review, Grok R6): the figure reads "about +$27", as Home and the trial page say it
+    await expect(tile.locator('.pg__value')).toHaveText('about +$27');
     await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
   });
@@ -416,7 +417,8 @@ test.describe('option bands: program sizes are not a commitment', () => {
   // WP47 (cycle-22 review): a full sentence with its subject (it was "Program sizes, not a commitment: use the discovery session to choose ...")
   const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
 
-  for (const route of ['', 'partner-with-us/universities/', 'programs/jobready-campus/']) {
+  // WP57 (cycle-29 review, Grok R5): Universities' "Choose Where to Start" has no size cards, so it carries no program-sizes note either (its lead is one line; tests/wp57.spec.ts)
+  for (const route of ['', 'programs/jobready-campus/']) {
     test(`${route || 'Home'}: the option band opens with Home’s line`, async ({ page }) => {
       await open(page, route);
       expect(compact(await page.locator('#offer .sh__lead').textContent())).toContain(NOTE);
@@ -425,9 +427,9 @@ test.describe('option bands: program sizes are not a commitment', () => {
 
   // WP49 (cycle-24 review, item 28): a page that also carries the "What Does It Cost?" answer does not repeat its pricing sentence in the "Choose Where to Start" lead; Universities' lead is the note alone (tests/wp49.spec.ts)
   // WP51 (cycle-26 review): "Program options are shown without prices." described the website itself and is gone from JobReady@Campus' lead; the pricing statement under the options stays (tests/wp51.spec.ts)
-  test('Universities’ lead is the note alone (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone too, and its pricing statement stays beside the options', async ({ page }) => {
+  test('Universities’ lead is its one line, not the note (its cost answer is in the FAQ); JobReady@Campus’ lead is the note alone, and its pricing statement stays beside the options', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are set in the discovery session.');
     await open(page, 'programs/jobready-campus/');
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(NOTE);
     await expect(page.locator('#offer [data-fact="PD-02"]')).toHaveCount(1);

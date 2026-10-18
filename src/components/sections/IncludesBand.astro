@@ -7,8 +7,8 @@ import Icon from '../system/Icon.astro';
  * C8 "What You Get": three short cards, each a heading and one or two sentences (WP38, cycle-15 review: Home; WP39, cycle-16 review: every audience and program page; WP40, cycle-17 review: Investors, whose status
  * table became three cards too). The concern / inclusion / benefit table this replaced (FeaturesTable, with its labelled parts "Funder Concern Addressed", "What Is Included", "Practical Benefit") read as a matrix and is
  * gone from the site: the band states what the partnership includes, once, in this component.
- * The cards answer the page's three ranked pains (the C2 band) in that order. On Home, YouthWIDE and the local-partners page a card carries `data-relieves` ("P1" to "P3"), so scripts/check-facts.mjs keeps its
- * one-to-one map; `data-fact` ties a card to the register facts its sentences rest on (the status gate and the production holds read it). The band keeps its id (#features) and its place.
+ * The cards answer the page's three ranked pains (the C2 band) in that order. On Home and the local-partners page a card carries `data-relieves` ("P1" to "P3"), so scripts/check-facts.mjs keeps its
+ * one-to-one map (WP57, cycle-29 review: YouthWIDE no longer has this band, and the check allows that page to show none); `data-fact` ties a card to the register facts its sentences rest on (the status gate and the production holds read it). The band keeps its id (#features) and its place.
  * An optional `more` slot holds one text link under the cards (Investors: "See the Full Rollout Status").
  */
 interface Card {

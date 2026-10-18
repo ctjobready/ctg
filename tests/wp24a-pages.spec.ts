@@ -116,10 +116,11 @@ test.describe('the comparison table (Home)', () => {
 test.describe('home partner logo wall', () => {
   test('partners are grouped into four relationship cards, with "not endorsements" stated', async ({ page }) => {
     await page.goto('');
-    expect(await texts(page, '#guide .rel__title')).toEqual(['Funders and Development Partners', 'Government Programs', 'Education Partners', 'Employers']);
+    // WP57 (cycle-29 review, GPT-6.1 Sol P1): the fourth group holds AWS and BASIS beside the employers, so it is "Employers and Industry Partners"
+    expect(await texts(page, '#guide .rel__title')).toEqual(['Funders and Development Partners', 'Government Programs', 'Education Partners', 'Employers and Industry Partners']);
     await expect(page.locator('#guide .rel__caption')).toContainText('not endorsements');
     await expect(page.locator('#guide [data-marquee]'), 'no scrolling marquee').toHaveCount(0);
-    for (const label of ['Funders and development partners', 'Government program partners', 'Education partners', 'Employer and private-sector partners']) {
+    for (const label of ['Funders and development partners', 'Government program partners', 'Education partners', 'Employers and industry partners']) {
       await expect(page.locator(`#guide section.partners[aria-label="${label}"]`)).toHaveCount(1);
     }
   });

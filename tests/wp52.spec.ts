@@ -416,12 +416,13 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
 });
 
 test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
-  test('slide 2: "... work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of ..."', async ({ page }) => {
+  // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).")
+  test('slide 2: "... work scoped for 31,200+ people. The total is contract scope, ...; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people. This is contract scope, not a count of completers. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12');
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01');
   });
 
   test('slide 4: "Four delivered programs, each with its partner, ..." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
@@ -536,12 +537,16 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
     expect(pagesWith('local, remote, overseas and freelance work')).toEqual([]);
   });
 
-  test('"Choose Where to Start" has the eyebrow "Options" on Governments, Development Partners and Universities (the same pair); Employers and Foundations keep theirs', async ({ page }) => {
-    for (const route of [GOV, DP, UNI]) {
+  // WP57 (cycle-29 review, Grok R5): Universities' band is one line and has no eyebrow ("Options" named size cards it no longer has); Governments and Development Partners keep the pair
+  test('"Choose Where to Start" has the eyebrow "Options" on Governments and Development Partners (the same pair); Universities has none; Employers and Foundations keep theirs', async ({ page }) => {
+    for (const route of [GOV, DP]) {
       await open(page, route);
       expect(compact(await page.locator('#offer .sh .eyebrow').textContent()), route).toBe('Options');
       await expect(page.locator('#offer h2'), route).toHaveText('Choose Where to Start');
     }
+    await open(page, UNI);
+    await expect(page.locator('#offer h2')).toHaveText('Choose Where to Start');
+    await expect(page.locator('#offer .sh .eyebrow')).toHaveCount(0);
     await open(page, EMP);
     expect(compact(await page.locator('#offer .sh .eyebrow').textContent())).toBe('Start');
     await open(page, FOUND);

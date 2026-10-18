@@ -4,7 +4,7 @@ import { PARTNER_CAPTION } from '../../../lib/logos';
 
 /**
  * The partner logo wall as relationship cards (WP24a, Benchmark): the same registered partner logos (src/data/partners.ts, PA-04), grouped by the kind of
- * relationship instead of one undifferentiated run: funders and development partners, government programs, education partners, employers.
+ * relationship instead of one undifferentiated run: funders and development partners, government programs, education partners, employers and industry partners.
  * Relationships, not endorsements: the caption says so, and no card implies that an organization endorses CodersTrust. Logos follow the permissions rule
  * of PartnerStrip (a logo that may not render shows the organization's name).
  * WP54 (cycle-28 review, Kimi K1): the caption is PARTNER_CAPTION in full ("Organizations we have worked with, 2014–2026. These are working relationships, not endorsements."), the one caption every logo band prints; this band added the second sentence by hand before.
@@ -13,7 +13,8 @@ const groups = [
   { title: 'Funders and Development Partners', group: 'development', label: 'Funders and development partners' },
   { title: 'Government Programs', group: 'government', label: 'Government program partners' },
   { title: 'Education Partners', group: 'academic', label: 'Education partners' },
-  { title: 'Employers', group: 'private', label: 'Employer and private-sector partners' },
+  // WP57 (cycle-29 review, GPT-6.1 Sol P1): the group holds AWS and BASIS beside the employers, so it is "Employers and Industry Partners" (the strip's landmark name follows the heading)
+  { title: 'Employers and Industry Partners', group: 'private', label: 'Employers and industry partners' },
 ] as const;
 ---
 

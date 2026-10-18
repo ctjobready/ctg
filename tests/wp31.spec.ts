@@ -83,7 +83,7 @@ test.describe('figures say what they measure', () => {
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. This is contract scope, not a count of completers.');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
@@ -351,8 +351,10 @@ test.describe('smaller wording fixes', () => {
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports will show progress toward paid work, as agreed in the program scope.');
     expect(compact(await page.locator('#faq').textContent())).toContain('follow-up surveys at 3, 6 and 12 months');
     await open(page, 'programs/youthwide/');
-    // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; the second one says "follow-up surveys"
-    expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toContain('A baseline, monthly reports and follow-up surveys, as agreed in the program scope.');
+    // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; the second said "follow-up surveys". WP57 (cycle-29 review, GPT-6.1 Sol G2): the band is gone, and the glance's Reporting row says them
+    await expect(page.locator('#features')).toHaveCount(0);
+    const reporting = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
+    expect(compact(await reporting.locator('dd').textContent())).toContain('Monthly reports and follow-up surveys');
   });
 
   // WP53 (owner decision 2026-10-16): the carousel's programs slide ("Find Your Program") is gone, so its last slide is the program results

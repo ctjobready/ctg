@@ -287,12 +287,13 @@ test.describe('Governments: the briefing, not a discovery session (items 12, 28 
     expect(await mainText(page)).not.toMatch(/indicative budget in the discovery session|in the discovery session you choose/);
   });
 
+  // WP57 (cycle-29 review, Grok R5): Universities' band is one line ("Start with one campus: ...") and has no program-sizes note
   test('Foundations and Universities, which also carry the cost answer, do not repeat its pricing sentence in their "Choose Where to Start" leads', async ({ page }) => {
     await open(page, FOUND);
     // WP52 (cycle-27 review): the lead is the note alone ("Prefer to fund the platform? See JobReady Platform Grants below." is gone; the funding-route comparison above carries the platform-grant row; tests/wp52.spec.ts)
     expect(compact(await page.locator('#cohort-grants .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     await open(page, UNI);
-    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
+    expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe('Start with one campus: cohort size, tracks and labs are set in the discovery session.');
     await open(page, DP);
     expect(compact(await page.locator('#offer .sh__lead').textContent())).toBe(PROGRAM_SIZES_NOTE);
     for (const route of [GOV, FOUND, UNI]) {

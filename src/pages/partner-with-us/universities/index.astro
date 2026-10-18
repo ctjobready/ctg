@@ -21,6 +21,8 @@
  * placement results you cannot yet show.") is gone from it, because the problem band above says it. EMPATHY.universities stays in copy.ts for JobReady@Campus, where the sentence is its problem band's lead.
  * WP51 (cycle-26 review): the institution's pain is headed "Build Placement Results You Can Publish" (it presumed a deficiency); the closing line under "What Happens Next" ("University partners include National University, the University for Peace
  * (UPEACE) and The City College of New York (CCNY).") is gone, because the three universities are already named above it: "The National University Partnership" band lists them in its University Partners tile (PA-05), and the Track Record band's logo strip (#guide) carries them as logo alt text.
+ * WP57 (cycle-29 review, Grok R5): "Choose Where to Start" has no size cards. Its recommended card read as a 1,000–2,500 country-pilot size for a campus program; the band is now its heading and one line, "Start with one campus: cohort size, tracks
+ * and labs are set in the discovery session.", and the page keeps its own one primary button (hero, call to action and sticky bar). The program-sizes note that qualified the cards (PROGRAM_SIZES_NOTE) is not on this page any more.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -41,9 +43,8 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACKING_MONTHS, meta, programOptions } from '../../../components/pages/partners/partners';
-import { HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
-import { offerDurationText } from '../../../components/sections/copyText';
+import { HOURS, LINKS, TRACKING_MONTHS, meta } from '../../../components/pages/partners/partners';
+import { HEADLINE, POSITIONING, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -60,11 +61,8 @@ const { title, description } = meta(
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 const FAQ_IDS = ['Q1-campus', 'Q10-campus', 'Q8-route'];
-const options = programOptions().filter((o) => o.name === 'Multi-Cohort Pilot Program' || o.name === 'Scale');
-const optionText: Record<string, string> = {
-  'Multi-Cohort Pilot Program': 'Prove the model with a first campus program.',
-  Scale: 'Expand to more cohorts and campuses on the pilot’s results.',
-};
+// WP57 (cycle-29 review, Grok R5): the one line that replaces the size cards of "Choose Where to Start".
+const START_LINE = 'Start with one campus: cohort size, tracks and labs are set in the discovery session.';
 ---
 
 <LandingLayout
@@ -166,14 +164,8 @@ const optionText: Record<string, string> = {
 
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
 
-  <!-- C11 · Offer -->
-  <OfferCards
-    eyebrow="Options"
-    title="Choose Where to Start"
-    lead={PROGRAM_SIZES_NOTE}
-    cards={options.map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: optionText[o.name], facts: ['PD-05'] }))}
-    recommended={0}
-  />
+  <!-- C11 · Offer. WP57 (cycle-29 review, Grok R5): no size cards, so no pilot size is recommended to a campus; the band is its heading and one line (OfferCards with no cards), and it holds no button of its own. -->
+  <OfferCards eyebrow="" title="Choose Where to Start" lead={START_LINE} cards={[]} />
 
   <!-- C12 · Risk reversal (immediately before C13). WP34 (cycle-11 review): the four diligence cards repeated what this page's bands state, so one item and a link stand in -->
   <DueDiligenceView brief id="due-diligence" />

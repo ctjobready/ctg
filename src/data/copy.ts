@@ -102,6 +102,32 @@ function wbKosovo(): CopyBlock {
   return { text: `World Bank: ${n} trainees won at least one online contract.`, facts: ['PR-02b'] };
 }
 export const WB_KOSOVO: CopyBlock = wbKosovo();
+/**
+ * WP57 (cycle-29 review, Gemini GM4; owner decision 7, "show both"): the program-records half of the same pair, for a card that shows no figure of its own: "Program records: 102 of 150 women in work." Home's "Proof in Practice" card
+ * showed only WB_KOSOVO (the records were in the results slide, far above it); it now reads this line and then WB_KOSOVO, so the card shows both. The count is PR-02's stat value and the phrase is the register's own
+ * ("102 of 150 women in work (68%)"), so the line cannot drift from the register; the builder throws if either stops reading that way. It names its source in its first words, as WB_KOSOVO does.
+ * The figure's spaces are no-break spaces, so "102 of 150" is never split across two lines in the card (on a phone the balanced line would break after "102").
+ */
+function kosovoRecords(): CopyBlock {
+  const r = fact('PR-02');
+  const n = r.stat?.value;
+  if (!n || !/^\d+ of \d+$/.test(n) || !r.text.includes(`${n} women in work`)) throw new Error('KOSOVO_RECORDS: PR-02 no longer reads "N of M women in work"');
+  return { text: `Program records: ${n.replace(/ /g, ' ')} women in work.`, facts: ['PR-02'] };
+}
+export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
+
+/**
+ * WP57 (cycle-29 review, Grok R2, with Gemini GM1): the 31,200+ (GV-12) must visibly include Her Power's national 25,125 (GV-01), so Home's government slide and the Governments glance tile say it in the wording GV-12's glance note had in WP35
+ * (cycle-12 review): "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)." The 25,125 is GV-01's stat value, never retyped, and the builder throws if the register stops saying
+ * that the figure is "contract scope, not a count of completers" (the clause that keeps the 31,200+ true). Impact keeps the register's own, longer note, which adds that CodersTrust trained 2,500 women directly.
+ */
+function contractTotalNote(): CopyBlock {
+  const n = fact('GV-01').stat?.value;
+  if (!n || !/^[\d,]+$/.test(n)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer has a plain count as its stat value');
+  if (!/contract scope, not a count of completers/.test(fact('GV-12').stat?.glance?.note ?? '')) throw new Error('CONTRACT_TOTAL_NOTE: the GV-12 glance note no longer says "contract scope, not a count of completers"');
+  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained).`, facts: ['GV-12', 'GV-01'] };
+}
+export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /**
@@ -259,7 +285,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
 /**
  * Ranked C2b pains for the three bespoke conversion pages (review round 14, M4): Home and YouthWIDE (a funder audience) and the
  * local-partners page. Each page's C2 band lists them as P1 to P3 (`name` as the heading, `text` under it, in the reader's own words)
- * and its C8 band has exactly one card per pain: pain (`name`) → how we relieve it → the registered feature behind it. Both bands read
+ * and its C8 band has exactly one card per pain: pain (`name`) → how we relieve it → the registered feature behind it (WP57, cycle-29 review: YouthWIDE's C8 band is gone, so its pains stand in C2 alone). Both bands read
  * this list, so the wording cannot drift between them; scripts/check-facts.mjs checks the one-to-one map from the built pages
  * (`data-pain` in C2, `data-relieves` in C8). The pains carry no figure; `facts` ties one to the register fact it rests on.
  */

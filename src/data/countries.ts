@@ -1,3 +1,5 @@
+import { fact } from './facts';
+
 /**
  * Program locations (SC-03): Bangladesh plus 15 international locations = 16 countries and territories.
  * Years, target groups and skills follow CodersTrust program records. Somaliland is its own row and pin, labelled neutrally.
@@ -29,6 +31,13 @@ export interface ProgramLocation {
   photo?: string;
 }
 
+/**
+ * WP57 (cycle-29 review, Grok R1): Denmark's note says when the launch was, "Launch location of CodersTrust, April 2014" (the page's H1 no longer says "Delivered in", so the one row that is not a program says what it is). The date is TL-01's
+ * (the Copenhagen tile of the "Around the World" strip reads it too), never retyped; the build stops if the register has no launch date.
+ */
+const launched = fact('TL-01').stat?.value;
+if (!launched) throw new Error('countries: TL-01 has no stat value (the launch date the Denmark note states)');
+
 export const OFFICES_LINE = 'Headquarters: New York (CT USA, Inc.). Country office: Dhaka (CodersTrust Bangladesh Ltd.).';
 
 export const locations: ProgramLocation[] = [
@@ -44,7 +53,7 @@ export const locations: ProgramLocation[] = [
   { id: 'somaliland', name: 'Somaliland', region: 'Africa', lat: 9.5600, lon: 44.0650, years: '2015–2016', targetGroup: 'Students interested in after-school programs', skills: 'Basic computing, data entry and freelancing', note: 'Hour of Code, and an ICT program at Tima-ade University', photo: 'global/somaliland-hour-of-code' },
   { id: 'uganda', name: 'Uganda', region: 'Africa', lat: 0.3476, lon: 32.5825, years: '2020', targetGroup: 'Learners through partner institutions', skills: 'Basic computing, data entry and freelancing', note: 'Partners: Maarifasasa, Makerere University Business School and U-Touch' },
   { id: 'albania', name: 'Albania', region: 'Europe', lat: 41.3275, lon: 19.8187, years: '2021–2022', targetGroup: 'Young Albanian women aged 16 to 35', skills: 'Digital marketing, graphic design and web development', note: 'Partner: World Bank Group (Digital Jobs Albania, with the Government of Albania and EuroPartners Development)' },
-  { id: 'denmark', name: 'Denmark', region: 'Europe', lat: 55.6761, lon: 12.5683, years: '2014', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Coding, development, mobile development and data analytics', note: 'Launch location of CodersTrust', photo: 'global/copenhagen-launch-dinner' },
+  { id: 'denmark', name: 'Denmark', region: 'Europe', lat: 55.6761, lon: 12.5683, years: '2014', targetGroup: 'Students, youth and people willing to create a career in online freelancing marketplaces', skills: 'Coding, development, mobile development and data analytics', note: `Launch location of CodersTrust, ${launched}`, photo: 'global/copenhagen-launch-dinner' },
   { id: 'kosovo', name: 'Kosovo', region: 'Europe', lat: 42.6629, lon: 21.1655, years: '2016–2017', targetGroup: 'Young women', skills: 'Front-end web development, coding, graphic design and digital marketing', note: 'Partner: World Bank Group (Women in Online Work pilot, 2016–2017)', photo: 'general/kosovo-wow-group' },
   { id: 'poland', name: 'Poland', region: 'Europe', lat: 52.2297, lon: 21.0122, years: '2016–2017', targetGroup: 'Students, youth and people from across Poland aged 18 to 45', skills: 'Full-stack, front-end and back-end development' },
   { id: 'honduras', name: 'Honduras', region: 'Americas', lat: 14.0723, lon: -87.1921, years: '2018', targetGroup: 'Higher-secondary students', skills: 'Web design and freelancing' },

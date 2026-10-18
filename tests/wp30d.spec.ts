@@ -167,7 +167,8 @@ test.describe('less is more: the report-like bands are gone', () => {
 
 test.describe('anchors that other pages link to stay', () => {
   const ANCHORS: [string, string[]][] = [
-    ['programs/youthwide/', ['governments', 'cta', 'cta-governments', 'mechanism', 'proof-band', 'features', 'next-steps']],
+    // WP57 (cycle-29 review, GPT-6.1 Sol G2): #features left YouthWIDE with its three-card band; no page linked to that anchor (#governments, #cta, #cta-governments, #mechanism, #proof-band and #next-steps are linked or tested)
+    ['programs/youthwide/', ['governments', 'cta', 'cta-governments', 'mechanism', 'proof-band', 'next-steps']],
     // WP31: #proof-band left the Work page with its youth-program trial block; no page linked to that anchor (#mechanism and #next-steps are linked, from the employer due-diligence view)
     ['programs/jobready-work/', ['mechanism', 'next-steps', 'cta']],
     ['programs/jobready-campus/', ['mechanism', 'features', 'next-steps', 'cta']],

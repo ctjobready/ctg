@@ -25,6 +25,8 @@
 // WP52 (cycle-27 reviews, Claude): the hero's ministry-briefing text link is labelled with its audience, "Governments: Request a Briefing for Your Ministry" (the label sits outside the link, as in CTABand's `routes`; the one primary button is unchanged);
 // the glance's first row says "Bangladesh is where most delivery has been" where it said "Bangladesh is the reference implementation" (IN-02 says it the same way).
 // WP53 (owner follow-up, 2026-10-16, consistent with that change): the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" ("Reference" was the same jargon), and the options band's eyebrow is "Options" (it was "Start", directly above "Three Ways to Start, ...").
+// WP57 (cycle-29 review, GPT-6.1 Sol G2): the three-card C8 band ("Built Around What Funders and Agencies Ask", #features) is gone: it restated At a Glance and "One Delivery Model", so its one new detail (what evaluators check earnings against) is in the glance's
+// Reporting row. The C2 pains stay (the challenge band); scripts/check-facts.mjs allows this page to carry no C8 band (PAIN_C8_OPTIONAL), and nothing links to the removed anchor. The photograph band takes the white ground the C8 band had, so white and airy still alternate after the case-study carousel.
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -39,7 +41,6 @@ import Icon from '../../components/system/Icon.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import CaseStudyCarousel from '../../components/sections/CaseStudyCarousel.astro';
-import IncludesBand from '../../components/sections/IncludesBand.astro';
 import GainsPains from '../../components/pages/partners/GainsPains.astro';
 import CopyP from '../../components/pages/programs/CopyP.astro';
 import ProblemSection from '../../components/pages/programs/ProblemSection.astro';
@@ -51,7 +52,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList, painForRow } from '../../data/copy';
+import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -123,7 +124,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
-      { label: 'Reporting', text: 'Monthly reports, follow-up surveys and documentary evidence of earnings where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      // WP57 (cycle-29 review, GPT-6.1 Sol G2): the verification detail of the removed C8 card ("Results Your Evaluators Can Check") is here: what earnings are checked against, where available.
+      { label: 'Reporting', text: 'Monthly reports and follow-up surveys, with earnings checked against payslips, offer letters, platform logs or bank receipts where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 
@@ -205,38 +207,10 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     ]}
   />
 
-  <!-- C8: one card per ranked pain of C2 (pain → how we relieve it → the registered facts behind it), checked by scripts/check-facts.mjs (`data-relieves`).
-       WP39 (cycle-16 review): three short cards in place of the funder concern / what is included / practical benefit matrix; the sentences keep the matrix rows' words (PD-15, PD-01 and PD-19: placement support, three months
-       of milestone-based mentoring, a work-entry plan per track agreed before enrollment (WP54, cycle-28 review: it said "approved"); PD-08 and PD-09: the baseline, monthly reports, follow-up surveys, documentary evidence where available; PD-02 and PD-10: an
-       AI-ready curriculum, entry-level tracks set per country from employer demand). -->
-  <IncludesBand
-    title="Built Around What Funders and Agencies Ask"
-    cards={[
-      {
-        painId: painForRow(FUNDER_PAINS, 'P1').painId,
-        icon: 'route',
-        title: 'Placement Support and Mentoring',
-        text: 'Placement support, three months of milestone-based mentoring and a work-entry plan per track agreed before enrollment. Success is measured against agreed outcomes, including paid work, not attendance alone.',
-        facts: ['PD-15', 'PD-01', 'PD-19'],
-      },
-      {
-        painId: painForRow(FUNDER_PAINS, 'P2').painId,
-        icon: 'clipboard-check',
-        title: 'Results Your Evaluators Can Check',
-        text: 'A baseline, monthly reports and follow-up surveys, as agreed in the program scope. Your evaluators can check results against payslips, offer letters, platform logs or bank receipts where available.',
-        facts: ['PD-08', 'PD-09'],
-      },
-      {
-        painId: painForRow(FUNDER_PAINS, 'P3').painId,
-        icon: 'briefcase',
-        title: 'Tracks That Follow Employer Demand',
-        text: 'An AI-ready curriculum, with entry-level tracks set per country from employer demand, designed to keep pace as AI changes entry-level tasks.',
-        facts: ['PD-02', 'PD-10'],
-      },
-    ]}
-  />
+  <!-- C8 (the three-card "What You Get" band) is left out since WP57 (cycle-29 review, GPT-6.1 Sol G2): At a Glance and "One Delivery Model" state what it said, and the glance's Reporting row says what evaluators check earnings against. -->
 
-  <PhotoGallery id="in-the-field" eyebrow="In the Field" title="Photographs from the Field" lead="Training rooms, laptop handovers and agreements, from past programs." photos={galleryPhotos('youthwide')} />
+  <!-- The gallery takes the white ground the C8 band had: the case-study carousel above it is airy, and the FAQ below it is ice. -->
+  <PhotoGallery id="in-the-field" tone="white" eyebrow="In the Field" title="Photographs from the Field" lead="Training rooms, laptop handovers and agreements, from past programs." photos={galleryPhotos('youthwide')} />
 
   <!-- C9 -->
   <FaqSection sources={faqSources} title="Questions Funders and Agencies Ask" />

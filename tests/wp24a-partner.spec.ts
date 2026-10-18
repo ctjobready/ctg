@@ -56,14 +56,14 @@ test.describe('Partner with Us hub', () => {
 test.describe('audience pages', () => {
   for (const slug of AUDIENCE_PAGES) {
     // WP34 (cycle-11 review): the four cards repeated what the page's own bands state, so the five pages other than Employers show one short item (tests/wp34.spec.ts pins its wording);
-    // Employers keeps the compact four-row view of its own offer (tests/wp25s.spec.ts)
-    test(`${slug}: the due-diligence block is ${slug === 'employers' ? 'the compact four-row "Due Diligence in One View"' : 'one short item'}`, async ({ page }) => {
+    // Employers keeps the compact view of its own offer (tests/wp25s.spec.ts); WP57 (cycle-29 review, GPT-6.1 Sol G7): three rows, its "Independent Evaluation Welcome" row is gone (tests/wp57.spec.ts)
+    test(`${slug}: the due-diligence block is ${slug === 'employers' ? 'the compact three-row "Due Diligence in One View"' : 'one short item'}`, async ({ page }) => {
       await page.goto(`partner-with-us/${slug}/`);
       const block = page.locator('#due-diligence');
       await expect(block).toHaveCount(1);
       if (slug === 'employers') {
         await expect(block.locator('h2')).toHaveText('Due Diligence in One View');
-        expect(await block.locator('li').count()).toBe(4);
+        expect(await block.locator('li').count()).toBe(3);
       } else {
         await expect(block.locator('h2')).toHaveText('Confirm Contracting, Safeguarding and Reporting');
         expect(await block.locator('li').count()).toBe(0);
@@ -99,9 +99,9 @@ test.describe('audience pages', () => {
     const tile = page.locator('#glance li', { hasText: '31,200+' });
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
     // WP46 (cycle-22 review): the note said who trained whom, so the 25,125 was not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
-    // WP51 (cycle-26 review, Kimi m2): Her Power's figures are in the contracts table below, so the tile keeps the first sentence and points to the table (Impact keeps the whole note: tests/wp35.spec.ts)
-    await expect(tile).toContainText('The figure is contract scope, not a count of completers. The contracts table below shows each scope.');
-    await expect(tile).not.toContainText('25,125');
+    // WP51 (cycle-26 review, Kimi m2): the tile kept the first sentence and pointed to the table. WP57 (cycle-29 review, Grok R2 with Gemini GM1): the total visibly includes Her Power's national program, in the note's WP35 wording (tests/wp57.spec.ts)
+    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    await expect(tile).not.toContainText('The contracts table below shows each scope.');
     await expect(page.locator('#contracts')).toContainText('The national program trained 25,125 women across 130 sub-districts (upazilas).');
   });
 

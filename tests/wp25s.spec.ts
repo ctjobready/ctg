@@ -164,11 +164,12 @@ test.describe('Programs', () => {
     expect(compact(await everything(page))).toContain('Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module.');
   });
 
-  // WP39 (cycle-16 review): YouthWIDE's features band is three short cards; its third says the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stays).
+  // WP39 (cycle-16 review): YouthWIDE's features band was three short cards; its third said the curriculum is "designed to keep pace as AI changes entry-level tasks" (the designed-to scope stayed).
+  // WP57 (cycle-29 review, GPT-6.1 Sol G2): that band is gone, so YouthWIDE no longer states the sentence (tests/wp31.spec.ts keeps the absolute "tracks have to follow" wording off the page).
   // WP40 (cycle-17 review): Investors' three cards no longer carry the AI-ready curriculum row; its AI answer (Q5) says tracks are chosen from current employer demand, with each track's AI content and work-entry plan agreed before enrollment
-  test('YouthWIDE says its curriculum is designed to keep pace with employer demand; Investors’ AI answer says tracks are chosen from current employer demand', async ({ page }) => {
+  test('YouthWIDE no longer carries the removed card’s "designed to keep pace" sentence; Investors’ AI answer says tracks are chosen from current employer demand', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    expect(compact(await main(page))).toContain('designed to keep pace as AI changes entry-level tasks');
+    expect(compact(await main(page))).not.toContain('designed to keep pace as AI changes entry-level tasks');
     await open(page, 'partner-with-us/investors/');
     expect(compact(await everything(page))).toContain('we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with you before enrollment');
   });
@@ -229,7 +230,8 @@ test.describe('Partner with Us', () => {
     expect(text).toContain('Needs Assessment First');
     expect(text).toContain('Progress Evaluation');
     expect(text).not.toMatch(/tracers|funder|Safeguarding Agreed per Program|enrollment/i);
-    await expect(dd.locator('.ddv__item')).toHaveCount(4);
+    // WP57 (cycle-29 review, GPT-6.1 Sol G7): three rows; the "Independent Evaluation Welcome" row is gone (tests/wp57.spec.ts)
+    await expect(dd.locator('.ddv__item')).toHaveCount(3);
   });
 
   test('Universities and Local Partners do not speak of a funder in their due-diligence item (WP34: one sentence for every audience page, no funder or contracting-party wording)', async ({ page }) => {

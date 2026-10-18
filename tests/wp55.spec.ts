@@ -142,7 +142,8 @@ test.describe('the register: 16 countries and territories, and the new dated and
       expect(byId[tile].factIds, tile).toEqual([id]);
     }
     expect(WORLD_STRIP.map((t) => t.id)).toEqual(['copenhagen', 'dubai', 'somaliland', 'kosovo', 'albania', 'new-york', 'bangladesh']);
-    expect(WORLD_STRIP_SHORT.map((t) => t.id)).toEqual(['copenhagen', 'dubai', 'kosovo']);
+    // WP57 (cycle-29 review, GPT-6.1 Sol G5): the short strip leads with Kosovo, then the two launch events; the full strip stays chronological
+    expect(WORLD_STRIP_SHORT.map((t) => t.id)).toEqual(['kosovo', 'copenhagen', 'dubai']);
   });
 });
 
@@ -204,7 +205,8 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
 
   test('the hero and description say 16 countries and territories; the thumbnails fit at 390 and 1280 with no sideways scroll', async ({ page }) => {
     await open(page, GLOBAL_REACH);
-    await expect(page.locator('main h1')).toHaveText('Delivered in 16 Countries and Territories');
+    // WP57 (cycle-29 review, Grok R1): the H1 is "Where We Have Worked: 16 Countries and Territories" (it said "Delivered in ..."); tests/wp57.spec.ts
+    await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
     for (const vp of [MOBILE, DESKTOP]) {
       await page.setViewportSize(vp);
@@ -293,13 +295,14 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
   });
 
   for (const [name, route] of [['Development Partners', DP], ['Governments', GOV], ['Foundations', FOUND]] as const) {
-    test(`${name}: the short strip (Copenhagen, Dubai, Kosovo) is an H3 inside the Our Track Record band, and no photograph repeats on the page`, async ({ page }) => {
+    // WP57 (cycle-29 review, GPT-6.1 Sol G5): Kosovo first, then Copenhagen and Dubai (it was Copenhagen, Dubai, Kosovo)
+    test(`${name}: the short strip (Kosovo, Copenhagen, Dubai) is an H3 inside the Our Track Record band, and no photograph repeats on the page`, async ({ page }) => {
       await open(page, route);
       const strip = page.locator('#guide #world[data-world-strip]');
       await expect(strip).toHaveCount(1);
       await expect(strip.getByRole('heading', { level: 3, name: 'CodersTrust Around the World' })).toHaveCount(1);
-      expect(await strip.locator('li[data-tile]').evaluateAll((els) => els.map((e) => e.getAttribute('data-tile')))).toEqual(['copenhagen', 'dubai', 'kosovo']);
-      expect(await texts(page, '#guide #world figcaption')).toEqual([EXPECTED[0][1], EXPECTED[1][1], EXPECTED[3][1]]);
+      expect(await strip.locator('li[data-tile]').evaluateAll((els) => els.map((e) => e.getAttribute('data-tile')))).toEqual(['kosovo', 'copenhagen', 'dubai']);
+      expect(await texts(page, '#guide #world figcaption')).toEqual([EXPECTED[3][1], EXPECTED[0][1], EXPECTED[1][1]]);
       const inStrip = await strip.locator('img[data-asset]').evaluateAll((imgs) => imgs.map((i) => i.getAttribute('data-asset')));
       const elsewhere = await page.locator('img[data-asset]').evaluateAll((imgs) => imgs.filter((i) => !i.closest('[data-world-strip]')).map((i) => i.getAttribute('data-asset')));
       for (const a of inStrip) expect(elsewhere, `${a} is on the page once`).not.toContain(a);
@@ -363,8 +366,9 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
   });
 });
 
-test.describe('"As covered by": a line of text links with years, no logos, on Home and About', () => {
-  const LINE = 'As covered by Gulf News (2014), TechCrunch (2014), Forbes (2014, contributor post), The Wall Street Journal (2014), USA Today (2014), Tech in Asia (2015) and The Times of India (2016); and by the World Bank on Kosovo (2016, 2017) and Albania (2021).';
+// WP57 (cycle-29 review, GPT-6.1 Sol P2): the line is two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."; every link stays (the ten HREFS below are unchanged)
+test.describe('"As covered by": the press coverage line, text links and no logos, on Home and About', () => {
+  const LINE = 'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India. World Bank coverage: Kosovo (2016, 2017) and Albania (2021).';
   const HREFS = [
     'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190',
     'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/',
@@ -379,7 +383,7 @@ test.describe('"As covered by": a line of text links with years, no logos, on Ho
   ];
 
   for (const [name, route] of [['Home', HOME], ['About', ABOUT]] as const) {
-    test(`${name}: the line reads as written, links ten dated pages that leave the site safely, and carries no image`, async ({ page }) => {
+    test(`${name}: the line reads as written, links ten pages that leave the site safely, and carries no image`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
@@ -416,7 +420,8 @@ test.describe('"As covered by": a line of text links with years, no logos, on Ho
 test.describe('Kosovo: both figures, the program records and the World Bank’s, wherever PR-02 is shown', () => {
   const LINE = 'World Bank: 77 trainees won at least one online contract.';
 
-  test('Home, Development Partners and YouthWIDE: the Kosovo card carries the World Bank line once, tied to PR-02b, beside its program-record line', async ({ page }) => {
+  // WP57 (cycle-29 review, Gemini GM4): Home's Kosovo card shows both figures itself now ("Program records: 102 of 150 women in work." then the World Bank line; tests/wp57.spec.ts)
+  test('Home, Development Partners and YouthWIDE: the Kosovo card carries the World Bank line once, tied to PR-02b, beside its program-record figure', async ({ page }) => {
     for (const route of [HOME, DP, YOUTHWIDE]) {
       await open(page, route);
       const card = page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' });
@@ -425,9 +430,10 @@ test.describe('Kosovo: both figures, the program records and the World Bank’s,
       expect(await card.locator('.case__note').getAttribute('data-fact'), route).toBe('PR-02b');
       expect(compact(await page.locator('main').textContent()).split(LINE).length - 1, `${route}: the line is stated once`).toBe(1);
     }
-    // Home states the program records in the slide above; the card adds only the World Bank's figure. Development Partners and YouthWIDE show both on the card.
+    // Home states the program records in the slide above and, since WP57, in the card itself; Development Partners and YouthWIDE show both on the card.
     await open(page, HOME);
     expect(compact(await page.locator('#results').textContent())).toContain('102 of 150');
+    expect(compact(await page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' }).textContent())).toContain('102 of 150');
     await open(page, DP);
     expect(compact(await page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' }).textContent())).toContain('102 of 150');
   });

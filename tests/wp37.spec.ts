@@ -42,14 +42,15 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 
 test.describe('Home: Proof in Practice says what was delivered where its carousel already states the figures', () => {
   // WP51 (cycle-26 review): slide 4 states WSDFM's "711 of 1,000" too (WP50), so the WSDFM card shows delivery context like the other two (tests/wp51.spec.ts holds the pages that keep the figure)
-  test('all three cards show a line of delivery context and no figure', async ({ page }) => {
+  // WP57 (cycle-29 review, Gemini GM4; owner decision 7, "show both"): the Kosovo card's context line is its program records ("Program records: 102 of 150 women in work."), and its World Bank line follows (tests/wp57.spec.ts); the other two say what was delivered
+  test('all three cards show one context line and no headline figure: WSDFM and Her Power say what was delivered, Kosovo gives its program records', async ({ page }) => {
     await open(page, '');
     const cards = page.locator('#cases article');
     await expect(cards).toHaveCount(3);
 
     const delivery = [
       { i: 0, title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', context: 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.', slug: 'wsdfm-women-freelancers' },
-      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Digital literacy followed by real online work.', slug: 'kosovo-women-in-online-work' },
+      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records: 102 of 150 women in work.', slug: 'kosovo-women-in-online-work' },
       { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
     ];
     for (const d of delivery) {
@@ -83,18 +84,19 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     }
   });
 
-  test('each program figure is stated once on Home: Kosovo, WSDFM and Her Power are in slide 4 only, and the band names no fact (its cards state none)', async ({ page }) => {
+  // WP57 (cycle-29 review, Gemini GM4): Kosovo's program records are stated twice on Home now, in slide 4 and in the Kosovo card (which shows both Kosovo figures); WSDFM's and Her Power's stay slide 4's alone
+  test('WSDFM’s and Her Power’s figures are stated once on Home, in slide 4; Kosovo’s program records are in slide 4 and in the Kosovo card, which names PR-02 and PR-02b', async ({ page }) => {
     await open(page, '');
     const text = await mainText(page);
-    expect(count(text, '102 of 150'), 'Kosovo, slide 4').toBe(1);
+    expect(count(text, '102 of 150'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
     expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
     expect(count(text, 'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
     expect(text).not.toContain('372 of 800');
     // WP51 (cycle-26 review): WSDFM's figure is slide 4's alone as well, and no card names PR-01 any more
     expect(count(text, '711 of 1,000'), 'WSDFM, slide 4').toBe(1);
-    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."); the band's wrapper and that line carry it.
-    // The program-record figures (PR-01, PR-02, PR-05) stay slide 4's alone, so no other fact is named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02b', 'PR-02b']);
+    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."). WP57 (cycle-29 review, Gemini GM4): and its program records
+    // (PR-02, "Program records: 102 of 150 women in work."); the band's wrapper names both, and each line names its own. The other program-record figures (PR-01, PR-05) stay slide 4's alone, so no other fact is named.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 PR-02b', 'PR-02', 'PR-02b']);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {

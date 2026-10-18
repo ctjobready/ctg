@@ -43,7 +43,8 @@
 //     (it restated the hero and returned to cohort language on a page about backing the platform; POSITION_EXEMPT_PAGES), and no other page is exempt; negative self-tests below
 //   - ranked pains and the C8 map (review round 14, M4): Home, /partner-with-us/local-partners/ and /programs/youthwide/ state exactly three
 //     pains in the C2 band (#problem; list items data-pain="P1".."P3", in that order) and give the C8 band (#features) exactly one card for
-//     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; negative self-tests below
+//     each (<li data-relieves="P1">.. since WP38/WP39; a <tr> row is still read), in the same order; rows without data-relieves are gain creators; WP57: YouthWIDE may carry no C8 band
+//     (PAIN_C8_OPTIONAL: its three-card band was removed in cycle 29; its C2 pains are still checked, and a C8 band it shows is held to the same rule); negative self-tests below
 //   - trial relevance line (round 14, m2): /partner-with-us/employers/, /programs/jobready-work/ (JobReady@Work) and /programs/nu-postgraduate-diploma/ (the NU
 //     Postgraduate Diploma) carry "This trial evaluated WSDFM training for women in Dhaka, not <offering>." directly under the trial headline of
 //     the C7 proof band (WP31: the two employer pages show no proof band today, which is allowed; any band they show needs the line; WP34: the same for the NU diploma overview, which
@@ -441,6 +442,9 @@ function positionProblems(markup, { unlike = true, closing = UNLIKE_SENTENCE, wh
 // how we relieve it → the registered feature behind it; WP38/WP39: three short cards, components/sections/IncludesBand.astro). An item without data-relieves is a gain creator and is not counted. Only the two bands
 // are read: the same attributes elsewhere on the page count for nothing. The wording lives in src/data/copy.ts (FUNDER_PAINS, LOCAL_PARTNER_PAINS).
 const PAIN_PAGES = ['/', '/partner-with-us/local-partners/', '/programs/youthwide/'];
+// WP57 (cycle-29 review, GPT-6.1 Sol G2): YouthWIDE's three-card C8 band restated its glance and its delivery-model band, so the page no longer carries one. Like TRIAL_SCOPE_OPTIONAL, this is one page's allowance: it still states its three
+// ranked pains in C2, and any C8 band it shows again is held to the one-card-per-pain rule. Home and the local-partners page must still carry the band.
+const PAIN_C8_OPTIONAL = new Set(['/programs/youthwide/']);
 const PAIN_IDS = ['P1', 'P2', 'P3'];
 /** The markup of the band whose <section> has this id, up to the next band (a <section class="band …">; a section nested in the band, such as a route card, is not one). */
 function bandMarkup(markup, id) {
@@ -450,17 +454,19 @@ function bandMarkup(markup, id) {
   const next = /<section\b[^>]*\bclass="band\b/.exec(rest);
   return next ? rest.slice(0, next.index) : rest;
 }
-function painMapProblems(markup) {
+function painMapProblems(markup, { c8Optional = false } = {}) {
   const c2 = bandMarkup(markup, 'problem');
   const c8 = bandMarkup(markup, 'features');
   const out = [];
   if (c2 === null) out.push('the C2 band (#problem) is missing, so the ranked pains have nowhere to sit');
-  if (c8 === null) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
-  if (c2 === null || c8 === null) return out;
+  if (c8 === null && !c8Optional) out.push('the C8 band (#features) is missing, so the pains have no relieving rows');
+  if (c2 === null || (c8 === null && !c8Optional)) return out;
   const pains = [...c2.matchAll(/<li\b[^>]*\bdata-pain="([^"]*)"/g)].map((m) => m[1]);
+  if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
+  // WP57: a page that may show no C8 band and shows none has no relieving rows to check (its pains were checked above); a band it does show is read like any other
+  if (c8 === null) return out;
   // WP18b: the C8 rows were concern-led cards (<li>); WP38/WP39: three short cards (<li>). A table row (<tr>) is still read
   const rows = [...c8.matchAll(/<(?:tr|li)\b[^>]*\bdata-relieves="([^"]*)"/g)].map((m) => m[1]);
-  if (pains.join(' ') !== PAIN_IDS.join(' ')) out.push(`C2 must state exactly three ranked pains, P1, P2 and P3 in that order (data-pain), found [${pains.join(' ') || 'none'}]`);
   for (const id of PAIN_IDS) {
     const n = rows.filter((r) => r === id).length;
     if (n !== 1) out.push(`C8 must have exactly one row for pain ${id} (data-relieves="${id}"), found ${n}`);
@@ -1055,6 +1061,24 @@ function numberGuardPage(path, html, allow = []) {
   painBad('a page with no C2 band', painPage({ c2: false }));
   painBad('a page with no C8 band', painPage({ c8: false }));
   painBad('pain ids that sit only outside C2 (the attributes in a later band do not count)', painPage({ pains: [] }).replace('<ol><li data-pain="P4">x</li></ol>', `<ol>${painLi('P1')}${painLi('P2')}${painLi('P3')}</ol>`));
+  // WP57: YouthWIDE alone may carry no C8 band; its pains are still read, and a band it shows is held to the one-card-per-pain rule
+  const painOptOk = (why, markup) => {
+    const r = painMapProblems(markup, { c8Optional: true });
+    if (r.length) problems.push(`self-test: the pain-map check rejected ${why}: ${r.join('; ')}`);
+  };
+  const painOptBad = (why, markup) => {
+    if (!painMapProblems(markup, { c8Optional: true }).length) problems.push(`self-test: the pain-map check accepted ${why}`);
+  };
+  painOptOk('a page that may carry no C8 band and carries none (WP57: YouthWIDE)', painPage({ c8: false }));
+  painOptOk('a page that may carry a C8 band and carries one card for each pain', painPage({ cards: true }));
+  painOptBad('a page that may carry no C8 band but states two pains in C2', painPage({ c8: false, pains: ['P1', 'P2'] }));
+  painOptBad('a page that may carry no C8 band but states its pains out of rank order', painPage({ c8: false, pains: ['P2', 'P1', 'P3'] }));
+  painOptBad('a page that may carry no C8 band and has no C2 band either', painPage({ c2: false, c8: false }));
+  painOptBad('a page that may carry no C8 band but shows one with a pain missing (P2)', painPage({ cards: true, rows: ['P1', 'P3'] }));
+  painOptBad('a page that may carry no C8 band but shows one whose cards are out of rank order', painPage({ cards: true, rows: ['P3', 'P1', 'P2'] }));
+  // the allowance is exactly YouthWIDE (Home and the local-partners page must still carry the C8 band)
+  if ([...PAIN_C8_OPTIONAL].join(' ') !== '/programs/youthwide/') problems.push('self-test: exactly /programs/youthwide/ (WP57) may carry no C8 band, and no other page');
+  for (const optional of PAIN_C8_OPTIONAL) if (!PAIN_PAGES.includes(optional)) problems.push(`self-test: ${optional} may carry no C8 band but is not one of the ranked-pain pages`);
   // the trial relevance line (m2): directly under the trial headline, in the plan's words for the page's own offering
   const scopeWork = TRIAL_SCOPE_BY_PAGE['/programs/jobready-work/'];
   const scopeNu = TRIAL_SCOPE_BY_PAGE['/programs/nu-postgraduate-diploma/'];
@@ -1181,6 +1205,7 @@ let proofCardPages = 0;
 let agendaPages = 0;
 let positionPages = 0;
 let painPages = 0;
+let painC8Pages = 0;
 let trialScopePages = 0;
 const guard ={ pages: 0, tokens: 0, byRegister: 0, byWhitelist: 0 };
 guardLog.clear(); // the self-tests above also pass through the guard
@@ -1256,7 +1281,9 @@ for (const file of htmlFiles(dist)) {
   // three ranked pains in C2 and one C8 card for each, on the three bespoke pages (round 14, M4)
   if (PAIN_PAGES.includes(path)) {
     painPages++;
-    for (const p of painMapProblems(markup)) problems.push(`${path}: ${p}`);
+    // WP57: the count of the pages whose C8 band was read (a page that may show none and shows none has no band to count)
+    if (!PAIN_C8_OPTIONAL.has(path) || bandMarkup(markup, 'features') !== null) painC8Pages++;
+    for (const p of painMapProblems(markup, { c8Optional: PAIN_C8_OPTIONAL.has(path) })) problems.push(`${path}: ${p}`);
   }
   // the trial relevance line directly under the randomized-trial headline where the offering is not the evaluated program (round 14, m2)
   if (TRIAL_SCOPE_PAGES.includes(path)) {
@@ -1296,6 +1323,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) with one C8 card each on ${painPages} page(s); trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );
