@@ -413,15 +413,15 @@ test.describe('Development Partners and Governments: no closing line repeats the
 test.describe('Home: the trial slide (items 17 and 18)', () => {
   const first = (page: Page) => page.locator('[data-hs-slide]').nth(0);
 
-  test('the heading is "Women Offered a Place Earned an Estimated 41% More"; the eyebrow is "Randomized Trial of a Predecessor Program"; the lead still names the predecessor WSDFM program', async ({ page }) => {
+  test('the heading is "Women Offered a Place Earned an Estimated 41% More per Month"; the eyebrow is "Randomized Trial of a Predecessor Program"; the lead still names the predecessor WSDFM program', async ({ page }) => {
     await open(page, '');
-    await expect(first(page).locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More');
-    expect('Women Offered a Place Earned an Estimated 41% More').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More'));
+    await expect(first(page).locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
+    expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
     expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(await first(page).locator('h2').getAttribute('data-fact')).toBe('RC-01');
-    expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More');
+    expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });
 
   test('the eyebrow is this slide’s own text: the menu’s trial card and the partner hub keep their wording, and the other slides keep their eyebrows', async ({ page }) => {

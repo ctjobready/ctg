@@ -35,7 +35,7 @@ const LOCAL = 'partner-with-us/local-partners/';
 const DP = 'partner-with-us/development-partners/';
 
 const TITLES = [
-  'Women Offered a Place Earned an Estimated 41% More',
+  'Women Offered a Place Earned an Estimated 41% More per Month',
   'Six Government Contracts and Bangladesh’s National University',
   'Surveyed Completers Report Higher Income',
   'Results by Program',

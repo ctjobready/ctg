@@ -55,7 +55,7 @@ export function grantStartTitles(): [string, string, string, string] {
 }
 
 /**
- * The grant-funded start sequence with each step's one-line description: the partner hub's "Your First 90 Days" and Home's closing band read these four (WP49, cycle-24 review: Home showed the headings alone, while the hub
+ * The grant-funded start sequence with each step's one-line description: the partner hub's "From First Conversation to First Cohort" (WP62; it was "Your First 90 Days") and Home's closing band read these four (WP49, cycle-24 review: Home showed the headings alone, while the hub
  * and the audience pages describe each step). The headings are grantStartTitles(), so no week is retyped.
  */
 export function grantStartSteps(): { title: string; text: string }[] {

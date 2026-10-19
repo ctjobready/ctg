@@ -51,6 +51,7 @@ import { cta } from '../lib/mailto';
  * so the slide no longer uses the register's term "surveyed new earners" or defines it in brackets (the Impact tile still does); and the slide shows its income tile directly under the heading, before that line (`statsFirst`).
  * WP54 (cycle-28 review, Grok R2): the trial slide's ">4×" callout reads "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it read "More than four times the average employment effect across nine
  * vocational-training trials.", which sat under an income heading without saying what was compared; see trialMultiple).
+ * WP62 (cycle-34 reviews): the trial slide's heading ends "per Month" ("Women Offered a Place Earned an Estimated 41% More per Month": RC-01's 41% is a monthly income difference); the hero's reach card ("Reach Since 2014") no longer repeats "since 2014" in its caption (reachCaption).
  * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
  */
 
@@ -223,6 +224,14 @@ const surveyLabel = fact('OC-01').stat?.label ?? '';
 if (!surveyLabel.includes('among surveyed completers')) throw new Error('heroSlides: OC-01 label no longer says "among surveyed completers"; update the hero survey caption');
 const surveyCaption = surveyLabel;
 
+/**
+ * The reach card's caption (WP62, cycle-34 review, Gemini): SC-16's label without its "since 2014". The card's eyebrow is "Reach Since 2014", so the caption "learners trained through 150,000+ enrollments since 2014. ..." said it twice.
+ * Read from the register, never retyped: the build stops if the label stops carrying the phrase (the caption would then be the register's label again, and this strip should be reviewed). SC-16's `text`, `stat.label` and glance wording are unchanged.
+ */
+const reachLabel = fact('SC-16').stat?.label ?? '';
+if (!reachLabel.includes(' since 2014')) throw new Error('heroSlides: SC-16 label no longer says "since 2014"; update the caption of the hero reach card');
+const reachCaption = reachLabel.replace(' since 2014', '');
+
 /** The stable home hero. */
 export const HOME_HERO = {
   title: HEADLINE.home,
@@ -248,7 +257,7 @@ export const HOME_HERO = {
       caption: `For every 100 women offered a place in a ${hours}-hour predecessor program, ${offeredPoints} more were in work than in the control group.`,
     },
     { eyebrow: 'Impact Survey 2026', factId: 'OC-01', caption: surveyCaption },
-    { eyebrow: 'Reach Since 2014', factId: 'SC-16' },
+    { eyebrow: 'Reach Since 2014', factId: 'SC-16', caption: reachCaption },
   ] as { eyebrow: string; factId: string; value?: string; unit?: string; caption?: string }[],
 };
 
@@ -261,7 +270,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // (RC-01: an estimated 41% higher, RC-04: about +$27 a month), worded as the register words it, with the predecessor program still named in the sentence (the heading and the figures are the offered-place women's, not today's tracks').
     // WP48 (cycle-23 review, the third reviewer to raise it): the heading named the predecessor program ("... in a Predecessor Program Earned an Estimated 41% More"), where only the lead below it did.
     // WP50 (cycle-25 review): two reviewers wanted it shorter and three had wanted the qualifier, so the heading is "Women Offered a Place Earned an Estimated 41% More" and the qualifier sits in the eyebrow directly above it and in the lead below it ("In the predecessor WSDFM program, ...").
-    title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More`,
+    // WP62 (cycle-34 review, GPT-6.1 Sol and Kimi): "... Earned an Estimated 41% More per Month": the 41% is a monthly income difference (RC-01: "Their monthly income was an estimated 41% higher"; its tile label: "estimated monthly income gain"), which the heading left unsaid.
+    title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More per Month`,
     titleFacts: ['RC-01'],
     lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
     leadFacts: ['RC-01', 'RC-04'],

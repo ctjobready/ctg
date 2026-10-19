@@ -85,10 +85,10 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
 test.describe('Home: the trial slide leads with income and keeps its scope (item 11)', () => {
   // WP48 (cycle-23 review): the heading itself named the predecessor program ("Women Offered a Place in a Predecessor Program Earned an Estimated 41% More")
   // WP50 (cycle-25 review): the heading is "Women Offered a Place Earned an Estimated 41% More" and the slide's eyebrow is "Randomized Trial of a Predecessor Program"; the >4× tile's caption says the multiple in words (tests/wp50.spec.ts)
-  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More": RC-01 and RC-04, the predecessor program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
+  test('slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month": RC-01 and RC-04, the predecessor program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More');
+    await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');

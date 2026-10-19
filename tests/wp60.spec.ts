@@ -185,7 +185,7 @@ test.describe('R5 (Grok): YouthWIDE’s country answer does not read as all 16 s
     await open(page, YOUTHWIDE);
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Will This Work in Our Country?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(`That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh, and the Kosovo pilot adds program results from outside it. ${SENTENCE}`);
+    expect(answer).toBe(`That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience. ${SENTENCE}`);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toContain(SENTENCE);
     expect(sitePages().filter((p) => visible(p.html).includes('has worked since 2014 in')).map((p) => p.route)).toEqual([]);
   });

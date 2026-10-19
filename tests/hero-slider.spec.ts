@@ -66,7 +66,7 @@ test.describe('home hero slider', () => {
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(4);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
     // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the heading is short again and the slide's eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; tests/wp50.spec.ts)
-    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 41% More');
+    await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
     // WP23, WP25h and WP30c gave the band one framing sentence ("Evidence first, then our programs."). WP53 (owner decision 2026-10-16): the programs slide is gone, so the band is headed "Results" and has no framing sentence.
     // No slide heading ends with a period.
     await expect(page.locator('.hs__intro')).toHaveCount(0);

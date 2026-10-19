@@ -328,7 +328,7 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     await expect(page.locator('.pwp, .he__top, .he__head, [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
     const text = await mainText(page);
     for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47']) expect(text, gone).not.toContain(gone);
-    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Five Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     expect((await hrefs(page, '#cases .csc__more a')).map(sitePath)).toEqual(['/impact/case-studies/', '/impact/independent-evaluation/', '/impact/outcomes-2026/']);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
     expect(order.filter((c) => c === 'C7'), 'one C7 proof position').toHaveLength(1);
@@ -443,7 +443,8 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance').textContent())).toContain('found their first job within three months');
     await open(page, 'partner-with-us/development-partners/');
-    expect(compact(await page.locator('#glance .pg__lead a[data-fact="PR-03"]').textContent())).toContain('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    // WP62 (cycle-34 review, Grok): this page’s tile names the program’s year, read from PR-03 (the register’s glance label above, which the Impact tile keeps, is unchanged; tests/wp62.spec.ts)
+    expect(compact(await page.locator('#glance .pg__lead a[data-fact="PR-03"]').textContent())).toContain('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
     await open(page, 'impact/case-studies/undp-yes-korail/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toBe('UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% completed, 67% of the 350 trained found a first job within three months.');
@@ -506,7 +507,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
   test('slide 1 names the predecessor program, in the eyebrow above its heading and in its lead; the >4× tile stays', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    const title = 'Women Offered a Place Earned an Estimated 41% More';
+    const title = 'Women Offered a Place Earned an Estimated 41% More per Month';
     await expect(first.locator('h2')).toHaveText(title);
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');

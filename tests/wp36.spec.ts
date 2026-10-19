@@ -130,7 +130,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tile).toContainText('67%');
     // WP48 (cycle-23 review): "three months", not "3 months", in prose labels (tests/wp48.spec.ts)
-    await expect(tile).toContainText('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    await expect(tile).toContainText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
   });
 
@@ -225,13 +225,16 @@ test.describe('Investors', () => {
 });
 
 test.describe('Foundations', () => {
-  test('the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"', async ({ page }) => {
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the fourth tile is the WSDFM program record (PR-01), in place of the +$27 tile (RC-04: "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"),
+  // which the trial's +10.3 already shared the glance with; tests/wp62.spec.ts
+  test('the fourth tile is the WSDFM program record: "711 of 1,000", "WSDFM program records: 71% in work", tagged Program Record', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    const tile = page.locator('#glance .pg__lead a[data-fact="RC-04"]');
-    // WP57 (cycle-29 review, Grok R6): the figure reads "about +$27", as Home and the trial page say it
-    await expect(tile.locator('.pg__value')).toHaveText('about +$27');
-    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
-    await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
+    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-01"]');
+    await expect(tile).toHaveCount(1);
+    await expect(tile.locator('.pg__value')).toHaveText('711 of 1,000');
+    await expect(tile.locator('.pg__desc')).toHaveText('WSDFM program records: 71% in work');
+    await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
+    await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
   });
 });
 

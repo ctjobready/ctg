@@ -151,9 +151,10 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
   });
 
   // WP59 (cycle-31 review, GLM L3): Home’s reach card carries the register’s label, now two sentences ("... enrollments since 2014. CodersTrust has worked in 16 countries and territories."); the Impact and hub tiles keep the glance note
-  test('SC-16 reads "... enrollments since 2014. CodersTrust has worked in 16 countries and territories." on Home’s reach card; the Impact tile (which keeps "Delivered") and the hub’s "Why Partner" tile keep the note "..., with work in 16 countries and territories."', async ({ page }) => {
+  // WP62 (cycle-34 review, Gemini): the card’s eyebrow is "Reach Since 2014", so its caption drops the repeated "since 2014" (tests/wp62.spec.ts); the register’s label is unchanged
+  test('SC-16 reads "... enrollments. CodersTrust has worked in 16 countries and territories." on Home’s reach card; the Impact tile (which keeps "Delivered") and the hub’s "Why Partner" tile keep the note "..., with work in 16 countries and territories."', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="SC-16"]');
     expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
@@ -305,7 +306,8 @@ test.describe('S8 is reversed (b): owner decision 7, "show both", takes preceden
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S9: the press line is not repeated on About', () => {
-  test('About’s recognition band has the HolonIQ sentence and the link to Recognition and Media only; Home keeps the "Early press coverage" line with its links', async ({ page }) => {
+  // WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): Home’s line is one pointer sentence to Recognition and Media, with no outlet links of its own (tests/wp55.spec.ts)
+  test('About’s recognition band has the HolonIQ sentence and the link to Recognition and Media only; Home keeps the "Early press coverage" line, as a pointer to that page', async ({ page }) => {
     await open(page, ABOUT);
     const about = page.locator('#recognition');
     expect(await texts(page, '#recognition .about-rec > *')).toEqual(['CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.', 'Recognition and Media']);
@@ -320,8 +322,8 @@ test.describe('S9: the press line is not repeated on About', () => {
       c.querySelectorAll('.sr-only').forEach((n) => n.remove());
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-    expect(homeLine).toMatch(/^Early press coverage, 2014–2016: .+ World Bank coverage: Kosovo \(2016, 2017\) and Albania \(2021\)\.$/);
-    expect(await home.locator('a').count()).toBeGreaterThan(8);
+    expect(homeLine).toBe('Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.');
+    expect(await home.locator('a').count()).toBe(0);
   });
 
   test('Recognition and Media keeps its press list (the outlets with their logos), tied to PA-09', async ({ page }) => {
@@ -365,20 +367,18 @@ test.describe('S10 and S11: headings', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G5 and L3: Foundations’ Results at a Glance', () => {
-  test('the +$27 tile’s caption reads "... in a predecessor program, compared with the control group" (the $66 mean stays in the register’s text only), with its "about"', async ({ page }) => {
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the +$27 tile left the glance (the WSDFM program record is the fourth tile; tests/wp62.spec.ts); RC-04’s register wording is unchanged
+  test('RC-04’s caption still reads "... in a predecessor program, compared with the control group" (the $66 mean stays in the register’s text only); Foundations’ glance no longer shows it', async ({ page }) => {
     expect(fact('RC-04').stat?.label).toBe('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
     expect(fact('RC-04').text).toContain('control-group mean of about $66');
     await open(page, FOUNDATIONS);
-    const tile = page.locator('#glance a[data-fact="RC-04"]');
-    await expect(tile).toHaveCount(1);
-    expect(compact(await tile.locator('.pg__desc').textContent())).toBe('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
-    expect(compact(await tile.locator('.pg__value').textContent())).toBe('about +$27');
+    await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
     expect(compact(await page.locator('#glance').textContent())).not.toContain('control mean');
   });
 
-  test('the +10.3 trial tile is first and the +$27 tile fourth; the survey and Kosovo tiles keep their places between them; four tiles in a row at 1280, no sideways scroll at 390', async ({ page }) => {
+  test('the +10.3 trial tile is first and the WSDFM program-record tile fourth; the survey and Kosovo tiles keep their places between them; four tiles in a row at 1280, no sideways scroll at 390', async ({ page }) => {
     await open(page, FOUNDATIONS);
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'RC-04']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-01']);
     expect(compact(await page.locator('#glance .pg__lead a').first().locator('.pg__value').textContent())).toBe('+10.3 percentage points');
     const tops = await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
     expect(new Set(tops).size, 'four tiles in one row at 1280').toBe(1);

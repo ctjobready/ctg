@@ -13,6 +13,7 @@ import { linkAttrs } from '../../../lib/url';
  * WP31: the 12-month outcome tracking (PD-02) is a commitment, not a result, so it left these tiles; the hero line states it.
  * WP32 (cycle-9 review): the reach tile came back as the third, so the strip reads trial, survey, reach.
  * WP45 (cycle-21 review): the trial tile shows "+10.3" with "percentage points" on a line under it, not the register's "pp".
+ * WP62 (cycle-34 review, Gemini): the reach tile's kicker is "Reach Since 2014", so its label is the register's glance label without " since 2014" ("learners trained"); the Impact page's tile, which has no such kicker, keeps "learners trained since 2014".
  */
 interface Props {
   id?: string;
@@ -34,6 +35,10 @@ const oc01 = fact('OC-01');
 const sc16 = fact('SC-16');
 if (!rc02.stat || !oc01.stat || !sc16.stat) throw new Error('WhyPartner: RC-02, OC-01 and SC-16 need a stat');
 const trialFigure = spellUnit(rc02.stat.value);
+// The reach tile's label without "since 2014", which its kicker says. Read from the register, never retyped; the build stops if the glance label stops ending that way.
+const reachGlance = sc16.stat.glance?.label ?? sc16.stat.label;
+if (!reachGlance.endsWith(' since 2014')) throw new Error('WhyPartner: SC-16 glance label no longer ends "since 2014"; update the reach tile label');
+const reachLabel = reachGlance.slice(0, -' since 2014'.length);
 const tiles: Tile[] = [
   {
     kicker: 'Randomized Trial of a Predecessor Program',
@@ -56,7 +61,7 @@ const tiles: Tile[] = [
   {
     kicker: 'Reach Since 2014',
     value: sc16.stat.value,
-    label: sc16.stat.glance?.label ?? sc16.stat.label,
+    label: reachLabel,
     note: sc16.stat.glance?.note,
     href: '/impact/global-reach/',
     link: 'Global Reach',

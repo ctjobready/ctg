@@ -32,6 +32,8 @@
  * WP53 (owner follow-up, 2026-10-16): the "Where They Work" card says "local, remote and global work" once, in its title; the text is "Placement support and outcome tracking for 12 months after each course." (as Home's card, with the months from PD-02).
  * WP58 (cycle-30 reviews, Claude S10 and GPT-6.1 Sol G6): the third "What Your Portfolio Gets" card is "Progress Your Evaluators Can Check" (it was "Results Your Evaluators Can Check": baseline data, surveys and monthly reports are a reporting plan, not results);
  * Adrian Afraham's card shows his verbatim quotation, name and program without the one-line summary above it ("Secured a first freelance job after the Graphic Designing course, followed by a job offer"), which repeated the quotation.
+ * WP62 (cycle-34 review, Grok): the UNDP YES tile of Results at a Glance names its year ("... in UNDP YES, Korail (2017), found their first job within three months"; the year is read from PR-03). The Impact page's tile keeps the register's label, because its note gives the year.
+ * WP62 (cycle-34 review, Gemini): the "Where They Work" card is unchanged (it already says "for 12 months", read from PD-02); Home, the shared mechanism band and YouthWIDE now say it the same way.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -78,6 +80,14 @@ const benchmark = /(more than four times the 2\.3-point average across nine voca
 if (!benchmark) throw new Error('Development Partners: the RC-06a glance label no longer ends "... more than four times the 2.3-point average across nine vocational-training trials"; update the +10.3 tile\'s note');
 const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
 
+// WP62 (cycle-34 review, Grok): the UNDP YES tile names its year, "... in UNDP YES, Korail (2017), found their first job within three months", which PR-03 gives ("..., Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 trained; ...").
+// The label is PR-03's glance label with the year added, read from the register and never retyped; the Impact page's tile for the same fact keeps the register's label, because its note already says "A 2017 program in Dhaka’s Korail settlement."
+// The build stops if the glance label or the fact's text changes shape.
+const undpYear = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
+const undpGlance = fact('PR-03').stat?.glance?.label ?? '';
+if (!undpYear || !undpGlance.includes(' in UNDP YES, Korail, found ')) throw new Error('Development Partners: PR-03 no longer reads "..., 2017: N trained; ..." with the glance label "... in UNDP YES, Korail, found ..."; update the UNDP YES tile');
+const undpLabel = undpGlance.replace(' in UNDP YES, Korail, found ', ` in UNDP YES, Korail (${undpYear}), found `);
+
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
 const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q10', 'Q8-route'];
@@ -103,7 +113,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
   <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp }]}
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: undpLabel }]}
     more={[]}
   />
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />

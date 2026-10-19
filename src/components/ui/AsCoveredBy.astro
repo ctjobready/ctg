@@ -1,54 +1,27 @@
 ---
-import { COVERED_BY, COVERED_BY_WORLD_BANK } from '../../data/press';
-import { linkAttrs } from '../../lib/url';
+import { COVERED_BY } from '../../data/press';
 
 /**
- * AsCoveredBy (WP55, synthesis 3.5): one paragraph of text links, no logos and no photographs. The seven outlets are PA-09's (Forbes' item is a contributor post, as the line says; PA-09's eighth item, the
- * World Bank's 2016 Kosovo feature story, is in the World Bank sentence); the World Bank pages are PA-13 (the Kosovo feature story and country brief, the Albania press release). The Recognition and Media page keeps the logo list. Links leave the site, so each carries
- * the rel from linkAttrs and a screen-reader "(opens host)" suffix like every other external link.
- * WP57 (cycle-29 review, GPT-6.1 Sol P2): the line was one overpacked sentence ("As covered by Gulf News (2014), TechCrunch (2014), ...; and by the World Bank on Kosovo (2016, 2017) and Albania (2021)."). It is two short ones now: "Early press coverage,
- * 2014–2016: ..." (the outlets, named once, under the span of their years, which is read from the data; Forbes keeps its "contributor post" qualifier) and "World Bank coverage: Kosovo (2016, 2017) and Albania (2021)." Every link stays. The World Bank
- * years stay as the link texts: Kosovo has two pages, so the year is what tells the two links apart.
+ * AsCoveredBy (WP55, synthesis 3.5): Home's press line under the recognition badges. It began as one paragraph of text links to the seven outlets of PA-09 (Forbes' item is a contributor post, as the line said) and to the World Bank pages of PA-13;
+ * WP57 (cycle-29 review, GPT-6.1 Sol P2) split it into two short sentences with every link kept.
+ * WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): on Home it is one pointer sentence, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.", with the existing
+ * "See All Recognition and Media" link directly under it. The outlets, their links and the other World Bank pages (the 2017 Kosovo country brief and the 2021 Albania press release) are no longer printed on Home; the Recognition and Media page lists
+ * the 2014–2016 coverage with its logos and headlines, and `COVERED_BY` / `COVERED_BY_WORLD_BANK` (src/data/press.ts) keep the researched links. The sentence says "Kosovo" alone because that page carries the World Bank's 2016 Kosovo story and not
+ * its Albania release; naming Albania here would send a reader to a page without it.
+ * The 2014–2016 span is read from the data (the years of PA-09's outlets), so the lead-in cannot drift from it.
  */
 interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
-const media = COVERED_BY.map((c) => ({ ...c, a: linkAttrs(c.href) }));
-const wb = COVERED_BY_WORLD_BANK.map((w) => ({ place: w.place, pages: w.pages.map((p) => ({ ...p, a: linkAttrs(p.href) })) }));
-// The span of the outlets' years ("2014–2016"), so the lead-in cannot drift from the data.
 const years = COVERED_BY.map((c) => Number(c.year));
 const first = Math.min(...years);
 const last = Math.max(...years);
 const span = first === last ? `${first}` : `${first}–${last}`;
-/** What follows item `i` of `n` in a list read aloud: a comma, "and" before the last item, nothing after it. */
-const after = (i: number, n: number) => (i < n - 2 ? ',' : i === n - 2 ? ' and' : '');
 ---
 
 <p class:list={['cov', className]} data-fact="PA-09 PA-13">
-  Early press coverage, {span}:
-  {
-    media.map((c, i) => (
-      <>
-        {' '}
-        <a href={c.a.href} rel={c.a.rel}>{c.outlet}<span class="sr-only"> {c.a.srText}</span></a>{c.note && ` (${c.note})`}{after(i, media.length)}
-      </>
-    ))
-  }. World Bank coverage:
-  {
-    wb.map((w, i) => (
-      <>
-        {' '}{w.place} (
-        {w.pages.map((p, j) => (
-          <>
-            {j > 0 && ', '}
-            <a href={p.a.href} rel={p.a.rel}>{p.year}<span class="sr-only"> {p.a.srText}</span></a>
-          </>
-        ))}
-        ){after(i, wb.length)}
-      </>
-    ))
-  }.
+  Early press coverage, {span}, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.
 </p>
 
 <style>

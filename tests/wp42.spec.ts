@@ -335,7 +335,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await open(page, '');
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
       // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
-      'Women Offered a Place Earned an Estimated 41% More',
+      'Women Offered a Place Earned an Estimated 41% More per Month',
       'Six Government Contracts and Bangladesh’s National University',
       'Surveyed Completers Report Higher Income',
       'Results by Program',

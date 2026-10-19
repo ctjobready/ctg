@@ -451,7 +451,8 @@ test.describe('L3: SC-16 is two sentences', () => {
     await open(page, HOME);
     const card = page.locator('.hh__card[data-fact="SC-16"]');
     await expect(card.locator('.stat__value')).toHaveText('130,000+');
-    expect(compact(await card.locator('.stat__label').textContent())).toBe(LABEL);
+    // WP62 (cycle-34 review, Gemini): the card’s eyebrow is "Reach Since 2014", so the caption is the register’s label without " since 2014"
+    expect(compact(await card.locator('.stat__label').textContent())).toBe(LABEL.replace(' since 2014', ''));
     expect(sitePages().filter((p) => /enrollments since 2014, with work in 16 countries/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 

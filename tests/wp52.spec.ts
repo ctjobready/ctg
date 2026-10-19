@@ -532,7 +532,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
 
   test('Foundations and Governments never showed the ">4×" tile and still have their four; Home’s first slide keeps its own', async ({ page }) => {
     for (const [route, ids] of [
-      [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04']],
+      [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-01']], // WP62 (cycle-34 review): the WSDFM program record is the fourth tile (the +$27 tile left)
       [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12']], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
     ] as const) {
       await open(page, route);

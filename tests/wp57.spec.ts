@@ -16,7 +16,7 @@ import { listPages } from './support/pages';
  *   - G6: the mobile drawer's Programs accordion shows the desktop menu's two group labels as plain labels, before YouthWIDE and the NU Postgraduate Diploma (it already did: this pins it beside the desktop names);
  *   - G7: Employers' "Due Diligence in One View" is three rows (no "Independent Evaluation Welcome"), laid out without an empty cell; the hub keeps its four;
  *   - P1: Home's fourth logo group is "Employers and Industry Partners";
- *   - P2: the press line is two short sentences ("Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."), every link kept;
+ *   - P2: the press line is two short sentences ("Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."), every link kept (WP62, cycle-34 review: one pointer sentence to Recognition and Media);
  *   - K1: Impact's "On This Page" list ends on the closing band, "Discuss the Evidence for Your Program";
  *   - K2: the Foundations meta description reads "... earned an estimated $27 more a month.";
  *   - GM4: Home's "Proof in Practice" Kosovo card reads "Program records: 102 of 150 women in work. World Bank: 77 trainees won at least one online contract." (PR-02, PR-02b), and every other card, tile or block that
@@ -24,7 +24,7 @@ import { listPages } from './support/pages';
  *   - R1: Global Reach's H1 is "Where We Have Worked: 16 Countries and Territories", and Denmark's note says "Launch location of CodersTrust, April 2014" (the date is TL-01's);
  *   - R2: the contract total says it includes Her Power's national program ("... it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).") on Home's government slide and the Governments glance (GV-12 and GV-01);
  *   - R5: Universities' "Choose Where to Start" is one line, "Start with one campus: cohort size, tracks and labs are set in the discovery session.", with no size cards;
- *   - R6: Foundations' +$27 tile reads "about +$27", as Home and the trial page do;
+ *   - R6: Foundations' +$27 tile reads "about +$27", as Home and the trial page do (WP62, cycle-34 review: the tile left the glance; Home and the trial page still say it);
  *   - P1 (Grok): "On This Page" is an H2 on the long-form pages (inside the contents box's summary).
  */
 
@@ -279,33 +279,20 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('P2, "As covered by" is two short sentences with every link kept', () => {
+// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): the two short sentences WP57 made (the outlets with their links; the World Bank pages) are one pointer sentence on Home now (tests/wp55.spec.ts and tests/wp62.spec.ts hold its wording)
+test.describe('P2, "As covered by" is one short sentence that points to Recognition and Media', () => {
   for (const [name, route] of [['Home', HOME]] as const) {
-    test(`${name}: "Early press coverage, 2014–2016: ..." names the seven outlets once (Forbes with its qualifier); "World Bank coverage: ..." keeps Kosovo’s two pages and Albania’s page apart by year`, async ({ page }) => {
+    test(`${name}: the press line is one sentence, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page."; no outlet is named in it`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
       const text = await visibleText(page, 'p.cov');
-      const sentences = text.split(/(?<=\.) (?=[A-Z])/);
-      expect(sentences).toEqual([
-        'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India.',
-        'World Bank coverage: Kosovo (2016, 2017) and Albania (2021).',
-      ]);
+      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.']);
       expect(text).not.toContain('As covered by');
-      // no stray space before a comma or a period (the links are followed directly by their punctuation)
+      // no stray space before a comma or a period
       expect(text).not.toMatch(/ [,.]/);
-      // the outlet links carry the outlet's name alone; the qualifier is plain text beside Forbes' link; the three World Bank links are their years
-      const linkTexts = await line.locator('a').evaluateAll((as) =>
-        as.map((a) => {
-          const c = a.cloneNode(true) as HTMLElement;
-          c.querySelectorAll('.sr-only').forEach((n) => n.remove());
-          return (c.textContent ?? '').trim();
-        }),
-      );
-      expect(linkTexts).toEqual(['Gulf News', 'TechCrunch', 'Forbes', 'The Wall Street Journal', 'USA Today', 'Tech in Asia', 'The Times of India', '2016', '2017', '2021']);
+      expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
       expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
-      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(10);
-      expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
     });
   }
 });
@@ -609,17 +596,16 @@ test.describe('R5, Universities: "Choose Where to Start" is one line, with no si
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('R6, Foundations: the +$27 tile reads "about +$27", as Home and the trial page say it', () => {
-  test('the tile’s figure is "about +$27" (the qualifier is the register’s own word), its label and facts are unchanged', async ({ page }) => {
-    await open(page, FOUNDATIONS);
-    const tile = page.locator('#glance a.pg__tile', { has: page.locator('.pg__value', { hasText: '+$27' }) });
-    await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.pg__value')).toHaveText('about +$27');
-    await expect(tile.locator('.pg__qual')).toHaveText('about');
-    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
-    expect(await tile.getAttribute('data-fact')).toBe('RC-04');
+// WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ glance no longer has the +$27 tile (the WSDFM program record is its fourth tile; tests/wp62.spec.ts), so the "about" qualifier of PartnerGlance (WP57) is gone with its one user;
+// Home and the trial page still say "about +$27 a month", and the register’s RC-04 is unchanged
+test.describe('R6, "about +$27": Home and the trial page say it; Foundations’ glance no longer carries the tile', () => {
+  test('RC-04 still opens "About +$27 a month"; Foundations’ glance has no RC-04 tile, no qualifier and no "+$27"', async ({ page }) => {
     expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
     expect(fact('RC-04').stat?.value).toBe('+$27');
+    await open(page, FOUNDATIONS);
+    await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
+    await expect(page.locator('#glance .pg__qual')).toHaveCount(0);
+    expect(compact(await page.locator('#glance').textContent())).not.toContain('+$27');
   });
 
   test('Home and the trial page say "about +$27 a month" in their own sentences', async ({ page }) => {
@@ -627,24 +613,6 @@ test.describe('R6, Foundations: the +$27 tile reads "about +$27", as Home and th
     expect(compact(await page.locator('#results').textContent())).toContain('about +$27 a month');
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$27 a month/);
-  });
-
-  test('the qualifier sits on the figure’s line in the small body size, inside the tile at 1280 and 390 (no sideways scroll)', async ({ page }) => {
-    for (const vp of [DESKTOP, MOBILE]) {
-      await page.setViewportSize(vp);
-      await open(page, FOUNDATIONS);
-      const g = await page.locator('#glance a.pg__tile', { has: page.locator('.pg__qual') }).evaluate((el) => {
-        const q = el.querySelector('.pg__qual')!.getBoundingClientRect();
-        const v = el.querySelector('.pg__value')!.getBoundingClientRect();
-        const t = el.getBoundingClientRect();
-        return { qTop: q.top, qBottom: q.bottom, vTop: v.top, vBottom: v.bottom, qRight: q.right, tRight: t.right, qSize: parseFloat(getComputedStyle(el.querySelector('.pg__qual')!).fontSize), vSize: parseFloat(getComputedStyle(el.querySelector('.pg__value')!).fontSize) };
-      });
-      expect(g.qTop, `${vp.width}px: on the figure's line`).toBeGreaterThanOrEqual(g.vTop - 1);
-      expect(g.qBottom).toBeLessThanOrEqual(g.vBottom + 1);
-      expect(g.qSize, 'smaller than the figure').toBeLessThan(g.vSize);
-      expect(g.qRight).toBeLessThanOrEqual(g.tRight);
-      expect(await noOverflow(page), `${vp.width}px`).toBe(true);
-    }
   });
 });
 

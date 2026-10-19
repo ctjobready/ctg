@@ -9,6 +9,7 @@
 // WP45 (cycle-21 review): the hub stacked reporting and safeguarding three times (the "Monthly Reports and Quarterly Reviews" band, the due-diligence cards and two FAQs). The band (#review-cycle) and the FAQs "How Do You Prove Outcomes?" and
 // "What About Safeguarding and Data Protection?" are gone; the due-diligence view states both once and links to Governance, and every route page answers the rest. The FAQ block is two questions.
 // WP48 (cycle-23 review, item 17): the Governments card no longer says "national programs for youth employment" (a 100,000+ national program is a design option CodersTrust has not yet delivered); it states what the route offers, as the nav.ts menu blurb does.
+// WP62 (cycle-34 review, GLM and Grok): the steps band is headed "From First Conversation to First Cohort" (it was "Your First 90 Days"), and its lead no longer opens "Four steps from first conversation to first cohort." (the heading says it now). The anchor (#how-partnering-works) is unchanged.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -91,7 +92,7 @@ const jsonLd = [
 
   <Tone cmf="HOW" tone="airy">
     <Section id="how-partnering-works" aria-labelledby="how-h">
-      <SectionHeader id="how-h" eyebrow="For Grant-Funded Supported Cohorts" title="Your First 90 Days" lead="Four steps from first conversation to first cohort. This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
+      <SectionHeader id="how-h" eyebrow="For Grant-Funded Supported Cohorts" title="From First Conversation to First Cohort" lead="This timing is for grant-funded pilots; public procurement follows the agency’s own timeline." />
       <div data-fact="PD-04">
         <StepFlow steps={steps} />
       </div>

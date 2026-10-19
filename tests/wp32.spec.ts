@@ -44,7 +44,8 @@ test.describe('Partner with Us hub', () => {
     const reach = tiles.nth(2);
     await expect(reach.locator('.wp__value')).toHaveText('130,000+');
     // WP49 (cycle-24 review): "learners trained", SC-01's wording (the 130,000+ includes teacher and staff enrollments, so it is not "young people")
-    await expect(reach.locator('.wp__desc')).toHaveText('learners trained since 2014');
+    // WP62 (cycle-34 review, Gemini): the kicker says "Reach Since 2014", so the label is "learners trained" (the glance label without " since 2014"; tests/wp62.spec.ts)
+    await expect(reach.locator('.wp__desc')).toHaveText('learners trained');
     await expect(reach.locator('.wp__note')).toHaveText('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     expect(await reach.locator('a.wp__link').getAttribute('href')).toMatch(/\/impact\/global-reach\/$/);
   });

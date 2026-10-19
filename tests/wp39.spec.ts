@@ -70,8 +70,8 @@ const PAGES: PageSpec[] = [
     route: 'partner-with-us/governments/',
     h2: 'What Your Agency Gets',
     cards: [
-      // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates")
-      { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point completers toward paid work.', facts: ['PD-10', 'PD-01'] },
+      // WP49 (cycle-24 review): "completers", the site's word for people who finished a program (it said "graduates"); WP62 (cycle-34 review, Gemini): "... placement support toward local, remote and global work." (it said "... that point completers toward paid work.")
+      { title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.', facts: ['PD-10', 'PD-01'] },
       { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',

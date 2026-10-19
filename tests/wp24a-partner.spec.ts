@@ -44,7 +44,7 @@ test.describe('Partner with Us hub', () => {
     expect(tile).not.toMatch(/\bpp\b|in percentage points/);
   });
 
-  test('WP30c: the hub has no RACI roles table (an internal-report view); the route cards, the first 90 days and two FAQs remain (WP45)', async ({ page }) => {
+  test('WP30c: the hub has no RACI roles table (an internal-report view); the route cards, the first-cohort steps and two FAQs remain (WP45; WP62: the steps band is headed "From First Conversation to First Cohort")', async ({ page }) => {
     await page.goto(URL);
     await expect(page.locator('.raci')).toHaveCount(0);
     await expect(page.locator('#who-does-what')).toHaveCount(0);

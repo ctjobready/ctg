@@ -366,24 +366,13 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
   });
 });
 
-// WP57 (cycle-29 review, GPT-6.1 Sol P2): the line is two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."; every link stays (the ten HREFS below are unchanged)
-test.describe('"As covered by": the press coverage line, text links and no logos, on Home', () => {
-  const LINE = 'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India. World Bank coverage: Kosovo (2016, 2017) and Albania (2021).';
-  const HREFS = [
-    'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190',
-    'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/',
-    'https://web.archive.org/web/20140924225212/http://www.forbes.com/sites/ilyapozin/2014/08/21/5-companies-making-a-splash-for-a-better-world/',
-    'https://web.archive.org/web/20141224065551/http://blogs.wsj.com/cio/2014/09/24/startup-aims-to-boost-number-of-qualified-it-workers/',
-    'https://web.archive.org/web/20141228085159/http://www.usatoday.com/story/tech/columnist/shinal/2014/12/22/new-york-bangladesh-global-technology-trends/20734365/',
-    'https://www.techinasia.com/microfinance-startup-coders-trust-teaches-code',
-    'https://timesofindia.indiatimes.com/home/sunday-times/Cook-to-coder-How-low-income-youth-are-writing-a-better-future/articleshow/53575603.cms',
-    'https://web.archive.org/web/20170504003520/http://www.worldbank.org/en/news/feature/2016/09/19/kosovos-women-go-wow-online-and-working',
-    'https://www.worldbank.org/en/country/kosovo/brief/kosovo-wow',
-    'https://www.worldbank.org/en/news/press-release/2021/09/14/women-in-albania-to-gain-greater-access-to-global-digital-jobs-market-with-world-bank-support',
-  ];
+// WP57 (cycle-29 review, GPT-6.1 Sol P2): the line was two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ...", with ten links that left the site.
+// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): on Home it is one pointer sentence with no outlet and no link of its own; the existing "See All Recognition and Media" link follows it, and the Recognition and Media page keeps the list.
+test.describe('"As covered by": the press coverage line on Home is one sentence that points to Recognition and Media', () => {
+  const LINE = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.';
 
   for (const [name, route] of [['Home', HOME]] as const) {
-    test(`${name}: the line reads as written, links ten pages that leave the site safely, and carries no image`, async ({ page }) => {
+    test(`${name}: the line reads as written, has no link and no image, and the link to Recognition and Media is the next paragraph`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
@@ -393,14 +382,26 @@ test.describe('"As covered by": the press coverage line, text links and no logos
         return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
       });
       expect(text).toBe(LINE);
-      expect(await line.locator('a').evaluateAll((as) => as.map((a) => a.getAttribute('href')))).toEqual(HREFS);
-      expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
+      await expect(line.locator('a')).toHaveCount(0);
       await expect(line.locator('img, svg, picture')).toHaveCount(0);
       expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
-      // every link says where it goes, for a screen reader
-      expect(await line.locator('a .sr-only').count()).toBe(10);
+      const next = page.locator('#recognition p.cov + p.rec__press a');
+      await expect(next).toHaveCount(1);
+      expect(compact(await next.textContent())).toBe('See All Recognition and Media');
+      expect(await next.getAttribute('href')).toMatch(/\/about\/recognition\/$/);
     });
   }
+
+  // the line says "Kosovo" alone because the page it names lists the World Bank's 2016 Kosovo story and no Albania release
+  test('the page the line names carries what it says: the seven outlets and the World Bank’s Kosovo story, dated 2014 to 2016; it names no Albania release', async ({ page }) => {
+    await open(page, 'about/recognition/');
+    const items = page.locator('ul.rec-press li');
+    await expect(items).toHaveCount(8);
+    const years = await items.locator('time').evaluateAll((els) => els.map((e) => e.getAttribute('datetime')));
+    expect(years.sort()).toEqual(['2014', '2014', '2014', '2014', '2014', '2015', '2016', '2016']);
+    await expect(page.locator('ul.rec-press li', { hasText: 'Kosovo' })).toHaveCount(1);
+    expect(compact(await page.locator('main').textContent())).not.toContain('Albania');
+  });
 
   test('the line is on Home only (WP58: About no longer repeats it; the Recognition and Media page keeps its logo list)', () => {
     const on = sitePages().filter((p) => /class="cov[ "]/.test(p.html)).map((p) => p.route).sort();
@@ -597,7 +598,7 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     await open(page, IMPACT);
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toHaveCount(1);
     await open(page, HOME);
-    await expect(page.getByRole('link', { name: 'See All Five Case Studies' })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: 'See All Case Studies' })).toHaveCount(1);
   });
 
   test('five cards sit 3 + 2 at 1280 px (no card alone in its row) and stack at 390 px with no sideways scroll', async ({ page }) => {

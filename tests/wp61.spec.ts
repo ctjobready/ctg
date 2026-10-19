@@ -450,12 +450,13 @@ test.describe('L6 (GLM, with Kimi): Contact no longer closes on a partner logo w
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('P1 (GLM): YouthWIDE’s "Where They Work" card is "Local, Remote and Global Work"', () => {
-  test('the card has the title Home, Development Partners and the shared mechanism band use; its text is unchanged; the earlier title is on no built page', async ({ page }) => {
+  // WP62 (cycle-34 review, Gemini): the card’s text says how long outcomes are tracked, "... outcome tracking for 12 months after each course." (tests/wp62.spec.ts)
+  test('the card has the title Home, Development Partners and the shared mechanism band use; its text says "for 12 months" (WP62); the earlier title is on no built page', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const card = page.locator('#mechanism li', { has: page.locator('.model__label', { hasText: 'Where They Work' }) });
     await expect(card).toHaveCount(1);
     await expect(card.locator('.model__title')).toHaveText('Local, Remote and Global Work');
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking after each course.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course.');
     expect(pagesWith('Local, Remote, Overseas and Freelance Work')).toEqual([]);
   });
 });

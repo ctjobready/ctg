@@ -131,7 +131,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     await open(page, '');
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-plain-line]')).toHaveCount(0);
-    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Five Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
+    expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     expect((await hrefs(page, '#cases .csc__more a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/case-studies/', 'impact/independent-evaluation/', 'impact/outcomes-2026/']);
   });
 
@@ -179,8 +179,8 @@ test.describe('the trial and the survey are shown once per page', () => {
   }
 });
 
-// WP50 (cycle-25 review): the WSDFM 71% is back in Home's program-results slide (as the second of four programs, "program records, not trial data"); it stays off the glance tiles
-test.describe('the WSDFM 71% is off the glance tiles (the case cards and the case study keep it; WP50: the Home program-results slide lists it again)', () => {
+// WP50 (cycle-25 review): the WSDFM 71% is back in Home's program-results slide (as the second of four programs, "program records, not trial data"); it stays off the glance tiles of Development Partners and Governments (WP62: Foundations' fourth tile is the WSDFM program record again)
+test.describe('the WSDFM 71% is off the glance tiles of Development Partners and Governments (the case cards and the case study keep it; WP50: the Home program-results slide lists it again)', () => {
   // WP42 (cycle-19 review): the government slide is second, so the program-results slide is the fourth
   test('Home slide 4 lists four programs: Women in Online Work, WSDFM, UNDP YES and Her Power', async ({ page }) => {
     await open(page, '');
@@ -196,8 +196,10 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     ]);
   });
 
-  test('Results at a Glance on Development Partners, Governments and Foundations carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it)', async ({ page }) => {
-    for (const slug of THREE) {
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ fourth tile is the WSDFM program-record tile again (PR-01, "711 of 1,000", tagged Program Record), in place of the +$27 tile, because the trial filled two of the four tiles (tests/wp62.spec.ts);
+  // Development Partners and Governments still carry no WSDFM tile
+  test('Results at a Glance on Development Partners and Governments carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it); Foundations’ fourth tile is the WSDFM program record (WP62)', async ({ page }) => {
+    for (const slug of THREE.filter((s) => s !== 'foundations')) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#glance [data-fact~="PR-01"]'), slug).toHaveCount(0);
       expect(compact(await page.locator('#glance').textContent()), slug).not.toMatch(/711 of 1,000|WSDFM/);
@@ -207,7 +209,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     // WP52 (cycle-27 review, Kimi M2): Development Partners' ">4×" tile (RC-06a) is gone from the glance; its comparison is the +10.3 tile's note (tests/wp52.spec.ts)
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     await open(page, 'partner-with-us/foundations/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'RC-04']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-01']);
     await open(page, 'partner-with-us/governments/');
     // WP61 (cycle-33 review, GLM L5): the results lead and the contract scope is the fourth tile (it led the glance): the trial, Her Power, Kosovo, then the contract scope (tests/wp61.spec.ts)
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'PR-05', 'PR-02', 'GV-12']);

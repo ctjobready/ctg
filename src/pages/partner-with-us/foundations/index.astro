@@ -40,6 +40,8 @@
  * WP57 (cycle-29 review, Kimi K3, item K2): the meta description reads "... found women offered a place earned an estimated $27 more a month." (RC-04's "+$27 a month", still read from the register by factPart); it said "had an estimated $27 higher monthly income".
  * WP60 (cycle-32 review, Gemini GM4 and GM9): "What Happens Next" opens "For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below." before the four cohort steps (it covered cohort grants only);
  * Samina's learner card shows her outcome line alone ("Completed 90+ projects as a freelance graphic designer on Fiverr"): the sentence under it, "She has completed 90+ projects on Fiverr so far.", repeated it (flagged in three cycles) and is gone.
+ * WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the randomized trial filled two of the four glance tiles (+10.3 percentage points and about +$27), so the fourth tile is the WSDFM program-record tile (PR-01: "711 of 1,000", "WSDFM program records: 71% in work",
+ * tagged Program Record) in place of the +$27 tile. The +$27 is not stated elsewhere in the page body; the meta description still says it (RC-04, read by factPart).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -66,6 +68,7 @@ import Reinforcement from '../../../components/pages/partners/Reinforcement.astr
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -83,6 +86,12 @@ const { title, description } = meta(
   'Fund Youth Employment: Foundations and CSR',
   `Fund a supported path to earnings. A randomized trial of a predecessor program found women offered a place earned an estimated ${factPart('RC-04', /\+(\$\d+) a month/)} more a month.`,
 );
+
+// WP62 (cycle-34 review): the fourth glance tile is the WSDFM program-record tile. Its label is PR-01's ("WSDFM: 71% in work") with "program records" in place of the colon, so the share is read from the register and never retyped;
+// the build stops if the label changes shape. The figure ("711 of 1,000") and the Program Record tag come from PR-01 itself (PartnerGlance). The tile has no note: the tag and the label say these are program records.
+const wsdfmShare = /^WSDFM: (\d+% in work)$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
+if (!wsdfmShare) throw new Error('Foundations: PR-01 label no longer reads "WSDFM: P% in work"; update the fourth glance tile');
+const wsdfmTileLabel = `WSDFM program records: ${wsdfmShare}`;
 
 // Q8-route and Q9-route: the one-line cost and safeguarding answers, each with a link to where the full answer lives (the partner hub FAQ, the governance page) (WP36).
 const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
@@ -106,10 +115,11 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   />
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
-  <!-- WP58 (cycle-30 review, GLM L3): the +10.3 trial tile (RC-02, the strongest evidence) is the first tile and the +$27 tile (RC-04, with its "about") the fourth, the single `more` tile that joins the main group; the survey and Kosovo tiles keep their places between them. -->
+  <!-- WP58 (cycle-30 review, GLM L3): the +10.3 trial tile (RC-02, the strongest evidence) is the first tile; the survey and Kosovo tiles follow. WP62 (cycle-34 review): the fourth tile, the single `more` tile that joins the main group, is the WSDFM program-record tile (PR-01),
+       where it was the +$27 tile (RC-04): the trial filled two of the four tiles. -->
   <PartnerGlance
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
-    more={[{ id: 'RC-04', href: '/impact/independent-evaluation/', qualifier: factPart('RC-04', /^(About) \+/).toLowerCase() }]}
+    more={[{ id: 'PR-01', href: LINKS.caseWsdfm, label: wsdfmTileLabel, also: ['PR-06'] }]}
   />
   <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />
 

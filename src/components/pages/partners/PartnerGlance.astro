@@ -14,6 +14,7 @@ import { linkAttrs } from '../../../lib/url';
  * WP49 (cycle-24 review): a "More Results" heading over ONE tile is no heading at all, so a single secondary tile joins the main group (four tiles in one row from 1100 px, two by two from 720 px, stacked on a phone); the heading and
  * its own row stay where it introduces several tiles. (Foundations and Governments each have three lead tiles and one more; WP52, cycle-27 review: Development Partners has the three lead tiles alone, its ">4×" tile
  * having become the +10.3 tile's `note`.)
+ * WP62 (cycle-34 review): the `qualifier` option (WP57: "about" before Foundations' +$27) is gone; its one user was that tile, which the WSDFM program-record tile replaced.
  */
 type EvidenceType = 'Randomized Trial' | 'Surveyed Completers' | 'Program Record' | 'Contract Scope' | 'Individual Story';
 interface Tile {
@@ -28,11 +29,6 @@ interface Tile {
   note?: string;
   /** A short caveat after the register's note ("contracted scopes, not a delivered-training total"). */
   caveat?: string;
-  /**
-   * WP57 (cycle-29 review, Grok R6): a word that qualifies the figure, shown small before it ("about" before "+$27": Foundations' RC-04 tile, as Home and the trial page say "about +$27 a month"). The page reads it from the register's own wording (RC-04 opens "About +$27 a month"), never from its own text.
-   * It is drawn on the three or four main tiles (the `lead` prop, and a single `more` tile, which joins them: WP58, cycle-30 review, GLM L3: Foundations' +$27 tile is that fourth tile); a tile in a grouped `more` row shows the figure alone.
-   */
-  qualifier?: string;
   /** Other facts the tile's note rests on, added to data-fact. */
   also?: string[];
   /** Evidence type; the default follows the fact id (RC trial, OC survey, PR program record, GV contract scope). */
@@ -86,7 +82,7 @@ const groupedTiles = single ? [] : moreTiles;
         <li>
           <a class="pg__tile pg__tile--lead" href={linkAttrs(t.href).href} data-fact={t.facts}>
             <EvidenceTag type={t.type} />
-            <span class="pg__value">{t.qualifier && <><span class="pg__qual">{t.qualifier}</span>{' '}</>}{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</span>
+            <span class="pg__value">{t.value}{t.unit && <>{' '}<span class="fig-unit">{t.unit}</span></>}</span>
             <span class="pg__desc">{t.label}</span>
             {t.note && <span class="pg__note">{t.note}</span>}
             <Icon name="arrow-right" size={16} />
@@ -186,13 +182,6 @@ const groupedTiles = single ? [] : moreTiles;
   }
   .pg__value--sm {
     font-size: var(--fs-heading-xl);
-  }
-  /* the qualifier before a figure ("about +$27", WP57): small body type in the figure's colour, on the figure's line */
-  .pg__qual {
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body-m);
-    font-weight: var(--fw-medium);
-    letter-spacing: 0;
   }
   .pg__desc {
     font-size: var(--fs-body-sm, 0.9375rem);

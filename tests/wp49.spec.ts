@@ -88,17 +88,19 @@ test.describe('Development Partners: the problem band and the first portfolio ca
 });
 
 test.describe('Governments, Universities and Local Partners: the wording the reviews asked for (items 2, 3, 4 and 27)', () => {
-  test('Governments: the two pain lines say what the agency needs, and "What Your Agency Gets" speaks of completers', async ({ page }) => {
+  // WP62 (cycle-34 review, Gemini): the first "What Your Agency Gets" card ends "... placement support toward local, remote and global work." (it said "... that point completers toward paid work."; tests/wp62.spec.ts)
+  test('Governments: the two pain lines say what the agency needs, and "What Your Agency Gets" opens with tracks and placement support toward local, remote and global work', async ({ page }) => {
     await open(page, GOV);
     const pain = (title: string) => page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: title }) });
     expect(compact(await pain('Training Budgets Do Not Show Up as Earnings').locator('.gp__a').textContent())).toBe('Track who is earning afterward, not only who enrolled.');
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "Trainer and Curriculum Capacity Takes Time to Build" (it said "Is Thin"); the line under it is unchanged
     expect(compact(await pain('Trainer and Curriculum Capacity Takes Time to Build').locator('.gp__a').textContent())).toBe('National delivery needs trained facilitators and localized curricula.');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then mentoring and placement support that point completers toward paid work.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['Certification tracks chosen from employer demand, then mentoring and placement support toward local, remote and global work.']);
     const text = await mainText(page);
     expect(text).not.toContain('Budgets are measured by enrollment, not by who is earning afterward.');
     expect(text).not.toContain('rarely ready at national scale');
     expect(text).not.toContain('point graduates toward paid work');
+    expect(text).not.toContain('point completers toward paid work');
   });
 
   test('Universities: the institution’s pain says what it needs', async ({ page }) => {
@@ -309,7 +311,7 @@ test.describe('Results at a Glance: one secondary tile has no heading of its own
   const PAGES: [string, string[], number, number][] = [
     [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
     [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12'], 2, 4], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
-    [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04'], 2, 4],
+    [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-01'], 2, 4], // WP62 (cycle-34 review): the WSDFM program record is the fourth tile (the +$27 tile left)
   ];
 
   for (const [route, ids, rows900, rows390] of PAGES) {
@@ -422,11 +424,12 @@ test.describe('SC-16 reads "learners trained" (item 18)', () => {
     expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.value).toBe('130,000+');
     await open(page, '');
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
+    // WP62 (cycle-34 review, Gemini): the card’s eyebrow and the hub tile’s kicker are "Reach Since 2014", so neither caption says "since 2014" again (tests/wp62.spec.ts); the Impact tile has no such heading and keeps it
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="SC-16"]').textContent())).toContain('learners trained since 2014');
     await open(page, 'partner-with-us/');
-    await expect(page.locator('#why-partner li').nth(2).locator('.wp__desc')).toHaveText('learners trained since 2014');
+    await expect(page.locator('#why-partner li').nth(2).locator('.wp__desc')).toHaveText('learners trained');
     expect(sitePages().filter((p) => /young people trained/i.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
