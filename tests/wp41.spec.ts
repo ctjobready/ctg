@@ -101,7 +101,7 @@ test.describe('Investors: the track-record band names relationships, not distrib
     expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03');
     await expect(page.locator('#guide .ig__channels')).toHaveCount(0);
     expect(await mainText(page)).not.toMatch(/Distribution Through|Four Kinds of Institutional Relationship/);
-    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Delivered Since 2014']);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Since 2014']);
   });
 });
 

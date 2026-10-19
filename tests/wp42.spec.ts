@@ -31,7 +31,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
   test('"Delivered Since 2014" is in the Guide band with its three tiles and the enrollment and location note; the Reach band no longer holds it', async ({ page }) => {
     await open(page, URL);
     const group = page.locator('#guide .ig__delivered');
-    await expect(group.locator('h3')).toHaveText('Delivered Since 2014');
+    await expect(group.locator('h3')).toHaveText('Since 2014');
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained since 2014', 'enrollments since 2014', 'countries and territories where CodersTrust has worked']);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
@@ -53,7 +53,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
   // WP43 (cycle-20 review): the relationship panel and the founder and leadership strips are gone (tests/wp43.spec.ts); the figures still come first, then the one paragraph that names the institutions, then the link to the leadership team
   test('the figures come before the institutional relationships (one paragraph), and those before the link to the leadership team', async ({ page }) => {
     await open(page, URL);
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
+    expect(await texts(page, '#guide h3')).toEqual(['Since 2014']);
     const [delivered, relationships, leadership] = await Promise.all([topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__names'), topOf(page, '#guide .ig__leaders')]);
     expect(delivered, 'delivered figures above the relationships').toBeLessThan(relationships);
     expect(relationships, 'relationships above the leadership link').toBeLessThan(leadership);
@@ -84,7 +84,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     await expect(page.locator('section#reach')).toHaveCount(1);
     await expect(page.locator('#reach .eyebrow')).toHaveText('Beyond Delivered Reach');
     await expect(page.locator('#reach h2')).toHaveText('Contracts, Pipeline and Recognition');
-    for (const heading of ['Contracts, Pipeline and Recognition', 'Beyond Delivered Reach', 'Delivered Since 2014', 'Contracted Scope']) expect(heading, heading).toBe(titleCase(heading));
+    for (const heading of ['Contracts, Pipeline and Recognition', 'Beyond Delivered Reach', 'Since 2014', 'Contracted Scope']) expect(heading, heading).toBe(titleCase(heading));
     expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
     const tile = page.locator('#reach .ir__tile');
     await expect(tile).toHaveCount(1);

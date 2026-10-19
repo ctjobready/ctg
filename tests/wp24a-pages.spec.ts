@@ -40,7 +40,7 @@ test.describe('Investors page structure', () => {
   // WP43 (cycle-20 review): the band's only sub-heading is "Delivered Since 2014"; the relationships are one paragraph under the figures, and the leadership entries are the "Meet the Leadership Team" link under that paragraph
   test('delivered reach leads the track-record band; the contract scope is its own labeled block in the next reach band', async ({ page }) => {
     await page.goto(URL);
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered Since 2014']);
+    expect(await texts(page, '#guide h3')).toEqual(['Since 2014']);
     expect(await texts(page, '#reach h3')).toEqual(['Contracted Scope']);
     const order = await page.evaluate(() => {
       const top = (sel: string) => (document.querySelector(sel) as HTMLElement).getBoundingClientRect().top + window.scrollY;
