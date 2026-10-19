@@ -212,6 +212,9 @@ export const IDENTITY: CopyBlock = identity();
  *  - PX-08 is PwC's 2026 Global AI Jobs Barometer (15 June 2026): "(PwC, 2026)".
  * WP59 (cycle-31 review, GPT-6.1 Sol G5) adds the Bangladesh graduate-unemployment rate (PX-03, the Local Partners and NU Postgraduate Diploma tiles):
  *  - PX-03 is the Bangladesh Bureau of Statistics' Labour Force Survey 2024 (source BBSLFS24: "Bangladesh Bureau of Statistics (BBS), Labour Force Survey 2024."): "(BBS Labour Force Survey, 2024)".
+ * WP64 (cycle-36 review, Kimi) adds the Bangladesh government digital labs (GV-09, the YouthWIDE and Local Partners tiles), by publisher alone, because its source states no year:
+ *  - GV-09 is the Department of ICT's count of the ICTD Digital Lab's labs (source DOICTLAB: "Department of ICT (DoICT), ICT Division, ICTD Digital Lab, “About”: digital labs in a total of 9,001 educational institutions ..."): "(Department of ICT)". The tile's note,
+ *    the register's own detail line ("In Bangladesh; lab access and seats are confirmed per program."), already says where the labs are and that access is confirmed per program.
  * FactCard, FactStat, ProblemSection's re-worded tiles, Home's cost-of-waiting card (freelancePostingsFinding, src/components/sections/copyText.ts) and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
  */
 const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string }> = {
@@ -221,6 +224,7 @@ const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas
   'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
   'PX-06': { note: 'Demirci, Hannane & Zhu, 2025', registered: ['Demirci, Hannane & Zhu', '2025'] },
   'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
+  'GV-09': { note: 'Department of ICT', registered: ['Department of ICT (DoICT)', '9,001'] },
 };
 function sourceNotes(): Record<string, string> {
   const out: Record<string, string> = {};
@@ -233,7 +237,7 @@ function sourceNotes(): Record<string, string> {
   }
   return out;
 }
-/** "(Publisher, Year)" by fact id, for the four external statistics. */
+/** "(Publisher, Year)" by fact id, for the external statistics (the labs figure, GV-09, names its publisher alone: its source states no year). */
 export const SOURCE_NOTE: Record<string, string> = sourceNotes();
 /** A label or sentence with its source note inside it ("... in 2026 (ManpowerGroup, 2026)"); text of any other fact is returned as it is. */
 // A label that already ends in a parenthesis (PX-01's "(range 61–78 million)") takes the note inside it, "(range 61–78 million; CodersTrust estimate from ILO data, 2026)", not as a second parenthesis.
@@ -256,6 +260,17 @@ export function defineNewEarners(label: string): string {
   if (!fact('OC-05').text.includes(NEW_EARNERS_DEFINITION)) throw new Error(`defineNewEarners: OC-05's text no longer says "${NEW_EARNERS_DEFINITION}"`);
   if (!label.includes(NEW_EARNERS_TERM)) throw new Error(`defineNewEarners: the label "${label}" no longer says "${NEW_EARNERS_TERM}"`);
   return label.replace(NEW_EARNERS_TERM, `${NEW_EARNERS_TERM} (${NEW_EARNERS_DEFINITION})`);
+}
+
+/**
+ * WP64 (cycle-36 review, Grok; the WP62 treatment of Home's reach card and the hub's "Why Partner" tile, now shared): a tile that sits under a heading or beside a label that already says "since 2014" ("Reach Since 2014" on the Programs hub, "Since 2014" on Investors,
+ * "Delivered Since 2014" on JobReady Platform) drops the phrase from its own label, so the period is said once: SC-01's "learners trained since 2014" reads "learners trained", SC-02's "enrollments since 2014" reads "enrollments". The label is read from the register,
+ * never retyped, and the build stops if it stops ending "since 2014" (the page would then need review). A page-level override: the register's labels are unchanged, so every other page that shows them still reads "since 2014".
+ */
+const SINCE_2014 = ' since 2014';
+export function withoutSince2014(label: string): string {
+  if (!label.endsWith(SINCE_2014)) throw new Error(`withoutSince2014: the label "${label}" no longer ends "${SINCE_2014}"; update the tile that drops it`);
+  return label.slice(0, -SINCE_2014.length);
 }
 
 /** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */

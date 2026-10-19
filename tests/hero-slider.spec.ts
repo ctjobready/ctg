@@ -74,7 +74,7 @@ test.describe('home hero slider', () => {
     // WP42 (cycle-19 review): the government slide is second, after the trial. WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line, tests/wp53.spec.ts),
     // so the order is the trial, the government scale, the survey and the program results
     expect(titles.slice(1), 'government, survey and program-result headlines').toEqual([
-      'Six Government Contracts and Bangladesh’s National University',
+      'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
     ]);

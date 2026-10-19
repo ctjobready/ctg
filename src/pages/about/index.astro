@@ -15,7 +15,7 @@ import Stat from '../../components/system/Stat.astro';
 import WorldStrip from '../../components/ui/WorldStrip.astro';
 import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
-import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, READ_THE_EVIDENCE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
+import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, READ_THE_EVIDENCE, TRIAL_BAND_HEADING, spellOutBigd, withoutSince2014 } from '../../data/copy';
 import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
@@ -43,6 +43,9 @@ const sc02Direct = /([\d,]+) through direct training/.exec(sc02.text)?.[1];
 const sc02Courseware = /([\d,]+) through CodersTrust courseware/.exec(sc02.text)?.[1];
 if (!sc02Direct || !sc02Courseware) throw new Error('About: SC-02 no longer reads "N through direct training ... N through CodersTrust courseware"; update the enrollments tile');
 const sc02Split = `Including ${sc02Direct} direct enrollments and ${sc02Courseware} through courseware.`;
+// WP64 (cycle-36 review, Grok): the two tiles sit side by side and neither the eyebrow ("At a Glance") nor the heading ("Where We Are Today") gives the period, so the learners tile keeps "since 2014" (SC-01's own label) and this tile drops it ("course enrollments"), said once.
+// SC-02's label without " since 2014" is read from the register ("enrollments"); "course" is this page's own word, as it was.
+const sc02Label = `course ${withoutSince2014(sc02Stat.label)}`;
 // WP30e: the employment result in one sentence; the income detail is on the Independent Evaluation page.
 // WP54 (cycle-28 review, GPT-6.1 Sol G8): this sentence is the page's one mention of the evaluator, so it is spelled out ("by the BRAC Institute of Governance and Development (BIGD)"); the register's headline says "by BIGD".
 const trial = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);
@@ -135,7 +138,7 @@ const jsonLd = [
     <!-- WP30b set where CodersTrust is based and how its entities relate (owner statement, ID-11) under these figures as a lead paragraph; WP52 (cycle-27 review) moved it to the hero, directly under the lede, so the figures stand alone here -->
     <div class="about-stats">
       <FactStat id="SC-01" />
-      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label="course enrollments since 2014" note={sc02Split} count={sc02Stat.numeric !== undefined} /></div>
+      <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label={sc02Label} note={sc02Split} count={sc02Stat.numeric !== undefined} /></div>
       {['SC-03', 'SC-11', 'SC-09'].map((id) => <FactStat id={id} />)}
     </div>
   </Section>

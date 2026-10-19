@@ -90,7 +90,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     const first = slide(page, 1);
     await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');

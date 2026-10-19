@@ -52,6 +52,8 @@ import { cta } from '../lib/mailto';
  * WP54 (cycle-28 review, Grok R2): the trial slide's ">4×" callout reads "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it read "More than four times the average employment effect across nine
  * vocational-training trials.", which sat under an income heading without saying what was compared; see trialMultiple).
  * WP62 (cycle-34 reviews): the trial slide's heading ends "per Month" ("Women Offered a Place Earned an Estimated 41% More per Month": RC-01's 41% is a monthly income difference); the hero's reach card ("Reach Since 2014") no longer repeats "since 2014" in its caption (reachCaption).
+ * WP64 (cycle-36 reviews): the government slide's heading is "Six Government Contracts and a National University Partnership" (four of six models; it named Bangladesh in the heading of a global page; the body still names the National University); the program-results
+ * lead is "Results from the records of four programs." (Impact counts five delivered programs, Albania among them, which has no outcome figure, so "Four delivered programs" read as a contradiction); the trial slide's lead says "about $27 more a month" (it said "about +$27 a month").
  * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
  */
 
@@ -278,7 +280,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     titleFacts: ['RC-01'],
     // WP63 (cycle-35 review, GLM L4): "..., women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month." (it said "..., their monthly income was an estimated 41% higher than the control group’s, ...", and "their" had no noun
     // before it in the sentence); the figures are RC-01's and RC-04's, read above, and the heading and the data-facts are unchanged.
-    lead: `In the predecessor WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about +$${dollarsOffered} a month.`,
+    // WP64 (cycle-36 review, GLM): "..., about $27 more a month." (it said "..., about +$27 a month.", a sign without a noun); the figure is still RC-04's (dollarsOffered), and RC-04's own text and tile ("+$27") are unchanged.
+    lead: `In the predecessor WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about $${dollarsOffered} more a month.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (see trialMultiple); the tile (">4×") and its data-fact are unchanged.
@@ -295,7 +298,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP42 (cycle-19 review): second, after the trial and before the survey, because most readers never reach slide 6: the trial, then government scale, then the survey and the program results. Wording unchanged.
     // WP41 (cycle-18 review): the heading counts the contracts ("Six", read from GV-12's own wording, never typed) and says "a" National University partnership, as the Governments page counts "Six Government Contracts".
     // WP51 (cycle-26 review, Grok m5): "... and Bangladesh’s National University" (five reviewers questioned "a National University Partnership", which Grok read as any university): GV-12 names the partner as "Bangladesh’s National University".
-    title: `${governmentScope[1].split(' ')[0]} Government Contracts and Bangladesh’s National University`,
+    // WP64 (cycle-36 review; GLM, GPT-6.1 Sol, Grok and Kimi, GLM's reason being global positioning): "... and a National University Partnership" (WP51 had "... and Bangladesh’s National University", which put Bangladesh in the heading of a global page). The body below still names
+    // "National University" ("As National University’s official training partner ..."), so the partner is named on the slide; the heading's "Six" is still read from GV-12, and the eyebrow, the body, the links and the data-facts are unchanged.
+    title: `${governmentScope[1].split(' ')[0]} Government Contracts and a National University Partnership`,
     titleFacts: ['GV-12'],
     // WP25h: the contracts' scope is stated as scope, and the National University sentence stays as registered. WP45 (cycle-21 review): the scope is stated in GV-12's own note, the wording Impact and Governments print, in place of
     // "(contract scope, not people trained)". WP46 (cycle-22 review): the note says who trained whom ("The total is contract scope, not a count of completers; it includes Her Power's national program, which trained 25,125 women;
@@ -356,7 +361,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // The review's wording ended "... from their own program records."; that is 683 px against the 626 px the lead has at 1280 px (the old line was 610 px), so it wrapped and made this the tallest slide, 14 px taller than "Find Your Program", which left every
     // other slide 55 px unused (the limit is 48, tests/hero-slider.spec.ts). "Program" is left out of "records" (615 px; the eyebrow says "Program Records" and the WSDFM line says "program records, not trial data").
     // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
-    lead: 'Four delivered programs, with results from each program’s records.',
+    // WP64 (cycle-36 review, Claude): "Results from the records of four programs." (it said "Four delivered programs, with results from each program’s records.", but Impact counts five delivered programs, Albania among them, and Albania has no outcome figure, so the slide's count looked like an omission).
+    // The slide still lists four programs, each from its own program records (the eyebrow says "Program Records"); the lead names no more than the lines below it.
+    lead: 'Results from the records of four programs.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
       { text: PR_TEXT.wsdfm, factIds: ['PR-01', 'RC-07'] },

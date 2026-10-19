@@ -394,8 +394,10 @@ test.describe('The shared origin line on Development Partners and Investors (ite
 test.describe('Home: the government slide and the program-results slide (items 25 and 26)', () => {
   const slide = (page: Page, n: number) => page.locator('[data-hs-slide]').nth(n - 1);
 
-  test('slide 2 is "Six Government Contracts and Bangladesh’s National University" (Title Case, tied to GV-12, which names the partner so)', async ({ page }) => {
-    const HEADING = 'Six Government Contracts and Bangladesh’s National University';
+  // WP64 (cycle-36 review; GLM, GPT-6.1 Sol, Grok and Kimi): the heading is "Six Government Contracts and a National University Partnership" (it named "Bangladesh’s National University" after GV-12, the register's own name for the partner, which is unchanged);
+  // "Six" is still read from GV-12 (tests/wp64.spec.ts)
+  test('slide 2 is "Six Government Contracts and a National University Partnership" (Title Case, tied to GV-12)', async ({ page }) => {
+    const HEADING = 'Six Government Contracts and a National University Partnership';
     expect(HEADING).toBe(titleCase(HEADING));
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University');
     await open(page, '');

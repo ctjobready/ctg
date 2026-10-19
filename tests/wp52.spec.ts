@@ -428,7 +428,7 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
   });
 });
 
-test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP60) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
+test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP60) and slide 4 reads "Results from the records of four programs." (WP64; it was "Four delivered programs, ...") with an unambiguous Her Power line (items 20 and 33)', () => {
   // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).")
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the slide said "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, ..."
   // WP61 (cycle-33 review, GPT-6.1 Sol G1): three sentences: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for ..., CodersTrust is onboarding 1.5M+ learners, the university’s own learners, ..." (tests/wp61.spec.ts)
@@ -440,11 +440,12 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 
-  test('slide 4: "Four delivered programs, with results from each program’s records." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
+  test('slide 4: "Results from the records of four programs." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
-    await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
+    // WP64 (cycle-36 review, Claude): "Results from the records of four programs." (Impact counts five delivered programs, Albania among them, which has no outcome figure; tests/wp64.spec.ts)
+    await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     const lines = slide(page, 4).locator('.hs__lines li');
     await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
     expect(await lines.nth(3).getAttribute('data-fact')).toBe('PR-05');

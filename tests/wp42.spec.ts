@@ -33,7 +33,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     const group = page.locator('#guide .ig__delivered');
     await expect(group.locator('h3')).toHaveText('Since 2014');
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
-    expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained since 2014', 'enrollments since 2014', 'countries and territories where CodersTrust has worked']);
+    expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']); // WP64 (cycle-36 review, Grok): the group heading says "Since 2014", so the tiles do not
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
@@ -337,12 +337,12 @@ test.describe('Home: the government slide is second (item 10)', () => {
     expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
       // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
       'Women Offered a Place Earned an Estimated 41% More per Month',
-      'Six Government Contracts and Bangladesh’s National University',
+      'Six Government Contracts and a National University Partnership',
       'Surveyed Completers Report Higher Income',
       'Results by Program',
     ]);
     const slides = page.locator('#results [data-hs-slide]');
-    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 4: Six Government Contracts and Bangladesh’s National University');
+    await expect(slides.nth(1)).toHaveAttribute('aria-label', '2 of 4: Six Government Contracts and a National University Partnership');
     await expect(slides.nth(3)).toHaveAttribute('aria-label', /^4 of 4: Results by Program/);
     const gov = slides.nth(1);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
@@ -366,7 +366,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
       const scroll = await page.locator('#results [data-hs-slide]').evaluateAll((els) => els.map((e) => Math.round((e as HTMLElement).scrollHeight)));
       for (const h of scroll) expect(h, `${vp.width}px`).toBeLessThanOrEqual(track + 1);
       await page.locator('[data-hs-dot]').nth(1).click();
-      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
+      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText('Six Government Contracts and a National University Partnership');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });

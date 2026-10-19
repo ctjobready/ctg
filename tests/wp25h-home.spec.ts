@@ -39,7 +39,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     const s = slide(page, 4);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
-    await expect(s.locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
+    await expect(s.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
@@ -81,7 +81,7 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
-    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
+    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
     // WP48 (cycle-23 review): the body was two sentences, the contract scope with the clause that keeps it true, then the National University sentence; WP57 (cycle-29 review, Grok R2): the clause names Her Power's national program again (25,125 women trained; CodersTrust trained 2,500 directly)
     await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');

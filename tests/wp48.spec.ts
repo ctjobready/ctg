@@ -79,7 +79,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     expect(compact(await s.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
-    await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
+    await expect(s.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
     expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
@@ -213,7 +213,8 @@ test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 1
     const tile = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.locator('.stat__note').textContent())).toBe(QUALIFIER);
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('government digital labs that could host blended learning');
+    // WP64 (cycle-36 review, Kimi): the label names its publisher, "(Department of ICT)" (SOURCE_NOTE; the source states no year; tests/wp64.spec.ts)
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('government digital labs that could host blended learning (Department of ICT)');
     await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
     await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
     await open(page, 'partner-with-us/local-partners/');
@@ -512,7 +513,7 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     expect(title).toBe(titleCase(title));
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');
   });
 

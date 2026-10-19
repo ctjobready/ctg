@@ -5,7 +5,7 @@ import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import Badge from '../../system/Badge.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import { INVESTOR_PARTNERS, ORIGIN_SHORT } from '../../../data/copy';
+import { INVESTOR_PARTNERS, ORIGIN_SHORT, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
@@ -38,6 +38,9 @@ const stat = (sid: string) => {
   if (!s) throw new Error(`InvestorGuide: ${sid} needs a stat`);
   return s;
 };
+// WP64 (cycle-36 review, Grok): the tiles sit under the group heading "Since 2014", so the learners and enrollments labels drop the phrase ("learners trained", "enrollments"; withoutSince2014, src/data/copy.ts); SC-03's label ("countries and territories where
+// CodersTrust has worked") has none to drop. The register's labels are unchanged.
+const tileLabel = (sid: string) => (sid === 'SC-03' ? stat(sid).label : withoutSince2014(stat(sid).label));
 // One note row under the delivered tiles: the register's detail lines for SC-02 and SC-03, read from it, so the tiles stay level.
 const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   const detail = stat(sid).detail;
@@ -64,7 +67,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
           delivered.map((sid) => (
             <div class="ig__tile" data-fact={sid}>
               {sid === 'SC-03' ? <Badge tone="brand" class="ig__period">Where We Have Worked</Badge> : <StatusTag status="Delivered" />}
-              <Stat value={stat(sid).value} label={stat(sid).label} size="lg" count={stat(sid).numeric !== undefined} />
+              <Stat value={stat(sid).value} label={tileLabel(sid)} size="lg" count={stat(sid).numeric !== undefined} />
             </div>
           ))
         }

@@ -103,7 +103,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
   test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records; trial studied 833" (WP60; it was "program records, not trial data"); each line names its facts', async ({ page }) => {
     await open(page, '');
     await expect(slide(page).locator('h2')).toHaveText('Results by Program');
-    await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
+    await expect(slide(page).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
@@ -422,7 +422,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
-    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
+    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first(page).locator('h2').getAttribute('data-fact')).toBe('RC-01');
     expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });
@@ -497,11 +497,12 @@ test.describe('Foundations: each funding-route link appears once (item 20)', () 
 });
 
 test.describe('About: the enrollments tile (item 21)', () => {
-  test('the tile keeps "150,000+" and "course enrollments since 2014"; its detail line is "Including 111,268 direct enrollments and 40,043 through courseware."', async ({ page }) => {
+  // WP64 (cycle-36 review, Grok): the learners tile beside it says "since 2014", so this one reads "course enrollments" (said once; tests/wp64.spec.ts)
+  test('the tile keeps "150,000+" and "course enrollments"; its detail line is "Including 111,268 direct enrollments and 40,043 through courseware."', async ({ page }) => {
     await open(page, 'about/');
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__value')).toContainText('150,000');
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments since 2014');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments');
     expect(compact(await tile.locator('.stat__note').textContent())).toBe('Including 111,268 direct enrollments and 40,043 through courseware.');
     expect(fact('SC-02').text).toContain('111,268 through direct training');
     expect(fact('SC-02').text).toContain('40,043 through CodersTrust courseware');

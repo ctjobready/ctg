@@ -30,7 +30,8 @@ const TEXT = {
   trial: { shows: `The effect of CodersTrust’s predecessor WSDFM program on women in Dhaka, evaluated by the ${BIGD_INSTITUTE} against a randomly chosen control group.`, not: 'Results for other countries, groups or today’s standard track.' },
   survey: { shows: 'What alumni who responded report about work and income after training.', not: 'Cause: respondents are not a random sample and may over-represent successful learners.' },
   records: { shows: 'What each named program recorded (in work, or a first job within three months), from CodersTrust program records.', not: 'What would have happened without training.' },
-  stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some are outliers and say so.' },
+  // WP64 (cycle-36 review, Gemini): "...; some stories are outliers, and their cards say so." (it said "...; some are outliers and say so.", where "some" had no noun and "say so" no clear subject): the story cards carry the caveat ("Individual story; an outlier, not typical.", LearnerStory).
+  stories: { shows: 'What the path can look like for one person.', not: 'A typical or promised outcome; some stories are outliers, and their cards say so.' },
 };
 const matrix = [
   // WP35 (cycle-12 review): the matrix is where the Impact page first names the evaluator; WP48: the name carries the abbreviation and the row's "What It Shows" text spells the evaluator out

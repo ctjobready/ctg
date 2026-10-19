@@ -44,7 +44,7 @@ test.describe('Investors: "What JobReady Does" is three short cards and one link
   const CARDS = [
     {
       title: 'Learn Through TalentLEAP',
-      text: 'Competent is the published first level; Proficient and Expert are planned. Supported cohorts include mentoring, certification exam preparation and placement support.',
+      text: 'The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Supported cohorts include mentoring, certification exam preparation and placement support.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
       facts: ['IN-06', 'IN-08', 'PD-01', 'PD-02'],
     },
     {
@@ -332,7 +332,7 @@ test.describe('the two research headings are short (item 8)', () => {
   test('the quantified sentences beneath the headings are the register’s own, unchanged', async ({ page }) => {
     // WP48 (cycle-23 review): YouthWIDE's cost band, which printed the whole register sentences, is gone, so they are read from the register
     expect(fact('RC-06').text).toContain('found only three with significant employment impacts');
-    expect(fact('RC-06').text).toContain('David McKenzie (2017)');
+    expect(fact('RC-06').text).toContain('A 2017 World Bank review of nine randomized vocational-training trials'); // WP64 (cycle-36 review): it named "World Bank economist David McKenzie (2017)"; the source id is still MCKENZIE17
     expect(fact('PX-06').text).toContain('postings for automation-prone writing and coding jobs on a major freelancing platform fell 21% relative to manual-intensive jobs');
     expect(fact('PX-06').text).toContain('image-creation postings fell 17%');
     await open(page, '');

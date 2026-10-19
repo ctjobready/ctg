@@ -239,11 +239,11 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
-  test('slide 2 counts the contracts and names Bangladesh’s National University', async ({ page }) => {
+  test('slide 2 counts the contracts and names a National University partnership', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(1);
-    await expect(slide.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
-    expect('Six Government Contracts and Bangladesh’s National University').toBe(titleCase('Six Government Contracts and Bangladesh’s National University'));
+    await expect(slide.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    expect('Six Government Contracts and a National University Partnership').toBe(titleCase('Six Government Contracts and a National University Partnership'));
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(fact('GV-12').text.startsWith('Six government contracts')).toBe(true);
   });

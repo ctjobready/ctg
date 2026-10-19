@@ -12,7 +12,7 @@ import { listPages } from './support/pages';
  *   - G1: "Remove the 56 item": the Kosovo case study no longer shows "56 won online contracts (~180 jobs)" (nor does any other built file); it keeps 102 of 150 in work, the earnings line and the World Bank's 77;
  *   - external statistics: "name publisher + year", inside the sentence, no footnotes: the 62 million (PX-01, "(CodersTrust estimate from ILO data, 2026)"), the 19M+ (PX-02, "(ILOSTAT, 2019–2025)"), the 72% of employers (PX-05,
  *     "(ManpowerGroup, 2026)") and the AI-skills growth (PX-08, "(PwC, 2026)"), each note taken from the fact's registered source, never in a title or meta description;
- *   - L3: Home slide 4 reads "Four delivered programs, with results from each program’s records.";
+ *   - L3: Home slide 4 reads "Four delivered programs, with results from each program’s records." (WP64, cycle-36 review: "Results from the records of four programs."; tests/wp64.spec.ts);
  *   - L5: Development Partners' quarterly reviews carry "as agreed in the program scope";
  *   - L8: About and llms.txt say "Additional country and regional offices are planned." (the register's ID-11 keeps "in the next few years").
  */
@@ -230,11 +230,12 @@ test.describe('external statistics name their publisher and year inside the sent
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('L3, Home: slide 4 reads "Four delivered programs, with results from each program’s records."', () => {
+// WP64 (cycle-36 review, Claude): the lead is now "Results from the records of four programs." (Impact counts five delivered programs, Albania among them, which has no outcome figure; tests/wp64.spec.ts); the program lines are unchanged
+test.describe('L3, Home: slide 4 reads "Results from the records of four programs." (WP57b: "Four delivered programs, with results from each program’s records.")', () => {
   test('the lead is the shorter line, and the four program lines under it are unchanged', async ({ page }) => {
     await open(page, HOME);
     const slide = page.locator('#results [data-hs-slide]').nth(3);
-    await expect(slide.locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
+    await expect(slide.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide.locator('.hs__lines li')).toHaveCount(4);
     expect(compact(await slide.textContent())).not.toContain('each with its partner');
   });

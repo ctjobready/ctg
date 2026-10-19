@@ -10,7 +10,7 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT, NU_NOT_TRAINED } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -56,6 +56,8 @@ const toc = [
 const pipelineBase = fact('SC-04').stat?.label;
 if (!pipelineBase) throw new Error('jobready-platform: SC-04 no longer has a stat label');
 const pipelineLabel = `${pipelineBase}, ${NU_NOT_TRAINED}`;
+// WP64 (cycle-36 review, Grok; the same repeat as the Programs hub's and Investors' tiles): the group is headed "Delivered Since 2014", so the learners tile reads "130,000+ learners trained" (SC-01's label without " since 2014", read from the register).
+const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
 const f = fundingCta();
 const d = discoveryCta();
 ---
@@ -102,7 +104,7 @@ const d = discoveryCta();
     <p data-fact="IN-04">JobReady builds on CodersTrust’s delivery record, its role with National University and its institutional reach.</p>
     <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
     <div class="jr__why">
-      <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" label={pipelineLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p></div>
     </div>

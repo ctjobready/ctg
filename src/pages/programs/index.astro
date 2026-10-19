@@ -15,7 +15,8 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import { ctaFor, statValue } from '../../components/pages/programs/meta';
-import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY } from '../../data/copy';
+import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY, withoutSince2014 } from '../../data/copy';
+import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 import { pageUrl, webPage } from '../../lib/schema';
 
@@ -32,6 +33,8 @@ const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (
 const title = 'Programs';
 const description = 'Explore CodersTrust programs, from school to the workplace: YouthWIDE, JobReady@Campus, JobReady@Work, SuperKids and the NU Postgraduate Diploma.';
 const discovery = ctaFor('discovery');
+// WP64 (cycle-36 review, Grok): the reach band is headed "Reach Since 2014", so its learners tile reads "130,000+ learners trained" (SC-01's label without " since 2014", read from the register); the register's label is unchanged.
+const learnersLabel = withoutSince2014(fact('SC-01').stat?.label ?? '');
 
 const programs = [
   { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, ${AIM_DEPENDENCY}.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }, { label: 'For Foundations', href: '/partner-with-us/foundations/' }] },
@@ -112,7 +115,7 @@ const jsonLd = [
     <!-- WP58 (cycle-30 reviews, Claude S1 a and GPT-6.1 Sol G1): the 16 is where CodersTrust has worked (a launch location, an announced cooperation and partnerships among them), so its tile carries a badge and no "Delivered" status; the 130,000+ learners trained keep theirs.
          WP61 (cycle-33 review, Kimi P1): the badge says "Where We Have Worked" (it said "Since 2014", which the band heading, "Reach Since 2014", already says). -->
     <div class="hub__reach">
-      <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
+      <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
       <div data-reveal><Badge tone="brand" class="hub__period">Where We Have Worked</Badge><FactStat id="SC-03" /></div>
     </div>
   </Section>

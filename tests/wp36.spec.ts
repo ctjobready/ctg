@@ -276,7 +276,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
     await open(page, 'our-model/talentleap/');
     const lead = compact(await page.locator('.lf-head .lead').textContent());
     expect(lead).toBe(
-      'TalentLEAP organizes learning around assessed skill units and career paths. Competent is the published first level; Proficient and Expert are planned. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.',
+      'TalentLEAP organizes learning around assessed skill units and career paths. The first published TalentLEAP level is Competent; Proficient and Expert levels are planned. Learners move through three stages, Learn, Earn and Prosper, with three months of milestone-based mentoring after the course.', // WP64 (cycle-36 review, Claude): it said "Competent is the published first level; Proficient and Expert are planned."
     );
     expect(lead).not.toMatch(/graduated|taught/);
     expect(compact(await page.locator('meta[name="description"]').getAttribute('content'))).not.toMatch(/graduated levels/);
@@ -407,7 +407,7 @@ test.describe('SuperKids: two separate 20M+ targets, each labeled', () => {
   test('the DoICT and NCTB targets are labeled apart, and the page says they are agreement targets, not delivered reach', async ({ page }) => {
     await open(page, 'programs/superkids/');
     expect(await texts(page, '.agree__fact p')).toEqual([
-      'DoICT agreement target: 20M+ students through 9,000+ digital labs, for primary-school STEM and robotics.',
+      'DoICT agreement target: 20M+ students through 9,000+ digital labs in Bangladesh, for primary-school STEM and robotics.', // WP64 (cycle-36 review, Kimi): the labs figure says where the labs are
       'NCTB agreement target: 20M+ students, for competency-based experiential learning.',
       'These are agreement targets, not delivered reach.',
     ]);

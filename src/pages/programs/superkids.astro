@@ -46,7 +46,10 @@ const pricingFirst = PRICING.text.split('. ')[0] + '.';
 const gv08 = fact('GV-08').text.match(/agreements with DoICT \(([^;]+); target reach ([^)]+)\) and NCTB \(([^)]+?) for ([^)]+)\)/);
 if (!gv08) throw new Error('GV-08 wording changed: update the SuperKids agreement sentences');
 const doictScope = gv08[1];
-const doictReach = gv08[2];
+// WP64 (cycle-36 review, Kimi): the labs figure says where the labs are, "... through 9,000+ digital labs in Bangladesh", as GV-09 ("9,000+ government digital labs in Bangladesh") and the YouthWIDE and Local Partners tiles do (the page's visible text named no country).
+// The agreement's party, DoICT, is named on the line itself ("DoICT agreement target"), so the line names its source already.
+if (!gv08[2].endsWith('9,000+ digital labs') || !fact('GV-09').text.startsWith('9,000+ government digital labs in Bangladesh')) throw new Error('SuperKids: GV-08 no longer ends its DoICT target "... 9,000+ digital labs", or GV-09 no longer places the labs in Bangladesh; update the DoICT target line');
+const doictReach = `${gv08[2]} in Bangladesh`;
 const nctbScope = gv08[3];
 const nctbReach = gv08[4];
 

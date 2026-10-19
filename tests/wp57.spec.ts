@@ -626,7 +626,7 @@ test.describe('R5, Universities: "Choose Where to Start" is one line, with no si
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ glance no longer has the +$27 tile (the WSDFM program record is its fourth tile; tests/wp62.spec.ts), so the "about" qualifier of PartnerGlance (WP57) is gone with its one user;
-// Home and the trial page still say "about +$27 a month", and the register’s RC-04 is unchanged
+// Home and the trial page still say it ("about +$27 a month"), and the register’s RC-04 is unchanged. WP64 (cycle-36 review, GLM): Home’s slide 1 now says "about $27 more a month"; the trial page’s RC-04 line still opens "About +$27 a month"
 test.describe('R6, "about +$27": Home and the trial page say it; Foundations’ glance no longer carries the tile', () => {
   test('RC-04 still opens "About +$27 a month"; Foundations’ glance has no RC-04 tile, no qualifier and no "+$27"', async ({ page }) => {
     expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
@@ -637,9 +637,10 @@ test.describe('R6, "about +$27": Home and the trial page say it; Foundations’ 
     expect(compact(await page.locator('#glance').textContent())).not.toContain('+$27');
   });
 
-  test('Home and the trial page say "about +$27 a month" in their own sentences', async ({ page }) => {
+  // WP64 (cycle-36 review, GLM): Home's slide 1 says "about $27 more a month" (it said "about +$27 a month"); the trial page's RC-04 line still opens "About +$27 a month" (tests/wp64.spec.ts)
+  test('Home says "about $27 more a month" and the trial page "About +$27 a month", each in its own sentence', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('#results').textContent())).toContain('about +$27 a month');
+    expect(compact(await page.locator('#results').textContent())).toContain('about $27 more a month');
     await open(page, 'impact/independent-evaluation/');
     expect(compact(await page.locator('li[data-fact="RC-04"]').first().textContent())).toMatch(/^About \+\$27 a month/);
   });
