@@ -101,7 +101,7 @@ test.describe('G1, Kosovo: "56 won online contracts (~180 jobs)" is removed', ()
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('external statistics name their publisher and year inside the sentence (owner decision 2026-10-19)', () => {
   const NOTES: Record<string, string> = {
-    'PX-01': '(CodersTrust estimate from ILO data, 2026)',
+    'PX-01': '; CodersTrust estimate from ILO data, 2026)',
     'PX-02': '(ILOSTAT, 2019–2025)',
     'PX-05': '(ManpowerGroup, 2026)',
     'PX-08': '(PwC, 2026)',
@@ -192,7 +192,7 @@ test.describe('external statistics name their publisher and year inside the sent
     const offenders = sitePages().flatMap((p) => {
       const title = /<title>([^<]*)<\/title>/.exec(p.html)?.[1] ?? '';
       const description = /<meta name="description" content="([^"]*)"/.exec(p.html)?.[1] ?? '';
-      return [title, description].filter((t) => /\((?:CodersTrust estimate from ILO data|ILOSTAT, 2019|ManpowerGroup, 2026|PwC, 2026)/.test(t)).map((t) => `${p.route}: ${t}`);
+      return [title, description].filter((t) => /(?:\(|; )(?:CodersTrust estimate from ILO data|ILOSTAT, 2019|ManpowerGroup, 2026|PwC, 2026)/.test(t)).map((t) => `${p.route}: ${t}`);
     });
     expect(offenders).toEqual([]);
   });

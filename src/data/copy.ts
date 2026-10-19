@@ -172,7 +172,12 @@ function sourceNotes(): Record<string, string> {
 /** "(Publisher, Year)" by fact id, for the four external statistics. */
 export const SOURCE_NOTE: Record<string, string> = sourceNotes();
 /** A label or sentence with its source note inside it ("... in 2026 (ManpowerGroup, 2026)"); text of any other fact is returned as it is. */
-export const withSourceNote = (id: string, text: string): string => (SOURCE_NOTE[id] ? `${text} ${SOURCE_NOTE[id]}` : text);
+// A label that already ends in a parenthesis (PX-01's "(range 61–78 million)") takes the note inside it, "(range 61–78 million; CodersTrust estimate from ILO data, 2026)", not as a second parenthesis.
+export const withSourceNote = (id: string, text: string): string => {
+  const note = SOURCE_NOTE[id];
+  if (!note) return text;
+  return text.endsWith(')') ? `${text.slice(0, -1)}; ${note.slice(1)}` : `${text} ${note}`;
+};
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /**
