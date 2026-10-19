@@ -58,7 +58,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -189,7 +189,6 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     audience="development-partners"
     ids={FAQ_IDS}
     title="Questions Partners Ask"
-    allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
@@ -214,7 +213,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     id="cta"
     heading="Let’s Design Your First Cohort"
     cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
+    secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
     micro={MICRO_COMMITMENT}
   >
     <SessionAgenda />

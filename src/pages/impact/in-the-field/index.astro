@@ -11,7 +11,7 @@ import { mayRender } from '../../../lib/permissions';
 import { newsGalleries } from '../../../components/pages/impact/news-galleries';
 import { linkAttrs } from '../../../lib/url';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { MICRO_COMMITMENT } from '../../../data/copy';
+import { DISCOVERY_SESSION_LINE, MICRO_COMMITMENT } from '../../../data/copy';
 import { webPage } from '../../../lib/schema';
 
 /**
@@ -126,7 +126,7 @@ const d = discoveryCta();
     <p class="itf__note">Photographs are used with the consent of those pictured.</p>
   </Section>
 
-  <CTABand id="cta" heading="Talk to Us About a First Cohort" text="Seen a program like the one you need? A discovery session agrees your priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Talk to Us About a First Cohort" text={`Seen a program like the one you need? ${DISCOVERY_SESSION_LINE}`} cta={{ label: d.label, href: d.href }} secondary={{ label: 'How to Read the Evidence', href: '/impact/#evidence-ladder' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

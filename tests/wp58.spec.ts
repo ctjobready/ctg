@@ -25,7 +25,7 @@ import { listPages } from './support/pages';
  *   - G5: Foundations' +$27 tile says "compared with the control group";
  *   - G6: Development Partners' Adrian Afraham card has no summary line above his quotation;
  *   - G7: TalentLEAP's results paragraph says "The figures in At a Glance above ...";
- *   - K5: the closing bands of the Impact pages say "A discovery session agrees your priority groups, tracks and the pilot scorecard.";
+ *   - K5: the closing bands of the Impact pages said "A discovery session agrees your priority groups, tracks and the pilot scorecard." (WP59, GPT-6.1 Sol G2: "A discovery session explores your goals, priority groups and possible program scope.", tests/wp59.spec.ts);
  *   - L3: Foundations' glance opens with the +10.3 trial tile and ends with the +$27 tile;
  *   - L4: Universities' second pain is "Placement Results Are Hard to Publish";
  *   - GM1: the contract-total note says "(25,125 women trained; CodersTrust trained 2,500 directly)" on Home's government slide and the Governments tile;
@@ -78,8 +78,9 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(sc03.stat?.label).toBe('countries and territories where CodersTrust has worked');
     expect(sc03.stat?.detail).toBe('Most delivery has been in Bangladesh.');
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    // WP59 (cycle-31 review, GLM L3): two sentences (tests/wp59.spec.ts); the glance label and note below are unchanged
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
     expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
   });
@@ -148,9 +149,10 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     }
   });
 
-  test('SC-16 reads "... enrollments since 2014, with work in 16 countries and territories" on Home’s reach card, the Impact tile (which keeps "Delivered") and the hub’s "Why Partner" tile', async ({ page }) => {
+  // WP59 (cycle-31 review, GLM L3): Home’s reach card carries the register’s label, now two sentences ("... enrollments since 2014. CodersTrust has worked in 16 countries and territories."); the Impact and hub tiles keep the glance note
+  test('SC-16 reads "... enrollments since 2014. CodersTrust has worked in 16 countries and territories." on Home’s reach card; the Impact tile (which keeps "Delivered") and the hub’s "Why Partner" tile keep the note "..., with work in 16 countries and territories."', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="SC-16"]');
     expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
@@ -433,16 +435,17 @@ test.describe('G7: TalentLEAP’s results paragraph points up, not down', () => 
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K5: the closing bands say a discovery session "agrees" the priority groups, tracks and pilot scorecard', () => {
-  const LINE = 'A discovery session agrees your priority groups, tracks and the pilot scorecard.';
-  test('Impact’s closing band, the other Impact pages’ closing bands and TalentLEAP’s next step carry the line; no built page says the session "sets" them', async ({ page }) => {
+// WP59 (cycle-31 review, GPT-6.1 Sol G2): the line is now "A discovery session explores your goals, priority groups and possible program scope." (DISCOVERY_SESSION_LINE; tests/wp59.spec.ts); K5's "agrees" wording is on no built page, as the "sets" wording before it was not.
+test.describe('K5, revised by WP59 G2: the closing bands say a discovery session "explores" the goals, priority groups and possible program scope', () => {
+  const LINE = 'A discovery session explores your goals, priority groups and possible program scope.';
+  test('Impact’s closing band, the other Impact pages’ closing bands and TalentLEAP’s next step carry the line; no built page says the session "sets" or "agrees" them', async ({ page }) => {
     await open(page, IMPACT);
     expect(compact(await page.locator('#cta').textContent())).toContain(LINE);
     for (const route of ['impact/independent-evaluation/', 'impact/outcomes-2026/', 'impact/in-the-field/', 'impact/in-the-field/news-photos/', TALENTLEAP]) {
       await open(page, route);
       expect(compact(await page.locator('main').textContent()), route).toContain(LINE);
     }
-    const hits = sitePages().filter((p) => /A discovery session sets priority groups, tracks and the pilot scorecard/.test(visible(p.html))).map((p) => p.route);
+    const hits = sitePages().filter((p) => /A discovery session (?:sets priority groups|agrees your priority groups), tracks and the pilot scorecard/.test(visible(p.html))).map((p) => p.route);
     expect(hits).toEqual([]);
   });
 });
@@ -473,17 +476,17 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
-  test('Home’s government slide and the Governments tile print it, tied to GV-12, GV-01 and GV-11; only those two pages do, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
+  test('Home’s government slide and the Governments tile print it, tied to GV-12, GV-01 and GV-11; with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1) they are the only pages that do, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`);
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).`);
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     expect(compact(await tile.locator('.pg__note').textContent())).toBe(NOTE);
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     const printed = sitePages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(printed).toEqual(['/', '/partner-with-us/governments/']);
+    expect(printed).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 

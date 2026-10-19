@@ -415,13 +415,14 @@ test.describe('About: the meta description (item 17)', () => {
 test.describe('SC-16 reads "learners trained" (item 18)', () => {
   test('the register, Home, Impact and the partner hub say "learners trained"; no page says "young people trained"', async ({ page }) => {
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    // WP59 (cycle-31 review, GLM L3): two sentences, "... enrollments since 2014. CodersTrust has worked in 16 countries and territories." (tests/wp59.spec.ts)
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
     expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
     expect(sc16.stat?.value).toBe('130,000+');
     await open(page, '');
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="SC-16"]').textContent())).toContain('learners trained since 2014');
     await open(page, 'partner-with-us/');

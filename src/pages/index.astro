@@ -46,7 +46,7 @@ import { futurePhotos } from '../data/photos';
 import { WORLD_STRIP } from '../data/globalStrip';
 import { HOME_SLIDES } from '../data/heroSlides';
 import GainsPains from '../components/pages/partners/GainsPains.astro';
-import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SIZES_NOTE, painForList, painForRow } from '../data/copy';
+import { C14, FUNDER_PAINS, HOME_META, MICRO_COMMITMENT, NEXT_STEPS_TITLE, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, painForList, painForRow } from '../data/copy';
 import { fact } from '../data/facts';
 import { CLAIM_PX06, CLAIM_RC06, freelancePostingsFinding } from '../components/sections/copyText';
 import { cta } from '../lib/mailto';
@@ -213,7 +213,7 @@ const includes = [
       heading="Let’s Design Your First Cohort"
       text="Start with a multi-cohort pilot, agree the scorecard up front, and decide on expansion from the evidence."
       cta={{ label: discovery.label, href: discovery.href }}
-      secondary={{ label: 'Read the evidence', href: '/impact/' }}
+      secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
       routes={[
         { audience: 'Governments', label: briefing.label, href: briefing.href },
         { audience: 'Impact investors', label: introduction.label, href: introduction.href },

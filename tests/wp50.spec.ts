@@ -428,15 +428,14 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
   });
 
   // WP54 (cycle-28 review, Grok R2): the support line is "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it said "More than four times the average employment effect across nine
-  // vocational-training trials." and stated no 2.3); it still does not repeat the +10.3 (tests/wp54.spec.ts)
-  test('the ">4×" tile’s support line says the multiple in words and does not repeat the trial result; its value is still RC-06a’s', async ({ page }) => {
+  // vocational-training trials." and stated no 2.3); WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): it states the +10.3 it compares, "Employment effect: +10.3 percentage points, more than four times the 2.3-point ..." (tests/wp54.spec.ts, tests/wp59.spec.ts)
+  test('the ">4×" tile’s support line states the +10.3 base and says the multiple in words; its value is still RC-06a’s', async ({ page }) => {
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     await open(page, '');
     const proof = first(page).locator('.hs__proof');
     expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
     await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect: more than four times the 2.3-point average across nine vocational-training trials.');
-    expect(compact(await proof.textContent())).not.toMatch(/10\.3|percentage points/);
+    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
     // the register is unchanged: RC-06a keeps its tile label and its glance label
     expect(fact('RC-06a').stat?.label).toContain('+10.3 percentage points for women offered a place, against 2.3 on average');
   });

@@ -242,9 +242,9 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): the slide kept "work scoped for 30,000+ people" and the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).',
     );
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 30,000\+/.test(p.html)).map((p) => p.route);
     expect(stale, 'pages with the old sentence').toEqual([]);
   });

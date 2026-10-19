@@ -16,7 +16,7 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, defineNewEarners } from '../../data/copy';
+import { DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, defineNewEarners } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
@@ -49,6 +49,7 @@ const onThisPage = [
 ];
 // WP58 (cycle-30 reviews, Claude S7 and Kimi K5): the Kosovo tile's note says "A 2016–2017 pilot with the World Bank Group." as the Global Reach table, the "Around the World" strip and the photograph captions do (it said "A 2017 pilot"); the closing band's line is
 // "A discovery session agrees your priority groups, tracks and the pilot scorecard." (it said "sets"), as on the other Impact pages' closing bands.
+// WP59 (cycle-31 review, GPT-6.1 Sol G2): that line is DISCOVERY_SESSION_LINE now (src/data/copy.ts), "A discovery session explores your goals, priority groups and possible program scope.", on every closing band that printed it.
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
 // WP52 (cycle-27 review, Grok m5): the page title is "Impact You Can Verify | CodersTrust", the H1's words (it was "Impact and Evidence You Can Verify | CodersTrust").
@@ -151,7 +152,7 @@ const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
     </ul>
   </Section>
 
-  <CTABand id="cta" heading={CLOSING_HEADING} text="A discovery session agrees your priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading={CLOSING_HEADING} text={DISCOVERY_SESSION_LINE} cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

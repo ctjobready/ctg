@@ -156,11 +156,14 @@ export const IDENTITY: CopyBlock = identity();
  *  - PX-05 is ManpowerGroup's Global Talent Shortage Survey 2026: "(ManpowerGroup, 2026)";
  *  - PX-06 is Demirci, Hannane & Zhu, "Who Is AI Replacing?", Management Science 71(10), 2025 (source DHZ25): "(Demirci, Hannane & Zhu, 2025)";
  *  - PX-08 is PwC's 2026 Global AI Jobs Barometer (15 June 2026): "(PwC, 2026)".
+ * WP59 (cycle-31 review, GPT-6.1 Sol G5) adds the Bangladesh graduate-unemployment rate (PX-03, the Local Partners and NU Postgraduate Diploma tiles):
+ *  - PX-03 is the Bangladesh Bureau of Statistics' Labour Force Survey 2024 (source BBSLFS24: "Bangladesh Bureau of Statistics (BBS), Labour Force Survey 2024."): "(BBS Labour Force Survey, 2024)".
  * FactCard, FactStat, ProblemSection's re-worded tiles, Home's cost-of-waiting card (freelancePostingsFinding, src/components/sections/copyText.ts) and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
  */
 const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string }> = {
   'PX-01': { note: 'CodersTrust estimate from ILO data, 2026', registered: ['CodersTrust analysis of ILOSTAT and ILO', '2026'], textHas: 'estimated' },
   'PX-02': { note: 'ILOSTAT, 2019–2025', registered: ['ILOSTAT', '2019–2025'] },
+  'PX-03': { note: 'BBS Labour Force Survey, 2024', registered: ['BBS', 'Labour Force Survey', '2024'] },
   'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
   'PX-06': { note: 'Demirci, Hannane & Zhu, 2025', registered: ['Demirci, Hannane & Zhu', '2025'] },
   'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
@@ -607,6 +610,13 @@ export const STEPS_FACTS = ['PD-19', 'PD-01', 'PD-15', 'PD-08', 'PD-09'];
 export const MICRO_COMMITMENT = 'A discovery session is a conversation, not a commitment.';
 /** The same reassurance on the Employers page, whose first step may be a hiring request rather than a discovery session (WP36, cycle-13 review). */
 export const MICRO_COMMITMENT_EMPLOYERS = 'Your first step is a conversation, not a commitment.';
+/**
+ * WP59 (cycle-31 review, GPT-6.1 Sol G2): what a discovery session does, in the one sentence the Impact pages' closing bands and TalentLEAP's next step print. "A discovery session agrees your priority groups, tracks and the pilot scorecard." (WP58, K5) made the first call sound like a
+ * commitment; the session "explores" what the visitor brings. It stands beside MICRO_COMMITMENT, which says the session is not a commitment.
+ */
+export const DISCOVERY_SESSION_LINE = 'A discovery session explores your goals, priority groups and possible program scope.';
+/** The closing bands' text link to the Impact page (WP59, cycle-31 review, Gemini GM1): Title Case, as the other text links are ("See the Evidence", "Read the Trial Results"). */
+export const READ_THE_EVIDENCE = 'Read the Evidence';
 
 /**
  * The line over the program options on Home (WP25h), and now on the Universities and JobReady@Campus option bands (WP36, cycle-13 review): the sizes (1,000–2,500 trainees and so on) are

@@ -22,7 +22,7 @@ import Tone from '../../components/pages/home/Tone.astro';
 import WhyPartner from '../../components/pages/hub/WhyPartner.astro';
 import { grantStartSteps } from '../../components/pages/partners/partners';
 import FaqBlock from '../../components/pages/hub/FaqBlock.astro';
-import { MICRO_COMMITMENT } from '../../data/copy';
+import { MICRO_COMMITMENT, READ_THE_EVIDENCE } from '../../data/copy';
 import { cta } from '../../lib/mailto';
 import DueDiligenceView from '../../components/pages/hub/DueDiligenceView.astro';
 import { faqJsonLd } from '../../lib/faq';
@@ -111,7 +111,7 @@ const jsonLd = [
       heading="Let’s Find the Right Partnership"
       text="Tell us your goals, and we will help you find the right partnership route."
       cta={{ label: discovery.label, href: discovery.href }}
-      secondary={{ label: 'Read the evidence', href: '/impact/' }}
+      secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
       micro={MICRO_COMMITMENT}
     />
   </Tone>

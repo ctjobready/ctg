@@ -112,8 +112,9 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     expect(sc03.text).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
     expect(sc03.stat?.detail).toBe('Most delivery has been in Bangladesh.');
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    // WP59 (cycle-31 review, GLM L3): two sentences (tests/wp59.spec.ts)
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
     expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     expect(locations.length).toBe(Number(sc03.stat?.value));
@@ -156,7 +157,7 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
 
   test('the headline surfaces: Home’s reach card, About’s description and tile, Global Reach’s title, heading and description, the Investors and Programs tiles, and llms.txt', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     await open(page, ABOUT);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.');
     await expect(page.locator('.about-stats .factstat[data-fact="SC-03"] .stat__value')).toHaveText('16');

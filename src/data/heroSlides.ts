@@ -119,11 +119,15 @@ if (offeredPoints === undefined || !hours || incomeOffered === undefined || doll
  * the 2.3 (the hero's trial card states the +10.3, the Independent Evaluation page the nine-trial comparison). The caption is the slide's own: RC-06a's tile label and glance label are unchanged. The build stops if the tile stops reading ">4×".
  * WP54 (cycle-28 review, Grok R2): the callout sits under the heading about income, so it names what is compared and the average it is compared with: "Employment effect: more than four times the 2.3-point average across nine vocational-training
  * trials." The average is read from RC-06a's glance label ("... was more than four times the 2.3-point average across nine vocational-training trials"), never typed; it is an average of nine trials, never "typical". The build stops if the label changes shape.
+ * WP59 (cycle-31 review, Kimi K3; flagged in earlier cycles too): the callout reads apart from its +10.3 base, so it states it: "Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." The +10.3 is RC-02's
+ * value (offeredPoints, the figure the hero's trial card shows), and the build stops unless RC-06a's own text states the same figure ("Women offered a place were 10.3 percentage points more likely to be employed, more than four times the average ..."). The tile and its data-fact (RC-06a) are unchanged.
+ * The longer caption is a third line in the card at 1280 px, where the card sits over the photograph (no change to the slide's height), and a third line under the photograph at 390 px, where the photograph gives up that height (the region's height is the tallest slide's, unchanged).
  */
 if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a no longer has the tile value ">4×"; update the caption of the trial slide ("Employment effect: more than four times ...")');
 const nineTrialAverage = /more than four times the ([\d.]+-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
 if (!nineTrialAverage) throw new Error('heroSlides: RC-06a’s glance label no longer ends "more than four times the N-point average across nine vocational-training trials"; update the callout of the trial slide');
-const trialMultiple = `Employment effect: more than four times the ${nineTrialAverage}.`;
+if (!fact('RC-06a').text.includes(`${offeredPoints} percentage points more likely to be employed`)) throw new Error('heroSlides: RC-06a no longer states the employment effect RC-02 states ("N percentage points more likely to be employed"); update the callout of the trial slide');
+const trialMultiple = `Employment effect: +${offeredPoints} percentage points, more than four times the ${nineTrialAverage}.`;
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
@@ -146,6 +150,12 @@ if (!herPowerDirect) throw new Error('heroSlides: PR-05 label no longer reads "t
  */
 const governmentScope = /^(Six government contracts with training and curriculum work scoped) for ([\d,]+\+ people); (official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... work scoped for N+ people; official training partner of ... onboarding N+ learners"');
+/**
+ * WP59 (cycle-31 review, GLM L1): "onboarding 1.5M+ learners" (the owner-confirmed wording of GV-12) carried no separation note on Home, as the Universities and Investors pages' notes have ("... the learners being onboarded; they are not learners trained by CodersTrust"; SC-04: "not counted in the delivered reach").
+ * The slide keeps the wording and adds the shortest qualifier from that note, in brackets after it: "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)." It rests on SC-04 ("1.5M+ National University learners in the onboarding pipeline"), which the build checks and the lead's data-fact lists.
+ */
+if (!fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')) throw new Error('heroSlides: SC-04 no longer opens "1.5M+ National University learners in the onboarding pipeline"; update the National University qualifier of the government slide');
+const NU_LEARNERS_NOTE = '(National University’s learners, not learners trained by CodersTrust)';
 /**
  * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
  * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.
@@ -275,8 +285,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // training partner of ..." for the university (the "also" keeps the two facts from reading as one scale; GV-12's "onboarding 1.5M+ learners" wording is unchanged).
     // WP57 (cycle-29 review, Grok R2, with Gemini GM1): the second sentence is CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), so the lead rests on GV-12 and GV-01.
     // WP58 (cycle-30 review, Gemini GM1): the note's parenthesis says who trained whom, "(25,125 women trained; CodersTrust trained 2,500 directly)", so the lead rests on GV-12, GV-01 and GV-11 (CONTRACT_TOTAL_NOTE.facts).
-    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${CONTRACT_TOTAL_NOTE.text} CodersTrust is also the ${governmentScope[3]}.`,
-    leadFacts: CONTRACT_TOTAL_NOTE.facts,
+    // WP59 (cycle-31 review, GLM L1): "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)." (NU_LEARNERS_NOTE); the lead also rests on SC-04, which says the 1.5M+ are National University's learners in the onboarding pipeline.
+    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${CONTRACT_TOTAL_NOTE.text} CodersTrust is also the ${governmentScope[3]} ${NU_LEARNERS_NOTE}.`,
+    leadFacts: [...CONTRACT_TOTAL_NOTE.facts, 'SC-04'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },

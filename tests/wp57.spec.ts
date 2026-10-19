@@ -521,9 +521,9 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     await open(page, HOME);
     const lead = page.locator('#results [data-hs-slide]').nth(1).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      `Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`,
+      `Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).`,
     );
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 
   test('Governments: the first glance tile (30,000+) carries the same note, tied to GV-12, SC-06 and GV-01; the old pointer sentence is gone', async ({ page }) => {
@@ -544,11 +544,12 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     expect(compact(await tile.textContent())).toContain('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
-  test('the 25,125 is stated on Home’s government slide and on the Governments tile in the same words (no page words the inclusion differently)', () => {
+  // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
+  test('the 25,125 is stated on Home’s government slide, on the Governments tile and on the Investors and JobReady Platform tiles in the same words (no page words the inclusion differently)', () => {
     const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national program/.test(p.html) && !p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route);
     expect(offenders).toEqual([]);
     const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(pages).toEqual(['/', '/partner-with-us/governments/']);
+    expect(pages).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

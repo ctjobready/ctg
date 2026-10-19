@@ -6,6 +6,7 @@ import Stat from '../../system/Stat.astro';
 import EvidenceTag from '../../system/EvidenceTag.astro';
 import Fact from '../../facts/Fact.astro';
 import { fact } from '../../../data/facts';
+import { CONTRACT_TOTAL_NOTE } from '../../../data/copy';
 
 /**
  * Contracts, Pipeline and Recognition (Investors; WP24a built it as "Reach to Date"): what is NOT delivered reach, apart from the outcome evidence (the trial and the survey) that follows it, so reach, scope and results are never
@@ -14,6 +15,8 @@ import { fact } from '../../../data/facts';
  * WP30c: the path-to-scale paragraph is gone (the scale FAQ answers it) and so are the heading's lead line and the pointer to Proof in Practice.
  * WP42 (cycle-19 review): "Delivered Since 2014" (SC-01, SC-02, SC-03 and their enrollment and location note) moved to the track-record band (#guide, InvestorGuide), which now opens with the delivered figures before the institutional
  * relationships and the leadership. This band keeps the id #reach and the contract scope in its own labeled block; its heading no longer says "Reach to Date", which the delivered figures it held were.
+ * WP59 (cycle-31 review, GPT-6.1 Sol G1): the 30,000+ carries the note Home's government slide and the Governments tile print (CONTRACT_TOTAL_NOTE: contract scope, not a count of completers, and Her Power's national program with who trained how many), directly under
+ * the figure and tied to the facts it rests on, so the total is explained the same way wherever it appears.
  */
 interface Props {
   id?: string;
@@ -35,6 +38,7 @@ const badges = ['PA-06', 'PA-08'];
     <div class="ir__tile" data-fact={contracted}>
       <EvidenceTag type="Contract Scope" />
       <Stat value={stat(contracted).value} label={stat(contracted).label} size="lg" count={stat(contracted).numeric !== undefined} />
+      <p class="ir__note" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p>
     </div>
   </div>
   <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the delivered reach: <Fact id="SC-04" /></p>
@@ -76,6 +80,14 @@ const badges = ['PA-06', 'PA-08'];
     justify-items: start;
     align-content: start;
     min-width: 0;
+  }
+  /* the note under the figure, in the note type of the tiles that print it elsewhere (Governments: .pg__note) */
+  .ir__note {
+    margin: 0;
+    max-width: 44ch;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
   }
   .ir__p {
     margin: var(--space-lg) 0 0;

@@ -11,7 +11,7 @@ import Callout from '../../../components/pages/impact/Callout.astro';
 import NextStep from '../../../components/pages/impact/NextStep.astro';
 import { articleNode, desc, title, discoveryCta } from '../../../components/pages/impact/page-utils';
 import { fact, sources } from '../../../data/facts';
-import { BIGD_FULL, MICRO_COMMITMENT } from '../../../data/copy';
+import { BIGD_FULL, DISCOVERY_SESSION_LINE, MICRO_COMMITMENT } from '../../../data/copy';
 import { buildFaq, para } from '../../../components/pages/programs/faq';
 import { faqPage } from '../../../lib/schema';
 import { hostOf, linkAttrs } from '../../../lib/url';
@@ -152,7 +152,7 @@ const d = discoveryCta();
 
   <NextStep
     heading="Talk to Us About a First Cohort"
-    text="A discovery session agrees your priority groups, tracks and the pilot scorecard."
+    text={DISCOVERY_SESSION_LINE}
     cta={{ label: d.label, href: d.href }}
     secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }}
     more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]}

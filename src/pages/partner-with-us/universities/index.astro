@@ -44,7 +44,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { HOURS, LINKS, TRACKING_MONTHS, meta } from '../../../components/pages/partners/partners';
-import { HEADLINE, POSITIONING, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, POSITIONING, READ_THE_EVIDENCE, SPEED_UNIVERSITIES, VALUE_PROPOSITION } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -160,7 +160,6 @@ const START_LINE = 'Start with one campus: cohort size, tracks and labs are set 
     audience="universities"
     ids={FAQ_IDS}
     title="Questions Universities Ask"
-    allLink={{ label: 'Safeguarding, Governance and Due Diligence', href: LINKS.governance }}
   />
 
   <!-- C10 · Differentiation: the positioning statement opens C6; the comparison table is on Home and Investors only (WP30c). -->
@@ -185,7 +184,7 @@ const START_LINE = 'Start with one campus: cohort size, tracks and labs are set 
     id="cta"
     heading="Let’s Bring JobReady@Campus to Your Students"
     cta={{ label: primary.label, href: primary.href }}
-    secondary={{ label: 'Read the evidence', href: LINKS.evidence }}
+    secondary={{ label: READ_THE_EVIDENCE, href: LINKS.evidence }}
     urgency={SPEED_UNIVERSITIES.text}
   />
 

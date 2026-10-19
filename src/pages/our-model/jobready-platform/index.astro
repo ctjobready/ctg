@@ -10,7 +10,7 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { MICRO_COMMITMENT } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT } from '../../../data/copy';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
@@ -97,7 +97,7 @@ const d = discoveryCta();
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p></div>
     </div>
     <p class="jr__links">
       <a class="link" href={linkAttrs('/our-model/').href}>How the Model Works<Icon name="arrow-right" size={16} /></a>
@@ -150,6 +150,14 @@ const d = discoveryCta();
     gap: var(--stack-title);
     justify-items: start;
     align-content: start;
+  }
+  /* WP59 (cycle-31 review, GPT-6.1 Sol G1): the contract-scope note under the 30,000+, as Home and Governments print it (CONTRACT_TOTAL_NOTE), in the note type of the Governments tile */
+  .jr__whynote {
+    margin: 0;
+    max-width: 44ch;
+    font-size: var(--fs-body-xs);
+    line-height: var(--lh-body-xs);
+    color: var(--on-surface-variant);
   }
   .jr__whyh {
     margin: 0;

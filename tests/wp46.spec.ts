@@ -220,7 +220,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
   // WP51 (cycle-26 review, Kimi m2): the Governments tile kept the note's first sentence and pointed to its contracts table; the Impact tile reads the register note.
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): R2 restores the note's WP35 wording on the Governments tile and Home slide 2 ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."), which WP46
   // had retired so the 25,125 is not read as CodersTrust's own count; the two pages that print it say "Her Power’s national program", and the Impact tile keeps the register's note, which adds that CodersTrust trained 2,500 women directly.
-  test('the register’s GV-12 note and the Impact tile read the same note; the Governments tile and Home slide 2 say the total includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly), and only those two pages say it', async ({ page }) => {
+  test('the register’s GV-12 note and the Impact tile read the same note; the Governments tile and Home slide 2 say the total includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly), and (WP59, GPT-6.1 Sol G1) the Investors and JobReady Platform tiles say it too and no other page does', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(NOTE);
     // the figures in the note are the register’s own (GV-01 and GV-13), and the register’s GV-12 text keeps the National University sentence
     expect(fact('GV-01').text).toContain('trained 25,125 women');
@@ -234,10 +234,10 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
-    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/', '/partner-with-us/governments/']);
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
+    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

@@ -15,6 +15,7 @@ import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
 import { galleryPhotos } from '../../../data/photos';
 import { press } from '../../../data/press';
 import { endorsements } from '../../../data/endorsements';
+import { READ_THE_EVIDENCE } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { ctaHref } from '../../../lib/mailto';
 import { formatDate, isoDate, slugify } from '../../../lib/format';
@@ -298,7 +299,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     heading="Working on a Story About Youth Employment?"
     text="We can talk about what the evidence shows and what it does not."
     cta={{ label: media.label, href: media.href }}
-    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+    secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
   />
 </BaseLayout>
 

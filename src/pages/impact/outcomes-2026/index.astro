@@ -16,7 +16,7 @@ import Accordion from '../../../components/ui/Accordion.astro';
 import { desc, title, val, discoveryCta, articleNode } from '../../../components/pages/impact/page-utils';
 import * as D from '../../../components/pages/impact/outcomes-data';
 import { fact } from '../../../data/facts';
-import { SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
+import { DISCOVERY_SESSION_LINE, SURVEY_EMPLOYMENT, MICRO_COMMITMENT } from '../../../data/copy';
 import { dataset, webPage } from '../../../lib/schema';
 import { canonicalUrl, linkAttrs, url } from '../../../lib/url';
 
@@ -217,7 +217,7 @@ const howToRead = `<ul>
     </a></p>
   </ReportSection>
 
-  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text="A discovery session agrees your priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading="Discuss the Evidence for Your Program" text={DISCOVERY_SESSION_LINE} cta={d} secondary={{ label: 'Read the Randomized Trial Results', href: '/impact/independent-evaluation/' }} more={[{ label: 'Find the Partnership Route for Your Organization', href: '/partner-with-us/' }]} micro={MICRO_COMMITMENT} />
 
 </LongformLayout>
 

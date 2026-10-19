@@ -15,7 +15,7 @@ import Stat from '../../components/system/Stat.astro';
 import WorldStrip from '../../components/ui/WorldStrip.astro';
 import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
-import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
+import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, READ_THE_EVIDENCE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
 import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
@@ -195,7 +195,7 @@ const jsonLd = [
     heading="Start a Conversation"
     text="Tell us your goals, and we will discuss the right partnership route."
     cta={{ label: 'Request a Discovery Session', href: ctaHref('discovery') }}
-    secondary={{ label: 'Read the evidence', href: '/impact/' }}
+    secondary={{ label: READ_THE_EVIDENCE, href: '/impact/' }}
     micro={MICRO_COMMITMENT}
   />
 

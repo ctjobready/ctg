@@ -65,7 +65,7 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   test('slide 2 body is the contract scope with its clause and Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly), then the National University sentence; the 2,500 only in the note; the lead rests on GV-12 and GV-01; the links stay', async ({ page }) => {
@@ -73,7 +73,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     expect(compact(await s.textContent())).toContain('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
@@ -95,9 +95,10 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   });
 
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording
-  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on Home slide 2 and the Governments tile only', () => {
+  // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
+  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on Home slide 2, the Governments tile and the Investors and JobReady Platform tiles only', () => {
     const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
-    expect(hits.map((p) => p.route).sort()).toEqual(['/', '/partner-with-us/governments/']);
+    expect(hits.map((p) => p.route).sort()).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -480,11 +481,11 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     }
   });
 
-  test('"Does the Trial Apply to Your Program?" is two sentences: the trial covered a 200-hour predecessor program, not today’s 100-hour tracks; later programs rest on the survey and program records, which are descriptive', async ({ page }) => {
+  test('"Does the Trial Apply to Your Program?" is two sentences: the trial covered a 200-hour predecessor program, not today’s 100-hour tracks; other programs rest on the survey and program records, which are descriptive', async ({ page }) => {
     await open(page, '');
     const answer = await answerOf(page, 'Does the Trial Apply to Your Program?');
     expect(answer).toBe(
-      'The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for later programs come from the October 2026 survey of completers and from program records, which are descriptive.',
+      'The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.',
     );
     expect((await faqJsonLd(page)).find((q) => q.name === 'Does the Trial Apply to Your Program?')?.text).toBe(answer);
   });

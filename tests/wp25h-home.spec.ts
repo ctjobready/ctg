@@ -84,7 +84,7 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
     // WP48 (cycle-23 review): the body was two sentences, the contract scope with the clause that keeps it true, then the National University sentence; WP57 (cycle-29 review, Grok R2): the clause names Her Power's national program again (25,125 women trained; CodersTrust trained 2,500 directly)
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.');
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).');
   });
 
   // WP48 (cycle-23 review, three reviewers): the third scenario is "Employers Hiring from Your Cohort" ("AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; tests/wp48.spec.ts)
@@ -104,9 +104,9 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     expect(await link.getAttribute('href')).toMatch(/\/impact\/case-studies\/$/);
   });
 
-  test('the FAQ "Does the Trial Apply to Your Program?" scopes later programs to the October 2026 survey and program records', async ({ page }) => {
+  test('the FAQ "Does the Trial Apply to Your Program?" scopes other programs to the October 2026 survey and program records', async ({ page }) => {
     await open(page, pageByRoute('/'));
-    expect(await text(page, '#faq')).toContain('Results for later programs come from the October 2026 survey of completers and from program records, which are descriptive');
+    expect(await text(page, '#faq')).toContain('Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive');
   });
 
   test('offer: option 1 is the First Multi-Cohort Pilot, scoped in the discovery session; pricing is one short block', async ({ page }) => {

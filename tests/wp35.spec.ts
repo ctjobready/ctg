@@ -147,10 +147,10 @@ test.describe('the trial and the survey are shown once per page', () => {
     await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.');
     const first = page.locator('[data-hs-slide]').nth(0);
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('their monthly income was an estimated 41% higher than the control group’s');
-    // WP50 (cycle-25 review, item 18): the slide's >4× tile says the multiple in words and no longer repeats the +10.3 percentage points, which this card states
-    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (still no +10.3; tests/wp54.spec.ts)
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect: more than four times the 2.3-point average across nine vocational-training trials.');
-    expect(compact(await first.locator('.hs__proof').textContent())).not.toContain('+10.3 percentage points');
+    // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
+    // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (tests/wp54.spec.ts)
+    // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect: +10.3 percentage points, more than four times the 2.3-point average ..."
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
   });
 
   for (const slug of THREE) {

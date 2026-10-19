@@ -114,7 +114,6 @@ export const LINKS = {
   trial: '/impact/independent-evaluation/',
   talentleap: '/our-model/talentleap/',
   model: '/our-model/',
-  governance: '/about/governance/',
   hub: '/partner-with-us/',
   nationwide: '/programs/youthwide/#governments',
   youthwide: '/programs/youthwide/',
