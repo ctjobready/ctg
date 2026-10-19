@@ -15,13 +15,14 @@ const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
 if (!raw) throw new Error('ST-05 text no longer has the expected "<Name>, a … participant in Kosovo, <outcome>" shape');
 const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 
-// PR-02 reads "<program>, 2017: <in work>; <earnings>; <contracts>; <ventures>". The page shows the first three as labeled lines (the venture count is an owner-confirmation item).
+// PR-02 reads "<program>, 2017: <in work>; <earnings>; <contracts>; <ventures>". The page shows the first two as labeled lines.
+// WP57b (owner decision 2026-10-19, "Remove the 56 item"): the contracts clause ("56 won online contracts (~180 jobs)") is not shown anywhere on the site: beside the World Bank's 77 trainees who won at least one online work contract it read as a
+// second count of the same measure. PR-02 is shared with the lines that stay (102 of 150 in work, the earnings), so the register entry is unchanged and only what renders changes. The venture count is an owner-confirmation item.
 const parts = fact('PR-02').text.split(': ')[1]?.split('; ');
-if (!parts || parts.length < 3) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
+if (!parts || parts.length < 3 || !/^102 of 150 women in work/.test(parts[0]) || !/earned/.test(parts[1])) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
 const results = [
   { label: 'In Work', text: parts[0] },
   { label: 'Online Earnings', text: parts[1] },
-  { label: 'Online Contracts', text: parts[2] },
 ];
 ---
 

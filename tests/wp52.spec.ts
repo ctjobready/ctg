@@ -330,13 +330,16 @@ test.describe('Governance: the Leadership card names each leader’s own organiz
 
 test.describe('About: the identity sentences sit directly under the lede (item 14), the closing band is "Start a Conversation" (item 22) and the meta description names the underemployed (item 27)', () => {
   const IDENTITY = fact('ID-11').text;
+  // WP57b (cycle-29 review, GLM L8): the page prints ID-11 with its last sentence as "Additional country and regional offices are planned." (the register entry is unchanged; tests/wp57b.spec.ts)
+  const SHOWN = IDENTITY.replace(' are planned in the next few years.', ' are planned.');
 
   test('the three sentences of ID-11 are the first thing under the hero lede, once on the page, and "Where We Are Today" holds the figures alone', async ({ page }) => {
     expect(IDENTITY).toBe('CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc. CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office. Additional country and regional offices are planned in the next few years.');
+    expect(SHOWN).toBe('CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc. CodersTrust Bangladesh (CodersTrust Bangladesh Ltd.) is a country office. Additional country and regional offices are planned.');
     await open(page, ABOUT);
     await expect(page.locator('main [data-fact="ID-11"]')).toHaveCount(1);
     await expect(page.locator('.hero__copy > .hero__lead + .about-identity')).toHaveCount(1);
-    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe(IDENTITY);
+    expect(compact(await page.locator('.hero__copy > .about-identity').textContent())).toBe(SHOWN);
     await expect(page.locator('#glance [data-fact="ID-11"]')).toHaveCount(0);
     await expect(page.locator('#glance .lead')).toHaveCount(0);
     expect(count(await everything(page), 'CT USA, Inc.')).toBe(1);
@@ -425,10 +428,11 @@ test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 re
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01');
   });
 
-  test('slide 4: "Four delivered programs, each with its partner, ..." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
+  test('slide 4: "Four delivered programs, with results from each program’s records." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
-    await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
+    // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
+    await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     const lines = slide(page, 4).locator('.hs__lines li');
     await expect(lines.nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work; 2,500 trained directly.');
     expect(await lines.nth(3).getAttribute('data-fact')).toBe('PR-05');

@@ -101,7 +101,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
   test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records, not trial data"; each line names its facts', async ({ page }) => {
     await open(page, '');
     await expect(slide(page).locator('h2')).toHaveText('Results by Program');
-    await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
+    await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',

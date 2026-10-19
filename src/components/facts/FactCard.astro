@@ -1,8 +1,12 @@
 ---
 import { CERT_FACT_IDS, fact } from '../../data/facts';
+import { withSourceNote } from '../../data/copy';
 import CertNote from '../ui/CertNote.astro';
 
-/** Stat + label + source line (problem/context facts). The number comes from the register. */
+/**
+ * Stat + label + source line (problem/context facts). The number comes from the register.
+ * WP57b (owner decision 2026-10-19): the four external statistics (PX-01, PX-02, PX-05, PX-08) carry "(Publisher, Year)" at the end of the label (withSourceNote, src/data/copy.ts).
+ */
 interface Props {
   id: string;
   /** Show the full canonical sentence under the figure (for facts without a stat). */
@@ -18,7 +22,7 @@ const useText = showText ?? !f.stat;
   <div class="card__body">
     {f.stat && <p class="factcard__value">{f.stat.value}</p>}
     <p class:list={['factcard__label', useText && 'factcard__label--text']}>
-      {useText ? f.text : f.stat?.label}    </p>
+      {withSourceNote(id, (useText ? f.text : f.stat?.label) ?? '')}    </p>
     {useText && CERT_FACT_IDS.includes(id) && <CertNote />}
   </div>
 </article>

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { ENTITY_DEFINITION, PRODUCTION_ORIGIN, SITE_NAME } from '../lib/site';
 import { fact } from '../data/facts';
+import { IDENTITY } from '../data/copy';
 
 /**
  * llms.txt (planning/09 §1 and §6).
@@ -71,7 +72,8 @@ function llmsTxt(): string {
   return [
     `# ${SITE_NAME}`,
     ENTITY_DEFINITION,
-    sentence(fact('ID-11').text),
+    // WP57b (cycle-29 review, GLM L8): the same identity sentences as the About page (IDENTITY: ID-11 without "in the next few years")
+    sentence(IDENTITY.text),
     sentence(fact('SC-03').text),
     '',
     '## Priority resources',

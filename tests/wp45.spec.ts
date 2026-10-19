@@ -234,7 +234,7 @@ test.describe('Partner with Us hub: no reporting band, two FAQs, no dead link (i
       await open(page, route);
       const callout = page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
       await expect(callout).toHaveCount(1);
-      expect(compact(await callout.locator('.callout__body p').first().textContent())).toBe('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
+      expect(compact(await callout.locator('.callout__body p').first().textContent())).toBe('For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.');
       await expect(callout.locator('a')).toHaveCount(0);
       expect(compact(await callout.textContent())).not.toContain('See Reporting and Review');
       expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle'))).toBe(false);

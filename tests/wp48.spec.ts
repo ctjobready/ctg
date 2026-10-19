@@ -267,7 +267,8 @@ test.describe('Governments: the contracts column and the glance heading (items 6
 });
 
 test.describe('"Reporting and Review" (item 7)', () => {
-  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
+  // WP57b (cycle-29 review, GLM L5): the quarterly reviews carry the scope qualifier "as agreed in the program scope"
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.';
   const callout = (page: Page) => page.locator('.callout', { has: page.locator('.eyebrow', { hasText: 'Reporting and Review' }) });
 
   test('Foundations has no "Reporting and Review" callout; its "Progress You Can See Every Month" card already says monthly reports and a quarterly steering review; the due-diligence band is followed by the call to action', async ({ page }) => {
@@ -418,7 +419,8 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
       expect(await page.locator('[data-fact~="PX-05"]').count(), route).toBeGreaterThan(0);
     }
     await open(page, 'programs/nu-postgraduate-diploma/');
-    expect(await texts(page, 'main .pcs__label')).toContain('of employers worldwide reported difficulty finding the talent they need in 2026');
+    // WP57b (owner decision 2026-10-19): the tile names its publisher and year inside the sentence (tests/wp57b.spec.ts)
+    expect(await texts(page, 'main .pcs__label')).toContain('of employers worldwide reported difficulty finding the talent they need in 2026 (ManpowerGroup, 2026)');
     await open(page, 'programs/jobready-work/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toBe('JobReady@Work builds custom AI-ready training for your team and sources talent. In 2026, 72% of employers globally reported difficulty finding talent.');

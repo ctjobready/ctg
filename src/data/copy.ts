@@ -2,7 +2,7 @@
 // Pages import these instead of retyping them, so a wording change from review is one edit here.
 // Every number inside a block is a registered fact; render footnote markers for the IDs in `facts`.
 
-import { fact } from './facts';
+import { fact, sources } from './facts';
 
 /**
  * WP27: the one eligibility statement for the NU Postgraduate Diploma, NU-01 verbatim ("Honors / Diploma holders with a minimum CGPA of 2.25"). The menu
@@ -112,7 +112,7 @@ function kosovoRecords(): CopyBlock {
   const r = fact('PR-02');
   const n = r.stat?.value;
   if (!n || !/^\d+ of \d+$/.test(n) || !r.text.includes(`${n} women in work`)) throw new Error('KOSOVO_RECORDS: PR-02 no longer reads "N of M women in work"');
-  return { text: `Program records: ${n.replace(/ /g, ' ')} women in work.`, facts: ['PR-02'] };
+  return { text: `Program records: ${n.replace(/ /g, '\u00a0')} women in work.`, facts: ['PR-02'] };
 }
 export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
 
@@ -128,6 +128,51 @@ function contractTotalNote(): CopyBlock {
   return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained).`, facts: ['GV-12', 'GV-01'] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
+
+/**
+ * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say
+ * "Additional country and regional offices are planned." (no time frame). ID-11 is an owner statement (OWNERHQ) shared with the two sentences before it, so the register entry is unchanged and only what renders changes; the builder throws if ID-11 stops
+ * ending with that clause, so a change to the register is noticed here.
+ */
+function identity(): CopyBlock {
+  const t = fact('ID-11').text;
+  const tail = ' are planned in the next few years.';
+  if (!t.endsWith(tail)) throw new Error('IDENTITY: ID-11 no longer ends "... are planned in the next few years."');
+  return { text: `${t.slice(0, -tail.length)} are planned.`, facts: ['ID-11'] };
+}
+export const IDENTITY: CopyBlock = identity();
+
+/**
+ * WP57b (owner decision 2026-10-19, "name publisher + year"; no footnotes): the external statistics name their publisher and year inside the sentence, "(Publisher, Year)", wherever they are shown: the 62 million (PX-01) and the 19M+ (PX-02) problem
+ * figures, the 72% of employers (PX-05) and the AI-skills growth (PX-08). Each note is taken only from the registered source of its fact (src/data/facts.ts `sources`, the planning register's sources table), and the builder throws if that source stops
+ * naming the publisher and the year it quotes, so no publisher or year is invented:
+ *  - PX-01 is a CodersTrust estimate computed from ILOSTAT and ILO data (source PX01CALC: "CodersTrust analysis of ILOSTAT and ILO, Global Employment Trends for Youth 2026"), not an ILO statistic, so it says so: "(CodersTrust estimate from ILO data, 2026)";
+ *  - PX-02 is ILOSTAT's (source ILOSTAT26: "latest year per country, 2019–2025"): "(ILOSTAT, 2019–2025)";
+ *  - PX-05 is ManpowerGroup's Global Talent Shortage Survey 2026: "(ManpowerGroup, 2026)";
+ *  - PX-08 is PwC's 2026 Global AI Jobs Barometer (15 June 2026): "(PwC, 2026)".
+ * FactCard, FactStat, ProblemSection's re-worded tiles and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
+ */
+const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string }> = {
+  'PX-01': { note: 'CodersTrust estimate from ILO data, 2026', registered: ['CodersTrust analysis of ILOSTAT and ILO', '2026'], textHas: 'estimated' },
+  'PX-02': { note: 'ILOSTAT, 2019–2025', registered: ['ILOSTAT', '2019–2025'] },
+  'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
+  'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
+};
+function sourceNotes(): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [id, spec] of Object.entries(SOURCE_NOTES)) {
+    const f = fact(id);
+    const cited = f.sourceIds.map((sid) => sources[sid]?.citation ?? '').join(' ');
+    for (const needle of spec.registered) if (!cited.includes(needle)) throw new Error(`SOURCE_NOTE ${id}: its registered source no longer says "${needle}" (${cited})`);
+    if (spec.textHas && !f.text.includes(spec.textHas)) throw new Error(`SOURCE_NOTE ${id}: the register no longer says "${spec.textHas}", which its note ("${spec.note}") relies on`);
+    out[id] = `(${spec.note})`;
+  }
+  return out;
+}
+/** "(Publisher, Year)" by fact id, for the four external statistics. */
+export const SOURCE_NOTE: Record<string, string> = sourceNotes();
+/** A label or sentence with its source note inside it ("... in 2026 (ManpowerGroup, 2026)"); text of any other fact is returned as it is. */
+export const withSourceNote = (id: string, text: string): string => (SOURCE_NOTE[id] ? `${text} ${SOURCE_NOTE[id]}` : text);
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /**

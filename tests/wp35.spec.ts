@@ -186,7 +186,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(3);
     await expect(slide.locator('h2')).toHaveText('Results by Program');
-    await expect(slide.locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
+    await expect(slide.locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
     await expect(slide.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',

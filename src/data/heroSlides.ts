@@ -308,7 +308,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP52 (cycle-27 review, Kimi M1): "Four delivered programs, ..." (it said "Four programs, ...", which clashed with the Programs page's "four partner programs ... and the NU Postgraduate Diploma", a different four; these are the delivered programs whose own records give the results).
     // The review's wording ended "... from their own program records."; that is 683 px against the 626 px the lead has at 1280 px (the old line was 610 px), so it wrapped and made this the tallest slide, 14 px taller than "Find Your Program", which left every
     // other slide 55 px unused (the limit is 48, tests/hero-slider.spec.ts). "Program" is left out of "records" (615 px; the eyebrow says "Program Records" and the WSDFM line says "program records, not trial data").
-    lead: 'Four delivered programs, each with its partner, with results from their own records.',
+    // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
+    lead: 'Four delivered programs, with results from each program’s records.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
       { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },

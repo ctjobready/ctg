@@ -16,7 +16,7 @@ import WorldStrip from '../../components/ui/WorldStrip.astro';
 import AsCoveredBy from '../../components/ui/AsCoveredBy.astro';
 import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
-import { BIGD_FULL, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
+import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
 import { timeline } from '../../data/timeline';
 import { ctaHref } from '../../lib/mailto';
 import { linkAttrs } from '../../lib/url';
@@ -89,8 +89,9 @@ const jsonLd = [
 
 <BaseLayout title="About Us" description={description} breadcrumbs={[{ label: 'About' }]} jsonLd={jsonLd}>
   <Hero eyebrow="About Us" title="A Global Workforce Organization, Built on Evidence" lead={fact('ID-01').text} artSeed="about-codertrust">
-    <!-- WP52 (cycle-27 review, Claude m10): where CodersTrust is based and how its entities relate (owner statement, ID-11) is the first thing under the lede, moved here from "Where We Are Today" (not repeated there) -->
-    <div class="about-identity" data-hero-in><Fact id="ID-11" as="p" /></div>
+    <!-- WP52 (cycle-27 review, Claude m10): where CodersTrust is based and how its entities relate (owner statement, ID-11) is the first thing under the lede, moved here from "Where We Are Today" (not repeated there).
+         WP57b (cycle-29 review, GLM L8): the paragraph is ID-11 with its last sentence as "Additional country and regional offices are planned." (IDENTITY, src/data/copy.ts; the register's ID-11 adds "in the next few years") -->
+    <div class="about-identity" data-hero-in><p class="fact" data-fact="ID-11">{IDENTITY.text}</p></div>
     <Fragment slot="actions">
       <a class="link" href={linkAttrs('/impact/').href}>See Our Impact<Icon name="arrow-right" size={16} /></a>
     </Fragment>

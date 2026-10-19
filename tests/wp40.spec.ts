@@ -218,7 +218,8 @@ test.describe('Foundations: the links and the pain (items 3 and 5; WP48: the "Re
 });
 
 test.describe('"Reporting and Review" says what the reports and reviews do (item 4)', () => {
-  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.';
+  // WP57b (cycle-29 review, GLM L5): the quarterly reviews carry the scope qualifier "as agreed in the program scope"
+  const SENTENCE = 'For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.';
   // WP45 (cycle-21 review): the hub's reporting band (#review-cycle) the callouts linked to is gone, so the callouts carry the sentence and no link (tests/wp45.spec.ts)
   // WP48 (cycle-23 review): Foundations' callout is gone (its "Progress You Can See Every Month" card says the same; tests/wp48.spec.ts); Development Partners keeps its callout
   for (const route of ['partner-with-us/development-partners/']) {

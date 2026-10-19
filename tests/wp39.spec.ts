@@ -257,7 +257,7 @@ test.describe('Partner with Us hub: no reporting band, and no page links to one 
       expect((await hrefs(page, 'main a')).some((h) => h.includes('#review-cycle')), route).toBe(false);
     }
     await open(page, 'partner-with-us/development-partners/');
-    expect(await mainText(page)).toContain('For supported cohorts, monthly reports track progress; quarterly reviews guide corrective action and any expansion.');
+    expect(await mainText(page)).toContain('For supported cohorts, monthly reports track progress; quarterly reviews, as agreed in the program scope, guide corrective action and any expansion.');
   });
 });
 

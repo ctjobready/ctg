@@ -3,6 +3,7 @@ import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import FactCard from '../../facts/FactCard.astro';
 import { fact } from '../../../data/facts';
+import { withSourceNote } from '../../../data/copy';
 
 /**
  * C2 Problem. Same look as ProblemBand but accepts any number of FactCards and extra text-only pain
@@ -10,6 +11,7 @@ import { fact } from '../../../data/facts';
  * `scope` re-words a fact that is not a Bangladesh figure (PX-05, PX-07, PX-08, PX-09) so the scope sits in
  * the same sentence: `prefix` ("Globally") is put before the canonical text; `label` replaces a stat label.
  * The named slot `lead` sits in the band header under the BLUF, like ProblemBand's: the ranked pains (GainsPains) go there.
+ * WP57b (owner decision 2026-10-19): a re-worded tile of an external statistic (the NU page's PX-05) carries "(Publisher, Year)" too (withSourceNote, src/data/copy.ts).
  */
 interface Extra {
   title: string;
@@ -39,7 +41,7 @@ const scoped = (fid: string) => {
   return {
     id: fid,
     value: f.stat?.value,
-    text: f.stat ? (sc.label ?? f.stat.label) : /\b(globally|worldwide)\b/i.test(f.text) ? f.text : `${sc.prefix}, ${lowerFirst(f.text)}`,
+    text: withSourceNote(fid, f.stat ? (sc.label ?? f.stat.label) : /\b(globally|worldwide)\b/i.test(f.text) ? f.text : `${sc.prefix}, ${lowerFirst(f.text)}`),
   };
 };
 ---

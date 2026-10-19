@@ -39,7 +39,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     const s = slide(page, 4);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
     await expect(s.locator('h2')).toHaveText('Results by Program');
-    await expect(s.locator('.hs__lead')).toHaveText('Four delivered programs, each with its partner, with results from their own records.');
+    await expect(s.locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
