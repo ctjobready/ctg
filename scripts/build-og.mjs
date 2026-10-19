@@ -30,6 +30,9 @@ const MAX_BYTES = 200 * 1024;
 /**
  * One card per top-level section of the IA (planning/03 §2). `prefix` is the base-less path prefix the card serves;
  * `label` is the section name and `line` one existing sentence from that section's own copy.
+ * WP63 rework RW1 (not applied): the About and Careers lines still say "educated, unemployed youth" and "educated, unemployed young people", while the site names the group "educated, unemployed and underemployed youth" (ID-01). With the full group they
+ * are 113 and 87 characters and still fit the card (48 px and 52 px headlines, four lines each, measured with the template below), but the script cannot run today: the corpus check below fails for 9 of these 11 cards (their lines are no longer verbatim
+ * site copy), so the cards and src/lib/og.ts are stale until all lines are refreshed from current copy and the cards regenerated.
  */
 const CARDS = [
   { file: 'default', prefix: '/', exact: true, label: 'Learn. Earn. Prosper.', line: 'Turn youth unemployment into digital employment — with evidence.' },

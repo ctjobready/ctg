@@ -33,8 +33,9 @@ export const VALUE_PROPOSITION: Record<Audience, string> = {
   // WP48 (cycle-23 review): "unemployed and underemployed", as ID-01 has the group (16 words, one over the CMF guideline above; no gate enforces it and the audience lines below run longer).
   // WP52 (cycle-27 review): "We help ..." (it began "Help ...", an instruction with no subject), as the audience lines below begin; 17 words, two over the guideline.
   home: 'We help educated, unemployed and underemployed youth reach paid digital work through training, mentoring and placement support.',
-  developmentPartners: 'We help development partners prepare educated, unemployed youth for paid work through mentored, certification-focused training.',
-  governments: 'We help governments prepare educated, unemployed youth for paid digital work through mentored, certification-focused training.',
+  // WP63 rework RW1 (coordinator, extending Grok R1): the Development Partners and Governments lines name the group as ID-01 and the Home line do, "educated, unemployed and underemployed youth" (the Governments line is also that page's meta description: 144 characters, within 155).
+  developmentPartners: 'We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.',
+  governments: 'We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.',
   foundations: 'We help funders back mentored, certification-focused training that prepares youth for paid digital work.',
   universities: 'We help universities and colleges prepare students for paid work through mentored, certification-focused training.',
   employers: 'We help employers upskill their teams for AI and digital work, and connect them to job-ready digital talent through our placement team.',
@@ -370,7 +371,7 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   },
   // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030).
   nationwide: {
-    text: `For ministries, agencies and national funders who need educated, unemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
+    text: `For ministries, agencies and national funders who need educated, unemployed and underemployed youth in paid digital work, CodersTrust offers YouthWIDE in Bangladesh. ${UNLIKE_APPROVED}`,
     facts: ['IN-01', 'PD-01', 'PD-08'],
   },
   campus: {
@@ -793,6 +794,7 @@ export const HOME_META = {
   // A colon, not a dash: scripts/check-title-case.mjs lowercases "From" after an em dash, and the title keeps its capital F.
   title: 'CodersTrust: From Learning to Earning for Youth',
   // WP23: at most 155 characters. WP41 (cycle-18 review): it opens with what CodersTrust does (ID-01: it trains and mentors educated, unemployed youth for digital work) and ends with the evidence, instead of leading with the trial abstract.
+  // WP63 rework RW1: this description still says "educated, unemployed youth": with ID-01's full group ("educated, unemployed and underemployed youth") it would be 162 characters, over the 155 limit, and no word can go without changing what it says. Reported, not truncated.
   description: 'CodersTrust trains and mentors educated, unemployed youth for paid digital work, with evidence from a randomized trial of a predecessor program.',
 };
 

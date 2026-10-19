@@ -23,7 +23,8 @@ test.describe('direct answers under the H1', () => {
   });
 
   for (const [route, needle] of [
-    ['programs/youthwide/', 'YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support.'],
+    // WP63 rework RW1: the lead names the group as ID-01 does ("educated, unemployed and underemployed youth")
+    ['programs/youthwide/', 'YouthWIDE helps governments and funders prepare educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support.'],
     // WP41 (cycle-18 review): the lead speaks to the institution ("Run mentored, certification-focused training in your campus labs alongside academic studies.")
     ['programs/jobready-campus/', 'Run mentored, certification-focused training in your campus labs alongside academic studies.'],
     ['programs/jobready-work/', 'JobReady@Work builds custom AI-ready training for your team'],

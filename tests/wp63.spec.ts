@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
-import { POSITIONING, SCORECARD_LABELS, WSDFM_RECORDS } from '../src/data/copy';
+import { POSITIONING, SCORECARD_LABELS, VALUE_PROPOSITION, WSDFM_RECORDS } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -24,7 +24,9 @@ import { listPages } from './support/pages';
  *   - R6: About’s meta description names "educated, unemployed and underemployed youth" within 155 characters;
  *   - L6: Governments’ contracts table is "What Each Government Contract Covers", its anchor unchanged;
  *   - K8: the partner hub’s FAQ lead is "Two questions partners ask first.";
- *   - R9 (not done): YouthWIDE keeps its "Last updated" line because the other program, evidence and legal pages carry the same line.
+ *   - R9 (not done): YouthWIDE keeps its "Last updated" line because the other program, evidence and legal pages carry the same line;
+ *   - RW1 (rework, coordinator): the target group is "educated, unemployed and underemployed youth" site-wide: the Governments, Development Partners and YouthWIDE leads name it, and no built page says "educated, unemployed youth" (or "young people")
+ *     in its visible text; the old phrase survives only in three meta descriptions that the full group would push past 155 characters (Home, Careers, YouthWIDE) and in the generated About and Careers social-card alt text (listed and pinned below).
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
@@ -77,6 +79,7 @@ const IMPACT = 'impact/';
 const CASE_STUDIES = 'impact/case-studies/';
 const YOUTHWIDE = 'programs/youthwide/';
 const ABOUT = 'about/';
+const CAREERS = 'careers/';
 const JOBREADY_PLATFORM = 'our-model/jobready-platform/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -352,5 +355,59 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
     await expect(page.locator('.updated')).toHaveText('Last updated October 15, 2026');
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test.describe('RW1 (rework; coordinator, extending Grok R1): the target group is "educated, unemployed and underemployed youth" site-wide', () => {
+  const GROUP = 'educated, unemployed and underemployed youth';
+  const OLD_GROUP = /educated,\s+unemployed\s+(?:youth|young people)/i;
+
+  test('the Governments and Development Partners leads name the group as ID-01 does; the Governments line is also its meta description, within 155 characters', async ({ page }) => {
+    expect(fact('ID-01').text).toContain(GROUP);
+    expect(VALUE_PROPOSITION.governments).toBe('We help governments prepare educated, unemployed and underemployed youth for paid digital work through mentored, certification-focused training.');
+    expect(VALUE_PROPOSITION.developmentPartners).toBe('We help development partners prepare educated, unemployed and underemployed youth for paid work through mentored, certification-focused training.');
+    await open(page, GOVERNMENTS);
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(VALUE_PROPOSITION.governments);
+    const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
+    expect(description).toBe(VALUE_PROPOSITION.governments);
+    expect(description.length).toBeLessThanOrEqual(155);
+    await open(page, DEV_PARTNERS);
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe(VALUE_PROPOSITION.developmentPartners);
+  });
+
+  test('YouthWIDE’s hero lead and its "Who It Is For" row name it too', async ({ page }) => {
+    await open(page, YOUTHWIDE);
+    expect(compact(await page.locator('#hero .hero__lead').textContent())).toBe('YouthWIDE helps governments and funders prepare educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support.');
+    const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Who It Is For' }) });
+    expect(compact(await row.locator('dd').textContent())).toBe('Governments, development partners and funders who want to report on educated, unemployed and underemployed young people moving into paid digital work.');
+  });
+
+  test('no built page says "educated, unemployed youth" or "educated, unemployed young people" in its visible text (the component gallery included)', () => {
+    expect(sitePages().some((p) => p.route === '/styleguide/'), 'the staging build has the component gallery').toBe(true);
+    expect(sitePages().filter((p) => OLD_GROUP.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+  });
+
+  // Reported, not changed (see the WP63 rework report): the full group does not fit three meta descriptions (155 characters), and the About and Careers social cards (image text and alt text) are generated by scripts/build-og.mjs,
+  // which only accepts card lines that are verbatim site copy and so cannot run until its stale lines are refreshed (9 of its 11 no longer appear in src/). This test pins exactly where the old phrase survives; when one is fixed, its entry goes.
+  test('the old phrase survives only in three meta descriptions that the full group would push past 155 characters, and in the generated About and Careers social-card alt text', async ({ page }) => {
+    const tag = (html: string, attr: string, value: string) => new RegExp(`<meta[^>]*\\b${attr}="${value}"[^>]*\\bcontent="([^"]*)"`, 'i').exec(html)?.[1] ?? '';
+    const pages = sitePages().filter((p) => OLD_GROUP.test(p.html));
+    const inDescription = pages.filter((p) => OLD_GROUP.test(tag(p.html, 'name', 'description'))).map((p) => p.route).sort();
+    const inCardAlt = pages.filter((p) => OLD_GROUP.test(tag(p.html, 'property', 'og:image:alt'))).map((p) => p.route).sort();
+    expect(inDescription).toEqual(['/', '/careers/', '/programs/youthwide/']);
+    expect(inCardAlt).toEqual(['/about/', '/about/governance/', '/about/mentors/', '/about/recognition/', '/about/team/', '/careers/']);
+    expect(pages.filter((p) => !inDescription.includes(p.route) && !inCardAlt.includes(p.route)).map((p) => p.route), 'the phrase is nowhere else').toEqual([]);
+    for (const route of [HOME, CAREERS, YOUTHWIDE]) {
+      await open(page, route);
+      const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
+      const full = description.replace('unemployed youth', 'unemployed and underemployed youth').replace('unemployed young people', 'unemployed and underemployed young people');
+      expect(description.length, route).toBeLessThanOrEqual(155);
+      expect(full.length, `${route}: the full group would not fit`).toBeGreaterThan(155);
+    }
+    // About's description already names the full group (R6); only its generated card alt text keeps the old phrase
+    await open(page, ABOUT);
+    expect((await page.locator('meta[name="description"]').getAttribute('content')) ?? '').toContain(GROUP);
+    expect(await page.locator('meta[property="og:image:alt"]').getAttribute('content')).toContain('educated, unemployed youth in emerging markets');
   });
 });

@@ -383,7 +383,8 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
 test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 and 8)', () => {
   test('the hero lead is one sentence: audience, outcome, mechanism', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    await expect(page.locator('#hero .hero__lead')).toHaveText('YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support.');
+    // WP63 rework RW1: "... educated, unemployed and underemployed youth ..." (the group ID-01 names)
+    await expect(page.locator('#hero .hero__lead')).toHaveText('YouthWIDE helps governments and funders prepare educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support.');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
     expect(description.length).toBeLessThanOrEqual(155);
   });

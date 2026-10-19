@@ -71,6 +71,7 @@ import { url } from '../../lib/url';
 const path = '/programs/youthwide/';
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes
 const title = 'YouthWIDE: From Training to Paid Digital Work';
+// WP63 rework RW1: the hero lead and the glance row name the full group ("educated, unemployed and underemployed youth"); this description keeps "educated, unemployed youth" because the full group makes it 163 characters, over the 155 limit. Reported, not truncated.
 const description = 'YouthWIDE prepares educated, unemployed youth for paid digital work: co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.';
 const discovery = ctaFor('discovery');
 const briefing = ctaFor('briefing');
@@ -109,7 +110,7 @@ const measures = [...SCORECARD_LABELS];
     <Hero
       eyebrow="YouthWIDE · Youth Digital Employment Program"
       title="From Training to Paid Digital Work, Country by Country"
-      lead="YouthWIDE helps governments and funders prepare educated, unemployed youth for paid digital work through training, mentoring and placement support."
+      lead="YouthWIDE helps governments and funders prepare educated, unemployed and underemployed youth for paid digital work through training, mentoring and placement support."
       artSeed="youthwide"
     >
       <Fragment slot="actions">
@@ -131,7 +132,7 @@ const measures = [...SCORECARD_LABELS];
       // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million vulnerable youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
       // WP48 (cycle-23 review): the row says "2 million vulnerable youth", IN-01's own wording, as the Programs menu, Home and the Programs hub do.
       { label: 'Designed for Three Regions', text: `South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, ${AIM_DEPENDENCY}.`, facts: ['IN-02', 'IN-01'] },
-      { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
+      { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed and underemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
