@@ -193,14 +193,15 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     for (const p of sitePages()) expect(p.html, p.route).not.toMatch(/Programs Have Run|Program locations table/);
   });
 
-  test('Global Reach: the note under the map defines a location as a place CodersTrust has worked, says the table distinguishes training, partnerships and launch activity, and that New York is the headquarters, not one of the 16', async ({ page }) => {
+  // WP60 (cycle-32 review, Grok R1): the second sentence said the table "distinguishes training, partnerships and launch activity", which it did not, row by row; it says which rows say what (tests/wp60.spec.ts checks the rows against it)
+  test('Global Reach: the note under the map defines a location as a place CodersTrust has worked, says which rows are a partnership, an announced cooperation or the launch and that the others are training programs, and that New York is the headquarters, not one of the 16', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const callout = page.locator('#map .callout');
     expect(compact(await callout.locator('.callout__label').textContent())).toBe('Locations Are Not Programs');
     const p = callout.locator('p[data-fact="SC-03"]');
     await expect(p).toHaveCount(1);
     expect(compact(await p.textContent())).toBe(
-      'A location is a country or territory where CodersTrust has worked. It does not say how many programs ran there, or how large they were. The table distinguishes training, partnerships and launch activity. New York is the headquarters, not one of the 16 locations.',
+      'A location is a country or territory where CodersTrust has worked. It does not say how many programs ran there, or how large they were. Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs. New York is the headquarters, not one of the 16 locations.',
     );
     // the 16 is the register's, and the table the note speaks of lists that many rows
     await expect(page.locator('.wmap__table tbody tr')).toHaveCount(Number(fact('SC-03').stat?.value));
@@ -476,17 +477,18 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
-  test('Home’s government slide and the Governments tile print it, tied to GV-12, GV-01 and GV-11; with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1) they are the only pages that do, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's government slide says the same facts in plainer sentences ("This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.") and no longer prints the note itself
+  test('Home’s government slide is tied to GV-12, GV-01 and GV-11 (its plainer sentences state the note’s facts); the Governments tile, with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1), prints the note, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).`);
+    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.`);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     expect(compact(await tile.locator('.pg__note').textContent())).toBe(NOTE);
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     const printed = sitePages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(printed).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(printed).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 
@@ -517,9 +519,9 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
     }
   });
 
-  test('YouthWIDE’s "Will This Work in Our Country?" answer ends "CodersTrust has worked since 2014 in 16 countries and territories.", in the page and in its structured data', async ({ page }) => {
+  test('YouthWIDE’s "Will This Work in Our Country?" answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.", in the page and in its structured data', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    const SENTENCE = 'CodersTrust has worked since 2014 in 16 countries and territories.';
+    const SENTENCE = 'CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.';
     expect(compact(await page.locator('main').textContent())).toContain(SENTENCE);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
     expect(ld).toContain(SENTENCE);
@@ -636,7 +638,7 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
 
   test('Home’s government slide, the Governments tile, Impact’s tile and the Investors and JobReady tiles show 30,000+ with the Contract Scope tag', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people\. The total is contract scope, not a count of completers;/);
+    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. This includes Her Power’s national program:/);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     await expect(tile).toHaveCount(1);

@@ -15,11 +15,14 @@ import FeatureCard from '../../components/ui/FeatureCard.astro';
 import CTABand from '../../components/ui/CTABand.astro';
 import EvidenceBand from '../../components/pages/home/EvidenceBand.astro';
 import { ctaFor, statValue } from '../../components/pages/programs/meta';
-import { MICRO_COMMITMENT, NU_ELIGIBILITY } from '../../data/copy';
+import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY } from '../../data/copy';
 import { linkAttrs } from '../../lib/url';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
+// WP60 (cycle-32 review, Gemini GM1): the evidence band under the program cards is headed "Evidence from Youth-Employment Programs" and opens "These results are from youth-employment programs, not evidence for every program listed above." (it was "Trial and Survey Evidence",
+// under a list that includes schools, universities and employers); the figures and the predecessor label (the trial line and the tile's label) are unchanged.
+// WP60 (cycle-32 review, Claude S3): the YouthWIDE card's "..., depending on government and donor commitments" is AIM_DEPENDENCY (src/data/copy.ts), the clause every other page that states the 2 million 2030 aim now reads too (it was typed here only).
 // WP50 (cycle-25 review): the overview prints no "Last updated" line (it read as a draft stamp on a hub page); the date stays in the page's JSON-LD (dateModified). The program pages, the evidence pages and the legal pages keep theirs.
 const LAST_UPDATED = '2026-10-15'; // WP31: the cycle-8 review wording changes (WP20c had set 2026-10-14; PAGE_UPDATED.programs is 2026-10-10)
 // R10/WP11 F23: no sentence says that every program aims at the same result (SuperKids is a K-12 program and the NU Postgraduate Diploma
@@ -31,7 +34,7 @@ const description = 'Explore CodersTrust programs, from school to the workplace:
 const discovery = ctaFor('discovery');
 
 const programs = [
-  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, depending on government and donor commitments.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }, { label: 'For Foundations', href: '/partner-with-us/foundations/' }] },
+  { icon: 'globe', href: '/programs/youthwide/', title: 'YouthWIDE', audience: 'Governments, Development Partners and Funders', text: `The youth digital-employment program, designed as co-funded country cohorts for South Asia, the Middle East and North Africa, and Sub-Saharan Africa. It builds on results from earlier programs in Bangladesh and Kosovo. In Bangladesh it aims to train ${statValue('IN-01')} vulnerable youth for digital employment by 2030, ${AIM_DEPENDENCY}.`, means: 'ministries can follow phased delivery from training to paid work, and funders get monthly reports on progress toward paid work, not only enrollment.', partner: [{ label: 'For Governments', href: '/partner-with-us/governments/' }, { label: 'For Development Partners', href: '/partner-with-us/development-partners/' }, { label: 'For Foundations', href: '/partner-with-us/foundations/' }] },
   { icon: 'graduation-cap', href: '/programs/jobready-campus/', title: 'JobReady@Campus', audience: 'Universities and Colleges', text: 'Industry-oriented skills training in parallel with academic studies, using on-campus labs.', means: 'students get a supported route to industry certification beside the degree.', partner: [{ label: 'For Universities', href: '/partner-with-us/universities/' }] },
   { icon: 'briefcase', href: '/programs/jobready-work/', title: 'JobReady@Work', audience: 'Employers', text: 'Corporate training custom-developed for each organization, plus a route to hire job-ready talent.', means: 'your team learns on tasks from your own roles.', partner: [{ label: 'For Employers', href: '/partner-with-us/employers/' }] },
   { icon: 'book-open', href: '/programs/nu-postgraduate-diploma/', title: 'NU Postgraduate Diploma', audienceLabel: 'Eligibility', audienceFacts: 'NU-01', audience: NU_ELIGIBILITY, text: 'National University postgraduate diploma courses delivered by CodersTrust, in digital marketing and ICT.', means: 'you add digital skills to the qualification you hold.' },
@@ -92,8 +95,9 @@ const jsonLd = [
        and the lead that said "predecessor program" and "surveyed completers" a second time are gone (the line and the tile's label say both). -->
   <EvidenceBand
     id="proof-band"
-    title="Trial and Survey Evidence"
-    bandHeading="Trial and Survey Evidence"
+    title="Evidence from Youth-Employment Programs"
+    bandHeading="Evidence from Youth-Employment Programs"
+    lead="These results are from youth-employment programs, not evidence for every program listed above."
     trialHeading="An Independent Randomized Trial"
     chart="none"
     trialLine

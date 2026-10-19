@@ -190,7 +190,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
     await expect(slide.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -216,11 +216,11 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
   test('the Proof in Practice cards and the case study still state the WSDFM program records, apart from the trial', async ({ page }) => {
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
-      // WP46 (cycle-22 review): "WSDFM program records (not trial data): 71% in work"
-      expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial data): 71% in work');
+      // WP46 (cycle-22 review): "WSDFM program records (not trial data; the trial studied 833 women): 71% in work"
+      expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
     }
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
   });

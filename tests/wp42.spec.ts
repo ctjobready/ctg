@@ -256,7 +256,7 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     const note = page.locator('.hero [data-hero-note]');
     await expect(note).toHaveCount(1);
     // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note is where the page first names the evaluator, so it spells it out (tests/wp54.spec.ts)
-    await expect(note).toHaveText('Program records and a separate randomized trial of the predecessor program by the BRAC Institute of Governance and Development (BIGD).');
+    await expect(note).toHaveText('Program records and a separate randomized trial of 833 women in the predecessor program, by the BRAC Institute of Governance and Development (BIGD).');
     expect(await note.evaluate((e) => e.parentElement?.className ?? '')).toContain('hero__stats');
     expect(await note.evaluate((e) => e.nextElementSibling?.className ?? '')).toContain('cs__stat');
     const [noteBox, firstTile, button] = await Promise.all([note.boundingBox(), page.locator('.hero .cs__stat').first().boundingBox(), page.locator('.hero .hero__actions a').boundingBox()]);
@@ -347,7 +347,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.');
     expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },

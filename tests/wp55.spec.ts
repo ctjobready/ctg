@@ -524,11 +524,12 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
     expect(compact(await page.locator('main .hero__lead').first().textContent())).toContain('from Kosovo to Bangladesh');
   });
 
-  test('the Development Partners hero is the Somaliland Hour of Code, the Case Studies hero is the Bhutan inauguration, and the YouthWIDE gallery shows the Somaliland photograph in its second place', async ({ page }) => {
+  // WP60 (cycle-32 review, Kimi K1): the Case Studies hero is the Kosovo training room (a case-study program's photograph; no Bhutan case study exists), no longer the Bhutan inauguration (tests/wp60.spec.ts)
+  test('the Development Partners hero is the Somaliland Hour of Code, the Case Studies hero is the Kosovo training room, and the YouthWIDE gallery shows the Somaliland photograph in its second place', async ({ page }) => {
     await open(page, DP);
     expect(await page.locator('img[fetchpriority="high"]').first().getAttribute('data-asset')).toBe('legacy-global-somaliland-hour-of-code');
     await open(page, HUB);
-    expect(await page.locator('img[fetchpriority="high"]').first().getAttribute('data-asset')).toBe('legacy-global-bhutan-batch-inauguration');
+    expect(await page.locator('img[fetchpriority="high"]').first().getAttribute('data-asset')).toBe('legacy-general-kosovo-woman-training');
     await open(page, YOUTHWIDE);
     const gallery = await page.locator('#in-the-field figure img').evaluateAll((imgs) => imgs.map((i) => i.getAttribute('data-asset')));
     expect(gallery[1]).toBe('legacy-global-somaliland-hour-of-code');
@@ -591,7 +592,8 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     expect(compact(await dja.locator('.case__label').textContent())).toBe('students enrolled, reported by the World Bank in May 2022 while the program was running');
     await expect(dja.locator('.evidence-tag, [data-evidence]')).toHaveCount(0);
     expect(await dja.locator('a.card__link').getAttribute('href')).toMatch(/\/impact\/case-studies\/digital-jobs-albania\/$/);
-    await expect(page.getByRole('heading', { level: 2, name: 'Five Programs, Results First' })).toHaveCount(1);
+    // WP60 (cycle-32 review, Kimi K2): the hub's H1 is "Five Programs, from Kosovo to Bangladesh", so the grid's H2 is "Results First, Program by Program" (it was "Five Programs, Results First")
+    await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     await open(page, IMPACT);
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toHaveCount(1);
     await open(page, HOME);

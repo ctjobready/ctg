@@ -14,8 +14,11 @@ import Icon from '../../system/Icon.astro';
 interface Props {
   /** Story id (src/content/stories/<id>.md). */
   story: 'adrian-afraham' | 'maria-dewan' | 'samina-tasneem-chowdhury' | 'mysha-k-diya';
-  /** Passage of the story file, verbatim (in quotation marks when it is the learner's own quotation). */
-  excerpt: string;
+  /**
+   * Passage of the story file, verbatim (in quotation marks when it is the learner's own quotation). WP60 (cycle-32 review, Gemini GM8 and GM9): omitted where the card's one-line outcome already says what the passage says (Governments' and Foundations'
+   * cards, whose narrative sentence repeated the outcome line above it); the card then shows the outcome line, the name and the program.
+   */
+  excerpt?: string;
   /** What the learner took, in one line (the story's own outcome line is used when omitted). */
   outcome?: string;
   program: string;
@@ -32,9 +35,9 @@ const { story, excerpt, outcome, program, tone = 'white', id = 'learner-voice', 
 const entry = await getEntry('stories', story);
 if (!entry) throw new Error(`LearnerVoice: story ${story} is missing`);
 const source = `${entry.data.quote ?? ''}\n${entry.body ?? ''}`;
-if (!source.includes(excerpt)) throw new Error(`LearnerVoice: the excerpt is not a verbatim part of ${story}`);
+if (excerpt !== undefined && !source.includes(excerpt)) throw new Error(`LearnerVoice: the excerpt is not a verbatim part of ${story}`);
 // A passage of the learner's own quotation is shown in quotation marks; a passage of the program's account of the learner is not.
-const isQuote = Boolean(entry.data.quote?.includes(excerpt));
+const isQuote = Boolean(excerpt !== undefined && entry.data.quote?.includes(excerpt));
 const stories = linkAttrs('/impact/stories/');
 ---
 
@@ -43,7 +46,7 @@ const stories = linkAttrs('/impact/stories/');
     name={entry.data.name}
     program={program}
     outcome={outcome ?? entry.data.outcome}
-    excerpt={isQuote ? `“${excerpt}”` : excerpt}
+    excerpt={excerpt !== undefined && isQuote ? `“${excerpt}”` : excerpt}
     image={entry.data.photo}
     imageAlt={entry.data.photoAlt ?? `Portrait of ${entry.data.name}`}
     assetId={`story-${story}`}

@@ -40,10 +40,12 @@ interface Props {
   artSeed?: string;
   /**
    * One short line directly above the stat tiles (WSDFM: "Program records and a separate randomized trial of the predecessor program."), saying what kinds of evidence the tiles are; each tile also carries its own evidence tag.
-   * No figure is typed in it. WP42 (cycle-19 review): it replaced the two paragraphs that stated the trial's plain-language reading and the program-record result in prose above the tiles that show them (the `plainLine` option
+   * No figure is typed in it (WP60: a count it names is read from the register and its fact is listed in `heroNoteFacts`). WP42 (cycle-19 review): it replaced the two paragraphs that stated the trial's plain-language reading and the program-record result in prose above the tiles that show them (the `plainLine` option
    * that printed the [PLAIN-LINE] here is gone; /impact/independent-evaluation/ keeps the sentence, and scripts/check-facts.mjs lists this case study as exempt from it).
    */
   heroNote?: string;
+  /** WP60 (cycle-32 review, Claude S4): the register facts the note states, where it names a count (WSDFM: RC-07's 833); they go on the note's data-fact. */
+  heroNoteFacts?: string[];
   /** The closing band's second link: the randomized trial's results (WSDFM only) or, by default, how to read the evidence. */
   trialLink?: boolean;
   /** Eyebrow of the learner-story section: "In a Learner’s Words" only where a direct quote follows the story; "Learner Experience" otherwise. */
@@ -56,7 +58,7 @@ interface Props {
    */
   heroPhoto?: { src: ImageMetadata; alt: string; assetId: string; width: number; height: number };
 }
-const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, heroNote, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
+const { slug, pageTitle, description, stats, context, challenges, solution, artSeed, heroNote, heroNoteFacts, trialLink = false, heroPhoto, storyEyebrow = 'Learner Experience', storyTitle = 'A Learner Story' } = Astro.props;
 // A case without its own hero photograph takes the one registered for its card (src/data/photos.ts).
 const fallback = caseCardPhoto(slug);
 const hero = heroPhoto ?? (fallback ? { src: fallback.src, alt: fallback.alt, assetId: fallback.assetId, width: fallback.src.width, height: fallback.src.height } : undefined);
@@ -78,7 +80,7 @@ const d = discoveryCta();
   <Hero variant="inner" eyebrow={`Case Study · ${c.program}`} title={c.heading} lead={c.summary} artSeed={artSeed ?? `case-${slug}`} mediaShape="landscape">
     {showPhoto && hero && <Img slot="media" src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} widths={[480, hero.width]} sizes="(min-width:1024px) 520px, 90vw" loading="eager" fetchpriority="high" assetId={hero.assetId} />}
     <Fragment slot="stats">
-      {heroNote && <p class="cs__note" data-hero-note>{heroNote}</p>}
+      {heroNote && <p class="cs__note" data-hero-note data-fact={heroNoteFacts?.join(' ')}>{heroNote}</p>}
       {
         stats.map((s) => (
           <div class="cs__stat">

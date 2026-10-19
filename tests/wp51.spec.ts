@@ -166,7 +166,7 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery co
     await open(page, '');
     const text = await everything(page);
     expect(count(text, '711 of 1,000')).toBe(1);
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).');
   });
 
   test('Development Partners, Foundations, Local Partners and YouthWIDE list their own cards: the WSDFM card keeps the figure and its caption there', async ({ page }) => {
@@ -175,7 +175,7 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery co
       const card = page.locator('#cases article', { hasText: WSDFM_TITLE });
       await expect(card, route).toHaveCount(1);
       await expect(card.locator('.case__value'), route).toHaveText('711 of 1,000');
-      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial data): 71% in work');
+      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
       await expect(card.locator('.case__context'), route).toHaveCount(0);
     }
   });
@@ -309,7 +309,7 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
 });
 
 test.describe('Home: the Outcome Tracking row, the positioning statement and the Compare heading (items 10, 11 and 12)', () => {
-  const CLOSING = 'CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
+  const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
 
   test('the Outcome Tracking row carries the scope qualifier and puts the reports first', async ({ page }) => {
     await open(page, '');
@@ -326,11 +326,12 @@ test.describe('Home: the Outcome Tracking row, the positioning statement and the
     expect(sitePages().filter((p) => visible(p.html).includes('How the Approaches Compare')).map((p) => p.route)).toEqual([]);
   });
 
-  test('the positioning statement’s reports are scoped, and the gate declares the same closing sentence independently', async ({ page }) => {
-    expect(POSITIONING.home.text.endsWith(` ${CLOSING}`)).toBe(true);
+  // WP60 (cycle-32 review, Gemini GM7): the statement is one sentence (CLOSING above), declared whole for Home in the gate (POSITION_WHOLE_STATEMENT['/']); it was an audience sentence followed by that closing sentence
+  test('the positioning statement’s reports are scoped, and the gate declares the same sentence independently', async ({ page }) => {
+    expect(POSITIONING.home.text).toBe(CLOSING);
     expect(readFileSync(resolve('scripts/check-facts.mjs'), 'utf8')).toContain(`'/': '${CLOSING}'`);
     await open(page, '');
-    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe(`For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. ${CLOSING}`);
+    expect(compact(await page.locator('#mechanism .pos__text').textContent())).toBe(CLOSING);
   });
 });
 
@@ -411,7 +412,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
     expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { CONTRACT_TOTAL_NOTE, HEADLINE, VALUE_PROPOSITION } from './copy';
+import { CONTRACT_FIGURES, CONTRACT_TOTAL_NOTE, HEADLINE, NU_NOT_TRAINED, TRIAL_WOMEN, VALUE_PROPOSITION } from './copy';
 import { cta } from '../lib/mailto';
 
 /**
@@ -155,7 +155,8 @@ if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six go
  * The slide keeps the wording and adds the shortest qualifier from that note, in brackets after it: "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)." It rests on SC-04 ("1.5M+ National University learners in the onboarding pipeline"), which the build checks and the lead's data-fact lists.
  */
 if (!fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')) throw new Error('heroSlides: SC-04 no longer opens "1.5M+ National University learners in the onboarding pipeline"; update the National University qualifier of the government slide');
-const NU_LEARNERS_NOTE = '(National University’s learners, not learners trained by CodersTrust)';
+// WP60 (cycle-32 reviews, Grok R4 and GPT-6.1 Sol G1): the clause that keeps the 1.5M+ apart from CodersTrust's own learners is NU_NOT_TRAINED (src/data/copy.ts), which the JobReady Platform page's "In the Pipeline" tile reads too. The slide says it in a sentence of its own
+// ("They are National University’s own learners, not learners trained by CodersTrust."), no longer in brackets after "onboarding 1.5M+ learners".
 /**
  * WP45 (cycle-21 review): the contracts' 31,200+ is contract scope and includes Her Power's national program, so the slide says it in GV-12's own tile note (the glance note the Impact and Governments pages print) instead of the shorter
  * "(contract scope, not people trained)", which left the 25,125 women Her Power trained unsaid. Read from the register, never retyped.
@@ -201,7 +202,11 @@ const wsdfmBase = fact('PR-01').stat?.value;
 if (!/^WSDFM: \d+% in work$/.test(wsdfmLabel) || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
 const PR_TEXT = {
   wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
-  wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records, not trial data).`,
+  // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): "(711 of 1,000; program records; trial studied 833)." says how the 711 of 1,000 relates to the trial, whose count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts). It replaces "...; program records, not trial data)".
+  // The review's form, "...; program records; the trial studied 833).", is 609 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48); "the" is the word left out (577 px).
+  // Measured at 1280 px, one row: "program records; trial studied 833" 577 px; "program records; the trial had 833" 577 px; "program records; trial: 833 women" 580 px; "program records, not the trial’s 833" 586 px. Wrapped: "program records; the trial studied 833" 609 px; "program records; trial of 833 women" 597 px;
+  // "program records; trial studied 833 women" 643 px; "program records, not the 833-woman trial" 642 px. At 390 px every form takes two rows, as the old one did.
+  wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records; trial studied ${TRIAL_WOMEN}).`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
@@ -286,7 +291,11 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP57 (cycle-29 review, Grok R2, with Gemini GM1): the second sentence is CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), so the lead rests on GV-12 and GV-01.
     // WP58 (cycle-30 review, Gemini GM1): the note's parenthesis says who trained whom, "(25,125 women trained; CodersTrust trained 2,500 directly)", so the lead rests on GV-12, GV-01 and GV-11 (CONTRACT_TOTAL_NOTE.facts).
     // WP59 (cycle-31 review, GLM L1): "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)." (NU_LEARNERS_NOTE); the lead also rests on SC-04, which says the 1.5M+ are National University's learners in the onboarding pipeline.
-    lead: `${governmentScope[1]} for ${governmentScope[2]}. ${CONTRACT_TOTAL_NOTE.text} CodersTrust is also the ${governmentScope[3]} ${NU_LEARNERS_NOTE}.`,
+    // WP60 (cycle-32 review, GPT-6.1 Sol G1; raised by three models): the body is four plain sentences with the same facts (it was three, with a semicolon, a nested parenthesis and a bracketed qualifier): "Six government contracts with training and curriculum work scoped for 30,000+ people, not a
+    // count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust."
+    // The owner-confirmed words "onboarding 1.5M+ learners" (GV-12) and "work scoped for" (WP47) are unchanged; the two Her Power counts are read as CONTRACT_TOTAL_NOTE reads them (CONTRACT_FIGURES, GV-01 and GV-11 with GV-13), so the lead still rests on GV-12, GV-01, GV-11 and SC-04.
+    // The Governments tile, Investors and the JobReady Platform page keep CONTRACT_TOTAL_NOTE as it was. tests/hero-slider.spec.ts holds the height budget.
+    lead: `${governmentScope[1]} for ${governmentScope[2]}, not a count of completers. This includes Her Power’s national program: ${CONTRACT_FIGURES.national} women trained nationally, ${CONTRACT_FIGURES.direct} directly by CodersTrust. CodersTrust is also the ${governmentScope[3]}. They are National University’s own learners, ${NU_NOT_TRAINED}.`,
     leadFacts: [...CONTRACT_TOTAL_NOTE.facts, 'SC-04'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
@@ -330,7 +339,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     lead: 'Four delivered programs, with results from each program’s records.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02'] },
-      { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
+      { text: PR_TEXT.wsdfm, factIds: ['PR-01', 'RC-07'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
       { text: PR_TEXT.herPower, factIds: ['PR-05'] },
     ],

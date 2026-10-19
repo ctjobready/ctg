@@ -140,7 +140,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
     const first = page.locator('#program-glance .pg__row').first();
     await expect(first).toContainText('Designed for Three Regions');
     expect(titleCase('Designed for Three Regions')).toBe('Designed for Three Regions');
-    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
+    expect(compact(await first.textContent())).toContain('South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.');
     expect(await mainText(page)).not.toContain('Where It Runs');
   });
 

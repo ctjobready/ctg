@@ -65,16 +65,17 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
-  test('slide 2 body is the contract scope with its clause and Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly), then the National University sentence; the 2,500 only in the note; the lead rests on GV-12 and GV-01; the links stay', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the body is four plain sentences (the contract scope with its clause; "This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust."; the National University sentence; "They are National University’s own learners, ...")
+  test('slide 2 body is the contract scope with its clause, Her Power’s national program (25,125 women trained nationally, 2,500 directly by CodersTrust), then the National University sentences; the 2,500 once; the lead rests on GV-12, GV-01, GV-11 and SC-04; the links stay', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(compact(await s.textContent())).toContain('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)');
+    expect(compact(await s.textContent())).toContain('This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
     await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
@@ -87,7 +88,9 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the note's first sentence and points to its contracts table (Her Power's figures are in the table); Impact still prints the whole note
   test('the slide reads its clause from the register note, and the Impact tile prints the whole new note while the Governments tile keeps its first sentence', async ({ page }) => {
     expect(fact('GV-12').stat?.glance?.note).toBe(GV12_NOTE);
-    expect(SLIDE2_LEAD).toContain(GV12_NOTE.split('. ')[0].replace('The figure is ', ''));
+    // WP60 (cycle-32 review, GPT-6.1 Sol G1): the register's clause is still "contract scope, not a count of completers"; the slide says it in plain words, "... work scoped for 30,000+ people, not a count of completers." (tests/wp60.spec.ts)
+    expect(GV12_NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
+    expect(SLIDE2_LEAD).toContain('work scoped for 30,000+ people, not a count of completers.');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
     await open(page, 'partner-with-us/governments/');
@@ -96,9 +99,10 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
 
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording
   // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
-  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on Home slide 2, the Governments tile and the Investors and JobReady Platform tiles only', () => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home slide 2 says the same facts in plainer sentences and no longer prints the note, so it is not in the list
+  test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on the Governments tile and the Investors and JobReady Platform tiles only', () => {
     const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
-    expect(hits.map((p) => p.route).sort()).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(hits.map((p) => p.route).sort()).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -357,7 +361,7 @@ test.describe('Development Partners, Foundations and Governments: sector general
     const dp = await mainText(page);
     // the pain headings render in Title Case (the sentence-case source strings are converted when the page prints them). WP49 (cycle-24 review): the first card is headed "Training Must Connect to Paid Work" (it was "Skills Programs Miss Their Employment Targets"; tests/wp49.spec.ts)
     expect(dp).toContain('Training Must Connect to Paid Work');
-    expect(dp).toContain('Enrollment is easy to count. Paid work is not.');
+    expect(dp).toContain('Connect training to a first job, freelance client or business.');
     expect(dp).not.toContain('Enrollment targets are often met, while employment results lag behind.');
     await open(page, 'partner-with-us/foundations/');
     const foundations = await mainText(page);
@@ -404,7 +408,7 @@ test.describe('The Governments blurb and the 2030 aim (items 17 and 18)', () => 
     expect(compact(await page.locator('#mega-programs .mega__feature-text').textContent())).toBe(MENU_LINE);
     await expect(page.locator('#results .hs__program')).toHaveCount(0);
     await open(page, 'programs/youthwide/');
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.');
     expect(sitePages().filter((p) => /2 million youth/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });

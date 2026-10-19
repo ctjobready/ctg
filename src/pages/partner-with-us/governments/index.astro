@@ -41,6 +41,10 @@
  * WP52 (cycle-27 review, Gemini P1): the "Choose Where to Start" band's eyebrow is "Options" (it was the shared default, "Start", which echoed the heading's last word); Development Partners and Universities, which paired the same eyebrow with the same heading, changed with it.
  * WP54 (cycle-28 reviews, GPT-6.1 Sol G2 and Claude S20): the third pain is "Trainer and curriculum capacity takes time to build" (it said capacity "is thin", which presumed a deficiency; the line under it is unchanged); the NHRDF contract's name says
  * "implemented by" in lower case (it was "Implemented by", a capital in the middle of a parenthesis; see ContractTable).
+ * WP60 (cycle-32 review, Claude S6): the delivery model's third card is "Trainers and Curriculum" (it was "Capacity Designed to Stay", one letter-run from the benefit card "Capacity Designed to Stay in Your System" in "What Your Agency Gets"); its text is unchanged,
+ * and the capacity claim stays in the benefit card.
+ * WP60 (cycle-32 review, Gemini GM5 and GM8): the benefit card "Capacity Designed to Stay in Your System" opens "Where included in your program scope:" (the list that follows read as unconditional; the rest of the list is unchanged); the learner card shows one line,
+ * "Won logo-design work on Freelancer.com, then gained more clients." (its narrative sentence repeated it, and is not a quotation, so it is gone; LearnerVoice takes no excerpt here).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -122,7 +126,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     ]}
     more={[{ id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
   />
-  <LearnerVoice story="maria-dewan" excerpt="She showed her skills by winning a company logo design on Freelancer.com, and thus began her journey of earning on her own." program="Her Power" tone="white" />
+  <LearnerVoice story="maria-dewan" outcome="Won logo-design work on Freelancer.com, then gained more clients." program="Her Power" tone="white" />
 
   <!-- C2 · Problem. WP31: the heading speaks to any ministry. WP34 (cycle-11 review): so does the tile, the global PX-01 figure as on Home; the Bangladesh 13.5% (PX-03) stays on the Bangladesh pages. -->
   <ProblemBand
@@ -160,7 +164,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     blocks={[
       { label: 'Who We Reach', title: 'Vulnerable and Unemployed Youth', text: 'Unemployed graduates and other priority groups, with women a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Government Digital Labs', text: 'Blended learning in government labs you already run; lab access and seats are confirmed per program.', icon: 'landmark' },
-      { label: 'What We Deliver', title: 'Capacity Designed to Stay', text: 'Training of Trainers, curriculum and manuals, then preparation for industry certification.', icon: 'award' },
+      { label: 'What We Deliver', title: 'Trainers and Curriculum', text: 'Training of Trainers, curriculum and manuals, then preparation for industry certification.', icon: 'award' },
       { label: 'Where They Work', title: 'Placement and Monthly Reports', text: `Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at ${TRACER_MONTHS} after each course, as agreed in the program scope.`, icon: 'globe' },
     ]}
     link={{ label: 'See How YouthWIDE Works', href: LINKS.youthwide }}
@@ -189,7 +193,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     cards={[
       { icon: 'award', title: 'Certification Tracks and Placement Support', text: 'Certification tracks chosen from employer demand, then mentoring and placement support that point completers toward paid work.', facts: ['PD-10', 'PD-01'] },
       { icon: 'chart-bar', title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
-      { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
+      { icon: 'landmark', title: 'Capacity Designed to Stay in Your System', text: 'Where included in your program scope: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.', facts: ['GV-11', 'PD-06', 'PD-07'] },
     ]}
   />
 

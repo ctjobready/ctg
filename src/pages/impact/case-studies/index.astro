@@ -25,10 +25,12 @@ const d = discoveryCta();
 ---
 
 <BaseLayout title={title('Case Studies: Kosovo to Bangladesh')} description={description} path={path} breadcrumbs={[{ label: 'Impact', href: '/impact/' }, { label: 'Case Studies' }]} jsonLd={jsonLd}>
-  <Hero variant="inner" eyebrow="Impact" title="Learners Reaching Paid Work, from Kosovo to Bangladesh" lead="Five programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
+  <!-- WP60 (cycle-32 review, Kimi K1 and K2): the H1 is "Five Programs, from Kosovo to Bangladesh" (it said "Learners Reaching Paid Work, ...", but the Albania card shows an enrollment figure, not a work result) and the hero photograph is the Kosovo training room (HERO["case-studies-hub"] in
+       src/data/photos.ts; it was the Bhutan inauguration, and no Bhutan case study exists). The grid's H2 is "Results First, Program by Program" (it said "Five Programs, Results First", which repeated the H1's and the lead's first words). The Albania card's figure is labelled "Reported Enrollment" (CaseGrid). -->
+  <Hero variant="inner" eyebrow="Impact" title="Five Programs, from Kosovo to Bangladesh" lead="Five programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
-    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Five Programs, Results First" />
+    <SectionHeader id="cases-h" eyebrow="Case Studies" title="Results First, Program by Program" />
     <CaseGrid />
     <p class="ch__link"><a class="link" href={linkAttrs('/impact/#evidence-ladder').href}>See Where These Results Sit on the Evidence Ladder<Icon name="arrow-right" size={16} /></a></p>
   </Section>

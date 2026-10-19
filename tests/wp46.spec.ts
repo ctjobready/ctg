@@ -234,10 +234,10 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).');
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 
@@ -257,7 +257,7 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For cohort grants.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants.');
     const stepsOf = async () => (await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''));
     const foundations = await stepsOf();
     await open(page, 'partner-with-us/development-partners/');
@@ -372,8 +372,8 @@ test.describe('Outcomes 2026: the download link names the data, not the file (it
 });
 
 test.describe('The WSDFM card says its 71% is program records, not trial data (item 23)', () => {
-  test('every page that shows the WSDFM caption reads "WSDFM program records (not trial data): 71% in work"', async () => {
-    const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial data): 71% in work'));
+  test('every page that shows the WSDFM caption reads "WSDFM program records (not trial data; the trial studied 833 women): 71% in work"', async () => {
+    const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial data; the trial studied 833 women): 71% in work'));
     // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure and its caption (the fourth carousel slide states the figure), so Home is not in the list
     expect(withCaption.map((p) => p.route).filter((r) => r !== '/styleguide/').sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/local-partners/', '/programs/youthwide/']);
     // the old caption is gone everywhere (Impact’s tile has its own label, "WSDFM program records: women in work (71%)", and its own note, "Program records, separate from the randomized trial of the predecessor program.": different lines, unchanged)
@@ -382,11 +382,11 @@ test.describe('The WSDFM card says its 71% is program records, not trial data (i
 });
 
 test.describe('Universities and Employers: no card restates the 72% tile (item 24)', () => {
-  test('Employers: the first card says only "AI skills are the hardest to find."; Universities: two pains remain, side by side, and the 72% tile and its footnote stay', async ({ page }) => {
+  test('Employers: the first card says only "AI skills are the hardest to find (ManpowerGroup, 2026)."; Universities: two pains remain, side by side, and the 72% tile and its footnote stay', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
     const first = page.locator('#problem .gp__pains li').first();
     expect(compact(await first.locator('.gp__q').textContent())).toBe('You Struggle to Find the Digital Talent You Need');
-    expect(compact(await first.locator('.gp__a').textContent())).toBe('AI skills are the hardest to find.');
+    expect(compact(await first.locator('.gp__a').textContent())).toBe('AI skills are the hardest to find (ManpowerGroup, 2026).');
     await expect(page.locator('#problem [data-fact="PX-05"]')).toContainText('72%');
     await open(page, 'partner-with-us/universities/');
     expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);

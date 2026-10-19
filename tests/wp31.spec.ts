@@ -53,8 +53,8 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
-    // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial data): 71% in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).');
+    // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial data; the trial studied 833 women): 71% in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
     expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
   });
 
@@ -64,8 +64,8 @@ test.describe('figures say what they measure', () => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
-      if (route === '') expect(cards, 'home').not.toContain('WSDFM program records (not trial data): 71% in work');
-      else expect(cards, route).toContain('WSDFM program records (not trial data): 71% in work');
+      if (route === '') expect(cards, 'home').not.toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
+      else expect(cards, route).toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
       if (cards.includes('Her Power')) {
         if (route === '') {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
@@ -83,14 +83,14 @@ test.describe('figures say what they measure', () => {
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 30,000+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent());
     // WP46 (cycle-22 review): the sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment
-    expect(lead).toContain('CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).');
+    expect(lead).toContain('CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.');
     expect(await mainText(page)).not.toContain('official skills partner');
   });
 
@@ -275,7 +275,7 @@ test.describe('Foundations keeps the two grant routes apart', () => {
     expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toBe(
       'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.',
     );
-    expect(compact(await page.locator('#next-steps .lead').textContent())).toBe('For cohort grants.');
+    expect(compact(await page.locator('#next-steps .lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants.');
     expect(compact(await page.locator('#next-steps').textContent())).not.toContain('introductory call');
   });
 });

@@ -27,6 +27,9 @@
 // WP53 (owner follow-up, 2026-10-16, consistent with that change): the Bangladesh band is headed "Bangladesh: Delivery Base and 2030 Aim" ("Reference" was the same jargon), and the options band's eyebrow is "Options" (it was "Start", directly above "Three Ways to Start, ...").
 // WP57 (cycle-29 review, GPT-6.1 Sol G2): the three-card C8 band ("Built Around What Funders and Agencies Ask", #features) is gone: it restated At a Glance and "One Delivery Model", so its one new detail (what evaluators check earnings against) is in the glance's
 // Reporting row. The C2 pains stay (the challenge band); scripts/check-facts.mjs allows this page to carry no C8 band (PAIN_C8_OPTIONAL), and nothing links to the removed anchor. The photograph band takes the white ground the C8 band had, so white and airy still alternate after the case-study carousel.
+// WP60 (cycle-32 reviews, Grok R5 and Claude S3): the "Will This Work in Our Country?" answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh." (it said "has worked since 2014 in 16 ...", which reads as all 16 since 2014);
+// the 2 million 2030 aim carries the dependency clause wherever it is stated (AIM_DEPENDENCY, src/data/copy.ts, the clause the Programs hub card had): the "Designed for Three Regions" row says it, and the 2030 aim tile's note reads it in place of "that depends on".
+// WP60 (cycle-32 review, GPT-6.1 Sol G2): the "Can You Deliver at National Scale?" answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators." (it said "We scale in phases, ...", which reads as an established configuration); the 100,000+ sentence after it is unchanged.
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -52,7 +55,7 @@ import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList } from '../../data/copy';
+import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -72,10 +75,10 @@ const hours = statValue('PD-01');
 // Five decision questions, one to three sentences each (cost is answered in the options band). Longer answers live on the evidence pages and in the discovery session.
 const faqSources: FaqSource[] = [
   { q: 'Is YouthWIDE Right for Our Organization?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing labs and colleges. YouthWIDE is not the right fit if you need a ${nationalSize} rollout delivered by one provider in a single phase; we plan national delivery phase by phase.`, evidence: ['PD-05'] },
-  { q: 'Will This Work in Our Country?', html: `That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh, and the Kosovo pilot adds program results from outside it. CodersTrust has worked since 2014 in ${statValue('SC-03')} countries and territories.`, evidence: ['SC-03', 'IN-02', 'PD-10', 'PR-02'] },
+  { q: 'Will This Work in Our Country?', html: `That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh, and the Kosovo pilot adds program results from outside it. CodersTrust has worked in ${statValue('SC-03')} countries and territories; most delivery has been in Bangladesh.`, evidence: ['SC-03', 'IN-02', 'PD-10', 'PR-02'] },
   {
     q: 'Can You Deliver at National Scale?',
-    html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="PD-06 PD-05">We scale in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
+    html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="PD-06 PD-05">Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
     evidence: ['GV-01', 'GV-11'],
   },
   { q: 'How Do You Prove Outcomes?', html: 'As agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports for every cohort, with documentary evidence of earnings where available. Independent evaluation is welcome.', evidence: ['PD-09', 'PD-08', 'RC-01'] },
@@ -119,7 +122,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
     rows={[
       // WP45 (cycle-21 review): IN-01 is an initiative that AIMS to train 2 million vulnerable youth by 2030, not an existing national program, so the row says "aims" (and the figure is the band's tile below, not retyped here).
       // WP48 (cycle-23 review): the row says "2 million vulnerable youth", IN-01's own wording, as the Programs menu, Home and the Programs hub do.
-      { label: 'Designed for Three Regions', text: 'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.', facts: ['IN-02', 'IN-01'] },
+      { label: 'Designed for Three Regions', text: `South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, ${AIM_DEPENDENCY}.`, facts: ['IN-02', 'IN-01'] },
       { label: 'Who It Is For', text: 'Governments, development partners and funders who want to report on educated, unemployed young people moving into paid digital work.' },
       { label: 'Delivery', text: 'Blended training in existing labs and colleges, with certified local facilitators; a central team coordinating local labs for larger programs.', facts: ['PD-06'] },
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
@@ -174,7 +177,7 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       <div class="mech-target" data-reveal>
         <StatusTag status="Target" />
         <FactStat id="IN-01" />
-        <p class="mech-target__note">A national ambition for 2030 that depends on government and donor commitments; not a delivered figure.</p>
+        <p class="mech-target__note">A national ambition for 2030, {AIM_DEPENDENCY}; not a delivered figure.</p>
       </div>
       <div class="mech-stat"><FactStat id="GV-09" /></div>
       <div class="mech-stat"><StatusTag status="Delivered" /><FactStat id="GV-13" /></div>

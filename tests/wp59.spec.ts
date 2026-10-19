@@ -224,7 +224,8 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/our-model/jobready-platform/']));
     for (const p of TOTAL_PAGES) {
       const text = mainOf(p.html);
-      expect(text, p.route).toContain('contract scope, not a count of completers');
+      // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the clause in plain words, "... work scoped for 30,000+ people, not a count of completers."; every other page keeps the register's "contract scope, not a count of completers"
+      expect(text, p.route).toContain(p.route === '/' ? 'work scoped for 30,000+ people, not a count of completers' : 'contract scope, not a count of completers');
       expect(text, p.route).toContain('25,125 women');
       expect(text, p.route).toContain('2,500');
     }
@@ -401,9 +402,10 @@ test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares'
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L1: Home slide 2 separates the National University’s learners from learners trained by CodersTrust', () => {
-  const TAIL = 'official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).';
+  const TAIL = 'official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.';
 
-  test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier follows it in brackets', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the qualifier is a sentence of its own after "onboarding 1.5M+ learners." (it was in brackets): "They are National University’s own learners, not learners trained by CodersTrust."
+  test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier follows it in a sentence of its own', async ({ page }) => {
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     expect(fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')).toBe(true);
     await open(page, HOME);

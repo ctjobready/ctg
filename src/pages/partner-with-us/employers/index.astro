@@ -50,7 +50,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION } from '../../../data/copy';
+import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -121,7 +121,8 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
       slot="lead"
       pains={[
         // WP46 (cycle-22 review): the 72% tile directly below states that employers worldwide report difficulty finding talent (PX-05), so the card adds only what the tile does not headline: AI skills are the hardest to find.
-        { q: 'You struggle to find the digital talent you need', text: 'AI skills are the hardest to find.' },
+        // WP60 (cycle-32 review, GPT-6.1 Sol G3; flagged in five cycles): the sentence names its source inside it, "AI skills are the hardest to find (ManpowerGroup, 2026).", from PX-05's source note (SOURCE_NOTE in src/data/copy.ts, withSourceNote), as the 72% tile below does.
+        { q: 'You struggle to find the digital talent you need', text: `${withSourceNote('PX-05', 'AI skills are the hardest to find')}.` },
         { q: 'Hiring alone does not close the gap', text: 'Hiring adds people, but your current teams still need the skills their own tasks now require.' },
         { q: 'Your teams need upskilling for AI workflows', text: 'The upskilling has to cover tasks from their own roles.' },
       ]}

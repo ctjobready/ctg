@@ -112,7 +112,9 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
   test('under "An Independent Randomized Trial" there is the one line, read from RC-02 and RC-01, and nothing else of the trial: no prose paragraph, no +10.3 pp tile, no chart', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
-    await expect(band.locator('h2')).toHaveText('Trial and Survey Evidence');
+    // WP60 (cycle-32 review, Gemini GM1): the band is "Evidence from Youth-Employment Programs" and opens "These results are from youth-employment programs, not evidence for every program listed above." (it was "Trial and Survey Evidence")
+    await expect(band.locator('h2')).toHaveText('Evidence from Youth-Employment Programs');
+    await expect(band.locator('.eb__head .lead').first()).toHaveText('These results are from youth-employment programs, not evidence for every program listed above.');
     expect(await texts(page, '#proof-band h3')).toEqual(['An Independent Randomized Trial', 'From the October 2026 Survey']);
     await expect(band.locator('.eb__headline')).toHaveCount(1);
     await expect(band.locator('.eb__headline')).toHaveText(LINE);
@@ -290,11 +292,12 @@ test.describe('Governments: the contracts table has short scope phrases and ever
     expect(await mainText(page)).not.toContain('372 of 800 women trained directly');
   });
 
-  test('the manuals figure is stated once, in the table; the "Capacity Designed to Stay" card of the delivery band no longer repeats it', async ({ page }) => {
+  // WP60 (cycle-32 review, Claude S6): the delivery band's card is "Trainers and Curriculum" (it was "Capacity Designed to Stay"); its text is unchanged
+  test('the manuals figure is stated once, in the table; the "Trainers and Curriculum" card of the delivery band no longer repeats it', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const text = await mainText(page);
     expect(count(text, '54,609')).toBe(1);
-    const card = compact(await page.locator('#mechanism li', { hasText: 'Capacity Designed to Stay' }).first().textContent());
+    const card = compact(await page.locator('#mechanism li', { hasText: 'Trainers and Curriculum' }).first().textContent());
     expect(card).toContain('Training of Trainers, curriculum and manuals, then preparation for industry certification.');
     expect(card).not.toMatch(/54,609|for Her Power/);
   });

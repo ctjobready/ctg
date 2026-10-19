@@ -75,7 +75,8 @@ const PAGES: PageSpec[] = [
       { title: 'Spending Measured Against Outcomes', text: 'A pilot scorecard with cost per completer and per verified outcome, and monthly reports. Your budget is assessed against the agreed scorecard.', facts: ['PD-11', 'PD-08'] },
       {
         title: 'Capacity Designed to Stay in Your System',
-        text: 'Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
+        // WP60 (cycle-32 review, Gemini GM5): the list opens "Where included in your program scope:" (it read as unconditional)
+        text: 'Where included in your program scope: Training of Trainers, curriculum and manuals; certified local facilitators; and blended learning in existing labs that works with limited connectivity, so rural labs can take part.',
         facts: ['GV-11', 'PD-06', 'PD-07'],
       },
     ],
@@ -124,7 +125,7 @@ const PAGES: PageSpec[] = [
       {
         title: 'Certified Facilitators and a Local Curriculum',
         // WP52 (cycle-27 review): what stays after funding ends is scoped ("Where included in the program scope, ..."); it read "Local capacity stays after a funded cohort ends, ..."
-        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. Where included in the program scope, trained facilitators and localized curricula remain after funding ends, and you do not have to build the curriculum or certification route yourself.',
+        text: 'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.',
         facts: ['PD-06', 'PD-02'],
         pain: 'P1',
       },

@@ -218,6 +218,9 @@ export function photo(key: string): Photo {
  * success looks like" band (assertion below); the case studies take theirs from CASE_CARD.
  * WP55 (owner decision 2026-10-17): the old "Albania" photograph is the Kosovo pilot, so it is not a hero any more (Development Partners takes the Somaliland group photograph, the Case Studies hub the Bhutan inauguration);
  * the Home hero keeps the World Bank Kosovo photograph (owner decision 2026-10-18).
+ * WP60 (cycle-32 review, Kimi K1): the Case Studies hub hero is a photograph from one of the five case-study programs, not the Bhutan inauguration (no Bhutan case study exists; the photograph stays on Global Reach, in the Bhutan row): the Kosovo
+ * training room, "A woman learner seated at a computer among other learners in a Women in Online Work training room in Kosovo". Not "kosovo-women-screens" (the hub's own Kosovo card shows it, and Impact's hero is it) and not "kosovo-wow-group" (1600 x 416, so the
+ * 3:2 hero frame keeps only its middle 39% and loses both banners).
  */
 const HERO: Record<string, string> = {
   // Home: a training room in Kosovo (the home hero reads HOME_HERO.photo in src/data/heroSlides.ts, kept equal to this entry).
@@ -246,7 +249,7 @@ const HERO: Record<string, string> = {
   careers: 'general/team-tshirts',
   contact: 'general/office-support-headset',
   'impact-hub': 'general/kosovo-women-screens',
-  'case-studies-hub': 'global/bhutan-batch-inauguration',
+  'case-studies-hub': 'general/kosovo-woman-training',
   'stories-hub': 'general/learner-mosaic',
   'field-hub': 'general/classroom-girls',
 };

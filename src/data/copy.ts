@@ -124,15 +124,49 @@ export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
  * WP58 (cycle-30 review, Gemini GM1): "(25,125 women trained)" beside the contract-scope total read as CodersTrust's own training, so the parenthesis says who trained how many: "(25,125 women trained; CodersTrust trained 2,500 directly)". The 2,500 is the count
  * GV-11's text states ("... 2,500 women trained directly; ..."), read from it, never retyped; GV-13 holds the same figure as its stat value, and the builder throws if the two stop agreeing or the register stops saying "women trained directly".
  */
-function contractTotalNote(): CopyBlock {
+function contractFigures(): { national: string; direct: string } {
   const n = fact('GV-01').stat?.value;
   if (!n || !/^[\d,]+$/.test(n)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer has a plain count as its stat value');
   if (!/contract scope, not a count of completers/.test(fact('GV-12').stat?.glance?.note ?? '')) throw new Error('CONTRACT_TOTAL_NOTE: the GV-12 glance note no longer says "contract scope, not a count of completers"');
   const direct = /(\d[\d,]*) women trained directly/.exec(fact('GV-11').text)?.[1];
   if (!direct || direct !== fact('GV-13').stat?.value) throw new Error('CONTRACT_TOTAL_NOTE: GV-11 no longer says "N women trained directly" with the count that GV-13 holds as its stat value');
+  return { national: n, direct };
+}
+/**
+ * WP60 (cycle-32 review, GPT-6.1 Sol G1): the two Her Power counts the note states, with the same guards, for the sentence Home's government slide builds in plainer words ("... 25,125 women trained nationally, 2,500 directly by CodersTrust.", src/data/heroSlides.ts);
+ * the note below is unchanged and still read by the Governments tile, Investors and the JobReady Platform page.
+ */
+export const CONTRACT_FIGURES = contractFigures();
+function contractTotalNote(): CopyBlock {
+  const { national: n, direct } = CONTRACT_FIGURES;
   return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained; CodersTrust trained ${direct} directly).`, facts: ['GV-12', 'GV-01', 'GV-11'] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
+
+/**
+ * WP60 (cycle-32 review, Grok R4): the clause that keeps National University's 1.5M+ apart from CodersTrust's own learners, in one place. Home's government slide closes "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)."
+ * (heroSlides.ts, WP59), and the JobReady Platform page's "In the Pipeline" tile reads "National University learners in the onboarding pipeline, not learners trained by CodersTrust" (SC-04's own label plus this clause), so the two cannot drift apart.
+ * The Universities and Campus pages say it in their band lead ("... they are not learners trained by CodersTrust.") and Investors by "Separately, and not counted in the delivered reach", so SC-04's own label stays as the register has it.
+ */
+export const NU_NOT_TRAINED = 'not learners trained by CodersTrust';
+
+/**
+ * WP60 (cycle-32 review, Claude S3): the clause that makes the 2 million 2030 aim (IN-01) conditional. It was typed once, in the Programs hub card; IN-01's register text does not carry it, so it is kept here and every page that states the aim reads it from here:
+ * the Programs hub card, YouthWIDE's "Designed for Three Regions" row and its 2030 aim tile, the Impact "Where We Are Heading" tile and the About timeline. It is not a figure and not an outcome; it says the aim depends on commitments that are not CodersTrust's to give.
+ */
+export const AIM_DEPENDENCY = 'depending on government and donor commitments';
+
+/**
+ * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM's program records (PR-01: 711 of 1,000 women in work) and the randomized trial of the predecessor program (RC-07) are two different counts,
+ * and the pages that show them side by side say so. The trial's count is the 833 that RC-07's text states ("Trial design: 833 women at baseline (425 treatment, 408 control) ..."), read from it, never retyped; it is the trial's whole sample, the 408 women who
+ * were not offered a place included, so no page says that the 833 are "of" the 1,000 trainees. The builder throws if RC-07 stops saying "N women at baseline".
+ */
+function trialWomen(): string {
+  const n = /(\d[\d,]*) women at baseline/.exec(fact('RC-07').text)?.[1];
+  if (!n) throw new Error('TRIAL_WOMEN: RC-07 no longer says "N women at baseline"');
+  return n;
+}
+export const TRIAL_WOMEN: string = trialWomen();
 
 /**
  * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say
@@ -264,13 +298,16 @@ const WORK_POSITIONING =
  * Home's closing sentence (WP19, item 13: two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins it for Home only).
  * WP50 (cycle-25 review): the first of the two ("Many programs cover one step: training, self-paced courses or freelance matching.") is gone; the sentence that names what CodersTrust connects stays.
  * WP51 (cycle-26 review): the monthly reports are scoped as every other reporting statement on the site is ("..., as agreed in the program scope"); scripts/check-facts.mjs declares the sentence independently (POSITION_EMPLOYER_CLOSING['/']).
+ * WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is ONE sentence that keeps the audience, "CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed
+ * in the program scope." (it was two sentences: "For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model." and "CodersTrust connects training, mentoring and placement support in one program, and partners
+ * receive monthly reports on progress toward paid work, as agreed in the program scope."). scripts/check-facts.mjs declares it whole for Home (POSITION_WHOLE_STATEMENT['/']), independently of this file, so a change to it has to be made twice on purpose.
  */
 const HOME_POSITIONING =
-  'CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
+  'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
-    text: `For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. ${HOME_POSITIONING}`,
+    text: HOME_POSITIONING,
     facts: ['PD-08'],
   },
   developmentPartners: {

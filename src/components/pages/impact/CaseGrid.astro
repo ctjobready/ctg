@@ -14,6 +14,7 @@ import herPower from '../../../assets/images/pages/impact/her-power-training-lab
 
 /**
  * Grid of the published case-study cards (five since WP55): outcome-first stat from the register, then the program.
+ * WP60 (cycle-32 review, Kimi K2): the figure's label is "Result" on every card but Digital Jobs Albania's, whose figure is the World Bank's enrollment count, so its card says "Reported Enrollment" (CaseStudy.resultTitle).
  * No `grid-cards--2` modifier: five cards read 3 + 2 in the system's default three columns (a two-column grid would leave the fifth alone in its row), and a set of four still reads 2 × 2 by the system's own rule (utilities.css).
  */
 interface Props {
@@ -48,7 +49,7 @@ const cards = CASE_STUDIES.filter((c) => c.slug !== except).map((c) => {
             <dl class="case__fields">
               <div><dt>Partner &amp; Place</dt><dd>{c.place}</dd></div>
               <div class="case__result">
-                <dt>Result</dt>
+                <dt>{c.resultTitle ?? 'Result'}</dt>
                 <dd>
                   <span class="case__tags"><StatusTag status="Delivered" />{c.evidence && <EvidenceTag type={c.evidence} />}</span>
                   <span class="case__value">{c.stat.value}</span>{' '}<span class="case__label">{c.resultLabel}</span>

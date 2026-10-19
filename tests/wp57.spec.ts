@@ -517,11 +517,12 @@ test.describe('R1, Global Reach: "Where We Have Worked: 16 Countries and Territo
 test.describe('R2, the 30,000+ visibly includes Her Power’s national program (GV-12 and GV-01)', () => {
   const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
 
-  test('Home, slide 2: the lead is the contracts sentence, the note and the National University sentence, tied to GV-12 and GV-01', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the same facts in four plain sentences (the Governments tile and the other tiles keep NOTE); the page lists below no longer include Home
+  test('Home, slide 2: the lead is the contracts sentence, the Her Power sentence and the National University sentences, tied to GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
     const lead = page.locator('#results [data-hs-slide]').nth(1).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      `Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).`,
+      `Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.`,
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
@@ -549,7 +550,7 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national program/.test(p.html) && !p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route);
     expect(offenders).toEqual([]);
     const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(pages).toEqual(['/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(pages).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

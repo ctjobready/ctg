@@ -72,10 +72,11 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
     expect(lead.split('. ')).toHaveLength(2);
   });
 
-  test('"One Path from Learning to Earning" states one closing sentence: the "Many programs cover one step" sentence is gone from the statement and from the source', async ({ page }) => {
+  // WP60 (cycle-32 review, Gemini GM7): the statement is ONE sentence that keeps the audience (it was the audience sentence, "For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.", and a closing sentence); tests/wp60.spec.ts
+  test('"One Path from Learning to Earning" states one sentence: the "Many programs cover one step" sentence is gone from the statement and from the source', async ({ page }) => {
     const expected =
       // WP51 (cycle-26 review): the reports are scoped like every other reporting statement on the site ("..., as agreed in the program scope"; tests/wp51.spec.ts)
-      'For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
+      'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
     expect(POSITIONING.home.text).toBe(expected);
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
     await open(page, '');
@@ -98,17 +99,18 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
 test.describe('Home: the program-results slide lists four programs (item 10)', () => {
   const slide = (page: Page) => page.locator('[data-hs-slide]').nth(3);
 
-  test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records, not trial data"; each line names its facts', async ({ page }) => {
+  test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records; trial studied 833" (WP60; it was "program records, not trial data"); each line names its facts', async ({ page }) => {
     await open(page, '');
     await expect(slide(page).locator('h2')).toHaveText('Results by Program');
     await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
-    expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01', 'PR-03 PR-06', 'PR-05']);
+    // WP60 (cycle-32 review, Claude S4): the WSDFM line names the trial's count (RC-07's 833) beside its own fact
+    expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01 RC-07', 'PR-03 PR-06', 'PR-05']);
   });
 
   // WP55 (owner decision 2026-10-18): Impact lists five case studies ("Five Programs, from Kosovo to Bangladesh"). The slide's four are the four with program records, in Impact's order; the fifth, Digital Jobs Albania, has only the World Bank's published figures
@@ -123,7 +125,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await open(page, 'partner-with-us/development-partners/');
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
-    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data): 71% in work');
+    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
     await open(page, 'impact/');
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toBeVisible();
     await expect(page.locator('#cases article.card')).toHaveCount(5);
@@ -158,7 +160,8 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
 });
 
 test.describe('Home: the reporting answer is two sentences, and the full answer stays elsewhere (item 12)', () => {
-  const HOME_ANSWER = 'Every cohort agrees a scorecard before delivery. As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome.';
+  // WP60 (cycle-32 review, GLM L4): "A scorecard is agreed for every cohort before delivery." (it said "Every cohort agrees a scorecard before delivery.", which gave the cohort the action)
+  const HOME_ANSWER = 'A scorecard is agreed for every cohort before delivery. As agreed in the program scope, partners receive monthly reports and follow-up surveys at 3, 6 and 12 months, and independent evaluation is welcome.';
 
   test('Home’s "How Do You Prove Outcomes?" is the Q3-home variant, tied to PD-11, PD-08 and PD-09, and the FAQ JSON-LD says the same words', async ({ page }) => {
     const variant = faqsFor('variants').find((f) => f.id === 'Q3-home')!;

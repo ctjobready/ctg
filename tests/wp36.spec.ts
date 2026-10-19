@@ -79,10 +79,10 @@ test.describe('Home: each figure once', () => {
   test('slide 4 names the base of every result and no line calls the Korail result "in work"', async ({ page }) => {
     await open(page, '');
     const lines = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts)
+    // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
+      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

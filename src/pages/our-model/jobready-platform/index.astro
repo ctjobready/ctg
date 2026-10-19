@@ -10,7 +10,8 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT, NU_NOT_TRAINED } from '../../../data/copy';
+import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
 
@@ -30,10 +31,11 @@ const jsonLd = [
 ];
 const faq = faqItems('foundations', faqIds);
 
-type Status = 'Live' | 'Operating' | 'Pre-Launch' | 'Roadmap';
-const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', Operating: 'success', 'Pre-Launch': 'info', Roadmap: 'sale' };
+// WP60 (cycle-32 review, GLM L7): the course storefront's status is "Live", as the partner portals' and the "Across the Platform" row's are (it said "Operating", the one status in the table that was not Live, Pre-Launch or Roadmap); its note still says "CodersTrust’s course storefront operates at jobready.global."
+type Status = 'Live' | 'Pre-Launch' | 'Roadmap';
+const tone: Record<Status, 'success' | 'info' | 'eyebrow' | 'sale'> = { Live: 'success', 'Pre-Launch': 'info', Roadmap: 'sale' };
 const rows: { job: string; capability: string; status: Status; note: string }[] = [
-  { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Operating', note: 'CodersTrust’s course storefront operates at jobready.global.' },
+  { job: 'Train', capability: 'Course storefront at jobready.global', status: 'Live', note: 'CodersTrust’s course storefront operates at jobready.global.' },
   { job: 'Connect to Work', capability: 'Gig-work (Earn) marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, placement support comes from CodersTrust’s placement team and marketplaces such as Upwork and Fiverr.' },
   { job: 'Supply Talent', capability: 'Employer marketplace', status: 'Pre-Launch', note: 'In pre-launch. Until then, employers are introduced to candidates through CodersTrust’s placement team.' },
   { job: 'Equip Institutions', capability: 'Partner portals', status: 'Live', note: 'Available to partner institutions for digital delivery.' },
@@ -49,6 +51,11 @@ const toc = [
   { id: 'roadmap', label: 'Planned Adaptive Learning' },
   { id: 'faq', label: 'Questions About the Platform' },
 ];
+// WP60 (cycle-32 review, Grok R4): the "In the Pipeline" tile read "1.5M+ National University learners in the onboarding pipeline" with no word that they are not CodersTrust's learners (the Universities and Campus pages say it in their band lead, Investors in "Separately, and not counted in the
+// delivered reach"). The tile's label is SC-04's own with the clause Home's government slide uses (NU_NOT_TRAINED, src/data/copy.ts): "... in the onboarding pipeline, not learners trained by CodersTrust". The register's label is unchanged, so the other pages that show it are too.
+const pipelineBase = fact('SC-04').stat?.label;
+if (!pipelineBase) throw new Error('jobready-platform: SC-04 no longer has a stat label');
+const pipelineLabel = `${pipelineBase}, ${NU_NOT_TRAINED}`;
 const f = fundingCta();
 const d = discoveryCta();
 ---
@@ -96,7 +103,7 @@ const d = discoveryCta();
     <!-- WP25s: three labelled groups, so the National University pipeline figure (not CodersTrust-trained learners) never reads as part of "Delivered". -->
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" /></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" label={pipelineLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p></div>
     </div>
     <p class="jr__links">

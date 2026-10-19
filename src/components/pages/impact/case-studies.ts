@@ -22,6 +22,8 @@ export interface CaseStudy {
   scope: string;
   /** WP55 ("Show both"): a second source's figure for the same program, as one short line under the card's result (Kosovo: the World Bank's 77 trainees with an online contract). */
   note?: { text: string; facts: string[] };
+  /** WP60 (cycle-32 review, Kimi K2): the card's name for its figure when it is not a result ("Reported Enrollment": Albania's figure is the World Bank's enrollment count, PR-07). Cards without one say "Result". */
+  resultTitle?: string;
   related: { label: string; href: string };
 }
 
@@ -56,6 +58,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
     who: 'Women aged 16 to 35',
     scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
+    resultTitle: 'Reported Enrollment',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

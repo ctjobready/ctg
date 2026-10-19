@@ -38,6 +38,8 @@
  * and the Funding Route 2 passage below keeps its #platform-grants id, which no link points to).
  * WP57 (cycle-29 review, Grok R6): the +$27 tile reads "about +$27" ("about" is the register's own word for it: RC-04 opens "About +$27 a month"), as Home and the trial page say it.
  * WP57 (cycle-29 review, Kimi K3, item K2): the meta description reads "... found women offered a place earned an estimated $27 more a month." (RC-04's "+$27 a month", still read from the register by factPart); it said "had an estimated $27 higher monthly income".
+ * WP60 (cycle-32 review, Gemini GM4 and GM9): "What Happens Next" opens "For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants." before the four cohort steps (it covered cohort grants only);
+ * Samina's learner card shows her outcome line alone ("Completed 90+ projects as a freelance graphic designer on Fiverr"): the sentence under it, "She has completed 90+ projects on Fiverr so far.", repeated it (flagged in three cycles) and is gone.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -109,7 +111,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
     more={[{ id: 'RC-04', href: '/impact/independent-evaluation/', qualifier: factPart('RC-04', /^(About) \+/).toLowerCase() }]}
   />
-  <LearnerVoice story="samina-tasneem-chowdhury" excerpt="She has completed 90+ projects on Fiverr so far." program="WSDFM" tone="white" />
+  <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -255,7 +257,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <!-- WP46 (cycle-22 review): the band has the same four steps as Development Partners, scoped "For cohort grants." (a platform grant is scoped in the discovery session, which the C13 agenda above says). WP32 (cycle-9 review) had left the band
        without steps and kept the cohort timing in the C13 urgency line; the steps now carry that timing (about three weeks to agreement, 6–8 weeks from signing to training), so the urgency line that repeated it is gone, as on Development Partners.
        The "introductory call" sentence is gone with the stepless band: the page names one first step, the discovery session. -->
-  <NextStepsBand lead="For cohort grants." timing={false} />
+  <NextStepsBand lead="For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants." timing={false} />
   <Reinforcement logos={false} reminder={false} />
 
   <PageEnhancements />

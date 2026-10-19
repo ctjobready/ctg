@@ -5,7 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
-import { KOSOVO_RECORDS, WB_KOSOVO } from '../../../data/copy';
+import { KOSOVO_RECORDS, TRIAL_WOMEN, WB_KOSOVO } from '../../../data/copy';
 import { caseBySlug } from '../impact/case-studies';
 
 interface CardPhoto {
@@ -33,10 +33,12 @@ const herPowerLabel = `tracked women in work (${herPowerParts[2]}), among the ${
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
  * 71% is program records, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.
  * WP46 (cycle-22 review): "(not trial data)", where it read "separate from the trial", which suggested the records contradict the trial of the same predecessor program.
+ * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): the parenthesis adds how the records relate to the trial, "(not trial data; the trial studied 833 women)": the 711 of 1,000 above it are the program's records and
+ * the trial's count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts), so the card names RC-07 beside PR-01 (CASE_CARD_LABEL_FACTS). It does not say the 833 are "of" the 1,000: the trial's sample includes 408 women who were not offered a place.
  */
 const wsdfmShare = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
 if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> in work"');
-const wsdfmLabel = `WSDFM program records (not trial data): ${wsdfmShare[1]}`;
+const wsdfmLabel = `WSDFM program records (not trial data; the trial studied ${TRIAL_WOMEN} women): ${wsdfmShare[1]}`;
 
 /**
  * The caption a case-study card puts under its figure, by register fact. CaseStudyCarousel uses it wherever a page gives no caption of its own, so the WSDFM and Her Power
@@ -44,6 +46,8 @@ const wsdfmLabel = `WSDFM program records (not trial data): ${wsdfmShare[1]}`;
  * directly by CodersTrust, in work: 47%", which no other page did); the Governments Results at a Glance tile reads it too.
  */
 export const CASE_CARD_LABELS: Record<string, string> = { 'PR-01': wsdfmLabel, 'PR-05': herPowerLabel };
+/** The other register facts a card's shared caption states (WP60: the WSDFM caption names the trial's count, RC-07's 833), named in the band's data-fact beside the card's own fact. */
+export const CASE_CARD_LABEL_FACTS: Record<string, string[]> = { 'PR-01': ['RC-07'] };
 
 /**
  * Home's three cards. WP37 (cycle-14 review): the results carousel above the band (slide 3, "Results by Program") already states the Kosovo (102 of 150) and Her Power (372 of 800) figures, so those two

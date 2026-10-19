@@ -60,10 +60,13 @@ const jsonLd = [
   }),
   faqPage(faq, path),
 ];
+// WP60 (cycle-32 review, Grok R6): the classes band is headed "Freelancing Share by Classes Attended" and says "In this study, freelancing was higher among women who attended more classes." (it said "More Classes, More Freelancing" and "... were more likely to be
+// freelancing at follow-up", which reads as a dose effect; the trial randomized the offer of a place, not how many classes a woman attended). The anchor (#classes) is unchanged. The chart under it is titled "Share of Women Freelancing" (it was
+// "Freelancing Share by Classes Attended", which the new heading would have printed twice, two lines apart); its data (RC-08) and its row labels are unchanged.
 const toc = [
   { id: 'summary', label: 'The Result' },
   { id: 'results', label: 'Income, Freelancing and Household Effects' },
-  { id: 'classes', label: 'More Classes, More Freelancing' },
+  { id: 'classes', label: 'Freelancing Share by Classes Attended' },
   { id: 'context', label: 'Over Four Times the Average of Nine Training Trials' },
   { id: 'funders', label: 'What It Means for Funders' },
   { id: 'faq', label: 'Questions Funders Ask' },
@@ -123,11 +126,11 @@ const d = discoveryCta();
     </ul>
   </ReportSection>
 
-  <ReportSection id="classes" title="More Classes, More Freelancing">
-    <p>Women who attended more classes were more likely to be freelancing at follow-up.</p>
+  <ReportSection id="classes" title="Freelancing Share by Classes Attended">
+    <p>In this study, freelancing was higher among women who attended more classes.</p>
     <div data-fact="RC-08">
       <BarChart
-        title="Freelancing Share by Classes Attended"
+        title="Share of Women Freelancing"
         items={classes.map((c) => ({ label: c.label, value: c.value }))}
       />
     </div>

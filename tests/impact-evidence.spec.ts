@@ -183,7 +183,7 @@ test.describe('Independent Evaluation', () => {
     await expect(page.locator('#funders')).toContainText(/five-year follow-up/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
     await expect(page.locator('#faq')).toContainText('How Do You Track Outcomes?');
-    await expect(page.locator('#classes h2')).toHaveText('More Classes, More Freelancing');
+    await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');
     await expect(page.locator('#classes')).toContainText('Freelancing Share by Classes Attended');
   });
 });
@@ -204,7 +204,7 @@ test.describe('case studies', () => {
   test('WSDFM states which figure is program records and which is the trial', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note spells out the evaluator, the page's first mention of BIGD
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of the predecessor program by the BRAC Institute of Governance and Development (BIGD).');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of 833 women in the predecessor program, by the BRAC Institute of Governance and Development (BIGD).');
     const tiles = page.locator('.hero .cs__stat');
     await expect(tiles).toHaveCount(3);
     await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);

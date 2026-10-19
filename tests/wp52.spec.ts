@@ -92,10 +92,11 @@ test.describe('JobReady@Campus: the problem band’s lead says what the program 
 
 test.describe('Local Partners: what stays after funding, and what the monthly reports cover, are scoped (items 3 and 4)', () => {
   const CARD =
-    'Certified-facilitator training, a localized curriculum and preparation for industry certification. Where included in the program scope, trained facilitators and localized curricula remain after funding ends, and you do not have to build the curriculum or certification route yourself.';
+    'Certified-facilitator training, a localized curriculum and preparation for industry certification. You do not have to build the curriculum or certification route yourself.';
   const BLOCK = 'Where a funder is involved, monthly reports cover enrollment, completion, certification, placements and first earnings, as agreed in the program scope.';
 
-  test('"Certified Facilitators and a Local Curriculum" scopes what remains after funding ends, as the page’s funding-ends answer does', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G5): the card no longer says what remains after funding ends; the page’s funding-ends answer (Q10) says it, with the scope words, and still opens with them
+  test('"Certified Facilitators and a Local Curriculum" is training, a localized curriculum and certification preparation; what remains after funding ends is the page’s funding-ends answer (Q10)', async ({ page }) => {
     await open(page, LOCAL);
     const card = page.locator('#features li', { has: page.locator('.card__title', { hasText: 'Certified Facilitators and a Local Curriculum' }) });
     await expect(card).toHaveCount(1);
@@ -170,7 +171,7 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
 });
 
 test.describe('About: the 2025–2026 timeline entry is sentences, not a semicolon chain (item 7)', () => {
-  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 2 million vulnerable youth in Bangladesh by 2030; CodersTrust publishes Impact Survey 2026.';
+  const TEXT = 'JobReady rolls out in stages. YouthWIDE aims to train 2 million vulnerable youth in Bangladesh by 2030, depending on government and donor commitments; CodersTrust publishes Impact Survey 2026.';
 
   test('the last entry reads as above, from data/timeline.ts, under its unchanged heading, and cites the facts its sentences rest on (IN-02 is no longer among them)', async ({ page }) => {
     const last = timeline[timeline.length - 1];
@@ -305,9 +306,11 @@ test.describe('Governments: the contracts-table note excepts the Her Power figur
 });
 
 test.describe('"Capacity Designed to Stay" (item 12)', () => {
-  test('the Governments delivery card and the Campus vignette say it; "Capacity That Stays" is on no built page', async ({ page }) => {
+  // WP60 (cycle-32 review, Claude S6): the Governments delivery card is "Trainers and Curriculum" (it was "Capacity Designed to Stay", one phrase from the benefit card "Capacity Designed to Stay in Your System"); the Campus vignette keeps its heading (tests/wp60.spec.ts)
+  test('the Governments delivery card is "Trainers and Curriculum" and the Campus vignette says "Capacity Designed to Stay on Campus"; "Capacity That Stays" is on no built page', async ({ page }) => {
     await open(page, GOV);
-    await expect(page.locator('#mechanism .model__title', { hasText: /^Capacity Designed to Stay$/ })).toHaveCount(1);
+    await expect(page.locator('#mechanism .model__title', { hasText: /^Trainers and Curriculum$/ })).toHaveCount(1);
+    await expect(page.locator('#mechanism .model__title', { hasText: /^Capacity Designed to Stay$/ })).toHaveCount(0);
     await open(page, CAMPUS);
     expect(await everything(page)).toContain('Capacity Designed to Stay on Campus');
     expect(pagesWith('Capacity That Stays')).toEqual([]);
@@ -407,7 +410,7 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
     expect(fact('IN-02').text.endsWith('current outcome evidence comes from Bangladesh and Kosovo, with Bangladesh where most delivery has been')).toBe(true);
     await open(page, YOUTHWIDE);
     expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain(
-      'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.',
+      'South Asia, the Middle East and North Africa, and Sub-Saharan Africa, as co-funded country cohorts. Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.',
     );
     // WP53 (owner follow-up, 2026-10-16): the Bangladesh band’s heading had kept "Reference Country", the jargon this item removed from the glance row; it is "Bangladesh: Delivery Base and 2030 Aim" (tests/wp53.spec.ts)
     await expect(page.locator('section#governments').getByRole('heading', { level: 2 })).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
@@ -418,12 +421,13 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
   });
 });
 
-test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
+test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP60) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
   // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).")
-  test('slide 2: "... work scoped for 30,000+ people. The total is contract scope, ...; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of ..."', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the slide now says "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, ..."
+  test('slide 2: "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });

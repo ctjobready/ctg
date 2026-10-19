@@ -70,7 +70,7 @@ test.describe('The Bangladesh initiative is an aim, not an existing national pro
     const heading = page.locator('section#governments').getByRole('heading', { level: 2 });
     await expect(heading).toHaveText('Bangladesh: Delivery Base and 2030 Aim');
     expect('Bangladesh: Delivery Base and 2030 Aim').toBe(titleCase('Bangladesh: Delivery Base and 2030 Aim'));
-    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030.');
+    expect(compact(await page.locator('#program-glance .pg__row').first().textContent())).toContain('Bangladesh is where most delivery has been, with an initiative of its own that aims to train 2 million vulnerable youth by 2030, depending on government and donor commitments.');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
     expect(description).toContain('co-funded cohorts designed for three regions, with a 2030 aim in Bangladesh.');
     expect(description!.length).toBeLessThanOrEqual(155);
@@ -125,7 +125,7 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
     // WP48 (cycle-23 review): the slide kept only the note's first clause ("contract scope, not a count of completers"). WP57 (cycle-29 review, Grok R2 with Gemini GM1): it says again that the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly),
     // in the note's WP35 wording, so the lead rests on GV-12 and GV-01 (tests/wp57.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust).',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     expect(compact(await lead.textContent())).not.toContain('not people trained');
