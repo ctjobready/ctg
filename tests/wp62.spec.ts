@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp62.spec.ts --project=chromium`):
  *   - 1: Home slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month" (RC-01's 41% is a monthly income difference), within the carousel’s height budget;
  *   - 2: Home’s press line is one pointer sentence to Recognition and Media that names Kosovo and Albania (no outlet, no link of its own); Recognition and Media prints the full line, with its ten links, in the coverage band (rework R1, R2);
- *   - 3: Foundations’ fourth glance tile is the WSDFM program record (711 of 1,000, "WSDFM program records: 71% in work", Program Record), not the +$27 tile, with the note the Impact tile has (rework R3);
+ *   - 3: Foundations’ fourth glance tile is a program record, not the +$27 tile (WP62: the WSDFM record, 711 of 1,000, with the note the Impact tile has, rework R3; WP65: the UNDP YES, Korail record, 67%, in its place);
  *   - 4: the partner hub’s steps band is "From First Conversation to First Cohort", and its lead no longer opens with the sentence the heading now says;
  *   - 5: Development Partners’ UNDP YES tile names the program’s year (2017, from PR-03); the Impact tile keeps the register’s label;
  *   - 6: the "Will This Work in Our Country?" answer (the bank’s Q1, its audience variants and YouthWIDE’s own) adds Digital Jobs Albania as delivery experience, not results (reworded by WP63 as two sentences, the same on YouthWIDE);
@@ -206,38 +206,39 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile is the WSDFM program record', () => {
-  test('the glance runs trial, survey, Kosovo, WSDFM; the fourth tile is "711 of 1,000" with the label "WSDFM program records: 71% in work", tagged Program Record, linking the WSDFM case study', async ({ page }) => {
+// WP65 (cycle-37 review, GPT-6.1 Sol, Gemini) supersedes this item's tile: "711 of 1,000" and its not-the-trial note stood in the glance and again on the Proof in Practice WSDFM card, so the fourth glance tile is the UNDP YES, Korail record (PR-03)
+// and the WSDFM program records are stated once, on the card (tests/wp65.spec.ts).
+test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundations’ fourth glance tile is a program record, not the +$27 tile', () => {
+  test('the glance runs trial, survey, Kosovo, UNDP YES; the fourth tile is "67%" with the label "... in UNDP YES, Korail (2017), found their first job within three months", tagged Program Record, linking the UNDP YES case study', async ({ page }) => {
     await open(page, FOUNDATIONS);
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-01']);
-    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-01"]');
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-03']);
+    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-03"]');
     await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.pg__value')).toHaveText('711 of 1,000');
-    await expect(tile.locator('.pg__desc')).toHaveText('WSDFM program records: 71% in work');
+    await expect(tile.locator('.pg__value')).toHaveText('67%');
+    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
-    expect(await tile.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
-    expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/wsdfm-women-freelancers\/$/);
+    expect(await tile.getAttribute('data-fact')).toBe('PR-03');
+    expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
   });
 
-  // WP62 rework (R3): WP35 had taken this tile off the page because its 71% read beside the trial's figures; the tile says how the records relate to the trial, in the string the Impact page's WSDFM tile has (one source, WSDFM_NOT_TRIAL_NOTE in src/data/copy.ts)
-  test('the tile’s note is the Impact page’s WSDFM tile note, from one source: "Program records, separate from the randomized trial of the predecessor program, which studied 833 women." (15 words, the 833 being RC-07’s)', async ({ page }) => {
+  // WP62 rework (R3): the WSDFM tile said how its records relate to the trial, in the string the Impact page's WSDFM tile has (one source, WSDFM_NOT_TRIAL_NOTE in src/data/copy.ts). WP65: Foundations no longer has that tile, so the Impact page's tile is the note's one user.
+  test('the not-the-trial note is the Impact page’s WSDFM tile note, from one source: "Program records, separate from the randomized trial of the predecessor program, which studied 833 women." (15 words, the 833 being RC-07’s); the Foundations glance no longer carries it', async ({ page }) => {
     const NOTE = 'Program records, separate from the randomized trial of the predecessor program, which studied 833 women.';
     expect(WSDFM_NOT_TRIAL_NOTE).toBe(NOTE);
     expect(TRIAL_WOMEN).toBe('833');
     expect(fact('RC-07').text).toContain('833 women at baseline');
     expect(NOTE.split(/\s+/)).toHaveLength(15);
     await open(page, FOUNDATIONS);
-    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-01"]');
-    await expect(tile.locator('.pg__note')).toHaveText(NOTE);
+    await expect(page.locator('#glance')).not.toContainText('Program records, separate from the randomized trial');
     await open(page, IMPACT);
     const impact = page.locator('#glance a[data-fact~="PR-01"]');
     await expect(impact.locator('.glance__note')).toHaveText(NOTE);
     expect(await impact.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
-    // the note is shown on a phone too (a single secondary tile joins the main group, whose notes stay), and the tile stays inside the page at 1280 and 390
+    // the Foundations tile (the single secondary tile joins the main group) stays inside the page at 1280 and 390, with its label shown on a phone too
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, FOUNDATIONS);
-      await expect(page.locator('#glance .pg__lead a[data-fact~="PR-01"] .pg__note')).toBeVisible();
+      await expect(page.locator('#glance .pg__lead a[data-fact~="PR-03"] .pg__desc')).toBeVisible();
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });
@@ -262,8 +263,9 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini): Foundations’ fourth glance 
     expect(await noOverflow(page)).toBe(true);
   });
 
-  test('Development Partners and Governments still carry no WSDFM tile in their glance', async ({ page }) => {
-    for (const route of [DEV_PARTNERS, GOVERNMENTS]) {
+  // WP65 (cycle-37 review): Foundations carries no WSDFM tile in its glance either now (the WSDFM program records are on its Proof in Practice card)
+  test('Development Partners, Governments and Foundations carry no WSDFM tile in their glance', async ({ page }) => {
+    for (const route of [DEV_PARTNERS, GOVERNMENTS, FOUNDATIONS]) {
       await open(page, route);
       await expect(page.locator('#glance [data-fact~="PR-01"]'), route).toHaveCount(0);
     }

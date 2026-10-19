@@ -304,11 +304,14 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
 });
 
 test.describe('About and Investors (items 37, 38, 39)', () => {
-  test('item 37: About’s enrollment tile counts "direct enrollments" beside the courseware enrollments', async ({ page }) => {
+  // WP50 (cycle-25 review, item 21) made the detail line a sentence ("Including 111,268 direct enrollments and 40,043 through courseware."; the figures are SC-02's);
+  // WP65 (cycle-37 review, Sonnet, Grok): the line is gone from About's tile (tests/wp65.spec.ts); SC-02's register detail is unchanged
+  test('item 37: About’s enrollment tile no longer splits "direct enrollments" from the courseware enrollments (WP65); the register still carries the split', async ({ page }) => {
     await open(page, 'about/');
-    const note = compact(await page.locator('#glance .about-stats__tile[data-fact="SC-02"] .stat__note').textContent());
-    // WP50 (cycle-25 review, item 21): the detail line is a sentence (tests/wp50.spec.ts); the figures are SC-02's
-    expect(note).toBe('Including 111,268 direct enrollments and 40,043 through courseware.');
+    const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
+    await expect(tile.locator('.stat__note')).toHaveCount(0);
+    expect(compact(await tile.textContent())).not.toMatch(/direct enrollments|courseware/);
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware.');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {

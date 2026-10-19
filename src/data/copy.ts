@@ -185,6 +185,7 @@ export const TRIAL_WOMEN: string = trialWomen();
 /**
  * WP62 (cycle-34 review, rework R3): the short note under a WSDFM program-record tile that says how the records relate to the trial ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women.", 15 words).
  * It is the Impact page's tile note (WP60), moved here so Foundations' WSDFM tile says it with the same string; the tile's data-fact names RC-07 beside PR-01 (the 833 is RC-07's, TRIAL_WOMEN).
+ * WP65 (cycle-37 review): Foundations' glance no longer carries the WSDFM tile (its fourth tile is UNDP YES, Korail), so the Impact page's tile is the note's one user; the Proof in Practice caption (CASE_CARD_LABELS) says the same thing in its own words.
  */
 export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, separate from the randomized trial of the predecessor program, which studied ${TRIAL_WOMEN} women.`;
 
@@ -885,6 +886,8 @@ export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
  * partner since 2024" (PA-05 words the relationship so; SC-04, in the band "Contracts, Pipeline and Recognition", says in full that CodersTrust is National University's official training partner). DoICT is spelled out where the
  * page first names it (the Her Power answer below says "DoICT"; the expansion is the confirmed one, F30). The builder throws if the register stops naming one of these institutions or changes one of those two relationships, so
  * the paragraph cannot outlive the facts it rests on.
+ * WP65 (cycle-37 review, GLM; Sonnet in cycles 34 and 36): AWS is named by the status PA-06 registers, "CodersTrust is an AWS Authorized Training Partner", rather than listed as a private-sector partner beside Grameenphone Academy and Accenture
+ * ("Private-sector partners include Grameenphone Academy, Accenture and AWS."); the sentence therefore rests on PA-06 as well as PA-03, and the builder throws if PA-06 stops reading "AWS Authorized Training Partner". PA-03 and PA-06 are unchanged.
  */
 function investorPartners(): CopyBlock {
   const named = (id: string, ...needles: string[]) => {
@@ -894,15 +897,16 @@ function investorPartners(): CopyBlock {
   named('PA-02', 'Bangladesh’s ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority');
   named('PA-01', 'UNDP', 'the World Bank Group', 'the World Food Programme');
   named('PA-05', 'National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024');
-  named('PA-03', 'Grameenphone Academy', 'Accenture', 'AWS');
+  named('PA-03', 'Grameenphone Academy', 'Accenture');
+  named('PA-06', 'AWS Authorized Training Partner');
   return {
     text: [
       'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority.',
       'Development partners include UNDP, the World Bank Group and the World Food Programme.',
       'University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MoU) partner since 2024.',
-      'Private-sector partners include Grameenphone Academy, Accenture and AWS.',
+      'Private-sector partners include Grameenphone Academy and Accenture, and CodersTrust is an AWS Authorized Training Partner.',
     ].join(' '),
-    facts: ['PA-02', 'PA-01', 'PA-05', 'PA-03'],
+    facts: ['PA-02', 'PA-01', 'PA-05', 'PA-03', 'PA-06'],
   };
 }
 export const INVESTOR_PARTNERS: CopyBlock = investorPartners();

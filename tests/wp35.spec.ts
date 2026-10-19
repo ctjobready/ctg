@@ -179,7 +179,7 @@ test.describe('the trial and the survey are shown once per page', () => {
   }
 });
 
-// WP50 (cycle-25 review): the WSDFM 71% is back in Home's program-results slide (as the second of four programs, "program records, not trial data"); it stays off the glance tiles of Development Partners and Governments (WP62: Foundations' fourth tile is the WSDFM program record again)
+// WP50 (cycle-25 review): the WSDFM 71% is back in Home's program-results slide (as the second of four programs, "program records, not trial data"); it stays off the glance tiles of Development Partners and Governments (WP62: Foundations' fourth tile was the WSDFM program record again; WP65: it is the UNDP YES, Korail record, so no audience page's glance has a WSDFM tile)
 test.describe('the WSDFM 71% is off the glance tiles of Development Partners and Governments (the case cards and the case study keep it; WP50: the Home program-results slide lists it again)', () => {
   // WP42 (cycle-19 review): the government slide is second, so the program-results slide is the fourth
   test('Home slide 4 lists four programs: Women in Online Work, WSDFM, UNDP YES and Her Power', async ({ page }) => {
@@ -196,9 +196,9 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     ]);
   });
 
-  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ fourth tile is the WSDFM program-record tile again (PR-01, "711 of 1,000", tagged Program Record), in place of the +$27 tile, because the trial filled two of the four tiles (tests/wp62.spec.ts);
-  // Development Partners and Governments still carry no WSDFM tile
-  test('Results at a Glance on Development Partners and Governments carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it); Foundations’ fourth tile is the WSDFM program record (WP62)', async ({ page }) => {
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): Foundations’ fourth tile was the WSDFM program-record tile again (PR-01, "711 of 1,000", tagged Program Record), in place of the +$27 tile, because the trial filled two of the four tiles (tests/wp62.spec.ts);
+  // WP65 (cycle-37 review): it is the UNDP YES, Korail program-record tile (PR-03); no audience page's glance carries a WSDFM tile now
+  test('Results at a Glance on Development Partners and Governments carries no WSDFM tile; Kosovo takes its place where it led (WP36: not on Development Partners, whose Kosovo case card states it); Foundations’ fourth tile is a program record, the UNDP YES one (WP65)', async ({ page }) => {
     for (const slug of THREE.filter((s) => s !== 'foundations')) {
       await open(page, `partner-with-us/${slug}/`);
       await expect(page.locator('#glance [data-fact~="PR-01"]'), slug).toHaveCount(0);
@@ -209,7 +209,8 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     // WP52 (cycle-27 review, Kimi M2): Development Partners' ">4×" tile (RC-06a) is gone from the glance; its comparison is the +10.3 tile's note (tests/wp52.spec.ts)
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     await open(page, 'partner-with-us/foundations/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-01']);
+    // WP65 (cycle-37 review, GPT-6.1 Sol, Gemini): Foundations’ fourth tile is the UNDP YES, Korail record (PR-03) now; the WSDFM program records stay on its Proof in Practice card (tests/wp65.spec.ts)
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'PR-03']);
     await open(page, 'partner-with-us/governments/');
     // WP61 (cycle-33 review, GLM L5): the results lead and the contract scope is the fourth tile (it led the glance): the trial, Her Power, Kosovo, then the contract scope (tests/wp61.spec.ts)
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'PR-05', 'PR-02', 'GV-12']);

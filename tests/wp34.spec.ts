@@ -315,7 +315,8 @@ test.describe('Our Model: two delivery cards say what they mean', () => {
     const scale = page.locator('#delivery .card', { hasText: 'Local Labs, Coordinated Delivery' });
     await expect(scale).toHaveCount(1);
     // WP46 (cycle-22 review): "are designed to run" (as Q2 and Investors say it), not "can run"
-    expect(compact(await scale.textContent())).toContain('From about month 5, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.');
+    // WP65 (cycle-37 review): month 5 is a month of a program (PD-06): "From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, ..."
+    expect(compact(await scale.textContent())).toContain('From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.');
     expect(await scale.locator('[data-fact]').getAttribute('data-fact')).toBe('PD-06');
     const text = await mainText(page);
     expect(text).not.toMatch(/Hub-and-Spoke Delivery at Scale|Each certification takes|Larger programs use hub-and-spoke/);

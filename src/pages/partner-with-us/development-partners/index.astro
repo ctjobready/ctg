@@ -34,6 +34,8 @@
  * Adrian Afraham's card shows his verbatim quotation, name and program without the one-line summary above it ("Secured a first freelance job after the Graphic Designing course, followed by a job offer"), which repeated the quotation.
  * WP62 (cycle-34 review, Grok): the UNDP YES tile of Results at a Glance names its year ("... in UNDP YES, Korail (2017), found their first job within three months"; the year is read from PR-03). The Impact page's tile keeps the register's label, because its note gives the year.
  * WP62 (cycle-34 review, Gemini): the "Where They Work" card is unchanged (it already says "for 12 months", read from PD-02); Home, the shared mechanism band and YouthWIDE now say it the same way.
+ * WP65 (cycle-37 review, Gemini, Sonnet): the first "What Your Portfolio Gets" card reads "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects training, mentoring and placement support.").
+ * The UNDP YES tile's label (WP62: PR-03's glance label with its year) is UNDP_YES_TILE_LABEL in partners.ts now, since Foundations' fourth glance tile is the same tile.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -59,7 +61,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACKING_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -79,14 +81,6 @@ const { title, description } = meta(
 const benchmark = /(more than four times the 2\.3-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
 if (!benchmark) throw new Error('Development Partners: the RC-06a glance label no longer ends "... more than four times the 2.3-point average across nine vocational-training trials"; update the +10.3 tile\'s note');
 const benchmarkNote = `${benchmark[0].toUpperCase()}${benchmark.slice(1)}.`;
-
-// WP62 (cycle-34 review, Grok): the UNDP YES tile names its year, "... in UNDP YES, Korail (2017), found their first job within three months", which PR-03 gives ("..., Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 trained; ...").
-// The label is PR-03's glance label with the year added, read from the register and never retyped; the Impact page's tile for the same fact keeps the register's label, because its note already says "A 2017 program in Dhaka’s Korail settlement."
-// The build stops if the glance label or the fact's text changes shape.
-const undpYear = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
-const undpGlance = fact('PR-03').stat?.glance?.label ?? '';
-if (!undpYear || !undpGlance.includes(' in UNDP YES, Korail, found ')) throw new Error('Development Partners: PR-03 no longer reads "..., 2017: N trained; ..." with the glance label "... in UNDP YES, Korail, found ..."; update the UNDP YES tile');
-const undpLabel = undpGlance.replace(' in UNDP YES, Korail, found ', ` in UNDP YES, Korail (${undpYear}), found `);
 
 // Q8-route: the one-line cost answer with a link to the partner hub FAQ, which keeps the full answer (WP36).
 // Q6-development-partners: the women-and-marginalized-groups answer points to Proof in Practice above instead of stating its three program figures again (WP37); the bank's shared Q6 keeps the figures.
@@ -113,7 +107,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- GEO · What is CodersTrust? -->
   <DefinitionBand />
   <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: undpLabel }]}
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
     more={[]}
   />
   <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />
@@ -183,13 +177,13 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   />
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (training must connect to paid work; barriers can interrupt training;
-       outcomes are hard to audit). Each sentence rests on the register: PD-01 (mentoring and placement support alongside the training; WP49, cycle-24 review: the first card says only that one delivery partner connects them, because the 100 hours
+       outcomes are hard to audit). Each sentence rests on the register: PD-01 (mentoring and placement support alongside the training; WP49, cycle-24 review: the first card says only that CodersTrust connects them in one program (WP65 wording), because the 100 hours
        per certification are in the delivery model above), PD-02 and PD-10 (outreach and selection, tracks from employer demand), PD-12 (safeguarding specified per program), PD-08 and PD-09 (monthly reports, baseline, follow-up surveys,
        documentary evidence where available). -->
   <IncludesBand
     title="What Your Portfolio Gets"
     cards={[
-      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'One delivery partner connects training, mentoring and placement support.', facts: ['PD-01'] },
+      { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'CodersTrust connects training, mentoring and placement support in one program.', facts: ['PD-01'] },
       { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
       { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}

@@ -298,7 +298,8 @@ test.describe('Governments: the closing call to action does not repeat the procu
 });
 
 test.describe('Governments: the contracts-table note excepts the Her Power figures and offers a briefing, not a request (items 11 and 37)', () => {
-  const NOTE = 'Delivery status is confirmed for each contract in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.';
+  // WP65 (cycle-37 review, Gemini, Kimi): the first sentence is active, "We confirm each contract’s delivery status in a briefing." (it said "Delivery status is confirmed for each contract in a briefing."; tests/wp65.spec.ts)
+  const NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.';
 
   test('two sentences under the table; the screen-reader caption makes the same exception; "on request" is on no built page', async ({ page }) => {
     await open(page, GOV);
@@ -536,7 +537,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
 
   test('Foundations and Governments never showed the ">4×" tile and still have their four; Home’s first slide keeps its own', async ({ page }) => {
     for (const [route, ids] of [
-      [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-01']], // WP62 (cycle-34 review): the WSDFM program record is the fourth tile (the +$27 tile left)
+      [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-03']], // WP62 (cycle-34 review): a program record is the fourth tile (the +$27 tile left); WP65 (cycle-37 review): it is the UNDP YES, Korail record (the WSDFM record is on the Proof in Practice card)
       [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12']], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
     ] as const) {
       await open(page, route);

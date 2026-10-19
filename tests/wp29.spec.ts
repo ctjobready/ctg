@@ -137,7 +137,8 @@ test.describe('Foundations: the two funding routes as a comparison', () => {
       [
         'Funding Route 2 JobReady Platform Grants',
         'A grant toward platform infrastructure, not toward cohorts. Live today: partner portals and AI chat. In pre-launch: the employer marketplace and the gig-work marketplace.',
-        'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
+        // WP65 (cycle-37 review, Gemini): the cell keeps the benchmark's line alone; "The outcome evidence on this page comes from the youth programs, not from the platform." restated it (tests/wp65.spec.ts)
+        'Youth-program outcomes are not platform outcomes.',
       ],
     ]);
   });

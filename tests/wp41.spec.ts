@@ -95,10 +95,11 @@ test.describe('"What Does It Cost?" and Home’s inclusions heading: standard in
 
 // WP43 (cycle-20 review): the heading "Four Kinds of Institutional Relationship" and the four lists under it are gone; the institutions are one paragraph by type (tests/wp43.spec.ts). What this test still holds: the band does not
 // talk about distribution (WP41: that read as platform distribution channels), and the paragraph rests on the same four register facts the four lists did.
+// WP65 (cycle-37 review, GLM): the private-sector sentence names AWS by the status PA-06 registers, so the paragraph rests on PA-06 as well (tests/wp43.spec.ts, tests/wp65.spec.ts).
 test.describe('Investors: the track-record band names relationships, not distribution (item 3)', () => {
-  test('the paragraph that names the institutions rests on PA-02, PA-01, PA-05 and PA-03, and no heading or text says "distribution"', async ({ page }) => {
+  test('the paragraph that names the institutions rests on PA-02, PA-01, PA-05, PA-03 and PA-06, and no heading or text says "distribution"', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03');
+    expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03 PA-06');
     await expect(page.locator('#guide .ig__channels')).toHaveCount(0);
     expect(await mainText(page)).not.toMatch(/Distribution Through|Four Kinds of Institutional Relationship/);
     expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Since 2014']);

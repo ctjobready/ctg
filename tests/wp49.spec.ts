@@ -75,11 +75,12 @@ test.describe('Development Partners: the problem band and the first portfolio ca
     expect(sitePages().filter((p) => /Enrollment Targets Are Often Met|Skills Programs Miss Their Employment Targets|The Hardest-to-Reach Groups Drop Out/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
-  test('the first "What Your Portfolio Gets" card says one delivery partner connects training, mentoring and placement support; the 100 hours per certification are in the delivery model, once', async ({ page }) => {
+  // WP65 (cycle-37 review, Gemini, Sonnet): the card says "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects ..."; tests/wp65.spec.ts)
+  test('the first "What Your Portfolio Gets" card says CodersTrust connects training, mentoring and placement support in one program; the 100 hours per certification are in the delivery model, once', async ({ page }) => {
     await open(page, DP);
     const card = page.locator('#features li.card').first();
     await expect(card.locator('h3')).toHaveText('Training, Mentoring and Placement Support');
-    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['One delivery partner connects training, mentoring and placement support.']);
+    expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual(['CodersTrust connects training, mentoring and placement support in one program.']);
     expect(await card.getAttribute('data-fact')).toBe('PD-01');
     expect(compact(await page.locator('#features').textContent())).not.toContain('100 training hours');
     expect(compact(await page.locator('#mechanism').textContent())).toContain('100 training hours per certification, then three months of milestone-based mentoring and placement support.');
@@ -312,7 +313,7 @@ test.describe('Results at a Glance: one secondary tile has no heading of its own
   const PAGES: [string, string[], number, number][] = [
     [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
     [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12'], 2, 4], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
-    [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-01'], 2, 4], // WP62 (cycle-34 review): the WSDFM program record is the fourth tile (the +$27 tile left)
+    [FOUND, ['RC-02', 'OC-03', 'PR-02', 'PR-03'], 2, 4], // WP62 (cycle-34 review): a program record is the fourth tile (the +$27 tile left); WP65 (cycle-37 review): it is the UNDP YES, Korail record (the WSDFM record is on the Proof in Practice card)
   ];
 
   for (const [route, ids, rows900, rows390] of PAGES) {

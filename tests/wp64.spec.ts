@@ -290,12 +290,13 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
     expect(compact(await page.locator('#reach').textContent()).match(/since 2014/gi)).toHaveLength(1);
   });
 
-  test('About: of the two side-by-side tiles only the learners tile says "since 2014"; the enrollments tile reads "course enrollments" with its detail line', async ({ page }) => {
+  // WP65 (cycle-37 review, Sonnet, Grok): the enrollments tile's detail line ("Including 111,268 direct enrollments and 40,043 through courseware.") is gone from About (tests/wp65.spec.ts)
+  test('About: of the two side-by-side tiles only the learners tile says "since 2014"; the enrollments tile reads "course enrollments" and has no detail line', async ({ page }) => {
     await open(page, ABOUT);
     const labels = await texts(page, '#glance .about-stats .stat__label');
     expect(labels.slice(0, 2)).toEqual(['learners trained since 2014', 'course enrollments']);
     expect(await texts(page, '#glance .about-stats .stat__value')).toContain('150,000+');
-    expect(compact(await page.locator('#glance .about-stats__tile[data-fact="SC-02"] .stat__note').textContent())).toBe('Including 111,268 direct enrollments and 40,043 through courseware.');
+    await expect(page.locator('#glance .about-stats__tile[data-fact="SC-02"] .stat__note')).toHaveCount(0);
     expect(compact(await page.locator('#glance').textContent()).match(/since 2014/gi)).toHaveLength(1);
   });
 

@@ -106,6 +106,19 @@ export function funderOptionCards(
   return programOptions().map((o, i) => ({ eyebrow: `Option ${i + 1}`, title: o.name, headline: o.volume, meta: offerDurationText(o.name, o.duration), text: blurbs[i], facts: ['PD-05'] }));
 }
 
+/**
+ * The UNDP YES tile's label in Results at a Glance (Development Partners; Foundations since WP65, cycle-37 review): PR-03's glance label with the program's year added, "... in UNDP YES, Korail (2017), found their first job within three months" (WP62, cycle-34 review, Grok).
+ * The year is read from PR-03's text ("..., Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 trained; ...") and the rest from its glance label, so nothing is retyped; the build stops if either changes shape.
+ * The Impact page's tile for the same fact keeps the register's label, because its note already says "A 2017 program in Dhaka’s Korail settlement."
+ */
+function undpYesTileLabel(): string {
+  const year = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
+  const glance = fact('PR-03').stat?.glance?.label ?? '';
+  if (!year || !glance.includes(' in UNDP YES, Korail, found ')) throw new Error('UNDP_YES_TILE_LABEL: PR-03 no longer reads "..., 2017: N trained; ..." with the glance label "... in UNDP YES, Korail, found ..."; update the UNDP YES tile');
+  return glance.replace(' in UNDP YES, Korail, found ', ` in UNDP YES, Korail (${year}), found `);
+}
+export const UNDP_YES_TILE_LABEL: string = undpYesTileLabel();
+
 /** Evidence links shared by the pages (internal routes, resolved by the base-aware helpers). */
 export const LINKS = {
   evidence: '/impact/',

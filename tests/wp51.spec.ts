@@ -542,7 +542,7 @@ test.describe('Foundations: the route table’s second column is "What the Evide
     expect('What the Evidence Covers').toBe(titleCase('What the Evidence Covers'));
     expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual([
       'Builds on results from earlier programs in Bangladesh and Kosovo.',
-      'Youth-program outcomes are not platform outcomes. The outcome evidence on this page comes from the youth programs, not from the platform.',
+      'Youth-program outcomes are not platform outcomes.', // WP65 (cycle-37 review, Gemini): the second sentence is gone (tests/wp65.spec.ts)
     ]);
     expect(sitePages().filter((p) => visible(p.html).includes('Evidence Relationship') || p.html.includes('data-label="Evidence Relationship"')).map((p) => p.route)).toEqual([]);
   });

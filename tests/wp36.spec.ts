@@ -225,15 +225,16 @@ test.describe('Investors', () => {
 });
 
 test.describe('Foundations', () => {
-  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the fourth tile is the WSDFM program record (PR-01), in place of the +$27 tile (RC-04: "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"),
-  // which the trial's +10.3 already shared the glance with; tests/wp62.spec.ts
-  test('the fourth tile is the WSDFM program record: "711 of 1,000", "WSDFM program records: 71% in work", tagged Program Record', async ({ page }) => {
+  // WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the fourth tile is a program record, the WSDFM one (PR-01), in place of the +$27 tile (RC-04: "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"),
+  // which the trial's +10.3 already shared the glance with; tests/wp62.spec.ts. WP65 (cycle-37 review): it is the UNDP YES, Korail record (PR-03) now, because "711 of 1,000" is on the Proof in Practice card below (tests/wp65.spec.ts)
+  test('the fourth tile is a program record, the UNDP YES, Korail one: "67%", "... in UNDP YES, Korail (2017), found their first job within three months", tagged Program Record', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
-    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-01"]');
+    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-03"]');
     await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.pg__value')).toHaveText('711 of 1,000');
-    await expect(tile.locator('.pg__desc')).toHaveText('WSDFM program records: 71% in work');
+    await expect(tile.locator('.pg__value')).toHaveText('67%');
+    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
+    await expect(page.locator('#glance a[data-fact~="PR-01"]')).toHaveCount(0);
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
   });
 });
