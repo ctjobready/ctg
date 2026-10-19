@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  *   - G1: Home slide 2 is three sentences (the contract scope; "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly."; one National University sentence that ends with the qualifier), within the carousel’s height budget;
  *   - G2 (= Kimi K1): Employers and JobReady@Work have no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the bands open with the origin line / the credentials list;
  *   - G3: JobReady@Work’s "Our Approach" is one sentence, declared whole in scripts/check-facts.mjs, above the four cards;
- *   - G4: Local Partners’ first pain is "Add Curriculum and Certification Support" (the C8 map to its card is intact);
+ *   - G4: Local Partners’ first pain is "Curriculum and Certification Take Time to Build" (the C8 map to its card is intact);
  *   - G5: Independent Evaluation’s lead opens with the result, then says which program the trial evaluated;
  *   - G6: the Her Power case study’s learner card tells Maria Dewan’s story in two plain sentences (the story file is unchanged);
  *   - P1 (GPT-6.1 Sol): the WSDFM case study’s learner card shows Samina’s outcome line alone;
@@ -207,11 +207,11 @@ test.describe('G3 (GPT-6.1 Sol): JobReady@Work’s "Our Approach" is one sentenc
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G4 (GPT-6.1 Sol): Local Partners’ first pain says what CodersTrust adds, not a deficit', () => {
-  const HEADING = 'Add Curriculum and Certification Support';
-  const BODY = 'Pair your community reach with CodersTrust’s curriculum, facilitator training and certification exam preparation.';
+  const HEADING = 'Curriculum and Certification Take Time to Build';
+  const BODY = 'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.';
 
   test('the pain is written once in sentence case in the source and set in Title Case on the page; P2 and P3 are unchanged', async ({ page }) => {
-    expect(LOCAL_PARTNER_PAINS[0]).toEqual({ id: 'P1', name: 'Add curriculum and certification support', text: BODY });
+    expect(LOCAL_PARTNER_PAINS[0]).toEqual({ id: 'P1', name: 'Curriculum and certification take time to build', text: BODY });
     await open(page, LOCAL);
     const pains = page.locator('#problem .gp__pains li');
     await expect(pains).toHaveCount(3);

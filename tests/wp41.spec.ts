@@ -187,7 +187,7 @@ test.describe('JobReady@Campus: hero lead and mechanism wording (items 6 and 8)'
       'Run mentored, certification-focused training in your campus labs alongside academic studies. Prepare students for paid digital work and build placement evidence from your own cohorts.',
     );
     const mechanism = compact(await page.locator('#mechanism').textContent());
-    expect(mechanism).toContain('Freelance, Local, Remote and Overseas Work');
+    expect(mechanism).toContain('Local, Remote and Global Work');
     expect(mechanism).toContain('Mentoring and placement support toward paid work.');
     expect(mechanism).not.toContain('lead into work');
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';

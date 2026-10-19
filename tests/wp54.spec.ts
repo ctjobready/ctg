@@ -85,13 +85,13 @@ test.describe('Governments: the third pain says capacity takes time to build; th
 });
 
 test.describe('Local Partners: training is "often" measured by enrollment (item G3)', () => {
-  // WP61 (cycle-33 review, GPT-6.1 Sol G4): the first pain is what CodersTrust adds ("Add Curriculum and Certification Support"), no longer a deficit ("... a ready curriculum, trained facilitators and a route to industry certification are often out of reach."); tests/wp61.spec.ts
+  // WP61 (cycle-33 review, GPT-6.1 Sol G4): the first pain is what CodersTrust adds ("Curriculum and Certification Take Time to Build"), no longer a deficit ("... a ready curriculum, trained facilitators and a route to industry certification are often out of reach."); tests/wp61.spec.ts
   test('the third pain says "often", not "still"; the other two pains are unchanged', async ({ page }) => {
     await open(page, LOCAL);
     const pains = page.locator('#problem .gp__pains li');
     await expect(pains).toHaveCount(3);
     expect(await texts(page, '#problem .gp__pains li .gp__a')).toEqual([
-      'Pair your community reach with CodersTrust’s curriculum, facilitator training and certification exam preparation.',
+      'A ready curriculum, trained facilitators and a route to industry certification take time and specialist support to build.',
       'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.',
       'Funders ask who is earning, but training is often measured by enrollment, not earnings.',
     ]);
