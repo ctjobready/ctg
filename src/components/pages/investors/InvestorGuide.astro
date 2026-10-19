@@ -24,7 +24,7 @@ import { linkAttrs } from '../../../lib/url';
  * WP47 (cycle-22 review): the heading is "A Record Built Since 2014"; the institutions it used to name in a trailing clause follow directly below it.
  * WP52 (cycle-27 review, Grok m1): the band no longer opens with the empathy line ("Impact investors need to see what is proven and what is still being built."; EMPATHY.investors is gone): after the eyebrow and heading it starts with its record,
  * the origin line, as the other audience pages' Track Record bands do.
- * WP58 (cycle-30 reviews, Claude S1 a and GPT-6.1 Sol G1): SC-03's tile (the countries and territories where CodersTrust has worked) carries the period, "Since 2014", and no "Delivered" status: the count includes a launch location, an announced cooperation and partnerships. The learners and the enrollments keep their "Delivered" tags.
+ * WP58 (cycle-30 reviews, Claude S1 a and GPT-6.1 Sol G1): SC-03's tile (the countries and territories where CodersTrust has worked) carries a badge and no "Delivered" status: the count includes a launch location, an announced cooperation and partnerships. WP61 (cycle-33 review, Kimi P1): the badge says "Where We Have Worked" (it said "Since 2014", which this band’s heading and the group’s sub-heading already say). The learners and the enrollments keep their "Delivered" tags.
  */
 interface Props {
   id?: string;
@@ -63,7 +63,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
         {
           delivered.map((sid) => (
             <div class="ig__tile" data-fact={sid}>
-              {sid === 'SC-03' ? <Badge tone="brand" class="ig__period">Since 2014</Badge> : <StatusTag status="Delivered" />}
+              {sid === 'SC-03' ? <Badge tone="brand" class="ig__period">Where We Have Worked</Badge> : <StatusTag status="Delivered" />}
               <Stat value={stat(sid).value} label={stat(sid).label} size="lg" count={stat(sid).numeric !== undefined} />
             </div>
           ))

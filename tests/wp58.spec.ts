@@ -98,7 +98,8 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(hits).toEqual([]);
   });
 
-  test('Programs: the 130,000+ keeps its "Delivered" tag and the 16 carries the period, "Since 2014", in a badge level with it, with no status', async ({ page }) => {
+  // WP61 (cycle-33 review, Kimi P1): the badge on the 16 says "Where We Have Worked" (it said "Since 2014"; the band heading already says it)
+  test('Programs: the 130,000+ keeps its "Delivered" tag and the 16 carries the badge "Where We Have Worked", level with it, with no status', async ({ page }) => {
     await open(page, PROGRAMS);
     const tiles = page.locator('#reach .hub__reach > div');
     await expect(tiles).toHaveCount(2);
@@ -107,7 +108,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     await expect(tiles.nth(0).locator('.status-tag')).toHaveCount(1);
     await expect(tiles.nth(1).locator('.factstat')).toHaveAttribute('data-fact', 'SC-03');
     await expect(tiles.nth(1).locator('[data-status]')).toHaveCount(0);
-    await expect(tiles.nth(1).locator('.badge')).toHaveText('Since 2014');
+    await expect(tiles.nth(1).locator('.badge')).toHaveText('Where We Have Worked');
     expect(compact(await tiles.nth(1).locator('.stat__label').textContent())).toBe('countries and territories where CodersTrust has worked');
     expect(compact(await tiles.nth(1).locator('.stat__note').textContent())).toBe('Most delivery has been in Bangladesh.');
     // the two figures start level (the period badge is as tall as the status tag)
@@ -115,13 +116,13 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(tops[0], 'the 130,000+ and the 16 start on the same line').toBe(tops[1]);
   });
 
-  test('Investors: the learners and the enrollments keep "Delivered"; the 16 carries "Since 2014" and no status; the label and the note read "where CodersTrust has worked" and "Most delivery has been in Bangladesh."', async ({ page }) => {
+  test('Investors: the learners and the enrollments keep "Delivered"; the 16 carries "Where We Have Worked" (WP61) and no status; the label and the note read "where CodersTrust has worked" and "Most delivery has been in Bangladesh."', async ({ page }) => {
     await open(page, INVESTORS);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
     const sc03 = page.locator('#guide .ig__tile[data-fact="SC-03"]');
     await expect(sc03).toHaveCount(1);
     await expect(sc03.locator('[data-status]')).toHaveCount(0);
-    await expect(sc03.locator('.badge')).toHaveText('Since 2014');
+    await expect(sc03.locator('.badge')).toHaveText('Where We Have Worked');
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained since 2014', 'enrollments since 2014', 'countries and territories where CodersTrust has worked']);
     expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware. Most delivery has been in Bangladesh.');
     const tops = await page.locator('#guide .ig__tile .stat__value').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
@@ -477,11 +478,11 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });
 
-  // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's government slide says the same facts in plainer sentences ("This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.") and no longer prints the note itself
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's government slide says the same facts in plainer sentences (WP61, cycle-33 review: "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.") and no longer prints the note itself
   test('Home’s government slide is tied to GV-12, GV-01 and GV-11 (its plainer sentences state the note’s facts); the Governments tile, with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1), prints the note, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.`);
+    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.`);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
@@ -638,7 +639,7 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
 
   test('Home’s government slide, the Governments tile, Impact’s tile and the Investors and JobReady tiles show 30,000+ with the Contract Scope tag', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. This includes Her Power’s national program:/);
+    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. Her Power, one of the six, trained 25,125 women nationally;/);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     await expect(tile).toHaveCount(1);

@@ -108,7 +108,8 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
     // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."; WP48, cycle-23 review: the slide keeps the note's first clause, "30,000+ people: contract scope, not a count of completers.")
     // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
-    expect(slide2).toContain('30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.');
+    // WP61 (cycle-33 review, GPT-6.1 Sol G1): "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly." (it said "This includes Her Power’s national program: ...")
+    expect(slide2).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect((text.match(/(?<![\d,])30,000\+/g) ?? []).length, 'the 30,000+ is stated once on Home (the 130,000+ learners are another figure)').toBe(1);
@@ -384,7 +385,8 @@ test.describe('one title pattern: "{Page} | CodersTrust", with Home’s brand-fo
   test('Home keeps "CodersTrust: From Learning to Earning for Youth"; the three pages that had dropped the suffix carry it', () => {
     const byRoute = new Map(listPages().map((p) => [p.route, titleOf(p.file)]));
     expect(byRoute.get('/')).toBe('CodersTrust: From Learning to Earning for Youth');
-    expect(byRoute.get('/about/')).toBe('About Us | CodersTrust');
+    // WP61 (cycle-33 review, Kimi K2): "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern)
+    expect(byRoute.get('/about/')).toBe('About | CodersTrust');
     expect(byRoute.get('/about/team/shamsul-haque/')).toBe('Md. Shamsul Haque, CEO, CodersTrust Bangladesh | CodersTrust');
     expect(byRoute.get('/news/a-proud-milestone-for-coderstrust/')).toBe('A Proud Milestone for CodersTrust! | CodersTrust');
   });

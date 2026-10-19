@@ -9,8 +9,18 @@ import photo from '../../../assets/images/pages/impact/her-power-training-lab.jp
 
 const maria = await getEntry('stories', 'maria-dewan');
 if (!maria) throw new Error('story maria-dewan missing');
-const paras = (maria.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-const excerpt = `${paras[1]} ${paras[2]}`;
+// WP61 (cycle-33 review, GPT-6.1 Sol G6): the card’s narrative is two plain sentences, each resting on the story file, in place of the story’s second and third paragraphs ("... through her dedication and continuous enthusiasm for learning, was quickly initiated into the
+// freelance marketplace ..."). The story file is unchanged (the Success Stories page builds its three steps from it, and checks the same phrases). The build stops if the story stops saying what the sentences say.
+const storyText = (maria.body ?? '').replace(/\s+/g, ' ');
+for (const phrase of [
+  'Maria Dewan was a third-year Biology student when she first came across Her Power',
+  'She enrolled in the Graphic Design course',
+  'winning a company logo design on Freelancer.com',
+  'with a growing portfolio, gradually winning more clients and higher-paying projects',
+]) {
+  if (!storyText.includes(phrase)) throw new Error(`story maria-dewan: "${phrase}" is not in the story text`);
+}
+const excerpt = 'Maria Dewan joined Her Power as a third-year Biology student. She studied Graphic Design, won logo-design work on Freelancer.com and built a portfolio with more clients and higher-paying projects.';
 ---
 
 <CaseStudyPage

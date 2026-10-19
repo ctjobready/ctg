@@ -45,6 +45,8 @@
  * and the capacity claim stays in the benefit card.
  * WP60 (cycle-32 review, Gemini GM5 and GM8): the benefit card "Capacity Designed to Stay in Your System" opens "Where included in your program scope:" (the list that follows read as unconditional; the rest of the list is unchanged); the learner card shows one line,
  * "Won logo-design work on Freelancer.com, then gained more clients." (its narrative sentence repeated it, and is not a quotation, so it is gone; LearnerVoice takes no excerpt here).
+ * WP61 (cycle-33 review, GLM L5): "Results and Contract Scope at a Glance" leads with the results and ends with the contract scope: the randomized trial (+10.3), Her Power (372 of 800), Kosovo, then the 30,000+ contract scope (it led with the contract scope). The tiles, labels and notes are unchanged;
+ * the contract-scope tile is the single secondary tile, which PartnerGlance draws as the fourth main tile (WP49).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -120,11 +122,11 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
   <PartnerGlance
     title="Results and Contract Scope at a Glance"
     lead={[
-      { id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', note: contractsNote, also: ['SC-06', ...contractsNoteFacts] },
-      { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
+      { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
+      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts },
     ]}
-    more={[{ id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
+    more={[{ id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', note: contractsNote, also: ['SC-06', ...contractsNoteFacts] }]}
   />
   <LearnerVoice story="maria-dewan" outcome="Won logo-design work on Freelancer.com, then gained more clients." program="Her Power" tone="white" />
 

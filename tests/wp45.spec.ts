@@ -125,7 +125,7 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
     // WP48 (cycle-23 review): the slide kept only the note's first clause ("contract scope, not a count of completers"). WP57 (cycle-29 review, Grok R2 with Gemini GM1): it says again that the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly),
     // in the note's WP35 wording, so the lead rests on GV-12 and GV-01 (tests/wp57.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     expect(compact(await lead.textContent())).not.toContain('not people trained');

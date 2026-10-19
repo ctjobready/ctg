@@ -10,7 +10,7 @@ import { listPages } from './support/pages';
  * WP60 behaviors (cycle-32 whole-site reviews: Grok R1, R2, R4, R5 and R6; Claude S3, S4 (owner answer 2026-10-20) and S6; GPT-6.1 Sol G1, G2, G3 and G5). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp60.spec.ts --project=chromium`):
  *   - R1: Global Reach's note says "Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs." and the table's rows bear it out (Bangladesh's and Somaliland's notes describe training);
- *   - R2: Maria Dewan "first came across Her Power, where CodersTrust was a training partner" on the Her Power case study, Success Stories and Universities; no page says CodersTrust implemented the project;
+ *   - R2: Maria Dewan "first came across Her Power, where CodersTrust was a training partner" on Success Stories and Universities (WP61, GPT-6.1 Sol G6: the Her Power case study’s card says "joined Her Power" in two plain sentences); no page says CodersTrust implemented the project;
  *   - R4: the JobReady Platform "In the Pipeline" tile reads "... in the onboarding pipeline, not learners trained by CodersTrust" (SC-04's own label plus the clause Home's slide 2 uses); the register's label and the other pages that show it are unchanged;
  *   - R5: YouthWIDE's country answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.";
  *   - R6: Independent Evaluation's classes band is "Freelancing Share by Classes Attended" and says "In this study, freelancing was higher among women who attended more classes.";
@@ -134,9 +134,12 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
 test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersTrust was a training partner', () => {
   const SENTENCE = 'Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner.';
 
-  test('the Her Power case study, the Universities page and Success Stories say it; no page says CodersTrust implemented the project', async ({ page }) => {
+  test('the Universities page and Success Stories say it, the Her Power case study joins her to Her Power without giving CodersTrust the project; no page says CodersTrust implemented the project', async ({ page }) => {
+    // WP61 (cycle-33 review, GPT-6.1 Sol G6): the case study’s card replaced the story’s second and third paragraphs with two plain sentences (tests/wp61.spec.ts); the case study’s own context says CodersTrust’s role
     await open(page, 'impact/case-studies/her-power/');
-    expect(compact(await page.locator('main').textContent())).toContain(`${SENTENCE} She enrolled in the Graphic Design course`);
+    const herPower = compact(await page.locator('main').textContent());
+    expect(herPower).toContain('Maria Dewan joined Her Power as a third-year Biology student.');
+    expect(herPower).toContain('Within the national program, CodersTrust provided the curriculum, training manuals, mentorship guidelines and trainer training, and trained a cohort of women directly.');
     await open(page, 'partner-with-us/universities/');
     expect(compact(await page.locator('main').textContent())).toContain(SENTENCE);
     await open(page, 'impact/stories/');
@@ -159,7 +162,8 @@ test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are
     await expect(tile).toContainText('1.5M+');
     await expect(tile.locator('.factstat')).toHaveAttribute('data-fact', 'SC-04');
     await open(page, HOME);
-    expect(compact(await slide(page, 2).locator('.hs__lead').textContent()).endsWith(`They are National University’s own learners, ${NU_NOT_TRAINED}.`)).toBe(true);
+    // WP61 (cycle-33 review, GPT-6.1 Sol G1): the clause closes the National University sentence ("..., the university’s own learners, not learners trained by CodersTrust."); it was a sentence of its own ("They are National University’s own learners, ...")
+    expect(compact(await slide(page, 2).locator('.hs__lead').textContent()).endsWith(`the university’s own learners, ${NU_NOT_TRAINED}.`)).toBe(true);
   });
 
   test('the pages that show SC-04’s figure with the register’s label keep it, and their own separation (a band lead, or "not counted in the delivered reach")', async ({ page }) => {
@@ -320,17 +324,19 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('G1 (GPT-6.1 Sol): Home slide 2 is four plain sentences with the same facts', () => {
+// WP61 (cycle-33 review, GPT-6.1 Sol G1) shortened the slide to three sentences, with one semicolon (in the Her Power sentence) and no bracket; tests/wp61.spec.ts holds the new wording's other behaviors.
+test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sentences (four until WP61, three since)', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
-  test('the lead reads as above, with no semicolon or bracket, the owner words "onboarding 1.5M+ learners", and the facts GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
+  test('the lead reads as above, with no bracket and one semicolon, the owner words "onboarding 1.5M+ learners", and the facts GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
     const text = compact(await lead.textContent());
     expect(text).toBe(LEAD);
-    expect(text).not.toMatch(/[;()]/);
-    expect(text.split(/(?<=\.)\s+/)).toHaveLength(4);
+    expect(text).not.toMatch(/[()]/);
+    expect((text.match(/;/g) ?? []).length, 'the one semicolon is the Her Power sentence’s').toBe(1);
+    expect(text.split(/(?<=\.)\s+/)).toHaveLength(3);
     expect(text).toContain('onboarding 1.5M+ learners');
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });

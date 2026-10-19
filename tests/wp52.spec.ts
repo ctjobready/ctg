@@ -57,14 +57,18 @@ const IMPACT = 'impact/';
 const MODEL = 'our-model/';
 
 test.describe('Employers and JobReady@Work: the track-record opener makes no speed comparison (item 1)', () => {
+  // WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1; flagged in many cycles): the line ("You have roles to fill and teams that need AI skills for their daily work.", EMPATHY.employers) is gone from both pages; the bands open with the origin line (Employers)
+  // or the credentials list (JobReady@Work). The speed comparison it replaced in WP52 is still on no page (next test). tests/wp61.spec.ts holds the rest.
   const LINE = 'You have roles to fill and teams that need AI skills for their daily work.';
 
-  test('both pages open the band with the line, read from the one source (EMPATHY.employers)', async ({ page }) => {
-    expect(EMPATHY.employers).toBe(LINE);
+  test('neither page opens the band with the line any more, and EMPATHY has no employers key', async ({ page }) => {
+    expect(Object.keys(EMPATHY)).not.toContain('employers');
     for (const route of [EMP, WORK]) {
       await open(page, route);
-      expect(compact(await page.locator('#guide p.lead').first().textContent()), route).toBe(LINE);
+      await expect(page.locator('#guide p.lead'), route).toHaveCount(0);
+      expect(compact(await page.locator('main').textContent()), route).not.toContain(LINE);
     }
+    expect(pagesWith(LINE)).toEqual([]);
   });
 
   test('the earlier comparison ("faster than hiring or generic courses can supply them") is on no built page', () => {
@@ -423,11 +427,12 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
 
 test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP60) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
   // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).")
-  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the slide now says "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, ..."
-  test('slide 2: "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ..."', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the slide said "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, ..."
+  // WP61 (cycle-33 review, GPT-6.1 Sol G1): three sentences: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for ..., CodersTrust is onboarding 1.5M+ learners, the university’s own learners, ..." (tests/wp61.spec.ts)
+  test('slide 2: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
@@ -528,7 +533,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
   test('Foundations and Governments never showed the ">4×" tile and still have their four; Home’s first slide keeps its own', async ({ page }) => {
     for (const [route, ids] of [
       [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04']],
-      [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02']],
+      [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12']], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
     ] as const) {
       await open(page, route);
       expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0])), route).toEqual(ids);
@@ -580,8 +585,9 @@ test.describe('The Track Record bands of Governments and Investors start with th
     expect(pagesWith('Impact investors need to see what is proven')).toEqual([]);
   });
 
-  test('the remaining empathy lines are the Employers/JobReady@Work, JobReady@Campus and NU lines', () => {
-    expect(Object.keys(EMPATHY).sort()).toEqual(['employers', 'nuPgd', 'universities']);
+  // WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): Employers and JobReady@Work have none either
+  test('the remaining empathy lines are the JobReady@Campus and NU lines', () => {
+    expect(Object.keys(EMPATHY).sort()).toEqual(['nuPgd', 'universities']);
   });
 });
 

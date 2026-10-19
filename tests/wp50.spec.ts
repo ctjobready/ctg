@@ -272,7 +272,8 @@ test.describe('Independent Evaluation: the evaluator is spelled out where the pa
     expect(BIGD_FULL).toBe('the BRAC Institute of Governance and Development (BIGD)');
     await open(page, 'impact/independent-evaluation/');
     const lead = compact(await page.locator('main .lf-head .lead').textContent());
-    expect(lead.startsWith(`A randomized trial by ${BIGD_FULL} found that women offered a place in CodersTrust’s predecessor WSDFM program`)).toBe(true);
+    // WP61 (cycle-33 review, GPT-6.1 Sol G5): the result comes first, with the evaluator ("In a randomized trial by the BRAC Institute of Governance and Development (BIGD), women offered a place were 10.3 percentage points more likely to be employed ...")
+    expect(lead.startsWith(`In a randomized trial by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed`)).toBe(true);
     const words = lead.split(/\s+/).length;
     expect(words, 'the direct answer is 40 to 60 words').toBeGreaterThanOrEqual(40);
     expect(words).toBeLessThanOrEqual(60);

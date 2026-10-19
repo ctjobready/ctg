@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
 import Icon from '../../components/system/Icon.astro';
-import PartnerStrip from '../../components/system/PartnerStrip.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CopyEmail from '../../components/ui/CopyEmail.astro';
@@ -114,7 +113,7 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
         <li data-fact="PD-04">Public procurement follows the agency’s own timeline.</li>
       </ul>
     </div>
-    <PartnerStrip variant="grid" group="development" />
+    <!-- WP61 (cycle-33 review, GLM L6, with Kimi): the page no longer closes on a partner logo wall; the track-record bands of the audience pages carry the logos. -->
   </Section>
 
 </BaseLayout>
@@ -199,7 +198,6 @@ const jsonLd = [webPage({ path: '/contact/', name: "Let’s Talk", description, 
   .ct-next {
     display: grid;
     gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
   }
   .ct-c14 {
     list-style: none;

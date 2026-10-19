@@ -308,7 +308,7 @@ test.describe('Results at a Glance: one secondary tile has no heading of its own
   // (tests/wp52.spec.ts). Each entry: the route, the tiles in order, the rows at 900 and the rows at 390.
   const PAGES: [string, string[], number, number][] = [
     [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
-    [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02'], 2, 4],
+    [GOV, ['RC-02', 'PR-05', 'PR-02', 'GV-12'], 2, 4], // WP61 (cycle-33 review, GLM L5): the contract scope is the fourth tile, after the results
     [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04'], 2, 4],
   ];
 

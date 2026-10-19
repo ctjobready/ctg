@@ -23,7 +23,7 @@ import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPATHY, EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
+import { EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -81,10 +81,9 @@ const approach = [
     ]}
   />
 
-  <!-- C5 -->
+  <!-- C5. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the credentials list. -->
   <GuideSection
     title="Employers and Partners We Work With"
-    empathy={EMPATHY.employers}
     statIds={['SC-15']}
     partnerGroup="private"
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}

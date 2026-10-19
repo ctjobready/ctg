@@ -65,17 +65,18 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
-  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the body is four plain sentences (the contract scope with its clause; "This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust."; the National University sentence; "They are National University’s own learners, ...")
-  test('slide 2 body is the contract scope with its clause, Her Power’s national program (25,125 women trained nationally, 2,500 directly by CodersTrust), then the National University sentences; the 2,500 once; the lead rests on GV-12, GV-01, GV-11 and SC-04; the links stay', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the body was four plain sentences (the contract scope with its clause; "This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust."; the National University sentence; "They are National University’s own learners, ...")
+  // WP61 (cycle-33 review, GPT-6.1 Sol G1): it is three: the contract scope with its clause; "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly."; and one National University sentence that ends with the qualifier
+  test('slide 2 body is the contract scope with its clause, Her Power (25,125 women trained nationally, 2,500 directly by CodersTrust), then the National University sentence; the 2,500 once; the lead rests on GV-12, GV-01, GV-11 and SC-04; the links stay', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(compact(await s.textContent())).toContain('This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust.');
+    expect(compact(await s.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
     await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');

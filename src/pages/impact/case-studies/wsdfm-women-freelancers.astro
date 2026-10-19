@@ -27,10 +27,9 @@ for (const v of [...control, ...offered]) if (!rc09.includes(`${v.toFixed(1)}%`)
 
 const samina = await getEntry('stories', 'samina-tasneem-chowdhury');
 if (!samina) throw new Error('story samina-tasneem-chowdhury missing');
-const paras = (samina.body ?? '').split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-// Trimmed to the sentence the register backs (ST-03: 90+ projects on Fiverr); the story's generic sentence before it is left out.
-const excerpt = paras[2].split(/(?<=\.)\s+/).find((x) => x.includes('90+ projects on Fiverr'));
-if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sentence');
+// WP61 (cycle-33 review, GPT-6.1 Sol P1; same fix as Foundations, WP60 GM9): the card shows her outcome line alone, "Completed 90+ projects as a freelance graphic designer on Fiverr." The story’s sentence under it ("She has completed 90+ projects on Fiverr so far.",
+// ST-03) said it a second time. The outcome line rests on that sentence, so the build stops if the story stops saying it.
+if (!(samina.body ?? '').includes('She has completed 90+ projects on Fiverr so far.')) throw new Error('Samina story no longer has the 90+ projects sentence');
 ---
 
 <CaseStudyPage
@@ -100,7 +99,6 @@ if (!excerpt) throw new Error('Samina story no longer has the 90+ projects sente
       program="WSDFM, first batch"
       tag
       outcome="Completed 90+ projects as a freelance graphic designer on Fiverr."
-      excerpt={excerpt}
       image={samina.data.photo}
       imageAlt={samina.data.photoAlt}
       assetId="story-samina-tasneem-chowdhury"

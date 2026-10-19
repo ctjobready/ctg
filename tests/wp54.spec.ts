@@ -85,12 +85,13 @@ test.describe('Governments: the third pain says capacity takes time to build; th
 });
 
 test.describe('Local Partners: training is "often" measured by enrollment (item G3)', () => {
+  // WP61 (cycle-33 review, GPT-6.1 Sol G4): the first pain is what CodersTrust adds ("Add Curriculum and Certification Support"), no longer a deficit ("... a ready curriculum, trained facilitators and a route to industry certification are often out of reach."); tests/wp61.spec.ts
   test('the third pain says "often", not "still"; the other two pains are unchanged', async ({ page }) => {
     await open(page, LOCAL);
     const pains = page.locator('#problem .gp__pains li');
     await expect(pains).toHaveCount(3);
     expect(await texts(page, '#problem .gp__pains li .gp__a')).toEqual([
-      'You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are often out of reach.',
+      'Pair your community reach with CodersTrust’s curriculum, facilitator training and certification exam preparation.',
       'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.',
       'Funders ask who is earning, but training is often measured by enrollment, not earnings.',
     ]);
@@ -294,9 +295,10 @@ test.describe('"Agreed before enrollment" everywhere (item S25)', () => {
 
 test.describe('One caption on every partner-logo band (item K1)', () => {
   const CAPTION = 'Organizations we have worked with, 2014–2026. These are working relationships, not endorsements.';
-  const ROUTES = [CONTACT, DP, GOV, FOUND, UNI, EMP, LOCAL, CAMPUS, WORK, NU, YOUTHWIDE];
+  // WP61 (cycle-33 review, GLM L6, with Kimi): Contact no longer closes on a partner logo wall, so it is not one of the pages with a logo band (tests/wp61.spec.ts holds its absence)
+  const ROUTES = [DP, GOV, FOUND, UNI, EMP, LOCAL, CAMPUS, WORK, NU, YOUTHWIDE];
 
-  test('every logo band on the audience pages, the program pages and Contact prints the full caption, and its landmark keeps PA-04’s sentence as its name', async ({ page }) => {
+  test('every logo band on the audience pages and the program pages prints the full caption, and its landmark keeps PA-04’s sentence as its name', async ({ page }) => {
     for (const route of ROUTES) {
       await open(page, route);
       const captions = await texts(page, 'section.partners .partners__title');

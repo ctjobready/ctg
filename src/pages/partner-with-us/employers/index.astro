@@ -50,7 +50,7 @@ import StepFlow from '../../../components/ui/StepFlow.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, meta } from '../../../components/pages/partners/partners';
-import { C14, EMPATHY, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
+import { C14, EMPLOYER_HIRING_STEPS, HEADLINE, MICRO_COMMITMENT_EMPLOYERS, POSITIONING, VALUE_PROPOSITION, withSourceNote } from '../../../data/copy';
 import { contractScope } from '../../../components/sections/copyText';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -131,9 +131,8 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
 
   <!-- C3 (Cost of Waiting) and C4 (Imagine) are left to Home since WP47 (owner decision 2026-10-15). -->
 
-  <!-- C5 · Guide (empathy first). -->
+  <!-- C5 · Guide. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the origin line, as on Governments, Foundations and Development Partners. -->
   <PartnerGuideBand
-    empathy={EMPATHY.employers}
     stats={['SC-15']}
     statSize="lg"
     statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-07'] }]}

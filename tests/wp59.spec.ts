@@ -402,15 +402,16 @@ test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares'
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L1: Home slide 2 separates the National University’s learners from learners trained by CodersTrust', () => {
-  const TAIL = 'official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners. They are National University’s own learners, not learners trained by CodersTrust.';
+  // WP61 (cycle-33 review, GPT-6.1 Sol G1): the National University sentence is one sentence that ends with the qualifier (it was two: "CodersTrust is also the official training partner of ..., onboarding 1.5M+ learners." and "They are National University’s own learners, ...")
+  const SENTENCE = 'As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
-  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the qualifier is a sentence of its own after "onboarding 1.5M+ learners." (it was in brackets): "They are National University’s own learners, not learners trained by CodersTrust."
-  test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier follows it in a sentence of its own', async ({ page }) => {
+  // WP60 (cycle-32 review, GPT-6.1 Sol G1): the qualifier was a sentence of its own after "onboarding 1.5M+ learners." (it had been in brackets): "They are National University’s own learners, not learners trained by CodersTrust."
+  test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier closes the same sentence', async ({ page }) => {
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     expect(fact('SC-04').text.startsWith('1.5M+ National University learners in the onboarding pipeline')).toBe(true);
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent()).endsWith(`CodersTrust is also the ${TAIL}`)).toBe(true);
+    expect(compact(await lead.textContent()).endsWith(SENTENCE)).toBe(true);
     // the lead rests on the facts of the contract-scope note, the National University sentence and the learners' pipeline (SC-04)
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });

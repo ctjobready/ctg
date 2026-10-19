@@ -209,7 +209,8 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     await open(page, 'partner-with-us/foundations/');
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'RC-04']);
     await open(page, 'partner-with-us/governments/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['GV-12', 'PR-05', 'RC-02', 'PR-02']);
+    // WP61 (cycle-33 review, GLM L5): the results lead and the contract scope is the fourth tile (it led the glance): the trial, Her Power, Kosovo, then the contract scope (tests/wp61.spec.ts)
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'PR-05', 'PR-02', 'GV-12']);
   });
 
   // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure (the fourth carousel slide states it); the pages that keep the figure still print the caption

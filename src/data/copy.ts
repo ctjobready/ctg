@@ -64,13 +64,13 @@ export const HEADLINE: Record<Audience, string> = {
 // WP50 (cycle-25 review): nor do Foundations ("You want your grant to change a young person’s income, and you need evidence that it did — not only a count of hours attended.") and the Universities partner page: each line restated the problem band just above its
 // track-record band, which now opens with the origin line. `universities` stays because JobReady@Campus states the sentence once, as its problem band's lead (tests/wp25s.spec.ts); the Universities partner page does not read it.
 // WP52 (cycle-27 reviews, Grok M2 and m1, and Gemini m6 for Governments): nor do Governments ("You answer for training budgets that must produce young people in work, not only seats filled.") and Investors ("Impact investors need to see what is proven and
-// what is still being built."): each line restated the problem band above its track-record band, which now starts with the origin line (Governments) or its record (Investors), as Local Partners' and Foundations' do. `employers` and `nuPgd` remain.
-export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations' | 'governments' | 'investors'>, string> = {
+// what is still being built."): each line restated the problem band above its track-record band, which now starts with the origin line (Governments) or its record (Investors), as Local Partners' and Foundations' do.
+// WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1; flagged in many cycles): nor do Employers and JobReady@Work ("You have roles to fill and teams that need AI skills for their daily work."): their track-record bands open with the origin line (Employers) or the credentials list
+// (JobReady@Work, which prints no origin line). `universities` and `nuPgd` remain.
+export const EMPATHY: Record<Exclude<Audience, 'developmentPartners' | 'home' | 'localPartners' | 'foundations' | 'governments' | 'investors' | 'employers'>, string> = {
   // WP52 (cycle-27 review): "Help students prepare for paid digital work and build placement evidence from your campus cohorts." (it said "You see capable students finish their degrees and still struggle to find work, and you are asked for placement results you cannot yet show.",
   // which assumed the institution has no results to show). JobReady@Campus's problem band reads it as its lead; its heading, "Capable Students Still Struggle to Find Work", speaks of students, not of the reader, and stays.
   universities: 'Help students prepare for paid digital work and build placement evidence from your campus cohorts.',
-  // WP52 (cycle-27 review): "... teams that need AI skills for their daily work." (it said "... faster than hiring or generic courses can supply them.", a speed comparison nothing on the page supports). Employers and JobReady@Work both read this line.
-  employers: 'You have roles to fill and teams that need AI skills for their daily work.',
   nuPgd: 'You worked hard for your degree, but the job offers did not follow, and it is hard to know which skills to add next.',
 };
 
@@ -290,10 +290,6 @@ export type PositioningKey = Exclude<Audience, 'nuPgd' | 'investors'> | 'youthwi
 const UNLIKE_APPROVED =
   'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.';
 
-/** JobReady@Work's closing sentence: what an employer gets from the program itself (all of it from IN-10 and the page's own steps). */
-const WORK_POSITIONING =
-  'Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before you start.';
-
 /**
  * Home's closing sentence (WP19, item 13: two plain sentences in place of the long [UNLIKE] sentence; scripts/check-facts.mjs pins it for Home only).
  * WP50 (cycle-25 review): the first of the two ("Many programs cover one step: training, self-paced courses or freelance matching.") is gone; the sentence that names what CodersTrust connects stays.
@@ -366,8 +362,11 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
     facts: ['IN-09', 'PD-01', 'PD-08'],
   },
   work: {
-    // WP18b: an employer-specific closing sentence in place of [UNLIKE] (which is about youth programs); scripts/check-facts.mjs pins it for this page only.
-    text: `For employers who need teams ready to use AI in their daily work, CodersTrust offers JobReady@Work, training custom-developed for each organization. ${WORK_POSITIONING}`,
+    // WP18b: an employer-specific statement in place of [UNLIKE] (which is about youth programs).
+    // WP61 (cycle-33 review, GPT-6.1 Sol G3): the two sentences (an audience sentence, then "Each program starts with a needs assessment of your roles, is delivered through workshops on tasks from those roles, and is checked against success measures you agree before
+    // you start.") repeated the four cards under the statement (Scope, Deliver, Measure, Support), so "Our Approach" is one sentence that names the range the cards detail, from IN-10 (needs assessment, workshops, progress evaluation). scripts/check-facts.mjs declares it whole for
+    // /programs/jobready-work/ (POSITION_WHOLE_STATEMENT), independently of this file, so a change to it has to be made twice on purpose.
+    text: 'JobReady@Work builds training around your roles, from needs assessment to workshops and progress evaluation.',
     facts: ['IN-10'],
   },
   // SuperKids carries no "unlike … we …" clause (review round 9, Mi3): neither a registered fact nor approved wording in this file
@@ -398,9 +397,11 @@ export const FUNDER_PAINS: Pain[] = [
   { id: 'P2', name: 'Results you cannot verify or report', text: 'Enrollment is easy to count. Showing who started earning, to a board or an evaluator, is much harder.' },
   { id: 'P3', name: 'Skills that age fast as AI changes entry-level work', text: 'AI is shifting which entry-level skills employers ask for, so last year’s course list can miss this year’s demand.', facts: ['PX-06'] },
 ];
-// WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training); P1 already says "often".
+// WP54 (cycle-28 review, GPT-6.1 Sol G3): P3 says training is "often" measured by enrollment (it said "still", an unhedged generalization about all training).
+// WP61 (cycle-33 review, GPT-6.1 Sol G4): P1 is what CodersTrust adds, not a deficit presumed of the partner (it was "Missing curriculum, trainers and certification": "You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are
+// often out of reach."). It rests on the same register facts as the "Certified Facilitators and a Local Curriculum" card it still maps to (PD-06, PD-02: certified local facilitators, a localized curriculum, preparation for industry certification).
 export const LOCAL_PARTNER_PAINS: Pain[] = [
-  { id: 'P1', name: 'Missing curriculum, trainers and certification', text: 'You reach the young people, but a ready curriculum, trained facilitators and a route to industry certification are often out of reach.' },
+  { id: 'P1', name: 'Add curriculum and certification support', text: 'Pair your community reach with CodersTrust’s curriculum, facilitator training and certification exam preparation.' },
   { id: 'P2', name: 'Missing work-entry connections', text: 'Training that stops at the classroom door leaves completers without links to employers, clients and platforms.' },
   { id: 'P3', name: 'Reporting and accountability demands', text: 'Funders ask who is earning, but training is often measured by enrollment, not earnings.' },
 ];
