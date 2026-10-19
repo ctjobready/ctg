@@ -397,7 +397,8 @@ const POSITION_EMPLOYER_CLOSING = {
 const POSITION_WHOLE_STATEMENT = {
   // WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is one sentence that keeps the audience ("... for educated, unemployed youth, ..."), with the monthly reports scoped as every statement on the site scopes them; it replaces the audience sentence
   // ("For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.") and the closing sentence that followed it.
-  '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.',
+  // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name; POSITIONING.home in src/data/copy.ts changed with it.
+  '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.',
   '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
   '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
@@ -1021,14 +1022,15 @@ function numberGuardPage(path, html, allow = []) {
   posBad('a Universities statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeUni.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeUni });
   // WP60: Home declares its statement whole too (one sentence that keeps the audience), with the same guarantees: the exact wording including its audience and its scope clause, nothing in front of it, each page its own text only, and the earlier two-sentence statement is refused
   const wholeHome = POSITION_WHOLE_STATEMENT['/'];
-  if (wholeHome !== 'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Home whole statement is no longer the WP60 wording');
+  if (wholeHome !== 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the Home whole statement is no longer the WP63 wording');
   posOk('the declared whole statement on the page that declares it (Home)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeHome });
   posOk('the declared Home statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeHome)}${headerHtml}</header>`), { whole: wholeHome });
   posBad('the shared audience-plus-[UNLIKE] statement on Home, which declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeHome });
   posBad('the earlier two-sentence Home statement (an audience sentence in front of the connecting sentence)', mech(`${headerHtml}${posBlock('For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model. CodersTrust connects training, mentoring and placement support in one program, and partners receive monthly reports on progress toward paid work, as agreed in the program scope.')}</header>`), { whole: wholeHome });
   posBad('a reworded Home statement', mech(`${headerHtml}${posBlock(wholeHome.replace('connects', 'links'))}</header>`), { whole: wholeHome });
   posBad('a Home statement that drops its scope clause ("as agreed in the program scope")', mech(`${headerHtml}${posBlock(wholeHome.replace(', as agreed in the program scope', ''))}</header>`), { whole: wholeHome });
-  posBad('a Home statement that drops its audience ("for educated, unemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace(' for educated, unemployed youth', ''))}</header>`), { whole: wholeHome });
+  posBad('a Home statement that drops its audience ("for educated, unemployed and underemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace(' for educated, unemployed and underemployed youth', ''))}</header>`), { whole: wholeHome });
+  posBad('a Home statement that drops "underemployed" from its audience ("for educated, unemployed youth")', mech(`${headerHtml}${posBlock(wholeHome.replace('unemployed and underemployed youth', 'unemployed youth'))}</header>`), { whole: wholeHome });
   posBad('a lead line before the Home statement', mech(`${headerHtml}<p class="sh__lead lead">A lead line.</p>${posBlock(wholeHome)}</header>`), { whole: wholeHome });
   posBad('the Foundations statement on Home (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeFdn)}</header>`), { whole: wholeHome });
   posBad('the Home statement on Foundations (each page carries only its own)', mech(`${headerHtml}${posBlock(wholeHome)}</header>`), { whole: wholeFdn });

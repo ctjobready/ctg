@@ -135,11 +135,11 @@ test.describe('Home', () => {
 
   // WP55 (owner decisions 2026-10-17/18, synthesis 3.5): the band ends with ONE press line (WP62, cycle-34 review: one pointer sentence to Recognition and Media; tests/wp55.spec.ts) above the link to the full list. The 2014–2016 press outlets are named
   // nowhere in the band: no logo list, no list in the line, no second mention.
-  test('the recognition band leads with the university and UN-mandated partners, then AWS, then the EdTech listing; the press line is one sentence that names no outlet, and the full list is a link away', async ({ page }) => {
+  test('the recognition band leads with the university partners (WP63, cycle-35 review, Gemini M3: "University Partners", it said "University and UN-Mandated Partners"; only UPEACE is UN-mandated, and its line says so), then AWS, then the EdTech listing; the press line is one sentence that names no outlet, and the full list is a link away', async ({ page }) => {
     await open(page, '');
     const band = page.locator('#recognition');
     await expect(band.locator('h2')).toHaveText('Partners and Recognition');
-    await expect(band.locator('h3')).toHaveText(['University and UN-Mandated Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('h3')).toHaveText(['University Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
     expect(compact(await band.locator('.rec__badge').first().textContent())).toContain('University for Peace (UPEACE), the UN-mandated university');
     await expect(band.locator('p.cov')).toHaveCount(1);
     const outsideTheLine = await band.evaluate((el) => {

@@ -49,10 +49,10 @@ test.describe('Impact', () => {
   });
 
   // WP55 (owner decision 2026-10-18): Digital Jobs Albania is the fifth case study; the two World Bank programs lead, then the three Bangladesh programs in their earlier order
-  test('"Five Programs, from Kosovo to Bangladesh" is five link cards, Kosovo first, and repeats no figure', async ({ page }) => {
+  test('"Five Programs Across Kosovo, Albania and Bangladesh" (WP63; it was "..., from Kosovo to Bangladesh") is five link cards, Kosovo first, and repeats no figure', async ({ page }) => {
     await open(page, 'impact/');
     const band = page.locator('#cases');
-    await expect(band.getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toBeVisible();
+    await expect(band.getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toBeVisible();
     await expect(band.locator('article.card')).toHaveCount(5);
     const hrefs = await band.locator('a.card__link').evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
     expect(hrefs.map((h) => h.split('/').filter(Boolean).pop())).toEqual(['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);

@@ -271,7 +271,8 @@ test.describe('Our Model', () => {
     await expect(rows).toContainText(['Train', 'Connect to Work', 'Supply Talent', 'Equip Institutions']);
     await expect(page.locator('#why a', { hasText: 'How TalentLEAP Works' })).toHaveCount(1);
     // WP49 (cycle-24 review): the "What Is Live Today" callout is gone; the roadmap says adaptive learning is planned, not live
-    await expect(page.locator('#roadmap')).toContainText('This is roadmap, not live.');
+    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "..., not live yet."
+    await expect(page.locator('#roadmap')).toContainText('not live yet.');
   });
 
   test('TalentLEAP: How It Works is the five-step stage pipeline (no repeated rows) and every On This Page label equals its heading', async ({ page }) => {

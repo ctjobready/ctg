@@ -5,8 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
-import { KOSOVO_RECORDS, TRIAL_WOMEN, WB_KOSOVO } from '../../../data/copy';
-import { caseBySlug } from '../impact/case-studies';
+import { KOSOVO_RECORDS, TRIAL_WOMEN, WB_KOSOVO, WSDFM_RECORDS } from '../../../data/copy';
 
 interface CardPhoto {
   src: ImageMetadata;
@@ -29,6 +28,14 @@ export function casePhoto(slug: string): CardPhoto | undefined {
 const herPowerParts = /^tracked women, from the ([\d,]+) trained directly by CodersTrust, in work: (\d+%)$/.exec(fact('PR-05').stat?.label ?? '');
 if (!herPowerParts) throw new Error('caseStudies: PR-05 label no longer reads "tracked women, from the N trained directly by CodersTrust, in work: P%"');
 const herPowerLabel = `tracked women in work (${herPowerParts[2]}), among the ${herPowerParts[1]} women CodersTrust trained directly`;
+/**
+ * WP63 (cycle-35 review, Gemini M6): the Governments Results at a Glance tile sets the label apart from its figure ("372 of 800"), and "Her Power: tracked women in work (47%), among the 2,500 women CodersTrust trained directly" could be read as all 2,500 tracked.
+ * The tile's label states the tracked base itself, in PR-05's numbers (the 800 from its stat value "372 of 800", the 47% and the 2,500 from its label): "Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly". The count (372) is the tile's own
+ * figure above the label, so the label does not state it a second time. The cards that print the figure and the caption together keep herPowerLabel ("372 of 800 tracked women in work (47%), among the 2,500 women ..."), which reads as one clause there.
+ */
+const herPowerTracked = /^[\d,]+ of ([\d,]+)$/.exec(fact('PR-05').stat?.value ?? '')?.[1];
+if (!herPowerTracked) throw new Error('caseStudies: PR-05 stat value no longer reads "N of M"');
+export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerParts[2]} of the ${herPowerTracked} tracked women in work, from the ${herPowerParts[1]} women CodersTrust trained directly`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
  * 71% is program records, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.
@@ -59,9 +66,11 @@ export const CASE_CARD_LABEL_FACTS: Record<string, string[]> = { 'PR-01': ['RC-0
  * Partners, Foundations, Local Partners and YouthWIDE list their own cards (no `context`), so they keep the figure and its caption (CASE_CARD_LABELS).
  * WP57 (cycle-29 review, Gemini GM4; owner decision 7, "show both"): the Kosovo card is the exception to the delivery-context rule: its `context` line is the program records ("Program records: 102 of 150 women in work.") and its `note` the World Bank's
  * figure, so the card shows both Kosovo figures itself (the slide's line stays as it is).
+ * WP63 (cycle-35 review, Gemini M4): the WSDFM card was left with the delivery-context line and no outcome line, while the Kosovo card has its program records. Its `context` is now the same kind of line, "Program records: 711 of 1,000 women in work (71%)."
+ * (WSDFM_RECORDS, src/data/copy.ts, from PR-01), which the fourth carousel slide states too (the figure is on Home twice now, as Kosovo's is); the case study's delivery scope stays on its own page and card.
  */
 export const caseStudyItems = [
-  { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: `${caseBySlug('wsdfm-women-freelancers').scope}.`, href: '/impact/case-studies/wsdfm-women-freelancers/' },
+  { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: WSDFM_RECORDS.text, contextFacts: WSDFM_RECORDS.facts, href: '/impact/case-studies/wsdfm-women-freelancers/' },
   // WP55 (owner decision 2026-10-17, "Show both"): this card adds the World Bank's own figure in one line (WB_KOSOVO). WP57 (cycle-29 review, Gemini GM4): the card showed only that line, with the program records in the slide far above it, so
   // it now shows both: "Program records: 102 of 150 women in work." (KOSOVO_RECORDS, PR-02) where the delivery-context line was ("Digital literacy followed by real online work."), then the World Bank's line.
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: KOSOVO_RECORDS.text, contextFacts: KOSOVO_RECORDS.facts, note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },

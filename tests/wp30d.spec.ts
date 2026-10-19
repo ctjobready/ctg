@@ -161,7 +161,9 @@ test.describe('less is more: the report-like bands are gone', () => {
     const text = compact(await page.locator('main').evaluate((el) => el.textContent ?? ''));
     expect(text.split('AI chat is live today').length - 1).toBe(0);
     expect(text.split('Adaptive learning remains on the roadmap').length - 1).toBe(0);
-    expect(text.split('This is roadmap, not live.').length - 1).toBe(1);
+    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): the sentence ends "..., not live yet." (it ended "... This is roadmap, not live."); it is still said once
+    expect(text.split('not live yet.').length - 1).toBe(1);
+    expect(text.split('This is roadmap, not live.').length - 1).toBe(0);
   });
 });
 

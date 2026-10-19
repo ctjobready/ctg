@@ -249,13 +249,16 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     expect(stale, 'pages with the old sentence').toEqual([]);
   });
 
-  test('item 34: the Her Power base reads "among the 2,500 women CodersTrust trained directly" on the Governments tile and on every case card that shows the figure', async ({ page }) => {
+  // WP63 (cycle-35 review, Gemini M6): the Governments tile states the tracked base itself ("Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly"); the case cards keep the caption below
+  test('item 34: the Her Power base reads "among the 2,500 women CodersTrust trained directly" on every case card that shows the figure; the Governments tile states the tracked base (WP63)', async ({ page }) => {
     const LABEL = 'tracked women in work (47%), among the 2,500 women CodersTrust trained directly';
+    const TILE = 'Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly';
     await open(page, 'partner-with-us/governments/');
     const tile = page.locator('#glance a[data-fact^="PR-05"]');
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
     // WP52 (cycle-27 review): the tile names the program ("Her Power: ..."); the case cards below sit under the program's name and keep the bare caption
-    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(`Her Power: ${LABEL}`);
+    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(TILE);
+    expect(compact(await tile.locator('.pg__desc').textContent())).not.toContain('among the 2,500');
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');

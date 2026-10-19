@@ -159,7 +159,7 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     await open(page, HOME);
     await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('learners trained through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     await open(page, ABOUT);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.'); // WP63 (cycle-35 review, Grok R6)
     await expect(page.locator('.about-stats .factstat[data-fact="SC-03"] .stat__value')).toHaveText('16');
     await open(page, GLOBAL_REACH);
     // WP57 (cycle-29 review, Grok R1): the H1 is "Where We Have Worked: 16 Countries and Territories"; the page title keeps "Global Reach: 16 Countries and Territories"

@@ -82,7 +82,7 @@ test.describe('Home: each figure once', () => {
     // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
+      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -387,7 +387,7 @@ test.describe('cost and safeguarding: full on the hub, one line and a link on th
     await open(page, 'partner-with-us/employers/');
     expect(await answerOf(page, 'What Does It Cost?')).toContain('confirm it after the needs assessment');
     await open(page, 'partner-with-us/governments/');
-    expect(await answerOf(page, 'Will This Work in Our Country?')).toContain('That depends on local demand and on lab access and facilitator supply, which we test first.');
+    expect(await answerOf(page, 'Will This Work in Our Country?')).toContain('We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'); // WP63 (cycle-35 review, GPT-6.1 Sol G2)
   });
 
   // WP37 (cycle-14 review): Development Partners no longer restates the three program figures (its Proof in Practice band, directly above, shows them): a page variant of Q6 (tests/wp37.spec.ts)

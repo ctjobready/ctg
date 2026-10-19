@@ -22,7 +22,7 @@ import { listPages } from './support/pages';
  *   - G3: Employers' first pain card says "AI skills are the hardest to find (ManpowerGroup, 2026).", from PX-05's source note;
  *   - G5: Local Partners' first "What Your Community Gets" card no longer repeats the funding-end answer;
  *   - K1: the Case Studies hub hero is the Kosovo training room (a case-study program's photograph), not the Bhutan inauguration, with Kosovo in its alt text;
- *   - K2: the hub H1 is "Five Programs, from Kosovo to Bangladesh" (grid H2 "Results First, Program by Program"), and the Albania card's figure is labelled "Reported Enrollment";
+ *   - K2: the hub H1 was "Five Programs, from Kosovo to Bangladesh" (WP63, cycle-35 review, Kimi K5: "Five Programs Across Kosovo, Albania and Bangladesh"; grid H2 "Results First, Program by Program"), and the Albania card's figure is labelled "Reported Enrollment";
  *   - K3: Her Power's 18.6% names its base, "18.6% of those 800 were in work during the course" (PR-05, owner answer 2026-10-20);
  *   - L4: Home's "How Do You Prove Outcomes?" opens "A scorecard is agreed for every cohort before delivery.";
  *   - L7: the JobReady Platform rollout table's first row (the course storefront) is "Live", not "Operating";
@@ -178,15 +178,17 @@ test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// WP63 (cycle-35 review, GPT-6.1 Sol G2): YouthWIDE prints the bank's two-sentence answer (tests/wp62.spec.ts, Item 6), so the 16-countries sentence WP60 added to it is gone; "has worked since 2014 in" is still on no built page
 test.describe('R5 (Grok): YouthWIDE’s country answer does not read as all 16 since 2014', () => {
   const SENTENCE = 'CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.';
 
-  test('the answer ends with the new sentence, in the page and in its structured data; "has worked since 2014 in" is on no built page', async ({ page }) => {
+  test('the answer no longer carries the 16-countries sentence, in the page and in its structured data; "has worked since 2014 in" is on no built page', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Will This Work in Our Country?' }) }).first();
     const answer = compact(await item.locator('.faq__a').textContent());
-    expect(answer).toBe(`That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience. ${SENTENCE}`);
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toContain(SENTENCE);
+    expect(answer).toBe('We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania.');
+    expect(answer).not.toContain(SENTENCE);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).not.toContain(SENTENCE);
     expect(sitePages().filter((p) => visible(p.html).includes('has worked since 2014 in')).map((p) => p.route)).toEqual([]);
   });
 });
@@ -243,7 +245,7 @@ test.describe('S3 (Claude): the 2 million 2030 aim carries its dependency on eve
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM’s program records name the trial’s count beside them', () => {
-  const LINE = 'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).';
+  const LINE = 'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.'; // WP63 (cycle-35 review, Kimi K2): the clause "from program records" is left out so the line stays one row at 1280 (this block's budget test)
   const CAPTION = 'WSDFM program records (not trial data; the trial studied 833 women): 71% in work';
   const CARD_PAGES = ['partner-with-us/development-partners/', 'partner-with-us/foundations/', LOCAL, YOUTHWIDE];
 
@@ -282,7 +284,7 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     });
   }
 
-  test('Home’s WSDFM card shows delivery context, not the caption, and the band does not name RC-07 (the slide states the figure)', async ({ page }) => {
+  test('Home’s WSDFM card shows its program records (WP63; it showed delivery context), not the caption, and the band does not name RC-07 (the slide names it beside the figure)', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await page.locator('#cases').textContent())).not.toContain('the trial studied 833 women');
     expect(((await page.locator('#cases [data-fact]').first().getAttribute('data-fact')) ?? '').split(' ')).not.toContain('RC-07');
@@ -390,15 +392,15 @@ test.describe('G5 (GPT-6.1 Sol): Local Partners’ first "What Your Community Ge
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs, from Kosovo to Bangladesh", with a photograph from a case-study program and an honest label on Albania’s figure', () => {
+test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across Kosovo, Albania and Bangladesh" (WP63; it was "..., from Kosovo to Bangladesh"), with a photograph from a case-study program and an honest label on Albania’s figure', () => {
   const HUB = 'impact/case-studies/';
 
   test('the H1, the lead and the grid’s H2 read as below, and the old H1 and H2 are gone', async ({ page }) => {
     await open(page, HUB);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs, from Kosovo to Bangladesh');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs Across Kosovo, Albania and Bangladesh');
     await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result, its base and what the figures do and do not show.');
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
-    expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+    expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First|Five Programs, from Kosovo to Bangladesh/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
   test('the hero photograph is the Kosovo training room (a case-study program), described as Kosovo; the Bhutan inauguration is on Global Reach and not on the hub', async ({ page }) => {
@@ -532,7 +534,8 @@ test.describe('GM6 (Gemini): Development Partners’ first challenge card no lon
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM7 (Gemini): Home’s "Our Approach" is one sentence that keeps the audience', () => {
-  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth" (it was "educated, unemployed youth"), the group ID-01 and the hero name
+  const STATEMENT = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
 
   test('the statement is the one sentence, in the source and on Home; the gate declares it whole for Home, independently of the source', async ({ page }) => {
     expect(POSITIONING.home.text).toBe(STATEMENT);

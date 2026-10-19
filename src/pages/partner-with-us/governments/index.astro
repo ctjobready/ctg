@@ -47,6 +47,8 @@
  * "Won logo-design work on Freelancer.com, then gained more clients." (its narrative sentence repeated it, and is not a quotation, so it is gone; LearnerVoice takes no excerpt here).
  * WP61 (cycle-33 review, GLM L5): "Results and Contract Scope at a Glance" leads with the results and ends with the contract scope: the randomized trial (+10.3), Her Power (372 of 800), Kosovo, then the 30,000+ contract scope (it led with the contract scope). The tiles, labels and notes are unchanged;
  * the contract-scope tile is the single secondary tile, which PartnerGlance draws as the fourth main tile (WP49).
+ * WP63 (cycle-35 reviews, Gemini M6 and GLM L6): the Her Power glance tile's label states the tracked base ("Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly"; HER_POWER_TILE_LABEL);
+ * the contracts table is headed "What Each Government Contract Covers" (it was "Six Government Contracts, Scope by Scope"). The table's anchor (#contracts) is unchanged.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -73,7 +75,7 @@ import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { CONTRACT_TOTAL_NOTE, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
-import { CASE_CARD_LABELS } from '../../../components/pages/home/caseStudies';
+import { HER_POWER_TILE_LABEL } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
 import { webPage } from '../../../lib/schema';
@@ -87,9 +89,9 @@ const { title, description } = meta(
   VALUE_PROPOSITION.governments,
 );
 
-// The Her Power tile reads as the Development Partners and Foundations cards do: the result first, then its base (built from PR-05's own label in caseStudies.ts). Those cards sit under the program's name; this tile does not, so the label opens with
-// it (WP52, cycle-27 review: "372 of 800" alone did not name the program). A page-level label: the shared caption and the register's PR-05 are unchanged.
-const herPowerLabel = `Her Power: ${CASE_CARD_LABELS['PR-05']}`;
+// The Her Power tile's label is a page-level label (HER_POWER_TILE_LABEL, built from PR-05 in caseStudies.ts; the shared card caption and the register's PR-05 are unchanged). The cards on the Development Partners and Foundations pages sit under the program's name; this tile does not,
+// so the label opens with it (WP52, cycle-27 review: "372 of 800" alone did not name the program). WP63 (cycle-35 review, Gemini M6): and it states the tracked base itself, "47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly"
+// (it said "tracked women in work (47%), among the 2,500 women ...", which could be read as all 2,500 tracked); the count, 372, is the tile's own figure above the label.
 // WP51 (cycle-26 review, Kimi m2): Her Power's 25,125 and 2,500 are in the contracts table below, so this page's tile did not repeat them (its note was the register note's first sentence and a pointer to the table; Impact keeps the full note).
 // WP57 (cycle-29 review, Grok R2, with Gemini GM1): the tile's note is the shared CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), so the total visibly
 // includes Her Power's national program; the pointer sentence is gone (the tile links to the table), and the tile's data-fact lists GV-12, SC-06 and GV-01. The 25,125 is GV-01's value, read in src/data/copy.ts.
@@ -123,7 +125,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     title="Results and Contract Scope at a Glance"
     lead={[
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
-      { id: 'PR-05', href: '/impact/case-studies/her-power/', label: herPowerLabel },
+      { id: 'PR-05', href: '/impact/case-studies/her-power/', label: HER_POWER_TILE_LABEL },
       { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts },
     ]}
     more={[{ id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', note: contractsNote, also: ['SC-06', ...contractsNoteFacts] }]}
@@ -185,7 +187,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     broaderLabel="The evidence behind the results"
   />
   <!-- WP37 (cycle-14 review): the Her Power band (WP29) that followed the table is gone: the glance tile and the table's first row state what it showed, and the case study is a text link under the table. -->
-  <ContractTable title="Six Government Contracts, Scope by Scope" lead="What CodersTrust does under each contract, and the training scope it covers." more={{ label: 'Read the Her Power Case Study', href: LINKS.caseHerPower }} />
+  <ContractTable title="What Each Government Contract Covers" lead="What CodersTrust does under each contract, and the training scope it covers." more={{ label: 'Read the Her Power Case Study', href: LINKS.caseHerPower }} />
 
   <!-- C8 · Features to benefits. WP39 (cycle-16 review): three short cards in place of the concern / inclusion / benefit matrix, in the order of the three pains in C2 (graduates struggle to find work; budgets are measured by
        enrollment, not earnings; trainer and curriculum capacity takes time to build). The sentences keep the matrix rows' words; they rest on PD-10 and PD-01 (tracks from employer demand, mentoring and placement support), PD-11 and PD-08

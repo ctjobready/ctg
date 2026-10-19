@@ -5,7 +5,6 @@ import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
 import { C14, EMPATHY, ORIGIN_SHORT, POSITIONING } from '../src/data/copy';
-import { CASE_STUDIES } from '../src/components/pages/impact/case-studies';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -146,27 +145,27 @@ test.describe('Home: the survey slide names its subgroup (item 3; WP53: the spee
   });
 });
 
-test.describe('Home: the WSDFM card of "Proof in Practice" shows its delivery context (item 4)', () => {
-  const CONTEXT = 'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.';
+// WP63 (cycle-35 review, Gemini M4): the WSDFM card's context line is its program records (it was the case study's delivery scope, "ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring."), as the Kosovo card's is
+test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line in the figure’s place, its program records (item 4; WP63)', () => {
+  const RECORDS = 'Program records: 711 of 1,000 women in work (71%).';
 
-  test('all three cards show a context line in the figure’s place and the band names only the two Kosovo facts (PR-02 and PR-02b); the WSDFM line is the case study’s own scope', async ({ page }) => {
-    expect(`${CASE_STUDIES.find((c) => c.slug === 'wsdfm-women-freelancers')!.scope}.`).toBe(CONTEXT);
+  test('all three cards show a context line in the figure’s place and the band names the WSDFM and Kosovo facts (PR-01, PR-02 and PR-02b); the WSDFM line is its program records', async ({ page }) => {
     await open(page, '');
     const cards = page.locator('#cases article');
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // WP57 (cycle-29 review, Gemini GM4): the Kosovo card's context line is its program records
-    expect(await texts(page, '#cases .case__context')).toEqual([CONTEXT, 'Program records: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
+    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
-    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WSDFM's and Her Power's facts (PR-01, PR-05) are not named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 PR-02b', 'PR-02', 'PR-02b']);
+    // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's fact (PR-05) is not named.
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 PR-02b', 'PR-01', 'PR-02', 'PR-02b']);
   });
 
-  test('the figure is stated once on Home, in slide 4, with its qualifier', async ({ page }) => {
+  test('the figure is stated on Home in slide 4, with its qualifier, and in the WSDFM card as program records (WP63; it was slide 4’s alone)', async ({ page }) => {
     await open(page, '');
     const text = await everything(page);
-    expect(count(text, '711 of 1,000')).toBe(1);
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).');
+    expect(count(text, '711 of 1,000')).toBe(2);
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
   });
 
   test('Development Partners, Foundations, Local Partners and YouthWIDE list their own cards: the WSDFM card keeps the figure and its caption there', async ({ page }) => {
@@ -309,7 +308,8 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
 });
 
 test.describe('Home: the Outcome Tracking row, the positioning statement and the Compare heading (items 10, 11 and 12)', () => {
-  const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
+  const CLOSING = 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
 
   test('the Outcome Tracking row carries the scope qualifier and puts the reports first', async ({ page }) => {
     await open(page, '');
@@ -412,7 +412,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
     expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
+      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

@@ -1,5 +1,6 @@
 ---
 import Icon from '../system/Icon.astro';
+import { SCORECARD_LABELS } from '../../data/copy';
 
 /**
  * Pilot Scorecard (WP22, review cycle 4): the five measures of the pilot scorecard agreed in co-design, as one visual.
@@ -12,12 +13,14 @@ interface Props {
   class?: string;
 }
 const { lead, class: className } = Astro.props;
+// WP63 (cycle-35 review, Grok R4): the five labels are SCORECARD_LABELS (src/data/copy.ts), the list YouthWIDE's "Managed Rollout" band prints too; the icons and the sustained-work example are this component's.
+const [completion, certification, firstPaidWork, sustainedWork, costPerOutcome] = SCORECARD_LABELS;
 const measures = [
-  { icon: 'circle-check', label: 'Completion' },
-  { icon: 'award', label: 'Certification' },
-  { icon: 'briefcase', label: 'First Paid Work' },
-  { icon: 'calendar-check', label: 'Sustained Work', note: 'For example, earnings in at least three of six months above an agreed minimum.' },
-  { icon: 'scale', label: 'Cost per Completer and per Verified Outcome' },
+  { icon: 'circle-check', label: completion },
+  { icon: 'award', label: certification },
+  { icon: 'briefcase', label: firstPaidWork },
+  { icon: 'calendar-check', label: sustainedWork, note: 'For example, earnings in at least three of six months above an agreed minimum.' },
+  { icon: 'scale', label: costPerOutcome },
 ];
 ---
 

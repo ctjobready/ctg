@@ -14,7 +14,7 @@ import { listPages } from './support/pages';
  *   - 3: Foundations’ fourth glance tile is the WSDFM program record (711 of 1,000, "WSDFM program records: 71% in work", Program Record), not the +$27 tile, with the note the Impact tile has (rework R3);
  *   - 4: the partner hub’s steps band is "From First Conversation to First Cohort", and its lead no longer opens with the sentence the heading now says;
  *   - 5: Development Partners’ UNDP YES tile names the program’s year (2017, from PR-03); the Impact tile keeps the register’s label;
- *   - 6: the "Will This Work in Our Country?" answer (the bank’s Q1, its audience variants and YouthWIDE’s own) adds Digital Jobs Albania as delivery experience, not results;
+ *   - 6: the "Will This Work in Our Country?" answer (the bank’s Q1, its audience variants and YouthWIDE’s own) adds Digital Jobs Albania as delivery experience, not results (reworded by WP63 as two sentences, the same on YouthWIDE);
  *   - 7: Home’s "Proof in Practice" link is "See All Case Studies";
  *   - 8: the "Where They Work" card says "Placement support and outcome tracking for 12 months after each course." on Home, YouthWIDE and the shared mechanism band, as on Development Partners;
  *   - 9: "Reach Since 2014" says "since 2014" once: Home’s hero card and the hub’s "Why Partner" tile drop it from their supporting line; the Impact tile (no such label) keeps it;
@@ -94,7 +94,7 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
     expect(fact('RC-01').stat?.value).toBe('+41%');
   });
 
-  test('the heading, its slide label and its Title Case; the eyebrow, lead and facts are unchanged; no built page keeps the heading without "per Month"', async ({ page }) => {
+  test('the heading, its slide label and its Title Case; the eyebrow and facts are unchanged (the lead is WP63’s: "women offered a place had ..."); no built page keeps the heading without "per Month"', async ({ page }) => {
     await open(page, HOME);
     const first = slide(page, 1);
     await expect(first.locator('h2')).toHaveText(TITLE);
@@ -102,7 +102,7 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
     await expect(first).toHaveAttribute('aria-label', `1 of 4: ${TITLE}`);
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(sitePages().filter((p) => /Earned an Estimated 41% More(?! per Month)/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 
@@ -135,7 +135,7 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
   test('Home: the recognition band keeps its three badges, then the one-sentence pointer naming Kosovo and Albania (no outlet, no link of its own), then the link to Recognition and Media', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
-    await expect(band.locator('h3')).toHaveText(['University and UN-Mandated Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('h3')).toHaveText(['University Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']); // WP63 (cycle-35 review, Gemini M3)
     const line = band.locator('p.cov');
     await expect(line).toHaveCount(1);
     expect(compact(await line.textContent())).toBe(POINTER);
@@ -311,44 +311,49 @@ test.describe('Item 5 (Grok): the UNDP YES tile names its year', () => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 6 (Sonnet, Gemini): "Will This Work in Our Country?" adds Digital Jobs Albania as delivery experience', () => {
-  const CLAUSE = 'Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience';
+// WP63 (cycle-35 review, GPT-6.1 Sol G2) supersedes WP62's wording of the answer (one long second sentence with two semicolons) with two plain sentences; Albania still adds delivery experience, not results, and the answer still rests on TL-05.
+test.describe('Item 6 (Sonnet, Gemini; reworded by WP63, GPT-6.1 Sol G2): "Will This Work in Our Country?" adds Digital Jobs Albania as delivery experience, not results', () => {
+  const FIRST = 'We test local employer demand first and choose each country’s tracks with local partners.';
+  const SECOND = 'Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania.';
   const answerOf = async (page: Page) => {
     const item = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Will This Work in Our Country?' }) }).first();
     return compact(await item.locator('.faq__a').textContent());
   };
 
-  test('the bank answer (Home) is two sentences; the clause is the new one; the answer rests on TL-05 too (CodersTrust took part in Digital Jobs Albania)', async ({ page }) => {
+  test('the bank answer (Home) is two sentences; the second is the new one; the answer rests on TL-05 too (CodersTrust took part in Digital Jobs Albania)', async ({ page }) => {
     await open(page, HOME);
     const answer = await answerOf(page);
-    expect(answer).toBe(`That depends on local demand, which we test first. ${CLAUSE}; we set each country’s tracks with local partners, from local employer demand.`);
+    expect(answer).toBe(`${FIRST} ${SECOND}`);
     expect(answer.split(/(?<=\.) (?=[A-Z])/)).toHaveLength(2);
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toContain(`${CLAUSE};`);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toBe(`${FIRST} ${SECOND}`);
     const evidence = (await page.locator('#faq details', { hasText: 'Will This Work in Our Country?' }).locator('.faq__a p').first().getAttribute('data-fact')) ?? '';
     expect(evidence.split(' ')).toEqual(['IN-02', 'PD-10', 'PR-02', 'TL-05']);
     expect(fact('TL-05').text).toContain('CodersTrust took part in Digital Jobs Albania');
   });
 
-  test('the audience variants inherit it (Development Partners, Governments, Universities), each opening with its own sentence', async ({ page }) => {
+  test('the audience variants keep the second sentence (Development Partners, Governments, Universities), each opening with its own first sentence', async ({ page }) => {
     for (const [route, opening] of [
-      [DEV_PARTNERS, 'That depends on local demand in your portfolio countries, which we test first.'],
-      [GOVERNMENTS, 'That depends on local demand and on lab access and facilitator supply, which we test first.'],
-      ['partner-with-us/universities/', 'That depends on local demand for your graduates’ skills and on your campus labs, which we test first.'],
+      [DEV_PARTNERS, 'We test local employer demand in your portfolio countries first and choose each country’s tracks with local partners.'],
+      [GOVERNMENTS, 'We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'],
+      ['partner-with-us/universities/', 'We test local employer demand for your graduates’ skills and your campus labs first, and choose each country’s tracks with local partners.'],
     ] as const) {
       await open(page, route);
-      expect(await answerOf(page), route).toBe(`${opening} ${CLAUSE}; we set each country’s tracks with local partners, from local employer demand.`);
+      expect(await answerOf(page), route).toBe(`${opening} ${SECOND}`);
     }
   });
 
-  test('YouthWIDE’s own answer says it with a full stop, then its 16-countries sentence; the page and its structured data agree', async ({ page }) => {
+  test('YouthWIDE prints the same answer as the bank (one shorter answer for every page; the 16-countries sentence of WP60 is gone), on the page and in its structured data, resting on the same facts', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    const sentence = 'CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.';
-    expect(await answerOf(page)).toBe(`That depends on local demand, which we test first. ${CLAUSE}. ${sentence}`);
-    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toContain(`${CLAUSE}. ${sentence}`);
+    expect(await answerOf(page)).toBe(`${FIRST} ${SECOND}`);
+    expect((await faqJsonLd(page)).find((q) => q.name === 'Will This Work in Our Country?')?.text).toBe(`${FIRST} ${SECOND}`);
+    const evidence = (await page.locator('#faq details', { hasText: 'Will This Work in Our Country?' }).locator('.faq__a p').first().getAttribute('data-fact')) ?? '';
+    expect(evidence.split(' ')).toEqual(['IN-02', 'PD-10', 'PR-02', 'TL-05']);
   });
 
-  test('the earlier clause is on no built page, and no page credits Albania with results', () => {
+  test('the earlier wording is on no built page, and no page credits Albania with results', () => {
     expect(pagesWith('comes mainly from Bangladesh, and the Kosovo pilot adds program results')).toEqual([]);
+    expect(pagesWith('the Kosovo pilot adds program results from outside it', 'Digital Jobs Albania adds delivery experience')).toEqual([]);
+    expect(pagesWith('That depends on local demand')).toEqual([]);
     expect(pagesWith('Digital Jobs Albania adds program results', 'Digital Jobs Albania adds results')).toEqual([]);
   });
 });

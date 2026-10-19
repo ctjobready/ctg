@@ -76,7 +76,8 @@ test.describe('Home: the challenge band and the positioning statement (items 1 a
   test('"One Path from Learning to Earning" states one sentence: the "Many programs cover one step" sentence is gone from the statement and from the source', async ({ page }) => {
     const expected =
       // WP51 (cycle-26 review): the reports are scoped like every other reporting statement on the site ("..., as agreed in the program scope"; tests/wp51.spec.ts)
-      'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+      // WP63 (cycle-35 review, Grok R1): "... for educated, unemployed and underemployed youth, ..." (the group ID-01 names)
+      'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
     expect(POSITIONING.home.text).toBe(expected);
     expect(POSITIONING.home.facts).toEqual(['PD-08']);
     await open(page, '');
@@ -105,7 +106,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(slide(page).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
+      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -113,9 +114,9 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01 RC-07', 'PR-03 PR-06', 'PR-05']);
   });
 
-  // WP55 (owner decision 2026-10-18): Impact lists five case studies ("Five Programs, from Kosovo to Bangladesh"). The slide's four are the four with program records, in Impact's order; the fifth, Digital Jobs Albania, has only the World Bank's published figures
+  // WP55 (owner decision 2026-10-18): Impact lists five case studies ("Five Programs Across Kosovo, Albania and Bangladesh" since WP63; it was "..., from Kosovo to Bangladesh"). The slide's four are the four with program records, in Impact's order; the fifth, Digital Jobs Albania, has only the World Bank's published figures
   // (interest and enrollment, no program-record result) and so is not a line on this slide.
-  test('the four lines are Impact’s case studies with program-record results, in the same order ("Five Programs, from Kosovo to Bangladesh" adds Digital Jobs Albania), and WSDFM’s figure is the case card’s', async ({ page }) => {
+  test('the four lines are Impact’s case studies with program-record results, in the same order ("Five Programs Across Kosovo, Albania and Bangladesh" adds Digital Jobs Albania), and WSDFM’s figure is the case card’s', async ({ page }) => {
     await open(page, '');
     const lines = await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li');
     expect(lines).toHaveLength(4);
@@ -127,7 +128,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
     expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
     await open(page, 'impact/');
-    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toBeVisible();
+    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toBeVisible();
     await expect(page.locator('#cases article.card')).toHaveCount(5);
     const hrefs = await page.locator('#cases a.card__link').evaluateAll((els) => els.map((e) => (e.getAttribute('href') ?? '').split('/').filter(Boolean).pop()));
     expect(hrefs).toEqual(['kosovo-women-in-online-work', 'digital-jobs-albania', 'wsdfm-women-freelancers', 'undp-yes-korail', 'her-power']);
@@ -174,13 +175,15 @@ test.describe('Home: the reporting answer is two sentences, and the full answer 
     expect(await answerOf(page, 'How Do You Prove Outcomes?')).toBe(HOME_ANSWER);
     expect(await itemOf(page, 'How Do You Prove Outcomes?').locator('.faq__a p').first().getAttribute('data-fact')).toBe('PD-11 PD-08 PD-09');
     expect((await faqJsonLd(page)).find((q) => q.name === 'How Do You Prove Outcomes?')?.text).toBe(HOME_ANSWER);
+    // WP63 (cycle-35 review, GPT-6.1 Sol G1): the shared Q3 reads "Documentary evidence of work and earnings, such as offer letters, ..."; Home prints the Q3-home variant, which has neither form
+    expect(await everything(page)).not.toContain('Documentary evidence of work and earnings, such as offer letters');
     expect(await everything(page)).not.toContain('Documentary evidence of earnings, such as offer letters');
   });
 
   test('the shared answer (Q3) is unchanged in the bank (the hub’s full list) and on the pages that print it: Development Partners and Foundations', async ({ page }) => {
     const full = faqs.find((f) => f.id === 'Q3')!.a;
     expect(full).toBe(
-      'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.',
+      'For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of work and earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.',
     );
     expect(faqsFor('all').map((f) => f.id)).toContain('Q3');
     for (const route of [DP, FOUND]) {
@@ -419,7 +422,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
-    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
+    expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first(page).locator('h2').getAttribute('data-fact')).toBe('RC-01');
     expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });

@@ -43,7 +43,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
+      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -109,10 +109,11 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     expect(await text(page, '#faq')).toContain('Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive');
   });
 
-  test('offer: option 1 is the First Multi-Cohort Pilot, scoped in the discovery session; pricing is one short block', async ({ page }) => {
+  // WP63 (cycle-35 review, Grok R5): option 1 is "Multi-Cohort Pilot Program", the name the audience pages use (Home called it "First Multi-Cohort Pilot")
+  test('offer: option 1 is the Multi-Cohort Pilot Program, scoped in the discovery session; pricing is one short block', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const first = page.locator('#offer ol > li').first();
-    await expect(first.locator('h3')).toHaveText('First Multi-Cohort Pilot');
+    await expect(first.locator('h3')).toHaveText('Multi-Cohort Pilot Program');
     await expect(first).toContainText('Scope the number of cohorts and trainees with us in the discovery session.');
     const offer = await text(page, '#offer');
     // WP30c: the offer states pricing in one short block; the scale evidence (Her Power, the contracts) is on the Governments page and in the carousel

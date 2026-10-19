@@ -131,6 +131,8 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
 test.describe('Governments: the delivery card scopes its reports and surveys; the Her Power tile names its program (items 4 and 5)', () => {
   const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
   const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,500 women CodersTrust trained directly';
+  // WP63 (cycle-35 review, Gemini M6): the tile states the tracked base itself; the case cards keep BASE_OF_FIGURE
+  const TILE_LABEL = 'Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly';
 
   test('"Placement and Monthly Reports" ends "..., as agreed in the program scope." and keeps the survey months', async ({ page }) => {
     await open(page, GOV);
@@ -146,7 +148,7 @@ test.describe('Governments: the delivery card scopes its reports and surveys; th
     await expect(tile).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('PR-05');
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
-    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(`Her Power: ${BASE_OF_FIGURE}`);
+    expect(compact(await tile.locator('.pg__desc').textContent())).toBe(TILE_LABEL);
     // the register's own label is unchanged: the caption is derived from it
     expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
     // the case cards on the pages that list them sit under the program's name and keep the bare caption
@@ -386,10 +388,11 @@ test.describe('About: the identity sentences sit directly under the lede (item 1
     expect(compact(await page.locator('#team-cta h2').textContent())).toBe('Talk to the Team');
   });
 
-  test('the meta description is 154 characters, within the limit of 155, with the register’s year and count, and names the underemployed (also in og:description)', async ({ page }) => {
+  // WP63 (cycle-35 review, Grok R6): "educated," is back in the group (ID-01's wording), so "Since 2014," is out to stay within 155 characters: 152
+  test('the meta description is 152 characters, within the limit of 155, with the register’s count, and names the group as ID-01 does (also in og:description)', async ({ page }) => {
     await open(page, ABOUT);
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
-    expect(D.length).toBe(154);
+    const D = 'New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
+    expect(D.length).toBe(152);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
     expect(fact('SC-03').stat?.value).toBe('16'); // WP55 (owner decision 2026-10-18): 17, with Egypt and Benin added; WP56 (owner decision 2026-10-18): 16, with Somalia merged into Somaliland

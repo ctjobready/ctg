@@ -116,6 +116,19 @@ function kosovoRecords(): CopyBlock {
   return { text: `Program records: ${n.replace(/ /g, '\u00a0')} women in work.`, facts: ['PR-02'] };
 }
 export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
+/**
+ * WP63 (cycle-35 review, Gemini M4): the same kind of line for the WSDFM card of Home's "Proof in Practice" band, which had no outcome line while the Kosovo card has its program records: "Program records: 711 of 1,000 women in work (71%)." The count is PR-01's
+ * stat value and the percentage is the one in its label ("WSDFM: 71% in work"); the builder throws if either stops reading that way or the register stops saying "N of M women in work (P%)". It names its source in its first words, so the figure is not read as trial data
+ * (the trial studied 833 women, TRIAL_WOMEN; the carousel's fourth slide says so beside the same figure). The figure's spaces are no-break spaces, as KOSOVO_RECORDS' are.
+ */
+function wsdfmRecords(): CopyBlock {
+  const r = fact('PR-01');
+  const n = r.stat?.value;
+  const pct = /^WSDFM: (\d+%) in work$/.exec(r.stat?.label ?? '')?.[1];
+  if (!n || !/^[\d,]+ of [\d,]+$/.test(n) || !pct || !r.text.includes(`${n} women in work (${pct})`)) throw new Error('WSDFM_RECORDS: PR-01 no longer reads "N of M women in work (P%)"');
+  return { text: `Program records: ${n.replace(/ /g, ' ')} women in work (${pct}).`, facts: ['PR-01'] };
+}
+export const WSDFM_RECORDS: CopyBlock = wsdfmRecords();
 
 /**
  * WP57 (cycle-29 review, Grok R2, with Gemini GM1): the 31,200+ (GV-12) must visibly include Her Power's national 25,125 (GV-01), so Home's government slide and the Governments glance tile say it in the wording GV-12's glance note had in WP35
@@ -303,9 +316,10 @@ const UNLIKE_APPROVED =
  * WP60 (cycle-32 review, Gemini GM7; raised in nearly every cycle): Home's "Our Approach" is ONE sentence that keeps the audience, "CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed
  * in the program scope." (it was two sentences: "For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model." and "CodersTrust connects training, mentoring and placement support in one program, and partners
  * receive monthly reports on progress toward paid work, as agreed in the program scope."). scripts/check-facts.mjs declares it whole for Home (POSITION_WHOLE_STATEMENT['/']), independently of this file, so a change to it has to be made twice on purpose.
+ * WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name ("... for educated, unemployed and underemployed youth, with monthly reports ..."); the declaration in scripts/check-facts.mjs changed with it.
  */
 const HOME_POSITIONING =
-  'CodersTrust connects training, mentoring and placement support for educated, unemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
+  'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.';
 
 export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   home: {
@@ -632,6 +646,15 @@ export const SCORECARD: CopyBlock = {
   text: 'A pilot scorecard is agreed in co-design: completion, certification, first paid work, sustained work (for example, earnings in at least three of six months above an agreed minimum), and cost per completer and per verified outcome. Missed thresholds trigger a corrective plan, expansion is the funder’s decision, and independent evaluation is welcome.',
   facts: ['PD-11'],
 };
+/**
+ * WP63 (cycle-35 review, Grok R4): the five measures of the pilot scorecard as Title Case labels, in one place. Home's scorecard (src/components/ui/PilotScorecard.astro) shows them as its five items, and YouthWIDE's "Managed Rollout" list prints the same labels
+ * (it printed "First paid work", "Sustained work" and "Cost per completer and per verified outcome" in sentence case). The order and the words are PD-11's ("completion, certification, first paid work, sustained work, ... cost per completer and per verified outcome");
+ * the builder throws if the register stops naming one of them.
+ */
+export const SCORECARD_LABELS = ['Completion', 'Certification', 'First Paid Work', 'Sustained Work', 'Cost per Completer and per Verified Outcome'] as const;
+for (const label of SCORECARD_LABELS) {
+  if (!fact('PD-11').text.toLowerCase().includes(label.toLowerCase())) throw new Error(`SCORECARD_LABELS: PD-11 no longer names "${label.toLowerCase()}"`);
+}
 
 export const PROGRAM_OPTIONS = [
   { name: 'Multi-Cohort Pilot Program', size: '1,000–2,500 trainees', duration: '8–14 months (tracking to month 23)', note: 'Prove the model in one country or region.' },

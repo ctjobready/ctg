@@ -166,7 +166,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
   test('About’s meta description says the count is where CodersTrust has worked ("..., with work in 16 countries and territories."), within 155 characters, in the page and its structured data', async ({ page }) => {
     await open(page, ABOUT);
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.');
+    expect(description).toBe('New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.'); // WP63 (cycle-35 review, Grok R6)
     expect(description!.length).toBeLessThanOrEqual(155);
     expect(description, 'the 16 is not attached to the training').not.toMatch(/(?:trained|youth|digital work) in 16 countries/);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(description);
@@ -520,12 +520,11 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
     }
   });
 
-  test('YouthWIDE’s "Will This Work in Our Country?" answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.", in the page and in its structured data', async ({ page }) => {
+  // WP63 (cycle-35 review, GPT-6.1 Sol G2): YouthWIDE’s "Will This Work in Our Country?" answer is the bank’s two-sentence Q1 now, with no 16-countries sentence (tests/wp62.spec.ts, Item 6); the page still states the 16 as where CodersTrust has worked (its SC-03 tile)
+  test('YouthWIDE states the 16 as where CodersTrust has worked (the SC-03 tile), and its structured data never says "has run programs since 2014"', async ({ page }) => {
     await open(page, 'programs/youthwide/');
-    const SENTENCE = 'CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.';
-    expect(compact(await page.locator('main').textContent())).toContain(SENTENCE);
+    expect(compact(await page.locator('main').textContent())).toContain('countries and territories where CodersTrust has worked');
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
-    expect(ld).toContain(SENTENCE);
     expect(ld).not.toContain('has run programs since 2014');
   });
 

@@ -195,7 +195,8 @@ test.describe('JobReady Platform: the live-today callout (item 8)', () => {
     await expect(rows.filter({ hasText: 'Employer marketplace' })).toContainText('Pre-Launch');
     await expect(page.locator('#status a', { hasText: 'Visit jobready.global' })).toHaveCount(1);
     await expect(page.locator('#roadmap h2')).toHaveText('Planned Adaptive Learning');
-    expect(compact(await page.locator('#roadmap').textContent())).toContain('This is roadmap, not live.');
+    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "..., not live yet."
+    expect(compact(await page.locator('#roadmap').textContent())).toContain('not live yet.');
   });
 });
 
@@ -404,11 +405,11 @@ test.describe('"What Happens Next" (item 16)', () => {
 });
 
 test.describe('About: the meta description (item 17)', () => {
-  // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts); WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): "..., with work in 16 countries and territories." (the count is where CodersTrust has worked), so "educated," is out to stay within the limit: 154 characters
-  test('it reads "Since 2014, New York-headquartered CodersTrust has trained ... in 16 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
+  // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts); WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): "..., with work in 16 countries and territories." (the count is where CodersTrust has worked), so "educated," was out to stay within the limit: 154 characters; WP63 (cycle-35 review, Grok R6): "educated," is back and "Since 2014," is out: 152 characters
+  test('it reads "New York-headquartered CodersTrust has trained educated, ... in 16 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
     await open(page, 'about/');
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
-    expect(D.length).toBe(154);
+    const D = 'New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
+    expect(D.length).toBe(152);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
   });

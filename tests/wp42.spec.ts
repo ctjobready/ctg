@@ -290,7 +290,8 @@ test.describe('JobReady Platform: the roadmap item is said once (item 6)', () =>
     await expect(page.locator('#roadmap h3, #roadmap .card')).toHaveCount(0);
     const body = page.locator('#roadmap p');
     await expect(body).toHaveCount(1);
-    await expect(body).toHaveText('Planned: personalized and adaptive learning based on TalentLEAP’s competency levels. This is roadmap, not live.');
+    // WP63 (cycle-35 review, GPT-6.1 Sol GP3, polish): "... competency levels, not live yet." (it ended "... competency levels. This is roadmap, not live.")
+    await expect(body).toHaveText('Planned: personalized and adaptive learning based on TalentLEAP’s competency levels, not live yet.');
     expect(await body.getAttribute('data-fact')).toBe('IN-06');
     expect(fact('IN-06').text).toContain('the basis for AI-driven personalized and adaptive learning (roadmap)');
     expect(await mainText(page)).not.toContain('Planned Personalized and Adaptive Learning');

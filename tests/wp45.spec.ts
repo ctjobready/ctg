@@ -90,7 +90,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     const first = slide(page, 1);
     await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
-    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, their monthly income was an estimated 41% higher than the control group’s, about +$27 a month.');
+    expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
     expect(fact('RC-04').stat?.value).toBe('+$27');
@@ -210,7 +210,8 @@ test.describe('Partner with Us hub: no reporting band, two FAQs, no dead link (i
   test('the FAQ block is two questions (the country and the cost) with the new lead-in; the FAQ JSON-LD lists the same two', async ({ page }) => {
     await open(page, 'partner-with-us/');
     expect(await texts(page, '#faqs details > summary')).toEqual(['Will This Work in Our Country?', 'What Does It Cost?']);
-    await expect(page.locator('#faqs .sh__lead')).toHaveText('Two questions every partner asks. Each route page answers the rest.');
+    // WP63 (cycle-35 review, Kimi K8, polish): "Two questions partners ask first." (it said "Two questions every partner asks.")
+    await expect(page.locator('#faqs .sh__lead')).toHaveText('Two questions partners ask first. Each route page answers the rest.');
     expect((await faqJsonLd(page)).map((q) => q.name)).toEqual(['Will This Work in Our Country?', 'What Does It Cost?']);
     const text = await mainText(page);
     expect(text).not.toContain('How Do You Prove Outcomes?');

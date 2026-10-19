@@ -127,7 +127,7 @@ test.describe('Employers', () => {
     expect(ld).toContain('We start with a needs assessment of your roles, tasks and required tools.');
     expect(ld).not.toContain('That depends on local demand for the roles you hire for');
     await open(page, 'partner-with-us/governments/');
-    expect(await mainText(page)).toContain('That depends on local demand and on lab access and facilitator supply, which we test first.');
+    expect(await mainText(page)).toContain('We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'); // WP63 (cycle-35 review, GPT-6.1 Sol G2)
   });
 });
 

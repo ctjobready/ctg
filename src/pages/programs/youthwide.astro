@@ -32,6 +32,9 @@
 // WP60 (cycle-32 review, GPT-6.1 Sol G2): the "Can You Deliver at National Scale?" answer says "Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators." (it said "We scale in phases, ...", which reads as an established configuration); the 100,000+ sentence after it is unchanged.
 // WP62 (cycle-34 reviews, Sonnet and Gemini): the "Will This Work in Our Country?" answer reads "Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience." (Albania has no outcome figures,
 // so it adds experience, not results; the answer also rests on TL-05 now); the "Where They Work" card says "... outcome tracking for 12 months after each course." (the months are PD-02's, TRACKING_MONTHS).
+// WP63 (cycle-35 reviews, GPT-6.1 Sol G1 and G2, Grok R4): the glance's Reporting row says "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings); "Will This Work in Our Country?" is the bank's own Q1 now, the two-sentence answer every page prints
+// ("We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania."), so the 16-countries sentence of WP60 is gone from it;
+// the Managed Rollout list prints the scorecard measures in the Title Case labels Home's scorecard has. The page keeps its "Last updated" line: the program pages, the evidence pages and the legal pages carry the same line (Grok R9 asked for it to go only if no other page had one).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -58,7 +61,7 @@ import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { TRACKING_MONTHS } from '../../components/pages/partners/partners';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, WB_KOSOVO, painForList } from '../../data/copy';
+import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { galleryPhotos } from '../../data/photos';
 import { formatDate, isoDate } from '../../lib/format';
@@ -78,7 +81,8 @@ const hours = statValue('PD-01');
 // Five decision questions, one to three sentences each (cost is answered in the options band). Longer answers live on the evidence pages and in the discovery session.
 const faqSources: FaqSource[] = [
   { q: 'Is YouthWIDE Right for Our Organization?', html: `Right for you if you want employment outcomes tracked after blended training delivered through existing labs and colleges. YouthWIDE is not the right fit if you need a ${nationalSize} rollout delivered by one provider in a single phase; we plan national delivery phase by phase.`, evidence: ['PD-05'] },
-  { q: 'Will This Work in Our Country?', html: `That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience. CodersTrust has worked in ${statValue('SC-03')} countries and territories; most delivery has been in Bangladesh.`, evidence: ['SC-03', 'IN-02', 'PD-10', 'PR-02', 'TL-05'] },
+  // WP63 (cycle-35 review, GPT-6.1 Sol G2): the answer is the bank's Q1 (src/data/faqs.ts), one two-sentence answer for every page; the 16-countries sentence WP60 added here is gone with the shorter wording.
+  { audience: 'all' as const, id: 'Q1' },
   {
     q: 'Can You Deliver at National Scale?',
     html: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly.</p><p data-fact="PD-06 PD-05">Larger programs are designed to run in phases, up to 10 cohorts in parallel, with certified local facilitators. A ${nationalSize} phase is a design option; we have not yet delivered a program at that size.`,
@@ -94,7 +98,8 @@ const jsonLd = [
   faqNode(faqSources, path),
 ];
 
-const measures = ['Completion', 'Certification', 'First paid work', 'Sustained work', 'Cost per completer and per verified outcome'];
+// WP63 (cycle-35 review, Grok R4): the five scorecard measures in the Title Case labels Home's scorecard shows ("First Paid Work", "Cost per Completer and per Verified Outcome"), from one list (SCORECARD_LABELS, src/data/copy.ts).
+const measures = [...SCORECARD_LABELS];
 ---
 
 <LandingLayout title={title} description={description} path={path} breadcrumbs={[{ label: 'Programs', href: '/programs/' }, { label: 'YouthWIDE' }]} jsonLd={jsonLd} stickyCta={discovery}>
@@ -131,7 +136,8 @@ const measures = ['Completion', 'Certification', 'First paid work', 'Sustained w
       { label: 'Training and Mentoring', text: `${hours} training hours per certification with the exam fee included, then three months of milestone-based mentoring.`, facts: ['PD-01', 'PD-02', 'PD-02a'] },
       { label: 'Placement Support', text: 'Placement support into local, remote and global work.', facts: ['PD-15'] },
       // WP57 (cycle-29 review, GPT-6.1 Sol G2): the verification detail of the removed C8 card ("Results Your Evaluators Can Check") is here: what earnings are checked against, where available.
-      { label: 'Reporting', text: 'Monthly reports and follow-up surveys, with earnings checked against payslips, offer letters, platform logs or bank receipts where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings; PD-09: "offer letters, payslips and platform or bank records document work and earnings").
+      { label: 'Reporting', text: 'Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

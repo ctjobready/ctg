@@ -10,6 +10,7 @@
 // "What About Safeguarding and Data Protection?" are gone; the due-diligence view states both once and links to Governance, and every route page answers the rest. The FAQ block is two questions.
 // WP48 (cycle-23 review, item 17): the Governments card no longer says "national programs for youth employment" (a 100,000+ national program is a design option CodersTrust has not yet delivered); it states what the route offers, as the nav.ts menu blurb does.
 // WP62 (cycle-34 review, GLM and Grok): the steps band is headed "From First Conversation to First Cohort" (it was "Your First 90 Days"), and its lead no longer opens "Four steps from first conversation to first cohort." (the heading says it now). The anchor (#how-partnering-works) is unchanged.
+// WP63 (cycle-35 review, Kimi K8, polish): the FAQ block's lead is "Two questions partners ask first." (it said "Two questions every partner asks.").
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroBand from '../../components/sections/HeroBand.astro';
 import DefinitionBand from '../../components/sections/DefinitionBand.astro';
@@ -102,7 +103,7 @@ const jsonLd = [
   <Tone cmf="DILIGENCE" tone="ice"><DueDiligenceView /></Tone>
 
   <Tone cmf="FAQ">
-    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Two questions every partner asks. Each route page answers the rest." />
+    <FaqBlock id="faqs" audience="all" ids={HUB_FAQ} tone="white" title="Partner FAQs" lead="Two questions partners ask first. Each route page answers the rest." />
   </Tone>
 
   <Tone cmf="CTA">

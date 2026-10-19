@@ -653,10 +653,10 @@ test.describe('Digital Jobs Albania: the fifth case study, in the World Bank’s
     expect(compact(await dja.locator('.case__label').textContent())).toBe('students enrolled, reported by the World Bank in May 2022 while the program was running');
     await expect(dja.locator('.evidence-tag, [data-evidence]')).toHaveCount(0);
     expect(await dja.locator('a.card__link').getAttribute('href')).toMatch(/\/impact\/case-studies\/digital-jobs-albania\/$/);
-    // WP60 (cycle-32 review, Kimi K2): the hub's H1 is "Five Programs, from Kosovo to Bangladesh", so the grid's H2 is "Results First, Program by Program" (it was "Five Programs, Results First")
+    // WP60 (cycle-32 review, Kimi K2): the hub's H1 is "Five Programs, ...", so the grid's H2 is "Results First, Program by Program" (it was "Five Programs, Results First"); WP63 (cycle-35 review, Kimi K5): the H1 and the Impact band are "Five Programs Across Kosovo, Albania and Bangladesh"
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     await open(page, IMPACT);
-    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs, from Kosovo to Bangladesh' })).toHaveCount(1);
+    await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toHaveCount(1);
     await open(page, HOME);
     await expect(page.getByRole('link', { name: 'See All Case Studies' })).toHaveCount(1);
   });

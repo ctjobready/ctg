@@ -146,7 +146,7 @@ test.describe('the trial and the survey are shown once per page', () => {
     // WP50 (cycle-25 review, item 28): "10.3 more", RC-02's own figure (it read "about 10 more"); tests/wp50.spec.ts
     await expect(card.locator('.hh__figlabel')).toHaveText('For every 100 women offered a place in a 200-hour predecessor program, 10.3 more were in work than in the control group.');
     const first = page.locator('[data-hs-slide]').nth(0);
-    expect(compact(await first.locator('.hs__lead').textContent())).toContain('their monthly income was an estimated 41% higher than the control group’s');
+    expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (tests/wp54.spec.ts)
     // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect: +10.3 percentage points, more than four times the 2.3-point average ..."
@@ -190,7 +190,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
     // WP36 (cycle-13 review): each result names its base (Kosovo "(102 of 150)", WSDFM "(711 of 1,000 ...)", UNDP YES "of the 350 trained"; Her Power already said "of 800 tracked women")
     await expect(slide.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
-      'WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).',
+      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -223,7 +223,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
       expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
     }
     await open(page, '');
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).');
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await mainText(page)).toContain('711 of 1,000');
   });

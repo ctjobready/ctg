@@ -107,11 +107,12 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     await expect(row).toHaveCount(1);
     const text = compact(await row.locator('dd').textContent());
-    expect(text).toBe('Monthly reports and follow-up surveys, with earnings checked against payslips, offer letters, platform logs or bank receipts where available, as agreed in the program scope.');
+    // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings)
+    expect(text).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.');
     expect(text.endsWith('.')).toBe(true);
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
     // the same detail is stated once on the page (the removed card said it too)
-    expect(compact(await page.locator('main').textContent()).split('payslips, offer letters, platform logs or bank receipts').length - 1).toBe(1);
+    expect(compact(await page.locator('main').textContent()).split('offer letters, payslips, platform logs or bank receipts').length - 1).toBe(1);
   });
 
   test('the band rhythm holds after the removal: carousel (airy), photographs (white), questions (ice); no two dark bands meet', async ({ page }) => {
@@ -411,8 +412,8 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
     expect(await card(page).locator('.case__note').getAttribute('data-fact')).toBe('PR-02b');
     expect(compact(await card(page).locator('.case__context, .case__note').allTextContents().then((t) => t.join(' ')))).toBe(`${RECORDS} ${WORLD_BANK}`);
     await expect(card(page).locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
-    // the band's wrapper names both facts; no other fact is named in the band (WSDFM's and Her Power's cards state none)
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 PR-02b', 'PR-02', 'PR-02b']);
+    // the band's wrapper names both Kosovo facts; WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's card states no fact
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 PR-02b', 'PR-01', 'PR-02', 'PR-02b']);
     // the program records are on Home in the hero slide and in this card; the World Bank's figure is on this card alone
     const main = compact(await page.locator('main').textContent());
     expect(main.split('102 of 150').length - 1).toBe(2);

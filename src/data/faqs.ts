@@ -25,13 +25,16 @@ export interface Faq {
 
 // Objection bank (planning/04 §5, Q1–Q14): answers and evidence IDs are the authoritative copy; first sentence = BLUF.
 export const faqs: Faq[] = [
-  // Q1 (WP62, cycle-34 review, Sonnet and Gemini): "Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience; ..." Albania has no outcome figures, so it adds experience, not results (TL-05: CodersTrust took part
-  // in Digital Jobs Albania, 2021–2022). The audience variants below (q1Variant) inherit the sentence and its evidence; YouthWIDE's own answer (src/pages/programs/youthwide.astro) says it the same way.
-  { id: 'Q1', q: `Will This Work in Our Country?`, a: `That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience; we set each country’s tracks with local partners, from local employer demand.`, evidence: ['IN-02', 'PD-10', 'PR-02', 'TL-05'], audiences: ['development-partners', 'governments', 'universities', 'employers', 'home', 'all'] },
+  // Q1 (WP62, cycle-34 review, Sonnet and Gemini): Albania has no outcome figures, so it adds delivery experience, not results (TL-05: CodersTrust took part in Digital Jobs Albania, 2021–2022).
+  // WP63 (cycle-35 review, GPT-6.1 Sol G2): two plain sentences, "We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania."
+  // (WP62's was "That depends on local demand, which we test first. Our outcome evidence comes mainly from Bangladesh; the Kosovo pilot adds program results from outside it, and Digital Jobs Albania adds delivery experience; we set each country’s tracks with local partners, from local employer demand.").
+  // The audience variants below (q1Variant) say their first sentence for their own reader and keep the second sentence and the evidence; YouthWIDE (src/pages/programs/youthwide.astro) prints this answer as it is.
+  { id: 'Q1', q: `Will This Work in Our Country?`, a: `We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania.`, evidence: ['IN-02', 'PD-10', 'PR-02', 'TL-05'], audiences: ['development-partners', 'governments', 'universities', 'employers', 'home', 'all'] },
   // Home only (WP19, item 17): the trial's scope, answered from RC-07 (the 200-hour predecessor program for women in Dhaka), PD-01 (100 hours per certification) and the October 2026 survey.
   { id: 'Q15', q: `Does the Trial Apply to Your Program?`, a: `The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.`, evidence: ['RC-01', 'RC-07', 'PD-01', 'OC-01', 'OC-02'], audiences: ['home'] },
   { id: 'Q2', q: `Can You Deliver at National Scale?`, a: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges, and a 100,000+ national program is a design option we plan phase by phase and have not yet delivered.`, evidence: ['GV-01', 'GV-11', 'PD-06', 'PD-05'], audiences: ['development-partners', 'governments', 'foundations', 'investors', 'home', 'all'] },
-  { id: 'Q3', q: `How Do You Prove Outcomes?`, a: `For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.`, evidence: ['PD-09', 'PD-08', 'RC-01'], audiences: ['development-partners', 'foundations', 'universities', 'home', 'all'] },
+  // Q3 (WP63, cycle-35 review, GPT-6.1 Sol G1): "Documentary evidence of work and earnings, such as offer letters, payslips, ..." (an offer letter documents work, not earnings; PD-09: "offer letters, payslips and platform or bank records document work and earnings").
+  { id: 'Q3', q: `How Do You Prove Outcomes?`, a: `For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of work and earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.`, evidence: ['PD-09', 'PD-08', 'RC-01'], audiences: ['development-partners', 'foundations', 'universities', 'home', 'all'] },
   { id: 'Q4', q: `Is There Independent Evidence?`, a: `Yes — a randomized controlled trial by BIGD (BRAC University) of CodersTrust’s WSDFM program studied women in Dhaka trained in 2020, on a 200-hour predecessor of today’s 100-hour track. It found that women offered a place were more likely to be employed than the control group; the trial surveyed 599 women at follow-up (report published May 2022).`, evidence: ['RC-01', 'RC-02', 'RC-07'], audiences: ['development-partners', 'foundations', 'investors', 'all'] },
   { id: 'Q5', q: `Will AI Eliminate the Jobs CodersTrust Trains For?`, a: `Some entry-level tasks in our tracks are vulnerable to automation, so we choose tracks from current employer demand, set per country, and agree each track’s AI content and work-entry plan with you before enrollment. We do not yet publish a track-by-track breakdown.`, evidence: ['PD-02', 'PD-10', 'PD-19'], audiences: ['development-partners', 'investors', 'employers', 'home', 'all'] },
   // WP36 (cycle-13 review): three plain sentences in place of two long ones with parentheses; the same claims and figures.
@@ -86,16 +89,17 @@ const bankAnswer = (id: string): Faq => {
   if (!f) throw new Error(`faqs: bank question ${id} is missing`);
   return f;
 };
-const Q1_OPENING = 'That depends on local demand, which we test first.';
+// WP63 (cycle-35 review, GPT-6.1 Sol G2): the bank answer's first sentence names what is tested and who chooses the tracks; each variant says it for its own reader and keeps the second sentence (the evidence statement) as it is.
+const Q1_OPENING = 'We test local employer demand first and choose each country’s tracks with local partners.';
 const q1Variant = (id: string, opening: string): Faq => {
   const q1 = bankAnswer('Q1');
   if (!q1.a.startsWith(Q1_OPENING)) throw new Error('faqs: Q1 no longer opens with its bank sentence; update the audience variants');
   return { ...q1, id, a: opening + q1.a.slice(Q1_OPENING.length), audiences: ['variants'] };
 };
 faqs.push(
-  q1Variant('Q1-development-partners', 'That depends on local demand in your portfolio countries, which we test first.'),
-  q1Variant('Q1-government', 'That depends on local demand and on lab access and facilitator supply, which we test first.'),
-  q1Variant('Q1-campus', 'That depends on local demand for your graduates’ skills and on your campus labs, which we test first.'),
+  q1Variant('Q1-development-partners', 'We test local employer demand in your portfolio countries first and choose each country’s tracks with local partners.'),
+  q1Variant('Q1-government', 'We test local employer demand, lab access and facilitator supply first and choose each country’s tracks with local partners.'),
+  q1Variant('Q1-campus', 'We test local employer demand for your graduates’ skills and your campus labs first, and choose each country’s tracks with local partners.'),
   // Employers (WP32, cycle-9 review): the bank answer is about youth-program evidence and country tracks, which does not answer an employer. This answer repeats the Employers page's own statements
   // (the needs assessment, IN-10; the candidate-pool scope of talent requests, which its positioning statement rests on IN-10 and IN-04 for), so it claims nothing the page does not already say.
   {

@@ -394,7 +394,8 @@ test.describe('YouthWIDE: one-sentence hero lead and one agenda line (items 7 an
     const row = page.locator('.pg__row', { has: page.locator('dt', { hasText: 'Reporting' }) });
     await expect(row).toHaveCount(1);
     // WP57 (cycle-29 review, GPT-6.1 Sol G2): the removed C8 card's verification detail is in this row
-    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with earnings checked against payslips, offer letters, platform logs or bank receipts where available, as agreed in the program scope.');
+    // WP63 (cycle-35 review, GPT-6.1 Sol G1): "work and earnings checked against offer letters, payslips, ..."
+    expect(compact(await row.locator('dd').textContent())).toBe('Monthly reports and follow-up surveys, with work and earnings checked against offer letters, payslips, platform logs or bank receipts where available, as agreed in the program scope.');
     expect(await row.getAttribute('data-fact')).toBe('PD-08 PD-09');
   });
 

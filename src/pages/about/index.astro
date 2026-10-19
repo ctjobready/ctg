@@ -22,7 +22,6 @@ import { linkAttrs } from '../../lib/url';
 import { webPage } from '../../lib/schema';
 
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
-const since = fact('ID-02').stat?.value;
 // WP30b: a global organization (headquartered in New York, ID-11; work in 16 countries and territories, SC-03), not a Bangladesh one.
 const countries = fact('SC-03').stat?.value;
 // WP49 (cycle-24 review): "has trained and mentored ... across N countries and territories since 2014" (the count and the year are the register's, so the sentence reports a record, not a present-tense claim); 155 characters, the SEO limit.
@@ -31,7 +30,8 @@ const countries = fact('SC-03').stat?.value;
 // WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): the count is the countries and territories CodersTrust has worked in ("..., with work in N countries and territories."), not where the youth were trained (SC-16 and SC-03 say the same). The sentence is 11
 // characters longer with "with work in", so "educated," is out to stay within the 155-character limit (the guard below): the group is "unemployed and underemployed youth", still ID-01's wording less its first adjective.
 // WP61 (cycle-33 review, Kimi K2): the <title> is "About | CodersTrust" (it was "About Us | CodersTrust", which broke the "{Page} | CodersTrust" pattern the menu label and the other pages follow); the hero eyebrow "About Us" is unchanged.
-const description = `Since ${since}, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in ${countries} countries and territories.`;
+// WP63 (cycle-35 review, Grok R6): "educated," is back, so the group is named as ID-01 names it ("educated, unemployed and underemployed youth"). It is ten characters longer, so "Since 2014," is out to stay within the 155-character limit (the guard below): 152 characters.
+const description = `New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work, with work in ${countries} countries and territories.`;
 if (description.length > 155) throw new Error(`About meta description is ${description.length} characters (max 155)`);
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.

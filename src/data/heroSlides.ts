@@ -199,16 +199,19 @@ if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides
  * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
  * slide that used to set the carousel's height is gone, WP53, and this slide's copy is now the tallest). The program's full name, which would need a second line, is on the Proof in Practice card below.
  */
-const wsdfmLabel = fact('PR-01').stat?.label ?? '';
+const wsdfmShare = /^WSDFM: (\d+%) in work$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
 const wsdfmBase = fact('PR-01').stat?.value;
-if (!/^WSDFM: \d+% in work$/.test(wsdfmLabel) || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
+if (!wsdfmShare || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
 const PR_TEXT = {
   wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
   // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): "(711 of 1,000; program records; trial studied 833)." says how the 711 of 1,000 relates to the trial, whose count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts). It replaces "...; program records, not trial data)".
   // The review's form, "...; program records; the trial studied 833).", is 609 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48); "the" is the word left out (577 px).
   // Measured at 1280 px, one row: "program records; trial studied 833" 577 px; "program records; the trial had 833" 577 px; "program records; trial: 833 women" 580 px; "program records, not the trial’s 833" 586 px. Wrapped: "program records; the trial studied 833" 609 px; "program records; trial of 833 women" 597 px;
   // "program records; trial studied 833 women" 643 px; "program records, not the 833-woman trial" 642 px. At 390 px every form takes two rows, as the old one did.
-  wsdfm: `${wsdfmLabel} (${wsdfmBase}; program records; trial studied ${TRIAL_WOMEN}).`,
+  // WP63 (cycle-35 review, Kimi K2): "WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women." (it said "WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).", three clauses packed into one parenthesis); the count and the share are PR-01's, the 833 RC-07's.
+  // The review's wording, "..., from program records; a separate trial studied 833 women.", is 779 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48; measured). "from program records" is the clause left out
+  // (this line is 588 px, one row): the slide's eyebrow ("Program Records") and its lead ("..., with results from each program’s records.") already say it for all four lines, and "a separate trial" keeps the 711 of 1,000 apart from the trial. At 390 px every form takes several rows.
+  wsdfm: `WSDFM: ${wsdfmBase} in work (${wsdfmShare}); a separate trial studied ${TRIAL_WOMEN} women.`,
   yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
@@ -273,7 +276,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP62 (cycle-34 review, GPT-6.1 Sol and Kimi): "... Earned an Estimated 41% More per Month": the 41% is a monthly income difference (RC-01: "Their monthly income was an estimated 41% higher"; its tile label: "estimated monthly income gain"), which the heading left unsaid.
     title: `Women Offered a Place Earned an Estimated ${incomeOffered}% More per Month`,
     titleFacts: ['RC-01'],
-    lead: `In the predecessor WSDFM program, their monthly income was an estimated ${incomeOffered}% higher than the control group’s, about +$${dollarsOffered} a month.`,
+    // WP63 (cycle-35 review, GLM L4): "..., women offered a place had an estimated 41% higher monthly income than the control group, about +$27 a month." (it said "..., their monthly income was an estimated 41% higher than the control group’s, ...", and "their" had no noun
+    // before it in the sentence); the figures are RC-01's and RC-04's, read above, and the heading and the data-facts are unchanged.
+    lead: `In the predecessor WSDFM program, women offered a place had an estimated ${incomeOffered}% higher monthly income than the control group, about +$${dollarsOffered} a month.`,
     leadFacts: ['RC-01', 'RC-04'],
     // WP50 (cycle-25 review): the caption no longer repeats the trial's employment result (+10.3 percentage points), which the hero's trial card states; it says the multiple the tile shows.
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (see trialMultiple); the tile (">4×") and its data-fact are unchanged.
