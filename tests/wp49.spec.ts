@@ -419,7 +419,7 @@ test.describe('SC-16 reads "learners trained" (item 18)', () => {
     expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
     expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.value).toBe('130,000+');
     await open(page, '');
     expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');

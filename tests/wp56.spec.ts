@@ -115,7 +115,7 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     // WP59 (cycle-31 review, GLM L3): two sentences (tests/wp59.spec.ts)
     expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
     expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     expect(locations.length).toBe(Number(sc03.stat?.value));
     // Nigeria is not counted (decision 15): the headline is Bangladesh plus 15, not plus 16

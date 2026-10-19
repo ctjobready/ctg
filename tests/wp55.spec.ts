@@ -74,7 +74,7 @@ test.describe('the register: 16 countries and territories, and the new dated and
     expect(sc03.text).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
     expect(sc03.stat?.detail).toBe('Most delivery has been in Bangladesh.');
     expect(fact('SC-16').text).toContain('16 countries and territories');
-    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     expect(locations).toHaveLength(16);
     expect(new Set(locations.map((l) => l.name)).size, 'no location is listed twice').toBe(16);
     expect(locations.length).toBe(Number(sc03.stat?.value));

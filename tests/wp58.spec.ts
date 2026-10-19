@@ -82,7 +82,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');
     expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
   test('no built page outside the archived posts still says the learners were trained or enrolled "in 16 countries", that the countries are ones "with CodersTrust programs", or the old SC-03 wording', () => {
@@ -155,10 +155,10 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories.');
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="SC-16"]');
-    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
     await expect(tile.locator('.status-tag')).toHaveText('Delivered');
     await open(page, HUB);
-    expect(compact(await page.locator('#why-partner li[data-fact="SC-16"]').textContent())).toContain('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(compact(await page.locator('#why-partner li[data-fact="SC-16"]').textContent())).toContain('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
   test('About’s meta description says the count is where CodersTrust has worked ("..., with work in 16 countries and territories."), within 155 characters, in the page and its structured data', async ({ page }) => {

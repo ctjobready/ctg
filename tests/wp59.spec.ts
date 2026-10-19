@@ -441,7 +441,7 @@ test.describe('L3: SC-16 is two sentences', () => {
     expect(sc16.stat?.label).toBe(LABEL);
     expect(sc16.stat?.value).toBe('130,000+');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
   test('Home’s reach card reads 130,000+ and the two sentences; no built page keeps the one-sentence form', async ({ page }) => {
