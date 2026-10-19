@@ -6,10 +6,13 @@ import PartnerStrip from '../system/PartnerStrip.astro';
 import Icon from '../system/Icon.astro';
 import { linkAttrs } from '../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../lib/logos';
+import { statLabelUnder } from '../../data/copy';
+import { fact } from '../../data/facts';
 
 /**
  * C5 Guide: empathy (we have been here) + authority (fact stats) + method signal + partner logo marquee.
  * WP49 (cycle-24 review): the empathy line is optional, as it is in PartnerGuideBand and GuideSection: Local Partners' band opens with its method paragraph (which names the Bangladesh team).
+ * WP64 rework RW2 (coordinator): when the heading says the period (the component gallery's "We’ve Built This Path Since 2014"), a tile whose label ends "since 2014" drops it; Local Partners' heading does not, so its tiles are unchanged (statLabelUnder, src/data/copy.ts).
  */
 interface Props {
   title: string;
@@ -41,7 +44,7 @@ const { title, empathy, authorityIds, method, partnerGroup, variant = 'marquee',
       }
     </div>
     <div class="guide__stats">
-      {authorityIds.map((s) => <FactStat id={s} />)}
+      {authorityIds.map((s) => <FactStat id={s} label={statLabelUnder(title, fact(s).stat?.label)} />)}
     </div>
   </div>
   <PartnerStrip variant={variant} group={partnerGroup} caption={PARTNER_CAPTION} />

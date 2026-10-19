@@ -9,7 +9,7 @@ import CopyText from './CopyText.astro';
 import { WORLD_STRIP_SHORT } from '../../../data/globalStrip';
 import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
-import { ORIGIN_SHORT } from '../../../data/copy';
+import { originShortUnder, statLabelUnder } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { endSentence } from '../../sections/copyText';
 
@@ -26,6 +26,8 @@ import { endSentence } from '../../sections/copyText';
  * remain follow it, and the AWS credential is a short line under the logo strip, beside the AWS logo (`logoNote`; the strip's default slot).
  * WP54 (cycle-28 review, Kimi K3): that credential is a sentence of the logo strip's caption now (`captionNote`: "... These are working relationships, not endorsements. CodersTrust is an AWS Authorized Training Partner."), not a lone
  * paragraph under the logos; the strip's slot and this band's `.pg__logonote` style are gone.
+ * WP64 rework RW2 (coordinator): the band's heading says the period ("We’ve Built This Path Since 2014"), so the origin line drops its "Since 2014," lead-in ("From a Copenhagen launch to work in 16 countries and territories.") and a tile whose label ends "since 2014" drops it
+ * ("learners trained"): originShortUnder and statLabelUnder (src/data/copy.ts) read the heading, so a page that gives this band a heading without the year keeps both.
  */
 interface Statement {
   /** Fact(s) behind the statement (data-fact and footnote markers). */
@@ -54,6 +56,7 @@ interface Props {
 }
 const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
 const hasProof = stats.length > 0 || statements.length > 0;
+const origin = originShortUnder(title);
 ---
 
 <Section id={id} aria-labelledby={`${id}-h`}>
@@ -61,7 +64,7 @@ const hasProof = stats.length > 0 || statements.length > 0;
   <div class:list={['pg', !hasProof && 'pg--solo']}>
     <div class="pg__copy" data-reveal>
       {empathy && <p class="lead">{empathy}</p>}
-      <CopyText block={ORIGIN_SHORT} markers={[]} class="pg__origin" />
+      <CopyText block={origin} markers={[]} class="pg__origin" />
       <p class="pg__method">
         {method.text}{' '}
         {method.link && (
@@ -72,7 +75,7 @@ const hasProof = stats.length > 0 || statements.length > 0;
     {
       hasProof && (
         <div class="pg__proof">
-          {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} size={statSize} />)}</div>}
+          {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} size={statSize} label={statLabelUnder(title, fact(s).stat?.label)} />)}</div>}
           {
             statements.length > 0 && (
               <ul class="pg__list" role="list">

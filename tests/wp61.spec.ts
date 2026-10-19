@@ -132,7 +132,7 @@ test.describe('G2 (GPT-6.1 Sol; Kimi K1): the Employers and JobReady@Work track-
     await open(page, EMPLOYERS);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(await page.locator('#guide .pg__copy').evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()))).toEqual([
-      'Since 2014, from a Copenhagen launch to work in 16 countries and territories.',
+      'From a Copenhagen launch to work in 16 countries and territories.', // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
       'Our TalentLEAP method organizes skills into career paths. How TalentLEAP Works',
     ]);
     await expect(page.locator('#guide .factstat[data-fact="SC-15"]')).toHaveCount(1);

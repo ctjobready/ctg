@@ -200,7 +200,7 @@ test.describe('the three funder pains that had a heading and no line now have on
 });
 
 test.describe('Guide band: one origin line on the audience pages, the two-sentence history on Home', () => {
-  const ORIGIN_SHORT = 'Since 2014, from a Copenhagen launch to work in 16 countries and territories.';
+  const ORIGIN_SHORT = 'From a Copenhagen launch to work in 16 countries and territories.'; // WP64 rework RW2 (coordinator): under a heading that says "Since 2014" the band drops that lead-in (originShortUnder, src/data/copy.ts; ORIGIN_SHORT itself keeps it)
   // WP42 (cycle-19 review): Investors' Guide band shows SC-03's tile since "Delivered Since 2014" moved into it, so its origin line is the launch alone, as on Development Partners (tests/wp42.spec.ts)
   const AUDIENCE = ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/'];
 
@@ -216,7 +216,7 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
 
   // WP51 (cycle-26 review, Kimi P2): Development Partners prints the shared origin line like Governments and Foundations (ORIGIN_SHORT), in place of the launch alone that WP38 gave a band showing SC-03's tile; the count is therefore in the
   // origin line as well as in the tile (tests/wp51.spec.ts; 15 then, 17 after WP55, 16 since WP56)
-  test('Development Partners: its Guide band prints the shared origin line, "Since 2014, from a Copenhagen launch to work in 16 countries and territories."', async ({ page }) => {
+  test('Development Partners: its Guide band prints the shared origin line, "From a Copenhagen launch to work in 16 countries and territories." (WP64: without the "Since 2014," its heading says)', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);

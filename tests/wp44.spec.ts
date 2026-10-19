@@ -93,6 +93,6 @@ test.describe('Development Partners: the guide band has no empathy line (item 8)
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('You need more than enrollment numbers');
-    await expect(page.locator('#guide .pg__origin').first()).toHaveText('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
+    await expect(page.locator('#guide .pg__origin').first()).toHaveText('From a Copenhagen launch to work in 16 countries and territories.'); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line does not
   });
 });

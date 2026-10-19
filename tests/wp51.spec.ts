@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
-import { C14, EMPATHY, ORIGIN_SHORT, POSITIONING } from '../src/data/copy';
+import { C14, EMPATHY, ORIGIN_SHORT, POSITIONING, originShortUnder } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -364,7 +364,8 @@ test.describe('The shared origin line on Development Partners and Investors (ite
       await open(page, route);
       const line = page.locator('#guide .pg__origin');
       await expect(line, route).toHaveCount(1);
-      expect(compact(await line.textContent()), route).toBe(ORIGIN_SHORT.text);
+      // WP64 rework RW2 (coordinator): the bands' heading says "Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
+      expect(compact(await line.textContent()), route).toBe(originShortUnder('We’ve Built This Path Since 2014').text);
       expect(await line.getAttribute('data-fact'), route).toBe('ID-02 SC-03');
     }
   });
@@ -373,7 +374,7 @@ test.describe('The shared origin line on Development Partners and Investors (ite
     await open(page, DP);
     expect(compact(await page.locator('#guide').textContent())).not.toContain('Launched in Copenhagen in 2014.');
     const copy = await texts(page, '#guide .pg__copy > *');
-    expect(copy[0]).toBe(ORIGIN_SHORT.text);
+    expect(copy[0]).toBe(originShortUnder('We’ve Built This Path Since 2014').text); // WP64 rework RW2 (coordinator): the heading says "Since 2014", so the line drops that lead-in
     expect(copy[1]).toContain('Our TalentLEAP method organizes skills into career paths.');
   });
 
@@ -381,7 +382,7 @@ test.describe('The shared origin line on Development Partners and Investors (ite
     await open(page, INVEST);
     const line = page.locator('#guide .ig__origin');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(ORIGIN_SHORT.text);
+    expect(compact(await line.textContent())).toBe(originShortUnder('A Record Built Since 2014').text); // WP64 rework RW2 (coordinator): the band's heading says "Since 2014", so the line drops that lead-in
     expect(await line.getAttribute('data-fact')).toBe('ID-02 SC-03');
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
   });

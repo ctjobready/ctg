@@ -213,8 +213,8 @@ test.describe('YouthWIDE: the labs tile carries the registered qualifier (item 1
     const tile = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
     await expect(tile).toHaveCount(1);
     expect(compact(await tile.locator('.stat__note').textContent())).toBe(QUALIFIER);
-    // WP64 (cycle-36 review, Kimi): the label names its publisher, "(Department of ICT)" (SOURCE_NOTE; the source states no year; tests/wp64.spec.ts)
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('government digital labs that could host blended learning (Department of ICT)');
+    // WP64 (cycle-36 review, Kimi; rework RW1): the label names the publisher of the count, "government digital labs (Department of ICT count) that could host blended learning" (SOURCE_NOTE; the source states no year; tests/wp64.spec.ts)
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('government digital labs (Department of ICT count) that could host blended learning');
     await expect(page.locator('#governments .mech-stat')).toHaveCount(2);
     await expect(page.locator('main .status-tag', { hasText: 'Target' })).toHaveCount(1);
     await open(page, 'partner-with-us/local-partners/');

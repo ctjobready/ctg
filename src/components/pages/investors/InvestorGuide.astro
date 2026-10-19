@@ -5,7 +5,7 @@ import Stat from '../../system/Stat.astro';
 import StatusTag from '../../system/StatusTag.astro';
 import Badge from '../../system/Badge.astro';
 import CopyBlock from '../home/CopyBlock.astro';
-import { INVESTOR_PARTNERS, ORIGIN_SHORT, withoutSince2014 } from '../../../data/copy';
+import { INVESTOR_PARTNERS, originShortUnder, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { linkAttrs } from '../../../lib/url';
 
@@ -30,6 +30,9 @@ interface Props {
   id?: string;
 }
 const { id = 'guide' } = Astro.props;
+// WP64 rework RW2 (coordinator): the band's heading says the period, so the origin line below it drops its "Since 2014," lead-in ("From a Copenhagen launch to work in 16 countries and territories."; originShortUnder, src/data/copy.ts).
+const heading = 'A Record Built Since 2014';
+const origin = originShortUnder(heading);
 const talentleap = linkAttrs('/our-model/talentleap/');
 const team = linkAttrs('/about/team/');
 const delivered = ['SC-01', 'SC-02', 'SC-03'] as const;
@@ -38,8 +41,8 @@ const stat = (sid: string) => {
   if (!s) throw new Error(`InvestorGuide: ${sid} needs a stat`);
   return s;
 };
-// WP64 (cycle-36 review, Grok): the tiles sit under the group heading "Since 2014", so the learners and enrollments labels drop the phrase ("learners trained", "enrollments"; withoutSince2014, src/data/copy.ts); SC-03's label ("countries and territories where
-// CodersTrust has worked") has none to drop. The register's labels are unchanged.
+// WP64 (cycle-36 review, Grok): the tiles sit under the group heading "Since 2014" (and the band's own heading says it), so the learners and enrollments labels drop the phrase ("learners trained", "enrollments"; withoutSince2014, src/data/copy.ts); SC-03's label
+// ("countries and territories where CodersTrust has worked") has none to drop. The register's labels are unchanged.
 const tileLabel = (sid: string) => (sid === 'SC-03' ? stat(sid).label : withoutSince2014(stat(sid).label));
 // One note row under the delivered tiles: the register's detail lines for SC-02 and SC-03, read from it, so the tiles stay level.
 const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
@@ -53,8 +56,8 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   <div class="ig">
     <div class="ig__copy">
       <p class="eyebrow" data-reveal>Our Track Record</p>
-      <h2 id={`${id}-h`} data-reveal>A Record Built Since 2014</h2>
-      <CopyBlock block={ORIGIN_SHORT} class="ig__origin" />
+      <h2 id={`${id}-h`} data-reveal>{heading}</h2>
+      <CopyBlock block={origin} class="ig__origin" />
       <p class="ig__method" data-fact="IN-06">
         TalentLEAP, our method, organizes skills into career paths.{' '}
         <a class="link" href={talentleap.href}>How TalentLEAP Works<Icon name="arrow-right" size={16} /></a>

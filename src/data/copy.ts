@@ -213,18 +213,21 @@ export const IDENTITY: CopyBlock = identity();
  * WP59 (cycle-31 review, GPT-6.1 Sol G5) adds the Bangladesh graduate-unemployment rate (PX-03, the Local Partners and NU Postgraduate Diploma tiles):
  *  - PX-03 is the Bangladesh Bureau of Statistics' Labour Force Survey 2024 (source BBSLFS24: "Bangladesh Bureau of Statistics (BBS), Labour Force Survey 2024."): "(BBS Labour Force Survey, 2024)".
  * WP64 (cycle-36 review, Kimi) adds the Bangladesh government digital labs (GV-09, the YouthWIDE and Local Partners tiles), by publisher alone, because its source states no year:
- *  - GV-09 is the Department of ICT's count of the ICTD Digital Lab's labs (source DOICTLAB: "Department of ICT (DoICT), ICT Division, ICTD Digital Lab, “About”: digital labs in a total of 9,001 educational institutions ..."): "(Department of ICT)". The tile's note,
+ *  - GV-09 is the Department of ICT's count of the ICTD Digital Lab's labs (source DOICTLAB: "Department of ICT (DoICT), ICT Division, ICTD Digital Lab, “About”: digital labs in a total of 9,001 educational institutions ..."): "(Department of ICT count)". The tile's note,
  *    the register's own detail line ("In Bangladesh; lab access and seats are confirmed per program."), already says where the labs are and that access is confirmed per program.
+ *    WP64 rework RW1 (coordinator): the note goes directly after "government digital labs" (`after`), not at the end of the label, so the attribution covers the count and not "that could host blended learning", which is CodersTrust's own judgment (the first version, "... blended learning (Department of ICT)",
+ *    could be read as DoICT saying the labs could host blended learning). The build stops if a text carrying the note no longer contains that phrase.
  * FactCard, FactStat, ProblemSection's re-worded tiles, Home's cost-of-waiting card (freelancePostingsFinding, src/components/sections/copyText.ts) and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
  */
-const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string }> = {
+const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string; after?: string }> = {
   'PX-01': { note: 'CodersTrust estimate from ILO data, 2026', registered: ['CodersTrust analysis of ILOSTAT and ILO', '2026'], textHas: 'estimated' },
   'PX-02': { note: 'ILOSTAT, 2019–2025', registered: ['ILOSTAT', '2019–2025'] },
   'PX-03': { note: 'BBS Labour Force Survey, 2024', registered: ['BBS', 'Labour Force Survey', '2024'] },
   'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
   'PX-06': { note: 'Demirci, Hannane & Zhu, 2025', registered: ['Demirci, Hannane & Zhu', '2025'] },
   'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
-  'GV-09': { note: 'Department of ICT', registered: ['Department of ICT (DoICT)', '9,001'] },
+  // `after`: the phrase the note attaches to; it goes directly after it, inside the text, not at the end (RW1: the count is DoICT's, "could host blended learning" is not)
+  'GV-09': { note: 'Department of ICT count', registered: ['Department of ICT (DoICT)', '9,001'], after: 'government digital labs' },
 };
 function sourceNotes(): Record<string, string> {
   const out: Record<string, string> = {};
@@ -237,13 +240,21 @@ function sourceNotes(): Record<string, string> {
   }
   return out;
 }
-/** "(Publisher, Year)" by fact id, for the external statistics (the labs figure, GV-09, names its publisher alone: its source states no year). */
+/** "(Publisher, Year)" by fact id, for the external statistics (the labs figure, GV-09, names its publisher alone and says it is the publisher's count: its source states no year). */
 export const SOURCE_NOTE: Record<string, string> = sourceNotes();
 /** A label or sentence with its source note inside it ("... in 2026 (ManpowerGroup, 2026)"); text of any other fact is returned as it is. */
 // A label that already ends in a parenthesis (PX-01's "(range 61–78 million)") takes the note inside it, "(range 61–78 million; CodersTrust estimate from ILO data, 2026)", not as a second parenthesis.
+// A note with an `after` phrase (GV-09: "government digital labs (Department of ICT count) that could host blended learning") goes directly after that phrase; a text without it stops the build, since the note would then have nothing to attach to.
 export const withSourceNote = (id: string, text: string): string => {
   const note = SOURCE_NOTE[id];
   if (!note) return text;
+  const after = SOURCE_NOTES[id]?.after;
+  if (after) {
+    const at = text.indexOf(after);
+    if (at < 0) throw new Error(`withSourceNote ${id}: the text "${text}" no longer contains "${after}", which its source note ${note} attaches to`);
+    const cut = at + after.length;
+    return `${text.slice(0, cut)} ${note}${text.slice(cut)}`;
+  }
   return text.endsWith(')') ? `${text.slice(0, -1)}; ${note.slice(1)}` : `${text} ${note}`;
 };
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
@@ -271,6 +282,27 @@ const SINCE_2014 = ' since 2014';
 export function withoutSince2014(label: string): string {
   if (!label.endsWith(SINCE_2014)) throw new Error(`withoutSince2014: the label "${label}" no longer ends "${SINCE_2014}"; update the tile that drops it`);
   return label.slice(0, -SINCE_2014.length);
+}
+
+/**
+ * WP64 rework RW2 (coordinator): the same rule for the audience bands whose HEADING says the period ("We’ve Built This Path Since 2014" on Development Partners, Governments, Foundations, Universities and Employers, "We Have Built This Path Since 2014" on YouthWIDE,
+ * "A Record Built Since 2014" on Investors). Under such a heading the band says it once:
+ *  - a tile whose register label ends "since 2014" (SC-01, "learners trained since 2014") shows it without the phrase (statLabelUnder);
+ *  - the origin line (ORIGIN_SHORT, "Since 2014, from a Copenhagen launch to work in 16 countries and territories.") drops its "Since 2014," lead-in, which only repeats the heading, and keeps the founding fact and the reach: "From a Copenhagen launch to work in 16 countries and territories." (originShortUnder).
+ * Both read the heading, so a band whose heading does not carry the year (Careers' "Why Join CodersTrust", Local Partners' "Delivered with a Bangladesh Team Beside You") keeps the year in its tile and prints the whole line. Page-level: the register's labels and ORIGIN_SHORT are unchanged, and the build stops if the
+ * line stops opening "Since 2014, from " (it is read from ID-02 and SC-03; a changed founding year would otherwise leave the headings and the line saying different things).
+ */
+export const headingStatesSince2014 = (heading: string): boolean => /\bsince 2014\b/i.test(heading);
+/** The label a stat tile shows under `heading`: the register's label without " since 2014" when the heading states the period and the label ends with it; otherwise `undefined` (the tile keeps the register's own label). */
+export function statLabelUnder(heading: string, label: string | undefined): string | undefined {
+  return label !== undefined && headingStatesSince2014(heading) && label.endsWith(SINCE_2014) ? withoutSince2014(label) : undefined;
+}
+/** The band's origin line under `heading`: ORIGIN_SHORT as it is, or without its "Since 2014," lead-in when the heading already says it. */
+export function originShortUnder(heading: string): CopyBlock {
+  if (!headingStatesSince2014(heading)) return ORIGIN_SHORT;
+  const lead = 'Since 2014, from ';
+  if (!ORIGIN_SHORT.text.startsWith(lead)) throw new Error(`originShortUnder: ORIGIN_SHORT no longer opens "${lead}" ("${ORIGIN_SHORT.text}"); update the band lines that drop the repeated year`);
+  return { ...ORIGIN_SHORT, text: `From ${ORIGIN_SHORT.text.slice(lead.length)}` };
 }
 
 /** H2 of an evidence band headed by the randomized trial; the RC-01 headline sentence is body text below it (ProofBand, EvidenceBand). */

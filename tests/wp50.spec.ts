@@ -59,7 +59,7 @@ const UNI = 'partner-with-us/universities/';
 const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
-const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to work in 16 countries and territories.';
+const ORIGIN_LINE = 'From a Copenhagen launch to work in 16 countries and territories.'; // WP64 rework RW2 (coordinator): under a heading that says "Since 2014" the line drops that lead-in (originShortUnder, src/data/copy.ts)
 const PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
 
 test.describe('Home: the challenge band and the positioning statement (items 1 and 11)', () => {

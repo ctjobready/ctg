@@ -3,7 +3,7 @@ import { join, relative, sep } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact, sources } from '../src/data/facts';
-import { CONTRACT_TOTAL_NOTE, ORIGIN_SHORT, SOURCE_NOTE, TRAINED_REACH } from '../src/data/copy';
+import { CONTRACT_TOTAL_NOTE, ORIGIN_SHORT, SOURCE_NOTE, TRAINED_REACH, originShortUnder } from '../src/data/copy';
 import { locations } from '../src/data/countries';
 import { DIST_DIR } from './support/env';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
@@ -516,7 +516,8 @@ test.describe('S1 extended: the other statements of the 16 say "work", not "prog
     );
     for (const p of pages) {
       await open(page, p);
-      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(ORIGIN_SHORT.text);
+      // WP64 rework RW2 (coordinator): every one of these bands is headed "... Since 2014", so the line drops that lead-in (ORIGIN_SHORT.text above keeps it)
+      expect(compact(await page.locator('[data-fact="ID-02 SC-03"]').first().textContent()), p.route).toBe(originShortUnder('Since 2014').text);
     }
   });
 

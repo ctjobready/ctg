@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact, sources } from '../src/data/facts';
-import { SOURCE_NOTE, withoutSince2014 } from '../src/data/copy';
+import { ORIGIN_SHORT, SOURCE_NOTE, originShortUnder, statLabelUnder, withSourceNote, withoutSince2014 } from '../src/data/copy';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -13,9 +13,12 @@ import { listPages } from './support/pages';
  *   - 2: Home slide 4 leads "Results from the records of four programs.", above its four program lines;
  *   - 3 (skipped): Home's Proof in Practice has the WSDFM, Kosovo and Her Power cards and no Digital Jobs Albania card; Albania's only appearance on Home is a strip tile that describes the initiative and states no outcome;
  *   - 4: the Cost of Waiting card reads "A 2017 World Bank review of nine randomized vocational-training trials found only three with significant employment impacts." (RC-06, source MCKENZIE17 kept);
- *   - 5: the 9,000+ labs tile (YouthWIDE, Local Partners) names its publisher, "(Department of ICT)" (its source states no year), beside the register's "In Bangladesh; ..." detail, and SuperKids' DoICT target says the labs are in Bangladesh;
+ *   - 5: the 9,000+ labs tile (YouthWIDE, Local Partners) names the publisher of the count, "government digital labs (Department of ICT count) that could host blended learning" (its source states no year; rework RW1: the note sits after the labs, not at the end, so it covers the count only),
+ *     beside the register's "In Bangladesh; ..." detail, and SuperKids' DoICT target says the labs are in Bangladesh;
  *   - 6: "since 2014" is said once where a heading or a neighbouring tile already says it: the Programs hub, About, Investors and JobReady Platform;
- *   - 7: Home slide 1 says "about $27 more a month"; Impact's Learner Stories row says "some stories are outliers, and their cards say so"; TalentLEAP and Investors say "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned."
+ *   - 7: Home slide 1 says "about $27 more a month"; Impact's Learner Stories row says "some stories are outliers, and their cards say so"; TalentLEAP and Investors say "The first published TalentLEAP level is Competent; Proficient and Expert levels are planned.";
+ *   - RW2 (rework, coordinator): where a band's heading already says "Since 2014" (Development Partners, Governments, Foundations, Universities, Employers, YouthWIDE, Investors), its tile label ("learners trained") and its origin line ("From a Copenhagen launch to work in 16 countries and territories.")
+ *     do not say it again; a band whose heading does not carry the year (Careers) keeps it, and founding-fact lines (Home's "CodersTrust launched in 2014 in Copenhagen ...") stay.
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
@@ -66,6 +69,11 @@ const LOCAL_PARTNERS = 'partner-with-us/local-partners/';
 const SUPERKIDS = 'programs/superkids/';
 const IMPACT = 'impact/';
 const TALENTLEAP = 'our-model/talentleap/';
+const DEV_PARTNERS = 'partner-with-us/development-partners/';
+const GOVERNMENTS = 'partner-with-us/governments/';
+const FOUNDATIONS = 'partner-with-us/foundations/';
+const UNIVERSITIES = 'partner-with-us/universities/';
+const EMPLOYERS = 'partner-with-us/employers/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Government Contracts and a National University Partnership"', () => {
@@ -178,12 +186,14 @@ test.describe('Item 4 (Gemini, GPT-6.1 Sol, Kimi): the Cost of Waiting card name
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 5 (Kimi): the 9,000+ labs name their publisher and say they are in Bangladesh', () => {
+test.describe('Item 5 (Kimi) and RW1: the 9,000+ labs name the publisher of the count and say they are in Bangladesh', () => {
   const QUALIFIER = 'In Bangladesh; lab access and seats are confirmed per program.';
   const LABEL = 'government digital labs that could host blended learning';
+  // RW1 (coordinator): the note covers the count (it goes right after the labs), not "that could host blended learning", which is CodersTrust's own judgment
+  const SHOWN = 'government digital labs (Department of ICT count) that could host blended learning';
 
   test('SOURCE_NOTE reads GV-09’s note from its registered source (DOICTLAB), publisher alone because the source states no year; the register’s wording is unchanged', () => {
-    expect(SOURCE_NOTE['GV-09']).toBe('(Department of ICT)');
+    expect(SOURCE_NOTE['GV-09']).toBe('(Department of ICT count)');
     expect(fact('GV-09').sourceIds).toEqual(['DOICTLAB']);
     expect(sources.DOICTLAB.citation).toContain('Department of ICT (DoICT)');
     expect(sources.DOICTLAB.citation).not.toMatch(/\b(?:19|20)\d{2}\b/);
@@ -192,16 +202,25 @@ test.describe('Item 5 (Kimi): the 9,000+ labs name their publisher and say they 
     expect(fact('GV-09').stat?.detail).toBe(QUALIFIER);
   });
 
-  test('YouthWIDE’s Bangladesh band and Local Partners’ track record print the label with "(Department of ICT)" and, under it, the register’s detail line; no year is made up', async ({ page }) => {
+  test('RW1: the note goes directly after "government digital labs", so it covers the count and not "that could host blended learning"; a text without that phrase stops the build; the other notes still close their text', () => {
+    expect(withSourceNote('GV-09', LABEL)).toBe(SHOWN);
+    expect(withSourceNote('GV-09', LABEL).endsWith('(Department of ICT count)')).toBe(false);
+    expect(withSourceNote('GV-09', fact('GV-09').text)).toBe('9,000+ government digital labs (Department of ICT count) in Bangladesh that could host blended learning');
+    expect(() => withSourceNote('GV-09', 'labs that could host blended learning')).toThrow(/no longer contains/);
+    expect(withSourceNote('PX-05', 'AI skills are the hardest to find')).toBe(`AI skills are the hardest to find ${SOURCE_NOTE['PX-05']}`);
+    expect(withSourceNote('SC-01', 'learners trained since 2014')).toBe('learners trained since 2014');
+  });
+
+  test('YouthWIDE’s Bangladesh band and Local Partners’ track record print the label with the note after the labs and, under it, the register’s detail line; no year is made up', async ({ page }) => {
     await open(page, YOUTHWIDE);
     const yw = page.locator('#governments .mech-stat', { has: page.locator('[data-fact="GV-09"]') });
     await expect(yw).toHaveCount(1);
-    expect(compact(await yw.locator('.stat__label').textContent())).toBe(`${LABEL} (Department of ICT)`);
+    expect(compact(await yw.locator('.stat__label').textContent())).toBe(SHOWN);
     expect(compact(await yw.locator('.stat__note').textContent())).toBe(QUALIFIER);
     await open(page, LOCAL_PARTNERS);
     const lp = page.locator('#guide .factstat[data-fact="GV-09"]');
     await expect(lp).toHaveCount(1);
-    expect(compact(await lp.locator('.stat__label').textContent())).toBe(`${LABEL} (Department of ICT)`);
+    expect(compact(await lp.locator('.stat__label').textContent())).toBe(SHOWN);
     expect(compact(await lp.locator('.stat__note').textContent())).toBe(QUALIFIER);
     expect(compact(await lp.locator('.stat__label').textContent())).not.toMatch(/\b(?:19|20)\d{2}\b/);
   });
@@ -354,5 +373,84 @@ test.describe('Item 7 (GLM, Gemini, Claude): three polish fixes', () => {
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([`${SENTENCE} Supported cohorts include mentoring, certification exam preparation and placement support.`]);
     expect(pagesWith('Competent is the published first level; Proficient and Expert are planned')).toEqual([]);
     expect(fact('IN-08').text).toContain('Competent is the first level; Proficient and Expert are planned');
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose heading says it', () => {
+  const HEADING = 'We’ve Built This Path Since 2014';
+  const LINE = 'From a Copenhagen launch to work in 16 countries and territories.';
+  const BANDS = [DEV_PARTNERS, GOVERNMENTS, FOUNDATIONS, UNIVERSITIES, EMPLOYERS];
+
+  test('the helpers read the heading: a "since 2014" label and the origin line lose the year only under a heading that states it; the register’s ORIGIN_SHORT and labels are unchanged', () => {
+    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
+    expect(originShortUnder(HEADING)).toEqual({ ...ORIGIN_SHORT, text: LINE });
+    expect(originShortUnder(HEADING).facts).toEqual(['ID-02', 'SC-03']);
+    expect(originShortUnder('A Record Built Since 2014').text).toBe(LINE);
+    expect(originShortUnder('Why Join CodersTrust')).toBe(ORIGIN_SHORT);
+    expect(statLabelUnder(HEADING, fact('SC-01').stat?.label)).toBe('learners trained');
+    expect(statLabelUnder('We Have Built This Path Since 2014', fact('SC-02').stat?.label)).toBe('enrollments');
+    expect(statLabelUnder('Why Join CodersTrust', fact('SC-01').stat?.label)).toBeUndefined();
+    expect(statLabelUnder(HEADING, fact('SC-03').stat?.label)).toBeUndefined();
+    expect(statLabelUnder(HEADING, undefined)).toBeUndefined();
+    expect(fact('SC-01').stat?.label).toBe('learners trained since 2014');
+  });
+
+  for (const route of BANDS) {
+    test(`${route}: the band is headed "${HEADING}", its origin line is "${LINE}" (still tied to ID-02 and SC-03), and "since 2014" is in the heading alone`, async ({ page }) => {
+      await open(page, route);
+      await expect(page.locator('#guide h2')).toHaveText(HEADING);
+      const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
+      await expect(line).toHaveCount(1);
+      expect(compact(await line.textContent())).toBe(LINE);
+      expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
+    });
+  }
+
+  test('Development Partners: the band’s tiles are "130,000+ learners trained" and the 16 countries and territories', async ({ page }) => {
+    await open(page, DEV_PARTNERS);
+    expect(await texts(page, '#guide .pg__stats .stat__value')).toEqual(['130,000+', '16']);
+    expect(await texts(page, '#guide .pg__stats .stat__label')).toEqual(['learners trained', 'countries and territories where CodersTrust has worked']);
+    expect(await page.locator('#guide .pg__stats .factstat').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-03']);
+  });
+
+  test('YouthWIDE: under "We Have Built This Path Since 2014" the learners tile is "learners trained"', async ({ page }) => {
+    await open(page, YOUTHWIDE);
+    await expect(page.locator('#guide h2')).toHaveText('We Have Built This Path Since 2014');
+    expect(await texts(page, '#guide .guide__stats .stat__label')).toEqual(['learners trained', 'countries and territories where CodersTrust has worked']);
+    expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
+  });
+
+  test('Investors: the band’s heading says the year, so neither its origin line nor its tiles do', async ({ page }) => {
+    await open(page, INVESTORS);
+    await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
+    const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
+    await expect(line).toHaveCount(1);
+    expect(compact(await line.textContent())).toBe(LINE);
+    expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
+  });
+
+  test('a band whose heading does not carry the year keeps it in its tile (Careers), and founding-fact lines stay (Home: "CodersTrust launched in 2014 in Copenhagen ...")', async ({ page }) => {
+    await open(page, 'careers/');
+    await expect(page.locator('#why h2')).toHaveText('Why Join CodersTrust');
+    expect(compact(await page.locator('#why .factstat[data-fact="SC-01"] .stat__label').textContent())).toBe('learners trained since 2014');
+    await open(page, HOME);
+    expect(compact(await page.locator('#guide').textContent())).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
+  });
+
+  test('no built page prints the old origin line, "Since 2014, from a Copenhagen launch ...", because every page that prints it is headed with the year', () => {
+    expect(pagesWith('Since 2014, from a Copenhagen launch')).toEqual([]);
+    expect(pagesWith(LINE).sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/employers/', '/partner-with-us/foundations/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/partner-with-us/universities/']);
+  });
+
+  test('the changed bands fit at 1280 and 390, with no sideways scroll', async ({ page }) => {
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      for (const route of [...BANDS, YOUTHWIDE, INVESTORS]) {
+        await open(page, route);
+        await scrollThrough(page);
+        expect(await noOverflow(page), `${route} at ${vp.width}px`).toBe(true);
+      }
+    }
   });
 });
