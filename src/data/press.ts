@@ -109,8 +109,8 @@ export const press: PressItem[] = [
 ];
 
 /**
- * WP62 (cycle-34 review): Home's press line is one pointer sentence to Recognition and Media now (src/components/ui/AsCoveredBy.astro); it reads only the years of `COVERED_BY`. The outlets' links below, and the World Bank pages after them, are the researched
- * list for any page that prints them again; no page prints them today.
+ * WP62 (cycle-34 review): Home's press line is one pointer sentence to Recognition and Media now; the line with every link below is printed on the Recognition and Media page, under its logo list (src/components/ui/AsCoveredBy.astro, `list` and `pointer`
+ * forms, both read from COVERED_BY and COVERED_BY_WORLD_BANK).
  * WP55 (owner decision 2026-10-18, synthesis 3.5): the "As covered by" line on Home and About (WP58, cycle-30 review, Claude S9: on Home only now; About no longer repeats it), as text links with their years and no logos. The outlets are PA-09's, in date order, each with the link the research
  * checked on 17-18 October 2026 (a live page where one answers, otherwise the Wayback Machine copy: Forbes, The Wall Street Journal and USA Today open only as copies). `press` above is unchanged: the Recognition and Media
  * page keeps its logo list and its headlines, and links only where the original URL is known.

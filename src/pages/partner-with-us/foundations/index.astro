@@ -42,6 +42,8 @@
  * Samina's learner card shows her outcome line alone ("Completed 90+ projects as a freelance graphic designer on Fiverr"): the sentence under it, "She has completed 90+ projects on Fiverr so far.", repeated it (flagged in three cycles) and is gone.
  * WP62 (cycle-34 review, Grok, GPT-6.1 Sol and Gemini): the randomized trial filled two of the four glance tiles (+10.3 percentage points and about +$27), so the fourth tile is the WSDFM program-record tile (PR-01: "711 of 1,000", "WSDFM program records: 71% in work",
  * tagged Program Record) in place of the +$27 tile. The +$27 is not stated elsewhere in the page body; the meta description still says it (RC-04, read by factPart).
+ * WP62 rework (R3): the tile carries the note the Impact page's WSDFM tile has, WSDFM_NOT_TRIAL_NOTE ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women."; src/data/copy.ts), since WP35 had taken the tile off this
+ * page because its 71% read beside the trial's figures; the tile's data-fact names RC-07 (the 833) and PR-06 beside PR-01, as Impact's does.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -67,7 +69,7 @@ import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astr
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
 import { LINKS, TRACKING_MONTHS, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
-import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
+import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -88,7 +90,7 @@ const { title, description } = meta(
 );
 
 // WP62 (cycle-34 review): the fourth glance tile is the WSDFM program-record tile. Its label is PR-01's ("WSDFM: 71% in work") with "program records" in place of the colon, so the share is read from the register and never retyped;
-// the build stops if the label changes shape. The figure ("711 of 1,000") and the Program Record tag come from PR-01 itself (PartnerGlance). The tile has no note: the tag and the label say these are program records.
+// the build stops if the label changes shape. The figure ("711 of 1,000") and the Program Record tag come from PR-01 itself (PartnerGlance). WP62 rework (R3): the tile's note is WSDFM_NOT_TRIAL_NOTE, the string the Impact page's WSDFM tile shows (src/data/copy.ts).
 const wsdfmShare = /^WSDFM: (\d+% in work)$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
 if (!wsdfmShare) throw new Error('Foundations: PR-01 label no longer reads "WSDFM: P% in work"; update the fourth glance tile');
 const wsdfmTileLabel = `WSDFM program records: ${wsdfmShare}`;
@@ -119,7 +121,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
        where it was the +$27 tile (RC-04): the trial filled two of the four tiles. -->
   <PartnerGlance
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
-    more={[{ id: 'PR-01', href: LINKS.caseWsdfm, label: wsdfmTileLabel, also: ['PR-06'] }]}
+    more={[{ id: 'PR-01', href: LINKS.caseWsdfm, label: wsdfmTileLabel, note: WSDFM_NOT_TRIAL_NOTE, also: ['PR-06', 'RC-07'] }]}
   />
   <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />
 

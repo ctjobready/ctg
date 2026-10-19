@@ -16,7 +16,7 @@ import { listPages } from './support/pages';
  *   - the register: SC-03 and SC-16 say 16 countries and territories; the dated tile facts (TL-01 to TL-06), the World Bank's Kosovo figure (PR-02b), the two Digital Jobs Albania figures (PR-07, PR-08) and the World Bank pages (PA-13) have sources;
  *   - Global Reach: 16 locations (Egypt and Benin added, Somalia removed by WP56; Uganda, Somaliland, Iraq, Albania and Kosovo corrected), a photograph in every row that has one;
  *   - the "CodersTrust Around the World" strip: seven tiles on Home and About, three on the audience pages, ending on Bangladesh;
- *   - the "As covered by" press line (text links, no logos);
+ *   - the "As covered by" press line (text links, no logos; WP62: printed on Recognition and Media, with Home pointing to it);
  *   - Kosovo "show both": the program records (102 of 150) and the World Bank's 77 trainees, wherever PR-02 is shown;
  *   - the former "Albania" photograph is the Kosovo pilot: cropped above its burned-in caption, re-keyed, captioned Kosovo, and gone from the pages that treated it as Albania;
  *   - the fifth case study (Digital Jobs Albania) and its hub entries; the five news-archive entries; the permissions rows of every added photograph.
@@ -366,51 +366,111 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
   });
 });
 
-// WP57 (cycle-29 review, GPT-6.1 Sol P2): the line was two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ...", with ten links that left the site.
-// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): on Home it is one pointer sentence with no outlet and no link of its own; the existing "See All Recognition and Media" link follows it, and the Recognition and Media page keeps the list.
-test.describe('"As covered by": the press coverage line on Home is one sentence that points to Recognition and Media', () => {
-  const LINE = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.';
-
-  for (const [name, route] of [['Home', HOME]] as const) {
-    test(`${name}: the line reads as written, has no link and no image, and the link to Recognition and Media is the next paragraph`, async ({ page }) => {
-      await open(page, route);
-      const line = page.locator('p.cov');
-      await expect(line).toHaveCount(1);
-      const text = await line.evaluate((el) => {
-        const c = el.cloneNode(true) as HTMLElement;
-        c.querySelectorAll('.sr-only').forEach((n) => n.remove());
-        return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
-      });
-      expect(text).toBe(LINE);
-      await expect(line.locator('a')).toHaveCount(0);
-      await expect(line.locator('img, svg, picture')).toHaveCount(0);
-      expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
-      const next = page.locator('#recognition p.cov + p.rec__press a');
-      await expect(next).toHaveCount(1);
-      expect(compact(await next.textContent())).toBe('See All Recognition and Media');
-      expect(await next.getAttribute('href')).toMatch(/\/about\/recognition\/$/);
+// WP57 (cycle-29 review, GPT-6.1 Sol P2): the line was two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ...", with ten links that left the site; every link stays (the ten HREFS below are unchanged).
+// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): Home's line is one pointer sentence with no outlet and no link of its own; the existing "See All Recognition and Media" link follows it.
+// WP62 rework (R1, R2): the full line, with its ten links, is printed on the Recognition and Media page, under its logo list, and Home’s pointer names both World Bank places (Kosovo and Albania).
+test.describe('"As covered by": the press coverage line, text links and no logos, on Recognition and Media; Home points to it', () => {
+  const POINTER = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.';
+  const LINE = 'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India. World Bank coverage: Kosovo (2016, 2017) and Albania (2021).';
+  const TECHCRUNCH = 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/';
+  const HREFS = [
+    'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190',
+    TECHCRUNCH,
+    'https://web.archive.org/web/20140924225212/http://www.forbes.com/sites/ilyapozin/2014/08/21/5-companies-making-a-splash-for-a-better-world/',
+    'https://web.archive.org/web/20141224065551/http://blogs.wsj.com/cio/2014/09/24/startup-aims-to-boost-number-of-qualified-it-workers/',
+    'https://web.archive.org/web/20141228085159/http://www.usatoday.com/story/tech/columnist/shinal/2014/12/22/new-york-bangladesh-global-technology-trends/20734365/',
+    'https://www.techinasia.com/microfinance-startup-coders-trust-teaches-code',
+    'https://timesofindia.indiatimes.com/home/sunday-times/Cook-to-coder-How-low-income-youth-are-writing-a-better-future/articleshow/53575603.cms',
+    'https://web.archive.org/web/20170504003520/http://www.worldbank.org/en/news/feature/2016/09/19/kosovos-women-go-wow-online-and-working',
+    'https://www.worldbank.org/en/country/kosovo/brief/kosovo-wow',
+    'https://www.worldbank.org/en/news/press-release/2021/09/14/women-in-albania-to-gain-greater-access-to-global-digital-jobs-market-with-world-bank-support',
+  ];
+  const RECOGNITION = 'about/recognition/';
+  const textOf = (page: Page, selector: string) =>
+    page.locator(selector).evaluate((el) => {
+      const c = el.cloneNode(true) as HTMLElement;
+      c.querySelectorAll('.sr-only').forEach((n) => n.remove());
+      return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-  }
 
-  // the line says "Kosovo" alone because the page it names lists the World Bank's 2016 Kosovo story and no Albania release
-  test('the page the line names carries what it says: the seven outlets and the World Bank’s Kosovo story, dated 2014 to 2016; it names no Albania release', async ({ page }) => {
-    await open(page, 'about/recognition/');
+  test('Home: the pointer reads as written (both places), has no link and no image, and the link to Recognition and Media is the next paragraph', async ({ page }) => {
+    await open(page, HOME);
+    const line = page.locator('p.cov');
+    await expect(line).toHaveCount(1);
+    expect(await textOf(page, 'p.cov')).toBe(POINTER);
+    await expect(line.locator('a')).toHaveCount(0);
+    await expect(line.locator('img, svg, picture')).toHaveCount(0);
+    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+    const next = page.locator('#recognition p.cov + p.rec__press a');
+    await expect(next).toHaveCount(1);
+    expect(compact(await next.textContent())).toBe('See All Recognition and Media');
+    expect(await next.getAttribute('href')).toMatch(/\/about\/recognition\/$/);
+  });
+
+  test('Recognition and Media: the line reads as written, links ten pages that leave the site safely, and carries no image', async ({ page }) => {
+    await open(page, RECOGNITION);
+    const line = page.locator('p.cov');
+    await expect(line).toHaveCount(1);
+    expect(await textOf(page, 'p.cov')).toBe(LINE);
+    expect(await line.locator('a').evaluateAll((as) => as.map((a) => a.getAttribute('href')))).toEqual(HREFS);
+    expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
+    await expect(line.locator('img, svg, picture')).toHaveCount(0);
+    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+    // every link says where it goes, for a screen reader
+    expect(await line.locator('a .sr-only').count()).toBe(10);
+  });
+
+  test('the line sits in the coverage band, after the outlets’ cards and before the founder-attribution note', async ({ page }) => {
+    await open(page, RECOGNITION);
+    const order = await page.evaluate(() => {
+      const band = document.querySelector('#coverage')!;
+      const list = band.querySelector('ul.rec-press')!;
+      const line = band.querySelector('p.cov')!;
+      const note = band.querySelector('aside.rec-note')!;
+      const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+      return { cardsThenLine: follows(list, line), lineThenNote: follows(line, note) };
+    });
+    expect(order).toEqual({ cardsThenLine: true, lineThenNote: true });
+  });
+
+  // the line is kept whole, so the TechCrunch article is linked twice on the page: by its card and by the line (the same URL)
+  test('the TechCrunch card and the line link the same article; no other link of the line repeats a card’s', async ({ page }) => {
+    await open(page, RECOGNITION);
+    expect(await page.locator(`a[href="${TECHCRUNCH}"]`).count()).toBe(2);
+    await expect(page.locator(`ul.rec-press a[href="${TECHCRUNCH}"]`)).toHaveCount(1);
+    await expect(page.locator(`p.cov a[href="${TECHCRUNCH}"]`)).toHaveCount(1);
+    const cardLinks = await page.locator('ul.rec-press a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    expect(HREFS.filter((h) => cardLinks.includes(h))).toEqual([TECHCRUNCH]);
+  });
+
+  // the pointer says Kosovo and Albania because this page prints both: the 2016 Kosovo story is also one of the eight cards
+  test('the pointer’s claims hold on the page it names: the seven outlets and the World Bank’s Kosovo story in the cards (2014 to 2016), the 2017 Kosovo brief and the 2021 Albania release in the line', async ({ page }) => {
+    await open(page, RECOGNITION);
     const items = page.locator('ul.rec-press li');
     await expect(items).toHaveCount(8);
     const years = await items.locator('time').evaluateAll((els) => els.map((e) => e.getAttribute('datetime')));
     expect(years.sort()).toEqual(['2014', '2014', '2014', '2014', '2014', '2015', '2016', '2016']);
     await expect(page.locator('ul.rec-press li', { hasText: 'Kosovo' })).toHaveCount(1);
-    expect(compact(await page.locator('main').textContent())).not.toContain('Albania');
+    // the outlet links carry the outlet's name alone and the three World Bank links are their years (the screen-reader suffix of each link aside)
+    const linkTexts = await page.locator('p.cov a').evaluateAll((as) =>
+      as.map((a) => {
+        const c = a.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('.sr-only').forEach((n) => n.remove());
+        return (c.textContent ?? '').trim();
+      }),
+    );
+    expect(linkTexts).toEqual(['Gulf News', 'TechCrunch', 'Forbes', 'The Wall Street Journal', 'USA Today', 'Tech in Asia', 'The Times of India', '2016', '2017', '2021']);
+    expect(await textOf(page, 'p.cov')).toContain('Kosovo (2016, 2017) and Albania (2021)');
   });
 
-  test('the line is on Home only (WP58: About no longer repeats it; the Recognition and Media page keeps its logo list)', () => {
+  test('the line is on Home (the pointer) and on Recognition and Media (the list) only (WP58: About does not repeat it)', () => {
     const on = sitePages().filter((p) => /class="cov[ "]/.test(p.html)).map((p) => p.route).sort();
-    expect(on).toEqual(['/']);
+    expect(on).toEqual(['/', '/about/recognition/']);
   });
 
-  test('the line fits at 390 px with no sideways scroll', async ({ page }) => {
+  test('the line fits at 390 px with no sideways scroll, on both pages', async ({ page }) => {
     await page.setViewportSize(MOBILE);
-    for (const route of [HOME]) {
+    for (const route of [HOME, RECOGNITION]) {
       await open(page, route);
       await scrollThrough(page);
       expect(await noOverflow(page), route).toBe(true);

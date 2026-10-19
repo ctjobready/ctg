@@ -169,6 +169,12 @@ function trialWomen(): string {
 export const TRIAL_WOMEN: string = trialWomen();
 
 /**
+ * WP62 (cycle-34 review, rework R3): the short note under a WSDFM program-record tile that says how the records relate to the trial ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women.", 15 words).
+ * It is the Impact page's tile note (WP60), moved here so Foundations' WSDFM tile says it with the same string; the tile's data-fact names RC-07 beside PR-01 (the 833 is RC-07's, TRIAL_WOMEN).
+ */
+export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, separate from the randomized trial of the predecessor program, which studied ${TRIAL_WOMEN} women.`;
+
+/**
  * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say
  * "Additional country and regional offices are planned." (no time frame). ID-11 is an owner statement (OWNERHQ) shared with the two sentences before it, so the register entry is unchanged and only what renders changes; the builder throws if ID-11 stops
  * ending with that clause, so a change to the register is noticed here.

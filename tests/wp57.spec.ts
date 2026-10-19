@@ -16,7 +16,7 @@ import { listPages } from './support/pages';
  *   - G6: the mobile drawer's Programs accordion shows the desktop menu's two group labels as plain labels, before YouthWIDE and the NU Postgraduate Diploma (it already did: this pins it beside the desktop names);
  *   - G7: Employers' "Due Diligence in One View" is three rows (no "Independent Evaluation Welcome"), laid out without an empty cell; the hub keeps its four;
  *   - P1: Home's fourth logo group is "Employers and Industry Partners";
- *   - P2: the press line is two short sentences ("Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."), every link kept (WP62, cycle-34 review: one pointer sentence to Recognition and Media);
+ *   - P2: the press line is two short sentences ("Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."), every link kept (WP62: printed on Recognition and Media; Home has one pointer sentence);
  *   - K1: Impact's "On This Page" list ends on the closing band, "Discuss the Evidence for Your Program";
  *   - K2: the Foundations meta description reads "... earned an estimated $27 more a month.";
  *   - GM4: Home's "Proof in Practice" Kosovo card reads "Program records: 102 of 150 women in work. World Bank: 77 trainees won at least one online contract." (PR-02, PR-02b), and every other card, tile or block that
@@ -279,22 +279,50 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): the two short sentences WP57 made (the outlets with their links; the World Bank pages) are one pointer sentence on Home now (tests/wp55.spec.ts and tests/wp62.spec.ts hold its wording)
-test.describe('P2, "As covered by" is one short sentence that points to Recognition and Media', () => {
-  for (const [name, route] of [['Home', HOME]] as const) {
-    test(`${name}: the press line is one sentence, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page."; no outlet is named in it`, async ({ page }) => {
+// WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini; rework R1 and R2): the two short sentences WP57 made (the outlets with their links; the World Bank pages) are printed on the Recognition and Media page, under its logo list, and Home’s line is one pointer sentence that
+// names both World Bank places (tests/wp55.spec.ts and tests/wp62.spec.ts hold the wording and the placement)
+test.describe('P2, "As covered by" is two short sentences with every link kept, on Recognition and Media; Home points to it in one', () => {
+  for (const [name, route] of [['Recognition and Media', 'about/recognition/']] as const) {
+    test(`${name}: "Early press coverage, 2014–2016: ..." names the seven outlets once (Forbes with its qualifier); "World Bank coverage: ..." keeps Kosovo’s two pages and Albania’s page apart by year`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
       const text = await visibleText(page, 'p.cov');
-      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.']);
+      const sentences = text.split(/(?<=\.) (?=[A-Z])/);
+      expect(sentences).toEqual([
+        'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India.',
+        'World Bank coverage: Kosovo (2016, 2017) and Albania (2021).',
+      ]);
       expect(text).not.toContain('As covered by');
-      // no stray space before a comma or a period
+      // no stray space before a comma or a period (the links are followed directly by their punctuation)
       expect(text).not.toMatch(/ [,.]/);
-      expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
+      // the outlet links carry the outlet's name alone; the qualifier is plain text beside Forbes' link; the three World Bank links are their years
+      const linkTexts = await line.locator('a').evaluateAll((as) =>
+        as.map((a) => {
+          const c = a.cloneNode(true) as HTMLElement;
+          c.querySelectorAll('.sr-only').forEach((n) => n.remove());
+          return (c.textContent ?? '').trim();
+        }),
+      );
+      expect(linkTexts).toEqual(['Gulf News', 'TechCrunch', 'Forbes', 'The Wall Street Journal', 'USA Today', 'Tech in Asia', 'The Times of India', '2016', '2017', '2021']);
       expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(10);
+      expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
     });
   }
+
+  test('Home: the press line is one sentence, "Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page."; no outlet is named in it', async ({ page }) => {
+    await open(page, HOME);
+    const line = page.locator('p.cov');
+    await expect(line).toHaveCount(1);
+    const text = await visibleText(page, 'p.cov');
+    expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.']);
+    expect(text).not.toContain('As covered by');
+    // no stray space before a comma or a period
+    expect(text).not.toMatch(/ [,.]/);
+    expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
+    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+  });
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
+import { TRIAL_WOMEN, WSDFM_NOT_TRIAL_NOTE } from '../src/data/copy';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -9,8 +10,8 @@ import { listPages } from './support/pages';
  * WP62 behaviors (cycle-34 whole-site reviews, Perplexity models; triage items 1 to 10). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp62.spec.ts --project=chromium`):
  *   - 1: Home slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month" (RC-01's 41% is a monthly income difference), within the carousel’s height budget;
- *   - 2: Home’s press line is one pointer sentence to Recognition and Media (no outlet, no link of its own), and the page it names carries what it says;
- *   - 3: Foundations’ fourth glance tile is the WSDFM program record (711 of 1,000, "WSDFM program records: 71% in work", Program Record), not the +$27 tile;
+ *   - 2: Home’s press line is one pointer sentence to Recognition and Media that names Kosovo and Albania (no outlet, no link of its own); Recognition and Media prints the full line, with its ten links, in the coverage band (rework R1, R2);
+ *   - 3: Foundations’ fourth glance tile is the WSDFM program record (711 of 1,000, "WSDFM program records: 71% in work", Program Record), not the +$27 tile, with the note the Impact tile has (rework R3);
  *   - 4: the partner hub’s steps band is "From First Conversation to First Cohort", and its lead no longer opens with the sentence the heading now says;
  *   - 5: Development Partners’ UNDP YES tile names the program’s year (2017, from PR-03); the Impact tile keeps the register’s label;
  *   - 6: the "Will This Work in Our Country?" answer (the bank’s Q1, its audience variants and YouthWIDE’s own) adds Digital Jobs Albania as delivery experience, not results;
@@ -119,16 +120,25 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini): Home’s press line is one pointer sentence', () => {
-  const LINE = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.';
+// WP62 rework (R1, R2): the first pass named Kosovo alone on Home and left the ten press and World Bank links on no page, because Recognition and Media printed no Albania release; the full line is printed on that page now and Home’s pointer names both places.
+test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s press line is one pointer sentence; Recognition and Media prints the line with its links', () => {
+  const POINTER = 'Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.';
+  const LINE = 'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India. World Bank coverage: Kosovo (2016, 2017) and Albania (2021).';
+  const TECHCRUNCH = 'https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/';
+  const withoutSrOnly = (selector: string) => (page: Page) =>
+    page.locator(selector).first().evaluate((el) => {
+      const c = el.cloneNode(true) as HTMLElement;
+      c.querySelectorAll('.sr-only').forEach((n) => n.remove());
+      return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
+    });
 
-  test('the recognition band keeps its three badges, then the one-sentence line (no outlet, no link of its own), then the link to Recognition and Media', async ({ page }) => {
+  test('Home: the recognition band keeps its three badges, then the one-sentence pointer naming Kosovo and Albania (no outlet, no link of its own), then the link to Recognition and Media', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
     await expect(band.locator('h3')).toHaveText(['University and UN-Mandated Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
     const line = band.locator('p.cov');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe(LINE);
+    expect(compact(await line.textContent())).toBe(POINTER);
     await expect(line.locator('a')).toHaveCount(0);
     expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
     expect(compact(await band.textContent())).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
@@ -136,21 +146,62 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini): Home’s press line is one po
     await expect(band.locator('a[href^="http"]')).toHaveCount(0);
   });
 
-  test('the page the line names carries what it says; the line names Kosovo alone, because that page has no Albania release', async ({ page }) => {
+  test('Recognition and Media: the full line is one paragraph with its ten links, each with rel and screen-reader text, in the coverage band after the outlets’ cards and before the founder note', async ({ page }) => {
     await open(page, RECOGNITION);
-    await expect(page.locator('ul.rec-press li')).toHaveCount(8);
-    await expect(page.locator('#coverage h2')).toContainText('2014–2016');
-    await expect(page.locator('ul.rec-press li', { hasText: 'World Bank' })).toHaveCount(1);
-    await expect(page.locator('ul.rec-press li', { hasText: 'Kosovo' })).toHaveCount(1);
-    expect(compact(await page.locator('main').textContent())).not.toContain('Albania');
-    expect(sitePages().filter((p) => /World Bank coverage: Kosovo \(2016, 2017\) and Albania \(2021\)/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
+    const line = page.locator('#coverage p.cov');
+    await expect(line).toHaveCount(1);
+    expect(await withoutSrOnly('#coverage p.cov')(page)).toBe(LINE);
+    expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
+    await expect(line.locator('a')).toHaveCount(10);
+    expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '') && a.getAttribute('href')!.startsWith('https://')))).toBe(true);
+    expect(await line.locator('a .sr-only').count()).toBe(10);
+    await expect(line.locator('img, svg, picture')).toHaveCount(0);
+    const order = await page.evaluate(() => {
+      const band = document.querySelector('#coverage')!;
+      const follows = (a: Element, b: Element) => !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+      const cards = band.querySelector('ul.rec-press')!;
+      const para = band.querySelector('p.cov')!;
+      const note = band.querySelector('aside.rec-note')!;
+      return { cardsThenLine: follows(cards, para), lineThenNote: follows(para, note) };
+    });
+    expect(order).toEqual({ cardsThenLine: true, lineThenNote: true });
   });
 
-  test('the line fits at 390 px with no sideways scroll', async ({ page }) => {
-    await page.setViewportSize(MOBILE);
-    await open(page, HOME);
-    await scrollThrough(page);
-    expect(await noOverflow(page)).toBe(true);
+  // the line is kept whole, so the TechCrunch article is linked by its card and by the line (the same URL); no other link of the line repeats one of the cards’
+  test('the TechCrunch link is the only one the line shares with a card', async ({ page }) => {
+    await open(page, RECOGNITION);
+    expect(await page.locator(`a[href="${TECHCRUNCH}"]`).count()).toBe(2);
+    const cards = await page.locator('ul.rec-press a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    const lineLinks = await page.locator('p.cov a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    expect(lineLinks.filter((h) => cards.includes(h))).toEqual([TECHCRUNCH]);
+  });
+
+  test('the pointer names exactly the World Bank places the line prints, and the years it names are the outlets’ own', async ({ page }) => {
+    await open(page, RECOGNITION);
+    const line = await withoutSrOnly('#coverage p.cov')(page);
+    const places = [...line.matchAll(/(?:World Bank coverage:| and) (Kosovo|Albania) \(/g)].map((m) => m[1]);
+    expect(places).toEqual(['Kosovo', 'Albania']);
+    expect(POINTER).toContain(`our work in ${places.join(' and ')} are on`);
+    const outletYears = (await page.locator('ul.rec-press li time').evaluateAll((els) => els.map((e) => e.getAttribute('datetime')))).sort();
+    expect(`${outletYears[0]}–${outletYears[outletYears.length - 1]}`).toBe('2014–2016');
+    expect(POINTER).toContain('Early press coverage, 2014–2016,');
+  });
+
+  test('the line fits at 1280 and 390 px with no sideways scroll, and its links stay inside the page', async ({ page }) => {
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      for (const route of [HOME, RECOGNITION]) {
+        await open(page, route);
+        await scrollThrough(page);
+        expect(await noOverflow(page), `${route || 'home'} at ${vp.width}px`).toBe(true);
+        const box = await page.locator('p.cov').first().evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          return { left: r.left, right: r.right, width: window.innerWidth };
+        });
+        expect(box.left, `${route || 'home'} at ${vp.width}px`).toBeGreaterThanOrEqual(0);
+        expect(box.right, `${route || 'home'} at ${vp.width}px`).toBeLessThanOrEqual(box.width);
+      }
+    }
   });
 });
 
@@ -164,9 +215,31 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini): Foundations’ fourth glance 
     await expect(tile.locator('.pg__value')).toHaveText('711 of 1,000');
     await expect(tile.locator('.pg__desc')).toHaveText('WSDFM program records: 71% in work');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
-    await expect(tile.locator('.pg__note')).toHaveCount(0);
-    expect(await tile.getAttribute('data-fact')).toBe('PR-01 PR-06');
+    expect(await tile.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/wsdfm-women-freelancers\/$/);
+  });
+
+  // WP62 rework (R3): WP35 had taken this tile off the page because its 71% read beside the trial's figures; the tile says how the records relate to the trial, in the string the Impact page's WSDFM tile has (one source, WSDFM_NOT_TRIAL_NOTE in src/data/copy.ts)
+  test('the tile’s note is the Impact page’s WSDFM tile note, from one source: "Program records, separate from the randomized trial of the predecessor program, which studied 833 women." (15 words, the 833 being RC-07’s)', async ({ page }) => {
+    const NOTE = 'Program records, separate from the randomized trial of the predecessor program, which studied 833 women.';
+    expect(WSDFM_NOT_TRIAL_NOTE).toBe(NOTE);
+    expect(TRIAL_WOMEN).toBe('833');
+    expect(fact('RC-07').text).toContain('833 women at baseline');
+    expect(NOTE.split(/\s+/)).toHaveLength(15);
+    await open(page, FOUNDATIONS);
+    const tile = page.locator('#glance .pg__lead a[data-fact~="PR-01"]');
+    await expect(tile.locator('.pg__note')).toHaveText(NOTE);
+    await open(page, IMPACT);
+    const impact = page.locator('#glance a[data-fact~="PR-01"]');
+    await expect(impact.locator('.glance__note')).toHaveText(NOTE);
+    expect(await impact.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
+    // the note is shown on a phone too (a single secondary tile joins the main group, whose notes stay), and the tile stays inside the page at 1280 and 390
+    for (const vp of [DESKTOP, MOBILE]) {
+      await page.setViewportSize(vp);
+      await open(page, FOUNDATIONS);
+      await expect(page.locator('#glance .pg__lead a[data-fact~="PR-01"] .pg__note')).toBeVisible();
+      expect(await noOverflow(page), `${vp.width}px`).toBe(true);
+    }
   });
 
   test('the figure and the share are the register’s (PR-01), and the +$27 is not stated anywhere in the page body (the meta description still says it)', async ({ page }) => {

@@ -11,6 +11,7 @@ import Img from '../../../components/ui/Img.astro';
 import Quote from '../../../components/ui/Quote.astro';
 import Fact from '../../../components/facts/Fact.astro';
 import CTABand from '../../../components/ui/CTABand.astro';
+import AsCoveredBy from '../../../components/ui/AsCoveredBy.astro';
 import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
 import { galleryPhotos } from '../../../data/photos';
 import { press } from '../../../data/press';
@@ -244,6 +245,9 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
         ))
       }
     </ul>
+    <!-- WP62 rework (R1): the press line with its links, as WP57 rendered it on Home, so the outlets' articles and the World Bank pages (the 2016 Kosovo story and 2017 brief, the 2021 Albania release) stay one link away; Home's pointer sentence names this page.
+         Its TechCrunch link is the one the TechCrunch card above already carries; the line is kept whole. -->
+    <AsCoveredBy class="rec-covered" />
     <aside class="rec-note" data-fact="ID-03" aria-label="Note on founder attribution">
       <Icon name="info" size={20} />
       <p>Some 2014 coverage described Morten Lund as a co-founder. CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
@@ -376,6 +380,10 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     line-height: var(--lh-body-m);
     font-weight: var(--fw-medium);
     color: var(--on-surface);
+  }
+  /* WP62 rework (R1): the press line sits one large step (the system's block gap, as .rec-note's) under the card grid */
+  :global(.rec-covered) {
+    margin: var(--space-lg) 0 0;
   }
   .rec-note {
     display: flex;

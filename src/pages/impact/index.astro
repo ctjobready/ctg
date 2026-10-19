@@ -16,7 +16,7 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { AIM_DEPENDENCY, DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, TRIAL_WOMEN, WB_KOSOVO, defineNewEarners } from '../../data/copy';
+import { AIM_DEPENDENCY, DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
@@ -60,6 +60,7 @@ const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
 // (the register's glance note, "YouthWIDE in Bangladesh. An ambition, not a result.", is unchanged; the tile overrides its note for this page, as the Her Power and Kosovo tiles do).
 const aimNote = `YouthWIDE in Bangladesh, ${AIM_DEPENDENCY}. An ambition, not a result.`;
 // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "711 of 1000 is correct. The BIGD study only studied 833."): the WSDFM tile's note says how the records relate to the trial, "..., which studied 833 women." (RC-07's count, TRIAL_WOMEN in src/data/copy.ts; the tile's data-fact names RC-07).
+// WP62 (cycle-34 review, rework R3): that note is WSDFM_NOT_TRIAL_NOTE (src/data/copy.ts), the string Foundations' WSDFM glance tile shows too; the tile's text is unchanged.
 ---
 
 <BaseLayout title={title('Impact You Can Verify')} description={description} path={path} breadcrumbs={[{ label: 'Impact' }]} jsonLd={jsonLd}>
@@ -99,7 +100,7 @@ const aimNote = `YouthWIDE in Bangladesh, ${AIM_DEPENDENCY}. An ambition, not a 
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [
         { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2016–2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
-        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: `Program records, separate from the randomized trial of the predecessor program, which studied ${TRIAL_WOMEN} women.`, also: ['PR-06', 'RC-07'] },
+        { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: WSDFM_NOT_TRIAL_NOTE, also: ['PR-06', 'RC-07'] },
         { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
         { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,500 CodersTrust trained directly', note: 'Within the national program scope; the national program’s reach is counted separately.' },
       ] },

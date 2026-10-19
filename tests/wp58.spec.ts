@@ -306,7 +306,7 @@ test.describe('S8 is reversed (b): owner decision 7, "show both", takes preceden
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S9: the press line is not repeated on About', () => {
-  // WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): Home’s line is one pointer sentence to Recognition and Media, with no outlet links of its own (tests/wp55.spec.ts)
+  // WP62 (cycle-34 review, Kimi, GPT-6.1 Sol and Gemini): Home’s line is one pointer sentence to Recognition and Media, with no outlet links of its own; the rework (R1, R2) prints the full line on Recognition and Media and the pointer names both places (tests/wp55.spec.ts)
   test('About’s recognition band has the HolonIQ sentence and the link to Recognition and Media only; Home keeps the "Early press coverage" line, as a pointer to that page', async ({ page }) => {
     await open(page, ABOUT);
     const about = page.locator('#recognition');
@@ -322,7 +322,7 @@ test.describe('S9: the press line is not repeated on About', () => {
       c.querySelectorAll('.sr-only').forEach((n) => n.remove());
       return (c.textContent ?? '').replace(/\s+/g, ' ').trim();
     });
-    expect(homeLine).toBe('Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo are on the Recognition and Media page.');
+    expect(homeLine).toBe('Early press coverage, 2014–2016, and World Bank coverage of our work in Kosovo and Albania are on the Recognition and Media page.');
     expect(await home.locator('a').count()).toBe(0);
   });
 
