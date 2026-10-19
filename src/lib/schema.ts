@@ -74,7 +74,7 @@ export function organization(): JsonLdNode {
     ],
     email: CONTACT.email,
     telephone: phone,
-    // A global organization (SC-03: programs in 15 countries and territories across Asia, Africa, Europe and the Americas, Bangladesh among them).
+    // A global organization (SC-03: work in 16 countries and territories across Asia, Africa, Europe and the Americas, Bangladesh among them).
     areaServed: ['Asia', 'Africa', 'Europe', 'the Americas'].map((name) => ({ '@type': 'Place', name })),
     knowsAbout: ['workforce development', 'digital skills training', 'youth employment', 'freelancing', 'competency-based education', 'AI-ready curriculum'],
     // The headquarters is in New York (ID-11).

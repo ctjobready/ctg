@@ -83,12 +83,13 @@ export const ORIGIN: CopyBlock = {
 /**
  * ORIGIN in one line, for the audience pages' Guide band (WP38, cycle-15 review: the two-sentence history was word for word on seven pages). Home keeps ORIGIN whole. The year is ID-02's stat value ("2014") and the
  * count of countries and territories is SC-03's stat value, so the line cannot drift from the register; the builder throws if either stat changes shape.
+ * WP58 (cycle-30 reviews, Claude S1 and GPT-6.1 Sol G1, applied to this line too): "..., from a Copenhagen launch to work in 16 countries and territories." (it said "to programs in ..."): the count is where CodersTrust has worked, as SC-03 says.
  */
 function originShort(): CopyBlock {
   const year = fact('ID-02').stat?.value;
   const countries = fact('SC-03').stat?.value;
   if (!year || !/^\d{4}$/.test(year) || !countries || !/^\d+$/.test(countries)) throw new Error('ORIGIN_SHORT: ID-02 or SC-03 no longer has the expected stat value');
-  return { text: `Since ${year}, from a Copenhagen launch to programs in ${countries} countries and territories.`, facts: ['ID-02', 'SC-03'] };
+  return { text: `Since ${year}, from a Copenhagen launch to work in ${countries} countries and territories.`, facts: ['ID-02', 'SC-03'] };
 }
 export const ORIGIN_SHORT: CopyBlock = originShort();
 
@@ -120,12 +121,16 @@ export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
  * WP57 (cycle-29 review, Grok R2, with Gemini GM1): the 31,200+ (GV-12) must visibly include Her Power's national 25,125 (GV-01), so Home's government slide and the Governments glance tile say it in the wording GV-12's glance note had in WP35
  * (cycle-12 review): "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)." The 25,125 is GV-01's stat value, never retyped, and the builder throws if the register stops saying
  * that the figure is "contract scope, not a count of completers" (the clause that keeps the 31,200+ true). Impact keeps the register's own, longer note, which adds that CodersTrust trained 2,500 women directly.
+ * WP58 (cycle-30 review, Gemini GM1): "(25,125 women trained)" beside the contract-scope total read as CodersTrust's own training, so the parenthesis says who trained how many: "(25,125 women trained; CodersTrust trained 2,500 directly)". The 2,500 is the count
+ * GV-11's text states ("... 2,500 women trained directly; ..."), read from it, never retyped; GV-13 holds the same figure as its stat value, and the builder throws if the two stop agreeing or the register stops saying "women trained directly".
  */
 function contractTotalNote(): CopyBlock {
   const n = fact('GV-01').stat?.value;
   if (!n || !/^[\d,]+$/.test(n)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer has a plain count as its stat value');
   if (!/contract scope, not a count of completers/.test(fact('GV-12').stat?.glance?.note ?? '')) throw new Error('CONTRACT_TOTAL_NOTE: the GV-12 glance note no longer says "contract scope, not a count of completers"');
-  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained).`, facts: ['GV-12', 'GV-01'] };
+  const direct = /(\d[\d,]*) women trained directly/.exec(fact('GV-11').text)?.[1];
+  if (!direct || direct !== fact('GV-13').stat?.value) throw new Error('CONTRACT_TOTAL_NOTE: GV-11 no longer says "N women trained directly" with the count that GV-13 holds as its stat value');
+  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained; CodersTrust trained ${direct} directly).`, facts: ['GV-12', 'GV-01', 'GV-11'] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
 
@@ -144,18 +149,20 @@ export const IDENTITY: CopyBlock = identity();
 
 /**
  * WP57b (owner decision 2026-10-19, "name publisher + year"; no footnotes): the external statistics name their publisher and year inside the sentence, "(Publisher, Year)", wherever they are shown: the 62 million (PX-01) and the 19M+ (PX-02) problem
- * figures, the 72% of employers (PX-05) and the AI-skills growth (PX-08). Each note is taken only from the registered source of its fact (src/data/facts.ts `sources`, the planning register's sources table), and the builder throws if that source stops
+ * figures, the 72% of employers (PX-05) and the AI-skills growth (PX-08). WP58 (cycle-30 reviews, Claude S5 and Kimi K2) adds the freelancing-platform study (PX-06). Each note is taken only from the registered source of its fact (src/data/facts.ts `sources`, the planning register's sources table), and the builder throws if that source stops
  * naming the publisher and the year it quotes, so no publisher or year is invented:
  *  - PX-01 is a CodersTrust estimate computed from ILOSTAT and ILO data (source PX01CALC: "CodersTrust analysis of ILOSTAT and ILO, Global Employment Trends for Youth 2026"), not an ILO statistic, so it says so: "(CodersTrust estimate from ILO data, 2026)";
  *  - PX-02 is ILOSTAT's (source ILOSTAT26: "latest year per country, 2019–2025"): "(ILOSTAT, 2019–2025)";
  *  - PX-05 is ManpowerGroup's Global Talent Shortage Survey 2026: "(ManpowerGroup, 2026)";
+ *  - PX-06 is Demirci, Hannane & Zhu, "Who Is AI Replacing?", Management Science 71(10), 2025 (source DHZ25): "(Demirci, Hannane & Zhu, 2025)";
  *  - PX-08 is PwC's 2026 Global AI Jobs Barometer (15 June 2026): "(PwC, 2026)".
- * FactCard, FactStat, ProblemSection's re-worded tiles and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
+ * FactCard, FactStat, ProblemSection's re-worded tiles, Home's cost-of-waiting card (freelancePostingsFinding, src/components/sections/copyText.ts) and the Investors thesis sentence add the note through withSourceNote; the register's wording (labels and text) is unchanged. Page titles and meta descriptions do not carry it.
  */
 const SOURCE_NOTES: Record<string, { note: string; registered: string[]; textHas?: string }> = {
   'PX-01': { note: 'CodersTrust estimate from ILO data, 2026', registered: ['CodersTrust analysis of ILOSTAT and ILO', '2026'], textHas: 'estimated' },
   'PX-02': { note: 'ILOSTAT, 2019–2025', registered: ['ILOSTAT', '2019–2025'] },
   'PX-05': { note: 'ManpowerGroup, 2026', registered: ['ManpowerGroup', '2026'] },
+  'PX-06': { note: 'Demirci, Hannane & Zhu, 2025', registered: ['Demirci, Hannane & Zhu', '2025'] },
   'PX-08': { note: 'PwC, 2026', registered: ['PwC', '2026'] },
 };
 function sourceNotes(): Record<string, string> {
@@ -460,6 +467,7 @@ export const RCT_COMPARISON: RctComparison = rctComparison();
  * SC-01 and SC-03 stated apart (review round 13, M3): the 130,000+ trained is mostly in Bangladesh, and the international programs are
  * a smaller share (no enrollment figures are given here). Used wherever the two figures sit side by side (the C5 guide bands). The
  * count of other locations is SC-03's count less Bangladesh, so it is derived, not typed.
+ * WP58 (cycle-30 reviews, Claude S1 and GPT-6.1 Sol G1, applied to this line too): "... CodersTrust has also worked in 15 other countries and territories." (it said "programs have also run in ..."), as SC-03 says where CodersTrust has worked. No page prints this block today.
  */
 function trainedReach(): CopyBlock {
   const sc01 = fact('SC-01');
@@ -467,7 +475,7 @@ function trainedReach(): CopyBlock {
   if (sc03.stat?.numeric === undefined) throw new Error('TRAINED_REACH: SC-03 has no numeric stat');
   const others = sc03.stat.numeric - 1;
   return {
-    text: `${sc01.text}, most of them in Bangladesh; programs have also run in ${others} other countries and territories.`,
+    text: `${sc01.text}, most of them in Bangladesh; CodersTrust has also worked in ${others} other countries and territories.`,
     facts: ['SC-01', 'SC-03'],
   };
 }

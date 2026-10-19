@@ -107,9 +107,9 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
     expect(compact(await first.locator('.hs__lead').textContent())).not.toMatch(/more likely to be employed|10\.3/);
   });
 
-  test('"Results You Can Check" is one line, scoped, tied to PD-08', async ({ page }) => {
+  test('"Progress You Can Check" is one line, scoped, tied to PD-08', async ({ page }) => {
     await open(page, '');
-    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Results You Can Check' }) });
+    const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Progress You Can Check' }) });
     await expect(card).toHaveCount(1);
     await expect(card.locator('.card__text')).toHaveText('Monthly reports will show progress toward paid work, as agreed in the program scope.');
     expect(await card.getAttribute('data-fact')).toBe('PD-08');
@@ -122,12 +122,12 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
     // WP46 (cycle-22 review): the note said who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
-    // WP48 (cycle-23 review): the slide kept only the note's first clause ("contract scope, not a count of completers"). WP57 (cycle-29 review, Grok R2 with Gemini GM1): it says again that the total includes Her Power's national program (25,125 women trained),
+    // WP48 (cycle-23 review): the slide kept only the note's first clause ("contract scope, not a count of completers"). WP57 (cycle-29 review, Grok R2 with Gemini GM1): it says again that the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly),
     // in the note's WP35 wording, so the lead rests on GV-12 and GV-01 (tests/wp57.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
     expect(compact(await lead.textContent())).not.toContain('not people trained');
     expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
   });

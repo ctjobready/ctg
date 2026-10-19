@@ -89,7 +89,7 @@ test.describe('home hero slider', () => {
     // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")
     await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(4);
     await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 71% in work (711 of 1,000; program records, not trial data).');
-    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work; 2,500 trained directly.');
+    await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
   });
 
   test('keyboard: the next, previous and dot controls change the slide, and focus stays put', async ({ page, browserName }) => {

@@ -203,7 +203,7 @@ test.describe('the Bangladesh graduate-unemployment tile (PX-03) leaves the glob
     expect(compact(await page.locator('#problem').textContent())).not.toMatch(/13\.5%|SSC|graduate unemployment in Bangladesh/);
     // WP35 (cycle-12 review): the pain titles are card titles, so they are set in Title Case; WP36 (cycle-13 review): they are statements, not questions
     // WP46 (cycle-22 review): the employers' pain card is gone (the 72% tile directly below states it), so two pains are left
-    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']);
+    expect(await texts(page, '#problem .gp__pains .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
 
     await open(page, 'programs/jobready-campus/');
     const problem = page.locator('#problem');

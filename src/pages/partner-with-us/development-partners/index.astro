@@ -30,6 +30,8 @@
  * WP52 (cycle-27 reviews, Gemini): the "Where They Work" card says "Placement support into local, remote and global work, ..." (it said "... local, remote, overseas and freelance work", not the site's usual wording); the "Choose Where to Start" band's eyebrow is "Options"
  * (see the Governments page).
  * WP53 (owner follow-up, 2026-10-16): the "Where They Work" card says "local, remote and global work" once, in its title; the text is "Placement support and outcome tracking for 12 months after each course." (as Home's card, with the months from PD-02).
+ * WP58 (cycle-30 reviews, Claude S10 and GPT-6.1 Sol G6): the third "What Your Portfolio Gets" card is "Progress Your Evaluators Can Check" (it was "Results Your Evaluators Can Check": baseline data, surveys and monthly reports are a reporting plan, not results);
+ * Adrian Afraham's card shows his verbatim quotation, name and program without the one-line summary above it ("Secured a first freelance job after the Graphic Designing course, followed by a job offer"), which repeated the quotation.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -104,7 +106,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/', note: benchmarkNote, also: ['RC-06a'] }, { id: 'OC-01', href: '/impact/outcomes-2026/' }, { id: 'PR-03', href: LINKS.caseUndp }]}
     more={[]}
   />
-  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" />
+  <LearnerVoice story="adrian-afraham" excerpt="Following my completion of the course, I successfully secured my very first freelance job, which was followed by an enticing job offer." program="Graphic Designing course, CodersTrust Bangladesh" tone="white" summary={false} />
 
   <!-- C2 · Problem -->
   <ProblemBand
@@ -178,7 +180,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
     cards={[
       { icon: 'route', title: 'Training, Mentoring and Placement Support', text: 'One delivery partner connects training, mentoring and placement support.', facts: ['PD-01'] },
       { icon: 'map-pin', title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { icon: 'clipboard-check', title: 'Results Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      { icon: 'clipboard-check', title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ]}
   />
 

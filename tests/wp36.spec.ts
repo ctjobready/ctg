@@ -4,7 +4,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 
 /**
  * WP36 behaviors (cycle-13 whole-site reviews, GPT-6.1 Sol, GLM 5.3 and Kimi K3): each figure is stated once on a page (Home's income and reach slides, Development Partners' Kosovo result,
- * Governments' 31,200+), the Investors evidence band is three sentences and three links with no case-study cards and no sector taxonomy, the audience pages state their pains as outcomes, the cost
+ * Governments' 30,000+), the Investors evidence band is three sentences and three links with no case-study cards and no sector taxonomy, the audience pages state their pains as outcomes, the cost
  * and safeguarding answers are one line with a link on the route pages, and the smaller wording fixes (Contact, TalentLEAP, YouthWIDE, SuperKids, the option bands, the contract-scope tag, the dating line).
  * Retrospective coverage (the owner exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then
  * `PORT=<port> npx playwright test tests/wp36.spec.ts --project=chromium`).
@@ -84,7 +84,7 @@ test.describe('Home: each figure once', () => {
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(lines[2]).not.toMatch(/in work/);
   });
@@ -93,7 +93,7 @@ test.describe('Home: each figure once', () => {
   test('the three cards of "What a Supported Youth Cohort Includes" (WP41: it was "What Your Partnership Includes") carry Title Case headings', async ({ page }) => {
     await open(page, '');
     const titles = await texts(page, '#features .card__title');
-    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Results You Can Check', 'Tracks Chosen from Employer Demand']);
+    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
     for (const t of titles) expect(t, t).toBe(titleCase(t));
   });
 
@@ -142,10 +142,10 @@ test.describe('Development Partners and Governments: each figure once', () => {
     expect(await mainText(page)).not.toMatch(/Placement into local/);
   });
 
-  test('Governments: the 31,200+ is stated once, in Results at a Glance; the Track Record band has no stat tile, the NU statement and the contracts table stay', async ({ page }) => {
+  test('Governments: the 30,000+ is stated once, in Results at a Glance; the Track Record band has no stat tile, the NU statement and the contracts table stay', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(count(await mainText(page), '31,200+')).toBe(1);
-    await expect(page.locator('#glance li', { hasText: '31,200+' })).toHaveCount(1);
+    expect(count(await mainText(page), '30,000+')).toBe(1);
+    await expect(page.locator('#glance li', { hasText: '30,000+' })).toHaveCount(1);
     await expect(page.locator('#guide .fs, #guide [data-fact="SC-06"], #guide .stat')).toHaveCount(0);
     await expect(page.locator('#guide')).toContainText('National University’s official training partner');
     await expect(page.locator('#contracts tbody tr')).toHaveCount(6);
@@ -153,7 +153,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
 
   test('Governments: the glance tile reads "People in the Scopes of Six Government Contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
+    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
     // WP39 (cycle-16 review): the features band is three short cards; the second one keeps "Spending Measured Against Outcomes" and the budget "assessed against the agreed scorecard"
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Spending Measured Against Outcomes' }) });
     await expect(card).toHaveCount(1);
@@ -225,12 +225,12 @@ test.describe('Investors', () => {
 });
 
 test.describe('Foundations', () => {
-  test('the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66"', async ({ page }) => {
+  test('the +$27 tile reads "estimated monthly income gain for women offered a place in a predecessor program, compared with the control group"', async ({ page }) => {
     await open(page, 'partner-with-us/foundations/');
     const tile = page.locator('#glance .pg__lead a[data-fact="RC-04"]');
     // WP57 (cycle-29 review, Grok R6): the figure reads "about +$27", as Home and the trial page say it
     await expect(tile.locator('.pg__value')).toHaveText('about +$27');
-    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66');
+    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
     await expect(tile.locator('[data-evidence="Randomized Trial"]')).toHaveCount(1);
   });
 });
@@ -306,7 +306,7 @@ test.describe('the ranked pains are statements, not questions', () => {
     // WP50 (cycle-25 review): the first Foundations pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
     ['partner-with-us/foundations/', ['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
-    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']],
+    ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],
   ];
   for (const [route, titles] of PAGES) {
@@ -436,7 +436,7 @@ test.describe('option bands: program sizes are not a commitment', () => {
   });
 });
 
-test.describe('one figure, one label: the 31,200+ is tagged "Contract Scope" everywhere', () => {
+test.describe('one figure, one label: the 30,000+ is tagged "Contract Scope" everywhere', () => {
   // WP38 (cycle-15 review): Home's Track Record band has no tile for it any more; slide 2 (since WP42) states it and says "contract scope, not people trained" (tests/wp31.spec.ts)
   const TILES: [string, string][] = [
     ['partner-with-us/governments/', '#glance li'],
@@ -445,9 +445,9 @@ test.describe('one figure, one label: the 31,200+ is tagged "Contract Scope" eve
     ['our-model/jobready-platform/', '#why .jr__whystat'],
   ];
   for (const [route, selector] of TILES) {
-    test(`${route || 'Home'}: the tile that shows 31,200+ carries the Contract Scope evidence tag and no Agreement status tag`, async ({ page }) => {
+    test(`${route || 'Home'}: the tile that shows 30,000+ carries the Contract Scope evidence tag and no Agreement status tag`, async ({ page }) => {
       await open(page, route);
-      const tile = page.locator(selector, { hasText: '31,200+' });
+      const tile = page.locator(selector, { hasText: /(?<![\d,])30,000\+/ }); // not the 130,000+ learners (the total is a substring of that figure)
       await expect(tile).toHaveCount(1);
       await expect(tile.locator('[data-evidence="Contract Scope"]')).toHaveCount(1);
       await expect(tile.locator('[data-status]')).toHaveCount(0);

@@ -17,7 +17,7 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
     await open(page, '');
     const card = page.locator('#features li[data-fact~="PD-08"]');
     await expect(card).toHaveCount(1);
-    await expect(card.locator('.card__title')).toHaveText('Results You Can Check');
+    await expect(card.locator('.card__title')).toHaveText('Progress You Can Check');
     const t = compact(await card.textContent());
     expect(t).not.toContain('Documentary Evidence of Earnings');
     expect(t).toContain('as agreed in the program scope');
@@ -26,7 +26,7 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
   test('no card on Home claims an "Employer-Ready Portfolio" (WP30c: the hands-on-labs row is gone; three cards answer the three ranked pains)', async ({ page }) => {
     await open(page, '');
     const titles = (await page.locator('#features .card__title').allTextContents()).map(compact);
-    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Results You Can Check', 'Tracks Chosen from Employer Demand']);
+    expect(titles).toEqual(['Training, Mentoring and Placement Support', 'Progress You Can Check', 'Tracks Chosen from Employer Demand']);
     expect(compact(await page.locator('main').textContent())).not.toMatch(/Employer-Ready Portfolio/i);
   });
 });

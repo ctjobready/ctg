@@ -75,15 +75,15 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   });
 
   // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the register note's first sentence and points to its contracts table, which states Her Power's two figures; Impact keeps the whole note (tests/wp51.spec.ts)
-  test('the 31,200+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
+  test('the 30,000+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
     const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
-    // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained)
-    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).';
+    // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
+    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
+    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
     expect(await mainText(page)).not.toMatch(/delivered-training total|Includes Her Power’s 25,125 women/);
   });
 });
@@ -192,7 +192,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
   });
 
@@ -207,7 +207,7 @@ test.describe('the WSDFM 71% is off the glance tiles (the case cards and the cas
     // WP52 (cycle-27 review, Kimi M2): Development Partners' ">4×" tile (RC-06a) is gone from the glance; its comparison is the +10.3 tile's note (tests/wp52.spec.ts)
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-01', 'PR-03']);
     await open(page, 'partner-with-us/foundations/');
-    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-04', 'OC-03', 'PR-02', 'RC-02']);
+    expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['RC-02', 'OC-03', 'PR-02', 'RC-04']);
     await open(page, 'partner-with-us/governments/');
     expect(await page.locator('#glance .pg__lead a').evaluateAll((els) => els.map((e) => (e.getAttribute('data-fact') ?? '').split(' ')[0]))).toEqual(['GV-12', 'PR-05', 'RC-02', 'PR-02']);
   });

@@ -90,8 +90,9 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     const text = await mainText(page);
     expect(count(text, '102 of 150'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
     expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
-    expect(count(text, 'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
-    expect(text).not.toContain('372 of 800');
+    expect(count(text, 'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
+    // WP58 (cycle-30 review, Grok R3): slide 4's line states the count and its base itself ("372 of 800 tracked in work (47%)"), once; no card states it
+    expect(count(text, '372 of 800'), 'the count and its base are slide 4’s alone').toBe(1);
     // WP51 (cycle-26 review): WSDFM's figure is slide 4's alone as well, and no card names PR-01 any more
     expect(count(text, '711 of 1,000'), 'WSDFM, slide 4').toBe(1);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."). WP57 (cycle-29 review, Gemini GM4): and its program records

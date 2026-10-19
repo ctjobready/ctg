@@ -7,6 +7,7 @@ import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
 import Icon from '../../components/system/Icon.astro';
 import StatusTag from '../../components/system/StatusTag.astro';
+import Badge from '../../components/system/Badge.astro';
 import FactStat from '../../components/facts/FactStat.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
@@ -104,9 +105,10 @@ const jsonLd = [
 
   <Section id="reach" pad="sm" aria-labelledby="reach-h">
     <SectionHeader id="reach-h" eyebrow="Reach" title="Reach Since 2014" />
+    <!-- WP58 (cycle-30 reviews, Claude S1 a and GPT-6.1 Sol G1): the 16 is where CodersTrust has worked (a launch location, an announced cooperation and partnerships among them), so its tile carries the period, "Since 2014", and no "Delivered" status; the 130,000+ learners trained keep theirs. -->
     <div class="hub__reach">
       <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-01" /></div>
-      <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-03" /></div>
+      <div data-reveal><Badge tone="brand" class="hub__period">Since 2014</Badge><FactStat id="SC-03" /></div>
     </div>
   </Section>
 
@@ -154,6 +156,11 @@ const jsonLd = [
     display: grid;
     gap: var(--space-sm);
     justify-items: start;
+    align-content: start;
+  }
+  /* WP58: the period badge is as tall as the 24 px status tag beside it, so the two figures start level */
+  .hub__reach :global(.hub__period) {
+    height: 24px;
   }
   @media (min-width: 768px) {
     .hub__reach {

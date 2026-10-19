@@ -337,7 +337,7 @@ test.describe('the two research headings are short (item 8)', () => {
     expect(fact('PX-06').text).toContain('image-creation postings fell 17%');
     await open(page, '');
     const home = await texts(page, '#cost .cost__data');
-    expect(home[0]).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release.');
+    expect(home[0]).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).');
     expect(home[1]).toContain('found only three with significant employment impacts');
     expect(await page.locator('#cost .cost__data').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PX-06', 'RC-06']);
   });

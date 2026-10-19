@@ -2,6 +2,7 @@
  * Small text helpers for conversion pages (WP1i-conv). They only reshape the register's own wording, so no figure is typed.
  */
 import { fact } from '../../data/facts';
+import { withSourceNote } from '../../data/copy';
 
 /**
  * Claim lines for the C3 "cost of waiting" blocks. Each is a short heading over its register fact, which the card shows directly under it as the DATA line and which carries the scope, the figure and the study in full
@@ -12,11 +13,12 @@ export const CLAIM_PX06 = 'AI Is Changing Freelance Demand';
 /**
  * PX-06 states two headline findings of one study in one sentence ("... fell 21% relative to manual-intensive jobs, and image-creation postings fell 17% ..."). A card that has room for one reads the first finding alone
  * (WP38, cycle-15 review: Home's cost-of-waiting card), in the register's own words and figures: the platform, the postings, the 21% and the eight-month window. The 17% image-creation finding stays in PX-06 for the pages that print it whole.
+ * WP58 (cycle-30 reviews, Claude S5 and Kimi K2): the sentence names its source inside it, "... of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).", through withSourceNote (src/data/copy.ts; DHZ25), as the other external statistics do (no footnote).
  */
 export function freelancePostingsFinding(): string {
   const m = /^Within (\w+ months) of ChatGPT’s release, postings for (automation-prone writing and coding) jobs on a major freelancing platform fell (\d+%) relative to manual-intensive jobs/.exec(fact('PX-06').text);
   if (!m) throw new Error(`freelancePostingsFinding: PX-06 no longer reads "Within N months of ChatGPT’s release, postings for automation-prone writing and coding jobs on a major freelancing platform fell N% relative to manual-intensive jobs ...": "${fact('PX-06').text}"`);
-  return `On one major freelancing platform, ${m[2]} postings fell ${m[3]} relative to manual-intensive jobs within ${m[1]} of ChatGPT’s release.`;
+  return `${withSourceNote('PX-06', `On one major freelancing platform, ${m[2]} postings fell ${m[3]} relative to manual-intensive jobs within ${m[1]} of ChatGPT’s release`)}.`;
 }
 /** RC-06: the review of vocational-training trials. */
 export const CLAIM_RC06 = 'Training Does Not Always Lead to Employment';

@@ -78,12 +78,12 @@ test.describe('figures say what they measure', () => {
     }
   });
 
-  // WP38 (cycle-15 review): the Home Track Record band no longer shows the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both); the slide says what kind of figure the 31,200+ is in words
+  // WP38 (cycle-15 review): the Home Track Record band no longer shows the 30,000+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both); the slide says what kind of figure the 30,000+ is in words
   // WP45 (cycle-21 review): the slide said it in GV-12's own note (the Impact and Governments wording), with Her Power's 25,125 women trained; WP48 (cycle-23 review): the slide keeps the note's first clause only (tests/wp48.spec.ts)
-  test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 31,200+ is contract scope, not a count of completers', async ({ page }) => {
+  test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 30,000+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {

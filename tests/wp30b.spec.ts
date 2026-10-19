@@ -141,7 +141,7 @@ test.describe('identity: headquartered in New York, parent organization CT USA, 
     expect(lines[0]).toBe('# CodersTrust');
     expect(lines[1]).toMatch(/^CodersTrust is a workforce-development organization/);
     expect(lines[2]).toMatch(/^CodersTrust is headquartered in New York, and its parent organization is CT USA, Inc\. CodersTrust Bangladesh \(CodersTrust Bangladesh Ltd\.\) is a country office\./);
-    expect(lines[3]).toMatch(/^Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014\.$/);
+    expect(lines[3]).toMatch(/^CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014\.$/);
     expect(lines[4]).toBe('');
   });
 });

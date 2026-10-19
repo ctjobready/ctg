@@ -71,10 +71,10 @@ test.describe('the register: 16 countries and territories, and the new dated and
     const sc03 = fact('SC-03');
     expect(sc03.stat?.value).toBe('16');
     expect(sc03.stat?.numeric).toBe(16);
-    expect(sc03.text).toBe('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
-    expect(sc03.stat?.detail).toBe('Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh.');
+    expect(sc03.text).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
+    expect(sc03.stat?.detail).toBe('Most delivery has been in Bangladesh.');
     expect(fact('SC-16').text).toContain('16 countries and territories');
-    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments across 16 countries and territories.');
+    expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
     expect(locations).toHaveLength(16);
     expect(new Set(locations.map((l) => l.name)).size, 'no location is listed twice').toBe(16);
     expect(locations.length).toBe(Number(sc03.stat?.value));
@@ -207,7 +207,7 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
     await open(page, GLOBAL_REACH);
     // WP57 (cycle-29 review, Grok R1): the H1 is "Where We Have Worked: 16 Countries and Territories" (it said "Delivered in ..."); tests/wp57.spec.ts
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations/);
     for (const vp of [MOBILE, DESKTOP]) {
       await page.setViewportSize(vp);
       await scrollThrough(page);
@@ -271,7 +271,7 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
     const last = page.locator('#world li[data-tile]').last();
     expect(await last.getAttribute('data-tile')).toBe('bangladesh');
     expect(compact(await last.locator('figcaption').textContent())).toContain('Most delivery has been in Bangladesh.');
-    expect(fact('SC-03').stat?.detail).toContain('most delivery has been in Bangladesh');
+    expect(fact('SC-03').stat?.detail).toBe('Most delivery has been in Bangladesh.');
     const links = page.locator('#world a');
     await expect(links).toHaveCount(1);
     await expect(links).toHaveText('See Global Reach');
@@ -367,7 +367,7 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
 });
 
 // WP57 (cycle-29 review, GPT-6.1 Sol P2): the line is two short sentences, "Early press coverage, 2014–2016: ..." and "World Bank coverage: ..."; every link stays (the ten HREFS below are unchanged)
-test.describe('"As covered by": the press coverage line, text links and no logos, on Home and About', () => {
+test.describe('"As covered by": the press coverage line, text links and no logos, on Home', () => {
   const LINE = 'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India. World Bank coverage: Kosovo (2016, 2017) and Albania (2021).';
   const HREFS = [
     'https://gulfnews.com/technology/skype-co-founder-seeks-local-partners-in-new-venture-1.1327190',
@@ -382,7 +382,7 @@ test.describe('"As covered by": the press coverage line, text links and no logos
     'https://www.worldbank.org/en/news/press-release/2021/09/14/women-in-albania-to-gain-greater-access-to-global-digital-jobs-market-with-world-bank-support',
   ];
 
-  for (const [name, route] of [['Home', HOME], ['About', ABOUT]] as const) {
+  for (const [name, route] of [['Home', HOME]] as const) {
     test(`${name}: the line reads as written, links ten pages that leave the site safely, and carries no image`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
@@ -402,14 +402,14 @@ test.describe('"As covered by": the press coverage line, text links and no logos
     });
   }
 
-  test('the line is on Home and About only (the Recognition and Media page keeps its logo list)', () => {
+  test('the line is on Home only (WP58: About no longer repeats it; the Recognition and Media page keeps its logo list)', () => {
     const on = sitePages().filter((p) => /class="cov[ "]/.test(p.html)).map((p) => p.route).sort();
-    expect(on).toEqual(['/', '/about/']);
+    expect(on).toEqual(['/']);
   });
 
   test('the line fits at 390 px with no sideways scroll', async ({ page }) => {
     await page.setViewportSize(MOBILE);
-    for (const route of [HOME, ABOUT]) {
+    for (const route of [HOME]) {
       await open(page, route);
       await scrollThrough(page);
       expect(await noOverflow(page), route).toBe(true);

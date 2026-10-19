@@ -109,13 +109,13 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     const sc03 = fact('SC-03');
     expect(sc03.stat?.value).toBe('16');
     expect(sc03.stat?.numeric).toBe(16);
-    expect(sc03.text).toBe('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
-    expect(sc03.stat?.detail).toBe('Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh.');
+    expect(sc03.text).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014');
+    expect(sc03.stat?.detail).toBe('Most delivery has been in Bangladesh.');
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments across 16 countries and territories.');
-    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
+    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     expect(locations.length).toBe(Number(sc03.stat?.value));
     // Nigeria is not counted (decision 15): the headline is Bangladesh plus 15, not plus 16
     expect(locations.map((l) => l.name)).not.toContain('Nigeria');
@@ -156,16 +156,16 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
 
   test('the headline surfaces: Home’s reach card, About’s description and tile, Global Reach’s title, heading and description, the Investors and Programs tiles, and llms.txt', async ({ page }) => {
     await open(page, HOME);
-    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
+    await expect(page.locator('.hh__card[data-fact="SC-16"]')).toContainText('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
     await open(page, ABOUT);
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 16 countries and territories.');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.');
     await expect(page.locator('.about-stats .factstat[data-fact="SC-03"] .stat__value')).toHaveText('16');
     await open(page, GLOBAL_REACH);
     // WP57 (cycle-29 review, Grok R1): the H1 is "Where We Have Worked: 16 Countries and Territories"; the page title keeps "Global Reach: 16 Countries and Territories"
     await expect(page.locator('main h1')).toHaveText('Where We Have Worked: 16 Countries and Territories');
     expect(await page.title()).toContain('Global Reach: 16 Countries and Territories');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/^Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
-    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toMatch(/^CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations/);
+    expect(compact(await page.locator('main .hero__lead').first().textContent())).toBe('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
     await open(page, INVESTORS);
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     await open(page, 'programs/');
@@ -173,7 +173,7 @@ test.describe('16 countries and territories wherever SC-03 and SC-16 render (own
     await open(page, 'careers/');
     await expect(page.locator('.factstat[data-fact="SC-03"] .stat__value')).toHaveText('16');
     const llms = readFileSync(join(DIST_DIR, 'llms.txt'), 'utf8');
-    expect(llms).toContain('Programs in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
+    expect(llms).toContain('CodersTrust has worked in 16 countries and territories across Asia, Africa, Europe and the Americas, including Bangladesh since 2014.');
   });
 });
 

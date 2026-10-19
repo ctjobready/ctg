@@ -8,7 +8,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  *  - the Outcomes 2026 income-source chart shows 7.1% and 4.7% as separate bars with an "about 12%" summary;
  *  - long lists (stories, photographs) show a first set and keep the rest behind a disclosure.
  */
-// WP36 (cycle-13 review, "one figure, one label"): the 31,200+ carries the "Contract Scope" evidence tag on /impact/ too (it had the "Agreement" status tag)
+// WP36 (cycle-13 review, "one figure, one label"): the 30,000+ carries the "Contract Scope" evidence tag on /impact/ too (it had the "Agreement" status tag)
 const TYPES = ['Randomized Trial', 'Surveyed Completers', 'Program Record', 'Contract Scope', 'Individual Story'];
 
 test.describe('evidence-type badge', () => {
@@ -89,7 +89,7 @@ test.describe('/impact/ At a Glance', () => {
     await open(page, 'impact/');
     const reach = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Reach and Contract Scope' }) });
     await expect(reach).toHaveCount(1);
-    await expect(reach).toContainText('31,200+');
+    await expect(reach).toContainText(/(?<![\d,])30,000\+/); // the group also holds the 130,000+ learners
     await expect(reach).toContainText(/contracted scopes of six government programs/i);
     await expect(reach).toContainText('25,125');
     await expect(reach).not.toContainText('800');

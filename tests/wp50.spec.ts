@@ -59,7 +59,7 @@ const UNI = 'partner-with-us/universities/';
 const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
-const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to programs in 16 countries and territories.';
+const ORIGIN_LINE = 'Since 2014, from a Copenhagen launch to work in 16 countries and territories.';
 const PRICING = 'Pricing is set per program; we share an indicative budget in the discovery session and confirm it after the needs assessment.';
 
 test.describe('Home: the challenge band and the positioning statement (items 1 and 11)', () => {
@@ -106,7 +106,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02', 'PR-01', 'PR-03 PR-06', 'PR-05']);
   });
@@ -231,7 +231,7 @@ test.describe('Investors: the thesis card (item 3)', () => {
     await open(page, INVEST);
     const cards = page.locator('#thesis article.card');
     await expect(cards).toHaveCount(3);
-    expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'Connect Learning to Paid Work', 'AI Is Raising the Bar for Entry Work']);
+    expect(await texts(page, '#thesis .card__title')).toEqual(['Young People Need Work and Employers Need Skills', 'Connect Learning to Paid Work', 'AI Skills Are in Rising Demand']);
     for (const t of await texts(page, '#thesis .card__title')) expect(t, t).toBe(titleCase(t));
     const second = cards.nth(1);
     expect(compact(await second.locator('.card__text').textContent())).toBe('JobReady is being built to connect learning with mentoring and placement support.');

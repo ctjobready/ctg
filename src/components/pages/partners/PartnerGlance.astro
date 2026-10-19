@@ -30,7 +30,7 @@ interface Tile {
   caveat?: string;
   /**
    * WP57 (cycle-29 review, Grok R6): a word that qualifies the figure, shown small before it ("about" before "+$27": Foundations' RC-04 tile, as Home and the trial page say "about +$27 a month"). The page reads it from the register's own wording (RC-04 opens "About +$27 a month"), never from its own text.
-   * It is drawn on the three or four lead tiles (the `lead` prop); a secondary tile in `more` shows the figure alone.
+   * It is drawn on the three or four main tiles (the `lead` prop, and a single `more` tile, which joins them: WP58, cycle-30 review, GLM L3: Foundations' +$27 tile is that fourth tile); a tile in a grouped `more` row shows the figure alone.
    */
   qualifier?: string;
   /** Other facts the tile's note rests on, added to data-fact. */

@@ -63,7 +63,7 @@ const PAGES: PageSpec[] = [
       // WP49 (cycle-24 review): "One delivery partner connects training, mentoring and placement support." (the 100 hours per certification stay in the delivery model above; tests/wp49.spec.ts)
       { title: 'Training, Mentoring and Placement Support', text: 'One delivery partner connects training, mentoring and placement support.', facts: ['PD-01'] },
       { title: 'Accessible Local Delivery', text: 'Outreach, accessible selection and tracks chosen from employer demand, with safeguarding agreed for each program.', facts: ['PD-02', 'PD-10', 'PD-12'] },
-      { title: 'Results Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
+      { title: 'Progress Your Evaluators Can Check', text: 'Baseline data, follow-up surveys and monthly reports, with documentary evidence where available, as agreed in the program scope.', facts: ['PD-08', 'PD-09'] },
     ],
   },
   {
@@ -267,7 +267,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     const guide = page.locator('#guide');
     const text = compact(await guide.textContent());
     expect(text).not.toContain('official training partner');
-    expect(text).toContain('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
+    expect(text).toContain('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
     expect(text).toContain('JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.');
     await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);

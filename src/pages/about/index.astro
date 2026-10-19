@@ -13,7 +13,6 @@ import TeamCard from '../../components/pages/about/TeamCard.astro';
 import PageNav from '../../components/pages/about/PageNav.astro';
 import Stat from '../../components/system/Stat.astro';
 import WorldStrip from '../../components/ui/WorldStrip.astro';
-import AsCoveredBy from '../../components/ui/AsCoveredBy.astro';
 import { WORLD_STRIP } from '../../data/globalStrip';
 import { fact } from '../../data/facts';
 import { BIGD_FULL, IDENTITY, MICRO_COMMITMENT, RCT_HEADLINE, TRIAL_BAND_HEADING, spellOutBigd } from '../../data/copy';
@@ -24,12 +23,14 @@ import { webPage } from '../../lib/schema';
 
 const founders = (await getCollection('team', (e) => e.data.group === 'founders')).sort((a, b) => a.data.order - b.data.order);
 const since = fact('ID-02').stat?.value;
-// WP30b: a global organization (headquartered in New York, ID-11; programs in 15 countries and territories, SC-03), not a Bangladesh one.
+// WP30b: a global organization (headquartered in New York, ID-11; work in 16 countries and territories, SC-03), not a Bangladesh one.
 const countries = fact('SC-03').stat?.value;
 // WP49 (cycle-24 review): "has trained and mentored ... across N countries and territories since 2014" (the count and the year are the register's, so the sentence reports a record, not a present-tense claim); 155 characters, the SEO limit.
 // WP52 (cycle-27 review, GLM m4): the description names the group as ID-01 does ("educated, unemployed and underemployed youth") and keeps the register's year and count: "Since 2014, New York-headquartered CodersTrust has trained ... in 15 countries and
 // territories." It is 153 characters; "and mentored" is out to make room within the 155 limit, which the guard below enforces.
-const description = `Since ${since}, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in ${countries} countries and territories.`;
+// WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): the count is the countries and territories CodersTrust has worked in ("..., with work in N countries and territories."), not where the youth were trained (SC-16 and SC-03 say the same). The sentence is 11
+// characters longer with "with work in", so "educated," is out to stay within the 155-character limit (the guard below): the group is "unemployed and underemployed youth", still ID-01's wording less its first adjective.
+const description = `Since ${since}, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in ${countries} countries and territories.`;
 if (description.length > 155) throw new Error(`About meta description is ${description.length} characters (max 155)`);
 
 // SC-01 (learners) and SC-02 (enrollments) sit side by side, so each tile names what it counts: learners trained, and course enrollments.
@@ -184,8 +185,7 @@ const jsonLd = [
     <SectionHeader id="rec-h" eyebrow="Recognition" title="Industry Recognition" />
     <div class="about-rec">
       <p class="lead" data-fact="PA-08">CodersTrust was listed in the HolonIQ South Asia EdTech 100 in 2023 (STEAM category) and 2024.</p>
-      <!-- WP55 (synthesis 3.5): the "As covered by" line, under the listing sentence. -->
-      <AsCoveredBy />
+      <!-- WP58 (cycle-30 review, Claude S9): the "As covered by" press line (WP55, synthesis 3.5) is no longer here: it was on Home, About and Recognition and Media. Home keeps it (HomeRecognition) and Recognition and Media keeps the full list, one link below. -->
       <a class="link" href={linkAttrs('/about/recognition/').href}>Recognition and Media<Icon name="arrow-right" size={16} /></a>
     </div>
   </Section>

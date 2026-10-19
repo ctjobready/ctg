@@ -31,7 +31,7 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
       facts: ['PD-01', 'PD-15', 'PD-19'],
     },
     {
-      title: 'Results You Can Check',
+      title: 'Progress You Can Check',
       // WP45 (cycle-21 review): one line, the monthly reports (PD-08), scoped
       text: 'Monthly reports will show progress toward paid work, as agreed in the program scope.',
       pain: 'P2',
@@ -94,10 +94,10 @@ test.describe('Home: "What a Supported Youth Cohort Includes" (WP41: it was "Wha
 });
 
 test.describe('Home: the Guide band and the cost-of-waiting card', () => {
-  test('the Guide band drops the 31,200+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both) and keeps its copy and logos', async ({ page }) => {
+  test('the Guide band drops the 30,000+ and 1.5M+ tiles (the government slide of the carousel, slide 2 since WP42, states both) and keeps its copy and logos', async ({ page }) => {
     await open(page, '');
     const guide = compact(await page.locator('#guide').textContent());
-    expect(guide).not.toMatch(/31,200|1\.5M/);
+    expect(guide).not.toMatch(/(?<![\d,])30,000|1\.5M/); // the 130,000+ learners are not the total
     await expect(page.locator('#guide .stat, #guide .guide__panel, #guide .guide__tile, #guide [data-evidence]')).toHaveCount(0);
     expect(guide).toContain('We’ve Built This Path Since 2014');
     expect(guide).toContain('CodersTrust launched in 2014 in Copenhagen and began training freelancers in Bangladesh.');
@@ -106,12 +106,12 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     await expect(page.locator('#guide .rel__title')).toHaveCount(4);
     // (WP42, cycle-19 review: the government slide is the second slide)
     const slide2 = compact(await page.locator('[data-hs-slide]').nth(1).textContent());
-    // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."; WP48, cycle-23 review: the slide keeps the note's first clause, "31,200+ people: contract scope, not a count of completers.")
+    // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."; WP48, cycle-23 review: the slide keeps the note's first clause, "30,000+ people: contract scope, not a count of completers.")
     // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
-    expect(slide2).toContain('31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)');
+    expect(slide2).toContain('30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
-    expect(count(text, '31,200+'), 'the 31,200+ is stated once on Home').toBe(1);
+    expect((text.match(/(?<![\d,])30,000\+/g) ?? []).length, 'the 30,000+ is stated once on Home (the 130,000+ learners are another figure)').toBe(1);
     expect(count(text, '1.5M+'), 'the 1.5M+ is stated once on Home').toBe(1);
   });
 
@@ -130,7 +130,7 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
   test('the cost card states the 21% finding alone, still rests on PX-06, and keeps its "What It Means" line; the register keeps the whole fact', async ({ page }) => {
     await open(page, '');
     const card = page.locator('#cost article').first();
-    expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release.');
+    expect(compact(await card.locator('.cost__data').textContent())).toBe('On one major freelancing platform, automation-prone writing and coding postings fell 21% relative to manual-intensive jobs within eight months of ChatGPT’s release (Demirci, Hannane & Zhu, 2025).');
     expect(await card.locator('.cost__data').getAttribute('data-fact')).toBe('PX-06');
     expect(compact(await card.locator('.cost__impl').textContent())).toBe('What It Means Training has to follow current employer demand, not last year’s job market.');
     expect(await mainText(page)).not.toMatch(/image-creation|17%/);
@@ -184,7 +184,7 @@ test.describe('the three funder pains that had a heading and no line now have on
     // WP49 (cycle-24 reviews): the Governments and Universities lines say what the agency or institution needs, not what is "rarely" so across a sector (tests/wp49.spec.ts)
     // WP54 (cycle-28 review, GPT-6.1 Sol G2): the heading is "... Takes Time to Build" (it said capacity "Is Thin"); the line is unchanged
     ['partner-with-us/governments/', 'Trainer and Curriculum Capacity Takes Time to Build', 'National delivery needs trained facilitators and localized curricula.'],
-    ['partner-with-us/universities/', 'Build Placement Results You Can Publish', 'Your institution needs placement data it can report to a board or ministry.'],
+    ['partner-with-us/universities/', 'Placement Results Are Hard to Publish', 'Your institution needs placement data it can report to a board or ministry.'],
   ];
   for (const [route, title, line] of LINES) {
     test(`${route}: "${title}" carries its line, and every pain on the page has one`, async ({ page }) => {
@@ -199,7 +199,7 @@ test.describe('the three funder pains that had a heading and no line now have on
 });
 
 test.describe('Guide band: one origin line on the audience pages, the two-sentence history on Home', () => {
-  const ORIGIN_SHORT = 'Since 2014, from a Copenhagen launch to programs in 16 countries and territories.';
+  const ORIGIN_SHORT = 'Since 2014, from a Copenhagen launch to work in 16 countries and territories.';
   // WP42 (cycle-19 review): Investors' Guide band shows SC-03's tile since "Delivered Since 2014" moved into it, so its origin line is the launch alone, as on Development Partners (tests/wp42.spec.ts)
   const AUDIENCE = ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/employers/'];
 
@@ -215,7 +215,7 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
 
   // WP51 (cycle-26 review, Kimi P2): Development Partners prints the shared origin line like Governments and Foundations (ORIGIN_SHORT), in place of the launch alone that WP38 gave a band showing SC-03's tile; the count is therefore in the
   // origin line as well as in the tile (tests/wp51.spec.ts; 15 then, 17 after WP55, 16 since WP56)
-  test('Development Partners: its Guide band prints the shared origin line, "Since 2014, from a Copenhagen launch to programs in 16 countries and territories."', async ({ page }) => {
+  test('Development Partners: its Guide band prints the shared origin line, "Since 2014, from a Copenhagen launch to work in 16 countries and territories."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const line = page.locator('#guide p[data-fact="ID-02 SC-03"]');
     await expect(line).toHaveCount(1);

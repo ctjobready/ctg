@@ -106,11 +106,11 @@ test.describe('JobReady@Campus: the problem cards say what the program does for 
 });
 
 test.describe('Universities: the institution’s pain is headed as the goal (item 2)', () => {
-  test('"Build Placement Results You Can Publish" keeps the line under it; the earlier heading is on no built page', async ({ page }) => {
+  test('"Placement Results Are Hard to Publish" keeps the line under it; the earlier heading is on no built page', async ({ page }) => {
     await open(page, UNI);
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Build Placement Results You Can Publish']);
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']);
     expect(await texts(page, '#problem .gp__a')).toEqual(['A degree alone does not guarantee a job offer.', 'Your institution needs placement data it can report to a board or ministry.']);
-    expect('Build Placement Results You Can Publish').toBe(titleCase('Build Placement Results You Can Publish'));
+    expect('Placement Results Are Hard to Publish').toBe(titleCase('Placement Results Are Hard to Publish'));
     expect(sitePages().filter((p) => visible(p.html).includes('Institutions Lack Placement Results They Can Publish')).map((p) => p.route)).toEqual([]);
   });
 });
@@ -358,7 +358,7 @@ test.describe('Home: the first Imagine card and the Learner Journeys lead (items
 
 test.describe('The shared origin line on Development Partners and Investors (items 13, 20 and 27)', () => {
   test('Development Partners, Governments and Foundations print the same line, from the same source (ORIGIN_SHORT)', async ({ page }) => {
-    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
+    expect(ORIGIN_SHORT.text).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     for (const route of [DP, GOV, FOUND]) {
       await open(page, route);
       const line = page.locator('#guide .pg__origin');
@@ -413,7 +413,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
       'Women in Online Work, Kosovo: 68% in work (102 of 150).',
       'WSDFM: 71% in work (711 of 1,000; program records, not trial data).',
       'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
-      'Her Power: 47% of 800 tracked women in work; 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(await slide(page, 4).locator('.hs__lines li').nth(3).getAttribute('data-fact')).toBe('PR-05');
   });
@@ -448,14 +448,14 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(sitePages().filter((p) => visible(p.html).includes('must show up as young people in work') || visible(p.html).includes('must produce young people in work, not only seats filled')).map((p) => p.route)).toEqual([]);
   });
 
-  // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the tile's note is the shared "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)." (tests/wp57.spec.ts); the contracts table still states the 2,500 and the 130 sub-districts
-  test('the GV-12 tile says the total includes Her Power’s national program (25,125 women trained); Impact keeps the full register note; the contracts table below states the rest', async ({ page }) => {
+  // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the tile's note is the shared "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)." (tests/wp57.spec.ts); the contracts table still states the 2,500 and the 130 sub-districts
+  test('the GV-12 tile says the total includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly); Impact keeps the full register note; the contracts table below states the rest', async ({ page }) => {
     const FULL = fact('GV-12').stat?.glance?.note;
     expect(FULL).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
     await open(page, GOV);
-    const tile = page.locator('#glance li', { hasText: '31,200+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
-    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01');
+    const tile = page.locator('#glance li', { hasText: '30,000+' });
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     // the table is below the tile and states the two figures Her Power's note used to repeat
     const contracts = compact(await page.locator('#contracts').textContent());
     expect(contracts).toContain('CodersTrust trained 2,500 women directly.');

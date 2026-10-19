@@ -65,17 +65,18 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
-  test('slide 2 body is the contract scope with its clause and Her Power’s national program (25,125 women trained), then the National University sentence; no 2,500; the lead rests on GV-12 and GV-01; the links stay', async ({ page }) => {
+  test('slide 2 body is the contract scope with its clause and Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly), then the National University sentence; the 2,500 only in the note; the lead rests on GV-12 and GV-01; the links stay', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01');
-    expect(compact(await s.textContent())).toContain('it includes Her Power’s national program (25,125 women trained)');
-    expect(compact(await s.textContent())).not.toMatch(/2,500/);
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(compact(await s.textContent())).toContain('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)');
+    // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
+    expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
     await expect(s.locator('h2')).toHaveText('Six Government Contracts and Bangladesh’s National University');
     expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
@@ -90,7 +91,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '31,200+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
 
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording

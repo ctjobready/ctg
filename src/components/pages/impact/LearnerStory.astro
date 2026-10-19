@@ -33,9 +33,13 @@ interface Props {
   eyebrow?: string;
   /** Show the "Individual Story" evidence tag above the story (Impact pages, WP24b); it stands in for the kicker of a named story (WP50). */
   tag?: boolean;
+  /**
+   * WP58 (cycle-30 review, GPT-6.1 Sol G6): `false` leaves out the one-line outcome above a quotation that already says it. The outcome is shown anyway when the quotation is not (an anonymized story), so a card is never left without its line.
+   */
+  summary?: boolean;
 }
 const props = Astro.props;
-const { factId, program, outcome, outlier = false, assetId, tag = false } = props;
+const { factId, program, outcome, outlier = false, assetId, tag = false, summary = true } = props;
 // The permissions rule decides whether the name, quote and photo may appear; if not, the line is shown anonymized.
 const named = Boolean(props.name) && (!assetId || mayRender(assetId));
 const name = named ? props.name : undefined;
@@ -46,6 +50,8 @@ const image = named && (!imageAsset || mayRender(imageAsset)) ? props.image : un
 const imageAlt = props.imageAlt ?? '';
 // WP50: the evidence tag takes the kicker's place on a named story; an anonymized story keeps its kicker (it says the name is withheld).
 const showKicker = !(tag && name);
+// WP58: the outcome line is left out only where the quotation that says it is shown.
+const showOutcome = summary || !excerpt;
 ---
 
 <article class="ls" data-asset={name ? assetId : undefined} data-fact={factId}>
@@ -55,7 +61,7 @@ const showKicker = !(tag && name);
   <div class="ls__body">
     {tag && <p class="ls__tag"><EvidenceTag type="Individual Story" /></p>}
     {showKicker && <p class="eyebrow">{name ? (props.eyebrow ?? 'Learner Story') : 'Learner Outcome, Shared Without a Name'}</p>}
-    <p class="ls__outcome">{outcome}</p>
+    {showOutcome && <p class="ls__outcome">{outcome}</p>}
     {excerpt && <p class="ls__excerpt">{excerpt}</p>}
     {name && <p class="ls__name"><b>{name}</b><span>{program}</span></p>}
     {!name && <p class="ls__name"><span>{program}</span></p>}

@@ -109,7 +109,7 @@ export const press: PressItem[] = [
 ];
 
 /**
- * WP55 (owner decision 2026-10-18, synthesis 3.5): the "As covered by" line on Home and About, as text links with their years and no logos. The outlets are PA-09's, in date order, each with the link the research
+ * WP55 (owner decision 2026-10-18, synthesis 3.5): the "As covered by" line on Home and About (WP58, cycle-30 review, Claude S9: on Home only now; About no longer repeats it), as text links with their years and no logos. The outlets are PA-09's, in date order, each with the link the research
  * checked on 17-18 October 2026 (a live page where one answers, otherwise the Wayback Machine copy: Forbes, The Wall Street Journal and USA Today open only as copies). `press` above is unchanged: the Recognition and Media
  * page keeps its logo list and its headlines, and links only where the original URL is known.
  */

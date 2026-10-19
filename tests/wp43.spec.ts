@@ -55,8 +55,8 @@ test.describe('Investors: the track-record band (item 1)', () => {
     await open(page, URL);
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
-    // WP51 (cycle-26 review, Grok m1): the shared origin line, "Since 2014, from a Copenhagen launch to programs in 16 countries and territories." (it was "Launched in Copenhagen in 2014.")
-    expect(compact(await page.locator('#guide p[data-fact="ID-02 SC-03"]').textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
+    // WP51 (cycle-26 review, Grok m1): the shared origin line, "Since 2014, from a Copenhagen launch to work in 16 countries and territories." (it was "Launched in Copenhagen in 2014.")
+    expect(compact(await page.locator('#guide p[data-fact="ID-02 SC-03"]').textContent())).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     // WP46 (cycle-22 review): "with progressive levels" is gone from the Track Record bands (only the first level is published)
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
     expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');

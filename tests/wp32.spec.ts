@@ -45,7 +45,7 @@ test.describe('Partner with Us hub', () => {
     await expect(reach.locator('.wp__value')).toHaveText('130,000+');
     // WP49 (cycle-24 review): "learners trained", SC-01's wording (the 130,000+ includes teacher and staff enrollments, so it is not "young people")
     await expect(reach.locator('.wp__desc')).toHaveText('learners trained since 2014');
-    await expect(reach.locator('.wp__note')).toHaveText('Through 150,000+ enrollments across 16 countries and territories.');
+    await expect(reach.locator('.wp__note')).toHaveText('Through 150,000+ enrollments, with work in 16 countries and territories.');
     expect(await reach.locator('a.wp__link').getAttribute('href')).toMatch(/\/impact\/global-reach\/$/);
   });
 
@@ -233,7 +233,7 @@ test.describe('benefit lines start with a capital letter', () => {
   test('Development Partners "What Your Portfolio Gets": three cards, each a heading with its sentence below it', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     await expect(page.locator('#features h2')).toHaveText('What Your Portfolio Gets');
-    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Results Your Evaluators Can Check']);
+    expect(await texts(page, '#features .card__title')).toEqual(['Training, Mentoring and Placement Support', 'Accessible Local Delivery', 'Progress Your Evaluators Can Check']);
     const sameLine = await page.locator('#features li.card').first().evaluate((card) => {
       const title = card.querySelector('.card__title')!.getBoundingClientRect();
       const text = card.querySelector('.card__text')!.getBoundingClientRect();

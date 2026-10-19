@@ -22,7 +22,7 @@ import { listPages } from './support/pages';
  *   - GM4: Home's "Proof in Practice" Kosovo card reads "Program records: 102 of 150 women in work. World Bank: 77 trainees won at least one online contract." (PR-02, PR-02b), and every other card, tile or block that
  *     shows one Kosovo figure shows the other (owner decision 7, "show both"); two hero headline figures list the program records alone, and the test names them;
  *   - R1: Global Reach's H1 is "Where We Have Worked: 16 Countries and Territories", and Denmark's note says "Launch location of CodersTrust, April 2014" (the date is TL-01's);
- *   - R2: the contract total says it includes Her Power's national program ("... it includes Her Power’s national program (25,125 women trained).") on Home's government slide and the Governments glance (GV-12 and GV-01);
+ *   - R2: the contract total says it includes Her Power's national program ("... it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).") on Home's government slide and the Governments glance (GV-12 and GV-01);
  *   - R5: Universities' "Choose Where to Start" is one line, "Start with one campus: cohort size, tracks and labs are set in the discovery session.", with no size cards;
  *   - R6: Foundations' +$27 tile reads "about +$27", as Home and the trial page do;
  *   - P1 (Grok): "On This Page" is an H2 on the long-form pages (inside the contents box's summary).
@@ -77,7 +77,7 @@ test.describe('G2, YouthWIDE: "Built Around What Funders and Agencies Ask" is go
     const main = compact(await page.locator('main').textContent());
     for (const gone of [
       'Built Around What Funders and Agencies Ask',
-      'Results Your Evaluators Can Check',
+      'Progress Your Evaluators Can Check',
       'Tracks That Follow Employer Demand',
       'Success is measured against agreed outcomes, including paid work, not attendance alone',
       'Your evaluators can check results against payslips',
@@ -280,7 +280,7 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('P2, "As covered by" is two short sentences with every link kept', () => {
-  for (const [name, route] of [['Home', HOME], ['About', ABOUT]] as const) {
+  for (const [name, route] of [['Home', HOME]] as const) {
     test(`${name}: "Early press coverage, 2014–2016: ..." names the seven outlets once (Forbes with its qualifier); "World Bank coverage: ..." keeps Kosovo’s two pages and Albania’s page apart by year`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
@@ -485,7 +485,7 @@ test.describe('R1, Global Reach: "Where We Have Worked: 16 Countries and Territo
     expect(title).toBe('Global Reach: 16 Countries and Territories | CodersTrust');
     expect(title.length).toBeLessThanOrEqual(60);
     const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
-    expect(description).toMatch(/^Programs in 16 countries and territories: Bangladesh since 2014, plus 15 international locations/);
+    expect(description).toMatch(/^CodersTrust has worked in 16 countries and territories: Bangladesh since 2014 and 15 international locations/);
     expect(description.length).toBeLessThanOrEqual(155);
   });
 
@@ -514,24 +514,24 @@ test.describe('R1, Global Reach: "Where We Have Worked: 16 Countries and Territo
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('R2, the 31,200+ visibly includes Her Power’s national program (GV-12 and GV-01)', () => {
-  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).';
+test.describe('R2, the 30,000+ visibly includes Her Power’s national program (GV-12 and GV-01)', () => {
+  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
 
   test('Home, slide 2: the lead is the contracts sentence, the note and the National University sentence, tied to GV-12 and GV-01', async ({ page }) => {
     await open(page, HOME);
     const lead = page.locator('#results [data-hs-slide]').nth(1).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      `Six government contracts with training and curriculum work scoped for 31,200+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`,
+      `Six government contracts with training and curriculum work scoped for 30,000+ people. ${NOTE} CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.`,
     );
-    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
   });
 
-  test('Governments: the first glance tile (31,200+) carries the same note, tied to GV-12, SC-06 and GV-01; the old pointer sentence is gone', async ({ page }) => {
+  test('Governments: the first glance tile (30,000+) carries the same note, tied to GV-12, SC-06 and GV-01; the old pointer sentence is gone', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    const tile = page.locator('#glance a.pg__tile', { has: page.locator('.pg__value', { hasText: '31,200+' }) });
+    const tile = page.locator('#glance a.pg__tile', { has: page.locator('.pg__value', { hasText: '30,000+' }) });
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__note')).toHaveText(NOTE);
-    expect(await tile.getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01');
+    expect(await tile.getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     expect(compact(await tile.textContent())).not.toContain('The contracts table below shows each scope.');
   });
 
@@ -545,9 +545,9 @@ test.describe('R2, the 31,200+ visibly includes Her Power’s national program (
   });
 
   test('the 25,125 is stated on Home’s government slide and on the Governments tile in the same words (no page words the inclusion differently)', () => {
-    const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national program/.test(p.html) && !p.html.includes('it includes Her Power’s national program (25,125 women trained)')).map((p) => p.route);
+    const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national program/.test(p.html) && !p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route);
     expect(offenders).toEqual([]);
-    const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program (25,125 women trained)')).map((p) => p.route).sort();
+    const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
     expect(pages).toEqual(['/', '/partner-with-us/governments/']);
   });
 });
@@ -614,7 +614,7 @@ test.describe('R6, Foundations: the +$27 tile reads "about +$27", as Home and th
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__value')).toHaveText('about +$27');
     await expect(tile.locator('.pg__qual')).toHaveText('about');
-    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, versus a control mean of about $66');
+    await expect(tile.locator('.pg__desc')).toHaveText('estimated monthly income gain for women offered a place in a predecessor program, compared with the control group');
     expect(await tile.getAttribute('data-fact')).toBe('RC-04');
     expect(fact('RC-04').text.startsWith('About +$27 a month')).toBe(true);
     expect(fact('RC-04').stat?.value).toBe('+$27');

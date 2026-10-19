@@ -47,6 +47,8 @@ const onThisPage = [
   // the closing band is the last entry, as About's list ends on its own ("Start a Conversation"): its label is its heading, its id (#cta) the anchor
   ...(d.href ? [{ label: CLOSING_HEADING, href: '#cta' }] : []),
 ];
+// WP58 (cycle-30 reviews, Claude S7 and Kimi K5): the Kosovo tile's note says "A 2016–2017 pilot with the World Bank Group." as the Global Reach table, the "Around the World" strip and the photograph captions do (it said "A 2017 pilot"); the closing band's line is
+// "A discovery session agrees your priority groups, tracks and the pilot scorecard." (it said "sets"), as on the other Impact pages' closing bands.
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
 // WP52 (cycle-27 review, Grok m5): the page title is "Impact You Can Verify | CodersTrust", the H1's words (it was "Impact and Evidence You Can Verify | CodersTrust").
@@ -91,7 +93,7 @@ const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
         },
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [
-        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
+        { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Women in Online Work, Kosovo: women in work (68%)', note: `A 2016–2017 pilot with the World Bank Group. ${WB_KOSOVO.text}`, also: ['PR-06', ...WB_KOSOVO.facts] },
         { id: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/', label: wsdfmLabel, note: 'Program records, separate from the randomized trial of the predecessor program.', also: ['PR-06'] },
         { id: 'PR-03', href: '/impact/case-studies/undp-yes-korail/', also: ['PR-06'], note: 'A 2017 program in Dhaka’s Korail settlement.' },
         { id: 'PR-05', href: '/impact/case-studies/her-power/', label: 'Her Power: tracked women in work (47%), from the 2,500 CodersTrust trained directly', note: 'Within the national program scope; the national program’s reach is counted separately.' },
@@ -149,7 +151,7 @@ const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
     </ul>
   </Section>
 
-  <CTABand id="cta" heading={CLOSING_HEADING} text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
+  <CTABand id="cta" heading={CLOSING_HEADING} text="A discovery session agrees your priority groups, tracks and the pilot scorecard." cta={d} secondary={{ label: 'See the Impact Survey 2026', href: '/impact/outcomes-2026/' }} micro={MICRO_COMMITMENT} />
 </BaseLayout>
 
 <style>

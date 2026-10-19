@@ -18,6 +18,7 @@ import { withSourceNote } from '../../../data/copy';
  * WP48 (cycle-23 review): the closing stakes line ("Every trained young person who remains out of work is an opportunity employers and communities are not yet capturing.") is gone: it added no fact, so the band ends with its three cards.
  * WP50 (cycle-25 review): the second card is "Connect Learning to Paid Work" with one line about what JobReady is being built to do; it was "Online Learning Sells Content, Not Earnings" (a heading that read as absolute) over a sentence
  * about what many online courses lack ("... without the work-entry support that turns skills into income: mentoring, certification and placement").
+ * WP58 (cycle-30 review, Claude S11): the third card is "AI Skills Are in Rising Demand" (it was "AI Is Raising the Bar for Entry Work", a heading about entry-level work over PX-08, which is about jobs that require AI skills at every level, against all jobs).
  */
 interface Props {
   id?: string;
@@ -57,7 +58,7 @@ const px08 = withSourceNote('PX-08', px08Text);
     <article class="card th__card" data-reveal>
       <div class="card__body">
         <Icon name="cpu" size={36} strokeWidth={1.5} class="th__icon" />
-        <h3 class="card__title">AI Is Raising the Bar for Entry Work</h3>
+        <h3 class="card__title">AI Skills Are in Rising Demand</h3>
         <p class="th__more" data-fact="PX-08">{px08}.</p>
       </div>
     </article>

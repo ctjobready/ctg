@@ -127,6 +127,9 @@ const trialMultiple = `Employment effect: more than four times the ${nineTrialAv
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
+/** The count and its base as the register states them ("372 of 800"): the slide's line leads with it (WP58, cycle-30 review, Grok R3), so "47%" is not read as a share of something else. */
+const herPowerTracked = fact('PR-05').stat?.value;
+if (!herPowerTracked || !/^[\d,]+ of [\d,]+$/.test(herPowerTracked) || !herPowerTracked.endsWith(` of ${herPower[1]}`)) throw new Error('heroSlides: PR-05 stat value no longer reads "N of M" with the base (M) its text names ("... of M tracked women")');
 /**
  * WP51 (cycle-26 review, Grok M1): Her Power's line on the program-results slide carries the base the Impact and Governments tiles state, in PR-05's words ("tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%"):
  * "... tracked women in work (2,500 trained directly)." The number is read from the label, never retyped; the build stops if the label stops reading that way. The fuller wording ("..., from the 2,500 trained directly by CodersTrust.", or the
@@ -193,7 +196,10 @@ const PR_TEXT = {
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
   // is already in "tracked women", so it is left out of the second clause to keep the line on one row (tests/wp51.spec.ts and tests/hero-slider.spec.ts hold the budget).
-  herPower: `Her Power: ${herPower[2]}% of ${herPower[1]} tracked women in work; ${herPowerDirect} trained directly.`,
+  // WP58 (cycle-30 review, Grok R3): "Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly." (it said "47% of 800 tracked women in work", which reads as 376 of the 800): the count and its base are PR-05's stat value ("372 of 800"), as the other pages state them, and the
+  // percentage is the one in PR-05's text, so nothing is retyped; the build stops if the stat value and the text stop naming the same base. The review's wording, "372 of 800 tracked women in work (47%); 2,500 trained directly.", is 624 px wide against the 594 px the row has at 1280 px, so it wrapped
+  // and made this slide 30 px taller, which left slide 1 57 px unused (the limit is 48, tests/hero-slider.spec.ts); "women" is the word left out (558.8 px: the Kosovo and WSDFM lines do not say it either, and the other pages say "tracked women").
+  herPower: `Her Power: ${herPowerTracked} tracked in work (${herPower[2]}%); ${herPowerDirect} trained directly.`,
 };
 
 /** The survey card's caption: OC-01's tile label. (WP35 added "in Bangladesh"; reverted until the owner confirms the survey's country scope — OC-09 gives districts, not an all-Bangladesh sample.) */
@@ -268,8 +274,9 @@ export const HOME_SLIDES: HeroSlide[] = [
     // WP52 (cycle-27 reviews, Claude P1 and GLM m1): two sentences for the contracts, "... work scoped for 31,200+ people. This is contract scope, not a count of completers." (it was one sentence joined by a colon), and "CodersTrust is also the official
     // training partner of ..." for the university (the "also" keeps the two facts from reading as one scale; GV-12's "onboarding 1.5M+ learners" wording is unchanged).
     // WP57 (cycle-29 review, Grok R2, with Gemini GM1): the second sentence is CONTRACT_TOTAL_NOTE ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained)."), so the lead rests on GV-12 and GV-01.
+    // WP58 (cycle-30 review, Gemini GM1): the note's parenthesis says who trained whom, "(25,125 women trained; CodersTrust trained 2,500 directly)", so the lead rests on GV-12, GV-01 and GV-11 (CONTRACT_TOTAL_NOTE.facts).
     lead: `${governmentScope[1]} for ${governmentScope[2]}. ${CONTRACT_TOTAL_NOTE.text} CodersTrust is also the ${governmentScope[3]}.`,
-    leadFacts: ['GV-12', 'GV-01'],
+    leadFacts: CONTRACT_TOTAL_NOTE.facts,
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).
     links: [
       { label: 'For Governments', href: '/partner-with-us/governments/', variant: 'primary' },

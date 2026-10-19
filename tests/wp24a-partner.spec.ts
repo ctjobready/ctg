@@ -94,13 +94,13 @@ test.describe('audience pages', () => {
     });
   }
 
-  test('governments: the 31,200+ tile says "People in the Scopes of Six Government Contracts" (WP36), that the total is contract scope and not a count of completers, and where each scope is shown (WP51)', async ({ page }) => {
+  test('governments: the 30,000+ tile says "People in the Scopes of Six Government Contracts" (WP36), that the total is contract scope and not a count of completers, and where each scope is shown (WP51)', async ({ page }) => {
     await page.goto('partner-with-us/governments/');
-    const tile = page.locator('#glance li', { hasText: '31,200+' });
+    const tile = page.locator('#glance li', { hasText: '30,000+' });
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
     // WP46 (cycle-22 review): the note said who trained whom, so the 25,125 was not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
     // WP51 (cycle-26 review, Kimi m2): the tile kept the first sentence and pointed to the table. WP57 (cycle-29 review, Grok R2 with Gemini GM1): the total visibly includes Her Power's national program, in the note's WP35 wording (tests/wp57.spec.ts)
-    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).');
+    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     await expect(tile).not.toContainText('The contracts table below shows each scope.');
     await expect(page.locator('#contracts')).toContainText('The national program trained 25,125 women across 130 sub-districts (upazilas).');
   });

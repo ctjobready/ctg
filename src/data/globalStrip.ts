@@ -3,7 +3,7 @@ import { fact } from './facts';
 /**
  * "CodersTrust Around the World" (WP55, owner decisions 2026-10-17/18; synthesis 3.1): the chronological strip of seven tiles on Home and About, and its three-tile short form in the audience pages' "Our Track Record" band (WP57: the short form leads with Kosovo, then Copenhagen and Dubai).
  * Each tile is one line, place and date first: the date and the line are the register's (TL-01 to TL-06: `stat.value` is the date, `stat.label` the line; the photographs and their captions are in src/data/photos.ts), so no
- * wording or date is typed here. The strip ends on Bangladesh, the country where most delivery has been: that tile's line is SC-03's own clause, "most delivery has been in Bangladesh".
+ * wording or date is typed here. The strip ends on Bangladesh, the country where most delivery has been: that tile's line is SC-03's own detail, "Most delivery has been in Bangladesh." (WP58, GLM L7: the detail was a two-clause line, of which the tile said the second).
  * TL-07 (the 2015–2016 Rockefeller Foundation grant for a feasibility study in Kenya and Nigeria) is not a tile: it is a line of the About timeline (src/data/timeline.ts), and Nigeria is not a location.
  * Albania has no photograph of the program (the only visual is the program's own cut-out, used on its case study), so its tile is a type tile: the program's name where a photograph would be.
  */
@@ -30,9 +30,9 @@ const dated = (factId: string, id: string, place: string, extra: Partial<StripTi
   return { id, place, when: s.value, line: s.label, factIds: [factId], ...extra };
 };
 
-// SC-03's detail reads "Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh."; the tile says its second clause.
-const bangladeshClause = /; (most delivery has been in Bangladesh)\.?$/.exec(fact('SC-03').stat?.detail ?? '')?.[1];
-if (!bangladeshClause) throw new Error('globalStrip: SC-03 detail no longer ends "...; most delivery has been in Bangladesh."');
+// SC-03's detail reads "Most delivery has been in Bangladesh." (WP58, GLM L7; it was "Bangladesh plus 15 other countries and territories; most delivery has been in Bangladesh.", of which the tile said the second clause); the tile says it as it is, without its final period.
+const bangladeshLine = /^(Most delivery has been in Bangladesh)\.?$/.exec(fact('SC-03').stat?.detail ?? '')?.[1];
+if (!bangladeshLine) throw new Error('globalStrip: SC-03 detail no longer reads "Most delivery has been in Bangladesh."');
 
 const TILES: Record<string, StripTile> = {
   copenhagen: dated('TL-01', 'copenhagen', 'Copenhagen', { photo: 'global/copenhagen-launch-dinner' }),
@@ -45,7 +45,7 @@ const TILES: Record<string, StripTile> = {
     id: 'bangladesh',
     place: 'Bangladesh',
     when: 'since 2014',
-    line: bangladeshClause[0].toUpperCase() + bangladeshClause.slice(1),
+    line: bangladeshLine,
     photo: 'general/women-learners-classroom',
     factIds: ['SC-03'],
     wide: true,

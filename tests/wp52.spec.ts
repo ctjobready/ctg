@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  * WP52 behaviors (the verified cycle-27 whole-site reviews, items 1-38): the employer track-record opener (Employers and JobReady@Work) without a speed comparison; JobReady@Campus's problem-band lead; the Local Partners
  * "Certified Facilitators and a Local Curriculum" card, "Monthly Reporting" block and challenge lead; the Governments delivery card, Her Power glance tile, contracts-table note, "Capacity Designed to Stay" card, closing call to action
  * (no repeated procurement point), Track Record band (no empathy line) and "Options" eyebrow; the Foundations cohort-grant lead; the About timeline, identity sentences, meta description and "Start a Conversation" band; Home's hero line,
- * slides 2, 4 and 5, "Results You Can Check" card and AWS line; "surveyed new earners" defined where the 58.8% appears; the Development Partners glance (no ">4×" tile) and "Where They Work" card; YouthWIDE's hero label and
+ * slides 2, 4 and 5, "Progress You Can Check" card and AWS line; "surveyed new earners" defined where the 58.8% appears; the Development Partners glance (no ">4×" tile) and "Where They Work" card; YouthWIDE's hero label and
  * glance row; the Governance leadership card; the Our Model cards; the Programs hub lines; the evidence ladder's first row; the Impact title; the Investors Track Record band and the IN-05 label. Retrospective coverage (the owner
  * exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp52.spec.ts --project=chromium`).
  */
@@ -379,10 +379,10 @@ test.describe('About: the identity sentences sit directly under the lede (item 1
     expect(compact(await page.locator('#team-cta h2').textContent())).toBe('Talk to the Team');
   });
 
-  test('the meta description is 153 characters, within the limit of 155, with the register’s year and count, and names the underemployed (also in og:description)', async ({ page }) => {
+  test('the meta description is 154 characters, within the limit of 155, with the register’s year and count, and names the underemployed (also in og:description)', async ({ page }) => {
     await open(page, ABOUT);
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 16 countries and territories.';
-    expect(D.length).toBe(153);
+    const D = 'Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
+    expect(D.length).toBe(154);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
     expect(fact('SC-03').stat?.value).toBe('16'); // WP55 (owner decision 2026-10-18): 17, with Egypt and Benin added; WP56 (owner decision 2026-10-18): 16, with Somalia merged into Somaliland
@@ -419,13 +419,13 @@ test.describe('YouthWIDE: the briefing link names its audience (item 15) and the
 });
 
 test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 reads "Four delivered programs" with an unambiguous Her Power line (items 20 and 33)', () => {
-  // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained).")
-  test('slide 2: "... work scoped for 31,200+ people. The total is contract scope, ...; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of ..."', async ({ page }) => {
+  // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).")
+  test('slide 2: "... work scoped for 30,000+ people. The total is contract scope, ...; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 31,200+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people. The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly). CodersTrust is also the official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners.',
     );
-    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01');
+    expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
   });
 
   test('slide 4: "Four delivered programs, with results from each program’s records." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
@@ -434,7 +434,7 @@ test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 re
     // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Four delivered programs, with results from each program’s records.');
     const lines = slide(page, 4).locator('.hs__lines li');
-    await expect(lines.nth(3)).toHaveText('Her Power: 47% of 800 tracked women in work; 2,500 trained directly.');
+    await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
     expect(await lines.nth(3).getAttribute('data-fact')).toBe('PR-05');
     expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
@@ -454,7 +454,7 @@ test.describe('Home: slide 2 is three sentences (items 17 and 25) and slide 4 re
   });
 });
 
-test.describe('Home: "Results You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
+test.describe('Home: "Progress You Can Check" promises reports (item 36) and the recognition band gives the AWS item its line (item 24)', () => {
   test('"Monthly reports will show progress toward paid work, as agreed in the program scope."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await page.locator('#features .card__text').nth(1).textContent())).toBe('Monthly reports will show progress toward paid work, as agreed in the program scope.');
@@ -523,7 +523,7 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
 
   test('Foundations and Governments never showed the ">4×" tile and still have their four; Home’s first slide keeps its own', async ({ page }) => {
     for (const [route, ids] of [
-      [FOUND, ['RC-04', 'OC-03', 'PR-02', 'RC-02']],
+      [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04']],
       [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02']],
     ] as const) {
       await open(page, route);
@@ -563,7 +563,7 @@ test.describe('The Track Record bands of Governments and Investors start with th
     expect(Object.keys(EMPATHY)).not.toContain('governments');
     await open(page, GOV);
     await expect(page.locator('#guide p.lead')).toHaveCount(0);
-    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Since 2014, from a Copenhagen launch to programs in 16 countries and territories.');
+    expect(compact(await page.locator('#guide .pg__copy > :first-child').textContent())).toBe('Since 2014, from a Copenhagen launch to work in 16 countries and territories.');
     await expect(page.locator('#guide h2')).toHaveText('We’ve Built This Path Since 2014');
   });
 
@@ -572,7 +572,7 @@ test.describe('The Track Record bands of Governments and Investors start with th
     await open(page, INVEST);
     await expect(page.locator('#guide .ig__empathy')).toHaveCount(0);
     const kids = await page.locator('#guide .ig__copy').first().evaluate((el) => Array.from(el.children).map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim()));
-    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'Since 2014, from a Copenhagen launch to programs in 16 countries and territories.']);
+    expect(kids.slice(0, 3)).toEqual(['Our Track Record', 'A Record Built Since 2014', 'Since 2014, from a Copenhagen launch to work in 16 countries and territories.']);
     expect(pagesWith('Impact investors need to see what is proven')).toEqual([]);
   });
 

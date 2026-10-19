@@ -103,7 +103,7 @@ test.describe('Governments, Universities and Local Partners: the wording the rev
 
   test('Universities: the institution’s pain says what it needs', async ({ page }) => {
     await open(page, UNI);
-    const line = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: 'Build Placement Results You Can Publish' }) }).locator('.gp__a');
+    const line = page.locator('.gp__pains li', { has: page.locator('.gp__q', { hasText: 'Placement Results Are Hard to Publish' }) }).locator('.gp__a');
     expect(compact(await line.textContent())).toBe('Your institution needs placement data it can report to a board or ministry.');
     expect(await mainText(page)).not.toContain('is rarely collected');
   });
@@ -309,7 +309,7 @@ test.describe('Results at a Glance: one secondary tile has no heading of its own
   const PAGES: [string, string[], number, number][] = [
     [DP, ['RC-02', 'OC-01', 'PR-03'], 1, 3],
     [GOV, ['GV-12', 'PR-05', 'RC-02', 'PR-02'], 2, 4],
-    [FOUND, ['RC-04', 'OC-03', 'PR-02', 'RC-02'], 2, 4],
+    [FOUND, ['RC-02', 'OC-03', 'PR-02', 'RC-04'], 2, 4],
   ];
 
   for (const [route, ids, rows900, rows390] of PAGES) {
@@ -402,11 +402,11 @@ test.describe('"What Happens Next" (item 16)', () => {
 });
 
 test.describe('About: the meta description (item 17)', () => {
-  // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts)
+  // WP52 (cycle-27 review, GLM m4): it names the group as ID-01 does ("educated, unemployed and underemployed youth") and opens with the year: 153 characters, within the 155 limit (tests/wp52.spec.ts); WP58 (cycle-30 reviews, Claude S1 d and GPT-6.1 Sol G1 i): "..., with work in 16 countries and territories." (the count is where CodersTrust has worked), so "educated," is out to stay within the limit: 154 characters
   test('it reads "Since 2014, New York-headquartered CodersTrust has trained ... in 16 countries and territories." within 155 characters, in the meta description and in og:description', async ({ page }) => {
     await open(page, 'about/');
-    const D = 'Since 2014, New York-headquartered CodersTrust has trained educated, unemployed and underemployed youth for digital work in 16 countries and territories.';
-    expect(D.length).toBe(153);
+    const D = 'Since 2014, New York-headquartered CodersTrust has trained unemployed and underemployed youth for digital work, with work in 16 countries and territories.';
+    expect(D.length).toBe(154);
     expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe(D);
     expect(await page.locator('meta[property="og:description"]').getAttribute('content')).toBe(D);
   });
@@ -415,13 +415,13 @@ test.describe('About: the meta description (item 17)', () => {
 test.describe('SC-16 reads "learners trained" (item 18)', () => {
   test('the register, Home, Impact and the partner hub say "learners trained"; no page says "young people trained"', async ({ page }) => {
     const sc16 = fact('SC-16');
-    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
-    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
+    expect(sc16.text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
+    expect(sc16.stat?.label).toBe('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
     expect(sc16.stat?.glance?.label).toBe('learners trained since 2014');
-    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments across 16 countries and territories.');
+    expect(sc16.stat?.glance?.note).toBe('Through 150,000+ enrollments, with work in 16 countries and territories.');
     expect(sc16.stat?.value).toBe('130,000+');
     await open(page, '');
-    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments in 16 countries and territories since 2014');
+    expect(compact(await page.locator('.hh__card[data-fact="SC-16"]').textContent())).toContain('learners trained through 150,000+ enrollments since 2014, with work in 16 countries and territories');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance a[data-fact~="SC-16"]').textContent())).toContain('learners trained since 2014');
     await open(page, 'partner-with-us/');

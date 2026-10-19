@@ -20,7 +20,8 @@ interface Props {
   caption?: string;
   class?: string;
 }
-const { items = locations, caption = 'Where CodersTrust Programs Have Run', class: className } = Astro.props;
+// WP58 (cycle-30 reviews, Claude S1 and GPT-6.1 Sol G1 g): the caption is "Where We Have Worked" (it was "Where CodersTrust Programs Have Run": the locations include the launch location, an announced cooperation and partnerships, not only programs).
+const { items = locations, caption = 'Where We Have Worked', class: className } = Astro.props;
 assertMapEquivalence(items);
 // WP55: a location that has a CodersTrust photograph shows it in its table row, under the partner or note (the pins stay text only, so the table still holds every detail a pin shows).
 // The photograph sits in the data cell, not in the row header, so its alt text is read with that cell and not with every cell of the row.
@@ -72,7 +73,7 @@ const pins = items.map((l) => {
   </figure>
   <p class="wmap__offices" data-fact="ID-07">{OFFICES_LINE}</p>
 
-  <section class="wmap__table table-scroll" aria-label="Program locations table" tabindex="0" data-stack>
+  <section class="wmap__table table-scroll" aria-label="Locations table" tabindex="0" data-stack>
     <table>
       <caption class="sr-only">{caption}</caption>
       <thead>

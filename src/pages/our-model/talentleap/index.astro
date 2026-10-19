@@ -103,7 +103,8 @@ const d = discoveryCta();
   </ReportSection>
 
   <ReportSection id="results" title="Results from CodersTrust Programs">
-    <p>The results below are for CodersTrust programs, each labeled with the evidence it rests on (see At a Glance). The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.</p>
+    <!-- WP58 (cycle-30 review, GPT-6.1 Sol G7): the figures are in At a Glance, above this section, not below it ("The results below are for CodersTrust programs, each labeled with the evidence it rests on (see At a Glance)."). -->
+    <p>The figures in At a Glance above describe CodersTrust programs, not individual TalentLEAP features. The current 100-hour track has not yet been independently evaluated. A pilot scorecard tracks agreed outcomes; independent evaluation is welcome.</p>
     <p class="tl__links"><a class="link" href={linkAttrs('/impact/outcomes-2026/').href}>Impact Survey 2026<Icon name="arrow-right" size={16} /></a><a class="link" href={linkAttrs('/impact/independent-evaluation/').href}>The Randomized Trial<Icon name="arrow-right" size={16} /></a></p>
   </ReportSection>
 
@@ -111,7 +112,7 @@ const d = discoveryCta();
     <Accordion items={faq} name="tl-faq" openFirst />
   </ReportSection>
 
-  <NextStep heading="See How TalentLEAP Would Run in Your Program" text="A discovery session sets priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
+  <NextStep heading="See How TalentLEAP Would Run in Your Program" text="A discovery session agrees your priority groups, tracks and the pilot scorecard." cta={{ label: d.label, href: d.href }} secondary={{ label: 'How the model works end to end', href: '/our-model/' }} micro={MICRO_COMMITMENT} />
 </LongformLayout>
 
 <style>
