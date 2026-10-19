@@ -10,7 +10,7 @@ import { listPages } from './support/pages';
  * WP60 behaviors (cycle-32 whole-site reviews: Grok R1, R2, R4, R5 and R6; Claude S3, S4 (owner answer 2026-10-20) and S6; GPT-6.1 Sol G1, G2, G3 and G5). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp60.spec.ts --project=chromium`):
  *   - R1: Global Reach's note says "Rows that are a partnership, an announced cooperation or the launch say so in their note; the other rows are training programs." and the table's rows bear it out (Bangladesh's and Somaliland's notes describe training);
- *   - R2: Maria Dewan "first came across Her Power, where CodersTrust was the training partner" on the Her Power case study, Success Stories and Universities; no page says CodersTrust implemented the project;
+ *   - R2: Maria Dewan "first came across Her Power, where CodersTrust was a training partner" on the Her Power case study, Success Stories and Universities; no page says CodersTrust implemented the project;
  *   - R4: the JobReady Platform "In the Pipeline" tile reads "... in the onboarding pipeline, not learners trained by CodersTrust" (SC-04's own label plus the clause Home's slide 2 uses); the register's label and the other pages that show it are unchanged;
  *   - R5: YouthWIDE's country answer ends "CodersTrust has worked in 16 countries and territories; most delivery has been in Bangladesh.";
  *   - R6: Independent Evaluation's classes band is "Freelancing Share by Classes Attended" and says "In this study, freelancing was higher among women who attended more classes.";
@@ -27,7 +27,7 @@ import { listPages } from './support/pages';
  *   - L4: Home's "How Do You Prove Outcomes?" opens "A scorecard is agreed for every cohort before delivery.";
  *   - L7: the JobReady Platform rollout table's first row (the course storefront) is "Live", not "Operating";
  *   - GM1: the Programs hub's evidence band is "Evidence from Youth-Employment Programs", with the scope line "These results are from youth-employment programs, not evidence for every program listed above.";
- *   - GM4: Foundations' "What Happens Next" opens "For platform grants, the first conversation covers JobReady's infrastructure and staged rollout. For cohort grants.";
+ *   - GM4: Foundations' "What Happens Next" opens "For platform grants, the first conversation covers JobReady's infrastructure and staged rollout. For cohort grants, the steps are below.";
  *   - GM5: Governments' "Capacity Designed to Stay in Your System" opens "Where included in your program scope:";
  *   - GM6: Development Partners' first challenge card is "Connect training to a first job, freelance client or business.";
  *   - GM7: Home's "Our Approach" is one sentence that keeps the audience, declared whole for Home in scripts/check-facts.mjs;
@@ -131,8 +131,8 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersTrust was the training partner', () => {
-  const SENTENCE = 'Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was the training partner.';
+test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersTrust was a training partner', () => {
+  const SENTENCE = 'Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner.';
 
   test('the Her Power case study, the Universities page and Success Stories say it; no page says CodersTrust implemented the project', async ({ page }) => {
     await open(page, 'impact/case-studies/her-power/');
@@ -140,7 +140,7 @@ test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersT
     await open(page, 'partner-with-us/universities/');
     expect(compact(await page.locator('main').textContent())).toContain(SENTENCE);
     await open(page, 'impact/stories/');
-    expect(compact(await page.locator('#steps').innerText())).toContain('A third-year Biology student when she first came across Her Power, where CodersTrust was the training partner.');
+    expect(compact(await page.locator('#steps').innerText())).toContain('A third-year Biology student when she first came across Her Power, where CodersTrust was a training partner.');
     expect(sitePages().filter((p) => /Her Power project implemented by CodersTrust/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });
 });
@@ -490,7 +490,7 @@ test.describe('GM4 (Gemini): Foundations’ "What Happens Next" says what the fi
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
     expect(await band.locator('[data-fact="PD-04"]').count()).toBe(1);
     expect(compact(await band.locator('[data-fact="PD-04"]').textContent())).toMatch(/Discovery.*Co-Design.*Agreement/);
   });
@@ -570,7 +570,7 @@ test.describe('GM8 and GM9 (Gemini): the Governments and Foundations learner car
   test('the other learner cards keep their passage (Local Partners’ Samina sentence, Universities’ Maria sentence, Employers’ quotation)', async ({ page }) => {
     for (const [route, text] of [
       [LOCAL, 'During the training period, she began offering her services as a graphic designer on the freelance marketplace Fiverr.'],
-      ['partner-with-us/universities/', 'Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was the training partner.'],
+      ['partner-with-us/universities/', 'Maria Dewan was a third-year Biology student when she first came across Her Power, where CodersTrust was a training partner.'],
       [EMPLOYERS, 'A paying job after only two months of Digital Accounting training is a huge accomplishment for me'],
     ] as const) {
       await open(page, route);

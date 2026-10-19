@@ -75,7 +75,7 @@ test.describe('Foundations', () => {
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
     expect((await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''))).toEqual(['Discovery (Week 1)', 'Co-Design (Week 2)', 'Agreement (Week 3)', 'Training Starts 6–8 Weeks After Signing']);
     expect(await band.locator('[data-fact]').first().getAttribute('data-fact')).toBe('PD-04');
     await expect(band.locator('.next__fn')).toHaveCount(0);

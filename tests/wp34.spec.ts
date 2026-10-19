@@ -259,7 +259,7 @@ test.describe('Foundations: what is discussed for each funding route is said onc
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
     await expect(band.locator('ol h3')).toHaveCount(4);
     await expect(band.locator('.next__routes')).toHaveCount(0);
     expect(compact(await band.textContent())).not.toMatch(/we discuss your country|we discuss JobReady/);
