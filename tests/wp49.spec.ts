@@ -176,7 +176,7 @@ test.describe('YouthWIDE: the closing timing paragraph (item 7)', () => {
     expect(text).not.toContain('Discovery (Week 1)');
     // procurement timing is stated in the Governments entry card and in the timing answer
     expect(compact(await page.locator('#cta-governments .entry__text').textContent())).toBe('Public procurement follows the agency’s own timeline, so we start with a briefing that fits it.');
-    expect(await answerOf(page, 'How Fast Can We Start?')).toBe('For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(await answerOf(page, 'How Fast Can We Start?')).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
     expect(await itemOf(page, 'How Fast Can We Start?').locator('.faq__a p').getAttribute('data-fact')).toBe('PD-04');
   });
 });

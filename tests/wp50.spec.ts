@@ -562,9 +562,9 @@ test.describe('Governments: the timing answer is the procurement sentence alone 
   });
 
   test('the other timing answers are unchanged: the shared Q7 (Home’s bank) and Q7-model (YouthWIDE, Our Model)', async () => {
-    expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('For grant-funded pilots, agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
+    expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('Target timing for grant-funded pilots: agreement typically takes about three weeks from first conversation, and the first cohort is typically in training 6–8 weeks after signing.');
     expect(faqsFor('variants').find((f) => f.id === 'Q7-model')!.a).toBe(
-      'For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.',
+      'Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.',
     );
   });
 });

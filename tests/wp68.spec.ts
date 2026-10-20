@@ -1,41 +1,56 @@
+import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { DESKTOP, open } from './support/browser';
+import { listPages } from './support/pages';
 
 /**
- * WP68 behaviors (Sonnet Low run 1 review of the Claude-ladder pages). Retrospective coverage (the owner exempted this project from test-first work);
+ * WP68 behaviors (Sonnet Low run 1 review of the Claude-ladder pages, reworked as RW1 and RW2). Retrospective coverage (the owner exempted this project from test-first work);
  * each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp68.spec.ts --project=chromium`):
- *   - item 1: the Universities band that shows National University's size and onboarding is headed "Our University Partnerships" (it was "The National University Partnership"); its eyebrow and anchor (#offer-evidence) are unchanged;
- *   - item 2: the grant-funded week figures are labelled as target timing once, in each band's lead (or, where a band has no lead, in its label): the shared NextStepsBand lead (Development Partners), the partner hub lead, Foundations' lead, Home's eyebrow and the Contact timing line;
- *   - item 2: the four step headings keep their week numbers ("Discovery (Week 1)" to "Training Starts 6–8 Weeks After Signing"), and no individual step heading says "Target".
+ *   - RW1: the Universities band that shows National University's size and onboarding keeps its heading "The National University Partnership" and takes the page-level eyebrow
+ *     "Our Partnerships" (the eyebrow was the misleading label, "Evidence for This Offer"); its anchor (#offer-evidence) is unchanged, and other pages keep the default eyebrow;
+ *   - item 2: the grant-funded week figures are labelled as target timing: the shared NextStepsBand lead (Development Partners), the partner hub lead, Foundations' lead, Home's eyebrow,
+ *     the Contact timing line, the C14 reminder and both "How Fast Can We Start?" timing answers (Q7 and Q7-model, RW2); the four step headings keep their week numbers;
+ *   - RW2: no built page still carries the untargeted grant-pilot timing wording.
  */
 
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 const STEP_HEADINGS = [/^Discovery \(Week 1\)$/, /^Co-Design \(Week 2\)$/, /^Agreement \(Week 3\)$/, /^Training Starts 6–8 Weeks After Signing$/];
+const OLD_TIMING_PHRASES = ['For grant-funded pilots, agreement typically takes', 'For grant-funded pilots, allow about three weeks', 'we plan for the first cohort to begin training'];
 
 async function stepHeadings(page: Page, selector: string) {
   // Each step heading is prefixed "Step N: " (tests/wp32.spec.ts strips the same prefix).
   return (await page.locator(selector).evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()))).map((t) => t.replace(/^Step \d: /, ''));
 }
 
-test.describe('WP68 item 1: the Universities band is headed for what it shows', () => {
-  test('the band heading is "Our University Partnerships", keeps its eyebrow and anchor, and still states that the figures are not CodersTrust learners', async ({ page }) => {
+/** The "How Fast Can We Start?" answer as rendered on the page. */
+function fastAnswer(page: Page) {
+  return page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Fast Can We Start?' }) }).locator('.faq__a').first();
+}
+
+test.describe('WP68 RW1: the Universities band keeps its heading and takes a page-level eyebrow', () => {
+  test('the band reads "Our Partnerships" over "The National University Partnership", keeps its anchor and its clarifying sentence and its three figures', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'partner-with-us/universities/');
     const band = page.locator('#offer-evidence');
     await expect(band).toHaveCount(1);
-    await expect(band.locator('h2')).toHaveText('Our University Partnerships');
-    await expect(band.locator('.eyebrow').first()).toHaveText('Evidence for This Offer');
+    await expect(band.locator('.eyebrow').first()).toHaveText('Our Partnerships');
+    await expect(band.locator('h2')).toHaveText('The National University Partnership');
     expect(compact(await band.locator('.sh__lead').textContent())).toContain('they are not learners trained by CodersTrust');
     await expect(band.locator('.pe__item')).toHaveCount(3);
   });
 
-  test('no element on the Universities page is headed "The National University Partnership" in the band', async ({ page }) => {
+  test('the Universities band no longer carries the "Evidence for This Offer" eyebrow', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#offer-evidence h2', { hasText: 'The National University Partnership' })).toHaveCount(0);
+    await expect(page.locator('#offer-evidence .eyebrow', { hasText: 'Evidence for This Offer' })).toHaveCount(0);
+  });
+
+  test('JobReady@Campus keeps its own eyebrow, "Delivery Context: National University", on its evidence band', async ({ page }) => {
+    await open(page, 'programs/jobready-campus/');
+    await expect(page.locator('#offer-evidence .eyebrow').first()).toHaveText('Delivery Context: National University');
   });
 });
 
-test.describe('WP68 item 2: the grant-funded week figures are target timing', () => {
+test.describe('WP68 item 2 and RW2: the grant-funded week figures are target timing', () => {
   test('Development Partners: the shared next-steps lead says "Target timing for grant-funded pilots." and the four week headings are unchanged', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
     const band = page.locator('#next-steps');
@@ -74,5 +89,27 @@ test.describe('WP68 item 2: the grant-funded week figures are target timing', ()
     await open(page, 'contact/');
     const line = page.locator('ul.ct-c14 li').first();
     expect(compact(await line.textContent())).toBe('Target timing for grant-funded pilots: the first cohort begins training 6–8 weeks after signing, and monthly reports follow from the first cohort.');
+  });
+
+  test('Our Model and YouthWIDE: "How Fast Can We Start?" (Q7-model) opens with the target qualifier and keeps its 3-week and 6–8 week figures', async ({ page }) => {
+    for (const route of ['our-model/', 'programs/youthwide/']) {
+      await open(page, route);
+      const answer = compact(await fastAnswer(page).textContent());
+      expect(answer, route).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    }
+  });
+});
+
+test.describe('RW2: no built page keeps the untargeted grant-pilot timing wording', () => {
+  test('every built page is free of the old "we plan for" reminder and the old Q7 openers', async () => {
+    const pages = listPages().filter((p) => !p.route.startsWith('/news/'));
+    expect(pages.length).toBeGreaterThan(40);
+    expect(pages.map((p) => p.route)).toContain('/contact/');
+    expect(pages.map((p) => p.route)).toContain('/our-model/');
+    const offenders = pages.flatMap((p) => {
+      const html = readFileSync(p.file, 'utf8');
+      return OLD_TIMING_PHRASES.filter((phrase) => html.includes(phrase)).map((phrase) => `${p.route}: ${phrase}`);
+    });
+    expect(offenders).toEqual([]);
   });
 });

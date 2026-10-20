@@ -318,7 +318,7 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
   test('the answer is two sentences, without the Week 1 to 3 count, tied to PD-04', async ({ page }) => {
     await open(page, 'our-model/');
     const answer = await answerOf(page, QUESTION);
-    expect(answer).toBe('For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(answer).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
     expect(sentences(answer)).toHaveLength(2);
     expect(answer).not.toMatch(/Counting from the first conversation|Week 1|Week 2|Week 3/);
     expect(await itemOf(page, QUESTION).locator('.faq__a p').getAttribute('data-fact')).toBe('PD-04');
@@ -330,7 +330,7 @@ test.describe('Our Model: a timeline answer that says the weeks once, and a plai
   test('the shared answer, with the Week 1 to 3 sentence, stays in the objection bank; YouthWIDE says the weeks once, like Our Model; the variant is not listed in the bank’s full list', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const text = await mainText(page);
-    expect(text).toContain('For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(text).toContain('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
     expect(text).not.toContain('Counting from the first conversation');
     expect(faqs.find((f) => f.id === 'Q7')!.a).toContain('Counting from the first conversation, Week 1 is a discovery session, Week 2 co-design and Week 3 the agreement; public procurement follows the agency’s own timeline.');
     expect(faqsFor('all').map((f) => f.id)).not.toContain('Q7-model');

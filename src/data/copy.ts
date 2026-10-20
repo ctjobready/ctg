@@ -822,7 +822,7 @@ export const C14 = {
     // WP46 (cycle-22 review): "Development and NGO partners include ..." mislabeled the foundations among these names, so the line says "Organizations that have worked with CodersTrust"; the names are still from PA-01.
     foundations: { text: 'Organizations that have worked with CodersTrust include the Rockefeller Foundation, DANIDA and Porticus.', facts: ['PA-01'] } as CopyBlock,
   },
-  reminder: { text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
+  reminder: { text: 'Target timing for grant-funded pilots: the first cohort begins training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
   // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).
   firstActionLabeled: 'A discovery session. In your inquiry, include two suitable times.',

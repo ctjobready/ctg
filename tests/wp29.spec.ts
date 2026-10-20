@@ -65,7 +65,7 @@ test.describe('timelines name their starting point', () => {
     await open(page, 'programs/youthwide/');
     const main = compact(await page.locator('main').textContent());
     // WP40 (cycle-17 review): YouthWIDE's "What Happens Next" shows the sequence, so its answer is the two-sentence variant (tests/wp40.spec.ts)
-    expect(main).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(main).toContain('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
     expect(main).not.toMatch(/Counting from the first conversation|week 1 is a discovery session, week 2/i);
   });
 });

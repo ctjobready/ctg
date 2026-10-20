@@ -338,7 +338,7 @@ test.describe('Our Model and Investors', () => {
     for (const route of ['programs/youthwide/', 'our-model/']) {
       await open(page, route);
       const text = compact(await everything(page));
-      expect(text, route).toContain('allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
+      expect(text, route).toContain('about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training');
     }
     await open(page, 'partner-with-us/governments/');
     const gov = compact(await everything(page));

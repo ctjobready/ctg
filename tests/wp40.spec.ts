@@ -146,7 +146,7 @@ test.describe('YouthWIDE: the glance row and the timing answer (items 2 and 7)',
 
   test('"How Fast Can We Start?" is the two-sentence variant (Q7-model), tied to PD-04, with no week-by-week count; the JSON-LD says the same', async ({ page }) => {
     const answer = faqsFor('variants').find((f) => f.id === 'Q7-model')!.a;
-    expect(answer).toBe('For grant-funded pilots, allow about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
+    expect(answer).toBe('Target timing for grant-funded pilots: about three weeks from the first conversation to agreement, then 6–8 weeks from signing to training. Public procurement follows the agency’s own timeline.');
     await open(page, 'programs/youthwide/');
     const item = page.locator('#faq details', { has: page.locator('summary', { hasText: 'How Fast Can We Start?' }) });
     await expect(item).toHaveCount(1);

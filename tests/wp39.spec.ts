@@ -279,9 +279,9 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(await texts(page, '#guide .pg__list li')).toEqual(['CodersTrust has signed MOUs, agreements or contracts with 20 universities and colleges.']);
   });
 
-  test('"Our University Partnerships" band still states the relationship, once on the page', async ({ page }) => {
+  test('"The National University Partnership" band still states the relationship, once on the page', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#offer-evidence h2')).toHaveText('Our University Partnerships');
+    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
     await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(3);
     expect(compact(await page.locator('#offer-evidence').textContent())).toContain('CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023');
     expect(count(await mainText(page), 'since 2023'), 'the relationship is stated once, in the NU band').toBe(1);
