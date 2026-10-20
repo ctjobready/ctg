@@ -318,11 +318,13 @@ test.describe('Employers: "Our Track Record" leads with its delivered figure; "A
     await expect(page.locator('#guide .pg__stats .stat--lg')).toHaveCount(1);
     expect(compact(await page.locator('#guide .pg__stats').textContent())).toContain('23,000+');
     expect(await page.locator('#guide .pg__stats .factstat').getAttribute('data-fact')).toBe('SC-15');
+    // WP66 (owner request 2026-10-20): the list closes with the signed-agreement sentence for companies and industry bodies (SC-11d); the two lines before it are as they were (tests/wp66.spec.ts)
     expect(await texts(page, '#guide .pg__list li')).toEqual([
       'Contract scope: ICT, networking and cybersecurity for 120+ professionals, for the Ministry of Power, Energy and Mineral Resources (via Bangladesh Petroleum Institute).',
       'Partnership with AIvolve Leadership Dynamics GmbH (Switzerland) for AI leadership and AI-transformation programs.',
+      'CodersTrust has signed MOUs, agreements or contracts with 27 companies and industry bodies.',
     ]);
-    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['GV-06', 'PA-07']);
+    expect(await page.locator('#guide .pg__list li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['GV-06', 'PA-07', 'SC-11d']);
     // a scope of work is never worded as delivered training (register presentation rule for GV-02 to GV-06)
     expect(compact(await page.locator('#guide').textContent())).not.toMatch(/Also delivered/);
   });

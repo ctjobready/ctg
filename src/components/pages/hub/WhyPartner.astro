@@ -5,6 +5,7 @@ import Icon from '../../system/Icon.astro';
 import { fact } from '../../../data/facts';
 import { spellUnit } from '../../../lib/format';
 import { linkAttrs } from '../../../lib/url';
+import { signedWith } from '../../sections/copyText';
 
 /**
  * "Why Partner with CodersTrust" (WP20b): a compact proof band under the route cards of /partner-with-us/. Three tiles, each read from the
@@ -14,6 +15,8 @@ import { linkAttrs } from '../../../lib/url';
  * WP32 (cycle-9 review): the reach tile came back as the third, so the strip reads trial, survey, reach.
  * WP45 (cycle-21 review): the trial tile shows "+10.3" with "percentage points" on a line under it, not the register's "pp".
  * WP62 (cycle-34 review, Gemini): the reach tile's kicker is "Reach Since 2014", so its label is the register's glance label without " since 2014" ("learners trained"); the Impact page's tile, which has no such kicker, keeps "learners trained since 2014".
+ * WP66 (owner request 2026-10-20): one line under the tiles gives the organizations with signed MOUs, agreements or contracts (SC-11) with their four categories, as the register words them (signedWith, src/components/sections/copyText.ts).
+ * It is a line of the band, not a fourth tile or a new band; it says "signed" and "since 2014" (the band's heading does not carry the year), so it never reads as partnerships that are active today.
  */
 interface Props {
   id?: string;
@@ -30,6 +33,8 @@ interface Tile {
   ids: string;
 }
 const { id = 'why-partner' } = Astro.props;
+const HEADING = 'Why Partner with CodersTrust';
+const signed = signedWith('SC-11', HEADING);
 const rc02 = fact('RC-02');
 const oc01 = fact('OC-01');
 const sc16 = fact('SC-16');
@@ -71,7 +76,7 @@ const tiles: Tile[] = [
 ---
 
 <Section id={id} tone="ice" pad="sm" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="The Evidence in Brief" title="Why Partner with CodersTrust" />
+  <SectionHeader id={`${id}-h`} eyebrow="The Evidence in Brief" title={HEADING} />
   <ul class="wp" role="list">
     {
       tiles.map((t) => (
@@ -85,6 +90,7 @@ const tiles: Tile[] = [
       ))
     }
   </ul>
+  <p class="wp__signed" data-fact="SC-11" data-reveal>{signed}</p>
 </Section>
 
 <style>
@@ -144,6 +150,12 @@ const tiles: Tile[] = [
   }
   .wp__note {
     font-size: var(--fs-body-xs);
+    color: var(--on-surface-variant);
+  }
+  /* WP66: the signed-agreements line is body text in the muted ground colour at the reading width, a 32px step (--space-lg) under the tiles, as About's "Meet the Full Team" link sits under its cards */
+  .wp__signed {
+    margin: var(--space-lg) 0 0;
+    max-width: var(--measure);
     color: var(--on-surface-variant);
   }
   .wp__link {

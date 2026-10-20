@@ -36,6 +36,8 @@
  * WP62 (cycle-34 review, Gemini): the "Where They Work" card is unchanged (it already says "for 12 months", read from PD-02); Home, the shared mechanism band and YouthWIDE now say it the same way.
  * WP65 (cycle-37 review, Gemini, Sonnet): the first "What Your Portfolio Gets" card reads "CodersTrust connects training, mentoring and placement support in one program." (it said "One delivery partner connects training, mentoring and placement support.").
  * The UNDP YES tile's label (WP62: PR-03's glance label with its year) is UNDP_YES_TILE_LABEL in partners.ts now, since Foundations' fourth glance tile is the same tile.
+ * WP66 (owner request 2026-10-20): the Track Record band's list is the signed-agreement sentence for development partners and NGOs (SC-11c, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... development partners and NGOs."), under the two tiles;
+ * the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -136,6 +138,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
   <!-- C5 · Guide. WP44 (cycle-21 review): no empathy line; the band opens with the origin line. WP51 (cycle-26 review): that line is the one Governments and Foundations print, "Since 2014, from a Copenhagen launch to programs in 15 countries and territories." (ORIGIN_SHORT), in place of the launch alone. -->
   <PartnerGuideBand
     stats={['SC-01', 'SC-03']}
+    signed="SC-11c"
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
     strip

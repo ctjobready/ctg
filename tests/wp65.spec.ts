@@ -93,9 +93,13 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
     expect(text).not.toMatch(/111,268|40,043|direct enrollments|through courseware/);
   });
 
-  test('the other tiles keep their notes: only the countries tile has one ("Most delivery has been in Bangladesh."), and the five tiles stay in the page order', async ({ page }) => {
+  // WP66 (owner request 2026-10-20): the SC-11 tile carries the register's detail line, the four categories of signed agreements, so two tiles have a note now: the countries tile and the signed-agreements tile (tests/wp66.spec.ts)
+  test('the other tiles keep their notes: only the countries tile ("Most delivery has been in Bangladesh.") and the signed-agreements tile (its four categories, WP66) have one, and the five tiles stay in the page order', async ({ page }) => {
     await open(page, ABOUT);
-    expect(await texts(page, '#glance .about-stats .stat__note')).toEqual(['Most delivery has been in Bangladesh.']);
+    expect(await texts(page, '#glance .about-stats .stat__note')).toEqual([
+      'Most delivery has been in Bangladesh.',
+      '13 government bodies, 20 universities and colleges, 13 development partners and NGOs, 27 companies and industry bodies.',
+    ]);
     expect(await page.locator('#glance .about-stats [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03', 'SC-11', 'SC-09']);
   });
 

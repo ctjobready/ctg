@@ -279,10 +279,13 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
     expect(C14.validateFor.foundations.text).toBe(LINE);
     await open(page, FOUND);
     const items = page.locator('#guide .pg__list li');
-    await expect(items).toHaveCount(2);
+    // WP66 (owner request 2026-10-20): a third line closes the list, the signed-agreement sentence for development partners and NGOs (SC-11c); the BIGD line and the moved line keep their places (tests/wp66.spec.ts)
+    await expect(items).toHaveCount(3);
     expect(compact(await items.nth(0).textContent())).toContain('separately evaluated the predecessor WSDFM program');
     expect(compact(await items.nth(1).textContent())).toBe(LINE);
     expect(await items.nth(1).getAttribute('data-fact')).toBe('PA-01');
+    expect(compact(await items.nth(2).textContent())).toBe('CodersTrust has signed MOUs, agreements or contracts with 13 development partners and NGOs.');
+    expect(await items.nth(2).getAttribute('data-fact')).toBe('SC-11c');
     expect(await texts(page, '#reinforce li')).toEqual([FIRST_ACTION]);
     expect(count(await everything(page), LINE), 'said once on the page').toBe(1);
     // the band is the one headed "We’ve Built This Path Since 2014"
