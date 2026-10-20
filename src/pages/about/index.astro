@@ -132,6 +132,9 @@ const jsonLd = [
   <Section id="glance" aria-labelledby="glance-h">
     <SectionHeader id="glance-h" eyebrow="At a Glance" title="Where We Are Today" />
     <!-- WP30b set where CodersTrust is based and how its entities relate (owner statement, ID-11) under these figures as a lead paragraph; WP52 (cycle-27 review) moved it to the hero, directly under the lede, so the figures stand alone here -->
+    <!-- WP66 (owner request 2026-10-20): the SC-11 tile is the register's "70+" and label ("organizations with signed partnership agreements since 2014") with the register's detail line under it, the four categories (FactStat shows a fact's detail).
+         Neither the eyebrow nor the heading gives the period, so the label keeps "since 2014": a count of signed agreements has to say since when, or it reads as partnerships that are active today. The tile is not beside SC-01's, the only other
+         tile that says the period: the enrollments tile (SC-02), which is beside SC-01, drops it (WP64), and SC-02 and SC-03 sit between the two in the widest row. -->
     <div class="about-stats">
       <FactStat id="SC-01" />
       <div class="about-stats__tile" data-fact="SC-02"><Stat value={sc02Stat.value} label={sc02Label} count={sc02Stat.numeric !== undefined} /></div>

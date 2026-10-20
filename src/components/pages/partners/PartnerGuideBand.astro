@@ -11,7 +11,7 @@ import { linkAttrs } from '../../../lib/url';
 import { PARTNER_CAPTION, type PartnerGroup } from '../../../lib/logos';
 import { originShortUnder, statLabelUnder } from '../../../data/copy';
 import { fact } from '../../../data/facts';
-import { endSentence } from '../../sections/copyText';
+import { endSentence, signedWith } from '../../sections/copyText';
 
 /**
  * C5 Guide, empathy first: the audience's empathy line (EMPATHY[audience]), then the origin line (ORIGIN_SHORT), then
@@ -28,6 +28,8 @@ import { endSentence } from '../../sections/copyText';
  * paragraph under the logos; the strip's slot and this band's `.pg__logonote` style are gone.
  * WP64 rework RW2 (coordinator): the band's heading says the period ("We’ve Built This Path Since 2014"), so the origin line drops its "Since 2014," lead-in ("From a Copenhagen launch to work in 16 countries and territories.") and a tile whose label ends "since 2014" drops it
  * ("learners trained"): originShortUnder and statLabelUnder (src/data/copy.ts) read the heading, so a page that gives this band a heading without the year keeps both.
+ * WP66 (owner request 2026-10-20): `signed` adds the audience's signed-agreement sentence (SC-11a to SC-11d) as the last item of the list ("CodersTrust has signed MOUs, agreements or contracts with 13 government bodies."); signedWith builds it under this band's heading,
+ * so under "We’ve Built This Path Since 2014" it leaves the year to the heading, as the tiles and the origin line do, and under a heading without the year it says "since 2014" itself. A band with only this sentence (Universities) has a proof column of one line.
  */
 interface Statement {
   /** Fact(s) behind the statement (data-fact and footnote markers). */
@@ -46,6 +48,8 @@ interface Props {
   /** Size of the stat tiles (default md). A band whose one figure is its headline shows it large. */
   statSize?: 'md' | 'lg';
   statements?: Statement[];
+  /** The signed-agreement fact of the page's audience (SC-11a to SC-11d), printed as the last sentence of the list (see the WP66 note above). */
+  signed?: string;
   /** A registered credential as one more sentence in the logo strip's caption, instead of a bullet in the list above (same fields as a statement; the page gives the sentence in `text`). */
   captionNote?: Statement;
   method: { text: string; link?: { label: string; href: string } };
@@ -54,8 +58,9 @@ interface Props {
   strip?: boolean;
   id?: string;
 }
-const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
-const hasProof = stats.length > 0 || statements.length > 0;
+const { title = 'We’ve Built This Path Since 2014', empathy, stats = [], statSize = 'md', statements = [], signed, captionNote, method, partnerGroup, strip = false, id = 'guide' } = Astro.props;
+const listed: Statement[] = signed ? [...statements, { facts: [signed], text: signedWith(signed, title) }] : statements;
+const hasProof = stats.length > 0 || listed.length > 0;
 const origin = originShortUnder(title);
 ---
 
@@ -77,9 +82,9 @@ const origin = originShortUnder(title);
         <div class="pg__proof">
           {stats.length > 0 && <div class="pg__stats">{stats.map((s) => <FactStat id={s} size={statSize} label={statLabelUnder(title, fact(s).stat?.label)} />)}</div>}
           {
-            statements.length > 0 && (
+            listed.length > 0 && (
               <ul class="pg__list" role="list">
-                {statements.map((s) => (
+                {listed.map((s) => (
                   <li data-fact={s.facts.join(' ')}>
                     <Icon name="circle-check" size={20} />
                     <span>{endSentence(s.text ?? fact(s.facts[0]).text)}</span>

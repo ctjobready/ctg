@@ -48,6 +48,8 @@
  * partner strip is the organization's, not the program), so the glance's fourth tile is the UNDP YES, Korail program-record tile (PR-03: 67% of the 350 trained found their first job within three months, 2017; the label is Development Partners',
  * UNDP_YES_TILE_LABEL in partners.ts) in place of the WSDFM tile, and the WSDFM records with their "not trial data" caption are stated once, on the Proof in Practice card.
  * "Two Ways to Fund the Path": Route 2's evidence cell is "Youth-program outcomes are not platform outcomes." alone (FundingRoutes; Gemini).
+ * WP66 (owner request 2026-10-20): the Track Record band's list closes with the signed-agreement sentence for development partners and NGOs (SC-11c, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... development partners and NGOs."),
+ * after the BIGD line and the names line (which keeps its place directly after the BIGD line); the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -149,6 +151,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
       // WP51 (cycle-26 review, Kimi m1): the partner line that closed the page under "What Happens Next" moved here, unchanged, directly after the BIGD line.
       C14.validateFor.foundations,
     ]}
+    signed="SC-11c"
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="development"
     strip

@@ -297,7 +297,10 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
     expect(labels.slice(0, 2)).toEqual(['learners trained since 2014', 'course enrollments']);
     expect(await texts(page, '#glance .about-stats .stat__value')).toContain('150,000+');
     await expect(page.locator('#glance .about-stats__tile[data-fact="SC-02"] .stat__note')).toHaveCount(0);
-    expect(compact(await page.locator('#glance').textContent()).match(/since 2014/gi)).toHaveLength(1);
+    // WP66 (owner request 2026-10-20): the fourth tile, the signed-agreements count (SC-11), says "since 2014" too (a count of signed agreements has to say since when): it is not beside the learners tile, and neither of its neighbors says it,
+    // so the phrase is on those two tiles only (tests/wp66.spec.ts)
+    expect(labels.map((l) => /since 2014/.test(l))).toEqual([true, false, false, true, false]);
+    expect(compact(await page.locator('#glance').textContent()).match(/since 2014/gi)).toHaveLength(2);
   });
 
   test('Investors: under the group heading "Since 2014" the learners and enrollments tiles read "learners trained" and "enrollments"; the tiles’ values, tags and notes are unchanged', async ({ page }) => {

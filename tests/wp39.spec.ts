@@ -263,7 +263,8 @@ test.describe('Partner with Us hub: no reporting band, and no page links to one 
 });
 
 test.describe('Universities: the Guide band does not repeat the National University sentence (item 3)', () => {
-  test('the band keeps its origin line, its TalentLEAP line and its logos, and has no proof column', async ({ page }) => {
+  // WP66 (owner request 2026-10-20): the band has a proof column again, with one line, the signed-agreements sentence for universities and colleges (SC-11b); it is not the NU sentence, which the first band still states once (tests/wp66.spec.ts)
+  test('the band keeps its origin line, its TalentLEAP line and its logos, and its one proof line is the signed-agreements sentence, not the NU relationship', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     const guide = page.locator('#guide');
     const text = compact(await guide.textContent());
@@ -273,8 +274,9 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(text).toContain('JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.');
     await expect(guide.getByRole('link', { name: 'How TalentLEAP Works' })).toHaveCount(1);
     await expect(guide.locator('.partners__row img'), 'the logo strip stays: National University, UPEACE and CCNY').toHaveCount(3);
-    await expect(guide.locator('.pg__proof')).toHaveCount(0);
-    await expect(guide.locator('.pg--solo')).toHaveCount(1);
+    await expect(guide.locator('.pg__proof')).toHaveCount(1);
+    await expect(guide.locator('.pg--solo')).toHaveCount(0);
+    expect(await texts(page, '#guide .pg__list li')).toEqual(['CodersTrust has signed MOUs, agreements or contracts with 20 universities and colleges.']);
   });
 
   test('"The National University Partnership" band still states the relationship, once on the page', async ({ page }) => {
@@ -285,7 +287,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
     expect(count(await mainText(page), 'since 2023'), 'the relationship is stated once, in the NU band').toBe(1);
   });
 
-  test('the copy is one column at a reading width, and the other Guide bands keep their proof column', async ({ page }) => {
+  test('the copy stays inside the page at both widths, and every Guide band has its proof column (Universities since WP66)', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, 'partner-with-us/universities/');
@@ -293,7 +295,7 @@ test.describe('Universities: the Guide band does not repeat the National Univers
       expect(width, `${vp.width}px`).toBeLessThanOrEqual(vp.width);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
-    for (const route of ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/employers/', 'partner-with-us/development-partners/']) {
+    for (const route of ['partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/employers/', 'partner-with-us/development-partners/', 'partner-with-us/universities/']) {
       await open(page, route);
       await expect(page.locator('#guide .pg__proof'), route).toHaveCount(1);
     }

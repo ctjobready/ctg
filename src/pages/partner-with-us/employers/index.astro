@@ -22,6 +22,8 @@
  * "AWS Authorized Training Partner" is a sentence of that strip's caption ("... not endorsements. CodersTrust is an AWS Authorized Training Partner."), not a lone paragraph under the logos.
  * WP57 (cycle-29 review, GPT-6.1 Sol G7): "Due Diligence in One View" is three rows (contracting entities, needs assessment, progress evaluation); its "Independent Evaluation Welcome" row is gone, because "Broader Evidence from Our Youth Programs" links the trial
  * and the pilot-team band after it (RiskReversalBand) has the same item.
+ * WP66 (owner request 2026-10-20): the Track Record band's list closes with the signed-agreement sentence for companies and industry bodies (SC-11d, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... companies and industry bodies."),
+ * after the contract line and the AIvolve line; the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -136,6 +138,7 @@ if (aws !== 'AWS Authorized Training Partner') throw new Error('Employers: PA-06
     stats={['SC-15']}
     statSize="lg"
     statements={[{ facts: ['GV-06'], text: contractScope('GV-06') }, { facts: ['PA-07'] }]}
+    signed="SC-11d"
     captionNote={{ facts: ['PA-06'], text: `CodersTrust is an ${aws}.` }}
     method={{ text: 'Our TalentLEAP method organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="private"

@@ -2,7 +2,7 @@
  * Small text helpers for conversion pages (WP1i-conv). They only reshape the register's own wording, so no figure is typed.
  */
 import { fact } from '../../data/facts';
-import { withSourceNote } from '../../data/copy';
+import { headingStatesSince2014, withSourceNote } from '../../data/copy';
 
 /**
  * Claim lines for the C3 "cost of waiting" blocks. Each is a short heading over its register fact, which the card shows directly under it as the DATA line and which carries the scope, the figure and the study in full
@@ -58,6 +58,22 @@ export function contractScope(id: string): string {
   const name = text.slice(0, at);
   const scope = text.slice(at + 2).replace(/\.$/, '');
   return `Contract scope: ${scope}, for the ${name}.`;
+}
+
+/**
+ * WP66 (owner request 2026-10-20): a signed-agreement fact (SC-11, or one of its categories SC-11a to SC-11d) written as the sentence a band prints:
+ * "CodersTrust has signed MOUs, agreements or contracts with 13 government bodies since 2014." (the category facts), and for SC-11 "... with 70+ organizations since 2014: 13 government bodies, 20 universities and colleges, ..." (the category breakdown after a colon).
+ * The count and the category are the register's own words, never typed; the sentence says "signed" and gives the year, so it never reads as a partnership that is active today. Under a heading that already says "Since 2014" (`heading`, the Track Record band's)
+ * the band says the year once, as its tiles and its origin line do (WP64 rework RW2; headingStatesSince2014, src/data/copy.ts), so the sentence drops " since 2014" and the heading carries it. The build stops if the register's wording changes shape.
+ * Each count is joined to the word after it with a no-break space, so a line never ends on a bare "13" or "70+" ("with 13 / government bodies").
+ */
+const keepCountWithNoun = (s: string): string => s.replace(/(\d+\+?) (?=[A-Za-z])/g, '$1\u00A0');
+export function signedWith(id: string, heading?: string): string {
+  const text = fact(id).text;
+  const m = /^(\d+\+? [^:]+?) with signed MOUs, agreements or contracts since 2014(: .+)?$/.exec(text);
+  if (!m) throw new Error(`signedWith: ${id} is not in "<count> <who> with signed MOUs, agreements or contracts since 2014" form: "${text}"`);
+  const period = heading !== undefined && headingStatesSince2014(heading) ? '' : ' since 2014';
+  return `CodersTrust has signed MOUs, agreements or contracts with ${keepCountWithNoun(m[1])}${period}${keepCountWithNoun(m[2] ?? '')}.`;
 }
 
 /**

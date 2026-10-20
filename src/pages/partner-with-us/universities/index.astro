@@ -23,6 +23,7 @@
  * (UPEACE) and The City College of New York (CCNY).") is gone, because the three universities are already named above it: "The National University Partnership" band lists them in its University Partners tile (PA-05), and the Track Record band's logo strip (#guide) carries them as logo alt text.
  * WP57 (cycle-29 review, Grok R5): "Choose Where to Start" has no size cards. Its recommended card read as a 1,000–2,500 country-pilot size for a campus program; the band is now its heading and one line, "Start with one campus: cohort size, tracks
  * and labs are set in the discovery session.", and the page keeps its own one primary button (hero, call to action and sticky bar). The program-sizes note that qualified the cards (PROGRAM_SIZES_NOTE) is not on this page any more.
+ * WP66 (owner request 2026-10-20): the Track Record band has one proof line, the signed-agreement sentence for universities and colleges (SC-11b, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... universities and colleges."); the band's heading says "Since 2014", so the sentence leaves the year to it.
  */
 import DueDiligenceView from '../../../components/pages/hub/DueDiligenceView.astro';
 import LearnerVoice from '../../../components/pages/impact/LearnerVoice.astro';
@@ -121,8 +122,10 @@ const START_LINE = 'Start with one campus: cohort size, tracks and labs are set 
 
   <!-- C5 · Guide. -->
   <!-- WP39 (cycle-16 review): no authority bullet here: "The National University Partnership" (the first band) states the NU relationship, so the Guide band keeps the origin line, the method line and the logos.
-       WP50 (cycle-25 review): no empathy line either: the band opens with the origin line, since the problem band above states the problem (JobReady@Campus keeps the sentence as its own problem band's lead). -->
+       WP50 (cycle-25 review): no empathy line either: the band opens with the origin line, since the problem band above states the problem (JobReady@Campus keeps the sentence as its own problem band's lead).
+       WP66 (owner request 2026-10-20): the band's one proof line is the signed-agreement sentence for universities and colleges (SC-11b, `signed`); it is not the National University relationship, which the first band still states once. -->
   <PartnerGuideBand
+    signed="SC-11b"
     method={{ text: 'JobReady@Campus runs training in parallel with academic studies, and TalentLEAP organizes skills into career paths.', link: { label: 'How TalentLEAP Works', href: LINKS.talentleap } }}
     partnerGroup="academic"
   />
