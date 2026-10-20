@@ -280,7 +280,7 @@ test.describe('Item 4 (GLM, Grok): the partner hub’s steps band', () => {
     await open(page, HUB);
     await expect(page.locator('#how-h')).toHaveText(HEADING);
     expect(HEADING).toBe(titleCase(HEADING));
-    expect(compact(await page.locator('#how-partnering-works .sh__lead').textContent())).toBe('This timing is for grant-funded pilots; public procurement follows the agency’s own timeline.');
+    expect(compact(await page.locator('#how-partnering-works .sh__lead').textContent())).toBe('Target timing for grant-funded pilots; public procurement follows the agency’s own timeline.');
     expect(compact(await page.locator('#how-h').locator('xpath=preceding-sibling::*[1]').textContent())).toBe('For Grant-Funded Supported Cohorts');
     await expect(page.locator('#how-partnering-works ol > li')).toHaveCount(4);
     expect(await page.locator('#how-partnering-works [data-fact="PD-04"]').count()).toBeGreaterThan(0);

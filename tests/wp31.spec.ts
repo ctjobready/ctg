@@ -276,7 +276,7 @@ test.describe('Foundations keeps the two grant routes apart', () => {
     expect(compact(await page.locator('#cta [data-session-agenda]').textContent())).toBe(
       'For a cohort grant, we discuss your country, priority groups, tracks, budget and scorecard. For a platform grant, we discuss JobReady’s staged rollout.',
     );
-    expect(compact(await page.locator('#next-steps .lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
+    expect(compact(await page.locator('#next-steps .lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
     expect(compact(await page.locator('#next-steps').textContent())).not.toContain('introductory call');
   });
 });

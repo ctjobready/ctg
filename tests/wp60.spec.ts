@@ -498,7 +498,7 @@ test.describe('GM4 (Gemini): Foundations’ "What Happens Next" says what the fi
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
     expect(await band.locator('[data-fact="PD-04"]').count()).toBe(1);
     expect(compact(await band.locator('[data-fact="PD-04"]').textContent())).toMatch(/Discovery.*Co-Design.*Agreement/);
   });

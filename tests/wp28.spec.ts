@@ -60,9 +60,9 @@ test.describe('post-inquiry band (#next-steps)', () => {
   const band = (page: Page) => page.locator('#next-steps');
 
   // WP46 (cycle-22 review): the label reads "For Grant-Funded Pilots" (it read "Cohorts"), the term the hub and Development Partners use for this timing
-  test('the week-by-week steps are labelled "For Grant-Funded Pilots", ahead of the heading', async ({ page }) => {
+  test('the week-by-week steps are labelled "Target Timing for Grant-Funded Pilots", ahead of the heading', async ({ page }) => {
     await open(page, '');
-    await expect(band(page).locator('.eyebrow').first()).toHaveText('For Grant-Funded Pilots');
+    await expect(band(page).locator('.eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
     // WP50 (cycle-25 review, item 25): "What Happens Next" (NEXT_STEPS_TITLE), the heading every other page gives this band (it was "What Happens After You Contact Us"; tests/wp50.spec.ts)
     await expect(band(page).locator('h2')).toHaveText('What Happens Next');
     // WP29: each step names its starting point

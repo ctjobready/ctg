@@ -162,7 +162,7 @@ test.describe('audience pages', () => {
     expect(ids.indexOf('offer-evidence'), 'NU band').toBeGreaterThan(-1);
     expect(ids.indexOf('offer-evidence')).toBeLessThan(ids.indexOf('problem'));
     // WP38 (cycle-15 review): the heading names the partnership; the sentence under it still says the figures are National University's, not learners trained by CodersTrust
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Our University Partnerships');
     await expect(page.locator('#offer-evidence .sh__lead')).toContainText('they are not learners trained by CodersTrust');
   });
 });

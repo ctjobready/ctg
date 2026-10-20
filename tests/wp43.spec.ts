@@ -200,7 +200,7 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
     expect(count(text, '77.9%'), 'the survey result is not restated').toBe(0);
     await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
     // the first band ends in the strip that links the evidence
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Our University Partnerships');
     expect(compact(await page.locator('#offer-evidence .pe__more-label').textContent())).toBe('Broader Evidence from Our Youth Programs');
     expect(await texts(page, '#offer-evidence nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']);
     expect((await hrefs(page, '#offer-evidence nav a')).map(sitePath)).toEqual(['/impact/independent-evaluation/', '/impact/outcomes-2026/', '/impact/case-studies/']);

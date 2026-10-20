@@ -78,7 +78,7 @@ export function grantStartSteps(): { title: string; text: string }[] {
  * C14.reminder on those pages; the PD-04 and PD-08 facts it rests on are unchanged.
  */
 export const FIRST_COHORT_REMINDER: CopyBlock = {
-  text: 'For grant-funded pilots, we plan for the first cohort to begin training 6–8 weeks after signing, and monthly reports follow from the first cohort.',
+  text: 'Target timing for grant-funded pilots: the first cohort begins training 6–8 weeks after signing, and monthly reports follow from the first cohort.',
   facts: ['PD-04', 'PD-08'],
 };
 

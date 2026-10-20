@@ -588,7 +588,7 @@ test.describe('Home and Governments: the closing band heading and link (items 25
     expect(NEXT_STEPS_TITLE).toBe('What Happens Next');
     await open(page, '');
     await expect(page.locator('#next-steps h2')).toHaveText('What Happens Next');
-    await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('For Grant-Funded Pilots');
+    await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
     await expect(page.locator('#next-steps ol h3')).toHaveText([/Discovery \(Week 1\)/, /Co-Design \(Week 2\)/, /Agreement \(Week 3\)/, /Training Starts 6–8 Weeks After Signing/]);
     expect(sitePages().filter((p) => visible(p.html).includes('What Happens After You Contact Us')).map((p) => p.route)).toEqual([]);
   });

@@ -257,7 +257,7 @@ test.describe('Foundations: "What Happens Next" has the four steps, and the part
     await open(page, 'partner-with-us/foundations/');
     const band = page.locator('#next-steps');
     await expect(band.locator('h2')).toHaveText('What Happens Next');
-    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps are below.');
+    expect(compact(await band.locator('.lead').textContent())).toBe('For platform grants, the first conversation covers JobReady’s infrastructure and staged rollout. For cohort grants, the steps below show target timing for grant-funded pilots.');
     const stepsOf = async () => (await texts(page, '#next-steps ol h3')).map((t) => t.replace(/^Step \d: /, ''));
     const foundations = await stepsOf();
     await open(page, 'partner-with-us/development-partners/');
@@ -453,9 +453,9 @@ test.describe('Impact: the freelancing tile carries no second claim (item 27)', 
 });
 
 test.describe('Home: the post-inquiry steps are labelled "For Grant-Funded Pilots" (item 28)', () => {
-  test('the eyebrow reads "For Grant-Funded Pilots", and no page labels the steps "For Grant-Funded Cohorts"', async ({ page }) => {
+  test('the eyebrow reads "Target Timing for Grant-Funded Pilots", and no page labels the steps "For Grant-Funded Cohorts"', async ({ page }) => {
     await open(page, '');
-    await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('For Grant-Funded Pilots');
+    await expect(page.locator('#next-steps .eyebrow').first()).toHaveText('Target Timing for Grant-Funded Pilots');
     expect(builtPages().filter((p) => p.html.includes('For Grant-Funded Cohorts')).map((p) => p.route)).toEqual([]);
   });
 });

@@ -170,9 +170,9 @@ test.describe('Universities: the one evidence strip, the National University hea
     }
   });
 
-  test('the first band is "The National University Partnership" and keeps its clarifying sentence and its three figures', async ({ page }) => {
+  test('the first band is "Our University Partnerships" and keeps its clarifying sentence and its three figures', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
-    await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
+    await expect(page.locator('#offer-evidence h2')).toHaveText('Our University Partnerships');
     expect(compact(await page.locator('#offer-evidence .sh__lead').textContent())).toBe('These figures describe National University’s size and the learners being onboarded; they are not learners trained by CodersTrust.');
     await expect(page.locator('#offer-evidence .pe__item')).toHaveCount(3);
   });
