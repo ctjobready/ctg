@@ -178,7 +178,7 @@ test.describe('YouthWIDE: no Cost of Waiting band, no Imagine band, no hero link
       return dark.flatMap((d, i) => (d && i > 0 && dark[i - 1] ? [`#${bands[i - 1].id} then #${bands[i].id}`] : []));
     });
     expect(adjacent).toEqual([]);
-    await expect(page.locator('#guide h2')).toHaveText(/We Have Built This Path Since/);
+    await expect(page.locator('#guide h2')).toHaveText(/We’ve Built This Path Since/);
   });
 
   test('the hero keeps one primary button and the ministry briefing as its one text link; "For Development Partners" and "For Governments" are gone from it', async ({ page }) => {

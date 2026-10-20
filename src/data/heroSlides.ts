@@ -100,7 +100,7 @@ export interface HeroSlide {
   photo: string;
 }
 
-/** The before-training figure of a survey fact (stat.from), for a caption such as "up from 47.4% before training". */
+/** The before-training figure of a survey fact (stat.from), for a caption such as "the median before training was $82". */
 function before(f: Fact): string {
   const from = f.stat?.from;
   if (!from) throw new Error(`heroSlides: ${f.id} has no stat.from`);
@@ -345,8 +345,10 @@ export const HOME_SLIDES: HeroSlide[] = [
     leadFacts: ['OC-05'],
     statsFirst: true,
     // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
+    // WP67 (cycle-38 review, GPT-6.1 Sol; GLM and Kimi in cycle 37: a recurring misreading of "up from"): the tile's caption states the before-training median as a plain fact ("... the median before training was $82."), where it said
+    // "... up from $82 before training". Same fact (OC-03), no "up from"; the $82 is OC-03's stat.from, read from the register, never typed.
     stats: [
-      { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers, up from ${before(f)} before training` },
+      { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers; the median before training was ${before(f)}.` },
     ],
     links: [{ label: 'Read the Impact Survey 2026', href: '/impact/outcomes-2026/', variant: 'primary' }],
     photo: 'general/woman-learner-laptop',

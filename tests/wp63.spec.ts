@@ -327,7 +327,7 @@ test.describe('R6 (Grok): About’s meta description names the group as ID-01 do
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L6 (GLM): the Governments contracts table', () => {
-  test('it is headed "What Each Government Contract Covers" (Title Case) and keeps its anchor, #contracts, which the glance tile and the scale answer link to; the earlier heading is on no built page', async ({ page }) => {
+  test('it is headed "What Each Government Contract Covers" (Title Case) and keeps its anchor, #contracts, which the glance tile links to (the scale answer did too until WP67, cycle-38 review); the earlier heading is on no built page', async ({ page }) => {
     const HEADING = 'What Each Government Contract Covers';
     expect(HEADING).toBe(titleCase(HEADING));
     await open(page, GOVERNMENTS);

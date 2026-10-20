@@ -11,6 +11,8 @@
 // connectivity card says "Lessons work over a 1.5 Mbps connection, ..." (it said "Lessons run on a 1.5 Mbps connection"); the placement-support list stays as PD-15 registers it.
 // WP65 (cycle-37 review, Sonnet, Grok, Kimi): the "Local Labs, Coordinated Delivery" card reads "From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, ..." (it said "From about month 5, programs are designed to run ...",
 // which did not say month 5 of what: PD-06's "from about month 5" is a month of a program). PD-06's register text is unchanged: the card paraphrases it and does not print it.
+// WP67 (cycle-38 review, Grok): the card reads "After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, ..." (it said "From about month 5 of a program, delivery is designed to run ..."). The five months
+// are PD-06's "from about month 5", said as a period of delivery; the design wording ("are designed to run", never "can run") is kept.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/system/Hero.astro';
 import Button from '../../components/system/Button.astro';
@@ -48,7 +50,7 @@ const cards = [
   { icon: 'layers', title: 'Foundation Tracks', id: 'PD-17', text: 'Learners with limited computer or English skills get extra foundation hours and facilitators, scoped in co-design. Their outcomes are reported by track.' },
   { icon: 'wifi', title: 'Learning with Limited Connectivity', id: 'PD-07', text: 'Lessons work over a 1.5 Mbps connection, and 720p lessons can be downloaded for offline viewing.' },
   { icon: 'graduation-cap', title: 'Blended Training with Certification', id: 'PD-01', text: `Each certification track includes ${val('PD-01')} training hours over 3–6 months. Three months of milestone-based one-to-one mentoring follow, with placement support alongside, toward each track’s agreed work-entry goal.` },
-  { icon: 'network', title: 'Local Labs, Coordinated Delivery', id: 'PD-06', text: 'From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.' },
+  { icon: 'network', title: 'Local Labs, Coordinated Delivery', id: 'PD-06', text: 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.' },
   { icon: 'briefcase', title: 'Placement Support', id: 'PD-15', text: 'Support includes assessment-based career advising, resume writing, job-application and interview preparation, industry internships and apprenticeships, job fairs, employer matching and freelance-marketplace onboarding.' },
 ];
 const d = discoveryCta();

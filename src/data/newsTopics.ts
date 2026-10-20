@@ -5,7 +5,7 @@
 export type NewsTopic = 'partnerships' | 'recognition' | 'programs-events' | 'leadership-advocacy' | 'insights';
 
 export const TOPICS: Record<NewsTopic, string> = {
-  partnerships: 'Partnerships and MoUs',
+  partnerships: 'Partnerships and MOUs',
   recognition: 'Recognition',
   'programs-events': 'Programs and Events',
   'leadership-advocacy': 'Leadership and Advocacy',

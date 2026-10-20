@@ -35,6 +35,8 @@
 // WP63 (cycle-35 reviews, GPT-6.1 Sol G1 and G2, Grok R4): the glance's Reporting row says "work and earnings checked against offer letters, payslips, ..." (an offer letter documents work, not earnings); "Will This Work in Our Country?" is the bank's own Q1 now, the two-sentence answer every page prints
 // ("We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania."), so the 16-countries sentence of WP60 is gone from it;
 // the Managed Rollout list prints the scorecard measures in the Title Case labels Home's scorecard has. The page keeps its "Last updated" line: the program pages, the evidence pages and the legal pages carry the same line (Grok R9 asked for it to go only if no other page had one).
+// WP67 (cycle-38 reviews, GLM and Sonnet): the track-record heading is "We’ve Built This Path Since 2014", as on the other pages (it said "We Have Built This Path Since 2014"; the year is ID-02's and the since-2014 rule of WP64, headingStatesSince2014, still sees it);
+// the "Where They Work" card closes "..., as agreed in the program scope." (WHERE_THEY_WORK_TEXT, shared with Home and Development Partners).
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import LandingLayout from '../../layouts/LandingLayout.astro';
 import Section from '../../components/ui/Section.astro';
@@ -59,7 +61,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { TRACKING_MONTHS } from '../../components/pages/partners/partners';
+import { WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
@@ -151,7 +153,7 @@ const measures = [...SCORECARD_LABELS];
 
   <!-- C5 (credibility before the vision) -->
   <GuideSection
-    title={`We Have Built This Path Since ${statValue('ID-02')}`}
+    title={`We’ve Built This Path Since ${statValue('ID-02')}`}
     statIds={['SC-01', 'SC-03']}
     partnerGroup={['government', 'academic', 'development']}
     method={{ text: 'TalentLEAP organizes skills into career paths.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
@@ -167,7 +169,7 @@ const measures = [...SCORECARD_LABELS];
       { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Priority groups are agreed with you in co-design; women are a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Accessible Selection, Blended Delivery', text: 'Outreach and an accessible readiness assessment, then training in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'AI-Ready Training, Certification Preparation and Mentoring', text: 'Each track prepares learners for an industry certification, then three months of milestone-based mentoring; exam eligibility and attempts are agreed in the program scope.', icon: 'award' },
-      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support and outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
     ]}
     factIds={['PD-14', 'PD-06', 'PD-01', 'PD-02', 'PD-15']}
     link={{ label: 'How Our Model Works', href: '/our-model/' }}

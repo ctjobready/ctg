@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
 /**
  * WP65 behaviors (cycle-37 whole-site reviews, Perplexity models; the accepted triage items 1 to 6; item 6's third part, the Impact "Cause:" label, was skipped because its condition was not met). Retrospective coverage (the owner exempted this project
  * from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp65.spec.ts --project=chromium`):
- *   - 1: Our Model's "Local Labs, Coordinated Delivery" card reads "From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, ..." (PD-06's register text is unchanged);
+ *   - 1: Our Model's "Local Labs, Coordinated Delivery" card reads "From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, ..." (PD-06's register text is unchanged; WP67, cycle-38 review, Grok: it reads "After about five months of delivery, programs are designed to run up to 10 ..." now, tests/wp67.spec.ts);
  *   - 2: About's enrollments tile is its number and label alone: "Including 111,268 direct enrollments and 40,043 through courseware." is gone from About (SC-02's register detail is unchanged; Investors still prints the split);
  *   - 3: Foundations' fourth glance tile is the UNDP YES, Korail program record (PR-03, Development Partners' tile and label) in place of the WSDFM tile, so "711 of 1,000" and its not-the-trial caption are stated once, on the Proof in Practice card
  *     (UNDP YES, Korail was on no other part of Foundations, so the tile was replaced rather than the card's caption removed);
@@ -52,7 +52,7 @@ const IMPACT = 'impact/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 1 (Sonnet, Grok, Kimi): the Our Model scale card says month 5 is a month of a program', () => {
-  const TEXT = 'From about month 5 of a program, delivery is designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.';
+  const TEXT = 'After about five months of delivery, programs are designed to run up to 10 certification cohorts in parallel, using existing labs and certified local facilitators.'; // WP67 (cycle-38 review, Grok): it was "From about month 5 of a program, delivery is designed to run ..."
 
   test('"Local Labs, Coordinated Delivery" reads as above, still rests on PD-06, and the earlier sentence is on no built page', async ({ page }) => {
     await open(page, OUR_MODEL);

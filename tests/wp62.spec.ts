@@ -16,7 +16,7 @@ import { listPages } from './support/pages';
  *   - 5: Development Partners’ UNDP YES tile names the program’s year (2017, from PR-03); the Impact tile keeps the register’s label;
  *   - 6: the "Will This Work in Our Country?" answer (the bank’s Q1, its audience variants and YouthWIDE’s own) adds Digital Jobs Albania as delivery experience, not results (reworded by WP63 as two sentences, the same on YouthWIDE);
  *   - 7: Home’s "Proof in Practice" link is "See All Case Studies";
- *   - 8: the "Where They Work" card says "Placement support and outcome tracking for 12 months after each course." on Home, YouthWIDE and the shared mechanism band, as on Development Partners;
+ *   - 8: the "Where They Work" card says "Placement support and outcome tracking for 12 months after each course, as agreed in the program scope." (WP67, cycle-38 review: the sentence ended at "course.") on Home, YouthWIDE and the shared mechanism band, as on Development Partners;
  *   - 9: "Reach Since 2014" says "since 2014" once: Home’s hero card and the hub’s "Why Partner" tile drop it from their supporting line; the Impact tile (no such label) keeps it;
  *   - 10: Governments’ first "What Your Agency Gets" card ends "... placement support toward local, remote and global work."
  */
@@ -372,7 +372,7 @@ test.describe('Item 7 (Grok): Home’s case-study link', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 8 (Gemini): the "Where They Work" card says how long outcomes are tracked', () => {
-  const TEXT = 'Placement support and outcome tracking for 12 months after each course.';
+  const TEXT = 'Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.';
 
   test('the months are PD-02’s ("outcome tracking for 12 months after each course")', () => {
     expect(fact('PD-02').text).toContain('outcome tracking for 12 months after each course');

@@ -93,7 +93,7 @@ test.describe('the register: 16 countries and territories, and the new dated and
       'Hour of Code, and an ICT program at Tima-ade University',
       'Women in Online Work, with the World Bank',
       'A World Bank initiative, delivered online',
-      'MoU with The City College of New York',
+      'MOU with The City College of New York',
     ]);
   });
 
@@ -232,7 +232,7 @@ test.describe('"CodersTrust Around the World": seven tiles on Home and About, th
     ['somaliland', 'Somaliland, 2015. Hour of Code, and an ICT program at Tima-ade University.', 'legacy-global-somaliland-hour-of-code'],
     ['kosovo', 'Kosovo, 2016–2017. Women in Online Work, with the World Bank.', 'legacy-general-kosovo-wow-group'],
     ['albania', 'Albania, 2021–2022. A World Bank initiative, delivered online.', ''],
-    ['new-york', 'New York, April 2024. MoU with The City College of New York.', 'legacy-field-ccny-mou-signing'],
+    ['new-york', 'New York, April 2024. MOU with The City College of New York.', 'legacy-field-ccny-mou-signing'],
     ['bangladesh', 'Bangladesh, since 2014. Most delivery has been in Bangladesh.', 'legacy-general-women-learners-classroom'],
   ] as const;
 

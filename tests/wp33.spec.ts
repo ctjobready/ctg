@@ -48,7 +48,7 @@ test.describe('Home evidence band (#proof-band): gone (WP48); the trial and surv
 });
 
 test.describe('the OC-03 tile note says the survey once, without repeating $245', () => {
-  const NOTE = 'Up from $82 before training (October 2026 survey).';
+  const NOTE = 'The median before training was $82 (October 2026 survey).'; // WP67 (cycle-38 review): it was "Up from $82 before training (October 2026 survey)."
 
   test('the register carries the shortened glance note', () => {
     const oc03 = fact('OC-03').stat!;

@@ -62,7 +62,7 @@ test.describe('YouthWIDE (/programs/youthwide/)', () => {
   test('the track record comes before the delivery model, and the page has no "what success looks like" band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const titles = await headingsOf(page);
-    const record = titles.findIndex((t) => /We Have Built This Path/i.test(t));
+    const record = titles.findIndex((t) => /We’ve Built This Path/i.test(t));
     const model = titles.findIndex((t) => /One Delivery Model, from Selection to Paid Work/i.test(t));
     expect(record).toBeGreaterThan(-1);
     expect(model).toBeGreaterThan(record);

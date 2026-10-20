@@ -239,7 +239,7 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
       expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
       const tile = compact(await s.locator('.hs__stat').textContent());
       expect(tile).toContain('$245');
-      expect(tile).toContain('median monthly income among surveyed completers, up from $82 before training');
+      expect(tile).toContain('median monthly income among surveyed completers; the median before training was $82.');
       expect(compact(await s.locator('.hs__lead').textContent())).toBe(SENTENCE);
       expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);

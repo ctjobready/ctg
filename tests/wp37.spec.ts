@@ -153,25 +153,18 @@ test.describe('Governments: Her Power is told once', () => {
     expect(count(await mainText(page), '372 of 800')).toBe(1);
   });
 
-  test('the national-scale answer is three short sentences; the last one is a link to the contracts table, in the page and in its FAQ JSON-LD', async ({ page }) => {
+  // WP67 (cycle-38 review, Gemini): the answer gives Her Power's two counts (GV-01's 25,125, GV-11's 2,500) and is three short sentences with no closing link (it was "We scale in phases. A 100,000+ national program is a design option we
+  // have not yet delivered. See the contract scopes above.", the link being the third sentence; a fourth would break the FAQ cap, tests/wp30c.spec.ts); the contracts table, its anchor and the glance tile's link to it are as they were (tests/wp63.spec.ts)
+  test('the national-scale answer is three short sentences (the phases, Her Power’s counts, the design option not yet delivered) with no link, in the page and in its FAQ JSON-LD', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const answer = await answerOf(page, 'Can You Deliver at National Scale?');
-    expect(answer).toBe('We scale in phases. A 100,000+ national program is a design option we have not yet delivered. See the contract scopes above.');
+    expect(answer).toBe('We scale in phases. Her Power, a national program, trained 25,125 women; CodersTrust provided the curriculum and trained 2,500 directly. A 100,000+ program is a design option we have not yet delivered.');
     expect(sentences(answer)).toHaveLength(3);
-    expect(answer).not.toMatch(/Her Power|25,125|2,500|120\+|3,120\+/);
-    const link = itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a a');
-    await expect(link).toHaveText('See the contract scopes above.');
-    expect(await link.getAttribute('href')).toBe('#contracts');
+    expect(answer, 'the counts are the register’s').toContain(`trained ${fact('GV-01').stat?.value} women`);
+    expect(answer).not.toMatch(/120\+|3,120\+|See the contract scopes above/);
+    await expect(itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a a')).toHaveCount(0);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toBe(answer);
-    expect(await itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a p').getAttribute('data-fact')).toBe('PD-05');
-  });
-
-  test('the link in the answer lands on the contracts table', async ({ page }) => {
-    await open(page, 'partner-with-us/governments/');
-    await itemOf(page, 'Can You Deliver at National Scale?').locator('summary').click();
-    await itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a a').click();
-    await expect(page).toHaveURL(/\/partner-with-us\/governments\/#contracts$/);
-    await expect(page.locator('#contracts h2')).toBeInViewport();
+    expect(await itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a p').getAttribute('data-fact')).toBe('GV-01 GV-11 PD-05');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

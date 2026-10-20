@@ -21,7 +21,7 @@ const latestAsset = `news-${latest.id}`;
 const showLatestCover = Boolean(latest.data.cover) && mayRender(latestAsset);
 const jsonLd = [
   {
-    ...webPage({ path: '/news/', name: 'News', description: 'News from CodersTrust: partnerships and MoUs, recognition, program events and leadership.', type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'News', path: '/news/' }] }),
+    ...webPage({ path: '/news/', name: 'News', description: 'News from CodersTrust: partnerships and MOUs, recognition, program events and leadership.', type: 'CollectionPage', breadcrumb: [{ name: 'Home', path: '/' }, { name: 'News', path: '/news/' }] }),
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: pageUrl(newsHref(p)), name: p.data.title })),
@@ -32,11 +32,11 @@ const jsonLd = [
 
 <BaseLayout
   title="News"
-  description="News from CodersTrust: partnerships and MoUs, recognition, program events and leadership, with each post dated as published."
+  description="News from CodersTrust: partnerships and MOUs, recognition, program events and leadership, with each post dated as published."
   breadcrumbs={[{ label: 'News' }]}
   jsonLd={jsonLd}
 >
-  <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MoUs, recognition, program events and leadership: what CodersTrust has announced, with each post dated when it was published." art={false} />
+  <Hero eyebrow="Newsroom" title="News from CodersTrust" lead="Partnerships and MOUs, recognition, program events and leadership: what CodersTrust has announced, with each post dated when it was published." art={false} />
 
   <Section id="archive" aria-labelledby="archive-h">
     <SectionHeader id="archive-h" eyebrow="All News" title="Browse by Topic" lead="Older posts are lightly edited from the original; each carries the dates its titles, offices and figures reflect." />

@@ -480,7 +480,7 @@ test.describe('smaller heading changes (item 10)', () => {
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     await expect(slide.locator('.stat__value')).toHaveText('$245');
-    expect(compact(await slide.locator('.stat__label').textContent())).toBe('median monthly income among surveyed completers, up from $82 before training');
+    expect(compact(await slide.locator('.stat__label').textContent())).toBe('median monthly income among surveyed completers; the median before training was $82.');
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     // WP53 (owner decision 2026-10-16): the carousel is four slides
     await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(4);

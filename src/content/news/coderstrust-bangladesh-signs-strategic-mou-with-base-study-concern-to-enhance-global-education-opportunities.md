@@ -1,21 +1,21 @@
 ---
-title: "CodersTrust Bangladesh Signs Strategic MoU with Base Study Concern to Enhance Global Education Opportunities"
+title: "CodersTrust Bangladesh Signs Strategic MOU with Base Study Concern to Enhance Global Education Opportunities"
 date: 2025-11-04
 updated: 2026-10-13
 topic: partnerships
-excerpt: "CodersTrust Bangladesh signs an MoU with Base Study Concern, a foreign education consultancy and IELTS training organization."
+excerpt: "CodersTrust Bangladesh signs an MOU with Base Study Concern, a foreign education consultancy and IELTS training organization."
 cover: ../../assets/images/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/mou-with-base-study-concern-1.jpg
 coverAlt: "Six men holding a signed agreement folder together under a CodersTrust sign"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/"
-tags: ["MoU Signing"]
-seoTitle: "Base Study Concern MoU on Global Education"
+tags: ["MOU Signing"]
+seoTitle: "Base Study Concern MOU on Global Education"
 ---
 
-CodersTrust Bangladesh is proud to announce the signing of a strategic Memorandum of Understanding (MoU) with Base Study Concern, a renowned foreign education consultancy, visa advisory, and IELTS training organization.
+CodersTrust Bangladesh is proud to announce the signing of a strategic Memorandum of Understanding (MOU) with Base Study Concern, a renowned foreign education consultancy, visa advisory, and IELTS training organization.
 
 ![Six men holding a signed agreement folder together under a CodersTrust sign](../../assets/images/news/coderstrust-bangladesh-signs-strategic-mou-with-base-study-concern-to-enhance-global-education-opportunities/mou-with-base-study-concern-1.jpg)
 
-On this momentous occasion, Md Shamsul Haque, CEO of CodersTrust Bangladesh, and Md Monayem Siddique, Co-Founder & CEO of Base Study Concern, formally signed the MoU on behalf of their respective organizations.
+On this momentous occasion, Md Shamsul Haque, CEO of CodersTrust Bangladesh, and Md Monayem Siddique, Co-Founder & CEO of Base Study Concern, formally signed the MOU on behalf of their respective organizations.
 
 Also present at the occasion were Md Aminul Islam, Country Manager of CodersTrust Bangladesh; Md Rakib Ahmed from Base Study Concern; Rezaul Karim Khan, Chief Business Officer of CodersTrust Bangladesh, Rana Saha, Finance & Accounts Manager of CodersTrust Bangladesh along with other senior officials from both organizations.
 

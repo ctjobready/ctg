@@ -325,11 +325,11 @@ test.describe('Track Record bands: "with progressive levels" is gone (item 16)',
 });
 
 test.describe('Our Model: the scale card says delivery is designed to run 10 cohorts in parallel (item 17)', () => {
-  // WP65 (cycle-37 review): the subject is "delivery" and month 5 is "of a program" ("From about month 5 of a program, delivery is designed to run up to 10 ..."; tests/wp34.spec.ts pins the whole sentence); the design wording ("is designed to run", never "can run") is item 17's
-  test('"Local Labs, Coordinated Delivery" reads "delivery is designed to run up to 10 certification cohorts in parallel", as Q2 and Investors say "designed"', async ({ page }) => {
+  // WP65 (cycle-37 review): the subject was "delivery" and month 5 was "of a program"; WP67 (cycle-38 review, Grok): "After about five months of delivery, programs are designed to run up to 10 ..." (tests/wp34.spec.ts pins the whole sentence); the design wording ("are designed to run", never "can run") is item 17's
+  test('"Local Labs, Coordinated Delivery" reads "programs are designed to run up to 10 certification cohorts in parallel", as Q2 and Investors say "designed"', async ({ page }) => {
     await open(page, 'our-model/');
     const scale = page.locator('#delivery .card', { hasText: 'Local Labs, Coordinated Delivery' });
-    expect(compact(await scale.textContent())).toContain('delivery is designed to run up to 10 certification cohorts in parallel');
+    expect(compact(await scale.textContent())).toContain('programs are designed to run up to 10 certification cohorts in parallel');
     expect(await mainText(page)).not.toContain('programs can run up to 10');
     expect(await mainText(page)).not.toContain('delivery can run up to 10');
     expect(faqs.find((f) => f.id === 'Q2')!.a).toContain('larger programs are designed to run up to 10 cohorts in parallel');

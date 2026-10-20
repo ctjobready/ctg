@@ -393,7 +393,7 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(originShortUnder('A Record Built Since 2014').text).toBe(LINE);
     expect(originShortUnder('Why Join CodersTrust')).toBe(ORIGIN_SHORT);
     expect(statLabelUnder(HEADING, fact('SC-01').stat?.label)).toBe('learners trained');
-    expect(statLabelUnder('We Have Built This Path Since 2014', fact('SC-02').stat?.label)).toBe('enrollments');
+    expect(statLabelUnder(HEADING, fact('SC-02').stat?.label)).toBe('enrollments');
     expect(statLabelUnder('Why Join CodersTrust', fact('SC-01').stat?.label)).toBeUndefined();
     expect(statLabelUnder(HEADING, fact('SC-03').stat?.label)).toBeUndefined();
     expect(statLabelUnder(HEADING, undefined)).toBeUndefined();
@@ -418,9 +418,9 @@ test.describe('RW2 (coordinator): "Since 2014" is said once in the bands whose h
     expect(await page.locator('#guide .pg__stats .factstat').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-03']);
   });
 
-  test('YouthWIDE: under "We Have Built This Path Since 2014" the learners tile is "learners trained"', async ({ page }) => {
+  test('YouthWIDE: under "We’ve Built This Path Since 2014" (WP67, cycle-38 review: it said "We Have Built This ...") the learners tile is "learners trained"', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    await expect(page.locator('#guide h2')).toHaveText('We Have Built This Path Since 2014');
+    await expect(page.locator('#guide h2')).toHaveText(HEADING);
     expect(await texts(page, '#guide .guide__stats .stat__label')).toEqual(['learners trained', 'countries and territories where CodersTrust has worked']);
     expect(compact(await page.locator('#guide').textContent()).match(/since 2014/gi)).toHaveLength(1);
   });

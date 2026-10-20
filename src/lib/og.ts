@@ -19,7 +19,7 @@ const SECTION_CARDS: { prefix: string; card: OgCard }[] = [
   { prefix: '/contact/', card: { src: '/og/contact.png', alt: 'CodersTrust: Contact. Choose the route that fits you.' } },
   { prefix: '/impact/', card: { src: '/og/impact.png', alt: 'CodersTrust: Impact. What CodersTrust results show, what kind of evidence each one is, and what it does not show.' } },
   { prefix: '/about/', card: { src: '/og/about.png', alt: 'CodersTrust: About. CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' } },
-  { prefix: '/news/', card: { src: '/og/news.png', alt: 'CodersTrust: News. Partnerships and MoUs, recognition, program events and leadership.' } },
+  { prefix: '/news/', card: { src: '/og/news.png', alt: 'CodersTrust: News. Partnerships and MOUs, recognition, program events and leadership.' } },
 ];
 
 /** The card for a base-less page path (for example "/impact/outcomes-2026/"); the default card when no section matches. */

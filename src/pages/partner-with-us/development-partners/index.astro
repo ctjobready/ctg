@@ -38,6 +38,7 @@
  * The UNDP YES tile's label (WP62: PR-03's glance label with its year) is UNDP_YES_TILE_LABEL in partners.ts now, since Foundations' fourth glance tile is the same tile.
  * WP66 (owner request 2026-10-20): the Track Record band's list is the signed-agreement sentence for development partners and NGOs (SC-11c, `signed` on PartnerGuideBand: "CodersTrust has signed MOUs, agreements or contracts with ... development partners and NGOs."), under the two tiles;
  * the band's heading says "Since 2014", so the sentence leaves the year to it.
+ * WP67 (cycle-38 review, Sonnet): the "Where They Work" card closes "..., as agreed in the program scope." (WHERE_THEY_WORK_TEXT, partners.ts, the same text Home, the shared mechanism band and YouthWIDE print).
  */
 import PartnerGlance from '../../../components/pages/partners/PartnerGlance.astro';
 import PairedEvidence from '../../../components/pages/partners/PairedEvidence.astro';
@@ -63,7 +64,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { HOURS, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { HOURS, LINKS, UNDP_YES_TILE_LABEL, WHERE_THEY_WORK_TEXT, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { ACCOUNTABILITY, HEADLINE, MICRO_COMMITMENT, POSITIONING, PROGRAM_SIZES_NOTE, READ_THE_EVIDENCE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqJsonLd } from '../../../lib/faq';
@@ -153,7 +154,7 @@ const FAQ_IDS = ['Q1-development-partners', 'Q6-development-partners', 'Q3', 'Q1
       { label: 'Who We Reach', title: 'Priority Groups', text: 'Priority groups are agreed with you in co-design; women are a priority in every group.', icon: 'users' },
       { label: 'How We Reach Them', title: 'Existing Labs and Colleges', text: 'Outreach and selection with local partners, then blended delivery in existing labs and colleges.', icon: 'graduation-cap' },
       { label: 'What We Deliver', title: 'Certification and Mentoring', text: `${HOURS} training hours per certification, then three months of milestone-based mentoring and placement support.`, icon: 'award' },
-      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support and outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+      { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
     ]}
     link={{ label: 'How Our Model Works', href: LINKS.model }}
   />

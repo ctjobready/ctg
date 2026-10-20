@@ -548,10 +548,10 @@ test.describe('Development Partners: the glance is three tiles and the +10.3 til
   });
 
   // WP53 (owner follow-up, 2026-10-16): the card said "local, remote and global work" in its title and again in its text; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
-  test('"Placement support and outcome tracking for 12 months after each course." (the title says "local, remote and global work" once)', async ({ page }) => {
+  test('"Placement support and outcome tracking for 12 months after each course, as agreed in the program scope." (the title says "local, remote and global work" once)', async ({ page }) => {
     await open(page, DP);
     const card = page.locator('#mechanism li', { has: page.locator('.model__title', { hasText: 'Local, Remote and Global Work' }) });
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.');
     expect(pagesWith('local, remote, overseas and freelance work')).toEqual([]);
   });
 

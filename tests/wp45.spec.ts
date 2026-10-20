@@ -244,7 +244,7 @@ test.describe('Partner with Us hub: no reporting band, two FAQs, no dead link (i
 });
 
 test.describe('Programs: the YouthWIDE card links every audience it names (item 13)', () => {
-  test('"Governments, Development Partners and Funders" has For Governments, For Development Partners and For Foundations links', async ({ page }) => {
+  test('"Governments, Development Partners and Foundations" (WP67, cycle-38 review: it said "... and Funders") has For Governments, For Development Partners and For Foundations links', async ({ page }) => {
     await open(page, 'programs/');
     const card = page.locator('#programs-grid li:has(a[href$="programs/youthwide/"])');
     expect(await texts(page, '#programs-grid li:has(a[href$="programs/youthwide/"]) .hub__partner a')).toEqual(['For Governments', 'For Development Partners', 'For Foundations']);
@@ -351,12 +351,12 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
 });
 
 test.describe('Outcomes 2026: the +$82 tile cannot be read as the $82 before training (item 22)', () => {
-  test('the tile says whose change it is; the $245 tile keeps "up from $82 before training"', async ({ page }) => {
+  test('the tile says whose change it is; the $245 tile says "the median before training was $82" (WP67, cycle-38 review: it said "up from $82 before training")', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const tile = page.locator('#income [data-fact="OC-03c"] .stat');
     await expect(tile.locator('.stat__value')).toHaveText('+$82');
     await expect(tile.locator('.stat__label')).toHaveText('median change in each surveyed completer’s own monthly income');
-    expect(compact(await page.locator('#summary [data-fact="OC-03"] .stat').textContent())).toContain('up from $82');
+    expect(compact(await page.locator('#summary [data-fact="OC-03"] .stat').textContent())).toContain('the median before training was $82');
   });
 });
 

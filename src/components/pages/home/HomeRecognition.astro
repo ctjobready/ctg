@@ -14,7 +14,7 @@ interface Props {
   id?: string;
 }
 const { id = 'recognition' } = Astro.props;
-// PA-05 reads "University partners: National University (...); University for Peace (UPEACE), the UN-mandated university; The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024".
+// PA-05 reads "University partners: National University (...); University for Peace (UPEACE), the UN-mandated university; The City College of New York (CCNY), a memorandum of understanding (MOU) partner since 2024".
 // The band's heading names the group, so the sentence keeps the register's list without its "University partners: " lead-in.
 const pa05 = /^University partners: (.+)$/.exec(fact('PA-05').text);
 if (!pa05) throw new Error('HomeRecognition: PA-05 no longer reads "University partners: ..."');

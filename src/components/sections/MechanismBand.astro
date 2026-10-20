@@ -4,12 +4,13 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import ModelDiagram from '../ui/ModelDiagram.astro';
 import Icon from '../system/Icon.astro';
 import PositioningStatement from './PositioningStatement.astro';
-import { TRACKING_MONTHS } from '../pages/partners/partners';
+import { WHERE_THEY_WORK_TEXT } from '../pages/partners/partners';
 import { linkAttrs } from '../../lib/url';
 
 /**
  * C6 Mechanism (Klein band): positioning statement + four-block model diagram (+ an optional slot under it, e.g. Foundations' funding-route comparison) + Learn → Earn → Prosper ribbon + link.
  * WP62 (cycle-34 review, Gemini): the default "Where They Work" card says "... outcome tracking for 12 months after each course." (the months are PD-02's, as Development Partners reads them).
+ * WP67 (cycle-38 review, Sonnet): the card's text is WHERE_THEY_WORK_TEXT (src/components/pages/partners/partners.ts), "... after each course, as agreed in the program scope."
  */
 interface Props {
   title: string;
@@ -33,7 +34,7 @@ const {
     { label: 'Who We Reach', title: 'Educated, Unemployed and Underemployed Youth', text: 'Outreach and selection with local partners.', icon: 'users' },
     { label: 'How We Reach Them', title: 'Blended Training', text: 'Labs, colleges and learning that works with limited connectivity.', icon: 'graduation-cap' },
     { label: 'What We Deliver', title: 'Skills, Certification Preparation and Mentoring', text: 'Each track includes preparation for an industry certification; exam eligibility and attempts are agreed in the program scope. Then three months of milestone-based mentoring.', icon: 'award' },
-    { label: 'Where They Work', title: 'Local, Remote and Global Work', text: `Placement support and outcome tracking for ${TRACKING_MONTHS} months after each course.`, icon: 'globe' },
+    { label: 'Where They Work', title: 'Local, Remote and Global Work', text: WHERE_THEY_WORK_TEXT, icon: 'globe' },
   ],
   diagram = true,
   link,

@@ -49,7 +49,7 @@ const DEV_PARTNERS = 'partner-with-us/development-partners/';
 const FOUNDATIONS = 'partner-with-us/foundations/';
 const EMPLOYERS = 'partner-with-us/employers/';
 
-const TOTAL_LABEL = 'organizations with signed partnership agreements since 2014';
+const TOTAL_LABEL = 'organizations with signed MOUs, agreements or contracts since 2014'; // WP67 (cycle-38 review): it was "... signed partnership agreements since 2014"
 const BREAKDOWN = '13 government bodies, 20 universities and colleges, 13 development partners and NGOs, 27 companies and industry bodies.';
 const BAND_HEADING = 'We’ve Built This Path Since 2014';
 const LEAD = 'CodersTrust has signed MOUs, agreements or contracts with';
@@ -391,7 +391,7 @@ test.describe('Where the new figures render, and what they never say', () => {
       await open(page, place.route);
       const own = compact(await page.locator(place.selector).textContent());
       expect(own, place.route).toMatch(/signed/);
-      if (/factstat/.test(place.selector)) expect(own, place.route).toMatch(/signed partnership agreements since 2014/);
+      if (/factstat/.test(place.selector)) expect(own, place.route).toMatch(/signed MOUs, agreements or contracts since 2014/);
     }
   });
 });

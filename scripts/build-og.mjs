@@ -43,7 +43,7 @@ const CARDS = [
   { file: 'our-model', prefix: '/our-model/', label: 'Our model', line: 'How the CodersTrust model works' },
   { file: 'impact', prefix: '/impact/', label: 'Impact', line: 'What CodersTrust results show, what kind of evidence each one is, and what it does not show.' },
   { file: 'about', prefix: '/about/', label: 'About', line: 'CodersTrust trains and mentors educated, unemployed youth in emerging markets for digital work.' },
-  { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MoUs, recognition, program events and leadership' },
+  { file: 'news', prefix: '/news/', label: 'News', line: 'Partnerships and MOUs, recognition, program events and leadership' },
   { file: 'careers', prefix: '/careers/', label: 'Careers', line: 'Help prepare educated, unemployed young people for paid digital work.' },
   { file: 'contact', prefix: '/contact/', label: 'Contact', line: 'Choose the route that fits you.' },
 ];

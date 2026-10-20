@@ -3,17 +3,17 @@ title: "CodersTrust Bangladesh Partners with US-Based RemoteIntegrity, to Expand
 date: 2026-07-27
 updated: 2026-10-13
 topic: partnerships
-excerpt: "CodersTrust Bangladesh signs an MoU with RemoteIntegrity, a Florida-based US technology organization, to widen global career opportunities."
+excerpt: "CodersTrust Bangladesh signs an MOU with RemoteIntegrity, a Florida-based US technology organization, to widen global career opportunities."
 cover: ../../assets/images/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/partners-with-us-based-remoteintegrity-2.jpg
 coverAlt: "Two men signing documents at a desk"
 legacyUrl: "https://coderstrust.global/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/"
-tags: ["Latest News", "MoU Signing"]
+tags: ["Latest News", "MOU Signing"]
 seoTitle: "RemoteIntegrity Partnership for Global Careers"
 ---
 
 ![Six people standing together in an office after the signing](../../assets/images/news/coderstrust-bangladesh-partners-with-us-based-remoteintegrity-llc-to-expand-global-career-opportunities/partners-with-us-based-remoteintegrity.jpg)
 
-DHAKA, BANGLADESH — CodersTrust Bangladesh has officially signed a strategic Memorandum of Understanding (MoU) with RemoteIntegrity, a Florida-based US technology organization, marking a major milestone in driving global workforce inclusion for Bangladeshi tech talent.
+DHAKA, BANGLADESH — CodersTrust Bangladesh has officially signed a strategic Memorandum of Understanding (MOU) with RemoteIntegrity, a Florida-based US technology organization, marking a major milestone in driving global workforce inclusion for Bangladeshi tech talent.
 
 The agreement was signed by Md. Shamsul Haque (CEO & Principal, CodersTrust Bangladesh) and Colin Koenig (CEO, RemoteIntegrity).
 

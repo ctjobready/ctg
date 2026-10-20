@@ -50,7 +50,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
   const URL = 'partner-with-us/investors/';
   // WP65 (cycle-37 review, GLM): the last sentence names AWS by the status PA-06 registers, "CodersTrust is an AWS Authorized Training Partner", not as a partner beside the other two (it was "... Grameenphone Academy, Accenture and AWS."; tests/wp65.spec.ts)
   const PARTNERS =
-    'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority. Development partners include UNDP, the World Bank Group and the World Food Programme. University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MoU) partner since 2024. Private-sector partners include Grameenphone Academy and Accenture, and CodersTrust is an AWS Authorized Training Partner.';
+    'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority. Development partners include UNDP, the World Bank Group and the World Food Programme. University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MOU) partner since 2024. Private-sector partners include Grameenphone Academy and Accenture, and CodersTrust is an AWS Authorized Training Partner.';
 
   test('the delivered tiles, the origin line and the TalentLEAP line stay; the only sub-heading left is "Delivered Since 2014"', async ({ page }) => {
     await open(page, URL);
@@ -83,9 +83,9 @@ test.describe('Investors: the track-record band (item 1)', () => {
     expect(compact(await paragraph.textContent())).toBe(PARTNERS);
     expect(await paragraph.getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03 PA-06');
     expect(sentences(PARTNERS).map((s) => s.split(' include')[0])).toEqual(['Government partners', 'Development partners', 'University partners', 'Private-sector partners']);
-    // the two relationship qualifiers travel with their names: National University "(official training partner)", The City College of New York "a memorandum of understanding (MoU) partner since 2024"
+    // the two relationship qualifiers travel with their names: National University "(official training partner)", The City College of New York "a memorandum of understanding (MOU) partner since 2024"
     expect(PARTNERS).toContain('National University (official training partner)');
-    expect(PARTNERS).toContain('The City College of New York, a memorandum of understanding (MoU) partner since 2024');
+    expect(PARTNERS).toContain('The City College of New York, a memorandum of understanding (MOU) partner since 2024');
     // the first mention of DoICT on the page is spelled out (the Her Power answer in the FAQ says "DoICT")
     const text = await mainText(page);
     expect(text.indexOf('the Department of ICT (DoICT)')).toBeGreaterThan(-1);
@@ -96,7 +96,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
     const named: Record<string, string[]> = {
       'PA-02': ['Bangladesh’s ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority'],
       'PA-01': ['UNDP', 'the World Bank Group', 'the World Food Programme'],
-      'PA-05': ['National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024'],
+      'PA-05': ['National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MOU) partner since 2024'],
       'PA-03': ['Grameenphone Academy', 'Accenture'],
       'PA-06': ['AWS Authorized Training Partner'], // WP65: AWS is named by its registered status, not listed as a PA-03 partner
     };

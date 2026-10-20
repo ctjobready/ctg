@@ -118,7 +118,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     const tile = compact(await s.locator('.hs__stat').textContent());
     expect(tile).toContain('$245');
-    expect(tile).toContain('median monthly income among surveyed completers, up from $82 before training');
+    expect(tile).toContain('median monthly income among surveyed completers; the median before training was $82.');
     // the evidence link
     const link = s.locator('.hs__actions a');
     await expect(link).toHaveCount(1);
@@ -298,7 +298,7 @@ test.describe('The WP52 follow-ups (items 6 to 9)', () => {
     await open(page, DP);
     const card = page.locator('#mechanism li', { has: page.locator('.model__title', { hasText: 'Local, Remote and Global Work' }) });
     await expect(card.locator('.model__title')).toHaveText('Local, Remote and Global Work');
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.');
     expect(count(compact(await card.textContent()).toLowerCase(), 'local, remote and global work')).toBe(1);
   });
 });

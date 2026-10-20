@@ -22,7 +22,7 @@ const ALT: Record<string, string> = {
   'general/exam-hall': 'Rows of students sitting an examination in a large hall',
   'general/graduates-caps': 'People in black graduation caps seated in rows at a convocation',
   'general/panel-international-forum': 'Four speakers seated at a panel table at an international forum, with a wood-paneled wall behind them',
-  'general/nctb-meeting': 'CodersTrust and NCTB representatives seated around a table at the MoU meeting',
+  'general/nctb-meeting': 'CodersTrust and NCTB representatives seated around a table at the MOU meeting',
   'general/kosovo-women-screens': 'Women learners at computers in a training room in Kosovo, one in the foreground turned toward the front of the room',
   // WP55 (owner decision 2026-10-17): this photograph shows the Kosovo Women in Online Work pilot, not Albania (the word ALBANIA was burned into the old file; the caption is cropped out). It was "general/albania-trainees-group".
   'general/kosovo-wow-group': 'Thirteen people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners',
@@ -42,8 +42,8 @@ const ALT: Record<string, string> = {
   'general/learner-mosaic': 'A mosaic of portraits of CodersTrust learners and program completers',
   'general/classroom-girls': 'Girls and women learners working at computers in a bright classroom',
   'general/yes-collage': 'Four photographs of UNDP YES (Youth Employment through Skills) trainees in classrooms and group portraits',
-  'superkids/mou-signing': 'Representatives of CodersTrust and a partner school at an MoU signing ceremony in front of a SuperKids backdrop',
-  'superkids/mou-signing-pen': 'Two signatories at a table signing an MoU in front of a SuperKids backdrop',
+  'superkids/mou-signing': 'Representatives of CodersTrust and a partner school at an MOU signing ceremony in front of a SuperKids backdrop',
+  'superkids/mou-signing-pen': 'Two signatories at a table signing an MOU in front of a SuperKids backdrop',
   'superkids/classroom-uniform': 'Students in school uniform at a computer class with a teacher looking on',
   'superkids/students-seated': 'School students seated together in a hall, listening to a session',
   'superkids/robotics-desk': 'Students in school uniform bent over worksheets at their desks during a hands-on STEAM lesson',
@@ -82,7 +82,7 @@ const ALT: Record<string, string> = {
   'superkids/learner-zuhaina': 'Portrait of Zuhaina, a SuperKids learner',
   'superkids/learner-nihal': 'Portrait of Nihal, a SuperKids learner',
   'superkids/learner-zaeem': 'Portrait of Zaeem, a SuperKids learner',
-  'field/ccny-mou-signing': 'Two signatories seated at a table at the City College of New York and CT USA (CodersTrust) MoU ceremony, with three people applauding behind them',
+  'field/ccny-mou-signing': 'Two signatories seated at a table at the City College of New York and CT USA (CodersTrust) MOU ceremony, with three people applauding behind them',
   'field/team-award-presentation': 'A man in a white polo handing a trophy to a young man in a black CT t-shirt, with CodersTrust team members in white CT polos behind them',
   'field/plaque-presentation': 'A man in a navy suit presenting a framed medal in a red case to a man in a blazer, with three people standing beside them in front of a trophy cabinet',
   // WP55 (owner decisions 2026-10-17/18, global positioning): CodersTrust’s work outside Bangladesh. All are CodersTrust Global ApS assets, now owned by CT USA, Inc. (owner ruling 2026-10-18; clearance id OWNER-2026-10-18-CTUSA-ASSETS). A permissions row has five fields only
@@ -104,8 +104,8 @@ const ALT: Record<string, string> = {
 
 /** Short caption under a photograph in the "In the field" archive: program, event or place, and a year only where the source states it. */
 export const CAPTION: Record<string, string> = {
-  'superkids/mou-signing': 'MoU signing for the SuperKids STEAM program with a partner school',
-  'superkids/mou-signing-pen': 'Signing a SuperKids school MoU',
+  'superkids/mou-signing': 'MOU signing for the SuperKids STEAM program with a partner school',
+  'superkids/mou-signing-pen': 'Signing a SuperKids school MOU',
   'superkids/classroom-uniform': 'SuperKids computer class for school students',
   'superkids/students-seated': 'School students at a SuperKids session',
   'superkids/robotics-desk': 'Hands-on lesson, Future Innovator STEAM workshop',
@@ -166,10 +166,10 @@ export const CAPTION: Record<string, string> = {
   'nu-pgd/students-laptops': 'Students at a table',
   'general/learner-mosaic': 'CodersTrust learners and program completers',
   'general/dict-hitech-mou': 'Agreement with the Hi-Tech Park Authority and DoICT',
-  'general/nctb-meeting': 'MoU meeting with NCTB',
+  'general/nctb-meeting': 'MOU meeting with NCTB',
   'general/nu-affiliation-group': 'Affiliation with National University',
   'general/nu-affiliation-meeting': 'Affiliation meeting with National University',
-  'field/ccny-mou-signing': 'MoU signing with the City College of New York, 12 April 2024 (date on the ceremony banner)',
+  'field/ccny-mou-signing': 'MOU signing with the City College of New York, 12 April 2024 (date on the ceremony banner)',
   'general/empowering-women-event': 'CodersTrust Bangladesh women empowerment event',
   'general/panel-international-forum': 'Panel at an international forum',
   'general/un-panel': 'Panel at the United Nations',
@@ -275,7 +275,7 @@ for (const [page, keys] of Object.entries(FUTURE)) {
 
 /** "In the field" galleries, by page. */
 const GALLERY: Record<string, string[]> = {
-  // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MoU photographs follow.
+  // SuperKids (WP18b): the set leads with lesson and project photographs (a hands-on lesson, a student presenting her project, group learning); the MOU photographs follow.
   superkids: ['superkids/classroom-uniform', 'superkids/robotics-desk', 'superkids/stem-group', 'superkids/hall-seated', 'superkids/student-explains', 'superkids/steam-workshop', 'superkids/certificate-ceremony', 'superkids/art-competition', 'superkids/plaques-group', 'superkids/tree-planting', 'superkids/mou-signing', 'superkids/mou-signing-pen', 'superkids/learner-kolika', 'superkids/learner-zuhaina', 'superkids/learner-nihal', 'superkids/learner-zaeem'],
   // YouthWIDE (WP21, item 1): programs and agreements with a known place (no photograph here is of a madrasah, and none implies a delivered madrasah program).
   // WP30b: the programs abroad lead, then the Bangladesh program and agreement.

@@ -286,7 +286,7 @@ export function withoutSince2014(label: string): string {
 }
 
 /**
- * WP64 rework RW2 (coordinator): the same rule for the audience bands whose HEADING says the period ("We’ve Built This Path Since 2014" on Development Partners, Governments, Foundations, Universities and Employers, "We Have Built This Path Since 2014" on YouthWIDE,
+ * WP64 rework RW2 (coordinator): the same rule for the audience bands whose HEADING says the period ("We’ve Built This Path Since 2014" on Development Partners, Governments, Foundations, Universities and Employers, and (WP67) on YouthWIDE,
  * "A Record Built Since 2014" on Investors). Under such a heading the band says it once:
  *  - a tile whose register label ends "since 2014" (SC-01, "learners trained since 2014") shows it without the phrase (statLabelUnder);
  *  - the origin line (ORIGIN_SHORT, "Since 2014, from a Copenhagen launch to work in 16 countries and territories.") drops its "Since 2014," lead-in, which only repeats the heading, and keeps the founding fact and the reach: "From a Copenhagen launch to work in 16 countries and territories." (originShortUnder).
@@ -882,7 +882,7 @@ export const INVESTOR_EVIDENCE: CopyBlock = investorEvidence();
  * The institutions Investors' track-record band names (WP43, cycle-20 review): ONE short paragraph, by type (governments, development partners, universities, private-sector partners), in place of four relationship lists
  * and the founders and leadership entries. Each sentence is the register's own pattern ("Government partners include ...", PA-02; "Development and NGO partners include ...", PA-01; "University partners: ...", PA-05;
  * "Private-sector partners include ...", PA-03) with a short selection of the names that fact lists (at most three for a type), so "include" keeps every list open exactly as the register words it; the full lists stay in the
- * register and on the pages that show the logos. A relationship qualifier travels with its name: National University is "(official training partner)" and The City College of New York is "a memorandum of understanding (MoU)
+ * register and on the pages that show the logos. A relationship qualifier travels with its name: National University is "(official training partner)" and The City College of New York is "a memorandum of understanding (MOU)
  * partner since 2024" (PA-05 words the relationship so; SC-04, in the band "Contracts, Pipeline and Recognition", says in full that CodersTrust is National University's official training partner). DoICT is spelled out where the
  * page first names it (the Her Power answer below says "DoICT"; the expansion is the confirmed one, F30). The builder throws if the register stops naming one of these institutions or changes one of those two relationships, so
  * the paragraph cannot outlive the facts it rests on.
@@ -896,14 +896,14 @@ function investorPartners(): CopyBlock {
   };
   named('PA-02', 'Bangladesh’s ICT Division', 'DoICT', 'Bangladesh Hi-Tech Park Authority');
   named('PA-01', 'UNDP', 'the World Bank Group', 'the World Food Programme');
-  named('PA-05', 'National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MoU) partner since 2024');
+  named('PA-05', 'National University (official training partner', 'The City College of New York (CCNY), a memorandum of understanding (MOU) partner since 2024');
   named('PA-03', 'Grameenphone Academy', 'Accenture');
   named('PA-06', 'AWS Authorized Training Partner');
   return {
     text: [
       'Government partners include Bangladesh’s ICT Division, the Department of ICT (DoICT) and the Bangladesh Hi-Tech Park Authority.',
       'Development partners include UNDP, the World Bank Group and the World Food Programme.',
-      'University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MoU) partner since 2024.',
+      'University partners include National University (official training partner) and The City College of New York, a memorandum of understanding (MOU) partner since 2024.',
       'Private-sector partners include Grameenphone Academy and Accenture, and CodersTrust is an AWS Authorized Training Partner.',
     ].join(' '),
     facts: ['PA-02', 'PA-01', 'PA-05', 'PA-03', 'PA-06'],

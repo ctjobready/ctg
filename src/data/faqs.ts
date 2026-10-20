@@ -1,3 +1,6 @@
+import { CONTRACT_FIGURES } from './copy';
+import { fact } from './facts';
+
 export type FaqAudience = 'governments' | 'development-partners' | 'foundations' | 'universities' | 'employers' | 'investors' | 'home' | 'variants' | 'all';
 export interface Faq {
   id: string;
@@ -89,6 +92,9 @@ const bankAnswer = (id: string): Faq => {
   if (!f) throw new Error(`faqs: bank question ${id} is missing`);
   return f;
 };
+// WP67 (cycle-38 review, Gemini): PD-05's national tier ("National 100,000+ trainees"), for the Governments scale answer below; read from the register, never retyped, and the build stops if the register stops saying it.
+const NATIONAL_SIZE = /National (\d[\d,]*\+) trainees/.exec(fact('PD-05').text)?.[1];
+if (!NATIONAL_SIZE) throw new Error('faqs: PD-05 no longer reads "National N+ trainees"; update the Governments scale answer');
 // WP63 (cycle-35 review, GPT-6.1 Sol G2): the bank answer's first sentence names what is tested and who chooses the tracks; each variant says it for its own reader and keeps the second sentence (the evidence statement) as it is.
 const Q1_OPENING = 'We test local employer demand first and choose each country’s tracks with local partners.';
 const q1Variant = (id: string, opening: string): Faq => {
@@ -109,9 +115,18 @@ faqs.push(
     evidence: ['IN-10', 'IN-04'],
     audiences: ['variants'],
   },
-  // Governments: the national-scale answer points to the contracts table, where each contract's scope is set out. WP37 (cycle-14 review): the Her Power results and the contract scopes are in Results at a Glance and
-  // the table, so the answer states only the phased approach and the design option; its closing sentence is a link to the table (the printed words stay "See the contract scopes above.").
-  { ...bankAnswer('Q2'), id: 'Q2-government', a: `We scale in phases. A 100,000+ national program is a design option we have not yet delivered.`, link: { label: 'See the contract scopes above', href: '#contracts' }, evidence: ['PD-05'], audiences: ['variants'] },
+  // Governments: the national-scale answer. WP37 (cycle-14 review): the Her Power results and the contract scopes are in Results at a Glance and the table, so the answer stated only the phased approach and the design option, and closed on a link to the table
+  // ("See the contract scopes above."). WP67 (cycle-38 review, Gemini): a question about national scale is answered with the delivered national program, so the answer gives Her Power's two counts again, in three short sentences (the FAQ cap, tests/wp30c.spec.ts), and the link
+  // sentence is gone (it would be a fourth): "We scale in phases. Her Power, a national program, trained 25,125 women; CodersTrust provided the curriculum and trained 2,500 directly. A 100,000+ program is a design option we have not yet delivered."
+  // The counts are the register's (CONTRACT_FIGURES: GV-01's 25,125 and GV-11's 2,500, which GV-13 holds too) and the 100,000+ is PD-05's national tier, all read, never retyped; CodersTrust's role is GV-11's "curriculum" and "trained directly", worded "provided the curriculum"
+  // as the bank answer, the Investors answer and the Her Power case study word it, not "built".
+  {
+    ...bankAnswer('Q2'),
+    id: 'Q2-government',
+    a: `We scale in phases. Her Power, a national program, trained ${CONTRACT_FIGURES.national} women; CodersTrust provided the curriculum and trained ${CONTRACT_FIGURES.direct} directly. A ${NATIONAL_SIZE} program is a design option we have not yet delivered.`,
+    evidence: ['GV-01', 'GV-11', 'PD-05'],
+    audiences: ['variants'],
+  },
   // Investors (WP25s): the national-scale answer leads with CodersTrust's own role in Her Power (GV-11) before the national total (GV-01), which is the program's, not CodersTrust's.
   // WP33 (cycle-10 review): the bank answer's closing 41-word sentence is two sentences here (the same two claims, no "phase by phase" repeat of "in phases"). FAQ answers are at most three
   // sentences (tests/wp30c.spec.ts), so the two Her Power statements, each already a short clause, are one sentence joined by a semicolon.
