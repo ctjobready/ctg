@@ -48,7 +48,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
                               <p class="mega__group-title">{it.group}</p>
                             </li>
                           )}
-                          <li>
+                          <li class:list={[it.children.length > 2 && 'mega__item--span']}>
                             <a class="mega__link" href={a.href} rel={a.rel} aria-current={isActive(it.href) && currentPath === it.href ? 'page' : undefined}>
                               <span class="mega__title">
                                 {it.label}
@@ -58,7 +58,7 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
                               {a.external && <span class="sr-only"> {a.srText}</span>}
                             </a>
                             {it.children.length > 0 && (
-                              <ul class="mega__sub" role="list" aria-label={`${it.label} tracks`}>
+                              <ul class:list={['mega__sub', it.children.length > 2 && 'mega__sub--two']} role="list" aria-label={`${it.label} tracks`}>
                                 {it.children.map((c) => {
                                   const ca = linkAttrs(c.href);
                                   return (
@@ -418,6 +418,14 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     border-left: 2px solid var(--primary-fixed);
     display: grid;
     gap: var(--space-xs);
+  }
+  /* WP76: four courses nest under the NU diploma (it had two). The panel is pinned under the sticky header and cannot scroll, so four stacked courses with their descriptions would end 867 px down at 1280 px wide (the two-course menu ended at 715 px), below a 800 px viewport:
+     a parent with three or more children spans both columns and its children sit two across (771 px at 1280 px; measured). Parents with fewer children (Impact's "In the Field") are unchanged. */
+  .mega__item--span {
+    grid-column: 1 / -1;
+  }
+  .mega__sub--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .mega__group {
     grid-column: 1 / -1;

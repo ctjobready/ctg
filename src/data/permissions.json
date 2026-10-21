@@ -200,6 +200,8 @@
   { "assetId": "legacy-recognition-supply-chain-award", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-nu-pgd-digital-marketing", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-nu-pgd-ict", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-nu-pgd-cybersecurity", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
+  { "assetId": "legacy-nu-pgd-data-analytics", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-nu-pgd-students-laptops", "clearanceId": "OWNER-2026-10-11-OLDSITE", "status": "cleared", "publishedOnLegacySite": true, "sensitiveGroup": false },
   { "assetId": "legacy-global-copenhagen-launch-dinner", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },
   { "assetId": "legacy-global-dubai-start-up-event", "clearanceId": "OWNER-2026-10-18-CTUSA-ASSETS", "status": "cleared", "publishedOnLegacySite": false, "sensitiveGroup": false },

@@ -159,7 +159,7 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
     await open(page, FOUNDATIONS);
     const text = await mainText(page);
     expect(count(text, '711 of 1,000')).toBe(1);
-    expect(count(text, 'WSDFM program records (not trial data; the trial studied 833 women): 71% in work')).toBe(1);
+    expect(count(text, 'WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work')).toBe(1);
     expect(count(text, 'Program records, separate from the randomized trial')).toBe(0);
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card).toHaveCount(1);

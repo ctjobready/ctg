@@ -121,16 +121,18 @@ function kosovoRecords(): CopyBlock {
 }
 export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
 /**
- * WP63 (cycle-35 review, Gemini M4): the same kind of line for the WSDFM card of Home's "Proof in Practice" band, which had no outcome line while the Kosovo card has its program records: "Program records: 711 of 1,000 women in work (71%)." The count is PR-01's
- * stat value and the percentage is the one in its label ("WSDFM: 71% in work"); the builder throws if either stops reading that way or the register stops saying "N of M women in work (P%)". It names its source in its first words, so the figure is not read as trial data
+ * WP63 (cycle-35 review, Gemini M4): the same kind of line for the WSDFM card of Home's "Proof in Practice" band, which had no outcome line while the Kosovo card has its program records. The count is PR-01's stat value and the percentage is the one in its label
+ * ("WSDFM: 71% of enrolled women in work"); the builder throws if either stops reading that way or the register stops saying "N of the M women enrolled were in work (P%)". It names its source in its first words, so the figure is not read as trial data
  * (the trial studied 833 women, TRIAL_WOMEN; the carousel's fourth slide says so beside the same figure). The figure's spaces are no-break spaces, as KOSOVO_RECORDS' are.
+ * WP76 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): the line names the base, "Program records: 711 of the 1,000 women enrolled were in work (71%)." (it said "711 of 1,000 women in work (71%)").
  */
 function wsdfmRecords(): CopyBlock {
   const r = fact('PR-01');
-  const n = r.stat?.value;
-  const pct = /^WSDFM: (\d+%) in work$/.exec(r.stat?.label ?? '')?.[1];
-  if (!n || !/^[\d,]+ of [\d,]+$/.test(n) || !pct || !r.text.includes(`${n} women in work (${pct})`)) throw new Error('WSDFM_RECORDS: PR-01 no longer reads "N of M women in work (P%)"');
-  return { text: `Program records: ${n.replace(/ /g, ' ')} women in work (${pct}).`, facts: ['PR-01'] };
+  const count = /^([\d,]+) of ([\d,]+)$/.exec(r.stat?.value ?? '');
+  const pct = /^WSDFM: (\d+%) of enrolled women in work$/.exec(r.stat?.label ?? '')?.[1];
+  if (!count || !pct || !r.text.includes(`${count[1]} of the ${count[2]} women enrolled were in work (${pct})`)) throw new Error('WSDFM_RECORDS: PR-01 no longer reads "N of the M women enrolled were in work (P%)"');
+  const base = `${count[1]} of the ${count[2]}`.replace(/ /g, '\u00a0');
+  return { text: `Program records: ${base} women enrolled were in work (${pct}).`, facts: ['PR-01'] };
 }
 export const WSDFM_RECORDS: CopyBlock = wsdfmRecords();
 

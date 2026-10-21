@@ -53,8 +53,8 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(0).locator('.hs__lead').textContent());
     expect(lead).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
-    // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial data; the trial studied 833 women): 71% in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.');
+    // WP51 (cycle-26 review): the Home card shows delivery context in place of the figure and its caption ("WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work"), which the pages that keep the figure still print (below; tests/wp51.spec.ts)
     expect(compact(await page.locator('#cases article').first().textContent())).not.toContain('WSDFM program records');
   });
 
@@ -64,8 +64,8 @@ test.describe('figures say what they measure', () => {
     for (const route of ['', 'partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
-      if (route === '') expect(cards, 'home').not.toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
-      else expect(cards, route).toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
+      if (route === '') expect(cards, 'home').not.toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work');
+      else expect(cards, route).toContain('WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work');
       if (cards.includes('Her Power')) {
         if (route === '') {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');

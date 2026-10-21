@@ -41,7 +41,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary: 'A pilot that prepared young women in Kosovo for online work.',
     place: 'World Bank Group; Kosovo, 2016–2017',
     who: 'Young women',
-    scope: 'Two-phase delivery that built digital literacy first, then real online work',
+    // WP76: the World Bank brief's two phases (February to August 2016: front-end web development; September to December 2016: three tracks, coding, graphic design and digital marketing), where the line had said digital literacy came first.
+    scope: 'Two phases: front-end web development first, then tracks in coding, graphic design and digital marketing',
     note: WB_KOSOVO,
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },

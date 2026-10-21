@@ -88,7 +88,7 @@ test.describe('home hero slider', () => {
     expect(lead).not.toContain('who attended');
     // the placement slide lists four programs (WP35 had taken the WSDFM 71% off it, because it is program records, read beside the trial's 63.1%; WP50, cycle-25 review: it is back as the second program, with the qualifier "program records, not trial data")
     await expect(slides.nth(3).locator('.hs__lines li')).toHaveCount(4);
-    await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
+    await expect(slides.nth(3).locator('.hs__lines li').nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.');
     await expect(slides.nth(3).locator('.hs__lines li').nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
   });
 

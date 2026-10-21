@@ -38,13 +38,13 @@ if (!herPowerTracked) throw new Error('caseStudies: PR-05 stat value no longer r
 export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerParts[2]} of the ${herPowerTracked} tracked women in work, from the ${herPowerParts[1]} women CodersTrust trained directly`;
 /**
  * WP31: the WSDFM card sits on pages that also show the trial's follow-up employment (63.1% against 52.8%), a different measure. The caption says the
- * 71% is program records, from PR-01's own label ("WSDFM: 71% in work"); the figures are not retyped.
+ * 71% is program records, from PR-01's own label ("WSDFM: 71% of enrolled women in work", WP76: it said "71% in work"); the figures are not retyped.
  * WP46 (cycle-22 review): "(not trial data)", where it read "separate from the trial", which suggested the records contradict the trial of the same predecessor program.
  * WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): the parenthesis adds how the records relate to the trial, "(not trial data; the trial studied 833 women)": the 711 of 1,000 above it are the program's records and
  * the trial's count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts), so the card names RC-07 beside PR-01 (CASE_CARD_LABEL_FACTS). It does not say the 833 are "of" the 1,000: the trial's sample includes 408 women who were not offered a place.
  */
 const wsdfmShare = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
-if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> in work"');
+if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> of enrolled women in work"');
 const wsdfmLabel = `WSDFM program records (not trial data; the trial studied ${TRIAL_WOMEN} women): ${wsdfmShare[1]}`;
 
 /**
@@ -58,7 +58,7 @@ export const CASE_CARD_LABEL_FACTS: Record<string, string[]> = { 'PR-01': ['RC-0
 
 /**
  * Home's three cards. WP37 (cycle-14 review): the results carousel above the band (slide 3, "Results by Program") already states the Kosovo (102 of 150) and Her Power (372 of 800) figures, so those two
- * cards show a line of delivery context in the figure's place (`context`, from each case study's own scope: Kosovo "Two-phase delivery that built digital literacy first, then real online work";
+ * cards show a line of delivery context in the figure's place (`context`, from each case study's own scope: Kosovo "Two phases: front-end web development first, then tracks in coding, graphic design and digital marketing" (WP76: the World Bank brief's two phases);
  * Her Power "Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly"). The WSDFM card kept its figure because the slide did not list WSDFM.
  * WP50 (cycle-25 review): the slide (now the fourth, still "Results by Program") lists WSDFM again as the fourth of four programs, with the same qualifier ("program records, not trial data"); this card still shows its figure.
  * WP51 (cycle-26 review): that slide now shows "711 of 1,000 ... 71% in work", so the WSDFM card repeated it: like the Kosovo and Her Power cards, it shows a line of delivery context in the figure's place. The line is the case study's own
@@ -66,13 +66,13 @@ export const CASE_CARD_LABEL_FACTS: Record<string, string[]> = { 'PR-01': ['RC-0
  * Partners, Foundations, Local Partners and YouthWIDE list their own cards (no `context`), so they keep the figure and its caption (CASE_CARD_LABELS).
  * WP57 (cycle-29 review, Gemini GM4; owner decision 7, "show both"): the Kosovo card is the exception to the delivery-context rule: its `context` line is the program records ("Program records: 102 of 150 women in work.") and its `note` the World Bank's
  * figure, so the card shows both Kosovo figures itself (the slide's line stays as it is).
- * WP63 (cycle-35 review, Gemini M4): the WSDFM card was left with the delivery-context line and no outcome line, while the Kosovo card has its program records. Its `context` is now the same kind of line, "Program records: 711 of 1,000 women in work (71%)."
+ * WP63 (cycle-35 review, Gemini M4): the WSDFM card was left with the delivery-context line and no outcome line, while the Kosovo card has its program records. Its `context` is now the same kind of line, "Program records: 711 of the 1,000 women enrolled were in work (71%)." (WP76, owner answer 2026-10-22: the 1,000 are the women enrolled)
  * (WSDFM_RECORDS, src/data/copy.ts, from PR-01), which the fourth carousel slide states too (the figure is on Home twice now, as Kosovo's is); the case study's delivery scope stays on its own page and card.
  */
 export const caseStudyItems = [
   { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', context: WSDFM_RECORDS.text, contextFacts: WSDFM_RECORDS.facts, href: '/impact/case-studies/wsdfm-women-freelancers/' },
   // WP55 (owner decision 2026-10-17, "Show both"): this card adds the World Bank's own figure in one line (WB_KOSOVO). WP57 (cycle-29 review, Gemini GM4): the card showed only that line, with the program records in the slide far above it, so
-  // it now shows both: "Program records: 102 of 150 women in work." (KOSOVO_RECORDS, PR-02) where the delivery-context line was ("Digital literacy followed by real online work."), then the World Bank's line.
+  // it now shows both: "Program records: 102 of 150 women in work." (KOSOVO_RECORDS, PR-02) where the delivery-context line was (the Kosovo scope line, see CASE_STUDIES), then the World Bank's line.
   { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', context: KOSOVO_RECORDS.text, contextFacts: KOSOVO_RECORDS.facts, note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
   { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', href: '/impact/case-studies/her-power/' },
 ];

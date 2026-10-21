@@ -43,7 +43,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

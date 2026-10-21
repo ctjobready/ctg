@@ -12,6 +12,7 @@ export const C14_FIRST = C14.firstAction.replace(/^Your first step: a discovery 
  * A page that changes gets its own entry in PAGE_UPDATED (2026-10-09: the programs index, YouthWIDE, JobReady@Campus, JobReady@Work, and the former NationWIDE page, now merged into YouthWIDE;
  * 2026-10-10: those five again, SuperKids and the NU Postgraduate Diploma index, after the round-16 wording changes, and the NU course pages
  * and the program pages once more after the round-17 heading changes; the program pages and the NU pages again after the round-18 wording changes, same date).
+ * 2026-10-22 (WP76, owner answer: the diploma has four courses): the NU Postgraduate Diploma index and the NU course pages (two new course pages, and "Also Consider" naming the other three courses on each).
  */
 export const LAST_UPDATED = '2026-10-08';
 export const PAGE_UPDATED = {
@@ -20,8 +21,8 @@ export const PAGE_UPDATED = {
   campus: '2026-10-21',
   work: '2026-10-15',
   superkids: '2026-10-10',
-  nu: '2026-10-15',
-  nuCourse: '2026-10-14',
+  nu: '2026-10-22',
+  nuCourse: '2026-10-22',
 } as const;
 
 /** Page-level primary-CTA helper: label + href for a registered key. */

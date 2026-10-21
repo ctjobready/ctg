@@ -274,7 +274,8 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     await open(page, URL);
     const results = page.locator('#results');
     await expect(results.getByRole('heading', { level: 3, name: 'What the Randomized Trial Found' })).toHaveCount(1);
-    expect(compact(await results.textContent())).toContain('711 of 1,000');
+    // WP76 (owner answer 2026-10-22: the 1,000 are the women enrolled): the program-results sentence (PR-01) names the base, "711 of the 1,000 women enrolled were in work (71%)"
+    expect(compact(await results.textContent())).toContain('711 of the 1,000 women enrolled were in work (71%)');
     await expect(results.locator('[data-fact="RC-09"]')).toContainText('Employment Status at Follow-Up');
     await expect(results.getByRole('link', { name: 'Read the Randomized Trial Results' })).toHaveCount(1);
     await open(page, 'impact/independent-evaluation/');

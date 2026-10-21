@@ -245,8 +245,8 @@ test.describe('S3 (Claude): the 2 million 2030 aim carries its dependency on eve
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM’s program records name the trial’s count beside them', () => {
-  const LINE = 'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.'; // WP63 (cycle-35 review, Kimi K2): the clause "from program records" is left out so the line stays one row at 1280 (this block's budget test)
-  const CAPTION = 'WSDFM program records (not trial data; the trial studied 833 women): 71% in work';
+  const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.'; // WP63 (cycle-35 review, Kimi K2): the clause "from program records" is left out so the line stays one row at 1280 (this block's budget test)
+  const CAPTION = 'WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work';
   const CARD_PAGES = ['partner-with-us/development-partners/', 'partner-with-us/foundations/', LOCAL, YOUTHWIDE];
 
   test('the count is RC-07’s (833 women at baseline: 425 treatment, 408 control), read from the register; PR-01 still says 711 of 1,000', () => {
@@ -318,7 +318,8 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
     const card = page.locator('#mechanism li', { hasText: 'Trainers and Curriculum' });
     await expect(card).toHaveCount(1);
     expect(compact(await card.textContent())).toContain('Training of Trainers, curriculum and manuals, then preparation for industry certification.');
-    expect(await texts(page, '#mechanism .model__title')).toEqual(['Vulnerable and Unemployed Youth', 'Government Digital Labs', 'Trainers and Curriculum', 'Placement and Monthly Reports']);
+    // WP76: the first card is the settled target-group wording ("Vulnerable and Unemployed Youth" before); tests/wp76.spec.ts holds the card
+    expect(await texts(page, '#mechanism .model__title')).toEqual(['Educated, Unemployed and Underemployed Youth', 'Government Digital Labs', 'Trainers and Curriculum', 'Placement and Monthly Reports']);
     const titles = await texts(page, 'h3, .card__title, .model__title');
     expect(titles.filter((t) => t === 'Capacity Designed to Stay')).toEqual([]);
     expect(titles.filter((t) => t === 'Capacity Designed to Stay in Your System')).toHaveLength(1);

@@ -106,7 +106,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(slide(page).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
@@ -126,7 +126,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await open(page, 'partner-with-us/development-partners/');
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
-    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
+    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work');
     await open(page, 'impact/');
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toBeVisible();
     await expect(page.locator('#cases article.card')).toHaveCount(5);

@@ -22,10 +22,10 @@ import MechanismSection from '../../../components/pages/programs/MechanismSectio
 import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
-import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
+import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
 import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
-import { formatDate, isoDate } from '../../../lib/format';
+import { formatDate, isoDate, joinList } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
 
 const path = NU_PATH;
@@ -35,6 +35,9 @@ const overview = await nuOverview();
 const apply = { label: NU_APPLY.label, href: overview.data.applyUrl };
 const applyLink = linkAttrs(apply.href);
 const courses = await nuCourses();
+// WP76: "Four courses, in digital marketing, ICT, cyber security and data analytics, delivered by ..." (it said "Two courses, delivered by ..."), built from the collection so the count and the names cannot drift from the cards below it
+const COUNT_WORD = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+const coursesLead = `${COUNT_WORD[courses.length]} courses, in ${joinList(courses.map((c) => NU_COURSE_SUBJECT[c.slug]))}, delivered by CodersTrust under National University’s official training partnership.`;
 
 const faqSources: FaqSource[] = [
   // WP27: admissions' own eligibility sentence (NU-01), not "if you hold a degree".
@@ -70,9 +73,9 @@ const jsonLd = [
     </dl>
   </Hero>
 
-  <!-- WP22: the two course-choice cards sit directly under the hero (they were the C6 band) -->
-  <MechanismSection id="courses" title="Choose Your Course" lead="Two courses, delivered by CodersTrust under National University’s official training partnership." eyebrow="The Courses" factIds={['SC-04']} tone="airy">
-    <div class="courses" data-fact="SC-04">
+  <!-- WP22: the course-choice cards sit directly under the hero (they were the C6 band). WP76 (owner answer 2026-10-22: the diploma has four courses): four cards, and the lead names all four (NU-13 states them; SC-04 the partnership). -->
+  <MechanismSection id="courses" title="Choose Your Course" lead={coursesLead} eyebrow="The Courses" factIds={['SC-04', 'NU-13']} tone="airy">
+    <div class="courses" data-fact="SC-04 NU-13">
       {
         courses.map((c) => (
           <CourseCard

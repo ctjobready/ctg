@@ -13,7 +13,7 @@ import { listPages } from './support/pages';
  *   - G2: "Will This Work in Our Country?" is two plain sentences on the hub, Home and YouthWIDE, with each audience variant opening with its own first sentence (tests/wp62.spec.ts holds the audience pages);
  *   - GP3: JobReady Platform’s roadmap sentence ends "..., not live yet.";
  *   - L4: Home slide 1’s lead says "women offered a place had an estimated 41% higher monthly income than the control group";
- *   - K2: Home slide 4’s WSDFM line is "WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.", one row at 1280, inside the carousel’s height budget;
+ *   - K2: Home slide 4’s WSDFM line is "WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.", one row at 1280, inside the carousel’s height budget;
  *   - K5: the Impact band and the Case Studies hub are "Five Programs Across Kosovo, Albania and Bangladesh";
  *   - M3: Home’s recognition band heads its first badge "University Partners";
  *   - M4: Home’s WSDFM card shows its program records, as the Kosovo card does;
@@ -161,14 +161,14 @@ test.describe('L4 (GLM) and K2 (Kimi): Home slides 1 and 4', () => {
     expect(pagesWith('their monthly income was an estimated')).toEqual([]);
   });
 
-  test('slide 4’s WSDFM line is "WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.", from PR-01 and RC-07, and it is one row at 1280 (as long as the Kosovo line)', async ({ page }) => {
+  test('slide 4’s WSDFM line is "WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.", from PR-01 and RC-07, and it is one row at 1280 (as long as the Kosovo line)', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     const lines = slide(page, 4).locator('.hs__lines li');
-    expect(compact(await lines.nth(1).textContent())).toBe('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
+    expect(compact(await lines.nth(1).textContent())).toBe('WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.');
     expect(await lines.nth(1).getAttribute('data-fact')).toBe('PR-01 RC-07');
     expect(fact('PR-01').stat?.value).toBe('711 of 1,000');
-    expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% in work');
+    expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% of enrolled women in work');
     expect(fact('RC-07').text).toContain('833 women at baseline');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[1], 'the WSDFM line wraps').toBe(heights[0]);
@@ -217,19 +217,19 @@ test.describe('M3 (Gemini): Home’s recognition band', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('M4 (Gemini): Home’s WSDFM card shows its program records, as the Kosovo card does', () => {
-  test('its context line is "Program records: 711 of 1,000 women in work (71%).", from PR-01, with no-break spaces in the figure, and no headline figure or caption', async ({ page }) => {
+  test('its context line is "Program records: 711 of the 1,000 women enrolled were in work (71%).", from PR-01, with no-break spaces in the figure, and no headline figure or caption', async ({ page }) => {
     await open(page, HOME);
     const card = page.locator('#cases article').first();
     expect(compact(await card.locator('.card__title').textContent())).toBe('Women’s Skill Development for Freelancing Marketplace (WSDFM)');
     const line = card.locator('.case__context');
     await expect(line).toHaveCount(1);
-    expect(compact(await line.textContent())).toBe('Program records: 711 of 1,000 women in work (71%).');
-    expect(compact(WSDFM_RECORDS.text)).toBe('Program records: 711 of 1,000 women in work (71%).');
+    expect(compact(await line.textContent())).toBe('Program records: 711 of the 1,000 women enrolled were in work (71%).');
+    expect(compact(WSDFM_RECORDS.text)).toBe('Program records: 711 of the 1,000 women enrolled were in work (71%).');
     expect(WSDFM_RECORDS.facts).toEqual(['PR-01']);
     expect(await line.getAttribute('data-fact')).toBe('PR-01');
-    expect(await line.evaluate((el) => (el.textContent ?? '').includes('711 of 1,000'))).toBe(true);
+    expect(await line.evaluate((el) => (el.textContent ?? '').includes('711\u00a0of\u00a0the\u00a01,000'))).toBe(true);
     await expect(card.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
-    expect(fact('PR-01').text).toContain('711 of 1,000 women in work (71%)');
+    expect(fact('PR-01').text).toContain('711 of the 1,000 women enrolled were in work (71%)');
   });
 
   test('the three cards hold their layout at 1280 and 390: each context line sits above its title inside the card, and nothing scrolls sideways', async ({ page }) => {

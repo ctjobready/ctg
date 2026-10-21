@@ -1,7 +1,9 @@
 ---
-// P16–P17 — NU PGD course pages /programs/nu-postgraduate-diploma/digital-marketing/ and /ict/ (T10), generated from the
+// P16–P17 — NU PGD course pages /programs/nu-postgraduate-diploma/digital-marketing/, /ict/, /cyber-security/ and /data-analytics/ (T10), generated from the
 // `nu-pgd` collection (kind: course). One H1 (the course name). Moved under /programs/ in WP20a. Every course-specific line (the FAQ answers,
 // the related fields) is derived from the course's module list; nothing promises an outcome.
+// WP76 (owner answer 2026-10-22: the diploma has four courses): Cyber Security and Data Analytics are added the same way (the same bands, the same Before You Apply rows, the same FAQ questions); "Also Consider", which named the one other course, names the other
+// three (src/components/pages/programs/nuPgd.ts holds each course's copy), and the line under "What You Study" is the course's own (its last module differs).
 // WP30d (owner direction 2026-10-14: less is more): the generic "What Is CodersTrust?" band, the instructors line, the wider-programs outcome band and the two FAQ answers that repeated the
 // module list and the Before You Apply table are cut.
 // WP46 (cycle-22 review): the "What You Will Work On" band (#why) is cut too: its points restated the module list in "What You Study" directly above. "Also Consider" turns white, so the bands
@@ -39,8 +41,8 @@ const LAST_UPDATED = PAGE_UPDATED.nuCourse;
 // One eligibility rule on every NU page: the overview rule (NU-01), so the three pages never differ.
 const eligibilityId = 'NU-01';
 
-const other = Object.keys(NU_COURSE_COPY).find((k) => k !== slug)!;
-const otherCourse = (await nuCourses()).find((x) => x.slug === other)!;
+// WP76: "Also Consider" names the other three courses (it named the one other course), each after its own "Prefer ...?" question, in the diploma's course order.
+const others = (await nuCourses()).filter((x) => x.slug !== slug);
 
 const faqSources: FaqSource[] = [
   // "What Will I Study?" repeats the module list above; the second answer names concrete modules.
@@ -106,7 +108,7 @@ const jsonLd = [
   </Section>
 
   <Section id="curriculum" tone="airy" aria-labelledby="curriculum-h">
-    <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead="Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions." />
+    <SectionHeader id="curriculum-h" eyebrow="Curriculum" title="What You Study" lead={copy.studyLead} />
     <details class="mods">
       <summary>View All {c.modules.length} Modules</summary>
       <ol class="modgrid" role="list" aria-label={`${c.title} modules`}>
@@ -121,8 +123,11 @@ const jsonLd = [
   </Section>
 
   <Section id="also-consider" aria-labelledby="also-h">
-    <SectionHeader id="also-h" eyebrow="Also Consider" title={otherCourse.title} lead={copy.alsoConsider} />
-    <p><a class="link" href={url(`${NU_PATH}${other}/`)}>View the Course<Icon name="arrow-right" size={16} /></a> or <a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
+    <SectionHeader id="also-h" eyebrow="Also Consider" title="Other NU Postgraduate Diploma Courses" />
+    <ul class="others" role="list">
+      {others.map((o) => <li>{NU_COURSE_COPY[o.slug].prefer} The <a class="link" href={url(`${NU_PATH}${o.slug}/`)}>{o.title}</a> is the course for those modules.</li>)}
+    </ul>
+    <p><a class="link" href={url(NU_PATH)}>See the NU Postgraduate Diploma Overview<Icon name="arrow-right" size={16} /></a></p>
   </Section>
 
   <FaqSection sources={faqSources} title="Questions About This Course" />
@@ -301,5 +306,15 @@ const jsonLd = [
     margin: 0 0 var(--space-md);
     font-size: var(--fs-body-xs);
     color: var(--on-surface-variant);
+  }
+  /* "Also Consider" (WP76): the other three courses, one sentence each, as plain text lines (no cards, no new elements) */
+  .others {
+    list-style: none;
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 52rem;
+    color: var(--on-surface);
   }
 </style>

@@ -209,14 +209,14 @@ if (!kosovoShare) throw new Error('heroSlides: PR-02 label no longer reads "Wome
 const korailYear = /, (\d{4}): [\d,]+ enrolled;/.exec(fact('PR-03').text)?.[1];
 if (!korailYear) throw new Error('heroSlides: PR-03 text no longer reads "..., YYYY: N enrolled; ..."; update the UNDP YES year of the program-results slide');
 /**
- * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% in work")
+ * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% of enrolled women in work")
  * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the first slide is the
  * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
  * slide that used to set the carousel's height is gone, WP53, and this slide's copy is now the tallest). The program's full name, which would need a second line, is on the Proof in Practice card below.
  */
-const wsdfmShare = /^WSDFM: (\d+%) in work$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
+const wsdfmShare = /^WSDFM: (\d+%) of enrolled women in work$/.exec(fact('PR-01').stat?.label ?? '')?.[1];
 const wsdfmBase = fact('PR-01').stat?.value;
-if (!wsdfmShare || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
+if (!wsdfmShare || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% of enrolled women in work" and a value "N of M"');
 const PR_TEXT = {
   wow: `Women in Online Work, Kosovo (${kosovoYears}): ${kosovoShare} (${kosovoBase}).`,
   // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): "(711 of 1,000; program records; trial studied 833)." says how the 711 of 1,000 relates to the trial, whose count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts). It replaces "...; program records, not trial data)".
@@ -226,7 +226,10 @@ const PR_TEXT = {
   // WP63 (cycle-35 review, Kimi K2): "WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women." (it said "WSDFM: 71% in work (711 of 1,000; program records; trial studied 833).", three clauses packed into one parenthesis); the count and the share are PR-01's, the 833 RC-07's.
   // The review's wording, "..., from program records; a separate trial studied 833 women.", is 779 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48; measured). "from program records" is the clause left out
   // (this line is 588 px, one row): the slide's eyebrow ("Program Records") and its lead ("..., with results from each program’s records.") already say it for all four lines, and "a separate trial" keeps the 711 of 1,000 apart from the trial. At 390 px every form takes several rows.
-  wsdfm: `WSDFM: ${wsdfmBase} in work (${wsdfmShare}); a separate trial studied ${TRIAL_WOMEN} women.`,
+  // WP76 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): "WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women." names the base the way Her Power's line does ("372 of 800 tracked in work (47%)"). The wording the answer suggests, "WSDFM: 711 of 1,000 enrolled in work (71%);
+  // a separate trial studied 833 women.", is 662 px against the 594 px the row has at 1280 px, so it wraps (76 px against 46 px for one row) and leaves slides 1 to 3 at 57, 57 and 40 px unused at 1280 px (the limit is 48; it is 42, 42 and 25 px with the one-row line, and 16 px on every slide at 390 px either way): measured. "a" and "studied" are the words left out (585 px, one row), as "from program records" was in WP63.
+  // Measured at 1280 px, wrapped: "...; a separate trial of 833 women." 616 px; "...; a separate trial had 833 women." 630 px; "711 of the 1,000 enrolled in work (71%); separate trial: 833 women." 618 px. One row: "...; separate trial studied 833." 582 px.
+  wsdfm: `WSDFM: ${wsdfmBase} enrolled in work (${wsdfmShare}); separate trial: ${TRIAL_WOMEN} women.`,
   yes: `UNDP YES, Korail (${korailYear}): ${fact('PR-03').stat?.value} of the ${firstJob[1]} enrolled found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"

@@ -239,7 +239,8 @@ const HERO: Record<string, string> = {
   'partners-employers': 'general/woman-learner-laptop',
   'partners-universities': 'field/ccny-mou-signing',
   'nu-pgd': 'general/nu-affiliation-meeting',
-  'nu-cybersecurity': 'nu-pgd/cybersecurity',
+  // WP76: a course page's art seed is `nu-<course slug>`, so the Cyber Security page (/cyber-security/) looks up "nu-cyber-security" (this key read "nu-cybersecurity", the legacy spelling, and matched no page: the hero showed the generated art instead of the course banner the other three pages show)
+  'nu-cyber-security': 'nu-pgd/cybersecurity',
   'nu-data-analytics': 'nu-pgd/data-analytics',
   'nu-digital-marketing': 'nu-pgd/digital-marketing',
   'nu-ict': 'nu-pgd/ict',
@@ -307,8 +308,12 @@ const CASE_CARD: Record<string, string> = {
 };
 export const caseCardPhoto = (slug: string): Photo | undefined => (CASE_CARD[slug] ? photo(CASE_CARD[slug]) : undefined);
 
-/** NU Postgraduate Diploma course banners, keyed by course slug. */
+/**
+ * NU Postgraduate Diploma course banners, keyed by course slug.
+ * WP76: the Cyber Security course's URL slug is "cyber-security" (/programs/nu-postgraduate-diploma/cyber-security/) while its banner file, alt text and permissions row (legacy-nu-pgd-cybersecurity) are keyed "cybersecurity": the file keeps its name, so this maps the slug to it.
+ */
+const NU_BANNER_KEY: Record<string, string> = { 'cyber-security': 'cybersecurity' };
 export const nuBanner = (slug: string): Photo | undefined => {
-  const key = `nu-pgd/${slug}`;
+  const key = `nu-pgd/${NU_BANNER_KEY[slug] ?? slug}`;
   return ALT[key] ? photo(key) : undefined;
 };

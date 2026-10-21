@@ -303,7 +303,8 @@ test.describe('NU Postgraduate Diploma: a link to the wider programs, not their 
 
   test('the page shows today as its last-updated date', async ({ page }) => {
     await open(page, 'programs/nu-postgraduate-diploma/');
-    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-15');
+    // WP76 (2026-10-22): the page's wording changed that day (four courses), so PAGE_UPDATED.nu moved from 2026-10-15
+    await expect(page.locator('.updated time')).toHaveAttribute('datetime', '2026-10-22');
   });
 });
 

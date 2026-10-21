@@ -27,7 +27,7 @@ export function evidenceOf(id: string): Evidence | undefined {
   return undefined;
 }
 
-/** The share inside a register label or text, e.g. "71%" from "WSDFM: 71% in work". */
+/** The share inside a register label or text, e.g. "71%" from "WSDFM: 71% of enrolled women in work". */
 const shareIn = (s: string, what: string): string => {
   const m = /(\d+(?:\.\d+)?%)/.exec(s);
   if (!m) throw new Error(`${what}: no share found in "${s}"`);
@@ -35,18 +35,28 @@ const shareIn = (s: string, what: string): string => {
 };
 
 /**
- * One formulation of the WSDFM program-record result, everywhere: "WSDFM program records: 711 of 1,000 women in work (71%)". Built from PR-01's own
+ * One formulation of the WSDFM program-record result, everywhere: "WSDFM program records: 711 of the 1,000 women enrolled were in work (71%)". Built from PR-01's own
  * stat (the count and its base) and its label (the share), so no figure is typed here.
+ * WP76 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): the base is named, "of the 1,000 women enrolled" (it said "711 of 1,000 women in work", which left the 1,000 unsaid). The builder throws if PR-01
+ * stops reading "N of M" with the label "WSDFM: P% of enrolled women in work", so the sentence cannot drift from the register.
  */
 export function wsdfmRecordLine(): string {
   const st = fact('PR-01').stat;
   if (!st) throw new Error('PR-01 has no stat');
-  return `WSDFM program records: ${st.value} women in work (${shareIn(st.label, 'PR-01')})`;
+  const count = /^([\d,]+) of ([\d,]+)$/.exec(st.value);
+  if (!count || !/^WSDFM: \d+% of enrolled women in work$/.test(st.label)) throw new Error('wsdfmRecordLine: PR-01 no longer has the value "N of M" and the label "WSDFM: P% of enrolled women in work"');
+  return `WSDFM program records: ${count[1]} of the ${count[2]} women enrolled were in work (${shareIn(st.label, 'PR-01')})`;
 }
 
-/** The tile and ladder label for PR-01: the same formulation without the count, which the figure above it already shows. */
+/**
+ * The tile and ladder label for PR-01: the same formulation without the count, which the figure above it already shows ("711 of 1,000"), and still naming the base: "WSDFM program records: enrolled women in work (71%)".
+ * (WP76: it read "WSDFM program records: women in work (71%)", which left the 1,000 unsaid.)
+ */
 export function wsdfmFigureLabel(): string {
-  return wsdfmRecordLine().replace(/ [\d,]+ of [\d,]+ women in work/, ': women in work').replace('records:: ', 'records: ');
+  const line = wsdfmRecordLine();
+  const label = line.replace(/ [\d,]+ of the [\d,]+ women enrolled were in work/, ' enrolled women in work');
+  if (label === line) throw new Error('wsdfmFigureLabel: the program-record sentence no longer reads "N of the M women enrolled were in work"');
+  return label;
 }
 
 /** The trial's employment label without the duplicated unit: the value already reads "+10.3 pp", so the label does not say "in percentage points" again. */
@@ -62,7 +72,7 @@ export interface ProgramResultRow {
   slug: string;
   partner: string;
   geography: string;
-  /** The count enrolled, where the register states one (UNDP YES, Korail: "350 enrolled", WP75; the register does not report how many of them were trained). */
+  /** The count enrolled, where the register states one (UNDP YES, Korail: "350 enrolled", WP75; WSDFM: the 1,000 women enrolled, WP76; the register does not report how many of them were trained). */
   enrolled?: string;
   trained?: string;
   completed?: string;
@@ -90,6 +100,10 @@ export function programResultRows(): ProgramResultRow[] {
   const enrolled = need(/(\d[\d,]*) enrolled;/.exec(pr03.text)?.[1], 'PR-03 enrolled');
   const completed = need(/(\d+(?:\.\d+)?%) completed the program/.exec(pr03.text)?.[1], 'PR-03 completed');
   const firstJob = need(/(\d+(?:\.\d+)?%) of the (\d[\d,]*) enrolled found their first job within three months/.exec(pr03.text), 'PR-03 first job');
+  // PR-01: "... program records report that 711 of the 1,000 women enrolled were in work (71%); ..." (WP76, owner answer 2026-10-22: the 1,000 are the women enrolled, so the table's Enrolled column states it
+  // and the In Work cell the 711); the stat's value must name the same two counts.
+  const wsdfm = need(/(\d[\d,]*) of the (\d[\d,]*) women enrolled were in work \((\d+(?:\.\d+)?%)\)/.exec(pr01.text), 'PR-01 enrolled base');
+  if (need(pr01.stat, 'PR-01 stat').value !== `${wsdfm[1]} of ${wsdfm[2]}`) throw new Error('program results table: PR-01 stat value and text name different counts');
   // PR-05: "372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, were in work (47%)"
   const direct = need(/(\d[\d,]*) women trained directly by CodersTrust/.exec(gv13.text)?.[1], 'GV-13 trained directly');
   return [
@@ -99,7 +113,8 @@ export function programResultRows(): ProgramResultRow[] {
       slug: 'wsdfm-women-freelancers',
       partner: 'Porticus',
       geography: 'Bangladesh',
-      inWork: `${need(pr01.stat, 'PR-01 stat').value} women (${shareIn(pr01.stat!.label, 'PR-01')})`,
+      enrolled: wsdfm[2],
+      inWork: `${wsdfm[1]} women (${wsdfm[3]})`,
     },
     {
       id: 'PR-02',

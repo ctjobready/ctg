@@ -58,12 +58,13 @@ test.describe('Investors URL', () => {
 test.describe('menus', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
 
-  test('Programs mega menu nests the NU diploma tracks in a child list, labelled "Digital Marketing" and "ICT"', async ({ page }) => {
+  // WP76 (owner answer 2026-10-22: the diploma has four courses): the child list holds Digital Marketing, ICT, Cyber Security and Data Analytics (it held the first two)
+  test('Programs mega menu nests the NU diploma tracks in a child list, labelled "Digital Marketing", "ICT", "Cyber Security" and "Data Analytics"', async ({ page }) => {
     await page.goto('');
     const parent = page.locator('#mega-programs li:has(> a.mega__link[href$="' + NU + '"])');
     await expect(parent).toHaveCount(1);
-    await expect(parent.locator('> ul > li > a.mega__link')).toHaveCount(2);
-    expect(await texts(page, '#mega-programs li:has(> a.mega__link[href$="' + NU + '"]) > ul > li > a .mega__title')).toEqual(['Digital Marketing', 'ICT']);
+    await expect(parent.locator('> ul > li > a.mega__link')).toHaveCount(4);
+    expect(await texts(page, '#mega-programs li:has(> a.mega__link[href$="' + NU + '"]) > ul > li > a .mega__title')).toEqual(['Digital Marketing', 'ICT', 'Cyber Security', 'Data Analytics']);
     // the tracks are not repeated as top-level items
     await expect(page.locator('#mega-programs > .mega__inner > .mega__links > li > a.mega__link[href*="' + NU + 'ict"]')).toHaveCount(0);
   });
@@ -82,7 +83,7 @@ test.describe('menus', () => {
     const parent = page.locator('.drawer .acc__body li:has(> a[href$="' + NU + '"])');
     await expect(parent).toHaveCount(1);
     const kids = await parent.locator('> ul > li > a').allTextContents();
-    expect(kids.map((k) => k.trim())).toEqual(['Digital Marketing', 'ICT']);
+    expect(kids.map((k) => k.trim())).toEqual(['Digital Marketing', 'ICT', 'Cyber Security', 'Data Analytics']);
   });
 
   // Owner, 2026-10-21: Digital Marketing and ICT are courses, not programs, so the footer's Programs column no longer lists them
@@ -93,6 +94,8 @@ test.describe('menus', () => {
     await expect(col.locator('li:has(> a[href$="' + NU + '"]) > ul')).toHaveCount(0);
     await expect(col.getByRole('link', { name: 'Digital Marketing' })).toHaveCount(0);
     await expect(col.getByRole('link', { name: 'ICT', exact: true })).toHaveCount(0);
+    await expect(col.getByRole('link', { name: 'Cyber Security' })).toHaveCount(0);
+    await expect(col.getByRole('link', { name: 'Data Analytics' })).toHaveCount(0);
     const borders = await page.locator('footer .footer__sub').evaluateAll((els) => els.map((e) => getComputedStyle(e).borderLeftWidth));
     expect(borders.length).toBeGreaterThan(0);
     for (const w of borders) expect(w).toBe('0px');
@@ -103,11 +106,14 @@ test.describe('menus', () => {
     await expect(last.locator('svg')).toHaveCount(1);
   });
 
-  test('the NU diploma page links both course tracks (they left the footer, so the no-JS path to them runs through it)', async ({ page }) => {
+  test('the NU diploma page links all four course tracks (they left the footer, so the no-JS path to them runs through it)', async ({ page }) => {
     await page.goto(NU.replace(/^\//, ''));
     const main = page.locator('main');
     await expect(main.locator('a[href$="' + NU + 'digital-marketing/"]').first()).toBeVisible();
     await expect(main.locator('a[href$="' + NU + 'ict/"]').first()).toBeVisible();
+    // WP76: the two added courses (tests/wp76.spec.ts holds their pages)
+    await expect(main.locator('a[href$="' + NU + 'cyber-security/"]').first()).toBeVisible();
+    await expect(main.locator('a[href$="' + NU + 'data-analytics/"]').first()).toBeVisible();
   });
 
   test('footer Partner column opens with "Partnership Overview"', async ({ page }) => {

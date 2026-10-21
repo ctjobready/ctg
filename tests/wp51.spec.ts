@@ -147,7 +147,7 @@ test.describe('Home: the survey slide names its subgroup (item 3; WP53: the spee
 
 // WP63 (cycle-35 review, Gemini M4): the WSDFM card's context line is its program records (it was the case study's delivery scope, "ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring."), as the Kosovo card's is
 test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line in the figure’s place, its program records (item 4; WP63)', () => {
-  const RECORDS = 'Program records: 711 of 1,000 women in work (71%).';
+  const RECORDS = 'Program records: 711 of the 1,000 women enrolled were in work (71%).';
 
   test('all three cards show a context line in the figure’s place and the band names the WSDFM and Kosovo facts (PR-01, PR-02 and PR-02b); the WSDFM line is its program records', async ({ page }) => {
     await open(page, '');
@@ -164,8 +164,10 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
   test('the figure is stated on Home in slide 4, with its qualifier, and in the WSDFM card as program records (WP63; it was slide 4’s alone)', async ({ page }) => {
     await open(page, '');
     const text = await everything(page);
-    expect(count(text, '711 of 1,000')).toBe(2);
-    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.');
+    // WP76 (owner answer 2026-10-22: the 1,000 are the women enrolled): slide 4 says "711 of 1,000 enrolled in work" and the card "711 of the 1,000 women enrolled were in work", so each form is on Home once
+    expect(count(text, '711 of 1,000')).toBe(1);
+    expect(count(text, '711 of the 1,000')).toBe(1);
+    await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.');
   });
 
   test('Development Partners, Foundations, Local Partners and YouthWIDE list their own cards: the WSDFM card keeps the figure and its caption there', async ({ page }) => {
@@ -174,7 +176,7 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
       const card = page.locator('#cases article', { hasText: WSDFM_TITLE });
       await expect(card, route).toHaveCount(1);
       await expect(card.locator('.case__value'), route).toHaveText('711 of 1,000');
-      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% in work');
+      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work');
       await expect(card.locator('.case__context'), route).toHaveCount(0);
     }
   });
@@ -418,7 +420,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
     expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

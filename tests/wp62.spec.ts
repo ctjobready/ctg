@@ -245,7 +245,7 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
 
   test('the figure and the share are the register’s (PR-01), and the +$27 is not stated anywhere in the page body (the meta description still says it)', async ({ page }) => {
     expect(fact('PR-01').stat?.value).toBe('711 of 1,000');
-    expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% in work');
+    expect(fact('PR-01').stat?.label).toBe('WSDFM: 71% of enrolled women in work');
     await open(page, FOUNDATIONS);
     expect(compact(await page.locator('main').textContent())).not.toContain('+$27');
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);
