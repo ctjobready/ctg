@@ -122,7 +122,7 @@ test.describe('Item 2: OC-03’s before-training median is "the median before tr
   test('Home slide 3: "$245" and "median monthly income among surveyed completers; the median before training was $98."', async ({ page }) => {
     await open(page, HOME);
     const s = slide(page, 3);
-    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(s.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(s.locator('.hs__stat')).toHaveCount(1);
     expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     await expect(s.locator('.stat__value')).toHaveText('$245');

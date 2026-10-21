@@ -334,7 +334,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
   // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line), so the carousel runs trial, government scale, survey, program results
   test('the carousel runs trial, government scale, survey, program results; the government slide’s text and links are unchanged', async ({ page }) => {
     await open(page, '');
-    expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
+    expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the eyebrow does ("Randomized Trial of a Predecessor Program"), and the heading is short again
       'Women Offered a Place Earned an Estimated 41% More per Month',
       'Six Government Contracts and a National University Partnership',
@@ -349,7 +349,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
     await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
-    expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
+    expect(await gov.locator('h3').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
@@ -366,7 +366,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
       const scroll = await page.locator('#results [data-hs-slide]').evaluateAll((els) => els.map((e) => Math.round((e as HTMLElement).scrollHeight)));
       for (const h of scroll) expect(h, `${vp.width}px`).toBeLessThanOrEqual(track + 1);
       await page.locator('[data-hs-dot]').nth(1).click();
-      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText('Six Government Contracts and a National University Partnership');
+      await expect(page.locator('#results [data-hs-slide].is-active h3')).toHaveText('Six Government Contracts and a National University Partnership');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
   });

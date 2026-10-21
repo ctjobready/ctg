@@ -88,7 +88,7 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same f
     expect(text).toContain('onboarding 1.5M+ learners');
     expect(text.endsWith(`the university’s own learners, ${NU_NOT_TRAINED}.`)).toBe(true);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(slide(page, 2).locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
   });
 
   test('the two Her Power counts are the register’s (GV-01 and GV-11 with GV-13) and each is on the slide once; the register’s GV-12 text is unchanged', async ({ page }) => {

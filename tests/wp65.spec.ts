@@ -127,7 +127,7 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile is UNDP YES, Korail; "711 of 1,000" is stated once', () => {
-  const LABEL = 'of the 350 trained in UNDP YES, Korail (2017), found their first job within three months';
+  const LABEL = 'of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months';
 
   test('the glance runs trial, survey, Kosovo, UNDP YES; the fourth tile is "67%", tagged Program Record, linking the UNDP YES case study, with no note', async ({ page }) => {
     await open(page, FOUNDATIONS);
@@ -145,14 +145,14 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
 
   test('one source: Foundations and Development Partners print the same label (UNDP_YES_TILE_LABEL, PR-03’s glance label with its 2017), and the Impact tile keeps the register’s own', async ({ page }) => {
     expect(UNDP_YES_TILE_LABEL).toBe(LABEL);
-    expect(fact('PR-03').stat?.glance?.label).toBe('of the 350 trained in UNDP YES, Korail, found their first job within three months');
-    expect(fact('PR-03').text).toContain('Swanirvar Bangladesh, 2017: 350 trained;');
+    expect(fact('PR-03').stat?.glance?.label).toBe('of the 350 enrolled in UNDP YES, Korail, found their first job within three months');
+    expect(fact('PR-03').text).toContain('Swanirvar Bangladesh, 2017: 350 enrolled;');
     for (const route of [FOUNDATIONS, DEV_PARTNERS]) {
       await open(page, route);
       await expect(page.locator('#glance .pg__lead a[data-fact="PR-03"] .pg__desc'), route).toHaveText(UNDP_YES_TILE_LABEL);
     }
     await open(page, IMPACT);
-    await expect(page.locator('#glance a[data-fact~="PR-03"] .glance__desc')).toHaveText('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    await expect(page.locator('#glance a[data-fact~="PR-03"] .glance__desc')).toHaveText('of the 350 enrolled in UNDP YES, Korail, found their first job within three months');
   });
 
   test('"711 of 1,000" and its not-the-trial caption are stated once on Foundations, on the Proof in Practice WSDFM card; the glance carries neither the figure nor the note', async ({ page }) => {
@@ -176,7 +176,7 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
     const text = await mainText(page);
     expect(count(text, 'UNDP YES')).toBe(1);
     expect(count(text, 'Korail')).toBe(1);
-    expect(count(text, '350 trained')).toBe(1);
+    expect(count(text, '350 enrolled')).toBe(1);
   });
 
   test('the four tiles sit in one row at 1280; at 390 they stack and nothing scrolls sideways', async ({ page }) => {

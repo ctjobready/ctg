@@ -42,7 +42,7 @@ test.describe('Home: each figure once', () => {
   test('slide 3 shows the income result only; the 78.2% is the hero’s survey card', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     expect(compact(await slide.textContent())).not.toContain('78.2');
@@ -67,8 +67,8 @@ test.describe('Home: each figure once', () => {
   test('the survey slide’s body line states the 58.7% with its base ("the 172 surveyed completers who first earned during or after training"), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+    await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await slide.locator('.hs__lead').textContent())).toContain('58.7%');
@@ -83,7 +83,7 @@ test.describe('Home: each figure once', () => {
     expect(lines).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(lines[2]).not.toMatch(/in work/);
@@ -130,7 +130,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(tile).toContainText('67%');
     // WP48 (cycle-23 review): "three months", not "3 months", in prose labels (tests/wp48.spec.ts)
-    await expect(tile).toContainText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
+    await expect(tile).toContainText('of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months');
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
   });
 
@@ -232,7 +232,7 @@ test.describe('Foundations', () => {
     const tile = page.locator('#glance .pg__lead a[data-fact~="PR-03"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__value')).toHaveText('67%');
-    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
+    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     await expect(page.locator('#glance a[data-fact~="PR-01"]')).toHaveCount(0);
     await expect(page.locator('#glance a[data-fact~="RC-04"]')).toHaveCount(0);

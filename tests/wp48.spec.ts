@@ -79,7 +79,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     expect(compact(await s.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,500/g) ?? []).length, 'the 2,500 is in the note alone').toBe(1);
-    await expect(s.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(s.locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
     expect(await s.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },
       { text: 'For Universities', href: expect.stringMatching(/\/partner-with-us\/universities\/$/) },
@@ -438,17 +438,17 @@ test.describe('PX-05 is dated, and UNDP YES says "three months" (items 19 and 20
 
   test('PR-03 reads "within three months" in the register, on the Impact tiles and in the case study’s description; no site page says "within 3 months"', async ({ page }) => {
     const pr03 = fact('PR-03');
-    expect(pr03.text.endsWith('67% of the 350 trained found their first job within three months')).toBe(true);
-    expect(pr03.stat?.label).toBe('of the 350 trained found their first job within three months');
-    expect(pr03.stat?.glance?.label).toBe('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    expect(pr03.text.endsWith('67% of the 350 enrolled found their first job within three months')).toBe(true);
+    expect(pr03.stat?.label).toBe('of the 350 enrolled found their first job within three months');
+    expect(pr03.stat?.glance?.label).toBe('of the 350 enrolled in UNDP YES, Korail, found their first job within three months');
     await open(page, 'impact/');
     expect(compact(await page.locator('#glance').textContent())).toContain('found their first job within three months');
     await open(page, 'partner-with-us/development-partners/');
     // WP62 (cycle-34 review, Grok): this page’s tile names the program’s year, read from PR-03 (the register’s glance label above, which the Impact tile keeps, is unchanged; tests/wp62.spec.ts)
-    expect(compact(await page.locator('#glance .pg__lead a[data-fact="PR-03"]').textContent())).toContain('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
+    expect(compact(await page.locator('#glance .pg__lead a[data-fact="PR-03"]').textContent())).toContain('of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months');
     await open(page, 'impact/case-studies/undp-yes-korail/');
     const description = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(description).toBe('UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 trained, 97.5% completed, 67% of the 350 trained found a first job within three months.');
+    expect(description).toBe('UNDP YES, a 2017 program with UNDP in Korail, Dhaka: 350 enrolled, 97.5% completed, 67% of the 350 enrolled found a first job within three months.');
     expect([...description!].length).toBeLessThanOrEqual(155);
     expect(sitePages().filter((p) => /within 3 months/.test(visible(p.html) + metaDescription(p.html))).map((p) => p.route)).toEqual([]);
   });
@@ -509,9 +509,9 @@ test.describe('Home: the low-risk band, the FAQ trial answer, the hero line, the
     await open(page, '');
     const first = slide(page, 1);
     const title = 'Women Offered a Place Earned an Estimated 41% More per Month';
-    await expect(first.locator('h2')).toHaveText(title);
+    await expect(first.locator('h3')).toHaveText(title);
     expect(title).toBe(titleCase(title));
-    expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
+    expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(compact(await first.locator('.hs__proof').textContent())).toContain('>4×');

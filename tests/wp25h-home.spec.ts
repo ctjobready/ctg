@@ -29,7 +29,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     expect(pr06.stat?.glance?.label, 'PR-06 glance label').not.toMatch(/\bin work\b/i);
     // WP48 (cycle-23 review): "three months", not "3 months", in prose labels (tests/wp48.spec.ts)
     expect(fact('PR-03').text).toContain('found their first job within three months');
-    expect(fact('PR-03').stat?.label).toBe('of the 350 trained found their first job within three months');
+    expect(fact('PR-03').stat?.label).toBe('of the 350 enrolled found their first job within three months');
   });
 
   // WP42 (cycle-19 review): the government slide moved to second, so the program-results slide is the fourth
@@ -38,13 +38,13 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
     await open(page, pageByRoute('/'));
     const s = slide(page, 4);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Program Records');
-    await expect(s.locator('h2')).toHaveText('Results by Program');
+    await expect(s.locator('h3')).toHaveText('Results by Program');
     await expect(s.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     // WP36 (cycle-13 review): every result names its base
     await expect(s.locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
   });
@@ -75,13 +75,13 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone. The survey slide (slide 3) keeps its heading, tile and evidence link and carries the finding of the former speed slide as ONE body line, OC-05's 58.7%
     // with the base the register defines ("surveyed new earners", WP36, WP49, WP52); the earlier heading ("Most Surveyed New Earners Were Earning by Six Months After the Course") is on no slide (tests/wp53.spec.ts).
     // WP54 (cycle-28 reviews, Claude S23 and GLM L1): that line leads with its base, in the words of OC-05's text, and follows the income tile (tests/wp54.spec.ts).
-    await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(slide(page, 3).locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide(page, 3).locator('.hs__lead')).toHaveText('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.');
     await expect(slide(page, 3).locator('a').first()).toHaveText('Read the Impact Survey 2026');
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP41 (cycle-18 review): the heading counts the contracts (GV-12 says "Six") and says "a" National University partnership
-    await expect(slide(page, 2).locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(slide(page, 2).locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
     // WP48 (cycle-23 review): the body was two sentences, the contract scope with the clause that keeps it true, then the National University sentence; WP57 (cycle-29 review, Grok R2): the clause names Her Power's national program again (25,125 women trained; CodersTrust trained 2,500 directly)
     await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');

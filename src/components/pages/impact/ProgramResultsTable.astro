@@ -7,9 +7,11 @@ import { linkAttrs } from '../../../lib/url';
 import { programResultRows } from './evidence';
 
 /**
- * "Every Reported Program Result in One Table" (WP24b, from the Kimi benchmark): Program · Partner · Geography · Trained · Completed · Certified · In Work ·
+ * "Every Reported Program Result in One Table" (WP24b, from the Kimi benchmark): Program · Partner · Geography · Enrolled · Trained · Completed · Certified · In Work ·
  * Evidence Type, for the four programs the register reports. Every count, base and share is read from the register (see programResultRows); a measure
  * the register does not report for a program is a dash, never an invented number. At 640 px and below each row stacks into a card (data-stack).
+ * WP75 (owner answer 2026-10-22, "350 enrolled, 97.5% completed"): UNDP YES, Korail's 350 is a count enrolled, so it has its own column; the "Trained" column is for counts the register states as trained (Her Power).
+ * This component is not placed on any page now (WP30e removed the table from Impact); the column is kept in step with the register so the table is true if it returns.
  */
 interface Props {
   id?: string;
@@ -18,6 +20,7 @@ interface Props {
 const { id = 'program-results', tone = 'white' } = Astro.props;
 const rows = programResultRows();
 const cols = [
+  { key: 'enrolled', label: 'Enrolled' },
   { key: 'trained', label: 'Trained' },
   { key: 'completed', label: 'Completed' },
   { key: 'certified', label: 'Certified' },
@@ -39,6 +42,7 @@ const cols = [
           <th scope="col">Program</th>
           <th scope="col">Partner</th>
           <th scope="col">Geography</th>
+          <th scope="col">Enrolled</th>
           <th scope="col">Trained</th>
           <th scope="col">Completed</th>
           <th scope="col">Certified</th>

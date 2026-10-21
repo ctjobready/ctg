@@ -53,7 +53,7 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     await expect(page.locator('#results')).toHaveAttribute('aria-labelledby', 'results-h');
     await expect(page.locator('.hs__intro')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
-    expect(await texts(page, '#results [data-hs-slide] h2')).toEqual(TITLES);
+    expect(await texts(page, '#results [data-hs-slide] h3')).toEqual(TITLES);
     for (const [i, t] of TITLES.entries()) {
       await expect(slide(page, i + 1)).toHaveAttribute('aria-label', `${i + 1} of 4: ${t}`);
       await expect(page.locator('[data-hs-dot]').nth(i)).toHaveAttribute('aria-label', `Show slide ${i + 1} of 4: ${t}`);
@@ -103,8 +103,8 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     await open(page, HOME);
     const s = slide(page, 3);
     await expect(s.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+    await expect(s.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await s.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     // the line is the owner’s sentence, built from the register (WP54: the count and base from OC-05's text, the value from its stat, the closing clause from its label)
     await expect(s.locator('.hs__lead')).toHaveCount(1);
     expect(compact(await s.locator('.hs__lead').textContent())).toBe(TIMING);

@@ -273,8 +273,8 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
   test('the survey slide (slide 3) states the 58.7% with its survey base in one body line tied to OC-05, under the unchanged income heading and "Impact Survey 2026" eyebrow', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+    await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');

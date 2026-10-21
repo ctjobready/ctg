@@ -6,7 +6,7 @@ import { pageByRoute } from './support/pages';
 /**
  * Home "Results" carousel (WP13, moved below the stable hero in WP17, headed "Results and Programs" until WP53; src/components/sections/HeroSlider.astro,
  * src/scripts/heroSlider.ts). WCAG 2.2 AA, APG carousel pattern. The hero above it (#hero, HomeHero) holds the page's only h1, the primary
- * action and the three proof cards; the carousel's slides are all h2.
+ * action and the three proof cards; the carousel's slides are all h3, children of the band's "Results" h2 (WP75; they were h2s, siblings of it).
  *   - keyboard: the next, previous and dot controls (Enter, Space, Tab, arrow keys on the controls) change the slide;
  *   - the Pause control toggles its label, and a stopped carousel does not rotate on its own;
  *   - autoplay steps every 7 s, pauses on hover, and a visitor's own choice stops it for good;
@@ -63,14 +63,14 @@ test.describe('home hero slider', () => {
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('#hero h1')).toHaveText('Turn Youth Unemployment into a Digital Workforce — with Evidence');
     await expect(page.locator('#results h1')).toHaveCount(0);
-    await expect(page.locator('#results [data-hs-slide] h2')).toHaveCount(4);
+    await expect(page.locator('#results [data-hs-slide] h3')).toHaveCount(4);
     // WP45 (cycle-21 review): the trial slide leads with the income result (the employment result is the hero card's, the bar's and the >4× tile's)
     // WP48 (cycle-23 review): the heading named the predecessor program; WP50 (cycle-25 review): the heading is short again and the slide's eyebrow carries the qualifier ("Randomized Trial of a Predecessor Program"; tests/wp50.spec.ts)
     await expect(slides.nth(0)).toHaveAttribute('aria-label', '1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
     // WP23, WP25h and WP30c gave the band one framing sentence ("Evidence first, then our programs."). WP53 (owner decision 2026-10-16): the programs slide is gone, so the band is headed "Results" and has no framing sentence.
     // No slide heading ends with a period.
     await expect(page.locator('.hs__intro')).toHaveCount(0);
-    const titles = await page.locator('#results [data-hs-slide] h2').allTextContents();
+    const titles = await page.locator('#results [data-hs-slide] h3').allTextContents();
     // WP42 (cycle-19 review): the government slide is second, after the trial. WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone (the survey slide carries the timing as one body line, tests/wp53.spec.ts),
     // so the order is the trial, the government scale, the survey and the program results
     expect(titles.slice(1), 'government, survey and program-result headlines').toEqual([
@@ -183,7 +183,7 @@ test.describe('home hero slider', () => {
     await page.locator('[data-hs-dot]').nth(2).click();
     // The leaving slide fades out before it leaves the accessibility tree: wait for that, then read the one heading that is left.
     await expect(hero.getByRole('heading')).toHaveCount(1);
-    await expect(hero.getByRole('heading', { level: 2 })).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(hero.getByRole('heading', { level: 3 })).toHaveText('Surveyed Completers Report Higher Income');
     await expect(hero.getByRole('heading')).toHaveCount(1);
     await expect(page.locator('[data-hs-slide]').nth(0).getByRole('link')).toHaveCount(0);
     await expect(page.locator('[data-hs-slide]').nth(0).locator('a').first()).toBeHidden();
@@ -244,7 +244,7 @@ test.describe('home hero slider in print', () => {
   test('every slide prints in order, and no control prints', async ({ page }) => {
     await open(page, pageByRoute('/'));
     await page.emulateMedia({ media: 'print' });
-    const headings = page.locator('#results [data-hs-slide] h2');
+    const headings = page.locator('#results [data-hs-slide] h3');
     await expect(headings).toHaveCount(4);
     for (const h of await headings.all()) {
       await expect(h).toBeVisible();

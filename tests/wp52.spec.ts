@@ -216,7 +216,7 @@ test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Im
     expect(fact('OC-05').stat?.value).toBe('58.7%');
     await open(page, HOME);
     const s = slide(page, 3);
-    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(s.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await s.locator('.hs__lead').textContent())).toBe(SLIDE_LINE);
     await expect(s.locator('.hs__stat')).toHaveCount(1);

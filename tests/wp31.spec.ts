@@ -41,7 +41,7 @@ test.describe('figures say what they measure', () => {
   test('Home slide 3 reads as what surveyed completers report; its one body line is the timing of first earnings (OC-05), not a repeat of the heading', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await slide.locator('.hs__lead').textContent())).not.toMatch(/income/i);
@@ -367,7 +367,7 @@ test.describe('smaller wording fixes', () => {
     const order = await ids(page);
     expect(order[order.length - 1], 'the page ends on its next steps').toBe('next-steps');
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
-    await expect(page.locator('[data-hs-slide]').nth(3).locator('h2')).toHaveText('Results by Program');
+    await expect(page.locator('[data-hs-slide]').nth(3).locator('h3')).toHaveText('Results by Program');
   });
 
   // WP48 (cycle-23 review): the evidence band (it had no scope line and no trial sub-heading) is gone from Home (tests/wp48.spec.ts); the comparison below it is unchanged

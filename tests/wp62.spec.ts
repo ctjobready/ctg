@@ -97,9 +97,9 @@ test.describe('Item 1 (GPT-6.1 Sol, Kimi): Home slide 1 says the 41% is monthly'
   test('the heading, its slide label and its Title Case; the eyebrow and facts are unchanged (the lead is WP63’s: "women offered a place had ..."); no built page keeps the heading without "per Month"', async ({ page }) => {
     await open(page, HOME);
     const first = slide(page, 1);
-    await expect(first.locator('h2')).toHaveText(TITLE);
+    await expect(first.locator('h3')).toHaveText(TITLE);
     expect(TITLE).toBe(titleCase(TITLE));
-    expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
+    expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     await expect(first).toHaveAttribute('aria-label', `1 of 4: ${TITLE}`);
     await expect(first.locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
@@ -215,7 +215,7 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
     const tile = page.locator('#glance .pg__lead a[data-fact~="PR-03"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__value')).toHaveText('67%');
-    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
+    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
     expect(await tile.getAttribute('data-fact')).toBe('PR-03');
     expect(await tile.getAttribute('href')).toMatch(/\/impact\/case-studies\/undp-yes-korail\/$/);
@@ -294,19 +294,19 @@ test.describe('Item 4 (GLM, Grok): the partner hub’s steps band', () => {
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 5 (Grok): the UNDP YES tile names its year', () => {
   test('Development Partners: "... in UNDP YES, Korail (2017), found their first job within three months", the year being PR-03’s', async ({ page }) => {
-    expect(/, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1]).toBe('2017');
+    expect(/, (\d{4}): [\d,]+ enrolled;/.exec(fact('PR-03').text)?.[1]).toBe('2017');
     await open(page, DEV_PARTNERS);
     const tile = page.locator('#glance .pg__lead a[data-fact="PR-03"]');
-    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 trained in UNDP YES, Korail (2017), found their first job within three months');
+    await expect(tile.locator('.pg__desc')).toHaveText('of the 350 enrolled in UNDP YES, Korail (2017), found their first job within three months');
     await expect(tile.locator('.pg__value')).toHaveText('67%');
     await expect(tile.locator('[data-evidence="Program Record"]')).toHaveCount(1);
   });
 
   test('the register’s glance label is unchanged, and the Impact tile (whose note already gives the year) does not say 2017 twice', async ({ page }) => {
-    expect(fact('PR-03').stat?.glance?.label).toBe('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    expect(fact('PR-03').stat?.glance?.label).toBe('of the 350 enrolled in UNDP YES, Korail, found their first job within three months');
     await open(page, IMPACT);
     const tile = page.locator('#glance a[data-fact~="PR-03"]');
-    await expect(tile.locator('.glance__desc')).toHaveText('of the 350 trained in UNDP YES, Korail, found their first job within three months');
+    await expect(tile.locator('.glance__desc')).toHaveText('of the 350 enrolled in UNDP YES, Korail, found their first job within three months');
     await expect(tile.locator('.glance__note')).toHaveText('A 2017 program in Dhaka’s Korail settlement.');
     expect(((await tile.textContent()) ?? '').match(/2017/g)?.length).toBe(1);
   });

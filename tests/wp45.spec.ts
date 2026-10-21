@@ -88,8 +88,8 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
   test('slide 1 is "Women Offered a Place Earned an Estimated 41% More per Month": RC-01 and RC-04, the predecessor program named in the eyebrow and the lead, the >4× tile kept', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    await expect(first.locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
-    expect(await first.locator('h2').getAttribute('data-fact')).toBe('RC-01');
+    await expect(first.locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
+    expect(await first.locator('h3').getAttribute('data-fact')).toBe('RC-01');
     expect(compact(await first.locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
     expect(await first.locator('.hs__lead').getAttribute('data-fact')).toBe('RC-01 RC-04');
     expect(fact('RC-01').stat?.value).toBe('+41%');
@@ -103,7 +103,7 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
   test('the employment result is no longer retold in the slide’s heading or lead (the hero card, the bar and the >4× tile state it)', async ({ page }) => {
     await open(page, '');
     const first = slide(page, 1);
-    expect(compact(await first.locator('h2').textContent())).not.toMatch(/Women in Work|10\.3|percentage points/);
+    expect(compact(await first.locator('h3').textContent())).not.toMatch(/Women in Work|10\.3|percentage points/);
     expect(compact(await first.locator('.hs__lead').textContent())).not.toMatch(/more likely to be employed|10\.3/);
   });
 
@@ -141,7 +141,7 @@ test.describe('Home: the speed and reach slides (items 16 and 28; WP53: they are
   test('the survey slide (slide 3) carries the 58.7% in one body line tied to OC-05, with its base, "the 172 surveyed completers who first earned during or after training"', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 3);
-    await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
+    await expect(s.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(s.locator('.hs__lead')).toHaveCount(1);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await s.locator('.hs__lead').textContent())).toContain('58.7%');

@@ -10,7 +10,7 @@ import { cta } from '../lib/mailto';
  * strongest proof cards, always visible. HOME_SLIDES are the carousel slides (WP19, item 7; four since WP53, owner decision 2026-10-16): the trial first, then (WP42, cycle-19 review) the government contracts and the National University partnership,
  * then the Impact Survey 2026 (income, with the timing of first earnings as one body line), then the results by program (named programs).
  * Each slide has one cleared photograph from the registry (src/data/photos.ts, D13 rows in src/data/permissions.json); the hero's is eager, the carousel's lazy.
- * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h2.
+ * Titles and eyebrows are Title Case (src/lib/titleCase.mjs) and carry no trailing period (WP23). Every carousel slide title is an h3, a child of the band's "Results" h2 (WP75; the slide titles were h2s, siblings of that heading).
  * WP23: the survey slides state their figure in the heading (read from the register, with titleFacts naming the facts); the trial slide gives
  * the offered-place employment and income results; the placement slide lists all four case-study programs.
  * WP25h: the program-results slide is headed "Results by Program" and says each program reports its own records; UNDP YES, Korail is stated
@@ -22,7 +22,7 @@ import { cta } from '../lib/mailto';
  * (OC-09: 58 of 64 districts). The caption, not the eyebrow, carries it: "Impact Survey 2026 in Bangladesh" wraps to two lines in the three-column range (768 to about 950 px) and pushes that card's figure out of line.
  * WP36 (cycle-13 reviews): the Home page states each figure once. The income slide has one tile (the 78.2% employment result is the hero's survey card), and the reach slide ("Explore Where Our Programs Have Run")
  * carries SC-03's detail line only (the 130,000+ and the 15 countries and territories are the hero's reach card). The program-results slide names the base of every result (Kosovo "(102 of 150)", UNDP YES
- * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
+ * "of the 350 enrolled" (WP75; it said "trained"), Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
  * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
  * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $98 before training" comparison are its tile alone (OC-03), not the heading too.
  * WP43 (cycle-20 review): the speed slide ("First Earnings Within Six Months") has no lead: it repeated the heading and the tile, so the slide is the heading, the 58.8% tile with its full base and the link.
@@ -54,6 +54,9 @@ import { cta } from '../lib/mailto';
  * WP62 (cycle-34 reviews): the trial slide's heading ends "per Month" ("Women Offered a Place Earned an Estimated 41% More per Month": RC-01's 41% is a monthly income difference); the hero's reach card ("Reach Since 2014") no longer repeats "since 2014" in its caption (reachCaption).
  * WP64 (cycle-36 reviews): the government slide's heading is "Six Government Contracts and a National University Partnership" (four of six models; it named Bangladesh in the heading of a global page; the body still names the National University); the program-results
  * lead is "Results from the records of four programs." (Impact counts five delivered programs, Albania among them, which has no outcome figure, so "Four delivered programs" read as a contradiction); the trial slide's lead says "about $27 more a month" (it said "about +$27 a month").
+ * WP75 (owner answer 2026-10-22: "350 enrolled, 97.5% completed"): UNDP YES, Korail's base is the 350 enrolled, so PR-03 says "350 enrolled" and the program-results line reads "67% of the 350 enrolled found a first job within three months" (it said "trained"). One character longer:
+ * the line is 715 px of text against 705 px at 1280 px (two rows either way; the Kosovo, WSDFM and Her Power lines are still one row, 571, 588 and 559 px in the 594 px row) and 577 px against 569 px at 390 px (two rows either way), so no slide's height changed: the unused space is still
+ * 42, 42, 25 and 16 px at 1280 and 16 px on every slide at 390 (the limit is 48; measured). The slide titles are h3s under the band's "Results" h2 (WP75): same classes and styles, so the same size (measured: same type styles and box on all four slides at both widths).
  * Order: the randomized trial, the government contracts and the National University, the survey, the results by program.
  */
 
@@ -73,7 +76,7 @@ export interface HeroSlideLink {
 export interface HeroSlide {
   id: string;
   eyebrow?: string;
-  /** The heading: the page's h1 on the first slide, an h2 on the others. */
+  /** The slide's heading, rendered as an h3 under the band's "Results" h2 (WP75; the page's h1 is the hero's, above the carousel). */
   title: string;
   /** Fact IDs whose figures the heading states, or the finding it rests on ("Report Higher Income" rests on OC-03) (data-fact on the heading). */
   titleFacts?: string[];
@@ -189,10 +192,10 @@ if (!timingBase || !timingClause || timingBase[1] !== timingClause[1] || !timing
 }
 const surveyTiming = `Of the ${timingBase[1]} ${timingBase[2]}, ${timing.stat.value} ${timingClause[2]}.`;
 if (!fact('OC-03').stat?.value || !fact('OC-03').stat?.from) throw new Error('heroSlides: OC-03 no longer carries the figure and its before-training comparison the income slide shows');
-/** UNDP YES, Korail reports a different measure from the others: the share of the 350 trained who found their first job within three months (PR-03), not the share in work. */
-const firstJob = /^of the (\d+) trained found their first job within three months$/.exec(fact('PR-03').stat?.label ?? '');
-if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N trained found their first job within three months"');
-/** Kosovo's base (PR-02's stat value, "102 of 150") closes its line, as Her Power's "of 800 tracked women" and UNDP YES's "of the 350 trained" do (WP36, cycle-13 review: each result names its base). */
+/** UNDP YES, Korail reports a different measure from the others: the share of the 350 enrolled who found their first job within three months (PR-03; WP75: enrolled, not trained), not the share in work. */
+const firstJob = /^of the (\d+) enrolled found their first job within three months$/.exec(fact('PR-03').stat?.label ?? '');
+if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the N enrolled found their first job within three months"');
+/** Kosovo's base (PR-02's stat value, "102 of 150") closes its line, as Her Power's "of 800 tracked women" and UNDP YES's "of the 350 enrolled" do (WP36, cycle-13 review: each result names its base). */
 const kosovoBase = fact('PR-02').stat?.value;
 if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
 /**
@@ -203,8 +206,8 @@ const kosovoYears = fact('TL-04').stat?.value;
 if (!kosovoYears || !/^\d{4}–\d{4}$/.test(kosovoYears)) throw new Error('heroSlides: TL-04 stat value no longer reads "YYYY–YYYY"; update the Kosovo year of the program-results slide');
 const kosovoShare = /^Women in Online Work, Kosovo: (\d+% in work)$/.exec(fact('PR-02').stat?.label ?? '')?.[1];
 if (!kosovoShare) throw new Error('heroSlides: PR-02 label no longer reads "Women in Online Work, Kosovo: P% in work"');
-const korailYear = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
-if (!korailYear) throw new Error('heroSlides: PR-03 text no longer reads "..., YYYY: N trained; ..."; update the UNDP YES year of the program-results slide');
+const korailYear = /, (\d{4}): [\d,]+ enrolled;/.exec(fact('PR-03').text)?.[1];
+if (!korailYear) throw new Error('heroSlides: PR-03 text no longer reads "..., YYYY: N enrolled; ..."; update the UNDP YES year of the program-results slide');
 /**
  * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% in work")
  * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the first slide is the
@@ -224,7 +227,7 @@ const PR_TEXT = {
   // The review's wording, "..., from program records; a separate trial studied 833 women.", is 779 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48; measured). "from program records" is the clause left out
   // (this line is 588 px, one row): the slide's eyebrow ("Program Records") and its lead ("..., with results from each program’s records.") already say it for all four lines, and "a separate trial" keeps the 711 of 1,000 apart from the trial. At 390 px every form takes several rows.
   wsdfm: `WSDFM: ${wsdfmBase} in work (${wsdfmShare}); a separate trial studied ${TRIAL_WOMEN} women.`,
-  yes: `UNDP YES, Korail (${korailYear}): ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
+  yes: `UNDP YES, Korail (${korailYear}): ${fact('PR-03').stat?.value} of the ${firstJob[1]} enrolled found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
   // is already in "tracked women", so it is left out of the second clause to keep the line on one row (tests/wp51.spec.ts and tests/hero-slider.spec.ts hold the budget).

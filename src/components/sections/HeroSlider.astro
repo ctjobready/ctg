@@ -1,7 +1,9 @@
 ---
 /**
- * Home "Results" carousel (WP13; headed "Results and Programs" until WP53, when the programs slide went and the carousel became four slides; layout and photographs reworked in WP13b; WP17: it sits directly below the stable hero, so every
- * slide heading is a level 2, the photographs load lazily and the slide links are text links; the hero owns the page's h1 and the primary button).
+ * Home "Results" carousel (WP13; headed "Results and Programs" until WP53, when the programs slide went and the carousel became four slides; layout and photographs reworked in WP13b; WP17: it sits directly below the stable hero, so
+ * the photographs load lazily and the slide links are text links; the hero owns the page's h1 and the primary button).
+ * WP75: the band's heading ("Results", an h2 above the carousel region) names the carousel, so every slide heading is a level 3 beneath it (the four slide headings were h2s, siblings of "Results"; see SlideHeading).
+ * The slide headings keep their classes and styles (`hs__title t-display-4xl` sets their size, weight and tracking), so only the outline changes, not the look.
  * Each slide has a copy column (eyebrow, heading, lead or register sentence, named results or figures, links) and a visual column (one cleared
  * photograph; the evidence slide adds a Klein-blue proof band: a card over the photograph on the desktop visual column, under it on phones). Every slide is in the markup. Without JavaScript the slides
  * stack, with no controls (print prints them in order). With JavaScript, html.js is set before first paint (BaseLayout), so the carousel
@@ -40,6 +42,8 @@ if (slides.length < 2) throw new Error('HeroSlider: needs at least two slides');
 const total = slides.length;
 const headingId = `${id}-h`;
 const trackId = `${id}-slides`;
+/** WP75: a slide's heading is an h3 beneath the band's own h2; a carousel with no band heading has nothing to nest under, so its slide headings stay h2s. */
+const SlideHeading = heading ? 'h3' : 'h2';
 
 /** The figure a tile shows, read from the register (throws when the fact has no stat, so a bad id fails the build). */
 const figure = (s: HeroSlideStat) => {
@@ -90,7 +94,7 @@ const views = slides.map((s, i) => {
                 </nav>
               )}
               {s.eyebrow && <p class="hs__eyebrow" data-hero-in={first ? '' : undefined}>{s.eyebrow}</p>}
-              <h2 class="hs__title t-display-4xl" data-fact={s.titleFacts?.join(' ')}>{s.title}</h2>
+              <SlideHeading class="hs__title t-display-4xl" data-fact={s.titleFacts?.join(' ')}>{s.title}</SlideHeading>
               {s.statsFirst && <HeroSlideStats stats={stats} />}
               {s.fact ? (
                 <Fact id={s.fact.id} field={s.fact.field} as="p" class="hs__lead" />

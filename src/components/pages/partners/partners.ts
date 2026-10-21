@@ -114,13 +114,14 @@ export function funderOptionCards(
 
 /**
  * The UNDP YES tile's label in Results at a Glance (Development Partners; Foundations since WP65, cycle-37 review): PR-03's glance label with the program's year added, "... in UNDP YES, Korail (2017), found their first job within three months" (WP62, cycle-34 review, Grok).
- * The year is read from PR-03's text ("..., Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 trained; ...") and the rest from its glance label, so nothing is retyped; the build stops if either changes shape.
+ * The year is read from PR-03's text ("..., Dhaka, with UNDP, the Government of Bangladesh and Swanirvar Bangladesh, 2017: 350 enrolled; ...") and the rest from its glance label, so nothing is retyped; the build stops if either changes shape.
  * The Impact page's tile for the same fact keeps the register's label, because its note already says "A 2017 program in Dhaka’s Korail settlement."
+ * WP75 (owner answer 2026-10-22, "350 enrolled, 97.5% completed"): the 350 is the number enrolled, so PR-03 says "2017: 350 enrolled; ..." and its glance label "of the 350 enrolled in UNDP YES, Korail, found their first job within three months" (it said "trained").
  */
 function undpYesTileLabel(): string {
-  const year = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
+  const year = /, (\d{4}): [\d,]+ enrolled;/.exec(fact('PR-03').text)?.[1];
   const glance = fact('PR-03').stat?.glance?.label ?? '';
-  if (!year || !glance.includes(' in UNDP YES, Korail, found ')) throw new Error('UNDP_YES_TILE_LABEL: PR-03 no longer reads "..., 2017: N trained; ..." with the glance label "... in UNDP YES, Korail, found ..."; update the UNDP YES tile');
+  if (!year || !glance.includes(' in UNDP YES, Korail, found ')) throw new Error('UNDP_YES_TILE_LABEL: PR-03 no longer reads "..., 2017: N enrolled; ..." with the glance label "... in UNDP YES, Korail, found ..."; update the UNDP YES tile');
   return glance.replace(' in UNDP YES, Korail, found ', ` in UNDP YES, Korail (${year}), found `);
 }
 export const UNDP_YES_TILE_LABEL: string = undpYesTileLabel();

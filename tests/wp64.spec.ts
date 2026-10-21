@@ -85,14 +85,14 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
     expect(fact('GV-12').text.startsWith('Six government contracts')).toBe(true);
     await open(page, HOME);
     const gov = slide(page, 2);
-    await expect(gov.locator('h2')).toHaveText(HEADING);
-    expect(await gov.locator('h2').getAttribute('data-fact')).toBe('GV-12');
+    await expect(gov.locator('h3')).toHaveText(HEADING);
+    expect(await gov.locator('h3').getAttribute('data-fact')).toBe('GV-12');
     await expect(gov).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     await expect(gov.locator('.hs__lead')).toHaveText(
       'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
-    expect(await texts(page, '#results [data-hs-slide] h2')).toEqual([
+    expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       'Women Offered a Place Earned an Estimated 41% More per Month',
       HEADING,
       'Surveyed Completers Report Higher Income',
@@ -109,7 +109,7 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
       await page.setViewportSize(vp);
       await open(page, HOME);
       await showSlide(page, 2);
-      await expect(page.locator('#results [data-hs-slide].is-active h2')).toHaveText(HEADING);
+      await expect(page.locator('#results [data-hs-slide].is-active h3')).toHaveText(HEADING);
       expect(await unusedBelow(page), `slide 2 at ${vp.width}px`).toBeLessThanOrEqual(48);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
     }
@@ -122,7 +122,7 @@ test.describe('Item 2 (Claude): Home slide 4 leads "Results from the records of 
     await open(page, HOME);
     const s4 = slide(page, 4);
     await expect(s4.locator('.hs__eyebrow')).toHaveText('Program Records');
-    await expect(s4.locator('h2')).toHaveText('Results by Program');
+    await expect(s4.locator('h3')).toHaveText('Results by Program');
     await expect(s4.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     const lines = await s4.locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
     expect(lines).toHaveLength(4);

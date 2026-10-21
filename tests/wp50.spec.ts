@@ -102,12 +102,12 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
 
   test('the lead says "Four programs"; WSDFM is the second line, with its base and the qualifier "program records; trial studied 833" (WP60; it was "program records, not trial data"); each line names its facts', async ({ page }) => {
     await open(page, '');
-    await expect(slide(page).locator('h2')).toHaveText('Results by Program');
+    await expect(slide(page).locator('h3')).toHaveText('Results by Program');
     await expect(slide(page).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     // WP60 (cycle-32 review, Claude S4): the WSDFM line names the trial's count (RC-07's 833) beside its own fact
@@ -418,12 +418,12 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
 
   test('the heading is "Women Offered a Place Earned an Estimated 41% More per Month"; the eyebrow is "Randomized Trial of a Predecessor Program"; the lead still names the predecessor WSDFM program', async ({ page }) => {
     await open(page, '');
-    await expect(first(page).locator('h2')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
+    await expect(first(page).locator('h3')).toHaveText('Women Offered a Place Earned an Estimated 41% More per Month');
     expect('Women Offered a Place Earned an Estimated 41% More per Month').toBe(titleCase('Women Offered a Place Earned an Estimated 41% More per Month'));
     await expect(first(page).locator('.hs__eyebrow')).toHaveText('Randomized Trial of a Predecessor Program');
     expect('Randomized Trial of a Predecessor Program').toBe(titleCase('Randomized Trial of a Predecessor Program'));
     expect(compact(await first(page).locator('.hs__lead').textContent())).toBe('In the predecessor WSDFM program, women offered a place had an estimated 41% higher monthly income than the control group, about $27 more a month.'); // WP63 (cycle-35 review, GLM L4)
-    expect(await first(page).locator('h2').getAttribute('data-fact')).toBe('RC-01');
+    expect(await first(page).locator('h3').getAttribute('data-fact')).toBe('RC-01');
     expect(await first(page).getAttribute('aria-label')).toBe('1 of 4: Women Offered a Place Earned an Estimated 41% More per Month');
   });
 

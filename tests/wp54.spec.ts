@@ -235,7 +235,7 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
       expect(tops[0], 'the heading is above the tile').toBeLessThan(tops[1]);
       expect(tops[1], 'the tile is above the sentence').toBeLessThan(tops[2]);
       expect(tops[2], 'the sentence is above the link').toBeLessThan(tops[3]);
-      expect(await s.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+      expect(await s.locator('h3').getAttribute('data-fact')).toBe('OC-03');
       expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
       const tile = compact(await s.locator('.hs__stat').textContent());
       expect(tile).toContain('$245');

@@ -228,9 +228,9 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   test('the survey slide (slide 3) keeps the income heading without a percentage, and its one body line states the 58.7% with its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
-    await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    expect(await slide.locator('h2').textContent()).not.toMatch(/\d/);
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
+    await expect(slide.locator('h3')).toHaveText('Surveyed Completers Report Higher Income');
+    expect(await slide.locator('h3').textContent()).not.toMatch(/\d/);
+    expect(await slide.locator('h3').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     const line = compact(await slide.locator('.hs__lead').textContent());
@@ -243,9 +243,9 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
   test('slide 2 counts the contracts and names a National University partnership', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(1);
-    await expect(slide.locator('h2')).toHaveText('Six Government Contracts and a National University Partnership');
+    await expect(slide.locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
     expect('Six Government Contracts and a National University Partnership').toBe(titleCase('Six Government Contracts and a National University Partnership'));
-    expect(await slide.locator('h2').getAttribute('data-fact')).toBe('GV-12');
+    expect(await slide.locator('h3').getAttribute('data-fact')).toBe('GV-12');
     expect(fact('GV-12').text.startsWith('Six government contracts')).toBe(true);
   });
 

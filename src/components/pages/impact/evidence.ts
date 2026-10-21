@@ -62,6 +62,8 @@ export interface ProgramResultRow {
   slug: string;
   partner: string;
   geography: string;
+  /** The count enrolled, where the register states one (UNDP YES, Korail: "350 enrolled", WP75; the register does not report how many of them were trained). */
+  enrolled?: string;
   trained?: string;
   completed?: string;
   certified?: string;
@@ -71,7 +73,7 @@ export interface ProgramResultRow {
 /**
  * The four program results the register reports, from registered facts only. Each count, base and share is read from the entry that states it
  * (PR-01, PR-02, PR-03, PR-05, GV-13); a measure the register does not report for a program stays undefined (a dash on the page). The rows
- * differ in what was measured: UNDP YES counts first jobs within three months of the 350 trained, the others count women in work at a follow-up.
+ * differ in what was measured: UNDP YES counts first jobs within three months of the 350 enrolled, the others count women in work at a follow-up.
  */
 export function programResultRows(): ProgramResultRow[] {
   const pr01 = fact('PR-01');
@@ -83,10 +85,11 @@ export function programResultRows(): ProgramResultRow[] {
     if (v === null || v === undefined) throw new Error(`program results table: ${what} not found in the register`);
     return v;
   };
-  // PR-03: "<program>, 2017: 350 trained; 97.5% completed the program; 67% of the 350 trained found their first job within three months" (WP48, cycle-23 review: "three months", not "3 months", in prose, as the rest of the page says it)
-  const trained = need(/(\d[\d,]*) trained;/.exec(pr03.text)?.[1], 'PR-03 trained');
+  // PR-03: "<program>, 2017: 350 enrolled; 97.5% completed the program; 67% of the 350 enrolled found their first job within three months" (WP48, cycle-23 review: "three months", not "3 months", in prose, as the rest of the page says it;
+  // WP75, owner answer 2026-10-22: the 350 is the number enrolled, not trained)
+  const enrolled = need(/(\d[\d,]*) enrolled;/.exec(pr03.text)?.[1], 'PR-03 enrolled');
   const completed = need(/(\d+(?:\.\d+)?%) completed the program/.exec(pr03.text)?.[1], 'PR-03 completed');
-  const firstJob = need(/(\d+(?:\.\d+)?%) of the (\d[\d,]*) trained found their first job within three months/.exec(pr03.text), 'PR-03 first job');
+  const firstJob = need(/(\d+(?:\.\d+)?%) of the (\d[\d,]*) enrolled found their first job within three months/.exec(pr03.text), 'PR-03 first job');
   // PR-05: "372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, were in work (47%)"
   const direct = need(/(\d[\d,]*) women trained directly by CodersTrust/.exec(gv13.text)?.[1], 'GV-13 trained directly');
   return [
@@ -112,7 +115,7 @@ export function programResultRows(): ProgramResultRow[] {
       slug: 'undp-yes-korail',
       partner: 'UNDP, Government of Bangladesh and Swanirvar Bangladesh',
       geography: 'Korail settlement, Dhaka',
-      trained,
+      enrolled,
       completed,
       inWork: `${firstJob[1]} found a first job within three months`,
     },

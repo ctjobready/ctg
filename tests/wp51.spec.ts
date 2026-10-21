@@ -405,8 +405,8 @@ test.describe('Home: the government slide and the program-results slide (items 2
     expect(HEADING).toBe(titleCase(HEADING));
     expect(fact('GV-12').text).toContain('official training partner of Bangladesh’s National University');
     await open(page, '');
-    await expect(slide(page, 2).locator('h2')).toHaveText(HEADING);
-    expect(await slide(page, 2).locator('h2').getAttribute('data-fact')).toBe('GV-12');
+    await expect(slide(page, 2).locator('h3')).toHaveText(HEADING);
+    expect(await slide(page, 2).locator('h3').getAttribute('data-fact')).toBe('GV-12');
     await expect(slide(page, 2)).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
   });
 
@@ -419,7 +419,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
     expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(await slide(page, 4).locator('.hs__lines li').nth(3).getAttribute('data-fact')).toBe('PR-05');
