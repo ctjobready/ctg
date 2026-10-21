@@ -462,9 +462,9 @@ test.describe('one figure, one label: the 30,000+ is tagged "Contract Scope" eve
 
 test.describe('dating lines', () => {
   // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
-  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 20, 2026"; no page says "Page last reviewed"', async ({ page }) => {
+  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 21, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 20, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 21, 2026');
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

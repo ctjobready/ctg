@@ -354,7 +354,7 @@ test.describe('R9 (Grok, not done): YouthWIDE keeps its "Last updated" line', ()
     expect(withLine).toContain('/programs/youthwide/');
     expect(withLine.length, `pages with a "Last updated" line: ${withLine.join(', ')}`).toBeGreaterThan(5);
     await open(page, YOUTHWIDE);
-    await expect(page.locator('.updated')).toHaveText('Last updated October 15, 2026');
+    await expect(page.locator('.updated')).toHaveText('Last updated October 21, 2026');
   });
 });
 

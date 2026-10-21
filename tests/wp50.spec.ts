@@ -284,7 +284,7 @@ test.describe('Independent Evaluation: the evaluator is spelled out where the pa
     const spelled = 'BRAC Institute of Governance and Development (BIGD)';
     expect(count(text, spelled)).toBe(1);
     expect(text.indexOf('BIGD')).toBe(text.indexOf(spelled) + spelled.length - 'BIGD)'.length);
-    await expect(page.getByRole('link', { name: /Read the BIGD Study/ })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /Read the BIGD Report \(2022\)/ })).toHaveCount(1);
   });
 });
 

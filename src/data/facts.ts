@@ -38,7 +38,7 @@ export const sources: Record<string, Source> = {
   IR26: { id: 'IR26', label: 'CodersTrust Impact Report 2026', citation: `CodersTrust, Impact Report 2026 (October 2026).` },
   // Survey results (OC-*) cite the survey behind the report; every other fact cites the report alone (F6, F32, m6).
   IR26S: { id: 'IR26S', label: 'CodersTrust Impact Survey, October 2026', citation: `CodersTrust, Impact Report 2026, drawing on the CodersTrust Impact Survey, October 2026.` },
-  BIGD22: { id: 'BIGD22', label: 'BIGD evaluation of the WSDFM program (2022)', citation: `BRAC Institute of Governance and Development (BIGD), BRAC University, Impact Evaluation Report of the WSDFM Program, May 2022.` },
+  BIGD22: { id: 'BIGD22', label: 'BIGD evaluation of the WSDFM program (2022)', citation: `BRAC Institute of Governance and Development (BIGD), BRAC University, Impact Evaluation Report of the WSDFM Program, May 2022.`, url: 'https://bigd.bracu.ac.bd/publications/impact-evaluation-report-of-the-womens-skill-development-for-freelancing-marketplaces-wsdfm-program/' },
   BIGDSTUDY: { id: 'BIGDSTUDY', label: 'BIGD study page for the WSDFM evaluation', citation: `BRAC Institute of Governance and Development (BIGD), BRAC University, study page “Long-Term Impact of Training Underprivileged Women on Digital Employment: Evidence From Bangladesh”.`, url: 'https://bigd.bracu.ac.bd/study/long-term-impact-of-training-underprivileged-women-on-digital-employment-evidence-from-bangladesh/' },
   PROGREC: { id: 'PROGREC', label: 'CodersTrust program records', citation: `CodersTrust program records (2026).` },
   PROGRECOWNER: { id: 'PROGRECOWNER', label: 'CodersTrust program records (owner breakdown, 2026)', citation: `CodersTrust program records (owner breakdown, 2026).` },

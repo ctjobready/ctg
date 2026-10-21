@@ -76,7 +76,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
 
     <section id="email" aria-labelledby="email-h">
       <h2 id="email-h">Email Inquiries</h2>
-      <p>Buttons that say "Request a Discovery Session", "Ask About Due Diligence" and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your inquiry. Your email provider handles the message on its way.</p>
+      <p>Buttons that say “Request a Discovery Session”, “Ask About Due Diligence” and similar open your own email app with a prefilled message. Nothing is sent to us until you press send in your email app. If you write to us, we receive your email address and whatever you include, and we use it to answer you and to follow up on your inquiry. Your email provider handles the message on its way.</p>
       <p>Write to us at <CopyEmail email={CONTACT.email} trail="." /></p>
       <p>Inquiries from the local-partners page go to our Bangladesh team at <CopyEmail email={BANGLADESH_HQ.email} trail="." /></p>
     </section>
@@ -88,7 +88,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
 
     <section id="links" aria-labelledby="links-h">
       <h2 id="links-h">Links to Other Sites</h2>
-      <p>Course catalog links go to <a href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>jobready.global<span class="sr-only"> (opens JobReady.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and "Open in Maps" links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
+      <p>Course catalog links go to <a href={JOBREADY} rel={linkAttrs(JOBREADY).rel}>jobready.global<span class="sr-only"> (opens JobReady.global)</span></a>, a separate site with its own privacy policy. Share buttons on news articles, social links and “Open in Maps” links are plain links: nothing is sent to LinkedIn, X, Facebook or Google until you click one, and then you are on their site.</p>
     </section>
 
     <section id="video" aria-labelledby="video-h">
@@ -114,7 +114,7 @@ const jsonLd = [webPage({ path: '/privacy-policy/', name: 'Privacy Policy', desc
 
     <section id="changes" aria-labelledby="changes-h">
       <h2 id="changes-h">Changes and Contact</h2>
-      <p>If we add or change a service that touches your data, we update this page before the change goes live. The "Last updated" date above shows the current version.</p>
+      <p>If we add or change a service that touches your data, we update this page before the change goes live. The “Last updated” date above shows the current version.</p>
       <p>This website is run by CodersTrust. Questions about privacy go to <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>, or by post to either office:</p>
       <ul>
         {OFFICES.map((o) => <li><strong>{o.name}</strong>, {o.address.join(', ')}</li>)}

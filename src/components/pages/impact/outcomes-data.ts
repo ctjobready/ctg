@@ -26,7 +26,7 @@
  */
 export const SOURCE_SNAPSHOT = 'October 2026';
 export const DATE_PUBLISHED = '2026-10-07';
-export const PAGE_LAST_REVIEWED = '2026-10-20'; // 20 October 2026: the survey figures moved to Impact Report 261014B (before: 15 October, when the page heading changed, WP41)
+export const PAGE_LAST_REVIEWED = '2026-10-21'; // 21 October 2026: the survey figures moved to Impact Report 261014B (before: 15 October, when the page heading changed, WP41)
 
 export interface ShareCell {
   label: string;

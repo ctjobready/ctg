@@ -39,7 +39,7 @@ const faq = buildFaq([
     evidence: ['PD-09', 'PD-08', 'RC-01'],
   },
 ]);
-const bigdStudy = sources.BIGDSTUDY;
+const bigdReport = sources.BIGD22;
 const jsonLd = [
   articleNode({
     path,
@@ -82,7 +82,7 @@ const attendedDetail = fact('RC-13').stat?.glance?.note;
 if (!attendedDetail) throw new Error('RC-13 no longer has a glance note');
 // WP22: the direct answer under the H1 (40 to 60 words): what the trial found, for which program, and what it does not measure. The callout below keeps the
 // plain-language line (PlainLine) and the income results, so the 10.3-point result is stated formally once here and in plain words once there.
-// WP50 (cycle-25 review): this lead is where the page first names the evaluator, so it spells it out (BIGD_FULL: "the BRAC Institute of Governance and Development (BIGD)"); the later "BIGD" on the page ("Read the BIGD Study") is the abbreviation it introduces.
+// WP50 (cycle-25 review): this lead is where the page first names the evaluator, so it spells it out (BIGD_FULL: "the BRAC Institute of Governance and Development (BIGD)"); the later "BIGD" on the page ("Read the BIGD Report (2022)") is the abbreviation it introduces.
 // WP61 (cycle-33 review, GPT-6.1 Sol G5): the first sentence carried the evaluator, the program, its length, its population and the result ("A randomized trial by ... found that women offered a place in CodersTrust’s predecessor WSDFM program, a 200-hour program for women in
 // Dhaka, were 10.3 percentage points more likely to be employed than the control group."). The result now comes first, with the evaluator; the second sentence says which program the trial evaluated and that it is not today’s 100-hour tracks. 46 words, inside the 40 to 60 above.
 const directAnswer = `In a randomized trial by ${BIGD_FULL}, women offered a place were 10.3 percentage points more likely to be employed than the control group. The trial evaluated CodersTrust’s 200-hour predecessor WSDFM program for women in Dhaka, not today’s 100-hour tracks.`;
@@ -112,7 +112,7 @@ const d = discoveryCta();
       <PlainLine />
       <p data-fact="RC-01">{incomeLine}</p>
     </Callout>
-    <p><a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>Read the BIGD Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a></p>
+    <p><a class="link" href={bigdReport.url} rel={linkAttrs(bigdReport.url!).rel}>Read the BIGD Report (2022)<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdReport.url!)})</span></a></p>
     <Accordion items={[{ q: 'How to Read This Trial', a: howToRead }]} name="ie-method" />
   </ReportSection>
 

@@ -14,6 +14,7 @@ import { linkAttrs } from '../../../lib/url';
  * so there is no "Program Record" pill (evidenceOf). No money amount, price or investment figure appears. There is no learner story, so the template leaves that band out (CaseStudyPage).
  */
 const release = linkAttrs(sources.WBDJA21.url ?? '');
+const update = linkAttrs(sources.WBBLOG22.url ?? '');
 ---
 
 <CaseStudyPage
@@ -46,6 +47,7 @@ const release = linkAttrs(sources.WBDJA21.url ?? '');
     </Callout>
     <p>The World Bank published these figures in May 2022, while the training was still running. They show interest and enrollment, not completion or employment.</p>
     <p><a class="link" href={release.href} rel={release.rel}>Read the World Bank Announcement<span class="sr-only"> (opens worldbank.org)</span><Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={update.href} rel={update.rel}>Read the World Bank’s May 2022 Update<span class="sr-only"> (opens web.archive.org)</span><Icon name="arrow-right" size={16} /></a></p>
   </Fragment>
 </CaseStudyPage>
 
