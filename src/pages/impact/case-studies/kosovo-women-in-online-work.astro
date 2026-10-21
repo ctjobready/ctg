@@ -11,8 +11,9 @@ import Icon from '../../../components/system/Icon.astro';
 
 // WP55: her portrait (the previous site's case study showed it beside her story; CodersTrust-owned, owner ruling 2026-10-18), with its own permissions row.
 const portrait = photo('impact/kosovo-graduate-portrait');
-// WP74: the World Bank and Ministry of Economic Development of Kosovo release of 13 February 2017 (WBKOSOVO17, archived copy), the source of the 77 in PR-02b.
-const release2017 = linkAttrs(sources.WBKOSOVO17.url ?? '');
+// WP74: the World Bank and Ministry of Economic Development of Kosovo release of 13 February 2017, the source of the 77 in PR-02b.
+// 2026-10-22: linked through the Ministry's own copy (MED17), which carries the 77; the World Bank page is gone (404) and its archived copy returns errors.
+const release2017 = linkAttrs(sources.MED17.url ?? '');
 
 // ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
 const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
@@ -62,7 +63,7 @@ const results = [
     <!-- WP55 (owner decision 2026-10-17, "Show both"): the World Bank's own count for the same pilot, in its full sentence (PR-02b), directly after the program records. -->
     <p><Fact id="PR-02b" /></p>
     <!-- WP74 (Sonnet XHigh run 3): the World Bank's February 2017 release, the source of PR-02b's 77 (WBKOSOVO17); the page had no link to it. The link is in the results, beside the line it sources. -->
-    <p><a class="link" href={release2017.href} rel={release2017.rel}>Read the World Bank’s February 2017 Release<span class="sr-only"> (opens web.archive.org)</span><Icon name="arrow-right" size={16} /></a></p>
+    <p><a class="link" href={release2017.href} rel={release2017.rel}>Read the February 2017 Release<span class="sr-only"> {release2017.srText}</span><Icon name="arrow-right" size={16} /></a></p>
   </Fragment>
 
   <Fragment slot="story">

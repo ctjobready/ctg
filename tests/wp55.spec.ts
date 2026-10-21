@@ -116,7 +116,7 @@ test.describe('the register: 16 countries and territories, and the new dated and
     expect(wb.stat?.value).toBe('77');
     expect(wb.stat?.numeric).toBe(77);
     expect(wb.text).toBe('The World Bank reports that 77 trainees in the Women in Online Work pilot in Kosovo won at least one online work contract in the pilot’s first two phases');
-    expect(wb.sourceIds).toEqual(['WBKOSOVO17', 'WBKOSOVO']);
+    expect(wb.sourceIds).toEqual(['WBKOSOVO17', 'MED17', 'WBKOSOVO']);
     expect(sources.WBKOSOVO.url).toBe('https://www.worldbank.org/en/country/kosovo/brief/kosovo-wow');
     expect(WB_KOSOVO.text).toBe('World Bank: 77 trainees won at least one online contract.');
     expect(WB_KOSOVO.facts).toEqual(['PR-02b']);

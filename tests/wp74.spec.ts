@@ -40,18 +40,20 @@ const visible = (html: string) =>
   );
 
 test.describe('Item 1: the Kosovo case study links the World Bank February 2017 release', () => {
-  test('the link sits in the results, with the external rel and "(opens web.archive.org)" text, and points at WBKOSOVO17', async ({ page }) => {
-    expect(sources.WBKOSOVO17.url).toContain('web.archive.org/');
+  // 2026-10-22: the World Bank page is gone (404) and its archived copy returns errors, so the link opens the Ministry of Economic
+  // Development of Kosovo's copy of the same release (MED17), which states the 77.
+  test('the link sits in the results, with the external rel and host text, and points at the Ministry copy of the release (MED17)', async ({ page }) => {
+    expect(sources.MED17.url).toContain('me.rks-gov.net/');
     await open(page, KOSOVO);
-    const link = page.locator('#results').getByRole('link', { name: /Read the World Bank’s February 2017 Release/ });
+    const link = page.locator('#results').getByRole('link', { name: /Read the February 2017 Release/ });
     await expect(link).toHaveCount(1);
-    await expect(link).toHaveAttribute('href', sources.WBKOSOVO17.url!);
+    await expect(link).toHaveAttribute('href', sources.MED17.url!);
     expect(await link.getAttribute('rel')).toMatch(/noopener/);
-    expect(compact(await link.textContent())).toContain('(opens web.archive.org)');
+    expect(compact(await link.textContent())).toContain('(opens me.rks-gov.net)');
   });
 
-  test('no other built page links WBKOSOVO17 (the short proof cards link the case study, not the release)', () => {
-    const url = sources.WBKOSOVO17.url!;
+  test('only the Kosovo case study links the February 2017 release (the short proof cards link the case study, not the release)', () => {
+    const url = sources.MED17.url!;
     const routes = allPages().filter((p) => p.html.includes(url)).map((p) => p.route);
     expect(routes).toEqual(['/impact/case-studies/kosovo-women-in-online-work/']);
   });
@@ -61,6 +63,7 @@ test.describe('Item 2: the 77 cites the World Bank February 2017 release', () =>
   test('PR-02b, the fact behind the 77, lists WBKOSOVO17 among its sources, and the line is built from it', () => {
     expect(fact('PR-02b').stat?.value).toBe('77');
     expect(fact('PR-02b').sourceIds).toContain('WBKOSOVO17');
+    expect(fact('PR-02b').sourceIds).toContain('MED17');
     expect(WB_KOSOVO.text).toBe('World Bank: 77 trainees won at least one online contract.');
     expect(WB_KOSOVO.facts).toEqual(['PR-02b']);
   });
