@@ -103,6 +103,13 @@ test.describe('menus', () => {
     await expect(last.locator('svg')).toHaveCount(1);
   });
 
+  test('the NU diploma page links both course tracks (they left the footer, so the no-JS path to them runs through it)', async ({ page }) => {
+    await page.goto(NU.replace(/^\//, ''));
+    const main = page.locator('main');
+    await expect(main.locator('a[href$="' + NU + 'digital-marketing/"]').first()).toBeVisible();
+    await expect(main.locator('a[href$="' + NU + 'ict/"]').first()).toBeVisible();
+  });
+
   test('footer Partner column opens with "Partnership Overview"', async ({ page }) => {
     await page.goto('');
     const col = page.locator('footer nav.footer__col', { has: page.locator('h2 a', { hasText: 'Partner with Us' }) });

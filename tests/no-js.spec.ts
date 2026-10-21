@@ -92,7 +92,12 @@ test.describe('no JS', () => {
             const footerHrefs = await visibleHrefs(page, 'footer');
             expect.soft(footerHrefs.length, 'visible footer links').toBeGreaterThan(15);
             const footerItems = nav.groups.filter((g) => ['About', 'Programs', 'Impact', 'Partner with Us'].includes(g.label)).flatMap((g) => g.links.filter((l) => !l.overview).map((l) => l.href));
-            expect.soft(footerItems.filter((h) => !footerHrefs.includes(h)), 'footer is missing destinations that the mega-menus list').toEqual([]);
+            // Owner, 2026-10-21: the NU course tracks (Digital Marketing, ICT) are courses, not programs, so the footer leaves them out.
+            // A destination nested under a page the footer lists (its path starts with that page's path) is one click away without
+            // scripts; the NU diploma page's own links to its tracks are pinned in wp24a.
+            // The parent must be an item page, not a group hub (a hub such as Programs Overview would excuse its whole group).
+            const nestedUnderFooter = (h: string) => footerHrefs.some((f) => f !== h && !hubs.includes(f) && f.endsWith('/') && h.startsWith(f));
+            expect.soft(footerItems.filter((h) => !footerHrefs.includes(h) && !nestedUnderFooter(h)), 'footer is missing destinations that the mega-menus list').toEqual([]);
           });
         }
 
@@ -185,7 +190,17 @@ test.describe('no JS', () => {
         if (!notOnHome.length) continue;
         await open(page, relativeToBase(hub));
         const onHub = new Set(await visibleHrefs(page, 'body'));
-        for (const l of notOnHome) if (!onHub.has(l.href)) missing.push(`${g.label}: ${l.href} is linked neither from the home page nor from the ${g.label} hub page`);
+        for (const l of notOnHome) {
+          if (onHub.has(l.href)) continue;
+          // Second route (owner, 2026-10-21: the NU course tracks left the footer): the destination's parent page — an item page whose
+          // path it extends, linked from home — links it, which is also two clicks from home.
+          const parent = [...onHome].find((h) => h !== l.href && h !== hub && h.endsWith('/') && l.href.startsWith(h) && g.links.some((x) => x.href === h));
+          if (parent) {
+            await open(page, relativeToBase(parent));
+            if ((await visibleHrefs(page, 'body')).includes(l.href)) continue;
+          }
+          missing.push(`${g.label}: ${l.href} is linked neither from the home page nor from the ${g.label} hub page${parent ? ` nor from ${parent}` : ''}`);
+        }
       }
       expect(missing, 'destinations unreachable without JS within two clicks').toEqual([]);
     });
