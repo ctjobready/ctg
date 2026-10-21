@@ -222,7 +222,7 @@ test.describe('The Programs menu describes YouthWIDE without the Bangladesh aim 
 });
 
 test.describe('Home slide 3: the income tile comes first, then a sentence that leads with its base (items S23 and L1)', () => {
-  const SENTENCE = 'Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.';
+  const SENTENCE = 'Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.';
 
   for (const vp of [DESKTOP, MOBILE]) {
     test(`at ${vp.width}px the order under the heading is the income tile, the sentence, the link, in the markup and on the page; data-fact ties and the eyebrow are kept`, async ({ page }) => {
@@ -239,7 +239,7 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
       expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
       const tile = compact(await s.locator('.hs__stat').textContent());
       expect(tile).toContain('$245');
-      expect(tile).toContain('median monthly income among surveyed completers; the median before training was $82.');
+      expect(tile).toContain('median monthly income among surveyed completers; the median before training was $98.');
       expect(compact(await s.locator('.hs__lead').textContent())).toBe(SENTENCE);
       expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
@@ -251,10 +251,10 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
     await expect(page.locator('#results .hs__stats')).toHaveCount(1);
     await expect(slide(page, 3).locator('.hs__stats')).toHaveCount(1);
     const oc05 = fact('OC-05');
-    expect(oc05.text.startsWith('Among the 170 surveyed completers who first earned during or after training: ')).toBe(true);
-    expect(oc05.stat?.value).toBe('58.8%');
+    expect(oc05.text.startsWith('Among the 172 surveyed completers who first earned during or after training: ')).toBe(true);
+    expect(oc05.stat?.value).toBe('58.7%');
     expect(oc05.stat?.label).toContain('had started earning by six months after finishing the course');
-    expect(count(compact(await page.locator('#results').evaluate((el) => el.textContent ?? '')), '58.8%'), 'the 58.8% is stated once in the carousel').toBe(1);
+    expect(count(compact(await page.locator('#results').evaluate((el) => el.textContent ?? '')), '58.7%'), 'the 58.7% is stated once in the carousel').toBe(1);
     expect(await everything(page)).not.toMatch(/surveyed new earners/i);
   });
 });
@@ -368,7 +368,7 @@ test.describe('Universities: the meta description states only what the page stat
     const body = await everything(page);
     expect(body).toContain('We help universities and colleges prepare students');
     expect(body).toContain('JobReady@Campus combines training, mentoring and placement support in campus labs alongside academic studies.');
-    expect(body).not.toContain('84.6');
+    expect(body).not.toContain('85.0');
   });
 });
 

@@ -23,18 +23,18 @@ test.describe('figures say what they measure', () => {
     expect(await mainText(page)).toContain('freelancing 2.8× the control group');
   });
 
-  test('the Impact survey tiles state shares, not growth multiples: 14.0% freelance (up from 6.2%), no "about 3×" beside the median', async ({ page }) => {
+  test('the Impact survey tiles state shares, not growth multiples: 13.6% freelance (up from 6.0%), no "2.5×" beside the median', async ({ page }) => {
     await open(page, 'impact/');
     const glance = compact(await page.locator('#glance').textContent());
-    expect(glance).toContain('14.0%');
-    expect(glance).toContain('of surveyed completers freelance, up from 6.2% before training');
+    expect(glance).toContain('13.6%');
+    expect(glance).toContain('of surveyed completers freelance, up from 6.0% before training');
     // WP46 (cycle-22 review): the note keeps the business-ownership sentence only; the foreign-client income share (OC-07) is stated on the survey page, not stacked on this tile
-    expect(glance).toContain('Business ownership rose from 2.8% to 10.6%.');
+    expect(glance).toContain('Business ownership rose from 3.0% to 10.3%.');
     expect(glance).not.toMatch(/Nearly one in eight|foreign clients or jobs abroad/);
-    expect(glance).not.toMatch(/growth in freelancing|2\.3×|3\.8×|3× the median/);
+    expect(glance).not.toMatch(/growth in freelancing|2\.3×|3\.4×|2\.5× the median/);
     await open(page, 'impact/outcomes-2026/');
     const survey = await mainText(page);
-    expect(survey).not.toMatch(/growth in freelancing|about 3× the median/);
+    expect(survey).not.toMatch(/growth in freelancing|2\.5× the median/);
   });
 
   // WP42 (cycle-19 review): the government slide is second, so the survey-income slide is the third. WP53 (owner decision 2026-10-16): it also carries the former speed slide's finding as one body line (OC-05), which does not repeat the heading
@@ -124,15 +124,15 @@ test.describe('figures say what they measure', () => {
     expect(links.map((l) => l.label)).toContain('Where We Are Heading');
   });
 
-  // WP41 (cycle-18 review): the hub states the trial as ONE line (the employment result, the predecessor program named) and keeps the 77.9% tile; the plain-language paragraph (WP31 kept it), the +10.3 pp tile and the chart
+  // WP41 (cycle-18 review): the hub states the trial as ONE line (the employment result, the predecessor program named) and keeps the 78.2% tile; the plain-language paragraph (WP31 kept it), the +10.3 pp tile and the chart
   // (WP31 kept them too) are gone, with the income paragraph and the 5.9% line before them (tests/wp41.spec.ts covers the band in full)
-  test('the Programs hub states the trial as one line and keeps the 77.9% tile; the plain-language paragraph, the chart, the income paragraph and the 5.9% line are gone', async ({ page }) => {
+  test('the Programs hub states the trial as one line and keeps the 78.2% tile; the plain-language paragraph, the chart, the income paragraph and the 5.7% line are gone', async ({ page }) => {
     await open(page, 'programs/');
     const band = page.locator('#proof-band');
     const text = compact(await band.textContent());
     expect(text).toContain('Women offered a place in the predecessor WSDFM program were 10.3 percentage points more likely to be employed than the control group.');
-    expect(text).toContain('77.9%');
-    expect(text).not.toMatch(/For every 100 women|41% higher|54% higher|5\.9%|View Chart Data as a Table/);
+    expect(text).toContain('78.2%');
+    expect(text).not.toMatch(/For every 100 women|41% higher|54% higher|5\.7%|View Chart Data as a Table/);
     await expect(band.locator('svg[role="img"]')).toHaveCount(0);
     await expect(band.locator('.ba__data')).toHaveCount(0);
   });
@@ -141,7 +141,7 @@ test.describe('figures say what they measure', () => {
     await open(page, 'our-model/');
     const evidence = compact(await page.locator('#evidence .om__text').textContent());
     expect(evidence).toMatch(/10\.3 percentage points more likely to be employed\.$/);
-    expect(evidence).not.toMatch(/41%|54%|77\.9%|surveyed completers/i);
+    expect(evidence).not.toMatch(/41%|54%|78\.2%|surveyed completers/i);
     await expect(page.locator('#evidence a[href$="impact/independent-evaluation/"]')).toHaveCount(1);
   });
 
@@ -150,7 +150,7 @@ test.describe('figures say what they measure', () => {
     const bar = page.locator('[data-promo]');
     const text = compact(await bar.locator('.promo-bar__long').textContent());
     expect(text).toBe('women offered a place were 10.3 percentage points more likely to be employed.');
-    expect(compact(await bar.textContent())).not.toMatch(/Surveyed completers|77\.9%|47\.4%/);
+    expect(compact(await bar.textContent())).not.toMatch(/Surveyed completers|78\.2%|48\.0%/);
     expect(await texts(page, '[data-promo] a')).toEqual(['Trial Results', 'Impact Survey 2026']);
   });
 });
@@ -193,7 +193,7 @@ test.describe('corporate offer pages carry no youth-program trial block', () => 
       await expect(page.locator('.pwp')).toHaveCount(0);
       await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
       const text = await mainText(page);
-      expect(text).not.toMatch(/10\.3|77\.9%|47\.4%|Not Corporate Training|This trial evaluated WSDFM/);
+      expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|Not Corporate Training|This trial evaluated WSDFM/);
       const group = page.locator('nav[aria-label="Broader Evidence from Our Youth Programs"]');
       await expect(group).toHaveCount(1);
       expect(await texts(page, 'nav[aria-label="Broader Evidence from Our Youth Programs"] a')).toEqual(['The Randomized Trial', 'Impact Survey 2026']);

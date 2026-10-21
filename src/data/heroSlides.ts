@@ -20,11 +20,11 @@ import { cta } from '../lib/mailto';
  * WP35 (cycle-12 review): the program-results slide no longer lists WSDFM (its 71% in work is program records, and read beside the trial's 63.1% it looked like a second result for the same
  * program; the case card and the case study keep it), so it lists three programs; the survey proof card on the hero says in its caption that the survey is of surveyed completers in Bangladesh
  * (OC-09: 58 of 64 districts). The caption, not the eyebrow, carries it: "Impact Survey 2026 in Bangladesh" wraps to two lines in the three-column range (768 to about 950 px) and pushes that card's figure out of line.
- * WP36 (cycle-13 reviews): the Home page states each figure once. The income slide has one tile (the 77.9% employment result is the hero's survey card), and the reach slide ("Explore Where Our Programs Have Run")
+ * WP36 (cycle-13 reviews): the Home page states each figure once. The income slide has one tile (the 78.2% employment result is the hero's survey card), and the reach slide ("Explore Where Our Programs Have Run")
  * carries SC-03's detail line only (the 130,000+ and the 15 countries and territories are the hero's reach card). The program-results slide names the base of every result (Kosovo "(102 of 150)", UNDP YES
  * "of the 350 trained", Her Power "of 800 tracked women"), and the speed slide says "surveyed completers", the term the survey page and the register use.
  * WP38 (cycle-15 review): the reach slide has a figure again, SC-03's "15" with its caption ("countries and territories with CodersTrust programs"), and the speed slide's heading leads with its figure and then names the base.
- * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $82 before training" comparison are its tile alone (OC-03), not the heading too.
+ * WP39 (cycle-16 review): the income slide is headed "Surveyed Completers Report Higher Income"; the $245 and its "up from $98 before training" comparison are its tile alone (OC-03), not the heading too.
  * WP43 (cycle-20 review): the speed slide ("First Earnings Within Six Months") has no lead: it repeated the heading and the tile, so the slide is the heading, the 58.8% tile with its full base and the link.
  * WP45 (cycle-21 review): the trial slide leads with the trial's income result ("Women Offered a Place Earned an Estimated 41% More", RC-01 and RC-04), since the hero card, the announcement bar and the ">4×" tile state the employment result; the
  * government slide states the contract scope in GV-12's own note (it includes Her Power's 25,125 women trained); the speed slide is "Most First Earnings Came Within Six Months" (a majority, not a promise); the reach slide is
@@ -47,7 +47,7 @@ import { cta } from '../lib/mailto';
  * WP53 (owner decision 2026-10-16, "Trim it": the cycle-27 Claude proposal): the carousel is four slides, not seven. The reach slide ("Programs in 15 Countries and Territories") and the programs slide ("Find Your Program") are deleted (the reach figure
  * stays in the hero's "Proof at a Glance" strip; the Programs menu, the role router and the Programs page cover the programs), and the two Impact Survey slides are one: the income slide ("Surveyed Completers Report Higher Income", with its $245 tile) takes the
  * timing slide's finding as one body line (OC-05 with its defined base; see surveyTiming). The notes above about the speed, reach and programs slides are the history of wording that is gone, or that the survey slide's line inherits.
- * WP54 (cycle-28 reviews, Claude S23 and GLM L1): the survey slide's body line leads with its base ("Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course."),
+ * WP54 (cycle-28 reviews, Claude S23 and GLM L1): the survey slide's body line leads with its base ("Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course."),
  * so the slide no longer uses the register's term "surveyed new earners" or defines it in brackets (the Impact tile still does); and the slide shows its income tile directly under the heading, before that line (`statsFirst`).
  * WP54 (cycle-28 review, Grok R2): the trial slide's ">4×" callout reads "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (it read "More than four times the average employment effect across nine
  * vocational-training trials.", which sat under an income heading without saying what was compared; see trialMultiple).
@@ -100,7 +100,7 @@ export interface HeroSlide {
   photo: string;
 }
 
-/** The before-training figure of a survey fact (stat.from), for a caption such as "the median before training was $82". */
+/** The before-training figure of a survey fact (stat.from), for a caption such as "the median before training was $98". */
 function before(f: Fact): string {
   const from = f.stat?.from;
   if (!from) throw new Error(`heroSlides: ${f.id} has no stat.from`);
@@ -176,9 +176,9 @@ if (!fact('SC-04').text.startsWith('1.5M+ National University learners in the on
  */
 /**
  * The survey slide's timing line (WP53, owner decision 2026-10-16; reworded in WP54, cycle-28 reviews, Claude S23 and GLM L1): OC-05's finding as one sentence that leads with its base, in the words of OC-05's own text:
- * "Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course."
+ * "Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course."
  * (WP53 had "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning ...", which opened with the percentage and defined the register's term in brackets; this sentence needs no term.)
- * Read from the register, never retyped: the count and the base come from OC-05's text ("Among the 170 surveyed completers who first earned during or after training: ..."), the figure from its stat value, and the closing clause from its stat label,
+ * Read from the register, never retyped: the count and the base come from OC-05's text ("Among the 172 surveyed completers who first earned during or after training: ..."), the figure from its stat value, and the closing clause from its stat label,
  * without the label's "(October 2026 survey)" (the slide's eyebrow says "Impact Survey 2026"). The build stops if the text, the value or the label changes shape.
  */
 const timing = fact('OC-05');
@@ -333,20 +333,20 @@ export const HOME_SLIDES: HeroSlide[] = [
     id: 'outcomes',
     eyebrow: 'Impact Survey 2026',
     // WP31: said as what surveyed completers report, not as a before-and-after effect.
-    // WP39 (cycle-16 review): the heading says the finding and whose it is; the figure and its before-training comparison are the tile's ($245, "up from $82 before training"), so the heading no longer states them a second time.
+    // WP39 (cycle-16 review): the heading says the finding and whose it is; the figure and its before-training comparison are the tile's ($245, "up from $98 before training"), so the heading no longer states them a second time.
     title: 'Surveyed Completers Report Higher Income',
     titleFacts: ['OC-03'],
     // WP53 (owner decision 2026-10-16, "trim the carousel"): this is now the carousel's one survey slide. It takes over the finding of the former timing slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") as ONE body line, OC-05's
-    // 58.8% with its defined base (see surveyTiming), under the heading and above the income tile. The heading, the eyebrow, the $245 tile and the evidence link are unchanged. The body line is the owner's first choice; a second small tile
-    // (the component supports two) was the alternative and is not used. The line was the tile's caption before; it is the lead now, so the slide still states 58.8% once.
-    // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the order under the heading is the income tile first ($245, "up from $82 before training"), then the timing sentence, which leads with its base ("Of the 170 surveyed completers who first earned
-    // during or after training, 58.8% ..."); the heading is about income, and the percentage under it read as the income result. The tile, the sentence, their data-fact attributes and the eyebrow are unchanged; only the order is (statsFirst).
+    // 58.7% with its defined base (see surveyTiming), under the heading and above the income tile. The heading, the eyebrow, the $245 tile and the evidence link are unchanged. The body line is the owner's first choice; a second small tile
+    // (the component supports two) was the alternative and is not used. The line was the tile's caption before; it is the lead now, so the slide still states 58.7% once.
+    // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the order under the heading is the income tile first ($245, "up from $98 before training"), then the timing sentence, which leads with its base ("Of the 172 surveyed completers who first earned
+    // during or after training, 58.7% ..."); the heading is about income, and the percentage under it read as the income result. The tile, the sentence, their data-fact attributes and the eyebrow are unchanged; only the order is (statsFirst).
     lead: surveyTiming,
     leadFacts: ['OC-05'],
     statsFirst: true,
-    // WP36 (cycle-13 review): one tile, the income result. The employment result (77.9%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
-    // WP67 (cycle-38 review, GPT-6.1 Sol; GLM and Kimi in cycle 37: a recurring misreading of "up from"): the tile's caption states the before-training median as a plain fact ("... the median before training was $82."), where it said
-    // "... up from $82 before training". Same fact (OC-03), no "up from"; the $82 is OC-03's stat.from, read from the register, never typed.
+    // WP36 (cycle-13 review): one tile, the income result. The employment result (78.2%) is the hero's survey card directly above the carousel, so the slide does not show it a second time.
+    // WP67 (cycle-38 review, GPT-6.1 Sol; GLM and Kimi in cycle 37: a recurring misreading of "up from"): the tile's caption states the before-training median as a plain fact ("... the median before training was $98."), where it said
+    // "... up from $98 before training". Same fact (OC-03), no "up from"; the $98 is OC-03's stat.from, read from the register, never typed.
     stats: [
       { factId: 'OC-03', caption: (f) => `median monthly income among surveyed completers; the median before training was ${before(f)}.` },
     ],

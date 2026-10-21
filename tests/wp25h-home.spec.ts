@@ -59,12 +59,12 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
 // WP48 (cycle-23 review): the evidence band ("Evidence You Can Check", #proof-band) is gone from Home with its paid-work pathways table and its 72.3% line (34 of 47): they repeated survey detail the hero's survey card and the carousel carry, and the
 // Impact Survey 2026 page keeps both. The band's two evidence links close the "Proof in Practice" link row (tests/wp48.spec.ts). It had held no trial block, chart, ladder or program record since WP30c, WP33 and WP35.
 test.describe('evidence band (#proof-band): gone from Home (WP48)', () => {
-  test('Home has no #proof-band, no pathways table, no 72.3% tile and none of the trial or program-record content the band had already shed', async ({ page }) => {
+  test('Home has no #proof-band, no pathways table, no 70.8% tile and none of the trial or program-record content the band had already shed', async ({ page }) => {
     await open(page, pageByRoute('/'));
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('.pwp, .he__top, .he__trial, .lc, [data-plain-line], [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
     const t = collapse(await page.locator('main').textContent());
-    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47', 'Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table']) expect(t, `no "${gone}" on Home`).not.toContain(gone);
+    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '70.8%', '34 of 48', 'Employment at Trial Follow-Up', 'Chart data:', 'View Chart Data as a Table']) expect(t, `no "${gone}" on Home`).not.toContain(gone);
   });
 });
 
@@ -72,11 +72,11 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
   test('the carousel slides carry the accepted headings, bases and links', async ({ page }) => {
     await open(page, pageByRoute('/'));
     // WP31: said as what surveyed completers report, not as a before-and-after effect. WP42 (cycle-19 review): the order is the trial, the government contracts, the survey income and the program results.
-    // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone. The survey slide (slide 3) keeps its heading, tile and evidence link and carries the finding of the former speed slide as ONE body line, OC-05's 58.8%
+    // WP53 (owner decision 2026-10-16): the speed, reach and programs slides are gone. The survey slide (slide 3) keeps its heading, tile and evidence link and carries the finding of the former speed slide as ONE body line, OC-05's 58.7%
     // with the base the register defines ("surveyed new earners", WP36, WP49, WP52); the earlier heading ("Most Surveyed New Earners Were Earning by Six Months After the Course") is on no slide (tests/wp53.spec.ts).
     // WP54 (cycle-28 reviews, Claude S23 and GLM L1): that line leads with its base, in the words of OC-05's text, and follows the income tile (tests/wp54.spec.ts).
     await expect(slide(page, 3).locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
-    await expect(slide(page, 3).locator('.hs__lead')).toHaveText('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.');
+    await expect(slide(page, 3).locator('.hs__lead')).toHaveText('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.');
     await expect(slide(page, 3).locator('a').first()).toHaveText('Read the Impact Survey 2026');
     await expect(page.locator('[data-hs-slide]')).toHaveCount(4);
     await expect(slide(page, 2).locator('.hs__eyebrow')).toHaveText('Government and University Partners');

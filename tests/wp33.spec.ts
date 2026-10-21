@@ -48,7 +48,7 @@ test.describe('Home evidence band (#proof-band): gone (WP48); the trial and surv
 });
 
 test.describe('the OC-03 tile note says the survey once, without repeating $245', () => {
-  const NOTE = 'The median before training was $82 (October 2026 survey).'; // WP67 (cycle-38 review): it was "Up from $82 before training (October 2026 survey)."
+  const NOTE = 'The median before training was $98 (October 2026 survey).'; // WP67 (cycle-38 review): it was "Up from $98 before training (October 2026 survey)."
 
   test('the register carries the shortened glance note', () => {
     const oc03 = fact('OC-03').stat!;
@@ -101,22 +101,22 @@ test.describe('the Governments "How Fast Can We Start?" answer does not count th
   });
 });
 
-test.describe('Outcomes 2026: "Results in Brief" has no bare 5.9% line', () => {
-  test('the OC-01 tile keeps its 77.9% and its label, without the "no longer employed" note, which stays with its context in "Employment Before and After Training"', async ({ page }) => {
+test.describe('Outcomes 2026: "Results in Brief" has no bare 5.7% line', () => {
+  test('the OC-01 tile keeps its 78.2% and its label, without the "no longer employed" note, which stays with its context in "Employment Before and After Training"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const summary = page.locator('#summary');
     const tile = summary.locator('[data-fact="OC-01"]');
     await expect(tile).toHaveCount(1);
-    expect(compact(await tile.textContent())).toContain('77.9%');
+    expect(compact(await tile.textContent())).toContain('78.2%');
     const brief = compact(await summary.textContent());
-    expect(brief).not.toMatch(/5\.9%|no longer employed/);
+    expect(brief).not.toMatch(/5\.7%|no longer employed/);
     const employment = compact(await page.locator('#employment').textContent());
-    expect(employment).toContain('Separately, 5.9% of those employed before training reported that they were no longer employed.');
-    expect(employment.match(/5\.9%/g), 'stated once in the section').toHaveLength(1);
+    expect(employment).toContain('Separately, 5.7% of those employed before training reported that they were no longer employed.');
+    expect(employment.match(/5\.7%/g), 'stated once in the section').toHaveLength(1);
   });
 
-  test('the register still holds the 5.9% (the page data is checked against it), so the fact is unchanged', () => {
-    expect(fact('OC-01').stat?.detail).toBe('5.9% of those employed before training reported they were no longer employed.');
+  test('the register still holds the 5.7% (the page data is checked against it), so the fact is unchanged', () => {
+    expect(fact('OC-01').stat?.detail).toBe('5.7% of those employed before training reported they were no longer employed.');
   });
 });
 

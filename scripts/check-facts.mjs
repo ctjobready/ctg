@@ -56,6 +56,9 @@
 //     scripts/facts-guard-allow.json (page + exact text + reason; a stale entry fails). Not scanned: /news/<post>/ archive posts, redirect
 //     stubs, /styleguide/ (a component sample page) and the 404. Details at "number guard" below; `FACTS_GUARD_LIST=1 npm run check:facts`
 //     lists every figure the register allowed. Negative self-tests below.
+//   - survey edition pin: the survey figures are those of ONE Impact Report edition (SURVEY_EDITION, Impact Report 261014B). The OC-* facts (text, stat value, numeric, before-training figure, label, detail and glance
+//     lines) and every row of the published survey CSV (outcomes-data.ts: chart cells, headline rows, bases) must state that edition's figures and none of the previous edition's (261007A); a fact field,
+//     a stat.numeric or a CSV row that disagrees fails as a "dataset:" problem naming it and the value it should have, and a survey fact or CSV row the pin does not list fails too. Negative self-tests below.
 //   - report CTA: while REPORT_EDITION_READY (src/lib/site.ts) is false, no "Request the Impact Report" button, link or mailto
 //     subject may appear on any page
 //   - SITE_ENV=production only: production fact holds. A private hold list names facts that must not render in
@@ -145,8 +148,8 @@ const DISCIPLINE = [
   [/\bdashboards?\b/i, '"dashboard" (use "monthly reports")'],
   [/into first income/i, '"into first income" (use "milestone-based mentoring")'],
   [/\b30[- ]minute/i, 'unsourced "30 minutes" promise'],
-  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners had started earning by six months after finishing the course." (WP46: the owner's answer of 2026-10-15 counts the months from the end of the course; WP48, cycle-23 review: OC-05 is cumulative and includes those who first earned during the course, so "by ... after", never "within ... of finishing"), with the 58.8%, its base and the survey qualifier immediately below
-  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners had started earning by six months after finishing the course.", with the 58.8%, its base and the survey qualifier below it)'],
+  // review round 14, m3: only conditional timing evidence supports it. Write "Most surveyed new earners had started earning by six months after finishing the course." (WP46: the owner's answer of 2026-10-15 counts the months from the end of the course; WP48, cycle-23 review: OC-05 is cumulative and includes those who first earned during the course, so "by ... after", never "within ... of finishing"), with the 58.7%, its base and the survey qualifier immediately below
+  [/\bearning starts within months\b/i, '"Earning starts within months" (OC-05 is a share of surveyed new earners: write "Most surveyed new earners had started earning by six months after finishing the course.", with the 58.7%, its base and the survey qualifier below it)'],
 ];
 // The investor CTA label and its mailto subject are allowed.
 const ALLOWED = [/Investor(%20| )deck(%20| )request/gi];
@@ -750,6 +753,109 @@ function numberGuardPage(path, html, allow = []) {
   return res;
 }
 
+/* ---- survey edition pin: the public survey dataset states the figures of ONE Impact Report edition ---- */
+/**
+ * Every survey figure on the site (the OC-* facts, and the aggregates behind /impact/outcomes-2026/ and its CSV in outcomes-data.ts) comes from one edition of the Impact Report.
+ * SURVEY_EDITION names it. SURVEY_FACTS and SURVEY_CSV_ROWS state what that edition prints (shares to one decimal, as the report prints them; dollars at the UN operational rate of BDT 122.465),
+ * and surveyEditionProblems() holds the dataset to them, so a figure left behind from the previous edition fails the build, naming the fact (or CSV row) and the value it should have.
+ * A new edition changes this block, src/data/facts.ts and outcomes-data.ts together. The self-tests below run the same function on fixtures built from these tables.
+ */
+const SURVEY_EDITION = 'Impact Report 261014B';
+const SURVEY_PREVIOUS_EDITION = 'Impact Report 261007A';
+// What each OC fact states in that edition. `want`: the figures each field of the fact must carry (a field is a path into the fact: text, stat.value, stat.from, stat.label, stat.detail,
+// stat.glance.label, stat.glance.note); `numeric`: stat.numeric; `stale`: the previous edition's figures, which no field of the fact may still carry (a figure that did not change is not listed).
+const SURVEY_FACTS = {
+  'OC-01': { want: { text: ['48.0%', '78.2%', '+30.2 percentage-point'], 'stat.value': ['78.2%'], 'stat.from': ['48.0%'], 'stat.label': ['48.0%'], 'stat.detail': ['5.7%'], 'stat.glance.note': ['48.0%'] }, numeric: 78.2, stale: ['47.4%', '77.9%', '30.5', '5.9%'] },
+  'OC-02': { want: { text: ['70.8%', '34 of 48'], 'stat.value': ['70.8%'], 'stat.label': ['34 of 48'] }, numeric: 70.8, stale: ['72.3%', '34 of 47'] },
+  'OC-03': { want: { text: ['$98', '$245', '(2.5×)'], 'stat.value': ['$245'], 'stat.from': ['$98'], 'stat.label': ['$98'], 'stat.glance.note': ['$98'] }, numeric: 245, stale: ['$82', 'about 3×'] },
+  'OC-03b': { want: { text: ['72.0%', '22.0%', '5.9%'], 'stat.value': ['72.0%'] }, numeric: 72, stale: ['72.2%', '5.8%'] },
+  'OC-03c': { want: { text: ['+$82'], 'stat.value': ['+$82'] }, numeric: 82, stale: [] },
+  'OC-04': { want: { text: ['39.0%', '54.4%', '6.0%', '13.6%', '(2.3×)', '3.0%', '10.3%', '(3.4×)'], 'stat.value': ['13.6%'], 'stat.from': ['6.0%'], 'stat.label': ['6.0%'], 'stat.glance.label': ['6.0%'], 'stat.glance.note': ['3.0%', '10.3%'] }, numeric: 13.6, stale: ['38.3%', '53.3%', '6.2%', '14.0%', '2.8%', '10.6%', '3.8×'] },
+  'OC-05': { want: { text: ['172', '23.3%', '58.7%', '77.3%', '90.7%'], 'stat.value': ['58.7%'], 'stat.label': ['172'], 'stat.glance.label': ['172', '23.3%'] }, numeric: 58.7, stale: ['170', '23.5%', '58.8%', '77.1%', '90.6%'] },
+  'OC-06': { want: { text: ['92.6%', '87.0%', '71.1%'], 'stat.value': ['92.6%'] }, numeric: 92.6, stale: ['92.7%', '86.9%', '71.6%'] },
+  'OC-07': { want: { text: ['About 12%', '78.0%'], 'stat.value': ['About 12%'] }, numeric: 12, stale: [] },
+  'OC-08': { want: { text: ['58.9%', '36.9%'], 'stat.value': ['58.9%'] }, numeric: 58.9, stale: ['59.5%', '37.4%'] },
+  'OC-09': { want: { text: ['85.0%', '68.2%', '19.6%', '63.0%', '58 of 64 districts', '15.6%'], 'stat.value': ['85.0%'] }, numeric: 85, stale: ['84.6%', '68.7%', '19.9%', '62.9%', '16.0%'] },
+};
+// What the published CSV (csvRows() of outcomes-data.ts) holds in that edition: [measure_id, category, value_type, value, base_n], every row, in the order of the file. The bases are the report's
+// own: 331 paired completers (employment, career outcomes), 286 paired income answers, 172 completers who first earned during or after training, 48 completers with no prior income, of whom 34 were earning.
+// Districts under 3.0% are combined into Other Districts (Narayanganj, 2.9%, is no longer listed).
+const surveyCsv = (id, type, base, cells) => cells.map(([category, value]) => [id, category, type, value, base]);
+const SURVEY_CSV_ROWS = [
+  ...surveyCsv('OC-01', 'percent', '331', [['Before Training', '48.0'], ['At the October 2026 survey', '78.2']]),
+  ...surveyCsv('OC-01', 'percent', '', [['Share of those employed before training', '5.7']]),
+  ...surveyCsv('OC-02', 'percent', '48', [['Earning', '70.8'], ['Not Earning', '29.2']]),
+  ...surveyCsv('OC-03', 'median_usd', '286', [['Before Training', '98'], ['At the October 2026 survey', '245']]),
+  ...surveyCsv('OC-03b', 'percent', '286', [['Increased', '72.0'], ['Unchanged', '22.0'], ['Decreased', '5.9']]),
+  ...surveyCsv('OC-03c', 'median_usd', '286', [['Median change', '82']]),
+  ...surveyCsv('OC-04', 'percent', '331', [['Salaried Employment, before training', '39.0'], ['Salaried Employment, at the October 2026 survey', '54.4'], ['Freelancing, before training', '6.0'], ['Freelancing, at the October 2026 survey', '13.6'], ['Business Ownership, before training', '3.0'], ['Business Ownership, at the October 2026 survey', '10.3']]),
+  ...surveyCsv('OC-05', 'percent', '172', [['During the Course', '23.3'], ['By 3 Months', '38.4'], ['By 6 Months', '58.7'], ['By 12 Months', '77.3'], ['By 2 Years', '90.7']]),
+  ...surveyCsv('OC-06-recommend', 'percent', '', [['0', '5.3'], ['1', '1.8'], ['2', '0.7'], ['3', '1.8'], ['4', '2.8'], ['5', '11.3'], ['6', '5.3'], ['7', '9.5'], ['8', '13.0'], ['9', '5.6'], ['10', '43.0']]),
+  ...surveyCsv('OC-08', 'percent', '331', [['Freelancing or Remote Job', '18.4'], ['New Job', '11.5'], ['Started a Business', '6.9'], ['Better Position', '6.3'], ['Higher Education', '8.2'], ['Promotion', '4.2'], ['Salary Increase', '3.3'], ['Other or No Change', '41.1']]),
+  ...surveyCsv('OC-07', 'percent', '', [['Job in Bangladesh', '49.1'], ['Own Business', '11.3'], ['Freelancing in Bangladesh', '6.1'], ['Freelancing for Foreign Clients', '6.9'], ['Job Abroad', '4.6'], ['Other', '16.8'], ['No Current Income', '5.2']]),
+  ...surveyCsv('OC-09-age', 'percent', '', [['15–24', '14.8'], ['25–35', '53.4'], ['36–45', '23.7'], ['46 and Over', '8.0']]),
+  ...surveyCsv('OC-09-education', 'percent', '', [['Higher Secondary Certificate (HSC) or Below', '10.7'], ['Diploma', '4.3'], ['Bachelor’s Degree', '34.2'], ['Master’s Degree or Higher', '50.8']]),
+  ...surveyCsv('OC-09-district', 'percent', '', [['Dhaka', '37.0'], ['Chattogram', '8.4'], ['Barishal', '5.6'], ['Comilla', '3.1'], ['Other Districts', '45.9']]),
+  ...surveyCsv('OC-01', 'percentage_points', '331', [['October 2026 survey vs. before training', '30.2']]),
+  ...surveyCsv('OC-03', 'percent_change', '', [['October 2026 survey vs. before training', '150']]),
+  ...surveyCsv('OC-06-summary', 'percent', '', [['Rate instructors good or better', '92.6'], ['Rate their overall experience good or better', '87.0'], ['Recommendation score of 7 or more out of 10', '71.1']]),
+  ...surveyCsv('OC-07-summary', 'percent', '', [['Freelancing for foreign clients or a job abroad', '11.6'], ['Work as the main income source', '78.0']]),
+  ...surveyCsv('OC-08-summary', 'percent', '331', [['Report a specific career or education outcome', '58.9'], ['Gained a new income source', '36.9']]),
+  ...surveyCsv('OC-09-profile', 'percent', '', [['Hold a bachelor’s degree or higher', '85.0'], ['Aged 15–35', '68.2'], ['Women', '19.6'], ['Live outside Dhaka', '63.0'], ['Rural', '15.6']]),
+];
+const SURVEY_FIELDS = ['text', 'headline', 'stat.value', 'stat.from', 'stat.label', 'stat.detail', 'stat.glance.label', 'stat.glance.note'];
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** A pinned figure on its own, never the end or the start of a longer number ("5.9%" is not in "15.9%", "170" is not in "1,170"). */
+const surveyFigure = (fig) => new RegExp(`(?<![\\d.,])${escapeRe(fig)}(?!\\d)`);
+const surveyField = (obj, path) => path.split('.').reduce((o, k) => o?.[k], obj);
+/**
+ * The public survey dataset against the edition's pin: `factsById` is the register, `rows` the published CSV rows (csvRows()). Returns the problems, one per fact field, stale-figure
+ * group, stat.numeric or CSV row that disagrees. `pins` is the pin the self-tests may replace.
+ */
+function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, rows: SURVEY_CSV_ROWS }) {
+  const out = [];
+  const rowKey = (id, category) => `${id} / ${category}`;
+  const describe = (r) => `${r.type} ${r.value}${r.base ? ` (n = ${r.base})` : ' (no base)'}`;
+  // the pin itself: a CSV row listed twice would hide a mismatch behind its twin
+  const pinnedRows = new Map();
+  for (const [id, category, type, value, base] of pins.rows) {
+    if (pinnedRows.has(rowKey(id, category))) out.push(`dataset: the ${SURVEY_EDITION} pin lists the CSV row ${rowKey(id, category)} twice`);
+    pinnedRows.set(rowKey(id, category), { type, value, base });
+  }
+  // the facts: every survey fact is pinned, and each pinned fact states the edition's figures and none of the previous edition's
+  for (const id of Object.keys(factsById)) if (/^OC-/.test(id) && !pins.facts[id]) out.push(`dataset: survey fact ${id} is not in the ${SURVEY_EDITION} pin (list the figures that edition prints for it)`);
+  for (const [id, pin] of Object.entries(pins.facts)) {
+    const f = factsById[id];
+    if (!f) { out.push(`dataset: ${id} is missing from the register, but ${SURVEY_EDITION} prints its survey figure`); continue; }
+    for (const [path, figures] of Object.entries(pin.want)) {
+      const s = surveyField(f, path);
+      const missing = figures.filter((fig) => typeof s !== 'string' || !surveyFigure(fig).test(s));
+      if (missing.length) out.push(`dataset: ${id} ${path} should state ${missing.map((m) => `"${m}"`).join(', ')} (${SURVEY_EDITION}); ${typeof s === 'string' ? `it reads "${s}"` : 'the field is missing'}`);
+    }
+    if (pin.numeric !== undefined && f.stat?.numeric !== pin.numeric) out.push(`dataset: ${id} stat.numeric should be ${pin.numeric} (${SURVEY_EDITION}), got ${f.stat?.numeric}`);
+    const stale = [];
+    for (const fig of pin.stale ?? []) for (const path of SURVEY_FIELDS) {
+      const s = surveyField(f, path);
+      if (typeof s === 'string' && surveyFigure(fig).test(s)) stale.push(`"${fig}" in ${path}`);
+    }
+    if (stale.length) out.push(`dataset: ${id} still carries ${stale.join(', ')} from the previous edition (${SURVEY_PREVIOUS_EDITION}); ${SURVEY_EDITION} prints the figures of the pin`);
+  }
+  // the published CSV: every row of the edition is there with its value and base, and no other row is
+  const seen = new Map();
+  for (const r of rows) {
+    if (seen.has(rowKey(r[0], r[2]))) out.push(`dataset: the survey CSV has two rows for ${rowKey(r[0], r[2])}`);
+    seen.set(rowKey(r[0], r[2]), r);
+  }
+  for (const [key, want] of pinnedRows) {
+    const r = seen.get(key);
+    if (!r) { out.push(`dataset: the survey CSV has no row ${key}, which ${SURVEY_EDITION} prints (${describe(want)})`); continue; }
+    const got = { type: r[3], value: r[4], base: r[5] };
+    if (got.type !== want.type || got.value !== want.value || got.base !== want.base) out.push(`dataset: survey CSV row ${key} should be ${describe(want)} (${SURVEY_EDITION}), got ${describe(got)}`);
+  }
+  for (const [key, r] of seen) if (!pinnedRows.has(key)) out.push(`dataset: the survey CSV carries a row ${key} (${r[3]} ${r[4]}) that ${SURVEY_EDITION} does not print${r[0] === 'OC-09-district' ? '; a district under 3.0% is combined into Other Districts' : ''}`);
+  return out;
+}
+
 /* ---- self-test: the post-processing on fixtures, then the checks above on its result (and on a broken page) ---- */
 {
   // a page that prints the non-affiliation note twice keeps only the first copy (postprocess.keepOneCertNote)
@@ -1172,18 +1278,21 @@ function numberGuardPage(path, html, allow = []) {
   guardPasses('"47.5%" on the styleguide (a component sample page)', '/styleguide/', '<p>47.5% and 1,234M+</p>');
   if (numberGuardPage('/404.html', guardDoc('<p>47.5%</p>')).problems.length) problems.push('self-test: the number guard flagged the 404');
   // numbers that are not claims carry no marker and are not read: years, dates, list counts, steps, durations, ages, bases
-  const unmarked = guardRun('/our-model/', '<p>Founded in 2014; the October 2026 survey; Nov–Dec 2021; steps 1, 2 and 3; 100 training hours; ages 18–35; 6–8 weeks; tracers at 3/6/12 months; n = 321; over 4 months; 1 of 3; Her Power 2.0.</p><p>Call +1 212 344 4111 or +880 1958\u{2011}220802. WSIS+20 Forum.</p>');
+  const unmarked = guardRun('/our-model/', '<p>Founded in 2014; the October 2026 survey; Nov–Dec 2021; steps 1, 2 and 3; 100 training hours; ages 18–35; 6–8 weeks; tracers at 3/6/12 months; n = 331; over 4 months; 1 of 3; Her Power 2.0.</p><p>Call +1 212 344 4111 or +880 1958\u{2011}220802. WSIS+20 Forum.</p>');
   if (unmarked.problems.length || unmarked.tokens) problems.push(`self-test: the number guard read figures that carry no marker (${unmarked.tokens} token(s)): ${unmarked.problems.join('; ')}`);
   // a registered figure in another format passes (value-level matching): RC-02 is "+10.3 pp"
   for (const fig of ['+10.3 pp', '10.3 percentage points', '10.3 percentage-point', '+10.3 percentage points', '10.3pp', '+10.3 pp']) guardPasses(`RC-02 written as "${fig}"`, '/our-model/', `<p>Employment rose ${fig} for women offered a place.</p>`);
   guardFails('"10.4 percentage points" (RC-02 is 10.3)', '/our-model/', '<p>Employment rose 10.4 percentage points.</p>');
-  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '3.00×', '3×', '2.80×', '2.30×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
+  for (const fig of ['62 million', '62M', '3M+', '3 million', '1.5M+', '1.5 million', '61–78 million', '~15,000', '+$27', '$27', '2.50×', '2.5×', '2.80×', '2.30×', '3.40×', '68–71%', '71–68%', '68% to 71%', '130,000+']) guardPasses(`the registered "${fig}"`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // $5M+ impact investment (SC-13) was removed on the owner's decision (2026-10-12): the figure is no longer a registered value and must not render anywhere
   // D1 (owner decision, 2026-10-13): the online gig-work range (154M–435M, PX-09), the 257M youth figure (PX-10) and the 10M+ labor-market figure (PX-15) are withdrawn from the public dataset and must not render
   for (const fig of ['68–73%', '$5M+', '$5 million', '$5.5M', '3.5×', 'BDT 2,355', '1.6M+', '61–79 million', '~16,000', '435M', '257M', '10M+']) guardFails(`"${fig}" (a range or figure with one unregistered value)`, '/our-model/', `<p>Figure: ${fig}.</p>`);
   // chart data: the published survey aggregates (outcomes-data.ts) are part of the public dataset
-  guardPasses('a published survey share ("37.1%" Dhaka)', '/impact/outcomes-2026/', '<p>Dhaka 37.1%, Chattogram 8.2%</p>');
+  guardPasses('a published survey share ("37.0%" Dhaka)', '/impact/outcomes-2026/', '<p>Dhaka 37.0%, Chattogram 8.4%</p>');
   guardFails('"37.2%" (not a published share)', '/impact/outcomes-2026/', '<p>Dhaka 37.2%</p>');
+  // the previous edition's figures (Impact Report 261007A) are no longer published values: Dhaka was 37.1%, the ratio of medians "3.00×" ("about 3×")
+  guardFails('"37.1%" (the previous edition’s Dhaka share)', '/impact/outcomes-2026/', '<p>Dhaka 37.1%</p>');
+  for (const fig of ['3.00×', 'about 3×']) guardFails(`"${fig}" (the previous edition’s ratio of medians; OC-03 is 2.5×)`, '/our-model/', `<p>Median income rose ${fig}.</p>`);
   // numbers derived from a fact in code: only the listed derivation passes ("about 10 more" is RC-02 rounded)
   guardPasses('"about 10 more" (RC-02 rounded)', '/our-model/', '<p>About 10 more were in work.</p>');
   guardFails('"about 11 more" (RC-02 rounds to 10)', '/our-model/', '<p>about 11 more were in work.</p>');
@@ -1210,8 +1319,50 @@ function numberGuardPage(path, html, allow = []) {
   }
   if (!allowlistProblems([allowEntry, { ...allowEntry }]).length) problems.push('self-test: the whitelist validator accepted a duplicate entry');
   if (!allowlistProblems({}).length) problems.push('self-test: the whitelist validator accepted a non-array');
+
+  // survey edition pin: the edition's own figures pass; a figure of the previous edition (261007A) is reported where it sits, with the value it should have. These run the real
+  // surveyEditionProblems() on fixtures built from the pin tables (and on the real wording of OC-01), so they hold whatever state the live dataset is in.
+  const setPath = (obj, path, value) => {
+    const keys = path.split('.');
+    const last = keys.pop();
+    let o = obj;
+    for (const k of keys) o = o[k] ??= {};
+    o[last] = value;
+  };
+  const fixtureFacts = () => Object.fromEntries(Object.entries(SURVEY_FACTS).map(([id, pin]) => {
+    const f = { id };
+    for (const [path, figures] of Object.entries(pin.want)) setPath(f, path, `${figures.join(' and ')} in this field`);
+    if (pin.numeric !== undefined) setPath(f, 'stat.numeric', pin.numeric);
+    return [id, f];
+  }));
+  const fixtureRows = () => SURVEY_CSV_ROWS.map(([id, category, type, value, base]) => [id, 'A measure', category, type, value, base, 'published']);
+  const reports = (why, got, expected) => {
+    if (got.length !== expected.length || got.some((p, i) => !p.includes(expected[i]))) problems.push(`self-test: the survey edition pin should report ${why} as [${expected.join(' | ')}], reported [${got.join(' | ')}]`);
+  };
+  const oc01 = { id: 'OC-01', text: 'Among surveyed completers, employment rose from 48.0% before training to 78.2% at the October 2026 survey (a +30.2 percentage-point change)', stat: { value: '78.2%', numeric: 78.2, from: '48.0%', label: 'employed, up from 48.0% before training, among surveyed completers at the October 2026 survey', detail: '5.7% of those employed before training reported they were no longer employed.', glance: { label: 'employed among surveyed completers at the October 2026 survey', note: 'Up from 48.0% before training.' } } };
+  const withOc01 = (f) => ({ ...fixtureFacts(), 'OC-01': f });
+  const withRow = (match, change) => fixtureRows().map((r) => (match(r) ? change(r) : r));
+  reports('the edition’s own figures as correct', surveyEditionProblems(fixtureFacts(), fixtureRows()), []);
+  reports('the real wording of OC-01 as correct', surveyEditionProblems(withOc01(oc01), fixtureRows()), []);
+  reports('OC-01 stating 77.9% in its text (the 78.2% is missing and the 77.9% is the previous edition’s)', surveyEditionProblems(withOc01({ ...oc01, text: oc01.text.replace('78.2%', '77.9%') }), fixtureRows()), ['OC-01 text should state "78.2%"', 'OC-01 still carries "77.9%" in text']);
+  reports('OC-01’s stat value at 77.9%', surveyEditionProblems(withOc01({ ...oc01, stat: { ...oc01.stat, value: '77.9%' } }), fixtureRows()), ['OC-01 stat.value should state "78.2%"', 'OC-01 still carries "77.9%" in stat.value']);
+  reports('OC-01’s stat.numeric at 77.9', surveyEditionProblems(withOc01({ ...oc01, stat: { ...oc01.stat, numeric: 77.9 } }), fixtureRows()), ['OC-01 stat.numeric should be 78.2']);
+  reports('the previous edition’s exit share (5.9%) left in OC-01’s detail', surveyEditionProblems(withOc01({ ...oc01, stat: { ...oc01.stat, detail: oc01.stat.detail.replace('5.7%', '5.9%') } }), fixtureRows()), ['OC-01 stat.detail should state "5.7%"', 'OC-01 still carries "5.9%" in stat.detail']);
+  reports('a previous-edition figure in a field the pin does not list (OC-03 headline)', surveyEditionProblems({ ...fixtureFacts(), 'OC-03': { ...fixtureFacts()['OC-03'], headline: 'Up about 3×' } }, fixtureRows()), ['OC-03 still carries "about 3×" in headline']);
+  reports('"15.9%" is not the previous edition’s "5.9%" (a figure is matched whole)', surveyEditionProblems(withOc01({ ...oc01, text: `${oc01.text}; 15.9% of the others` }), fixtureRows()), []);
+  reports('a survey fact the pin does not list', surveyEditionProblems({ ...fixtureFacts(), 'OC-99': { id: 'OC-99', text: '1.0% of something' } }, fixtureRows()), [`survey fact OC-99 is not in the ${SURVEY_EDITION} pin`]);
+  reports('a pinned survey fact that is missing from the register', surveyEditionProblems((({ 'OC-09': gone, ...rest }) => rest)(fixtureFacts()), fixtureRows()), ['OC-09 is missing from the register']);
+  reports('a chart cell at the previous edition’s share (Comilla 3.2, now 3.1)', surveyEditionProblems(fixtureFacts(), withRow((r) => r[0] === 'OC-09-district' && r[2] === 'Comilla', (r) => [...r.slice(0, 4), '3.2', ...r.slice(5)])), ['survey CSV row OC-09-district / Comilla should be percent 3.1 (no base)']);
+  reports('a base from the previous edition (OC-05 at n = 170, now 172)', surveyEditionProblems(fixtureFacts(), withRow((r) => r[0] === 'OC-05' && r[2] === 'By 6 Months', (r) => [...r.slice(0, 5), '170', r[6]])), ['survey CSV row OC-05 / By 6 Months should be percent 58.7 (n = 172)']);
+  reports('the headline row of the previous edition (OC-01 net gain 30.5, now 30.2)', surveyEditionProblems(fixtureFacts(), withRow((r) => r[3] === 'percentage_points', (r) => [...r.slice(0, 4), '30.5', ...r.slice(5)])), ['survey CSV row OC-01 / October 2026 survey vs. before training should be percentage_points 30.2 (n = 331)']);
+  reports('Narayanganj (2.9%) still listed although it is under the 3.0% fold', surveyEditionProblems(fixtureFacts(), [...fixtureRows(), ['OC-09-district', 'Respondents by District of Residence', 'Narayanganj', 'percent', '2.9', '', 'published']]), [`the survey CSV carries a row OC-09-district / Narayanganj (percent 2.9) that ${SURVEY_EDITION} does not print; a district under 3.0% is combined into Other Districts`]);
+  reports('a row of the edition that the CSV dropped (Other Districts)', surveyEditionProblems(fixtureFacts(), fixtureRows().filter((r) => r[2] !== 'Other Districts')), ['the survey CSV has no row OC-09-district / Other Districts']);
+  reports('a CSV row listed twice', surveyEditionProblems(fixtureFacts(), [...fixtureRows(), fixtureRows()[0]]), ['the survey CSV has two rows for OC-01 / Before Training']);
+  reports('a pin that lists a CSV row twice', surveyEditionProblems(fixtureFacts(), fixtureRows(), { facts: SURVEY_FACTS, rows: [...SURVEY_CSV_ROWS, SURVEY_CSV_ROWS[0]] }), ['pin lists the CSV row OC-01 / Before Training twice']);
 }
 
+// The survey figures are those of one edition of the Impact Report (SURVEY_EDITION): the OC-* facts and the published aggregates state its figures and none of the previous edition's.
+problems.push(...surveyEditionProblems(facts, outcomesCsvRows()));
 // The public dataset itself (D1, D15): no unverified facts and no restricted facts without a public scope.
 for (const f of Object.values(facts)) {
   if (f.status === 'U') problems.push(`dataset: unverified (U) fact ${f.id} must stay in the private register`);
@@ -1357,6 +1508,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
+  `check-facts: OK — ${pages} pages, ${refs} fact references, no gated facts or internal wording; ${vendorPages} page(s) name vendor certifications and carry the note once; no "enquir*", "licence" or "tripled" outside /news/<post>/; [PLAIN-LINE] on ${plainLinePages} page(s) with RC-02's numbers; [PROOF-CARD] (the hero's plain-language trial reading, held to RC-02 and RC-07) on ${proofCardPages} page(s); [SESSION-AGENDA] beside the CTA on ${agendaPages} page(s); [POSITION] opens C6 on ${positionPages} page(s); three ranked pains (C2) on ${painPages} page(s), with one C8 card each on ${painC8Pages} of them; trial relevance line under the trial headline on ${trialScopePages} page(s); number guard: ${guard.pages} evergreen page(s) scanned, ${guard.tokens} claim-marked figure(s) checked, ${guard.byRegister} allowed by the register, ${guard.byWhitelist} by the whitelist (${allowList.length} entries); survey dataset pinned to ${SURVEY_EDITION} (${Object.keys(SURVEY_FACTS).length} facts, ${SURVEY_CSV_ROWS.length} CSV rows); report CTA ${reportWithheld ? 'withheld' : 'enabled'}` +
     (production ? `; production holds: ${holds.size} held fact(s), none rendered.` : '.'),
 );

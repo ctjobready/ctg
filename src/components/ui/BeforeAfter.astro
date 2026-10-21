@@ -56,7 +56,8 @@ const bars = [
   const h = (Math.max(0, Math.min(100, b.value)) / 100) * maxH;
   return { ...b, h, y: baseY - h };
 });
-const fmt = (v: number) => `${v}${unit}`;
+// A share prints to one decimal, as everywhere else on the site (a whole share reads "48.0%", not "48%"); any other unit prints as given.
+const fmt = (v: number) => `${unit === '%' ? v.toFixed(1) : v}${unit}`;
 // "+30.5 pp" is shown as "+30.5" over "percentage points": no bare "pp" before it has been spelled out (doc 06 copy conventions).
 const deltaUnit = delta?.endsWith(' pp') ? 'percentage points' : undefined;
 const deltaValue = delta && deltaUnit ? delta.slice(0, -3) : delta;

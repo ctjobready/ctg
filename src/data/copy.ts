@@ -261,9 +261,9 @@ export const withSourceNote = (id: string, text: string): string => {
 // WP51 (cycle-26 reviews, Kimi P2 and Grok m1): ORIGIN_LAUNCH ("Launched in Copenhagen in 2014.", the line for a band that shows SC-03's tile) is gone: Development Partners and Investors print ORIGIN_SHORT like Governments and Foundations.
 
 /**
- * WP52 (cycle-27 review): OC-05's labels call the 170 "surveyed new earners", a term the Outcomes 2026 page defines once (WP49), so the 58.8% read away from that definition (Home's speed slide, the Impact tile) could be taken for a
- * share of all completers. Those two surfaces define the term in place: "... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course ...".
- * The definition is the words of OC-05's own text ("Among the 170 surveyed completers who first earned during or after training"); the label is the register's, with the definition inserted after the term, never retyped. The build
+ * WP52 (cycle-27 review): OC-05's labels call the 172 "surveyed new earners", a term the Outcomes 2026 page defines once (WP49), so the 58.7% read away from that definition (Home's speed slide, the Impact tile) could be taken for a
+ * share of all completers. Those two surfaces define the term in place: "... of the 172 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course ...".
+ * The definition is the words of OC-05's own text ("Among the 172 surveyed completers who first earned during or after training"); the label is the register's, with the definition inserted after the term, never retyped. The build
  * stops if the register's text or the label stops reading that way. The register's labels (OC-05's stat and glance) are unchanged, so the Outcomes page keeps its short labels beside its one definition.
  */
 const NEW_EARNERS_TERM = 'surveyed new earners';
@@ -627,13 +627,13 @@ export const SPEED_UNIVERSITIES: CopyBlock = {
 
 export const SURVEY_EMPLOYMENT: CopyBlock = {
   // WP25s: two readings, not a rise (a rise reads as the training's effect, which a survey of completers does not show).
-  text: 'Among surveyed completers, employment was 47.4% before training and 77.9% at the October 2026 survey.',
+  text: 'Among surveyed completers, employment was 48.0% before training and 78.2% at the October 2026 survey.',
   facts: ['OC-01'],
 };
 
 /**
- * The median-income survey result as two readings (WP35, cycle-12 review). OC-03's register sentence ("median monthly income rose from $82 before training to $245 at the October 2026
- * survey (about 3×)") reads as an effect and a multiple, so a page that states the result prints this display sentence instead; the register sentence itself is unchanged (it backs
+ * The median-income survey result as two readings (WP35, cycle-12 review). OC-03's register sentence ("median monthly income rose from $98 before training to $245 at the October 2026
+ * survey (2.5×)") reads as an effect and a multiple, so a page that states the result prints this display sentence instead; the register sentence itself is unchanged (it backs
  * the published aggregates). Both medians are read from OC-03's stat, so no figure is typed here.
  */
 function surveyIncome(): CopyBlock {
@@ -866,7 +866,7 @@ const predecessorTrialLine = (points: string): CopyBlock => ({
 /**
  * The Independent Evidence body on Investors (WP36, cycle-13 review): the trial and the survey in three sentences, the last saying that youth-program outcomes are not platform outcomes. It replaces the
  * band that restated the trial's plain-language reading, the income headline, the +10.3 pp tile, the trial chart and the survey sentence. The figures are read from RC-02 and OC-01, so the sentences
- * cannot drift from the register, and the builder throws if either stat changes shape. The survey sentence reads "was 77.9% at the October 2026 survey, up from 47.4% before training", as Home's survey card and
+ * cannot drift from the register, and the builder throws if either stat changes shape. The survey sentence reads "was 78.2% at the October 2026 survey, up from 48.0% before training", as Home's survey card and
  * the Impact tile word it: a report by surveyed completers, with the base named and no multiplier.
  */
 function investorEvidence(): CopyBlock {
@@ -913,7 +913,7 @@ export const INVESTOR_PARTNERS: CopyBlock = investorPartners();
 
 /**
  * The two lines of Local Partners' evidence strip (WP42, cycle-19 review), in place of the full trial-and-survey band (the +41% and +54% income results, the 52.8% / 63.1% employment chart and its table, the survey chart and the
- * median income): the trial result and the survey's employment readings, worded as the survey tile words them ("was 77.9% at the October 2026 survey, up from 47.4% before training"; the survey line names its base, "Among
+ * median income): the trial result and the survey's employment readings, worded as the survey tile words them ("was 78.2% at the October 2026 survey, up from 48.0% before training"; the survey line names its base, "Among
  * surveyed completers"). The program-result cards and the two evidence links stay on the page. Figures are read from RC-02 and OC-01, so the lines cannot drift from the register.
  * (WP38 had a strip like it on Universities, with the degree share; WP43, cycle-20 review, removed that strip, so Local Partners' is the one page that states the trial and the survey as two lines.)
  */

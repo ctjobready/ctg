@@ -323,12 +323,12 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     expect(builtPages().filter((p) => p.html.includes('The Strongest Proof')).map((p) => p.route)).toEqual([]);
   });
 
-  test('"Evidence You Can Check" is gone with its pathways table and its 72.3% line; the two evidence links close the "Proof in Practice" link row', async ({ page }) => {
+  test('"Evidence You Can Check" is gone with its pathways table and its 70.8% line; the two evidence links close the "Proof in Practice" link row', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('.pwp, .he__top, .he__head, [data-fact="OC-02"], [data-fact="OC-04"]')).toHaveCount(0);
     const text = await mainText(page);
-    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '72.3%', '34 of 47']) expect(text, gone).not.toContain(gone);
+    for (const gone of ['Evidence You Can Check', 'Paid-Work Pathways Among Surveyed Completers', '70.8%', '34 of 48']) expect(text, gone).not.toContain(gone);
     expect(await texts(page, '#cases .csc__more a')).toEqual(['See All Case Studies', 'Read the Trial Results', 'Impact Survey 2026']);
     expect((await hrefs(page, '#cases .csc__more a')).map(sitePath)).toEqual(['/impact/case-studies/', '/impact/independent-evaluation/', '/impact/outcomes-2026/']);
     const order = await page.evaluate(() => Array.from(document.querySelectorAll('[data-cmf]')).map((el) => el.getAttribute('data-cmf')));
@@ -337,13 +337,13 @@ test.describe('Home: the proof strip and the evidence band (items 9 and 13)', ()
     expect(order[order.indexOf('C7') + 1]).toBe('RECOGNITION');
   });
 
-  test('the Impact Survey 2026 page keeps the pathways and the 72.3%', async ({ page }) => {
+  test('the Impact Survey 2026 page keeps the pathways and the 70.8%', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const text = await mainText(page);
-    expect(text).toContain('72.3%');
-    expect(text).toContain('34 of 47');
-    expect(text).toContain('38.3%');
-    expect(text).toContain('53.3%');
+    expect(text).toContain('70.8%');
+    expect(text).toContain('34 of 48');
+    expect(text).toContain('39.0%');
+    expect(text).toContain('54.4%');
   });
 
   test('the link row wraps as a row at 1280 and 390 and the page does not scroll sideways', async ({ page }) => {
@@ -559,10 +559,10 @@ test.describe('Investors and Development Partners (items 25 and 27)', () => {
 });
 
 test.describe('OC-05: "had started earning by six months after finishing" (item 32)', () => {
-  const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
+  const TEXT = 'Among the 172 surveyed completers who first earned during or after training: 23.3% first earned during the course; 58.7% had started earning by six months after finishing it; 77.3% by a year; 90.7% by two years (cumulative)';
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition and the Outcomes page defines the term once: tests/wp49.spec.ts)
-  const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  const LABEL = 'of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course';
   // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
   const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
   const HEADING = 'Most Surveyed New Earners Were Earning by Six Months After the Course';
@@ -572,23 +572,23 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
   test('the register says "by six months after finishing" in its text, stat label and glance label; the figures and the base are unchanged', () => {
     const oc05 = fact('OC-05');
     expect(oc05.text).toBe(TEXT);
-    expect(oc05.stat?.value).toBe('58.8%');
+    expect(oc05.stat?.value).toBe('58.7%');
     expect(oc05.stat?.label).toBe(LABEL);
     expect(oc05.stat?.glance?.label).toBe(GLANCE);
-    // the cumulative figures include the 23.5% who first earned during the course, who cannot have started "within six months of" the course ending
-    expect(oc05.text).toContain('23.5% first earned during the course');
+    // the cumulative figures include the 23.3% who first earned during the course, who cannot have started "within six months of" the course ending
+    expect(oc05.text).toContain('23.3% first earned during the course');
     expect(`${oc05.text} ${oc05.stat?.label} ${oc05.stat?.glance?.label}`).not.toMatch(/within (?:six months|a year|two years)|of finishing the course/);
   });
 
   // WP53 (owner decision 2026-10-16): the speed slide (headed HEADING) is gone; the survey slide's one body line is OC-05's value and label with the term defined (WP52), without the label's "(October 2026 survey)", and it fits the carousel at 1280 and 390
-  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 170 surveyed completers who first earned during or after training, 58.8% ...", and needs no term (tests/wp54.spec.ts)
+  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 172 surveyed completers who first earned during or after training, 58.7% ...", and needs no term (tests/wp54.spec.ts)
   test('Home slide 3’s body line is OC-05’s value and the register’s closing clause, leading with its base; the former speed heading is on no slide; the slide fits the carousel at 1280 and 390', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);
       await open(page, '');
       const s = slide(page, 3);
       expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-      expect(compact(await s.locator('.hs__lead').textContent()), `${vp.width}px`).toBe('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.');
+      expect(compact(await s.locator('.hs__lead').textContent()), `${vp.width}px`).toBe('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.');
       expect(compact(await page.locator('#results').textContent())).not.toContain(HEADING);
       const track = await page.locator('[data-hs-track]').evaluate((e) => Math.round((e as HTMLElement).clientHeight));
       expect(await s.evaluate((e) => Math.round((e as HTMLElement).scrollHeight)), `${vp.width}px: the slide fits its track`).toBeLessThanOrEqual(track + 1);
@@ -606,11 +606,11 @@ test.describe('OC-05: "had started earning by six months after finishing" (item 
     expect(rows).toHaveLength(5);
     for (const r of rows) expect(r, r).toContain(`"${MEASURE}"`);
     expect(rows.map((r) => r.split('"')[2].split(',').slice(1, 6).join('|'))).toEqual([
-      'During the Course|percent|23.5|170|published',
-      'By 3 Months|percent|38.2|170|published',
-      'By 6 Months|percent|58.8|170|published',
-      'By 12 Months|percent|77.1|170|published',
-      'By 2 Years|percent|90.6|170|published',
+      'During the Course|percent|23.3|172|published',
+      'By 3 Months|percent|38.4|172|published',
+      'By 6 Months|percent|58.7|172|published',
+      'By 12 Months|percent|77.3|172|published',
+      'By 2 Years|percent|90.7|172|published',
     ]);
   });
 

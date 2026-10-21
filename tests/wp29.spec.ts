@@ -70,7 +70,7 @@ test.describe('timelines name their starting point', () => {
   });
 });
 
-// WP31: the Employers page carries no pathways block; WP48 (cycle-23 review): Home's "Evidence You Can Check" band, the one place the block stood, is gone with its 72.3% tile (the Impact Survey 2026 page keeps the table and the 72.3%), so no
+// WP31: the Employers page carries no pathways block; WP48 (cycle-23 review): Home's "Evidence You Can Check" band, the one place the block stood, is gone with its 72.3% tile (the Impact Survey 2026 page keeps the table and the 70.8%), so no
 // page but the survey page shows the paid-work pathways comparison any more (tests/wp48.spec.ts)
 test.describe('paid-work pathways comparison (OC-04): the Impact Survey 2026 page alone', () => {
   for (const route of ['', 'partner-with-us/employers/']) {

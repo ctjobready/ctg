@@ -5,7 +5,7 @@ import { DESKTOP, MOBILE, open } from './support/browser';
  * WP24b: the Impact section tells apart the kinds of evidence (cycle-4 review round 9).
  *  - every proof figure on an Impact page carries an evidence-type badge (Randomized Trial · Surveyed Completers · Program Record · Individual Story);
  *  - /impact/ keeps program records in their own group, never beside the trial, and states each program result once (WP30e: the separate results table is gone);
- *  - the Outcomes 2026 income-source chart shows 7.1% and 4.7% as separate bars with an "about 12%" summary;
+ *  - the Outcomes 2026 income-source chart shows 6.9% and 4.6% as separate bars with an "about 12%" summary;
  *  - long lists (stories, photographs) show a first set and keep the rest behind a disclosure.
  */
 // WP36 (cycle-13 review, "one figure, one label"): the 30,000+ carries the "Contract Scope" evidence tag on /impact/ too (it had the "Agreement" status tag)
@@ -148,23 +148,32 @@ test.describe('/impact/ program results', () => {
 test.describe('Outcomes 2026', () => {
   test.use({ viewport: DESKTOP });
 
-  test('the income-source chart shows 7.1% and 4.7% as separate bars, and the summary says about 12%', async ({ page }) => {
+  test('the income-source chart shows 6.9% and 4.6% as separate bars, and the summary says about 12%', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const sec = page.locator('#income-source');
     await expect(sec).toContainText('Freelancing for Foreign Clients');
-    await expect(sec).toContainText('7.1%');
+    await expect(sec).toContainText('6.9%');
     await expect(sec).toContainText('Job Abroad');
-    await expect(sec).toContainText('4.7%');
+    await expect(sec).toContainText('4.6%');
     await expect(sec).toContainText(/about 12%/i);
     const text = await sec.innerText();
-    expect(text).not.toContain('11.9%');
+    expect(text).not.toContain('11.6%');
   });
 
-  test('the employment sentence reads plainly and the 58.8% label has no stray comma', async ({ page }) => {
+  test('the employment sentence reads plainly and the 58.7% label has no stray comma', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    await expect(page.locator('#employment')).toContainText('77.9% of surveyed completers reported being employed at the October 2026 survey, compared with 47.4% before training');
+    await expect(page.locator('#employment')).toContainText('78.2% of surveyed completers reported being employed at the October 2026 survey, compared with 48.0% before training');
     const text = await page.locator('main').innerText();
     expect(text).not.toMatch(/during or after training, started earning/);
+  });
+
+  // Impact Report 261014B: the employment share before training is 48.0%. A number prints without its decimal ("48%") unless the chart formats it, so the chart, its text alternative and its data table must read as the sentence above them does.
+  test('the employment chart prints both shares to one decimal, as the sentence above it does (48.0%, not 48%)', async ({ page }) => {
+    await open(page, 'impact/outcomes-2026/');
+    const chart = page.locator('#employment .ba');
+    await expect(chart.locator('.ba-value')).toHaveText(['48.0%', '78.2%']);
+    await expect(chart.locator('svg[role="img"]')).toHaveAttribute('aria-label', /Before: 48\.0%\. October 2026 Survey: 78\.2%\. Change: \+30\.2 percentage points\./);
+    await expect(chart.locator('.ba__data td')).toHaveText(['48.0%', '78.2%', '+30.2 percentage points']);
   });
 });
 

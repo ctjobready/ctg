@@ -373,13 +373,13 @@ test.describe('P1 (Kimi): the badge on the 16-countries tiles says "Where We Hav
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L4 (GLM): Outcomes 2026 "How to Read This Survey" names the respondents’ gender as well as their education', () => {
   test('the line reads the two shares from OC-09 and says the group is mostly graduate and majority-male', async ({ page }) => {
-    expect(fact('OC-09').stat?.value).toBe('84.6%');
-    expect(fact('OC-09').text).toContain('19.9% women');
+    expect(fact('OC-09').stat?.value).toBe('85.0%');
+    expect(fact('OC-09').text).toContain('19.6% women');
     await open(page, 'impact/outcomes-2026/');
     const item = page.locator('#methodology li', { hasText: 'Who the respondents are.' });
     await expect(item).toHaveCount(1);
     expect(compact(await item.evaluate((el) => el.textContent))).toBe(
-      'Who the respondents are. 84.6% of respondents hold a bachelor’s degree or higher and 19.9% are women, so results describe a mostly graduate, majority-male group.',
+      'Who the respondents are. 85.0% of respondents hold a bachelor’s degree or higher and 19.6% are women, so results describe a mostly graduate, majority-male group.',
     );
     expect(await item.getAttribute('data-fact')).toBe('OC-09');
     expect(pagesWith('so results describe a mostly graduate group')).toEqual([]);

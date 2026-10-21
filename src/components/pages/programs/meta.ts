@@ -37,7 +37,7 @@ export function statValue(id: string): string {
   return v;
 }
 
-/** Survey proof number for meta descriptions: "47.4% to 77.9%" (OC-01), always with its qualifier in the same sentence. */
+/** Survey proof number for meta descriptions: "48.0% to 78.2%" (OC-01), always with its qualifier in the same sentence. */
 export const surveyShort = () => {
   const s = fact('OC-01').stat!;
   return `${s.from} to ${s.value}`;
