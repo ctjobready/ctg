@@ -419,13 +419,20 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     display: grid;
     gap: var(--space-xs);
   }
-  /* WP76: four courses nest under the NU diploma (it had two). The panel is pinned under the sticky header and cannot scroll, so four stacked courses with their descriptions would end 867 px down at 1280 px wide (the two-course menu ended at 715 px), below a 800 px viewport:
-     a parent with three or more children spans both columns and its children sit two across (771 px at 1280 px; measured). Parents with fewer children (Impact's "In the Field") are unchanged. */
+  /* WP76: four courses nest under the NU diploma (it had two). The panel is pinned under the sticky header and cannot scroll, so its links have to end inside the viewport. Measured at 1280 px wide with the header pinned, the Programs links ended at 643 px with two
+     courses, would end at 835 px with four stacked (with their descriptions), and end at 739 px (783 px with the promo bar above the header) with the rule below: a parent with three or more children spans both columns and its children sit two across.
+     Parents with fewer children (Impact's "In the Field") are unchanged. Where that is still taller than the window (a viewport under 790 px tall, or under 1280 px wide and 820 px tall, where the descriptions wrap more) the nested descriptions are left out,
+     as the mobile drawer leaves them out: the links then end at 671 px (715 px with the promo bar). */
   .mega__item--span {
     grid-column: 1 / -1;
   }
   .mega__sub--two {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-height: 789px), (max-width: 1279px) and (max-height: 819px) {
+    .mega__sub--two .mega__desc {
+      display: none;
+    }
   }
   .mega__group {
     grid-column: 1 / -1;

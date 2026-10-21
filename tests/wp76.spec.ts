@@ -311,8 +311,15 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
     for (const label of ['Cyber Security', 'Data Analytics']) expect(await page.locator('footer').getByRole('link', { name: label }).count(), `footer: ${label}`).toBe(0);
   });
 
-  test('the Programs menu still fits an 800 px viewport at 1280 px wide (page at the top, and scrolled with the header pinned): the diploma spans both columns and its four courses sit two across; other menus keep their layout', async ({ page }) => {
-    await page.setViewportSize(DESKTOP);
+  // The nested descriptions show where the window is tall enough (the links end 739 px down with the header pinned and 783 px at the top of the page, at 1280 px wide) and are left out below that (671 and 715 px): every window listed shows every link.
+  const MENU_WINDOWS = [
+    { width: 1280, height: 800, desc: true },
+    { width: 1440, height: 900, desc: true },
+    { width: 1280, height: 720, desc: false },
+    { width: 1100, height: 800, desc: false },
+  ];
+  for (const win of MENU_WINDOWS) test(`the Programs menu fits a ${win.width} by ${win.height} window (page at the top, and scrolled with the header pinned) with ${win.desc ? 'the nested descriptions' : 'the nested descriptions left out'}: the diploma spans both columns and its four courses sit two across; other menus keep their layout`, async ({ page }) => {
+    await page.setViewportSize({ width: win.width, height: win.height });
     await open(page, HOME);
     // the parent of three or more nested links spans the row; only the Programs menu has one (Impact's "In the Field" has a single child)
     expect(await page.locator('#mega-programs .mega__item--span').count()).toBe(1);
@@ -324,6 +331,8 @@ test.describe('WP76 item 1: the overview page, the Programs hub and the menus na
       await page.locator('[data-mega-trigger][aria-controls="mega-programs"]').click();
       await expect(page.locator('#mega-programs')).toBeVisible();
       await page.waitForTimeout(450);
+      if (win.desc) await expect(page.locator('#mega-programs .mega__sub .mega__desc').first()).toBeVisible();
+      else await expect(page.locator('#mega-programs .mega__sub .mega__desc').first()).toBeHidden();
       const m = await page.evaluate(() => {
         const links = document.querySelector('#mega-programs .mega__links') as HTMLElement;
         const kids = Array.from(document.querySelectorAll('#mega-programs .mega__sub > li > a')) as HTMLElement[];
