@@ -85,11 +85,17 @@ test.describe('menus', () => {
     expect(kids.map((k) => k.trim())).toEqual(['Digital Marketing', 'ICT']);
   });
 
-  test('footer Programs column nests the NU tracks and ends with an external "Courses" link', async ({ page }) => {
+  // Owner, 2026-10-21: Digital Marketing and ICT are courses, not programs, so the footer's Programs column no longer lists them
+  // (the header menu still nests them under the diploma); and no footer sub-list draws a vertical rule.
+  test('footer Programs column lists programs only (no NU course tracks), ends with an external "Courses" link, and draws no rule beside nested links', async ({ page }) => {
     await page.goto('');
     const col = page.locator('footer nav.footer__col', { has: page.locator('h2 a', { hasText: 'Programs' }) });
-    const nested = col.locator('li:has(> a[href$="' + NU + '"]) > ul > li > a');
-    expect((await nested.allTextContents()).map((t) => t.trim())).toEqual(['Digital Marketing', 'ICT']);
+    await expect(col.locator('li:has(> a[href$="' + NU + '"]) > ul')).toHaveCount(0);
+    await expect(col.getByRole('link', { name: 'Digital Marketing' })).toHaveCount(0);
+    await expect(col.getByRole('link', { name: 'ICT', exact: true })).toHaveCount(0);
+    const borders = await page.locator('footer .footer__sub').evaluateAll((els) => els.map((e) => getComputedStyle(e).borderLeftWidth));
+    expect(borders.length).toBeGreaterThan(0);
+    for (const w of borders) expect(w).toBe('0px');
     const top = col.locator('> ul > li > a');
     const last = top.last();
     await expect(last).toContainText('Courses');
