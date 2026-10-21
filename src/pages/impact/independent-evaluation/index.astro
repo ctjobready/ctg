@@ -40,6 +40,8 @@ const faq = buildFaq([
   },
 ]);
 const bigdReport = sources.BIGD22;
+// WP73: the follow-up study is under way (BIGD's study page, BIGDSTUDY), so RC-10's sentence links that page.
+const bigdStudy = sources.BIGDSTUDY;
 const jsonLd = [
   articleNode({
     path,
@@ -147,6 +149,7 @@ const d = discoveryCta();
       The offered-place results are the closer guide to what a funded program can deliver, because they include women who were offered a place but did not attend. One trial in one population does not forecast a new country or a new track, so a new pilot starts from a scorecard agreed in co-design, with independent evaluation welcome.
     </p>
     <p data-fact="RC-10"><Fact id="RC-10" />.{' '}
+      <a class="link" href={bigdStudy.url} rel={linkAttrs(bigdStudy.url!).rel}>See BIGD’s Follow-Up Study<Icon name="arrow-right" size={16} /><span class="sr-only"> (opens {hostOf(bigdStudy.url!)})</span></a>{' '}
       <a class="link" href={linkAttrs('/partner-with-us/').href}>See How Partnerships Work<Icon name="arrow-right" size={16} /></a>
     </p>
   </ReportSection>

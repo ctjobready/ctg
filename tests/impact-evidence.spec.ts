@@ -189,7 +189,8 @@ test.describe('Independent Evaluation', () => {
     await expect(method).toHaveCount(1);
     expect(await method.evaluate((el) => (el as HTMLDetailsElement).open)).toBe(false);
     await expect(method).toContainText('833 women at baseline');
-    await expect(page.locator('#funders')).toContainText(/five-year follow-up/i);
+    await expect(page.locator('#funders')).toContainText(/follow-up study of the program is under way/);
+    await expect(page.locator('#funders')).not.toContainText(/five-year/i);
     await expect(page.locator('#funders')).toContainText('See How Partnerships Work');
     await expect(page.locator('#faq')).toContainText('How Do You Track Outcomes?');
     await expect(page.locator('#classes h2')).toHaveText('Freelancing Share by Classes Attended');

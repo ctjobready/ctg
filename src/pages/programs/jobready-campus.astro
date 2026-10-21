@@ -45,12 +45,16 @@ const campus = ctaFor('campus');
 const hours = statValue('PD-01');
 const pricingFirst = PRICING.text.split('. ')[0] + '.';
 
+// WP73: the bachelor’s share is read from OC-09's text, not retyped; the build stops if OC-09 stops stating it.
+const bachelorShare = /(\d+\.\d+)% hold a bachelor/.exec(fact('OC-09').text)?.[1];
+if (!bachelorShare) throw new Error('OC-09 no longer states the bachelor’s-degree share ("N.N% hold a bachelor")');
+
 const faqSources: FaqSource[] = [
   { audience: 'variants' as const, id: 'Q3-institution' },
-  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 85.0% is the wider-programs survey profile, said as such.
+  // WP34 (cycle-11 review): the question is about this program's fit, so the answer names who it is for; the 85.0% is the October 2026 survey's profile of completers, said as such (WP73).
   {
     q: 'Who Is JobReady@Campus For?',
-    html: 'Students and degree holders at universities and colleges. Across CodersTrust’s wider programs, 85.0% of surveyed completers hold a bachelor’s degree or higher.',
+    html: `Students and degree holders at universities and colleges. In CodersTrust’s October 2026 survey of completers across its programs, ${bachelorShare}% held a bachelor’s degree or higher.`,
     evidence: ['OC-09'],
   },
 ];
