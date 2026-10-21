@@ -247,7 +247,7 @@ test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answe
     expect(fact('GV-11').text).toContain('2,500 women trained directly');
     expect(fact('GV-13').stat?.value).toBe('2,500');
     expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,500' });
-    expect(fact('PD-05').text).toContain('National 100,000+ trainees');
+    expect(fact('PD-05').text).toContain('National Design Option 100,000+ trainees'); // WP69 (owner item 3): the option is "National Design Option"
   });
 
   test('the answer is three sentences with no link, its JSON-LD says the same, and it rests on GV-01, GV-11 and PD-05', async ({ page }) => {

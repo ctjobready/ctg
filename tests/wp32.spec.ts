@@ -116,9 +116,9 @@ test.describe('Investors', () => {
 });
 
 test.describe('Employers', () => {
-  test('"Will This Work in Our Country?" is answered with the needs assessment and the candidate-pool scope, in the page and in its FAQ markup; the other pages keep the country answer', async ({ page }) => {
+  test('"Will This Work for Our Roles?" (WP69: was "in Our Country?") is answered with the needs assessment and the candidate-pool scope, in the page and in its FAQ markup; the other pages keep the country answer', async ({ page }) => {
     await open(page, 'partner-with-us/employers/');
-    const item = page.locator('#faq details', { hasText: 'Will This Work in Our Country?' });
+    const item = page.locator('#faq details', { hasText: 'Will This Work for Our Roles?' });
     await expect(item).toHaveCount(1);
     const answer = compact(await item.textContent());
     expect(answer).toContain('We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.');

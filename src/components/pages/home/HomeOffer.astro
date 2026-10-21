@@ -2,7 +2,6 @@
 import Section from '../../ui/Section.astro';
 import SectionHeader from '../../ui/SectionHeader.astro';
 import Icon from '../../system/Icon.astro';
-import Badge from '../../system/Badge.astro';
 import PilotScorecard from '../../ui/PilotScorecard.astro';
 import CopyBlock from './CopyBlock.astro';
 import { optionDuration } from '../../../lib/format';
@@ -40,7 +39,7 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
         <li class="card offer__card" data-reveal>
           <div class="card__body">
             <p class="eyebrow">Option {i + 1}</p>
-            <h3 class="card__title">{o.name}{o.name === 'National' && ' '}{o.name === 'National' && <Badge tone="sale" class="offer__badge">Design Option</Badge>}</h3>
+            <h3 class="card__title">{o.name}</h3>
             <p class="offer__size">{o.size}</p>
             <p class="card__meta offer__duration">{optionDuration(o.duration)}</p>
             <p class="card__text">{o.note}</p>
@@ -65,10 +64,6 @@ const options = PROGRAM_OPTIONS.map((o, i) =>
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-  .offer :global(.offer__badge) {
-    margin-left: var(--space-sm);
-    vertical-align: middle;
   }
   .offer__size {
     font-size: var(--fs-heading-l);

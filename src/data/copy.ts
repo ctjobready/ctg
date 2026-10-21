@@ -708,7 +708,7 @@ for (const label of SCORECARD_LABELS) {
 export const PROGRAM_OPTIONS = [
   { name: 'Multi-Cohort Pilot Program', size: '1,000–2,500 trainees', duration: '8–14 months (tracking to month 23)', note: 'Prove the model in one country or region.' },
   { name: 'Scale', size: '10,000–25,000 trainees', duration: '12–18 months rolling', note: 'Expand to more cohorts and locations on the pilot’s results.' },
-  { name: 'National', size: '100,000+ trainees', duration: '3–5 years', note: 'A design option we plan phase by phase; not yet delivered at this size.' },
+  { name: 'National Design Option', size: '100,000+ trainees', duration: '3–5 years', note: 'A design option we plan phase by phase; not yet delivered at this size.' }, // WP69 (owner item 3): was "National"
 ] as const;
 export const PROGRAM_OPTIONS_FACTS = ['PD-05'];
 

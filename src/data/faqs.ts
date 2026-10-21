@@ -93,8 +93,8 @@ const bankAnswer = (id: string): Faq => {
   return f;
 };
 // WP67 (cycle-38 review, Gemini): PD-05's national tier ("National 100,000+ trainees"), for the Governments scale answer below; read from the register, never retyped, and the build stops if the register stops saying it.
-const NATIONAL_SIZE = /National (\d[\d,]*\+) trainees/.exec(fact('PD-05').text)?.[1];
-if (!NATIONAL_SIZE) throw new Error('faqs: PD-05 no longer reads "National N+ trainees"; update the Governments scale answer');
+const NATIONAL_SIZE = /National Design Option (\d[\d,]*\+) trainees/.exec(fact('PD-05').text)?.[1]; // WP69: the option is named "National Design Option" (owner item 3)
+if (!NATIONAL_SIZE) throw new Error('faqs: PD-05 no longer reads "National Design Option N+ trainees"; update the Governments scale answer');
 // WP63 (cycle-35 review, GPT-6.1 Sol G2): the bank answer's first sentence names what is tested and who chooses the tracks; each variant says it for its own reader and keeps the second sentence (the evidence statement) as it is.
 const Q1_OPENING = 'We test local employer demand first and choose each country’s tracks with local partners.';
 const q1Variant = (id: string, opening: string): Faq => {
@@ -108,9 +108,11 @@ faqs.push(
   q1Variant('Q1-campus', 'We test local employer demand for your graduates’ skills and your campus labs first, and choose each country’s tracks with local partners.'),
   // Employers (WP32, cycle-9 review): the bank answer is about youth-program evidence and country tracks, which does not answer an employer. This answer repeats the Employers page's own statements
   // (the needs assessment, IN-10; the candidate-pool scope of talent requests, which its positioning statement rests on IN-10 and IN-04 for), so it claims nothing the page does not already say.
+  // WP69 (owner item 1, 2026-10-21): the question is "Will This Work for Our Roles?" on this page (the answer below is about roles, not countries); the shared Q1 keeps "Will This Work in Our Country?" for the other audiences.
   {
     ...bankAnswer('Q1'),
     id: 'Q1-employer',
+    q: `Will This Work for Our Roles?`,
     a: `We start with a needs assessment of your roles, tasks and required tools. For hiring, talent requests are scoped against the experience and credentials available in the candidate pool.`,
     evidence: ['IN-10', 'IN-04'],
     audiences: ['variants'],
