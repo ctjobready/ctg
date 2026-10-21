@@ -165,7 +165,7 @@ test.describe('Item 2: OC-03’s before-training median is "the median before tr
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 3: the "Where They Work" card closes "as agreed in the program scope"', () => {
-  const TEXT = 'Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.';
+  const TEXT = 'Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.';
 
   test('the months are still PD-02’s', () => {
     expect(fact('PD-02').text).toContain('outcome tracking for 12 months after each course');

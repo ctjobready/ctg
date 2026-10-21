@@ -456,7 +456,7 @@ test.describe('P1 (GLM): YouthWIDE’s "Where They Work" card is "Local, Remote 
     const card = page.locator('#mechanism li', { has: page.locator('.model__label', { hasText: 'Where They Work' }) });
     await expect(card).toHaveCount(1);
     await expect(card.locator('.model__title')).toHaveText('Local, Remote and Global Work');
-    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.');
+    expect(compact(await card.locator('.model__text').textContent())).toBe('Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.');
     expect(pagesWith('Local, Remote, Overseas and Freelance Work')).toEqual([]);
   });
 });

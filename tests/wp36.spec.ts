@@ -137,7 +137,7 @@ test.describe('Development Partners and Governments: each figure once', () => {
   // WP53 (owner follow-up, 2026-10-16): "local, remote and global work" is said once, in the card's title; the text is "Placement support and outcome tracking for 12 months after each course." (tests/wp53.spec.ts)
   test('Development Partners: the mechanism card says "Placement support ..." with its 12 months of outcome tracking, not "Placement into local ..."', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
-    const card = page.locator('#mechanism').getByText('Placement support and outcome tracking for 12 months after each course, as agreed in the program scope.');
+    const card = page.locator('#mechanism').getByText('Placement support, then outcome tracking for 12 months after each course, as agreed in the program scope.');
     await expect(card).toHaveCount(1);
     expect(await mainText(page)).not.toMatch(/Placement into local/);
   });
