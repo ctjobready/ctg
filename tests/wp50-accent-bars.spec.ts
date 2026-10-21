@@ -8,10 +8,12 @@ import { listPages } from './support/pages';
  * and the active states are in place, and fails on an edge accent bar:
  *   - a left or top border of 2 px or more, with a colour that is not transparent, that is thicker than the opposite border (a bar is one-sided; the uniform white ring around the timeline and map dots is not a bar).
  * It applies to any element, not only to rounded or painted ones: the bars the owner objected to sat on quotes, definition blocks and data lines that had neither a radius nor a ground, and every such block is "a box" in the owner's words.
- * Allow-listed, by selector, are the navigation indicators that are not boxes: the menu and drawer sub-list dividers (SiteHeader: .mega__sub, .drawer__sub; 2 px, no radius, no ground) and the table of contents' active-section
+ * Allow-listed, by selector, is one navigation indicator that is not a box: the table of contents' active-section
  * marker (LongformLayout: `.lf-toc a`, transparent until the link is active). Retrospective coverage (the owner exempted this project from test-first work); run `npm run build` first.
  */
-const NAV_INDICATORS = ['.mega__sub', '.drawer__sub', '.lf-toc a'];
+// Owner, 2026-10-21/22: no vertical bars beside nested links, so the menu and drawer sub-lists (.mega__sub, .drawer__sub) are no
+// longer allow-listed; only the table of contents' active-section marker is.
+const NAV_INDICATORS = ['.lf-toc a'];
 
 /** Every edge accent bar on the page, as "<element> (<side> <width>px <colour>)". Runs in the page. */
 async function accentBars(page: Page, allow: string[] = NAV_INDICATORS): Promise<string[]> {
@@ -66,9 +68,8 @@ test.describe('the scan proves itself on fixtures before it judges the site', ()
     });
     const found = await accentBars(page);
     const mine = found.filter((f) => /#f-/.test(f)).map((f) => f.replace(/\.[^ (]*/g, '').replace(/ \(.*/, '')).sort();
-    expect(mine).toEqual(['div#f-box', 'div#f-inline', 'div#f-pseudo::before', 'div#f-top', 'p#f-text']);
-    // without the allow-list the navigation divider is found too, so the list is what lets it through
-    expect((await accentBars(page, [])).some((f) => /#f-nav/.test(f))).toBe(true);
+    // A sub-list divider beside nested links is now reported like any other bar (owner, 2026-10-21/22).
+    expect(mine).toEqual(['div#f-box', 'div#f-inline', 'div#f-pseudo::before', 'div#f-top', 'p#f-text', 'ul#f-nav'].sort());
   });
 });
 

@@ -410,12 +410,12 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
     text-decoration: none;
     transition: background-color var(--dur-base) ease;
   }
-  /* Nested tracks (the NU diploma): indented under their parent, as a real child list. Its 2 px rule is a navigation divider (no radius, no ground, not a box), so the owner's left-edge rule (2026-10-16, WP50) leaves it; tests/wp50-accent-bars.spec.ts allow-lists it. */
+  /* Nested tracks (the NU diploma): indented under their parent, as a real child list, with no rule beside them (owner, 2026-10-21/22:
+     no vertical bars beside nested links, footer and menus alike). */
   .mega__sub {
     list-style: none;
     margin: var(--space-xs) 0 0 var(--space-compact);
     padding: 0 0 0 var(--space-sm);
-    border-left: 2px solid var(--primary-fixed);
     display: grid;
     gap: var(--space-xs);
   }
@@ -625,11 +625,10 @@ const menus = navGroups.map((g) => ({ ...g, nodes: nestItems(g.items) }));
   .drawer__group .acc__body ul {
     padding-bottom: var(--space-sm);
   }
-  /* Nested tracks (the NU diploma): indented under their parent. Its 2 px rule is a navigation divider, not a box (WP50: kept, and allow-listed in tests/wp50-accent-bars.spec.ts). */
+  /* Nested tracks (the NU diploma): indented under their parent, with no rule beside them (owner, 2026-10-21/22: no vertical bars beside nested links). */
   .drawer__group .acc__body ul.drawer__sub {
     margin-left: var(--space-md);
     padding: 0 0 0 var(--space-sm);
-    border-left: 2px solid var(--primary-fixed);
   }
   .drawer__group .acc__body .drawer__sub a {
     min-height: 40px;
