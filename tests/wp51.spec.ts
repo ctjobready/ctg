@@ -155,10 +155,10 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // WP57 (cycle-29 review, Gemini GM4): the Kosovo card's context line is its program records
-    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
+    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records, 2016–2017: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's fact (PR-05) is not named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 PR-02b', 'PR-01', 'PR-02', 'PR-02b']);
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
   });
 
   test('the figure is stated on Home in slide 4, with its qualifier, and in the WSDFM card as program records (WP63; it was slide 4’s alone)', async ({ page }) => {
@@ -417,9 +417,9 @@ test.describe('Home: the government slide and the program-results slide (items 2
     const heights = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
     expect(await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li')).toEqual([
-      'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(await slide(page, 4).locator('.hs__lines li').nth(3).getAttribute('data-fact')).toBe('PR-05');

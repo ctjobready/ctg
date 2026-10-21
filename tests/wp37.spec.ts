@@ -51,7 +51,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
 
     const delivery = [
       { i: 0, title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', context: 'Program records: 711 of 1,000 women in work (71%).', slug: 'wsdfm-women-freelancers' },
-      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records: 102 of 150 women in work.', slug: 'kosovo-women-in-online-work' },
+      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records, 2016–2017: 102 of 150 women in work.', slug: 'kosovo-women-in-online-work' },
       { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
     ];
     for (const d of delivery) {
@@ -91,7 +91,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     await open(page, '');
     const text = await mainText(page);
     expect(count(text, '102 of 150'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
-    expect(count(text, 'Women in Online Work, Kosovo: 68% in work'), 'Kosovo, slide 4').toBe(1);
+    expect(count(text, 'Women in Online Work, Kosovo (2016–2017): 68% in work'), 'Kosovo, slide 4').toBe(1);
     expect(count(text, 'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
     // WP58 (cycle-30 review, Grok R3): slide 4's line states the count and its base itself ("372 of 800 tracked in work (47%)"), once; no card states it
     expect(count(text, '372 of 800'), 'the count and its base are slide 4’s alone').toBe(1);
@@ -99,7 +99,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     expect(count(text, '711 of 1,000'), 'WSDFM, slide 4 and the WSDFM card').toBe(2);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds the World Bank's own figure (PR-02b, one line: "World Bank: 77 trainees won at least one online contract."). WP57 (cycle-29 review, Gemini GM4): and its program records
     // (PR-02, "Program records: 102 of 150 women in work."); the band's wrapper names both, and each line names its own. The other program-record figures (PR-01, PR-05) stay slide 4's alone, so no other fact is named.
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 PR-02b', 'PR-01', 'PR-02', 'PR-02b']);
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
   });
 
   test('the other pages keep their case-study figures: Development Partners and Foundations show the Kosovo and Her Power results, no card shows a context line', async ({ page }) => {

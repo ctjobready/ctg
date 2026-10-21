@@ -284,12 +284,12 @@ test.describe('S8 is reversed (b): owner decision 7, "show both", takes preceden
   test('the card still reads the program records and the World Bank line, each tied to its own fact; slide 4 gives the program records alone', async ({ page }) => {
     await open(page, HOME);
     const card = page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' });
-    await expect(card.locator('.case__context')).toHaveText('Program records: 102 of 150 women in work.');
-    expect(await card.locator('.case__context').getAttribute('data-fact')).toBe('PR-02');
+    await expect(card.locator('.case__context')).toHaveText('Program records, 2016–2017: 102 of 150 women in work.');
+    expect(await card.locator('.case__context').getAttribute('data-fact')).toBe('PR-02 TL-04');
     await expect(card.locator('.case__note')).toHaveText('World Bank: 77 trainees won at least one online contract.');
     expect(await card.locator('.case__note').getAttribute('data-fact')).toBe('PR-02b');
     const slide4 = compact(await page.locator('#results').textContent());
-    expect(slide4).toContain('Women in Online Work, Kosovo: 68% in work (102 of 150).');
+    expect(slide4).toContain('Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).');
     expect(slide4, 'the World Bank’s 77 is not on slide 4').not.toContain('77 trainees');
     expect(compact(await page.locator('main').textContent()).split('77 trainees').length - 1, 'the World Bank’s figure is on Home in the card alone').toBe(1);
   });

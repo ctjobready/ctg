@@ -114,7 +114,10 @@ function kosovoRecords(): CopyBlock {
   const r = fact('PR-02');
   const n = r.stat?.value;
   if (!n || !/^\d+ of \d+$/.test(n) || !r.text.includes(`${n} women in work`)) throw new Error('KOSOVO_RECORDS: PR-02 no longer reads "N of M women in work"');
-  return { text: `Program records: ${n.replace(/ /g, '\u00a0')} women in work.`, facts: ['PR-02'] };
+  // WP71 (owner direction, dated program records): the years are TL-04's span, read from the register ("Program records, 2016\u20132017: 102 of 150 women in work.").
+  const years = fact('TL-04').stat?.value;
+  if (!years || !/^\d{4}\u2013\d{4}$/.test(years)) throw new Error('KOSOVO_RECORDS: TL-04 stat value no longer reads "YYYY\u2013YYYY"');
+  return { text: `Program records, ${years}: ${n.replace(/ /g, '\u00a0')} women in work.`, facts: ['PR-02', 'TL-04'] };
 }
 export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
 /**

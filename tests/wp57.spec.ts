@@ -399,7 +399,7 @@ test.describe('K2, Foundations: the meta description reads "earned an estimated 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures, and no card, tile or block shows one without the other ("show both", owner decision 7)', () => {
-  const RECORDS = 'Program records: 102 of 150 women in work.';
+  const RECORDS = 'Program records, 2016–2017: 102 of 150 women in work.';
   const WORLD_BANK = 'World Bank: 77 trainees won at least one online contract.';
   const card = (page: Page) => page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' });
 
@@ -407,13 +407,13 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
     await open(page, HOME);
     await expect(card(page)).toHaveCount(1);
     await expect(card(page).locator('.case__context')).toHaveText(RECORDS);
-    expect(await card(page).locator('.case__context').getAttribute('data-fact')).toBe('PR-02');
+    expect(await card(page).locator('.case__context').getAttribute('data-fact')).toBe('PR-02 TL-04');
     await expect(card(page).locator('.case__note')).toHaveText(WORLD_BANK);
     expect(await card(page).locator('.case__note').getAttribute('data-fact')).toBe('PR-02b');
     expect(compact(await card(page).locator('.case__context, .case__note').allTextContents().then((t) => t.join(' ')))).toBe(`${RECORDS} ${WORLD_BANK}`);
     await expect(card(page).locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // the band's wrapper names both Kosovo facts; WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's card states no fact
-    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 PR-02b', 'PR-01', 'PR-02', 'PR-02b']);
+    expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
     // the program records are on Home in the hero slide and in this card; the World Bank's figure is on this card alone
     const main = compact(await page.locator('main').textContent());
     expect(main.split('102 of 150').length - 1).toBe(2);
