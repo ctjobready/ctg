@@ -196,6 +196,16 @@ if (!firstJob) throw new Error('heroSlides: PR-03 label no longer reads "of the 
 const kosovoBase = fact('PR-02').stat?.value;
 if (!kosovoBase || !/^\d+ of \d+$/.test(kosovoBase)) throw new Error('heroSlides: PR-02 value no longer reads "N of M"');
 /**
+ * WP71 (owner direction, dated program records like the other pages): the program years are read from the register, never typed. Kosovo's years are TL-04's stat value ("2016–2017"; Development Partners and the case study read the same span);
+ * Korail's year is the "2017:" in PR-03's text, as the Development Partners tile reads it (partners.ts). The label is PR-02's own "Women in Online Work, Kosovo: P% in work", with the years placed after the program name.
+ */
+const kosovoYears = fact('TL-04').stat?.value;
+if (!kosovoYears || !/^\d{4}–\d{4}$/.test(kosovoYears)) throw new Error('heroSlides: TL-04 stat value no longer reads "YYYY–YYYY"; update the Kosovo year of the program-results slide');
+const kosovoShare = /^Women in Online Work, Kosovo: (\d+% in work)$/.exec(fact('PR-02').stat?.label ?? '')?.[1];
+if (!kosovoShare) throw new Error('heroSlides: PR-02 label no longer reads "Women in Online Work, Kosovo: P% in work"');
+const korailYear = /, (\d{4}): [\d,]+ trained;/.exec(fact('PR-03').text)?.[1];
+if (!korailYear) throw new Error('heroSlides: PR-03 text no longer reads "..., YYYY: N trained; ..."; update the UNDP YES year of the program-results slide');
+/**
  * WSDFM's program-record result, the fourth program on the program-results slide (WP50, cycle-25 review: Impact says "Four Programs" and so does Case Studies). Read from PR-01 as Kosovo's line is: the label ("WSDFM: 71% in work")
  * and the base from its value ("711 of 1,000"). The line carries the Home case card's qualifier ("program records, not trial data", src/components/pages/home/caseStudies.ts), because the first slide is the
  * randomized trial of the same predecessor program (RC-01), and it is kept to one line at 1280 px so the slide does not grow and leave the other slides more than 48 px unused below their content (tests/hero-slider.spec.ts; the "Find Your Program"
@@ -205,7 +215,7 @@ const wsdfmShare = /^WSDFM: (\d+%) in work$/.exec(fact('PR-01').stat?.label ?? '
 const wsdfmBase = fact('PR-01').stat?.value;
 if (!wsdfmShare || !wsdfmBase || !/^[\d,]+ of [\d,]+$/.test(wsdfmBase)) throw new Error('heroSlides: PR-01 no longer has the label "WSDFM: P% in work" and a value "N of M"');
 const PR_TEXT = {
-  wow: `${fact('PR-02').stat?.label} (${kosovoBase}).`,
+  wow: `Women in Online Work, Kosovo (${kosovoYears}): ${kosovoShare} (${kosovoBase}).`,
   // WP60 (cycle-32 review, Claude S4; owner answer 2026-10-20, "The BIGD study only studied 833"): "(711 of 1,000; program records; trial studied 833)." says how the 711 of 1,000 relates to the trial, whose count is RC-07's 833 (TRIAL_WOMEN, src/data/copy.ts). It replaces "...; program records, not trial data)".
   // The review's form, "...; program records; the trial studied 833).", is 609 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48); "the" is the word left out (577 px).
   // Measured at 1280 px, one row: "program records; trial studied 833" 577 px; "program records; the trial had 833" 577 px; "program records; trial: 833 women" 580 px; "program records, not the trial’s 833" 586 px. Wrapped: "program records; the trial studied 833" 609 px; "program records; trial of 833 women" 597 px;
@@ -214,7 +224,7 @@ const PR_TEXT = {
   // The review's wording, "..., from program records; a separate trial studied 833 women.", is 779 px against the 594 px the row has at 1280 px, so it wrapped and made this slide 30 px taller, which left slides 1 to 3 at 57, 57 and 50 px unused (the limit is 48; measured). "from program records" is the clause left out
   // (this line is 588 px, one row): the slide's eyebrow ("Program Records") and its lead ("..., with results from each program’s records.") already say it for all four lines, and "a separate trial" keeps the 711 of 1,000 apart from the trial. At 390 px every form takes several rows.
   wsdfm: `WSDFM: ${wsdfmBase} in work (${wsdfmShare}); a separate trial studied ${TRIAL_WOMEN} women.`,
-  yes: `UNDP YES, Korail: ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
+  yes: `UNDP YES, Korail (${korailYear}): ${fact('PR-03').stat?.value} of the ${firstJob[1]} trained found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
   // is already in "tracked women", so it is left out of the second clause to keep the line on one row (tests/wp51.spec.ts and tests/hero-slider.spec.ts hold the budget).
@@ -367,7 +377,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     // The slide still lists four programs, each from its own program records (the eyebrow says "Program Records"); the lead names no more than the lines below it.
     lead: 'Results from the records of four programs.',
     lines: [
-      { text: PR_TEXT.wow, factIds: ['PR-02'] },
+      { text: PR_TEXT.wow, factIds: ['PR-02', 'TL-04'] },
       { text: PR_TEXT.wsdfm, factIds: ['PR-01', 'RC-07'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
       { text: PR_TEXT.herPower, factIds: ['PR-05'] },

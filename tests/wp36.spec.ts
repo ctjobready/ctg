@@ -81,9 +81,9 @@ test.describe('Home: each figure once', () => {
     const lines = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
     // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
-      'Women in Online Work, Kosovo: 68% in work (102 of 150).',
+      'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 in work (71%); a separate trial studied 833 women.',
-      'UNDP YES, Korail: 67% of the 350 trained found a first job within three months.',
+      'UNDP YES, Korail (2017): 67% of the 350 trained found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     expect(lines[2]).not.toMatch(/in work/);

@@ -126,7 +126,8 @@ test.describe('Item 2 (Claude): Home slide 4 leads "Results from the records of 
     await expect(s4.locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     const lines = await s4.locator('.hs__lines li').evaluateAll((els) => els.map((e) => (e.textContent ?? '').replace(/\s+/g, ' ').trim()));
     expect(lines).toHaveLength(4);
-    expect(lines.map((l) => l.split(':')[0])).toEqual(['Women in Online Work, Kosovo', 'WSDFM', 'UNDP YES, Korail', 'Her Power']);
+    // WP71: the Kosovo and Korail lines carry their years in brackets ("Women in Online Work, Kosovo (2016–2017): ...", "UNDP YES, Korail (2017): ...").
+    expect(lines.map((l) => l.split(':')[0])).toEqual(['Women in Online Work, Kosovo (2016–2017)', 'WSDFM', 'UNDP YES, Korail (2017)', 'Her Power']);
     expect(pagesWith('Four delivered programs')).toEqual([]);
   });
 
