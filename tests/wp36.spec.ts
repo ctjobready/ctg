@@ -39,15 +39,15 @@ const answerOf = async (page: Page, question: string) => compact(await page.loca
 
 test.describe('Home: each figure once', () => {
   // WP42 (cycle-19 review): the government slide is second, so the survey, program-result, speed and reach slides are the third to the sixth
-  test('slide 3 shows the income result only; the 77.9% is the hero’s survey card', async ({ page }) => {
+  test('slide 3 shows the income result only; the 78.2% is the hero’s survey card', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
-    expect(compact(await slide.textContent())).not.toContain('77.9');
-    await expect(page.locator('.hh__card[data-fact="OC-01"]')).toContainText('77.9%');
-    expect(count(await mainText(page), '77.9%'), 'the 77.9% is stated once on Home').toBe(1);
+    expect(compact(await slide.textContent())).not.toContain('78.2');
+    await expect(page.locator('.hh__card[data-fact="OC-01"]')).toContainText('78.2%');
+    expect(count(await mainText(page), '78.2%'), 'the 78.2% is stated once on Home').toBe(1);
   });
 
   // WP38 (cycle-15 review) and WP45 (cycle-21 review) had a reach slide ("Programs in 15 Countries and Territories", SC-03's detail line, no tile). WP53 (owner decision 2026-10-16): that slide is gone. The 130,000+ and the 16 countries and territories
@@ -62,17 +62,17 @@ test.describe('Home: each figure once', () => {
   });
 
   // WP38 (cycle-15 review), WP41 (cycle-18 reviews), WP43 (cycle-20 review), WP45 to WP48 (cycles 21 to 23) and WP51 (cycle-26 review) shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course": the finding, no percentage, the
-  // 58.8% in a tile). WP53 (owner decision 2026-10-16): that slide is gone and its finding is the survey slide's ONE body line, tied to OC-05 (tests/wp53.spec.ts). WP54 (cycle-28 review): the line leads with its base, "Of the 170 surveyed completers who
-  // first earned during or after training, 58.8% ...", and no longer uses the register's term "surveyed new earners" (tests/wp54.spec.ts).
-  test('the survey slide’s body line states the 58.8% with its base ("the 170 surveyed completers who first earned during or after training"), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
+  // 58.8% in a tile). WP53 (owner decision 2026-10-16): that slide is gone and its finding is the survey slide's ONE body line, tied to OC-05 (tests/wp53.spec.ts). WP54 (cycle-28 review): the line leads with its base, "Of the 172 surveyed completers who
+  // first earned during or after training, 58.7% ...", and no longer uses the register's term "surveyed new earners" (tests/wp54.spec.ts).
+  test('the survey slide’s body line states the 58.7% with its base ("the 172 surveyed completers who first earned during or after training"), tied to OC-05; no slide carries the former speed heading', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     expect(await slide.locator('h2').getAttribute('data-fact')).toBe('OC-03');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('58.8%');
-    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('the 170 surveyed completers who first earned during or after training');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('58.7%');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('the 172 surveyed completers who first earned during or after training');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
@@ -176,7 +176,7 @@ test.describe('Partner with Us hub', () => {
 
 test.describe('Investors', () => {
   const EVIDENCE =
-    'A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 77.9% at the October 2026 survey, up from 47.4% before training. Youth-program outcomes are not platform outcomes.';
+    'A randomized trial of CodersTrust’s predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed. Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training. Youth-program outcomes are not platform outcomes.';
 
   test('Independent Evidence is three sentences tied to RC-02 and OC-01, then three links; no chart, tile, table or case-study card', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
@@ -195,13 +195,13 @@ test.describe('Investors', () => {
     expect(await band.getAttribute('class')).toMatch(/band--klein/);
   });
 
-  test('the youth-program line is said once on the page, and the trial, the 77.9% and the 47.4% are stated once', async ({ page }) => {
+  test('the youth-program line is said once on the page, and the trial, the 78.2% and the 48.0% are stated once', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const text = await mainText(page);
     expect(count(text, 'Youth-program outcomes are not platform outcomes.')).toBe(1);
     expect(count(text, '10.3 percentage points')).toBe(1);
-    expect(count(text, '77.9%')).toBe(1);
-    expect(count(text, '47.4%')).toBe(1);
+    expect(count(text, '78.2%')).toBe(1);
+    expect(count(text, '48.0%')).toBe(1);
     expect(text).not.toMatch(/BIGD|For every 100 women|Chart data|Control Group/);
   });
 
@@ -461,10 +461,10 @@ test.describe('one figure, one label: the 30,000+ is tagged "Contract Scope" eve
 });
 
 test.describe('dating lines', () => {
-  // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow), so its "Last updated" is that day; the source snapshot stays October 2026
-  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 15, 2026"; no page says "Page last reviewed"', async ({ page }) => {
+  // WP41 (cycle-18 review): the survey page's heading changed on October 15 (the survey's name moved to the eyebrow); its "Last updated" moved to October 20, 2026 with the refresh of its data (Impact Report 261014B); the source snapshot stays October 2026
+  test('Impact Survey 2026 reads "Source snapshot: October 2026 · Last updated October 20, 2026"; no page says "Page last reviewed"', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 15, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 20, 2026');
     for (const route of ['impact/independent-evaluation/', 'our-model/talentleap/', 'programs/youthwide/', 'programs/superkids/']) {
       await open(page, route);
       expect(compact(await page.locator('.lf-updated, .updated').first().textContent()), route).toMatch(/^Last updated [A-Z][a-z]+ \d{1,2}, 2026$/);

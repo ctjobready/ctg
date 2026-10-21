@@ -41,7 +41,7 @@ const TITLES = [
   'Results by Program',
 ];
 // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's own text (it was "58.8% of the 170 surveyed new earners (completers who first earned during or after training) had started earning ...")
-const TIMING = 'Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.';
+const TIMING = 'Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.';
 
 test.describe('Home: the carousel is four slides (item 1)', () => {
   test.use({ viewport: DESKTOP });
@@ -110,23 +110,23 @@ test.describe('Home: the carousel is four slides (item 1)', () => {
     expect(compact(await s.locator('.hs__lead').textContent())).toBe(TIMING);
     const oc05 = fact('OC-05');
     const stat = oc05.stat!;
-    expect(oc05.text.startsWith('Among the 170 surveyed completers who first earned during or after training: ')).toBe(true);
-    expect(TIMING).toBe(`Of the 170 surveyed completers who first earned during or after training, ${stat.value} ${stat.label.replace(/^of the 170 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
+    expect(oc05.text.startsWith('Among the 172 surveyed completers who first earned during or after training: ')).toBe(true);
+    expect(TIMING).toBe(`Of the 172 surveyed completers who first earned during or after training, ${stat.value} ${stat.label.replace(/^of the 172 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     // one tile: the income result, with its before-training comparison
     await expect(s.locator('.hs__stat')).toHaveCount(1);
     expect(await s.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
     const tile = compact(await s.locator('.hs__stat').textContent());
     expect(tile).toContain('$245');
-    expect(tile).toContain('median monthly income among surveyed completers; the median before training was $82.');
+    expect(tile).toContain('median monthly income among surveyed completers; the median before training was $98.');
     // the evidence link
     const link = s.locator('.hs__actions a');
     await expect(link).toHaveCount(1);
     expect(compact(await link.textContent())).toBe('Read the Impact Survey 2026');
     expect(await link.getAttribute('href')).toMatch(/\/impact\/outcomes-2026\/$/);
-    // the figure is stated once in the carousel, and the 77.9% stays the hero’s
-    expect(count(compact(await page.locator('#results').evaluate((el) => el.textContent ?? '')), '58.8%'), 'the 58.8% is stated once in the carousel').toBe(1);
-    expect(compact(await s.textContent())).not.toContain('77.9');
+    // the figure is stated once in the carousel, and the 78.2% stays the hero’s
+    expect(count(compact(await page.locator('#results').evaluate((el) => el.textContent ?? '')), '58.7%'), 'the 58.7% is stated once in the carousel').toBe(1);
+    expect(compact(await s.textContent())).not.toContain('78.2');
   });
 
   for (const vp of [DESKTOP, MOBILE]) {

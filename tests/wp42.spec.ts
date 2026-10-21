@@ -136,13 +136,13 @@ test.describe('Investors: the delivered figures lead the track-record band (item
 test.describe('Local Partners: the evidence is a two-line strip (item 2)', () => {
   const URL = 'partner-with-us/local-partners/';
   const TRIAL = 'A randomized trial of the predecessor WSDFM program found women offered a place were 10.3 percentage points more likely to be employed.';
-  const SURVEY = 'Among surveyed completers, employment was 77.9% at the October 2026 survey, up from 47.4% before training.';
+  const SURVEY = 'Among surveyed completers, employment was 78.2% at the October 2026 survey, up from 48.0% before training.';
 
   test('the strip keeps the band’s anchor, says the trial and the survey in one line each, and links the two evidence pages', async ({ page }) => {
     await open(page, URL);
     expect(fact('RC-02').stat?.value).toBe('+10.3 pp');
-    expect(fact('OC-01').stat?.value).toBe('77.9%');
-    expect(fact('OC-01').stat?.from).toBe('47.4%');
+    expect(fact('OC-01').stat?.value).toBe('78.2%');
+    expect(fact('OC-01').stat?.from).toBe('48.0%');
     const band = page.locator('section#proof');
     await expect(band).toHaveCount(1);
     await expect(band.locator('.eyebrow')).toHaveText('The Evidence');
@@ -159,7 +159,7 @@ test.describe('Local Partners: the evidence is a two-line strip (item 2)', () =>
   test('the full band is gone: no income results, no 52.8% / 63.1% employment table, no median income, no evaluator named; the program-result cards stay', async ({ page }) => {
     await open(page, URL);
     const text = await mainText(page);
-    expect(text).not.toMatch(/41% higher|54% higher|\+41%|\$245|\$82|63\.1%|View Chart Data|An Independent Randomized Trial|Chart data:/);
+    expect(text).not.toMatch(/41% higher|54% higher|\+41%|\$245|\$98|\$82|63\.1%|View Chart Data|An Independent Randomized Trial|Chart data:/);
     expect(text).not.toMatch(/BIGD|BRAC Institute/);
     await expect(page.locator('#proof [data-fact="RC-01"]')).toHaveCount(0);
     const cards = page.locator('#cases article');

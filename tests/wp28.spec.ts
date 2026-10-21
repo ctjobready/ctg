@@ -32,7 +32,7 @@ test.describe('What a Supported Youth Cohort Includes (#features; WP41: it was "
 });
 
 // WP48 (cycle-23 review): the evidence band (#proof-band) is gone from Home with its paid-work pathways table and its 72.3% tile, so the tests of their order and layout are gone with them;
-// tests/wp25h-home.spec.ts and tests/wp48.spec.ts hold the Home without the band, and the Impact Survey 2026 page keeps the table and the 72.3%.
+// tests/wp25h-home.spec.ts and tests/wp48.spec.ts hold the Home without the band, and the Impact Survey 2026 page keeps the table and the 70.8%.
 
 test.describe('the UPEACE news headline matches its body', () => {
   test('the article says students "were invited to apply", as its body does ("accepting applications")', async ({ page }) => {

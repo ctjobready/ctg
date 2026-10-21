@@ -9,7 +9,7 @@ import { listPages } from './support/pages';
  * WP67 behaviors (cycle-38 whole-site reviews, Perplexity models; the accepted triage items 1 to 8). Written before the changes and run red against the cycle-37 build, then green (the owner exempted this project from test-first work, so this is
  * a courtesy, not a gate); each test states one observable behavior of the register or of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp67.spec.ts --project=chromium`):
  *   - 1: the SC-11 tile (About, Careers, Local Partners) reads "organizations with signed MOUs, agreements or contracts since 2014", as the hub line and SC-11's text do;
- *   - 2: OC-03's before-training median is worded "the median before training was $82", never "up from $82", on Home slide 3, the Impact and Foundations glance tiles, the Impact Survey 2026 tile and the YouthWIDE tile;
+ *   - 2: OC-03's before-training median is worded "the median before training was $98", never "up from $98", on Home slide 3, the Impact and Foundations glance tiles, the Impact Survey 2026 tile and the YouthWIDE tile;
  *   - 3: the "Where They Work" card (Home, YouthWIDE, Development Partners and the shared mechanism band) closes "..., as agreed in the program scope.";
  *   - 4: "MoU" is "MOU" wherever it is printed (the one exception is a person's words, quoted verbatim in an archived news post);
  *   - 5: YouthWIDE's track-record heading is "We’ve Built This Path Since 2014", as on the other pages;
@@ -103,10 +103,10 @@ test.describe('Item 1: the SC-11 tile says "signed MOUs, agreements or contracts
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('Item 2: OC-03’s before-training median is "the median before training was $82", not "up from $82"', () => {
-  const NOTE = 'The median before training was $82 (October 2026 survey).';
-  const LABEL = 'median monthly income among surveyed completers at the October 2026 survey; the median before training was $82';
-  const CAPTION = 'median monthly income among surveyed completers; the median before training was $82.';
+test.describe('Item 2: OC-03’s before-training median is "the median before training was $98", not "up from $98"', () => {
+  const NOTE = 'The median before training was $98 (October 2026 survey).';
+  const LABEL = 'median monthly income among surveyed completers at the October 2026 survey; the median before training was $98';
+  const CAPTION = 'median monthly income among surveyed completers; the median before training was $98.';
 
   test('the register: the stat label and the glance note say it (no "up from"); the figures, the register sentence and the glance label are unchanged', () => {
     const oc03 = fact('OC-03');
@@ -114,12 +114,12 @@ test.describe('Item 2: OC-03’s before-training median is "the median before tr
     expect(oc03.stat?.glance?.note).toBe(NOTE);
     expect(oc03.stat?.glance?.label).toBe('median monthly income among surveyed completers');
     expect(oc03.stat?.value).toBe('$245');
-    expect(oc03.stat?.from).toBe('$82');
-    expect(oc03.text).toBe('Among surveyed completers, median monthly income rose from $82 before training to $245 at the October 2026 survey (about 3×)');
+    expect(oc03.stat?.from).toBe('$98');
+    expect(oc03.text).toBe('Among surveyed completers, median monthly income rose from $98 before training to $245 at the October 2026 survey (2.5×)');
     expect(`${oc03.stat?.label} ${oc03.stat?.glance?.note}`).not.toMatch(/up from/i);
   });
 
-  test('Home slide 3: "$245" and "median monthly income among surveyed completers; the median before training was $82."', async ({ page }) => {
+  test('Home slide 3: "$245" and "median monthly income among surveyed completers; the median before training was $98."', async ({ page }) => {
     await open(page, HOME);
     const s = slide(page, 3);
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
@@ -156,9 +156,9 @@ test.describe('Item 2: OC-03’s before-training median is "the median before tr
     });
   }
 
-  test('no built page says "up from $82"', () => {
-    expect(pagesWith('up from $82', 'Up from $82')).toEqual([]);
-    const raw = allPages().filter((p) => /up from \$82/i.test(p.html)).map((p) => p.route);
+  test('no built page says "up from $98" (or "up from $82", the previous edition’s median before training)', () => {
+    expect(pagesWith('up from $98', 'Up from $98', 'up from $82', 'Up from $82')).toEqual([]);
+    const raw = allPages().filter((p) => /up from \$(?:98|82)\b/i.test(p.html)).map((p) => p.route);
     expect(raw, 'not in attributes or structured data either').toEqual([]);
   });
 });

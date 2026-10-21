@@ -229,7 +229,7 @@ test.describe('JobReady@Campus FAQ: who the program is for', () => {
     await expect(item).toHaveCount(1);
     expect(compact(await item.locator('summary').textContent())).toBe('Who Is JobReady@Campus For?');
     const answer = item.locator('p');
-    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Across CodersTrust’s wider programs, 84.6% of surveyed completers hold a bachelor’s degree or higher.');
+    expect(compact(await answer.textContent())).toBe('Students and degree holders at universities and colleges. Across CodersTrust’s wider programs, 85.0% of surveyed completers hold a bachelor’s degree or higher.');
     expect(await answer.getAttribute('data-fact')).toBe('OC-09');
     expect(await mainText(page)).not.toMatch(/Typical Learners|Mostly university graduates from across Bangladesh/);
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join(' ');
@@ -290,7 +290,7 @@ test.describe('NU Postgraduate Diploma: a link to the wider programs, not their 
     await expect(page.locator('#proof-band')).toHaveCount(0);
     await expect(page.locator('[data-trial-scope]')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/10\.3|77\.9%|47\.4%|\+41%|Not This Diploma|not from the National University Postgraduate Diploma|This trial evaluated/);
+    expect(text).not.toMatch(/10\.3|78\.2%|48\.0%|\+41%|Not This Diploma|not from the National University Postgraduate Diploma|This trial evaluated/);
   });
 
   test('the strip sits between "Delivered with National University" and the questions, and the closing call to action keeps its one primary button', async ({ page }) => {

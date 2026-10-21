@@ -135,17 +135,17 @@ test.describe('Home: the government slide states the contract scope in GV-12’s
 
 test.describe('Home: the speed and reach slides (items 16 and 28; WP53: they are gone)', () => {
   // WP46 (cycle-22 review, owner answer 2026-10-15): the six months are counted from the end of the course (tests/wp46.spec.ts)
-  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "within six months of the course ending" contradicted itself (tests/wp48.spec.ts)
+  // WP48 (cycle-23 review, item 32): OC-05 is cumulative and includes the 23.3% who first earned DURING the course, so "within six months of the course ending" contradicted itself (tests/wp48.spec.ts)
   // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; its finding is the survey slide's one body line, tied to OC-05, with the base the register defines
-  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 170 surveyed completers who first earned during or after training, 58.8% ...", and no longer uses the register's term (tests/wp54.spec.ts)
-  test('the survey slide (slide 3) carries the 58.8% in one body line tied to OC-05, with its base, "the 170 surveyed completers who first earned during or after training"', async ({ page }) => {
+  // WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, "Of the 172 surveyed completers who first earned during or after training, 58.7% ...", and no longer uses the register's term (tests/wp54.spec.ts)
+  test('the survey slide (slide 3) carries the 58.7% in one body line tied to OC-05, with its base, "the 172 surveyed completers who first earned during or after training"', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 3);
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
     await expect(s.locator('.hs__lead')).toHaveCount(1);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
-    expect(compact(await s.locator('.hs__lead').textContent())).toContain('58.8%');
-    expect(compact(await s.locator('.hs__lead').textContent())).toContain('the 170 surveyed completers who first earned during or after training');
+    expect(compact(await s.locator('.hs__lead').textContent())).toContain('58.7%');
+    expect(compact(await s.locator('.hs__lead').textContent())).toContain('the 172 surveyed completers who first earned during or after training');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
@@ -350,13 +350,13 @@ test.describe('The cost inclusions are one sentence in the hub (item 21); Our Mo
   });
 });
 
-test.describe('Outcomes 2026: the +$82 tile cannot be read as the $82 before training (item 22)', () => {
-  test('the tile says whose change it is; the $245 tile says "the median before training was $82" (WP67, cycle-38 review: it said "up from $82 before training")', async ({ page }) => {
+test.describe('Outcomes 2026: the +$82 tile says whose change it is, apart from the before-training median (item 22)', () => {
+  test('the tile says whose change it is; the $245 tile says "the median before training was $98" (WP67, cycle-38 review: it said "up from $98 before training")', async ({ page }) => {
     await open(page, 'impact/outcomes-2026/');
     const tile = page.locator('#income [data-fact="OC-03c"] .stat');
     await expect(tile.locator('.stat__value')).toHaveText('+$82');
     await expect(tile.locator('.stat__label')).toHaveText('median change in each surveyed completer’s own monthly income');
-    expect(compact(await page.locator('#summary [data-fact="OC-03"] .stat').textContent())).toContain('the median before training was $82');
+    expect(compact(await page.locator('#summary [data-fact="OC-03"] .stat').textContent())).toContain('the median before training was $98');
   });
 });
 

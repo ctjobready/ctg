@@ -3,7 +3,7 @@ import { titleCase } from '../src/lib/titleCase.mjs';
 import { DESKTOP, MOBILE, open } from './support/browser';
 
 /**
- * WP35 behaviors (cycle-12 whole-site review): the Impact overview is lighter, the survey is stated as what completers report (no multiplier, no "+30.5 percentage points", no "Difference" row on the audience pages),
+ * WP35 behaviors (cycle-12 whole-site review): the Impact overview is lighter, the survey is stated as what completers report (no multiplier, no "+30.2 percentage points", no "Difference" row on the audience pages),
  * the trial and survey are shown once per page (Home's evidence band and the proof bands of Development Partners, Governments and Foundations no longer restate them), the WSDFM tile leaves Home's third
  * slide and the audience pages' Results at a Glance, the Partner with Us hub chooses a route instead of opening an email, the evaluator (BIGD) is spelled out where a page first names it, and the smaller
  * wording fixes. Retrospective coverage (the owner exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then
@@ -66,7 +66,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     await open(page, '');
     const card = page.locator('.hh__card[data-fact="OC-01"]');
     await expect(card.locator('.hh__eyebrow')).toHaveText('Impact Survey 2026');
-    await expect(card.locator('.stat__label')).toHaveText('employed, up from 47.4% before training, among surveyed completers at the October 2026 survey');
+    await expect(card.locator('.stat__label')).toHaveText('employed, up from 48.0% before training, among surveyed completers at the October 2026 survey');
     for (const width of [390, 768, 820, 900, 1024, 1280]) {
       await page.setViewportSize({ width, height: 900 });
       const tops = await page.locator('.hh__card').evaluateAll((cards) => cards.map((c) => Math.round((c.querySelector('.hh__figvalue, .stat__value') as HTMLElement).getBoundingClientRect().top - c.getBoundingClientRect().top)));
@@ -91,19 +91,19 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
 test.describe('survey figures say what completers report, not an effect', () => {
   const PAGES = ['impact/', 'partner-with-us/', 'partner-with-us/development-partners/', 'partner-with-us/governments/', 'partner-with-us/foundations/', 'partner-with-us/universities/', 'partner-with-us/local-partners/', 'our-model/talentleap/'];
   for (const route of PAGES) {
-    test(`${route}: no "+30.5 percentage points", no "about 3×" and no "Difference" row on a survey chart`, async ({ page }) => {
+    test(`${route}: no "+30.2 percentage points", no "2.5×" and no "Difference" row on a survey chart`, async ({ page }) => {
       await open(page, route);
-      expect(await mainText(page)).not.toMatch(/\+30\.5|about 3×|percentage-point change/);
+      expect(await mainText(page)).not.toMatch(/\+30\.2|2\.5×|percentage-point change/);
       await expect(page.locator('.ba__data th', { hasText: 'Difference' })).toHaveCount(0);
       await expect(page.locator('.ba-delta')).toHaveCount(0);
     });
   }
 
-  test('the survey employment tile reads "Up from 47.4% before training." on Impact and on the hub', async ({ page }) => {
+  test('the survey employment tile reads "Up from 48.0% before training." on Impact and on the hub', async ({ page }) => {
     await open(page, 'impact/');
-    await expect(page.locator('#glance a[data-fact~="OC-01"] .glance__note')).toHaveText('Up from 47.4% before training.');
+    await expect(page.locator('#glance a[data-fact~="OC-01"] .glance__note')).toHaveText('Up from 48.0% before training.');
     await open(page, 'partner-with-us/');
-    await expect(page.locator('#why-partner li[data-fact="OC-01"] .wp__note')).toHaveText('Up from 47.4% before training.');
+    await expect(page.locator('#why-partner li[data-fact="OC-01"] .wp__note')).toHaveText('Up from 48.0% before training.');
   });
 
   // WP38 (cycle-15 review): Universities' evidence band was two lines; the median income and the chart left it, and the survey line kept the two-readings form ("was 77.9% ... up from 47.4% before training").
@@ -111,7 +111,7 @@ test.describe('survey figures say what completers report, not an effect', () => 
   test('Universities states no survey reading, and has no "rose", no multiplier, no chart and no median income', async ({ page }) => {
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#proof-band')).toHaveCount(0);
-    expect(await mainText(page)).not.toMatch(/employment was 77\.9%|rose from|3×|median monthly income/);
+    expect(await mainText(page)).not.toMatch(/employment was 78\.2%|rose from|2\.5×|median monthly income/);
     await expect(page.locator('main .ba__data, main .ev')).toHaveCount(0);
   });
 
@@ -119,7 +119,7 @@ test.describe('survey figures say what completers report, not an effect', () => 
     await open(page, 'impact/outcomes-2026/');
     await expect(page.locator('.ba__data th', { hasText: 'Change' })).toHaveCount(1);
     const text = await mainText(page);
-    expect(text).toContain('+30.5 percentage points');
+    expect(text).toContain('+30.2 percentage points');
     expect(text).toContain('does not show that training caused the change');
     expect(text).not.toMatch(/LimeSurvey|112268/);
   });

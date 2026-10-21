@@ -146,7 +146,7 @@ test.describe('Universities: the one evidence strip, the National University hea
     await open(page, 'partner-with-us/universities/');
     await expect(page.locator('#proof-band')).toHaveCount(0);
     const text = await mainText(page);
-    expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program|Among surveyed completers, 84\.6%|An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
+    expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program|Among surveyed completers, 85\.0%|An Independent Randomized Trial|What Surveyed Completers Report|Employment Among Surveyed Completers|median monthly income was \$245/);
     expect(await texts(page, '#offer-evidence nav a')).toEqual(['The Randomized Trial', 'Impact Survey 2026', 'Case Studies']);
     expect((await hrefs(page, '#offer-evidence nav a')).map((h) => h.replace(/^.*\/ctg\//, ''))).toEqual(['impact/independent-evaluation/', 'impact/outcomes-2026/', 'impact/case-studies/']);
     await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
@@ -270,7 +270,7 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
 
   // WP41 (cycle-18 reviews), WP43 (cycle-20 review) and WP45 to WP51 shaped the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course", Title Case, tied to OC-05, the 58.8% and its base in a tile). WP53 (owner decision 2026-10-16): that slide is gone;
   // its finding is the survey slide's one body line, tied to OC-05, with the base the register defines.
-  test('the survey slide (slide 3) states the 58.8% with its survey base in one body line tied to OC-05, under the unchanged income heading and "Impact Survey 2026" eyebrow', async ({ page }) => {
+  test('the survey slide (slide 3) states the 58.7% with its survey base in one body line tied to OC-05, under the unchanged income heading and "Impact Survey 2026" eyebrow', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
@@ -279,7 +279,7 @@ test.describe('Home carousel: the reach slide and the speed slide are one survey
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
-    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
+    expect(compact(await slide.locator('.hs__lead').textContent())).toContain('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 });

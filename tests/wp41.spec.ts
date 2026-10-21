@@ -127,12 +127,12 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
     expect(text).not.toMatch(/\+10\.3|For every 100 women|Trial figures are for a predecessor program|Chart data/);
   });
 
-  test('the survey tile stays (77.9%, without its detail line) and the two links stay; the band is one column', async ({ page }) => {
+  test('the survey tile stays (78.2%, without its detail line) and the two links stay; the band is one column', async ({ page }) => {
     await open(page, 'programs/');
     const tiles = page.locator('#proof-band .eb__stat');
     await expect(tiles).toHaveCount(1);
     expect(await tiles.first().getAttribute('data-fact')).toBe('OC-01');
-    expect(compact(await tiles.first().textContent())).toContain('77.9%');
+    expect(compact(await tiles.first().textContent())).toContain('78.2%');
     expect(compact(await tiles.first().textContent())).not.toContain('no longer employed');
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['See the Evidence', 'The Randomized Trial']);
     expect((await hrefs(page, '#proof-band .eb__links a')).map(sitePath)).toEqual(['/impact/', '/impact/independent-evaluation/']);
@@ -224,8 +224,8 @@ test.describe('American English: "resume", not "CV" (item 7)', () => {
 
 test.describe('Home: slide headings, tile and meta description (items 8, 13 and 16)', () => {
   // WP42 (cycle-19 review): the government slide moved to second, so the speed slide was the fifth. WP43 to WP51 shaped its heading ("Most Surveyed New Earners Were Earning by Six Months After the Course": the finding, no percentage, no lead, the 58.8% in a tile).
-  // WP53 (owner decision 2026-10-16): that slide is gone; its finding is the survey slide's one body line (slide 3), so the heading carries no percentage and the 58.8% keeps its surveyed-completer base in that line
-  test('the survey slide (slide 3) keeps the income heading without a percentage, and its one body line states the 58.8% with its surveyed-completer base', async ({ page }) => {
+  // WP53 (owner decision 2026-10-16): that slide is gone; its finding is the survey slide's one body line (slide 3), so the heading carries no percentage and the 58.7% keeps its surveyed-completer base in that line
+  test('the survey slide (slide 3) keeps the income heading without a percentage, and its one body line states the 58.7% with its surveyed-completer base', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
@@ -234,9 +234,9 @@ test.describe('Home: slide headings, tile and meta description (items 8, 13 and 
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
     await expect(slide.locator('.hs__lead')).toHaveCount(1);
     const line = compact(await slide.locator('.hs__lead').textContent());
-    expect(line).toContain('58.8%');
+    expect(line).toContain('58.7%');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
-    expect(line).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
+    expect(line).toContain('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course');
     expect(compact(await page.locator('#results').textContent())).not.toContain('Most Surveyed New Earners Were Earning');
   });
 
@@ -395,7 +395,7 @@ test.describe('Outcomes 2026: the heading is the finding; the survey’s name is
       return out;
     });
     expect(headlines).toContain('Surveyed Completers Report More Work and Higher Income');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 15, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Source snapshot: October 2026 · Last updated October 20, 2026');
   });
 });
 

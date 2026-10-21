@@ -481,7 +481,7 @@ test.describe('GM1 (Gemini): the Programs hub’s evidence band is scoped to you
     await expect(band.locator('.eb__head .lead').first()).toHaveText('These results are from youth-employment programs, not evidence for every program listed above.');
     expect(await texts(page, '#proof-band h3')).toEqual(['An Independent Randomized Trial', 'From the October 2026 Survey']);
     expect(compact(await band.locator('.eb__headline').textContent())).toContain('predecessor WSDFM program');
-    expect(compact(await band.locator('.eb__stat').first().textContent())).toContain('77.9%');
+    expect(compact(await band.locator('.eb__stat').first().textContent())).toContain('78.2%');
     expect(await texts(page, '#proof-band .eb__links a')).toEqual(['See the Evidence', 'The Randomized Trial']);
     expect(sitePages().filter((p) => p.route === '/programs/' && visible(p.html).includes('Trial and Survey Evidence'))).toEqual([]);
   });

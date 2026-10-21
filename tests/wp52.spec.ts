@@ -11,7 +11,7 @@ import { listPages } from './support/pages';
  * WP52 behaviors (the verified cycle-27 whole-site reviews, items 1-38): the employer track-record opener (Employers and JobReady@Work) without a speed comparison; JobReady@Campus's problem-band lead; the Local Partners
  * "Certified Facilitators and a Local Curriculum" card, "Monthly Reporting" block and challenge lead; the Governments delivery card, Her Power glance tile, contracts-table note, "Capacity Designed to Stay" card, closing call to action
  * (no repeated procurement point), Track Record band (no empathy line) and "Options" eyebrow; the Foundations cohort-grant lead; the About timeline, identity sentences, meta description and "Start a Conversation" band; Home's hero line,
- * slides 2, 4 and 5, "Progress You Can Check" card and AWS line; "surveyed new earners" defined where the 58.8% appears; the Development Partners glance (no ">4×" tile) and "Where They Work" card; YouthWIDE's hero label and
+ * slides 2, 4 and 5, "Progress You Can Check" card and AWS line; "surveyed new earners" defined where the 58.7% appears; the Development Partners glance (no ">4×" tile) and "Where They Work" card; YouthWIDE's hero label and
  * glance row; the Governance leadership card; the Our Model cards; the Programs hub lines; the evidence ladder's first row; the Impact title; the Investors Track Record band and the IN-05 label. Retrospective coverage (the owner
  * exempted this project from test-first work); each test states one observable behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp52.spec.ts --project=chromium`).
  */
@@ -205,15 +205,15 @@ test.describe('About: the 2025–2026 timeline entry is sentences, not a semicol
 });
 
 // WP54 (cycle-28 reviews, Claude S23 and GLM L1): Home's survey slide no longer uses the term; its body line leads with the base in the words of OC-05's own text (tests/wp54.spec.ts). The Impact tile still defines the term where it uses it.
-test.describe('"Surveyed new earners" is defined where the 58.8% appears: the Impact tile (item 8); Home’s survey slide names the subgroup in OC-05’s own words (WP54)', () => {
+test.describe('"Surveyed new earners" is defined where the 58.7% appears: the Impact tile (item 8); Home’s survey slide names the subgroup in OC-05’s own words (WP54)', () => {
   const DEFINITION = '(completers who first earned during or after training)';
   // WP53 (owner decision 2026-10-16): the speed slide's tile caption became the survey slide's body line; WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base, in the words of OC-05's text
-  const SLIDE_LINE = 'Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course.';
-  const TILE_LABEL = `of the 170 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course, including 23.5% who first earned during the course`;
+  const SLIDE_LINE = 'Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course.';
+  const TILE_LABEL = `of the 172 surveyed new earners ${DEFINITION} had started earning by six months after finishing the course, including 23.3% who first earned during the course`;
 
   test('the survey slide’s body line names the subgroup in OC-05’s own words, so it needs no definition of the term', async ({ page }) => {
-    expect(fact('OC-05').text.startsWith('Among the 170 surveyed completers who first earned during or after training: ')).toBe(true);
-    expect(fact('OC-05').stat?.value).toBe('58.8%');
+    expect(fact('OC-05').text.startsWith('Among the 172 surveyed completers who first earned during or after training: ')).toBe(true);
+    expect(fact('OC-05').stat?.value).toBe('58.7%');
     await open(page, HOME);
     const s = slide(page, 3);
     await expect(s.locator('h2')).toHaveText('Surveyed Completers Report Higher Income');
@@ -233,8 +233,8 @@ test.describe('"Surveyed new earners" is defined where the 58.8% appears: the Im
   test('the definition is the words of OC-05’s own text, the register’s labels are unchanged, and the Outcomes page keeps its short label beside its one definition', async ({ page }) => {
     const oc05 = fact('OC-05');
     expect(oc05.text).toContain('surveyed completers who first earned during or after training');
-    expect(oc05.stat?.label).toBe('of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
-    expect(oc05.stat?.glance?.label).toBe('of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course');
+    expect(oc05.stat?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)');
+    expect(oc05.stat?.glance?.label).toBe('of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course');
     await open(page, 'impact/outcomes-2026/');
     expect(compact(await page.locator('#summary [data-fact="OC-05"]').textContent())).toContain(oc05.stat!.label);
     expect(count(await everything(page), 'Surveyed new earners are the completers who first earned during or after training.')).toBe(1);
@@ -244,7 +244,7 @@ test.describe('"Surveyed new earners" is defined where the 58.8% appears: the Im
     expect(() => defineNewEarners('of the 170 completers had started earning')).toThrow(/no longer says/);
   });
 
-  // WP53 (owner decision 2026-10-16): the slide that states the 58.8% is the survey slide (slide 3)
+  // WP53 (owner decision 2026-10-16): the slide that states the 58.7% is the survey slide (slide 3)
   test('the survey slide (slide 3) still fits the carousel at 1280 and 390 (the unused-space budget is held by tests/hero-slider.spec.ts)', async ({ page }) => {
     for (const vp of [DESKTOP, MOBILE]) {
       await page.setViewportSize(vp);

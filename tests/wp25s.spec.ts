@@ -92,8 +92,8 @@ test.describe('Impact', () => {
   test('the survey reads as two readings, not as a rise', async ({ page }) => {
     await open(page, 'impact/');
     const text = await main(page);
-    expect(text).toContain('employment was 47.4% before training and 77.9% at the October 2026 survey');
-    expect(text).not.toMatch(/employment rose from 47\.4%/);
+    expect(text).toContain('employment was 48.0% before training and 78.2% at the October 2026 survey');
+    expect(text).not.toMatch(/employment rose from 48\.0%/);
   });
 });
 
@@ -151,7 +151,7 @@ test.describe('Programs', () => {
   test('Work shows no youth-program survey figure of its own: two links to the evidence pages stand in for it (WP31)', async ({ page }) => {
     await open(page, 'programs/jobready-work/');
     const text = compact(await main(page));
-    expect(text).not.toContain('77.9%');
+    expect(text).not.toContain('78.2%');
     await expect(page.locator('#offer-evidence .pe__more a')).toHaveText(['The Randomized Trial', 'Impact Survey 2026']);
   });
 

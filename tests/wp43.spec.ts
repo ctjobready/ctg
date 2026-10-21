@@ -197,7 +197,7 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
     const text = await mainText(page);
     expect(text).not.toMatch(/Evidence from Our Wider Youth Programs|A randomized trial of the predecessor WSDFM program/);
     expect(count(text, '10.3 percentage points'), 'the trial result is not restated').toBe(0);
-    expect(count(text, '77.9%'), 'the survey result is not restated').toBe(0);
+    expect(count(text, '78.2%'), 'the survey result is not restated').toBe(0);
     await expect(page.locator('main .eyebrow', { hasText: 'The Evidence' })).toHaveCount(0);
     // the first band ends in the strip that links the evidence
     await expect(page.locator('#offer-evidence h2')).toHaveText('The National University Partnership');
@@ -228,8 +228,8 @@ test.describe('Universities: one evidence strip, not two (item 3)', () => {
 
 test.describe('Home: the survey slide’s timing line is one sentence that repeats neither the heading nor a tile (item 4; WP53)', () => {
   // WP43 (cycle-20 review): the speed slide had no lead sentence ("Among surveyed completers who first earned during or after training, most started within six months." repeated its heading and its tile). WP53 (owner decision 2026-10-16): that slide is gone;
-  // its finding is ONE body line on the survey slide (slide 3), the 58.8% with its defined base, stated once and in no tile.
-  test('slide 3 has the 58.8% once, with its full base, in one body line; its one tile is the income result; the evidence link stays; the old repeating sentence is gone', async ({ page }) => {
+  // its finding is ONE body line on the survey slide (slide 3), the 58.7% with its defined base, stated once and in no tile.
+  test('slide 3 has the 58.7% once, with its full base, in one body line; its one tile is the income result; the evidence link stays; the old repeating sentence is gone', async ({ page }) => {
     await open(page, '');
     const slide = page.locator('[data-hs-slide]').nth(2);
     await expect(slide.locator('.hs__eyebrow')).toHaveText('Impact Survey 2026');
@@ -237,12 +237,12 @@ test.describe('Home: the survey slide’s timing line is one sentence that repea
     expect(await slide.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     expect(compact(await slide.textContent())).not.toMatch(/most started within six months|Among surveyed completers who first earned/);
     const line = compact(await slide.locator('.hs__lead').textContent());
-    expect(line).toContain('58.8%');
+    expect(line).toContain('58.7%');
     // WP49 (cycle-24 review): "surveyed new earners", the register's term (the Outcomes page defines it; tests/wp49.spec.ts). WP54 (cycle-28 reviews, Claude S23 and GLM L1): the line leads with its base and needs no term (tests/wp54.spec.ts)
-    expect(line).toContain('Of the 170 surveyed completers who first earned during or after training, 58.8% had started earning by six months after finishing the course');
+    expect(line).toContain('Of the 172 surveyed completers who first earned during or after training, 58.7% had started earning by six months after finishing the course');
     await expect(slide.locator('.hs__stat')).toHaveCount(1);
     expect(await slide.locator('.hs__stat').getAttribute('data-fact')).toBe('OC-03');
-    expect(compact(await slide.locator('.hs__stat').textContent())).not.toContain('58.8%');
+    expect(compact(await slide.locator('.hs__stat').textContent())).not.toContain('58.7%');
     const link = slide.locator('a', { hasText: 'Read the Impact Survey 2026' });
     await expect(link).toHaveCount(1);
     expect(sitePath((await link.getAttribute('href')) ?? '')).toBe('/impact/outcomes-2026/');

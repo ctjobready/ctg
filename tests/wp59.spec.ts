@@ -12,7 +12,7 @@ import { listPages } from './support/pages';
  * WP59 behaviors (cycle-31 whole-site reviews: Claude S3 and S4; GPT-6.1 Sol G1, G2, G5 and G6; Kimi K3; GLM L1 and L3; Gemini GM1). Retrospective coverage (the owner exempted this project from test-first work); each test states one observable
  * behavior of the built site (run `npm run build` first, then `PORT=<port> npx playwright test tests/wp59.spec.ts --project=chromium`):
  *   - S3: the Home FAQ "Does the Trial Apply to Your Program?" says "Results for other programs ..." (not "later programs"), in the page and in its FAQ structured data;
- *   - S4: Outcomes 2026, "Results in Brief": the 72.3% tile names its base, "(34 of 47) of surveyed 2014-2023 completers with no prior income were earning at the October 2026 survey";
+ *   - S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its base, "(34 of 48) of surveyed 2014-2023 completers with no prior income were earning at the October 2026 survey";
  *   - G1: the Investors and JobReady Platform "Contracted Scope" tiles carry the note Home and Governments print (CONTRACT_TOTAL_NOTE), so the 30,000+ is explained the same way wherever it appears;
  *   - G2: the closing bands (Impact pages, TalentLEAP) say "A discovery session explores your goals, priority groups and possible program scope.";
  *   - G5: the Bangladesh graduate-unemployment rate (PX-03) names its publisher and year, "(BBS Labour Force Survey, 2024)", wherever it is shown (Local Partners, NU Postgraduate Diploma);
@@ -114,13 +114,13 @@ test.describe('S3: the Home FAQ says "Results for other programs ..."', () => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-test.describe('S4: Outcomes 2026, "Results in Brief": the 72.3% tile names its base', () => {
-  const LABEL = '(34 of 47) of surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey';
+test.describe('S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its base', () => {
+  const LABEL = '(34 of 48) of surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey';
 
-  test('the register: OC-02 states 72.3% (34 of 47); the tile label prints that base, which is the base the page data holds (NO_PRIOR)', () => {
+  test('the register: OC-02 states 70.8% (34 of 48); the tile label prints that base, which is the base the page data holds (NO_PRIOR)', () => {
     const oc02 = fact('OC-02');
-    expect(oc02.text).toBe('72.3% (34 of 47) of 2014–2023 completers who had no income before training were earning at the October 2026 survey');
-    expect(oc02.stat?.value).toBe('72.3%');
+    expect(oc02.text).toBe('70.8% (34 of 48) of 2014–2023 completers who had no income before training were earning at the October 2026 survey');
+    expect(oc02.stat?.value).toBe('70.8%');
     expect(oc02.stat?.label).toBe(LABEL);
     expect(oc02.stat?.label.startsWith(`(${NO_PRIOR.earning} of ${NO_PRIOR.base}) `)).toBe(true);
     expect(`${percent(NO_PRIOR.earning, NO_PRIOR.base).toFixed(1)}%`).toBe(oc02.stat?.value);
@@ -128,14 +128,14 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 72.3% tile names its b
     expect(oc02.stat?.glance?.label).toBe('of surveyed 2014–2023 completers with no income before training were earning at the October 2026 survey');
   });
 
-  test('the tile reads "72.3% (34 of 47) of surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey", with no note under it', async ({ page }) => {
+  test('the tile reads "70.8% (34 of 48) of surveyed 2014–2023 completers with no prior income were earning at the October 2026 survey", with no note under it', async ({ page }) => {
     await open(page, OUTCOMES);
     const tile = page.locator('#summary [data-fact="OC-02"]');
     await expect(tile).toHaveCount(1);
-    await expect(tile.locator('.stat__value')).toHaveText('72.3%');
+    await expect(tile.locator('.stat__value')).toHaveText('70.8%');
     expect(compact(await tile.locator('.stat__label').textContent())).toBe(LABEL);
     await expect(tile.locator('.stat__note')).toHaveCount(0);
-    expect(compact(await tile.evaluate((el) => (el as HTMLElement).innerText))).toBe(`72.3% ${LABEL}`);
+    expect(compact(await tile.evaluate((el) => (el as HTMLElement).innerText))).toBe(`70.8% ${LABEL}`);
     // the paragraph in "Income Higher for Most Surveyed Completers" still states the register's text
     expect(compact(await page.locator('#income p[data-fact="OC-02"]').textContent())).toBe(`${fact('OC-02').text}.`);
   });
@@ -163,7 +163,7 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 72.3% tile names its b
       const text = visible(p.html);
       for (const m of text.matchAll(bare)) {
         seen += 1;
-        if (!text.slice(0, m.index!).endsWith('(34 of 47) ')) problems.push(`${p.route}: "${text.slice(Math.max(0, m.index! - 20), m.index! + 20)}"`);
+        if (!text.slice(0, m.index!).endsWith('(34 of 48) ')) problems.push(`${p.route}: "${text.slice(Math.max(0, m.index! - 20), m.index! + 20)}"`);
       }
     }
     expect(seen, 'the label is found in the build (the check is not silently empty)').toBeGreaterThan(0);

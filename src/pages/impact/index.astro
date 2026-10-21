@@ -53,8 +53,8 @@ const onThisPage = [
 // One formulation of the WSDFM program-record result, read from PR-01 (WP24b); the tile label adds only the measure.
 const wsdfmLabel = wsdfmFigureLabel();
 // WP52 (cycle-27 review, Grok m5): the page title is "Impact You Can Verify | CodersTrust", the H1's words (it was "Impact and Evidence You Can Verify | CodersTrust").
-// WP52 (cycle-27 review): the 58.8% tile defines "surveyed new earners" where the figure appears ("... of the 170 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course,
-// including 23.5% who first earned during the course"), so it is not read as a share of all completers. It is OC-05's glance label with the definition inserted (defineNewEarners); the register's labels are unchanged.
+// WP52 (cycle-27 review): the 58.7% tile defines "surveyed new earners" where the figure appears ("... of the 172 surveyed new earners (completers who first earned during or after training) had started earning by six months after finishing the course,
+// including 23.3% who first earned during the course"), so it is not read as a share of all completers. It is OC-05's glance label with the definition inserted (defineNewEarners); the register's labels are unchanged.
 const oc05Label = defineNewEarners(fact('OC-05').stat?.glance?.label ?? '');
 // WP60 (cycle-32 review, Claude S3): the "Where We Are Heading" tile for the 2 million 2030 aim carries the dependency clause the Programs hub card had (AIM_DEPENDENCY, src/data/copy.ts), in its note: "YouthWIDE in Bangladesh, depending on government and donor commitments. An ambition, not a result."
 // (the register's glance note, "YouthWIDE in Bangladesh. An ambition, not a result.", is unchanged; the tile overrides its note for this page, as the Her Power and Kosovo tiles do).

@@ -442,10 +442,10 @@ test.describe('Our Model: the cost FAQ is the one-line route answer with a link 
 
 test.describe('Impact: the freelancing tile carries no second claim (item 27)', () => {
   test('OC-04’s note is the business-ownership sentence only, the tile no longer carries OC-07, and the survey page still states the foreign-client share', async ({ page }) => {
-    expect(fact('OC-04').stat?.glance?.note).toBe('Business ownership rose from 2.8% to 10.6%.');
+    expect(fact('OC-04').stat?.glance?.note).toBe('Business ownership rose from 3.0% to 10.3%.');
     await open(page, 'impact/');
     const tile = page.locator('#glance a[data-fact~="OC-04"]');
-    await expect(tile.locator('.glance__note')).toHaveText('Business ownership rose from 2.8% to 10.6%.');
+    await expect(tile.locator('.glance__note')).toHaveText('Business ownership rose from 3.0% to 10.3%.');
     expect(await tile.getAttribute('data-fact')).not.toContain('OC-07');
     await open(page, 'impact/outcomes-2026/');
     expect(await mainText(page)).toContain('About 12%');
@@ -460,13 +460,13 @@ test.describe('Home: the post-inquiry steps are labelled "For Grant-Funded Pilot
   });
 });
 
-// WP48 (cycle-23 review, item 32, a logic error this item introduced): OC-05 is cumulative and includes the 23.5% who first earned DURING the course, so "started earning within six months of finishing the course"
+// WP48 (cycle-23 review, item 32, a logic error this item introduced): OC-05 is cumulative and includes the 23.3% who first earned DURING the course, so "started earning within six months of finishing the course"
 // contradicted itself (they started before it ended). The wording is "had started earning by six months after finishing" (tests/wp48.spec.ts pins the rest of item 32).
 test.describe('OC-05: the six months are counted from the end of the course (item 29, owner answer 2026-10-15; "by", not "within": item 32 of cycle 23)', () => {
-  const TEXT = 'Among the 170 surveyed completers who first earned during or after training: 23.5% first earned during the course; 58.8% had started earning by six months after finishing it; 77.1% by a year; 90.6% by two years (cumulative)';
+  const TEXT = 'Among the 172 surveyed completers who first earned during or after training: 23.3% first earned during the course; 58.7% had started earning by six months after finishing it; 77.3% by a year; 90.7% by two years (cumulative)';
   // WP49 (cycle-24 review): the labels say "surveyed new earners" (the register's term; the text field keeps the full definition; tests/wp49.spec.ts)
-  const LABEL = 'of the 170 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
-  const GLANCE = 'of the 170 surveyed new earners had started earning by six months after finishing the course, including 23.5% who first earned during the course';
+  const LABEL = 'of the 172 surveyed new earners had started earning by six months after finishing the course (October 2026 survey)';
+  const GLANCE = 'of the 172 surveyed new earners had started earning by six months after finishing the course, including 23.3% who first earned during the course';
   // WP52 (cycle-27 review): Home's slide and the Impact tile define the term in place (OC-05's label with "(completers who first earned during or after training)" after it); the register's labels are unchanged (tests/wp52.spec.ts)
   const define = (s: string) => s.replace('surveyed new earners', 'surveyed new earners (completers who first earned during or after training)');
 
@@ -475,7 +475,7 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     expect(oc05.text).toBe(TEXT);
     expect(oc05.stat?.label).toBe(LABEL);
     expect(oc05.stat?.glance?.label).toBe(GLANCE);
-    expect(oc05.stat?.value).toBe('58.8%');
+    expect(oc05.stat?.value).toBe('58.7%');
   });
 
   // WP53 (owner decision 2026-10-16): the speed slide ("Most Surveyed New Earners Were Earning by Six Months After the Course") is gone; the survey slide's one body line is OC-05's value and the register's label with the term defined (WP52),
@@ -485,7 +485,7 @@ test.describe('OC-05: the six months are counted from the end of the course (ite
     const s = slide(page, 3);
     expect(await s.locator('.hs__lead').getAttribute('data-fact')).toBe('OC-05');
     const line = compact(await s.locator('.hs__lead').textContent());
-    expect(line).toBe(`Of the 170 surveyed completers who first earned during or after training, 58.8% ${LABEL.replace(/^of the 170 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
+    expect(line).toBe(`Of the 172 surveyed completers who first earned during or after training, 58.7% ${LABEL.replace(/^of the 172 surveyed new earners /, '').replace(/ \(October 2026 survey\)$/, '')}.`);
     expect(line).toContain('had started earning by six months after finishing the course');
   });
 
