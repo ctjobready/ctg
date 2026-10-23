@@ -25,7 +25,8 @@ function visibleTextOfHtml(html: string): string {
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<(code|pre)\b[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/&quot;|&#34;|&#x22;/gi, '"');
+    .replace(/&quot;|&#34;|&#x22;/gi, '"')
+    .replace(/&#39;|&#x27;|&apos;/gi, "'");
 }
 
 test.describe('Item 1: the trial page links the 2022 BIGD report', () => {
@@ -49,11 +50,12 @@ test.describe('Item 2: the Albania case study links the World Bank May 2022 upda
   });
 });
 
-test.describe('Item 3: no straight double quotes in visible text', () => {
-  test('no built page prints a straight double quote in visible text (code samples excepted)', () => {
+test.describe('Item 3: no straight double quotes or apostrophes in visible text', () => {
+  // WP77 item 2 extends this check to straight apostrophes (' or &#39;), which teasers printed before WP77.
+  test('no built page prints a straight double quote or apostrophe in visible text (code samples and attributes excepted)', () => {
     const offenders = listPages().flatMap((p) => {
       const text = visibleTextOfHtml(readFileSync(p.file, 'utf8'));
-      const i = text.indexOf('"');
+      const i = text.search(/["']/);
       return i === -1 ? [] : [`${p.route}: …${text.slice(Math.max(0, i - 50), i + 50).replace(/\s+/g, ' ')}…`];
     });
     expect(offenders).toEqual([]);

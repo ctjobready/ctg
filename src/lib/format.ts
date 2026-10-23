@@ -129,3 +129,10 @@ export function spellUnit(value: string): { figure: string; unit?: string } {
 export function labelWithoutUnit(label: string): string {
   return label.replace(', in percentage points,', '');
 }
+/**
+ * WP77: visible teaser text prints curly apostrophes, never straight ones. An apostrophe or closing single quote becomes ’; a single quote that opens a quotation (start of text, or after a space, an opening bracket or a dash) becomes ‘.
+ * Used for card titles and excerpts only, so attributes, meta descriptions and JSON-LD keep the source text.
+ */
+export function curlyApostrophes(text: string): string {
+  return text.replace(/(^|[\s([{“—–-])'/g, '$1‘').replace(/'/g, '’');
+}

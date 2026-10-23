@@ -240,6 +240,8 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/mastering-ai-with-prompt-engineering/,32114,course,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
 /course/mern-stack-development/,25388,course,JR,https://jobready.global/course/mern-stack-development-live-online-course/,none,none,stub+edge
 /course/motion-graphics/,25370,course,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/post-graduate-diploma-in-cybersecurity/,none,course,MOVE,/programs/nu-postgraduate-diploma/cyber-security/,none,none,stub+edge
+/course/post-graduate-diploma-in-data-analytics/,none,course,MOVE,/programs/nu-postgraduate-diploma/data-analytics/,none,none,stub+edge
 /course/professional-graphic-design/,25390,course,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/python-and-django/,25333,course,JR,https://jobready.global/course/python-and-django-live-online-course/,none,none,stub+edge
 /course/react-js/,25400,course,JR,https://jobready.global/courses/,none,none,stub+edge
@@ -446,6 +448,8 @@ legacy_url,content_id,class,disposition,destination,query_handling,publication_h
 /course/mastering-ai-with-prompt-engineering/feed/,none,archive,JR,https://jobready.global/course/mastering-ai-with-prompt-engineering-live-online/,none,none,stub+edge
 /course/mern-stack-development/feed/,none,archive,JR,https://jobready.global/course/mern-stack-development-live-online-course/,none,none,stub+edge
 /course/motion-graphics/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
+/course/post-graduate-diploma-in-cybersecurity/feed/,none,archive,DROP,/programs/nu-postgraduate-diploma/cyber-security/,none,none,stub+edge
+/course/post-graduate-diploma-in-data-analytics/feed/,none,archive,DROP,/programs/nu-postgraduate-diploma/data-analytics/,none,none,stub+edge
 /course/professional-graphic-design/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge
 /course/python-and-django/feed/,none,archive,JR,https://jobready.global/course/python-and-django-live-online-course/,none,none,stub+edge
 /course/react-js/feed/,none,archive,JR,https://jobready.global/courses/,none,none,stub+edge

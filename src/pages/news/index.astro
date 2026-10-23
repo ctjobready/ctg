@@ -9,7 +9,7 @@ import Badge from '../../components/system/Badge.astro';
 import Icon from '../../components/system/Icon.astro';
 import NewsGrid from '../../components/pages/news/NewsGrid.astro';
 import { allNews, coverAlt, newsHref, TOPICS } from '../../components/pages/news/news';
-import { formatDate, isoDate } from '../../lib/format';
+import { curlyApostrophes, formatDate, isoDate } from '../../lib/format';
 import { pageUrl, webPage } from '../../lib/schema';
 import { mayRender } from '../../lib/permissions';
 import { url } from '../../lib/url';
@@ -52,8 +52,8 @@ const jsonLd = [
             <time datetime={isoDate(latest.data.date)}>{formatDate(latest.data.date)}</time>{' '}
             <Badge tone="brand">{TOPICS[latest.data.topic]}</Badge>
           </p>
-          <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{latest.data.title}</a></h3>
-          <p class="card__text">{latest.data.excerpt}</p>
+          <h3 class="card__title feat__title"><a class="card__link" href={url(newsHref(latest))}>{curlyApostrophes(latest.data.title)}</a></h3>
+          <p class="card__text">{curlyApostrophes(latest.data.excerpt)}</p>
           <span class="card__more" aria-hidden="true">Read More<span class="sr-only">: {latest.data.title}</span><Icon name="arrow-right" size={16} /></span>
         </div>
       </article>

@@ -135,12 +135,41 @@ const NO_MODULE: Record<string, RegExp> = {
   'cyber-security': /^(IT Support Executive|Network Support Associate|IT Operations Associate|IT Audit Assistant)$/,
   'data-analytics': /^(MIS Executive|Entrepreneur)$/,
 };
+/**
+ * WP77 (owner direction 2026-10-14: less is more): at most eight titles per course, the ones the course's own modules most directly lead to. The titles are the legacy text (no title is added),
+ * and each kept list keeps the legacy order. Cyber Security: 15 became 8; Data Analytics: 14 became 8. Digital Marketing (4) and ICT (8) were already within the limit and are not listed.
+ */
+const CHIP_TITLES: Record<string, string[]> = {
+  // Network and Communication Security, Cryptography and Data Security, Cyber Crime Investigation and Digital Forensics, Cyber Risk Management, Cyber Economic Crime, Social Media and Digital Privacy
+  'cyber-security': [
+    'Junior Cyber Security Analyst',
+    'Information Security Analyst',
+    'Network Security Assistant',
+    'Digital Forensics Assistant',
+    'Cybercrime Investigation Assistant',
+    'Junior Cyber Risk Analyst',
+    'Fraud Investigation Assistant',
+    'Data Privacy Assistant',
+  ],
+  // Data Analytics: Tools and Techniques, Database Systems, Data Visualization, Data Analysis and Software Application, Fundamentals of Data Analytics, Professional Development & Freelancing
+  'data-analytics': [
+    'Data Analyst',
+    'Junior Data Analyst',
+    'Business Intelligence Analyst',
+    'Reporting Analyst',
+    'Performance Analyst',
+    'Data Visualization Analyst',
+    'Database Reporting Assistant',
+    'Freelance Data Analyst',
+  ],
+};
 export function relatedCareerAreas(raw: string[], slug?: string): string[] {
   const drop = slug ? NO_MODULE[slug] : undefined;
+  const keep = slug ? CHIP_TITLES[slug] : undefined;
   return raw
     .flatMap((r) => r.split(/\s+or\s+|\s+&\s+(?=[A-Z][a-z])/))
     .map((r) => r.trim())
-    .filter((r) => r && !SENIOR_TITLE.test(r) && !(drop && drop.test(r)));
+    .filter((r) => r && !SENIOR_TITLE.test(r) && !(drop && drop.test(r)) && (!keep || keep.includes(r)));
 }
 
 /**
