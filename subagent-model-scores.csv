@@ -299,3 +299,10 @@ timestamp,model_slug,reasoning_effort,score,task_complexity
 2026-10-23T14:42:19Z,claude-sonnet-5-5,max,5,high
 2026-10-23T15:30:49Z,claude-sonnet-5-5,xhigh,5,medium
 2026-10-23T16:43:42Z,claude-sonnet-5-5,xhigh,5,medium
+2026-10-23T16:45:39Z,claude-haiku-5-5,medium,5,low
+2026-10-23T17:22:06Z,claude-sonnet-5-5,max,5,high
+2026-10-23T17:25:05Z,claude-opus-5-5,low,4,high
+2026-10-23T17:31:12Z,claude-opus-5-5,medium,4,high
+2026-10-23T17:40:43Z,claude-opus-5-5,high,4,high
+2026-10-23T18:00:11Z,claude-opus-5-5,xhigh,5,high
+2026-10-23T18:44:29Z,claude-haiku-5-5,medium,4,low
