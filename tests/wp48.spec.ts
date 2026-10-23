@@ -93,7 +93,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     expect(GV12_NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(SLIDE2_LEAD).toContain('work scoped for 30,000+ people, not a count of completers.');
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(GV12_NOTE);
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     await open(page, 'partner-with-us/governments/');
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
@@ -103,7 +103,7 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home slide 2 says the same facts in plainer sentences and no longer prints the note, so it is not in the list
   test('the old note ("The total is contract scope ... it includes Her Power’s national program") is printed on the Governments tile and the Investors and JobReady Platform tiles only', () => {
     const hits = builtPages().filter((p) => /The total is contract scope|it includes Her Power’s national program/.test(visible(p.html)));
-    expect(hits.map((p) => p.route).sort()).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(hits.map((p) => p.route).sort()).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

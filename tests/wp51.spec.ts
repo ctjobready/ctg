@@ -283,7 +283,7 @@ test.describe('Closing partner lines (items 9 and 17)', () => {
     const items = page.locator('#guide .pg__list li');
     // WP66 (owner request 2026-10-20): a third line closes the list, the signed-agreement sentence for development partners and NGOs (SC-11c); the BIGD line and the moved line keep their places (tests/wp66.spec.ts)
     await expect(items).toHaveCount(3);
-    expect(compact(await items.nth(0).textContent())).toContain('separately evaluated the predecessor WSDFM program');
+    expect(compact(await items.nth(0).textContent())).toContain('evaluated the predecessor WSDFM program');
     expect(compact(await items.nth(1).textContent())).toBe(LINE);
     expect(await items.nth(1).getAttribute('data-fact')).toBe('PA-01');
     expect(compact(await items.nth(2).textContent())).toBe('CodersTrust has signed MOUs, agreements or contracts with 13 development partners and NGOs.');
@@ -471,7 +471,7 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(contracts).toContain('The national program trained 25,125 women across 130 sub-districts (upazilas).');
     expect(await page.evaluate(() => Boolean(document.getElementById('glance')!.compareDocumentPosition(document.getElementById('contracts')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(FULL);
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
 });
 

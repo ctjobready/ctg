@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact } from '../src/data/facts';
-import { TRIAL_WOMEN, WSDFM_NOT_TRIAL_NOTE } from '../src/data/copy';
+import { TRIAL_OFFERED, TRIAL_WOMEN, WSDFM_NOT_TRIAL_NOTE } from '../src/data/copy';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -222,12 +222,13 @@ test.describe('Item 3 (Grok, GPT-6.1 Sol, Gemini; superseded by WP65): Foundatio
   });
 
   // WP62 rework (R3): the WSDFM tile said how its records relate to the trial, in the string the Impact page's WSDFM tile has (one source, WSDFM_NOT_TRIAL_NOTE in src/data/copy.ts). WP65: Foundations no longer has that tile, so the Impact page's tile is the note's one user.
-  test('the not-the-trial note is the Impact page’s WSDFM tile note, from one source: "Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000." (21 words, the 833 being RC-07’s); the Foundations glance no longer carries it', async ({ page }) => {
-    const NOTE = 'Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000.';
+  test('the not-the-trial note is the Impact page’s WSDFM tile note, from one source: "Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000." (19 words, the 425 being RC-07’s); the Foundations glance no longer carries it', async ({ page }) => {
+    const NOTE = 'Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.';
     expect(WSDFM_NOT_TRIAL_NOTE).toBe(NOTE);
     expect(TRIAL_WOMEN).toBe('833');
+    expect(TRIAL_OFFERED).toBe('425');
     expect(fact('RC-07').text).toContain('833 women at baseline');
-    expect(NOTE.split(/\s+/)).toHaveLength(21);
+    expect(NOTE.split(/\s+/)).toHaveLength(19);
     await open(page, FOUNDATIONS);
     await expect(page.locator('#glance')).not.toContainText('Program records, separate from the randomized trial');
     await open(page, IMPACT);

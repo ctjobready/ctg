@@ -14,6 +14,8 @@ const portrait = photo('impact/kosovo-graduate-portrait');
 // WP74: the World Bank and Ministry of Economic Development of Kosovo release of 13 February 2017, the source of the 77 in PR-02b.
 // 2026-10-22: linked through the Ministry's own copy (MED17), which carries the 77; the World Bank page is gone (404) and its archived copy returns errors.
 const release2017 = linkAttrs(sources.MED17.url ?? '');
+// WP82: the World Bank's Kosovo Brief, the source of the 78 completers and about $25,000 line (WBKOSOVO).
+const brief = linkAttrs(sources.WBKOSOVO.url ?? '');
 
 // ST-05 names the learner as the previous site did (Erlisa Zherka, "Trainee, WOW Pilot"); the program is shown beside the name, so the line is shortened to the outcome.
 const raw = fact('ST-05').text.split(' in Kosovo, ')[1];
@@ -25,10 +27,9 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 // second count of the same measure. PR-02 is shared with the lines that stay (102 of 150 in work, the earnings), so the register entry is unchanged and only what renders changes. The venture count is an owner-confirmation item.
 const parts = fact('PR-02').text.split(': ')[1]?.split('; ');
 if (!parts || parts.length < 3 || !/^102 of the 150 women trained were in work/.test(parts[0]) || !/earned/.test(parts[1])) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
-const results = [
-  { label: 'In Work', text: parts[0] },
-  { label: 'Online Earnings', text: parts[1] },
-];
+// WP82 (owner item, 2026-10-23): the earnings clause is the World Bank's figure (WBKOSOVO), not a CodersTrust program record, so it is shown under the World Bank's attribution below the records, not as a program-record row.
+const results = [{ label: 'In Work', text: parts[0] }];
+const worldBankEarnings = parts[1];
 ---
 
 <CaseStudyPage
@@ -62,8 +63,10 @@ const results = [
     <p>Women in Online Work was a pilot with the World Bank Group in 2016–2017. The figures above are from CodersTrust program records.</p>
     <!-- WP55 (owner decision 2026-10-17, "Show both"): the World Bank's own count for the same pilot, in its full sentence (PR-02b), directly after the program records. -->
     <p><Fact id="PR-02b" /></p>
+    <p>World Bank: {worldBankEarnings}.</p>
     <!-- WP74 (Sonnet XHigh run 3): the World Bank's February 2017 release, the source of PR-02b's 77 (WBKOSOVO17); the page had no link to it. The link is in the results, beside the line it sources. -->
-    <p><a class="link" href={release2017.href} rel={release2017.rel}>Read the February 2017 Release<span class="sr-only"> {release2017.srText}</span><Icon name="arrow-right" size={16} /></a></p>
+    <!-- WP82: the World Bank's Kosovo Brief (WBKOSOVO) is the source of the earnings line above, so it is linked beside the release link, with the same rel and sr-only pattern. -->
+    <p><a class="link" href={release2017.href} rel={release2017.rel}>Read the February 2017 Release<span class="sr-only"> {release2017.srText}</span><Icon name="arrow-right" size={16} /></a> <a class="link" href={brief.href} rel={brief.rel}>Read the World Bank’s Kosovo Brief<span class="sr-only"> {brief.srText}</span><Icon name="arrow-right" size={16} /></a></p>
   </Fragment>
 
   <Fragment slot="story">

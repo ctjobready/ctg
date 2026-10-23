@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { fact } from '../src/data/facts';
-import { TRIAL_WOMEN, WSDFM_ENROLLED, WSDFM_NOT_TRIAL_NOTE } from '../src/data/copy';
+import { TRIAL_OFFERED, TRIAL_WOMEN, WSDFM_ENROLLED, WSDFM_NOT_TRIAL_NOTE } from '../src/data/copy';
 import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
@@ -45,7 +45,7 @@ test.describe('WP81: WSDFM program records are not "separate" from the trial; th
   });
 
   test('the WSDFM case-study hero note and the Impact tile note say the records are not trial results, and the trial’s women were among the 1,000', async ({ page }) => {
-    const note = `Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (${TRIAL_WOMEN} women studied, by the BRAC Institute of Governance and Development (BIGD)) were among these ${WSDFM_ENROLLED}.`;
+    const note = `Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`;
     await open(page, IMPACT_WSDFM);
     await expect(page.locator('[data-hero-note]')).toHaveText(note);
     await open(page, 'impact/');
@@ -55,8 +55,9 @@ test.describe('WP81: WSDFM program records are not "separate" from the trial; th
   test('the constants read the 1,000 from PR-01 and the 833 from RC-07, and the note keeps the trial’s women inside the 1,000', () => {
     expect(WSDFM_ENROLLED).toBe(fact('PR-01').stat?.value?.split(' of ')[1]);
     expect(TRIAL_WOMEN).toBe(/(\d[\d,]*) women at baseline/.exec(fact('RC-07').text)?.[1]);
+    expect(TRIAL_OFFERED).toBe(/(\d[\d,]*) treatment/.exec(fact('RC-07').text)?.[1]);
     expect(WSDFM_NOT_TRIAL_NOTE).toBe(
-      `Program records, not trial results; the women offered a place in the randomized trial (${TRIAL_WOMEN} women studied) were among these ${WSDFM_ENROLLED}.`,
+      `Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`,
     );
   });
 

@@ -552,13 +552,13 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     expect(compact(await tile.textContent())).not.toContain('The contracts table below shows each scope.');
   });
 
-  test('the 25,125 is GV-01’s own value and the clause that keeps the total true is still in GV-12’s register note; Impact keeps the register’s longer note (it adds the 2,500 trained directly)', async ({ page }) => {
+  test('the 25,125 is GV-01’s own value and the clause that keeps the total true is still in GV-12’s register note; Impact prints the same contract-scope note as the other pages (WP82)', async ({ page }) => {
     expect(fact('GV-01').stat?.value).toBe('25,125');
     expect(fact('GV-01').text).toContain('a national program that trained 25,125 women');
     expect(fact('GV-12').stat?.glance?.note).toContain('contract scope, not a count of completers');
     await open(page, IMPACT);
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
-    expect(compact(await tile.textContent())).toContain('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    expect(compact(await tile.textContent())).toContain('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
 
   // WP59 (cycle-31 review, GPT-6.1 Sol G1): the Investors and JobReady Platform "Contracted Scope" tiles print the same note (tests/wp59.spec.ts)
@@ -566,7 +566,7 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     const offenders = sitePages().filter((p) => /it includes Her Power(?:’|&#39;|')s national program/.test(p.html) && !p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route);
     expect(offenders).toEqual([]);
     const pages = sitePages().filter((p) => p.html.includes('it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(pages).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(pages).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

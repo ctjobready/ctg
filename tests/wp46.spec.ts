@@ -228,7 +228,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     // WP47 (cycle-22 review): the register’s GV-12 text now says "work scoped for" (it read "scopes covering"); tests/wp47.spec.ts pins the new sentence
     expect(fact('GV-12').text).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(NOTE);
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
     await open(page, 'partner-with-us/governments/');
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
@@ -237,7 +237,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(builtPages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort()).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
   });
 });
 

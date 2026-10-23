@@ -621,7 +621,7 @@ test.describe('WP76 item 2: the register says the 1,000 are the women enrolled (
   test('PR-01 reads "program records report that 711 of the 1,000 women enrolled were in work (71%)", with the value "711 of 1,000" and the label "WSDFM: 71% of enrolled women in work"', () => {
     const pr01 = fact('PR-01');
     expect(pr01.text).toBe(
-      'WSDFM (Women’s Skill Development for Freelancing Marketplace), commissioned by Porticus: program records report that 711 of the 1,000 women enrolled were in work (71%); BIGD separately evaluated the predecessor WSDFM program in a randomized trial',
+      'WSDFM (Women’s Skill Development for Freelancing Marketplace), commissioned by Porticus: program records report that 711 of the 1,000 women enrolled were in work (71%); BIGD evaluated the predecessor WSDFM program in a randomized trial',
     );
     expect(pr01.stat?.value).toBe('711 of 1,000');
     expect(pr01.stat?.numeric).toBe(711);
@@ -687,7 +687,7 @@ test.describe('WP76 item 2: every page that states the figure names its base', (
     const tile = page.locator('#glance a[data-fact~="PR-01"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.glance__desc')).toHaveText('WSDFM program records: enrolled women in work (71%)');
-    await expect(tile.locator('.glance__note')).toHaveText('Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000.');
+    await expect(tile.locator('.glance__note')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.');
     expect(await tile.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
     expect(compact(await tile.textContent())).toContain('711 of 1,000');
     await open(page, 'impact/case-studies/');

@@ -489,13 +489,13 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
     expect(compact(await tile.locator('.pg__note').textContent())).toBe(NOTE);
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     const printed = sitePages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
-    expect(printed).toEqual(['/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(printed).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 
-  test('Impact keeps the register’s note, which also says CodersTrust trained 2,500 women directly', async ({ page }) => {
+  test('Impact prints the shared contract-scope note (WP82)', async ({ page }) => {
     await open(page, IMPACT);
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe(fact('GV-12').stat?.glance?.note);
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
   });
 });
 

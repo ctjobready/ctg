@@ -16,7 +16,7 @@ import { wsdfmFigureLabel } from '../../components/pages/impact/evidence';
 import { articleNode, desc, title, discoveryCta } from '../../components/pages/impact/page-utils';
 import { CASE_STUDIES } from '../../components/pages/impact/case-studies';
 import PageNav from '../../components/pages/about/PageNav.astro';
-import { AIM_DEPENDENCY, DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
+import { AIM_DEPENDENCY, CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_LINE, IMPACT_ANSWER, MICRO_COMMITMENT, WB_KOSOVO, WSDFM_NOT_TRIAL_NOTE, defineNewEarners } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { linkAttrs } from '../../lib/url';
 
@@ -96,6 +96,8 @@ const aimNote = `YouthWIDE in Bangladesh, ${AIM_DEPENDENCY}. An ambition, not a 
           href: '/partner-with-us/governments/',
           also: ['SC-06', 'GV-10', 'GV-01', 'GV-11'],
           label: 'people in the contracted scopes of six government programs',
+          // WP82 (owner item, 2026-10-23): the tile carries the same contract-scope note as Home, Governments and Investors (CONTRACT_TOTAL_NOTE): the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly).
+          note: CONTRACT_TOTAL_NOTE.text,
         },
       ] },
       { title: 'Program Results, by Named Program', cols: 4, items: [

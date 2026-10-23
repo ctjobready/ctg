@@ -55,10 +55,11 @@ const DP = 'partner-with-us/development-partners/';
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1, Kosovo: "56 won online contracts (~180 jobs)" is removed', () => {
-  test('the case study lists "In Work" (102 of 150 women in work, 68%) and "Online Earnings" only, still tied to PR-02, and the World Bank’s 77 follows the lines', async ({ page }) => {
+  test('the case study lists "In Work" (102 of 150 women in work, 68%) only, still tied to PR-02; the World Bank’s 78 and about $25,000 is attributed to the World Bank (WP82), and its 77 follows the lines', async ({ page }) => {
     await open(page, KOSOVO);
-    expect(await texts(page, '.kw__results dt')).toEqual(['In Work', 'Online Earnings']);
-    expect(await texts(page, '.kw__results dd')).toEqual(['102 of the 150 women trained were in work (68%)','78 program completers earned a combined total of about $25,000 online']);
+    expect(await texts(page, '.kw__results dt')).toEqual(['In Work']);
+    expect(await texts(page, '.kw__results dd')).toEqual(['102 of the 150 women trained were in work (68%)']);
+    expect(compact(await page.locator('#results').textContent())).toContain('World Bank: 78 program completers earned a combined total of about $25,000 online.');
     expect(await page.locator('.kw__results').getAttribute('data-fact')).toBe('PR-02');
     const results = compact(await page.locator('#results').textContent());
     expect(results).not.toMatch(/56|180|Online Contracts/);

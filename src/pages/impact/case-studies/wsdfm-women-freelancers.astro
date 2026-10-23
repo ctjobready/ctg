@@ -10,7 +10,7 @@ import Img from '../../../components/ui/Img.astro';
 import Icon from '../../../components/system/Icon.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import { fact } from '../../../data/facts';
-import { BIGD_FULL, RCT_HEADLINE, TRIAL_WOMEN, WSDFM_ENROLLED } from '../../../data/copy';
+import { RCT_HEADLINE, TRIAL_OFFERED, WSDFM_ENROLLED } from '../../../data/copy';
 import { linkAttrs } from '../../../lib/url';
 import photo from '../../../assets/images/pages/impact/wsdfm-training-group.jpg';
 
@@ -37,7 +37,7 @@ if (!(samina.body ?? '').includes('She has completed 90+ projects on Fiverr so f
   slug="wsdfm-women-freelancers"
   pageTitle="WSDFM Case Study"
   description="WSDFM (Porticus): a randomized trial of the predecessor program found income rose for women offered a place; 711 of the 1,000 women enrolled were in work."
-  heroNote={`Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (${TRIAL_WOMEN} women studied, by ${BIGD_FULL}) were among these ${WSDFM_ENROLLED}.`}
+  heroNote={`Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`}
   heroNoteFacts={['RC-07']}
   trialLink
   stats={[

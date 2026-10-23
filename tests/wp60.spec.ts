@@ -294,14 +294,14 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     await open(page, 'impact/');
     const tile = page.locator('#glance a[data-fact~="PR-01"]');
     await expect(tile).toHaveCount(1);
-    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000.');
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.');
     expect(((await tile.getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'PR-06', 'RC-07']));
   });
 
-  test('the WSDFM case study: the note above the tiles says the trial was of 833 women, beside the first tile’s "711 of 1,000"', async ({ page }) => {
+  test('the WSDFM case study: the note above the tiles says the 425 women offered a place were among the 1,000 (WP82), beside the first tile’s "711 of 1,000"', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const note = page.locator('[data-hero-note]');
-    await expect(note).toHaveText('Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (833 women studied, by the BRAC Institute of Governance and Development (BIGD)) were among these 1,000.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.');
     await expect(note).toHaveAttribute('data-fact', 'RC-07');
     await expect(page.locator('.cs__stat').first()).toContainText('711 of 1,000');
   });

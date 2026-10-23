@@ -190,6 +190,16 @@ function trialWomen(): string {
 export const TRIAL_WOMEN: string = trialWomen();
 
 /**
+ * WP82 (owner item, 2026-10-23): the women offered a place in the randomized trial are 425 of the 833 (RC-07's "425 treatment"), read from RC-07, never retyped. The builder throws if RC-07 stops saying "N treatment".
+ */
+function trialOffered(): string {
+  const n = /(\d[\d,]*) treatment/.exec(fact('RC-07').text)?.[1];
+  if (!n) throw new Error('TRIAL_OFFERED: RC-07 no longer says "N treatment"');
+  return n;
+}
+export const TRIAL_OFFERED: string = trialOffered();
+
+/**
  * WP81 (owner item, 2026-10-23): WSDFM's program records cover the 1,000 women enrolled, and the women offered a place in the randomized trial were among them (BIGD report p. 19), so the two are different evidence, not different people. The 1,000 is PR-01's value ("711 of 1,000"), read from it, never retyped.
  */
 function wsdfmEnrolled(): string {
@@ -205,7 +215,7 @@ export const WSDFM_ENROLLED: string = wsdfmEnrolled();
  * It is the Impact page's tile note (WP60), moved here so Foundations' WSDFM tile says it with the same string; the tile's data-fact names RC-07 beside PR-01 (the 833 is RC-07's, TRIAL_WOMEN).
  * WP65 (cycle-37 review): Foundations' glance no longer carries the WSDFM tile (its fourth tile is UNDP YES, Korail), so the Impact page's tile is the note's one user; the Proof in Practice caption (CASE_CARD_LABELS) says the same thing in its own words.
  */
-export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, not trial results; the women offered a place in the randomized trial (${TRIAL_WOMEN} women studied) were among these ${WSDFM_ENROLLED}.`;
+export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`;
 
 /**
  * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say

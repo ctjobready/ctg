@@ -157,6 +157,8 @@ test.describe('BIGD is spelled out at its first mention on every page that names
       if (first === -1) continue;
       checked++;
       if (p.route === '/impact/') continue;
+      // WP82: the WSDFM hero note no longer names the evaluator (owner wording), so its first BIGD is the tile abbreviation; the owner decides whether the full name returns (see the WP82 report).
+      if (p.route === '/impact/case-studies/wsdfm-women-freelancers/') continue;
       const spelled = text.indexOf(SPELLED);
       if (spelled === -1 || spelled + SPELLED.length - 'BIGD)'.length !== first) offenders.push(p.route);
     }
@@ -186,10 +188,11 @@ test.describe('BIGD is spelled out at its first mention on every page that names
 
   test('the WSDFM case study: the hero note names the evaluator in full, and the tiles, the trial sub-heading and the chart note use the abbreviation it introduces', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (833 women studied, by the BRAC Institute of Governance and Development (BIGD)) were among these 1,000.');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.');
     const text = await everything(page);
-    expect(count(text, SPELLED)).toBe(1);
-    expect(text.indexOf('BIGD'), 'the first BIGD is the one in the hero note’s full name').toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);
+    // WP82: the hero note is the owner's wording without the evaluator's name, so the page no longer spells it out (open item for the owner)
+    expect(count(text, SPELLED)).toBe(0);
+    expect(text.indexOf('BIGD'), 'the first BIGD is the tile abbreviation').toBeGreaterThan(-1);
     expect(count(text, 'BIGD randomized trial'), 'the tiles, the trial sub-heading and the chart note keep the abbreviation').toBeGreaterThanOrEqual(3);
   });
 });

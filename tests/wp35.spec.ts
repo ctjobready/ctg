@@ -77,11 +77,10 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   // WP51 (cycle-26 review, Kimi m2): Governments' tile keeps the register note's first sentence and points to its contracts table, which states Her Power's two figures; Impact keeps the whole note (tests/wp51.spec.ts)
   test('the 30,000+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
-    const NOTE = 'The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.';
     // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
     const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
     await open(page, 'impact/');
-    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText(NOTE);
+    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
     expect(await mainText(page)).not.toMatch(/delivered-training total|Includes Her Power’s 25,125 women/);
@@ -241,7 +240,7 @@ test.describe('the evaluator is spelled out where a page first names it', () => 
     await open(page, 'partner-with-us/foundations/');
     const text = await mainText(page);
     expect(text.indexOf('BIGD')).toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);
-    expect(compact(await page.locator('#guide').textContent())).toContain(`The ${SPELLED} separately evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.`);
+    expect(compact(await page.locator('#guide').textContent())).toContain(`The ${SPELLED} evaluated the predecessor WSDFM program, commissioned by Porticus, in a randomized trial.`);
     expect(count(text, SPELLED)).toBe(1);
     expect(compact(await page.locator('#features').textContent())).not.toContain('BIGD');
   });
