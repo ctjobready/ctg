@@ -27,7 +27,7 @@ export interface PressItem {
 export const press: PressItem[] = [
   {
     outlet: "Gulf News",
-    headline: "CodersTrust to Finance Brains to Educate IT Coders",
+    headline: "Skype Co-Founder Seeks Local Partners in New Venture",
     date: "2014-05-01",
     url: null,
     logo: logo_gulf_news,

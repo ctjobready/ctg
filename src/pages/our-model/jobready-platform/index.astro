@@ -10,7 +10,7 @@ import StatusTag from '../../../components/system/StatusTag.astro';
 import EvidenceTag from '../../../components/system/EvidenceTag.astro';
 import ReportSection from '../../../components/pages/impact/ReportSection.astro';
 import { articleNode, desc, title, fundingCta, discoveryCta } from '../../../components/pages/impact/page-utils';
-import { CONTRACT_TOTAL_NOTE, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
+import { CONTRACT_TOTAL_NOTE_SHORT, MICRO_COMMITMENT, NU_NOT_TRAINED, withoutSince2014 } from '../../../data/copy';
 import { fact } from '../../../data/facts';
 import { faqItems, faqJsonLd } from '../../../lib/faq';
 import { linkAttrs } from '../../../lib/url';
@@ -26,7 +26,7 @@ const description = desc('JobReady is CodersTrust’s digital learning and earni
 // WP41 (cycle-18 review): the answer points to "Rollout Status" (#status) above it instead of listing the status a second time (the table says it).
 const faqIds = ['Q11-platform'];
 const jsonLd = [
-  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-15', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
+  articleNode({ path, headline: 'JobReady: A Platform Built to Connect Learning to Work', description, datePublished: '2026-10-08', dateModified: '2026-10-24', author: 'CodersTrust', about: { '@type': 'Thing', name: 'JobReady Platform' } }),
   faqJsonLd('foundations', path, faqIds),
 ];
 const faq = faqItems('foundations', faqIds);
@@ -69,7 +69,7 @@ const d = discoveryCta();
   lead="JobReady is CodersTrust’s digital learning and earning platform. Modules are rolling out in stages."
   description={description}
   path={path}
-  updated="2026-10-15"
+  updated="2026-10-24"
   toc={toc}
   breadcrumbs={[{ label: 'Our Model', href: '/our-model/' }, { label: 'JobReady Platform' }]}
   jsonLd={jsonLd}
@@ -106,7 +106,7 @@ const d = discoveryCta();
     <div class="jr__why">
       <div class="jr__whystat"><h3 class="jr__whyh">Delivered Since 2014</h3><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
       <div class="jr__whystat"><h3 class="jr__whyh">In the Pipeline</h3><FactStat id="SC-04" label={pipelineLabel} /></div>
-      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p></div>
+      <div class="jr__whystat"><h3 class="jr__whyh">Contracted Scope</h3><EvidenceTag type="Contract Scope" /><FactStat id="SC-06" /><p class="jr__whynote" data-fact={CONTRACT_TOTAL_NOTE_SHORT.facts.join(' ')}>{CONTRACT_TOTAL_NOTE_SHORT.text}</p></div>
     </div>
     <p class="jr__links">
       <a class="link" href={linkAttrs('/our-model/').href}>How the Model Works<Icon name="arrow-right" size={16} /></a>

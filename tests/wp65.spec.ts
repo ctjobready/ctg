@@ -159,7 +159,7 @@ test.describe('Item 3 (GPT-6.1 Sol, Gemini): Foundations’ fourth glance tile i
     await open(page, FOUNDATIONS);
     const text = await mainText(page);
     expect(count(text, '711 of 1,000')).toBe(1);
-    expect(count(text, 'WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work')).toBe(1);
+    expect(count(text, 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work')).toBe(1);
     expect(count(text, 'Program records, separate from the randomized trial')).toBe(0);
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card).toHaveCount(1);
@@ -250,7 +250,7 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
   test('Governments: the contracts note opens "We confirm each contract’s delivery status in a briefing." and keeps its second sentence and GV-10', async ({ page }) => {
     await open(page, GOVERNMENTS);
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe(
-      'We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.',
+      'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.',
     );
     expect(await page.locator('#contracts .ct__notes p').getAttribute('data-fact')).toBe('GV-10');
     expect(pagesWith('Delivery status is confirmed for each contract')).toEqual([]);

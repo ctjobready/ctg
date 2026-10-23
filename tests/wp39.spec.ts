@@ -378,7 +378,7 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
     expect(cells[0].startsWith('CodersTrust trained 2,400 women directly.')).toBe(true);
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
     // WP65 (cycle-37 review): "We confirm each contract’s delivery status in a briefing." (tests/wp52.spec.ts, tests/wp65.spec.ts)
-    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.');
+    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.');
     expect(await mainText(page)).not.toContain('Direct Training');
   });
 });

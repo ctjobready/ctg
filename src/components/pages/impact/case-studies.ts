@@ -24,6 +24,8 @@ export interface CaseStudy {
   note?: { text: string; facts: string[] };
   /** WP60 (cycle-32 review, Kimi K2): the card's name for its figure when it is not a result ("Reported Enrollment": Albania's figure is the World Bank's enrollment count, PR-07). Cards without one say "Result". */
   resultTitle?: string;
+  /** WP86 (coordinator item 9): a figure the World Bank reported while the program was still running; the card takes no "Delivered" tag (CaseGrid). */
+  reported?: boolean;
   related: { label: string; href: string };
 }
 
@@ -60,6 +62,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     who: 'Women aged 16 to 35',
     scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
     resultTitle: 'Reported Enrollment',
+    reported: true,
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },
   },
   {

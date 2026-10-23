@@ -306,7 +306,7 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
 
   test('Investors: under the group heading "Since 2014" the learners and enrollments tiles read "learners trained" and "enrollments"; the tiles’ values, tags and notes are unchanged', async ({ page }) => {
     await open(page, INVESTORS);
-    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Since 2014');
+    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Delivered');
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);

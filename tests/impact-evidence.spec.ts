@@ -207,7 +207,8 @@ test.describe('case studies', () => {
     const names = await page.locator('article.case .card__title').allInnerTexts();
     expect(names.map((n) => n.trim())[0]).toBe('Women in Online Work, Kosovo');
     await expect(page.getByRole('heading', { level: 2, name: 'WSDFM, Women in Online Work and Her Power, Side by Side' })).toHaveCount(0);
-    await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(5);
+    // WP86 (coordinator item 9): Digital Jobs Albania's figure was reported mid-program, so its card takes no Delivered tag (four of five)
+    await expect(page.locator('article.case .status-tag[data-status="Delivered"]')).toHaveCount(4);
   });
 
   // WP42 (cycle-19 review): the hero's two paragraphs (the plain-language trial line and the program-record line) are gone; one line above the tiles names the two kinds of evidence, and each tile carries its own tag

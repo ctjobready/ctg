@@ -39,6 +39,8 @@ const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTru
 const NEW_DETAIL = `Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware ${BREAKDOWN}.`;
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
+// WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
+const SHORT_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 
 test.describe('WP84: the register says what the courseware share is', () => {
   test('SC-02’s detail and text call the 40,043 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
@@ -121,13 +123,13 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect(CONTRACT_TOTAL_NOTE.text).toContain(`Her Power’s ${fact('GV-01').stat?.value} is the same group counted in the ${fact('SC-02').stat?.value} enrollments through CodersTrust’s curriculum`);
   });
 
-  test('every page that prints the note prints it whole (Investors, Impact, Governments, JobReady Platform); no other page words it', () => {
+  test('every page that prints the overlap sentence prints the whole note (Investors and Impact); no other page words it', () => {
     const pages = builtPages().filter((p) => visible(p.html).includes(OVERLAP)).map((p) => p.route).sort();
-    expect(pages).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
+    expect(pages).toEqual(['/impact/', '/partner-with-us/investors/']);
     for (const p of builtPages().filter((q) => pages.includes(q.route))) expect(visible(p.html), p.route).toContain(FULL_NOTE);
   });
 
-  test('Impact, Governments and JobReady Platform print the same note, tied to SC-02', async ({ page }) => {
+  test('Impact prints the whole note tied to SC-02; Governments and JobReady Platform print the first sentence, tied to their own facts', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
@@ -135,12 +137,12 @@ test.describe('WP84: the shared contract-scope note', () => {
     expect((await tile.getAttribute('data-fact')) ?? '').toContain('SC-02');
     await open(page, 'partner-with-us/governments/');
     const gov = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await gov.locator('.pg__note').textContent())).toBe(FULL_NOTE);
-    expect(await gov.locator('a.pg__tile').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11 SC-02');
+    expect(compact(await gov.locator('.pg__note').textContent())).toBe(SHORT_NOTE);
+    expect(await gov.locator('a.pg__tile').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     await open(page, 'our-model/jobready-platform/');
     const jr = page.locator('#why .jr__whynote');
-    expect(compact(await jr.textContent())).toBe(FULL_NOTE);
-    expect(await jr.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
+    expect(compact(await jr.textContent())).toBe(SHORT_NOTE);
+    expect(await jr.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
   });
 
   test('Home’s government slide is unchanged: its own contract-scope sentences, no overlap sentence, data-fact still GV-12 GV-01 GV-11 SC-04', async ({ page }) => {

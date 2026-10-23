@@ -102,7 +102,7 @@ test.describe('Investors: the track-record band names relationships, not distrib
     expect(await page.locator('#guide .ig__names').getAttribute('data-fact')).toBe('PA-02 PA-01 PA-05 PA-03 PA-06');
     await expect(page.locator('#guide .ig__channels')).toHaveCount(0);
     expect(await mainText(page)).not.toMatch(/Distribution Through|Four Kinds of Institutional Relationship/);
-    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Since 2014']);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Delivered']);
   });
 });
 
@@ -151,7 +151,7 @@ test.describe('Programs hub: the trial is one line (item 4)', () => {
 });
 
 test.describe('JobReady Platform: the status question points to "Rollout Status" (item 5)', () => {
-  const ANSWER = 'Partly. See Rollout Status above for live, pre-launch and planned capabilities.';
+  const ANSWER = 'Partly. See Rollout Status above for what is live and what is in pre-launch.';
 
   test('the answer is one short pair of sentences, "Rollout Status" is a link to the rollout band, and the FAQ JSON-LD says the same words', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
@@ -177,7 +177,7 @@ test.describe('JobReady Platform: the status question points to "Rollout Status"
 
   test('the page carries today’s date, the day its wording changed', async ({ page }) => {
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 15, 2026');
+    expect(compact(await page.locator('.lf-updated').textContent())).toBe('Last updated October 24, 2026');
   });
 });
 

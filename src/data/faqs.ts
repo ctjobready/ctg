@@ -152,7 +152,7 @@ faqs.push(
   { ...bankAnswer('Q11'), id: 'Q11-investor', a: `Partly. See What JobReady Does above for the live, pre-launch and planned capabilities.`, inlineLink: { text: 'What JobReady Does', href: '#features' }, audiences: ['variants'] },
   // JobReady Platform (WP41, cycle-18 review): the "Rollout Status" band directly above its questions has the table (WP49, cycle-24 review: and no longer a "What Is Live Today" callout beside it), so the answer points to it (its words are the link, to the
   // band's id) and does not list the status a second time, as for Investors just above. The shared Q11 stays as it is where it is asked elsewhere (Employers, JobReady@Work).
-  { ...bankAnswer('Q11'), id: 'Q11-platform', a: `Partly. See Rollout Status above for live, pre-launch and planned capabilities.`, inlineLink: { text: 'Rollout Status', href: '#status' }, audiences: ['variants'] },
+  { ...bankAnswer('Q11'), id: 'Q11-platform', a: `Partly. See Rollout Status above for what is live and what is in pre-launch.`, inlineLink: { text: 'Rollout Status', href: '#status' }, audiences: ['variants'] },
   // Universities: "what happens when funding ends", in campus terms, from the bank answer's own content (facilitators, curricula, the alumni network) and the campus delivery model (campus labs as blended-learning centers).
   {
     id: 'Q10-campus',

@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { titleCase } from '../src/lib/titleCase.mjs';
 import { fact, sources } from '../src/data/facts';
 import { faqs } from '../src/data/faqs';
-import { CONTRACT_TOTAL_NOTE, DISCOVERY_SESSION_LINE, READ_THE_EVIDENCE, SOURCE_NOTE } from '../src/data/copy';
+import { CONTRACT_TOTAL_NOTE, CONTRACT_TOTAL_NOTE_SHORT, DISCOVERY_SESSION_LINE, READ_THE_EVIDENCE, SOURCE_NOTE } from '../src/data/copy';
 import { NO_PRIOR, percent } from '../src/components/pages/impact/outcomes-data';
 import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 import { listPages } from './support/pages';
@@ -205,8 +205,8 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     expect(await texts(page, '#why .jr__whyh')).toEqual(['Delivered Since 2014', 'In the Pipeline', 'Contracted Scope']);
     await expect(page.locator('#why .jr__whynote')).toHaveCount(1);
     const third = tiles.nth(2);
-    expect(compact(await third.locator('.jr__whynote').textContent())).toBe(CONTRACT_TOTAL_NOTE.text);
-    expect(await third.locator('.jr__whynote').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
+    expect(compact(await third.locator('.jr__whynote').textContent())).toBe(CONTRACT_TOTAL_NOTE_SHORT.text);
+    expect(await third.locator('.jr__whynote').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
     await expect(third.locator('.factstat')).toHaveAttribute('data-fact', 'SC-06');
     await expect(third.locator('.stat__value')).toHaveText('30,000+');
     const gap = await page.evaluate(() => {

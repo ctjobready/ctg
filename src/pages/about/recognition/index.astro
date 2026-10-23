@@ -109,13 +109,15 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     </Fragment>
   </Hero>
 
+  <!-- WP86 (coordinator item 11): each entry is a section's own heading, and every section that renders gets one (the three conditional sections only when they render). -->
   <PageNav links={[
-    { label: 'Industry Recognition', href: '#listing' },
-    { label: 'Founder Honors', href: '#honors' },
-    { label: 'Forums and Events', href: '#forums' },
-    { label: 'University Partnership', href: '#endorsements' },
+    { label: 'HolonIQ South Asia EdTech 100, 2023 and 2024', href: '#listing' },
+    { label: 'Aziz Ahmad’s Appointments and Honors', href: '#honors' },
+    ...(relatedRecognition.length > 0 ? [{ label: 'Recognition Connected to Our Chairman’s Work', href: '#related' }] : []),
+    ...(FORUMS.length > 0 ? [{ label: 'Where CodersTrust Has Taken Part', href: '#forums' }] : []),
+    ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
     { label: 'Awards and Forums in Photographs', href: '#photos' },
-    { label: 'Early Press Coverage', href: '#coverage' },
+    { label: 'Early Coverage of CodersTrust’s First Years, 2014–2016', href: '#coverage' },
     { label: 'Press Kit', href: '#press-kit' },
   ]} />
 

@@ -63,7 +63,8 @@ test.describe('Item 3: no straight double quotes or apostrophes in visible text'
 });
 
 test.describe('Item 4: pages whose survey figures changed on 21 October say so', () => {
-  for (const route of ['impact/outcomes-2026/', 'programs/jobready-campus/', 'programs/youthwide/']) {
+  // WP86 (CLR run 3, Minor 3): YouthWIDE's line is now October 24 (tests/wp86.spec.ts)
+  for (const route of ['impact/outcomes-2026/', 'programs/jobready-campus/']) {
     test(`${route} shows "Last updated October 21, 2026"`, async ({ page }) => {
       await open(page, route);
       await expect(page.locator('body')).toContainText('Last updated October 21, 2026');

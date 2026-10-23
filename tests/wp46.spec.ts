@@ -231,7 +231,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     expect(await page.locator('#glance a[data-fact~="GV-12"]').getAttribute('data-fact')).toContain('GV-11');
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
@@ -374,8 +374,8 @@ test.describe('Outcomes 2026: the download link names the data, not the file (it
 });
 
 test.describe('The WSDFM card says its 71% is program records, not trial data (item 23)', () => {
-  test('every page that shows the WSDFM caption reads "WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work"', async () => {
-    const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work'));
+  test('every page that shows the WSDFM caption reads "WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"', async () => {
+    const withCaption = builtPages().filter((p) => p.html.includes('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work'));
     // WP51 (cycle-26 review): Home's card shows delivery context in place of the figure and its caption (the fourth carousel slide states the figure), so Home is not in the list
     expect(withCaption.map((p) => p.route).filter((r) => r !== '/styleguide/').sort()).toEqual(['/partner-with-us/development-partners/', '/partner-with-us/foundations/', '/partner-with-us/local-partners/', '/programs/youthwide/']);
     // the old caption is gone everywhere (Impact’s tile has its own label, "WSDFM program records: enrolled women in work (71%)", and its own note, "Program records, separate from the randomized trial of the predecessor program.": different lines, unchanged)

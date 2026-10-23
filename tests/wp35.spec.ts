@@ -78,7 +78,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   test('the 30,000+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
     // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
-    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
+    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
     await open(page, 'impact/');
     await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     await open(page, 'partner-with-us/governments/');
@@ -219,8 +219,8 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
   test('the Proof in Practice cards and the case study still state the WSDFM program records, apart from the trial', async ({ page }) => {
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
-      // WP46 (cycle-22 review): "WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work"
-      expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work');
+      // WP46 (cycle-22 review): "WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work"
+      expect((await texts(page, '#cases article')).join(' | '), route).toContain('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work');
     }
     await open(page, '');
     await expect(page.locator('[data-hs-slide]').nth(3)).toContainText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');

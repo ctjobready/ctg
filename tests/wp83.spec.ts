@@ -160,10 +160,10 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
 
   test('Governments: the tile and the table row say trained, meeting its target; the FAQ says "Her Power, a national program, trained 25,125 women, meeting its target"; the note exempts only CodersTrust’s own Her Power figures', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(CONTRACT_NOTE);
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(SCOPE_NOTE);
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(row).toContain('CodersTrust trained 2,400 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target. 54,609 manuals and guidelines were distributed.');
-    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.');
+    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.');
     expect(compact(await page.locator('#contracts caption').textContent())).toContain('Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power, a national program, trained 25,125 women, meeting its target; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.');
@@ -175,7 +175,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(CONTRACT_NOTE);
+    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
   });
 
   test('YouthWIDE: the national-scale answer says Her Power, a national program of DoICT, the ICT Division, trained 25,125 women, meeting its target', async ({ page }) => {

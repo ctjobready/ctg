@@ -246,7 +246,7 @@ test.describe('S3 (Claude): the 2 million 2030 aim carries its dependency on eve
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM’s program records name the trial’s count beside them', () => {
   const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.'; // WP63 (cycle-35 review, Kimi K2): WP81 (owner item 2026-10-23): "separate trial: 833 women" is replaced by "from program records", which keeps the line one row at 1280 (this block's budget test)
-  const CAPTION = 'WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work';
+  const CAPTION = 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work';
   const CARD_PAGES = ['partner-with-us/development-partners/', 'partner-with-us/foundations/', LOCAL, YOUTHWIDE];
 
   test('the count is RC-07’s (833 women at baseline: 425 treatment, 408 control), read from the register; PR-01 still says 711 of 1,000', () => {
@@ -350,7 +350,7 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sente
     expect(fact('GV-13').stat?.value).toBe(CONTRACT_FIGURES.direct);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 

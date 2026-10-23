@@ -659,7 +659,7 @@ test.describe('WP76 item 2: the register says the 1,000 are the women enrolled (
 
 test.describe('WP76 item 2: every page that states the figure names its base', () => {
   const RECORD_LINE = 'Program records: 711 of the 1,000 women enrolled were in work (71%).';
-  const CAPTION = 'WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work';
+  const CAPTION = 'WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work';
   const SLIDE_LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.';
 
   test('Home: slide 4 says "WSDFM: 711 of 1,000 enrolled in work (71%), from program records." and the WSDFM card "Program records: 711 of the 1,000 women enrolled were in work (71%)."', async ({ page }) => {

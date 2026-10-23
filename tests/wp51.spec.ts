@@ -176,7 +176,7 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
       const card = page.locator('#cases article', { hasText: WSDFM_TITLE });
       await expect(card, route).toHaveCount(1);
       await expect(card.locator('.case__value'), route).toHaveText('711 of 1,000');
-      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work');
+      expect(compact(await card.locator('.case__label').textContent()), route).toBe('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work');
       await expect(card.locator('.case__context'), route).toHaveCount(0);
     }
   });
@@ -463,8 +463,8 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(FULL).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national program, which trained 25,125 women and met its target; CodersTrust trained 2,400 women directly.');
     await open(page, GOV);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
-    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11 SC-02');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
+    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     // the table is below the tile and states the two figures Her Power's note used to repeat
     const contracts = compact(await page.locator('#contracts').textContent());
     expect(contracts).toContain('CodersTrust trained 2,400 women directly.');

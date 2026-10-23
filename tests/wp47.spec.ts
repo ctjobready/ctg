@@ -327,7 +327,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
   test('item 39: the Investors record band is headed "A Record Built Since 2014"; the institutions follow directly below it', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
-    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Since 2014']);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Delivered']);
     expect(await mainText(page)).not.toContain('with Institutions That Reach Youth');
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide.indexOf('Government partners include')).toBeGreaterThan(guide.indexOf('A Record Built Since 2014'));

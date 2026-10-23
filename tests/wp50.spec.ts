@@ -126,7 +126,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await open(page, 'partner-with-us/development-partners/');
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
-    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work');
+    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work');
     await open(page, 'impact/');
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toBeVisible();
     await expect(page.locator('#cases article.card')).toHaveCount(5);

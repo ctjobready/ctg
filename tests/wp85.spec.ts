@@ -161,7 +161,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
 
   test('Governments: the tile, the Her Power row and the national-scale answer say trained, meeting its target', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(CONTRACT_NOTE);
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(SCOPE_NOTE);
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(row).toContain('CodersTrust trained 2,400 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target. 54,609 manuals and guidelines were distributed.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
@@ -180,7 +180,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(CONTRACT_NOTE);
+    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(SCOPE_NOTE);
   });
 
   test('YouthWIDE: "Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {

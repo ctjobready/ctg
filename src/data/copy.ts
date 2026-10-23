@@ -177,12 +177,18 @@ function overlapSentence(n: string): { text: string; fact: string } {
   if (!(fact('SC-02').stat?.detail ?? '').includes(`the ${n} women Her Power trained nationally with CodersTrust’s curriculum`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "the N women Her Power trained nationally with CodersTrust’s curriculum" (the overlap with the 30,000+ contract scope)');
   return { text: `Her Power’s ${n} is the same group counted in the ${enrollments} enrollments through CodersTrust’s curriculum, not additional people.`, fact: 'SC-02' };
 }
-function contractTotalNote(): CopyBlock {
+/**
+ * WP86 (CLR review, Sonnet Max run 3, Minor 2): the overlap sentence is printed only where the 150,000+ is printed (Investors and Impact, the full form). Governments and the JobReady Platform page show the short form, the first sentence alone, with no SC-02 in its facts.
+ */
+function contractTotalNote(withOverlap: boolean): CopyBlock {
   const { national: n, direct } = CONTRACT_FIGURES;
+  const first = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained ${n} women (CodersTrust trained ${direct} directly).`;
+  if (!withOverlap) return { text: first, facts: ['GV-12', 'GV-01', 'GV-11'] };
   const overlap = overlapSentence(n);
-  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained ${n} women (CodersTrust trained ${direct} directly). ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
+  return { text: `${first} ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
 }
-export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
+export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote(true);
+export const CONTRACT_TOTAL_NOTE_SHORT: CopyBlock = contractTotalNote(false);
 
 /**
  * WP60 (cycle-32 review, Grok R4): the clause that keeps National University's 1.5M+ apart from CodersTrust's own learners, in one place. Home's government slide closes "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)."
@@ -236,6 +242,11 @@ export const WSDFM_ENROLLED: string = wsdfmEnrolled();
  * WP65 (cycle-37 review): Foundations' glance no longer carries the WSDFM tile (its fourth tile is UNDP YES, Korail), so the Impact page's tile is the note's one user; the Proof in Practice caption (CASE_CARD_LABELS) says the same thing in its own words.
  */
 export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`;
+/**
+ * WP86 (coordinator item 5): the short form of WSDFM_NOT_TRIAL_NOTE for the case-study card caption (CASE_CARD_LABELS: Development Partners, Foundations, Local Partners and YouthWIDE), where the full note does not fit under the figure.
+ * It replaces the caption's "(not trial results; the trial studied 833 women)", so the cards and the Impact tile say the same thing about the trial (RC-07's 425 offered a place; the 1,000 are program records).
+ */
+export const WSDFM_NOT_TRIAL_SHORT: string = `not trial results; the trial’s ${TRIAL_OFFERED} women offered a place were among these ${WSDFM_ENROLLED}`;
 
 /**
  * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say

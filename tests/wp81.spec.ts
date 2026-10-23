@@ -63,7 +63,7 @@ test.describe('WP81: WSDFM program records are not "separate" from the trial; th
 
   test('the Home case card’s WSDFM caption says "not trial results"; no built page calls the WSDFM records separate from, or a separate trial of, the women', () => {
     const pages = sitePages();
-    const withCaption = pages.filter((p) => visible(p.html).includes('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work'));
+    const withCaption = pages.filter((p) => visible(p.html).includes('WSDFM program records (not trial results; the trial’s 425 women offered a place were among these 1,000): 71% of enrolled women in work'));
     expect(withCaption.length).toBeGreaterThan(0);
     const separate = pages
       .filter((p) => /separate (trial|randomized trial|from the randomized trial)|separate randomized trial/i.test(visible(p.html)))

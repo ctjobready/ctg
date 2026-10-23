@@ -299,7 +299,7 @@ test.describe('Governments: the closing call to action does not repeat the procu
 
 test.describe('Governments: the contracts-table note excepts the Her Power figures and offers a briefing, not a request (items 11 and 37)', () => {
   // WP65 (cycle-37 review, Gemini, Kimi): the first sentence is active, "We confirm each contract’s delivery status in a briefing." (it said "Delivery status is confirmed for each contract in a briefing."; tests/wp65.spec.ts)
-  const NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.';
+  const NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, the other rows give contracted scopes of work, not delivered scale.';
 
   test('two sentences under the table; the screen-reader caption makes the same exception; "on request" is on no built page', async ({ page }) => {
     await open(page, GOV);

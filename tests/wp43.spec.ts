@@ -62,7 +62,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
     expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
-    expect(await texts(page, '#guide h3')).toEqual(['Since 2014']);
+    expect(await texts(page, '#guide h3')).toEqual(['Delivered']);
   });
 
   test('the four relationship lists and the seven founder and leadership entries are gone: no panel, list, portrait or person in the band, and no person anywhere on the page', async ({ page }) => {

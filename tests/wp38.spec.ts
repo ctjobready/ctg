@@ -340,7 +340,7 @@ test.describe('wording fixes', () => {
 
 test.describe('Recognition: the press headlines are in Title Case, words unchanged (the Tech in Asia card carries the article’s own headline since WP83)', () => {
   const TITLED = [
-    'CodersTrust to Finance Brains to Educate IT Coders',
+    'Skype Co-Founder Seeks Local Partners in New Venture',
     'Bangladesh, New York Pursue Different Paths to Train More Coders',
     'This Microfinance Startup Teaches Students in Bangladesh, Africa How to Code', // WP83: the publisher's own headline (Tech in Asia), in Title Case; it was the legacy homepage card's "A Novel Idea in Microfinance Is Turning Bangladeshis into Freelance Coders"
     'Cook to Coder: How Low-Income Youth Are Writing a Better Future',

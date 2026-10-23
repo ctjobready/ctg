@@ -5,7 +5,7 @@ import wsdfm from '../../../assets/images/pages/impact/wsdfm-training-group.jpg'
 import herPower from '../../../assets/images/pages/impact/her-power-training-lab.jpg';
 import { caseCardPhoto } from '../../../data/photos';
 import { fact } from '../../../data/facts';
-import { KOSOVO_RECORDS, TRIAL_WOMEN, WB_KOSOVO, WSDFM_RECORDS } from '../../../data/copy';
+import { KOSOVO_RECORDS, WB_KOSOVO, WSDFM_NOT_TRIAL_SHORT, WSDFM_RECORDS } from '../../../data/copy';
 
 interface CardPhoto {
   src: ImageMetadata;
@@ -45,7 +45,8 @@ export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerParts[2]} of the ${her
  */
 const wsdfmShare = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
 if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> of enrolled women in work"');
-const wsdfmLabel = `WSDFM program records (not trial results; the trial studied ${TRIAL_WOMEN} women): ${wsdfmShare[1]}`;
+// WP86 (coordinator item 5): the caption's parenthesis is the short form of WSDFM_NOT_TRIAL_NOTE (WSDFM_NOT_TRIAL_SHORT), not the trial's 833.
+const wsdfmLabel = `WSDFM program records (${WSDFM_NOT_TRIAL_SHORT}): ${wsdfmShare[1]}`;
 
 /**
  * The caption a case-study card puts under its figure, by register fact. CaseStudyCarousel uses it wherever a page gives no caption of its own, so the WSDFM and Her Power

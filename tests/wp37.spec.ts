@@ -397,7 +397,7 @@ test.describe('"CRM" is written out wherever the live-platform list is printed',
     }
     await open(page, 'our-model/jobready-platform/');
     const platform = await answerOf(page, 'Is the JobReady Platform Live?');
-    expect(platform).toBe('Partly. See Rollout Status above for live, pre-launch and planned capabilities.');
+    expect(platform).toBe('Partly. See Rollout Status above for what is live and what is in pre-launch.');
     expect((await faqJsonLd(page)).find((q) => q.name === 'Is the JobReady Platform Live?')?.text).toBe(platform);
     // WP39 (cycle-16 review): Investors lists the status in "What JobReady Does", directly above its questions, so its answer points there (tests/wp39.spec.ts); the JSON-LD still reads the same as the page
     await open(page, 'partner-with-us/investors/');
