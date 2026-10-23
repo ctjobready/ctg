@@ -399,7 +399,7 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
   test('the H1, the lead and the grid’s H2 read as below, and the old H1 and H2 are gone', async ({ page }) => {
     await open(page, HUB);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs Across Kosovo, Albania and Bangladesh');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result, its base and what the figures do and do not show.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result and its base; each case study says what its figures do and do not show.');
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First|Five Programs, from Kosovo to Bangladesh/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });

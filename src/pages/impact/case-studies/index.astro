@@ -14,7 +14,7 @@ import { linkAttrs } from '../../../lib/url';
 import { webPage } from '../../../lib/schema';
 
 const path = '/impact/case-studies/';
-const description = desc('Five CodersTrust case studies, each with its result and what it does not show: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
+const description = desc('Five CodersTrust case studies, each with its result and its base: Women in Online Work, Digital Jobs Albania, WSDFM, UNDP YES and Her Power.');
 const jsonLd = [
   webPage({ path, name: 'CodersTrust Case Studies', description, type: 'CollectionPage' }),
   itemList('CodersTrust case studies', CASE_STUDIES.map((c) => ({ name: c.name, path: c.path }))),
@@ -28,7 +28,7 @@ const d = discoveryCta();
   <!-- WP60 (cycle-32 review, Kimi K1 and K2): the H1 was "Five Programs, from Kosovo to Bangladesh" (it said "Learners Reaching Paid Work, ...", but the Albania card shows an enrollment figure, not a work result) and the hero photograph is the Kosovo training room (HERO["case-studies-hub"] in
        src/data/photos.ts; it was the Bhutan inauguration, and no Bhutan case study exists). The grid's H2 is "Results First, Program by Program" (it said "Five Programs, Results First", which repeated the H1's and the lead's first words). The Albania card's figure is labelled "Reported Enrollment" (CaseGrid).
        WP63 (cycle-35 review, Kimi K5; also Kimi in cycle 34): the H1 is "Five Programs Across Kosovo, Albania and Bangladesh" (the range "from Kosovo to Bangladesh" left Albania, one of the five, unnamed), as the Impact page's "Five Programs" band is headed; the <title> names the same three countries. -->
-  <Hero variant="inner" eyebrow="Impact" title="Five Programs Across Kosovo, Albania and Bangladesh" lead="Five programs, each with its result, its base and what the figures do and do not show." artSeed="case-studies-hub" />
+  <Hero variant="inner" eyebrow="Impact" title="Five Programs Across Kosovo, Albania and Bangladesh" lead="Five programs, each with its result and its base; each case study says what its figures do and do not show." artSeed="case-studies-hub" />
 
   <Section aria-labelledby="cases-h">
     <SectionHeader id="cases-h" eyebrow="Case Studies" title="Results First, Program by Program" />
