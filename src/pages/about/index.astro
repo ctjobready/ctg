@@ -40,8 +40,8 @@ const sc02Stat = sc02.stat!;
 // WP65 (cycle-37 review, Sonnet, Grok): the tile is its number and label alone. Its detail line (WP50: "Including 111,268 direct enrollments and 40,043 through courseware.") is gone from About only;
 // SC-02's register detail is unchanged, and Investors' tile still prints it (FactStat).
 // WP64 (cycle-36 review, Grok): the two tiles sit side by side and neither the eyebrow ("At a Glance") nor the heading ("Where We Are Today") gives the period, so the learners tile keeps "since 2014" (SC-01's own label) and this tile drops it ("course enrollments"), said once.
-// SC-02's label without " since 2014" is read from the register ("enrollments"); "course" is this page's own word, as it was.
-const sc02Label = `course ${withoutSince2014(sc02Stat.label)}`;
+// SC-02's label without " since 2014" is read from the register ("enrollments"). WP88 item 9: the "course" word is gone, so the tile reads "enrollments" as every other page does.
+const sc02Label = withoutSince2014(sc02Stat.label);
 // WP30e: the employment result in one sentence; the income detail is on the Independent Evaluation page.
 // WP54 (cycle-28 review, GPT-6.1 Sol G8): this sentence is the page's one mention of the evaluator, so it is spelled out ("by the BRAC Institute of Governance and Development (BIGD)"); the register's headline says "by BIGD".
 const trial = spellOutBigd(RCT_HEADLINE.text.split(/(?<=\.)\s+(?=[A-Z])/)[0]);

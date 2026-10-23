@@ -199,7 +199,7 @@ test.describe('About, Careers and Local Partners: the SC-11 tile', () => {
     const labels = await texts(page, '#glance .about-stats .stat__label');
     expect(labels.map((l) => /since 2014/.test(l))).toEqual([true, false, false, true, false]);
     expect(labels[0]).toBe('learners trained since 2014');
-    expect(labels[1]).toBe('course enrollments');
+    expect(labels[1]).toBe('enrollments');
     expect(compact(await page.locator('#glance').textContent()).match(/since 2014/gi)).toHaveLength(2);
     // neither the eyebrow nor the heading gives the period, so the tile keeps it: a count of signed agreements says since when
     await expect(page.locator('#glance h2')).toHaveText('Where We Are Today');

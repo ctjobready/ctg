@@ -90,7 +90,7 @@ test.describe('/impact/ At a Glance', () => {
     const reach = page.locator('#glance .glance__group', { has: page.getByRole('heading', { level: 3, name: 'Reach and Contract Scope' }) });
     await expect(reach).toHaveCount(1);
     await expect(reach).toContainText(/(?<![\d,])30,000\+/); // the group also holds the 130,000+ learners
-    await expect(reach).toContainText(/contracted scopes of six government programs/i);
+    await expect(reach).toContainText(/contracted scopes of six government contracts/i);
     await expect(reach).toContainText('25,125');
     await expect(reach).not.toContainText('800');
     // WP36: the contract-scope figure carries the "Contract Scope" evidence tag (as on Home, Governments and Investors), not an "Agreement" status tag; the reach figure keeps "Delivered"

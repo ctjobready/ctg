@@ -577,7 +577,7 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
     for (const p of sitePages().filter((q) => on.includes(q.route))) {
       const alts = [...p.html.matchAll(/<img[^>]*data-asset="legacy-general-kosovo-wow-group"[^>]*>/g)].map((m) => /alt="([^"]*)"/.exec(m[0])?.[1] ?? '');
       expect(alts.length, p.route).toBe(1);
-      expect(alts[0], p.route).toBe('Thirteen people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners');
+      expect(alts[0], p.route).toBe('13 people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners');
       expect(visible(p.html), p.route).toContain('Kosovo');
     }
   });
@@ -600,7 +600,7 @@ test.describe('the former "Albania" photograph is the Kosovo pilot: cropped, re-
     const gallery = await page.locator('#in-the-field figure img').evaluateAll((imgs) => imgs.map((i) => i.getAttribute('data-asset')));
     expect(gallery[1]).toBe('legacy-global-somaliland-hour-of-code');
     expect(gallery).toHaveLength(4);
-    expect(await texts(page, '#in-the-field figure figcaption')).toContain('Hour of Code, and an ICT program at Tima-ade University, Somaliland, December 2015');
+    expect(await texts(page, '#in-the-field figure figcaption')).toContain('Hour of Code, and an ICT program at Tima-ade University, Somaliland, 2015');
   });
 });
 

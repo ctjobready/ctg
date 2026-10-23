@@ -127,7 +127,7 @@ test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target s
     for (const p of pages) {
       const text = visible(p.html);
       const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 45), m.index + 70));
-      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/);
+      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/);
     }
   });
 
@@ -149,13 +149,13 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 
-  test('Impact: the 30,000+ tile carries the contract-scope note; the Her Power tile says the national program’s reach is counted separately', async ({ page }) => {
+  test('Impact: the 30,000+ tile carries the contract-scope note; the Her Power tile says the 2,400 are among the 25,125 women', async ({ page }) => {
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
     expect(compact(await tile.textContent())).toContain(SCOPE_NOTE);
     const her = page.locator('#glance [data-fact~="PR-05"]').first();
     expect(compact(await her.textContent())).toContain('Her Power: tracked women in work (47%), from the 2,400 CodersTrust trained directly');
-    expect(compact(await her.textContent())).toContain('Within the national program scope; the national program’s reach is counted separately.');
+    expect(compact(await her.textContent())).toContain('The 2,400 are among the 25,125 women the national program trained.');
   });
 
   test('Governments: the tile and the table row say trained, meeting its target; the FAQ says "Her Power, a national program, trained 25,125 women, meeting its target"; the note exempts only CodersTrust’s own Her Power figures', async ({ page }) => {
@@ -184,14 +184,14 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     expect(compact(await faq.textContent())).toContain('Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
   });
 
-  test('the Her Power case study: "National Scale: A Different Measure"; the tracked 372 of 800 from the 2,400 trained directly is unchanged', async ({ page }) => {
+  test('the Her Power case study: "National Scale: The Wider Program"; the tracked 372 of 800 from the 2,400 trained directly is unchanged', async ({ page }) => {
     await open(page, 'impact/case-studies/her-power/');
-    await expect(page.getByRole('heading', { level: 3, name: 'National Scale: A Different Measure' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'National Scale: The Wider Program' })).toBeVisible();
     const scale = compact(await page.locator('.hp__scale').textContent());
-    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
+    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.');
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');
     expect(compact(await page.locator('main').textContent())).toContain('Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%)');
-    expect(titleCase('National Scale: A Different Measure')).toBe('National Scale: A Different Measure');
+    expect(titleCase('National Scale: The Wider Program')).toBe('National Scale: The Wider Program');
   });
 
   test('the Her Power news post: the banner note is "Delivered: the national program trained 25,125 women, its full target."', async ({ page }) => {
@@ -284,7 +284,7 @@ test.describe('WP83: CodersTrust trained 2,400 women directly in Her Power (owne
         seen.add(p.route);
         const at = m.index ?? 0;
         const near = text.slice(Math.max(0, at - 70), at + 70);
-        if (!/directly/.test(near)) offenders.push(`${p.route}: "${near}"`);
+        if (!/directly|are among the 25,125|Counting the 2,400 women once/.test(near)) offenders.push(`${p.route}: "${near}"`);
       }
     }
     expect(offenders).toEqual([]);

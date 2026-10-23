@@ -82,12 +82,12 @@ test.describe('Item 1 (Sonnet, Grok, Kimi): the Our Model scale card says month 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail line', () => {
-  test('the tile is "150,000+" and "course enrollments" with no note; About states neither 112,926 nor 40,152', async ({ page }) => {
+  test('the tile is "150,000+" and "enrollments" with no note; About states neither 112,926 nor 40,152', async ({ page }) => {
     await open(page, ABOUT);
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.stat__value')).toContainText('150,000');
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('enrollments');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     const text = await mainText(page);
     expect(text).not.toMatch(/112,926|40,152|direct enrollments|through courseware/);
@@ -105,9 +105,9 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
 
   test('SC-02 is unchanged in the register, and Investors still prints the split from its detail line', async ({ page }) => {
     expect(fact('SC-02').text).toContain('112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware');
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners).');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.');
     await open(page, INVESTORS);
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners).');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.');
     // the wording WP50 gave About's tile is on no page; the split is on Investors and no longer on About
     expect(pagesWith('Including 111,268 direct enrollments and 40,043 through courseware.')).toEqual([]);
     const withSplit = pagesWith('112,926');

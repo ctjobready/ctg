@@ -4,7 +4,7 @@ date: 2015-12-21
 topic: programs-events
 excerpt: "In late 2015, CodersTrust’s work in Somaliland included an Hour of Code event for students, and an ICT program at Tima-ade University."
 cover: ../../assets/images/pages/global/somaliland-hour-of-code.jpg
-coverAlt: "About thirty men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner"
+coverAlt: "About 30 men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner"
 tags: []
 archiveNote: "Added in October 2026 from the dated sources linked in the text."
 ---

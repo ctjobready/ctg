@@ -36,7 +36,7 @@ const NEWS_HOC = 'news/hour-of-code-in-somaliland/';
 /** The owner's wording (decision 13). */
 const PHRASE = 'Hour of Code, and an ICT program at Tima-ade University';
 /** The alt text describes the visible banner; it does not say the Hour of Code was held with the university. */
-const BANNER_ALT = 'About thirty men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner';
+const BANNER_ALT = 'About 30 men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner';
 /** The owner's timeline line (decision 15). */
 const NIGERIA_TEXT = 'A Rockefeller Foundation grant supported a CodersTrust feasibility study in Kenya and Nigeria.';
 const RF_URL = 'https://web.archive.org/web/20231202123117/https://www.rockefellerfoundation.org/grant/grant-2015-213/';
@@ -222,7 +222,7 @@ test.describe('Somaliland wording: "Hour of Code, and an ICT program at Tima-ade
 
   test('YouthWIDE: the gallery caption is the owner’s wording with the place and month; its alt text still describes the banner', async ({ page }) => {
     await open(page, YOUTHWIDE);
-    expect(await texts(page, '#in-the-field figure figcaption')).toContain(`${PHRASE}, Somaliland, December 2015`);
+    expect(await texts(page, '#in-the-field figure figcaption')).toContain(`${PHRASE}, Somaliland, 2015`);
     const figure = page.locator('#in-the-field figure', { has: page.locator('img[data-asset="legacy-global-somaliland-hour-of-code"]') });
     expect(await figure.locator('img').getAttribute('alt')).toBe(BANNER_ALT);
   });

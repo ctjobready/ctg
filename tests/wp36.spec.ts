@@ -151,9 +151,9 @@ test.describe('Development Partners and Governments: each figure once', () => {
     await expect(page.locator('#contracts tbody tr')).toHaveCount(6);
   });
 
-  test('Governments: the glance tile reads "People in the Scopes of Six Government Contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
+  test('Governments: the glance tile reads "people in the scopes of six government contracts"; "What Your Agency Gets" speaks of outcomes and the agreed scorecard', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
+    await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__desc')).toHaveText('people in the scopes of six government contracts');
     // WP39 (cycle-16 review): the features band is three short cards; the second one keeps "Spending Measured Against Outcomes" and the budget "assessed against the agreed scorecard"
     const card = page.locator('#features li.card', { has: page.locator('h3', { hasText: 'Spending Measured Against Outcomes' }) });
     await expect(card).toHaveCount(1);

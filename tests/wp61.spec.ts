@@ -399,7 +399,7 @@ test.describe('L5 (GLM): Governments’ glance runs trial, Her Power, Kosovo, th
     await expect(page.locator('#glance h2')).toHaveText('Results and Contract Scope at a Glance');
     // the contract-scope tile keeps its label, note and facts
     const tile = page.locator('#glance a[data-fact~="GV-12"]');
-    await expect(tile.locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
+    await expect(tile.locator('.pg__desc')).toHaveText('people in the scopes of six government contracts');
     expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     expect((await tile.getAttribute('data-fact'))!.split(' ')).toEqual(expect.arrayContaining(['GV-12', 'SC-06', 'GV-01', 'GV-11']));
   });

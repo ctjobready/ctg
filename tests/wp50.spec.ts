@@ -497,13 +497,13 @@ test.describe('Foundations: each funding-route link appears once (item 20)', () 
 });
 
 test.describe('About: the enrollments tile (item 21)', () => {
-  // WP64 (cycle-36 review, Grok): the learners tile beside it says "since 2014", so this one reads "course enrollments" (said once; tests/wp64.spec.ts)
+  // WP64 (cycle-36 review, Grok): the learners tile beside it says "since 2014", so this one reads "enrollments" (said once; tests/wp64.spec.ts)
   // WP65 (cycle-37 review, Sonnet, Grok): the detail line ("Including 111,268 direct enrollments and 40,043 through courseware.") is gone from About; the register's SC-02 text and detail are unchanged (tests/wp65.spec.ts)
-  test('the tile keeps "150,000+" and "course enrollments" and has no detail line; the register still states the split; the item-21 wording ("111,268 direct enrollments; 40,043 through courseware") is on no page', async ({ page }) => {
+  test('the tile keeps "150,000+" and "enrollments" and has no detail line; the register still states the split; the item-21 wording ("111,268 direct enrollments; 40,043 through courseware") is on no page', async ({ page }) => {
     await open(page, 'about/');
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__value')).toContainText('150,000');
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('enrollments');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(fact('SC-02').text).toContain('112,926 through direct training'); // WP87 (items 19 and 21): the owner's updated Ex-Trainees Data sheet (it was 111,268)
     expect(fact('SC-02').text).toContain('40,152 reached through CodersTrust curriculum and courseware'); // WP87 (items 19 and 21): 25,125 + 15,027 (it was 40,043)

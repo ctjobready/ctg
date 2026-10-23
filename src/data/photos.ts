@@ -25,7 +25,7 @@ const ALT: Record<string, string> = {
   'general/nctb-meeting': 'CodersTrust and NCTB representatives seated around a table at the MOU meeting',
   'general/kosovo-women-screens': 'Women learners at computers in a training room in Kosovo, one in the foreground turned toward the front of the room',
   // WP55 (owner decision 2026-10-17): this photograph shows the Kosovo Women in Online Work pilot, not Albania (the word ALBANIA was burned into the old file; the caption is cropped out). It was "general/albania-trainees-group".
-  'general/kosovo-wow-group': 'Thirteen people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners',
+  'general/kosovo-wow-group': '13 people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners',
   'general/kosovo-woman-training': 'A woman learner seated at a computer among other learners in a Women in Online Work training room in Kosovo',
   'general/her-power-laptops-1': 'Women receiving laptops at a Her Power laptop distribution ceremony, in front of the event banner',
   'general/her-power-laptops-2': 'A participant in a yellow coat receiving a laptop box from a man in a pink shirt and face mask at a Her Power laptop distribution ceremony', // WP87: agrees with the caption ("A participant receives a laptop"); it said the participant was the one handing the box over
@@ -96,7 +96,7 @@ const ALT: Record<string, string> = {
   //   general/kosovo-wow-group            the site's own file (the old "Albania" photograph), cropped above the burned-in caption; legacy source https://coderstrust.global/wp-content/uploads/2023/07/CodersTrust-slider-albania-color-.webp
   'global/copenhagen-launch-dinner': 'Guests seated at round tables in an ornate hotel hall at a dinner, with a speaker standing beneath a projection screen at the far end',
   'global/dubai-start-up-event': 'Attendees seated and standing in a lounge at an evening start-up event',
-  'global/somaliland-hour-of-code': 'About thirty men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner',
+  'global/somaliland-hour-of-code': 'About 30 men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner',
   'global/bhutan-batch-inauguration': 'Dozens of people in Bhutanese dress, including a monk in an orange robe and two men in suits, pose in rows on the steps of a building at a trainee batch inauguration ceremony',
   'global/digital-jobs-albania': 'A smiling woman with glasses seated with a laptop on her lap, gesturing with an open hand, on a light blue background',
   'impact/kosovo-graduate-portrait': 'Portrait of Erlisa Zherka, a program completer of the Women in Online Work pilot in Kosovo',
@@ -144,10 +144,10 @@ export const CAPTION: Record<string, string> = {
   'global/copenhagen-launch-dinner': 'Launch dinner for Virgin Unite, Copenhagen, April 2014',
   'global/dubai-start-up-event': 'Start-up event at In5, Dubai Internet City, April 2014',
   // WP56 (owner decision 13, 2026-10-18): no source says the Hour of Code was held with the university; the photograph shows a Tima-ade University banner (see its alt text).
-  'global/somaliland-hour-of-code': 'Hour of Code, and an ICT program at Tima-ade University, Somaliland, December 2015',
+  'global/somaliland-hour-of-code': 'Hour of Code, and an ICT program at Tima-ade University, Somaliland, 2015',
   'global/bhutan-batch-inauguration': 'Trainee batch inauguration ceremony, Bhutan',
   'global/digital-jobs-albania': 'Digital Jobs Albania, an online training program for women, 2021–2022',
-  'impact/kosovo-graduate-portrait': 'Erlisa Zherka, Women in Online Work graduate, Kosovo',
+  'impact/kosovo-graduate-portrait': 'Erlisa Zherka, Women in Online Work program completer, Kosovo',
   'general/yes-trainees-group': 'UNDP YES (Youth Employment through Skills) trainees, Korail',
   'general/yes-collage': 'UNDP YES (Youth Employment through Skills) trainees in class and in group portraits',
   'general/woman-learner-laptop': 'A UNDP YES program completer at her laptop',

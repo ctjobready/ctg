@@ -300,7 +300,7 @@ test.describe('Item 17: polish', () => {
 });
 
 test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total stays "150,000+"; the composition is 112,926 direct and 40,152 courseware', () => {
-  const SPLIT = 'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners).';
+  const SPLIT = 'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.';
 
   test('no built page prints the old composition (111,268 / 40,043 / 14,918), a "~150,000" total or a "nearly 150,000" total', () => {
     const offenders: string[] = [];
@@ -355,11 +355,11 @@ test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total
     for (const route of ['', 'about/', 'impact/', 'partner-with-us/', 'partner-with-us/investors/']) expect(visible(pageHtml(route)), route || 'home').toContain('150,000+');
   });
 
-  test('About’s tile is "150,000+" over "course enrollments"', async ({ page }) => {
+  test('About’s tile is "150,000+" over "enrollments"', async ({ page }) => {
     await open(page, 'about/');
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__value')).toHaveText('150,000+');
-    expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments');
+    expect(compact(await tile.locator('.stat__label').textContent())).toBe('enrollments');
   });
 });
 

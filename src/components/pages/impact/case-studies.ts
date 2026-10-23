@@ -83,7 +83,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'undp-yes-korail',
     path: `${base}undp-yes-korail/`,
     name: 'UNDP YES, Korail',
-    heading: 'UNDP YES: Korail Youth into Freelance Work, 2017',
+    heading: 'UNDP YES: Korail Youth into Paid Work, 2017',
     program: 'UNDP, Government of Bangladesh, Swanirvar Bangladesh',
     partner: '2017',
     factId: 'PR-03',
@@ -104,7 +104,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',
     place: 'ICT Division / DoICT, Government of Bangladesh; Bangladesh, from 2023',
     who: 'Women',
-    scope: 'Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly',
+    scope: 'Curriculum, training manuals, mentorship guidelines and trainer training; 2,400 trained directly',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/#governments' },
   },
 ];

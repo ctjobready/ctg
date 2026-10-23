@@ -697,7 +697,7 @@ test.describe('WP76 item 2: every page that states the figure names its base', (
   });
 
   test('the WSDFM case study: the first tile (711 of 1,000, "WSDFM: 71% of enrolled women in work"), the program-results sentence and the description, social descriptions and JSON-LD all say the women enrolled', async ({ page }) => {
-    const DESCRIPTION = 'WSDFM (Porticus): a randomized trial of the predecessor program found income rose for women offered a place; 711 of the 1,000 women enrolled were in work.';
+    const DESCRIPTION = 'WSDFM (Porticus): a randomized trial of the predecessor found women offered a place had an estimated 41% higher monthly income than the control group.';
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     expect(await page.locator('.factstat[data-fact="PR-01"] .stat__num').getAttribute('data-final')).toBe('711 of 1,000');
     await expect(page.locator('.factstat[data-fact="PR-01"] .stat__label')).toHaveText('WSDFM: 71% of enrolled women in work');
@@ -794,7 +794,7 @@ test.describe('WP76 item 3: the Kosovo program is described as the World Bank br
       'Three-month online training in graphic design, web development and digital marketing, with mentoring.',
       'ICT skills for freelancing marketplaces and local jobs, with one-to-one mentoring.',
       'Skills training linked to freelance marketplaces, in a fully equipped lab with one-to-one mentoring.',
-      'Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly.',
+      'Curriculum, training manuals, mentorship guidelines and trainer training; 2,400 trained directly.',
     ]);
   });
 

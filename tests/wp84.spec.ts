@@ -36,7 +36,7 @@ const visible = (html: string) =>
   );
 
 const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
-const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}.`;
+const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}. Counting the 2,400 women once, the total is 150,678.`;
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
@@ -164,12 +164,12 @@ test.describe('WP84: the Her Power case study sentence has one colon', () => {
     expect(fact('GV-01').stat?.value).toBe('25,125');
   });
 
-  test('"The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {
+  test('"The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them."', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/case-studies/her-power/');
     const para = compact(await page.locator('.hp__scale p').textContent());
     expect(para).toBe(
-      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
+      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target. The 2,400 women CodersTrust trained directly are among them.',
     );
     expect(para.split(':').length - 1, 'one colon in the paragraph').toBe(1);
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');

@@ -139,7 +139,7 @@ test.describe('R2 (Grok): Maria Dewan first came across Her Power, where CodersT
     await open(page, 'impact/case-studies/her-power/');
     const herPower = compact(await page.locator('main').textContent());
     expect(herPower).toContain('Maria Dewan joined Her Power as a third-year Biology student.');
-    expect(herPower).toContain('Within the national program, CodersTrust provided the curriculum, training manuals, mentorship guidelines and trainer training, and trained a cohort of women directly.');
+    expect(herPower).toContain('Within the national program, CodersTrust provided the curriculum, training manuals, mentorship guidelines and trainer training, and trained 2,400 women directly.');
     await open(page, 'partner-with-us/universities/');
     expect(compact(await page.locator('main').textContent())).toContain(SENTENCE);
     await open(page, 'impact/stories/');
