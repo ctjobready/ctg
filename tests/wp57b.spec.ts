@@ -58,7 +58,7 @@ test.describe('G1, Kosovo: "56 won online contracts (~180 jobs)" is removed', ()
   test('the case study lists "In Work" (102 of 150 women in work, 68%) and "Online Earnings" only, still tied to PR-02, and the World Bank’s 77 follows the lines', async ({ page }) => {
     await open(page, KOSOVO);
     expect(await texts(page, '.kw__results dt')).toEqual(['In Work', 'Online Earnings']);
-    expect(await texts(page, '.kw__results dd')).toEqual(['102 of 150 women in work (68%)', '78 program completers earned a combined total of about $25,000 online']);
+    expect(await texts(page, '.kw__results dd')).toEqual(['102 of the 150 women trained were in work (68%)','78 program completers earned a combined total of about $25,000 online']);
     expect(await page.locator('.kw__results').getAttribute('data-fact')).toBe('PR-02');
     const results = compact(await page.locator('#results').textContent());
     expect(results).not.toMatch(/56|180|Online Contracts/);
@@ -76,7 +76,7 @@ test.describe('G1, Kosovo: "56 won online contracts (~180 jobs)" is removed', ()
 
   test('the register entry PR-02 is shared with the lines that stay, so only what renders changed: the 102 of 150 and the earnings clause are still its first two clauses', () => {
     const parts = fact('PR-02').text.split(': ')[1]?.split('; ') ?? [];
-    expect(parts[0]).toMatch(/^102 of 150 women in work/);
+    expect(parts[0]).toMatch(/^102 of the 150 women trained were in work/);
     expect(parts[1]).toMatch(/earned a combined total/);
   });
 

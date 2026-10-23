@@ -399,7 +399,7 @@ test.describe('K2, Foundations: the meta description reads "earned an estimated 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures, and no card, tile or block shows one without the other ("show both", owner decision 7)', () => {
-  const RECORDS = 'Program records, 2016–2017: 102 of 150 women in work.';
+  const RECORDS = 'Program records, 2016–2017: 102 of the 150 women trained were in work.';
   const WORLD_BANK = 'World Bank: 77 trainees won at least one online contract.';
   const card = (page: Page) => page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' });
 
@@ -416,15 +416,15 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
     expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);
     // the program records are on Home in the hero slide and in this card; the World Bank's figure is on this card alone
     const main = compact(await page.locator('main').textContent());
-    expect(main.split('102 of 150').length - 1).toBe(2);
+    expect(main.split('102 of').length - 1).toBe(2);
     expect(main.split('77 trainees').length - 1).toBe(1);
-    // the figure's spaces are no-break spaces, so "102 of 150" never splits across two lines in the card
-    expect(await card(page).locator('.case__context').evaluate((el) => (el.textContent ?? '').includes('102\u00a0of\u00a0150'))).toBe(true);
+    // the figure's spaces are no-break spaces, so "102 of the 150" never splits across two lines in the card
+    expect(await card(page).locator('.case__context').evaluate((el) => (el.textContent ?? '').includes('102\u00a0of\u00a0the\u00a0150'))).toBe(true);
   });
 
-  test('both lines are built from the register: PR-02 reads "102 of 150 women in work" and PR-02b is the World Bank’s count of 77', () => {
+  test('both lines are built from the register: PR-02 reads "102 of the 150 women trained were in work" and PR-02b is the World Bank’s count of 77', () => {
     expect(fact('PR-02').stat?.value).toBe('102 of 150');
-    expect(fact('PR-02').text).toContain('102 of 150 women in work');
+    expect(fact('PR-02').text).toContain('102 of the 150 women trained were in work');
     expect(fact('PR-02b').stat?.value).toBe('77');
     expect(fact('PR-02b').text).toContain('The World Bank reports that 77 trainees');
   });
@@ -456,7 +456,7 @@ test.describe('GM4, Kosovo: Home’s "Proof in Practice" card shows both figures
     for (const route of routes) {
       await open(page, route.replace(/^\//, ''));
       const hits = await page.evaluate(() => {
-        const A = '102 of 150';
+        const A = '102 of'; // WP80: the card reads "102 of the 150" (the slide reads "102 of 150")
         const B = '77 trainees';
         const norm = (t: string | null) => (t ?? '').replace(/\s+/g, ' ').trim();
         const out: { needle: string; container: string; length: number; inHero: boolean }[] = [];

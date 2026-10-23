@@ -74,7 +74,7 @@ import RouteLink from '../../../components/pages/partners/RouteLink.astro';
 import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import StepsBand from '../../../components/pages/partners/StepsBand.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACER_MONTHS, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { CONTRACT_TOTAL_NOTE, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE_BRIEFING, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { HER_POWER_TILE_LABEL } from '../../../components/pages/home/caseStudies';
 import { faqJsonLd } from '../../../lib/faq';
@@ -127,7 +127,7 @@ const FAQ_IDS = ['Q7-government', 'Q2-government', 'Q1-government', 'Q10', 'Q8-g
     lead={[
       { id: 'RC-02', href: '/impact/independent-evaluation/' },
       { id: 'PR-05', href: '/impact/case-studies/her-power/', label: HER_POWER_TILE_LABEL },
-      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts },
+      { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO.text, also: WB_KOSOVO.facts },
     ]}
     more={[{ id: 'GV-12', href: '/partner-with-us/governments/#contracts', label: 'People in the Scopes of Six Government Contracts', note: contractsNote, also: ['SC-06', ...contractsNoteFacts] }]}
   />

@@ -329,7 +329,8 @@ test.describe('Our Model and Investors', () => {
     // WP49 (cycle-24 review): the shared "What Happens When Funding Ends?" answer no longer carries that TalentLEAP clause (tests/wp49.spec.ts); the page's own worked example states the levels
     expect(text).not.toContain('TalentLEAP is designed to organize skills into career paths with progressive levels as further levels are published');
     expect(text).toContain('TalentLEAP organizes skills into career paths with progressive levels. In this example the levels are Competent, Proficient and Expert.');
-    expect(text).toContain('by the BRAC Institute of Governance and Development (BIGD) at BRAC University');
+    // WP80 (item 1): the FAQ answer now opens "Yes, for a predecessor program." and names the evaluator in its second sentence.
+    expect(text).toContain('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial');
   });
 
   // WP37 (cycle-14 review): Our Model has its own two-sentence variant of the timeline answer ("allow about three weeks ... then 6–8 weeks ..."), hedged by "allow about"; WP40 (cycle-17 review): YouthWIDE, whose "What Happens Next"

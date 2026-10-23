@@ -494,7 +494,7 @@ test.describe('Kosovo: both figures, the program records and the World Bank’s,
     // Home states the program records in the slide above and, since WP57, in the card itself; Development Partners and YouthWIDE show both on the card.
     await open(page, HOME);
     expect(compact(await page.locator('#results').textContent())).toContain('102 of 150');
-    expect(compact(await page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' }).textContent())).toContain('102 of 150');
+    expect(compact(await page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' }).textContent())).toContain('102 of the 150');
     await open(page, DP);
     expect(compact(await page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' }).textContent())).toContain('102 of 150');
   });
@@ -518,9 +518,9 @@ test.describe('Kosovo: both figures, the program records and the World Bank’s,
     await expect(card.locator('.case__second')).toHaveText(LINE);
     await open(page, KOSOVO);
     const results = compact(await page.locator('#results').textContent());
-    expect(results).toContain('102 of 150 women in work (68%)');
+    expect(results).toContain('102 of the 150 women trained were in work (68%)');
     expect(results).toContain('The World Bank reports that 77 trainees in the Women in Online Work pilot in Kosovo won at least one online work contract in the pilot’s first two phases.');
-    expect(results.indexOf('102 of 150'), 'the program records come first').toBeLessThan(results.indexOf('77 trainees'));
+    expect(results.indexOf('102 of the 150'), 'the program records come first').toBeLessThan(results.indexOf('77 trainees'));
   });
 
   test('every built page that shows the 102 of 150 also shows the World Bank’s 77 (the staging-only component gallery aside)', () => {

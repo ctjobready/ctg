@@ -113,11 +113,13 @@ export const WB_KOSOVO: CopyBlock = wbKosovo();
 function kosovoRecords(): CopyBlock {
   const r = fact('PR-02');
   const n = r.stat?.value;
-  if (!n || !/^\d+ of \d+$/.test(n) || !r.text.includes(`${n} women in work`)) throw new Error('KOSOVO_RECORDS: PR-02 no longer reads "N of M women in work"');
-  // WP71 (owner direction, dated program records): the years are TL-04's span, read from the register ("Program records, 2016\u20132017: 102 of 150 women in work.").
+  const m = n && /^(\d+) of (\d+)$/.exec(n);
+  if (!m || !r.text.includes(`${m[1]} of the ${m[2]} women trained were in work`)) throw new Error('KOSOVO_RECORDS: PR-02 no longer reads "N of the M women trained were in work"');
+  // WP71 (owner direction, dated program records): the years are TL-04's span, read from the register. WP80 (item 3): the base reads "of the 150 women trained".
   const years = fact('TL-04').stat?.value;
   if (!years || !/^\d{4}\u2013\d{4}$/.test(years)) throw new Error('KOSOVO_RECORDS: TL-04 stat value no longer reads "YYYY\u2013YYYY"');
-  return { text: `Program records, ${years}: ${n.replace(/ /g, '\u00a0')} women in work.`, facts: ['PR-02', 'TL-04'] };
+  const base = `${m[1]}\u00a0of\u00a0the\u00a0${m[2]}`;
+  return { text: `Program records, ${years}: ${base} women trained were in work.`, facts: ['PR-02', 'TL-04'] };
 }
 export const KOSOVO_RECORDS: CopyBlock = kosovoRecords();
 /**

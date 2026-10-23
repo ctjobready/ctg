@@ -43,12 +43,11 @@ const glance = [
   { id: 'OC-01', value: stat('OC-01').value, label: stat('OC-01').glance?.label ?? stat('OC-01').label, note: stat('OC-01').glance?.note },
   { id: 'RC-02', value: stat('RC-02').value, label: stat('RC-02').label, note: stat('RC-02').detail },
 ];
-// The shared answers for the three questions, with the page's own scope: the trial's evaluator is spelled out once (WP25s), and the nine-trials context sentence stays on the evidence pages.
+// The shared answers for the three questions, with the page's own scope. The Independent Evidence answer already spells out the evaluator (faqs.ts, WP80), so this page checks that it still does rather than rewriting it.
 const faq = faqItems('foundations', ['Q14', 'Q10', 'Q4']).map((f) => {
   if (f.q !== 'Is There Independent Evidence?') return f;
-  const spelled = f.a.replace('by BIGD (BRAC University)', 'by the BRAC Institute of Governance and Development (BIGD) at BRAC University').replace(/; the trial surveyed 599 women at follow-up[^<]*?(\.<\/p>)$/, '$1');
-  if (!spelled.includes('BRAC Institute of Governance and Development (BIGD)') || spelled.includes('599') || spelled.includes('For context')) throw new Error('TalentLEAP: the Independent Evidence FAQ changed; update the expansion and the cut');
-  return { ...f, a: spelled };
+  if (!f.a.includes('The BRAC Institute of Governance and Development (BIGD) at BRAC University ran')) throw new Error('TalentLEAP: the Independent Evidence FAQ changed; keep the evaluator spelled out once');
+  return f;
 });
 const jsonLd = [
   articleNode({ path, headline: 'TalentLEAP: A Skill-by-Skill Path from Learning to Earning', description, datePublished: '2026-10-08', dateModified: '2026-10-21', author: 'CodersTrust Learning Design', about: { '@type': 'Thing', name: 'TalentLEAP' } }),

@@ -24,7 +24,7 @@ const outcome = `She ${raw.replace('; earning', ' and is earning')}.`;
 // WP57b (owner decision 2026-10-19, "Remove the 56 item"): the contracts clause ("56 won online contracts (~180 jobs)") is not shown anywhere on the site: beside the World Bank's 77 trainees who won at least one online work contract it read as a
 // second count of the same measure. PR-02 is shared with the lines that stay (102 of 150 in work, the earnings), so the register entry is unchanged and only what renders changes. The venture count is an owner-confirmation item.
 const parts = fact('PR-02').text.split(': ')[1]?.split('; ');
-if (!parts || parts.length < 3 || !/^102 of 150 women in work/.test(parts[0]) || !/earned/.test(parts[1])) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
+if (!parts || parts.length < 3 || !/^102 of the 150 women trained were in work/.test(parts[0]) || !/earned/.test(parts[1])) throw new Error('PR-02 no longer has the expected "<in work>; <earnings>; <contracts>" shape');
 const results = [
   { label: 'In Work', text: parts[0] },
   { label: 'Online Earnings', text: parts[1] },
@@ -34,7 +34,7 @@ const results = [
 <CaseStudyPage
   slug="kosovo-women-in-online-work"
   pageTitle="Kosovo Women in Online Work"
-  description="Women in Online Work, a 2016–2017 pilot in Kosovo with the World Bank Group: 102 of 150 women in work (68%)."
+  description="Women in Online Work, a 2016–2017 pilot in Kosovo with the World Bank Group: 102 of the 150 women trained were in work (68%)."
   stats={[{ id: 'PR-02' }]}
   context={[
     'The World Bank Group sought market-oriented skills to help young women in Kosovo find meaningful employment.',

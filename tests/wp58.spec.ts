@@ -268,7 +268,7 @@ test.describe('S7: every Kosovo year label reads 2016–2017', () => {
     expect(main).toContain('World Bank Group, 2016–2017');
     expect(main).toContain('Women in Online Work was a pilot with the World Bank Group in 2016–2017.');
     expect(main).toContain('Women in Online Work, Kosovo, 2016–2017');
-    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Women in Online Work, a 2016–2017 pilot in Kosovo with the World Bank Group: 102 of 150 women in work (68%).');
+    expect(await page.locator('meta[name="description"]').getAttribute('content')).toBe('Women in Online Work, a 2016–2017 pilot in Kosovo with the World Bank Group: 102 of the 150 women trained were in work (68%).');
     await open(page, 'impact/stories/');
     expect(compact(await page.locator('main').textContent())).toContain('Women in Online Work, Kosovo, 2016–2017');
     const STALE = [/\bA 2017 pilot\b/, /\ba 2017 pilot\b/, /World Bank Group; Kosovo, 2017/, /World Bank Group, 2017\b/, /Women in Online Work, Kosovo, 2017/, /pilot with the World Bank Group in 2017/];
@@ -284,7 +284,7 @@ test.describe('S8 is reversed (b): owner decision 7, "show both", takes preceden
   test('the card still reads the program records and the World Bank line, each tied to its own fact; slide 4 gives the program records alone', async ({ page }) => {
     await open(page, HOME);
     const card = page.locator('#cases article', { hasText: 'Women in Online Work, Kosovo' });
-    await expect(card.locator('.case__context')).toHaveText('Program records, 2016–2017: 102 of 150 women in work.');
+    await expect(card.locator('.case__context')).toHaveText('Program records, 2016–2017: 102 of the 150 women trained were in work.');
     expect(await card.locator('.case__context').getAttribute('data-fact')).toBe('PR-02 TL-04');
     await expect(card.locator('.case__note')).toHaveText('World Bank: 77 trainees won at least one online contract.');
     expect(await card.locator('.case__note').getAttribute('data-fact')).toBe('PR-02b');

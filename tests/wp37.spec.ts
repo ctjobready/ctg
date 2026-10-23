@@ -51,7 +51,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
 
     const delivery = [
       { i: 0, title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', context: 'Program records: 711 of the 1,000 women enrolled were in work (71%).', slug: 'wsdfm-women-freelancers' },
-      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records, 2016–2017: 102 of 150 women in work.', slug: 'kosovo-women-in-online-work' },
+      { i: 1, title: 'Women in Online Work, Kosovo', program: 'World Bank Group', context: 'Program records, 2016–2017: 102 of the 150 women trained were in work.', slug: 'kosovo-women-in-online-work' },
       { i: 2, title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', context: 'Curriculum, trainer training and direct delivery for women’s digital skills.', slug: 'her-power' },
     ];
     for (const d of delivery) {
@@ -90,7 +90,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
   test('Her Power’s figures are stated once on Home, in slide 4; Kosovo’s and WSDFM’s program records are in slide 4 and in their cards, which name PR-02 and PR-02b, and PR-01', async ({ page }) => {
     await open(page, '');
     const text = await mainText(page);
-    expect(count(text, '102 of 150'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
+    expect(count(text, '102 of'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
     expect(count(text, 'Women in Online Work, Kosovo (2016–2017): 68% in work'), 'Kosovo, slide 4').toBe(1);
     expect(count(text, 'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
     // WP58 (cycle-30 review, Grok R3): slide 4's line states the count and its base itself ("372 of 800 tracked in work (47%)"), once; no card states it

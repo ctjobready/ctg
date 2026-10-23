@@ -61,7 +61,7 @@ import OfferSection from '../../components/pages/programs/OfferSection.astro';
 import RiskSection from '../../components/pages/programs/RiskSection.astro';
 import NextSteps from '../../components/pages/programs/NextSteps.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
-import { WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
+import { KOSOVO_WOW_TILE_LABEL, WHERE_THEY_WORK_TEXT } from '../../components/pages/partners/partners';
 import { C14_FIRST, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
 import { AIM_DEPENDENCY, C14, FUNDER_PAINS, MICRO_COMMITMENT, POSITIONING, PROGRAM_OPTIONS, SAFEGUARDING, SCORECARD_LABELS, WB_KOSOVO, painForList } from '../../data/copy';
 import { fact } from '../../data/facts';
@@ -217,7 +217,7 @@ const measures = [...SCORECARD_LABELS];
     title="Results from Delivered Programs"
     items={[
       { title: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)', program: 'Commissioned by Porticus', factId: 'PR-01', href: '/impact/case-studies/wsdfm-women-freelancers/' },
-      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
+      { title: 'Women in Online Work, Kosovo', program: 'World Bank Group', factId: 'PR-02', statLabel: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO, href: '/impact/case-studies/kosovo-women-in-online-work/' },
       { title: 'Her Power', program: 'ICT Division / Department of ICT (DoICT)', factId: 'PR-05', href: '/impact/case-studies/her-power/' },
     ]}
   />

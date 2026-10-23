@@ -75,7 +75,7 @@ import OfferCards from '../../../components/pages/partners/OfferCards.astro';
 import FundingRoutes from '../../../components/pages/partners/FundingRoutes.astro';
 import Reinforcement from '../../../components/pages/partners/Reinforcement.astro';
 import PageEnhancements from '../../../components/pages/partners/PageEnhancements.astro';
-import { LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
+import { KOSOVO_WOW_TILE_LABEL, LINKS, TRACKING_MONTHS, UNDP_YES_TILE_LABEL, factPart, funderOptionCards, meta } from '../../../components/pages/partners/partners';
 import { BIGD_NAME, C14, HEADLINE, POSITIONING, PROGRAM_SIZES_NOTE, VALUE_PROPOSITION, WB_KOSOVO } from '../../../data/copy';
 import { faqJsonLd } from '../../../lib/faq';
 import { cta } from '../../../lib/mailto';
@@ -120,7 +120,7 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   <!-- WP58 (cycle-30 review, GLM L3): the +10.3 trial tile (RC-02, the strongest evidence) is the first tile; the survey and Kosovo tiles follow. WP62 (cycle-34 review): the fourth tile, the single `more` tile that joins the main group, was the WSDFM program-record tile (PR-01),
        where it had been the +$27 tile (RC-04): the trial filled two of the four tiles. WP65 (cycle-37 review): it is the UNDP YES, Korail program-record tile (PR-03, as Development Partners shows it), because WSDFM's "711 of 1,000" is on the Proof in Practice card below. -->
   <PartnerGlance
-    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
+    lead={[{ id: 'RC-02', href: '/impact/independent-evaluation/' }, { id: 'OC-03', href: '/impact/outcomes-2026/' }, { id: 'PR-02', href: '/impact/case-studies/kosovo-women-in-online-work/', label: KOSOVO_WOW_TILE_LABEL, note: WB_KOSOVO.text, also: WB_KOSOVO.facts }]}
     more={[{ id: 'PR-03', href: LINKS.caseUndp, label: UNDP_YES_TILE_LABEL }]}
   />
   <LearnerVoice story="samina-tasneem-chowdhury" program="WSDFM" tone="white" />

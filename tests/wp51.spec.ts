@@ -155,7 +155,7 @@ test.describe('Home: the WSDFM card of "Proof in Practice" shows a context line 
     await expect(cards).toHaveCount(3);
     await expect(cards.locator('.case__stat, .case__value, .case__label')).toHaveCount(0);
     // WP57 (cycle-29 review, Gemini GM4): the Kosovo card's context line is its program records
-    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records, 2016–2017: 102 of 150 women in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
+    expect(await texts(page, '#cases .case__context')).toEqual([RECORDS, 'Program records, 2016–2017: 102 of the 150 women trained were in work.', 'Curriculum, trainer training and direct delivery for women’s digital skills.']);
     expect(compact(await cards.nth(0).locator('.card__title').textContent())).toBe(WSDFM_TITLE);
     // WP55 (owner decision 2026-10-17, "Show both"): the Kosovo card adds one World Bank line (PR-02b). WP57 (cycle-29 review, Gemini GM4): and its own program-records line (PR-02); the band's wrapper names both. WP63 (cycle-35 review, Gemini M4): and the WSDFM card's program records (PR-01); Her Power's fact (PR-05) is not named.
     expect(await page.locator('#cases [data-fact]').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-01 PR-02 TL-04 PR-02b', 'PR-01', 'PR-02 TL-04', 'PR-02b']);

@@ -126,6 +126,19 @@ function undpYesTileLabel(): string {
 }
 export const UNDP_YES_TILE_LABEL: string = undpYesTileLabel();
 
+/**
+ * The Women in Online Work tile's label on the partner pages (Governments and Foundations' glance, Development Partners' and YouthWIDE's Proof in Practice cards; WP80, item 4): PR-02's label with the pilot's span added,
+ * "Women in Online Work, Kosovo (2016–2017): 68% in work", as the UNDP YES tile reads "(2017)". The span is TL-04's stat value and the label is PR-02's own; the build stops if either changes shape.
+ */
+function kosovoWowTileLabel(): string {
+  const span = fact('TL-04').stat?.value;
+  const label = /^Women in Online Work, Kosovo: (\d+% in work)$/.exec(fact('PR-02').stat?.label ?? '');
+  if (!span || !/^\d{4}–\d{4}$/.test(span) || !label) throw new Error('KOSOVO_WOW_TILE_LABEL: PR-02 no longer reads "Women in Online Work, Kosovo: P% in work" or TL-04 no longer reads "YYYY–YYYY"');
+  // Word joiners around the en dash keep "(2016–2017)" on one line (it wrapped after the dash on the Governments glance at 1280).
+  return `Women in Online Work, Kosovo (${span.replace('–', '⁠–⁠')}): ${label[1]}`;
+}
+export const KOSOVO_WOW_TILE_LABEL: string = kosovoWowTileLabel();
+
 /** Evidence links shared by the pages (internal routes, resolved by the base-aware helpers). */
 export const LINKS = {
   evidence: '/impact/',

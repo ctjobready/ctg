@@ -10,7 +10,7 @@ import { pageByRoute } from './support/pages';
  *   - Home's results carousel, slide 4 ("Results by Program"), dates the Kosovo program records "Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150)." and the
  *     UNDP YES, Korail result "UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.";
  *   - the years are read from the register, not typed: TL-04's stat value ("2016–2017") and PR-03's own text ("..., 2017: 350 enrolled; ...");
- *   - the Home Proof in Practice Kosovo card reads "Program records, 2016–2017: 102 of 150 women in work." and names TL-04 beside PR-02 (data-fact);
+ *   - the Home Proof in Practice Kosovo card reads "Program records, 2016–2017: 102 of the 150 women trained were in work." and names TL-04 beside PR-02 (data-fact);
  *   - the carousel keeps its height budget: no slide leaves more than 48 px unused below its content at 1280 and 390, and nothing scrolls sideways at 390.
  * Run after `npm run build`: PORT=<port> npx playwright test tests/wp71.spec.ts --project=chromium
  */
@@ -41,8 +41,9 @@ test.describe('WP71: the register supplies the years', () => {
     expect(fact('PR-02').stat?.label).toBe('Women in Online Work, Kosovo: 68% in work');
   });
 
-  test('the Kosovo card’s program-records line is built from the register: "Program records, 2016–2017: 102 of 150 women in work." (no-break spaces in the figure)', () => {
-    expect(KOSOVO_RECORDS.text).toBe('Program records, 2016–2017: 102 of 150 women in work.');
+  test('the Kosovo card’s program-records line is built from the register: "Program records, 2016–2017: 102 of the 150 women trained were in work." (no-break spaces in the figure)', () => {
+    // WP80: the base is no-break spaced, so "102 of the 150" never splits across two lines in the card
+    expect(KOSOVO_RECORDS.text).toBe('Program records, 2016–2017: 102\u00a0of\u00a0the\u00a0150 women trained were in work.');
     expect(KOSOVO_RECORDS.facts).toEqual(['PR-02', 'TL-04']);
   });
 });
@@ -100,10 +101,10 @@ test.describe('WP71: the carousel keeps its height budget with the longer lines'
 test.describe('WP71: Home Proof in Practice Kosovo card', () => {
   test.use({ viewport: DESKTOP });
 
-  test('the card reads "Program records, 2016–2017: 102 of 150 women in work." and then the World Bank line', async ({ page }) => {
+  test('the card reads "Program records, 2016–2017: 102 of the 150 women trained were in work." and then the World Bank line', async ({ page }) => {
     await open(page, pageByRoute('/'));
     const card = page.locator('#cases .case__context').nth(1);
-    await expect(card).toHaveText('Program records, 2016–2017: 102 of 150 women in work.');
+    await expect(card).toHaveText('Program records, 2016–2017: 102 of the 150 women trained were in work.');
     await expect(card).toHaveAttribute('data-fact', 'PR-02 TL-04');
     await expect(page.locator('#cases').getByText('World Bank: 77 trainees won at least one online contract.')).toBeVisible();
   });
