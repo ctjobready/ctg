@@ -54,6 +54,8 @@ async function showSlide(page: Page, n: number) {
 }
 
 const TARGET_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).';
+/** WP84: the shared note also says the 25,125 is the curriculum reach already counted in the 150,000+ enrollments. */
+const CONTRACT_NOTE = `${TARGET_NOTE} Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.`;
 /** Wordings that say the national program (or its 25,125 women) was trained. */
 const TRAINED_25125 = [
   /trained 25,125/i,
@@ -65,7 +67,7 @@ const TRAINED_25125 = [
 
 test.describe('WP83: the register words Her Power’s 25,125 as a target', () => {
   test('GV-01 and GV-10 say "a national program to train 25,125 women"; GV-11 and GV-13 keep CodersTrust’s own 2,400 trained directly', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division): a national program to train 25,125 women across 130 sub-districts (upazilas)');
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)'); // WP84: "is", where it had a colon
     expect(fact('GV-01').stat?.value).toBe('25,125');
     expect(fact('GV-01').stat?.label).toBe('women targeted for training across 130 sub-districts (upazilas) in the national program');
     expect(fact('GV-10').text).toContain('curriculum for a national program to train 25,125 women, with 2,400 women trained directly');
@@ -78,8 +80,8 @@ test.describe('WP83: the register words Her Power’s 25,125 as a target', () =>
     expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
     expect(fact('GV-12').stat?.value).toBe('30,000+');
     expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,400' });
-    expect(CONTRACT_TOTAL_NOTE.text).toBe(TARGET_NOTE);
-    expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11']);
+    expect(CONTRACT_TOTAL_NOTE.text).toBe(CONTRACT_NOTE);
+    expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
   });
 
   test('no register fact says the national program trained 25,125 women', () => {
@@ -153,7 +155,7 @@ test.describe('WP83: the pages that state the 25,125', () => {
 
   test('Governments: the tile and the table row say target; the FAQ says "Her Power is a national program to train 25,125 women"; the note exempts only CodersTrust’s own Her Power figures', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(TARGET_NOTE);
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(CONTRACT_NOTE);
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(row).toContain('CodersTrust trained 2,400 women directly. The national program’s target is to train 25,125 women across 130 sub-districts (upazilas). 54,609 manuals and guidelines were distributed.');
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.');
@@ -164,11 +166,11 @@ test.describe('WP83: the pages that state the 25,125', () => {
 
   test('Investors: the tile and the FAQ say target (CodersTrust’s role first); JobReady Platform’s tile says target', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(TARGET_NOTE);
+    expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
     expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program’s target is to train 25,125 women across 130 sub-districts (upazilas).');
     await open(page, 'our-model/jobready-platform/');
-    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(TARGET_NOTE);
+    expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(CONTRACT_NOTE);
   });
 
   test('YouthWIDE: the national-scale answer says Her Power is a national program of DoICT, the ICT Division, to train 25,125 women', async ({ page }) => {
@@ -181,7 +183,7 @@ test.describe('WP83: the pages that state the 25,125', () => {
     await open(page, 'impact/case-studies/her-power/');
     await expect(page.getByRole('heading', { level: 3, name: 'National Target: A Different Measure' })).toBeVisible();
     const scale = compact(await page.locator('.hp__scale').textContent());
-    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s target is separate: Her Power (DoICT, ICT Division): a national program to train 25,125 women across 130 sub-districts (upazilas).');
+    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s target is separate: Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas).');
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');
     expect(compact(await page.locator('main').textContent())).toContain('Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%)');
     expect(titleCase('National Target: A Different Measure')).toBe('National Target: A Different Measure');

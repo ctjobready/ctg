@@ -531,7 +531,7 @@ test.describe('R1, Global Reach: "Where We Have Worked: 16 Countries and Territo
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R2, the 30,000+ visibly includes Her Power’s national program (GV-12 and GV-01)', () => {
-  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).';
+  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the same facts in four plain sentences (the Governments tile and the other tiles keep NOTE); the page lists below no longer include Home
   test('Home, slide 2: the lead is the contracts sentence, the Her Power sentence and the National University sentences, tied to GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
@@ -548,7 +548,7 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     const tile = page.locator('#glance a.pg__tile', { has: page.locator('.pg__value', { hasText: '30,000+' }) });
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.pg__note')).toHaveText(NOTE);
-    expect(await tile.getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
+    expect(await tile.getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11 SC-02');
     expect(compact(await tile.textContent())).not.toContain('The contracts table below shows each scope.');
   });
 

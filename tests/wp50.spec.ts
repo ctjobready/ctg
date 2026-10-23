@@ -506,7 +506,7 @@ test.describe('About: the enrollments tile (item 21)', () => {
     expect(compact(await tile.locator('.stat__label').textContent())).toBe('course enrollments');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(fact('SC-02').text).toContain('111,268 through direct training');
-    expect(fact('SC-02').text).toContain('40,043 through CodersTrust courseware');
+    expect(fact('SC-02').text).toContain('40,043 reached through CodersTrust curriculum and courseware');
     expect(sitePages().filter((p) => visible(p.html).includes('111,268 direct enrollments; 40,043 through courseware')).map((p) => p.route)).toEqual([]);
   });
 });

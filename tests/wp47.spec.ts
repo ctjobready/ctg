@@ -311,7 +311,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/direct enrollments|courseware/);
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (Her Power’s curriculum for its national target of 25,125 women, and UNDP FutureNation’s 14,918 course learners).');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {

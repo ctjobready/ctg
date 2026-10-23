@@ -45,6 +45,7 @@ const stat = (sid: string) => {
 // ("countries and territories where CodersTrust has worked") has none to drop. The register's labels are unchanged.
 const tileLabel = (sid: string) => (sid === 'SC-03' ? stat(sid).label : withoutSince2014(stat(sid).label));
 // One note row under the delivered tiles: the register's detail lines for SC-02 and SC-03, read from it, so the tiles stay level.
+// WP84 (owner answer 2026-10-24): SC-02's detail now says what the 40,043 courseware share is ("reached through CodersTrust curriculum and courseware": Her Power's curriculum for its national target of 25,125 women, GV-01, and UNDP FutureNation's 14,918 course learners, SC-14), so the note's data-fact cites both.
 const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
   const detail = stat(sid).detail;
   if (!detail) throw new Error(`InvestorGuide: ${sid} needs a stat detail`);
@@ -75,7 +76,7 @@ const notes = (['SC-02', 'SC-03'] as const).map((sid) => {
           ))
         }
       </div>
-      <p class="ig__notes" data-fact="SC-02 SC-03">{notes.join(' ')}</p>
+      <p class="ig__notes" data-fact="SC-02 SC-03 GV-01 SC-14">{notes.join(' ')}</p>
     </div>
   </div>
   <div class="ig__partners" data-reveal>

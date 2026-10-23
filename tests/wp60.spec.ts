@@ -350,7 +350,7 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sente
     expect(fact('GV-13').stat?.value).toBe(CONTRACT_FIGURES.direct);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
   });
 });
 

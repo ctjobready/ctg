@@ -38,15 +38,18 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 through CodersTrust courseware. Most delivery has been in Bangladesh.');
-    expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03');
-    // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice: the tile, and the register's own "Of 150,000+ enrollments" note), and the Reach band holds none of it
+    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (Her Power’s curriculum for its national target of 25,125 women, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.');
+    expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
+    // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note), and the Reach band holds none of the delivered figures;
+    // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
     const text = await mainText(page);
     for (const figure of ['130,000+', '111,268', '40,043']) expect(count(text, figure), `${figure} is stated once on Investors`).toBe(1);
-    expect(count(text, '150,000+'), 'the tile and the note’s lead-in').toBe(2);
+    expect(count(text, '150,000+'), 'the tile, the note’s lead-in and the contract-scope note’s overlap sentence').toBe(3);
     expect(count(compact(await page.locator('#guide').textContent()), '150,000+'), 'both are in the Guide band').toBe(2);
     const reach = compact(await page.locator('#reach').textContent());
-    expect(reach).not.toMatch(/130,000|150,000|111,268|Delivered Since 2014/);
+    expect(reach).not.toMatch(/130,000|111,268|Delivered Since 2014/);
+    expect(count(reach, '150,000+'), 'only in the overlap sentence of the contract-scope note').toBe(1);
+    expect(reach).toContain('Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
     await expect(page.locator('#reach .status-tag')).toHaveCount(0);
   });
 

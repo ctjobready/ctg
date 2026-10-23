@@ -174,8 +174,8 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its b
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles explain the 30,000+ as Home and Governments do', () => {
   test('the note is CONTRACT_TOTAL_NOTE (contract scope, not a count of completers; Her Power’s national program; who trained how many), tied to GV-12, GV-01 and GV-11', () => {
-    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
-    expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11']);
+    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
   });
 
   test('Investors: directly under the 30,000+ figure and its label, inside the tile, tied to the facts it rests on; the tile keeps its Contract Scope tag and its fact', async ({ page }) => {
@@ -188,7 +188,7 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     const note = tile.locator('.ir__note');
     await expect(note).toHaveCount(1);
     expect(compact(await note.textContent())).toBe(CONTRACT_TOTAL_NOTE.text);
-    expect(await note.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await note.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
     const gap = await page.evaluate(() => {
       const label = document.querySelector('#reach .ir__tile .stat__label')!.getBoundingClientRect();
       const note = document.querySelector('#reach .ir__tile .ir__note')!.getBoundingClientRect();
@@ -206,7 +206,7 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     await expect(page.locator('#why .jr__whynote')).toHaveCount(1);
     const third = tiles.nth(2);
     expect(compact(await third.locator('.jr__whynote').textContent())).toBe(CONTRACT_TOTAL_NOTE.text);
-    expect(await third.locator('.jr__whynote').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11');
+    expect(await third.locator('.jr__whynote').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-02');
     await expect(third.locator('.factstat')).toHaveAttribute('data-fact', 'SC-06');
     await expect(third.locator('.stat__value')).toHaveText('30,000+');
     const gap = await page.evaluate(() => {

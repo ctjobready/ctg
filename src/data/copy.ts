@@ -162,9 +162,22 @@ function contractFigures(): { national: string; direct: string } {
  * the note below is unchanged and still read by the Governments tile, Investors and the JobReady Platform page.
  */
 export const CONTRACT_FIGURES = contractFigures();
+/**
+ * WP84 (owner answer 2026-10-24: keep "130,000+ learners trained" and "150,000+ enrollments", but relabel the courseware share; CLR review, Sonnet Max run 2, finding 1): the 30,000+ contract scope includes Her Power's 25,125, and the 150,000+ enrollments
+ * count the same 25,125 as curriculum reach (SC-02's detail: 40,043 reached through CodersTrust curriculum and courseware = Her Power's curriculum for its national target of 25,125 women + UNDP FutureNation's 14,918 course learners), so the note adds a second sentence that
+ * stops a reader adding the two: "Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people." The 25,125 is GV-01's stat value and the 150,000+ is SC-02's, both read here, never retyped;
+ * the builder throws if SC-02's detail stops saying the courseware share is Her Power's curriculum for the same national target. The note stays ONE shared source: Investors, Impact, Governments and the JobReady Platform page all print it.
+ */
+function overlapSentence(n: string): { text: string; fact: string } {
+  const enrollments = fact('SC-02').stat?.value;
+  if (!enrollments || !/^[\d,]+\+$/.test(enrollments)) throw new Error('CONTRACT_TOTAL_NOTE: SC-02 no longer has a plain "N+" count as its stat value');
+  if (!(fact('SC-02').stat?.detail ?? '').includes(`Her Power’s curriculum for its national target of ${n} women`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share is "Her Power’s curriculum for its national target of N women" (the overlap with the 30,000+ contract scope)');
+  return { text: `Her Power’s ${n} is the same curriculum reach counted in the ${enrollments} enrollments, not additional people.`, fact: 'SC-02' };
+}
 function contractTotalNote(): CopyBlock {
   const { national: n, direct } = CONTRACT_FIGURES;
-  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national target of ${n} women (CodersTrust trained ${direct} directly).`, facts: ['GV-12', 'GV-01', 'GV-11'] };
+  const overlap = overlapSentence(n);
+  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national target of ${n} women (CodersTrust trained ${direct} directly). ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
 

@@ -463,15 +463,15 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
     expect(FULL).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
     await open(page, GOV);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
-    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11 SC-02');
     // the table is below the tile and states the two figures Her Power's note used to repeat
     const contracts = compact(await page.locator('#contracts').textContent());
     expect(contracts).toContain('CodersTrust trained 2,400 women directly.');
     expect(contracts).toContain('The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).');
     expect(await page.evaluate(() => Boolean(document.getElementById('glance')!.compareDocumentPosition(document.getElementById('contracts')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
   });
 });
 
