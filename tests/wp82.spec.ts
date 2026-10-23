@@ -64,7 +64,7 @@ test.describe('WP82: WSDFM trial wording uses the 425 offered a place', () => {
 
   test('the WSDFM case-study hero note and the Impact tile note read the new wording', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText(NOTE_NOW);
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the BRAC Institute of Governance and Development (BIGD)’s randomized trial were among these 1,000.');
     await open(page, 'impact/');
     await expect(page.locator('.glance__note', { hasText: 'Program records, not trial results' })).toHaveText(NOTE_NOW);
   });

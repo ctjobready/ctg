@@ -47,7 +47,7 @@ test.describe('WP81: WSDFM program records are not "separate" from the trial; th
   test('the WSDFM case-study hero note and the Impact tile note say the records are not trial results, and the trial’s women were among the 1,000', async ({ page }) => {
     const note = `Program records, not trial results; the ${TRIAL_OFFERED} women offered a place in the randomized trial were among these ${WSDFM_ENROLLED}.`;
     await open(page, IMPACT_WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText(note);
+    await expect(page.locator('[data-hero-note]')).toContainText('Program records, not trial results;');
     await open(page, 'impact/');
     await expect(page.locator('.glance__note', { hasText: 'Program records, not trial results' })).toHaveText(WSDFM_NOT_TRIAL_NOTE);
   });

@@ -256,7 +256,7 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     const note = page.locator('.hero [data-hero-note]');
     await expect(note).toHaveCount(1);
     // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note is where the page first names the evaluator, so it spells it out (tests/wp54.spec.ts)
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial were among these 1,000.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the BRAC Institute of Governance and Development (BIGD)’s randomized trial were among these 1,000.');
     expect(await note.evaluate((e) => e.parentElement?.className ?? '')).toContain('hero__stats');
     expect(await note.evaluate((e) => e.nextElementSibling?.className ?? '')).toContain('cs__stat');
     const [noteBox, firstTile, button] = await Promise.all([note.boundingBox(), page.locator('.hero .cs__stat').first().boundingBox(), page.locator('.hero .hero__actions a').boundingBox()]);
