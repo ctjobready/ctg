@@ -38,7 +38,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (Her Power’s curriculum for its national target of 25,125 women, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note), and the Reach band holds none of the delivered figures;
     // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
@@ -49,7 +49,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     const reach = compact(await page.locator('#reach').textContent());
     expect(reach).not.toMatch(/130,000|111,268|Delivered Since 2014/);
     expect(count(reach, '150,000+'), 'only in the overlap sentence of the contract-scope note').toBe(1);
-    expect(reach).toContain('Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(reach).toContain('Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     await expect(page.locator('#reach .status-tag')).toHaveCount(0);
   });
 
@@ -352,7 +352,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
     expect(await gov.locator('h3').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },

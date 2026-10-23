@@ -35,7 +35,7 @@ export const faqs: Faq[] = [
   { id: 'Q1', q: `Will This Work in Our Country?`, a: `We test local employer demand first and choose each country’s tracks with local partners. Our outcome evidence comes mainly from Bangladesh, with program results from Kosovo and delivery experience in Albania.`, evidence: ['IN-02', 'PD-10', 'PR-02', 'TL-05'], audiences: ['development-partners', 'governments', 'universities', 'employers', 'home', 'all'] },
   // Home only (WP19, item 17): the trial's scope, answered from RC-07 (the 200-hour predecessor program for women in Dhaka), PD-01 (100 hours per certification) and the October 2026 survey.
   { id: 'Q15', q: `Does the Trial Apply to Your Program?`, a: `The randomized trial evaluated a 200-hour predecessor program for women in Dhaka, not today’s 100-hour tracks. Results for other programs come from the October 2026 survey of completers and from program records, which are descriptive.`, evidence: ['RC-01', 'RC-07', 'PD-01', 'OC-01', 'OC-02'], audiences: ['home'] },
-  { id: 'Q2', q: `Can You Deliver at National Scale?`, a: `Her Power is a national program of DoICT, the ICT Division, to train 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges, and a 100,000+ national program is a design option we plan phase by phase and have not yet delivered.`, evidence: ['GV-01', 'GV-11', 'PD-06', 'PD-05'], audiences: ['development-partners', 'governments', 'foundations', 'investors', 'home', 'all'] },
+  { id: 'Q2', q: `Can You Deliver at National Scale?`, a: `Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges, and a 100,000+ national program is a design option we plan phase by phase and have not yet delivered.`, evidence: ['GV-01', 'GV-11', 'PD-06', 'PD-05'], audiences: ['development-partners', 'governments', 'foundations', 'investors', 'home', 'all'] },
   // Q3 (WP63, cycle-35 review, GPT-6.1 Sol G1): "Documentary evidence of work and earnings, such as offer letters, payslips, ..." (an offer letter documents work, not earnings; PD-09: "offer letters, payslips and platform or bank records document work and earnings").
   { id: 'Q3', q: `How Do You Prove Outcomes?`, a: `For every cohort, as agreed in the program scope, we plan a baseline at enrollment, follow-up surveys at 3, 6 and 12 months and monthly reports. Documentary evidence of work and earnings, such as offer letters, payslips, platform logs or bank receipts, is collected where available. Independent evaluation is welcome.`, evidence: ['PD-09', 'PD-08', 'RC-01'], audiences: ['development-partners', 'foundations', 'universities', 'home', 'all'] },
   { id: 'Q4', q: `Is There Independent Evidence?`, a: `Yes, for a predecessor program. The BRAC Institute of Governance and Development (BIGD) at BRAC University ran a randomized controlled trial of CodersTrust’s WSDFM program, a 200-hour predecessor of today’s 100-hour tracks, with women in Dhaka trained in 2020. Women offered a place were more likely to be employed than the control group.`, evidence: ['RC-01', 'RC-02', 'RC-07'], audiences: ['development-partners', 'foundations', 'investors', 'all'] },
@@ -125,8 +125,8 @@ faqs.push(
   {
     ...bankAnswer('Q2'),
     id: 'Q2-government',
-    // WP83 (owner answer 2026-10-23): Her Power's 25,125 is the national program's target, so the answer says "Her Power is a national program to train 25,125 women" (it said "..., a national program, trained 25,125 women;").
-    a: `We scale in phases. Her Power is a national program to train ${CONTRACT_FIGURES.national} women; CodersTrust provided the curriculum and trained ${CONTRACT_FIGURES.direct} directly. A ${NATIONAL_SIZE} program is a design option we have not yet delivered.`,
+    // WP83 (owner answer 2026-10-23): Her Power's 25,125 was worded as the national program's target ("Her Power is a national program to train 25,125 women"). WP85 (owner update 2026-10-24: the government achieved 100% of the target): back to "trained", with "meeting its target".
+    a: `We scale in phases. Her Power, a national program, trained ${CONTRACT_FIGURES.national} women, meeting its target; CodersTrust provided the curriculum and trained ${CONTRACT_FIGURES.direct} directly. A ${NATIONAL_SIZE} program is a design option we have not yet delivered.`,
     evidence: ['GV-01', 'GV-11', 'PD-05'],
     audiences: ['variants'],
   },
@@ -135,14 +135,14 @@ faqs.push(
   // sentences (tests/wp30c.spec.ts), so the two Her Power statements, each already a short clause, are one sentence joined by a semicolon.
   (() => {
     const q2 = bankAnswer('Q2');
-    const national = 'Her Power is a national program of DoICT, the ICT Division, to train 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.';
+    const national = 'Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.';
     const scale = 'We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges, and a 100,000+ national program is a design option we plan phase by phase and have not yet delivered.';
     if (!q2.a.includes(national) || !q2.a.includes(scale)) throw new Error('faqs: Q2 no longer has the Her Power and scale sentences; update the investors variant');
     return {
       ...q2,
       id: 'Q2-investor',
       a: q2.a
-        .replace(national, 'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program’s target is to train 25,125 women across 130 sub-districts (upazilas).')
+        .replace(national, 'In Her Power, a national program of DoICT, the ICT Division, CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.')
         .replace(scale, 'We scale in phases: larger programs are designed to run up to 10 cohorts in parallel through certified local facilitators in existing labs and colleges. A 100,000+ national program is a design option we have not yet delivered.'),
       audiences: ['variants'] as Faq['audiences'],
     };

@@ -100,9 +100,9 @@ test.describe('audience pages', () => {
     await expect(tile).toContainText('People in the Scopes of Six Government Contracts');
     // WP46 (cycle-22 review): the note said who trained whom, so the 25,125 was not read as CodersTrust's own count; WP48 (cycle-23 review): "The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; ..."
     // WP51 (cycle-26 review, Kimi m2): the tile kept the first sentence and pointed to the table. WP57 (cycle-29 review, Grok R2 with Gemini GM1): the total visibly includes Her Power's national program, in the note's WP35 wording (tests/wp57.spec.ts)
-    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
+    await expect(tile).toContainText('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     await expect(tile).not.toContainText('The contracts table below shows each scope.');
-    await expect(page.locator('#contracts')).toContainText('The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).');
+    await expect(page.locator('#contracts')).toContainText('The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
   });
 
   // WP46 (cycle-22 review): "What a Ministry Sees" (WP24a, WP29) is gone: it restated the reporting cadence the page already gives. Its one detail that stood nowhere else, the follow-up surveys counted from the end of each course, is in the delivery model's card.

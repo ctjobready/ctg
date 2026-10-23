@@ -174,7 +174,7 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its b
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles explain the 30,000+ as Home and Governments do', () => {
   test('the note is CONTRACT_TOTAL_NOTE (contract scope, not a count of completers; Her Power’s national program; who trained how many), tied to GV-12, GV-01 and GV-11', () => {
-    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
   });
 

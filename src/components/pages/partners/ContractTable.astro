@@ -51,8 +51,8 @@ const rows: Row[] = [
     // "54,609 manuals and guidelines distributed"). The numbers are still read from the register (GV-11 and GV-01); the register's strings are unchanged.
     direct: [
       `CodersTrust trained ${factPart('GV-11', /([\d,]+ women) trained directly/)} directly.`,
-      // WP83 (owner answer 2026-10-23): the 25,125 is the national program's target, not a count of women trained ("The national program’s target is to train 25,125 women across 130 sub-districts (upazilas)."; it said "The national program trained ...").
-      `The national program’s target is to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}.`,
+      // WP83 (owner answer 2026-10-23): the 25,125 was worded as the national program's target ("The national program’s target is to train 25,125 women across 130 sub-districts (upazilas)."). WP85 (owner update 2026-10-24: the government achieved 100% of the target): "The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target." (read from GV-01).
+      `The national program trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ sub-districts \(upazilas\), meeting its target)/)}.`,
       `${factPart('GV-11', /([\d,]+ manuals and guidelines) distributed/)} were distributed.`,
     ],
   },

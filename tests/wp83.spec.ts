@@ -8,11 +8,12 @@ import { listPages } from './support/pages';
 
 /**
  * WP83 behaviors (owner answer 2026-10-23: "Her Power's 25,125 is the national program's TARGET, not a count of women trained"; CLR review finding 2). Retrospective coverage (the owner exempted this
- * project from test-first work). Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp83.spec.ts --project=chromium`:
- *   - 1: the register says Her Power is "a national program to train 25,125 women" (GV-01, GV-10) and the contract-scope total "includes Her Power’s national target of 25,125 women" (GV-12 note, CONTRACT_TOTAL_NOTE);
- *   - 1: every page that states the 25,125 words it as a target (Home slide 2, Impact, the Her Power case study, Governments, Investors, JobReady Platform, YouthWIDE); no built page, JSON-LD included, says the national program
- *     trained 25,125 women; the 372-of-800 tracked outcome (47%) is unchanged;
- *   - 1: the Her Power news post's banner reads "Target: ..." (not "Delivered: ..."), tied to GV-01;
+ * project from test-first work). Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp83.spec.ts --project=chromium`.
+ * WP85 (owner update 2026-10-24: a CodersTrust team member confirmed that the government achieved 100% of Her Power's 25,125-trainee target) reversed the WP83 wording; the items below pin the WP85 state, and tests/wp85.spec.ts holds the sentence-by-sentence check of every built page:
+ *   - 1: the register says Her Power is "a national program that trained 25,125 women, meeting its target" (GV-01, GV-10) and the contract-scope total "includes Her Power’s national program, which trained 25,125 women" (GV-12 note, CONTRACT_TOTAL_NOTE);
+ *   - 1: every page that states the 25,125 words it as trained (Home slide 2, Impact, the Her Power case study, Governments, Investors, JobReady Platform, YouthWIDE); no built page words it as a target still to be met
+ *     (the news post's own "Aims to Train" headline apart); the 372-of-800 tracked outcome (47%) is unchanged;
+ *   - 1: the Her Power news post's banner reads "Delivered: ...", tied to GV-01;
  *   - 1: Home's carousel keeps its height budget (no slide leaves more than 48 px unused at 1280 and 390, no horizontal overflow);
  *   - 2: the Recognition and Media card for Tech in Asia carries the article's own headline, in Title Case;
  *   - 3 (owner, 2026-10-23: "CodersTrust trained 2,400 women directly in Her Power, not 2,500"; source: the owner's "CT - JobReady Platform" sheet, Ex-Trainees Data): GV-13, GV-11, GV-10, GV-12 and PR-05 read 2,400,
@@ -53,59 +54,63 @@ async function showSlide(page: Page, n: number) {
   await page.waitForTimeout(450);
 }
 
-const TARGET_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).';
-/** WP84: the shared note also says the 25,125 is the curriculum reach already counted in the 150,000+ enrollments. */
-const CONTRACT_NOTE = `${TARGET_NOTE} Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.`;
-/** Wordings that say the national program (or its 25,125 women) was trained. */
-const TRAINED_25125 = [
-  /trained 25,125/i,
-  /25,125 (?:women )?(?:were |have been )?(?:trained|delivered|reached|graduated)/i,
-  /25,125 women trained/i,
-  /national program trained/i,
-  /Delivered: the national program/i,
+const SCOPE_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
+/** WP84: the shared note also says the 25,125 is the same group already counted in the 150,000+ enrollments (WP85 wording). */
+const CONTRACT_NOTE = `${SCOPE_NOTE} Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.`;
+/** WP83 wordings that put the national program's 25,125 as a target still to be met (WP85: the target was met, so none stands). */
+const TARGET_25125 = [
+  /to train 25,125/i,
+  /national target/i,
+  /targeted for training/i,
+  /target of 25,125/i,
+  /target is (?:to train|separate|a separate)/i,
+  /National Target: A Different Measure/,
 ];
 
-test.describe('WP83: the register words Her Power’s 25,125 as a target', () => {
-  test('GV-01 and GV-10 say "a national program to train 25,125 women"; GV-11 and GV-13 keep CodersTrust’s own 2,400 trained directly', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)'); // WP84: "is", where it had a colon
+test.describe('WP83 (WP85 wording): the register words Her Power’s 25,125 as trained, meeting its target', () => {
+  test('GV-01 and GV-10 say "a national program that trained 25,125 women"; GV-11 and GV-13 keep CodersTrust’s own 2,400 trained directly', () => {
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target'); // WP84: "is", where it had a colon
     expect(fact('GV-01').stat?.value).toBe('25,125');
-    expect(fact('GV-01').stat?.label).toBe('women targeted for training across 130 sub-districts (upazilas) in the national program');
-    expect(fact('GV-10').text).toContain('curriculum for a national program to train 25,125 women, with 2,400 women trained directly');
+    expect(fact('GV-01').stat?.label).toBe('women trained across 130 sub-districts (upazilas) in the national program (its full target)');
+    expect(fact('GV-10').text).toContain('curriculum for a national program that trained 25,125 women (its full target), with 2,400 women trained directly');
     expect(fact('GV-11').text).toContain('2,400 women trained directly');
     expect(fact('GV-13').stat?.value).toBe('2,400');
     expect(fact('PR-05').stat?.value).toBe('372 of 800');
   });
 
-  test('GV-12’s note and the shared contract-scope note say the total includes Her Power’s national target, and CodersTrust trained 2,400 directly', () => {
-    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
+  test('GV-12’s note and the shared contract-scope note say the total includes Her Power’s national program, which trained 25,125 women, and CodersTrust trained 2,400 directly', () => {
+    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national program, which trained 25,125 women and met its target; CodersTrust trained 2,400 women directly.');
     expect(fact('GV-12').stat?.value).toBe('30,000+');
     expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,400' });
     expect(CONTRACT_TOTAL_NOTE.text).toBe(CONTRACT_NOTE);
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
   });
 
-  test('no register fact says the national program trained 25,125 women', () => {
-    for (const id of ['GV-01', 'GV-10', 'GV-11', 'GV-12', 'GV-13', 'PR-05']) {
+  test('no register fact words the national program’s 25,125 as a target still to be met', () => {
+    for (const id of ['GV-01', 'GV-10', 'GV-11', 'GV-12', 'GV-13', 'PR-05', 'SC-02']) {
       const f = fact(id);
-      const all = [f.text, f.stat?.label, f.stat?.glance?.note, f.stat?.glance?.label].filter(Boolean).join(' | ');
-      for (const re of TRAINED_25125) expect(all, `${id} vs ${re}`).not.toMatch(re);
+      const all = [f.text, f.stat?.label, f.stat?.detail, f.stat?.glance?.note, f.stat?.glance?.label].filter(Boolean).join(' | ');
+      for (const re of TARGET_25125) expect(all, `${id} vs ${re}`).not.toMatch(re);
     }
   });
 });
 
-test.describe('WP83: no built page says the national program trained 25,125 women', () => {
-  test('the HTML of every page (text, meta and JSON-LD) has none of the "trained 25,125" wordings; the news post’s own "aims to train" headline stays', () => {
+test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target still to be met', () => {
+  test('the HTML of every page (text, meta and JSON-LD) has none of the WP83 target wordings; the news post’s own "Aims to Train" headline and archived text stay', () => {
     const offenders: string[] = [];
+    const POST = '/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/';
     for (const p of builtPages()) {
-      for (const re of TRAINED_25125) if (re.test(p.html)) offenders.push(`${p.route} ${re}`);
+      // the post and the news index print the archived headline, excerpt and text as published ("aims to train", "to train and support", "train and facilitate")
+      if (p.route === POST || p.route === '/news/') continue;
+      for (const re of TARGET_25125) if (re.test(p.html)) offenders.push(`${p.route} ${re}`);
     }
     expect(offenders).toEqual([]);
-    const post = builtPages().find((p) => p.route === '/news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/');
+    const post = builtPages().find((p) => p.route === POST);
     expect(post, 'the Her Power news post is built').toBeTruthy();
     expect(visible(post!.html)).toContain('Her Power Contract Aims to Train 25,125 Women');
   });
 
-  test('every built page that shows 25,125 states it as a target or an aim: "to train", "target of" or "target is to train" (the news post’s archived text says "train and facilitate")', () => {
+  test('every built page that shows 25,125 states it as trained, or (the news post and index) keeps the archived "aims to train" wording', () => {
     const pages = builtPages().filter((p) => visible(p.html).includes('25,125'));
     expect(pages.map((p) => p.route).sort()).toEqual([
       '/impact/',
@@ -121,80 +126,79 @@ test.describe('WP83: no built page says the national program trained 25,125 wome
     ].sort());
     for (const p of pages) {
       const text = visible(p.html);
-      const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 110), m.index + 40));
-      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/to train|national target of|aims? to train|train and (?:support|facilitate)|Aims to Train/);
+      const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 45), m.index + 70));
+      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/);
     }
   });
 
-  test('the older section heading and sentence are gone: "National Scale: A Different Measure", "reach is counted separately"', () => {
-    const offenders = builtPages().filter((p) => /National Scale: A Different Measure|reach is counted separately/.test(visible(p.html))).map((p) => p.route);
+  test('the WP83 section heading and sentences are gone: "National Target: A Different Measure", "target is separate", "target is a separate figure", "target is to train"', () => {
+    const offenders = builtPages().filter((p) => /National Target: A Different Measure|target is separate|target is a separate figure|target is to train/.test(visible(p.html))).map((p) => p.route);
     expect(offenders).toEqual([]);
   });
 });
 
-test.describe('WP83: the pages that state the 25,125', () => {
+test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
   test.use({ viewport: DESKTOP });
 
-  test('Home slide 2: "Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly."; the 30,000+ and the NU sentence stay', async ({ page }) => {
+  test('Home slide 2: "Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly."; the 30,000+ and the NU sentence stay', async ({ page }) => {
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 
-  test('Impact: the 30,000+ tile carries the target note; the Her Power tile says its target is a separate figure', async ({ page }) => {
+  test('Impact: the 30,000+ tile carries the contract-scope note; the Her Power tile says the national program’s reach is counted separately', async ({ page }) => {
     await open(page, 'impact/');
     const tile = page.locator('#glance [data-fact~="GV-12"]').first();
-    expect(compact(await tile.textContent())).toContain(TARGET_NOTE);
+    expect(compact(await tile.textContent())).toContain(SCOPE_NOTE);
     const her = page.locator('#glance [data-fact~="PR-05"]').first();
     expect(compact(await her.textContent())).toContain('Her Power: tracked women in work (47%), from the 2,400 CodersTrust trained directly');
-    expect(compact(await her.textContent())).toContain('Within the national program scope; the national program’s target is a separate figure.');
+    expect(compact(await her.textContent())).toContain('Within the national program scope; the national program’s reach is counted separately.');
   });
 
-  test('Governments: the tile and the table row say target; the FAQ says "Her Power is a national program to train 25,125 women"; the note exempts only CodersTrust’s own Her Power figures', async ({ page }) => {
+  test('Governments: the tile and the table row say trained, meeting its target; the FAQ says "Her Power, a national program, trained 25,125 women, meeting its target"; the note exempts only CodersTrust’s own Her Power figures', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe(CONTRACT_NOTE);
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
-    expect(row).toContain('CodersTrust trained 2,400 women directly. The national program’s target is to train 25,125 women across 130 sub-districts (upazilas). 54,609 manuals and guidelines were distributed.');
+    expect(row).toContain('CodersTrust trained 2,400 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target. 54,609 manuals and guidelines were distributed.');
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.');
     expect(compact(await page.locator('#contracts caption').textContent())).toContain('Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power is a national program to train 25,125 women; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.');
+    expect(compact(await faq.textContent())).toContain('We scale in phases. Her Power, a national program, trained 25,125 women, meeting its target; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.');
   });
 
-  test('Investors: the tile and the FAQ say target (CodersTrust’s role first); JobReady Platform’s tile says target', async ({ page }) => {
+  test('Investors: the tile and the FAQ say trained (CodersTrust’s role first); JobReady Platform’s tile says it too', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program’s target is to train 25,125 women across 130 sub-districts (upazilas).');
+    expect(compact(await faq.textContent())).toContain('trained 2,400 women directly; the national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     await open(page, 'our-model/jobready-platform/');
     expect(compact(await page.locator('#why .jr__whynote').textContent())).toBe(CONTRACT_NOTE);
   });
 
-  test('YouthWIDE: the national-scale answer says Her Power is a national program of DoICT, the ICT Division, to train 25,125 women', async ({ page }) => {
+  test('YouthWIDE: the national-scale answer says Her Power, a national program of DoICT, the ICT Division, trained 25,125 women, meeting its target', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    expect(compact(await faq.textContent())).toContain('Her Power is a national program of DoICT, the ICT Division, to train 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
+    expect(compact(await faq.textContent())).toContain('Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly.');
   });
 
-  test('the Her Power case study: "National Target: A Different Measure"; the tracked 372 of 800 from the 2,400 trained directly is unchanged', async ({ page }) => {
+  test('the Her Power case study: "National Scale: A Different Measure"; the tracked 372 of 800 from the 2,400 trained directly is unchanged', async ({ page }) => {
     await open(page, 'impact/case-studies/her-power/');
-    await expect(page.getByRole('heading', { level: 3, name: 'National Target: A Different Measure' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'National Scale: A Different Measure' })).toBeVisible();
     const scale = compact(await page.locator('.hp__scale').textContent());
-    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s target is separate: Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas).');
+    expect(scale).toContain('The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target.');
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');
     expect(compact(await page.locator('main').textContent())).toContain('Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%)');
-    expect(titleCase('National Target: A Different Measure')).toBe('National Target: A Different Measure');
+    expect(titleCase('National Scale: A Different Measure')).toBe('National Scale: A Different Measure');
   });
 
-  test('the Her Power news post: the banner note is "Target: ..." and "Delivered" appears nowhere in it', async ({ page }) => {
+  test('the Her Power news post: the banner note is "Delivered: the national program trained 25,125 women, its full target."', async ({ page }) => {
     await open(page, 'news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/');
     const note = page.locator('.archive-banner .archive-banner__note');
-    await expect(note).toHaveText('Target: Her Power is a national program to train 25,125 women. See the Her Power case study.');
+    await expect(note).toHaveText('Delivered: the national program trained 25,125 women, its full target. See the Her Power case study.');
     expect(await note.getAttribute('data-fact')).toBe('GV-01');
-    expect(compact(await page.locator('.archive-banner').textContent())).not.toMatch(/Delivered/);
     expect(await note.locator('a').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
   });
 });

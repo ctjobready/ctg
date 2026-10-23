@@ -242,7 +242,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): the slide kept "work scoped for 30,000+ people" and the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 30,000\+/.test(p.html)).map((p) => p.route);
@@ -311,7 +311,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/direct enrollments|courseware/);
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (Her Power’s curriculum for its national target of 25,125 women, and UNDP FutureNation’s 14,918 course learners).');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners).');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {

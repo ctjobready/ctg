@@ -118,18 +118,18 @@ test.describe('Home: the trial slide leads with income and keeps its scope (item
 });
 
 test.describe('Home: the government slide states the contract scope in GV-12’s note (item 10)', () => {
-  test('slide 2 says the total is contract scope and includes Her Power’s national target of 25,125 women (the Impact tile prints the same note) and keeps the National University sentence', async ({ page }) => {
+  test('slide 2 says the total is contract scope and includes Her Power’s national program, which trained 25,125 women (the Impact tile prints the same note) and keeps the National University sentence', async ({ page }) => {
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
     // WP46 (cycle-22 review): the note said who trained whom ("which trained 25,125 women; CodersTrust trained 2,500 women directly", GV-01 and GV-11) and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the slide kept only the note's first clause ("contract scope, not a count of completers"). WP57 (cycle-29 review, Grok R2 with Gemini GM1): it says again that the total includes Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly),
     // in the note's WP35 wording, so the lead rests on GV-12 and GV-01 (tests/wp57.spec.ts)
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     expect(compact(await lead.textContent())).not.toContain('not people trained');
-    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
+    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national program, which trained 25,125 women and met its target; CodersTrust trained 2,400 women directly.');
   });
 });
 
@@ -294,16 +294,16 @@ test.describe('Recognition: the H1 is the listing the register supports (item 17
 test.describe('News: the Her Power post carries a delivery note (item 20)', () => {
   const HER_POWER = 'news/25000-trainees-her-power-empowerment-of-women-through-ict-frontier-initiative/';
 
-  test('the archive banner ends with "Target: Her Power is a national program to train 25,125 women." (WP83: it said "Delivered: the national program trained 25,125 women."), tied to GV-01; the headline is unchanged', async ({ page }) => {
+  test('the archive banner ends with "Delivered: the national program trained 25,125 women, its full target." (WP83 had "Target: Her Power is a national program to train 25,125 women."; WP85, owner update 2026-10-24), tied to GV-01; the headline is unchanged', async ({ page }) => {
     await open(page, HER_POWER);
     const banner = page.locator('.archive-banner');
     const note = banner.locator('.archive-banner__note');
     // WP46 (cycle-22 review): the note closes with a text link to the Her Power case study (the sentence itself is unchanged)
-    await expect(note).toHaveText('Target: Her Power is a national program to train 25,125 women. See the Her Power case study.');
+    await expect(note).toHaveText('Delivered: the national program trained 25,125 women, its full target. See the Her Power case study.');
     await expect(note.locator('a')).toHaveText('See the Her Power case study.');
     expect(await note.locator('a').getAttribute('href')).toMatch(/\/impact\/case-studies\/her-power\/$/);
     expect(await note.getAttribute('data-fact')).toBe('GV-01');
-    expect(fact('GV-01').text).toContain('a national program to train 25,125 women');
+    expect(fact('GV-01').text).toContain('a national program that trained 25,125 women');
     expect(compact(await banner.textContent())).toContain('Archived post, lightly edited.');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Her Power Contract Aims to Train 25,125 Women: Empowerment of Women Through ICT Frontier Initiative');
   });

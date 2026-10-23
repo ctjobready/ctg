@@ -358,13 +358,13 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
 test.describe('Governments: Her Power’s row is three full sentences (item 15)', () => {
   const SENTENCES = [
     'CodersTrust trained 2,400 women directly.',
-    'The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).',
+    'The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
     '54,609 manuals and guidelines were distributed.',
   ];
 
   test('each line is its own sentence with a full stop, one per line, and the row keeps its facts; the figures are the register’s', async ({ page }) => {
     expect(fact('GV-11').text).toContain('2,400 women trained directly; 54,609 manuals and guidelines distributed');
-    expect(fact('GV-01').text).toContain('national program to train 25,125 women across 130 sub-districts (upazilas)');
+    expect(fact('GV-01').text).toContain('national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
     await open(page, 'partner-with-us/governments/');
     const row = page.locator('#contracts tbody tr').first();
     expect(await row.getAttribute('data-fact')).toBe('GV-01 GV-11');

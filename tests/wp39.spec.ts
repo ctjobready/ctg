@@ -372,7 +372,7 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
     // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
       'CodersTrust trained 2,400 women directly.',
-      'The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).',
+      'The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
       '54,609 manuals and guidelines were distributed.',
     ]);
     expect(cells[0].startsWith('CodersTrust trained 2,400 women directly.')).toBe(true);

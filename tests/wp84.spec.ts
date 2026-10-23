@@ -8,11 +8,12 @@ import { listPages } from './support/pages';
 /**
  * WP84 behaviors (owner answer 2026-10-24: keep "130,000+ learners trained" and "150,000+ enrollments", but say what the courseware share is; CLR review, Sonnet Max run 2, findings 1 and 2).
  * Retrospective coverage (the owner exempted this project from test-first work). Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp84.spec.ts --project=chromium`:
- *   - 1: SC-02 (text and detail) calls the 40,043 "reached through CodersTrust curriculum and courseware", not "through CodersTrust courseware": Her Power's curriculum for its national target of 25,125 women plus UNDP FutureNation's
+ * WP85 (owner update 2026-10-24: the government achieved 100% of Her Power's 25,125-trainee target) reworded the Her Power parts below; the items pin the WP85 wording:
+ *   - 1: SC-02 (text and detail) calls the 40,043 "reached through CodersTrust curriculum and courseware", not "through CodersTrust courseware": the 25,125 women Her Power trained nationally with CodersTrust's curriculum plus UNDP FutureNation's
  *     14,918 course learners (25,125 + 14,918 = 40,043); the headline figures (130,000+ learners trained, 150,000+ enrollments) are unchanged; Investors prints the relabeled note and no page prints the old wording;
- *   - 2: the shared contract-scope note under the 30,000+ ends "Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people." on every page that prints it (Investors, Impact, Governments,
- *     JobReady Platform), tied to SC-02; Home's government slide, which words the contract scope itself, is unchanged;
- *   - 3: the Her Power case study reads "... target is separate: Her Power (DoICT, ICT Division) is a national program to train 25,125 women ..." (one colon), from GV-01's text;
+ *   - 2: the shared contract-scope note under the 30,000+ ends "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people." on every page that prints it (Investors, Impact,
+ *     Governments, JobReady Platform), tied to SC-02; Home's government slide, which words the contract scope itself, is unchanged;
+ *   - 3: the Her Power case study reads "... reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women ..., meeting its target." (one colon), from GV-01's text;
  *   - the changed regions fit at 1280 and 390 (nothing scrolls sideways).
  */
 
@@ -34,10 +35,10 @@ const visible = (html: string) =>
       .replace(/&quot;/g, '"'),
   );
 
-const BREAKDOWN = '(Her Power’s curriculum for its national target of 25,125 women, and UNDP FutureNation’s 14,918 course learners)';
+const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners)';
 const NEW_DETAIL = `Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware ${BREAKDOWN}.`;
-const OVERLAP = 'Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.';
-const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
+const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
+const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 
 test.describe('WP84: the register says what the courseware share is', () => {
   test('SC-02’s detail and text call the 40,043 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
@@ -55,7 +56,7 @@ test.describe('WP84: the register says what the courseware share is', () => {
     const futureNation = fact('SC-14').stat?.numeric;
     expect(herPower).toBe(25125);
     expect(futureNation).toBe(14918);
-    expect(detail).toContain(`for its national target of ${fact('GV-01').stat?.value} women`);
+    expect(detail).toContain(`the ${fact('GV-01').stat?.value} women Her Power trained nationally with CodersTrust’s curriculum`);
     expect(detail).toContain(`UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')} course learners`);
     expect(share).toBe(herPower + (futureNation ?? 0));
     expect(share).toBe(40043);
@@ -102,7 +103,7 @@ test.describe('WP84: Investors', () => {
     expect(await notes.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
   });
 
-  test('Beyond Delivered Reach: the 30,000+ tile’s note says the 25,125 is the curriculum reach already counted in the 150,000+ enrollments', async ({ page }) => {
+  test('Beyond Delivered Reach: the 30,000+ tile’s note says the 25,125 is the same group already counted in the 150,000+ enrollments', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const tile = page.locator('#reach .ir__tile');
     await expect(tile).toHaveCount(1);
@@ -117,7 +118,7 @@ test.describe('WP84: the shared contract-scope note', () => {
   test('CONTRACT_TOTAL_NOTE ends with the overlap sentence, reads the 25,125 from GV-01 and the 150,000+ from SC-02, and cites SC-02', () => {
     expect(CONTRACT_TOTAL_NOTE.text).toBe(FULL_NOTE);
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
-    expect(CONTRACT_TOTAL_NOTE.text).toContain(`Her Power’s ${fact('GV-01').stat?.value} is the same curriculum reach counted in the ${fact('SC-02').stat?.value} enrollments`);
+    expect(CONTRACT_TOTAL_NOTE.text).toContain(`Her Power’s ${fact('GV-01').stat?.value} is the same group counted in the ${fact('SC-02').stat?.value} enrollments through CodersTrust’s curriculum`);
   });
 
   test('every page that prints the note prints it whole (Investors, Impact, Governments, JobReady Platform); no other page words it', () => {
@@ -146,24 +147,24 @@ test.describe('WP84: the shared contract-scope note', () => {
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     const lead = page.locator('[data-hs-slide]').nth(1).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toContain('Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly.');
-    expect(compact(await lead.textContent())).not.toContain('curriculum reach');
+    expect(compact(await lead.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
+    expect(compact(await lead.textContent())).not.toContain('same group counted');
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 });
 
 test.describe('WP84: the Her Power case study sentence has one colon', () => {
-  test('GV-01 reads "Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)"', () => {
-    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)');
+  test('GV-01 reads "Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target"', () => {
+    expect(fact('GV-01').text).toBe('Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target');
     expect(fact('GV-01').stat?.value).toBe('25,125');
   });
 
-  test('"The national program’s target is separate: Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas)."', async ({ page }) => {
+  test('"The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target."', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, 'impact/case-studies/her-power/');
     const para = compact(await page.locator('.hp__scale p').textContent());
     expect(para).toBe(
-      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s target is separate: Her Power (DoICT, ICT Division) is a national program to train 25,125 women across 130 sub-districts (upazilas).',
+      'The in-work figure above covers 800 tracked women from the 2,400 that CodersTrust trained directly. The national program’s reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
     );
     expect(para.split(':').length - 1, 'one colon in the paragraph').toBe(1);
     expect(await page.locator('.hp__scale').getAttribute('data-fact')).toBe('GV-01');

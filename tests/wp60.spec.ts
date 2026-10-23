@@ -330,7 +330,7 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
 // WP61 (cycle-33 review, GPT-6.1 Sol G1) shortened the slide to three sentences, with one semicolon (in the Her Power sentence) and no bracket; tests/wp61.spec.ts holds the new wording's other behaviors.
 test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sentences (four until WP61, three since)', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
   test('the lead reads as above, with no bracket and one semicolon, the owner words "onboarding 1.5M+ learners", and the facts GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
@@ -350,7 +350,7 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sente
     expect(fact('GV-13').stat?.value).toBe(CONTRACT_FIGURES.direct);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
   });
 });
 

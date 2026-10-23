@@ -147,11 +147,13 @@ export const WSDFM_RECORDS: CopyBlock = wsdfmRecords();
  * WP83 (owner answer 2026-10-23: "Her Power's 25,125 is the national program's TARGET, not a count of women trained"): GV-01 says "a national program to train 25,125 women", and the note says the total "includes Her Power’s national target of 25,125 women
  * (CodersTrust trained 2,400 directly)". The builder throws if GV-01 stops saying "a national program to train N women", so the target cannot slip back into "trained".
  * WP83 (owner, 2026-10-23: "CodersTrust trained 2,400 women directly in Her Power, not 2,500"; source: the owner's "CT - JobReady Platform" sheet, Ex-Trainees Data): the count CodersTrust trained directly is 2,400 in the register (GV-11's text, GV-13's value), read from there as before; it was 2,500.
+ * WP85 (owner update 2026-10-24: a CodersTrust team member confirmed that the government achieved 100% of Her Power's 25,125-trainee target): the target wording of WP83 is replaced. GV-01 says "a national program that trained N women, meeting its target",
+ * and the note says "it includes Her Power’s national program, which trained N women (CodersTrust trained 2,400 directly)". The builder throws if GV-01 stops saying "a national program that trained N women", so the figure cannot slip back into a target.
  */
 function contractFigures(): { national: string; direct: string } {
   const n = fact('GV-01').stat?.value;
   if (!n || !/^[\d,]+$/.test(n)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer has a plain count as its stat value');
-  if (!fact('GV-01').text.includes(`a national program to train ${n} women`)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer says "a national program to train N women" (the figure is Her Power’s target, not a count of women trained)');
+  if (!fact('GV-01').text.includes(`a national program that trained ${n} women`)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer says "a national program that trained N women" (the owner confirmed on 2026-10-24 that the program met its target)');
   if (!/contract scope, not a count of completers/.test(fact('GV-12').stat?.glance?.note ?? '')) throw new Error('CONTRACT_TOTAL_NOTE: the GV-12 glance note no longer says "contract scope, not a count of completers"');
   const direct = /(\d[\d,]*) women trained directly/.exec(fact('GV-11').text)?.[1];
   if (!direct || direct !== fact('GV-13').stat?.value) throw new Error('CONTRACT_TOTAL_NOTE: GV-11 no longer says "N women trained directly" with the count that GV-13 holds as its stat value');
@@ -167,17 +169,18 @@ export const CONTRACT_FIGURES = contractFigures();
  * count the same 25,125 as curriculum reach (SC-02's detail: 40,043 reached through CodersTrust curriculum and courseware = Her Power's curriculum for its national target of 25,125 women + UNDP FutureNation's 14,918 course learners), so the note adds a second sentence that
  * stops a reader adding the two: "Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people." The 25,125 is GV-01's stat value and the 150,000+ is SC-02's, both read here, never retyped;
  * the builder throws if SC-02's detail stops saying the courseware share is Her Power's curriculum for the same national target. The note stays ONE shared source: Investors, Impact, Governments and the JobReady Platform page all print it.
+ * WP85 (owner update 2026-10-24): SC-02's detail now names "the 25,125 women Her Power trained nationally with CodersTrust’s curriculum", and the sentence reads "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people."
  */
 function overlapSentence(n: string): { text: string; fact: string } {
   const enrollments = fact('SC-02').stat?.value;
   if (!enrollments || !/^[\d,]+\+$/.test(enrollments)) throw new Error('CONTRACT_TOTAL_NOTE: SC-02 no longer has a plain "N+" count as its stat value');
-  if (!(fact('SC-02').stat?.detail ?? '').includes(`Her Power’s curriculum for its national target of ${n} women`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share is "Her Power’s curriculum for its national target of N women" (the overlap with the 30,000+ contract scope)');
-  return { text: `Her Power’s ${n} is the same curriculum reach counted in the ${enrollments} enrollments, not additional people.`, fact: 'SC-02' };
+  if (!(fact('SC-02').stat?.detail ?? '').includes(`the ${n} women Her Power trained nationally with CodersTrust’s curriculum`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "the N women Her Power trained nationally with CodersTrust’s curriculum" (the overlap with the 30,000+ contract scope)');
+  return { text: `Her Power’s ${n} is the same group counted in the ${enrollments} enrollments through CodersTrust’s curriculum, not additional people.`, fact: 'SC-02' };
 }
 function contractTotalNote(): CopyBlock {
   const { national: n, direct } = CONTRACT_FIGURES;
   const overlap = overlapSentence(n);
-  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national target of ${n} women (CodersTrust trained ${direct} directly). ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
+  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained ${n} women (CodersTrust trained ${direct} directly). ${overlap.text}`, facts: ['GV-12', 'GV-01', 'GV-11', overlap.fact] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
 
@@ -638,7 +641,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power is a national program of DoICT, the ICT Division, to train 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas), meeting its target. CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 

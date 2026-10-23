@@ -62,21 +62,21 @@ async function faqJsonLd(page: Page) {
 const itemOf = (page: Page, question: string) => page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: question }) }).first();
 const answerOf = async (page: Page, question: string) => compact(await itemOf(page, question).locator('.faq__a').textContent());
 
-const GV12_NOTE = 'The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.';
+const GV12_NOTE = 'The figure is contract scope, not a count of completers. It includes Her Power’s national program, which trained 25,125 women and met its target; CodersTrust trained 2,400 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the body was four plain sentences (the contract scope with its clause; "This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust."; the National University sentence; "They are National University’s own learners, ...")
   // WP61 (cycle-33 review, GPT-6.1 Sol G1): it is three: the contract scope with its clause; "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly."; and one National University sentence that ends with the qualifier
-  test('slide 2 body is the contract scope with its clause, Her Power (a national program to train 25,125 women; 2,400 trained directly by CodersTrust), then the National University sentence; the 2,400 once; the lead rests on GV-12, GV-01, GV-11 and SC-04; the links stay', async ({ page }) => {
+  test('slide 2 body is the contract scope with its clause, Her Power (trained 25,125 women nationally, its full target; 2,400 trained directly by CodersTrust), then the National University sentence; the 2,400 once; the lead rests on GV-12, GV-01, GV-11 and SC-04; the links stay', async ({ page }) => {
     await open(page, '');
     const s = slide(page, 2);
     const lead = s.locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(SLIDE2_LEAD);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
-    expect(compact(await s.textContent())).toContain('Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly.');
+    expect(compact(await s.textContent())).toContain('Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
     // WP58 (cycle-30 review, Gemini GM1): the note says "CodersTrust trained 2,500 directly", so the 2,500 is on the slide once, in the note
     expect((compact(await s.textContent()).match(/2,400/g) ?? []).length, 'the 2,400 is in the note alone').toBe(1);
     await expect(s.locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
@@ -93,9 +93,9 @@ test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
     expect(GV12_NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(SLIDE2_LEAD).toContain('work scoped for 30,000+ people, not a count of completers.');
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     await open(page, 'partner-with-us/governments/');
-    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people.');
+    expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
   });
 
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the WP35 wording is back on two pages by decision (it had been retired in WP46/WP48); the register's note and the Impact tile keep the later wording
@@ -255,7 +255,7 @@ test.describe('Governments: the contracts column and the glance heading (items 6
     // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
       'CodersTrust trained 2,400 women directly.',
-      'The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).',
+      'The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target.',
       '54,609 manuals and guidelines were distributed.',
     ]);
     const cells = await texts(page, '#contracts td.ct__num');
