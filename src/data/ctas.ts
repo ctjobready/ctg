@@ -76,51 +76,51 @@ export const CTAS: Record<CtaKey, CtaDef> = {
     key: 'funding',
     label: 'Explore a Funding Partnership',
     subject: 'Funding partnership — [foundation/company]',
-    body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline'],
+    body: ['Organization', 'Focus regions', 'Interest: platform grant / YouthWIDE cohort', 'Timeline', 'Two suitable times for a call'],
   },
   /** WP27: the two funding routes on /partner-with-us/foundations/ (hero text links), each with its own prefilled subject so the team sees which route the sender means. */
   fundingYouthwide: {
     key: 'fundingYouthwide',
     label: 'Discuss a YouthWIDE Cohort Grant',
     subject: 'YouthWIDE cohort grant — [foundation/company]',
-    body: ['Organization', 'Focus regions', 'Priority groups', 'Timeline'],
+    body: ['Organization', 'Focus regions', 'Priority groups', 'Timeline', 'Two suitable times for a call'],
   },
   fundingPlatform: {
     key: 'fundingPlatform',
     label: 'Discuss a JobReady Platform Grant',
     subject: 'JobReady platform grant — [foundation/company]',
-    body: ['Organization', 'Questions about the platform grant', 'Timeline'],
+    body: ['Organization', 'Questions about the platform grant', 'Timeline', 'Two suitable times for a call'],
   },
   /** YouthWIDE in Bangladesh (/programs/youthwide/): the secondary CTA for national funders, in place of `funding` (review round 15, F4): districts and priority groups, not a platform grant. */
   nationalFunding: {
     key: 'nationalFunding',
     label: 'Explore Co-Funding YouthWIDE in Bangladesh',
     subject: 'YouthWIDE co-funding in Bangladesh — [organization]',
-    body: ['Organization', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline'],
+    body: ['Organization', 'Funding scope (districts, priority groups)', 'Approximate trainees', 'Timeline', 'Two suitable times for a call'],
   },
   investor: {
     key: 'investor',
     label: 'Request an Introduction Call',
     subject: 'Introduction call request — [firm]',
-    body: ['Firm', 'Name & role', 'Impact focus', 'Preferred time for an introduction call'],
+    body: ['Firm', 'Name & role', 'Impact focus', 'Two suitable times for a call'],
   },
   campus: {
     key: 'campus',
     label: 'Bring JobReady@Campus to Your Institution',
     subject: 'JobReady@Campus inquiry — [institution]',
-    body: ['Institution', 'Number of students', 'Programs of interest'],
+    body: ['Institution', 'Number of students', 'Programs of interest', 'Two suitable times for a call'],
   },
   work: {
     key: 'work',
     label: 'Plan Your First Team Program',
     subject: 'JobReady@Work inquiry — [company]',
-    body: ['Company', 'Team size', 'Skills needed', 'Timeline'],
+    body: ['Company', 'Team size', 'Skills needed', 'Timeline', 'Two suitable times for a call'],
   },
   talent: {
     key: 'talent',
     label: 'Hire JobReady Talent',
     subject: 'Talent request — [company]',
-    body: ['Company', 'Roles', 'Number of hires', 'Location/remote'],
+    body: ['Company', 'Roles', 'Number of hires', 'Location/remote', 'Two suitable times for a call'],
   },
   /** Withheld while REPORT_EDITION_READY is false (src/lib/site.ts): `cta('report')` then returns an empty href and nothing renders. */
   report: {

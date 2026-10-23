@@ -182,7 +182,7 @@ const ANSWER_MODULES: Record<string, { module: string; words: string }[]> = {
   'digital-marketing': [
     { module: 'WordPress Design (Practical)', words: 'WordPress design' },
     { module: 'Content Marketing (Practical)', words: 'content marketing' },
-    { module: 'Search Engine Optimization (SEO) - Practical', words: 'SEO' },
+    { module: 'Search Engine Optimization (SEO) (Practical)', words: 'SEO' },
     { module: 'Web & Google Analytics (Practical)', words: 'analytics' },
   ],
   ict: [
@@ -228,9 +228,9 @@ const FIT_TOPICS: Record<string, { name: string; topics: { modules: string[]; wo
   'digital-marketing': {
     name: 'Digital Marketing',
     topics: [
-      { modules: ['Search Engine Optimization (SEO) - Practical'], words: 'SEO' },
+      { modules: ['Search Engine Optimization (SEO) (Practical)'], words: 'SEO' },
       { modules: ['Social Media Marketing'], words: 'social media' },
-      { modules: ['AdWords & PPC'], words: 'advertising' },
+      { modules: ['Google Ads and PPC'], words: 'advertising' },
       { modules: ['Web & Google Analytics (Practical)'], words: 'analytics' },
     ],
   },

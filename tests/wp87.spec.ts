@@ -246,9 +246,9 @@ test.describe('Item 17: polish', () => {
     for (const slug of slugs) {
       const d = metaDescription(pageHtml(news(slug)));
       expect(d, slug).not.toMatch(/['"]/);
-      expect(d, slug).toMatch(/[’‘]/);
+      expect(d, slug).toMatch(/[’‘“”]/);
     }
-    expect(metaDescription(pageHtml(news(slugs[2])))).toContain('‘Be Useful’');
+    expect(metaDescription(pageHtml(news(slugs[2])))).toContain('“Be Useful.”');
     const withOldDate = builtPages().filter((p) => visible(p.html).includes('City College of New York, 12 April 2024')).map((p) => p.route);
     expect(withOldDate).toEqual([]);
     expect(visible(pageHtml('impact/in-the-field/'))).toContain('MOU signing with the City College of New York, April 12, 2024 (date on the ceremony banner)');

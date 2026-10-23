@@ -6,7 +6,7 @@ duration: "12 Months"
 fee: "BDT 50,000"
 mode: "On-Campus"
 applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm4K2bBY83VmcOgYfuMpK9RC91jhULnKFo479dug8strodtA/viewform"
-modules: ["Fundamentals of Digital Marketing", "WordPress Design (Practical)", "AdWords & PPC", "Content Marketing (Practical)", "Affiliate & E-mail Marketing (Practical)", "E-Commerce", "Social Media Marketing", "Search Engine Optimization (SEO) - Practical", "Web & Google Analytics (Practical)", "Internship/ Project Work & Seminar"]
+modules: ["Fundamentals of Digital Marketing", "WordPress Design (Practical)", "Google Ads and PPC", "Content Marketing (Practical)", "Affiliate & E-mail Marketing (Practical)", "E-Commerce", "Social Media Marketing", "Search Engine Optimization (SEO) (Practical)", "Web & Google Analytics (Practical)", "Internship/ Project Work & Seminar"]
 internship: "The students are required to undergo an internship in Digital Marketing Firm for gaining practical experience in the field."
 faqs:
   - q: "What Is Digital Marketing, and Why Is It Important in Today’s Business Landscape?"
@@ -58,7 +58,7 @@ The syllabus is framed in such a way that it provides skill based education to s
 - Web Developer & Web Designer
 - Social Media Executive & Social Media Manager
 - SEO Executive/Expert
-- AdWords & PPC/SEM Expert
+- Google Ads, PPC and SEM Specialist
 - Content Marketer
 - Analytics Manager
 - CRM Manager

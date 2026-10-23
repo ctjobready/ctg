@@ -3,7 +3,7 @@ title: "CodersTrust Partners Up with University for Peace (UPEACE) to Offer Next
 date: 2023-06-03
 updated: 2026-10-13
 topic: partnerships
-excerpt: "CodersTrust and the UN-mandated University for Peace sign a partnership in San Jose, Costa Rica, to offer Next Generation Skills training."
+excerpt: "CodersTrust and the UN-mandated University for Peace sign a partnership in San José, Costa Rica, to offer Next Generation Skills training."
 cover: ../../assets/images/news/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/whatsapp-image-2023-06-04-at-00-15-44.jpg
 coverAlt: "Two men shaking hands while exchanging a signed document"
 legacyUrl: "https://coderstrust.global/coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration/"

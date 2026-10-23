@@ -531,7 +531,7 @@ test.describe('WP76 item 1: the existing course pages keep their wording and str
     await open(page, `${NU}digital-marketing/`);
     expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in WordPress design, content marketing, SEO and analytics, followed by the final internship, project work and seminar module. ${NEXT_STEP}`);
     expect(compact(await page.locator('#curriculum .sh .lead, #curriculum header .lead').first().textContent())).toBe('Modules, in order. The final module combines internship, project work and a seminar; internship arrangements are confirmed with admissions.');
-    expect(await texts(page, '#who .roles li')).toEqual(['Social Media Executive', 'SEO Executive/Expert', 'AdWords & PPC/SEM Expert', 'Content Marketer']);
+    expect(await texts(page, '#who .roles li')).toEqual(['Social Media Executive', 'SEO Executive/Expert', 'Google Ads, PPC and SEM Specialist', 'Content Marketer']);
     await open(page, `${NU}ict/`);
     expect(await answerOf(page, 'What Will I Be Able to Do After This Course?')).toBe(`Build practical work in programming, databases, networks and mobile applications, followed by the final internship, project work and seminar module. ${NEXT_STEP}`);
     expect(await texts(page, '#who .roles li')).toEqual(['Software Developer', 'Programmer', 'Network Administrator', 'Network Engineer', 'Database Administrator', 'Web Developer', 'Web Designer', 'Mobile App Developer']);

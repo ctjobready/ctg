@@ -207,7 +207,7 @@ test.describe('NU course pages: "Is This the Right Course for Me?" (item 9)', ()
 
   for (const [slug, sentence, topics] of [
     ['ict', 'Choose ICT if you want to study programming, databases, networks and mobile or web development.', ['Java Programming', 'Database Management Systems', 'Computer Networks Maintenance', 'Mobile Application Development', 'Web Application & Web Site Design']],
-    ['digital-marketing', 'Choose Digital Marketing if you want to study SEO, social media, advertising and analytics.', ['Search Engine Optimization (SEO) - Practical', 'Social Media Marketing', 'AdWords & PPC', 'Web & Google Analytics (Practical)']],
+    ['digital-marketing', 'Choose Digital Marketing if you want to study SEO, social media, advertising and analytics.', ['Search Engine Optimization (SEO) (Practical)', 'Social Media Marketing', 'Google Ads and PPC', 'Web & Google Analytics (Practical)']],
   ] as [string, string, string[]][]) {
     test(`${slug}: the answer keeps the eligibility sentence and names what the course teaches, from its own module list`, async ({ page }) => {
       await open(page, `${NU}${slug}/`);
