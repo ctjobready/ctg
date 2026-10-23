@@ -75,7 +75,7 @@ const CONTACT = 'contact/';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same facts', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
   test('the lead reads as above: the owner words "work scoped for" (WP47) and "onboarding 1.5M+ learners" (GV-12) stay, and the lead rests on GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
@@ -92,12 +92,12 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same f
   });
 
   test('the two Her Power counts are the register’s (GV-01 and GV-11 with GV-13) and each is on the slide once; the register’s GV-12 text is unchanged', async ({ page }) => {
-    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,500' });
+    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,400' });
     expect(fact('GV-12').text).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
     await open(page, HOME);
     const text = compact(await slide(page, 2).textContent());
     expect((text.match(/25,125/g) ?? []).length).toBe(1);
-    expect((text.match(/2,500/g) ?? []).length).toBe(1);
+    expect((text.match(/2,400/g) ?? []).length).toBe(1);
     expect((text.match(/1\.5M\+/g) ?? []).length).toBe(1);
   });
 
@@ -400,7 +400,7 @@ test.describe('L5 (GLM): Governments’ glance runs trial, Her Power, Kosovo, th
     // the contract-scope tile keeps its label, note and facts
     const tile = page.locator('#glance a[data-fact~="GV-12"]');
     await expect(tile.locator('.pg__desc')).toHaveText('People in the Scopes of Six Government Contracts');
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
     expect((await tile.getAttribute('data-fact'))!.split(' ')).toEqual(expect.arrayContaining(['GV-12', 'SC-06', 'GV-01', 'GV-11']));
   });
 

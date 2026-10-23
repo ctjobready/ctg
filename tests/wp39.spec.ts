@@ -371,14 +371,14 @@ test.describe('Governments: the contracts table’s last column (item 6; WP48: "
     // WP41 (cycle-18 review): Her Power's cell lists its three figures, one per line (tests/wp41.spec.ts): the first is still the women CodersTrust trained directly
     // WP50 (cycle-25 review, item 15): each line is a full sentence (tests/wp50.spec.ts)
     expect(await texts(page, '#contracts tbody tr:first-child td.ct__num li')).toEqual([
-      'CodersTrust trained 2,500 women directly.',
-      'The national program trained 25,125 women across 130 sub-districts (upazilas).',
+      'CodersTrust trained 2,400 women directly.',
+      'The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).',
       '54,609 manuals and guidelines were distributed.',
     ]);
-    expect(cells[0].startsWith('CodersTrust trained 2,500 women directly.')).toBe(true);
+    expect(cells[0].startsWith('CodersTrust trained 2,400 women directly.')).toBe(true);
     for (const c of cells.slice(1)) expect(c.startsWith('Contract scope:'), c).toBe(true);
     // WP65 (cycle-37 review): "We confirm each contract’s delivery status in a briefing." (tests/wp52.spec.ts, tests/wp65.spec.ts)
-    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.');
+    expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe('We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.');
     expect(await mainText(page)).not.toContain('Direct Training');
   });
 });

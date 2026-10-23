@@ -330,7 +330,7 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
 // WP61 (cycle-33 review, GPT-6.1 Sol G1) shortened the slide to three sentences, with one semicolon (in the Her Power sentence) and no bracket; tests/wp61.spec.ts holds the new wording's other behaviors.
 test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sentences (four until WP61, three since)', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
 
   test('the lead reads as above, with no bracket and one semicolon, the owner words "onboarding 1.5M+ learners", and the facts GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
@@ -345,12 +345,12 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sente
   });
 
   test('the two Her Power counts are the register’s (GV-01 and GV-11 with GV-13), and the Governments tile keeps the longer note', async ({ page }) => {
-    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,500' });
+    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,400' });
     expect(fact('GV-01').stat?.value).toBe(CONTRACT_FIGURES.national);
     expect(fact('GV-13').stat?.value).toBe(CONTRACT_FIGURES.direct);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 
@@ -433,7 +433,7 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
 test.describe('K3 (Kimi; owner answer 2026-10-20: "Of the same 800 tracked"): Her Power’s 18.6% names its base', () => {
   test('PR-05 says "18.6% of those 800 were in work during the course", and every page that prints the 18.6% says it that way', async ({ page }) => {
     expect(fact('PR-05').text).toBe(
-      'Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,500 trained directly by CodersTrust, were in work (47%); 18.6% of those 800 were in work during the course',
+      'Her Power (ICT Division / DoICT): 372 of 800 tracked women, from the 2,400 trained directly by CodersTrust, were in work (47%); 18.6% of those 800 were in work during the course',
     );
     expect(fact('PR-05').stat?.value).toBe('372 of 800');
     const printing = sitePages().filter((p) => visible(p.html).includes('18.6%'));

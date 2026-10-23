@@ -250,7 +250,7 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
   test('Governments: the contracts note opens "We confirm each contract’s delivery status in a briefing." and keeps its second sentence and GV-10', async ({ page }) => {
     await open(page, GOVERNMENTS);
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe(
-      'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.',
+      'We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.',
     );
     expect(await page.locator('#contracts .ct__notes p').getAttribute('data-fact')).toBe('GV-10');
     expect(pagesWith('Delivery status is confirmed for each contract')).toEqual([]);

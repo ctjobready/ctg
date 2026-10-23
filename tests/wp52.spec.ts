@@ -130,9 +130,9 @@ test.describe('Local Partners: what stays after funding, and what the monthly re
 
 test.describe('Governments: the delivery card scopes its reports and surveys; the Her Power tile names its program (items 4 and 5)', () => {
   const CARD = 'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';
-  const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,500 women CodersTrust trained directly';
+  const BASE_OF_FIGURE = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
   // WP63 (cycle-35 review, Gemini M6): the tile states the tracked base itself; the case cards keep BASE_OF_FIGURE
-  const TILE_LABEL = 'Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly';
+  const TILE_LABEL = 'Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly';
 
   test('"Placement and Monthly Reports" ends "..., as agreed in the program scope." and keeps the survey months', async ({ page }) => {
     await open(page, GOV);
@@ -150,7 +150,7 @@ test.describe('Governments: the delivery card scopes its reports and surveys; th
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
     expect(compact(await tile.locator('.pg__desc').textContent())).toBe(TILE_LABEL);
     // the register's own label is unchanged: the caption is derived from it
-    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
+    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
     // the case cards on the pages that list them sit under the program's name and keep the bare caption
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/']) {
       await open(page, route);
@@ -299,16 +299,16 @@ test.describe('Governments: the closing call to action does not repeat the procu
 
 test.describe('Governments: the contracts-table note excepts the Her Power figures and offers a briefing, not a request (items 11 and 37)', () => {
   // WP65 (cycle-37 review, Gemini, Kimi): the first sentence is active, "We confirm each contract’s delivery status in a briefing." (it said "Delivery status is confirmed for each contract in a briefing."; tests/wp65.spec.ts)
-  const NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.';
+  const NOTE = 'We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.';
 
   test('two sentences under the table; the screen-reader caption makes the same exception; "on request" is on no built page', async ({ page }) => {
     await open(page, GOV);
     expect(compact(await page.locator('#contracts .ct__notes').textContent())).toBe(NOTE);
     expect(await page.locator('#contracts .ct__notes p').getAttribute('data-fact')).toBe('GV-10');
-    expect(compact(await page.locator('#contracts caption').textContent())).toBe('Six government contracts: what CodersTrust does under each and the training scope. Apart from the Her Power figures, counts are contract training scopes, not delivered scale.');
+    expect(compact(await page.locator('#contracts caption').textContent())).toBe('Six government contracts: what CodersTrust does under each and the training scope. Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.');
     expect(pagesWith('confirmed per contract on request')).toEqual([]);
     // the exception names figures that are in the table: Her Power’s first row has the delivered ones
-    expect(compact(await page.locator('#contracts tbody tr').first().textContent())).toContain('CodersTrust trained 2,500 women directly.');
+    expect(compact(await page.locator('#contracts tbody tr').first().textContent())).toContain('CodersTrust trained 2,400 women directly.');
   });
 });
 
@@ -433,27 +433,27 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
   // WP57 (cycle-29 review, Grok R2): the second sentence is the note's WP35 wording ("The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).")
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the slide said "... work scoped for 30,000+ people, not a count of completers. This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust. CodersTrust is also the official training partner of ... onboarding 1.5M+ learners. They are National University’s own learners, ..."
   // WP61 (cycle-33 review, GPT-6.1 Sol G1): three sentences: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for ..., CodersTrust is onboarding 1.5M+ learners, the university’s own learners, ..." (tests/wp61.spec.ts)
-  test('slide 2: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for ..."', async ({ page }) => {
+  test('slide 2: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 
-  test('slide 4: "Results from the records of four programs." and Her Power’s line ends "... tracked women in work; 2,500 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
+  test('slide 4: "Results from the records of four programs." and Her Power’s line ends "... tracked women in work; 2,400 trained directly." (one line at 1280, read from PR-05)', async ({ page }) => {
     await page.setViewportSize(DESKTOP);
     await open(page, HOME);
     // WP57b (cycle-29 review, GLM L3): "Four delivered programs, with results from each program’s records." (it said "..., each with its partner, with results from their own records.")
     // WP64 (cycle-36 review, Claude): "Results from the records of four programs." (Impact counts five delivered programs, Albania among them, which has no outcome figure; tests/wp64.spec.ts)
     await expect(slide(page, 4).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     const lines = slide(page, 4).locator('.hs__lines li');
-    await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
+    await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.');
     expect(await lines.nth(3).getAttribute('data-fact')).toBe('PR-05');
-    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
+    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[3], 'the Her Power line wraps').toBe(heights[0]);
-    expect(pagesWith('Four programs, each with its partner', 'in work (2,500 trained directly)')).toEqual([]);
+    expect(pagesWith('Four programs, each with its partner', 'in work (2,400 trained directly)')).toEqual([]);
   });
 
   // WP53 (owner decision 2026-10-16): the carousel is four slides; the slide that had been the fifth (the speed slide) is the survey slide's body line now (slide 3)

@@ -93,7 +93,7 @@ test.describe('WP82: the Impact contract-scope tile carries the shared note', ()
     const tile = page.locator('#glance a[data-fact~="GV-12"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.glance__note')).toHaveText(CONTRACT_TOTAL_NOTE.text);
-    expect(CONTRACT_TOTAL_NOTE.text).toContain('includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)');
+    expect(CONTRACT_TOTAL_NOTE.text).toContain('includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly)');
   });
 });
 

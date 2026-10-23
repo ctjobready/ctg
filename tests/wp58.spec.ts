@@ -466,36 +466,36 @@ test.describe('L4: Universities’ second pain is a pain', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('GM1: the contract-total note says who trained how many', () => {
-  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
+  const NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).';
 
-  test('CONTRACT_TOTAL_NOTE reads the 25,125 from GV-01 and the 2,500 from GV-11 (GV-13 holds the same count), and names those facts', () => {
+  test('CONTRACT_TOTAL_NOTE reads the 25,125 from GV-01 and the 2,400 from GV-11 (GV-13 holds the same count), and names those facts', () => {
     expect(CONTRACT_TOTAL_NOTE.text).toBe(NOTE);
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11']);
     expect(fact('GV-01').stat?.value).toBe('25,125');
-    expect(fact('GV-11').text).toContain('2,500 women trained directly');
-    expect(fact('GV-13').stat?.value).toBe('2,500');
+    expect(fact('GV-11').text).toContain('2,400 women trained directly');
+    expect(fact('GV-13').stat?.value).toBe('2,400');
     // the register's own longer note (Impact) is unchanged
-    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    expect(fact('GV-12').stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
   });
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's government slide says the same facts in plainer sentences (WP61, cycle-33 review: "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.") and no longer prints the note itself
-  test('Home’s government slide is tied to GV-12, GV-01 and GV-11 (its plainer sentences state the note’s facts); the Governments tile, with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1), prints the note, and none prints the bare "(25,125 women trained)"', async ({ page }) => {
+  test('Home’s government slide is tied to GV-12, GV-01 and GV-11 (its plainer sentences state the note’s facts); the Governments tile, with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1), prints the note, and none prints the bare "(25,125 women trained)" or the older "national program (25,125 women trained; ..."', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.`);
+    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.`);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     expect(compact(await tile.locator('.pg__note').textContent())).toBe(NOTE);
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
-    const printed = sitePages().filter((p) => p.html.includes('(25,125 women trained; CodersTrust trained 2,500 directly)')).map((p) => p.route).sort();
+    const printed = sitePages().filter((p) => p.html.includes('national target of 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort();
     expect(printed).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
     expect(sitePages().filter((p) => p.html.includes('(25,125 women trained)')).map((p) => p.route)).toEqual([]);
   });
 
   test('Impact prints the shared contract-scope note (WP82)', async ({ page }) => {
     await open(page, IMPACT);
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 
@@ -566,13 +566,13 @@ test.describe('R1 (Grok): the Denmark row has no target group or skills', () => 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('R3 (Grok): Home slide 4 states Her Power’s count and base', () => {
-  const LINE = 'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.';
+  const LINE = 'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.';
 
-  test('the line is built from PR-05 ("372 of 800", 47%, 2,500) and tied to it', async ({ page }) => {
+  test('the line is built from PR-05 ("372 of 800", 47%, 2,400) and tied to it', async ({ page }) => {
     expect(fact('PR-05').stat?.value).toBe('372 of 800');
     expect(fact('PR-05').text).toContain('372 of 800 tracked women');
     expect(fact('PR-05').text).toContain('(47%)');
-    expect(fact('PR-05').stat?.label).toContain('from the 2,500 trained directly by CodersTrust');
+    expect(fact('PR-05').stat?.label).toContain('from the 2,400 trained directly by CodersTrust');
     await open(page, HOME);
     const lines = slide(page, 4).locator('.hs__lines li');
     await expect(lines).toHaveCount(4);
@@ -620,8 +620,8 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
     const gv12 = fact('GV-12');
     expect([gv12.stat?.value, gv12.stat?.numeric]).toEqual(['30,000+', 30000]);
     expect(gv12.text).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding 1.5M+ learners');
-    expect(gv12.stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
-    expect(CONTRACT_TOTAL_NOTE.text).toContain('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained;');
+    expect(gv12.stat?.glance?.note).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
+    expect(CONTRACT_TOTAL_NOTE.text).toContain('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained');
   });
 
   test('the pages that show the total are found in the build, and each says 30,000+ and never 31,200', () => {
@@ -639,7 +639,7 @@ test.describe('K3 (owner decision 2026-10-19): the six-contract total is 30,000+
 
   test('Home’s government slide, the Governments tile, Impact’s tile and the Investors and JobReady tiles show 30,000+ with the Contract Scope tag', async ({ page }) => {
     await open(page, HOME);
-    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. Her Power, one of the six, trained 25,125 women nationally;/);
+    expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toMatch(/^Six government contracts with training and curriculum work scoped for 30,000\+ people, not a count of completers\. Her Power, one of the six, is a national program to train 25,125 women;/);
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
     await expect(tile).toHaveCount(1);

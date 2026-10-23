@@ -109,7 +109,7 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     // (WP45, cycle-21 review: the scope was GV-12's own note, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."; WP48, cycle-23 review: the slide keeps the note's first clause, "30,000+ people: contract scope, not a count of completers.")
     // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
     // WP61 (cycle-33 review, GPT-6.1 Sol G1): "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly." (it said "This includes Her Power’s national program: ...")
-    expect(slide2).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
+    expect(slide2).toContain('30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly.');
     expect(slide2).toContain('1.5M+ learners');
     const text = await mainText(page);
     expect((text.match(/(?<![\d,])30,000\+/g) ?? []).length, 'the 30,000+ is stated once on Home (the 130,000+ learners are another figure)').toBe(1);
@@ -338,11 +338,11 @@ test.describe('wording fixes', () => {
   });
 });
 
-test.describe('Recognition: the press headlines are in Title Case, words unchanged', () => {
+test.describe('Recognition: the press headlines are in Title Case, words unchanged (the Tech in Asia card carries the article’s own headline since WP83)', () => {
   const TITLED = [
     'CodersTrust to Finance Brains to Educate IT Coders',
     'Bangladesh, New York Pursue Different Paths to Train More Coders',
-    'A Novel Idea in Microfinance Is Turning Bangladeshis into Freelance Coders',
+    'This Microfinance Startup Teaches Students in Bangladesh, Africa How to Code', // WP83: the publisher's own headline (Tech in Asia), in Title Case; it was the legacy homepage card's "A Novel Idea in Microfinance Is Turning Bangladeshis into Freelance Coders"
     'Cook to Coder: How Low-Income Youth Are Writing a Better Future',
   ];
 

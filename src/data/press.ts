@@ -63,7 +63,8 @@ export const press: PressItem[] = [
   },
   {
     outlet: "Tech in Asia",
-    headline: "A Novel Idea in Microfinance Is Turning Bangladeshis into Freelance Coders",
+    // WP83 (CLR review finding 2, 2026-10-23): the article's own headline (Tech in Asia, "This microfinance startup teaches students in Bangladesh, Africa how to code", the page linked in COVERED_BY below), in Title Case; the legacy homepage's card text ("A novel idea in microfinance is turning Bangladeshis into freelance coders") was not the publisher's headline.
+    headline: "This Microfinance Startup Teaches Students in Bangladesh, Africa How to Code",
     date: "2015-10-20",
     url: null,
     logo: logo_tech_in_asia,

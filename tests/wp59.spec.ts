@@ -174,7 +174,7 @@ test.describe('S4: Outcomes 2026, "Results in Brief": the 70.8% tile names its b
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles explain the 30,000+ as Home and Governments do', () => {
   test('the note is CONTRACT_TOTAL_NOTE (contract scope, not a count of completers; Her Power’s national program; who trained how many), tied to GV-12, GV-01 and GV-11', () => {
-    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(CONTRACT_TOTAL_NOTE.text).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11']);
   });
 
@@ -219,7 +219,7 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
     expect(gap.noteTop - gap.labelBottom).toBeLessThanOrEqual(24);
   });
 
-  test('wherever a built page shows the six-contract total (a SC-06 or GV-12 tile), it also says it is contract scope, not a count of completers, and names Her Power’s 25,125 and the 2,500 trained directly', () => {
+  test('wherever a built page shows the six-contract total (a SC-06 or GV-12 tile), it also says it is contract scope, not a count of completers, and names Her Power’s 25,125 and the 2,400 trained directly', () => {
     const TOTAL_PAGES = sitePages().filter((p) => p.route !== '/styleguide/' && /data-fact="[^"]*\b(?:SC-06|GV-12)\b[^"]*"/.test(p.html));
     expect(TOTAL_PAGES.map((p) => p.route)).toEqual(expect.arrayContaining(['/', '/impact/', '/partner-with-us/governments/', '/partner-with-us/investors/', '/our-model/jobready-platform/']));
     for (const p of TOTAL_PAGES) {
@@ -227,7 +227,7 @@ test.describe('G1: the Investors and JobReady Platform "Contracted Scope" tiles 
       // WP60 (cycle-32 review, GPT-6.1 Sol G1): Home's slide 2 says the clause in plain words, "... work scoped for 30,000+ people, not a count of completers."; every other page keeps the register's "contract scope, not a count of completers"
       expect(text, p.route).toContain(p.route === '/' ? 'work scoped for 30,000+ people, not a count of completers' : 'contract scope, not a count of completers');
       expect(text, p.route).toContain('25,125 women');
-      expect(text, p.route).toContain('2,500');
+      expect(text, p.route).toContain('2,400');
     }
   });
 

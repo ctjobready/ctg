@@ -412,8 +412,8 @@ test.describe('Home: the government slide and the program-results slide (items 2
     await expect(slide(page, 2)).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
   });
 
-  test('slide 4’s Her Power line carries its base (the 2,500 trained directly), read from PR-05’s label, and stays one line at 1280 like the Kosovo and WSDFM lines', async ({ page }) => {
-    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
+  test('slide 4’s Her Power line carries its base (the 2,400 trained directly), read from PR-05’s label, and stays one line at 1280 like the Kosovo and WSDFM lines', async ({ page }) => {
+    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
     await page.setViewportSize(DESKTOP);
     await open(page, '');
     const heights = await page.locator('[data-hs-slide]').nth(3).locator('.hs__lines li').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
@@ -422,7 +422,7 @@ test.describe('Home: the government slide and the program-results slide (items 2
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
-      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
     expect(await slide(page, 4).locator('.hs__lines li').nth(3).getAttribute('data-fact')).toBe('PR-05');
   });
@@ -458,20 +458,20 @@ test.describe('Governments: the empathy line and the glance tile (items 14 and 1
   });
 
   // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the tile's note is the shared "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)." (tests/wp57.spec.ts); the contracts table still states the 2,500 and the 130 sub-districts
-  test('the GV-12 tile says the total includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly); Impact keeps the full register note; the contracts table below states the rest', async ({ page }) => {
+  test('the GV-12 tile says the total includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly); Impact prints the same note; the contracts table below states the rest', async ({ page }) => {
     const FULL = fact('GV-12').stat?.glance?.note;
-    expect(FULL).toBe('The figure is contract scope, not a count of completers. In Her Power, the national program trained 25,125 women; CodersTrust trained 2,500 women directly.');
+    expect(FULL).toBe('The figure is contract scope, not a count of completers. It includes Her Power’s national target of 25,125 women; CodersTrust trained 2,400 women directly.');
     await open(page, GOV);
     const tile = page.locator('#glance li', { hasText: '30,000+' });
-    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await tile.locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
     expect(await tile.locator('a').getAttribute('data-fact')).toBe('GV-12 SC-06 GV-01 GV-11');
     // the table is below the tile and states the two figures Her Power's note used to repeat
     const contracts = compact(await page.locator('#contracts').textContent());
-    expect(contracts).toContain('CodersTrust trained 2,500 women directly.');
-    expect(contracts).toContain('The national program trained 25,125 women across 130 sub-districts (upazilas).');
+    expect(contracts).toContain('CodersTrust trained 2,400 women directly.');
+    expect(contracts).toContain('The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).');
     expect(await page.evaluate(() => Boolean(document.getElementById('glance')!.compareDocumentPosition(document.getElementById('contracts')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await open(page, 'impact/');
-    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    expect(compact(await page.locator('#glance a[data-fact~="GV-12"] .glance__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
   });
 });
 

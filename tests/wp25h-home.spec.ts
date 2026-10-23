@@ -45,7 +45,7 @@ test.describe('UNDP YES, Korail: first job, not "in work" (PR-03, PR-06)', () =>
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
-      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
   });
 
@@ -84,7 +84,7 @@ test.describe('carousel, vision, proof, FAQ and offer wording', () => {
     await expect(slide(page, 2).locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
     // WP45 (cycle-21 review): the contract scope is GV-12's own note, with Her Power's 25,125 women trained; WP46 (cycle-22 review): the note adds that CodersTrust trained 2,500 directly, and the last sentence names its subject
     // WP48 (cycle-23 review): the body was two sentences, the contract scope with the clause that keeps it true, then the National University sentence; WP57 (cycle-29 review, Grok R2): the clause names Her Power's national program again (25,125 women trained; CodersTrust trained 2,500 directly)
-    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
+    await expect(slide(page, 2).locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
   });
 
   // WP48 (cycle-23 review, three reviewers): the third scenario is "Employers Hiring from Your Cohort" ("AI-ready" is a positioning term that Employers and JobReady@Work explain, not Home; tests/wp48.spec.ts)

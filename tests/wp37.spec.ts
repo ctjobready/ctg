@@ -92,7 +92,7 @@ test.describe('Home: Proof in Practice says what was delivered where its carouse
     const text = await mainText(page);
     expect(count(text, '102 of'), 'Kosovo, slide 4 and the Kosovo card').toBe(2);
     expect(count(text, 'Women in Online Work, Kosovo (2016–2017): 68% in work'), 'Kosovo, slide 4').toBe(1);
-    expect(count(text, 'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.'), 'Her Power, slide 4').toBe(1);
+    expect(count(text, 'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.'), 'Her Power, slide 4').toBe(1);
     // WP58 (cycle-30 review, Grok R3): slide 4's line states the count and its base itself ("372 of 800 tracked in work (47%)"), once; no card states it
     expect(count(text, '372 of 800'), 'the count and its base are slide 4’s alone').toBe(1);
     // WP51 (cycle-26 review): WSDFM's figure was slide 4's alone, and no card named PR-01; WP63 (cycle-35 review, Gemini M4): its card shows the program records too
@@ -141,7 +141,7 @@ test.describe('Governments: Her Power is told once', () => {
     expect(firstRow).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
     expect(firstRow).toContain('25,125 women across 130 sub-districts (upazilas)');
     // WP50 (cycle-25 review, item 15): the row's lines are full sentences ("CodersTrust trained 2,500 women directly."; tests/wp50.spec.ts)
-    expect(firstRow).toContain('CodersTrust trained 2,500 women directly.');
+    expect(firstRow).toContain('CodersTrust trained 2,400 women directly.');
     // the contracts table is followed directly by "What Your Agency Gets"
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll('main section[id]')).map((s) => s.id));
     expect(ids.indexOf('features')).toBe(ids.indexOf('contracts') + 1);
@@ -160,9 +160,9 @@ test.describe('Governments: Her Power is told once', () => {
   test('the national-scale answer is three short sentences (the phases, Her Power’s counts, the design option not yet delivered) with no link, in the page and in its FAQ JSON-LD', async ({ page }) => {
     await open(page, 'partner-with-us/governments/');
     const answer = await answerOf(page, 'Can You Deliver at National Scale?');
-    expect(answer).toBe('We scale in phases. Her Power, a national program, trained 25,125 women; CodersTrust provided the curriculum and trained 2,500 directly. A 100,000+ program is a design option we have not yet delivered.');
+    expect(answer).toBe('We scale in phases. Her Power is a national program to train 25,125 women; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.');
     expect(sentences(answer)).toHaveLength(3);
-    expect(answer, 'the counts are the register’s').toContain(`trained ${fact('GV-01').stat?.value} women`);
+    expect(answer, 'the counts are the register’s').toContain(`national program to train ${fact('GV-01').stat?.value} women`);
     expect(answer).not.toMatch(/120\+|3,120\+|See the contract scopes above/);
     await expect(itemOf(page, 'Can You Deliver at National Scale?').locator('.faq__a a')).toHaveCount(0);
     expect((await faqJsonLd(page)).find((q) => q.name === 'Can You Deliver at National Scale?')?.text).toBe(answer);
@@ -215,7 +215,7 @@ test.describe('JobReady@Work: the hero offers hiring beside training', () => {
 
 test.describe('Development Partners: the women-and-marginalized-groups answer does not restate the program figures', () => {
   const QUESTION = 'Can You Reach Women and Other Priority Groups?';
-  const SHARED_FIGURES = /71%|68%|372 of 800|47%|2,500/;
+  const SHARED_FIGURES = /71%|68%|372 of 800|47%|2,400/;
 
   test('the answer says the programs report work outcomes, points to Proof in Practice and keeps the trial’s scope; the FAQ JSON-LD says the same', async ({ page }) => {
     await open(page, 'partner-with-us/development-partners/');
@@ -236,7 +236,7 @@ test.describe('Development Partners: the women-and-marginalized-groups answer do
 
   test('the objection bank’s shared answer is unchanged (it keeps the three program results); the page variant is not listed in the bank’s full list', () => {
     const shared = faqs.find((f) => f.id === 'Q6')!;
-    expect(shared.a).toContain('WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,500 trained directly by CodersTrust.');
+    expect(shared.a).toContain('WSDFM 71% in work; Women in Online Work, Kosovo 68%; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,400 trained directly by CodersTrust.');
     expect(shared.a).toContain('The randomized trial studied women aged 18–35 in Dhaka with at least a Secondary School Certificate (SSC), so it does not speak to other groups.');
     expect(faqsFor('all').map((f) => f.id)).not.toContain('Q6-development-partners');
     expect(faqsFor('variants').map((f) => f.id)).toContain('Q6-development-partners');

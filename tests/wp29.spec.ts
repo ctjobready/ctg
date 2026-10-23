@@ -100,11 +100,11 @@ test.describe('Governments: Her Power is a row of the contracts table and a link
     const text = compact(await row.textContent());
     expect(text).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
     expect(text).toContain('25,125 women across 130 sub-districts (upazilas)');
-    expect(fact('GV-01').text).toContain('trained 25,125 women across 130 sub-districts (upazilas)');
+    expect(fact('GV-01').text).toContain('a national program to train 25,125 women across 130 sub-districts (upazilas)');
     // WP50 (cycle-25 review, item 15): the row's three lines are full sentences ("CodersTrust trained 2,500 women directly." ...; tests/wp50.spec.ts); the register's GV-11 string is unchanged
     expect(text).toContain('54,609 manuals and guidelines were distributed.');
-    expect(text).toContain('CodersTrust trained 2,500 women directly.');
-    expect(fact('GV-11').text).toContain('2,500 women trained directly; 54,609 manuals and guidelines distributed');
+    expect(text).toContain('CodersTrust trained 2,400 women directly.');
+    expect(fact('GV-11').text).toContain('2,400 women trained directly; 54,609 manuals and guidelines distributed');
     // the tracked outcome (372 of 800, from the 2,500 trained directly) is the glance tile's, never beside the 25,125 as one figure
     expect(text).not.toContain('372 of 800');
   });

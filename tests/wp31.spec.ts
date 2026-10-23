@@ -71,9 +71,9 @@ test.describe('figures say what they measure', () => {
           expect(cards, 'home').toContain('Curriculum, trainer training and direct delivery for women’s digital skills.');
           expect(cards, 'home').not.toContain('372 of 800');
         } else {
-          expect(cards, route).toContain('372 of 800 tracked women in work (47%), among the 2,500 women CodersTrust trained directly');
+          expect(cards, route).toContain('372 of 800 tracked women in work (47%), among the 2,400 women CodersTrust trained directly');
         }
-        expect(cards, route || 'home').not.toContain('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
+        expect(cards, route || 'home').not.toContain('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
       }
     }
   });
@@ -83,7 +83,7 @@ test.describe('figures say what they measure', () => {
   test('the Home Track Record band has no tile for the six government contracts; slide 2 says the 30,000+ is contract scope, not a count of completers', async ({ page }) => {
     await open(page, '');
     await expect(page.locator('#guide .guide__tile, #guide [data-evidence="Contract Scope"]')).toHaveCount(0);
-    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly.');
+    expect(compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent())).toContain('30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly.');
   });
 
   test('the National University relationship is worded one way: official training partner for digital career skills and credentials', async ({ page }) => {

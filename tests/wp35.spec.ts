@@ -78,9 +78,9 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
   test('the 30,000+ note says the total is contract scope, not a count of completers; Impact prints the register note with Her Power’s 25,125 women, Governments says the total includes Her Power’s national program', async ({ page }) => {
     // WP46 (cycle-22 review): "... national program, which trained 25,125 women; CodersTrust trained 2,500 women directly." (the 25,125 is not CodersTrust's own count); WP48 (cycle-23 review): two plain sentences, as below
     // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the Governments tile prints the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
-    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).';
+    const GOV_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).';
     await open(page, 'impact/');
-    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText('The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly).');
+    await expect(page.locator('#glance a[data-fact~="GV-12"] .glance__note')).toHaveText('The total is contract scope, not a count of completers; it includes Her Power’s national target of 25,125 women (CodersTrust trained 2,400 directly).');
     await open(page, 'partner-with-us/governments/');
     await expect(page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note')).toHaveText(GOV_NOTE);
     expect(await mainText(page)).not.toMatch(/delivered-training total|Includes Her Power’s 25,125 women/);
@@ -191,7 +191,7 @@ test.describe('the WSDFM 71% is off the glance tiles of Development Partners and
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
-      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
   });
 

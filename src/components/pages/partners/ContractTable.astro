@@ -51,7 +51,8 @@ const rows: Row[] = [
     // "54,609 manuals and guidelines distributed"). The numbers are still read from the register (GV-11 and GV-01); the register's strings are unchanged.
     direct: [
       `CodersTrust trained ${factPart('GV-11', /([\d,]+ women) trained directly/)} directly.`,
-      `The national program trained ${factPart('GV-01', /national program that trained ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}.`,
+      // WP83 (owner answer 2026-10-23): the 25,125 is the national program's target, not a count of women trained ("The national program’s target is to train 25,125 women across 130 sub-districts (upazilas)."; it said "The national program trained ...").
+      `The national program’s target is to train ${factPart('GV-01', /national program to train ([\d,]+ women across \d+ sub-districts \(upazilas\))/)}.`,
       `${factPart('GV-11', /([\d,]+ manuals and guidelines) distributed/)} were distributed.`,
     ],
   },
@@ -104,7 +105,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
   <SectionHeader id={`${id}-h`} eyebrow="Government Contracts" title={title} lead={lead} />
   <section class="ct" aria-label="Government contracts: CodersTrust scope and training scope" tabindex="0" data-scroll data-stack data-reveal>
     <table>
-      <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Apart from the Her Power figures, counts are contract training scopes, not delivered scale.</caption>
+      <caption class="sr-only">Six government contracts: what CodersTrust does under each and the training scope. Apart from CodersTrust’s own Her Power figures, counts are contract training scopes, not delivered scale.</caption>
       <thead>
         <tr>
           <th scope="col">Contract</th>
@@ -126,7 +127,7 @@ const { title, lead, id = 'contracts', more } = Astro.props;
     </table>
   </section>
   <div class="ct__notes" data-reveal>
-    <p data-fact="GV-10">We confirm each contract’s delivery status in a briefing. Apart from the Her Power figures, scopes are contracted scopes of work, not delivered scale.</p>
+    <p data-fact="GV-10">We confirm each contract’s delivery status in a briefing. Apart from CodersTrust’s own Her Power figures, scopes are contracted scopes of work, not delivered scale.</p>
   </div>
   {more && <p class="ct__more" data-reveal><a class="link" href={linkAttrs(more.href).href}>{more.label}<Icon name="arrow-right" size={16} /></a></p>}
 </Section>

@@ -239,14 +239,14 @@ test.describe('Item 5: YouthWIDE’s track-record heading is "We’ve Built This
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answer gives Her Power’s figures', () => {
   const Q = 'Can You Deliver at National Scale?';
-  const ANSWER = 'We scale in phases. Her Power, a national program, trained 25,125 women; CodersTrust provided the curriculum and trained 2,500 directly. A 100,000+ program is a design option we have not yet delivered.';
+  const ANSWER = 'We scale in phases. Her Power is a national program to train 25,125 women; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.';
   const item = (page: Page) => page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) });
 
-  test('the figures are the register’s (GV-01’s 25,125 and GV-11’s 2,500, GV-13 holds the same count)', () => {
+  test('the figures are the register’s (GV-01’s 25,125 and GV-11’s 2,400, GV-13 holds the same count)', () => {
     expect(fact('GV-01').stat?.value).toBe('25,125');
-    expect(fact('GV-11').text).toContain('2,500 women trained directly');
-    expect(fact('GV-13').stat?.value).toBe('2,500');
-    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,500' });
+    expect(fact('GV-11').text).toContain('2,400 women trained directly');
+    expect(fact('GV-13').stat?.value).toBe('2,400');
+    expect(CONTRACT_FIGURES).toEqual({ national: '25,125', direct: '2,400' });
     expect(fact('PD-05').text).toContain('National Design Option 100,000+ trainees'); // WP69 (owner item 3): the option is "National Design Option"
   });
 

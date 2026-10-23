@@ -90,7 +90,7 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
     await expect(gov).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     await expect(gov.locator('.hs__lead')).toHaveText(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       'Women Offered a Place Earned an Estimated 41% More per Month',

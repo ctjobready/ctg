@@ -79,7 +79,7 @@ test.describe('WP75 item 1: the register says the 350 were enrolled (owner answe
     expect(yes?.completed).toBe('97.5%');
     expect(yes?.trained).toBeUndefined();
     expect(yes?.inWork).toBe('67% found a first job within three months');
-    expect(rows.find((r) => r.id === 'PR-05')?.trained).toBe('2,500 directly by CodersTrust');
+    expect(rows.find((r) => r.id === 'PR-05')?.trained).toBe('2,400 directly by CodersTrust');
     expect(rows.find((r) => r.id === 'PR-05')?.enrolled).toBeUndefined();
   });
 });

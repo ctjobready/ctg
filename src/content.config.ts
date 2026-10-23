@@ -51,7 +51,7 @@ const news = defineCollection({
        */
       seoTitle: z.string().max(46).optional(),
       /**
-       * Optional one-line note for the archive banner (WP45, cycle-21 review): what a post that announced an aim ended up as, in the register's words ("Delivered: the national program trained 25,125 women."). It is printed on its own
+       * Optional one-line note for the archive banner (WP45, cycle-21 review): what a post that announced an aim stands as now, in the register's words ("Target: Her Power is a national program to train 25,125 women."; WP83, owner answer 2026-10-23: the 25,125 is the program's target, so it is not tagged "Delivered"). It is printed on its own
        * line under the banner's standard sentences; `archiveNoteFacts` names the register facts it states (rendered as data-fact).
        */
       archiveNote: z.string().max(120).optional(),

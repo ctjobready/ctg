@@ -74,7 +74,7 @@ test.describe('/impact/ At a Glance', () => {
     await expect(tileOf('PR-03')).toContainText(/within (3|three) months/);
     await expect(tileOf('PR-05')).toContainText(/Her Power/);
     await expect(tileOf('PR-05')).toContainText(/47%/);
-    await expect(tileOf('PR-05')).toContainText(/2,500/);
+    await expect(tileOf('PR-05')).toContainText(/2,400/);
     // The trial group holds trial figures only.
     const trial = group('Trial Results, Predecessor Program');
     await expect(trial).toHaveCount(1);

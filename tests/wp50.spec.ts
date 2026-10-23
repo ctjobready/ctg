@@ -108,7 +108,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
-      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
     // WP60 (cycle-32 review, Claude S4): the WSDFM line names the trial's count (RC-07's 833) beside its own fact
     expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 TL-04', 'PR-01', 'PR-03 PR-06', 'PR-05']);
@@ -357,14 +357,14 @@ test.describe('Home: the Investors router card names the platform in IN-04’s w
 
 test.describe('Governments: Her Power’s row is three full sentences (item 15)', () => {
   const SENTENCES = [
-    'CodersTrust trained 2,500 women directly.',
-    'The national program trained 25,125 women across 130 sub-districts (upazilas).',
+    'CodersTrust trained 2,400 women directly.',
+    'The national program’s target is to train 25,125 women across 130 sub-districts (upazilas).',
     '54,609 manuals and guidelines were distributed.',
   ];
 
   test('each line is its own sentence with a full stop, one per line, and the row keeps its facts; the figures are the register’s', async ({ page }) => {
-    expect(fact('GV-11').text).toContain('2,500 women trained directly; 54,609 manuals and guidelines distributed');
-    expect(fact('GV-01').text).toContain('national program that trained 25,125 women across 130 sub-districts (upazilas)');
+    expect(fact('GV-11').text).toContain('2,400 women trained directly; 54,609 manuals and guidelines distributed');
+    expect(fact('GV-01').text).toContain('national program to train 25,125 women across 130 sub-districts (upazilas)');
     await open(page, 'partner-with-us/governments/');
     const row = page.locator('#contracts tbody tr').first();
     expect(await row.getAttribute('data-fact')).toBe('GV-01 GV-11');

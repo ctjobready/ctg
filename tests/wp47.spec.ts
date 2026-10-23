@@ -242,7 +242,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): the slide kept "work scoped for 30,000+ people" and the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 30,000\+/.test(p.html)).map((p) => p.route);
@@ -250,24 +250,24 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
   });
 
   // WP63 (cycle-35 review, Gemini M6): the Governments tile states the tracked base itself ("Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly"); the case cards keep the caption below
-  test('item 34: the Her Power base reads "among the 2,500 women CodersTrust trained directly" on every case card that shows the figure; the Governments tile states the tracked base (WP63)', async ({ page }) => {
-    const LABEL = 'tracked women in work (47%), among the 2,500 women CodersTrust trained directly';
-    const TILE = 'Her Power: 47% of the 800 tracked women in work, from the 2,500 women CodersTrust trained directly';
+  test('item 34: the Her Power base reads "among the 2,400 women CodersTrust trained directly" on every case card that shows the figure; the Governments tile states the tracked base (WP63)', async ({ page }) => {
+    const LABEL = 'tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
+    const TILE = 'Her Power: 47% of the 800 tracked women in work, from the 2,400 women CodersTrust trained directly';
     await open(page, 'partner-with-us/governments/');
     const tile = page.locator('#glance a[data-fact^="PR-05"]');
     expect(compact(await tile.locator('.pg__value').textContent())).toBe('372 of 800');
     // WP52 (cycle-27 review): the tile names the program ("Her Power: ..."); the case cards below sit under the program's name and keep the bare caption
     expect(compact(await tile.locator('.pg__desc').textContent())).toBe(TILE);
-    expect(compact(await tile.locator('.pg__desc').textContent())).not.toContain('among the 2,500');
+    expect(compact(await tile.locator('.pg__desc').textContent())).not.toContain('among the 2,400');
     for (const route of ['partner-with-us/development-partners/', 'partner-with-us/foundations/', 'partner-with-us/local-partners/']) {
       await open(page, route);
       const cards = (await texts(page, '#cases article')).join(' | ');
       expect(cards, route).toContain(`372 of 800 ${LABEL}`);
     }
-    const stale = builtPages().filter((p) => /tracked women in work \(47%\), from the 2,500 trained directly by CodersTrust/.test(p.html)).map((p) => p.route);
+    const stale = builtPages().filter((p) => /tracked women in work \(47%\), from the 2,400 trained directly by CodersTrust/.test(p.html)).map((p) => p.route);
     expect(stale, 'the old caption').toEqual([]);
     // the register's own wording (PR-05) is unchanged: the caption is derived from it
-    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,500 trained directly by CodersTrust, in work: 47%');
+    expect(fact('PR-05').stat?.label).toBe('tracked women, from the 2,400 trained directly by CodersTrust, in work: 47%');
   });
 
   // WP48 (cycle-23 review, item 5): the Employers FAQ no longer lists the full tooling; it says "Partner portals and AI chat are live; the employer marketplace and the gig-work (Earn) marketplace are in pre-launch. Hiring currently runs through CodersTrust’s placement team." (tests/wp48.spec.ts)

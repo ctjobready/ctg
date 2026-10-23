@@ -144,10 +144,14 @@ export const WSDFM_RECORDS: CopyBlock = wsdfmRecords();
  * that the figure is "contract scope, not a count of completers" (the clause that keeps the 31,200+ true). Impact keeps the register's own, longer note, which adds that CodersTrust trained 2,500 women directly.
  * WP58 (cycle-30 review, Gemini GM1): "(25,125 women trained)" beside the contract-scope total read as CodersTrust's own training, so the parenthesis says who trained how many: "(25,125 women trained; CodersTrust trained 2,500 directly)". The 2,500 is the count
  * GV-11's text states ("... 2,500 women trained directly; ..."), read from it, never retyped; GV-13 holds the same figure as its stat value, and the builder throws if the two stop agreeing or the register stops saying "women trained directly".
+ * WP83 (owner answer 2026-10-23: "Her Power's 25,125 is the national program's TARGET, not a count of women trained"): GV-01 says "a national program to train 25,125 women", and the note says the total "includes Her Power’s national target of 25,125 women
+ * (CodersTrust trained 2,400 directly)". The builder throws if GV-01 stops saying "a national program to train N women", so the target cannot slip back into "trained".
+ * WP83 (owner, 2026-10-23: "CodersTrust trained 2,400 women directly in Her Power, not 2,500"; source: the owner's "CT - JobReady Platform" sheet, Ex-Trainees Data): the count CodersTrust trained directly is 2,400 in the register (GV-11's text, GV-13's value), read from there as before; it was 2,500.
  */
 function contractFigures(): { national: string; direct: string } {
   const n = fact('GV-01').stat?.value;
   if (!n || !/^[\d,]+$/.test(n)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer has a plain count as its stat value');
+  if (!fact('GV-01').text.includes(`a national program to train ${n} women`)) throw new Error('CONTRACT_TOTAL_NOTE: GV-01 no longer says "a national program to train N women" (the figure is Her Power’s target, not a count of women trained)');
   if (!/contract scope, not a count of completers/.test(fact('GV-12').stat?.glance?.note ?? '')) throw new Error('CONTRACT_TOTAL_NOTE: the GV-12 glance note no longer says "contract scope, not a count of completers"');
   const direct = /(\d[\d,]*) women trained directly/.exec(fact('GV-11').text)?.[1];
   if (!direct || direct !== fact('GV-13').stat?.value) throw new Error('CONTRACT_TOTAL_NOTE: GV-11 no longer says "N women trained directly" with the count that GV-13 holds as its stat value');
@@ -160,7 +164,7 @@ function contractFigures(): { national: string; direct: string } {
 export const CONTRACT_FIGURES = contractFigures();
 function contractTotalNote(): CopyBlock {
   const { national: n, direct } = CONTRACT_FIGURES;
-  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national program (${n} women trained; CodersTrust trained ${direct} directly).`, facts: ['GV-12', 'GV-01', 'GV-11'] };
+  return { text: `The total is contract scope, not a count of completers; it includes Her Power’s national target of ${n} women (CodersTrust trained ${direct} directly).`, facts: ['GV-12', 'GV-01', 'GV-11'] };
 }
 export const CONTRACT_TOTAL_NOTE: CopyBlock = contractTotalNote();
 
@@ -621,7 +625,7 @@ export const TRAINED_REACH: CopyBlock = trainedReach();
 
 export const SCALE: CopyBlock = {
   // WP21: short sentences with named actors (DoICT, the ICT Division, CodersTrust), as in the national-scale FAQ answer (Q2).
-  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power, a national program of DoICT, the ICT Division, trained 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,500 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
+  text: 'We scale in phases, starting from what we have done. Government contracts have training scopes ranging from 120+ professionals to 3,120+ digital-lab staff. Her Power is a national program of DoICT, the ICT Division, to train 25,125 women across 130 sub-districts (upazilas). CodersTrust provided the curriculum, training manuals and mentorship guidelines and trained 2,400 women directly. Separately, 10,000 teachers were trained to teach online during COVID-19. Larger programs use existing labs and colleges, certified local facilitators and blended delivery, and can run up to 10 cohorts in parallel.',
   facts: ['GV-10', 'GV-01', 'GV-11', 'SC-08', 'PD-06'],
 };
 
@@ -699,7 +703,7 @@ export const IMPACT_ANSWER: CopyBlock = impactAnswer();
 
 export const WOMEN_INCLUSION: CopyBlock = {
   // PR-01, PR-02 and PR-05 are program results, stated plainly.
-  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,500 trained directly by CodersTrust.',
+  text: 'Women-focused programs report their own results: WSDFM 71% in work; Women in Online Work, Kosovo 68% in work; Her Power 372 of 800 tracked women in work (47%), tracked from the 2,400 trained directly by CodersTrust.',
   facts: ['PR-01', 'PR-02', 'PR-05'],
 };
 

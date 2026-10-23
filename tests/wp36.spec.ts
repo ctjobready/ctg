@@ -84,7 +84,7 @@ test.describe('Home: each figure once', () => {
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
       'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
-      'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
+      'Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.',
     ]);
     expect(lines[2]).not.toMatch(/in work/);
   });

@@ -60,7 +60,7 @@ test.describe('WP71: Home results carousel, slide 4 (Results by Program)', () =>
     await expect(lines.nth(0)).toHaveText('Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).');
     await expect(lines.nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
     await expect(lines.nth(2)).toHaveText('UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.');
-    await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
+    await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,400 trained directly.');
   });
 
   test('the old undated wording is gone from the Home results carousel', async ({ page }) => {
