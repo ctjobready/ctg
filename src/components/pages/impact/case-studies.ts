@@ -98,11 +98,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     path: `${base}her-power/`,
     name: 'Her Power',
     heading: 'Her Power: Women’s Digital Skills with the ICT Division',
-    program: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh',
+    program: 'ICT Division / Department of ICT (DoICT), Government of Bangladesh, from 2023', // WP87 (CLR review, Opus High run 1, finding 2): "from 2023" is the year of the contract signing the site already dates (news post of April 13, 2023; photo caption "Her Power contract signing, April 2023"; register GV-01: contract scope 2023–2025)
     partner: 'Training cohort',
     factId: 'PR-05',
     summary: 'A national program for women’s self-employment through digital skills, with CodersTrust as curriculum and training partner.',
-    place: 'ICT Division / DoICT, Government of Bangladesh; Bangladesh',
+    place: 'ICT Division / DoICT, Government of Bangladesh; Bangladesh, from 2023',
     who: 'Women',
     scope: 'Curriculum, training manuals, mentorship guidelines and trainer training; a cohort trained directly',
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/#governments' },

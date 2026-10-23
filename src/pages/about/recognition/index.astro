@@ -14,7 +14,7 @@ import CTABand from '../../../components/ui/CTABand.astro';
 import AsCoveredBy from '../../../components/ui/AsCoveredBy.astro';
 import PhotoGallery from '../../../components/ui/PhotoGallery.astro';
 import { galleryPhotos } from '../../../data/photos';
-import { press } from '../../../data/press';
+import { COVERED_BY, COVERED_BY_WORLD_BANK, press } from '../../../data/press';
 import { endorsements } from '../../../data/endorsements';
 import { READ_THE_EVIDENCE } from '../../../data/copy';
 import { fact } from '../../../data/facts';
@@ -62,10 +62,17 @@ const relatedRecognition = honors.filter((h) => COMPANY_AWARD.test(h.label)).map
 
 // Media coverage (PA-09): the eight registered items, with years, oldest first. Links only where the original URL is known.
 const PA09 = ['Forbes', 'The Wall Street Journal', 'TechCrunch', 'Tech in Asia', 'Gulf News', 'USA Today', 'The Times of India', 'World Bank'];
+// WP87 (CLR review, Opus XHigh run 1, Minor): each card's headline links to its article. `press` has the original URL for TechCrunch alone, so the others come from COVERED_BY (the links the research checked on 17-18 October 2026: a live page where one answers,
+// otherwise the Wayback Machine copy); the World Bank card is the 2016 Kosovo feature story of COVERED_BY_WORLD_BANK. The build stops if a card has no link.
+const cardHref = (p: (typeof press)[number]): string => {
+  const href = p.url ?? (p.outlet === 'World Bank' ? COVERED_BY_WORLD_BANK.find((w) => w.place === 'Kosovo')?.pages.find((x) => x.year === '2016')?.href : COVERED_BY.find((c) => c.outlet === p.outlet)?.href);
+  if (!href) throw new Error(`Recognition: the early-coverage card "${p.outlet}" has no article link`);
+  return href;
+};
 const coverage = press
   .filter((p) => PA09.includes(p.outlet))
   .sort((a, b) => a.date.localeCompare(b.date))
-  .map((p) => ({ ...p, year: p.date.slice(0, 4) }));
+  .map((p) => ({ ...p, year: p.date.slice(0, 4), a: linkAttrs(cardHref(p)) }));
 // WP25s: the World Bank item names a program only by its headline; one clause says it is CodersTrust's Women in Online Work program in Kosovo (PR-02: with the World Bank Group), with a link to the case study.
 const CONTEXT: Record<string, { text: string; href: string; label: string; fact: string }> = {
   'World Bank': { text: 'About CodersTrust’s Women in Online Work program in Kosovo, with the World Bank Group.', href: '/impact/case-studies/kosovo-women-in-online-work/', label: 'Read the Case Study', fact: 'PR-02' },
@@ -118,6 +125,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     ...(quotes.length > 0 ? [{ label: 'What University for Peace Says', href: '#endorsements' }] : []),
     { label: 'Awards and Forums in Photographs', href: '#photos' },
     { label: 'Early Coverage of CodersTrust’s First Years, 2014–2016', href: '#coverage' },
+    { label: 'Coverage of Our Work in Kosovo and Albania', href: '#world-bank' },
     { label: 'Press Kit', href: '#press-kit' },
   ]} />
 
@@ -133,7 +141,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
   </Section>
 
   <Section id="honors" tone="airy" aria-labelledby="honors-h">
-    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" lead="Co-founder and Chairman." />
+    <SectionHeader id="honors-h" eyebrow="Founder Honors" title="Aziz Ahmad’s Appointments and Honors" lead="Co-Founder and Chairman." />
     <ul class="rec-honors" role="list" data-fact="PA-11">
       {
         personalHonors.map((h) => (
@@ -235,7 +243,7 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
               </div>
               <p class="card__meta"><time datetime={c.year}>{c.year}</time></p>
               <h3 class="rec-press__headline">
-                {c.url ? <a class="link" href={linkAttrs(c.url).href} rel={linkAttrs(c.url).rel}>{c.headline}<span class="sr-only"> (opens {new URL(c.url).hostname.replace('www.', '')})</span></a> : c.headline}
+                <a class="link" href={c.a.href} rel={c.a.rel}>{c.headline}<span class="sr-only"> {c.a.srText}</span></a>
               </h3>
               {CONTEXT[c.outlet] && (
                 <p class="card__meta rec-press__context" data-fact={CONTEXT[c.outlet].fact}>
@@ -247,13 +255,17 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
         ))
       }
     </ul>
-    <!-- WP62 rework (R1): the press line with its links, as WP57 rendered it on Home, so the outlets' articles and the World Bank pages (the 2016 Kosovo story and 2017 brief, the 2021 Albania release) stay one link away; Home's pointer sentence names this page.
-         Its TechCrunch link is the one the TechCrunch card above already carries; the line is kept whole. -->
-    <AsCoveredBy class="rec-covered" />
+    <!-- WP87 (CLR review, Opus XHigh run 1): the paragraph "Early press coverage, 2014–2016: Gulf News, TechCrunch, ..." is gone (it repeated the eight outlets above only to carry their links, which the cards carry now). -->
     <aside class="rec-note" data-fact="ID-03" aria-label="Note on founder attribution">
       <Icon name="info" size={20} />
       <p>Some 2014 coverage described Morten Lund as a co-founder. CodersTrust’s founders are Aziz Ahmad and Ferdinand Kjærulff.</p>
     </aside>
+  </Section>
+
+  <!-- WP87 (CLR review, Opus XHigh run 1): the World Bank pages (Kosovo 2016 and 2017, Albania 2021, PA-13) keep their links, in a section of their own so the 2021 release does not sit under the 2014–2016 heading. Home's pointer sentence still names this page for both. -->
+  <Section id="world-bank" tone="white" pad="sm" aria-labelledby="wb-h">
+    <SectionHeader id="wb-h" eyebrow="World Bank" title="Coverage of Our Work in Kosovo and Albania" />
+    <AsCoveredBy class="rec-covered" />
   </Section>
 
   <Section id="press-kit" tone="ice" aria-labelledby="kit-h">
@@ -383,9 +395,9 @@ const media = { href: ctaHref('media'), label: 'Media Inquiries' };
     font-weight: var(--fw-medium);
     color: var(--on-surface);
   }
-  /* WP62 rework (R1): the press line sits one large step (the system's block gap, as .rec-note's) under the card grid */
+  /* WP87: the World Bank line is the only content of its own section (it sat one large step under the card grid before); one medium step under the section header */
   :global(.rec-covered) {
-    margin: var(--space-lg) 0 0;
+    margin: var(--space-md) 0 0;
   }
   .rec-note {
     display: flex;

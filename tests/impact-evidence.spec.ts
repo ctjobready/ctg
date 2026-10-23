@@ -215,7 +215,7 @@ test.describe('case studies', () => {
   test('WSDFM states which figure is program records and which is the trial', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note spells out the evaluator, the page's first mention of BIGD
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the BRAC Institute of Governance and Development (BIGD)’s randomized trial were among these 1,000.');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
     const tiles = page.locator('.hero .cs__stat');
     await expect(tiles).toHaveCount(3);
     await expect(tiles.nth(0).locator('[data-evidence="Program Record"]')).toHaveCount(1);

@@ -99,7 +99,7 @@ const AUDIENCE_BY_POST: Record<string, NewsAudience> = {
   'coderstrust-chairman-aziz-ahmad-visits-city-college-downtown-to-explore-global-partnership': 'university',
   'coderstrust-is-signing-mou-with-un-mandated-university-for-peace-on-academic-collaboration': 'university',
   'coderstrust-chairman-and-co-founder-aziz-ahmad-encourages-rmstu-graduates-to-build-global-careers-through-skills-and-innovation': 'university',
-  'mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust': 'university',
+  'mou-signed-between-bangladesh-petroleum-institute-bpi-and-coderstrust': 'government', // WP87 (CLR review, Opus High run 1, finding 4): an energy-sector government MOU gets the briefing band, not the universities offer
   'coderstrust-is-committed-to-the-vision-of-a-smart-bangladesh-within-2041-aziz-ahmad': 'university',
   '1000-trainees-enhancing-digital-government-economy-edge': 'government',
   '1000-trainees-sheikh-kamal-ict-incubator-training': 'government',

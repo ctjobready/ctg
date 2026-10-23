@@ -5,7 +5,7 @@ role: "Co-Founder · In Memoriam (2023)"
 group: founders
 order: 2
 photo: ../../assets/images/team/ferdinand-kjaerulff.jpg
-photoAlt: "Photo of Ferdinand Kjærulff, Co-founder"
+photoAlt: "Portrait of Ferdinand Kjærulff, Co-Founder"
 expertise: []
 legacyUrl: "https://coderstrust.global/ferdinand-kjaerulff/"
 ---

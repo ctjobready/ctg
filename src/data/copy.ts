@@ -170,6 +170,7 @@ export const CONTRACT_FIGURES = contractFigures();
  * stops a reader adding the two: "Her Power’s 25,125 is the same curriculum reach counted in the 150,000+ enrollments, not additional people." The 25,125 is GV-01's stat value and the 150,000+ is SC-02's, both read here, never retyped;
  * the builder throws if SC-02's detail stops saying the courseware share is Her Power's curriculum for the same national target. The note stays ONE shared source: Investors, Impact, Governments and the JobReady Platform page all print it.
  * WP85 (owner update 2026-10-24): SC-02's detail now names "the 25,125 women Her Power trained nationally with CodersTrust’s curriculum", and the sentence reads "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people."
+ * WP87 (owner decisions 2026-10-24, items 18 to 21): the sentence keeps "150,000+" (the owner restored it after trying "nearly" and "~"): Her Power's 2,400 directly trained women are inside the national 25,125 and counted once, and the de-duplicated total is 150,678 (112,926 direct + 40,152 courseware - 2,400).
  */
 function overlapSentence(n: string): { text: string; fact: string } {
   const enrollments = fact('SC-02').stat?.value;
@@ -196,6 +197,16 @@ export const CONTRACT_TOTAL_NOTE_SHORT: CopyBlock = contractTotalNote(false);
  * The Universities and Campus pages say it in their band lead ("... they are not learners trained by CodersTrust.") and Investors by "Separately, and not counted in the delivered reach", so SC-04's own label stays as the register has it.
  */
 export const NU_NOT_TRAINED = 'not learners trained by CodersTrust';
+/**
+ * WP87 (CLR review, Opus XHigh run 1, Minor): the National University partnership is worded with its scope on every page ("... official training partner for digital career skills and credentials since 2023"); the NU Postgraduate Diploma page had dropped it, so it read as an exclusive, university-wide partnership.
+ * One sentence, read from SC-04 ("CodersTrust has been NU’s official training partner for digital career skills and credentials since 2023"), for Governments and the diploma page; the build stops if SC-04 stops saying it.
+ */
+const nuPartnershipStatement = (): string => {
+  const m = /CodersTrust has been NU’s (official training partner for digital career skills and credentials since \d{4})/.exec(fact('SC-04').text);
+  if (!m) throw new Error('NU_PARTNERSHIP_STATEMENT: SC-04 no longer says "CodersTrust has been NU’s official training partner for digital career skills and credentials since YYYY"');
+  return `CodersTrust has been National University’s ${m[1]}.`;
+};
+export const NU_PARTNERSHIP_STATEMENT: string = nuPartnershipStatement();
 
 /**
  * WP60 (cycle-32 review, Claude S3): the clause that makes the 2 million 2030 aim (IN-01) conditional. It was typed once, in the Programs hub card; IN-01's register text does not carry it, so it is kept here and every page that states the aim reads it from here:

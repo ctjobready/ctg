@@ -138,7 +138,7 @@ test.describe('Governments: Her Power is told once', () => {
     expect(geometry.linkTop, 'under the table’s note').toBeGreaterThanOrEqual(geometry.noteBottom);
 
     const firstRow = compact(await page.locator('#contracts tbody tr').first().textContent());
-    expect(firstRow).toContain('Her Power (Department of ICT (DoICT), ICT Division)');
+    expect(firstRow).toContain('Her Power: Department of ICT (DoICT), ICT Division');
     expect(firstRow).toContain('25,125 women across 130 sub-districts (upazilas)');
     // WP50 (cycle-25 review, item 15): the row's lines are full sentences ("CodersTrust trained 2,500 women directly."; tests/wp50.spec.ts)
     expect(firstRow).toContain('CodersTrust trained 2,400 women directly.');

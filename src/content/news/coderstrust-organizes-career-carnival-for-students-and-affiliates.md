@@ -3,7 +3,7 @@ title: "CodersTrust Organizes Career Carnival for Students and Affiliates"
 date: 2024-10-08
 updated: 2026-10-13
 topic: programs-events
-excerpt: "CodersTrust holds a Career Carnival at its Banani, Dhaka head office to create job placement opportunities for students and alumni."
+excerpt: "CodersTrust holds a Career Carnival at its Dhaka office in Banani to create job placement opportunities for students and alumni."
 cover: ../../assets/images/news/coderstrust-organizes-career-carnival-for-students-and-affiliates/coderstrust-organizes-career-carnival-1.jpg
 coverAlt: "A large group of participants posing in front of the CodersTrust building entrance, decorated with balloons"
 legacyUrl: "https://coderstrust.global/coderstrust-organizes-career-carnival-for-students-and-affiliates/"

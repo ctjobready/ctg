@@ -124,7 +124,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     await expect(sc03.locator('[data-status]')).toHaveCount(0);
     await expect(sc03.locator('.badge')).toHaveText('Where We Have Worked');
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']); // WP64 (cycle-36 review, Grok): the group heading says "Since 2014", so the tiles do not
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Most delivery has been in Bangladesh.');
     const tops = await page.locator('#guide .ig__tile .stat__value').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
     expect(new Set(tops).size, 'the three figures start on the same line').toBe(1);
   });

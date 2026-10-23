@@ -361,11 +361,11 @@ test.describe('Recognition: the press headlines are in Title Case, words unchang
     expect(headlines).not.toContain('CodersTrust to finance brains to educate IT coders');
   });
 
-  test('the linked headline (TechCrunch) keeps its link', async ({ page }) => {
+  test('every headline is a link to its article (WP87: only TechCrunch’s was); TechCrunch keeps its own', async ({ page }) => {
     await open(page, 'about/recognition/');
     const link = page.locator('#coverage .rec-press__headline a');
-    await expect(link).toHaveCount(1);
-    expect(await link.getAttribute('href')).toBe('https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/');
+    await expect(link).toHaveCount(8);
+    expect(await link.evaluateAll((as) => as.map((a) => a.getAttribute('href')))).toContain('https://techcrunch.com/2014/06/13/building-code-to-break-poverty-in-bangladesh/');
   });
 });
 

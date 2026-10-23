@@ -23,7 +23,7 @@ import FaqSection from '../../../components/pages/programs/FaqSection.astro';
 import { anchor, faqNode, type FaqSource } from '../../../components/pages/programs/faq';
 import { PAGE_UPDATED } from '../../../components/pages/programs/meta';
 import { NU_ADMISSIONS_NOTE, NU_APPLY, NU_CALL, NU_CALL_NUMBER, NU_CALL_TEXT, NU_COURSE_COPY, NU_COURSE_SUBJECT, NU_LOCATION_NOTE, NU_NAME, NU_PATH, NU_SCHEDULE_NOTE, nuCourses, nuOverview } from '../../../components/pages/programs/nuPgd';
-import { HEADLINE, NU_ELIGIBILITY, VALUE_PROPOSITION } from '../../../data/copy';
+import { HEADLINE, NU_ELIGIBILITY, NU_PARTNERSHIP_STATEMENT, VALUE_PROPOSITION } from '../../../data/copy';
 import { COURSES_URL } from '../../../lib/site';
 import { formatDate, isoDate, joinList } from '../../../lib/format';
 import { pageUrl, webPage } from '../../../lib/schema';
@@ -126,7 +126,7 @@ const jsonLd = [
     partnerGroup="academic"
     method={{ text: 'Practical digital-skills courses, delivered by CodersTrust under National University’s training partnership.', factId: 'SC-04' }}
   >
-    <p data-fact="SC-04">CodersTrust has been the official training partner of National University since 2023.</p>
+    <p data-fact="SC-04">{NU_PARTNERSHIP_STATEMENT}</p>
   </GuideSection>
 
   <!-- C7. WP34 (cycle-11 review): no trial or survey figure is shown on the admissions page (they are not this diploma's results); a one-link strip points to the wider programs' evidence. The trial relevance line has no band to sit in (scripts/check-facts.mjs allows that, as on the two employer pages). -->

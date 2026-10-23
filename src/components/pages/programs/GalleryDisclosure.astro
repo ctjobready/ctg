@@ -20,8 +20,10 @@ interface Props {
   tone?: 'white' | 'airy' | 'ice';
   /** The disclosure's summary text (default "View More Photos"). */
   moreLabel?: string;
+  /** Heading level of the gallery's title (default 2); a gallery that sits under another section's H2 passes 3 (WP87). */
+  level?: 2 | 3;
 }
-const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', moreLabel = 'View More Photos' } = Astro.props;
+const { photos, visible = 6, title = 'In the Field', eyebrow = 'Photographs', lead, id = 'field', tone = 'airy', moreLabel = 'View More Photos', level = 2 } = Astro.props;
 const shown = photos.filter((p) => mayRender(p.assetId));
 const first = shown.slice(0, visible);
 const rest = shown.slice(visible);
@@ -31,7 +33,7 @@ const sizes = '(min-width:1024px) 280px, (min-width:600px) 33vw, 50vw';
 {
   first.length > 1 && (
     <Section id={id} tone={tone} defer aria-labelledby={`${id}-h`}>
-      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} />
+      <SectionHeader id={`${id}-h`} eyebrow={eyebrow} title={title} lead={lead} level={level} />
       <ul class="gd" aria-label={title}>
         {first.map((p) => (
           <li>

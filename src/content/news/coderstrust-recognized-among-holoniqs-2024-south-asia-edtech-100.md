@@ -2,7 +2,7 @@
 title: "CodersTrust Recognized Among HolonIQ’s 2024 South Asia EdTech 100"
 date: 2025-01-22
 topic: recognition
-excerpt: "CodersTrust is named in HolonIQ's 2024 South Asia EdTech 100."
+excerpt: "CodersTrust is named in HolonIQ’s 2024 South Asia EdTech 100."
 cover: ../../assets/images/news/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/holoniq-24.jpg
 coverAlt: "Graphic of the HolonIQ 2024 South Asia EdTech 100 list"
 legacyUrl: "https://coderstrust.global/coderstrust-recognized-among-holoniqs-2024-south-asia-edtech-100/"
@@ -18,7 +18,7 @@ CodersTrust, a global EdTech company with its headquarters in NYC, announced it 
 
 The HolonIQ South Asia EdTech 100 recognizes trailblazing organizations across the region that are redefining how people learn, teach, and upskill in today’s digital-first economy. CodersTrust earned its place alongside other prominent companies such as NxtWave, Virohan, and Zell Education, showcasing excellence in professional certification and technology-focused training.
 
-Mr. Tuan Nguyen Anh, Founder and President of Boston Global Forum added “CodersTrust is playing a critical role in building the nation’s future by empowering learners to compete globally. Their focus on digital skills aligns with our vision of transforming Bangladesh into a skilled and innovative economy. We are proud to see CodersTrust recognized on an international stage.
+Mr. Tuan Nguyen Anh, Founder and President of Boston Global Forum added “CodersTrust is playing a critical role in building the nation’s future by empowering learners to compete globally. Their focus on digital skills aligns with our vision of transforming Bangladesh into a skilled and innovative economy. We are proud to see CodersTrust recognized on an international stage.”
 
 This year’s spotlight on workforce and skills solutions underscores the surging demand for qualified talent in technology, finance, healthcare, and soft skills. CodersTrust, with its direct-to-consumer approach, continues to cater to a diverse audience through its robust portfolio of programs tailored for digital skill-building, professional certification, and career growth.
 

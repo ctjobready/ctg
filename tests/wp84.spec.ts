@@ -6,11 +6,11 @@ import { DESKTOP, MOBILE, open } from './support/browser';
 import { listPages } from './support/pages';
 
 /**
- * WP84 behaviors (owner answer 2026-10-24: keep "130,000+ learners trained" and "150,000+ enrollments", but say what the courseware share is; CLR review, Sonnet Max run 2, findings 1 and 2).
+ * WP84 behaviors (owner answer 2026-10-24: keep "130,000+ learners trained" and "150,000+ enrollments", but say what the courseware share is; WP87 (owner decisions 2026-10-24) kept the total "150,000+" and changed the composition to the live counts, 112,926 direct and 40,152 courseware (25,125 + 15,027); the items below pin the WP87 figures; CLR review, Sonnet Max run 2, findings 1 and 2).
  * Retrospective coverage (the owner exempted this project from test-first work). Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp84.spec.ts --project=chromium`:
  * WP85 (owner update 2026-10-24: the government achieved 100% of Her Power's 25,125-trainee target) reworded the Her Power parts below; the items pin the WP85 wording:
- *   - 1: SC-02 (text and detail) calls the 40,043 "reached through CodersTrust curriculum and courseware", not "through CodersTrust courseware": the 25,125 women Her Power trained nationally with CodersTrust's curriculum plus UNDP FutureNation's
- *     14,918 course learners (25,125 + 14,918 = 40,043); the headline figures (130,000+ learners trained, 150,000+ enrollments) are unchanged; Investors prints the relabeled note and no page prints the old wording;
+ *   - 1: SC-02 (text and detail) calls the 40,152 "reached through CodersTrust curriculum and courseware", not "through CodersTrust courseware": the 25,125 women Her Power trained nationally with CodersTrust's curriculum plus UNDP FutureNation's
+ *     15,027 course learners (25,125 + 15,027 = 40,152; 112,926 + 40,152 - 2,400 = 150,678); the headline figures are 130,000+ learners trained and 150,000+ enrollments; Investors prints the relabeled note and no page prints the old wording;
  *   - 2: the shared contract-scope note under the 30,000+ ends "Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people." on every page that prints it (Investors, Impact,
  *     Governments, JobReady Platform), tied to SC-02; Home's government slide, which words the contract scope itself, is unchanged;
  *   - 3: the Her Power case study reads "... reach is a separate measure: Her Power (DoICT, ICT Division) is a national program that trained 25,125 women ..., meeting its target." (one colon), from GV-01's text;
@@ -35,37 +35,40 @@ const visible = (html: string) =>
       .replace(/&quot;/g, '"'),
   );
 
-const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners)';
-const NEW_DETAIL = `Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware ${BREAKDOWN}.`;
+const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
+const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}.`;
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
 const SHORT_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 
 test.describe('WP84: the register says what the courseware share is', () => {
-  test('SC-02’s detail and text call the 40,043 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
+  test('SC-02’s detail and text call the 40,152 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
     const sc02 = fact('SC-02');
     expect(sc02.stat?.detail).toBe(NEW_DETAIL);
-    expect(sc02.text).toBe(`150,000+ enrollments since 2014 — 111,268 through direct training across 45 programs and 40,043 reached through CodersTrust curriculum and courseware ${BREAKDOWN}`);
-    expect(`${sc02.text} ${sc02.stat?.detail}`).not.toMatch(/40,043 through CodersTrust courseware/);
+    expect(sc02.text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}`);
+    expect(`${sc02.text} ${sc02.stat?.detail}`).not.toMatch(/4[01],\d{3} through CodersTrust courseware/);
   });
 
-  test('the breakdown closes against the register: GV-01’s 25,125 plus SC-14’s 14,918 is the 40,043, and 111,268 plus 40,043 covers the 150,000+', () => {
+  test('the breakdown closes against the register: GV-01’s 25,125 plus SC-14’s 15,027 is the 40,152, and 112,926 plus 40,152 less the 2,400 counted twice is 150,678, which covers the 150,000+ (WP87)', () => {
     const detail = fact('SC-02').stat?.detail ?? '';
     const share = toInt(/and ([\d,]+) reached through/.exec(detail)?.[1]);
     const direct = toInt(/: ([\d,]+) direct/.exec(detail)?.[1]);
     const herPower = toInt(fact('GV-01').stat?.value);
     const futureNation = fact('SC-14').stat?.numeric;
     expect(herPower).toBe(25125);
-    expect(futureNation).toBe(14918);
+    expect(futureNation).toBe(15027);
     expect(detail).toContain(`the ${fact('GV-01').stat?.value} women Her Power trained nationally with CodersTrust’s curriculum`);
     expect(detail).toContain(`UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')} course learners`);
     expect(share).toBe(herPower + (futureNation ?? 0));
-    expect(share).toBe(40043);
-    expect(direct + share).toBeGreaterThanOrEqual(fact('SC-02').stat?.numeric ?? Number.NaN);
+    expect(share).toBe(40152);
+    expect(direct).toBe(112926);
+    // WP87 (owner decisions 2026-10-24): Her Power's 2,400 directly trained women are inside the 25,125, so they are counted once; the de-duplicated total (the owner's sheet: 150,678) still covers the "150,000+"
+    expect(direct + share - 2400).toBe(150678);
+    expect(direct + share - 2400).toBeGreaterThanOrEqual(fact('SC-02').stat?.numeric ?? Number.NaN);
   });
 
-  test('the headline figures are unchanged: 130,000+ learners trained (SC-01) and 150,000+ enrollments (SC-02, SC-16)', () => {
+  test('the headline figures: 130,000+ learners trained (SC-01, unchanged) and 150,000+ enrollments (SC-02, SC-16; WP87)', () => {
     expect(fact('SC-01').stat?.value).toBe('130,000+');
     expect(fact('SC-01').stat?.label).toBe('learners trained since 2014');
     expect(fact('SC-02').stat?.value).toBe('150,000+');
@@ -74,16 +77,16 @@ test.describe('WP84: the register says what the courseware share is', () => {
     expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
-  test('no built page prints the old wording, and every 40,043 on a built page is "reached through CodersTrust curriculum and courseware"', () => {
+  test('no built page prints the old wording, and every 40,152 on a built page is "reached through CodersTrust curriculum and courseware"', () => {
     const old: string[] = [];
     const bare: string[] = [];
     const seen: string[] = [];
     for (const p of builtPages()) {
       const text = visible(p.html);
-      if (/40,043 through (?:CodersTrust )?courseware/.test(text) || /111,268 direct enrollments; 40,043/.test(text)) old.push(p.route);
-      for (const m of text.matchAll(/40,043/g)) {
+      if (/4[01],\d{3} through (?:CodersTrust )?courseware/.test(text) || /1[01]\d,\d{3} direct enrollments; 4[01],\d{3}/.test(text)) old.push(p.route);
+      for (const m of text.matchAll(/40,152/g)) {
         seen.push(p.route);
-        if (!text.slice(m.index ?? 0, (m.index ?? 0) + 80).startsWith('40,043 reached through CodersTrust curriculum and courseware')) bare.push(`${p.route}: "${text.slice(m.index ?? 0, (m.index ?? 0) + 80)}"`);
+        if (!text.slice(m.index ?? 0, (m.index ?? 0) + 80).startsWith('40,152 reached through CodersTrust curriculum and courseware')) bare.push(`${p.route}: "${text.slice(m.index ?? 0, (m.index ?? 0) + 80)}"`);
       }
     }
     expect(old).toEqual([]);

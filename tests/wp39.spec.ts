@@ -88,7 +88,7 @@ const PAGES: PageSpec[] = [
       {
         title: 'Mentoring, Placement Support and Outcome Tracking',
         // WP49 (cycle-24 review): the scorecard also covers completion, certification and sustained work (PD-11), so results are measured against it, "including first paid work, not attendance alone"
-        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+        text: 'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course, as agreed in the program scope. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
         facts: ['PD-01', 'PD-02', 'PD-11'],
       },
       { title: 'A Pilot Scorecard Agreed with You', text: 'Cost per completer and per verified outcome, with thresholds agreed before the first cohort starts.', facts: ['PD-11'] },

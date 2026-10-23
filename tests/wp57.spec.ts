@@ -284,20 +284,17 @@ test.describe('P1, Home: the fourth logo group is "Employers and Industry Partne
 // names both World Bank places (tests/wp55.spec.ts and tests/wp62.spec.ts hold the wording and the placement)
 test.describe('P2, "As covered by" is two short sentences with every link kept, on Recognition and Media; Home points to it in one', () => {
   for (const [name, route] of [['Recognition and Media', 'about/recognition/']] as const) {
-    test(`${name}: "Early press coverage, 2014–2016: ..." names the seven outlets once (Forbes with its qualifier); "World Bank coverage: ..." keeps Kosovo’s two pages and Albania’s page apart by year`, async ({ page }) => {
+    test(`${name}: the press line is one short sentence, "World Bank coverage: ...", keeping Kosovo’s two pages and Albania’s page apart by year (WP87: the "Early press coverage, 2014–2016: ..." sentence is gone; the outlets' links are on the cards)`, async ({ page }) => {
       await open(page, route);
       const line = page.locator('p.cov');
       await expect(line).toHaveCount(1);
       const text = await visibleText(page, 'p.cov');
-      const sentences = text.split(/(?<=\.) (?=[A-Z])/);
-      expect(sentences).toEqual([
-        'Early press coverage, 2014–2016: Gulf News, TechCrunch, Forbes (contributor post), The Wall Street Journal, USA Today, Tech in Asia and The Times of India.',
-        'World Bank coverage: Kosovo (2016, 2017) and Albania (2021).',
-      ]);
+      expect(text.split(/(?<=\.) (?=[A-Z])/)).toEqual(['World Bank coverage: Kosovo (2016, 2017) and Albania (2021).']);
       expect(text).not.toContain('As covered by');
+      expect(text).not.toMatch(/Gulf News|TechCrunch|Forbes|Wall Street Journal|USA Today|Tech in Asia|Times of India/);
       // no stray space before a comma or a period (the links are followed directly by their punctuation)
       expect(text).not.toMatch(/ [,.]/);
-      // the outlet links carry the outlet's name alone; the qualifier is plain text beside Forbes' link; the three World Bank links are their years
+      // the three World Bank links are their years
       const linkTexts = await line.locator('a').evaluateAll((as) =>
         as.map((a) => {
           const c = a.cloneNode(true) as HTMLElement;
@@ -305,9 +302,9 @@ test.describe('P2, "As covered by" is two short sentences with every link kept, 
           return (c.textContent ?? '').trim();
         }),
       );
-      expect(linkTexts).toEqual(['Gulf News', 'TechCrunch', 'Forbes', 'The Wall Street Journal', 'USA Today', 'Tech in Asia', 'The Times of India', '2016', '2017', '2021']);
-      expect(await line.getAttribute('data-fact')).toBe('PA-09 PA-13');
-      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(10);
+      expect(linkTexts).toEqual(['2016', '2017', '2021']);
+      expect(await line.getAttribute('data-fact')).toBe('PA-13');
+      expect(await line.locator('a .sr-only').count(), 'each link says where it goes').toBe(3);
       expect(await line.locator('a').evaluateAll((as) => as.every((a) => /noopener/.test(a.getAttribute('rel') ?? '')))).toBe(true);
     });
   }

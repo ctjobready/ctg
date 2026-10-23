@@ -38,16 +38,16 @@ test.describe('Investors: the delivered figures lead the track-record band (item
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
-    // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note), and the Reach band holds none of the delivered figures;
+    // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note; WP87: the figures are now 112,926 and 40,152), and the Reach band holds none of the delivered figures;
     // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
     const text = await mainText(page);
-    for (const figure of ['130,000+', '111,268', '40,043']) expect(count(text, figure), `${figure} is stated once on Investors`).toBe(1);
+    for (const figure of ['130,000+', '112,926', '40,152']) expect(count(text, figure), `${figure} is stated once on Investors`).toBe(1);
     expect(count(text, '150,000+'), 'the tile, the note’s lead-in and the contract-scope note’s overlap sentence').toBe(3);
     expect(count(compact(await page.locator('#guide').textContent()), '150,000+'), 'both are in the Guide band').toBe(2);
     const reach = compact(await page.locator('#reach').textContent());
-    expect(reach).not.toMatch(/130,000|111,268|Delivered Since 2014/);
+    expect(reach).not.toMatch(/130,000|112,926|Delivered Since 2014/);
     expect(count(reach, '150,000+'), 'only in the overlap sentence of the contract-scope note').toBe(1);
     expect(reach).toContain('Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.');
     await expect(page.locator('#reach .status-tag')).toHaveCount(0);
@@ -259,7 +259,7 @@ test.describe('the WSDFM case study: one line above the tiles instead of two par
     const note = page.locator('.hero [data-hero-note]');
     await expect(note).toHaveCount(1);
     // WP54 (cycle-28 review, GPT-6.1 Sol G8): the note is where the page first names the evaluator, so it spells it out (tests/wp54.spec.ts)
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the BRAC Institute of Governance and Development (BIGD)’s randomized trial were among these 1,000.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
     expect(await note.evaluate((e) => e.parentElement?.className ?? '')).toContain('hero__stats');
     expect(await note.evaluate((e) => e.nextElementSibling?.className ?? '')).toContain('cs__stat');
     const [noteBox, firstTile, button] = await Promise.all([note.boundingBox(), page.locator('.hero .cs__stat').first().boundingBox(), page.locator('.hero .hero__actions a').boundingBox()]);

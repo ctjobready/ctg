@@ -10,7 +10,7 @@ expertise: ["AI Applications and Tools", "Cloud Computing and Solution Architect
 legacyUrl: "https://coderstrust.global/team-member/rezaul-karim-khan/"
 ---
 
-Rezaul Karim Khan is the Chief Business Officer of CodersTrust and also mentors learners in artificial intelligence. A technologist and business innovator with 20+ years in global ICT projects and startups.
+Rezaul Karim Khan is the Chief Business Officer of CodersTrust and also mentors learners in artificial intelligence. He is a technologist and business innovator with 20+ years in global ICT projects and startups.
 
 He works on AI applications and champions the power of technology to transform productivity and prepare people for the future. His areas of expertise include prompt engineering, AI service design, cloud computing and solution architecture, business analysis, and project management.
 

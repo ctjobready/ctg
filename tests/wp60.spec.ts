@@ -301,7 +301,7 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
   test('the WSDFM case study: the note above the tiles says the 425 women offered a place were among the 1,000 (WP82), beside the first tile’s "711 of 1,000"', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const note = page.locator('[data-hero-note]');
-    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the BRAC Institute of Governance and Development (BIGD)’s randomized trial were among these 1,000.');
+    await expect(note).toHaveText('Program records, not trial results; the 425 women offered a place in the randomized trial by the BRAC Institute of Governance and Development (BIGD) were among the 1,000 women enrolled.');
     await expect(note).toHaveAttribute('data-fact', 'RC-07');
     await expect(page.locator('.cs__stat').first()).toContainText('711 of 1,000');
   });

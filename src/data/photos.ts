@@ -28,7 +28,7 @@ const ALT: Record<string, string> = {
   'general/kosovo-wow-group': 'Thirteen people, most of them young women, pose together in a training room in front of two purple Women in Online Work banners',
   'general/kosovo-woman-training': 'A woman learner seated at a computer among other learners in a Women in Online Work training room in Kosovo',
   'general/her-power-laptops-1': 'Women receiving laptops at a Her Power laptop distribution ceremony, in front of the event banner',
-  'general/her-power-laptops-2': 'A woman in a yellow coat accepting a laptop box from a participant at a Her Power laptop distribution ceremony',
+  'general/her-power-laptops-2': 'A participant in a yellow coat receiving a laptop box from a man in a pink shirt and face mask at a Her Power laptop distribution ceremony', // WP87: agrees with the caption ("A participant receives a laptop"); it said the participant was the one handing the box over
   'general/her-power-group': 'A group of women in matching purple at a Her Power program event',
   'general/dict-hitech-mou': 'Officials and CodersTrust representatives around a signing table at the agreement with the Hi-Tech Park Authority and DoICT',
   'general/empowering-women-event': 'A large audience seated in a hall under a banner for a CodersTrust Bangladesh women empowerment event',
@@ -99,7 +99,7 @@ const ALT: Record<string, string> = {
   'global/somaliland-hour-of-code': 'About thirty men and women, many in white caps, pose in two rows outdoors in front of a Tima-ade University banner',
   'global/bhutan-batch-inauguration': 'Dozens of people in Bhutanese dress, including a monk in an orange robe and two men in suits, pose in rows on the steps of a building at a trainee batch inauguration ceremony',
   'global/digital-jobs-albania': 'A smiling woman with glasses seated with a laptop on her lap, gesturing with an open hand, on a light blue background',
-  'impact/kosovo-graduate-portrait': 'Portrait of Erlisa Zherka, a graduate of the Women in Online Work pilot in Kosovo',
+  'impact/kosovo-graduate-portrait': 'Portrait of Erlisa Zherka, a program completer of the Women in Online Work pilot in Kosovo',
 };
 
 /** Short caption under a photograph in the "In the field" archive: program, event or place, and a year only where the source states it. */
@@ -169,7 +169,7 @@ export const CAPTION: Record<string, string> = {
   'general/nctb-meeting': 'MOU meeting with NCTB',
   'general/nu-affiliation-group': 'Affiliation with National University',
   'general/nu-affiliation-meeting': 'Affiliation meeting with National University',
-  'field/ccny-mou-signing': 'MOU signing with the City College of New York, 12 April 2024 (date on the ceremony banner)',
+  'field/ccny-mou-signing': 'MOU signing with the City College of New York, April 12, 2024 (date on the ceremony banner)',
   'general/empowering-women-event': 'CodersTrust Bangladesh women empowerment event',
   'general/panel-international-forum': 'Panel at an international forum',
   'general/un-panel': 'Panel at the United Nations',

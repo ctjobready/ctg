@@ -3,7 +3,7 @@ title: "A Proud Milestone for CodersTrust!"
 date: 2026-08-01
 updated: 2026-09-02
 topic: programs-events
-excerpt: "CodersTrust and the U.S. Embassy Dhaka mark America's 250th anniversary with a gamified digital treasure hunt that drew 1,400+ registered users."
+excerpt: "CodersTrust and the U.S. Embassy Dhaka mark America’s 250th anniversary with a gamified digital treasure hunt that drew 1,400+ registered users."
 cover: ../../assets/images/news/a-proud-milestone-for-coderstrust/great-american-treasure-hunt-2.jpg
 coverAlt: "A man taking a selfie with a large audience seated in a hall behind him"
 legacyUrl: "https://coderstrust.global/a-proud-milestone-for-coderstrust/"
@@ -11,8 +11,6 @@ tags: ["Latest News", "U.S. Embassy"]
 ---
 
 ## U.S. Embassy Dhaka and CodersTrust Celebrate a Successful “Great American Treasure Hunt” Marking America’s 250th Anniversary
-
-[Read the press release on PRWeb](https://www.prweb.com/releases/us-embassy-dhaka-and-coderstrust-celebrate-a-successful-great-american-treasure-hunt-marking-americas-250th-anniversary-302839834.html)
 
 ![Six people standing together in front of an American flag and a Bangladeshi flag](../../assets/images/news/a-proud-milestone-for-coderstrust/great-american-treasure-hunt-5.jpg)
 
@@ -27,5 +25,3 @@ Since 2014, we’ve trained 130,000+ learners and worked in 16 countries and ter
 Here’s to lifting educated youth in Bangladesh and beyond and to many more collaborations ahead.
 
 Learn a skill, the world is yours.
-
-For more information, you can read the full article published on “[CISION PRWEB](https://www.prweb.com/releases/us-embassy-dhaka-and-coderstrust-celebrate-a-successful-great-american-treasure-hunt-marking-americas-250th-anniversary-302839834.html)”.

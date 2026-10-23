@@ -94,12 +94,12 @@ test.describe('Item 2: teaser text prints curly apostrophes', () => {
     expect(cards.filter((t) => t.includes("'"))).toEqual([]);
   });
 
-  test('a news post shows its related teasers curly, and its meta description keeps the source text', async ({ page }) => {
+  test('a news post shows its related teasers curly, and its meta description is curly too (WP87: the source excerpt was corrected; it kept a straight apostrophe)', async ({ page }) => {
     await open(page, 'news/coderstrust-chairman-aziz-ahmad-meets-bangladesh-foreign-affairs-minister-khalilur-rahman/');
     const teasers = await page.locator('.card__text').allTextContents();
     expect(teasers.filter((t) => t.includes("'"))).toEqual([]);
-    // attributes are not visible text: the meta description still carries the source's straight apostrophe
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Bangladesh's Foreign Minister/);
+    // WP87 (CLR review, Opus XHigh run 1): the seven news excerpts that carried straight apostrophes are curly at the source, so the meta description and the teasers agree
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Bangladesh’s Foreign Minister to discuss CodersTrust’s mission/);
   });
 });
 

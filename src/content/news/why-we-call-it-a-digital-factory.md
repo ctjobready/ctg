@@ -3,7 +3,7 @@ title: "Why We Call It a Digital Factory"
 date: 2026-07-18
 updated: 2026-10-13
 topic: insights
-excerpt: "Why Bangladesh's greatest natural resource is its young people, and what a digital factory means for them."
+excerpt: "Why Bangladesh’s greatest natural resource is its young people, and what a digital factory means for them."
 cover: ../../assets/images/news/why-we-call-it-a-digital-factory/why-we-call-it-a-digital-factory.jpg
 coverAlt: "A large crowd of people posing together, many making peace signs, photographed from above"
 legacyUrl: "https://coderstrust.global/why-we-call-it-a-digital-factory/"

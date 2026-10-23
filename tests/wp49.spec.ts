@@ -133,7 +133,7 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
   test('the first card measures results against the agreed scorecard, including first paid work, not attendance alone', async ({ page }) => {
     await open(page, FOUND);
     expect(await texts(page, '#features li.card:nth-child(1) p')).toEqual([
-      'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
+      'Mentoring and placement support are standard inclusions, and outcomes are tracked for 12 months after each course, as agreed in the program scope. Results are measured against the agreed scorecard, including first paid work, not attendance alone.',
     ]);
     expect(await mainText(page)).not.toContain('using the agreed scorecard');
   });

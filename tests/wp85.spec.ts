@@ -10,7 +10,7 @@ import { listPages } from './support/pages';
  * WP85 behaviors (owner update 2026-10-24: a CodersTrust team member confirmed to the owner that the government achieved 100% of Her Power's 25,125-trainee target). Retrospective coverage
  * (the owner exempted this project from test-first work). Run `npm run build` first, then `PORT=<port> npx playwright test tests/wp85.spec.ts --project=chromium`:
  *   - 1: the register says the national program TRAINED 25,125 women and met its target (GV-01, GV-10, GV-12's note, SC-02's text and detail, CONTRACT_TOTAL_NOTE); CodersTrust trained 2,400 directly, 372 of 800 tracked (47%),
- *     the 30,000+ contract scope and the 130,000+ / 150,000+ figures are unchanged;
+ *     the 30,000+ contract scope and the 130,000+ figure are unchanged (WP87: the composition changed, the total stays "150,000+");
  *   - 2: on every built page (text, meta tags and JSON-LD) each 25,125 sits in a sentence that says "trained" (or "the 25,125 women Her Power trained", or "the same group counted in the 150,000+ enrollments");
  *     the only other wording is the Her Power news post's archived headline, excerpt and text ("Aims to Train", "train and support", "train and facilitate"), on the post and the news index;
  *   - 3: the pages that state it (Home slide 2, Impact, the Her Power case study, Governments, Investors, JobReady Platform, YouthWIDE) read the new sentences; the case study heading is "National Scale: A Different Measure";
@@ -67,11 +67,11 @@ test.describe('WP85: the register says the national program trained 25,125 women
     expect(CONTRACT_TOTAL_NOTE.facts).toEqual(['GV-12', 'GV-01', 'GV-11', 'SC-02']);
   });
 
-  test('SC-02 names the 25,125 women Her Power trained nationally with CodersTrust’s curriculum; 130,000+ learners trained and 150,000+ enrollments are unchanged', () => {
-    const breakdown = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners)';
-    expect(fact('SC-02').text).toBe(`150,000+ enrollments since 2014 — 111,268 through direct training across 45 programs and 40,043 reached through CodersTrust curriculum and courseware ${breakdown}`);
-    expect(fact('SC-02').stat?.detail).toBe(`Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware ${breakdown}.`);
-    expect(25125 + (fact('SC-14').stat?.numeric ?? 0)).toBe(40043);
+  test('SC-02 names the 25,125 women Her Power trained nationally with CodersTrust’s curriculum; 130,000+ learners trained and 150,000+ enrollments are unchanged (WP87 changed the composition: 112,926 direct, 40,152 courseware)', () => {
+    const breakdown = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
+    expect(fact('SC-02').text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${breakdown}`);
+    expect(fact('SC-02').stat?.detail).toBe(`Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${breakdown}.`);
+    expect(25125 + (fact('SC-14').stat?.numeric ?? 0)).toBe(40152);
     expect(fact('SC-01').stat?.value).toBe('130,000+');
     expect(fact('SC-02').stat?.value).toBe('150,000+');
   });
@@ -173,7 +173,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
   test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; JobReady Platform prints the shared note', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide .ig__notes')).toHaveText(
-      'Of 150,000+ enrollments: 111,268 direct and 40,043 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, and UNDP FutureNation’s 14,918 course learners). Most delivery has been in Bangladesh.',
+      'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Most delivery has been in Bangladesh.',
     );
     expect(await page.locator('#guide .ig__notes').getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);

@@ -119,7 +119,8 @@ const d = discoveryCta();
     <SectionHeader id="itf-later-h" eyebrow="More Collections" title="Partners, Forums and Recognition" lead="Signings, awards, forums and meetings." />
   </Section>
 
-  {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} />)}
+  {/* WP87 (CLR review, Opus XHigh run 1): the two collections are H3s under the "Partners, Forums and Recognition" H2 (it was followed by two sibling H2s and stood empty). */}
+  {laterGroups.map((g, i) => <GalleryDisclosure id={g.id} eyebrow={g.eyebrow} title={g.title} lead={g.lead} photos={g.photos} visible={6} moreLabel={fullLabel(g)} tone={(programGroups.length + i) % 2 === 0 ? 'white' : 'airy'} level={3} />)}
 
   <Section pad="sm" aria-label="About these photographs">
     <p class="itf__news"><a class="link" href={newsHref}>News Photographs<Icon name="arrow-right" size={16} /></a> Photographs from news posts, {newsSpan}.</p>

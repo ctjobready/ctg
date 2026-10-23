@@ -55,7 +55,7 @@ async function showSlide(page: Page, n: number) {
 }
 
 const SCOPE_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
-/** WP84: the shared note also says the 25,125 is the same group already counted in the 150,000+ enrollments (WP85 wording). */
+/** WP84: the shared note also says the 25,125 is the same group already counted in the 150,000+ enrollments (WP85 wording; WP87 kept "150,000+"). */
 const CONTRACT_NOTE = `${SCOPE_NOTE} Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.`;
 /** WP83 wordings that put the national program's 25,125 as a target still to be met (WP85: the target was met, so none stands). */
 const TARGET_25125 = [
@@ -240,7 +240,7 @@ test.describe('WP83: Recognition and Media shows the Tech in Asia article’s ow
     await open(page, 'about/recognition/');
     const card = page.locator('#coverage .rec-press__item', { has: page.locator('img[alt="Tech in Asia logo"]') });
     await expect(card).toHaveCount(1);
-    expect(compact(await card.locator('.rec-press__headline').textContent())).toBe(HEADLINE);
+    expect(compact(await card.locator('.rec-press__headline').textContent()).replace(/ \(opens [^)]+\)$/, '')).toBe(HEADLINE); // WP87: the headline is a link, so it ends with its screen-reader note
     expect(compact(await card.locator('time').textContent())).toBe('2015');
     expect(await page.locator('#coverage .rec-press__headline').count()).toBe(8);
     expect(builtPages().filter((p) => p.html.includes(OLD)).map((p) => p.route)).toEqual([]);
