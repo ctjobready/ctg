@@ -105,7 +105,7 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
     expect(sitePages().filter((p) => visible(p.html).includes('distinguishes training, partnerships and launch activity')).map((p) => p.route)).toEqual([]);
   });
 
-  test('every row is one of three kinds the note names or a training program: seven rows name a partner, a cooperation or the launch; Bangladesh’s and Somaliland’s notes describe training; the rest have no note', async ({ page }) => {
+  test('every row is one of three kinds the note names or a training program: seven rows name a partner, a cooperation or the launch (Albania and Kosovo are training programs with a World Bank program label); Bangladesh’s and Somaliland’s notes describe training; the rest have no note', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const rows = page.locator('.wmap__table tbody tr');
     await expect(rows).toHaveCount(locations.length);
@@ -117,12 +117,12 @@ test.describe('R1 (Grok): Global Reach says which rows are partnerships, an anno
     }
     const kind = (note: string) => (/^Partners?:/.test(note) ? 'partnership' : /^Cooperation with .* announced/.test(note) ? 'cooperation' : /^Launch location/.test(note) ? 'launch' : 'training');
     const byKind = (k: string) => found.filter((r) => kind(r.note) === k).map((r) => r.name).sort();
-    expect(byKind('partnership')).toEqual(['Albania', 'Benin', 'Egypt', 'Kosovo', 'Uganda']);
+    expect(byKind('partnership')).toEqual(['Benin', 'Egypt', 'Uganda']);
     expect(byKind('cooperation')).toEqual(['Iraq']);
     expect(byKind('launch')).toEqual(['Denmark']);
     // the other nine are "training programs": no note (a dash), or a note that says it is training or a program
     const training = found.filter((r) => kind(r.note) === 'training');
-    expect(training.map((r) => r.name).sort()).toEqual(['Bangladesh', 'Bhutan', 'Honduras', 'India', 'Jordan', 'Kenya', 'Malaysia', 'Poland', 'Somaliland']);
+    expect(training.map((r) => r.name).sort()).toEqual(['Albania', 'Bangladesh', 'Bhutan', 'Honduras', 'India', 'Jordan', 'Kenya', 'Kosovo', 'Malaysia', 'Poland', 'Somaliland']);
     for (const r of training) {
       if (r.note === '—' || r.note === '') continue;
       expect(r.note, `${r.name}'s note describes training or a program`).toMatch(/training|program/i);
@@ -399,7 +399,7 @@ test.describe('K1 and K2 (Kimi): the Case Studies hub is "Five Programs Across K
   test('the H1, the lead and the grid’s H2 read as below, and the old H1 and H2 are gone', async ({ page }) => {
     await open(page, HUB);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Five Programs Across Kosovo, Albania and Bangladesh');
-    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result and its base; each case study says what its figures do and do not show.');
+    await expect(page.locator('main .hero__lead').first()).toHaveText('Five programs, each with its result and its base.');
     await expect(page.getByRole('heading', { level: 2, name: 'Results First, Program by Program' })).toHaveCount(1);
     expect(sitePages().filter((p) => /Learners Reaching Paid Work, from Kosovo|Five Programs, Results First|Five Programs, from Kosovo to Bangladesh/.test(visible(p.html))).map((p) => p.route)).toEqual([]);
   });

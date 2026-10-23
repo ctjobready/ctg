@@ -25,10 +25,10 @@ test.describe('WP78 item 1: Global Reach note', () => {
 });
 
 test.describe('WP78 item 2: Case Studies index wording', () => {
-  test('the lead says each case study says what its figures show, and the old overpromise is gone', async ({ page }) => {
+  test('the lead says each result comes with its base, and the old overpromise is gone', async ({ page }) => {
     await open(page, 'impact/case-studies/');
     const lead = page.locator('main .hero__lead').first();
-    await expect(lead).toHaveText('Five programs, each with its result and its base; each case study says what its figures do and do not show.');
+    await expect(lead).toHaveText('Five programs, each with its result and its base.');
     await expect(page.locator('main')).not.toContainText('its base and what the figures do and do not show');
   });
 

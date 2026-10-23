@@ -181,12 +181,12 @@ test.describe('Global Reach: 16 locations, the owner’s corrected rows, and a p
     expect(iraq.note, 'Iraq states no outcome').not.toMatch(/trained|graduat|enrolled|employ|completed|earned|earning|\d+ (people|refugees|learners)/i);
   });
 
-  test('Albania names the World Bank Group, Digital Jobs Albania, the Government of Albania and EuroPartners Development, and shows no photograph (none exists)', async ({ page }) => {
+  test('Albania names Digital Jobs Albania, a World Bank initiative, the Government of Albania and EuroPartners Development, and shows no photograph (none exists)', async ({ page }) => {
     await open(page, GLOBAL_REACH);
-    expect(compact(await cell(page, 'Albania', 'Partner / Note').textContent())).toBe('Partner: World Bank Group (Digital Jobs Albania, with the Government of Albania and EuroPartners Development)');
+    expect(compact(await cell(page, 'Albania', 'Partner / Note').textContent())).toBe('Program: Digital Jobs Albania, a World Bank initiative, with the Government of Albania and EuroPartners Development');
     expect(compact(await cell(page, 'Albania', 'Years').textContent())).toBe('2021–2022');
     await expect(row(page, 'Albania').locator('img')).toHaveCount(0);
-    expect(compact(await cell(page, 'Kosovo', 'Partner / Note').textContent())).toBe('Partner: World Bank Group (Women in Online Work pilot, 2016–2017)');
+    expect(compact(await cell(page, 'Kosovo', 'Partner / Note').textContent())).toBe('Program: Women in Online Work, with the World Bank');
   });
 
   test('a location that has a photograph shows it in its row (Bhutan, Somaliland, Denmark, Kosovo), with alt text; a location without one shows none', async ({ page }) => {

@@ -418,21 +418,21 @@ test.describe('Albania and Kosovo: no photograph is captioned as Albania, and Gl
     }
   });
 
-  test('Global Reach: the Albania row’s "Partner / Note" cell names the World Bank Group and the program (Kosovo’s pattern), names no amount or investment figure, and exactly the rows with a named partner say so', async ({ page }) => {
+  test('Global Reach: the Albania row’s "Partner / Note" cell names the World Bank and the program (Kosovo’s pattern), names no amount or investment figure, and exactly the rows with a named partner say so', async ({ page }) => {
     await open(page, GLOBAL_REACH);
     const row = (name: string) => page.locator('.wmap__table tbody tr', { has: page.locator('th[scope="row"]', { hasText: name }) });
     const cell = (name: string) => row(name).locator('td[data-label="Partner / Note"]');
     await expect(cell('Albania')).toHaveCount(1);
-    expect(compact(await cell('Albania').textContent())).toBe('Partner: World Bank Group (Digital Jobs Albania, with the Government of Albania and EuroPartners Development)');
-    expect(compact(await cell('Kosovo').textContent())).toBe('Partner: World Bank Group (Women in Online Work pilot, 2016–2017)');
+    expect(compact(await cell('Albania').textContent())).toBe('Program: Digital Jobs Albania, a World Bank initiative, with the Government of Albania and EuroPartners Development');
+    expect(compact(await cell('Kosovo').textContent())).toBe('Program: Women in Online Work, with the World Bank');
     expect(compact(await cell('Albania').textContent())).not.toMatch(/[$€£\d]|million|investment|invested|funded|grant|amount/i);
     // WP55: the rows that name a partner are Albania, Benin, Egypt, Kosovo and Uganda (the 2020 partnerships and the two World Bank programs); Bangladesh, Denmark and Iraq carry other notes; every other location keeps the dash.
     // WP56 (owner decision 13): Somaliland is no longer a "Partner:" row; its note says "Hour of Code, and an ICT program at Tima-ade University" (no source says the Hour of Code was held with the university).
     const cells = await page.locator('.wmap__table tbody tr').evaluateAll((rows) =>
       rows.map((r) => ({ name: (r.querySelector('th')?.firstChild?.textContent ?? '').trim(), cell: (r.querySelector('td[data-label="Partner / Note"]')?.textContent ?? '').replace(/\s+/g, ' ').trim() })),
     );
-    expect(cells.filter((c) => c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Albania', 'Benin', 'Egypt', 'Kosovo', 'Uganda']);
-    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Bangladesh', 'Denmark', 'Iraq', 'Somaliland']);
+    expect(cells.filter((c) => c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Benin', 'Egypt', 'Uganda']);
+    expect(cells.filter((c) => c.cell !== '—' && !c.cell.startsWith('Partner')).map((c) => c.name).sort()).toEqual(['Albania', 'Bangladesh', 'Denmark', 'Iraq', 'Kosovo', 'Somaliland']);
     expect(cells, 'the table lists the 16 program locations').toHaveLength(16);
   });
 
@@ -440,7 +440,7 @@ test.describe('Albania and Kosovo: no photograph is captioned as Albania, and Gl
     await open(page, GLOBAL_REACH);
     const card = compact(await page.locator('#wmap-card-albania').evaluate((el) => el.textContent ?? ''));
     expect(card).toContain('Albania');
-    expect(card).toContain('Partner: World Bank Group');
+    expect(card).toContain('Program: Digital Jobs Albania, a World Bank initiative');
     expect(card).not.toMatch(/[$€£]|million|investment|invested/i);
   });
 });
