@@ -186,7 +186,7 @@ test.describe('BIGD is spelled out at its first mention on every page that names
 
   test('the WSDFM case study: the hero note names the evaluator in full, and the tiles, the trial sub-heading and the chart note use the abbreviation it introduces', async ({ page }) => {
     await open(page, WSDFM);
-    await expect(page.locator('[data-hero-note]')).toHaveText('Program records and a separate randomized trial of 833 women in the predecessor program, by the BRAC Institute of Governance and Development (BIGD).');
+    await expect(page.locator('[data-hero-note]')).toHaveText('Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (833 women studied, by the BRAC Institute of Governance and Development (BIGD)) were among these 1,000.');
     const text = await everything(page);
     expect(count(text, SPELLED)).toBe(1);
     expect(text.indexOf('BIGD'), 'the first BIGD is the one in the hero note’s full name').toBe(text.indexOf(SPELLED) + SPELLED.length - 'BIGD)'.length);

@@ -245,8 +245,8 @@ test.describe('S3 (Claude): the 2 million 2030 aim carries its dependency on eve
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The BIGD study only studied 833."): WSDFM’s program records name the trial’s count beside them', () => {
-  const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.'; // WP63 (cycle-35 review, Kimi K2): the clause "from program records" is left out so the line stays one row at 1280 (this block's budget test)
-  const CAPTION = 'WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work';
+  const LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.'; // WP63 (cycle-35 review, Kimi K2): WP81 (owner item 2026-10-23): "separate trial: 833 women" is replaced by "from program records", which keeps the line one row at 1280 (this block's budget test)
+  const CAPTION = 'WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work';
   const CARD_PAGES = ['partner-with-us/development-partners/', 'partner-with-us/foundations/', LOCAL, YOUTHWIDE];
 
   test('the count is RC-07’s (833 women at baseline: 425 treatment, 408 control), read from the register; PR-01 still says 711 of 1,000', () => {
@@ -260,7 +260,7 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     await open(page, HOME);
     const lines = slide(page, 4).locator('.hs__lines li');
     expect((await texts(page, '[data-hs-slide]:nth-child(4) .hs__lines li'))[1]).toBe(LINE);
-    expect(await lines.nth(1).getAttribute('data-fact')).toBe('PR-01 RC-07');
+    expect(await lines.nth(1).getAttribute('data-fact')).toBe('PR-01');
     const heights = await lines.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
     expect(heights[1], 'the WSDFM line wraps').toBe(heights[0]);
     for (const vp of [DESKTOP, MOBILE]) {
@@ -294,14 +294,14 @@ test.describe('S4 (Claude; owner answer 2026-10-20: "711 of 1000 is correct. The
     await open(page, 'impact/');
     const tile = page.locator('#glance a[data-fact~="PR-01"]');
     await expect(tile).toHaveCount(1);
-    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Program records, separate from the randomized trial of the predecessor program, which studied 833 women.');
+    expect(compact(await tile.locator('.glance__note').textContent())).toBe('Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000.');
     expect(((await tile.getAttribute('data-fact')) ?? '').split(' ')).toEqual(expect.arrayContaining(['PR-01', 'PR-06', 'RC-07']));
   });
 
   test('the WSDFM case study: the note above the tiles says the trial was of 833 women, beside the first tile’s "711 of 1,000"', async ({ page }) => {
     await open(page, 'impact/case-studies/wsdfm-women-freelancers/');
     const note = page.locator('[data-hero-note]');
-    await expect(note).toHaveText('Program records and a separate randomized trial of 833 women in the predecessor program, by the BRAC Institute of Governance and Development (BIGD).');
+    await expect(note).toHaveText('Program records, not trial results; the women offered a place in the randomized trial of the predecessor program (833 women studied, by the BRAC Institute of Governance and Development (BIGD)) were among these 1,000.');
     await expect(note).toHaveAttribute('data-fact', 'RC-07');
     await expect(page.locator('.cs__stat').first()).toContainText('711 of 1,000');
   });

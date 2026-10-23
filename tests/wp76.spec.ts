@@ -659,14 +659,14 @@ test.describe('WP76 item 2: the register says the 1,000 are the women enrolled (
 
 test.describe('WP76 item 2: every page that states the figure names its base', () => {
   const RECORD_LINE = 'Program records: 711 of the 1,000 women enrolled were in work (71%).';
-  const CAPTION = 'WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work';
-  const SLIDE_LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.';
+  const CAPTION = 'WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work';
+  const SLIDE_LINE = 'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.';
 
-  test('Home: slide 4 says "711 of 1,000 enrolled in work (71%); separate trial: 833 women." and the WSDFM card "Program records: 711 of the 1,000 women enrolled were in work (71%)."', async ({ page }) => {
+  test('Home: slide 4 says "WSDFM: 711 of 1,000 enrolled in work (71%), from program records." and the WSDFM card "Program records: 711 of the 1,000 women enrolled were in work (71%)."', async ({ page }) => {
     await open(page, HOME);
     const line = slide(page, 4).locator('.hs__lines li').nth(1);
     await expect(line).toHaveText(SLIDE_LINE);
-    await expect(line).toHaveAttribute('data-fact', 'PR-01 RC-07');
+    await expect(line).toHaveAttribute('data-fact', 'PR-01');
     const card = page.locator('#cases article').first();
     expect(compact(await card.locator('.case__context').textContent())).toBe(RECORD_LINE);
     expect(await card.locator('.case__context').getAttribute('data-fact')).toBe('PR-01');
@@ -687,7 +687,7 @@ test.describe('WP76 item 2: every page that states the figure names its base', (
     const tile = page.locator('#glance a[data-fact~="PR-01"]');
     await expect(tile).toHaveCount(1);
     await expect(tile.locator('.glance__desc')).toHaveText('WSDFM program records: enrolled women in work (71%)');
-    await expect(tile.locator('.glance__note')).toHaveText('Program records, separate from the randomized trial of the predecessor program, which studied 833 women.');
+    await expect(tile.locator('.glance__note')).toHaveText('Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000.');
     expect(await tile.getAttribute('data-fact')).toBe('PR-01 PR-06 RC-07');
     expect(compact(await tile.textContent())).toContain('711 of 1,000');
     await open(page, 'impact/case-studies/');
@@ -709,7 +709,7 @@ test.describe('WP76 item 2: every page that states the figure names its base', (
     expect(DESCRIPTION.length, 'meta description length (the SEO check warns above 155)').toBeLessThanOrEqual(155);
   });
 
-  test('no built page gives the 711 or the 71% without its base: none says "711 of 1,000 women in work", "711 of 1,000 in work", "WSDFM: 71% in work" or "(not trial data; the trial studied 833 women): 71% in work"', () => {
+  test('no built page gives the 711 or the 71% without its base: none says "711 of 1,000 women in work", "711 of 1,000 in work", "WSDFM: 71% in work" or "(not trial results; the trial studied 833 women): 71% in work"', () => {
     const offenders: string[] = [];
     for (const p of sitePages()) {
       const text = visible(p.html);

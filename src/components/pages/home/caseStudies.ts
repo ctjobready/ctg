@@ -45,7 +45,7 @@ export const HER_POWER_TILE_LABEL = `Her Power: ${herPowerParts[2]} of the ${her
  */
 const wsdfmShare = /^WSDFM: (.+)$/.exec(fact('PR-01').stat?.label ?? '');
 if (!wsdfmShare) throw new Error('caseStudies: PR-01 label no longer reads "WSDFM: <share> of enrolled women in work"');
-const wsdfmLabel = `WSDFM program records (not trial data; the trial studied ${TRIAL_WOMEN} women): ${wsdfmShare[1]}`;
+const wsdfmLabel = `WSDFM program records (not trial results; the trial studied ${TRIAL_WOMEN} women): ${wsdfmShare[1]}`;
 
 /**
  * The caption a case-study card puts under its figure, by register fact. CaseStudyCarousel uses it wherever a page gives no caption of its own, so the WSDFM and Her Power

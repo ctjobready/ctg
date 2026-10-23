@@ -82,7 +82,7 @@ test.describe('Home: each figure once', () => {
     // WP50 (cycle-25 review, item 10): WSDFM is the second of four programs, with its base and the qualifier "program records, not trial data" (tests/wp50.spec.ts); WP60 (cycle-32 review, Claude S4): "program records; trial studied 833"
     expect(lines).toEqual([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);

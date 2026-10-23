@@ -58,7 +58,7 @@ test.describe('WP71: Home results carousel, slide 4 (Results by Program)', () =>
     const lines = s4.locator('.hs__lines li');
     await expect(lines).toHaveCount(4);
     await expect(lines.nth(0)).toHaveText('Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).');
-    await expect(lines.nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.');
+    await expect(lines.nth(1)).toHaveText('WSDFM: 711 of 1,000 enrolled in work (71%), from program records.');
     await expect(lines.nth(2)).toHaveText('UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.');
     await expect(lines.nth(3)).toHaveText('Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.');
   });

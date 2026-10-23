@@ -190,11 +190,22 @@ function trialWomen(): string {
 export const TRIAL_WOMEN: string = trialWomen();
 
 /**
+ * WP81 (owner item, 2026-10-23): WSDFM's program records cover the 1,000 women enrolled, and the women offered a place in the randomized trial were among them (BIGD report p. 19), so the two are different evidence, not different people. The 1,000 is PR-01's value ("711 of 1,000"), read from it, never retyped.
+ */
+function wsdfmEnrolled(): string {
+  const n = /^[\d,]+ of ([\d,]+)$/.exec(fact('PR-01').stat?.value ?? '')?.[1];
+  if (!n) throw new Error('WSDFM_ENROLLED: PR-01 stat value no longer reads "N of M"');
+  return n;
+}
+export const WSDFM_ENROLLED: string = wsdfmEnrolled();
+
+/**
  * WP62 (cycle-34 review, rework R3): the short note under a WSDFM program-record tile that says how the records relate to the trial ("Program records, separate from the randomized trial of the predecessor program, which studied 833 women.", 15 words).
+ * WP81: "separate from" is gone, because the trial's women were among the 1,000; the note now reads "Program records, not trial results; the women offered a place in the randomized trial (833 women studied) were among these 1,000."
  * It is the Impact page's tile note (WP60), moved here so Foundations' WSDFM tile says it with the same string; the tile's data-fact names RC-07 beside PR-01 (the 833 is RC-07's, TRIAL_WOMEN).
  * WP65 (cycle-37 review): Foundations' glance no longer carries the WSDFM tile (its fourth tile is UNDP YES, Korail), so the Impact page's tile is the note's one user; the Proof in Practice caption (CASE_CARD_LABELS) says the same thing in its own words.
  */
-export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, separate from the randomized trial of the predecessor program, which studied ${TRIAL_WOMEN} women.`;
+export const WSDFM_NOT_TRIAL_NOTE: string = `Program records, not trial results; the women offered a place in the randomized trial (${TRIAL_WOMEN} women studied) were among these ${WSDFM_ENROLLED}.`;
 
 /**
  * WP57b (cycle-29 review, GLM L8; owner direction): the identity sentences of ID-11 as the site renders them. The register's ID-11 ends "Additional country and regional offices are planned in the next few years."; the About page and llms.txt say

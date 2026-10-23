@@ -106,12 +106,12 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await expect(slide(page).locator('.hs__lead')).toHaveText('Results from the records of four programs.');
     await expect(slide(page).locator('.hs__lines li')).toHaveText([
       'Women in Online Work, Kosovo (2016–2017): 68% in work (102 of 150).',
-      'WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women.',
+      'WSDFM: 711 of 1,000 enrolled in work (71%), from program records.',
       'UNDP YES, Korail (2017): 67% of the 350 enrolled found a first job within three months.',
       'Her Power: 372 of 800 tracked in work (47%); 2,500 trained directly.',
     ]);
     // WP60 (cycle-32 review, Claude S4): the WSDFM line names the trial's count (RC-07's 833) beside its own fact
-    expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 TL-04', 'PR-01 RC-07', 'PR-03 PR-06', 'PR-05']);
+    expect(await slide(page).locator('.hs__lines li').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['PR-02 TL-04', 'PR-01', 'PR-03 PR-06', 'PR-05']);
   });
 
   // WP55 (owner decision 2026-10-18): Impact lists five case studies ("Five Programs Across Kosovo, Albania and Bangladesh" since WP63; it was "..., from Kosovo to Bangladesh"). The slide's four are the four with program records, in Impact's order; the fifth, Digital Jobs Albania, has only the World Bank's published figures
@@ -126,7 +126,7 @@ test.describe('Home: the program-results slide lists four programs (item 10)', (
     await open(page, 'partner-with-us/development-partners/');
     const card = page.locator('#cases article', { hasText: 'Women’s Skill Development for Freelancing Marketplace (WSDFM)' });
     await expect(card.locator('.case__value')).toHaveText('711 of 1,000');
-    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial data; the trial studied 833 women): 71% of enrolled women in work');
+    expect(compact(await card.locator('.case__label').textContent())).toBe('WSDFM program records (not trial results; the trial studied 833 women): 71% of enrolled women in work');
     await open(page, 'impact/');
     await expect(page.locator('#cases').getByRole('heading', { level: 2, name: 'Five Programs Across Kosovo, Albania and Bangladesh' })).toBeVisible();
     await expect(page.locator('#cases article.card')).toHaveCount(5);

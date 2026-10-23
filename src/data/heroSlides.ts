@@ -1,5 +1,5 @@
 import { fact, type Fact } from './facts';
-import { CONTRACT_FIGURES, CONTRACT_TOTAL_NOTE, HEADLINE, NU_NOT_TRAINED, TRIAL_WOMEN, VALUE_PROPOSITION } from './copy';
+import { CONTRACT_FIGURES, CONTRACT_TOTAL_NOTE, HEADLINE, NU_NOT_TRAINED, VALUE_PROPOSITION } from './copy';
 import { cta } from '../lib/mailto';
 
 /**
@@ -229,7 +229,9 @@ const PR_TEXT = {
   // WP76 (owner answer 2026-10-22: "the 1,000 are the women enrolled"): "WSDFM: 711 of 1,000 enrolled in work (71%); separate trial: 833 women." names the base the way Her Power's line does ("372 of 800 tracked in work (47%)"). The wording the answer suggests, "WSDFM: 711 of 1,000 enrolled in work (71%);
   // a separate trial studied 833 women.", is 662 px against the 594 px the row has at 1280 px, so it wraps (76 px against 46 px for one row) and leaves slides 1 to 3 at 57, 57 and 40 px unused at 1280 px (the limit is 48; it is 42, 42 and 25 px with the one-row line, and 16 px on every slide at 390 px either way): measured. "a" and "studied" are the words left out (585 px, one row), as "from program records" was in WP63.
   // Measured at 1280 px, wrapped: "...; a separate trial of 833 women." 616 px; "...; a separate trial had 833 women." 630 px; "711 of the 1,000 enrolled in work (71%); separate trial: 833 women." 618 px. One row: "...; separate trial studied 833." 582 px.
-  wsdfm: `WSDFM: ${wsdfmBase} enrolled in work (${wsdfmShare}); separate trial: ${TRIAL_WOMEN} women.`,
+  // WP81 (owner item, 2026-10-23): "separate trial: 833 women" is gone, so the 711 of 1,000 read as program records, not as a trial result. The owner's first wording, "...(71%); program records, not trial results.", wraps at 1280 px
+  // (two rows, 76 px against the Kosovo line's 46 px; measured 537 px wide), so the fallback is used: "...(71%), from program records." (549 px at 1280, one row; 289 px wide at 390 px as the other lines wrap). The 833 is no longer on this line, so RC-07 is not in its facts.
+  wsdfm: `WSDFM: ${wsdfmBase} enrolled in work (${wsdfmShare}), from program records.`,
   yes: `UNDP YES, Korail (${korailYear}): ${fact('PR-03').stat?.value} of the ${firstJob[1]} enrolled found a first job within three months.`,
   // WP52 (cycle-27 review, Grok M1): "... tracked women in work; 2,500 trained directly." (the parenthesis "(2,500 trained directly)" could be read as 47% of the 2,500: the 800 tracked women are the base of the 47%, and the 2,500 is a separate fact, set apart by
   // the semicolon). The review's wording, "...; 2,500 women trained directly.", is 644 px wide against the 594 px the row has at 1280 px (this line is 579 px; the old one 588), so it wrapped and made the slide taller than "Find Your Program"; "women"
@@ -384,7 +386,7 @@ export const HOME_SLIDES: HeroSlide[] = [
     lead: 'Results from the records of four programs.',
     lines: [
       { text: PR_TEXT.wow, factIds: ['PR-02', 'TL-04'] },
-      { text: PR_TEXT.wsdfm, factIds: ['PR-01', 'RC-07'] },
+      { text: PR_TEXT.wsdfm, factIds: ['PR-01'] },
       { text: PR_TEXT.yes, factIds: ['PR-03', 'PR-06'] },
       { text: PR_TEXT.herPower, factIds: ['PR-05'] },
     ],
