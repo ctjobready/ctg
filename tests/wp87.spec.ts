@@ -300,7 +300,7 @@ test.describe('Item 17: polish', () => {
 });
 
 test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total stays "150,000+"; the composition is 112,926 direct and 40,152 courseware', () => {
-  const SPLIT = 'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.';
+  const SPLIT = 'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.';
 
   test('no built page prints the old composition (111,268 / 40,043 / 14,918), a "~150,000" total or a "nearly 150,000" total', () => {
     const offenders: string[] = [];
@@ -326,6 +326,7 @@ test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total
     const sc02 = fact('SC-02');
     expect(sc02.stat?.value).toBe('150,000+');
     expect(sc02.stat?.detail).toBe(SPLIT);
+    // WP90 shortened only the detail; the register text keeps the full wording
     expect(sc02.text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)`);
     expect(fact('SC-01').stat?.value, 'the unique-learner count is a separate figure').toBe('130,000+');
     expect(fact('SC-16').text).toBe('130,000+ learners trained through 150,000+ enrollments since 2014. CodersTrust has worked in 16 countries and territories');

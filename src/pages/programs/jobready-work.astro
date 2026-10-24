@@ -14,6 +14,7 @@ import Fact from '../../components/facts/Fact.astro';
 import ProgramGlance from '../../components/pages/programs/ProgramGlance.astro';
 import PairedEvidence from '../../components/pages/partners/PairedEvidence.astro';
 import GuideSection from '../../components/pages/programs/GuideSection.astro';
+import FactStat from '../../components/facts/FactStat.astro';
 import MechanismSection from '../../components/pages/programs/MechanismSection.astro';
 import FaqSection from '../../components/pages/programs/FaqSection.astro';
 import OfferSection from '../../components/pages/programs/OfferSection.astro';
@@ -23,7 +24,7 @@ import RouteBlock from '../../components/ui/RouteBlock.astro';
 import StepFlow from '../../components/ui/StepFlow.astro';
 import { faqNode, type FaqSource } from '../../components/pages/programs/faq';
 import { C14_FIRST, PAGE_UPDATED, ctaFor, serviceNode, statValue } from '../../components/pages/programs/meta';
-import { EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING } from '../../data/copy';
+import { EMPLOYER_HIRING_STEPS, MICRO_COMMITMENT, POSITIONING, statLabelUnder } from '../../data/copy';
 import { fact } from '../../data/facts';
 import { contractScope } from '../../components/sections/copyText';
 import { formatDate, isoDate } from '../../lib/format';
@@ -84,10 +85,11 @@ const approach = [
   <!-- C5. WP61 (cycle-33 reviews, GPT-6.1 Sol G2 and Kimi K1): no empathy line ("You have roles to fill and teams that need AI skills for their daily work."); the band opens with the credentials list. -->
   <GuideSection
     title="Employers and Partners We Work With"
-    statIds={['SC-15']}
     partnerGroup="private"
     method={{ text: 'JobReady@Work builds each program around a needs assessment, on the TalentLEAP model.', factId: 'IN-06', link: { label: 'How TalentLEAP Works', href: '/our-model/talentleap/' } }}
   >
+    {/* WP90 (triage A3): the 23,000+ tile leads the band, above the credential bullets (it was a side tile after them). Wording unchanged. */}
+    <FactStat id="SC-15" label={statLabelUnder('Employers and Partners We Work With', fact('SC-15').stat?.label)} />
     <ul class="guide-list" role="list">
       <li data-fact="PA-06"><Fact id="PA-06" />.</li>
       <li data-fact="PA-07"><Fact id="PA-07" />.</li>

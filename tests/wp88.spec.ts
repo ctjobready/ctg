@@ -80,17 +80,17 @@ test.describe('Items 1 and 10: the Her Power overlap and the cohort wording', ()
 });
 
 test.describe('Item 2: the Investors enrollment note states the de-duplicated total', () => {
-  test('SC-02 detail ends with "Counting the 2,400 women once, the total is 150,678." and the arithmetic closes', () => {
+  test('SC-02 detail ends with "Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678." and the arithmetic closes', () => {
     expect(112926 + 40152 - 2400).toBe(150678);
-    expect(fact('SC-02').stat?.detail).toContain('the 2,400 CodersTrust also trained directly');
-    expect(fact('SC-02').stat?.detail).toContain('Counting the 2,400 women once, the total is 150,678.');
+    expect(fact('SC-02').stat?.detail).toContain('Her Power’s 2,400 directly trained women are in both counts');
+    expect(fact('SC-02').stat?.detail).toContain('so counting them once gives 150,678.');
   });
 
   test('the rendered Investors note carries the total after the split', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const note = compact(await page.locator('#guide .ig__notes').textContent());
     expect(note).toContain('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware');
-    expect(note).toContain('UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678. Most delivery has been in Bangladesh.');
+    expect(note).toContain('UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678. Most delivery has been in Bangladesh.');
   });
 });
 

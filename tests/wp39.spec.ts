@@ -106,7 +106,7 @@ const PAGES: PageSpec[] = [
     cards: [
       { title: 'Certification Exam Preparation and Mentoring', text: CERT_AND_MENTORING, facts: ['PD-02', 'PD-01'] },
       { title: 'Skills Employers Ask For', text: EMPLOYER_SKILLS, facts: ['PD-10', 'PD-02'] },
-      { title: 'Placement Results You Can Discuss', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
+      { title: 'Placement Evidence You Can Report', text: SCOPE_RESULTS, facts: ['PD-08', 'PD-09'] },
     ],
   },
   {

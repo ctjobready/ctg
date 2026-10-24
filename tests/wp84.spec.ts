@@ -35,8 +35,8 @@ const visible = (html: string) =>
       .replace(/&quot;/g, '"'),
   );
 
-const BREAKDOWN = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
-const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}. Counting the 2,400 women once, the total is 150,678.`;
+const BREAKDOWN = '(Her Power’s 25,125 and UNDP FutureNation’s 15,027)';
+const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}. Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.`;
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
@@ -46,7 +46,8 @@ test.describe('WP84: the register says what the courseware share is', () => {
   test('SC-02’s detail and text call the 40,152 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
     const sc02 = fact('SC-02');
     expect(sc02.stat?.detail).toBe(NEW_DETAIL);
-    expect(sc02.text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}`);
+    // WP90: the register text keeps the full breakdown; only the detail is shortened
+    expect(sc02.text).toBe('150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)');
     expect(`${sc02.text} ${sc02.stat?.detail}`).not.toMatch(/4[01],\d{3} through CodersTrust courseware/);
   });
 
@@ -58,8 +59,8 @@ test.describe('WP84: the register says what the courseware share is', () => {
     const futureNation = fact('SC-14').stat?.numeric;
     expect(herPower).toBe(25125);
     expect(futureNation).toBe(15027);
-    expect(detail).toContain(`the ${fact('GV-01').stat?.value} women Her Power trained nationally with CodersTrust’s curriculum`);
-    expect(detail).toContain(`UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')} course learners`);
+    // WP90 (triage A1): the detail names Her Power's figure and UNDP FutureNation's figure, not the longer curriculum clause.
+    expect(detail).toContain(`Her Power’s ${fact('GV-01').stat?.value} and UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')})`);
     expect(share).toBe(herPower + (futureNation ?? 0));
     expect(share).toBe(40152);
     expect(direct).toBe(112926);

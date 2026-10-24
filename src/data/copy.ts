@@ -175,7 +175,8 @@ export const CONTRACT_FIGURES = contractFigures();
 function overlapSentence(n: string): { text: string; fact: string } {
   const enrollments = fact('SC-02').stat?.value;
   if (!enrollments || !/^[\d,]+\+$/.test(enrollments)) throw new Error('CONTRACT_TOTAL_NOTE: SC-02 no longer has a plain "N+" count as its stat value');
-  if (!(fact('SC-02').stat?.detail ?? '').includes(`the ${n} women Her Power trained nationally with CodersTrust’s curriculum`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "the N women Her Power trained nationally with CodersTrust’s curriculum" (the overlap with the 30,000+ contract scope)');
+  // WP90 (triage A1): SC-02's detail now names "Her Power’s N" (the shortened breakdown); the guard reads that form.
+  if (!(fact('SC-02').stat?.detail ?? '').includes(`Her Power’s ${n} and`)) throw new Error('CONTRACT_TOTAL_NOTE: the SC-02 detail no longer says the courseware share includes "Her Power’s N and" (the overlap with the 30,000+ contract scope)');
   return { text: `Her Power’s ${n} is the same group counted in the ${enrollments} enrollments through CodersTrust’s curriculum, not additional people.`, fact: 'SC-02' };
 }
 /**

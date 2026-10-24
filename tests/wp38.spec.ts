@@ -238,7 +238,7 @@ test.describe('Guide band: one origin line on the audience pages, the two-senten
 });
 
 test.describe('Investors: the definition band no longer repeats the 130,000+', () => {
-  // WP42 (cycle-19 review): the count is the first tile of "Delivered Since 2014", which moved from "Reach to Date" (now "Contracts, Pipeline and Recognition") into the track-record band (#guide)
+  // WP42 (cycle-19 review): the count is the first tile of "Delivered Since 2014", which moved from "Reach to Date" (now "Contracts and Recognition") into the track-record band (#guide)
   test('the second paragraph is the platform sentence alone; the track-record band carries the count', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     expect(await texts(page, '#definition .def__text')).toEqual([

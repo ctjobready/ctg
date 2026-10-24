@@ -144,11 +144,11 @@ test.describe('Foundations: the first and third "What Your Cohort Grant Gets" ca
     await expect(card.locator('h3')).toHaveText('Progress You Can See Every Month');
     expect(await texts(page, '#features li.card:nth-child(3) p')).toEqual(['Monthly reports and quarterly reviews keep progress visible. Where agreed, SDG-mapped reporting follows your CSR framework, with co-branded certificates and events.']);
     expect(((await card.getAttribute('data-fact')) ?? '').split(' ').sort()).toEqual(['PD-08', 'PD-18']);
-    // the scorecard: the second card and the Accountability callout; the due-diligence confirmation: the Due Diligence band
+    // the scorecard: the second card (the Accountability callout was removed in WP90, triage A2); the due-diligence confirmation: the Due Diligence band
     await expect(page.locator('#features li.card:nth-child(2) h3')).toHaveText('A Pilot Scorecard Agreed with You');
     expect(compact(await page.locator('#due-diligence .lead').textContent())).toBe('The contracting entity, safeguarding arrangements and reporting plan are confirmed for your program.');
     const text = await mainText(page);
-    expect(text).toContain('For cohort grants, every pilot is judged on cost per completer and per verified outcome');
+    expect(text).not.toContain('For cohort grants, every pilot is judged on cost per completer and per verified outcome');
     expect(text).not.toContain('confirmed in co-design');
   });
 

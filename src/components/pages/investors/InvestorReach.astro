@@ -29,10 +29,14 @@ const stat = (sid: string) => {
   return s;
 };
 const badges = ['PA-06', 'PA-08'];
+// WP90 (triage item 3): this page says the NU learners are being onboarded (the wording the other NU pages use). SC-04 keeps "onboarding pipeline" for the pages that read it; only this sentence changes, and the rest of SC-04 is read from the register.
+const nuPipeline = '1.5M+ National University learners in the onboarding pipeline';
+if (!fact('SC-04').text.startsWith(nuPipeline)) throw new Error('InvestorReach: SC-04 no longer opens with the pipeline wording this sentence replaces');
+const nuSentence = `1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)${fact('SC-04').text.slice(nuPipeline.length)}`;
 ---
 
 <Section id={id} tone="white" aria-labelledby={`${id}-h`}>
-  <SectionHeader id={`${id}-h`} eyebrow="Beyond Delivered Reach" title="Contracts, Pipeline and Recognition" />
+  <SectionHeader id={`${id}-h`} eyebrow="Beyond Delivered Reach" title="Contracts and Recognition" />
   <div class="ir__group" data-reveal>
     <h3 class="ir__h t-heading-l">Contracted Scope</h3>
     <div class="ir__tile" data-fact={contracted}>
@@ -41,7 +45,7 @@ const badges = ['PA-06', 'PA-08'];
       <p class="ir__note" data-fact={CONTRACT_TOTAL_NOTE.facts.join(' ')}>{CONTRACT_TOTAL_NOTE.text}</p>
     </div>
   </div>
-  <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the delivered reach: <Fact id="SC-04" /></p>
+  <p class="ir__p" data-fact="SC-04" data-reveal>Separately, and not counted in the delivered reach: {nuSentence}.</p>
   <ul class="ir__badges" role="list" data-reveal>
     {
       badges.map((bid) => (

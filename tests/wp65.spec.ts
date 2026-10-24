@@ -105,9 +105,9 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
 
   test('SC-02 is unchanged in the register, and Investors still prints the split from its detail line', async ({ page }) => {
     expect(fact('SC-02').text).toContain('112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware');
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.');
     await open(page, INVESTORS);
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners). Counting the 2,400 women once, the total is 150,678.');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.');
     // the wording WP50 gave About's tile is on no page; the split is on Investors and no longer on About
     expect(pagesWith('Including 111,268 direct enrollments and 40,043 through courseware.')).toEqual([]);
     const withSplit = pagesWith('112,926');

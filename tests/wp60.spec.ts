@@ -173,7 +173,7 @@ test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are
     expect(campus).not.toContain(`${BASE}, ${NU_NOT_TRAINED}`);
     expect(campus).toContain('they are not learners trained by CodersTrust');
     await open(page, 'partner-with-us/investors/');
-    expect(compact(await page.locator('main').textContent())).toContain('Separately, and not counted in the delivered reach: 1.5M+ National University learners in the onboarding pipeline');
+    expect(compact(await page.locator('main').textContent())).toContain('Separately, and not counted in the delivered reach: 1.5M+ National University learners being onboarded (the university’s own learners, not learners trained by CodersTrust)');
   });
 });
 

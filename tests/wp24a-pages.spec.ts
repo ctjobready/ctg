@@ -36,7 +36,7 @@ test.describe('Investors page structure', () => {
     await expect(page.locator('#proof-band').getByRole('link', { name: 'Case Studies' })).toHaveAttribute('href', /\/impact\/case-studies\/$/);
   });
 
-  // WP42 (cycle-19 review): "Delivered Since 2014" moved into the track-record band (#guide), before the institutional relationships; the contract scope stays in its own labeled block in #reach ("Contracts, Pipeline and Recognition")
+  // WP42 (cycle-19 review): "Delivered Since 2014" moved into the track-record band (#guide), before the institutional relationships; the contract scope stays in its own labeled block in #reach ("Contracts and Recognition")
   // WP43 (cycle-20 review): the band's only sub-heading is "Delivered Since 2014"; the relationships are one paragraph under the figures, and the leadership entries are the "Meet the Leadership Team" link under that paragraph
   test('delivered reach leads the track-record band; the contract scope is its own labeled block in the next reach band', async ({ page }) => {
     await page.goto(URL);
