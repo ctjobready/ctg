@@ -207,7 +207,7 @@ test.describe('M3 (Gemini): Home’s recognition band', () => {
   test('its first badge is "University Partners" (only UPEACE is UN-mandated, and its own line says so); "University and UN-Mandated Partners" is on no built page', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
     const first = band.locator('.rec__badge').first();
     expect(compact(await first.textContent())).toContain('University for Peace (UPEACE), the UN-mandated university');
     expect(await first.getAttribute('data-fact')).toBe('PA-05');

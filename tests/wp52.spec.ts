@@ -172,7 +172,7 @@ test.describe('Foundations: the cohort-grant offer’s lead is the program-sizes
     expect(ids.indexOf('platform-grants')).toBe(ids.indexOf('cohort-grants') + 1);
     expect(compact(await page.locator('#funding-routes tbody tr').nth(1).locator('th').textContent())).toBe('Funding Route 2 JobReady Platform Grants');
     expect((await texts(page, '#mechanism .fr__inquire a')).some((t) => t.includes('Discuss a JobReady Platform Grant'))).toBe(true);
-    await expect(page.locator('#platform-grants .callout').first()).toContainText('A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
+    await expect(page.locator('#platform-grants .callout').first()).toContainText('The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
   });
 });
 
@@ -436,7 +436,7 @@ test.describe('Home: slide 2 is plain sentences (items 17 and 25; four since WP6
   test('slide 2: "... work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for ..."', async ({ page }) => {
     await open(page, HOME);
     expect(compact(await slide(page, 2).locator('.hs__lead').textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
@@ -481,7 +481,7 @@ test.describe('Home: "Progress You Can Check" promises reports (item 36) and the
     await expect(badges).toHaveCount(3);
     for (let i = 0; i < 3; i++) await expect(badges.nth(i).locator('.rec__badge-text'), `badge ${i + 1}`).toHaveCount(1);
     const aws = page.locator('#recognition .rec__badge[data-fact="PA-06"]');
-    expect(compact(await aws.locator('.rec__badge-title').textContent())).toBe('AWS Authorized Training Partner');
+    expect(compact(await aws.locator('.rec__badge-title').textContent())).toBe('Amazon Web Services (AWS)');
     expect(compact(await aws.locator('.rec__badge-text').textContent())).toBe('CodersTrust is an AWS Authorized Training Partner.');
     expect(fact('PA-06').text).toBe('AWS Authorized Training Partner');
   });

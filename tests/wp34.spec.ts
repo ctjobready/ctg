@@ -15,7 +15,7 @@ const texts = (page: Page, selector: string) => page.locator(selector).evaluateA
 const noOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 const count = (haystack: string, needle: string) => haystack.split(needle).length - 1;
 
-const HIRING = 'We scope your talent request against the experience and credentials available in the candidate pool.';
+const HIRING = 'A conversation about the roles you want to fill, to scope your talent request.';
 const INTRODUCTIONS = 'Job-ready candidates are introduced through CodersTrust’s placement team.';
 
 test.describe('Employers and JobReady@Work: the closing steps name their routes', () => {

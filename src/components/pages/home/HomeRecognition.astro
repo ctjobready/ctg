@@ -28,7 +28,8 @@ if (pa06 !== 'AWS Authorized Training Partner') throw new Error('HomeRecognition
 const items = [
   // WP63 (cycle-35 review, Gemini M3): "University Partners" (it said "University and UN-Mandated Partners", but only UPEACE is UN-mandated; PA-05's own line under the heading still says so).
   { id: 'PA-05', icon: 'landmark', title: 'University Partners', text: `${pa05[1]}.` },
-  { id: 'PA-06', icon: 'cloud', title: pa06, text: `CodersTrust is an ${pa06}.` },
+  // WP91 (triage A9): the title names the company, as the other two titles do; the line under it still states the registered status (PA-06).
+  { id: 'PA-06', icon: 'cloud', title: 'Amazon Web Services (AWS)', text: `CodersTrust is an ${pa06}.` },
   { id: 'PA-08', icon: 'award', title: 'HolonIQ South Asia EdTech 100', text: `CodersTrust was listed ${pa08[1].replace('STEAM Category', 'STEAM category')}.` },
 ];
 ---

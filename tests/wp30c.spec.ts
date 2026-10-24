@@ -139,7 +139,7 @@ test.describe('Home', () => {
     await open(page, '');
     const band = page.locator('#recognition');
     await expect(band.locator('h2')).toHaveText('Partners and Recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']);
+    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']);
     expect(compact(await band.locator('.rec__badge').first().textContent())).toContain('University for Peace (UPEACE), the UN-mandated university');
     await expect(band.locator('p.cov')).toHaveCount(1);
     const outsideTheLine = await band.evaluate((el) => {

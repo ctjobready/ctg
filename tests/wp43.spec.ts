@@ -62,7 +62,7 @@ test.describe('Investors: the track-record band (item 1)', () => {
     expect(compact(await page.locator('#guide .ig__method').textContent())).toContain('TalentLEAP, our method, organizes skills into career paths.');
     expect(compact(await page.locator('#guide .ig__method').textContent())).not.toContain('progressive levels');
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered']);
+    expect(await texts(page, '#guide h3')).toEqual(['Scale and Partners']);
   });
 
   test('the four relationship lists and the seven founder and leadership entries are gone: no panel, list, portrait or person in the band, and no person anywhere on the page', async ({ page }) => {
@@ -351,7 +351,7 @@ test.describe('Development Partners and Foundations: headings that are not absol
     expect('Fund Training That Reaches Paid Work').toBe(titleCase('Fund Training That Reaches Paid Work'));
     expect(await mainText(page)).not.toContain('Grants Buy Hours. You Want Earnings');
     await expect(page.locator('#problem .gp__pains li')).toHaveCount(3);
-    // WP50 (cycle-25 review): the first pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
-    expect(await texts(page, '#problem .gp__q')).toEqual(['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
+    // WP50 (cycle-25 review): the first pain is "Earnings Must Be Tracked, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
+    expect(await texts(page, '#problem .gp__q')).toEqual(['Earnings Must Be Tracked, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
   });
 });

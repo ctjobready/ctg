@@ -190,7 +190,7 @@ test.describe('Item 13: no two consecutive Investors headings both start "Since 
     for (let i = 1; i < texts.length; i++) {
       expect(texts[i - 1].startsWith('Since 2014') && texts[i].startsWith('Since 2014'), `${texts[i - 1]} / ${texts[i]}`).toBe(false);
     }
-    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Delivered');
+    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Scale and Partners');
   });
 });
 

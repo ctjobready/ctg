@@ -135,7 +135,7 @@ test.describe('Item 2 (Kimi, GPT-6.1 Sol, Gemini; rework R1 and R2): Home’s pr
   test('Home: the recognition band keeps its three badges, then the one-sentence pointer naming Kosovo and Albania (no outlet, no link of its own), then the link to Recognition and Media', async ({ page }) => {
     await open(page, HOME);
     const band = page.locator('#recognition');
-    await expect(band.locator('h3')).toHaveText(['University Partners', 'AWS Authorized Training Partner', 'HolonIQ South Asia EdTech 100']); // WP63 (cycle-35 review, Gemini M3)
+    await expect(band.locator('h3')).toHaveText(['University Partners', 'Amazon Web Services (AWS)', 'HolonIQ South Asia EdTech 100']); // WP63 (cycle-35 review, Gemini M3)
     const line = band.locator('p.cov');
     await expect(line).toHaveCount(1);
     expect(compact(await line.textContent())).toBe(POINTER);

@@ -133,7 +133,8 @@ if (fact('RC-06a').stat?.value !== '>4×') throw new Error('heroSlides: RC-06a n
 const nineTrialAverage = /more than four times the ([\d.]+-point average across nine vocational-training trials)$/.exec(fact('RC-06a').stat?.glance?.label ?? '')?.[1];
 if (!nineTrialAverage) throw new Error('heroSlides: RC-06a’s glance label no longer ends "more than four times the N-point average across nine vocational-training trials"; update the callout of the trial slide');
 if (!fact('RC-06a').text.includes(`${offeredPoints} percentage points more likely to be employed`)) throw new Error('heroSlides: RC-06a no longer states the employment effect RC-02 states ("N percentage points more likely to be employed"); update the callout of the trial slide');
-const trialMultiple = `Employment effect: +${offeredPoints} percentage points, more than four times the ${nineTrialAverage}.`;
+// WP91 (triage A3): "Employment effect, not income:" says what the caption measures, since the heading above it is about earnings.
+const trialMultiple = `Employment effect, not income: +${offeredPoints} percentage points, more than four times the ${nineTrialAverage}.`;
 /** Her Power's tracked base and in-work share, read from PR-05 ("372 of 800 tracked women ... in work (47%)"). */
 const herPower = /of (\d+) tracked women.*\((\d+)%\)/.exec(fact('PR-05').text);
 if (!herPower) throw new Error('heroSlides: PR-05 no longer reads "... of N tracked women ... (P%)"');
@@ -156,6 +157,9 @@ if (!herPowerDirect) throw new Error('heroSlides: PR-05 label no longer reads "t
  */
 const governmentScope = /^(Six government contracts with training and curriculum work scoped) for ([\d,]+\+ people); official training partner of Bangladesh’s National University (for digital career skills and credentials), (onboarding [\d.]+M\+ learners)$/.exec(fact('GV-12').text);
 if (!governmentScope) throw new Error('heroSlides: GV-12 no longer reads "Six government contracts ... work scoped for N+ people; official training partner of Bangladesh’s National University for digital career skills and credentials, onboarding N+ learners"');
+// WP91 (triage A2): the count of the National University's learners, read from GV-12's "onboarding 1.5M+ learners" (governmentScope[4]); the lead never retypes it.
+const nuLearners = /^onboarding ([\d.]+M\+) learners$/.exec(governmentScope[4])?.[1];
+if (!nuLearners) throw new Error('heroSlides: GV-12 no longer reads "onboarding N learners" for the National University count');
 /**
  * WP59 (cycle-31 review, GLM L1): "onboarding 1.5M+ learners" (the owner-confirmed wording of GV-12) carried no separation note on Home, as the Universities and Investors pages' notes have ("... the learners being onboarded; they are not learners trained by CodersTrust"; SC-04: "not counted in the delivered reach").
  * The slide keeps the wording and adds the shortest qualifier from that note, in brackets after it: "... onboarding 1.5M+ learners (National University’s learners, not learners trained by CodersTrust)." It rests on SC-04 ("1.5M+ National University learners in the onboarding pipeline"), which the build checks and the lead's data-fact lists.
@@ -340,7 +344,8 @@ export const HOME_SLIDES: HeroSlide[] = [
     // CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust." The words come from GV-12 (governmentScope[3] and [4]) and NU_NOT_TRAINED; "onboarding 1.5M+ learners" is unchanged and every data-fact stays.
     // WP83 (owner answer 2026-10-23: Her Power's 25,125 is the national program's TARGET, not a count of women trained): "Her Power, one of the six, is a national program to train 25,125 women; CodersTrust trained 2,500 directly." (it said "..., trained 25,125 women nationally; ...").
     // WP85 (owner update 2026-10-24: the government achieved 100% of Her Power's 25,125-trainee target): "Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly." (WP83 had "..., is a national program to train 25,125 women; ...").
-    lead: `${governmentScope[1]} for ${governmentScope[2]}, not a count of completers. Her Power, one of the six, trained ${CONTRACT_FIGURES.national} women nationally, its full target; CodersTrust trained ${CONTRACT_FIGURES.direct} directly. As National University’s official training partner ${governmentScope[3]}, CodersTrust is ${governmentScope[4]}, the university’s own learners, ${NU_NOT_TRAINED}.`,
+    // WP91 (Perplexity cycle 40, triage A2): the National University sentence names the country and says the 1.5M+ are the university's own learners, read from GV-12's "onboarding N learners" (nuLearners).
+    lead: `${governmentScope[1]} for ${governmentScope[2]}, not a count of completers. Her Power, one of the six, trained ${CONTRACT_FIGURES.national} women nationally, its full target; CodersTrust trained ${CONTRACT_FIGURES.direct} directly. As the official training partner of Bangladesh’s National University ${governmentScope[3]}, CodersTrust is onboarding ${nuLearners} of the university’s own learners, who are not learners trained by CodersTrust.`,
     // WP84 (owner answer 2026-10-24): the shared note's overlap sentence cites SC-02 (the 150,000+ enrollments), which this slide does not print, so SC-02 is left off the lead's data-fact (it stays GV-12 GV-01 GV-11 SC-04).
     leadFacts: [...CONTRACT_TOTAL_NOTE.facts.filter((f) => f !== 'SC-02'), 'SC-04'],
     // WP32 (cycle-9 review): the slide covers the contracts and the National University partnership, so it links both audience pages (the carousel renders every link as a text link, side by side).

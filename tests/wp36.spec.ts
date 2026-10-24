@@ -307,8 +307,8 @@ test.describe('the ranked pains are statements, not questions', () => {
     ['partner-with-us/governments/', ['Graduates Struggle to Find Work', 'Training Budgets Do Not Show Up as Earnings', 'Trainer and Curriculum Capacity Takes Time to Build']],
     // WP49 (cycle-24 review): the first two Development Partners pains were broad sector conclusions; they say what the partner needs (tests/wp49.spec.ts)
     ['partner-with-us/development-partners/', ['Training Must Connect to Paid Work', 'Barriers Can Interrupt Training', 'Outcomes Are Hard to Audit']],
-    // WP50 (cycle-25 review): the first Foundations pain is "Track Earnings, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
-    ['partner-with-us/foundations/', ['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
+    // WP50 (cycle-25 review): the first Foundations pain is "Earnings Must Be Tracked, Not Only Training Hours" (it was "Grants Buy Training Hours, but Rarely Earnings"; tests/wp50.spec.ts)
+    ['partner-with-us/foundations/', ['Earnings Must Be Tracked, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']],
     // WP46 (cycle-22 review): Universities states two pains; the employers' pain is the 72% tile directly below them
     ['partner-with-us/universities/', ['Degree Holders Struggle to Find Work', 'Placement Results Are Hard to Publish']],
     ['partner-with-us/employers/', ['You Struggle to Find the Digital Talent You Need', 'Hiring Alone Does Not Close the Gap', 'Your Teams Need Upskilling for AI Workflows']],

@@ -163,7 +163,7 @@ test.describe('R4 (Grok): the JobReady Platform pipeline tile says the 1.5M+ are
     await expect(tile.locator('.factstat')).toHaveAttribute('data-fact', 'SC-04');
     await open(page, HOME);
     // WP61 (cycle-33 review, GPT-6.1 Sol G1): the clause closes the National University sentence ("..., the university’s own learners, not learners trained by CodersTrust."); it was a sentence of its own ("They are National University’s own learners, ...")
-    expect(compact(await slide(page, 2).locator('.hs__lead').textContent()).endsWith(`the university’s own learners, ${NU_NOT_TRAINED}.`)).toBe(true);
+    expect(compact(await slide(page, 2).locator('.hs__lead').textContent()).endsWith('who are not learners trained by CodersTrust.')).toBe(true);
   });
 
   test('the pages that show SC-04’s figure with the register’s label keep it, and their own separation (a band lead, or "not counted in the delivered reach")', async ({ page }) => {
@@ -330,7 +330,7 @@ test.describe('S6 (Claude): the Governments delivery card is "Trainers and Curri
 // WP61 (cycle-33 review, GPT-6.1 Sol G1) shortened the slide to three sentences, with one semicolon (in the Her Power sentence) and no bracket; tests/wp61.spec.ts holds the new wording's other behaviors.
 test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sentences (four until WP61, three since)', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
   test('the lead reads as above, with no bracket and one semicolon, the owner words "onboarding 1.5M+ learners", and the facts GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
@@ -340,7 +340,7 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 says the same facts in plain sente
     expect(text).not.toMatch(/[()]/);
     expect((text.match(/;/g) ?? []).length, 'the one semicolon is the Her Power sentence’s').toBe(1);
     expect(text.split(/(?<=\.)\s+/)).toHaveLength(3);
-    expect(text).toContain('onboarding 1.5M+ learners');
+    expect(text).toContain('onboarding 1.5M+ of the university’s own learners');
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
 

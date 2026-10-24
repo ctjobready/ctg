@@ -260,13 +260,13 @@ test.describe('Home slide 3: the income tile comes first, then a sentence that l
 });
 
 test.describe('Home slide 1: the ">4×" callout names the comparison and its average (item R2)', () => {
-  // WP59 (cycle-31 review, Kimi K3): the callout states the +10.3 it compares (RC-02's figure, which RC-06a's text states too): "Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." (tests/wp59.spec.ts)
-  test('"Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." with the tile and its fact tie unchanged; an average, never "typical"', async ({ page }) => {
+  // WP59 (cycle-31 review, Kimi K3): the callout states the +10.3 it compares (RC-02's figure, which RC-06a's text states too): "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." (tests/wp59.spec.ts)
+  test('"Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials." with the tile and its fact tie unchanged; an average, never "typical"', async ({ page }) => {
     await open(page, HOME);
     const proof = slide(page, 1).locator('.hs__proof');
     expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
     await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
     expect(fact('RC-06a').stat?.value).toBe('>4×');
     expect(fact('RC-06a').stat?.glance?.label).toMatch(/more than four times the 2\.3-point average across nine vocational-training trials$/);
     const text = compact(await proof.textContent());

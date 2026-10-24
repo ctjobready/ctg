@@ -300,7 +300,7 @@ test.describe('Item 17: polish', () => {
 });
 
 test.describe('Items 18 to 21 (owner decisions 2026-10-24): the enrollment total stays "150,000+"; the composition is 112,926 direct and 40,152 courseware', () => {
-  const SPLIT = 'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.';
+  const SPLIT = 'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678.';
 
   test('no built page prints the old composition (111,268 / 40,043 / 14,918), a "~150,000" total or a "nearly 150,000" total', () => {
     const offenders: string[] = [];

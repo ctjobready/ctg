@@ -17,7 +17,7 @@ import { listPages } from './support/pages';
  *   - G2: the closing bands (Impact pages, TalentLEAP) say "A discovery session explores your goals, priority groups and possible program scope.";
  *   - G5: the Bangladesh graduate-unemployment rate (PX-03) names its publisher and year, "(BBS Labour Force Survey, 2024)", wherever it is shown (Local Partners, NU Postgraduate Diploma);
  *   - G6: the five audience pages no longer print the standalone "Safeguarding, Governance and Due Diligence" link after their FAQs; the due-diligence band and its "Governance and Accountability" link stay;
- *   - K3: Home slide 1's ">4x" callout states its base, "Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.", within the carousel's height budget;
+ *   - K3: Home slide 1's ">4x" callout states its base, "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.", within the carousel's height budget;
  *   - L1: Home slide 2 keeps "onboarding 1.5M+ learners" and adds "(National University's learners, not learners trained by CodersTrust)", within the carousel's height budget;
  *   - L3: SC-16 is two sentences, "... enrollments since 2014. CodersTrust has worked in 16 countries and territories.", on Home's reach card;
  *   - GM1: the closing-band text link is "Read the Evidence" (Title Case) on Home, the hub, About, Recognition, Development Partners and Universities.
@@ -363,7 +363,7 @@ test.describe('G6: the five audience pages end their FAQs without the standalone
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares', () => {
-  const CAPTION = 'Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.';
+  const CAPTION = 'Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.';
 
   test('the +10.3 is RC-02’s figure and RC-06a’s own text states it; the callout is an average of nine trials, never "typical"', async ({ page }) => {
     expect(fact('RC-02').stat?.numeric).toBe(10.3);
@@ -403,7 +403,7 @@ test.describe('K3: Home slide 1’s ">4×" callout states the +10.3 it compares'
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('L1: Home slide 2 separates the National University’s learners from learners trained by CodersTrust', () => {
   // WP61 (cycle-33 review, GPT-6.1 Sol G1): the National University sentence is one sentence that ends with the qualifier (it was two: "CodersTrust is also the official training partner of ..., onboarding 1.5M+ learners." and "They are National University’s own learners, ...")
-  const SENTENCE = 'As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+  const SENTENCE = 'As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the qualifier was a sentence of its own after "onboarding 1.5M+ learners." (it had been in brackets): "They are National University’s own learners, not learners trained by CodersTrust."
   test('the owner-confirmed wording "onboarding 1.5M+ learners" is kept (GV-12), and the qualifier closes the same sentence', async ({ page }) => {

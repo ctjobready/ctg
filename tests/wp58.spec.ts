@@ -124,7 +124,7 @@ test.describe('S1, G1 and L7: "16 countries and territories" is where CodersTrus
     await expect(sc03.locator('[data-status]')).toHaveCount(0);
     await expect(sc03.locator('.badge')).toHaveText('Where We Have Worked');
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']); // WP64 (cycle-36 review, Grok): the group heading says "Since 2014", so the tiles do not
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678. Most delivery has been in Bangladesh.');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
     const tops = await page.locator('#guide .ig__tile .stat__value').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
     expect(new Set(tops).size, 'the three figures start on the same line').toBe(1);
   });
@@ -482,7 +482,7 @@ test.describe('GM1: the contract-total note says who trained how many', () => {
   test('Home’s government slide is tied to GV-12, GV-01 and GV-11 (its plainer sentences state the note’s facts); the Governments tile, with the Investors and JobReady Platform tiles (WP59, GPT-6.1 Sol G1), prints the note, and none prints the bare "(25,125 women trained)" or the older "national program (25,125 women trained; ..."', async ({ page }) => {
     await open(page, HOME);
     const lead = slide(page, 2).locator('.hs__lead');
-    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.`);
+    expect(compact(await lead.textContent())).toBe(`Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.`);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await open(page, GOVERNMENTS);
     const tile = page.locator('#glance li', { hasText: '30,000+' });

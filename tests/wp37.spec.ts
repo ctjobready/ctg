@@ -250,7 +250,7 @@ test.describe('Foundations: the Funding Route 2 passage says what a platform gra
     await open(page, 'partner-with-us/foundations/');
     const passage = page.locator('#platform-grants .callout', { hasText: 'Funding Route 2 · JobReady Platform Grants' });
     await expect(passage).toHaveCount(1);
-    expect(compact(await passage.locator('p[data-fact="IN-04"]').textContent())).toBe('A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
+    expect(compact(await passage.locator('p[data-fact="IN-04"]').textContent())).toBe('The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
     await expect(passage.getByRole('link')).toHaveCount(0);
     const inquiry = page.locator('.fr__inquire a', { hasText: 'Discuss a JobReady Platform Grant' });
     await expect(inquiry).toHaveCount(1);

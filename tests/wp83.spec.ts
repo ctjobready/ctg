@@ -127,7 +127,7 @@ test.describe('WP83 (WP85 wording): no built page words the 25,125 as a target s
     for (const p of pages) {
       const text = visible(p.html);
       const mentions = [...text.matchAll(/25,125/g)].map((m) => text.slice(Math.max(0, m.index - 45), m.index + 70));
-      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware \(Her Power’s 25,125/);
+      for (const m of mentions) expect(m, `${p.route}: "${m}"`).toMatch(/trained 25,125|25,125 women Her Power trained|25,125 is the same group|25,125 women the national program trained|Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125|courseware: Her Power’s 25,125/);
     }
   });
 
@@ -144,7 +144,7 @@ test.describe('WP83 (WP85 wording): the pages that state the 25,125', () => {
     await open(page, '');
     const lead = slide(page, 2).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.',
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });
@@ -284,7 +284,7 @@ test.describe('WP83: CodersTrust trained 2,400 women directly in Her Power (owne
         seen.add(p.route);
         const at = m.index ?? 0;
         const near = text.slice(Math.max(0, at - 70), at + 70);
-        if (!/directly|are among the 25,125|so counting them once/.test(near)) offenders.push(`${p.route}: "${near}"`);
+        if (!/directly|are among the 25,125|so counted once/.test(near)) offenders.push(`${p.route}: "${near}"`);
       }
     }
     expect(offenders).toEqual([]);

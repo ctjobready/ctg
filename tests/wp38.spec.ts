@@ -110,7 +110,7 @@ test.describe('Home: the Guide band and the cost-of-waiting card', () => {
     // WP57 (cycle-29 review, Grok R2): the slide says the note's WP35 wording again
     // WP61 (cycle-33 review, GPT-6.1 Sol G1): "Her Power, one of the six, trained 25,125 women nationally; CodersTrust trained 2,500 directly." (it said "This includes Her Power’s national program: ...")
     expect(slide2).toContain('30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly.');
-    expect(slide2).toContain('1.5M+ learners');
+    expect(slide2).toContain('1.5M+ of the university’s own learners');
     const text = await mainText(page);
     expect((text.match(/(?<![\d,])30,000\+/g) ?? []).length, 'the 30,000+ is stated once on Home (the 130,000+ learners are another figure)').toBe(1);
     expect(count(text, '1.5M+'), 'the 1.5M+ is stated once on Home').toBe(1);

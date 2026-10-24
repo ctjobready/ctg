@@ -330,11 +330,11 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
   test('the last entry is the closing band’s heading in Title Case, linking its anchor (#cta), after the goals entry; the entries before it are unchanged and in page order', async ({ page }) => {
     await open(page, IMPACT);
     const links = await page.locator('nav[aria-label="On this page"] a').evaluateAll((els) => els.map((a) => ({ label: (a.textContent ?? '').replace(/\s+/g, ' ').trim(), id: (a.getAttribute('href') ?? '').replace(/^.*#/, '') })));
+    // WP91 (triage A11): the entries are the full headings, and "In Short" is gone
     expect(links).toEqual([
-      { label: 'In Short', id: 'summary' },
       { label: 'Results at a Glance', id: 'glance' },
-      { label: 'Five Programs', id: 'cases' },
-      { label: 'Four Kinds of Evidence', id: 'evidence-ladder' },
+      { label: 'Five Programs Across Kosovo, Albania and Bangladesh', id: 'cases' },
+      { label: 'Four Kinds of Evidence, Strongest First', id: 'evidence-ladder' },
       { label: 'Where We Are Heading', id: 'heading' },
       { label: 'Seven Global Goals, Three at the Core', id: 'sdg' },
       { label: CLOSING, id: 'cta' },
@@ -361,7 +361,7 @@ test.describe('K1, Impact: "On This Page" ends on the closing band', () => {
       await open(page, IMPACT);
       expect(await noOverflow(page), `${vp.width}px`).toBe(true);
       const boxes = await rectsOf(page, 'nav[aria-label="On this page"] a');
-      expect(boxes).toHaveLength(7);
+      expect(boxes).toHaveLength(6);
       for (const b of boxes) {
         expect(b.left, `${vp.width}px: inside on the left`).toBeGreaterThanOrEqual(0);
         expect(b.right, `${vp.width}px: inside on the right`).toBeLessThanOrEqual(vp.width);
@@ -536,7 +536,7 @@ test.describe('R2, the 30,000+ visibly includes Her Power’s national program (
     await open(page, HOME);
     const lead = page.locator('#results [data-hs-slide]').nth(1).locator('.hs__lead');
     expect(compact(await lead.textContent())).toBe(
-      `Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.`,
+      `Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.`,
     );
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
   });

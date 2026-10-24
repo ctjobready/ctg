@@ -65,7 +65,7 @@ const answerOf = async (page: Page, question: string) => compact(await itemOf(pa
 const GV12_NOTE = 'The figure is contract scope, not a count of completers. It includes Her Power’s national program, which trained 25,125 women and met its target; CodersTrust trained 2,400 women directly.';
 // WP57 (cycle-29 review, Grok R2 with Gemini GM1): the second sentence is the note's WP35 wording again (it said "This is contract scope, not a count of completers.")
 const SLIDE2_LEAD =
-  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+  'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
 test.describe('Home slide 2 and the GV-12 note (items 1 and 12)', () => {
   // WP60 (cycle-32 review, GPT-6.1 Sol G1): the body was four plain sentences (the contract scope with its clause; "This includes Her Power’s national program: 25,125 women trained nationally, 2,500 directly by CodersTrust."; the National University sentence; "They are National University’s own learners, ...")

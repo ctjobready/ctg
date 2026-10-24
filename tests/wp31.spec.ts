@@ -90,8 +90,8 @@ test.describe('figures say what they measure', () => {
     await open(page, '');
     const lead = compact(await page.locator('[data-hs-slide]').nth(1).locator('.hs__lead').textContent());
     // WP46 (cycle-22 review): the sentence names its subject ("CodersTrust is the official training partner of ..."), where it was a fragment
-    // WP61 (cycle-33 review, GPT-6.1 Sol G1): "As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust."
-    expect(lead).toContain('As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
+    // WP61 (cycle-33 review, GPT-6.1 Sol G1): "As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust."
+    expect(lead).toContain('As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.');
     expect(await mainText(page)).not.toContain('official skills partner');
   });
 

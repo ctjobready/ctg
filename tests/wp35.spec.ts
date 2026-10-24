@@ -50,7 +50,7 @@ test.describe('Impact overview: Results at a Glance and the jump list', () => {
     expect(await mainText(page)).not.toContain('Go Deeper');
     // WP42 (cycle-19 review): the goals entry is the full heading ("Seven Global Goals, Three at the Core"), which says which goals are the focus
     // WP57 (cycle-29 review, Kimi K3, item K1): the closing band is the last entry (tests/wp57.spec.ts)
-    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['In Short', 'Results at a Glance', 'Five Programs', 'Four Kinds of Evidence', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Discuss the Evidence for Your Program']);
+    expect(await texts(page, 'nav[aria-label="On this page"] a')).toEqual(['Results at a Glance', 'Five Programs Across Kosovo, Albania and Bangladesh', 'Four Kinds of Evidence, Strongest First', 'Where We Are Heading', 'Seven Global Goals, Three at the Core', 'Discuss the Evidence for Your Program']);
     expect(compact(await page.locator('#sdg').textContent())).toContain('CodersTrust’s training-to-employment model aligns with seven SDGs, with a primary focus on Quality Education, Gender Equality, and Decent Work and Economic Growth');
     // the band order keeps its rhythm: no two dark bands in a row
     const dark = await page.evaluate(() => Array.from(document.querySelectorAll('main .band')).map((b) => /band--(klein|deep-ink)/.test(b.className)));
@@ -148,8 +148,8 @@ test.describe('the trial and the survey are shown once per page', () => {
     expect(compact(await first.locator('.hs__lead').textContent())).toContain('women offered a place had an estimated 41% higher monthly income than the control group'); // WP63 (cycle-35 review, GLM L4)
     // WP50 (cycle-25 review, item 18): the slide's >4× tile said the multiple in words and no longer repeated the +10.3 percentage points, which this card states
     // WP54 (cycle-28 review, Grok R2): "Employment effect: more than four times the 2.3-point average across nine vocational-training trials." (tests/wp54.spec.ts)
-    // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect: +10.3 percentage points, more than four times the 2.3-point average ..."
-    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    // WP59 (cycle-31 review, Kimi K3, reversing WP50 on this point): the tile reads apart from its base, so the caption states it: "Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average ..."
+    expect(compact(await first.locator('.hs__proof').textContent())).toContain('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
   });
 
   for (const slug of THREE) {

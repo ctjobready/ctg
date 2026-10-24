@@ -60,7 +60,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary: 'A World Bank initiative that gave women in Albania a three-month online course in digital skills.',
     place: 'World Bank, with the Government of Albania and EuroPartners Development; Albania, 2021–2022',
     who: 'Women aged 16 to 35',
-    scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring',
+    // WP91 (triage A7): the card's figure and wording are PR-07's (register: "the World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled").
+    scope: 'Three-month online training in graphic design, web development and digital marketing, with mentoring. The World Bank reported in May 2022, while the program was still running, that more than 500 students had enrolled',
     resultTitle: 'Reported Enrollment',
     reported: true,
     related: { label: 'See How YouthWIDE Deploys the Model', href: '/programs/youthwide/' },

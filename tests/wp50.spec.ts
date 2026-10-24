@@ -195,10 +195,10 @@ test.describe('Home: the reporting answer is two sentences, and the full answer 
 });
 
 test.describe('Foundations: the first pain and the track-record band (items 2 and 7)', () => {
-  test('the first pain is "Track Earnings, Not Only Training Hours" in Title Case, with its supporting sentence unchanged; the other two are unchanged', async ({ page }) => {
+  test('the first pain is "Earnings Must Be Tracked, Not Only Training Hours" in Title Case, with its supporting sentence unchanged; the other two are unchanged', async ({ page }) => {
     await open(page, FOUND);
     const qs = await texts(page, '#problem .gp__q');
-    expect(qs).toEqual(['Track Earnings, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
+    expect(qs).toEqual(['Earnings Must Be Tracked, Not Only Training Hours', 'Independent Evidence Is Hard to Find', 'Accountability Must Keep Pace with Scale']);
     for (const q of qs) expect(q, q).toBe(titleCase(q));
     expect((await texts(page, '#problem .gp__a'))[0]).toBe('Attendance is easy to count; a change in income is harder to show.');
     expect(sitePages().filter((p) => visible(p.html).includes('Grants Buy Training Hours')).map((p) => p.route)).toEqual([]);
@@ -442,7 +442,7 @@ test.describe('Home: the trial slide (items 17 and 18)', () => {
     const proof = first(page).locator('.hs__proof');
     expect(await proof.getAttribute('data-fact')).toBe('RC-06a');
     await expect(proof.locator('.stat__value')).toHaveText('>4×');
-    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
+    expect(compact(await proof.locator('.stat__label').textContent())).toBe('Employment effect, not income: +10.3 percentage points, more than four times the 2.3-point average across nine vocational-training trials.');
     // the register is unchanged: RC-06a keeps its tile label and its glance label
     expect(fact('RC-06a').stat?.label).toContain('+10.3 percentage points for women offered a place, against 2.3 on average');
   });
@@ -490,7 +490,7 @@ test.describe('Foundations: each funding-route link appears once (item 20)', () 
     await expect(youthwide).toHaveCount(1);
     expect(await texts(page, '#mechanism .fr__inquire a')).toHaveLength(2);
     await expect(page.locator('#platform-grants').getByRole('link')).toHaveCount(0);
-    expect(compact(await page.locator('#platform-grants .callout').first().textContent())).toContain('A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
+    expect(compact(await page.locator('#platform-grants .callout').first().textContent())).toContain('The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.');
     // one primary button in the hero and the closing band are the page’s other inquiry actions; the two route links are text links
     await expect(platform).not.toHaveClass(/btn/);
   });

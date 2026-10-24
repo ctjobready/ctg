@@ -35,15 +35,15 @@ const visible = (html: string) =>
       .replace(/&quot;/g, '"'),
   );
 
-const BREAKDOWN = '(Her Power’s 25,125 and UNDP FutureNation’s 15,027)';
-const NEW_DETAIL = `Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${BREAKDOWN}. Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.`;
+// WP91 (triage A1): the detail's wording is the triage's ("came through", not "reached through"); the figures are unchanged.
+const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678.';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
 const SHORT_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 
 test.describe('WP84: the register says what the courseware share is', () => {
-  test('SC-02’s detail and text call the 40,152 "reached through CodersTrust curriculum and courseware" and name the two programs; the old wording is gone', () => {
+  test('SC-02’s text keeps "reached through CodersTrust curriculum and courseware" and names the two programs; its detail (WP91) says the 40,152 came through them', () => {
     const sc02 = fact('SC-02');
     expect(sc02.stat?.detail).toBe(NEW_DETAIL);
     // WP90: the register text keeps the full breakdown; only the detail is shortened
@@ -53,14 +53,15 @@ test.describe('WP84: the register says what the courseware share is', () => {
 
   test('the breakdown closes against the register: GV-01’s 25,125 plus SC-14’s 15,027 is the 40,152, and 112,926 plus 40,152 less the 2,400 counted twice is 150,678, which covers the 150,000+ (WP87)', () => {
     const detail = fact('SC-02').stat?.detail ?? '';
-    const share = toInt(/and ([\d,]+) reached through/.exec(detail)?.[1]);
-    const direct = toInt(/: ([\d,]+) direct/.exec(detail)?.[1]);
+    // WP91 (triage A1): the detail reads "..., 112,926 were direct. The other 40,152 came through ..."
+    const share = toInt(/The other ([\d,]+) came through/.exec(detail)?.[1]);
+    const direct = toInt(/, ([\d,]+) were direct/.exec(detail)?.[1]);
     const herPower = toInt(fact('GV-01').stat?.value);
     const futureNation = fact('SC-14').stat?.numeric;
     expect(herPower).toBe(25125);
     expect(futureNation).toBe(15027);
     // WP90 (triage A1): the detail names Her Power's figure and UNDP FutureNation's figure, not the longer curriculum clause.
-    expect(detail).toContain(`Her Power’s ${fact('GV-01').stat?.value} and UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')})`);
+    expect(detail).toContain(`Her Power’s ${fact('GV-01').stat?.value} and UNDP FutureNation’s ${futureNation?.toLocaleString('en-US')}.`);
     expect(share).toBe(herPower + (futureNation ?? 0));
     expect(share).toBe(40152);
     expect(direct).toBe(112926);
@@ -78,7 +79,7 @@ test.describe('WP84: the register says what the courseware share is', () => {
     expect(fact('SC-16').stat?.glance?.note).toBe('Through 150,000+ enrollments. CodersTrust has worked in 16 countries and territories.');
   });
 
-  test('no built page prints the old wording, and every 40,152 on a built page is "reached through CodersTrust curriculum and courseware"', () => {
+  test('no built page prints the old wording, and every 40,152 on a built page is "reached through" or "came through CodersTrust curriculum and courseware"', () => {
     const old: string[] = [];
     const bare: string[] = [];
     const seen: string[] = [];
@@ -87,7 +88,9 @@ test.describe('WP84: the register says what the courseware share is', () => {
       if (/4[01],\d{3} through (?:CodersTrust )?courseware/.test(text) || /1[01]\d,\d{3} direct enrollments; 4[01],\d{3}/.test(text)) old.push(p.route);
       for (const m of text.matchAll(/40,152/g)) {
         seen.push(p.route);
-        if (!text.slice(m.index ?? 0, (m.index ?? 0) + 80).startsWith('40,152 reached through CodersTrust curriculum and courseware')) bare.push(`${p.route}: "${text.slice(m.index ?? 0, (m.index ?? 0) + 80)}"`);
+        // WP91 (triage A1): the Investors detail says "came through"; every other 40,152 says "reached through"
+        const around = text.slice(m.index ?? 0, (m.index ?? 0) + 80);
+        if (!around.startsWith('40,152 reached through CodersTrust curriculum and courseware') && !around.startsWith('40,152 came through CodersTrust curriculum and courseware')) bare.push(`${p.route}: "${text.slice(m.index ?? 0, (m.index ?? 0) + 80)}"`);
       }
     }
     expect(old).toEqual([]);

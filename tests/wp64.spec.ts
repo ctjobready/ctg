@@ -90,7 +90,7 @@ test.describe('Item 1 (GLM, GPT-6.1 Sol, Grok, Kimi): Home slide 2 is "Six Gover
     await expect(gov).toHaveAttribute('aria-label', `2 of 4: ${HEADING}`);
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     await expect(gov.locator('.hs__lead')).toHaveText(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.',
     );
     expect(await texts(page, '#results [data-hs-slide] h3')).toEqual([
       'Women Offered a Place Earned an Estimated 41% More per Month',
@@ -306,11 +306,11 @@ test.describe('Item 6 (Grok): "since 2014" is said once where a heading or a nei
 
   test('Investors: under the group heading "Since 2014" the learners and enrollments tiles read "learners trained" and "enrollments"; the tiles’ values, tags and notes are unchanged', async ({ page }) => {
     await open(page, INVESTORS);
-    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Delivered');
+    await expect(page.locator('#guide .ig__delivered h3')).toHaveText('Scale and Partners');
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']);
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
-    await expect(page.locator('#guide .ig__notes')).toHaveText('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678. Most delivery has been in Bangladesh.');
+    await expect(page.locator('#guide .ig__notes')).toHaveText('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => /since 2014/.test(e.textContent ?? '')))).toEqual([false, false, false]);
   });
 

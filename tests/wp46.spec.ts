@@ -234,7 +234,7 @@ test.describe('The contract-scope note says who trained whom, and Home’s slide
     expect(compact(await page.locator('#glance li', { hasText: '30,000+' }).locator('.pg__note').textContent())).toBe('The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).');
     await open(page, '');
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
-    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
+    expect(lead).toBe('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.');
     expect(NOTE.startsWith('The figure is contract scope, not a count of completers.')).toBe(true);
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     expect(builtPages().filter((p) => p.html.includes('national program, which trained 25,125 women (CodersTrust trained 2,400 directly)')).map((p) => p.route).sort()).toEqual(['/impact/', '/our-model/jobready-platform/', '/partner-with-us/governments/', '/partner-with-us/investors/']);
@@ -413,7 +413,7 @@ test.describe('Employers: "For Hiring" has two steps in the training route’s s
     const hiring = page.locator('#next-steps .route', { has: page.locator('h3', { hasText: 'For Hiring' }) });
     expect((await hiring.locator('ol h4').allTextContents()).map((t) => compact(t).replace(/^Step \d: /, ''))).toEqual(['Discovery', 'Introductions']);
     expect((await hiring.locator('.steps__text').allTextContents()).map(compact)).toEqual([
-      'We scope your talent request against the experience and credentials available in the candidate pool.',
+      'A conversation about the roles you want to fill, to scope your talent request.',
       'Job-ready candidates are introduced through CodersTrust’s placement team.',
     ]);
     expect(await hiring.locator('[data-fact]').first().getAttribute('data-fact')).toBe('IN-04');

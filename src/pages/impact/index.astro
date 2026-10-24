@@ -37,11 +37,11 @@ const d = discoveryCta();
 const CLOSING_HEADING = 'Discuss the Evidence for Your Program';
 // WP31: the jump labels are the headings they jump to (a short form only where the heading is long: the part before the comma), and every heading has one.
 // WP42 (cycle-19 review): the goals entry is the full heading, "Seven Global Goals, Three at the Core": its short form dropped the qualifier that says which goals are the focus.
+// WP91 (triage A11): each entry is its heading's full text, so the list matches the headings it jumps to; "In Short" (a label above this list, not a heading) is gone.
 const onThisPage = [
-  { label: 'In Short', href: '#summary' },
   { label: 'Results at a Glance', href: '#glance' },
-  { label: 'Five Programs', href: '#cases' },
-  { label: 'Four Kinds of Evidence', href: '#evidence-ladder' },
+  { label: 'Five Programs Across Kosovo, Albania and Bangladesh', href: '#cases' },
+  { label: 'Four Kinds of Evidence, Strongest First', href: '#evidence-ladder' },
   { label: 'Where We Are Heading', href: '#heading' },
   { label: 'Seven Global Goals, Three at the Core', href: '#sdg' },
   // the closing band is the last entry, as About's list ends on its own ("Start a Conversation"): its label is its heading, its id (#cta) the anchor

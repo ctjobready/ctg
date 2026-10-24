@@ -677,7 +677,8 @@ export const PRICING: CopyBlock = {
 // their options band, so the sentence is now said once on each page, in the "What Does It Cost?" answer (Q8-employer in faqs.ts).
 
 /** The hiring route in the closing steps of Employers and JobReady@Work (WP34, cycle-11 review): the steps there are team training, so hiring gets its own short route ("For Hiring"). */
-export const EMPLOYER_HIRING_ROUTE = 'We scope your talent request against the experience and credentials available in the candidate pool.';
+// WP91 (triage A8): the hiring step says what the conversation covers; the hedge stays in the hire band and the FAQ, which need it. JobReady@Work mirrors these steps (WP47), so it reads the same sentence.
+export const EMPLOYER_HIRING_ROUTE = 'A conversation about the roles you want to fill, to scope your talent request.';
 
 /**
  * The hiring route's two steps, in the same step component as the training route's (WP46, cycle-22 review: Employers; WP47: JobReady@Work mirrors them, with the same wording and component). Both sentences are wording the pages

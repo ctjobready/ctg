@@ -31,14 +31,14 @@ test.describe('Investors: the delivered figures lead the track-record band (item
   test('"Delivered Since 2014" is in the Guide band with its three tiles and the enrollment and location note; the Reach band no longer holds it', async ({ page }) => {
     await open(page, URL);
     const group = page.locator('#guide .ig__delivered');
-    await expect(group.locator('h3')).toHaveText('Delivered');
+    await expect(group.locator('h3')).toHaveText('Scale and Partners');
     expect(await texts(page, '#guide .ig__tile .stat__value')).toEqual(['130,000+', '150,000+', '16']);
     expect(await texts(page, '#guide .ig__tile .stat__label')).toEqual(['learners trained', 'enrollments', 'countries and territories where CodersTrust has worked']); // WP64 (cycle-36 review, Grok): the group heading says "Since 2014", so the tiles do not
     expect(await texts(page, '#guide .ig__tile .status-tag')).toEqual(['Delivered', 'Delivered']);
     expect(await page.locator('#guide .ig__tile').evaluateAll((els) => els.map((e) => e.getAttribute('data-fact')))).toEqual(['SC-01', 'SC-02', 'SC-03']);
     // the explanation moved with the tiles, in the register's own words (SC-02 and SC-03 detail lines)
     const note = page.locator('#guide .ig__notes');
-    await expect(note).toHaveText('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678. Most delivery has been in Bangladesh.');
+    await expect(note).toHaveText('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
     expect(await note.getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     // moved, not duplicated: the figures are stated where they were, once (the 150,000+ twice in the Guide band: the tile, and the register's own "Of 150,000+ enrollments" note; WP87: the figures are now 112,926 and 40,152), and the Reach band holds none of the delivered figures;
     // WP84 (owner answer 2026-10-24): its contract-scope note, shared with the other pages, says Her Power's 25,125 is the same curriculum reach counted in the 150,000+ enrollments, so the Reach band names the 150,000+ once, in that sentence
@@ -56,7 +56,7 @@ test.describe('Investors: the delivered figures lead the track-record band (item
   // WP43 (cycle-20 review): the relationship panel and the founder and leadership strips are gone (tests/wp43.spec.ts); the figures still come first, then the one paragraph that names the institutions, then the link to the leadership team
   test('the figures come before the institutional relationships (one paragraph), and those before the link to the leadership team', async ({ page }) => {
     await open(page, URL);
-    expect(await texts(page, '#guide h3')).toEqual(['Delivered']);
+    expect(await texts(page, '#guide h3')).toEqual(['Scale and Partners']);
     const [delivered, relationships, leadership] = await Promise.all([topOf(page, '#guide .ig__delivered'), topOf(page, '#guide .ig__names'), topOf(page, '#guide .ig__leaders')]);
     expect(delivered, 'delivered figures above the relationships').toBeLessThan(relationships);
     expect(relationships, 'relationships above the leadership link').toBeLessThan(leadership);
@@ -352,7 +352,7 @@ test.describe('Home: the government slide is second (item 10)', () => {
     await expect(gov.locator('.hs__eyebrow')).toHaveText('Government and University Partners');
     // WP46 (cycle-22 review): the note says who trained whom, and the last sentence names its subject ("CodersTrust is the official training partner of ...")
     // WP48 (cycle-23 review): the body was two sentences with the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, which names Her Power's national program (25,125 women trained; CodersTrust trained 2,500 directly)
-    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.');
+    await expect(gov.locator('.hs__lead')).toHaveText('Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.');
     expect(await gov.locator('h3').getAttribute('data-fact')).toBe('GV-12');
     expect(await gov.locator('.hs__actions a').evaluateAll((els) => els.map((a) => ({ text: (a.textContent ?? '').trim(), href: a.getAttribute('href') ?? '' })))).toEqual([
       { text: 'For Governments', href: expect.stringMatching(/\/partner-with-us\/governments\/$/) },

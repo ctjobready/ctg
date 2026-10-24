@@ -45,7 +45,7 @@ async function showSlide(page: Page, n: number) {
 const SCOPE_NOTE = 'The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly).';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const CONTRACT_NOTE = `${SCOPE_NOTE} ${OVERLAP}`;
-const SLIDE_2 = 'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+const SLIDE_2 = 'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
 /** Wordings that put the 25,125 as a target still to be met (WP83); none may stand. */
 const TARGET_WORDING = [/to train 25,125/i, /national target/i, /targeted for training/i, /target of 25,125/i, /target is (?:to train|separate|a separate)/i, /National Target: A Different Measure/, /national program to train/i];
@@ -71,8 +71,8 @@ test.describe('WP85: the register says the national program trained 25,125 women
     // the register text keeps the full wording (WP90 shortened only the detail)
     const longBreakdown = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
     expect(fact('SC-02').text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${longBreakdown}`);
-    const breakdown = '(Her Power’s 25,125 and UNDP FutureNation’s 15,027)';
-    expect(fact('SC-02').stat?.detail).toBe(`Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware ${breakdown}. Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.`);
+    // WP91 (triage A1): the detail's wording is the triage's; the figures are unchanged
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678.');
     expect(25125 + (fact('SC-14').stat?.numeric ?? 0)).toBe(40152);
     expect(fact('SC-01').stat?.value).toBe('130,000+');
     expect(fact('SC-02').stat?.value).toBe('150,000+');
@@ -96,7 +96,7 @@ test.describe('WP85: the register says the national program trained 25,125 women
 
 test.describe('WP85: every 25,125 on a built page is said as trained', () => {
   // WP90: the SC-02 detail's shortened form "courseware (Her Power’s 25,125 and ...)" is a reach figure, not a target
-  const TRAINED = /trained 25,125|25,125 women Her Power trained|25,125 is the same group counted|25,125 women the national program trained|courseware \(Her Power’s 25,125/;
+  const TRAINED = /trained 25,125|25,125 women Her Power trained|25,125 is the same group counted|25,125 women the national program trained|courseware: Her Power’s 25,125/;
   const ARCHIVED = /Aims to Train 25,125|aims to train and support 25,125|train and facilitate 25,125/;
 
   test('text, meta tags and JSON-LD: each 25,125 is in a "trained" context; only the Her Power news post and the news index keep the archived "aims to train" wording', () => {
@@ -176,7 +176,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
   test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; JobReady Platform prints the shared note', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide .ig__notes')).toHaveText(
-      'Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678. Most delivery has been in Bangladesh.',
+      'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678. Most delivery has been in Bangladesh.',
     );
     expect(await page.locator('#guide .ig__notes').getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);

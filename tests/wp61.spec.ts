@@ -75,7 +75,7 @@ const CONTACT = 'contact/';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same facts', () => {
   const LEAD =
-    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.';
+    'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.';
 
   test('the lead reads as above: the owner words "work scoped for" (WP47) and "onboarding 1.5M+ learners" (GV-12) stay, and the lead rests on GV-12, GV-01, GV-11 and SC-04', async ({ page }) => {
     await open(page, HOME);
@@ -85,8 +85,8 @@ test.describe('G1 (GPT-6.1 Sol): Home slide 2 is three sentences with the same f
     expect(text.split(/(?<=\.)\s+/)).toHaveLength(3);
     expect(text).not.toMatch(/[()—]/);
     expect(text).toContain('work scoped for 30,000+ people, not a count of completers.');
-    expect(text).toContain('onboarding 1.5M+ learners');
-    expect(text.endsWith(`the university’s own learners, ${NU_NOT_TRAINED}.`)).toBe(true);
+    expect(text).toContain('onboarding 1.5M+ of the university’s own learners');
+    expect(text.endsWith('who are not learners trained by CodersTrust.')).toBe(true);
     expect(await lead.getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     await expect(slide(page, 2).locator('h3')).toHaveText('Six Government Contracts and a National University Partnership');
   });

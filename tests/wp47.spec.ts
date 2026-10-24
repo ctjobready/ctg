@@ -242,7 +242,7 @@ test.describe('Single-source wording (items 31, 32, 34, 35, 36)', () => {
     const lead = compact(await slide(page, 2).locator('.hs__lead').textContent());
     // WP48 (cycle-23 review): the slide kept "work scoped for 30,000+ people" and the clause "contract scope, not a count of completers"; WP57 (cycle-29 review, Grok R2): the clause is the note's WP35 wording, "The total is contract scope, not a count of completers; it includes Her Power’s national program (25,125 women trained; CodersTrust trained 2,500 directly)."
     expect(lead).toBe(
-      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As National University’s official training partner for digital career skills and credentials, CodersTrust is onboarding 1.5M+ learners, the university’s own learners, not learners trained by CodersTrust.',
+      'Six government contracts with training and curriculum work scoped for 30,000+ people, not a count of completers. Her Power, one of the six, trained 25,125 women nationally, its full target; CodersTrust trained 2,400 directly. As the official training partner of Bangladesh’s National University for digital career skills and credentials, CodersTrust is onboarding 1.5M+ of the university’s own learners, who are not learners trained by CodersTrust.',
     );
     expect(await slide(page, 2).locator('.hs__lead').getAttribute('data-fact')).toBe('GV-12 GV-01 GV-11 SC-04');
     const stale = builtPages().filter((p) => /curriculum scopes (?:for|covering) 30,000\+/.test(p.html)).map((p) => p.route);
@@ -311,7 +311,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
     const tile = page.locator('#glance .about-stats__tile[data-fact="SC-02"]');
     await expect(tile.locator('.stat__note')).toHaveCount(0);
     expect(compact(await tile.textContent())).not.toMatch(/direct enrollments|courseware/);
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments: 112,926 direct and 40,152 reached through CodersTrust curriculum and courseware (Her Power’s 25,125 and UNDP FutureNation’s 15,027). Her Power’s 2,400 directly trained women are in both counts, so counting them once gives 150,678.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both counts, so counted once the total is 150,678.');
   });
 
   test('item 38: the founding line reads "Founded in 2014 and launched in Copenhagen, Denmark, …" on the About timeline and in the register (the Recognition page prints the register line)', async ({ page }) => {
@@ -327,7 +327,7 @@ test.describe('About and Investors (items 37, 38, 39)', () => {
   test('item 39: the Investors record band is headed "A Record Built Since 2014"; the institutions follow directly below it', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide h2')).toHaveText('A Record Built Since 2014');
-    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Delivered']);
+    expect(await texts(page, '#guide h2, #guide h3')).toEqual(['A Record Built Since 2014', 'Scale and Partners']);
     expect(await mainText(page)).not.toContain('with Institutions That Reach Youth');
     const guide = compact(await page.locator('#guide').textContent());
     expect(guide.indexOf('Government partners include')).toBeGreaterThan(guide.indexOf('A Record Built Since 2014'));

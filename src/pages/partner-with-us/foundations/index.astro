@@ -134,7 +134,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
     <GainsPains
       slot="lead"
       pains={[
-        { q: 'Track earnings, not only training hours', text: 'Attendance is easy to count; a change in income is harder to show.' },
+        // WP91 (triage A10): a "Must" title, as the page's other "Must" card; the body sentence is unchanged.
+        { q: 'Earnings must be tracked, not only training hours', text: 'Attendance is easy to count; a change in income is harder to show.' },
         // WP48 (cycle-23 review): "Independent evidence on youth-employment programs is thin." was a claim about the whole sector; the card states the funder's need instead.
         { q: 'Independent evidence is hard to find', text: 'You need independent evidence, not a provider’s own count.' },
         // WP38 (cycle-15 review): a general funder pain, stated in one line like its two neighbors; it rests on no CodersTrust fact. WP40 (cycle-17 review): worded as the funder's need, not as a comparison with other implementers.
@@ -245,7 +246,8 @@ const FAQ_IDS = ['Q3', 'Q8-route', 'Q9-route', 'Q10'];
   />
   <SubBand tone="airy" pull id="platform-grants">
     <Callout eyebrow="Funding Route 2 · JobReady Platform Grants">
-      <p data-fact="IN-04">A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
+      <!-- WP91 (triage A4): the sentence before the register line says the program sizes above are for cohort grants only, so the platform grant reads as the other route. -->
+      <p data-fact="IN-04">The program sizes above apply to cohort grants only. A platform grant supports JobReady’s infrastructure and staged rollout, not cohorts.</p>
     </Callout>
   </SubBand>
 
