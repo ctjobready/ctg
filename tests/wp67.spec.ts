@@ -239,7 +239,7 @@ test.describe('Item 5: YouthWIDE’s track-record heading is "We’ve Built This
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 6: Governments’ "Can You Deliver at National Scale?" answer gives Her Power’s figures', () => {
   const Q = 'Can You Deliver at National Scale?';
-  const ANSWER = 'We scale in phases. Her Power, a national program, trained 25,125 women, meeting its target; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.';
+  const ANSWER = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
   const item = (page: Page) => page.locator('#faq details', { has: page.locator('summary', { hasText: Q }) });
 
   test('the figures are the register’s (GV-01’s 25,125 and GV-11’s 2,400, GV-13 holds the same count)', () => {

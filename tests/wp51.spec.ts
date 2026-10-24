@@ -74,7 +74,7 @@ const UNI = 'partner-with-us/universities/';
 const LOCAL = 'partner-with-us/local-partners/';
 const EMP = 'partner-with-us/employers/';
 const INVEST = 'partner-with-us/investors/';
-const FIRST_ACTION = 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.';
+const FIRST_ACTION = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';
 const NOTE = 'These are program sizes, not commitments: in the discovery session you choose a starting scope for your goals, country and delivery capacity.';
 const WSDFM_TITLE = 'Women’s Skill Development for Freelancing Marketplace (WSDFM)';
 
@@ -547,7 +547,7 @@ test.describe('Foundations: the route table’s second column is "What the Evide
     expect('What the Evidence Covers').toBe(titleCase('What the Evidence Covers'));
     expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual([
       'Builds on results from earlier programs in Bangladesh and Kosovo.',
-      'Youth-program outcomes are not platform outcomes.', // WP65 (cycle-37 review, Gemini): the second sentence is gone (tests/wp65.spec.ts)
+      'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.', // WP93 A2 adds the staged-rollout sentence; WP65 (cycle-37 review, Gemini): the second sentence is gone (tests/wp65.spec.ts)
     ]);
     expect(sitePages().filter((p) => visible(p.html).includes('Evidence Relationship') || p.html.includes('data-label="Evidence Relationship"')).map((p) => p.route)).toEqual([]);
   });

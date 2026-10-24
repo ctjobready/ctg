@@ -72,7 +72,7 @@ test.describe('WP85: the register says the national program trained 25,125 women
     const longBreakdown = '(the 25,125 women Her Power trained nationally with CodersTrust’s curriculum, including the 2,400 CodersTrust also trained directly, and UNDP FutureNation’s 15,027 course learners)';
     expect(fact('SC-02').text).toBe(`150,000+ enrollments since 2014 — 112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware ${longBreakdown}`);
     // WP91 (triage A1): the detail's wording is the triage's; the figures are unchanged
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.');
     expect(25125 + (fact('SC-14').stat?.numeric ?? 0)).toBe(40152);
     expect(fact('SC-01').stat?.value).toBe('130,000+');
     expect(fact('SC-02').stat?.value).toBe('150,000+');
@@ -168,7 +168,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
     const row = compact(await page.locator('#contracts tbody tr').first().textContent());
     expect(row).toContain('CodersTrust trained 2,400 women directly. The national program trained 25,125 women across 130 sub-districts (upazilas), meeting its target. 54,609 manuals and guidelines were distributed.');
     const faq = page.locator('#faq details, #faqs details', { has: page.locator('summary', { hasText: 'Can You Deliver at National Scale?' }) }).first();
-    const answer = 'We scale in phases. Her Power, a national program, trained 25,125 women, meeting its target; CodersTrust provided the curriculum and trained 2,400 directly. A 100,000+ program is a design option we have not yet delivered.';
+    const answer = 'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
     expect(compact(await faq.textContent())).toContain(answer);
     expect(builtPages().find((p) => p.route === '/partner-with-us/governments/')!.html).toContain(`"text":"${answer}"`);
   });
@@ -176,7 +176,7 @@ test.describe('WP85: the pages that state the 25,125', () => {
   test('Investors: the track-record note, the 30,000+ note and the national-scale answer say trained; JobReady Platform prints the shared note', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     await expect(page.locator('#guide .ig__notes')).toHaveText(
-      'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678. Most delivery has been in Bangladesh.',
+      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678. Most delivery has been in Bangladesh.',
     );
     expect(await page.locator('#guide .ig__notes').getAttribute('data-fact')).toBe('SC-02 SC-03 GV-01 SC-14');
     expect(compact(await page.locator('#reach .ir__note').textContent())).toBe(CONTRACT_NOTE);

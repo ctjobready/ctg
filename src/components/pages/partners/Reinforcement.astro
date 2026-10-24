@@ -20,7 +20,7 @@ interface Props {
   logos?: PartnerGroup | PartnerGroup[] | false;
   id?: string;
 }
-const { firstAction = C14.firstAction, reminder = true, logos = 'development', id = 'reinforce' } = Astro.props;
+const { firstAction = C14.firstActionReinforce, reminder = true, logos = 'development', id = 'reinforce' } = Astro.props;
 ---
 
 <SubBand tone="airy" pull id={id}>

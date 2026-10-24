@@ -389,7 +389,7 @@ test.describe('Home: the router card, the closing steps and the first-step line 
 
   test('the audience pages, where no "Your First Step" heading precedes the line, keep the full sentence', async ({ page }) => {
     await open(page, DP);
-    expect(compact(await page.locator('#reinforce .rf__first').textContent())).toBe(C14.firstAction);
+    expect(compact(await page.locator('#reinforce .rf__first').textContent())).toBe(C14.firstActionReinforce);
     expect(C14.firstAction).toBe('Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.');
   });
 });

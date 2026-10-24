@@ -36,7 +36,7 @@ const visible = (html: string) =>
   );
 
 // WP91 (triage A1): the detail's wording is the triage's ("came through", not "reached through"); the figures are unchanged.
-const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.';
+const NEW_DETAIL = 'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.';
 const OVERLAP = 'Her Power’s 25,125 is the same group counted in the 150,000+ enrollments through CodersTrust’s curriculum, not additional people.';
 const FULL_NOTE = `The total is contract scope, not a count of completers; it includes Her Power’s national program, which trained 25,125 women (CodersTrust trained 2,400 directly). ${OVERLAP}`;
 // WP86 (CLR run 3, Minor 2): Governments and the JobReady Platform print the first sentence alone (CONTRACT_TOTAL_NOTE_SHORT).
@@ -53,8 +53,8 @@ test.describe('WP84: the register says what the courseware share is', () => {
 
   test('the breakdown closes against the register: GV-01’s 25,125 plus SC-14’s 15,027 is the 40,152, and 112,926 plus 40,152 less the 2,400 counted twice is 150,678, which covers the 150,000+ (WP87)', () => {
     const detail = fact('SC-02').stat?.detail ?? '';
-    // WP91 (triage A1): the detail reads "..., 112,926 were direct. The other 40,152 came through ..."
-    const share = toInt(/The other ([\d,]+) came through/.exec(detail)?.[1]);
+    // WP91 (triage A1): the detail reads "..., 112,926 were direct. Another 40,152 came through ..."
+    const share = toInt(/Another ([\d,]+) came through/.exec(detail)?.[1]);
     const direct = toInt(/, ([\d,]+) were direct/.exec(detail)?.[1]);
     const herPower = toInt(fact('GV-01').stat?.value);
     const futureNation = fact('SC-14').stat?.numeric;

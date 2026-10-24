@@ -242,7 +242,7 @@ test.describe('the positioning statements share one plain closing', () => {
   // Partners and Governments state the two shared sentences with the reader named in the second (declared whole too); WP43 (cycle-20 review): JobReady@Campus' statement is two sentences with the program as the subject and the
   // reporting scoped ("as agreed in the program scope"; declared whole as well); every other page keeps its audience sentence and the shared closing
   const WHOLE: Record<string, string> = {
-    'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+    'programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
     'partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
     'partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
     'partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',

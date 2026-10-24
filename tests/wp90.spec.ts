@@ -21,7 +21,7 @@ const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ')
 test.describe('WP90 A1: SC-02 detail is shortened, the figures are unchanged', () => {
   test('the register detail reads the shortened breakdown and keeps the arithmetic', () => {
     expect(fact('SC-02').stat?.detail).toBe(
-      'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.',
+      'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.',
     );
     expect(112926 + 40152 - 2400).toBe(150678);
     expect(25125 + 15027).toBe(40152);
@@ -37,7 +37,7 @@ test.describe('WP90 A1: SC-02 detail is shortened, the figures are unchanged', (
   test('the Investors track-record note prints the shortened detail and the Her Power overlap sentence', async ({ page }) => {
     await open(page, 'partner-with-us/investors/');
     const note = compact(await page.locator('#guide .ig__notes').textContent());
-    expect(note).toContain('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678. Most delivery has been in Bangladesh.');
+    expect(note).toContain('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678. Most delivery has been in Bangladesh.');
     expect(note).not.toContain('the 25,125 women Her Power trained nationally');
   });
 });

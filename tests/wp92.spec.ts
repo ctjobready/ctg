@@ -22,7 +22,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
 const compact = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
 
 const SC02_DETAIL =
-  'Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.';
+  'Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.';
 const HER_POWER_TILE = 'Her Power: tracked women in work (47%), among the 2,400 women CodersTrust trained directly';
 const WHERE_THEY_WORK_BODY =
   'Placement support into local, remote and global work, with monthly reports to the agency and follow-up surveys at 3, 6 and 12 months after each course, as agreed in the program scope.';

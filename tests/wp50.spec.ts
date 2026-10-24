@@ -387,7 +387,7 @@ test.describe('Governments: Her Power’s row is three full sentences (item 15)'
 test.describe('Development Partners and Governments: no closing line repeats the logo strip (item 16)', () => {
   test('Development Partners: the closing band has the first-action line alone; the track-record band’s strip names UNDP, the World Bank Group and BRAC', async ({ page }) => {
     await open(page, DP);
-    expect(await texts(page, '#reinforce li')).toEqual(['Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.']);
+    expect(await texts(page, '#reinforce li')).toEqual(['Your first step: a discovery session. In your inquiry, include two suitable times for it.']);
     expect(await everything(page)).not.toContain('Organizations that have worked with CodersTrust include');
     const strip = await page.locator('#guide .partners').evaluate((el) => `${el.textContent ?? ''} ${Array.from(el.querySelectorAll('img')).map((i) => i.getAttribute('alt') ?? '').join(' ')}`);
     for (const name of ['UNDP', 'World Bank Group', 'BRAC']) expect(strip, name).toContain(name);

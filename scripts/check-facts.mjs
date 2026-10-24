@@ -402,7 +402,8 @@ const POSITION_WHOLE_STATEMENT = {
   // ("For funders who need educated, unemployed youth in paid digital work, CodersTrust offers an integrated training-to-earnings model.") and the closing sentence that followed it.
   // WP63 (cycle-35 review, Grok R1): the audience is "educated, unemployed and underemployed youth", the group ID-01 and the hero's value proposition name; POSITIONING.home in src/data/copy.ts changed with it.
   '/': 'CodersTrust connects training, mentoring and placement support for educated, unemployed and underemployed youth, with monthly reports on progress toward paid work, as agreed in the program scope.',
-  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+  // WP93 (triage A4): the YouthWIDE statement carries the scope guard ("as agreed in the program scope"), as every other Approach statement does.
+  '/programs/youthwide/': 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
   '/partner-with-us/local-partners/': 'Your organization mobilizes learners and hosts training. CodersTrust supports delivery, mentoring, placement and reporting.',
   '/partner-with-us/development-partners/': 'We combine training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports and outcome tracking after each course, as agreed in the program scope.',
   '/partner-with-us/governments/': 'We combine training, mentoring and placement support in existing labs and colleges. Your agency receives monthly reports on progress toward paid work, as agreed in the program scope.',
@@ -1061,7 +1062,7 @@ function surveyEditionProblems(factsById, rows, pins = { facts: SURVEY_FACTS, ro
   posBad('a statement that is not in the #mechanism band', `<main><section class="band" id="mechanism"><p>x</p></section>${posBlock()}</main>`);
   // WP36: a page-specific whole statement (YouthWIDE) passes only with exactly its declared text, and the declaration never loosens the rule for any other page
   const wholeYw = POSITION_WHOLE_STATEMENT['/programs/youthwide/'];
-  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP36 wording');
+  if (wholeYw !== 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.') problems.push('self-test: the YouthWIDE whole statement is no longer the WP36 wording');
   posOk('the declared whole statement on the page that declares it (YouthWIDE)', mech(`${headerHtml}${posBlock(wholeYw)}</header>`), { whole: wholeYw });
   posOk('the declared whole statement with the statement before the header (nothing precedes it)', mech(`${posBlock(wholeYw)}${headerHtml}</header>`), { whole: wholeYw });
   posBad('the shared audience-plus-[UNLIKE] statement on the page that declares a whole statement', mech(`${headerHtml}${posBlock()}</header>`), { whole: wholeYw });

@@ -182,7 +182,7 @@ test.describe('Investors', () => {
     await open(page, 'partner-with-us/investors/');
     const band = page.locator('#proof-band');
     await expect(band).toHaveCount(1);
-    await expect(band.locator('h2')).toHaveText('Independent Evidence');
+    await expect(band.locator('h2')).toHaveText('Evidence from the Youth Programs');
     const body = band.locator('p.lead');
     await expect(body).toHaveCount(1);
     expect(compact(await body.textContent())).toBe(EVIDENCE);
@@ -294,7 +294,7 @@ test.describe('TalentLEAP and YouthWIDE', () => {
   test('YouthWIDE: "Our Approach" is the two shared sentences with the program as subject, and opens the band', async ({ page }) => {
     await open(page, 'programs/youthwide/');
     await expect(page.locator('#mechanism .pos__label')).toHaveText('Our Approach');
-    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.');
+    await expect(page.locator('#mechanism .pos__text')).toHaveText('YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.');
     expect(await page.locator('#mechanism .pos').getAttribute('data-fact')).toBe('PD-01 PD-08');
     // WP44 (cycle-21 review): Foundations is declared whole too, with its own two sentences (tests/wp44.spec.ts), not the audience sentence it had here
     await open(page, 'partner-with-us/foundations/');

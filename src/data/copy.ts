@@ -485,7 +485,8 @@ export const POSITIONING: Record<PositioningKey, CopyBlock> = {
   youthwide: {
     // WP36 (cycle-13 review): YouthWIDE's hero lead and "at a Glance" rows already say who the program is for and where it runs, so "Our Approach" states only what the program does, in the two shared sentences
     // with the program named as the subject. This is the one page-specific statement of its kind: scripts/check-facts.mjs declares it whole for /programs/youthwide/ (POSITION_WHOLE_STATEMENT).
-    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work.',
+    // WP93 (triage A4): the reporting promise carries the scope guard, as the other Approach statements do.
+    text: 'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.',
     facts: ['PD-01', 'PD-08'],
   },
   // No page uses this statement today (the YouthWIDE page's is `youthwide`, above). WP45 (cycle-21 review): it no longer calls the Bangladesh initiative "a national initiative" (IN-01 is an initiative that aims to train 2 million vulnerable youth by 2030).
@@ -896,6 +897,8 @@ export const C14 = {
   },
   reminder: { text: 'Target timing for grant-funded pilots: the first cohort begins training 6–8 weeks after signing, and monthly reports follow from the first cohort.', facts: ['PD-04', 'PD-08'] } as CopyBlock,
   firstAction: 'Your first step: a discovery session. In your inquiry, include two suitable times for a discovery conversation.',
+  // WP93 (Perplexity cycle 42, triage A7): the partner-page closing strip (Development Partners, Foundations, Universities) says "for it", as Governments and Investors do, so the page does not name the discovery session twice in adjacent sentences. The programs pages keep `firstAction`, where the lead is removed and "for it" would have no noun.
+  firstActionReinforce: 'Your first step: a discovery session. In your inquiry, include two suitable times for it.',
   // WP49 (cycle-24 review): Home's closing band prints the same action under a "Your First Step" label, so the line there does not say "Your first step" again (the audience pages' reinforcement strip has no such label and keeps `firstAction`).
   firstActionLabeled: 'A discovery session. In your inquiry, include two suitable times.',
   variants: {

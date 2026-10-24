@@ -105,9 +105,9 @@ test.describe('Item 2 (Sonnet, Grok): About’s enrollments tile has no detail l
 
   test('SC-02 is unchanged in the register, and Investors still prints the split from its detail line', async ({ page }) => {
     expect(fact('SC-02').text).toContain('112,926 through direct training across 45 programs and 40,152 reached through CodersTrust curriculum and courseware');
-    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.');
+    expect(fact('SC-02').stat?.detail).toBe('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.');
     await open(page, INVESTORS);
-    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments, 112,926 were direct. The other 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125, so counted once the total is 150,678.');
+    expect(compact(await page.locator('#guide .ig__notes').textContent())).toContain('Of 150,000+ enrollments, 112,926 were direct. Another 40,152 came through CodersTrust curriculum and courseware: Her Power’s 25,125 and UNDP FutureNation’s 15,027. Her Power’s 2,400 directly trained women are in both the 112,926 and the 25,125. Counted once, the total is 150,678.');
     // the wording WP50 gave About's tile is on no page; the split is on Investors and no longer on About
     expect(pagesWith('Including 111,268 direct enrollments and 40,043 through courseware.')).toEqual([]);
     const withSplit = pagesWith('112,926');
@@ -225,9 +225,9 @@ test.describe('Item 4 (GLM; Sonnet in cycles 34 and 36): Investors names AWS by 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test.describe('Item 5 (Gemini): the platform-grant row says one thing', () => {
-  test('"What the Evidence Covers" for Funding Route 2 is "Youth-program outcomes are not platform outcomes." alone; Route 1’s cell is unchanged', async ({ page }) => {
+  test('"What the Evidence Covers" for Funding Route 2 is "Youth-program outcomes are not platform outcomes." and the first-conversation line; Route 1’s cell is unchanged', async ({ page }) => {
     await open(page, FOUNDATIONS);
-    expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual(['Builds on results from earlier programs in Bangladesh and Kosovo.', 'Youth-program outcomes are not platform outcomes.']);
+    expect(await texts(page, '#funding-routes tbody td:nth-child(3)')).toEqual(['Builds on results from earlier programs in Bangladesh and Kosovo.', 'Youth-program outcomes are not platform outcomes. The first conversation covers JobReady’s staged rollout.']);
     expect(count(await mainText(page), 'Youth-program outcomes are not platform outcomes.')).toBe(1);
   });
 
@@ -269,7 +269,7 @@ test.describe('Item 6 (Gemini, Kimi, Sonnet): polish', () => {
     await open(page, IMPACT);
     const cells = await texts(page, '#evidence-ladder tbody td[data-label="What It Does Not Show"]');
     expect(cells).toHaveLength(4);
-    expect(cells.filter((c) => /^[A-Z][a-z]+:/.test(c))).toEqual(['Cause: respondents are not a random sample and may over-represent successful learners.']);
+    expect(cells.filter((c) => /^[A-Z][a-z]+:/.test(c))).toEqual(['Cause: respondents are not a random sample and may over-represent successful learners. 19.6% are women.']);
     expect(cells.filter((c) => /^Cause:/.test(c))).toHaveLength(1);
   });
 

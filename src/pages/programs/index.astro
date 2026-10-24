@@ -120,7 +120,7 @@ const jsonLd = [
          WP61 (cycle-33 review, Kimi P1): the badge says "Where We Have Worked" (it said "Since 2014", which the band heading, "Reach Since 2014", already says). -->
     <div class="hub__reach">
       <div data-reveal><StatusTag status="Delivered" /><FactStat id="SC-01" label={learnersLabel} /></div>
-      <div data-reveal><Badge tone="brand" class="hub__period">Where We Have Worked</Badge><FactStat id="SC-03" /></div>
+      <div data-reveal><Badge tone="brand" class="hub__period">Where We Have Worked</Badge><FactStat id="SC-03" /><p class="hub__reach-link"><a class="link" href={linkAttrs('/impact/global-reach/').href}>See Global Reach<Icon name="arrow-right" size={16} /></a></p></div>
     </div>
   </Section>
 
@@ -178,6 +178,10 @@ const jsonLd = [
     .hub__reach {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+  /* WP93 (triage A6): the secondary text link under the 16, directly after the SC-03 note; no second button */
+  .hub__reach-link {
+    margin: 0;
   }
   .hub__more {
     margin: var(--space-lg) 0 0;
