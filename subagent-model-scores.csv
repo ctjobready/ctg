@@ -325,3 +325,7 @@ timestamp,model_slug,reasoning_effort,score,task_complexity
 2026-10-24T07:18:57Z,claude-haiku-5-5,medium,5,low
 2026-10-24T08:07:02Z,claude-sonnet-5-5,xhigh,5,medium
 2026-10-24T09:08:57Z,claude-haiku-5-5,medium,4,low
+2026-10-24T09:10:53Z,claude-haiku-5-5,medium,5,low
+2026-10-24T09:11:02Z,claude-haiku-5-5,medium,5,low
+2026-10-24T11:14:47Z,claude-sonnet-5-5,xhigh,5,medium
+2026-10-24T12:23:46Z,claude-haiku-5-5,medium,5,low
