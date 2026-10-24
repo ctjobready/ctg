@@ -20,9 +20,12 @@ import { AIM_DEPENDENCY, MICRO_COMMITMENT, NU_ELIGIBILITY, withoutSince2014 } fr
 import { fact } from '../../data/facts';
 import { joinList } from '../../lib/format';
 import { linkAttrs } from '../../lib/url';
+import { COURSES_URL } from '../../lib/site';
 import { pageUrl, webPage } from '../../lib/schema';
 
 const path = '/programs/';
+// WP95 (triage A2): the JobReady.global link for learners who want short courses (linkAttrs adds the opens-in-new-note the SuperKids page uses).
+const courses = linkAttrs(COURSES_URL);
 // WP60 (cycle-32 review, Gemini GM1): the evidence band under the program cards is headed "Evidence from Youth-Employment Programs" and opens "These results are from youth-employment programs, not evidence for every program listed above." (it was "Trial and Survey Evidence",
 // under a list that includes schools, universities and employers); the figures and the predecessor label (the trial line and the tile's label) are unchanged.
 // WP60 (cycle-32 review, Claude S3): the YouthWIDE card's "..., depending on government and donor commitments" is AIM_DEPENDENCY (src/data/copy.ts), the clause every other page that states the 2 million 2030 aim now reads too (it was typed here only).
@@ -70,6 +73,8 @@ const jsonLd = [
       <Button href={discovery.href} iconEnd="arrow-right">{discovery.label}</Button>
       <!-- WP25s: the learner route is visible at the top, as a text link under the one primary button (the diploma has no partner route). -->
       <p class="hub__nu">Applying for the NU Postgraduate Diploma? <a class="link" href={linkAttrs('/programs/nu-postgraduate-diploma/').href}>See the diploma.</a></p>
+      <!-- WP95 (triage A2): the body's only route for a learner who wants short courses; a text link, not a second button. Same external-link pattern as SuperKids. -->
+      <p class="hub__nu">Looking for a short self-paced course? <a class="link" href={courses.href} rel={courses.rel}>Explore Courses at JobReady.global<Icon name="arrow-up-right" size={16} /><span class="sr-only"> {courses.srText}</span></a></p>
     </Fragment>
   </Hero>
 

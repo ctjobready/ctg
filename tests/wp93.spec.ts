@@ -12,7 +12,7 @@ import { DESKTOP, MOBILE, open, scrollThrough } from './support/browser';
  *   - A2: Foundations' Route 2 evidence cell adds "The first conversation covers JobReady’s staged rollout.";
  *   - A3: the Impact ladder's survey row says "19.6% are women." (OC-09's share, read from its text, as Outcomes 2026 words it);
  *   - A4: YouthWIDE's Our Approach reporting promise is "..., as agreed in the program scope.";
- *   - A5: the Governments national-scale answer says "met its full target with CodersTrust’s curriculum; the contract table above gives the figures.";
+ *   - A5: the Governments national-scale answer says "met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures.";
  *   - A6: Programs' reach band links "See Global Reach" after the 16's note;
  *   - A7: the partner closing strips end "include two suitable times for it." (Programs keep "for a discovery conversation").
  * Item 4 (headings flow from source): the only heading change (A0) is one string in InvestorEvidence.astro, and Investors renders no On This Page list, so nothing else needs the new wording.
@@ -29,7 +29,7 @@ const SURVEY_NOT = 'Cause: respondents are not a random sample and may over-repr
 const YOUTHWIDE_STATEMENT =
   'YouthWIDE combines training, mentoring and placement support in existing labs and colleges. Partners receive monthly reports on progress toward paid work, as agreed in the program scope.';
 const NATIONAL_ANSWER =
-  'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
+  'We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained 2,400 women directly; the contract table above gives the figures. A 100,000+ program is a design option we have not yet delivered.';
 const FIRST_ACTION_PARTNER = 'Your first step: a discovery session. In your inquiry, include two suitable times for it.';
 const FIRST_ACTION_PROGRAMS = 'First action. In your inquiry, include two suitable times for a discovery conversation.';
 

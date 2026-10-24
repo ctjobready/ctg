@@ -129,7 +129,7 @@ test.describe('Contact: step 1 asks for two suitable times; step 3 is four short
     expect(first).toContain('Your Inquiry');
     expect(first).toContain('In your inquiry, include two suitable times.');
     expect(first).not.toContain('discovery conversation');
-    expect(compact(await page.locator('#next .steps__item').nth(1).textContent())).toContain('We talk through your goals, priority groups and timeline.');
+    expect(compact(await page.locator('#next .steps__item').nth(1).textContent())).toContain('We talk through your goals and timeline.');
   });
 
   test('step 3 is "Program partners: ... Foundations: ... Employers: ... Impact investors: ...", with the hiring qualifier kept', async ({ page }) => {

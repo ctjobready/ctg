@@ -127,7 +127,8 @@ faqs.push(
     id: 'Q2-government',
     // WP83 (owner answer 2026-10-23): Her Power's 25,125 was worded as the national program's target ("Her Power is a national program to train 25,125 women"). WP85 (owner update 2026-10-24: the government achieved 100% of the target): back to "trained", with "meeting its target".
     // WP93 (triage A5): the answer no longer repeats the two Her Power counts that the glance note and the contract table already state; "met its full target" is Home slide 2's wording.
-    a: `We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum; the contract table above gives the figures. A ${NATIONAL_SIZE} program is a design option we have not yet delivered.`,
+    // WP95 (triage A1): the answer says what CodersTrust itself trained, from GV-11 through CONTRACT_FIGURES (never retyped).
+    a: `We scale in phases. Her Power, a national program, met its full target with CodersTrust’s curriculum, and CodersTrust trained ${CONTRACT_FIGURES.direct} women directly; the contract table above gives the figures. A ${NATIONAL_SIZE} program is a design option we have not yet delivered.`,
     evidence: ['GV-01', 'GV-11', 'PD-05'],
     audiences: ['variants'],
   },
